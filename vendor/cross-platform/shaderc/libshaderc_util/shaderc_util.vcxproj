@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1DE5563E-DFDF-3941-87C6-4C6C288C34B8}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>shaderc_util</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">shaderc_util.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">shaderc_util</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">shaderc_util.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">shaderc_util</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">shaderc_util.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">shaderc_util</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">shaderc_util.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">shaderc_util</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\glslang\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..\External;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-tools\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-headers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4800</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;ENABLE_HLSL;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;ENABLE_HLSL;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\glslang\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..\External;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-tools\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-headers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\glslang\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..\External;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-tools\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-headers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\glslang\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..\External;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-tools\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-headers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DisableSpecificWarnings>4800</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;ENABLE_HLSL;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;ENABLE_HLSL;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\glslang\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..\External;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-tools\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-headers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\glslang\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..\External;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-tools\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-headers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\glslang\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..\External;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-tools\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-headers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DisableSpecificWarnings>4800</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;ENABLE_HLSL;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;ENABLE_HLSL;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\glslang\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..\External;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-tools\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-headers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\glslang\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..\External;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-tools\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-headers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\glslang\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..\External;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-tools\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-headers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4800</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;ENABLE_HLSL;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;ENABLE_HLSL;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\glslang\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..\External;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-tools\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-headers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\glslang\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\..\External;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-tools\include;C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-headers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/terra/OneDrive/Documents/references/y3/MoravaEngine/vendor/cross-platform/shaderc/libshaderc_util/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/terra/OneDrive/Documents/references/y3/MoravaEngine/vendor/cross-platform/shaderc -BC:/Users/terra/OneDrive/Documents/references/y3/MoravaEngine/vendor/cross-platform/shaderc --check-stamp-file C:/Users/terra/OneDrive/Documents/references/y3/MoravaEngine/vendor/cross-platform/shaderc/libshaderc_util/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.27\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\Internal\CheckSourceCompiles.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/terra/OneDrive/Documents/references/y3/MoravaEngine/vendor/cross-platform/shaderc/libshaderc_util/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/terra/OneDrive/Documents/references/y3/MoravaEngine/vendor/cross-platform/shaderc -BC:/Users/terra/OneDrive/Documents/references/y3/MoravaEngine/vendor/cross-platform/shaderc --check-stamp-file C:/Users/terra/OneDrive/Documents/references/y3/MoravaEngine/vendor/cross-platform/shaderc/libshaderc_util/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.27\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\Internal\CheckSourceCompiles.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/terra/OneDrive/Documents/references/y3/MoravaEngine/vendor/cross-platform/shaderc/libshaderc_util/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/terra/OneDrive/Documents/references/y3/MoravaEngine/vendor/cross-platform/shaderc -BC:/Users/terra/OneDrive/Documents/references/y3/MoravaEngine/vendor/cross-platform/shaderc --check-stamp-file C:/Users/terra/OneDrive/Documents/references/y3/MoravaEngine/vendor/cross-platform/shaderc/libshaderc_util/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.27\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\Internal\CheckSourceCompiles.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/terra/OneDrive/Documents/references/y3/MoravaEngine/vendor/cross-platform/shaderc/libshaderc_util/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/terra/OneDrive/Documents/references/y3/MoravaEngine/vendor/cross-platform/shaderc -BC:/Users/terra/OneDrive/Documents/references/y3/MoravaEngine/vendor/cross-platform/shaderc --check-stamp-file C:/Users/terra/OneDrive/Documents/references/y3/MoravaEngine/vendor/cross-platform/shaderc/libshaderc_util/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.27\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\Internal\CheckSourceCompiles.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include\libshaderc_util\counting_includer.h" />
+    <ClInclude Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include\libshaderc_util\file_finder.h" />
+    <ClInclude Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include\libshaderc_util\format.h" />
+    <ClInclude Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include\libshaderc_util\io.h" />
+    <ClInclude Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include\libshaderc_util\mutex.h" />
+    <ClInclude Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include\libshaderc_util\message.h" />
+    <ClInclude Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include\libshaderc_util\resources.h" />
+    <ClInclude Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include\libshaderc_util\spirv_tools_wrapper.h" />
+    <ClInclude Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include\libshaderc_util\string_piece.h" />
+    <ClInclude Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include\libshaderc_util\universal_unistd.h" />
+    <ClInclude Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\include\libshaderc_util\version_profile.h" />
+    <ClCompile Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\src\args.cc" />
+    <ClCompile Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\src\compiler.cc" />
+    <ClCompile Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\src\file_finder.cc" />
+    <ClCompile Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\src\io.cc" />
+    <ClCompile Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\src\message.cc" />
+    <ClCompile Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\src\resources.cc" />
+    <ClCompile Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\src\shader_stage.cc" />
+    <ClCompile Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\src\spirv_tools_wrapper.cc" />
+    <ClCompile Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc_util\src\version_profile.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\ZERO_CHECK.vcxproj">
+      <Project>{A7FE2E54-6602-3836-854B-63A3716190C6}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\glslang\GenericCodeGen.vcxproj">
+      <Project>{BE30F840-0AFD-3961-92E2-8B49D05B1F09}</Project>
+      <Name>GenericCodeGen</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\hlsl\HLSL.vcxproj">
+      <Project>{AFB8BA6A-9F11-3B0E-AADB-CB284DC768AB}</Project>
+      <Name>HLSL</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\glslang\MachineIndependent.vcxproj">
+      <Project>{2600F471-E49E-33B7-AEE9-5FB75BFB700F}</Project>
+      <Name>MachineIndependent</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\OGLCompilersDLL\OGLCompiler.vcxproj">
+      <Project>{0D6D4F49-0F05-3666-8CBD-5D91905057A8}</Project>
+      <Name>OGLCompiler</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\glslang\OSDependent\Windows\OSDependent.vcxproj">
+      <Project>{9335649F-6183-3799-982B-62A5F68D4AA1}</Project>
+      <Name>OSDependent</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\SPIRV\SPIRV.vcxproj">
+      <Project>{63480CB8-7DC6-34F1-A712-69133D69A5FE}</Project>
+      <Name>SPIRV</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-tools\source\opt\SPIRV-Tools-opt.vcxproj">
+      <Project>{1858DB35-C7C4-3122-9D05-B0A7DC0819A7}</Project>
+      <Name>SPIRV-Tools-opt</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\spirv-tools\source\SPIRV-Tools-static.vcxproj">
+      <Project>{894C4705-BDB5-3BF4-8D07-905E4B5A11F4}</Project>
+      <Name>SPIRV-Tools-static</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\third_party\glslang\glslang\glslang.vcxproj">
+      <Project>{8A1F7D29-AD53-3E2F-964D-52378122D664}</Project>
+      <Name>glslang</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc\src\shaderc.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc\include\shaderc\shaderc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc\include\shaderc\shaderc.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc\src\shaderc_private.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\terra\OneDrive\Documents\references\y3\MoravaEngine\vendor\cross-platform\shaderc\libshaderc\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{36710128-0FAC-30FE-8EA6-B1983C8E2A8E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{20C12263-04E9-36BA-AF87-2E4AD7155836}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
