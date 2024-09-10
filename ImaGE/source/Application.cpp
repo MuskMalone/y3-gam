@@ -7,6 +7,7 @@
 
 #include <GUI/GUIManager.h>
 #include <Input/InputAssistant.h>
+#include <Events/EventManager.h>
 
 void Application::Init()
 {
@@ -39,7 +40,9 @@ void Application::Run()
     // @TODO: REPLACE WITH INPUT MANAGER UPDATE
     InputAssistant::Update();
 
-    // @TODO: EVENT MANAGER DISPATCH HERE
+    // dispatch all events in the queue at the start of game loop
+    static auto& eventManager{ Events::EventManager::GetInstance() };
+    eventManager.DispatchAll();
 
     if (m_imGuiActive)
     {
