@@ -4,7 +4,6 @@
 #include <GUI/ImGuiHelpers.h>
 #include <sstream>
 #include <glm/gtx/transform.hpp>
-#include <BoundingVolumes/BoundingSphere.h>
 
 namespace GUI
 {
@@ -42,12 +41,12 @@ namespace GUI
     if (ImGuiHelpers::InputSliderVec3("Position", selectedObj.transform.pos, -30.f, 30.f)) {
       selectedObj.modified = true;
     }
-    //if (ImGuiHelpers::InputSliderVec3("Scale", selectedObj.transform.scale, 0.1f, 100.f)) {
-    //  selectedObj.modified = true;
-    //}
-    //if (ImGuiHelpers::InputSliderVec3("Rotate", selectedObj.transform.rot, 0.f, 359.f)) {
-    //  selectedObj.modified = true;
-    //}
+    if (ImGuiHelpers::InputSliderVec3("Scale", selectedObj.transform.scale, 0.1f, 100.f)) {
+      selectedObj.modified = true;
+    }
+    if (ImGuiHelpers::InputSliderVec3("Rotate", selectedObj.transform.rot, 0.f, 359.f)) {
+      selectedObj.modified = true;
+    }
 
     if (selectedObj.modified) {
       m_sceneRef.RecomputeBVH();

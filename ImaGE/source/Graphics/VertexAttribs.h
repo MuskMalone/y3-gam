@@ -13,7 +13,6 @@ namespace Graphics
     std::vector<glm::vec3> points;
     std::vector<glm::vec3> normals;
     std::vector <glm::vec2> texCoords;
-    std::vector<GLfloat> tangents;
 
     VertexAttribs() = default;
     void AddMeshes(aiMesh const* mesh);  // adds mesh data into existing vertices

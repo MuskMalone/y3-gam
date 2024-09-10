@@ -4,15 +4,11 @@
 #include <Graphics/Model.h>
 #include <Graphics/MeshType.h>
 #include <memory>
-#include <BoundingVolumes/BVTypes.h>
-#include <BoundingVolumes/AABB.h>
-#include <BoundingVolumes/BoundingSphere.h>
 
 struct Object
 {
   glm::mat4 mdlTransform;
   Transform transform;
-  std::shared_ptr<BV::Collider> collider;
   glm::vec4 clr;
   
   std::shared_ptr<Graphics::Model> meshRef;
@@ -21,12 +17,10 @@ struct Object
   Object(Graphics::MeshType type, glm::vec4 const& color = { 1.f, 0.5f, 0.2f, 1.f },
     glm::vec3 const& _pos = {}, glm::vec3 const& _scale = { 1.f, 1.f, 1.f });
 
-  Object(std::string const& filePath, BV::BVType type, glm::vec3 const& _pos = {},
+  Object(std::string const& filePath, glm::vec3 const& _pos = {},
     glm::vec3 const& _scale = { 1.f, 1.f, 1.f });
 
   void Update(float deltaTime);
-  void ChangeBV(BV::BVType type);
-  inline void RecomputeBV() const { collider->ComputeBV(meshRef->GetVertexAttribs()); collider->Update(transform); }
   void Reset();
 
   inline glm::vec3& GetPos() noexcept { return transform.pos; }

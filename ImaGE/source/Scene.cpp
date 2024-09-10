@@ -4,25 +4,20 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <fstream>
 #include <filesystem>
-#include <BoundingVolumes/BoundingSphere.h>
-#include <BVH/VolumeBounder.h>
 
 Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 const& clearClr)
   : m_shaders{}, m_defaultShaders{}, 
   m_light{ { 0.f, 25.f, 0.f }, { 0.4f, 0.4f, 0.4f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 1.0f } },
   m_material{ glm::vec3(1.f), glm::vec3(1.f), glm::vec3(1.f), 100.f }, m_cameras{},
-  m_objects{}, m_bvh{}, m_octree{}, m_bsp{},
+  m_objects{},
   m_leftClickHeld{ false }, m_leftClickTriggered{ true }, m_bvhModified{ true }, m_reconstructTree{ false }
 {
-  Settings::Init(clearClr, 1.f);
-  if (Settings::enableDepthBuffer) {
-    glEnable(GL_DEPTH_TEST);
-  }
+  glClearColor(clearClr.r, clearClr.g, clearClr.b, clearClr.a);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+  glEnable(GL_DEPTH_TEST);
 
-  if (Settings::backfaceCulling) {
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-  }
+  glEnable(GL_CULL_FACE);
+  glCullFace(GL_BACK);
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_BLEND);
@@ -30,12 +25,7 @@ Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 co
   m_shaders.CompileShaderFile(vtxShaderFile, fragShaderFile);
   m_defaultShaders.CompileShaderFile("./shaders/Framework.vert.glsl", "./shaders/Framework.frag.glsl");
   m_cameras.emplace_back(WINDOW_WIDTH<int>, WINDOW_HEIGHT<int>, glm::vec3(3.f, 3.f, 15.f));
-  m_cameras.emplace_back(WINDOW_WIDTH<int>, WINDOW_HEIGHT<int>, glm::vec3(0.f, 30.f, 1.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, -1.f), glm::vec3(1.f, 0.f, 0.f), false);
-}
-
-Scene::~Scene()
-{
-  m_bsp.SaveTree("bsptree.json");
+  m_cameras.emplace_back(WINDOW_WIDTH<int>, WINDOW_HEIGHT<int>, glm::vec3(0.f, 15.f, 1.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, -1.f), glm::vec3(1.f, 0.f, 0.f), false);
 }
 
 void Scene::Init()
@@ -66,22 +56,10 @@ void Scene::Init()
     }
   });
 
-  // POWERPLANT MODELS
-  //LoadMultiPartModel("./assets/Section4.txt", glm::vec3(0.0001f, 0.0001f, 0.0001f));
-  //LoadMultiPartModel("./assets/Section5.txt", glm::vec3(0.0001f, 0.0001f, 0.0001f));
-  //LoadMultiPartModel("./assets/Section6.txt", glm::vec3(0.0001f, 0.0001f, 0.0001f));
-
   // OTHER MODELS
-  m_objects.emplace_back(std::make_shared<Object>("./assets/models/menger_sponge_level_1_low_poly.obj", BV::BVType::AABB, glm::vec3(1), glm::vec3(20.f)));
-  m_objects.emplace_back(std::make_shared<Object>("./assets/models/cube_low_poly.obj", BV::BVType::AABB, glm::vec3(1), glm::vec3(20.f)));
-
-  if (Settings::currDataStructure == Settings::DataStructure::BVH) {
-    m_bvh.Construct(m_objects, BV::BVHierarchy::Type::TOP_DOWN);
-  }
-
-  m_octree.BuildTree(m_objects);
-  m_bsp.BuildTree(m_objects);
-  //m_bsp.LoadTree("bsptree.json");
+  m_objects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3(-5.f, 0.f, 0.f), glm::vec3(20.f)));
+  m_objects.emplace_back(std::make_shared<Object>("./assets/models/horse_high_poly.obj", glm::vec3(5.f), glm::vec3(10.f, 10.f, 10.f)));
+  m_objects.emplace_back(std::make_shared<Object>("./assets/models/teapot_mid_poly.obj", glm::vec3()));
 }
 
 void Scene::Update(float deltaTime)
@@ -92,20 +70,6 @@ void Scene::Update(float deltaTime)
     obj->Update(deltaTime);
   }
 
-  if (Settings::currDataStructure == Settings::DataStructure::BVH && Settings::showTree && m_bvhModified) {
-    ReconstructBVH();
-  }
-  else if (m_reconstructTree)
-  {
-    if (Settings::currDataStructure == Settings::DataStructure::OCTREE) {
-      m_octree.BuildTree(m_objects);
-    }
-    else {
-      m_bsp.BuildTree(m_objects);
-    }
-    m_reconstructTree = false;
-  }
-
   // update camera
   for (auto& cam : m_cameras)
   {
@@ -113,24 +77,10 @@ void Scene::Update(float deltaTime)
   }
 }
 
-void Scene::ReconstructBVH()
-{
-  m_bvh.Reconstruct(m_objects);
-  m_bvhModified = false;
-}
-
-void Scene::ChangeConstructionMethod(BV::BVHierarchy::Type type)
-{
-  m_bvh.Construct(m_objects, type);
-  m_bvhModified = false;
-}
-
 void Scene::Draw()
 {
   glClear(GL_COLOR_BUFFER_BIT);
-  if (Settings::enableDepthBuffer) {
-    glClear(GL_DEPTH_BUFFER_BIT);
-  }
+  glClear(GL_DEPTH_BUFFER_BIT);
 
   m_shaders.Use();
 
@@ -138,55 +88,28 @@ void Scene::Draw()
   m_light.SetUniforms(m_shaders);
   m_material.SetUniforms(m_shaders);
 
-  if (!Settings::showTree)
+  for (auto& obj : m_objects)
   {
-    for (auto& obj : m_objects)
+    m_shaders.SetUniform("uMdlTransform", obj->mdlTransform);
+    m_shaders.SetUniform("uVtxClr", obj->clr);
+    auto const& mdl{ *obj->meshRef };
+
+    glBindVertexArray(mdl.GetVAO());
+
+    // if primitive type is a point, render with GL_POINTS
+    if (mdl.isUsingIndices)
     {
-      m_shaders.SetUniform("uMdlTransform", obj->mdlTransform);
-      m_shaders.SetUniform("uVtxClr", obj->clr);
-      auto const& mdl{ *obj->meshRef };
-
-      glBindVertexArray(mdl.GetVAO());
-
-      // if primitive type is a point, render with GL_POINTS
-      if (mdl.isUsingIndices)
-      {
-        glDrawElements(mdl.primitiveType, static_cast<GLsizei>(mdl.drawCount), GL_UNSIGNED_SHORT, NULL);
-      }
-      // else draw as per normal
-      else {
-        glDrawArrays(mdl.primitiveType, 0, static_cast<GLsizei>(mdl.drawCount));
-      }
+      glDrawElements(mdl.primitiveType, static_cast<GLsizei>(mdl.drawCount), GL_UNSIGNED_SHORT, NULL);
+    }
+    // else draw as per normal
+    else {
+      glDrawArrays(mdl.primitiveType, 0, static_cast<GLsizei>(mdl.drawCount));
     }
   }
   m_shaders.Unuse();
   
   m_defaultShaders.Use();
   m_cameras.front().SetUniforms(m_defaultShaders);
-  // draw bounding volumes with lines, then revert back to current mode
-  auto const prevMode{ Settings::renderMode };
-  Settings::SetRenderMode(Settings::RenderMode::WIREFRAME);
-  if (Settings::showBoundingVol)
-  {
-    for (auto& obj : m_objects)
-    {
-      obj->collider->Draw(m_defaultShaders);
-    }
-  }
-
-  if (Settings::showTree)
-  {
-    if (Settings::currDataStructure == Settings::DataStructure::BVH) {
-      m_bvh.Draw(m_defaultShaders);
-    }
-    else if (Settings::currDataStructure == Settings::DataStructure::OCTREE) {
-      m_octree.Draw(m_defaultShaders);
-    }
-    else if (Settings::currDataStructure == Settings::DataStructure::BSPTREE) {
-      m_bsp.Draw(m_defaultShaders);
-    }
-  }
-  Settings::SetRenderMode(prevMode);
   m_defaultShaders.Unuse();
 
   glBindVertexArray(0);
@@ -195,9 +118,7 @@ void Scene::Draw()
 void Scene::DrawTopView()
 {
   glClear(GL_COLOR_BUFFER_BIT);
-  if (Settings::enableDepthBuffer) {
-    glClear(GL_DEPTH_BUFFER_BIT);
-  }
+  glClear(GL_DEPTH_BUFFER_BIT);
 
   m_shaders.Use();
 
@@ -226,74 +147,9 @@ void Scene::DrawTopView()
 
   m_defaultShaders.Use();
   m_cameras[1].SetUniforms(m_defaultShaders);
-  // draw bounding volumes with lines, then revert back to current mode
-  auto const prevMode{ Settings::renderMode };
-  Settings::SetRenderMode(Settings::RenderMode::WIREFRAME);
-  if (Settings::showBoundingVol)
-  {
-    for (auto& obj : m_objects)
-    {
-      obj->collider->Draw(m_defaultShaders);
-    }
-  }
-
-  if (Settings::showTree)
-  {
-    if (Settings::currDataStructure == Settings::DataStructure::BVH) {
-      m_bvh.Draw(m_defaultShaders);
-    }
-    else if (Settings::currDataStructure == Settings::DataStructure::OCTREE)
-    {
-      m_octree.Draw(m_defaultShaders);
-    }
-    else if (Settings::currDataStructure == Settings::DataStructure::BSPTREE)
-    {
-      m_bsp.Draw(m_defaultShaders);
-    }
-  }
-  Settings::SetRenderMode(prevMode);
   m_defaultShaders.Unuse();
 
   glBindVertexArray(0);
-}
-
-void Scene::LoadMultiPartModel(const char* path, glm::vec3 const& scale, BV::BVType type)
-{
-  std::ifstream ifs{ path };
-  if (!ifs) { throw std::runtime_error("Unable to read " + std::string(path)); }
-
-  std::string file;
-  std::filesystem::path currPath{ path };
-  std::string const parentPath{ currPath.parent_path().string() };
-  while (ifs)
-  {
-    ifs >> file;
-    m_objects.emplace_back(std::make_shared<Object>(parentPath + "/" + file, type, glm::vec3(), scale));
-  }
-  ifs.close();
-}
-
-void Scene::RandomizeBVInitialPoints()
-{
-  for (auto& obj : m_objects) {
-    auto bs{ std::dynamic_pointer_cast<BV::BoundingSphere>(obj->collider) };
-    bs->reRandomizePoints = true;
-    obj->modified = true;
-  }
-  RecomputeBVH();
-}
-
-void Scene::ChangeAllBVs(BV::BVType type)
-{
-  Settings::bvType = type;
-  for (auto& obj : m_objects) { obj->ChangeBV(type); }
-  RecomputeBVH();
-}
-
-void Scene::RecomputeAllBVs()
-{
-  for (auto const& obj : m_objects) { obj->modified = true; }
-  RecomputeBVH();
 }
 
 void Scene::ResetCamera()

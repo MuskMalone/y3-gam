@@ -20,7 +20,9 @@ void Application::Run()
 {
   while (!glfwWindowShouldClose(m_window))
   {
+    // @TODO: REPLACE WITH FRAME RATE CONTROLLER UPDATE
     m_frc.Update();
+
     glfwPollEvents();
 
     if (m_imGuiActive)
@@ -34,11 +36,15 @@ void Application::Run()
 #endif
     }
 
+    // @TODO: REPLACE WITH INPUT MANAGER UPDATE
+    InputAssistant::Update();
+
+    // @TODO: EVENT MANAGER DISPATCH HERE
+
     if (m_imGuiActive)
     {
       GUI::GUIManager::UpdateGUI();
     }
-    InputAssistant::Update();
     m_scene->Update(m_frc.GetDeltaTime());
 
     glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
@@ -47,6 +53,8 @@ void Application::Run()
 
     if (m_imGuiActive)
     {
+      // iterate through all framebuffer and invoke the
+      // draw function associated with it
       for (auto const& [fb, drawFn] : m_framebuffers)
       {
         fb.Bind();
@@ -68,6 +76,7 @@ void Application::Run()
       ImGui::Render();
       ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
+      // for floating windows feature
       if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
       {
         GLFWwindow* backup_current_context = glfwGetCurrentContext();

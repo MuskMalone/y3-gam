@@ -2,8 +2,6 @@
 #include "GUIManager.h"
 #include "Elements/ObjectManager.h"
 #include "Elements/ObjectEditor.h"
-#include "Elements/SettingsEditor.h"
-#include "Elements/TreeConfig.h"
 #include <ImGui/imgui.h>
 
 namespace GUI
@@ -16,8 +14,6 @@ namespace GUI
     m_windows.reserve(4);
     m_windows.emplace_back(std::make_unique<ObjectManager>("Object Manager", scene));
     m_windows.emplace_back(std::make_unique<ObjectEditor>("Object Editor", scene));
-    m_windows.emplace_back(std::make_unique<TreeConfig>("Tree Config", scene, scene.m_bvh));
-    m_windows.emplace_back(std::make_unique<SettingsEditor>("Settings", scene));
   }
 
   void GUIManager::UpdateGUI()

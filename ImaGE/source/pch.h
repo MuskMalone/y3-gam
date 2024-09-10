@@ -22,7 +22,6 @@
 
 #include <Globals.h>
 #include <Input/InputAssistant.h>
-#include <Core/Settings.h>
 
 #ifdef _DEBUG
 #include <Debug.h>
