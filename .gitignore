@@ -1,0 +1,14 @@
+.vs/
+*.obj
+# Ignore all x64 folders recursively
+x64/
+
+# Except the x64 folder at the same level as this .gitignore file
+!/x64/
+
+#specific files i cannot upload
+#pls paste in vendor/cross-platform/shaderc/libshaderc/Debug 
+vendor/cross-platform/shaderc/libshaderc/Debug/shaderc_combined.lib
+#pls rebuild if you are on Debug
+Engine.pdb 
+
