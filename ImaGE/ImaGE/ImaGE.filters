@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Graphics\ShaderProgram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Graphics\VertexAttribs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Graphics\MeshGen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Graphics\Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Input\InputAssistant.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FrameRateController\FrameRateController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGui\backends\imgui_impl_glfw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGui\misc\cpp\imgui_stdlib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGui\imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGui\imgui_demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGui\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGui\imgui_tables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGui\imgui_widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\Elements\ObjectEditor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGui\backends\imgui_impl_opengl3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\Elements\ObjectManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\Elements\SettingsEditor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\GUIManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\ImGuiHelpers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Settings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\GUIWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Graphics\Framebuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BoundingVolumes\Collider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Graphics\ShaderStructs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BoundingVolumes\BoundingSphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BoundingVolumes\AABB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Random.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BVH\VolumeBounder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BVH\TreeNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\Elements\TreeConfig.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BVH\Construct\TopDownConstruct.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BVH\Construct\BottomUpConstruct.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BoundingVolumes\BVHelpers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BoundingVolumes\Extra\OBB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BoundingVolumes\Extra\Ellipsoid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SpatialPartitioning\Octree\OctNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Intersection\IntersectionTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Intersection\Primitives.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SpatialPartitioning\Octree\Octree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SpatialPartitioning\BSPTree\BSPNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SpatialPartitioning\BSPTree\BSPTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\Graphics\ShaderProgram.h" />
+    <ClInclude Include="Source\Core\Camera.h" />
+    <ClInclude Include="source\Graphics\VertexAttribs.h" />
+    <ClInclude Include="Source\pch.h" />
+    <ClInclude Include="source\Graphics\MeshGen.h" />
+    <ClInclude Include="source\Graphics\Model.h" />
+    <ClInclude Include="Source\Input\InputAssistant.h" />
+    <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\FrameRateController\FrameRateController.h" />
+    <ClInclude Include="Source\Core\Object.h" />
+    <ClInclude Include="source\Scene.h" />
+    <ClInclude Include="source\External\ImGui\misc\cpp\imgui_stdlib.h" />
+    <ClInclude Include="source\External\ImGui\backends\imgui_impl_glfw.h" />
+    <ClInclude Include="source\External\ImGui\misc\single_file\imgui_single_file.h" />
+    <ClInclude Include="source\External\ImGui\imconfig.h" />
+    <ClInclude Include="source\External\ImGui\imgui.h" />
+    <ClInclude Include="source\External\ImGui\imgui_internal.h" />
+    <ClInclude Include="source\External\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="source\External\ImGui\imstb_textedit.h" />
+    <ClInclude Include="source\External\ImGui\imstb_truetype.h" />
+    <ClInclude Include="source\GUI\Elements\ObjectEditor.h" />
+    <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl3.h" />
+    <ClInclude Include="source\GUI\GUIWindow.h" />
+    <ClInclude Include="source\GUI\Elements\ObjectManager.h" />
+    <ClInclude Include="source\GUI\Elements\SettingsEditor.h" />
+    <ClInclude Include="source\GUI\GUIManager.h" />
+    <ClInclude Include="source\Graphics\MeshType.h" />
+    <ClInclude Include="source\GUI\ImGuiHelpers.h" />
+    <ClInclude Include="source\Core\Settings.h" />
+    <ClInclude Include="source\Core\Transform.h" />
+    <ClInclude Include="source\Graphics\Framebuffer.h" />
+    <ClInclude Include="source\BoundingVolumes\BoundingSphere.h" />
+    <ClInclude Include="source\Graphics\ShaderStructs.h" />
+    <ClInclude Include="source\BoundingVolumes\Collider.h" />
+    <ClInclude Include="source\BoundingVolumes\AABB.h" />
+    <ClInclude Include="source\BoundingVolumes\BVTypes.h" />
+    <ClInclude Include="source\Core\Random.h" />
+    <ClInclude Include="source\BVH\VolumeBounder.h" />
+    <ClInclude Include="source\BVH\TreeNode.h" />
+    <ClInclude Include="source\GUI\Elements\TreeConfig.h" />
+    <ClInclude Include="source\BVH\Construct\BVHierarchy.h" />
+    <ClInclude Include="source\BVH\Construct\TopDownConstruct.h" />
+    <ClInclude Include="source\BVH\SplitMethod.h" />
+    <ClInclude Include="source\BVH\Construct\BottomUpConstruct.h" />
+    <ClInclude Include="source\Debug.h" />
+    <ClInclude Include="source\BoundingVolumes\BVHelpers.h" />
+    <ClInclude Include="source\BoundingVolumes\Extra\OBB.h" />
+    <ClInclude Include="source\BoundingVolumes\Extra\Ellipsoid.h" />
+    <ClInclude Include="source\SpatialPartitioning\Octree\Octree.h" />
+    <ClInclude Include="source\SpatialPartitioning\Octree\OctNode.h" />
+    <ClInclude Include="source\SpatialPartitioning\ProxyObj.h" />
+    <ClInclude Include="source\Intersection\IntersectionTests.h" />
+    <ClInclude Include="source\Intersection\Result.h" />
+    <ClInclude Include="source\Intersection\Primitives.h" />
+    <ClInclude Include="source\SpatialPartitioning\BSPTree\BSPNode.h" />
+    <ClInclude Include="source\SpatialPartitioning\BSPTree\BSPTree.h" />
+  </ItemGroup>
+</Project>
