@@ -1,6 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
-#include <Core/Transform.h>
+#include <Core/Components.h>
 #include <Graphics/Model.h>
 #include <Graphics/MeshType.h>
 #include <memory>
@@ -8,7 +8,7 @@
 struct Object
 {
   glm::mat4 mdlTransform;
-  Transform transform;
+  Components::Transform transform;
   glm::vec4 clr;
   
   std::shared_ptr<Graphics::Model> meshRef;

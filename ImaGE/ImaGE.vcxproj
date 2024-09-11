@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="source\Core\Entity.cpp" />
+    <ClCompile Include="source\Core\EntityManager.cpp" />
     <ClCompile Include="source\Core\Random.cpp" />
     <ClCompile Include="source\Events\EventManager.cpp" />
     <ClCompile Include="source\FrameRateController\FrameRateController.cpp" />
@@ -102,6 +104,9 @@
     <ClCompile Include="source\Serialization\Deserializer.cpp" />
     <ClCompile Include="source\Serialization\Registration.cpp" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
+    <ClInclude Include="source\Core\Component.h" />
+    <ClInclude Include="source\Core\Entity.h" />
+    <ClInclude Include="source\Core\EntityManager.h" />
     <ClInclude Include="source\Events\Event.h" />
     <ClInclude Include="source\Events\EventCallback.h" />
     <ClInclude Include="source\Events\EventManager.h" />
@@ -122,7 +127,6 @@
     <ClInclude Include="source\Graphics\MeshType.h" />
     <ClInclude Include="source\Graphics\Model.h" />
     <ClInclude Include="Source\Core\Object.h" />
-    <ClInclude Include="source\Core\Transform.h" />
     <ClInclude Include="source\External\ImGui\backends\imgui_impl_glfw.h" />
     <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl3_loader.h" />
@@ -306,7 +310,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(ProjectDir)Shaders;$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)lib\glad-gl-4.6\include;$(ProjectDir)Source\External;$(SolutionDir)lib\assimp\include;$(SolutionDir)lib\glm\include;$(SolutionDir)lib\rapidjson-1.1.0\include;$(SolutionDir)lib\rttr\includeD</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(ProjectDir)Shaders;$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)lib\glad-gl-4.6\include;$(ProjectDir)Source\External;$(SolutionDir)lib\assimp\include;$(SolutionDir)lib\glm\include;$(SolutionDir)lib\rapidjson-1.1.0\include;$(SolutionDir)lib\rttr\includeD;$(SolutionDir)lib\entt\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -368,7 +372,7 @@ xcopy "$(ProjectDir)assets" "$(OutDir)assets" /s /r /y /q</Command>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(ProjectDir)Shaders;$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)lib\glad-gl-4.6\include;$(ProjectDir)Source\External;$(SolutionDir)lib\assimp\include;$(SolutionDir)lib\glm\include;$(SolutionDir)lib\rapidjson-1.1.0\include;$(SolutionDir)lib\rttr\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(ProjectDir)Shaders;$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)lib\glad-gl-4.6\include;$(ProjectDir)Source\External;$(SolutionDir)lib\assimp\include;$(SolutionDir)lib\glm\include;$(SolutionDir)lib\rapidjson-1.1.0\include;$(SolutionDir)lib\rttr\include;$(SolutionDir)lib\entt\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>

@@ -9,11 +9,13 @@
 #include <Input/InputAssistant.h>
 #include <Events/EventManager.h>
 
+#include <Core/EntityManager.h>
+#include <Core/Component.h>
+
 void Application::Init()
 {
   m_scene->Init();
   GUI::GUIManager::Init(*m_scene);
-
   InputAssistant::RegisterKeyPressEvent(GLFW_KEY_GRAVE_ACCENT, std::bind(&Application::ToggleImGuiActive, this));
 }
 
