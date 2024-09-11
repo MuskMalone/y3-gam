@@ -1,19 +1,23 @@
 #pragma once
 #include <entt.hpp>
+#include "EntityManager.h"
 
 class Entity {
+public:
   using EntityID = entt::entity;
 
 public:
   Entity() = default;
   Entity(EntityID entID);
-  uint32_t GetEntityID(Entity entity);
+  uint32_t GetEntityID() const;
+  EntityID GetRawEnttEntityID() const;
+  std::string GetTag() const;
 
   template<typename T, typename... Args>
-  T& AddComponent(Args&&... args);
+  T& EmplaceComponent(Args&&... args);
 
   template<typename T, typename... Args>
-  T& ReplaceComponent(Args&&... args);
+  T& EmplaceOrReplaceComponent(Args&&... args);
 
   template<typename T>
   T& GetComponent();
@@ -25,22 +29,23 @@ public:
   bool HasComponent();
 
 private:
-  EntityID m_id;
+  EntityID m_id{ entt::null };
 };
 
+// Use this function for new components
 template<typename T, typename ...Args>
-inline T& Entity::AddComponent(Args && ...args) {
-  // TODO: insert return statement here
+inline T& Entity::EmplaceComponent(Args && ...args) {
+  return EntityManager::GetInstance().GetRegistry().emplace<T>(m_id, std::forward<Args>(args)...);
 }
 
 template<typename T, typename ...Args>
-inline T& Entity::ReplaceComponent(Args && ...args) {
-  // TODO: insert return statement here
+inline T& Entity::EmplaceOrReplaceComponent(Args && ...args) {
+  
 }
 
 template<typename T>
 inline T& Entity::GetComponent() {
-  // TODO: insert return statement here
+  
 }
 
 template<typename T>

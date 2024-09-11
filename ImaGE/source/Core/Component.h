@@ -3,7 +3,7 @@
 
 namespace Component {
   struct Tag {
-    Tag() : tag{ "No Name" } {};
+    Tag() : tag{ "NoName" } {};
     Tag(std::string const& tagString) : tag{ tagString } {};
 
     inline void Clear() noexcept { tag = "No Name"; }
