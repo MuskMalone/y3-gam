@@ -32,6 +32,8 @@ void Application::Run()
       ImGui_ImplOpenGL3_NewFrame();
       ImGui_ImplGlfw_NewFrame();
       ImGui::NewFrame();
+      ImGui::DockSpaceOverViewport(); // convert the window into a dockspace
+
 #ifdef _DEBUG
       //ImGui::ShowDemoWindow(); // Show demo window! :)
 #endif
@@ -50,13 +52,9 @@ void Application::Run()
     }
     m_scene->Update(m_frc.GetDeltaTime());
 
-    glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
-    m_scene->Draw();
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
     if (m_imGuiActive)
     {
-      // iterate through all framebuffer and invoke the
+      // iterate through all framebuffers and invoke the
       // draw function associated with it
       for (auto const& [fb, drawFn] : m_framebuffers)
       {
@@ -142,7 +140,7 @@ Application::Application(const char* name, int width, int height) :
   m_scene = std::make_unique<Scene>("./shaders/BlinnPhong.vert.glsl", "./shaders/BlinnPhong.frag.glsl");
   // attach each draw function to its framebuffer
   m_framebuffers.emplace_back(std::piecewise_construct, std::forward_as_tuple("Top-down View", width, height),
-    std::forward_as_tuple(std::bind(&Scene::DrawTopView, m_scene.get())));
+    std::forward_as_tuple(std::bind(&Scene::Draw, m_scene.get())));
 }
 
 Application::~Application()
