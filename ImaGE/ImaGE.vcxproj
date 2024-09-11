@@ -75,8 +75,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='NO_IMGUI_R|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="source\Graphics\ShaderStructs.cpp" />
-    <ClCompile Include="source\GUI\Elements\ObjectEditor.cpp" />
-    <ClCompile Include="source\GUI\Elements\ObjectManager.cpp" />
+    <ClCompile Include="source\GUI\Elements\Viewport.cpp" />
     <ClCompile Include="source\GUI\GUIManager.cpp" />
     <ClCompile Include="source\GUI\GUIWindow.cpp" />
     <ClCompile Include="source\GUI\ImGuiHelpers.cpp" />
@@ -136,8 +135,7 @@
     <ClInclude Include="source\External\ImGui\misc\single_file\imgui_single_file.h" />
     <ClInclude Include="source\GUI\GUIManager.h" />
     <ClInclude Include="source\GUI\GUIWindow.h" />
-    <ClInclude Include="source\GUI\Elements\ObjectEditor.h" />
-    <ClInclude Include="source\GUI\Elements\ObjectManager.h" />
+    <ClInclude Include="source\GUI\Elements\Viewport.h" />
     <ClInclude Include="source\GUI\ImGuiHelpers.h" />
     <ClInclude Include="Source\Input\InputAssistant.h" />
     <ClInclude Include="source\Graphics\MeshGen.h" />

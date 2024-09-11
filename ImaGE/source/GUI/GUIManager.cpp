@@ -1,52 +1,61 @@
 #include <pch.h>
 #include "GUIManager.h"
-#include "Elements/ObjectManager.h"
-#include "Elements/ObjectEditor.h"
 #include <ImGui/imgui.h>
+#include "Elements/Viewport.h"
 
 namespace GUI
 {
   std::vector<std::unique_ptr<GUIWindow>> GUIManager::m_windows;
-  bool GUIManager::m_isPopupShown{ false };
 
-  void GUIManager::Init(Scene& scene)
+  void GUIManager::Init(Graphics::Framebuffer const& framebuffer)
   {
     m_windows.reserve(4);
-    m_windows.emplace_back(std::make_unique<ObjectManager>("Object Manager", scene));
-    m_windows.emplace_back(std::make_unique<ObjectEditor>("Object Editor", scene));
+    m_windows.emplace_back(std::make_unique<Viewport>("Viewport", framebuffer));
   }
 
   void GUIManager::UpdateGUI()
   {
-    if (ImGui::IsKeyPressed(ImGuiKey_MouseRight))
-    {
-      ImGui::OpenPopup("RightClickMenu"); //m_isPopupShown = true;
-    }
+    RunToolbar();
 
-    // run all actrive windows
+    // run all active windows
     for (auto& window : m_windows)
     {
-      if (window->IsDisabled()) { continue; }
+      if (!window->IsActive()) { continue; }
 
       window->Run();
     }
-
-    UpdatePopUpMenu();
   }
 
-  void GUIManager::UpdatePopUpMenu()
+  void GUIManager::RunToolbar()
   {
-    if (ImGui::BeginPopup("RightClickMenu"))
+    if (ImGui::BeginMainMenuBar())
     {
-      for (auto& window : m_windows)
+      if (ImGui::BeginMenu("File"))
       {
-        if (ImGui::MenuItem(window->GetName().c_str(), nullptr, !window->IsDisabled()))
-        {
-          window->Toggle();
-        }
+
+        ImGui::EndMenu();
       }
 
-      ImGui::EndPopup();
+      if (ImGui::BeginMenu("View"))
+      {
+        for (auto const& window : m_windows)
+        {
+          if (ImGui::MenuItem(window->GetName().c_str(), nullptr, window->IsActive()))
+          {
+            window->Toggle();
+          }
+        }
+        ImGui::EndMenu();
+      }
+
+      if (ImGui::BeginMenu("Options"))
+      {
+
+        ImGui::EndMenu();
+      }
+
+
+      ImGui::EndMainMenuBar();
     }
   }
 

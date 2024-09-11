@@ -4,7 +4,7 @@
 namespace Graphics
 {
 
-  Framebuffer::Framebuffer(std::string name, unsigned width, unsigned height) : m_name{ std::move(name) }
+  Framebuffer::Framebuffer(unsigned width, unsigned height)
   {
     // create and bind
     glGenFramebuffers(1, &m_fbo);

@@ -30,6 +30,8 @@ private:
   int m_width, m_height;
   bool m_imGuiActive;
 
+  void ImGuiStartFrame() const;
+  void UpdateFramebuffers();
   void SetCallbacks();
 
   static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
