@@ -19,6 +19,7 @@ namespace Graphics
   private:
     GLuint m_fbo, m_rbo;
     GLuint m_texture;
+    unsigned m_width, m_height;
   };
 
 } // namespace Graphics

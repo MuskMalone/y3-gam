@@ -1,9 +1,6 @@
 #include <pch.h>
 #include "Viewport.h"
 #include <imgui/imgui.h>
-#include <GUI/ImGuiHelpers.h>
-#include <sstream>
-#include <glm/gtx/transform.hpp>
 
 namespace GUI
 {

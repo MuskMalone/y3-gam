@@ -75,6 +75,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='NO_IMGUI_R|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="source\Graphics\ShaderStructs.cpp" />
+    <ClCompile Include="source\GUI\Elements\AssetBrowser.cpp" />
+    <ClCompile Include="source\GUI\Elements\Inspector.cpp" />
+    <ClCompile Include="source\GUI\Elements\SceneControls.cpp" />
+    <ClCompile Include="source\GUI\Elements\SceneHierarchy.cpp" />
     <ClCompile Include="source\GUI\Elements\Viewport.cpp" />
     <ClCompile Include="source\GUI\GUIManager.cpp" />
     <ClCompile Include="source\GUI\GUIWindow.cpp" />
@@ -108,6 +112,10 @@
     <ClInclude Include="source\Events\InputEvents.h" />
     <ClInclude Include="source\FrameRateController\FrameRateController.h" />
     <ClInclude Include="source\Globals.h" />
+    <ClInclude Include="source\GUI\Elements\AssetBrowser.h" />
+    <ClInclude Include="source\GUI\Elements\Inspector.h" />
+    <ClInclude Include="source\GUI\Elements\SceneControls.h" />
+    <ClInclude Include="source\GUI\Elements\SceneHierarchy.h" />
     <ClInclude Include="source\Serialization\Deserializer.h" />
     <ClInclude Include="source\Serialization\Serializer.h" />
     <ClInclude Include="source\Singleton.h" />
