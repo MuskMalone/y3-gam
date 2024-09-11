@@ -306,14 +306,14 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(ProjectDir)Shaders;$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)lib\glad-gl-4.6\include;$(ProjectDir)Source\External;$(SolutionDir)lib\assimp\include;$(SolutionDir)lib\glm\include;$(SolutionDir)lib\rapidjson-1.1.0\include;$(SolutionDir)lib\rttr-0.9.6\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(ProjectDir)Shaders;$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)lib\glad-gl-4.6\include;$(ProjectDir)Source\External;$(SolutionDir)lib\assimp\include;$(SolutionDir)lib\glm\include;$(SolutionDir)lib\rapidjson-1.1.0\include;$(SolutionDir)lib\rttr\includeD</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;glfw3dll.lib;glfw3.lib;assimp-vc143-mt.lib;rttr_core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\lib-vc2022;$(SolutionDir)lib\assimp;$(SolutionDir)lib\rttr-0.9.6\lib\Debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\lib-vc2022;$(SolutionDir)lib\assimp;$(SolutionDir)lib\rttr\lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent />
     <PostBuildEvent>
@@ -323,7 +323,7 @@ xcopy "$(ProjectDir)imgui.ini" "$(OutDir)" /s /r /y /q
 mkdir "$(OutDir)Shaders"
 xcopy "$(ProjectDir)Shaders" "$(OutDir)Shaders" /s /r /y /q
 mkdir "$(OutDir)assets"
-xcopy "$(SolutionDir)lib\rttr-0.9.6\lib\Debug\rttr_core_d.dll" "$(OutDir)" /F /R /Y /I
+xcopy "$(SolutionDir)lib\rttr\lib\bin\rttr_core_d.dll" "$(OutDir)" /F /R /Y /I
 xcopy "$(ProjectDir)assets" "$(OutDir)assets" /s /r /y /q</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -368,7 +368,7 @@ xcopy "$(ProjectDir)assets" "$(OutDir)assets" /s /r /y /q</Command>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(ProjectDir)Shaders;$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)lib\glad-gl-4.6\include;$(ProjectDir)Source\External;$(SolutionDir)lib\assimp\include;$(SolutionDir)lib\glm\include;$(SolutionDir)lib\rapidjson-1.1.0\include;$(SolutionDir)lib\rttr-0.9.6\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(ProjectDir)Shaders;$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)lib\glad-gl-4.6\include;$(ProjectDir)Source\External;$(SolutionDir)lib\assimp\include;$(SolutionDir)lib\glm\include;$(SolutionDir)lib\rapidjson-1.1.0\include;$(SolutionDir)lib\rttr\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -377,7 +377,7 @@ xcopy "$(ProjectDir)assets" "$(OutDir)assets" /s /r /y /q</Command>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;glfw3dll.lib;glfw3.lib;assimp-vc143-mt.lib;rttr_core.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\lib-vc2022;$(SolutionDir)lib\assimp;$(SolutionDir)lib\rttr-0.9.6\lib\Release</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\lib-vc2022;$(SolutionDir)lib\assimp;$(SolutionDir)lib\rttr\lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent />
     <PostBuildEvent>
@@ -387,7 +387,7 @@ xcopy "$(ProjectDir)imgui.ini" "$(OutDir)" /s /r /y /q
 mkdir "$(OutDir)Shaders"
 xcopy "$(ProjectDir)Shaders" "$(OutDir)Shaders" /s /r /y /q
 mkdir "$(OutDir)assets"
-xcopy "$(SolutionDir)lib\rttr-0.9.6\lib\Release\rttr_core.dll" "$(OutDir)" /F /R /Y /I
+xcopy "$(SolutionDir)lib\rttr\lib\Bin\rttr_core.dll" "$(OutDir)" /F /R /Y /I
 xcopy "$(ProjectDir)assets" "$(OutDir)assets" /s /r /y /q</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

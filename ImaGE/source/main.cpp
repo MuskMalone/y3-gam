@@ -5,7 +5,7 @@ int main()
 {
   try
   {
-    Application myApp{ "ImaGE :)", WINDOW_WIDTH<int>, WINDOW_HEIGHT<int> };
+    Application myApp{ "ImaGE", WINDOW_WIDTH<int>, WINDOW_HEIGHT<int> };
 
     myApp.Init();
 
