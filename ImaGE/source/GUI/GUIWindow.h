@@ -7,22 +7,17 @@ namespace GUI
   class GUIWindow
   {
   public:
-    inline void Toggle() noexcept { m_disabled = !m_disabled; }
-    inline bool IsDisabled() const noexcept { return m_disabled; }
+    inline void Toggle() noexcept { m_active = !m_active; }
+    inline bool IsActive() const noexcept { return m_active; }
     inline std::string GetName() const noexcept { return m_windowName; }
 
     virtual void Run() = 0;
 
   protected:
-    GUIWindow(std::string windowName, Scene& scene) : m_windowName{ std::move(windowName) }, m_sceneRef { scene }, m_disabled{ false } {}
-
-    inline std::vector<std::shared_ptr<Object>>& GetSceneObjects() noexcept { return m_sceneRef.m_objects; }
-
-    static std::shared_ptr<Object> m_selectedObj;
+    GUIWindow(std::string windowName) : m_windowName{ std::move(windowName) }, m_active{ true } {}
 
     std::string const m_windowName;
-    Scene& m_sceneRef;
-    bool m_disabled;
+    bool m_active;
   };
 
 };  // namespace GUI

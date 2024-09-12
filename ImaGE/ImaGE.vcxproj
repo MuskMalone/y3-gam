@@ -77,11 +77,15 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='NO_IMGUI_R|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="source\Graphics\ShaderStructs.cpp" />
-    <ClCompile Include="source\GUI\Elements\ObjectEditor.cpp" />
-    <ClCompile Include="source\GUI\Elements\ObjectManager.cpp" />
+    <ClCompile Include="source\GUI\Dockable\AssetBrowser.cpp" />
+    <ClCompile Include="source\GUI\Dockable\Inspector.cpp" />
+    <ClCompile Include="source\GUI\Persistent\SceneControls.cpp" />
+    <ClCompile Include="source\GUI\Dockable\SceneHierarchy.cpp" />
+    <ClCompile Include="source\GUI\Dockable\Viewport.cpp" />
     <ClCompile Include="source\GUI\GUIManager.cpp" />
     <ClCompile Include="source\GUI\GUIWindow.cpp" />
     <ClCompile Include="source\GUI\ImGuiHelpers.cpp" />
+    <ClCompile Include="source\GUI\Persistent\Toolbar.cpp" />
     <ClCompile Include="Source\Input\InputAssistant.cpp" />
     <ClCompile Include="source\Graphics\MeshGen.cpp" />
     <ClCompile Include="Source\pch.cpp" />
@@ -114,6 +118,11 @@
     <ClInclude Include="source\Events\InputEvents.h" />
     <ClInclude Include="source\FrameRateController\FrameRateController.h" />
     <ClInclude Include="source\Globals.h" />
+    <ClInclude Include="source\GUI\Dockable\AssetBrowser.h" />
+    <ClInclude Include="source\GUI\Dockable\Inspector.h" />
+    <ClInclude Include="source\GUI\Persistent\SceneControls.h" />
+    <ClInclude Include="source\GUI\Dockable\SceneHierarchy.h" />
+    <ClInclude Include="source\GUI\Persistent\Toolbar.h" />
     <ClInclude Include="source\Serialization\Deserializer.h" />
     <ClInclude Include="source\Serialization\Serializer.h" />
     <ClInclude Include="source\Singleton.h" />
@@ -140,8 +149,7 @@
     <ClInclude Include="source\External\ImGui\misc\single_file\imgui_single_file.h" />
     <ClInclude Include="source\GUI\GUIManager.h" />
     <ClInclude Include="source\GUI\GUIWindow.h" />
-    <ClInclude Include="source\GUI\Elements\ObjectEditor.h" />
-    <ClInclude Include="source\GUI\Elements\ObjectManager.h" />
+    <ClInclude Include="source\GUI\Dockable\Viewport.h" />
     <ClInclude Include="source\GUI\ImGuiHelpers.h" />
     <ClInclude Include="Source\Input\InputAssistant.h" />
     <ClInclude Include="source\Graphics\MeshGen.h" />

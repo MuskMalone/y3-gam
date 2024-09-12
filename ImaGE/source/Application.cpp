@@ -15,7 +15,8 @@
 void Application::Init()
 {
   m_scene->Init();
-  GUI::GUIManager::Init(*m_scene);
+  GUI::GUIManager::Init(m_framebuffers.front().first);
+
   InputAssistant::RegisterKeyPressEvent(GLFW_KEY_GRAVE_ACCENT, std::bind(&Application::ToggleImGuiActive, this));
 }
 
@@ -28,15 +29,8 @@ void Application::Run()
 
     glfwPollEvents();
 
-    if (m_imGuiActive)
-    {
-      // Start the Dear ImGui frame
-      ImGui_ImplOpenGL3_NewFrame();
-      ImGui_ImplGlfw_NewFrame();
-      ImGui::NewFrame();
-#ifdef _DEBUG
-      //ImGui::ShowDemoWindow(); // Show demo window! :)
-#endif
+    if (m_imGuiActive) {
+      ImGuiStartFrame();
     }
 
     // @TODO: REPLACE WITH INPUT MANAGER UPDATE
@@ -46,37 +40,15 @@ void Application::Run()
     static auto& eventManager{ Events::EventManager::GetInstance() };
     eventManager.DispatchAll();
 
-    if (m_imGuiActive)
-    {
+    if (m_imGuiActive) {
       GUI::GUIManager::UpdateGUI();
     }
-    m_scene->Update(m_frc.GetDeltaTime());
 
-    glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
-    m_scene->Draw();
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    m_scene->Update(m_frc.GetDeltaTime());
 
     if (m_imGuiActive)
     {
-      // iterate through all framebuffer and invoke the
-      // draw function associated with it
-      for (auto const& [fb, drawFn] : m_framebuffers)
-      {
-        fb.Bind();
-
-        drawFn();
-
-        fb.Unbind();
-
-        ImGui::Begin(fb.GetName().c_str());
-        ImGui::Image(
-          (ImTextureID)(uintptr_t)fb.GetTextureID(),
-          ImGui::GetContentRegionAvail(),
-          ImVec2(0, 1),
-          ImVec2(1, 0)
-        );
-        ImGui::End();
-      }
+      UpdateFramebuffers();
 
       ImGui::Render();
       ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -143,17 +115,30 @@ Application::Application(const char* name, int width, int height) :
 
   m_scene = std::make_unique<Scene>("./shaders/BlinnPhong.vert.glsl", "./shaders/BlinnPhong.frag.glsl");
   // attach each draw function to its framebuffer
-  m_framebuffers.emplace_back(std::piecewise_construct, std::forward_as_tuple("Top-down View", width, height),
-    std::forward_as_tuple(std::bind(&Scene::DrawTopView, m_scene.get())));
+  m_framebuffers.emplace_back(std::piecewise_construct, std::forward_as_tuple(width, height),
+    std::forward_as_tuple(std::bind(&Scene::Draw, m_scene.get())));
 }
 
-Application::~Application()
+void Application::UpdateFramebuffers()
 {
-  ImGui_ImplOpenGL3_Shutdown();
-  ImGui_ImplGlfw_Shutdown();
-  ImGui::DestroyContext();
+  // iterate through all framebuffers and invoke the
+  // draw function associated with it
+  for (auto const& [fb, drawFn] : m_framebuffers)
+  {
+    fb.Bind();
 
-  glfwTerminate();
+    drawFn();
+
+    fb.Unbind();
+  }
+}
+
+void Application::ImGuiStartFrame() const
+{
+  ImGui_ImplOpenGL3_NewFrame();
+  ImGui_ImplGlfw_NewFrame();
+  ImGui::NewFrame();
+  ImGui::DockSpaceOverViewport(); // convert the window into a dockspace
 }
 
 void Application::SetCallbacks()
@@ -179,4 +164,13 @@ void Application::ErrorCallback(int err, const char* desc)
 #ifdef _DEBUG
   std::cerr << "GLFW ERROR: \"" << desc << "\"" << " | Error code: " << std::endl;
 #endif
+}
+
+Application::~Application()
+{
+  ImGui_ImplOpenGL3_Shutdown();
+  ImGui_ImplGlfw_Shutdown();
+  ImGui::DestroyContext();
+
+  glfwTerminate();
 }

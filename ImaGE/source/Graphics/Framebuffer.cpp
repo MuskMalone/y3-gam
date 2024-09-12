@@ -4,7 +4,7 @@
 namespace Graphics
 {
 
-  Framebuffer::Framebuffer(std::string name, unsigned width, unsigned height) : m_name{ std::move(name) }
+  Framebuffer::Framebuffer(unsigned width, unsigned height) : m_width{ width }, m_height{ height }
   {
     // create and bind
     glGenFramebuffers(1, &m_fbo);
@@ -38,6 +38,9 @@ namespace Graphics
 
   void Framebuffer::Resize(unsigned width, unsigned height)
   {
+    m_width = width;
+    m_height = height;
+
     glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
     glBindTexture(GL_TEXTURE_2D, m_texture);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
