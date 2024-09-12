@@ -7,12 +7,26 @@ class Entity; // Forward Declaration
 
 class EntityManager : public Singleton <EntityManager> {
 public:
+  friend class Entity;
+
   Entity CreateEntity();
   Entity CreateEntityWithTag(std::string tag);
-  void RemoveEntity(Entity entity);
+  Entity CopyEntity(Entity entity);
+  bool HasParent(Entity entity);
+  bool HasChild(Entity entity);
+
   Entity GetEntityFromTag(std::string tag);
+  Entity GetParentEntity(Entity const& child) const;
+  std::set<Entity>& GetChildEntity(Entity const& parent);
+
+  void SetParentEntity(Entity const& parent, Entity const& child);
+  void SetChildEntity(Entity const& parent, Entity const& child);
+
+  void RemoveParentEntity(Entity const& child);
+  void RemoveChildEntity(Entity const& parent, Entity const& child);
+
   void Reset();
-  entt::registry& GetRegistry();
+  void DeleteEntity(Entity entity);
 
   template<typename... Components>
   void RemoveComponentFromAllEntities();
@@ -24,7 +38,16 @@ public:
   void RemoveEntitiesWithComponents();
 
 private:
+  entt::registry& GetRegistry();
+
+private:
   entt::registry m_registry;
+
+  // entity is key, children are value
+  std::map<Entity, std::set<Entity>> m_children;   
+
+  // entity is key, parent is value
+  std::map<Entity, Entity> m_parent;               
 };
 
 template<typename ...Components>

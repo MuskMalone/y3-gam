@@ -8,10 +8,15 @@ public:
 
 public:
   Entity() = default;
-  Entity(EntityID entID);
+  Entity(EntityID entityID);
+
   uint32_t GetEntityID() const;
   EntityID GetRawEnttEntityID() const;
   std::string GetTag() const;
+
+  operator bool() const;
+  bool operator==(const Entity& entity) const;
+  bool operator!=(const Entity& entity) const;
 
   template<typename T, typename... Args>
   T& EmplaceComponent(Args&&... args);
@@ -24,12 +29,6 @@ public:
 
   template<typename T>
   T const& GetComponent() const;
-
-  template<typename T>
-  T& TryGetComponent();
-
-  template<typename T>
-  T const& TryGetComponent() const;
 
   template<typename... Components>
   void RemoveComponent();
@@ -64,19 +63,6 @@ inline T const& Entity::GetComponent() const {
   return cRegistry.get<T>(m_id);
 }
 
-// Use this over GetComponent() if you are unsure if the entity has the component
-template<typename T>
-inline T& Entity::TryGetComponent() {
-  return EntityManager::GetInstance().GetRegistry().try_get<T>(m_id);
-}
-
-// Use this over GetComponent() if you are unsure if the entity has the component
-template<typename T>
-inline T const& Entity::TryGetComponent() const {
-  const auto& cRegistry{ EntityManager::GetInstance().GetRegistry() };
-  return cRegistry.try_get<T>(m_id);
-}
-
 template<typename... Components>
 inline void Entity::RemoveComponent() {
   EntityManager::GetInstance().GetRegistry().remove<Components...>(m_id);
@@ -84,6 +70,5 @@ inline void Entity::RemoveComponent() {
 
 template<typename... Components>
 inline bool Entity::HasComponent() {
-  
-  return false;
+  return EntityManager::GetInstance().GetRegistry().all_of<Components...>(m_id);
 }

@@ -6,9 +6,16 @@ namespace Component {
     Tag() : tag{ "NoName" } {};
     Tag(std::string const& tagString) : tag{ tagString } {};
 
-    inline void Clear() noexcept { tag = "No Name"; }
+    inline void Clear() noexcept { tag = "NoName"; }
 
     std::string tag;
+  };
+
+  struct Layer {
+    Layer() : layerName{ "NoLayer" } {};
+    Layer(std::string const& layer) : layerName{ layer } {};
+
+    std::string layerName;
   };
 
   struct Transform {
