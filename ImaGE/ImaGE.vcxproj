@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Scenes\SceneManager.cpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="source\Core\Random.cpp" />
     <ClCompile Include="source\Events\EventManager.cpp" />
@@ -106,6 +107,7 @@
     <ClCompile Include="source\Serialization\Deserializer.cpp" />
     <ClCompile Include="source\Serialization\Registration.cpp" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
+    <ClInclude Include="source\Scenes\SceneManager.h" />
     <ClInclude Include="source\Events\Event.h" />
     <ClInclude Include="source\Events\EventCallback.h" />
     <ClInclude Include="source\Events\EventManager.h" />
@@ -118,6 +120,7 @@
     <ClInclude Include="source\GUI\Persistent\SceneControls.h" />
     <ClInclude Include="source\GUI\Dockable\SceneHierarchy.h" />
     <ClInclude Include="source\GUI\Persistent\Toolbar.h" />
+    <ClInclude Include="source\Scenes\SceneStates.h" />
     <ClInclude Include="source\Serialization\Deserializer.h" />
     <ClInclude Include="source\Serialization\Serializer.h" />
     <ClInclude Include="source\Singleton.h" />

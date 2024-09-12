@@ -9,7 +9,7 @@ namespace GUI
 
   void AssetBrowser::Run()
   {
-    ImGui::Begin(m_windowName.c_str());
+    ImGui::Begin(mWindowName.c_str());
 
     
 

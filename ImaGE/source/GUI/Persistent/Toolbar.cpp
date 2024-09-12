@@ -7,7 +7,7 @@ namespace GUI
 {
 
   Toolbar::Toolbar(std::string const& name, std::vector<std::unique_ptr<GUIWindow>> const& windowsRef)\
-  : m_windowsRef{ windowsRef }, GUIWindow(name) {}
+  : mWindowsRef{ windowsRef }, GUIWindow(name) {}
 
   void Toolbar::Run()
   {
@@ -21,7 +21,7 @@ namespace GUI
 
       if (ImGui::BeginMenu("View"))
       {
-        for (auto const& window : m_windowsRef)
+        for (auto const& window : mWindowsRef)
         {
           if (ImGui::MenuItem(window->GetName().c_str(), nullptr, window->IsActive()))
           {

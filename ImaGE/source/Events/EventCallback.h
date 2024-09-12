@@ -7,6 +7,8 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
+#include <Events/Event.h>
+#include <memory>
 
 /*!*********************************************************************
 \brief

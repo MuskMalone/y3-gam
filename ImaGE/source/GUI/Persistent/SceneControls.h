@@ -1,5 +1,6 @@
 #pragma once
 #include <GUI/GUIWindow.h>
+#include <Scenes/SceneManager.h>
 
 namespace GUI
 {
@@ -12,7 +13,7 @@ namespace GUI
     void Run();
 
   private:
-    
+    Scenes::SceneManager const& mSceneManager;
   };
 
 } // namespace GUI
