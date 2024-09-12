@@ -23,20 +23,20 @@ namespace GUI
     mWindows.reserve(4);
     mWindows.emplace_back(std::make_unique<Viewport>("Viewport", framebuffer));
     mWindows.emplace_back(std::make_unique<Inspector>("Inspector"));
-    mWindows.emplace_back(std::make_unique<SceneHierarchy>("Scene Hierarchy"));
+    auto& sceneHierarchy{ mWindows.emplace_back(std::make_unique<SceneHierarchy>("Scene Hierarchy")) };
     mWindows.emplace_back(std::make_unique<AssetBrowser>("Asset Browser"));
   }
 
   void GUIManager::UpdateGUI()
   {
     // always run persistent windows
-    for (auto& elem : mPersistentElements)
+    for (auto const& elem : mPersistentElements)
     {
       elem->Run();
     }
 
     // run all active windows
-    for (auto& window : mWindows)
+    for (auto const& window : mWindows)
     {
       if (!window->IsActive()) { continue; }
 

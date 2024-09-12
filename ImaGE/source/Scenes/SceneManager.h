@@ -14,6 +14,7 @@ namespace Scenes
 
     void Init();
     //void Update();
+    inline std::string const& GetSceneName() const noexcept { return mSceneName; }
     inline SceneState GetSceneState() const noexcept { return mSceneState; }
 
   private:
