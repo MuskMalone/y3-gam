@@ -21,14 +21,14 @@ public:
 private:
   using SceneDrawCall = std::function<void()>;
 
-  FRC m_frc;
-  std::unique_ptr<Scene> m_scene;
+  FRC mFRC;
+  std::unique_ptr<Scene> mScene;
   // vector of framebuffers to render to, each attached to a draw call
-  std::vector<std::pair<Graphics::Framebuffer, SceneDrawCall>> m_framebuffers;
+  std::vector<std::pair<Graphics::Framebuffer, SceneDrawCall>> mFramebuffers;
 
-  GLFWwindow* m_window;
-  int m_width, m_height;
-  bool m_imGuiActive;
+  GLFWwindow* mWindow;
+  int mWidth, mHeight;
+  bool mImGuiActive;
 
   void ImGuiStartFrame() const;
   void UpdateFramebuffers();
@@ -37,5 +37,5 @@ private:
   static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
   static void ErrorCallback(int err, const char* desc);
 
-  inline void ToggleImGuiActive() noexcept { m_imGuiActive = !m_imGuiActive; }
+  inline void ToggleImGuiActive() noexcept { mImGuiActive = !mImGuiActive; }
 };

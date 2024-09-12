@@ -10,16 +10,16 @@ namespace Graphics
   public:
     Framebuffer(unsigned width, unsigned height);
 
-    inline GLuint GetTextureID() const noexcept { return m_texture; }
-    inline void Bind() const { glBindFramebuffer(GL_FRAMEBUFFER, m_fbo); }
+    inline GLuint GetTextureID() const noexcept { return mTexture; }
+    inline void Bind() const { glBindFramebuffer(GL_FRAMEBUFFER, mFBO); }
     inline void Unbind() const { glBindFramebuffer(GL_FRAMEBUFFER, 0); }
     void Resize(unsigned width, unsigned height);
     void Release();
 
   private:
-    GLuint m_fbo, m_rbo;
-    GLuint m_texture;
-    unsigned m_width, m_height;
+    GLuint mFBO, mRBO;
+    GLuint mTexture;
+    unsigned mWidth, mHeight;
   };
 
 } // namespace Graphics

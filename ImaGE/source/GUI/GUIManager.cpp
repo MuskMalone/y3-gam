@@ -12,31 +12,31 @@
 
 namespace GUI
 {
-  std::vector<std::unique_ptr<GUIWindow>> GUIManager::m_persistentElements, GUIManager::m_windows;
+  std::vector<std::unique_ptr<GUIWindow>> GUIManager::mPersistentElements, GUIManager::mWindows;
 
   void GUIManager::Init(Graphics::Framebuffer const& framebuffer)
   {
-    m_persistentElements.reserve(2);
-    m_persistentElements.emplace_back(std::make_unique<Toolbar>("Scene Controls", m_windows));
-    m_persistentElements.emplace_back(std::make_unique<SceneControls>("Scene Controls"));
+    mPersistentElements.reserve(2);
+    mPersistentElements.emplace_back(std::make_unique<Toolbar>("Toolbar", mWindows));
+    mPersistentElements.emplace_back(std::make_unique<SceneControls>("Scene Controls"));
 
-    m_windows.reserve(4);
-    m_windows.emplace_back(std::make_unique<Viewport>("Viewport", framebuffer));
-    m_windows.emplace_back(std::make_unique<Inspector>("Inspector"));
-    m_windows.emplace_back(std::make_unique<SceneHierarchy>("Scene Hierarchy"));
-    m_windows.emplace_back(std::make_unique<AssetBrowser>("Asset Browser"));
+    mWindows.reserve(4);
+    mWindows.emplace_back(std::make_unique<Viewport>("Viewport", framebuffer));
+    mWindows.emplace_back(std::make_unique<Inspector>("Inspector"));
+    auto& sceneHierarchy{ mWindows.emplace_back(std::make_unique<SceneHierarchy>("Scene Hierarchy")) };
+    mWindows.emplace_back(std::make_unique<AssetBrowser>("Asset Browser"));
   }
 
   void GUIManager::UpdateGUI()
   {
     // always run persistent windows
-    for (auto& elem : m_persistentElements)
+    for (auto const& elem : mPersistentElements)
     {
       elem->Run();
     }
 
     // run all active windows
-    for (auto& window : m_windows)
+    for (auto const& window : mWindows)
     {
       if (!window->IsActive()) { continue; }
 

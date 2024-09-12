@@ -17,7 +17,7 @@ namespace Events
 {
   enum class EventType
   {
-    KEY_TRIGGERED = 0,
+    KEY_TRIGGERED,
     KEY_HELD,
     KEY_RELEASED,
     MOUSE_TRIGGERED,
@@ -27,16 +27,17 @@ namespace Events
     WINDOW_GAIN_FOCUS,
     WINDOW_MINIMIZED,
     TOGGLE_FULLSCREEN,
-    QUIT_GAME
-#ifdef GAM200_EVENTS
-#ifndef IMGUI_DISABLE
-    NEW_SCENE,
+    QUIT_GAME,
     START_SCENE,
     PAUSE_SCENE,
     STOP_SCENE,
+    NEW_SCENE,
+    EDIT_PREFAB
+#ifdef GAM200_EVENTS
+#ifndef IMGUI_DISABLE
+    NEW_SCENE,
     PREFAB_SAVED,
     PREFAB_INSTANCES_UPDATED,
-    EDIT_PREFAB,
     DELETE_ASSET,
     DELETE_PREFAB,
     DELETE_PREFAB_CHILD,
@@ -48,7 +49,7 @@ namespace Events
   class Event
   {
   public:
-    Event(EventType type) : m_category{ type } {}
+    Event(EventType type) : mCategory{ type } {}
 
     /*!*********************************************************************
       \brief
@@ -64,7 +65,7 @@ namespace Events
     \return
       The category of the current event
     ************************************************************************/
-    inline EventType GetCategory() const noexcept { return m_category; }
+    inline EventType GetCategory() const noexcept { return mCategory; }
 
     /*!*********************************************************************
     \brief
@@ -72,7 +73,7 @@ namespace Events
     \return
       True if the event has already been handled and false otherwise
     ************************************************************************/
-    //inline bool IsHandled() const noexcept { return m_handled; }
+    //inline bool IsHandled() const noexcept { return mHandled; }
 
     /*!*********************************************************************
     \brief
@@ -81,8 +82,8 @@ namespace Events
     virtual ~Event() {}
 
   protected:
-    EventType m_category;
-    //bool m_handled = false;
+    EventType mCategory;
+    //bool mHandled = false;
   };
 
 } // namespace Events

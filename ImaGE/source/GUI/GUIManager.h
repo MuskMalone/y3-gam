@@ -14,8 +14,8 @@ namespace GUI
     static void UpdateGUI();
 
   private:
-    static std::vector<std::unique_ptr<GUIWindow>> m_persistentElements;  // contains controls outside of the dockspace
-    static std::vector<std::unique_ptr<GUIWindow>> m_windows; // dockable/hideable windows
+    static std::vector<std::unique_ptr<GUIWindow>> mPersistentElements;  // contains controls outside of the dockspace
+    static std::vector<std::unique_ptr<GUIWindow>> mWindows; // dockable/hideable windows
   };
 
 } // namespace GUI

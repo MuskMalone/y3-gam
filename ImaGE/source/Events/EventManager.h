@@ -65,8 +65,8 @@ namespace Events
 
     // list of subscribers for each event
     // each event in the map will have its own list of subscribers
-    SubscriberMap m_subscribers;
-    std::queue<EventPtr> m_eventQueue; // events to be dispatched
+    SubscriberMap mSubscribers;
+    std::queue<EventPtr> mEventQueue; // events to be dispatched
   };
 
 

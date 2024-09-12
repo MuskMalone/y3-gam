@@ -20,27 +20,27 @@ namespace Events
 
   void EventManager::Subscribe(EventType eventType, EventCallback const& callback)
   {
-    m_subscribers[eventType].emplace_back(callback);
+    mSubscribers[eventType].emplace_back(callback);
   }
 
   void EventManager::QueueEvent(EventPtr const& event)
   {
-    m_eventQueue.emplace(event);
+    mEventQueue.emplace(event);
   }
 
   void EventManager::QueueEvent(EventPtr&& event)
   {
-    m_eventQueue.emplace(std::move(event));
+    mEventQueue.emplace(std::move(event));
   }
 
   void EventManager::DispatchAll()
   {
-    while (!m_eventQueue.empty())
+    while (!mEventQueue.empty())
     {
-      auto eventToDispatch{ std::move(m_eventQueue.front()) };
-      m_eventQueue.pop();
+      auto eventToDispatch{ std::move(mEventQueue.front()) };
+      mEventQueue.pop();
 
-      SubscriberList& subscribers{ m_subscribers[eventToDispatch->GetCategory()] };
+      SubscriberList& subscribers{ mSubscribers[eventToDispatch->GetCategory()] };
       for (auto& fn : subscribers)
       {
         fn(eventToDispatch);

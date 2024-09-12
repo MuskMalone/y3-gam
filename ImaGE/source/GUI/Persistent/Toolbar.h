@@ -14,7 +14,11 @@ namespace GUI
     void Run();
 
   private:
-    std::vector<std::unique_ptr<GUIWindow>> const& m_windowsRef;  // to manage active states
+    std::vector<std::unique_ptr<GUIWindow>> const& mWindowsRef;  // to manage active states
+    bool mScenePopup, mPrefabPopup;
+
+    void RunNewScenePopup();
+    void RunNewPrefabPopup();
   };
 
 } // namespace GUI

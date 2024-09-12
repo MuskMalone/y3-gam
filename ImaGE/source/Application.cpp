@@ -8,6 +8,7 @@
 #include <GUI/GUIManager.h>
 #include <Input/InputAssistant.h>
 #include <Events/EventManager.h>
+#include <Scenes/SceneManager.h>
 
 #include <Core/EntityManager.h>
 #include <Core/Entity.h>
@@ -16,22 +17,23 @@
 
 void Application::Init()
 {
-  m_scene->Init();
-  GUI::GUIManager::Init(m_framebuffers.front().first);
+  mScene->Init();
+  GUI::GUIManager::Init(mFramebuffers.front().first);
+  Scenes::SceneManager::GetInstance().Init();
 
   InputAssistant::RegisterKeyPressEvent(GLFW_KEY_GRAVE_ACCENT, std::bind(&Application::ToggleImGuiActive, this));
 }
 
 void Application::Run()
 {
-  while (!glfwWindowShouldClose(m_window))
+  while (!glfwWindowShouldClose(mWindow))
   {
     // @TODO: REPLACE WITH FRAME RATE CONTROLLER UPDATE
-    m_frc.Update();
+    mFRC.Update();
 
     glfwPollEvents();
 
-    if (m_imGuiActive) {
+    if (mImGuiActive) {
       ImGuiStartFrame();
     }
 
@@ -42,13 +44,13 @@ void Application::Run()
     static auto& eventManager{ Events::EventManager::GetInstance() };
     eventManager.DispatchAll();
 
-    if (m_imGuiActive) {
+    if (mImGuiActive) {
       GUI::GUIManager::UpdateGUI();
     }
 
-    m_scene->Update(m_frc.GetDeltaTime());
+    mScene->Update(mFRC.GetDeltaTime());
 
-    if (m_imGuiActive)
+    if (mImGuiActive)
     {
       UpdateFramebuffers();
 
@@ -66,13 +68,13 @@ void Application::Run()
     }
 
     // check and call events, swap buffers
-    glfwSwapBuffers(m_window);
+    glfwSwapBuffers(mWindow);
   }
 }
 
 Application::Application(const char* name, int width, int height) :
-  m_frc{}, m_scene{}, m_window{},
-  m_width{ width }, m_height{ height }, m_imGuiActive{ true }
+  mFRC{}, mScene{}, mWindow{},
+  mWidth{ width }, mHeight{ height }, mImGuiActive{ true }
 {
   glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -82,12 +84,12 @@ Application::Application(const char* name, int width, int height) :
   glfwWindowHint(GLFW_RED_BITS, 8); glfwWindowHint(GLFW_GREEN_BITS, 8);
   glfwWindowHint(GLFW_BLUE_BITS, 8); glfwWindowHint(GLFW_ALPHA_BITS, 8);
 
-  m_window = glfwCreateWindow(width, height, name, NULL, NULL);
-  if (!m_window) {
+  mWindow = glfwCreateWindow(width, height, name, NULL, NULL);
+  if (!mWindow) {
     throw std::runtime_error("Unable to create window for application");
   }
 
-  glfwMakeContextCurrent(m_window);
+  glfwMakeContextCurrent(mWindow);
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
     throw std::runtime_error("Failed to initialize GLAD");
   }
@@ -107,25 +109,25 @@ Application::Application(const char* name, int width, int height) :
   }
 
   // Setup Platform/Renderer backends
-  ImGui_ImplGlfw_InitForOpenGL(m_window, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
+  ImGui_ImplGlfw_InitForOpenGL(mWindow, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
   ImGui_ImplOpenGL3_Init();
 
-  glfwSetWindowUserPointer(m_window, this); // set the window to reference this class
+  glfwSetWindowUserPointer(mWindow, this); // set the window to reference this class
   
   glViewport(0, 0, width, height); // specify size of viewport
   SetCallbacks();
 
-  m_scene = std::make_unique<Scene>("./shaders/BlinnPhong.vert.glsl", "./shaders/BlinnPhong.frag.glsl");
+  mScene = std::make_unique<Scene>("./shaders/BlinnPhong.vert.glsl", "./shaders/BlinnPhong.frag.glsl");
   // attach each draw function to its framebuffer
-  m_framebuffers.emplace_back(std::piecewise_construct, std::forward_as_tuple(width, height),
-    std::forward_as_tuple(std::bind(&Scene::Draw, m_scene.get())));
+  mFramebuffers.emplace_back(std::piecewise_construct, std::forward_as_tuple(width, height),
+    std::forward_as_tuple(std::bind(&Scene::Draw, mScene.get())));
 }
 
 void Application::UpdateFramebuffers()
 {
   // iterate through all framebuffers and invoke the
   // draw function associated with it
-  for (auto const& [fb, drawFn] : m_framebuffers)
+  for (auto const& [fb, drawFn] : mFramebuffers)
   {
     fb.Bind();
 
@@ -145,9 +147,9 @@ void Application::ImGuiStartFrame() const
 
 void Application::SetCallbacks()
 {
-  glfwSetFramebufferSizeCallback(m_window, FramebufferSizeCallback);
+  glfwSetFramebufferSizeCallback(mWindow, FramebufferSizeCallback);
   glfwSetErrorCallback(ErrorCallback);
-  InputAssistant::Init(m_window);
+  InputAssistant::Init(mWindow);
 }
 
 void Application::FramebufferSizeCallback(GLFWwindow* window, int width, int height)
@@ -155,7 +157,7 @@ void Application::FramebufferSizeCallback(GLFWwindow* window, int width, int hei
   glViewport(0, 0, width, height);
 
   Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
-  for (auto& elem : app->m_framebuffers)
+  for (auto& elem : app->mFramebuffers)
   {
     elem.first.Resize(width, height);
   }

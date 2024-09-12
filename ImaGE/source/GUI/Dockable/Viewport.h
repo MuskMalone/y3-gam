@@ -13,7 +13,7 @@ namespace GUI
     void Run();
 
   private:
-    Graphics::Framebuffer const& m_framebuffer;
+    Graphics::Framebuffer const& mFramebuffer;
   };
   
 } // namespace GUI
