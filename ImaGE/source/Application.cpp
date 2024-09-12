@@ -10,6 +10,8 @@
 #include <Events/EventManager.h>
 
 #include <Core/EntityManager.h>
+#include <Core/Entity.h>
+
 #include <Core/Component.h>
 
 void Application::Init()

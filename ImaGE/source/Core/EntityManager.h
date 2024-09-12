@@ -15,6 +15,7 @@ public:
   bool HasParent(Entity entity);
   bool HasChild(Entity entity);
 
+  auto GetAllEntities();
   Entity GetEntityFromTag(std::string tag);
   Entity GetParentEntity(Entity const& child) const;
   std::set<Entity>& GetChildEntity(Entity const& parent);

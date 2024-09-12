@@ -52,6 +52,10 @@ bool EntityManager::HasChild(Entity entity) {
   return iter != m_children.end();
 }
 
+auto EntityManager::GetAllEntities() {
+  return m_registry.view<Component::Tag>();
+}
+
 Entity EntityManager::GetEntityFromTag(std::string tag) {
   auto view{ GetAllEntitiesWithComponents<Component::Tag>() };
   for (Entity::EntityID entity : view) {
