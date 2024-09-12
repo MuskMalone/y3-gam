@@ -27,7 +27,7 @@ private:
   entt::registry m_registry;
 };
 
-template<typename... Components>
+template<typename ...Components>
 inline void EntityManager::RemoveComponentFromAllEntities() {
   m_registry.clear<Components...>();
 }
