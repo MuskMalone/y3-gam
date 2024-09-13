@@ -54,7 +54,7 @@ namespace GUI
     if (mCurrentDir.empty()) { return; }
 
     float const regionAvailX{ 0.8f * ImGui::GetContentRegionAvail().x };
-    int const assetsPerRow{ regionAvailX > sMaxAssetSize * 10.f ? 10 : regionAvailX < sMaxAssetSize * 3.f ? 3 : 6 };
+    int const assetsPerRow{ regionAvailX > sMaxAssetSize * 10.f ? 10 : regionAvailX < sMaxAssetSize * 4.f ? 3 : 6 };
     float const sizePerAsset{ regionAvailX / static_cast<float>(assetsPerRow) };
     float const imgSize{ sizePerAsset > sMaxAssetSize ? sMaxAssetSize : sizePerAsset };
 
