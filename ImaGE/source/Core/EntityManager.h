@@ -26,12 +26,12 @@ namespace ECS {
     void SetParentEntity(Entity const& parent, Entity const& child);
     void SetChildEntity(Entity const& parent, Entity const& child);
 
-    void RemoveParentEntity(Entity const& child);
-    void RemoveChildEntity(Entity const& parent, Entity const& child);
+    std::map<EntityID, std::set<EntityID>> const& GetChildrenMap() const;
+    std::map<EntityID, EntityID> const& GetParentMap() const;
 
+    void RemoveEntity(Entity const& child);
     void Reset();
-    void DeleteEntity(Entity entity);
-
+    
     template<typename... Components>
     void RemoveComponentFromAllEntities();
 
@@ -42,7 +42,9 @@ namespace ECS {
     void RemoveEntitiesWithComponents();
 
   private:
+    void RecursivelyRemoveParentAndChild(EntityID entityID);
     entt::registry& GetRegistry();
+    void DeleteEntity(Entity entity);
 
   private:
     entt::registry m_registry;

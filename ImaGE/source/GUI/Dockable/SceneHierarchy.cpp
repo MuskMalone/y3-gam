@@ -34,7 +34,7 @@ namespace GUI
     {
       ImGuiPayload const* drop{ ImGui::AcceptDragDropPayload(sDragDropPayload) };
       ECS::Entity const droppedEntity{ *reinterpret_cast<ECS::Entity*>(drop->Data) };
-      mEntityManager.RemoveParentEntity(droppedEntity);
+      //mEntityManager.RemoveParentEntity(droppedEntity);
 #ifdef HEIRARCHY_DEBUG
       std::cout << "Unparented Entity " << droppedEntity << "\n";
 #endif
@@ -99,7 +99,7 @@ namespace GUI
         {
           ECS::Entity const droppedEntity{ *reinterpret_cast<ECS::EntityManager::EntityID*>(drop->Data) };
           if (mEntityManager.HasParent(droppedEntity)) {
-            mEntityManager.RemoveParentEntity(droppedEntity);
+            //mEntityManager.RemoveParentEntity(droppedEntity);
           }
           mEntityManager.SetParentEntity(entity, droppedEntity);
         }
@@ -161,9 +161,9 @@ namespace GUI
       {
         // @TODO: CHANGE WHEN ECS DELETES PROPERLY
         if (mEntityManager.HasParent(mRightClickedEntity)) {
-          mEntityManager.RemoveParentEntity(mRightClickedEntity);
+          //mEntityManager.RemoveParentEntity(mRightClickedEntity);
         }
-        mEntityManager.DeleteEntity(mRightClickedEntity);
+        //mEntityManager.DeleteEntity(mRightClickedEntity);
       }
 
       ImGui::EndPopup();

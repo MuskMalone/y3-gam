@@ -10,6 +10,7 @@
 #include <Events/EventManager.h>
 #include <Scenes/SceneManager.h>
 
+#include <Core/Entity.h>
 #include <Core/EntityManager.h>
 #include <Core/Component/Components.h>
 
@@ -21,6 +22,32 @@ void Application::Init() {
 
   // @TODO: SETTINGS TO BE LOADED FROM CONFIG FILE
   FrameRateController::GetInstance().Init(360.f, 1.f, false);
+  /*
+  ECS::Entity one = ECS::EntityManager::GetInstance().CreateEntityWithTag("one");
+  ECS::Entity two = ECS::EntityManager::GetInstance().CreateEntityWithTag("two");
+  ECS::Entity three = ECS::EntityManager::GetInstance().CreateEntityWithTag("three");
+  ECS::Entity four = ECS::EntityManager::GetInstance().CreateEntityWithTag("four");
+  ECS::Entity five = ECS::EntityManager::GetInstance().CreateEntityWithTag("five");
+  ECS::Entity six = ECS::EntityManager::GetInstance().CreateEntityWithTag("six");
+  ECS::Entity seven = ECS::EntityManager::GetInstance().CreateEntityWithTag("seven");
+
+  ECS::EntityManager::GetInstance().SetChildEntity(one, two);
+  ECS::EntityManager::GetInstance().SetChildEntity(one, three);
+  ECS::EntityManager::GetInstance().SetChildEntity(two, four);
+  ECS::EntityManager::GetInstance().SetChildEntity(two, five);
+  ECS::EntityManager::GetInstance().SetChildEntity(four, six);
+  ECS::EntityManager::GetInstance().SetChildEntity(six, seven);
+
+  ECS::EntityManager::GetInstance().RemoveEntity(one);
+  std::map<ECS::EntityManager::EntityID, std::set<ECS::EntityManager::EntityID>> list =
+    ECS::EntityManager::GetInstance().GetChildrenMap();
+
+  for (const auto& element : list) {
+    for (const auto& elem : element.second) {
+      std::cout << static_cast<int>(elem) << " ";
+    }
+  }
+  */
 }
 
 void Application::Run() {
