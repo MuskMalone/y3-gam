@@ -2,7 +2,6 @@
 #include <entt.hpp>
 #include "Component/Components.h"
 #include "Singleton.h"
-#include "Core/Component/Tag.h"
 
 namespace ECS {
   class Entity; // Forward Declaration
@@ -29,7 +28,8 @@ namespace ECS {
     std::map<EntityID, std::set<EntityID>> const& GetChildrenMap() const;
     std::map<EntityID, EntityID> const& GetParentMap() const;
 
-    void RemoveEntity(Entity const& child);
+    bool RemoveParent(Entity const& child);
+    void RemoveEntity(Entity const& entity);
     void Reset();
     
     template<typename... Components>

@@ -22,6 +22,8 @@ void Application::Init() {
 
   // @TODO: SETTINGS TO BE LOADED FROM CONFIG FILE
   FrameRateController::GetInstance().Init(360.f, 1.f, false);
+
+  // @TODO: REMOVE, FOR TESTING ONLY
   /*
   ECS::Entity one = ECS::EntityManager::GetInstance().CreateEntityWithTag("one");
   ECS::Entity two = ECS::EntityManager::GetInstance().CreateEntityWithTag("two");
@@ -35,17 +37,22 @@ void Application::Init() {
   ECS::EntityManager::GetInstance().SetChildEntity(one, three);
   ECS::EntityManager::GetInstance().SetChildEntity(two, four);
   ECS::EntityManager::GetInstance().SetChildEntity(two, five);
-  ECS::EntityManager::GetInstance().SetChildEntity(four, six);
-  ECS::EntityManager::GetInstance().SetChildEntity(six, seven);
+  ECS::EntityManager::GetInstance().RemoveParent(four);
 
-  ECS::EntityManager::GetInstance().RemoveEntity(one);
-  std::map<ECS::EntityManager::EntityID, std::set<ECS::EntityManager::EntityID>> list =
-    ECS::EntityManager::GetInstance().GetChildrenMap();
+  std::vector<ECS::Entity> list =
+    ECS::EntityManager::GetInstance().GetChildEntity(two);
 
+  std::cout << "First List: ";
   for (const auto& element : list) {
-    for (const auto& elem : element.second) {
-      std::cout << static_cast<int>(elem) << " ";
-    }
+    std::cout << element.GetTag() << " ";
+  }
+
+  std::vector<ECS::Entity> listTwo =
+    ECS::EntityManager::GetInstance().GetChildEntity(one);
+
+  std::cout << "Second List: ";
+  for (const auto& element : listTwo) {
+    std::cout << element.GetTag() << " ";
   }
   */
 }
