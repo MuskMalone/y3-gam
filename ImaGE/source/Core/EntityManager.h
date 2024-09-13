@@ -2,6 +2,7 @@
 #include <entt.hpp>
 #include "Component/Components.h"
 #include "Singleton.h"
+#include "Core/Component/Tag.h"
 
 namespace ECS {
   class Entity; // Forward Declaration
@@ -12,7 +13,7 @@ namespace ECS {
     friend class Entity;
 
     Entity CreateEntity();
-    Entity CreateEntityWithTag(std::string tag);
+    Entity CreateEntityWithTag(std::string const& tag);
     Entity CopyEntity(Entity entity);
     bool HasParent(Entity entity) const;
     bool HasChild(Entity entity) const;
@@ -20,7 +21,7 @@ namespace ECS {
     auto GetAllEntities();
     Entity GetEntityFromTag(std::string tag);
     Entity GetParentEntity(Entity const& child) const;
-    std::set<Entity> GetChildEntity(Entity const& parent);
+    std::vector<Entity> GetChildEntity(Entity const& parent);
 
     void SetParentEntity(Entity const& parent, Entity const& child);
     void SetChildEntity(Entity const& parent, Entity const& child);

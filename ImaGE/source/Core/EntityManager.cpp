@@ -14,10 +14,9 @@ namespace ECS {
     return entity;
   }
 
-  Entity EntityManager::CreateEntityWithTag(std::string tag) {
+  Entity EntityManager::CreateEntityWithTag(std::string const& tag) {
     Entity entity(m_registry.create());
-    Component::Tag entTag = entity.EmplaceComponent<Component::Tag>();
-    entTag.tag = tag;
+    Component::Tag entTag = entity.EmplaceComponent<Component::Tag>(tag);
     entity.EmplaceComponent<Component::Transform>();
 
     return entity;
@@ -80,7 +79,7 @@ namespace ECS {
     return iter->second;
   }
 
-  std::set<Entity> EntityManager::GetChildEntity(Entity const& parent) {
+  std::vector<Entity> EntityManager::GetChildEntity(Entity const& parent) {
     auto iter{ m_children.find(parent.GetRawEnttEntityID()) };
 
     if (iter == m_children.end()) {
@@ -88,22 +87,22 @@ namespace ECS {
       std::cout << "Entity: " << parent.GetTag() << " does not have a Child!\n";
     }
 
-    std::set<Entity> ret{};
+    std::vector<Entity> ret{};
     for (EntityID entID : iter->second) {
-      ret.insert(Entity(entID));
+      ret.emplace_back(entID);
     }
 
     return ret;
   }
 
   void EntityManager::SetParentEntity(Entity const& parent, Entity const& child) {
-    m_parent[parent.GetRawEnttEntityID()] = child.GetRawEnttEntityID();
-    SetChildEntity(parent, child);
+    m_parent[child.GetRawEnttEntityID()] = parent.GetRawEnttEntityID();
+    m_children[parent.GetRawEnttEntityID()].insert(child.GetRawEnttEntityID());
   }
 
   void EntityManager::SetChildEntity(Entity const& parent, Entity const& child) {
     m_children[parent.GetRawEnttEntityID()].insert(child.GetRawEnttEntityID());
-    SetParentEntity(parent, child);
+    m_parent[child.GetRawEnttEntityID()] = parent.GetRawEnttEntityID();
   }
 
   void EntityManager::RemoveParentEntity(Entity const& child) {
@@ -128,11 +127,21 @@ namespace ECS {
       return;
     }
 
-    RemoveParentEntity(child);
     m_children[parent.GetRawEnttEntityID()].erase(child.GetRawEnttEntityID());
 
     if (m_children[parent.GetRawEnttEntityID()].empty())
       m_children.erase(parent.GetRawEnttEntityID());
+
+    //RemoveParentEntity(child);
+    auto iter2{ m_parent.find(child.GetRawEnttEntityID()) };
+
+    if (iter2 == m_parent.end()) {
+      // To replace with logging
+      std::cout << "Removing Non-existent Parent!\n";
+      return;
+    }
+
+    m_parent.erase(child.GetRawEnttEntityID());
   }
 
   void EntityManager::Reset() {
