@@ -58,16 +58,23 @@ namespace GUI
     float const sizePerAsset{ regionAvailX / static_cast<float>(assetsPerRow) };
     float const imgSize{ sizePerAsset > sMaxAssetSize ? sMaxAssetSize : sizePerAsset };
 
-    unsigned maxChars{ static_cast<unsigned>(imgSize * 0.9f / ImGui::CalcTextSize("L").x) };
+    unsigned const maxChars{ static_cast<unsigned>(imgSize * 0.9f / ImGui::CalcTextSize("L").x) };
     if (ImGui::BeginTable("DirectoryTable", assetsPerRow, ImGuiTableFlags_Sortable | ImGuiTableFlags_ScrollY))
     {
       for (auto const& file : std::filesystem::directory_iterator(mCurrentDir)) {
         std::string const fileName{ file.path().filename().string() };
+        bool const exceed{ fileName.size() > maxChars };
         if (file.is_directory()) { continue; }
         ImGui::TableNextColumn();
         ImGui::ImageButton(0, ImVec2(imgSize, imgSize));
         ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
-        ImGui::Text((fileName.size() > maxChars ? fileName.substr(0, maxChars - 2) + "..." : fileName).c_str());
+        ImGui::Text((exceed ? fileName.substr(0, maxChars) : fileName).c_str());
+        if (exceed) {
+          ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
+          std::string const secondRow{ fileName.substr(maxChars) };
+          ImGui::Text((secondRow.size() > maxChars ? secondRow.substr(0, maxChars - 2) + "..." : secondRow).c_str());
+        }
+        ImGui::NewLine();
       }
 
       ImGui::EndTable();
