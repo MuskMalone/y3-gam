@@ -15,6 +15,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <pch.h>
 #include "EventManager.h"
 
+#ifdef _DEBUG
+#define EVENT_DEBUG
+#endif
+
 namespace Events
 {
 
@@ -39,6 +43,10 @@ namespace Events
     {
       auto eventToDispatch{ std::move(mEventQueue.front()) };
       mEventQueue.pop();
+
+#ifdef EVENT_DEBUG
+      std::cout << "[EventManager] Dispatched Event: " << eventToDispatch->GetName() << "\n";
+#endif
 
       SubscriberList& subscribers{ mSubscribers[eventToDispatch->GetCategory()] };
       for (auto& fn : subscribers)
