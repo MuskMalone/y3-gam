@@ -10,7 +10,7 @@ namespace GUI
   public:
     SceneControls(std::string const& name);
 
-    void Run();
+    void Run() override;
 
   private:
     Scenes::SceneManager const& mSceneManager;

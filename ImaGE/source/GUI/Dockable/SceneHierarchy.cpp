@@ -159,11 +159,7 @@ namespace GUI
 
       if (ImGui::Selectable("Delete"))
       {
-        // @TODO: CHANGE WHEN ECS DELETES PROPERLY
-        if (mEntityManager.HasParent(mRightClickedEntity)) {
-          //mEntityManager.RemoveParentEntity(mRightClickedEntity);
-        }
-        //mEntityManager.DeleteEntity(mRightClickedEntity);
+        mEntityManager.RemoveEntity(mRightClickedEntity);
       }
 
       ImGui::EndPopup();

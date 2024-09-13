@@ -1,7 +1,6 @@
 #include <pch.h>
 #include "ImGuiHelpers.h"
 #include <ImGui/imgui.h>
-#include <ImGui/imgui_internal.h>
 //#include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <string>
 
@@ -28,3 +27,37 @@ namespace ImGuiHelpers
   }
 
 } // namespace ImGuiHelpers
+
+
+// operator overloads
+ImVec2 operator+(ImVec2 const& lhs, ImVec2 const& rhs) {
+  return { lhs.x + rhs.x, lhs.y + rhs.y };
+}
+
+ImVec2 operator+(ImVec2 const& lhs, float rhs) {
+  return { lhs.x + rhs, lhs.y + rhs };
+}
+
+ImVec2 operator-(ImVec2 const& lhs, ImVec2 const& rhs) {
+  return { lhs.x - rhs.x, lhs.y - rhs.y };
+}
+
+ImVec2 operator-(ImVec2 const& lhs, float rhs) {
+  return { lhs.x - rhs, lhs.y - rhs };
+}
+
+ImVec4 operator+(ImVec4 const& lhs, ImVec4 const& rhs) {
+  return { lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z, lhs.w + rhs.w };
+}
+
+ImVec4 operator+(ImVec4 const& lhs, float rhs) {
+  return { lhs.x + rhs, lhs.y + rhs, lhs.z + rhs, lhs.w + rhs };
+}
+
+ImVec4 operator-(ImVec4 const& lhs, ImVec4 const& rhs) {
+  return { lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z, lhs.w - rhs.w };
+}
+
+ImVec4 operator-(ImVec4 const& lhs, float rhs) {
+  return { lhs.x - rhs, lhs.y - rhs, lhs.z - rhs, lhs.w - rhs };
+}

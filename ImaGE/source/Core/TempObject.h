@@ -22,9 +22,9 @@ struct Object
 
   void Update(float deltaTime);
 
-  inline glm::vec3& GetPos() noexcept { return transform.position; }
-  inline glm::vec3 const& GetPos() const noexcept { return transform.position; }
-  inline glm::vec3& GetScale() noexcept { return transform.scale; }
-  inline glm::vec3 const& GetScale() const noexcept { return transform.scale; }
+  inline glm::vec3& GetPos() noexcept { return transform.worldPos; }
+  inline glm::vec3 const& GetPos() const noexcept { return transform.worldPos; }
+  inline glm::vec3& GetScale() noexcept { return transform.worldScale; }
+  inline glm::vec3 const& GetScale() const noexcept { return transform.worldScale; }
 };
 

@@ -14,7 +14,7 @@ namespace GUI
   public:
     SceneHierarchy(std::string const& name);
 
-    void Run();
+    void Run() override;
 
   private:
     ECS::EntityManager& mEntityManager;

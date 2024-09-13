@@ -9,7 +9,7 @@ namespace GUI
   public:
     Inspector(std::string const& name);
 
-    void Run();
+    void Run() override;
 
   private:
     

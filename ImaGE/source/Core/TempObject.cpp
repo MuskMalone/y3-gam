@@ -33,19 +33,19 @@ void Object::Update(float deltaTime)
 
   //scale
   mdlTransform = {
-    transform.scale.x, 0.f, 0.f, 0.f,
-    0.f,  transform.scale.y, 0.f, 0.f,
-    0.f, 0.f,  transform.scale.z, 0.f,
+    transform.worldScale.x, 0.f, 0.f, 0.f,
+    0.f,  transform.worldScale.y, 0.f, 0.f,
+    0.f, 0.f,  transform.worldScale.z, 0.f,
     0.f, 0.f, 0.f, 1.f
   };
 
   // rotate
-  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.rotation.x), glm::vec3(1.f, 0.f, 0.f));
-  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.rotation.y), glm::vec3(0.f, 1.f, 0.f));
-  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.rotation.z), glm::vec3(0.f, 0.f, 1.f));
+  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.worldRot.x), glm::vec3(1.f, 0.f, 0.f));
+  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.worldRot.y), glm::vec3(0.f, 1.f, 0.f));
+  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.worldRot.z), glm::vec3(0.f, 0.f, 1.f));
 
   // translate
-  mdlTransform[3] = glm::vec4(transform.position, 1.f);
+  mdlTransform[3] = glm::vec4(transform.worldPos, 1.f);
 
   modified = false;
 }
