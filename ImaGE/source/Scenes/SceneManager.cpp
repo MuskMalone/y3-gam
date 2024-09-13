@@ -61,7 +61,7 @@ namespace Scenes
   EVENT_CALLBACK_DEF(SceneManager, HandleEvent)
   {
 #ifdef EVENTS_DEBUG
-    std::cout << "SceneManager: " << event->GetName() << "\n";
+    std::cout << "[SceneManager] Handled Event: " << event->GetName() << "\n";
 #endif
 
     switch (event->GetCategory())

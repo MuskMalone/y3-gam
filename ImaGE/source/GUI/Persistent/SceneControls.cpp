@@ -30,6 +30,7 @@ namespace GUI
         // stop button
         if (sceneStopped) {
           ImGui::BeginDisabled(sceneStopped);
+          ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.f, 0.f, 0.5f));
         }
         else {
           ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.7f, 0.f, 0.f, 1.f));
@@ -42,6 +43,7 @@ namespace GUI
 
         if (sceneStopped) {
           ImGui::EndDisabled();
+          ImGui::PopStyleColor();
         }
         else {
           ImGui::PopStyleColor();
