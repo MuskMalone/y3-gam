@@ -62,7 +62,9 @@ namespace ECS {
     }
 
     auto iter{ m_children.find(entity.GetRawEnttEntityID()) };
-    return iter != m_children.end();
+    // added 2nd check to ensure there are no children
+    // also removes the need to erase from map when deleting
+    return iter != m_children.end() && !iter->second.empty();
   }
 
   Entity EntityManager::GetEntityFromTag(std::string tag) {

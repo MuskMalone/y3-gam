@@ -34,7 +34,7 @@ namespace GUI
     {
       ImGuiPayload const* drop{ ImGui::AcceptDragDropPayload(sDragDropPayload) };
       ECS::Entity const droppedEntity{ *reinterpret_cast<ECS::Entity*>(drop->Data) };
-      //mEntityManager.RemoveParentEntity(droppedEntity);
+      mEntityManager.RemoveParent(droppedEntity);
 #ifdef HEIRARCHY_DEBUG
       std::cout << "Unparented Entity " << droppedEntity << "\n";
 #endif
@@ -99,7 +99,7 @@ namespace GUI
         {
           ECS::Entity const droppedEntity{ *reinterpret_cast<ECS::EntityManager::EntityID*>(drop->Data) };
           if (mEntityManager.HasParent(droppedEntity)) {
-            //mEntityManager.RemoveParentEntity(droppedEntity);
+            mEntityManager.RemoveParent(droppedEntity);
           }
           mEntityManager.SetParentEntity(entity, droppedEntity);
         }
@@ -144,21 +144,22 @@ namespace GUI
   {
     if (ImGui::BeginPopup("EntityOptions"))
     {
-      if (ImGui::Selectable("Create Entity"))
-      {
+      if (ImGui::Selectable("Create Entity")) {
         ECS::Entity const newEntity{ CreateNewEntity() };
         mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
       }
 
+      if (ImGui::Selectable("Duplicate")) {
+        mEntityManager.CopyEntity(mRightClickedEntity);
+      }
+
       ImGui::BeginDisabled();
-      if (ImGui::Selectable("Save as Prefab"))
-      {
+      if (ImGui::Selectable("Save as Prefab")) {
         mPrefabPopup = true;
       }
       ImGui::EndDisabled();
 
-      if (ImGui::Selectable("Delete"))
-      {
+      if (ImGui::Selectable("Delete")) {
         mEntityManager.RemoveEntity(mRightClickedEntity);
       }
 
