@@ -14,7 +14,7 @@ namespace ECS {
     return entity;
   }
 
-  Entity EntityManager::CreateEntityWithTag(std::string tag) {
+  Entity EntityManager::CreateEntityWithTag(std::string const& tag) {
     Entity entity(m_registry.create());
     Component::Tag& entTag = entity.EmplaceComponent<Component::Tag>();
     entTag.tag = tag;

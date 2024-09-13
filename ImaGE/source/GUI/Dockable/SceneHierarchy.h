@@ -1,9 +1,10 @@
 #pragma once
 #include <GUI/GUIWindow.h>
 #include <set>
+#include <Core/Entity.h>
 
 // forward declaration
-namespace ECS { class Entity; }
+namespace Scenes { class SceneManager; }
 
 namespace GUI
 {
@@ -16,9 +17,17 @@ namespace GUI
     void Run();
 
   private:
+    ECS::EntityManager& mEntityManager;
+    Scenes::SceneManager& mSceneManager;
+    ECS::Entity mRightClickedEntity; // used to hold the entity the menu was opened on
+    bool mRightClickMenu, mEntityOptionsMenu, mPrefabPopup;
+
     static constexpr char sDragDropPayload[] = "ENTITY";
 
-    void RecurseDownHeirarchy(ECS::Entity parent);
+    ECS::Entity CreateNewEntity() const;
+    void RecurseDownHierarchy(ECS::Entity entity);
+    void RunRightClickMenu();
+    void RunEntityOptions();
   };
 
 } // namespace GUI

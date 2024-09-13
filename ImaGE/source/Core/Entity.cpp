@@ -15,7 +15,7 @@ namespace ECS
     return m_id;
   }
 
-  std::string Entity::GetTag() const {
+  std::string const& Entity::GetTag() const {
     Component::Tag const& tagComponent{ this->GetComponent<Component::Tag>() };
     return tagComponent.tag;
   }
