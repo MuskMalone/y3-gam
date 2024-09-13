@@ -1,16 +1,18 @@
 #pragma once
 #include <pch.h>
-#define JPH_DEBUG_RENDERER
 #include <Physics/Physics.h>
+#include <Core/Object.h>
 namespace IGE {
 	namespace Physics {
 		const float gDeltaTime = 1.f / 60.f;
 
 		class PhysicsSystem {
 		public:
+			static std::shared_ptr<IGE::Physics::PhysicsSystem> GetInstance();
 			PhysicsSystem();
+			static void InitAllocator();
 			void Init();
-			void Update(float dt);
+			void Update(float dt, std::vector<std::shared_ptr<Object>>& objsTest);
 			void OnEntityAdd();
 			void Debug(float dt); // not sure if this function will be needed;
 			void Release();
@@ -31,6 +33,12 @@ namespace IGE {
 			MyBodyActivationListener mBodyActivationListener;
 			MyContactListener mContactListener;
 
+			std::vector<Component::Collider> testingBodies;
+
+			static std::shared_ptr<IGE::Physics::PhysicsSystem> _mSelf;
+			static std::mutex _mMutex;
+			PhysicsSystem(PhysicsSystem& other) = delete;
+			void operator=(const PhysicsSystem&) = delete;
 		};
 	}
 }

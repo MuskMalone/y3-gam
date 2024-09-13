@@ -1,52 +1,46 @@
 #include <pch.h>
 #include "GUIManager.h"
-#include "Elements/ObjectManager.h"
-#include "Elements/ObjectEditor.h"
 #include <ImGui/imgui.h>
+#pragma region IndivWindowIncludes
+#include "Persistent/Toolbar.h"
+#include "Persistent/SceneControls.h"
+#include "Dockable/Viewport.h"
+#include "Dockable/Inspector.h"
+#include "Dockable/SceneHierarchy.h"
+#include "Dockable/AssetBrowser.h"
+#pragma endregion
 
 namespace GUI
 {
-  std::vector<std::unique_ptr<GUIWindow>> GUIManager::m_windows;
-  bool GUIManager::m_isPopupShown{ false };
+  std::vector<std::unique_ptr<GUIWindow>> GUIManager::mPersistentElements, GUIManager::mWindows;
 
-  void GUIManager::Init(Scene& scene)
+  void GUIManager::Init(Graphics::Framebuffer const& framebuffer)
   {
-    m_windows.reserve(4);
-    m_windows.emplace_back(std::make_unique<ObjectManager>("Object Manager", scene));
-    m_windows.emplace_back(std::make_unique<ObjectEditor>("Object Editor", scene));
+    mPersistentElements.reserve(2);
+    mPersistentElements.emplace_back(std::make_unique<Toolbar>("Toolbar", mWindows));
+    mPersistentElements.emplace_back(std::make_unique<SceneControls>("Scene Controls"));
+
+    mWindows.reserve(4);
+    mWindows.emplace_back(std::make_unique<Viewport>("Viewport", framebuffer));
+    mWindows.emplace_back(std::make_unique<Inspector>("Inspector"));
+    auto& sceneHierarchy{ mWindows.emplace_back(std::make_unique<SceneHierarchy>("Scene Hierarchy")) };
+    mWindows.emplace_back(std::make_unique<AssetBrowser>("Asset Browser"));
   }
 
   void GUIManager::UpdateGUI()
   {
-    if (ImGui::IsKeyPressed(ImGuiKey_MouseRight))
+    // always run persistent windows
+    for (auto const& elem : mPersistentElements)
     {
-      ImGui::OpenPopup("RightClickMenu"); //m_isPopupShown = true;
+      elem->Run();
     }
 
-    // run all actrive windows
-    for (auto& window : m_windows)
+    // run all active windows
+    for (auto const& window : mWindows)
     {
-      if (window->IsDisabled()) { continue; }
+      if (!window->IsActive()) { continue; }
 
       window->Run();
-    }
-
-    UpdatePopUpMenu();
-  }
-
-  void GUIManager::UpdatePopUpMenu()
-  {
-    if (ImGui::BeginPopup("RightClickMenu"))
-    {
-      for (auto& window : m_windows)
-      {
-        if (ImGui::MenuItem(window->GetName().c_str(), nullptr, !window->IsDisabled()))
-        {
-          window->Toggle();
-        }
-      }
-
-      ImGui::EndPopup();
     }
   }
 

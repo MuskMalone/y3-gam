@@ -47,37 +47,53 @@ namespace Events
     inline std::string GetName() const noexcept override { return "Quit Game"; }
   };
 
-#ifdef GAM200_EVENTS
-#ifndef IMGUI_DISABLE
-
-  class NewSceneEvent : public Event
-  {
-  public:
-    NewSceneEvent(std::string name) : Event(EVENT_TYPE::NEW_SCENE), m_sceneName{ name } {}
-    inline std::string GetName() const noexcept override { return "New Scene " + m_sceneName + " created"; }
-
-    std::string const m_sceneName;
-  };
-
   class StartSceneEvent : public Event
   {
   public:
-    StartSceneEvent() : Event(EVENT_TYPE::START_SCENE) {}
-    inline std::string GetName() const noexcept override { return "Scene Started"; }
+    StartSceneEvent() : Event(EventType::START_SCENE) {}
+    inline std::string GetName() const noexcept override { return "Starting Scene"; }
+  };
+
+  class PauseSceneEvent : public Event
+  {
+  public:
+    PauseSceneEvent() : Event(EventType::PAUSE_SCENE) {}
+    inline std::string GetName() const noexcept override { return "Pausing Scene"; }
   };
 
   class StopSceneEvent : public Event
   {
   public:
-    StopSceneEvent() : Event(EVENT_TYPE::STOP_SCENE) {}
-    inline std::string GetName() const noexcept override { return "Scene Stopped"; }
+    StopSceneEvent() : Event(EventType::STOP_SCENE) {}
+    inline std::string GetName() const noexcept override { return "Stopping Scene"; }
   };
+
+  class NewSceneEvent : public Event
+  {
+  public:
+    NewSceneEvent(std::string const& name) : Event(EventType::NEW_SCENE), mSceneName{ name } {}
+    inline std::string GetName() const noexcept override { return "New Scene " + mSceneName + " created"; }
+
+    std::string const mSceneName;
+  };
+
+  class EditPrefabEvent : public Event
+  {
+  public:
+    EditPrefabEvent(std::string prefab, std::string path) : Event(EventType::EDIT_PREFAB), mPrefab{ std::move(prefab) }, mPath{ std::move(path) } {}
+    inline std::string GetName() const noexcept override { return "Editing Prefab: " + mPrefab; }
+
+    std::string const mPrefab, mPath;
+  };
+
+#ifdef GAM200_EVENTS
+#ifndef IMGUI_DISABLE
 
   class PrefabSavedEvent : public Event
   {
   public:
-    PrefabSavedEvent(std::string prefab) : Event(EVENT_TYPE::PREFAB_SAVED), m_prefab{ std::move(prefab) } {}
-    inline std::string GetName() const noexcept override { return "Prefab Saved: " + m_prefab; }
+    PrefabSavedEvent(std::string prefab) : Event(EventType::PREFAB_SAVED), mPrefab{ std::move(prefab) } {}
+    inline std::string GetName() const noexcept override { return "Prefab Saved: " + mPrefab; }
 
     std::string const m_prefab;
   };
@@ -85,45 +101,36 @@ namespace Events
   class PrefabInstancesUpdatedEvent : public Event
   {
   public:
-    PrefabInstancesUpdatedEvent() : Event(EVENT_TYPE::PREFAB_INSTANCES_UPDATED) {}
+    PrefabInstancesUpdatedEvent() : Event(EventType::PREFAB_INSTANCES_UPDATED) {}
     inline std::string GetName() const noexcept override { return "Scene Updated with Prefab Instances"; }
-  };
-
-  class EditPrefabEvent : public Event
-  {
-  public:
-    EditPrefabEvent(std::string prefab, std::string path) : Event(EVENT_TYPE::EDIT_PREFAB), m_prefab{ std::move(prefab) }, m_path{ std::move(path) } {}
-    inline std::string GetName() const noexcept override { return "Editing Prefab: " + m_prefab; }
-
-    std::string const m_prefab, m_path;
   };
 
   class DeletePrefabEvent : public Event
   {
   public:
-    DeletePrefabEvent(std::string name) : Event(EVENT_TYPE::DELETE_PREFAB), m_name{ std::move(name) } {}
-    inline std::string GetName() const noexcept override { return "Deleted Prefab: " + m_name; }
+    DeletePrefabEvent(std::string name) : Event(EventType::DELETE_PREFAB), mName{ std::move(name) } {}
+    inline std::string GetName() const noexcept override { return "Deleted Prefab: " + mName; }
 
-    std::string const m_name;
+    std::string const mName;
   };
 
   class DeleteAssetEvent : public Event
   {
   public:
-    DeleteAssetEvent(Assets::AssetType type, std::string name) : Event(EVENT_TYPE::DELETE_ASSET), m_type{ type }, m_name{ std::move(name) } {}
-    inline std::string GetName() const noexcept override { return "Deleted Asset: " + m_name + " of type " + std::to_string(static_cast<int>(m_type)); }
+    DeleteAssetEvent(Assets::AssetType type, std::string name) : Event(EventType::DELETE_ASSET), mType{ type }, mName{ std::move(name) } {}
+    inline std::string GetName() const noexcept override { return "Deleted Asset: " + mName + " of type " + std::to_string(static_cast<int>(mType)); }
 
-    Assets::AssetType const m_type;
-    std::string const m_name;
+    Assets::AssetType const mType;
+    std::string const mName;
   };
 
   class DeletePrefabChildEvent : public Event
   {
   public:
-    DeletePrefabChildEvent(ECS::Entity entity) : Event(EVENT_TYPE::DELETE_PREFAB_CHILD), m_entity{ entity } {}
-    inline std::string GetName() const noexcept override { return "Deleted entity " + std::to_string(m_entity) + " of prefab"; }
+    DeletePrefabChildEvent(ECS::Entity entity) : Event(EventType::DELETE_PREFAB_CHILD), mEntity{ entity } {}
+    inline std::string GetName() const noexcept override { return "Deleted entity " + std::to_string(mEntity) + " of prefab"; }
 
-    ECS::Entity const m_entity;
+    ECS::Entity const mEntity;
   };
 
 #endif

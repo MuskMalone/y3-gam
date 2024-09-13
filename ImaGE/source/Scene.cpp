@@ -4,7 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <fstream>
 #include <filesystem>
-
+#include <Physics/PhysicsSystem.h>
 Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 const& clearClr)
   : m_shaders{}, m_defaultShaders{}, 
   m_light{ { 0.f, 25.f, 0.f }, { 0.4f, 0.4f, 0.4f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 1.0f } },
@@ -57,13 +57,31 @@ void Scene::Init()
   });
 
   // OTHER MODELS
+  //m_objects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3(-5.f, 0.f, 0.f), glm::vec3(20.f)));
+  //m_objects.emplace_back(std::make_shared<Object>("./assets/models/horse_high_poly.obj", glm::vec3(5.f), glm::vec3(10.f, 10.f, 10.f)));
+  //m_objects.emplace_back(std::make_shared<Object>("./assets/models/teapot_mid_poly.obj", glm::vec3()));
   m_objects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3(-5.f, 0.f, 0.f), glm::vec3(20.f)));
-  m_objects.emplace_back(std::make_shared<Object>("./assets/models/horse_high_poly.obj", glm::vec3(5.f), glm::vec3(10.f, 10.f, 10.f)));
-  m_objects.emplace_back(std::make_shared<Object>("./assets/models/teapot_mid_poly.obj", glm::vec3()));
+  m_objects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3(5.f), glm::vec3(10.f, 10.f, 10.f)));
+  m_objects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3()));
+
+
 }
 
+
+//IGE::Physics::PhysicsSystem ps{};
 void Scene::Update(float deltaTime)
 {
+    {//this is for testing
+        using namespace IGE;
+        using namespace Physics;
+        static bool firsttime = true;
+        if (firsttime) {
+            Physics::PhysicsSystem::InitAllocator();
+            Physics::PhysicsSystem::GetInstance()->Init();
+            firsttime = !firsttime;
+        }
+        Physics::PhysicsSystem::GetInstance()->Update(deltaTime, m_objects);
+    }
   // update transforms
   for (auto& obj : m_objects)
   {
