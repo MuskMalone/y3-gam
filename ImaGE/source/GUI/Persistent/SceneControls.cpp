@@ -12,8 +12,9 @@ namespace GUI
 
   void SceneControls::Run()
   {
-    if (mSceneManager.GetSceneState() == Scenes::SceneState::PLAYING)
-    {
+    bool const sceneStopped{ mSceneManager.GetSceneState() == Scenes::SceneState::STOPPED };
+
+    if (!sceneStopped) {
       ImGui::PushStyleColor(ImGuiCol_MenuBarBg, ImVec4(0.f, 0.6f, 0.f, 1.f));
     }
 
@@ -23,13 +24,12 @@ namespace GUI
       if (ImGui::BeginMenuBar())
       {
         static float const xOffset{ (ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize("     PlayPauseStep").x) * 0.5f };
+        bool const sceneNotPlaying{ mSceneManager.GetSceneState() != Scenes::SceneState::PLAYING };
         ImGui::SetCursorPosX(xOffset);
 
         // stop button
-        bool const sceneStopped{ mSceneManager.GetSceneState() == Scenes::SceneState::STOPPED },
-          sceneNotPlaying{ mSceneManager.GetSceneState() != Scenes::SceneState::PLAYING };
         if (sceneStopped) {
-          ImGui::BeginDisabled();
+          ImGui::BeginDisabled(sceneStopped);
         }
         else {
           ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.7f, 0.f, 0.f, 1.f));
@@ -69,23 +69,20 @@ namespace GUI
         }        
 
         // step button
-        if (sceneNotPlaying) { ImGui::BeginDisabled(); }
-
+        ImGui::BeginDisabled(sceneNotPlaying);
         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.f, 0.f, 0.5f));
         if (ImGui::Button("Step")) {
 
         }
         ImGui::PopStyleColor();
-
-        if (sceneNotPlaying) { ImGui::EndDisabled(); }
+        ImGui::EndDisabled();
 
         ImGui::EndMenuBar();
       }
     }
     ImGui::End();
 
-    if (mSceneManager.GetSceneState() == Scenes::SceneState::PLAYING)
-    {
+    if (!sceneStopped) {
       ImGui::PopStyleColor();
     }
   }

@@ -1,7 +1,7 @@
 #pragma once
 #include <Graphics/ShaderProgram.h>
 #include <vector>
-#include <Core/Object.h>
+#include <Core/TempObject.h>
 #include <glm/glm.hpp>
 #include <Core/Camera.h>
 #include <Graphics/ShaderStructs.h>

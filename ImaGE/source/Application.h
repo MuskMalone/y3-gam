@@ -2,7 +2,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <FrameRateController/FrameRateController.h>
-#include <Scene.h>
+#include <TempScene.h>
 #include <memory>
 #include <Graphics/Framebuffer.h>
 
