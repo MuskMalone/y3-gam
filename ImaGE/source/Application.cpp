@@ -12,24 +12,21 @@
 
 #include <Core/EntityManager.h>
 #include <Core/Entity.h>
-
 #include <Core/Component.h>
 
-void Application::Init()
-{
+void Application::Init() {
   mScene->Init();
   GUI::GUIManager::Init(mFramebuffers.front().first);
   Scenes::SceneManager::GetInstance().Init();
-
   InputAssistant::RegisterKeyPressEvent(GLFW_KEY_GRAVE_ACCENT, std::bind(&Application::ToggleImGuiActive, this));
+
+  // @TODO: SETTINGS TO BE LOADED FROM CONFIG FILE
+  FrameRateController::GetInstance().Init(360.f, 1.f, false);
 }
 
-void Application::Run()
-{
-  while (!glfwWindowShouldClose(mWindow))
-  {
-    // @TODO: REPLACE WITH FRAME RATE CONTROLLER UPDATE
-    mFRC.Update();
+void Application::Run() {
+  while (!glfwWindowShouldClose(mWindow)) {
+    FrameRateController::GetInstance().Start();
 
     glfwPollEvents();
 
@@ -48,7 +45,7 @@ void Application::Run()
       GUI::GUIManager::UpdateGUI();
     }
 
-    mScene->Update(mFRC.GetDeltaTime());
+    mScene->Update(FrameRateController::GetInstance().GetDeltaTime());
 
     if (mImGuiActive)
     {
@@ -69,11 +66,13 @@ void Application::Run()
 
     // check and call events, swap buffers
     glfwSwapBuffers(mWindow);
+
+    FrameRateController::GetInstance().End();
   }
 }
 
 Application::Application(const char* name, int width, int height) :
-  mFRC{}, mScene{}, mWindow{},
+  mScene{}, mWindow{},
   mWidth{ width }, mHeight{ height }, mImGuiActive{ true }
 {
   glfwInit();

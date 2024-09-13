@@ -65,7 +65,7 @@ namespace Scenes
 
     std::stack<SaveState> mSaveStates;  // used to temporarily store scene saves when playing/stopping/transitioning to PrefabEditor
     std::string mSceneName, mTempDir;
-    SceneState mSceneState;
+    SceneState mSceneState{};
   };
 
 };  // namespace Scenes

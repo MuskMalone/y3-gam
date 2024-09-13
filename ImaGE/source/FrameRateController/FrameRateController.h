@@ -1,19 +1,27 @@
 #pragma once
+#include "Singleton.h"
 
-// Frame Rate Controller
-class FRC
-{
+class FrameRateController : public Singleton <FrameRateController> {
 public:
   using TimeType = float;
 
-  static void Update();
-  static TimeType GetDeltaTime() noexcept;
-  static TimeType GetFPS() noexcept;
+  void Init(float targetFPS = 120.f, float fpsCalculationInterval = 1.f, bool vsyncEnabled = false);
+  void Start();
+  void End();
+  TimeType GetDeltaTime() const noexcept;
+  TimeType GetFPS() const noexcept;
+
+  bool GetVsyncFlag() const noexcept;
+  void SetVsync(bool VsyncFlag);
+
+  void Reset();
 
 private:
-  static TimeType constexpr FPSCalcInterval = 1.0;
-
-  static TimeType m_prevFrameTime, m_currFrameTime, m_deltaTime;
-  static TimeType m_fpsTimer, m_currFPS;
-  static unsigned m_framesElapsed;
+  bool m_vsyncEnabled{};
+  TimeType m_currFrameTime{}, m_newFrameTime{}, m_deltaTime{};
+  TimeType m_fpsTimer{}, m_currFPS{};
+  TimeType m_targetFPS{};
+  TimeType m_targetFrameTime{};
+  TimeType m_fpsCalculationInterval{};
+  unsigned m_frameCounter{};
 };

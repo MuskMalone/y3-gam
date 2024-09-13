@@ -20,8 +20,6 @@ public:
 
 private:
   using SceneDrawCall = std::function<void()>;
-
-  FRC mFRC;
   std::unique_ptr<Scene> mScene;
   // vector of framebuffers to render to, each attached to a draw call
   std::vector<std::pair<Graphics::Framebuffer, SceneDrawCall>> mFramebuffers;
