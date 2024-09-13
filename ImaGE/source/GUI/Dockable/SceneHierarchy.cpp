@@ -2,6 +2,7 @@
 #include "SceneHierarchy.h"
 #include <imgui/imgui.h>
 #include <Scenes/SceneManager.h>
+#include <Core/Entity.h>
 
 #ifdef _DEBUG
 #define HEIRARCHY_DEBUG
@@ -12,11 +13,7 @@ namespace GUI
 
   SceneHierarchy::SceneHierarchy(std::string const& name) : GUIWindow(name)
   {
-    mEntities.emplace(1);
-    mEntities.emplace(2);
-    mEntities.emplace(3);
-    mEntities.emplace(4);
-    mEntities.emplace(5);
+    
   }
 
   void SceneHierarchy::Run()
@@ -34,7 +31,7 @@ namespace GUI
       {
         ImGuiPayload const* drop{ ImGui::AcceptDragDropPayload(sDragDropPayload) };
         if (drop) {
-          Entity const droppedEntity{ *reinterpret_cast<Entity*>(drop->Data) };
+          ECS::Entity const droppedEntity{ *reinterpret_cast<ECS::Entity*>(drop->Data) };
 #ifdef HEIRARCHY_DEBUG
           std::cout << "Unparented Entity " << droppedEntity;
 #endif
@@ -43,10 +40,10 @@ namespace GUI
         ImGui::EndDragDropTarget();
       }
 
-      for (Entity const& e : mEntities)
+      /*for (Entity const& e : mEntities)
       {
         RecurseDownHeirarchy(e);
-      }
+      }*/
 
       ImGui::TreePop();
     }
@@ -54,7 +51,7 @@ namespace GUI
     ImGui::End();
   }
 
-  void SceneHierarchy::RecurseDownHeirarchy(Entity parent)
+  void SceneHierarchy::RecurseDownHeirarchy(ECS::Entity parent)
   {
     if (ImGui::TreeNodeEx(("Entity " + std::to_string(parent)).c_str(), ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_OpenOnArrow
       | ImGuiTreeNodeFlags_OpenOnDoubleClick))

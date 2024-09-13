@@ -1,5 +1,5 @@
 #include <pch.h>
-#include "Object.h"
+#include "TempObject.h"
 #include <glm/gtx/transform.hpp>
 #include <Graphics/MeshGen.h>
 #include <memory>
@@ -31,29 +31,21 @@ void Object::Update(float deltaTime)
   // if values weren't touched, we don't have to recompute
   if (!modified) { return; }
 
-  glm::vec3 const combinedScale{ transform.GetBaseScale() * transform.scale };
-
   //scale
   mdlTransform = {
-    combinedScale.x, 0.f, 0.f, 0.f,
-    0.f,  combinedScale.y, 0.f, 0.f,
-    0.f, 0.f,  combinedScale.z, 0.f,
+    transform.scale.x, 0.f, 0.f, 0.f,
+    0.f,  transform.scale.y, 0.f, 0.f,
+    0.f, 0.f,  transform.scale.z, 0.f,
     0.f, 0.f, 0.f, 1.f
   };
 
   // rotate
-  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.rot.x), glm::vec3(1.f, 0.f, 0.f));
-  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.rot.y), glm::vec3(0.f, 1.f, 0.f));
-  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.rot.z), glm::vec3(0.f, 0.f, 1.f));
+  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.rotation.x), glm::vec3(1.f, 0.f, 0.f));
+  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.rotation.y), glm::vec3(0.f, 1.f, 0.f));
+  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.rotation.z), glm::vec3(0.f, 0.f, 1.f));
 
   // translate
-  mdlTransform[3] = glm::vec4(transform.pos, 1.f);
+  mdlTransform[3] = glm::vec4(transform.position, 1.f);
 
   modified = false;
-}
-
-void Object::Reset()
-{
-  transform.Clear();
-  modified = true;
 }

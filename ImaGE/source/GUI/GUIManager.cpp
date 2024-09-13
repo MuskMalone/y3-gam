@@ -23,7 +23,7 @@ namespace GUI
     mWindows.reserve(4);
     mWindows.emplace_back(std::make_unique<Viewport>("Viewport", framebuffer));
     mWindows.emplace_back(std::make_unique<Inspector>("Inspector"));
-    auto& sceneHierarchy{ mWindows.emplace_back(std::make_unique<SceneHierarchy>("Scene Hierarchy")) };
+    mWindows.emplace_back(std::make_unique<SceneHierarchy>("Scene Hierarchy"));
     mWindows.emplace_back(std::make_unique<AssetBrowser>("Asset Browser"));
   }
 
