@@ -13,7 +13,7 @@ void FrameRateController::Init(float targetFPS, float fpsCalculationInterval, bo
   m_targetFrameTime = 1.f / m_targetFPS;
   m_fpsCalculationInterval = fpsCalculationInterval;
 
-  m_frameCounter = 0.f;
+  m_frameCounter = 0;
 }
 
 void FrameRateController::Start() {
@@ -59,5 +59,5 @@ void FrameRateController::Reset() {
   m_newFrameTime = 0.f;
   m_deltaTime = 0.f;
   m_fpsTimer = 0.f, m_currFPS = 0.f;
-  m_frameCounter = 0.f;
+  m_frameCounter = 0;
 }

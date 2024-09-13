@@ -2,11 +2,8 @@
 #include <entt.hpp>
 #include "EntityManager.h"
 
-namespace ECS
-{
-
-  class Entity
-  {
+namespace ECS {
+  class Entity {
   public:
     using EntityID = entt::entity;
 
@@ -76,5 +73,4 @@ namespace ECS
   inline bool Entity::HasComponent() {
     return EntityManager::GetInstance().GetRegistry().all_of<Components...>(m_id);
   }
-
 } // namespace ECS

@@ -1,15 +1,14 @@
 #pragma once
 #include <entt.hpp>
+#include "Component/Components.h"
 #include "Singleton.h"
-//#include "Entity.h"
 
-namespace ECS
-{
+namespace ECS {
   class Entity; // Forward Declaration
 
-  class EntityManager : public Singleton <EntityManager>
-  {
+  class EntityManager : public Singleton <EntityManager> {
   public:
+    using EntityID = entt::entity;
     friend class Entity;
 
     Entity CreateEntity();
@@ -21,7 +20,7 @@ namespace ECS
     auto GetAllEntities();
     Entity GetEntityFromTag(std::string tag);
     Entity GetParentEntity(Entity const& child) const;
-    std::set<Entity>& GetChildEntity(Entity const& parent);
+    std::set<Entity> GetChildEntity(Entity const& parent);
 
     void SetParentEntity(Entity const& parent, Entity const& child);
     void SetChildEntity(Entity const& parent, Entity const& child);
@@ -48,11 +47,15 @@ namespace ECS
     entt::registry m_registry;
 
     // entity is key, children are value
-    std::map<Entity, std::set<Entity>> m_children;
+    std::map<EntityID, std::set<EntityID>> m_children;
 
     // entity is key, parent is value
-    std::map<Entity, Entity> m_parent;
+    std::map<EntityID, EntityID> m_parent;
   };
+
+  inline auto EntityManager::GetAllEntities() {
+    return m_registry.view<Component::Tag>();
+  }
 
   template<typename ...Components>
   inline void EntityManager::RemoveComponentFromAllEntities() {
@@ -69,5 +72,4 @@ namespace ECS
     auto view{ EntityManager::GetAllEntitiesWithComponents<Components...>() };
     m_registry.destroy(view.begin(), view.end());
   }
-
 } // namespace ECS

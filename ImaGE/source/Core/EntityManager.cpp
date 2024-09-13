@@ -3,9 +3,7 @@
 #include "Component/Components.h"
 #include "Entity.h"
 
-namespace ECS
-{
-
+namespace ECS {
   Entity EntityManager::CreateEntity() {
     Entity entity(m_registry.create());
 
@@ -47,17 +45,13 @@ namespace ECS
   }
 
   bool EntityManager::HasParent(Entity entity) const {
-    auto iter{ m_parent.find(entity) };
+    auto iter{ m_parent.find(entity.GetRawEnttEntityID()) };
     return iter != m_parent.end();
   }
 
   bool EntityManager::HasChild(Entity entity) const {
-    auto iter{ m_children.find(entity) };
+    auto iter{ m_children.find(entity.GetRawEnttEntityID()) };
     return iter != m_children.end();
-  }
-
-  auto EntityManager::GetAllEntities() {
-    return m_registry.view<Component::Tag>();
   }
 
   Entity EntityManager::GetEntityFromTag(std::string tag) {
@@ -76,7 +70,7 @@ namespace ECS
   }
 
   Entity EntityManager::GetParentEntity(Entity const& child) const {
-    auto iter{ m_parent.find(child) };
+    auto iter{ m_parent.find(child.GetRawEnttEntityID()) };
 
     if (iter == m_parent.end()) {
       // To replace with logging
@@ -86,29 +80,34 @@ namespace ECS
     return iter->second;
   }
 
-  std::set<Entity>& EntityManager::GetChildEntity(Entity const& parent) {
-    auto iter{ m_children.find(parent) };
+  std::set<Entity> EntityManager::GetChildEntity(Entity const& parent) {
+    auto iter{ m_children.find(parent.GetRawEnttEntityID()) };
 
     if (iter == m_children.end()) {
       // To replace with logging
       std::cout << "Entity: " << parent.GetTag() << " does not have a Child!\n";
     }
 
-    return iter->second;
+    std::set<Entity> ret{};
+    for (EntityID entID : iter->second) {
+      ret.insert(Entity(entID));
+    }
+
+    return ret;
   }
 
   void EntityManager::SetParentEntity(Entity const& parent, Entity const& child) {
-    m_parent[parent] = child;
+    m_parent[parent.GetRawEnttEntityID()] = child.GetRawEnttEntityID();
     SetChildEntity(parent, child);
   }
 
   void EntityManager::SetChildEntity(Entity const& parent, Entity const& child) {
-    m_children[parent].insert(child);
+    m_children[parent.GetRawEnttEntityID()].insert(child.GetRawEnttEntityID());
     SetParentEntity(parent, child);
   }
 
   void EntityManager::RemoveParentEntity(Entity const& child) {
-    auto iter{ m_parent.find(child) };
+    auto iter{ m_parent.find(child.GetRawEnttEntityID()) };
 
     if (iter == m_parent.end()) {
       // To replace with logging
@@ -116,24 +115,24 @@ namespace ECS
       return;
     }
 
-    RemoveChildEntity(m_parent[child], child);
-    m_parent.erase(child);
+    RemoveChildEntity(m_parent[child.GetRawEnttEntityID()], child);
+    m_parent.erase(child.GetRawEnttEntityID());
   }
 
   void EntityManager::RemoveChildEntity(Entity const& parent, Entity const& child) {
-    auto iter{ m_children[parent].find(child) };
+    auto iter{ m_children[parent.GetRawEnttEntityID()].find(child.GetRawEnttEntityID()) };
 
-    if (iter == m_children[parent].end()) {
+    if (iter == m_children[parent.GetRawEnttEntityID()].end()) {
       // To replace with logging
       std::cout << "Removing Non-existent Child!\n";
       return;
     }
 
     RemoveParentEntity(child);
-    m_children[parent].erase(child);
+    m_children[parent.GetRawEnttEntityID()].erase(child.GetRawEnttEntityID());
 
-    if (m_children[parent].empty())
-      m_children.erase(parent);
+    if (m_children[parent.GetRawEnttEntityID()].empty())
+      m_children.erase(parent.GetRawEnttEntityID());
   }
 
   void EntityManager::Reset() {
@@ -147,6 +146,4 @@ namespace ECS
   entt::registry& EntityManager::GetRegistry() {
     return m_registry;
   }
-
 } // namespace ECS
-

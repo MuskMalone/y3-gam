@@ -11,6 +11,7 @@
 #include <Scenes/SceneManager.h>
 
 #include <Core/EntityManager.h>
+#include <Core/Component/Components.h>
 
 void Application::Init() {
   mScene->Init();
