@@ -10,6 +10,7 @@ namespace GUI
     inline bool IsActive() const noexcept { return mActive; }
     inline std::string const& GetName() const noexcept { return mWindowName; }
 
+    //virtual void Init() {}
     virtual void Run() = 0;
 
   protected:

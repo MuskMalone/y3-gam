@@ -8,7 +8,8 @@ namespace Scenes
   {
     STOPPED,
     PLAYING,
-    PAUSED
+    PAUSED,
+    PREFAB_EDITOR
   };
 
 } // namespace Scenes

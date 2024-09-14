@@ -90,8 +90,10 @@ namespace Scenes
     case Events::EventType::EDIT_PREFAB:
       // save and unload
       TemporarySave();
-      //UnloadScene();
-      //FreeScene();
+      ClearScene();
+      UnloadScene();
+      mSceneState = SceneState::PREFAB_EDITOR;
+      mSceneName = std::static_pointer_cast<Events::EditPrefabEvent>(event)->mPrefab;
       break;
 
     default: break;

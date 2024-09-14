@@ -182,6 +182,10 @@ void Application::SetCallbacks()
   glfwSetFramebufferSizeCallback(mWindow, FramebufferSizeCallback);
   glfwSetErrorCallback(ErrorCallback);
   InputAssistant::Init(mWindow);
+
+#ifndef IMGUI_DISABLE
+  glfwSetDropCallback(mWindow, WindowDropCallback);           // file drag n drop callback
+#endif
 }
 
 void Application::FramebufferSizeCallback(GLFWwindow* window, int width, int height)
@@ -201,6 +205,12 @@ void Application::ErrorCallback(int err, const char* desc)
   std::cerr << "GLFW ERROR: \"" << desc << "\"" << " | Error code: " << std::endl;
 #endif
 }
+
+#ifndef IMGUI_DISABLE
+void Application::WindowDropCallback(GLFWwindow*, int pathCount, const char* paths[]) {
+  QUEUE_EVENT(Events::AddFilesFromExplorerEvent, pathCount, paths);
+}
+#endif
 
 Application::~Application()
 {

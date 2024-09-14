@@ -9,6 +9,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma once
 #include "Event.h"
 #include <Core/EntityManager.h>
+#include <vector>
 
 namespace Events
 {
@@ -103,6 +104,19 @@ namespace Events
     inline std::string GetName() const noexcept override { return "Deleted Prefab: " + static_cast<unsigned>(mEntityId); }
 
     ECS::EntityManager::EntityID const mEntityId;
+  };
+
+  class AddFilesFromExplorerEvent : public Event
+  {
+  public:
+    AddFilesFromExplorerEvent(int pathCount, const char* paths[]) : Event(EventType::ADD_FILES) {
+      for (int i{}; i < pathCount; ++i) {
+        mPaths.emplace_back(paths[i]);
+      }
+    }
+    inline std::string GetName() const noexcept override { return "Adding " + std::to_string(mPaths.size()) + " files from file explorer"; }
+
+    std::vector<std::string> mPaths;
   };
 
 #ifdef GAM200_EVENTS

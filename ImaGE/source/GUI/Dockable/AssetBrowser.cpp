@@ -2,16 +2,57 @@
 #include "AssetBrowser.h"
 #include <imgui/imgui.h>
 #include <Globals.h>
+#include <Events/EventManager.h>
+#include <Scenes/SceneManager.h>
+
+// windows api
+#include <Windows.h>
+#include <commdlg.h>	// to open file explorer
+#include <shellapi.h>
+#include <shlobj_core.h>  // enable selection in file explorer
 
 namespace Helper
 {
+  /*!*********************************************************************
+  \brief
+    Checks if the given directory contains more directories
+  \param dirEntry
+    The path of the file
+  \return
+    True if it contains at least 1 directory and false otherwise
+  ************************************************************************/
   bool ContainsDirectories(std::filesystem::path const& dirEntry);
+
+  /*!*********************************************************************
+  \brief
+    Opens the given file with the default program
+  \param filePath
+    The path of the file
+  ************************************************************************/
+  void OpenFileWithDefaultProgram(std::filesystem::path const& filePath);
+
+  /*!*********************************************************************
+  \brief
+    Opens the file explorer with mSelectedAsset selected
+  ************************************************************************/
+  void OpenFileInExplorer(std::filesystem::path const& filePath);
+
+  /*!*********************************************************************
+  \brief
+    Opens the directory in the file explorer
+  ************************************************************************/
+  void OpenDirectoryInExplorer(std::filesystem::path const& filePath);
 }
 
 namespace GUI
 {
 
-  AssetBrowser::AssetBrowser(std::string const& name) : mCurrentDir{}, GUIWindow(name) {}
+  AssetBrowser::AssetBrowser(std::string const& name)
+    : mCurrentDir{ gAssetsDirectory }, mRightClickedDir{},
+      mSelectedAsset{}, mDirMenuPopup{ false }, GUIWindow(name)
+  {
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::ADD_FILES, &AssetBrowser::HandleEvent, this);
+  }
 
   void AssetBrowser::Run()
   {
@@ -36,8 +77,18 @@ namespace GUI
 
   void AssetBrowser::DirectoryTree()
   {
-    if (ImGui::TreeNodeEx("Assets", ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow))
+    ImGuiTreeNodeFlags flags{ ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow };
+    if (mCurrentDir == gAssetsDirectory) { flags |= ImGuiTreeNodeFlags_Selected; }
+    if (ImGui::TreeNodeEx("Assets", flags))
     {
+      if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+        mCurrentDir = gAssetsDirectory;
+      }
+      else if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+        mRightClickedDir = gAssetsDirectory;
+        mDirMenuPopup = true;
+      }
+
       for (auto const& file : std::filesystem::directory_iterator(gAssetsDirectory))
       {
         if (!file.is_directory()) { continue; }
@@ -47,12 +98,19 @@ namespace GUI
 
       ImGui::TreePop();
     }
+
+    if (mDirMenuPopup) {
+      ImGui::OpenPopup("DirectoryMenu");
+      mDirMenuPopup = false;
+    }
+    DirectoryMenuPopup();
   }
 
   void AssetBrowser::ContentViewer()
   {
     if (mCurrentDir.empty()) { return; }
 
+    static bool mAssetMenuPopup{ false };
     float const regionAvailX{ 0.8f * ImGui::GetContentRegionAvail().x };
     int const assetsPerRow{ regionAvailX > sMaxAssetSize * 10.f ? 10 : regionAvailX < sMaxAssetSize * 4.f ? 3 : 6 };
     float const sizePerAsset{ regionAvailX / static_cast<float>(assetsPerRow) };
@@ -62,11 +120,25 @@ namespace GUI
     if (ImGui::BeginTable("DirectoryTable", assetsPerRow, ImGuiTableFlags_Sortable | ImGuiTableFlags_ScrollY))
     {
       for (auto const& file : std::filesystem::directory_iterator(mCurrentDir)) {
+        if (file.is_directory()) { continue; }
+
+        ImGui::TableNextColumn();
         std::string const fileName{ file.path().filename().string() };
         bool const exceed{ fileName.size() > maxChars };
-        if (file.is_directory()) { continue; }
-        ImGui::TableNextColumn();
+
+        // asset icon + input
         ImGui::ImageButton(0, ImVec2(imgSize, imgSize));
+        if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
+        {
+          mSelectedAsset = file;
+          mAssetMenuPopup = true;
+        }
+        else if (ImGui::IsItemClicked(ImGuiMouseButton_Left) && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+        {
+          Helper::OpenFileWithDefaultProgram(file.path().string());
+        }
+
+        // display file name below
         ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
         ImGui::Text((exceed ? fileName.substr(0, maxChars) : fileName).c_str());
         if (exceed) {
@@ -78,6 +150,22 @@ namespace GUI
       }
 
       ImGui::EndTable();
+    }
+
+    if (mAssetMenuPopup) {
+      ImGui::OpenPopup("AssetsMenu");
+      mAssetMenuPopup = false;
+    }
+    AssetMenuPopup();
+  }
+
+  EVENT_CALLBACK_DEF(AssetBrowser, HandleEvent)
+  {
+    switch (event->GetCategory())
+    {
+    case Events::EventType::ADD_FILES:
+      AddAssets(std::static_pointer_cast<Events::AddFilesFromExplorerEvent>(event)->mPaths);
+      break;
     }
   }
 
@@ -91,10 +179,12 @@ namespace GUI
 
     if (ImGui::TreeNodeEx(fileName.c_str(), flag))
     {
-      if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
-      {
-        std::cout << "Selected " << path.string() << "\n";
+      if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
         mCurrentDir = path;
+      }
+      else if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+        mRightClickedDir = path;
+        mDirMenuPopup = true;
       }
 
       if (hasDirectories)
@@ -111,6 +201,124 @@ namespace GUI
     }
   }
 
+  void AssetBrowser::AddAssets(std::vector<std::string> const& files)
+  {
+    for (std::string const& file : files) {
+      std::filesystem::copy(file, mCurrentDir);
+    }
+  }
+
+  void AssetBrowser::DirectoryMenuPopup() const
+  {
+    static bool deletePopup{ false };
+    if (ImGui::BeginPopup("DirectoryMenu"))
+    {
+      if (ImGui::Selectable("Open in File Explorer")) {
+        Helper::OpenDirectoryInExplorer(mRightClickedDir);
+      }
+
+      ImGui::EndPopup();
+    }
+  }
+
+  void AssetBrowser::AssetMenuPopup() const
+  {
+    static bool deletePopup{ false };
+    if (ImGui::BeginPopup("AssetsMenu"))
+    {
+      if (ImGui::Selectable("Open")) {
+        Helper::OpenFileWithDefaultProgram(mSelectedAsset.string());
+      }
+
+      if (ImGui::Selectable("Open in File Explorer")) {
+        Helper::OpenFileInExplorer(mSelectedAsset);
+      }
+
+      // only enabled for prefabs
+      if (mSelectedAsset.extension().string() == ".pfb")
+      {
+        ImGui::BeginDisabled(Scenes::SceneManager::GetInstance().GetSceneState() == Scenes::SceneState::PREFAB_EDITOR);
+        if (ImGui::Selectable("Edit Prefab"))
+        {
+          QUEUE_EVENT(Events::EditPrefabEvent, mSelectedAsset.stem().string(),
+            mSelectedAsset.relative_path().string());
+        }
+        ImGui::EndDisabled();
+      }
+
+      if (ImGui::Selectable("Delete"))
+      {
+        deletePopup = true;
+      }
+
+      ImGui::EndPopup();
+    }
+
+    if (deletePopup)
+    {
+      ImGui::OpenPopup("Confirm Delete");
+      deletePopup = false;
+    }
+    ConfirmDeletePopup();
+  }
+
+  void AssetBrowser::ConfirmDeletePopup() const
+  {
+    ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    if (ImGui::BeginPopupModal("Confirm Delete", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+    {
+      ImGui::Text("Are you sure you want to delete");
+      ImGui::SameLine();
+      ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), mSelectedAsset.filename().string().c_str());
+      ImGui::SameLine();
+      ImGui::Text("?");
+
+      ImGui::SetCursorPosX(ImGui::GetWindowContentRegionMax().x * 0.5f - ImGui::CalcTextSize("Yes ").x);
+      ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.65f, 0.f, 1.f));
+      if (ImGui::Button("No"))
+      {
+        ImGui::CloseCurrentPopup();
+      }
+      ImGui::PopStyleColor();
+
+      ImGui::SameLine();
+      ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.2f, 0.2f, 1.f));
+      if (ImGui::Button("Yes"))
+      {
+        // @TODO: UPDATE ASSET MANAGER ACCORDINGLY
+        //Assets::AssetManager const& am{ Assets::AssetManager::GetInstance() };
+        //// if prefab deleted
+        //if (asset.extension() == am.PrefabFileExt)
+        //{
+        //  Events::EventManager::GetInstance().Dispatch(Events::DeletePrefabEvent(asset.stem().string()));
+        //}
+        //else
+        //{
+        //  Assets::AssetType type{ Assets::AssetType::NONE };
+        //  if (asset.extension() == am.SceneFileExt)
+        //    type = Assets::AssetType::SCENE;
+        //  else if (asset.extension() == am.ImageFileExt)
+        //    type = Assets::AssetType::IMAGES;
+        //  else if (asset.extension() == am.AudioFileExt)
+        //    type = Assets::AssetType::AUDIO;
+        //  else if (asset.extension() == am.FontFileExt)
+        //    type = Assets::AssetType::FONTS;
+        //  else if (asset.extension() == am.ShaderFileExt)
+        //    type = Assets::AssetType::SHADERS;
+
+        //  Events::EventManager::GetInstance().Dispatch(Events::DeleteAssetEvent(type, asset.stem().string()));
+        //}
+        std::remove(mSelectedAsset.relative_path().string().c_str());
+        ImGui::CloseCurrentPopup();
+      }
+      ImGui::PopStyleColor();
+
+      ImGui::EndPopup();
+    }
+  }
+
+  
+
 } // namespace GUI
 
 
@@ -123,5 +331,31 @@ namespace Helper
     }
 
     return false;
+  }
+
+  void OpenFileWithDefaultProgram(std::filesystem::path const& path)
+  {
+    std::wstring const absolutePath{ std::filesystem::absolute(path).wstring() };
+    ShellExecute(NULL, NULL, absolutePath.c_str(), NULL, NULL, SW_SHOW);
+  }
+
+  void OpenFileInExplorer(std::filesystem::path const& filePath)
+  {
+    //ShellExecuteA(NULL, "open", mCurrentDir.string().c_str(), NULL, NULL, SW_SHOWDEFAULT);
+    std::wstring const absolutePath{ std::filesystem::absolute(filePath).wstring() };
+    PIDLIST_ABSOLUTE pidl = ILCreateFromPath(absolutePath.c_str());
+    if (pidl) {
+      SHOpenFolderAndSelectItems(pidl, 0, 0, 0);
+      ILFree(pidl);
+    }
+    else {
+      // log error
+    }
+  }
+
+  void OpenDirectoryInExplorer(std::filesystem::path const& filePath)
+  {
+    std::string const absolutePath{ std::filesystem::absolute(filePath).string() };
+    ShellExecuteA(NULL, "open", absolutePath.c_str(), NULL, NULL, SW_SHOWDEFAULT);
   }
 }
