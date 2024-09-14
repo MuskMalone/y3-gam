@@ -11,7 +11,7 @@ namespace GUI
   public:
     Toolbar(std::string const& name, std::vector<std::unique_ptr<GUIWindow>> const& windowsRef);
 
-    void Run();
+    void Run() override;
 
   private:
     std::vector<std::unique_ptr<GUIWindow>> const& mWindowsRef;  // to manage active states

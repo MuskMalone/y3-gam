@@ -2,144 +2,230 @@
 #include "EntityManager.h"
 #include "Entity.h"
 
-Entity EntityManager::CreateEntity() {
-  Entity entity(m_registry.create());
+namespace ECS {
+  Entity EntityManager::CreateEntity() {
+    Entity entity(m_registry.create());
 
-  // Default all created entities to have the following components:
-  entity.EmplaceComponent<Component::Tag>();
-  entity.EmplaceComponent<Component::Transform>();
+    // Default all created entities to have the following components:
+    entity.EmplaceComponent<Component::Tag>();
+    entity.EmplaceComponent<Component::Transform>();
 
-  return entity;
-}
-
-Entity EntityManager::CreateEntityWithTag(std::string tag) {
-  Entity entity(m_registry.create());
-  Component::Tag entTag = entity.EmplaceComponent<Component::Tag>();
-  entTag.tag = tag;
-  entity.EmplaceComponent<Component::Transform>();
-
-  return entity;
-}
-
-Entity EntityManager::CopyEntity(Entity entity) {
-  Entity entityCopy{ EntityManager::CreateEntity() };
-
-  // There has to be a better method...
-  // But for now it is what it is...
-  entityCopy.GetComponent<Component::Tag>().tag = 
-    entity.GetComponent<Component::Tag>().tag + "Copy";
-
-  if (entity.HasComponent<Component::Layer>()) {
-    entityCopy.EmplaceComponent<Component::Layer>() = 
-      entity.GetComponent<Component::Layer>().layerName;
+    return entity;
   }
 
-  if (entity.HasComponent<Component::Transform>()) {
-    entityCopy.EmplaceComponent<Component::Transform>() =
-      entity.GetComponent<Component::Transform>();
+  Entity EntityManager::CreateEntityWithTag(std::string const& tag) {
+    Entity entity(m_registry.create());
+    Component::Tag& entTag = entity.EmplaceComponent<Component::Tag>();
+    entTag.tag = tag;
+    entity.EmplaceComponent<Component::Transform>();
+
+    return entity;
   }
 
-  return entityCopy;
-}
+  Entity EntityManager::CopyEntity(Entity entity) {
+    Entity entityCopy{ EntityManager::CreateEntity() };
 
-bool EntityManager::HasParent(Entity entity) {
-  auto iter{ m_parent.find(entity) };
-  return iter != m_parent.end();
-}
+    // There has to be a better method...
+    // But for now it is what it is...
+    entityCopy.GetComponent<Component::Tag>().tag =
+      entity.GetComponent<Component::Tag>().tag + "Copy";
 
-bool EntityManager::HasChild(Entity entity) {
-  auto iter{ m_children.find(entity) };
-  return iter != m_children.end();
-}
+    if (entity.HasComponent<Component::Layer>()) {
+      entityCopy.EmplaceComponent<Component::Layer>() =
+        entity.GetComponent<Component::Layer>().layerName;
+    }
 
-auto EntityManager::GetAllEntities() {
-  return m_registry.view<Component::Tag>();
-}
+    if (entity.HasComponent<Component::Transform>()) {
+      entityCopy.EmplaceComponent<Component::Transform>() =
+        entity.GetComponent<Component::Transform>();
+    }
 
-Entity EntityManager::GetEntityFromTag(std::string tag) {
-  auto view{ GetAllEntitiesWithComponents<Component::Tag>() };
-  for (Entity::EntityID entity : view) {
-    const Component::Tag tagComp{ view.get<Component::Tag>(entity) };
-    if (tagComp.tag == tag) {
-      return Entity(entity);
+    return entityCopy;
+  }
+
+  bool EntityManager::HasParent(Entity entity) const {
+    if (!m_registry.valid(entity.GetRawEnttEntityID())) {
+      // @TODO: REPLACE WITH LOGGING SYSTEM
+      std::cout << "Entity is not valid!" << std::endl;
+      return false;
+    }
+
+    auto iter{ m_parent.find(entity.GetRawEnttEntityID()) };
+    return iter != m_parent.end();
+  }
+
+  bool EntityManager::HasChild(Entity entity) const {
+    if (!m_registry.valid(entity.GetRawEnttEntityID())) {
+      // @TODO: REPLACE WITH LOGGING SYSTEM
+      std::cout << "Entity is not valid!" << std::endl;
+      return Entity();
+    }
+
+    auto iter{ m_children.find(entity.GetRawEnttEntityID()) };
+    // added 2nd check to ensure there are no children
+    // also removes the need to erase from map when deleting
+    return iter != m_children.end() && !iter->second.empty();
+  }
+
+  Entity EntityManager::GetEntityFromTag(std::string tag) {
+    auto view{ GetAllEntitiesWithComponents<Component::Tag>() };
+    for (Entity::EntityID entity : view) {
+      const Component::Tag tagComp{ view.get<Component::Tag>(entity) };
+      if (tagComp.tag == tag) {
+        return Entity(entity);
+      }
+    }
+
+    // @TODO: REPLACE WITH LOGGING SYSTEM
+    std::cout << "No Entities have the specified Tag!\n";
+
+    return Entity();
+  }
+
+  Entity EntityManager::GetParentEntity(Entity const& child) const {
+    if (!m_registry.valid(child.GetRawEnttEntityID())) {
+      // @TODO: REPLACE WITH LOGGING SYSTEM
+      std::cout << "Child is not valid!" << std::endl;
+      return Entity();
+    }
+
+    auto iter{ m_parent.find(child.GetRawEnttEntityID()) };
+
+    if (iter == m_parent.end()) {
+      // @TODO: REPLACE WITH LOGGING SYSTEM
+      std::cout << "Entity: " << child.GetTag() << " does not have a Parent!\n";
+    }
+
+    return iter->second;
+  }
+
+  std::vector<Entity> EntityManager::GetChildEntity(Entity const& parent) {
+    if (!m_registry.valid(parent.GetRawEnttEntityID())) {
+      // @TODO: REPLACE WITH LOGGING SYSTEM
+      std::cout << "Parent is not valid!" << std::endl;
+      return std::vector<Entity>();
+    }
+
+    auto iter{ m_children.find(parent.GetRawEnttEntityID()) };
+
+    if (iter == m_children.end()) {
+      // @TODO: REPLACE WITH LOGGING SYSTEM
+      std::cout << "Entity: " << parent.GetTag() << " does not have a Child!\n";
+      return std::vector<Entity>();
+    }
+
+    std::vector<Entity> ret{};
+    for (EntityID entID : iter->second) {
+      ret.push_back(Entity(entID));
+    }
+    return ret;
+  }
+
+  void EntityManager::SetParentEntity(Entity const& parent, Entity const& child) {
+    if (!m_registry.valid(parent.GetRawEnttEntityID()) || 
+      !m_registry.valid(child.GetRawEnttEntityID())) {
+      // @TODO: REPLACE WITH LOGGING SYSTEM
+      std::cout << "Parent/Child is not valid!" << std::endl;
+      return;
+    }
+
+    m_parent[child.GetRawEnttEntityID()] = parent.GetRawEnttEntityID();
+    m_children[parent.GetRawEnttEntityID()].insert(child.GetRawEnttEntityID());
+  }
+
+  void EntityManager::SetChildEntity(Entity const& parent, Entity const& child) {
+    if (!m_registry.valid(parent.GetRawEnttEntityID()) || 
+      !m_registry.valid(child.GetRawEnttEntityID())) {
+      // @TODO: REPLACE WITH LOGGING SYSTEM
+      std::cout << "Parent/Child is not valid!" << std::endl;
+      return;
+    }
+
+    m_children[parent.GetRawEnttEntityID()].insert(child.GetRawEnttEntityID());
+    m_parent[child.GetRawEnttEntityID()] = parent.GetRawEnttEntityID();
+  }
+
+  std::map<EntityManager::EntityID, std::set<EntityManager::EntityID>> const& EntityManager::GetChildrenMap() const {
+    return m_children;
+  }
+
+  std::map<EntityManager::EntityID, EntityManager::EntityID> const& EntityManager::GetParentMap() const {
+    return m_parent;
+  }
+
+  bool EntityManager::RemoveParent(Entity const& child) {
+    if (!m_registry.valid(child.GetRawEnttEntityID())) {
+      // @TODO: REPLACE WITH LOGGING SYSTEM
+      std::cout << "Entity is not valid!" << std::endl;
+      return false;
+    }
+
+    auto iter{ m_parent.find(child.GetRawEnttEntityID()) };
+
+    if (iter == m_parent.end()) {
+      // @TODO: REPLACE WITH LOGGING SYSTEM
+      std::cout << "Removing Non-existent Parent!\n";
+      return false;
+    }
+
+    else {
+      std::set<EntityID>& childList = m_children[m_parent[child.GetRawEnttEntityID()]];
+      childList.erase(child.GetRawEnttEntityID());
+      m_parent.erase(child.GetRawEnttEntityID());
+      return true;
     }
   }
 
-  // To replace with logging
-  std::cout << "No Entities have the specified Tag!\n";
+  void EntityManager::RemoveEntity(Entity const& entity) {
+    if (!m_registry.valid(entity.GetRawEnttEntityID())) {
+      // @TODO: REPLACE WITH LOGGING SYSTEM
+      std::cout << "Entity is not valid!" << std::endl;
+      return;
+    }
 
-  return Entity();
-}
+    auto iter{ m_parent.find(entity.GetRawEnttEntityID()) };
 
-Entity EntityManager::GetParentEntity(Entity const& child) const {
-  auto iter{ m_parent.find(child) };
+    if (iter == m_parent.end()) {
+      // @TODO: REPLACE WITH LOGGING SYSTEM
+      std::cout << "Removing Non-existent Parent!\n";
+      return;
+    }
 
-  if (iter == m_parent.end()) {
-    // To replace with logging
-    std::cout << "Entity: " << child.GetTag() << " does not have a Parent!\n";   
+    else { // Entity has a parent, proceed to remove it from parent's child list
+      std::set<EntityID> & childList = m_children[m_parent[entity.GetRawEnttEntityID()]];
+      childList.erase(entity.GetRawEnttEntityID());
+    }
+    
+    m_parent.erase(entity.GetRawEnttEntityID());
+    RecursivelyRemoveParentAndChild(entity.GetRawEnttEntityID());
   }
 
-  return iter->second;
-}
-
-std::set<Entity>& EntityManager::GetChildEntity(Entity const& parent) {
-  auto iter{ m_children.find(parent) };
-
-  if (iter == m_children.end()) {
-    // To replace with logging
-    std::cout << "Entity: " << parent.GetTag() << " does not have a Child!\n";
+  void EntityManager::RecursivelyRemoveParentAndChild(EntityID entity) {
+    std::set<EntityID> setOfChildren = m_children[entity];
+    for (EntityID child : setOfChildren) {
+      m_parent.erase(child);
+      RecursivelyRemoveParentAndChild(child);
+    }
+    m_children.erase(entity);
+    DeleteEntity(entity);
   }
 
-  return iter->second;
-}
-
-void EntityManager::SetParentEntity(Entity const& parent, Entity const& child) {
-  m_parent[parent] = child;
-  SetChildEntity(parent, child);
-}
-
-void EntityManager::SetChildEntity(Entity const& parent, Entity const& child) {
-  m_children[parent].insert(child);
-  SetParentEntity(parent, child);
-}
-
-void EntityManager::RemoveParentEntity(Entity const& child) {
-  auto iter{ m_parent.find(child) };
-
-  if (iter == m_parent.end()) {
-    // To replace with logging
-    std::cout << "Removing Non-existent Parent!\n";
-    return;
+  void EntityManager::Reset() {
+    m_registry.clear();
+    m_children.clear();
+    m_parent.clear();
   }
 
-  RemoveChildEntity(m_parent[child], child);
-  m_parent.erase(child);
-}
-
-void EntityManager::RemoveChildEntity(Entity const& parent, Entity const& child) {
-  auto iter{ m_children[parent].find(child) };
-
-  if (iter == m_children[parent].end()) {
-    // To replace with logging
-    std::cout << "Removing Non-existent Child!\n";
-    return;
+  entt::registry& EntityManager::GetRegistry() {
+    return m_registry;
   }
 
-  RemoveParentEntity(child);
-  m_children[parent].erase(child);
-
-  if (m_children[parent].empty())
-    m_children.erase(parent);
-}
-
-void EntityManager::Reset() {
-  m_registry.clear();
-}
-
-void EntityManager::DeleteEntity(Entity entity) {
-  m_registry.destroy(entity.GetRawEnttEntityID());
-}
-
-entt::registry& EntityManager::GetRegistry() {
-  return m_registry;
-}
+  void EntityManager::DeleteEntity(Entity entity) {
+    if (!m_registry.valid(entity.GetRawEnttEntityID())) {
+      // @TODO: REPLACE WITH LOGGING SYSTEM
+      std::cout << "Entity is not valid!" << std::endl;
+      return;
+    }
+    m_registry.destroy(entity.GetRawEnttEntityID());
+  }
+} // namespace ECS

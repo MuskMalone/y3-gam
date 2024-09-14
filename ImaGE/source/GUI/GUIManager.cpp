@@ -1,6 +1,7 @@
 #include <pch.h>
 #include "GUIManager.h"
 #include <ImGui/imgui.h>
+#include <Core/Entity.h>
 #pragma region IndivWindowIncludes
 #include "Persistent/Toolbar.h"
 #include "Persistent/SceneControls.h"
@@ -12,6 +13,7 @@
 
 namespace GUI
 {
+  ECS::Entity GUIManager::mSelectedEntity{};
   std::vector<std::unique_ptr<GUIWindow>> GUIManager::mPersistentElements, GUIManager::mWindows;
 
   void GUIManager::Init(Graphics::Framebuffer const& framebuffer)
@@ -23,7 +25,7 @@ namespace GUI
     mWindows.reserve(4);
     mWindows.emplace_back(std::make_unique<Viewport>("Viewport", framebuffer));
     mWindows.emplace_back(std::make_unique<Inspector>("Inspector"));
-    auto& sceneHierarchy{ mWindows.emplace_back(std::make_unique<SceneHierarchy>("Scene Hierarchy")) };
+    mWindows.emplace_back(std::make_unique<SceneHierarchy>("Scene Hierarchy"));
     mWindows.emplace_back(std::make_unique<AssetBrowser>("Asset Browser"));
   }
 

@@ -1,70 +1,63 @@
 #include <pch.h>
-#include <ImGui/imgui.h>
 #include "ImGuiHelpers.h"
+#include <ImGui/imgui.h>
 //#include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <string>
-#include <glm/glm.hpp>
 
 namespace ImGuiHelpers
 {
 
-  bool InputSliderVec3(std::string const& label, glm::vec3& vector, float min, float max)
+  bool BeginDrapDropTargetWindow(const char* payloadName)
   {
-    bool modified{ false };
-
-    ImGui::Text(label.c_str());
-    if (ImGui::BeginTable("##sliderTable", 3))
-    {
-      ImGui::TableNextColumn();
-      ImGui::Text("x");
-      ImGui::SameLine();
-      if (ImGui::SliderFloat("##xComp", &vector.x, min, max)) { modified = true; }
-
-      ImGui::TableNextColumn();
-      ImGui::Text("y");
-      ImGui::SameLine();
-      if (ImGui::SliderFloat("##yComp", &vector.y, min, max)) { modified = true; }
-
-      ImGui::TableNextColumn();
-      ImGui::Text("z");
-      ImGui::SameLine();
-      if (ImGui::SliderFloat("##zComp", &vector.z, min, max)) { modified = true; }
-
-      ImGui::EndTable();
-    }
-    return modified;
-  }
-
-  bool InputSliderVec4(std::string const& label, glm::vec4& vector, float min, float max)
-  {
-    bool modified{ false };
-
-    ImGui::Text(label.c_str());
-    if (ImGui::BeginTable("##sliderTable", 4))
-    {
-      ImGui::TableNextColumn();
-      ImGui::Text("x");
-      ImGui::SameLine();
-      if (ImGui::SliderFloat("##xComp", &vector.x, min, max)) { modified = true; }
-
-      ImGui::TableNextColumn();
-      ImGui::Text("y");
-      ImGui::SameLine();
-      if (ImGui::SliderFloat("##yComp", &vector.y, min, max)) { modified = true; }
-
-      ImGui::TableNextColumn();
-      ImGui::Text("z");
-      ImGui::SameLine();
-      if (ImGui::SliderFloat("##zComp", &vector.z, min, max)) { modified = true; }
-
-      ImGui::TableNextColumn();
-      ImGui::Text("z");
-      ImGui::SameLine();
-      if (ImGui::SliderFloat("##wComp", &vector.w, min, max)) { modified = true; }
-
-      ImGui::EndTable();
-    }
-    return modified;
+    ImRect inner_rect = ImGui::GetCurrentWindow()->InnerRect;
+    if (ImGui::BeginDragDropTargetCustom(inner_rect, ImGui::GetID("##WindowBgArea")))
+      if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(payloadName, ImGuiDragDropFlags_AcceptBeforeDelivery | ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
+      {
+        if (payload->IsPreview())
+        {
+          ImDrawList* draw_list = ImGui::GetForegroundDrawList();
+          draw_list->AddRectFilled(inner_rect.Min, inner_rect.Max, ImGui::GetColorU32(ImGuiCol_DragDropTarget, 0.05f));
+          draw_list->AddRect(inner_rect.Min, inner_rect.Max, ImGui::GetColorU32(ImGuiCol_DragDropTarget), 0.0f, 0, 2.0f);
+        }
+        if (payload->IsDelivery())
+          return true;
+        ImGui::EndDragDropTarget();
+      }
+    return false;
   }
 
 } // namespace ImGuiHelpers
+
+
+// operator overloads
+ImVec2 operator+(ImVec2 const& lhs, ImVec2 const& rhs) {
+  return { lhs.x + rhs.x, lhs.y + rhs.y };
+}
+
+ImVec2 operator+(ImVec2 const& lhs, float rhs) {
+  return { lhs.x + rhs, lhs.y + rhs };
+}
+
+ImVec2 operator-(ImVec2 const& lhs, ImVec2 const& rhs) {
+  return { lhs.x - rhs.x, lhs.y - rhs.y };
+}
+
+ImVec2 operator-(ImVec2 const& lhs, float rhs) {
+  return { lhs.x - rhs, lhs.y - rhs };
+}
+
+ImVec4 operator+(ImVec4 const& lhs, ImVec4 const& rhs) {
+  return { lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z, lhs.w + rhs.w };
+}
+
+ImVec4 operator+(ImVec4 const& lhs, float rhs) {
+  return { lhs.x + rhs, lhs.y + rhs, lhs.z + rhs, lhs.w + rhs };
+}
+
+ImVec4 operator-(ImVec4 const& lhs, ImVec4 const& rhs) {
+  return { lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z, lhs.w - rhs.w };
+}
+
+ImVec4 operator-(ImVec4 const& lhs, float rhs) {
+  return { lhs.x - rhs, lhs.y - rhs, lhs.z - rhs, lhs.w - rhs };
+}

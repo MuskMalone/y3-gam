@@ -10,26 +10,56 @@
 #include <Events/EventManager.h>
 #include <Scenes/SceneManager.h>
 
-#include <Core/EntityManager.h>
 #include <Core/Entity.h>
+#include <Core/EntityManager.h>
+#include <Core/Component/Components.h>
 
-#include <Core/Component.h>
-
-void Application::Init()
-{
+void Application::Init() {
   mScene->Init();
   GUI::GUIManager::Init(mFramebuffers.front().first);
   Scenes::SceneManager::GetInstance().Init();
-
   InputAssistant::RegisterKeyPressEvent(GLFW_KEY_GRAVE_ACCENT, std::bind(&Application::ToggleImGuiActive, this));
+
+  // @TODO: SETTINGS TO BE LOADED FROM CONFIG FILE
+  FrameRateController::GetInstance().Init(360.f, 1.f, false);
+
+  // @TODO: REMOVE, FOR TESTING ONLY
+  /*
+  ECS::Entity one = ECS::EntityManager::GetInstance().CreateEntityWithTag("one");
+  ECS::Entity two = ECS::EntityManager::GetInstance().CreateEntityWithTag("two");
+  ECS::Entity three = ECS::EntityManager::GetInstance().CreateEntityWithTag("three");
+  ECS::Entity four = ECS::EntityManager::GetInstance().CreateEntityWithTag("four");
+  ECS::Entity five = ECS::EntityManager::GetInstance().CreateEntityWithTag("five");
+  ECS::Entity six = ECS::EntityManager::GetInstance().CreateEntityWithTag("six");
+  ECS::Entity seven = ECS::EntityManager::GetInstance().CreateEntityWithTag("seven");
+
+  ECS::EntityManager::GetInstance().SetChildEntity(one, two);
+  ECS::EntityManager::GetInstance().SetChildEntity(one, three);
+  ECS::EntityManager::GetInstance().SetChildEntity(two, four);
+  ECS::EntityManager::GetInstance().SetChildEntity(two, five);
+  ECS::EntityManager::GetInstance().RemoveParent(four);
+
+  std::vector<ECS::Entity> list =
+    ECS::EntityManager::GetInstance().GetChildEntity(two);
+
+  std::cout << "First List: ";
+  for (const auto& element : list) {
+    std::cout << element.GetTag() << " ";
+  }
+
+  std::vector<ECS::Entity> listTwo =
+    ECS::EntityManager::GetInstance().GetChildEntity(one);
+
+  std::cout << "Second List: ";
+  for (const auto& element : listTwo) {
+    std::cout << element.GetTag() << " ";
+  }
+  */
 }
 
-void Application::Run()
-{
-  while (!glfwWindowShouldClose(mWindow))
-  {
-    // @TODO: REPLACE WITH FRAME RATE CONTROLLER UPDATE
-    mFRC.Update();
+void Application::Run() {
+  while (!glfwWindowShouldClose(mWindow)) {
+    FrameRateController::GetInstance().Start();
 
     glfwPollEvents();
 
@@ -48,7 +78,7 @@ void Application::Run()
       GUI::GUIManager::UpdateGUI();
     }
 
-    mScene->Update(mFRC.GetDeltaTime());
+    mScene->Update(FrameRateController::GetInstance().GetDeltaTime());
 
     if (mImGuiActive)
     {
@@ -69,11 +99,13 @@ void Application::Run()
 
     // check and call events, swap buffers
     glfwSwapBuffers(mWindow);
+
+    FrameRateController::GetInstance().End();
   }
 }
 
 Application::Application(const char* name, int width, int height) :
-  mFRC{}, mScene{}, mWindow{},
+  mScene{}, mWindow{},
   mWidth{ width }, mHeight{ height }, mImGuiActive{ true }
 {
   glfwInit();
@@ -117,7 +149,7 @@ Application::Application(const char* name, int width, int height) :
   glViewport(0, 0, width, height); // specify size of viewport
   SetCallbacks();
 
-  mScene = std::make_unique<Scene>("./shaders/BlinnPhong.vert.glsl", "./shaders/BlinnPhong.frag.glsl");
+  mScene = std::make_unique<Scene>("./Assets/Shaders/BlinnPhong.vert.glsl", "./Assets/Shaders/BlinnPhong.frag.glsl");
   // attach each draw function to its framebuffer
   mFramebuffers.emplace_back(std::piecewise_construct, std::forward_as_tuple(width, height),
     std::forward_as_tuple(std::bind(&Scene::Draw, mScene.get())));

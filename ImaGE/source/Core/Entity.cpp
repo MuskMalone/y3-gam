@@ -1,29 +1,35 @@
 #include <pch.h>
 #include "Entity.h"
+#include "Component/Tag.h"
 
-Entity::Entity(EntityID entityID) : m_id{ entityID } {}
+namespace ECS
+{
 
-uint32_t Entity::GetEntityID() const {
-  return static_cast<uint32_t>(m_id);
-}
+  Entity::Entity(EntityID entityID) : m_id{ entityID } {}
 
-Entity::EntityID Entity::GetRawEnttEntityID() const {
-  return m_id;
-}
+  uint32_t Entity::GetEntityID() const {
+    return static_cast<uint32_t>(m_id);
+  }
 
-std::string Entity::GetTag() const {
-  Component::Tag const& tagComponent{ this->GetComponent<Component::Tag>() };
-  return tagComponent.tag;
-}
+  Entity::EntityID Entity::GetRawEnttEntityID() const {
+    return m_id;
+  }
 
-Entity::operator bool() const {
-  return m_id != entt::null;
-}
+  std::string const& Entity::GetTag() const {
+    Component::Tag const& tagComponent{ this->GetComponent<Component::Tag>() };
+    return tagComponent.tag;
+  }
 
-bool Entity::operator==(const Entity& entity) const {
-  return (*this).m_id == entity.m_id;
-}
+  Entity::operator bool() const {
+    return m_id != entt::null;
+  }
 
-bool Entity::operator!=(const Entity& entity) const {
-  return (*this).m_id != entity.m_id;
-}
+  bool Entity::operator==(const Entity& entity) const {
+    return (*this).m_id == entity.m_id;
+  }
+
+  bool Entity::operator!=(const Entity& entity) const {
+    return (*this).m_id != entity.m_id;
+  }
+
+} // namespace ECS

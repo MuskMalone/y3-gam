@@ -1,6 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
-#include <Core/Component.h>
+#include <Core/Component/Transform.h>
 #include <Graphics/Model.h>
 #include <Graphics/MeshType.h>
 #include <memory>
@@ -21,12 +21,10 @@ struct Object
     glm::vec3 const& _scale = { 1.f, 1.f, 1.f });
 
   void Update(float deltaTime);
-  void Reset();
 
-  inline glm::vec3& GetPos() noexcept { return transform.pos; }
-  inline glm::vec3 const& GetPos() const noexcept { return transform.pos; }
-  inline glm::vec3& GetScale() noexcept { return transform.scale; }
-  inline glm::vec3 const& GetScale() const noexcept { return transform.scale; }
-  inline glm::vec3 const& GetWorldPos() const noexcept { return transform.worldPos; }
+  inline glm::vec3& GetPos() noexcept { return transform.worldPos; }
+  inline glm::vec3 const& GetPos() const noexcept { return transform.worldPos; }
+  inline glm::vec3& GetScale() noexcept { return transform.worldScale; }
+  inline glm::vec3 const& GetScale() const noexcept { return transform.worldScale; }
 };
 

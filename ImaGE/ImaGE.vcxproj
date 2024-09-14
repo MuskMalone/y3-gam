@@ -19,16 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Core\TempObject.cpp" />
+    <ClCompile Include="source\TempScene.cpp" />
     <ClCompile Include="source\Scenes\SceneManager.cpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="source\Core\Entity.cpp" />
     <ClCompile Include="source\Core\EntityManager.cpp" />
-    <ClCompile Include="source\Core\Random.cpp" />
     <ClCompile Include="source\Events\EventManager.cpp" />
     <ClCompile Include="source\FrameRateController\FrameRateController.cpp" />
     <ClCompile Include="source\Graphics\Framebuffer.cpp" />
     <ClCompile Include="source\Graphics\Model.cpp" />
-    <ClCompile Include="Source\Core\Object.cpp" />
     <ClCompile Include="source\External\ImGui\backends\imgui_impl_glfw.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='NO_IMGUI_D|x64'">NotUsing</PrecompiledHeader>
@@ -110,9 +110,14 @@
     <ClCompile Include="source\Serialization\Deserializer.cpp" />
     <ClCompile Include="source\Serialization\Registration.cpp" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
-    <ClInclude Include="source\Core\Component.h" />
+    <ClInclude Include="source\Core\Component\Components.h" />
+    <ClInclude Include="source\Core\Component\Layer.h" />
+    <ClInclude Include="source\Core\Component\Tag.h" />
+    <ClInclude Include="source\Core\Component\Transform.h" />
     <ClInclude Include="source\Core\Entity.h" />
     <ClInclude Include="source\Core\EntityManager.h" />
+    <ClInclude Include="Source\Core\TempObject.h" />
+    <ClInclude Include="source\TempScene.h" />
     <ClInclude Include="source\Scenes\SceneManager.h" />
     <ClInclude Include="source\Events\Event.h" />
     <ClInclude Include="source\Events\EventCallback.h" />
@@ -135,13 +140,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
-    <ClInclude Include="source\Core\Random.h" />
     <ClInclude Include="source\Debug.h" />
     <ClInclude Include="source\Graphics\ShaderStructs.h" />
     <ClInclude Include="source\Graphics\Framebuffer.h" />
     <ClInclude Include="source\Graphics\MeshType.h" />
     <ClInclude Include="source\Graphics\Model.h" />
-    <ClInclude Include="Source\Core\Object.h" />
     <ClInclude Include="source\External\ImGui\backends\imgui_impl_glfw.h" />
     <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl3_loader.h" />
@@ -161,7 +164,6 @@
     <ClInclude Include="source\Graphics\MeshGen.h" />
     <ClInclude Include="Source\pch.h" />
     <ClInclude Include="Source\Core\Camera.h" />
-    <ClInclude Include="source\Scene.h" />
     <ClInclude Include="source\Graphics\ShaderProgram.h" />
     <ClInclude Include="source\Graphics\VertexAttribs.h" />
   </ItemGroup>

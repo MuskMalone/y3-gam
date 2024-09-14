@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 #include <filesystem>
 #include <Events/EventManager.h>
+#include <Globals.h>
 
 #ifdef _DEBUG
 #define EVENTS_DEBUG
@@ -12,7 +13,7 @@ namespace Scenes
   void SceneManager::Init()
   {
     // @TODO: SHOULD RETREIVE FROM CONFIG FILE IN FUTURE
-    mTempDir = ".temp";
+    mTempDir = gTempDirectory;
 
     // create temp directory if it doesn't already exist
     if (!std::filesystem::exists(mTempDir) || !std::filesystem::is_directory(mTempDir))
@@ -61,7 +62,7 @@ namespace Scenes
   EVENT_CALLBACK_DEF(SceneManager, HandleEvent)
   {
 #ifdef EVENTS_DEBUG
-    std::cout << "SceneManager: " << event->GetName() << "\n";
+    std::cout << "[SceneManager] Handled Event: " << event->GetName() << "\n";
 #endif
 
     switch (event->GetCategory())

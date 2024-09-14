@@ -2,32 +2,62 @@
 #include "FrameRateController.h"
 #include <GLFW/glfw3.h>
 
-FRC::TimeType FRC::m_prevFrameTime{}, FRC::m_currFrameTime{},
-  FRC::m_deltaTime{}, FRC::m_fpsTimer{}, FRC::m_currFPS{};
-unsigned FRC::m_framesElapsed{};
+void FrameRateController::Init(float targetFPS, float fpsCalculationInterval, bool vsyncEnabled) {
+  m_vsyncEnabled = vsyncEnabled;
+  SetVsync(m_vsyncEnabled);
 
-void FRC::Update()
-{
-  m_prevFrameTime = m_currFrameTime;
-  m_currFrameTime = static_cast<TimeType>(glfwGetTime());
-  m_deltaTime = m_currFrameTime - m_prevFrameTime;
+  m_currFrameTime = 0.f, m_newFrameTime = 0.f, m_deltaTime = 0.f;
+  m_fpsTimer = 0.f, m_currFPS = 0.f;
 
-  m_fpsTimer += m_deltaTime;
-  if (m_fpsTimer >= FPSCalcInterval)
-  {
-    m_currFPS = static_cast<TimeType>(m_framesElapsed) / FPSCalcInterval;
-    m_fpsTimer = 0.0;
-  }
+  m_targetFPS = targetFPS;
+  m_targetFrameTime = 1.f / m_targetFPS;
+  m_fpsCalculationInterval = fpsCalculationInterval;
 
-  ++m_framesElapsed;
+  m_frameCounter = 0;
 }
 
-FRC::TimeType FRC::GetDeltaTime() noexcept
-{
+void FrameRateController::Start() {
+  m_deltaTime = m_newFrameTime - m_currFrameTime;
+  m_currFrameTime = m_newFrameTime;
+
+  m_fpsTimer += m_deltaTime;
+  if (m_fpsTimer >= m_fpsCalculationInterval) {
+    m_currFPS = static_cast<TimeType>(m_frameCounter) / m_fpsCalculationInterval;
+    m_fpsTimer = 0.f;
+  }
+}
+
+void FrameRateController::End() {
+  do {
+    m_newFrameTime = static_cast<TimeType>(glfwGetTime());
+    m_deltaTime = m_newFrameTime - m_currFrameTime;
+  } while (m_deltaTime < m_targetFrameTime);
+
+  m_newFrameTime = static_cast<TimeType>(glfwGetTime());
+  ++m_frameCounter;
+}
+
+FrameRateController::TimeType FrameRateController::GetDeltaTime() const noexcept {
   return m_deltaTime;
 }
 
-FRC::TimeType FRC::GetFPS() noexcept
-{
+FrameRateController::TimeType FrameRateController::GetFPS() const noexcept {
   return m_currFPS;
+}
+
+bool FrameRateController::GetVsyncFlag() const noexcept {
+  return m_vsyncEnabled;
+}
+
+void FrameRateController::SetVsync(bool vsyncEnabled) {
+  m_vsyncEnabled = vsyncEnabled;
+  glfwSwapInterval((m_vsyncEnabled) ? 1 : 0);
+}
+
+void FrameRateController::Reset() {
+  m_currFrameTime = 0.f;
+  m_newFrameTime = 0.f;
+  m_deltaTime = 0.f;
+  m_fpsTimer = 0.f, m_currFPS = 0.f;
+  m_frameCounter = 0;
 }

@@ -1,8 +1,10 @@
 #pragma once
 #include <GUI/GUIWindow.h>
 #include <set>
+#include <Core/Entity.h>
 
-#define HIERARCHY_DUMMY_DATA
+// forward declaration
+namespace Scenes { class SceneManager; }
 
 namespace GUI
 {
@@ -12,17 +14,20 @@ namespace GUI
   public:
     SceneHierarchy(std::string const& name);
 
-    void Run();
+    void Run() override;
 
   private:
-#ifdef HIERARCHY_DUMMY_DATA
-    using Entity = unsigned;
-    std::set<Entity> mEntities;
-#endif
+    ECS::EntityManager& mEntityManager;
+    Scenes::SceneManager& mSceneManager;
+    ECS::Entity mRightClickedEntity; // used to hold the entity the menu was opened on
+    bool mRightClickMenu, mEntityOptionsMenu, mPrefabPopup;
 
     static constexpr char sDragDropPayload[] = "ENTITY";
 
-    void RecurseDownHeirarchy(Entity parent);
+    ECS::Entity CreateNewEntity() const;
+    void RecurseDownHierarchy(ECS::Entity entity);
+    void RunRightClickMenu();
+    void RunEntityOptions();
   };
 
 } // namespace GUI
