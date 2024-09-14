@@ -8,6 +8,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
 #include "Event.h"
+#include <Core/EntityManager.h>
 
 namespace Events
 {
@@ -86,6 +87,24 @@ namespace Events
     std::string const mPrefab, mPath;
   };
 
+  class DeletePrefabEvent : public Event
+  {
+  public:
+    DeletePrefabEvent(std::string name) : Event(EventType::DELETE_PREFAB), mName{ std::move(name) } {}
+    inline std::string GetName() const noexcept override { return "Deleted Prefab: " + mName; }
+
+    std::string const mName;
+  };
+
+  class RemoveEntityEvent : public Event
+  {
+  public:
+    RemoveEntityEvent(ECS::EntityManager::EntityID id) : Event(EventType::REMOVE_ENTITY), mEntityId{ id } {}
+    inline std::string GetName() const noexcept override { return "Deleted Prefab: " + static_cast<unsigned>(mEntityId); }
+
+    ECS::EntityManager::EntityID const mEntityId;
+  };
+
 #ifdef GAM200_EVENTS
 #ifndef IMGUI_DISABLE
 
@@ -103,15 +122,6 @@ namespace Events
   public:
     PrefabInstancesUpdatedEvent() : Event(EventType::PREFAB_INSTANCES_UPDATED) {}
     inline std::string GetName() const noexcept override { return "Scene Updated with Prefab Instances"; }
-  };
-
-  class DeletePrefabEvent : public Event
-  {
-  public:
-    DeletePrefabEvent(std::string name) : Event(EventType::DELETE_PREFAB), mName{ std::move(name) } {}
-    inline std::string GetName() const noexcept override { return "Deleted Prefab: " + mName; }
-
-    std::string const mName;
   };
 
   class DeleteAssetEvent : public Event
