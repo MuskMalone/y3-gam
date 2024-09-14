@@ -1,5 +1,6 @@
 #include <pch.h>
 #include "Physics/PhysicsSystem.h"
+#include "Core/Component/Components.h"
 namespace IGE {
 	namespace Physics {
 
@@ -38,47 +39,25 @@ namespace IGE {
 			mPhysicsSystem.SetGravity(JPH::Vec3(0.f, -9.81f, 0.f));
 		}
 
-		void PhysicsSystem::Update(float dt, std::vector<std::shared_ptr<Object>>& objsTest){
-			static bool firsttime = true;
-			//static JPH::TempAllocatorImpl tempAllocImpl{ 10 * 1024 * 1024 };
-			//static JPH::JobSystemThreadPool jobSysTP{ cMaxPhysicsJobs, cMaxPhysicsBarriers, static_cast<int>(std::thread::hardware_concurrency() - 1)};
-
-			if (firsttime) {
-
-				for (auto const& obj : objsTest) {
-					Component::Collider collider {
-						.scale = JPH::Vec3(obj->transform.scale.x, obj->transform.scale.y, obj->transform.scale.z),
-							.position = JPH::Vec3(obj->transform.pos.x, obj->transform.pos.y, obj->transform.pos.z),
-							.rotation = JPH::Quat::sEulerAngles(JPH::Vec3(obj->transform.rot.x, obj->transform.rot.x, obj->transform.rot.x))
-					};
-
-					JPH::BodyCreationSettings bodySettings(new SphereShape(collider.scale.GetX()), collider.position, collider.rotation,
-						JPH::EMotionType::Dynamic, Layers::MOVING);
-					//bodySettings.mMassPropertiesOverride = collider.shape->GetMassProperties(5.f); // Set mass 
-					collider.bodyID = mPhysicsSystem.GetBodyInterface().CreateAndAddBody(bodySettings, EActivation::Activate); // Activ
-					collider.type = mPhysicsSystem.GetBodyInterface().GetShape(collider.bodyID)->GetSubType();
-					testingBodies.emplace_back(collider);
-				}
-				firsttime = !firsttime;
-				mPhysicsSystem.OptimizeBroadPhase();
-			}
+		void PhysicsSystem::Update(float dt){
 
 			mPhysicsSystem.Update(gDeltaTime, 1, &mTempAllocator, &mJobSystem);
-			for (int i{}; i < testingBodies.size(); ++i) {
-				auto& bi = mPhysicsSystem.GetBodyInterface();
-				//update the collider vars themselves
-				testingBodies[i].position = bi.GetPosition(testingBodies[i].bodyID);
-				testingBodies[i].rotation = bi.GetRotation(testingBodies[i].bodyID);
-				
-				objsTest[i]->transform.pos = glm::vec3{ testingBodies[i].position.GetX(), testingBodies[i].position.GetY(), testingBodies[i].position.GetZ() };
-				//JPH::Vec3 eulerAngles = testingBodies[i].rotation.
-				//objsTest[i]->transform.rot = glm
-				objsTest[i]->modified = true;
-			}
+
 		}
 
 		void PhysicsSystem::OnEntityAdd(){
-			mPhysicsSystem.OptimizeBroadPhase();
+			//Component::Collider collider {
+			//	.scale = JPH::Vec3(obj->transform.scale.x, obj->transform.scale.y, obj->transform.scale.z),
+			//		.position = JPH::Vec3(obj->transform.pos.x, obj->transform.pos.y, obj->transform.pos.z),
+			//		.rotation = JPH::Quat::sEulerAngles(JPH::Vec3(obj->transform.rot.x, obj->transform.rot.x, obj->transform.rot.x))
+			//};
+
+			//JPH::BodyCreationSettings bodySettings(new SphereShape(collider.scale.GetX()), collider.position, collider.rotation,
+			//	JPH::EMotionType::Dynamic, Layers::MOVING);
+			////bodySettings.mMassPropertiesOverride = collider.shape->GetMassProperties(5.f); // Set mass 
+			//collider.bodyID = mPhysicsSystem.GetBodyInterface().CreateAndAddBody(bodySettings, EActivation::Activate); // Activ
+			//collider.type = mPhysicsSystem.GetBodyInterface().GetShape(collider.bodyID)->GetSubType();
+			//mPhysicsSystem.OptimizeBroadPhase();
 			//left empty for now
 		}
 

@@ -104,14 +104,17 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='NO_IMGUI_R|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="source\Physics\PhysicsSystem.cpp" />
-    <ClCompile Include="source\Scene.cpp" />
     <ClCompile Include="source\Graphics\ShaderProgram.cpp" />
     <ClCompile Include="source\Graphics\VertexAttribs.cpp" />
     <ClCompile Include="source\Serialization\Deserializer.cpp" />
     <ClCompile Include="source\Serialization\Registration.cpp" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
+    <ClInclude Include="source\Core\Component\Collider.h" />
     <ClInclude Include="source\Core\Component\Components.h" />
+    <ClInclude Include="source\Core\Component\Material.h" />
+    <ClInclude Include="source\Core\Component\Model.h" />
     <ClInclude Include="source\Core\Component\Layer.h" />
+    <ClInclude Include="source\Core\Component\RigidBody.h" />
     <ClInclude Include="source\Core\Component\Tag.h" />
     <ClInclude Include="source\Core\Component\Transform.h" />
     <ClInclude Include="source\Core\Entity.h" />

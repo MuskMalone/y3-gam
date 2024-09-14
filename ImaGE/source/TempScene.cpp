@@ -60,9 +60,9 @@ void Scene::Init()
   //m_objects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3(-5.f, 0.f, 0.f), glm::vec3(20.f)));
   //m_objects.emplace_back(std::make_shared<Object>("./assets/models/horse_high_poly.obj", glm::vec3(5.f), glm::vec3(10.f, 10.f, 10.f)));
   //m_objects.emplace_back(std::make_shared<Object>("./assets/models/teapot_mid_poly.obj", glm::vec3()));
-  m_objects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3(-5.f, 0.f, 0.f), glm::vec3(20.f)));
-  m_objects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3(5.f), glm::vec3(10.f, 10.f, 10.f)));
-  m_objects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3()));
+  //m_objects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3(-5.f, 0.f, 0.f), glm::vec3(20.f)));
+  //m_objects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3(5.f), glm::vec3(10.f, 10.f, 10.f)));
+  //m_objects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3()));
 
 
 }
@@ -71,28 +71,28 @@ void Scene::Init()
 //IGE::Physics::PhysicsSystem ps{};
 void Scene::Update(float deltaTime)
 {
-    {//this is for testing
-        using namespace IGE;
-        using namespace Physics;
-        static bool firsttime = true;
-        if (firsttime) {
-            Physics::PhysicsSystem::InitAllocator();
-            Physics::PhysicsSystem::GetInstance()->Init();
-            firsttime = !firsttime;
-        }
-        Physics::PhysicsSystem::GetInstance()->Update(deltaTime, m_objects);
-    }
-  // update transforms
-  for (auto& obj : m_objects)
-  {
-    obj->Update(deltaTime);
-  }
+  //  {//this is for testing
+  //      using namespace IGE;
+  //      using namespace Physics;
+  //      static bool firsttime = true;
+  //      if (firsttime) {
+  //          Physics::PhysicsSystem::InitAllocator();
+  //          Physics::PhysicsSystem::GetInstance()->Init();
+  //          firsttime = !firsttime;
+  //      }
+  //      Physics::PhysicsSystem::GetInstance()->Update(deltaTime);
+  //  }
+  //// update transforms
+  //for (auto& obj : m_objects)
+  //{
+  //  obj->Update(deltaTime);
+  //}
 
-  // update camera
-  for (auto& cam : m_cameras)
-  {
-    cam.Update(deltaTime);
-  }
+  //// update camera
+  //for (auto& cam : m_cameras)
+  //{
+  //  cam.Update(deltaTime);
+  //}
 }
 
 void Scene::Draw()

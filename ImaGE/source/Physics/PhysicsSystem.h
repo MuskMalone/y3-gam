@@ -1,7 +1,6 @@
 #pragma once
 #include <pch.h>
 #include <Physics/Physics.h>
-#include <Core/Object.h>
 namespace IGE {
 	namespace Physics {
 		const float gDeltaTime = 1.f / 60.f;
@@ -12,7 +11,7 @@ namespace IGE {
 			PhysicsSystem();
 			static void InitAllocator();
 			void Init();
-			void Update(float dt, std::vector<std::shared_ptr<Object>>& objsTest);
+			void Update(float dt);
 			void OnEntityAdd();
 			void Debug(float dt); // not sure if this function will be needed;
 			void Release();
@@ -32,8 +31,6 @@ namespace IGE {
 			JPH::PhysicsSystem mPhysicsSystem;
 			MyBodyActivationListener mBodyActivationListener;
 			MyContactListener mContactListener;
-
-			std::vector<Component::Collider> testingBodies;
 
 			static std::shared_ptr<IGE::Physics::PhysicsSystem> _mSelf;
 			static std::mutex _mMutex;
