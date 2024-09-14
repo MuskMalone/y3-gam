@@ -4,7 +4,7 @@
 
 namespace ECS {
   Entity EntityManager::CreateEntity() {
-    Entity entity(m_registry.create());
+    Entity entity(mRegistry.create());
 
     // Default all created entities to have the following components:
     entity.EmplaceComponent<Component::Tag>();
@@ -14,7 +14,7 @@ namespace ECS {
   }
 
   Entity EntityManager::CreateEntityWithTag(std::string const& tag) {
-    Entity entity(m_registry.create());
+    Entity entity(mRegistry.create());
     Component::Tag& entTag = entity.EmplaceComponent<Component::Tag>();
     entTag.tag = tag;
     entity.EmplaceComponent<Component::Transform>();
@@ -44,27 +44,27 @@ namespace ECS {
   }
 
   bool EntityManager::HasParent(Entity entity) const {
-    if (!m_registry.valid(entity.GetRawEnttEntityID())) {
+    if (!mRegistry.valid(entity.GetRawEnttEntityID())) {
       // @TODO: REPLACE WITH LOGGING SYSTEM
       std::cout << "Entity is not valid!" << std::endl;
       return false;
     }
 
-    auto iter{ m_parent.find(entity.GetRawEnttEntityID()) };
-    return iter != m_parent.end();
+    auto iter{ mParent.find(entity.GetRawEnttEntityID()) };
+    return iter != mParent.end();
   }
 
   bool EntityManager::HasChild(Entity entity) const {
-    if (!m_registry.valid(entity.GetRawEnttEntityID())) {
+    if (!mRegistry.valid(entity.GetRawEnttEntityID())) {
       // @TODO: REPLACE WITH LOGGING SYSTEM
       std::cout << "Entity is not valid!" << std::endl;
       return Entity();
     }
 
-    auto iter{ m_children.find(entity.GetRawEnttEntityID()) };
+    auto iter{ mChildren.find(entity.GetRawEnttEntityID()) };
     // added 2nd check to ensure there are no children
     // also removes the need to erase from map when deleting
-    return iter != m_children.end() && !iter->second.empty();
+    return iter != mChildren.end() && !iter->second.empty();
   }
 
   Entity EntityManager::GetEntityFromTag(std::string tag) {
@@ -83,15 +83,15 @@ namespace ECS {
   }
 
   Entity EntityManager::GetParentEntity(Entity const& child) const {
-    if (!m_registry.valid(child.GetRawEnttEntityID())) {
+    if (!mRegistry.valid(child.GetRawEnttEntityID())) {
       // @TODO: REPLACE WITH LOGGING SYSTEM
       std::cout << "Child is not valid!" << std::endl;
       return Entity();
     }
 
-    auto iter{ m_parent.find(child.GetRawEnttEntityID()) };
+    auto iter{ mParent.find(child.GetRawEnttEntityID()) };
 
-    if (iter == m_parent.end()) {
+    if (iter == mParent.end()) {
       // @TODO: REPLACE WITH LOGGING SYSTEM
       std::cout << "Entity: " << child.GetTag() << " does not have a Parent!\n";
     }
@@ -100,15 +100,15 @@ namespace ECS {
   }
 
   std::vector<Entity> EntityManager::GetChildEntity(Entity const& parent) {
-    if (!m_registry.valid(parent.GetRawEnttEntityID())) {
+    if (!mRegistry.valid(parent.GetRawEnttEntityID())) {
       // @TODO: REPLACE WITH LOGGING SYSTEM
       std::cout << "Parent is not valid!" << std::endl;
       return std::vector<Entity>();
     }
 
-    auto iter{ m_children.find(parent.GetRawEnttEntityID()) };
+    auto iter{ mChildren.find(parent.GetRawEnttEntityID()) };
 
-    if (iter == m_children.end()) {
+    if (iter == mChildren.end()) {
       // @TODO: REPLACE WITH LOGGING SYSTEM
       std::cout << "Entity: " << parent.GetTag() << " does not have a Child!\n";
       return std::vector<Entity>();
@@ -122,110 +122,110 @@ namespace ECS {
   }
 
   void EntityManager::SetParentEntity(Entity const& parent, Entity const& child) {
-    if (!m_registry.valid(parent.GetRawEnttEntityID()) || 
-      !m_registry.valid(child.GetRawEnttEntityID())) {
+    if (!mRegistry.valid(parent.GetRawEnttEntityID()) || 
+      !mRegistry.valid(child.GetRawEnttEntityID())) {
       // @TODO: REPLACE WITH LOGGING SYSTEM
       std::cout << "Parent/Child is not valid!" << std::endl;
       return;
     }
 
-    m_parent[child.GetRawEnttEntityID()] = parent.GetRawEnttEntityID();
-    m_children[parent.GetRawEnttEntityID()].insert(child.GetRawEnttEntityID());
+    mParent[child.GetRawEnttEntityID()] = parent.GetRawEnttEntityID();
+    mChildren[parent.GetRawEnttEntityID()].insert(child.GetRawEnttEntityID());
   }
 
   void EntityManager::SetChildEntity(Entity const& parent, Entity const& child) {
-    if (!m_registry.valid(parent.GetRawEnttEntityID()) || 
-      !m_registry.valid(child.GetRawEnttEntityID())) {
+    if (!mRegistry.valid(parent.GetRawEnttEntityID()) || 
+      !mRegistry.valid(child.GetRawEnttEntityID())) {
       // @TODO: REPLACE WITH LOGGING SYSTEM
       std::cout << "Parent/Child is not valid!" << std::endl;
       return;
     }
 
-    m_children[parent.GetRawEnttEntityID()].insert(child.GetRawEnttEntityID());
-    m_parent[child.GetRawEnttEntityID()] = parent.GetRawEnttEntityID();
+    mChildren[parent.GetRawEnttEntityID()].insert(child.GetRawEnttEntityID());
+    mParent[child.GetRawEnttEntityID()] = parent.GetRawEnttEntityID();
   }
 
-  std::map<EntityManager::EntityID, std::set<EntityManager::EntityID>> const& EntityManager::GetChildrenMap() const {
-    return m_children;
+  std::unordered_map<EntityManager::EntityID, std::set<EntityManager::EntityID>> const& EntityManager::GetChildrenMap() const {
+    return mChildren;
   }
 
-  std::map<EntityManager::EntityID, EntityManager::EntityID> const& EntityManager::GetParentMap() const {
-    return m_parent;
+  std::unordered_map<EntityManager::EntityID, EntityManager::EntityID> const& EntityManager::GetParentMap() const {
+    return mParent;
   }
 
   bool EntityManager::RemoveParent(Entity const& child) {
-    if (!m_registry.valid(child.GetRawEnttEntityID())) {
+    if (!mRegistry.valid(child.GetRawEnttEntityID())) {
       // @TODO: REPLACE WITH LOGGING SYSTEM
       std::cout << "Entity is not valid!" << std::endl;
       return false;
     }
 
-    auto iter{ m_parent.find(child.GetRawEnttEntityID()) };
+    auto iter{ mParent.find(child.GetRawEnttEntityID()) };
 
-    if (iter == m_parent.end()) {
+    if (iter == mParent.end()) {
       // @TODO: REPLACE WITH LOGGING SYSTEM
       std::cout << "Removing Non-existent Parent!\n";
       return false;
     }
 
     else {
-      std::set<EntityID>& childList = m_children[m_parent[child.GetRawEnttEntityID()]];
+      std::set<EntityID>& childList = mChildren[mParent[child.GetRawEnttEntityID()]];
       childList.erase(child.GetRawEnttEntityID());
-      m_parent.erase(child.GetRawEnttEntityID());
+      mParent.erase(child.GetRawEnttEntityID());
       return true;
     }
   }
 
   void EntityManager::RemoveEntity(Entity const& entity) {
-    if (!m_registry.valid(entity.GetRawEnttEntityID())) {
+    if (!mRegistry.valid(entity.GetRawEnttEntityID())) {
       // @TODO: REPLACE WITH LOGGING SYSTEM
       std::cout << "Entity is not valid!" << std::endl;
       return;
     }
 
-    auto iter{ m_parent.find(entity.GetRawEnttEntityID()) };
+    auto iter{ mParent.find(entity.GetRawEnttEntityID()) };
 
-    if (iter == m_parent.end()) {
+    if (iter == mParent.end()) {
       // @TODO: REPLACE WITH LOGGING SYSTEM
       std::cout << "Removing Non-existent Parent!\n";
       return;
     }
 
     else { // Entity has a parent, proceed to remove it from parent's child list
-      std::set<EntityID> & childList = m_children[m_parent[entity.GetRawEnttEntityID()]];
+      std::set<EntityID> & childList = mChildren[mParent[entity.GetRawEnttEntityID()]];
       childList.erase(entity.GetRawEnttEntityID());
     }
     
-    m_parent.erase(entity.GetRawEnttEntityID());
+    mParent.erase(entity.GetRawEnttEntityID());
     RecursivelyRemoveParentAndChild(entity.GetRawEnttEntityID());
   }
 
   void EntityManager::RecursivelyRemoveParentAndChild(EntityID entity) {
-    std::set<EntityID> setOfChildren = m_children[entity];
+    std::set<EntityID> setOfChildren = mChildren[entity];
     for (EntityID child : setOfChildren) {
-      m_parent.erase(child);
+      mParent.erase(child);
       RecursivelyRemoveParentAndChild(child);
     }
-    m_children.erase(entity);
+    mChildren.erase(entity);
     DeleteEntity(entity);
   }
 
   void EntityManager::Reset() {
-    m_registry.clear();
-    m_children.clear();
-    m_parent.clear();
+    mRegistry.clear();
+    mChildren.clear();
+    mParent.clear();
   }
 
   entt::registry& EntityManager::GetRegistry() {
-    return m_registry;
+    return mRegistry;
   }
 
   void EntityManager::DeleteEntity(Entity entity) {
-    if (!m_registry.valid(entity.GetRawEnttEntityID())) {
+    if (!mRegistry.valid(entity.GetRawEnttEntityID())) {
       // @TODO: REPLACE WITH LOGGING SYSTEM
       std::cout << "Entity is not valid!" << std::endl;
       return;
     }
-    m_registry.destroy(entity.GetRawEnttEntityID());
+    mRegistry.destroy(entity.GetRawEnttEntityID());
   }
 } // namespace ECS

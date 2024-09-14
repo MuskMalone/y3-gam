@@ -128,7 +128,7 @@ namespace Events
     PrefabSavedEvent(std::string prefab) : Event(EventType::PREFAB_SAVED), mPrefab{ std::move(prefab) } {}
     inline std::string GetName() const noexcept override { return "Prefab Saved: " + mPrefab; }
 
-    std::string const m_prefab;
+    std::string const mPrefab;
   };
 
   class PrefabInstancesUpdatedEvent : public Event

@@ -1,0 +1,26 @@
+/*!*********************************************************************
+\file   ComponentTypes.h
+\date   15-September-2024
+\brief	Contains the list of component types used for easy access
+				during reflection.
+	
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
+#pragma once
+#include <vector>
+#include <rttr/type.h>
+#include <Core/Component/Components.h>
+#include <typeindex>
+#include <bitset>
+
+namespace Reflection
+{
+
+	std::vector<rttr::type> const gComponentTypes
+	{
+		rttr::type::get<Component::Tag>(),
+		rttr::type::get<Component::Transform>(),
+		rttr::type::get<Component::Layer>()
+	};
+
+}

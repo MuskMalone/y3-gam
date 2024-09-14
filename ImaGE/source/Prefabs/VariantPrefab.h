@@ -37,7 +37,7 @@ namespace Prefabs
     \param comp
       The component to add
     ************************************************************************/
-    void AddComponent(rttr::variant const& comp) { m_components.emplace_back(comp); }
+    void AddComponent(rttr::variant const& comp) { mComponents.emplace_back(comp); }
 
     /*!*********************************************************************
     \brief
@@ -46,7 +46,7 @@ namespace Prefabs
     \param comp
       The component to add
     ************************************************************************/
-    void AddComponent(rttr::variant&& comp) { m_components.emplace_back(std::move(comp)); }
+    void AddComponent(rttr::variant&& comp) { mComponents.emplace_back(std::move(comp)); }
 
     /*!*********************************************************************
     \brief
@@ -59,10 +59,10 @@ namespace Prefabs
     ************************************************************************/
     ECS::Entity Construct() const;
 
-    std::string m_name;
-    std::vector<rttr::variant> m_components;
-    SubDataId m_id, m_parent;
-    bool m_isActive;
+    std::string mName;
+    std::vector<rttr::variant> mComponents;
+    SubDataId mId, mParent;
+    bool mIsActive;
 
     // id of the first layer of the prefab
     static SubDataId const BasePrefabId = 0;
@@ -82,7 +82,7 @@ namespace Prefabs
     \return
       True if child components exist and false otherwise
     ************************************************************************/
-    inline bool HasChildComponents() const noexcept { return !m_objects.empty(); }
+    inline bool HasChildComponents() const noexcept { return !mObjects.empty(); }
 
     /*!*********************************************************************
     \brief
@@ -97,7 +97,7 @@ namespace Prefabs
     /*!*********************************************************************
     \brief
       Creates a sub-object of given the set of entity IDs from the ECS and
-      adds it to m_objects vector. Calling this function does not require
+      adds it to mObjects vector. Calling this function does not require
       the 2nd argument to be used. This function is recursively called 
       downwards for each child in the set until an entity without
       children is encountered.
@@ -121,29 +121,29 @@ namespace Prefabs
     // stores data relating to a removed component
     struct RemovedComponent
     {
-      RemovedComponent() : m_id{}, m_type{ rttr::type::get<void>() }, m_version{} {}
+      RemovedComponent() : mId{}, mType{ rttr::type::get<void>() }, mVersion{} {}
       RemovedComponent(PrefabSubData::SubDataId id, rttr::type const& type, PrefabVersion ver) :
-        m_id{ id }, m_type{ type }, m_version{ ver } {}
+        mId{ id }, mType{ type }, mVersion{ ver } {}
 
-      PrefabSubData::SubDataId m_id;
-      rttr::type m_type;
-      PrefabVersion m_version;
+      PrefabSubData::SubDataId mId;
+      rttr::type mType;
+      PrefabVersion mVersion;
     };
 
-    std::string m_name;
-    std::vector<PrefabSubData> m_objects;
-    std::vector<rttr::variant> m_components;
-    std::vector<std::pair<PrefabSubData::SubDataId, PrefabVersion>> m_removedChildren;
-    std::vector<RemovedComponent> m_removedComponents;
-    PrefabVersion m_version;
-    bool m_isActive;
+    std::string mName;
+    std::vector<PrefabSubData> mObjects;
+    std::vector<rttr::variant> mComponents;
+    std::vector<std::pair<PrefabSubData::SubDataId, PrefabVersion>> mRemovedChildren;
+    std::vector<RemovedComponent> mRemovedComponents;
+    PrefabVersion mVersion;
+    bool mIsActive;
   };
 
   // stores information pertaining to each prefab instance
   struct VariantPrefab::EntityMappings
   {
-    EntityMappings() : m_prefab{}, m_objToEntity{}, m_version{}, m_registered{ true } {}
-    EntityMappings(std::string prefab, PrefabVersion version) : m_prefab{ std::move(prefab) }, m_objToEntity{}, m_version{ version }, m_registered{ true } {}
+    EntityMappings() : mPrefab{}, mObjToEntity{}, mVersion{}, mRegistered{ true } {}
+    EntityMappings(std::string prefab, PrefabVersion version) : mPrefab{ std::move(prefab) }, mObjToEntity{}, mVersion{ version }, mRegistered{ true } {}
 
     /*!*********************************************************************
     \brief
@@ -152,9 +152,9 @@ namespace Prefabs
     ************************************************************************/
     void Validate();
 
-    std::string m_prefab;
-    std::unordered_map<PrefabSubData::SubDataId, ECS::Entity> m_objToEntity;
-    PrefabVersion m_version;
-    bool m_registered = true;  // whether the entity should be updated by the prefab
+    std::string mPrefab;
+    std::unordered_map<PrefabSubData::SubDataId, ECS::EntityManager::EntityID> mObjToEntity;
+    PrefabVersion mVersion;
+    bool mRegistered = true;  // whether the entity should be updated by the prefab
   };
 }

@@ -11,7 +11,7 @@ Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 co
   : m_shaders{}, m_defaultShaders{}, 
   m_light{ { 0.f, 25.f, 0.f }, { 0.4f, 0.4f, 0.4f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 1.0f } },
   m_material{ glm::vec3(1.f), glm::vec3(1.f), glm::vec3(1.f), 100.f }, m_cameras{},
-  m_objects{},
+  mObjects{},
   m_leftClickHeld{ false }, m_leftClickTriggered{ true }, m_bvhModified{ true }, m_reconstructTree{ false }
 {
   glClearColor(clearClr.r, clearClr.g, clearClr.b, clearClr.a);
@@ -59,15 +59,15 @@ void Scene::Init()
   });
 
   // OTHER MODELS
-  m_objects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3(-5.f, 0.f, 0.f), glm::vec3(30.f)));
-  m_objects.emplace_back(std::make_shared<Object>("./assets/models/horse_high_poly.obj", glm::vec3(5.f), glm::vec3(30.f)));
-  m_objects.emplace_back(std::make_shared<Object>("./assets/models/teapot_mid_poly.obj", glm::vec3(), glm::vec3(1.f)));
+  mObjects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3(-5.f, 0.f, 0.f), glm::vec3(30.f)));
+  mObjects.emplace_back(std::make_shared<Object>("./assets/models/horse_high_poly.obj", glm::vec3(5.f), glm::vec3(30.f)));
+  mObjects.emplace_back(std::make_shared<Object>("./assets/models/teapot_mid_poly.obj", glm::vec3(), glm::vec3(1.f)));
 }
 
 void Scene::Update(float deltaTime)
 {
   // update transforms
-  for (auto& obj : m_objects)
+  for (auto& obj : mObjects)
   {
     obj->Update(deltaTime);
   }
@@ -90,7 +90,7 @@ void Scene::Draw()
   m_light.SetUniforms(m_shaders);
   m_material.SetUniforms(m_shaders);
 
-  for (auto& obj : m_objects)
+  for (auto& obj : mObjects)
   {
     m_shaders.SetUniform("uMdlTransform", obj->mdlTransform);
     m_shaders.SetUniform("uVtxClr", obj->clr);
@@ -128,7 +128,7 @@ void Scene::DrawTopView()
   m_light.SetUniforms(m_shaders);
   m_material.SetUniforms(m_shaders);
 
-  for (auto& obj : m_objects)
+  for (auto& obj : mObjects)
   {
     m_shaders.SetUniform("uMdlTransform", obj->mdlTransform);
     m_shaders.SetUniform("uVtxClr", obj->clr);
