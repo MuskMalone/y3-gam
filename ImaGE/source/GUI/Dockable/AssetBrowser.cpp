@@ -47,9 +47,9 @@ namespace Helper
 namespace GUI
 {
 
-  AssetBrowser::AssetBrowser(std::string const& name)
-    : mCurrentDir{ gAssetsDirectory }, mRightClickedDir{},
-      mSelectedAsset{}, mDirMenuPopup{ false }, GUIWindow(name)
+  AssetBrowser::AssetBrowser(std::string const& name) :
+    mCurrentDir{ gAssetsDirectory }, mRightClickedDir{},
+    mSelectedAsset{}, mDirMenuPopup{ false }, GUIWindow(name)
   {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::ADD_FILES, &AssetBrowser::HandleEvent, this);
   }

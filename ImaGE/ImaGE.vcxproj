@@ -24,6 +24,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Source\GUI\Persistent\PrefabEditor.cpp" />
     <ClCompile Include="Source\Prefabs\PrefabManager.cpp" />
     <ClCompile Include="Source\Prefabs\VariantPrefab.cpp" />
     <ClCompile Include="source\TempScene.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="source\Core\Entity.h" />
     <ClInclude Include="source\Core\EntityManager.h" />
     <ClInclude Include="Source\Core\TempObject.h" />
+    <ClInclude Include="Source\GUI\Persistent\PrefabEditor.h" />
     <ClInclude Include="Source\Prefabs\PrefabManager.h" />
     <ClInclude Include="Source\Prefabs\VariantPrefab.h" />
     <ClInclude Include="source\TempScene.h" />
