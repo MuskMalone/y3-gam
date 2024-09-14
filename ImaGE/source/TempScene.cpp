@@ -1,5 +1,7 @@
 #include <pch.h>
 #include "TempScene.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <glm/gtc/constants.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <fstream>

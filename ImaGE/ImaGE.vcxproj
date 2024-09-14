@@ -20,6 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\TempObject.cpp" />
+    <ClCompile Include="Source\External\glad.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\GUI\Persistent\PrefabEditor.cpp" />
+    <ClCompile Include="Source\Prefabs\PrefabManager.cpp" />
+    <ClCompile Include="Source\Prefabs\VariantPrefab.cpp" />
     <ClCompile Include="source\TempScene.cpp" />
     <ClCompile Include="source\Scenes\SceneManager.cpp" />
     <ClCompile Include="Source\Application.cpp" />
@@ -91,12 +98,6 @@
     <ClCompile Include="source\Graphics\MeshGen.cpp" />
     <ClCompile Include="Source\pch.cpp" />
     <ClCompile Include="Source\Core\Camera.cpp" />
-    <ClCompile Include="Source\External\glad.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='NO_IMGUI_D|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='NO_IMGUI_R|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="Source\main.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='NO_IMGUI_D|x64'">Create</PrecompiledHeader>
@@ -120,6 +121,9 @@
     <ClInclude Include="source\Core\Entity.h" />
     <ClInclude Include="source\Core\EntityManager.h" />
     <ClInclude Include="Source\Core\TempObject.h" />
+    <ClInclude Include="Source\GUI\Persistent\PrefabEditor.h" />
+    <ClInclude Include="Source\Prefabs\PrefabManager.h" />
+    <ClInclude Include="Source\Prefabs\VariantPrefab.h" />
     <ClInclude Include="source\TempScene.h" />
     <ClInclude Include="source\Scenes\SceneManager.h" />
     <ClInclude Include="source\Events\Event.h" />

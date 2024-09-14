@@ -35,5 +35,18 @@ private:
   static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
   static void ErrorCallback(int err, const char* desc);
 
+  /*!*********************************************************************
+  \brief
+    Callback function for dragging files into the editor. Sends the
+    filepaths received to the asset manager.
+  \param window
+    The window the file was dragged into
+  \param pathCount
+    The number of files
+  \param paths
+    The paths of the files
+  ************************************************************************/
+  static void WindowDropCallback(GLFWwindow*, int pathCount, const char* paths[]);
+
   inline void ToggleImGuiActive() noexcept { mImGuiActive = !mImGuiActive; }
 };

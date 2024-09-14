@@ -12,6 +12,7 @@ namespace Scenes
 {
   void SceneManager::Init()
   {
+    mSceneState = SceneState::STOPPED;
     // @TODO: SHOULD RETREIVE FROM CONFIG FILE IN FUTURE
     mTempDir = gTempDirectory;
 
@@ -90,8 +91,10 @@ namespace Scenes
     case Events::EventType::EDIT_PREFAB:
       // save and unload
       TemporarySave();
-      //UnloadScene();
-      //FreeScene();
+      ClearScene();
+      UnloadScene();
+      mSceneState = SceneState::PREFAB_EDITOR;
+      mSceneName = "Prefab Editor: " + std::static_pointer_cast<Events::EditPrefabEvent>(event)->mPrefab;
       break;
 
     default: break;

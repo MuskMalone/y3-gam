@@ -12,7 +12,7 @@ namespace GUI
 
   void SceneControls::Run()
   {
-    bool const sceneStopped{ mSceneManager.GetSceneState() == Scenes::SceneState::STOPPED };
+    bool const sceneStopped{ mSceneManager.GetSceneState() >= Scenes::SceneState::STOPPED };
 
     if (!sceneStopped) {
       ImGui::PushStyleColor(ImGuiCol_MenuBarBg, ImVec4(0.f, 0.6f, 0.f, 1.f));

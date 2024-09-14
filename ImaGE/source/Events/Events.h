@@ -8,6 +8,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
 #include "Event.h"
+#include <Core/EntityManager.h>
+#include <vector>
 
 namespace Events
 {
@@ -86,6 +88,37 @@ namespace Events
     std::string const mPrefab, mPath;
   };
 
+  class DeletePrefabEvent : public Event
+  {
+  public:
+    DeletePrefabEvent(std::string name) : Event(EventType::DELETE_PREFAB), mName{ std::move(name) } {}
+    inline std::string GetName() const noexcept override { return "Deleted Prefab: " + mName; }
+
+    std::string const mName;
+  };
+
+  class RemoveEntityEvent : public Event
+  {
+  public:
+    RemoveEntityEvent(ECS::EntityManager::EntityID id) : Event(EventType::REMOVE_ENTITY), mEntityId{ id } {}
+    inline std::string GetName() const noexcept override { return "Deleted Prefab: " + static_cast<unsigned>(mEntityId); }
+
+    ECS::EntityManager::EntityID const mEntityId;
+  };
+
+  class AddFilesFromExplorerEvent : public Event
+  {
+  public:
+    AddFilesFromExplorerEvent(int pathCount, const char* paths[]) : Event(EventType::ADD_FILES) {
+      for (int i{}; i < pathCount; ++i) {
+        mPaths.emplace_back(paths[i]);
+      }
+    }
+    inline std::string GetName() const noexcept override { return "Adding " + std::to_string(mPaths.size()) + " files from file explorer"; }
+
+    std::vector<std::string> mPaths;
+  };
+
 #ifdef GAM200_EVENTS
 #ifndef IMGUI_DISABLE
 
@@ -103,15 +136,6 @@ namespace Events
   public:
     PrefabInstancesUpdatedEvent() : Event(EventType::PREFAB_INSTANCES_UPDATED) {}
     inline std::string GetName() const noexcept override { return "Scene Updated with Prefab Instances"; }
-  };
-
-  class DeletePrefabEvent : public Event
-  {
-  public:
-    DeletePrefabEvent(std::string name) : Event(EventType::DELETE_PREFAB), mName{ std::move(name) } {}
-    inline std::string GetName() const noexcept override { return "Deleted Prefab: " + mName; }
-
-    std::string const mName;
   };
 
   class DeleteAssetEvent : public Event

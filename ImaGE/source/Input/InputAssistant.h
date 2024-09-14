@@ -15,10 +15,10 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include <unordered_map>
 #include <functional>
+
+struct GLFWwindow;
 
 class InputAssistant
 {

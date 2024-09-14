@@ -22,7 +22,7 @@ namespace Scenes
     {
       SaveState(std::string name, std::string path) : mName{ std::move(name) }, mPath{ std::move(path) } {}
 
-      std::string const mName, mPath;
+      std::string mName, mPath;
     };
 
     void LoadScene(std::string const& filePath);

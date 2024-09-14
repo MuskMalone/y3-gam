@@ -6,9 +6,10 @@ namespace Scenes
 
   enum class SceneState : uint8_t
   {
-    STOPPED,
     PLAYING,
-    PAUSED
+    PAUSED,
+    STOPPED,
+    PREFAB_EDITOR
   };
 
 } // namespace Scenes
