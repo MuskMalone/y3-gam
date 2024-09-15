@@ -12,8 +12,23 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
 #include "Deserializer.h"
+#include "JsonKeys.h"
 #include <fstream>
 #include <rapidjson/istreamwrapper.h>
+#include <sstream>
+#include <cstdarg>
+#include <Prefabs/PrefabManager.h>
+
+#define DESERIALIZER_DEBUG
+
+#ifdef _DEBUG
+std::ostream& operator<<(std::ostream& os, rttr::type const& type)
+{
+  os << type.get_name().to_string();
+
+  return os;
+}
+#endif
 
 namespace Serialization
 {
@@ -41,6 +56,157 @@ namespace Serialization
     }
 
     DeserializeRecursive(inst, document);
+  }
+
+  Reflection::ObjectFactory::EntityDataContainer Deserializer::DeserializeScene(std::string const& filepath)
+  {
+    rapidjson::Document document;
+    // some initial sanity checks
+    // we don't throw here because this is called when the engine
+    // first runs, before the catching is established
+    if (!ParseJsonIntoDocument(document, filepath)) {
+      return{};
+    }
+
+    if (!document.IsArray()) {
+      // log(filepath + ": root is not an array!");
+#ifdef _DEBUG
+      std::cout << filepath + ": root is not an array!" << "\n";
+#endif
+      return {};
+    }
+    // check if scn file contains all basic keys
+    if (!ScanJsonFileForMembers(document, filepath, 6,
+      JsonNameKey, rapidjson::kStringType, JsonChildEntitiesKey, rapidjson::kArrayType,
+      JsonIdKey, rapidjson::kNumberType, JsonParentKey, rapidjson::kNumberType,
+      JsonComponentsKey, rapidjson::kArrayType, JsonEntityStateKey, rapidjson::kFalseType))
+    {
+      return {};
+    }
+
+    // okay code starts here
+    Reflection::ObjectFactory::EntityDataContainer ret{};
+    for (auto const& entity : document.GetArray())
+    {
+      EntityID entityId{ entity[JsonIdKey].GetUint() };
+      EntityID const parentId{ entity[JsonParentKey].IsNull() ? entt::null : entity[JsonParentKey].GetUint() };
+      Reflection::VariantEntity entityVar{ entity[JsonNameKey].GetString(),
+        parentId, entity[JsonEntityStateKey].GetBool() };  // set parent
+      // get child ids
+      for (auto const& child : entity[JsonChildEntitiesKey].GetArray()) {
+        entityVar.mChildEntities.emplace_back(EntityID(child.GetUint()));
+      }
+
+#ifndef IMGUI_DISABLE
+      // @TODO: TO RESTORE PREFAB SYSTEM
+      /*Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
+      if (entity.HasMember(JsonPrefabKey) && !entity[JsonPrefabKey].IsNull())
+      {
+        rttr::variant mappedData{ Prefabs::VariantPrefab::EntityMappings{} };
+        DeserializeRecursive(mappedData, entity[JsonPrefabKey]);
+        pm.AttachPrefab(entityId, std::move(mappedData.get_value<Prefabs::VariantPrefab::EntityMappings>()));
+      }*/
+#endif
+
+      // restore components
+      std::vector<rttr::variant>& compVector{ entityVar.mComponents };
+      for (auto const& elem : entity[JsonComponentsKey].GetArray())
+      {
+        for (rapidjson::Value::ConstMemberIterator comp{ elem.MemberBegin() }; comp != elem.MemberEnd(); ++comp)
+        {
+          std::string const compName{ comp->name.GetString() };
+          rapidjson::Value const& compJson{ comp->value };
+
+          rttr::type compType = rttr::type::get_by_name(compName);
+#ifdef DESERIALIZER_DEBUG
+          std::cout << "  [S] Deserializing " << compType << "\n";
+#endif
+          if (!compType.is_valid())
+          {
+            std::ostringstream oss{};
+            oss << "Trying to deserialize an invalid component: " << compName;
+            // log(oss.str());
+#ifdef _DEBUG
+            std::cout << oss.str() << "\n";
+#endif
+            continue;
+          }
+
+          rttr::variant compVar{};
+          DeserializeComponent(compVar, compType, compJson);
+
+          compVector.emplace_back(std::move(compVar));
+        }
+      }
+
+      ret.emplace_back(entityId, std::move(entityVar));
+    }
+
+    return ret;
+  }
+
+  void Deserializer::DeserializeComponent(rttr::variant& compVar, rttr::type const& compType, rapidjson::Value const& compJson)
+  {
+#ifdef DESERIALIZER_DEBUG
+    std::cout << "  Type of component variant is " << compType << "\n";
+#endif
+
+    rttr::constructor const& compCtr{ *compType.get_constructors().begin() };
+    // if ctor is default, invoke it and proceed
+    if (compCtr.get_parameter_infos().empty())
+    {
+      compVar = compCtr.invoke();
+#ifdef DESERIALIZER_DEBUG
+      std::cout << "  Invoking default ctor...\n";
+#endif
+      DeserializeRecursive(compVar, compJson);
+    }
+    else
+    {
+#ifdef DESERIALIZER_DEBUG
+      std::cout << "  Invoking non-default ctor...\n";
+#endif
+
+      std::vector<rttr::argument> args{}; // vector of args for ctor
+      // iterate through data members of component
+      auto const properties{ compType.get_properties() };
+      args.reserve(compCtr.get_parameter_infos().size());
+      for (auto const& param : compCtr.get_parameter_infos())
+      {
+        for (auto& prop : properties)
+        {
+          // match param name with property name
+          // to get the right order of args to invoke ctor
+          if (param.get_name() == prop.get_name())
+          {
+#ifdef DESERIALIZER_DEBUG
+            std::cout << "    Extracting property: " << prop.get_name().to_string() << " of type: " << prop.get_type() << "\n";
+#endif
+            rapidjson::Value::ConstMemberIterator iter{ compJson.FindMember(prop.get_name().to_string().c_str()) };
+            if (iter == compJson.MemberEnd())
+            {
+              std::ostringstream oss{};
+              oss << "Unable to find " << prop.get_name().to_string()
+                << " property in " << compType.get_name().to_string();
+              // log(oss.str());
+              continue;
+            }
+
+            rttr::type const propType{ prop.get_type() };
+            args.emplace_back(ExtractValue(iter->value, propType));
+#ifdef DESERIALIZER_DEBUG
+            std::cout << "    Added " << param.get_name() << " of type " << args.back().get_type() << " to args list\n";
+#endif
+            break;
+          }
+        }
+      }
+
+      compVar = compCtr.invoke_variadic(args);
+#ifdef DESERIALIZER_DEBUG
+      std::cout << "    Invoked ctor, returning " << compVar.get_type() << "\n";
+#endif
+    }
   }
 
   void Deserializer::DeserializeRecursive(rttr::instance inst, rapidjson::Value const& jsonObj)
@@ -259,6 +425,143 @@ namespace Serialization
         }
       }
     }
+  }
+
+  bool Deserializer::ParseJsonIntoDocument(rapidjson::Document& document, std::string const& filepath)
+  {
+    std::ifstream ifs{ filepath };
+    if (!ifs)
+    {
+      // log ("Unable to read " + filepath);
+#ifdef _DEBUG
+      std::cout << "Unable to read " << filepath << "\n";
+#endif
+      return false;
+    }
+    // parse into document object
+    rapidjson::IStreamWrapper isw{ ifs };
+    if (ifs.peek() == std::ifstream::traits_type::eof())
+    {
+      ifs.close(); //log ("Empty scene file read. Ignoring checks");
+      return false;
+    }
+
+    if (document.ParseStream(isw).HasParseError())
+    {
+      ifs.close(); // log ("Unable to parse " + filepath);
+#ifdef _DEBUG
+      std::cout << "Unable to parse " + filepath << "\n";
+#endif
+      return false;
+    }
+
+    return true;
+  }
+
+  bool Deserializer::ScanJsonFileForMembers(rapidjson::Value const& value, std::string const& filename, unsigned keyCount, ...)
+  {
+    va_list args;
+    va_start(args, keyCount);
+
+    bool status{ true };
+    std::vector <std::pair<std::string, rapidjson::Type>> keys{};
+    for (unsigned i{}; i < keyCount; ++i)
+    {
+      std::string test{ va_arg(args, const char*) };
+      keys.emplace_back(std::move(test), static_cast<rapidjson::Type>(va_arg(args, int)));
+    }
+
+    if (value.IsArray())
+    {
+      for (unsigned i{}; i < value.GetArray().Size(); ++i)
+      {
+        for (auto const& [keyName, type] : keys)
+        {
+          rapidjson::Value const& elem{ value[i] };
+          auto result{ elem.FindMember(keyName.c_str()) };
+          if (result == elem.MemberEnd())
+          {
+            std::ostringstream oss{};
+            oss << filename << ": Unable to find key \"" + keyName + "\" of element: " << i << " in rapidjson value";
+            // log
+#ifdef _DEBUG
+            std::cout << oss.str() << "\n";
+#endif
+            status = false;
+            continue;
+          }
+
+          if ((type == rapidjson::kTrueType || type == rapidjson::kFalseType))
+          {
+            if (!elem[keyName.c_str()].IsBool())
+            {
+              std::ostringstream oss{};
+              oss << filename << ": Element \"" << keyName << "\" is not of type bool";
+              // log
+#ifdef _DEBUG
+              std::cout << oss.str() << "\n";
+#endif
+              status = false;
+            }
+          }
+          else if (!elem[keyName.c_str()].IsNull() && elem[keyName.c_str()].GetType() != type)
+          {
+            std::ostringstream oss{};
+            oss << filename << ": Element \"" << keyName << "\" is not of rapidjson type:" << type;
+            // log
+#ifdef _DEBUG
+            std::cout << oss.str() << "\n";
+#endif
+            status = false;
+          }
+        }
+      }
+    }
+    else
+    {
+      for (auto const& [keyName, type] : keys)
+      {
+        auto result{ value.FindMember(keyName.c_str()) };
+        if (result == value.MemberEnd())
+        {
+          std::ostringstream oss{};
+          oss << filename << ": Unable to find key \"" << keyName << "\" in rapidjson value";
+          // log
+#ifdef _DEBUG
+          std::cout << oss.str() << "\n";
+#endif
+          status = false;
+          continue;
+        }
+
+        if ((type == rapidjson::kTrueType || type == rapidjson::kFalseType))
+        {
+          if (!value[keyName.c_str()].IsBool())
+          {
+            std::ostringstream oss{};
+            oss << filename << ": Element \"" << keyName << "\" is not of type bool";
+            // log
+#ifdef _DEBUG
+            std::cout << oss.str() << "\n";
+#endif
+            status = false;
+          }
+        }
+        else if (!value[keyName.c_str()].IsNull() && value[keyName.c_str()].GetType() != type)
+        {
+          std::ostringstream oss{};
+          oss << filename << ": Element \"" << keyName << "\" is not of rapidjson type:" << type;
+          // log
+#ifdef _DEBUG
+          std::cout << oss.str() << "\n";
+#endif
+          status = false;
+        }
+      }
+    }
+
+    va_end(args);
+    return status;
   }
 
 } // namespace Serialization

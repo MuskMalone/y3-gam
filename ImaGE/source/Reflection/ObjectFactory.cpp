@@ -117,7 +117,7 @@ namespace Reflection
 
   void ObjectFactory::LoadEntityData(std::string const& filePath)
   {
-    //mRawEntities = Serialization::Deserializer::DeserializeScene(filePath);
+    mRawEntities = Serialization::Deserializer::DeserializeScene(filePath);
   }
 
   void ObjectFactory::AddComponentToEntity(ECS::Entity& entity, rttr::variant const& compVar) const
