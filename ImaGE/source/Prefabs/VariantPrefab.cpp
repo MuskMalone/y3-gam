@@ -25,7 +25,7 @@ PrefabSubData::PrefabSubData(std::string name, SubDataId id, SubDataId parent) :
 ECS::Entity PrefabSubData::Construct() const
 {
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
-  ECS::Entity const entity{ entityMan.CreateEntityWithTag(mName) };
+  ECS::Entity entity{ entityMan.CreateEntityWithTag(mName) };
 
   //entityMan.SetIsActiveEntity(entity, mIsActive);
   Reflection::ObjectFactory::GetInstance().AddComponentsToEntity(entity, mComponents);
@@ -56,7 +56,7 @@ std::pair<ECS::Entity, VariantPrefab::EntityMappings> VariantPrefab::Construct()
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
 
   // first, create the base entity
-  ECS::Entity const entity{ entityMan.CreateEntityWithTag(mName) };
+  ECS::Entity entity{ entityMan.CreateEntityWithTag(mName) };
   //entityMan.SetIsActiveEntity(entity, mIsActive);
   Reflection::ObjectFactory::GetInstance().AddComponentsToEntity(entity, mComponents);
 

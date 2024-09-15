@@ -13,7 +13,7 @@ namespace ECS {
     return entity;
   }
 
-  Entity EntityManager::CreateEntityWithID(EntityID entityID) {
+  Entity EntityManager::CreateEntityWithID([[maybe_unused]] ECSKey key, EntityID entityID) {
       return Entity(mRegistry.create(entityID));
   }
 

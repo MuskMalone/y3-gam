@@ -26,7 +26,7 @@ Object::Object(std::string const& filePath, glm::vec3 const& _pos, glm::vec3 con
 }
 
 
-void Object::Update(float deltaTime)
+void Object::Update([[maybe_unused]] float deltaTime)
 {
   // if values weren't touched, we don't have to recompute
   if (!modified) { return; }

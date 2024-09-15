@@ -29,7 +29,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace Reflection
 {
 
-  void ObjectFactory::AddComponentsToEntity(ECS::Entity id, std::vector<rttr::variant> const& components) const
+  void ObjectFactory::AddComponentsToEntity(ECS::Entity& id, std::vector<rttr::variant> const& components) const
   {
     for (rttr::variant const& component : components) {
       AddComponentToEntity(id, component);
@@ -91,9 +91,10 @@ namespace Reflection
 
     for (auto const& [id, data] : mRawEntities)
     {
-      //entityMan.CreateEntity({}, id, data.mName);
+      ECS::Entity newEntity{ entityMan.CreateEntityWithID({}, id) };
+      newEntity.GetComponent<Component::Tag>().tag = data.mName;
       //entityMan.SetIsActiveEntity(id, data.mIsActive);
-      AddComponentsToEntity(id, data.mComponents);
+      AddComponentsToEntity(newEntity, data.mComponents);
     }
 
     for (auto const& [id, data] : mRawEntities)
@@ -119,7 +120,7 @@ namespace Reflection
     //mRawEntities = Serialization::Deserializer::DeserializeScene(filePath);
   }
 
-  void ObjectFactory::AddComponentToEntity(ECS::Entity entity, rttr::variant const& compVar) const
+  void ObjectFactory::AddComponentToEntity(ECS::Entity& entity, rttr::variant const& compVar) const
   {
     rttr::type compType{ compVar.get_type() };
     // get underlying type if it's wrapped in a pointer
@@ -162,7 +163,7 @@ namespace Reflection
     }
   }
 
-  void ObjectFactory::RemoveComponentFromEntity(ECS::Entity entity, rttr::type compType) const
+  void ObjectFactory::RemoveComponentFromEntity(ECS::Entity& entity, rttr::type compType) const
   {
     // get underlying type if it's wrapped in a pointer
     compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;

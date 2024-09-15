@@ -42,7 +42,7 @@ namespace Scenes
 
   void SceneManager::LoadScene(std::string const& filePath)
   {
-
+    UNREFERENCED_PARAMETER(filePath);
   }
 
   void SceneManager::InitScene()

@@ -201,6 +201,7 @@ void Application::FramebufferSizeCallback(GLFWwindow* window, int width, int hei
 
 void Application::ErrorCallback(int err, const char* desc)
 {
+  UNREFERENCED_PARAMETER(err);
 #ifdef _DEBUG
   std::cerr << "GLFW ERROR: \"" << desc << "\"" << " | Error code: " << std::endl;
 #endif

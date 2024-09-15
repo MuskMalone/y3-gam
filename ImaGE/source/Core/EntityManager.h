@@ -3,7 +3,18 @@
 #include "Component/Components.h"
 #include "Singleton.h"
 
+// forward declaration
+namespace Reflection{ class ObjectFactory; }
+
 namespace ECS {
+  // For exclusive access to CreateEntityWithID() function
+  // Ctor is private so an instance can only be created by friend classes
+  class ECSKey {
+    friend class Reflection::ObjectFactory;
+    ECSKey() {}
+    ECSKey(ECSKey const&) = delete;
+  };
+
   class Entity; // Forward Declaration
 
   class EntityManager : public Singleton <EntityManager> {
@@ -13,8 +24,18 @@ namespace ECS {
 
     Entity CreateEntity();
 
-    //DANGER: ONLY FOR CHENG EN
-    Entity CreateEntityWithID(EntityID entityID);
+    /*!*********************************************************************
+    \brief
+      Allows an entity to be created with a given ID and name. This
+      function can only be invoked by classes the "Exclusive" class 
+      explicitly friends. Only friend classes can create an instance of
+      Exclusive by specifying "{}" in the arg list.
+    \param entityID
+      The ID of the entity
+    \return
+      The created entity
+    ************************************************************************/
+    Entity CreateEntityWithID(ECSKey key, EntityID entityID);
 
     Entity CreateEntityWithTag(std::string const& tag);
     Entity CopyEntity(Entity entity);
