@@ -21,7 +21,7 @@ void Application::Init() {
   InputAssistant::RegisterKeyPressEvent(GLFW_KEY_GRAVE_ACCENT, std::bind(&Application::ToggleImGuiActive, this));
 
   // @TODO: SETTINGS TO BE LOADED FROM CONFIG FILE
-  FrameRateController::GetInstance().Init(360.f, 1.f, false);
+  FrameRateController::GetInstance().Init(120.f, 1.f, false);
 
   // @TODO: REMOVE, FOR TESTING ONLY
   /*
@@ -53,6 +53,15 @@ void Application::Init() {
   std::cout << "Second List: ";
   for (const auto& element : listTwo) {
     std::cout << element.GetTag() << " ";
+  }
+
+  FrameRateController::GetInstance().StartSystemTimer();
+
+  FrameRateController::GetInstance().EndSystemTimer("Cool System");
+
+  auto const& map{ FrameRateController::GetInstance().GetSystemTimerMap() };
+  for (auto const& elem : map) {
+    std::cout << elem.first << " : " << elem.second << "\n";
   }
   */
 }
