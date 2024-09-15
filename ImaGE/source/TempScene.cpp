@@ -4,6 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <fstream>
 #include <filesystem>
+#include "Graphics/Renderer.h"
 
 Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 const& clearClr)
   : m_shaders{}, m_defaultShaders{}, 
@@ -30,6 +31,7 @@ Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 co
 
 void Scene::Init()
 {
+    Graphics::Renderer::Init();
   InputAssistant::RegisterKeyPressEvent(GLFW_KEY_W, std::bind(&Camera::Forward, &m_cameras.front()));
   InputAssistant::RegisterKeyPressEvent(GLFW_KEY_S, std::bind(&Camera::Backward, &m_cameras.front()));
   InputAssistant::RegisterKeyPressEvent(GLFW_KEY_D, std::bind(&Camera::Right, &m_cameras.front()));
@@ -112,7 +114,50 @@ void Scene::Draw()
   m_cameras.front().SetUniforms(m_defaultShaders);
   m_defaultShaders.Unuse();
 
+  DebugDraw();
+ 
   glBindVertexArray(0);
+}
+
+void Scene::DebugDraw() {
+
+    // Get the view and projection matrices from the camera
+    glm::mat4 viewMatrix = m_cameras.front().GetViewMatrix();  // World to view space
+    glm::mat4 projMatrix = m_cameras.front().GetProjMatrix();  // View to projection space
+
+    glm::mat4 mtx = projMatrix * viewMatrix;
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+    Graphics::Renderer::RenderSceneBegin(mtx);
+
+    Graphics::Renderer::DrawQuad({-1.f,0.f,0.f}, {0.5f,0.5f}, glm::vec4{0.9f,0.2f,0.8f,1.f});
+    Graphics::Renderer::DrawQuad({ 1.f,0.f,0.f }, { 0.5f,0.5f }, glm::vec4{ 0.2f,1.f,0.8f,1.f });
+
+    //Graphics::Renderer::SubmitCube(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 5.0f, 5.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+
+    // Imagine a 5x5 grid of cubes, each placed at different positions, scales, and colors
+    for (int x = -2; x <= 2; ++x) {
+        for (int y = -2; y <= 2; ++y) {
+            // Calculate the position offset based on grid coordinates
+            glm::vec3 position = glm::vec3(x * 6.0f, y * 6.0f, 0.0f); // Spacing the cubes 6 units apart
+
+            // Random or incremental scaling
+            glm::vec3 scale = glm::vec3(1.0f + (x + 2) * 0.5f, 1.0f + (y + 2) * 0.5f, 1.0f);
+
+            // Assign a unique color for each cube (using normalized RGB values)
+            glm::vec4 color = glm::vec4(
+                (x + 2) * 0.2f, // Ranges from 0.0 to 1.0 as x goes from -2 to 2
+                (y + 2) * 0.2f, // Same for Y axis
+                1.0f - (x + 2) * 0.2f, // Creates a variety in color between cubes
+                1.0f);  // Alpha is always 1 (fully opaque)
+
+            // Submit the cube with the calculated position, scale, and color
+            Graphics::Renderer::SubmitCube(position, scale, color, 0.0f);
+        }
+    }
+
+    Graphics::Renderer::RenderSceneEnd();
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 void Scene::DrawTopView()

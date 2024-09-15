@@ -24,7 +24,9 @@ public:
   void Draw();
   void DrawTopView();
 
-  // allow ObjectEditor to access objects
+  void DebugDraw(); //@todo TEMP
+
+  // allow ObjectEditor to access objects,
   friend class GUI::GUIWindow;
   friend class GUI::GUIManager;
 

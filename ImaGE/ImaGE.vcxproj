@@ -19,7 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Graphics\ElementBuffer.cpp" />
+    <ClCompile Include="source\Graphics\RenderAPI.cpp" />
+    <ClCompile Include="source\Graphics\Renderer.cpp" />
+    <ClCompile Include="source\Graphics\Shader.cpp" />
     <ClCompile Include="Source\Core\TempObject.cpp" />
+    <ClCompile Include="source\Graphics\VertexArray.cpp" />
+    <ClCompile Include="source\Graphics\VertexBuffer.cpp" />
     <ClCompile Include="source\TempScene.cpp" />
     <ClCompile Include="source\Scenes\SceneManager.cpp" />
     <ClCompile Include="Source\Application.cpp" />
@@ -108,6 +114,11 @@
     <ClCompile Include="source\Serialization\Deserializer.cpp" />
     <ClCompile Include="source\Serialization\Registration.cpp" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
+    <ClCompile Include="source\Graphics\Texture.cpp" />
+    <ClInclude Include="source\Graphics\ElementBuffer.h" />
+    <ClInclude Include="source\Graphics\RenderAPI.h" />
+    <ClInclude Include="source\Graphics\Renderer.h" />
+    <ClInclude Include="source\Graphics\Shader.h" />
     <ClInclude Include="source\Core\Component\Components.h" />
     <ClInclude Include="source\Core\Component\Layer.h" />
     <ClInclude Include="source\Core\Component\Tag.h" />
@@ -115,6 +126,8 @@
     <ClInclude Include="source\Core\Entity.h" />
     <ClInclude Include="source\Core\EntityManager.h" />
     <ClInclude Include="Source\Core\TempObject.h" />
+    <ClInclude Include="source\Graphics\VertexArray.h" />
+    <ClInclude Include="source\Graphics\VertexBuffer.h" />
     <ClInclude Include="source\TempScene.h" />
     <ClInclude Include="source\Scenes\SceneManager.h" />
     <ClInclude Include="source\Events\Event.h" />
@@ -133,6 +146,7 @@
     <ClInclude Include="source\Serialization\Deserializer.h" />
     <ClInclude Include="source\Serialization\Serializer.h" />
     <ClInclude Include="source\Singleton.h" />
+    <ClInclude Include="source\Graphics\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
@@ -162,6 +176,10 @@
     <ClInclude Include="Source\Core\Camera.h" />
     <ClInclude Include="source\Graphics\ShaderProgram.h" />
     <ClInclude Include="source\Graphics\VertexAttribs.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\Default.frag.glsl" />
+    <None Include="shaders\Default.vert.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

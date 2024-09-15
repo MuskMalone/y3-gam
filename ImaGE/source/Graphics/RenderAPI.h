@@ -9,7 +9,7 @@ namespace Graphics{
 		void SetClearColor(const glm::vec4& color);
 		void Clear();
 
-		void DrawIndices(std::shared_ptr<VertexArray> const& vao, unsigned int idxCount);
+		void static DrawIndices(std::shared_ptr<VertexArray> const& vao, unsigned int idxCount);
 		void DrawLines(std::shared_ptr<VertexArray> const& vao, unsigned int vtxCount);
 
 		void SetLineWidth(float width);
