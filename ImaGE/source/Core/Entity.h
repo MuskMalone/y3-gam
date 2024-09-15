@@ -14,6 +14,7 @@ namespace ECS {
     uint32_t GetEntityID() const;
     EntityID GetRawEnttEntityID() const;
     std::string const& GetTag() const;
+    void SetTag(std::string const& tag);
 
     operator bool() const;
     bool operator==(const Entity& entity) const;

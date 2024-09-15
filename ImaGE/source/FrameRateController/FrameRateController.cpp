@@ -1,63 +1,101 @@
 #include <pch.h>
-#include "FrameRateController.h"
 #include <GLFW/glfw3.h>
+#include "FrameRateController.h"
 
 void FrameRateController::Init(float targetFPS, float fpsCalculationInterval, bool vsyncEnabled) {
-  m_vsyncEnabled = vsyncEnabled;
-  SetVsync(m_vsyncEnabled);
+  mVsyncEnabled = vsyncEnabled;
+  SetVsync(mVsyncEnabled);
 
-  m_currFrameTime = 0.f, m_newFrameTime = 0.f, m_deltaTime = 0.f;
-  m_fpsTimer = 0.f, m_currFPS = 0.f;
+  mCurrFrameTime = 0.f, mNewFrameTime = 0.f, mDeltaTime = 0.f;
+  mFPSTimer = 0.f, mCurrFPS = 0.f;
 
-  m_targetFPS = targetFPS;
-  m_targetFrameTime = 1.f / m_targetFPS;
-  m_fpsCalculationInterval = fpsCalculationInterval;
+  mTargetFPS = targetFPS;
+  mTargetFrameTime = 1.f / mTargetFPS;
+  mFPSCalculationInterval = fpsCalculationInterval;
 
-  m_frameCounter = 0;
+  mFrameCounter = 0;
 }
 
 void FrameRateController::Start() {
-  m_deltaTime = m_newFrameTime - m_currFrameTime;
-  m_currFrameTime = m_newFrameTime;
+  mDeltaTime = mNewFrameTime - mCurrFrameTime;
+  mCurrFrameTime = mNewFrameTime;
 
-  m_fpsTimer += m_deltaTime;
-  if (m_fpsTimer >= m_fpsCalculationInterval) {
-    m_currFPS = static_cast<TimeType>(m_frameCounter) / m_fpsCalculationInterval;
-    m_fpsTimer = 0.f;
+  mFPSTimer += mDeltaTime;
+
+  if (mFPSTimer >= mFPSCalculationInterval) {
+    mCurrFPS = static_cast<TimeType>(mFrameCounter) / mFPSCalculationInterval;
+    mFPSTimer = 0.f;
   }
 }
 
 void FrameRateController::End() {
   do {
-    m_newFrameTime = static_cast<TimeType>(glfwGetTime());
-    m_deltaTime = m_newFrameTime - m_currFrameTime;
-  } while (m_deltaTime < m_targetFrameTime);
+    mNewFrameTime = static_cast<TimeType>(glfwGetTime());
+    mDeltaTime = mNewFrameTime - mCurrFrameTime;
+  } while (mDeltaTime < mTargetFrameTime);
 
-  m_newFrameTime = static_cast<TimeType>(glfwGetTime());
-  ++m_frameCounter;
+  mNewFrameTime = static_cast<TimeType>(glfwGetTime());
+  ++mFrameCounter;
+}
+
+void FrameRateController::StartSystemTimer() {
+  mSystemTimeStart = std::chrono::high_resolution_clock::now();
+}
+
+void FrameRateController::EndSystemTimer(std::string systemName) {
+  auto endTime{ std::chrono::high_resolution_clock::now() };
+  std::map<std::string, TimeFormat>::iterator iter = mSystemTimerMap.find(systemName);
+
+  if (iter != mSystemTimerMap.end())
+    iter->second = std::chrono::duration_cast<TimeFormat>(endTime - mSystemTimeStart);
+  else
+    mSystemTimerMap[systemName] = std::chrono::duration_cast<TimeFormat>(endTime - mSystemTimeStart);
+
+  mSystemTimeStart = endTime;
+}
+
+std::map<std::string, FrameRateController::TimeFormat> const& FrameRateController::GetSystemTimerMap() const noexcept {
+  return mSystemTimerMap;
+}
+
+FrameRateController::TimeType FrameRateController::GetFPSCalculationInterval() const noexcept {
+  return mFPSCalculationInterval;
+}
+
+FrameRateController::TimeType FrameRateController::GetTargetFPS() const noexcept {
+  return mTargetFPS;
 }
 
 FrameRateController::TimeType FrameRateController::GetDeltaTime() const noexcept {
-  return m_deltaTime;
+  return mDeltaTime;
 }
 
 FrameRateController::TimeType FrameRateController::GetFPS() const noexcept {
-  return m_currFPS;
+  return mCurrFPS;
 }
 
 bool FrameRateController::GetVsyncFlag() const noexcept {
-  return m_vsyncEnabled;
+  return mVsyncEnabled;
+}
+
+void FrameRateController::SetFPSCalculationInterval(float fpsCalculationInterval) {
+  mFPSCalculationInterval = fpsCalculationInterval;
+}
+
+void FrameRateController::SetTargetFPS(float target) {
+  mTargetFPS = target;
+  mTargetFrameTime = 1.f / mTargetFPS;
 }
 
 void FrameRateController::SetVsync(bool vsyncEnabled) {
-  m_vsyncEnabled = vsyncEnabled;
-  glfwSwapInterval((m_vsyncEnabled) ? 1 : 0);
+  mVsyncEnabled = vsyncEnabled;
+  glfwSwapInterval((mVsyncEnabled) ? 1 : 0);
 }
 
 void FrameRateController::Reset() {
-  m_currFrameTime = 0.f;
-  m_newFrameTime = 0.f;
-  m_deltaTime = 0.f;
-  m_fpsTimer = 0.f, m_currFPS = 0.f;
-  m_frameCounter = 0;
+  mCurrFrameTime = 0.f;
+  mNewFrameTime = 0.f;
+  mDeltaTime = 0.f;
+  mFPSTimer = 0.f, mCurrFPS = 0.f;
+  mFrameCounter = 0;
 }

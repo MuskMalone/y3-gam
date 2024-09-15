@@ -12,7 +12,18 @@ namespace ECS {
 
     return entity;
   }
-
+  
+  /*!*********************************************************************
+  \brief
+    Allows an entity to be created with a given ID and name. This
+    function can only be invoked by classes the "Exclusive" class
+    explicitly friends. Only friend classes can create an instance of
+    Exclusive by specifying "{}" in the arg list.
+  \param entityID
+    The ID of the entity
+  \return
+    The created entity
+  ************************************************************************/
   Entity EntityManager::CreateEntityWithID([[maybe_unused]] ECSKey key, EntityID entityID) {
       return Entity(mRegistry.create(entityID));
   }
@@ -189,18 +200,13 @@ namespace ECS {
 
     auto iter{ mParent.find(entity.GetRawEnttEntityID()) };
 
-    if (iter == mParent.end()) {
-      // @TODO: REPLACE WITH LOGGING SYSTEM
-      std::cout << "Removing Non-existent Parent!\n";
-      return;
-    }
-
-    else { // Entity has a parent, proceed to remove it from parent's child list
+    if (iter != mParent.end()) {
+      // Entity has a parent, proceed to remove it from parent's child list
       std::set<EntityID> & childList = mChildren[mParent[entity.GetRawEnttEntityID()]];
       childList.erase(entity.GetRawEnttEntityID());
+      mParent.erase(entity.GetRawEnttEntityID());
     }
     
-    mParent.erase(entity.GetRawEnttEntityID());
     RecursivelyRemoveParentAndChild(entity.GetRawEnttEntityID());
   }
 

@@ -22,38 +22,44 @@ namespace GUI
       if (ImGui::BeginMenu("File"))
       {
         const char* const sceneFilter{ "Scenes (*.scn)\0*.scn" }, * const initialDir{ ".\\Assets\\Scenes" };
-        bool const noSceneSelected{ mSceneManager.NoSceneSelected() };
+        bool const noSceneSelected{ mSceneManager.NoSceneSelected() }
+          , lockControls{ mSceneManager.IsScenePlaying() || mSceneManager.GetSceneState() == Scenes::SceneState::PREFAB_EDITOR };
 
         // im sorry this is messy
         // i need to disable different stuff based on the scene state
-        if (mSceneManager.GetSceneState() == Scenes::SceneState::PREFAB_EDITOR || noSceneSelected) {
+        if (lockControls) {
           ImGui::BeginDisabled();
         }
-          if (ImGui::MenuItem("New Scene")) {
-            mScenePopup = true;
-          }
 
-          if (ImGui::MenuItem("New Prefab")) {
-            mPrefabPopup = true;
-          }
+        if (ImGui::MenuItem("New Scene")) {
+          mScenePopup = true;
+        }
 
-        if (!noSceneSelected && mSceneManager.IsScenePlaying()) {
+        if (noSceneSelected) {
           ImGui::BeginDisabled();
         }
-          if (ImGui::MenuItem("Save Scene")) {
-            mSceneManager.SaveScene();
-          }
+
+        if (ImGui::MenuItem("New Prefab")) {
+          mPrefabPopup = true;
+        }
+
+        if (ImGui::MenuItem("Save Scene")) {
+          mSceneManager.SaveScene();
+        }
+
         if (noSceneSelected) {
           ImGui::EndDisabled();
         }
-          if (ImGui::MenuItem("Load Scene")) {
-            std::string const scenePath{ AssetHelpers::LoadFileFromExplorer(sceneFilter, 1, initialDir) };
 
-            if (!scenePath.empty()) {
-              QUEUE_EVENT(Events::LoadSceneEvent, std::filesystem::path(scenePath).stem().string(), scenePath);
-            }
+        if (ImGui::MenuItem("Load Scene")) {
+          std::string const scenePath{ AssetHelpers::LoadFileFromExplorer(sceneFilter, 1, initialDir) };
+
+          if (!scenePath.empty()) {
+            QUEUE_EVENT(Events::LoadSceneEvent, std::filesystem::path(scenePath).stem().string(), scenePath);
           }
-        if (!noSceneSelected) {
+        }
+
+        if (lockControls) {
           ImGui::EndDisabled();
         }
 

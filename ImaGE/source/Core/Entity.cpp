@@ -20,6 +20,11 @@ namespace ECS
     return tagComponent.tag;
   }
 
+  void Entity::SetTag(std::string const& tag) {
+    Component::Tag& tagRef{ this->GetComponent<Component::Tag>() };
+    tagRef = tag;
+  }
+
   Entity::operator bool() const {
     return mId != entt::null;
   }
