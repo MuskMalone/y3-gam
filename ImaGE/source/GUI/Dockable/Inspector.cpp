@@ -3,6 +3,7 @@
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include "Inspector.h"
 #include <Physics/PhysicsSystem.h>
+#include <TempScene.h> //tch for testing to remove
 #include <functional>
 namespace GUI {
   Inspector::Inspector(std::string const& name) : GUIWindow(name) {}
@@ -15,8 +16,8 @@ namespace GUI {
     { "Transform", [&](ECS::Entity) {
 
     }},
-    { "Mesh",[&](ECS::Entity) {
-
+    { "Mesh",[&](ECS::Entity currentEntity) {
+        Scene::AddMesh(currentEntity);
     }},
     { "RigidBody", [&](ECS::Entity currentEntity) {
         IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(currentEntity);
@@ -94,22 +95,25 @@ namespace GUI {
 
   void Inspector::LayerComponentWindow(ECS::Entity entity) {
     ImGui::Separator();
-
+    
     ImGui::Separator();
   }
 
   void Inspector::TransformComponentWindow(ECS::Entity entity) {
     ImGui::Separator();
-
+    { // tch added for testing, pls remove if needed
+        auto& xfm{ entity.GetComponent<Component::Transform>() };
+        ImGui::DragFloat3("World Position", &xfm.worldPos.x, 0.1f);
+        ImGui::DragFloat3("World Scale", &xfm.worldScale.x, 0.1f);
+        ImGui::DragFloat3("World Rotation", &xfm.worldRot.x, 0.1f);
+    }
     ImGui::Separator();
   }
 
   void Inspector::RigidBodyComponentWindow(ECS::Entity entity) {
       ImGui::Separator();
-      Component::RigidBody rigidBody{entity.GetComponent<Component::RigidBody>()};
+      Component::RigidBody& rigidBody{entity.GetComponent<Component::RigidBody>()};
       // Assuming 'rigidBody' is an instance of RigidBody
-
-      ImGui::Checkbox("Use Gravity", &rigidBody.useGravity);
 
       ImGui::DragFloat("Friction", &rigidBody.friction, 0.01f, 0.0f, 1.0f);
       ImGui::DragFloat("Restitution", &rigidBody.restitution, 0.01f, 0.0f, 1.0f);
@@ -119,17 +123,18 @@ namespace GUI {
       ImGui::DragFloat3("Angular Velocity", rigidBody.angularVelocity.mF32, 0.1f);
 
       // Motion Type Selection
-      const char* motionTypes[] = { "Static", "Dynamic", "Kinematic" };
+      const char* motionTypes[] = { "Static", "Kinematic", "Dynamic" };
       int currentMotionType = static_cast<int>(rigidBody.motionType);
       if (ImGui::Combo("Motion Type", &currentMotionType, motionTypes, IM_ARRAYSIZE(motionTypes))) {
           rigidBody.motionType = static_cast<JPH::EMotionType>(currentMotionType);
+          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::MOTION);
       }
   }
 
   void Inspector::ColliderComponentWindow(ECS::Entity entity) {
       ImGui::Separator();
       // Assuming 'collider' is an instance of Collider
-      Component::Collider collider{entity.GetComponent<Component::Collider>()};
+      Component::Collider& collider{entity.GetComponent<Component::Collider>()};
       ImGui::DragFloat3("Scale", collider.scale.mF32, 0.1f);
       ImGui::DragFloat3("Position Offset", collider.positionOffset.mF32, 0.1f);
       ImGui::DragFloat3("Rotation Offset", collider.rotationOffset.mF32, 0.1f);

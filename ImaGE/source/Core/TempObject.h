@@ -4,9 +4,10 @@
 #include <Graphics/Model.h>
 #include <Graphics/MeshType.h>
 #include <memory>
-
+#include <Core/Entity.h> //tch: also for testing
 struct Object
 {
+    ECS::Entity entity;
   glm::mat4 mdlTransform;
   Component::Transform transform;
   glm::vec4 clr;

@@ -42,7 +42,14 @@ namespace IGE {
 		void PhysicsSystem::Update(float dt){
 
 			mPhysicsSystem.Update(gDeltaTime, 1, &mTempAllocator, &mJobSystem);
-
+			auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::RigidBody, Component::Transform>() };
+			for (auto entity : rbsystem) {
+				auto& xfm{ rbsystem.get<Component::Transform>(entity) };
+				auto const& rb{ rbsystem.get<Component::RigidBody>(entity) };
+				JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
+				xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));
+				//xfm.worldPos = ToGLMVec3(bodyInterface.(rb.bodyID));
+			}
 		}
 
 		void PhysicsSystem::AddRigidBody(ECS::Entity entity) {
@@ -55,9 +62,9 @@ namespace IGE {
 				auto* shape = new BoxShape(ToJPHVec3(transform.worldScale)); // this is an arbitrary shape, since the collider should be updated in another component
 				JPH::BodyCreationSettings bodySettings(shape, ToJPHVec3(transform.worldPos), Quat::sEulerAngles(ToJPHVec3(transform.worldRot)),
 					rigidbody.motionType, Layers::MOVING);
-				//bodySettings.mMassPropertiesOverride = collider.shape->GetMassProperties(5.f); // Set mass 
-				
-				rigidbody.bodyID = bodyinterface.CreateAndAddBody(bodySettings, EActivation::DontActivate); // Active
+				//bodySettings.mMassPropertiesOverride = shape->Set; // Set mass 
+				bodySettings.mAllowDynamicOrKinematic = true;
+				rigidbody.bodyID = bodyinterface.CreateAndAddBody(bodySettings, EActivation::Activate); // Active
 				JPH::Body* body = mPhysicsSystem.GetBodyLockInterface().TryGetBody(rigidbody.bodyID);
 			}
 			//set 
@@ -72,6 +79,15 @@ namespace IGE {
 
 		void PhysicsSystem::ChangeRigidBodyVar(ECS::Entity entity, Component::RigidBodyVars var)
 		{
+			auto& bodyinterface = mPhysicsSystem.GetBodyInterface();
+			auto const& rb{ entity.GetComponent<Component::RigidBody>() };
+			switch (var) {
+			case Component::RigidBodyVars::MOTION: {
+				bodyinterface.SetMotionType(rb.bodyID, rb.motionType, JPH::EActivation::Activate);
+			}break;
+			}
+			
+			
 		}
 
 		void PhysicsSystem::AddCollider(ECS::Entity entity)
@@ -86,6 +102,7 @@ namespace IGE {
 
 		void PhysicsSystem::ChangeColliderVar(ECS::Entity entity, Component::ColliderVars var)
 		{
+
 		}
 		
 		void PhysicsSystem::Debug(float dt){

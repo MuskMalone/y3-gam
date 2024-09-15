@@ -11,7 +11,6 @@ namespace Component {
 		MOTION
 	};
 	struct RigidBody {
-		bool useGravity{true};
 		//float mass //mass cannot be set on the fly like how other variables can 
 		float friction;
 		float restitution;
