@@ -113,7 +113,7 @@
     <ClInclude Include="source\Core\Component\Collider.h" />
     <ClInclude Include="source\Core\Component\Components.h" />
     <ClInclude Include="source\Core\Component\Material.h" />
-    <ClInclude Include="source\Core\Component\Model.h" />
+    <ClInclude Include="source\Core\Component\Mesh.h" />
     <ClInclude Include="source\Core\Component\Layer.h" />
     <ClInclude Include="source\Core\Component\RigidBody.h" />
     <ClInclude Include="source\Core\Component\Tag.h" />
@@ -122,6 +122,7 @@
     <ClInclude Include="source\Core\EntityManager.h" />
     <ClInclude Include="Source\Core\TempObject.h" />
     <ClInclude Include="Source\GUI\Persistent\PrefabEditor.h" />
+    <ClInclude Include="source\Physics\PhysicsHelpers.h" />
     <ClInclude Include="Source\Prefabs\PrefabManager.h" />
     <ClInclude Include="Source\Prefabs\VariantPrefab.h" />
     <ClInclude Include="source\TempScene.h" />

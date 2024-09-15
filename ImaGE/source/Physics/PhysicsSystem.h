@@ -1,6 +1,7 @@
 #pragma once
 #include <pch.h>
 #include <Physics/Physics.h>
+#include <Core/Entity.h>
 namespace IGE {
 	namespace Physics {
 		const float gDeltaTime = 1.f / 60.f;
@@ -12,7 +13,8 @@ namespace IGE {
 			static void InitAllocator();
 			void Init();
 			void Update(float dt);
-			void OnEntityAdd();
+			void AddRigidBody(ECS::Entity entity); // should const ref this when the functions r consted
+			void AddCollider(ECS::Entity entity);
 			void Debug(float dt); // not sure if this function will be needed;
 			void Release();
 		private:

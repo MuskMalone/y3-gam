@@ -1,6 +1,8 @@
 #include <pch.h>
 #include "Physics/PhysicsSystem.h"
 #include "Core/Component/Components.h"
+#include "Core/EntityManager.h"
+#include "Core/Entity.h"
 namespace IGE {
 	namespace Physics {
 
@@ -18,7 +20,7 @@ namespace IGE {
 			mTempAllocator{ 10 * 1024 * 1024 },
 			mJobSystem{ cMaxPhysicsJobs, cMaxPhysicsBarriers, thread::hardware_concurrency() - 1 }
 		{
-		
+			
 		}
 		void PhysicsSystem::InitAllocator()
 		{
@@ -45,20 +47,31 @@ namespace IGE {
 
 		}
 
-		void PhysicsSystem::OnEntityAdd(){
-			//Component::Collider collider {
-			//	.scale = JPH::Vec3(obj->transform.scale.x, obj->transform.scale.y, obj->transform.scale.z),
-			//		.position = JPH::Vec3(obj->transform.pos.x, obj->transform.pos.y, obj->transform.pos.z),
-			//		.rotation = JPH::Quat::sEulerAngles(JPH::Vec3(obj->transform.rot.x, obj->transform.rot.x, obj->transform.rot.x))
-			//};
+		void PhysicsSystem::AddRigidBody(ECS::Entity entity) {
+			Component::Transform const& transform = entity.GetComponent<Component::Transform>();
+			Component::RigidBody rigidbody{};
+			auto* shape = new BoxShape(ToJPHVec3(transform.worldScale)); // this is an arbitrary shape, since the collider should be updated in another component
+			JPH::BodyCreationSettings bodySettings(shape, ToJPHVec3(transform.worldPos), Quat::sEulerAngles(ToJPHVec3(transform.worldRot)),
+				rigidbody.motionType, Layers::MOVING);
+			//bodySettings.mMassPropertiesOverride = collider.shape->GetMassProperties(5.f); // Set mass 
+			auto& bodyinterface = mPhysicsSystem.GetBodyInterface();
+			rigidbody.bodyID = bodyinterface.CreateAndAddBody(bodySettings, EActivation::DontActivate); // Active
 
-			//JPH::BodyCreationSettings bodySettings(new SphereShape(collider.scale.GetX()), collider.position, collider.rotation,
-			//	JPH::EMotionType::Dynamic, Layers::MOVING);
-			////bodySettings.mMassPropertiesOverride = collider.shape->GetMassProperties(5.f); // Set mass 
-			//collider.bodyID = mPhysicsSystem.GetBodyInterface().CreateAndAddBody(bodySettings, EActivation::Activate); // Activ
-			//collider.type = mPhysicsSystem.GetBodyInterface().GetShape(collider.bodyID)->GetSubType();
-			//mPhysicsSystem.OptimizeBroadPhase();
-			//left empty for now
+			JPH::Body* body = mPhysicsSystem.GetBodyLockInterface().TryGetBody(rigidbody.bodyID);
+			//set 
+			bodyinterface.SetFriction(rigidbody.bodyID, rigidbody.friction);
+			bodyinterface.SetRestitution(rigidbody.bodyID, rigidbody.restitution);
+			bodyinterface.SetGravityFactor(rigidbody.bodyID, rigidbody.gravityFactor);
+			bodyinterface.SetAngularVelocity(rigidbody.bodyID, rigidbody.angularVelocity);
+
+			mPhysicsSystem.OptimizeBroadPhase();
+			
+		}
+
+		void PhysicsSystem::AddCollider(ECS::Entity entity)
+		{
+			//empty. rigidbody is the collider for now
+
 		}
 
 		void PhysicsSystem::Debug(float dt){

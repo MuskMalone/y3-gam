@@ -6,7 +6,7 @@
 // The Jolt headers don't include Jolt.h. Always include Jolt.h before including any other Jolt header.
 // You can use Jolt.h in your precompiled header to speed up compilation.
 #include <pch.h>
-
+#include "PhysicsHelpers.h"
 // Disable common warnings triggered by Jolt, you can use JPH_SUPPRESS_WARNING_PUSH / JPH_SUPPRESS_WARNING_POP to store and restore the warning state
 JPH_SUPPRESS_WARNINGS
 namespace IGE {
@@ -177,6 +177,8 @@ namespace IGE {
 				cout << "A body went to sleep" << endl;
 			}
 		};
+		
+
 	}
 }
 #ifdef ZEROASDF

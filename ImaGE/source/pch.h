@@ -1,5 +1,5 @@
 #pragma once
-
+#pragma warning(disable : 4005)
 //stdlib
 #include <iostream>
 #include <string>
