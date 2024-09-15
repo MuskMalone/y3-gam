@@ -201,8 +201,8 @@ namespace ECS {
     auto iter{ mParent.find(entity.GetRawEnttEntityID()) };
 
     if (iter == mParent.end()) {
-      // @TODO: REPLACE WITH LOGGING SYSTEM
-      std::cout << "Removing Non-existent Parent!\n";
+      // Entity has no parent, simply delete it
+      DeleteEntity(entity);
       return;
     }
 
