@@ -13,6 +13,10 @@ namespace ECS {
     return entity;
   }
 
+  Entity EntityManager::CreateEntityWithID(EntityID entityID) {
+      return Entity(mRegistry.create(entityID));
+  }
+
   Entity EntityManager::CreateEntityWithTag(std::string const& tag) {
     Entity entity(mRegistry.create());
     Component::Tag& entTag = entity.EmplaceComponent<Component::Tag>();
@@ -121,6 +125,14 @@ namespace ECS {
     return ret;
   }
 
+  std::unordered_map<EntityManager::EntityID, std::set<EntityManager::EntityID>> const& EntityManager::GetChildrenMap() const {
+      return mChildren;
+  }
+
+  std::unordered_map<EntityManager::EntityID, EntityManager::EntityID> const& EntityManager::GetParentMap() const {
+      return mParent;
+  }
+
   void EntityManager::SetParentEntity(Entity const& parent, Entity const& child) {
     if (!mRegistry.valid(parent.GetRawEnttEntityID()) || 
       !mRegistry.valid(child.GetRawEnttEntityID())) {
@@ -143,14 +155,6 @@ namespace ECS {
 
     mChildren[parent.GetRawEnttEntityID()].insert(child.GetRawEnttEntityID());
     mParent[child.GetRawEnttEntityID()] = parent.GetRawEnttEntityID();
-  }
-
-  std::unordered_map<EntityManager::EntityID, std::set<EntityManager::EntityID>> const& EntityManager::GetChildrenMap() const {
-    return mChildren;
-  }
-
-  std::unordered_map<EntityManager::EntityID, EntityManager::EntityID> const& EntityManager::GetParentMap() const {
-    return mParent;
   }
 
   bool EntityManager::RemoveParent(Entity const& child) {

@@ -12,6 +12,10 @@ namespace ECS {
     friend class Entity;
 
     Entity CreateEntity();
+
+    //DANGER: ONLY FOR CHENG EN
+    Entity CreateEntityWithID(EntityID entityID);
+
     Entity CreateEntityWithTag(std::string const& tag);
     Entity CopyEntity(Entity entity);
     bool HasParent(Entity entity) const;
@@ -21,12 +25,11 @@ namespace ECS {
     Entity GetEntityFromTag(std::string tag);
     Entity GetParentEntity(Entity const& child) const;
     std::vector<Entity> GetChildEntity(Entity const& parent);
+    std::unordered_map<EntityID, std::set<EntityID>> const& GetChildrenMap() const;
+    std::unordered_map<EntityID, EntityID> const& GetParentMap() const;
 
     void SetParentEntity(Entity const& parent, Entity const& child);
     void SetChildEntity(Entity const& parent, Entity const& child);
-
-    std::unordered_map<EntityID, std::set<EntityID>> const& GetChildrenMap() const;
-    std::unordered_map<EntityID, EntityID> const& GetParentMap() const;
 
     bool RemoveParent(Entity const& child);
     void RemoveEntity(Entity const& entity);
