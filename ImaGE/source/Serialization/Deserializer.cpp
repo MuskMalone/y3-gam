@@ -19,7 +19,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <cstdarg>
 #include <Prefabs/PrefabManager.h>
 
-#define DESERIALIZER_DEBUG
+//#define DESERIALIZER_DEBUG
 
 #ifdef _DEBUG
 std::ostream& operator<<(std::ostream& os, rttr::type const& type)
@@ -76,8 +76,8 @@ namespace Serialization
       return {};
     }
     // check if scn file contains all basic keys
-    if (!ScanJsonFileForMembers(document, filepath, 6,
-      JsonNameKey, rapidjson::kStringType, JsonChildEntitiesKey, rapidjson::kArrayType,
+    if (!ScanJsonFileForMembers(document, filepath, 5,
+      JsonChildEntitiesKey, rapidjson::kArrayType,
       JsonIdKey, rapidjson::kNumberType, JsonParentKey, rapidjson::kNumberType,
       JsonComponentsKey, rapidjson::kArrayType, JsonEntityStateKey, rapidjson::kFalseType))
     {
@@ -90,8 +90,7 @@ namespace Serialization
     {
       EntityID entityId{ entity[JsonIdKey].GetUint() };
       EntityID const parentId{ entity[JsonParentKey].IsNull() ? entt::null : entity[JsonParentKey].GetUint() };
-      Reflection::VariantEntity entityVar{ entity[JsonNameKey].GetString(),
-        parentId, entity[JsonEntityStateKey].GetBool() };  // set parent
+      Reflection::VariantEntity entityVar{ parentId, entity[JsonEntityStateKey].GetBool() };  // set parent
       // get child ids
       for (auto const& child : entity[JsonChildEntitiesKey].GetArray()) {
         entityVar.mChildEntities.emplace_back(EntityID(child.GetUint()));
@@ -202,7 +201,18 @@ namespace Serialization
         }
       }
 
-      compVar = compCtr.invoke_variadic(args);
+      if (args.size() == 1) {
+        compVar = compCtr.invoke(args.front());
+      }
+      else if (args.size() == 2) {
+        compVar = compCtr.invoke(args[0], args[1]);
+      }
+      else if (args.size() == 3) {
+        compVar = compCtr.invoke(args[0], args[1], args[2]);
+      }
+      else {
+        compVar = compCtr.invoke_variadic(args);
+      }
 #ifdef DESERIALIZER_DEBUG
       std::cout << "    Invoked ctor, returning " << compVar.get_type() << "\n";
 #endif
@@ -212,8 +222,13 @@ namespace Serialization
   void Deserializer::DeserializeRecursive(rttr::instance inst, rapidjson::Value const& jsonObj)
   {
     rttr::instance wrappedInst{ inst.get_type().get_raw_type().is_wrapper() ? inst.get_wrapped_instance() : inst };
-    for (auto const& prop : inst.get_derived_type().get_properties())
+    rttr::type baseType{ wrappedInst.get_type() };
+    baseType = baseType.is_wrapper() ? baseType.get_wrapped_type().get_raw_type() : baseType.is_pointer() ? baseType.get_raw_type() : baseType;
+    for (auto const& prop : baseType.get_properties())
     {
+#ifdef DESERIALIZER_DEBUG
+      std::cout << "Deserializing property: " << prop.get_name().to_string() << "\n";
+#endif
       auto ret{ jsonObj.FindMember(prop.get_name().data()) };
       if (ret == jsonObj.MemberEnd())
       {

@@ -49,7 +49,7 @@ namespace Reflection
     \brief
       Creates the entities for the scene with the data stored.
     ************************************************************************/
-    void LoadScene();
+    void InitScene();
 
     /*!*********************************************************************
     \brief

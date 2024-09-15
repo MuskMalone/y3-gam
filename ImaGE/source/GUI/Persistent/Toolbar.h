@@ -2,6 +2,7 @@
 #include <GUI/GUIWindow.h>
 #include <vector>
 #include <memory>
+#include <Scenes/SceneManager.h>
 
 namespace GUI
 {
@@ -15,6 +16,7 @@ namespace GUI
 
   private:
     std::vector<std::unique_ptr<GUIWindow>> const& mWindowsRef;  // to manage active states
+    Scenes::SceneManager& mSceneManager;
     bool mScenePopup, mPrefabPopup;
 
     void RunNewScenePopup();

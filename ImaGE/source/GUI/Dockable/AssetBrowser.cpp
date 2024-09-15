@@ -4,12 +4,7 @@
 #include <Globals.h>
 #include <Events/EventManager.h>
 #include <Scenes/SceneManager.h>
-
-// windows api
-#include <Windows.h>
-#include <commdlg.h>	// to open file explorer
-#include <shellapi.h>
-#include <shlobj_core.h>  // enable selection in file explorer
+#include <GUI/Helpers/AssetHelpers.h>
 
 namespace Helper
 {
@@ -22,26 +17,6 @@ namespace Helper
     True if it contains at least 1 directory and false otherwise
   ************************************************************************/
   bool ContainsDirectories(std::filesystem::path const& dirEntry);
-
-  /*!*********************************************************************
-  \brief
-    Opens the given file with the default program
-  \param filePath
-    The path of the file
-  ************************************************************************/
-  void OpenFileWithDefaultProgram(std::filesystem::path const& filePath);
-
-  /*!*********************************************************************
-  \brief
-    Opens the file explorer with mSelectedAsset selected
-  ************************************************************************/
-  void OpenFileInExplorer(std::filesystem::path const& filePath);
-
-  /*!*********************************************************************
-  \brief
-    Opens the directory in the file explorer
-  ************************************************************************/
-  void OpenDirectoryInExplorer(std::filesystem::path const& filePath);
 }
 
 namespace GUI
@@ -135,7 +110,7 @@ namespace GUI
         }
         else if (ImGui::IsItemClicked(ImGuiMouseButton_Left) && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
         {
-          Helper::OpenFileWithDefaultProgram(file.path().string());
+          AssetHelpers::OpenFileWithDefaultProgram(file.path().string());
         }
 
         // display file name below
@@ -214,7 +189,7 @@ namespace GUI
     if (ImGui::BeginPopup("DirectoryMenu"))
     {
       if (ImGui::Selectable("Open in File Explorer")) {
-        Helper::OpenDirectoryInExplorer(mRightClickedDir);
+        AssetHelpers::OpenDirectoryInExplorer(mRightClickedDir);
       }
 
       ImGui::EndPopup();
@@ -227,11 +202,11 @@ namespace GUI
     if (ImGui::BeginPopup("AssetsMenu"))
     {
       if (ImGui::Selectable("Open")) {
-        Helper::OpenFileWithDefaultProgram(mSelectedAsset.string());
+        AssetHelpers::OpenFileWithDefaultProgram(mSelectedAsset.string());
       }
 
       if (ImGui::Selectable("Open in File Explorer")) {
-        Helper::OpenFileInExplorer(mSelectedAsset);
+        AssetHelpers::OpenFileInExplorer(mSelectedAsset);
       }
 
       // only enabled for prefabs
@@ -246,16 +221,14 @@ namespace GUI
         ImGui::EndDisabled();
       }
 
-      if (ImGui::Selectable("Delete"))
-      {
+      if (ImGui::Selectable("Delete")) {
         deletePopup = true;
       }
 
       ImGui::EndPopup();
     }
 
-    if (deletePopup)
-    {
+    if (deletePopup) {
       ImGui::OpenPopup("Confirm Delete");
       deletePopup = false;
     }
@@ -331,31 +304,5 @@ namespace Helper
     }
 
     return false;
-  }
-
-  void OpenFileWithDefaultProgram(std::filesystem::path const& path)
-  {
-    std::wstring const absolutePath{ std::filesystem::absolute(path).wstring() };
-    ShellExecute(NULL, NULL, absolutePath.c_str(), NULL, NULL, SW_SHOW);
-  }
-
-  void OpenFileInExplorer(std::filesystem::path const& filePath)
-  {
-    //ShellExecuteA(NULL, "open", mCurrentDir.string().c_str(), NULL, NULL, SW_SHOWDEFAULT);
-    std::wstring const absolutePath{ std::filesystem::absolute(filePath).wstring() };
-    PIDLIST_ABSOLUTE pidl = ILCreateFromPath(absolutePath.c_str());
-    if (pidl) {
-      SHOpenFolderAndSelectItems(pidl, 0, 0, 0);
-      ILFree(pidl);
-    }
-    else {
-      // log error
-    }
-  }
-
-  void OpenDirectoryInExplorer(std::filesystem::path const& filePath)
-  {
-    std::string const absolutePath{ std::filesystem::absolute(filePath).string() };
-    ShellExecuteA(NULL, "open", absolutePath.c_str(), NULL, NULL, SW_SHOWDEFAULT);
   }
 }

@@ -4,7 +4,7 @@
 #include <Scenes/SceneManager.h>
 #include <Core/Component/Tag.h>
 #include <GUI/GUIManager.h>
-#include <GUI/ImGuiHelpers.h>
+#include <GUI/Helpers/ImGuiHelpers.h>
 
 namespace GUI
 {

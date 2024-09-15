@@ -25,10 +25,10 @@ namespace Reflection
     using EntityID = ECS::EntityManager::EntityID;
 
     VariantEntity() = default;
-    VariantEntity(std::string const& name, EntityID parent = entt::null, bool active = true)
-      : mName{ name }, mPrefab{}, mComponents {}, mChildEntities{}, mParent{ parent }, mIsActive{ active } {}
+    VariantEntity(EntityID parent = entt::null, bool active = true)
+      : mPrefab{}, mComponents {}, mChildEntities{}, mParent{ parent }, mIsActive{ active } {}
 
-    std::string mName, mPrefab;
+    std::string mPrefab;
     std::vector<rttr::variant> mComponents;
     std::vector<EntityID> mChildEntities;
     EntityID mParent = entt::null;

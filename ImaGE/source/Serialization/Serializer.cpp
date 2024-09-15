@@ -13,7 +13,13 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
 #include "Serializer.h"
+#include <Serialization/JsonKeys.h>
+#include <Core/Component/Components.h>
 #include <fstream>
+#include <Reflection/ObjectFactory.h>
+#ifndef IMGUI_DISABLE
+#include <Prefabs/PrefabManager.h>
+#endif
 
 namespace Helper
 {
@@ -41,6 +47,94 @@ namespace Serialization
     ofs.close();
   }
 
+  void Serializer::SerializeScene(std::string const& filePath)
+  {
+    std::ofstream ofs{ filePath };
+    if (!ofs) {
+      // log("Unable to serialize scene into " + filePath);
+    }
+    rapidjson::OStreamWrapper osw{ ofs };
+    WriterType writer{ osw };
+
+    ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
+
+    writer.StartArray();
+    for (auto const& entity : entityMan.GetAllEntities()) {
+      SerializeEntity(entity, writer);
+    }
+    writer.EndArray();
+
+    // clean up
+    ofs.close();
+  }
+
+  void Serializer::SerializeEntity(ECS::Entity const& entity, WriterType& writer)
+  {
+    ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
+    writer.StartObject();
+
+    // serialize entity id
+    writer.Key(JsonIdKey);
+    writer.Uint(entity.GetEntityID());
+
+
+#ifndef IMGUI_DISABLE
+    // serialize prefab created from
+    writer.Key(JsonPrefabKey);
+    writer.Null();
+    /*Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
+
+    rapidjson::Value prefabJson{ rapidjson::kNullType };
+    auto const entityPrefab{ pm.GetEntityPrefab(id) };
+    if (entityPrefab) {
+      SerializeRecursive(*entityPrefab, writer);
+    }
+    entity.AddMember(JsonPrefabKey, prefabJson, allocator);*/
+#endif
+
+    // serialize state
+    writer.Key(JsonEntityStateKey);
+    writer.Bool(true);// entityMan.GetIsActiveEntity(entity));
+
+    // serialize parent id
+    writer.Key(JsonParentKey);
+    if (entityMan.HasParent(entity)) {
+      writer.Uint(entityMan.GetParentEntity(entity).GetEntityID());
+    }
+    else {
+      writer.Null();
+    }
+
+    // serialize child entities
+    writer.Key(JsonChildEntitiesKey);
+    writer.StartArray();
+    if (entityMan.HasChild(entity)) {
+      for (auto const& child : entityMan.GetChildEntity(entity)) {
+        writer.Uint(child.GetEntityID());
+      }
+    }
+    writer.EndArray();
+
+    writer.Key(JsonComponentsKey);
+    std::vector<rttr::variant> const components{ Reflection::ObjectFactory::GetInstance().GetEntityComponents(entity) };
+    SerializeVariantComponents(components, writer);
+    writer.EndObject();
+  }
+
+  void Serializer::SerializeVariantComponents(std::vector<rttr::variant> const& components, WriterType& writer)
+  {
+    writer.StartArray();
+    // for each component, extract the string of the class and serialize
+    for (rttr::variant const& comp : components)
+    {
+      writer.StartObject();
+      writer.Key(comp.get_type().get_name().to_string().c_str());
+      SerializeRecursive(comp, writer);
+      writer.EndObject();
+    }
+    writer.EndArray();
+  }
+
   void Serializer::SerializeRecursive(rttr::instance const& obj, WriterType& writer)
   {
     writer.StartObject();
@@ -49,8 +143,7 @@ namespace Serialization
     auto const properties{ wrappedObj.get_derived_type().get_properties() };
     for (auto const& property : properties)
     {
-      if (property.get_metadata("NO_SERIALIZE")) { continue; }
-
+      //if (property.get_metadata("NO_SERIALIZE")) { continue; }
       rttr::variant propVal{ property.get_value(wrappedObj) };
       if (!propVal)
       {
@@ -79,7 +172,7 @@ namespace Serialization
     if (type.is_arithmetic())
     {
       if (Helper::IsType<float>(type)) { writer.Double(var.to_float()); }
-      else if (Helper::IsType<bool>(type)) { writer.Double(var.to_double()); }
+      if (Helper::IsType<double>(type)) { writer.Double(var.to_double()); }
       else if (Helper::IsType<int64_t>(type)) { writer.Int64(var.to_int64()); }
       else if (Helper::IsType<uint64_t>(type)) { writer.Uint64(var.to_uint64()); }
       else if (Helper::IsType<bool>(type)) { writer.Bool(var.to_bool()); }
@@ -105,7 +198,7 @@ namespace Serialization
       std::string str{ var.to_string(&result) };
       if (result)
       {
-        writer.String(str.c_str());
+        writer.String(str.c_str(), str.length(), false);
       }
       else
       {

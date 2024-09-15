@@ -4,12 +4,16 @@
 #include <ImGui/imgui_internal.h> // for BeginViewportSideBar
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <Events/EventManager.h>
+#include <Scenes/SceneManager.h>
+#include <GUI/Helpers/AssetHelpers.h>
+#include <filesystem>
 
 namespace GUI
 {
 
-  Toolbar::Toolbar(std::string const& name, std::vector<std::unique_ptr<GUIWindow>> const& windowsRef)\
-  : mWindowsRef{ windowsRef }, mScenePopup{ false }, mPrefabPopup{ false }, GUIWindow(name) {}
+  Toolbar::Toolbar(std::string const& name, std::vector<std::unique_ptr<GUIWindow>> const& windowsRef) :
+    mWindowsRef{ windowsRef }, mSceneManager{ Scenes::SceneManager::GetInstance() },
+    mScenePopup{ false }, mPrefabPopup{ false }, GUIWindow(name) {}
 
   void Toolbar::Run()
   {
@@ -17,23 +21,41 @@ namespace GUI
     {
       if (ImGui::BeginMenu("File"))
       {
-        if (ImGui::MenuItem("New Scene")) {
-          mScenePopup = true;
-        }
+        const char* const sceneFilter{ "Scenes (*.scn)\0*.scn" }, * const initialDir{ ".\\Assets\\Scenes" };
+        bool const noSceneSelected{ mSceneManager.NoSceneSelected() };
 
-        if (ImGui::MenuItem("New Prefab")) {
-          mPrefabPopup = true;
+        // im sorry this is messy
+        // i need to disable different stuff based on the scene state
+        if (mSceneManager.GetSceneState() == Scenes::SceneState::PREFAB_EDITOR || noSceneSelected) {
+          ImGui::BeginDisabled();
         }
+          if (ImGui::MenuItem("New Scene")) {
+            mScenePopup = true;
+          }
 
-        // @TODO: IMPLEMENT WHEN ASSET MANAGER/BROWSER IS UP
-        ImGui::BeginDisabled();
-        if (ImGui::MenuItem("Save Scene")) {
+          if (ImGui::MenuItem("New Prefab")) {
+            mPrefabPopup = true;
+          }
 
+        if (!noSceneSelected && mSceneManager.IsScenePlaying()) {
+          ImGui::BeginDisabled();
         }
-        if (ImGui::MenuItem("Load Scene")) {
-
+          if (ImGui::MenuItem("Save Scene")) {
+            mSceneManager.SaveScene();
+          }
+        if (noSceneSelected) {
+          ImGui::EndDisabled();
         }
-        ImGui::EndDisabled();
+          if (ImGui::MenuItem("Load Scene")) {
+            std::string const scenePath{ AssetHelpers::LoadFileFromExplorer(sceneFilter, 1, initialDir) };
+
+            if (!scenePath.empty()) {
+              QUEUE_EVENT(Events::LoadSceneEvent, std::filesystem::path(scenePath).stem().string(), scenePath);
+            }
+          }
+        if (!noSceneSelected) {
+          ImGui::EndDisabled();
+        }
 
         ImGui::EndMenu();
       }
@@ -121,7 +143,7 @@ namespace GUI
         }*/
         else
         {
-          QUEUE_EVENT(Events::NewSceneEvent, sceneName);
+          QUEUE_EVENT(Events::LoadSceneEvent, sceneName, std::string());
           blankWarning = existingSceneWarning = false;
           sceneName.clear();
           ImGui::CloseCurrentPopup();

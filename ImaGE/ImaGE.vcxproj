@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\GUI\Helpers\AssetHelpers.cpp" />
     <ClCompile Include="Source\Reflection\ObjectFactory.cpp" />
     <ClCompile Include="Source\Core\TempObject.cpp" />
     <ClCompile Include="Source\External\glad.c">
@@ -95,7 +96,7 @@
     <ClCompile Include="source\GUI\Dockable\Viewport.cpp" />
     <ClCompile Include="source\GUI\GUIManager.cpp" />
     <ClCompile Include="source\GUI\GUIWindow.cpp" />
-    <ClCompile Include="source\GUI\ImGuiHelpers.cpp" />
+    <ClCompile Include="Source\GUI\Helpers\ImGuiHelpers.cpp" />
     <ClCompile Include="source\GUI\Persistent\Toolbar.cpp" />
     <ClCompile Include="Source\Input\InputAssistant.cpp" />
     <ClCompile Include="source\Graphics\MeshGen.cpp" />
@@ -112,6 +113,7 @@
     <ClCompile Include="source\Serialization\Deserializer.cpp" />
     <ClCompile Include="Source\Serialization\Registration\RegisterComponents.cpp" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
+    <ClInclude Include="Source\GUI\Helpers\AssetHelpers.h" />
     <ClInclude Include="Source\Reflection\ComponentTypes.h" />
     <ClInclude Include="Source\Reflection\ObjectFactory.h" />
     <ClInclude Include="source\Core\Component\Components.h" />
@@ -166,7 +168,7 @@
     <ClInclude Include="source\GUI\GUIManager.h" />
     <ClInclude Include="source\GUI\GUIWindow.h" />
     <ClInclude Include="source\GUI\Dockable\Viewport.h" />
-    <ClInclude Include="source\GUI\ImGuiHelpers.h" />
+    <ClInclude Include="Source\GUI\Helpers\ImGuiHelpers.h" />
     <ClInclude Include="Source\Input\InputAssistant.h" />
     <ClInclude Include="source\Graphics\MeshGen.h" />
     <ClInclude Include="Source\pch.h" />

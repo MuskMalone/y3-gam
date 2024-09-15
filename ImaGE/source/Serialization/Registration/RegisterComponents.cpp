@@ -20,13 +20,7 @@ RTTR_REGISTRATION
     .property("tag", &Tag::tag);
 
   rttr::registration::class_<Transform>("Transform")
-    .constructor<glm::vec3 const&, glm::vec3 const&, glm::vec3 const&>()
-    (
-      rttr::parameter_names("worldPos", "worldScale", "worldRot")
-    )
-    .property("localPos", &Transform::localPos)
-    .property("localRot", &Transform::localRot)
-    .property("localScale", &Transform::localScale)
+    .constructor<>()
     .property("worldPos", &Transform::worldPos)
     .property("worldScale", &Transform::worldScale)
     .property("worldRot", &Transform::worldRot);
@@ -34,6 +28,5 @@ RTTR_REGISTRATION
   rttr::registration::class_<Layer>("Layer")
     .constructor<>()
     .property("layerName", &Layer::layerName);
-
 
 }

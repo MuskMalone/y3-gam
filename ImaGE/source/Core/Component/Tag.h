@@ -5,8 +5,8 @@ namespace Component
 {
   struct Tag
   {
-    Tag() : tag{ "NoName" } {};
-    Tag(std::string const& tagString) : tag{ tagString } {};
+    Tag() : tag{ "NoName" } {}
+    Tag(std::string const& tagString) : tag{ tagString } {}
 
     inline void Clear() noexcept { tag = "NoName"; }
 

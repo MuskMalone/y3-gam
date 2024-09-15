@@ -15,7 +15,6 @@ namespace Serialization
 {
   // Names of Keys used when serializing to file
   // Both Serializer and Deserializer uses these to determine the name of the keys
-  constexpr char JsonNameKey[] = "Name";
   constexpr char JsonIdKey[] = "ID";
   constexpr char JsonEntityStateKey[] = "isActive";
   constexpr char JsonParentKey[] = "Parent";

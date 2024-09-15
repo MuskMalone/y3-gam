@@ -4,6 +4,7 @@
 #include <string>
 #include <stack>
 #include <Events/EventCallback.h>
+#include <Reflection/ObjectFactory.h>
 
 namespace Scenes
 {
@@ -13,9 +14,13 @@ namespace Scenes
   public:
 
     void Init();
-    //void Update();
+    void SaveScene() const;
+
     inline std::string const& GetSceneName() const noexcept { return mSceneName; }
     inline SceneState GetSceneState() const noexcept { return mSceneState; }
+    inline bool IsScenePlaying() const noexcept { return mSceneState <= Scenes::SceneState::PAUSED; }
+    // check if there is currently a scene selected
+    inline bool NoSceneSelected() const noexcept { return mSceneName.empty(); }
 
   private:
     struct SaveState
@@ -25,7 +30,9 @@ namespace Scenes
       std::string mName, mPath;
     };
 
-    void LoadScene(std::string const& filePath);
+    static constexpr char sSceneFileExtension[] = ".scn";
+
+    void LoadScene(std::string const& path);
     void InitScene();
     void ClearScene();
     void UnloadScene();
@@ -48,6 +55,8 @@ namespace Scenes
     \brief
       Handles the events the SceneManager subscribed to
       
+      LOAD_SCENE
+        - Sets the current scene name
       START_SCENE
         - Trigger a temporary save before the scene is played in the
           editor (to later revert to)
@@ -65,6 +74,7 @@ namespace Scenes
 
     std::stack<SaveState> mSaveStates;  // used to temporarily store scene saves when playing/stopping/transitioning to PrefabEditor
     std::string mSceneName, mTempDir;
+    Reflection::ObjectFactory* mObjFactory;
     SceneState mSceneState{};
   };
 

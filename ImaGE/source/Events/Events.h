@@ -70,13 +70,13 @@ namespace Events
     inline std::string GetName() const noexcept override { return "Stopping Scene"; }
   };
 
-  class NewSceneEvent : public Event
+  class LoadSceneEvent : public Event
   {
   public:
-    NewSceneEvent(std::string const& name) : Event(EventType::NEW_SCENE), mSceneName{ name } {}
-    inline std::string GetName() const noexcept override { return "New Scene " + mSceneName + " created"; }
+    LoadSceneEvent(std::string const& name, std::string const& path) : Event(EventType::LOAD_SCENE), mSceneName{ name }, mPath{ path } {}
+    inline std::string GetName() const noexcept override { return "Loading Scene " + mSceneName; }
 
-    std::string const mSceneName;
+    std::string const mSceneName, mPath;
   };
 
   class EditPrefabEvent : public Event

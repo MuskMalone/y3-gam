@@ -85,24 +85,23 @@ namespace Reflection
     }
   }
 
-  void ObjectFactory::LoadScene()
+  void ObjectFactory::InitScene()
   {
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
 
     for (auto const& [id, data] : mRawEntities)
     {
       ECS::Entity newEntity{ entityMan.CreateEntityWithID({}, id) };
-      newEntity.GetComponent<Component::Tag>().tag = data.mName;
       //entityMan.SetIsActiveEntity(id, data.mIsActive);
       AddComponentsToEntity(newEntity, data.mComponents);
     }
 
-    for (auto const& [id, data] : mRawEntities)
-    {
-      entityMan.SetParentEntity(data.mParent, id);
+    for (auto const& [id, data] : mRawEntities) {
+      if (data.mParent != entt::null) {
+        entityMan.SetParentEntity(data.mParent, id);
+      }
 
-      for (ECS::Entity const& child : data.mChildEntities)
-      {
+      for (ECS::Entity const& child : data.mChildEntities) {
         entityMan.SetChildEntity(id, child);
       }
     }
@@ -127,13 +126,16 @@ namespace Reflection
     compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
 
     if (compType == rttr::type::get<Component::Tag>()) {
-      entity.EmplaceOrReplaceComponent<Component::Tag>(compVar.get_value<Component::Tag>());
+      auto tag = *compVar.get_value<std::shared_ptr<Component::Tag>>();
+      entity.EmplaceOrReplaceComponent<Component::Tag>(*compVar.get_value<std::shared_ptr<Component::Tag>>());
     }
     else if (compType == rttr::type::get<Component::Transform>()) {
-      entity.EmplaceOrReplaceComponent<Component::Transform>(compVar.get_value<Component::Transform>());
+      auto trans = *compVar.get_value<std::shared_ptr<Component::Transform>>();
+      entity.EmplaceOrReplaceComponent<Component::Transform>(*compVar.get_value<std::shared_ptr<Component::Transform>>());
     }
     else if (compType == rttr::type::get<Component::Layer>()) {
-      entity.EmplaceOrReplaceComponent<Component::Layer>(compVar.get_value<Component::Layer>());
+      auto l = *compVar.get_value<std::shared_ptr<Component::Layer>>();
+      entity.EmplaceOrReplaceComponent<Component::Layer>(*compVar.get_value<std::shared_ptr<Component::Layer>>());
     }
     else
     {

@@ -1,0 +1,285 @@
+[
+    {
+        "ID": 7,
+        "Prefab": null,
+        "isActive": true,
+        "Parent": 3,
+        "Child Entities": [],
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "Entity 7"
+                }
+            },
+            {
+                "Transform": {
+                    "worldPos": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldScale": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldRot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 6,
+        "Prefab": null,
+        "isActive": true,
+        "Parent": 5,
+        "Child Entities": [],
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "Entity 6"
+                }
+            },
+            {
+                "Transform": {
+                    "worldPos": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldScale": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldRot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 5,
+        "Prefab": null,
+        "isActive": true,
+        "Parent": 4,
+        "Child Entities": [
+            6
+        ],
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "Entity 5"
+                }
+            },
+            {
+                "Transform": {
+                    "worldPos": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldScale": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldRot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 4,
+        "Prefab": null,
+        "isActive": true,
+        "Parent": 3,
+        "Child Entities": [
+            5
+        ],
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "Entity 4"
+                }
+            },
+            {
+                "Transform": {
+                    "worldPos": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldScale": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldRot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 3,
+        "Prefab": null,
+        "isActive": true,
+        "Parent": null,
+        "Child Entities": [
+            4,
+            7
+        ],
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "Entity 3"
+                }
+            },
+            {
+                "Transform": {
+                    "worldPos": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldScale": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldRot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 2,
+        "Prefab": null,
+        "isActive": true,
+        "Parent": null,
+        "Child Entities": [],
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "e3"
+                }
+            },
+            {
+                "Transform": {
+                    "worldPos": {
+                        "x": 3.0,
+                        "y": 3.0,
+                        "z": 3.0
+                    },
+                    "worldScale": {
+                        "x": 2.0,
+                        "y": 2.0,
+                        "z": 2.0
+                    },
+                    "worldRot": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 1,
+        "Prefab": null,
+        "isActive": true,
+        "Parent": null,
+        "Child Entities": [
+            0
+        ],
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "e2"
+                }
+            },
+            {
+                "Layer": {
+                    "layerName": "weh"
+                }
+            },
+            {
+                "Transform": {
+                    "worldPos": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldScale": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldRot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 0,
+        "Prefab": null,
+        "isActive": true,
+        "Parent": 1,
+        "Child Entities": [],
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "e1"
+                }
+            },
+            {
+                "Layer": {
+                    "layerName": "oof"
+                }
+            },
+            {
+                "Transform": {
+                    "worldPos": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "worldScale": {
+                        "x": 2.0,
+                        "y": 2.0,
+                        "z": 2.0
+                    },
+                    "worldRot": {
+                        "x": 3.0,
+                        "y": 3.0,
+                        "z": 3.0
+                    }
+                }
+            }
+        ]
+    }
+]

@@ -12,7 +12,7 @@ namespace GUI
 
   void SceneControls::Run()
   {
-    bool const sceneStopped{ mSceneManager.GetSceneState() >= Scenes::SceneState::STOPPED };
+    bool const sceneStopped{ !mSceneManager.IsScenePlaying() };
 
     if (!sceneStopped) {
       ImGui::PushStyleColor(ImGuiCol_MenuBarBg, ImVec4(0.f, 0.6f, 0.f, 1.f));
@@ -28,6 +28,7 @@ namespace GUI
         ImGui::SetCursorPosX(xOffset);
 
         // stop button
+        ImGui::BeginDisabled(mSceneManager.GetSceneState() == Scenes::SceneState::PREFAB_EDITOR || mSceneManager.NoSceneSelected());
         if (sceneStopped) {
           ImGui::BeginDisabled(sceneStopped);
           ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.f, 0.f, 0.5f));
@@ -77,6 +78,7 @@ namespace GUI
 
         }
         ImGui::PopStyleColor();
+        ImGui::EndDisabled();
         ImGui::EndDisabled();
 
         ImGui::EndMenuBar();

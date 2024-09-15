@@ -3,6 +3,8 @@
 #include <filesystem>
 #include <Events/EventManager.h>
 #include <Globals.h>
+#include <Serialization/Serializer.h>
+#include <Core/Entity.h>
 
 #ifdef _DEBUG
 #define EVENTS_DEBUG
@@ -13,6 +15,7 @@ namespace Scenes
   void SceneManager::Init()
   {
     mSceneState = SceneState::STOPPED;
+    mObjFactory = &Reflection::ObjectFactory::GetInstance();
     // @TODO: SHOULD RETREIVE FROM CONFIG FILE IN FUTURE
     mTempDir = gTempDirectory;
 
@@ -28,26 +31,19 @@ namespace Scenes
     }
 
     // subscribe to scene events
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::NEW_SCENE, &SceneManager::HandleEvent, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::LOAD_SCENE, &SceneManager::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::START_SCENE, &SceneManager::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::PAUSE_SCENE, &SceneManager::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::STOP_SCENE, &SceneManager::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &SceneManager::HandleEvent, this);
   }
 
-  //void SceneManager::Update()
-  //{
-
-  //}
-
-  void SceneManager::LoadScene(std::string const& filePath)
-  {
-    UNREFERENCED_PARAMETER(filePath);
+  void SceneManager::LoadScene(std::string const& path) {
+    mObjFactory->LoadEntityData(path);
   }
 
-  void SceneManager::InitScene()
-  {
-
+  void SceneManager::InitScene() {
+    mObjFactory->InitScene();
   }
 
   void SceneManager::ClearScene()
@@ -57,7 +53,18 @@ namespace Scenes
 
   void SceneManager::UnloadScene()
   {
+    auto& entityMan { ECS::EntityManager::GetInstance() };
+    std::vector<ECS::Entity> entitiesToDestroy;
 
+    for (auto const& e : entityMan.GetAllEntities()) {
+      if (entityMan.HasParent(e)) { continue; }
+
+      entitiesToDestroy.emplace_back(e);
+    }
+
+    for (auto const& e : entitiesToDestroy) {
+      entityMan.RemoveEntity(e);
+    }
   }
 
   EVENT_CALLBACK_DEF(SceneManager, HandleEvent)
@@ -68,11 +75,19 @@ namespace Scenes
 
     switch (event->GetCategory())
     {
-    case Events::EventType::NEW_SCENE:
-      ClearScene();
-      UnloadScene();
-      mSceneName = std::static_pointer_cast<Events::NewSceneEvent>(event)->mSceneName;
+    case Events::EventType::LOAD_SCENE:
+    {
+      if (!mSceneName.empty()) {
+        UnloadScene();
+      }
+      auto loadSceneEvent{ std::static_pointer_cast<Events::LoadSceneEvent>(event) };
+      mSceneName = loadSceneEvent->mSceneName;
+      if (!loadSceneEvent->mPath.empty()) {
+        LoadScene(loadSceneEvent->mPath);
+        InitScene();
+      }
       break;
+    }
     case Events::EventType::START_SCENE:
       TemporarySave();
       mSceneState = SceneState::PLAYING;
@@ -99,6 +114,16 @@ namespace Scenes
 
     default: break;
     }
+  }
+
+  void SceneManager::SaveScene() const
+  {
+    // Save the scene
+    std::ostringstream filepath{};
+    filepath << gAssetsDirectory << "Scenes/" << mSceneName << sSceneFileExtension;
+    Serialization::Serializer::SerializeScene(filepath.str());
+
+   // log("Successfully saved scene to " + filepath.str());
   }
 
   void SceneManager::TemporarySave()
