@@ -14,7 +14,11 @@
 #include <Core/EntityManager.h>
 #include <Core/Component/Components.h>
 
+#include <Physics/PhysicsSystem.h>
+
 void Application::Init() {
+    IGE::Physics::PhysicsSystem::InitAllocator();
+    IGE::Physics::PhysicsSystem::GetInstance()->Init();
   mScene->Init();
   GUI::GUIManager::Init(mFramebuffers.front().first);
   Scenes::SceneManager::GetInstance().Init();

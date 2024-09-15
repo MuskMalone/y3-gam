@@ -30,8 +30,6 @@ namespace IGE {
 			JPH::RegisterTypes();
 		}
 		void PhysicsSystem::Init(){
-			
-
 			mPhysicsSystem.Init(
 				cMaxBodies, cNumBodyMutexes, cMaxBodyPairs, cMaxContactConstraints,
 				mBroadPhaseLayerInterface, mObjectVsBroadphaseLayerFilter, mObjectVsObjectLayerFilter
@@ -48,32 +46,48 @@ namespace IGE {
 		}
 
 		void PhysicsSystem::AddRigidBody(ECS::Entity entity) {
-			Component::Transform const& transform = entity.GetComponent<Component::Transform>();
-			Component::RigidBody rigidbody{};
-			auto* shape = new BoxShape(ToJPHVec3(transform.worldScale)); // this is an arbitrary shape, since the collider should be updated in another component
-			JPH::BodyCreationSettings bodySettings(shape, ToJPHVec3(transform.worldPos), Quat::sEulerAngles(ToJPHVec3(transform.worldRot)),
-				rigidbody.motionType, Layers::MOVING);
-			//bodySettings.mMassPropertiesOverride = collider.shape->GetMassProperties(5.f); // Set mass 
-			auto& bodyinterface = mPhysicsSystem.GetBodyInterface();
-			rigidbody.bodyID = bodyinterface.CreateAndAddBody(bodySettings, EActivation::DontActivate); // Active
 
-			JPH::Body* body = mPhysicsSystem.GetBodyLockInterface().TryGetBody(rigidbody.bodyID);
+
+			Component::RigidBody rigidbody{};
+			auto& bodyinterface = mPhysicsSystem.GetBodyInterface();
+			if (!entity.HasComponent<Component::Collider>()) {
+				Component::Transform const& transform = entity.GetComponent<Component::Transform>();
+				auto* shape = new BoxShape(ToJPHVec3(transform.worldScale)); // this is an arbitrary shape, since the collider should be updated in another component
+				JPH::BodyCreationSettings bodySettings(shape, ToJPHVec3(transform.worldPos), Quat::sEulerAngles(ToJPHVec3(transform.worldRot)),
+					rigidbody.motionType, Layers::MOVING);
+				//bodySettings.mMassPropertiesOverride = collider.shape->GetMassProperties(5.f); // Set mass 
+				
+				rigidbody.bodyID = bodyinterface.CreateAndAddBody(bodySettings, EActivation::DontActivate); // Active
+				JPH::Body* body = mPhysicsSystem.GetBodyLockInterface().TryGetBody(rigidbody.bodyID);
+			}
 			//set 
 			bodyinterface.SetFriction(rigidbody.bodyID, rigidbody.friction);
 			bodyinterface.SetRestitution(rigidbody.bodyID, rigidbody.restitution);
 			bodyinterface.SetGravityFactor(rigidbody.bodyID, rigidbody.gravityFactor);
 			bodyinterface.SetAngularVelocity(rigidbody.bodyID, rigidbody.angularVelocity);
-
+			entity.EmplaceOrReplaceComponent<Component::RigidBody>(rigidbody);
 			mPhysicsSystem.OptimizeBroadPhase();
 			
 		}
 
+		void PhysicsSystem::ChangeRigidBodyVar(ECS::Entity entity, Component::RigidBodyVars var)
+		{
+		}
+
 		void PhysicsSystem::AddCollider(ECS::Entity entity)
 		{
-			//empty. rigidbody is the collider for now
+			//empty. rigidbody is the collider 
 
 		}
 
+		void PhysicsSystem::ChangeColliderShape(ECS::Entity entity)
+		{
+		}
+
+		void PhysicsSystem::ChangeColliderVar(ECS::Entity entity, Component::ColliderVars var)
+		{
+		}
+		
 		void PhysicsSystem::Debug(float dt){
 		}
 

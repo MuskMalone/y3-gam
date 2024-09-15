@@ -2,6 +2,14 @@
 #include <pch.h>
 
 namespace Component {
+	enum class RigidBodyVars {
+		FRICTION, 
+		RESTITUTION,
+		GRAVITY_FACTOR,
+		VELOCITY,
+		ANGULAR_VELOCITY,
+		MOTION
+	};
 	struct RigidBody {
 		bool useGravity{true};
 		//float mass //mass cannot be set on the fly like how other variables can 
