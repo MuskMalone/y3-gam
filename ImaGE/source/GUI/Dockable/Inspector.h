@@ -15,5 +15,13 @@ namespace GUI {
     void TagComponentWindow(ECS::Entity entity);
     void LayerComponentWindow(ECS::Entity entity);
     void TransformComponentWindow(ECS::Entity entity);
+    bool WindowBegin(std::string windowName);
+    void WindowEnd(bool isOpen);
+
+  private:
+    static std::map<std::string, bool> sComponentOpenStatusMap;
+    static bool sFirstOpen;
+    static ECS::Entity sPreviousEntity;
+    static bool sEntityChanged;
   };
 } // namespace GUI
