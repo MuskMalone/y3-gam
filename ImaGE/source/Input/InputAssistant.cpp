@@ -122,5 +122,7 @@ void InputAssistant::ScrollCallback(GLFWwindow* pWindow, double xOffset, double 
 
 void InputAssistant::SizeCallback(GLFWwindow* pWindow, int width, int height)
 {
-
+  UNREFERENCED_PARAMETER(pWindow);
+  UNREFERENCED_PARAMETER(width);
+  UNREFERENCED_PARAMETER(height);
 }

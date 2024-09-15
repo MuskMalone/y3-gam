@@ -18,20 +18,25 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rapidjson/ostreamwrapper.h>
 #include <string>
 
-class Serializer
+namespace Serialization
 {
-public:
-  Serializer() = delete;
 
-  static void SerializeAny(rttr::instance const& obj, std::string const& filename);
+  class Serializer
+  {
+  public:
+    Serializer() = delete;
 
-private:
-  using WriterType = rapidjson::PrettyWriter<rapidjson::OStreamWrapper>;
+    static void SerializeAny(rttr::instance const& obj, std::string const& filename);
 
-  static void SerializeRecursive(rttr::instance const& obj, WriterType& writer);
+  private:
+    using WriterType = rapidjson::PrettyWriter<rapidjson::OStreamWrapper>;
 
-  static bool WriteBasicTypes(rttr::type const& type, rttr::variant const& var, WriterType& writer);
-  static void WriteSequentialContainer(rttr::variant_sequential_view const& seqView, WriterType& writer);
-  static bool WriteVariant(rttr::variant const& var, WriterType& writer);
-  static void WriteAssociativeContainer(rttr::variant_associative_view const& view, WriterType& writer);
-};
+    static void SerializeRecursive(rttr::instance const& obj, WriterType& writer);
+
+    static bool WriteBasicTypes(rttr::type const& type, rttr::variant const& var, WriterType& writer);
+    static void WriteSequentialContainer(rttr::variant_sequential_view const& seqView, WriterType& writer);
+    static bool WriteVariant(rttr::variant const& var, WriterType& writer);
+    static void WriteAssociativeContainer(rttr::variant_associative_view const& view, WriterType& writer);
+  };
+
+} // namespace Serialization

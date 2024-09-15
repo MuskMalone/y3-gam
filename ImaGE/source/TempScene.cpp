@@ -6,12 +6,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <fstream>
 #include <filesystem>
-#include <Physics/PhysicsSystem.h>
+
 Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 const& clearClr)
   : m_shaders{}, m_defaultShaders{}, 
   m_light{ { 0.f, 25.f, 0.f }, { 0.4f, 0.4f, 0.4f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 1.0f } },
   m_material{ glm::vec3(1.f), glm::vec3(1.f), glm::vec3(1.f), 100.f }, m_cameras{},
-  m_objects{},
+  mObjects{},
   m_leftClickHeld{ false }, m_leftClickTriggered{ true }, m_bvhModified{ true }, m_reconstructTree{ false }
 {
   glClearColor(clearClr.r, clearClr.g, clearClr.b, clearClr.a);
@@ -59,42 +59,24 @@ void Scene::Init()
   });
 
   // OTHER MODELS
-  //m_objects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3(-5.f, 0.f, 0.f), glm::vec3(20.f)));
-  //m_objects.emplace_back(std::make_shared<Object>("./assets/models/horse_high_poly.obj", glm::vec3(5.f), glm::vec3(10.f, 10.f, 10.f)));
-  //m_objects.emplace_back(std::make_shared<Object>("./assets/models/teapot_mid_poly.obj", glm::vec3()));
-  //m_objects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3(-5.f, 0.f, 0.f), glm::vec3(20.f)));
-  //m_objects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3(5.f), glm::vec3(10.f, 10.f, 10.f)));
-  //m_objects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3()));
-
-
+  mObjects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3(-5.f, 0.f, 0.f), glm::vec3(30.f)));
+  mObjects.emplace_back(std::make_shared<Object>("./assets/models/horse_high_poly.obj", glm::vec3(5.f), glm::vec3(30.f)));
+  mObjects.emplace_back(std::make_shared<Object>("./assets/models/teapot_mid_poly.obj", glm::vec3(), glm::vec3(1.f)));
 }
 
-
-//IGE::Physics::PhysicsSystem ps{};
 void Scene::Update(float deltaTime)
 {
-  //  {//this is for testing
-  //      using namespace IGE;
-  //      using namespace Physics;
-  //      static bool firsttime = true;
-  //      if (firsttime) {
-  //          Physics::PhysicsSystem::InitAllocator();
-  //          Physics::PhysicsSystem::GetInstance()->Init();
-  //          firsttime = !firsttime;
-  //      }
-  //      Physics::PhysicsSystem::GetInstance()->Update(deltaTime);
-  //  }
-  //// update transforms
-  //for (auto& obj : m_objects)
-  //{
-  //  obj->Update(deltaTime);
-  //}
+  // update transforms
+  for (auto& obj : mObjects)
+  {
+    obj->Update(deltaTime);
+  }
 
-  //// update camera
-  //for (auto& cam : m_cameras)
-  //{
-  //  cam.Update(deltaTime);
-  //}
+  // update camera
+  for (auto& cam : m_cameras)
+  {
+    cam.Update(deltaTime);
+  }
 }
 
 void Scene::Draw()
@@ -108,7 +90,7 @@ void Scene::Draw()
   m_light.SetUniforms(m_shaders);
   m_material.SetUniforms(m_shaders);
 
-  for (auto& obj : m_objects)
+  for (auto& obj : mObjects)
   {
     m_shaders.SetUniform("uMdlTransform", obj->mdlTransform);
     m_shaders.SetUniform("uVtxClr", obj->clr);
@@ -146,7 +128,7 @@ void Scene::DrawTopView()
   m_light.SetUniforms(m_shaders);
   m_material.SetUniforms(m_shaders);
 
-  for (auto& obj : m_objects)
+  for (auto& obj : mObjects)
   {
     m_shaders.SetUniform("uMdlTransform", obj->mdlTransform);
     m_shaders.SetUniform("uVtxClr", obj->clr);

@@ -13,6 +13,7 @@ namespace GUI
 
     //virtual void Init() {}
     virtual void Run() = 0;
+    virtual ~GUIWindow() {}
 
   protected:
     GUIWindow(std::string windowName) : mWindowName{ std::move(windowName) }, mActive{ true } {}

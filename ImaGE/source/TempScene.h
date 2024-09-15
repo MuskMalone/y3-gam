@@ -37,7 +37,7 @@ private:
   // can encapsulate in a struct if more members are added
   // so that GUIWindow can allow access to relevant members
   // to derived classes
-  std::vector<std::shared_ptr<Object>> m_objects;
+  std::vector<std::shared_ptr<Object>> mObjects;
 
   bool m_leftClickHeld, m_leftClickTriggered;
   bool m_bvhModified, m_reconstructTree;

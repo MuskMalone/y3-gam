@@ -1,5 +1,5 @@
 /*!*********************************************************************
-\file   PrefabEditor.h
+\file   PrefabEditor.cpp
 \author chengen.lau\@digipen.edu
 \date   14-September-2024
 \brief  Contains the class encapsulating functions for the prefab
@@ -100,7 +100,7 @@ namespace GUI
 //#ifdef PREFAB_EDITOR_DEBUG
 //          std::cout << "Saving...\n";
 //#endif
-//          //pm.UpdatePrefabFromEditor(m_prefabInstance, m_removedChildren, m_removedComponents, m_prefabPath);
+//          //pm.UpdatePrefabFromEditor(m_prefabInstance, mRemovedChildren, mRemovedComponents, m_prefabPath);
 //        }
         QUEUE_EVENT(Events::StopSceneEvent);
 

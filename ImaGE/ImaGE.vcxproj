@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Reflection\ObjectFactory.cpp" />
     <ClCompile Include="Source\Core\TempObject.cpp" />
     <ClCompile Include="Source\External\glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -110,6 +111,8 @@
     <ClCompile Include="source\Serialization\Deserializer.cpp" />
     <ClCompile Include="source\Serialization\Registration.cpp" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
+    <ClInclude Include="Source\Reflection\ComponentTypes.h" />
+    <ClInclude Include="Source\Reflection\ObjectFactory.h" />
     <ClInclude Include="source\Core\Component\Collider.h" />
     <ClInclude Include="source\Core\Component\Components.h" />
     <ClInclude Include="source\Core\Component\Material.h" />
@@ -125,6 +128,7 @@
     <ClInclude Include="source\Physics\PhysicsHelpers.h" />
     <ClInclude Include="Source\Prefabs\PrefabManager.h" />
     <ClInclude Include="Source\Prefabs\VariantPrefab.h" />
+    <ClInclude Include="Source\Reflection\VariantEntity.h" />
     <ClInclude Include="source\TempScene.h" />
     <ClInclude Include="source\Scenes\SceneManager.h" />
     <ClInclude Include="source\Events\Event.h" />
@@ -327,11 +331,11 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);JPH_FLOATING_POINT_EXCEPTIONS_ENABLED;JPH_DEBUG_RENDERER;JPH_PROFILE_ENABLED;JPH_OBJECT_STREAM;JPH_USE_AVX2;JPH_USE_AVX;JPH_USE_SSE4_1;JPH_USE_SSE4_2;JPH_USE_LZCNT;JPH_USE_TZCNT;JPH_USE_F16C;JPH_USE_FMADD</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir)Source;$(ProjectDir)Shaders;$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)lib\glad-gl-4.6\include;$(ProjectDir)Source\External;$(SolutionDir)lib\assimp\include;$(SolutionDir)lib\glm\include;$(SolutionDir)lib\rapidjson-1.1.0\include;$(SolutionDir)lib\rttr-0.9.6\include;$(SolutionDir)lib\entt\include;$(SolutionDir)lib\jolt\include</AdditionalIncludeDirectories>
@@ -388,13 +392,13 @@ xcopy "$(ProjectDir)assets" "$(OutDir)assets" /s /r /y /q</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);JPH_FLOATING_POINT_EXCEPTIONS_ENABLED;JPH_DEBUG_RENDERER;JPH_PROFILE_ENABLED;JPH_OBJECT_STREAM;JPH_USE_AVX2;JPH_USE_AVX;JPH_USE_SSE4_1;JPH_USE_SSE4_2;JPH_USE_LZCNT;JPH_USE_TZCNT;JPH_USE_F16C;JPH_USE_FMADD</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir)Source;$(ProjectDir)Shaders;$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)lib\glad-gl-4.6\include;$(ProjectDir)Source\External;$(SolutionDir)lib\assimp\include;$(SolutionDir)lib\glm\include;$(SolutionDir)lib\rapidjson-1.1.0\include;$(SolutionDir)lib\rttr-0.9.6\include;$(SolutionDir)lib\jolt\include;$(SolutionDir)lib\entt\include</AdditionalIncludeDirectories>
