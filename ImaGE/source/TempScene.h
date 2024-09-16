@@ -6,6 +6,7 @@
 #include <Core/Camera.h>
 #include <Graphics/ShaderStructs.h>
 #include <variant>
+#include <Graphics/Mesh.h>
 
 // forward declaration
 namespace GUI { class GUIWindow; class GUIManager; }
@@ -46,4 +47,6 @@ private:
 
   inline void StartPanning() noexcept { m_leftClickHeld = true; }
   inline void EndPanning() noexcept { m_leftClickHeld = false; m_leftClickTriggered = true; }
+public:
+	Graphics::Mesh mesh0; //temp
 };

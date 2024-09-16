@@ -50,6 +50,13 @@ namespace Graphics {
 		return std::make_shared<ElementBuffer>(indices, count);
 	}
 
+	void ElementBuffer::SetData(unsigned int* indices, unsigned int count) {
+		mIdxCount = count; // Update the index count
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEboHdl);
+		// glBufferSubData is used to update buffer data without reallocating it
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), indices, GL_DYNAMIC_DRAW);
+	}
+
 	/*  _________________________________________________________________________ */
 	/*! Bind
 

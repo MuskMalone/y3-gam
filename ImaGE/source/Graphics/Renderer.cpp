@@ -46,6 +46,28 @@ namespace Graphics {
 		std::shared_ptr<ElementBuffer> quadEbo = ElementBuffer::Create(quadIndices.data(), mData.cMaxIndices);
 		mData.quadVertexArray->SetElementBuffer(quadEbo);
 
+		//Meshes
+		mData.meshVertexArray = VertexArray::Create();
+		mData.meshVertexBuffer = VertexBuffer::Create(mData.cMaxVertices * sizeof(Vertex));
+
+		BufferLayout vertexMeshLayout = {
+			{AttributeType::VEC3, "a_Position"},
+			{AttributeType::VEC3, "a_Normal"},
+			{AttributeType::VEC2, "a_TexCoord"},
+			{AttributeType::FLOAT, "a_TexIdx"},
+			{AttributeType::VEC3, "a_Tangent"},
+			{AttributeType::VEC3, "a_Bitangent"},
+			{AttributeType::VEC4, "a_Color"},
+		};
+
+		mData.meshVertexBuffer->SetLayout(vertexMeshLayout);
+		mData.meshVertexArray->AddVertexBuffer(mData.meshVertexBuffer);
+		mData.meshBuffer = std::vector<Vertex>(mData.cMaxVertices);
+
+
+		std::shared_ptr<ElementBuffer> meshEbo = ElementBuffer::Create(mData.meshIdxBuffer.data(), mData.cMaxIndices);
+		mData.meshVertexArray->SetElementBuffer(meshEbo);
+
 		//====================================================================
 
 		//Cubes
@@ -70,7 +92,7 @@ namespace Graphics {
 		std::vector<unsigned int> cubeIndices(mData.cMaxIndices); // 36 indices per cube
 
 		unsigned int cubeOffset{};
-		for (size_t i = 0; i < cubeIndices.size(); i += 36) {
+		for (size_t i{}; i < mData.cMaxIndices; i += 36) {
 			// Front face
 			cubeIndices[i + 0] = cubeOffset + 0; // Bottom-left
 			cubeIndices[i + 1] = cubeOffset + 1; // Bottom-right
@@ -122,7 +144,7 @@ namespace Graphics {
 			cubeOffset += 24; // Each cube has 24 vertices (6 faces, 4 vertices per face)
 		}
 
-		std::shared_ptr<ElementBuffer> cubeEbo = ElementBuffer::Create(cubeIndices.data(), static_cast<unsigned int>(cubeIndices.size()));
+		std::shared_ptr<ElementBuffer> cubeEbo = ElementBuffer::Create(cubeIndices.data(), mData.cMaxIndices);
 		mData.cubeVertexArray->SetElementBuffer(cubeEbo);
 
 		//========================================================
@@ -216,6 +238,20 @@ namespace Graphics {
 			vtx.clr = clr;
 		}
 		++mData.cubeBufferIndex;
+	}
+
+	void Renderer::SetMeshBufferData(glm::vec3 const& pos, glm::vec3 const& norm, glm::vec2 const& texCoord, float texIdx, glm::vec3 const& tangent, glm::vec3 const& bitangent, glm::vec4 const& clr) {
+		if (mData.meshVtxCount < mData.meshBuffer.size()) {
+			Vertex& vtx = mData.meshBuffer[mData.meshVtxCount];
+			vtx.position = pos;
+			vtx.normal = norm;
+			vtx.texcoord = texCoord;
+			//vtx.texIdx = texIdx;
+			vtx.tangent = tangent;
+			vtx.bitangent = bitangent;
+			vtx.color = clr;
+		}
+		++mData.meshVtxCount;
 	}
 
 	void Renderer::DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::vec4 const& clr, float rot) {
@@ -313,6 +349,43 @@ namespace Graphics {
 		//++mData.stats.quadCount;
 	}
 
+	void Renderer::SubmitMesh(Mesh const& mesh, glm::vec3 const& pos, glm::vec3 const& scale, glm::vec4 const& clr, float rot) {
+		auto const& meshSrc = mesh.GetMeshSource();
+		auto const& submeshes = meshSrc->GetSubmeshes();
+
+		// Transformation matrices
+		glm::mat4 translateMtx{ glm::translate(glm::mat4{ 1.f }, pos) };
+		glm::mat4 rotateMtx{ glm::rotate(glm::mat4{ 1.f }, glm::radians(rot), {0.f, 1.f, 0.f}) };
+		glm::mat4 scaleMtx{ glm::scale(glm::mat4{ 1.f }, scale) };
+		glm::mat4 transformMtx{ translateMtx * rotateMtx * scaleMtx };
+
+		// Iterate over the submeshes
+		for (const auto& submesh : submeshes) {
+			if (mData.meshIdxCount >= RendererData::cMaxIndices) {
+				NextBatch();  // Flush if the batch is full
+			}
+
+			// Apply the instance's transformation to the submesh's transform
+			glm::mat4 finalxformMtx = transformMtx * submesh.transform;
+
+			// Collect vertex data from the submesh
+			for (size_t i = 0; i < submesh.vtxCount; ++i) {
+				const Vertex& vtx = meshSrc->GetVertices()[submesh.baseVtx + i];
+
+				// Map vertex data into the batch buffer
+				SetMeshBufferData(finalxformMtx * glm::vec4(vtx.position, 1.0f), vtx.normal, vtx.texcoord, 0.f, vtx.tangent, vtx.bitangent, clr);
+			}
+
+			// Collect index data from the submesh
+			for (uint32_t i = 0; i < submesh.idxCount; ++i) {
+				mData.meshIdxBuffer.push_back(submesh.baseIdx + i + mData.meshVtxCount);
+			}
+
+			mData.meshVtxCount += submesh.vtxCount;
+			mData.meshIdxCount += submesh.idxCount;
+		}
+	}
+
 	void Renderer::FlushBatch() {
 		if (mData.quadIdxCount) {
 			//ptrdiff_t difference{ reinterpret_cast<unsigned char*>(mData.quadBufferPtr)
@@ -349,6 +422,33 @@ namespace Graphics {
 
 			++mData.stats.drawCalls;
 		}
+		if (mData.meshIdxCount) {
+
+
+			//std::shared_ptr<ElementBuffer> meshEbo = ElementBuffer::Create(mData.meshIdxBuffer.data(), mData.cMaxIndices);
+			//mData.meshVertexArray->SetElementBuffer(meshEbo);
+			// Calculate data size for mesh vertices
+			unsigned int dataSize = static_cast<unsigned int>(mData.meshVtxCount * sizeof(Vertex));
+
+			// Update the mesh vertex buffer with the batched data
+			mData.meshVertexBuffer->SetData(mData.meshBuffer.data(), dataSize);
+
+			unsigned int idxDataSize = static_cast<unsigned int>(mData.meshIdxCount * sizeof(uint32_t));
+			mData.meshVertexArray->GetElementBuffer()->SetData(mData.meshIdxBuffer.data(), idxDataSize);
+
+			// Bind the textures for the meshes
+			for (unsigned int i{}; i < mData.texUnitIdx; ++i) {
+				mData.texUnits[i]->Bind(i);
+			}
+
+			// Use the appropriate shader and draw the indexed meshes
+			mData.texShader->Use();
+			RenderAPI::DrawIndices(mData.meshVertexArray, mData.meshIdxCount);
+
+			// Increment draw call stats
+			++mData.stats.drawCalls;
+		}
+
 	}
 
 	void Renderer::BeginBatch() {
@@ -358,6 +458,12 @@ namespace Graphics {
 		mData.quadBufferIndex = 0;  // Reset the index for the new batch
 		mData.cubeBufferIndex = 0;
 		mData.texUnitIdx = 1;
+
+		// Reset for general meshes
+		mData.meshIdxCount = 0;
+		mData.meshVtxCount = 0;
+		mData.meshIdxBuffer.clear();
+
 	}
 
 	void Renderer::NextBatch() {

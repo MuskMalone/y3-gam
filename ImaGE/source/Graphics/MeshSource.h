@@ -8,11 +8,14 @@
 namespace Graphics {
 	class MeshSource {
     public:
-        MeshSource(const std::shared_ptr<VertexArray>& vao, const std::vector<Submesh>& submeshes)
-            : mVertexArray{ vao }, mSubmeshes{ submeshes } {}
+        MeshSource(const std::shared_ptr<VertexArray>& vao,
+            const std::vector<Submesh>& submeshes,
+            const std::vector<Vertex>& vertices,
+            const std::vector<uint32_t>& indices)
+            : mVertexArray{ vao }, mSubmeshes{ submeshes }, mVertices{ vertices }, mIndices{ indices } {}
 
-        const std::vector<Vertex>& GetVertices() const { return m_Vertices; }
-        const std::vector<uint32_t>& GetIndices() const { return m_Indices; }
+        const std::vector<Vertex>& GetVertices() const { return mVertices; }
+        const std::vector<uint32_t>& GetIndices() const { return mIndices; }
 
         const std::shared_ptr<VertexArray>& GetVertexArray() const { return mVertexArray; }
         const std::vector<Submesh>& GetSubmeshes() const { return mSubmeshes; }
@@ -20,8 +23,8 @@ namespace Graphics {
         //const AABB& GetBoundingBox() const { return mBoundingBox; } TO ADD IN THE FUTURE
 
     private:
-        std::vector<Vertex> m_Vertices;
-        std::vector<uint32_t> m_Indices;
+        std::vector<Vertex> mVertices;
+        std::vector<uint32_t> mIndices;
 
         std::shared_ptr<VertexArray> mVertexArray;
         std::vector<Submesh> mSubmeshes;

@@ -1,10 +1,12 @@
+#pragma once
 #include <pch.h>
 #include "MeshSource.h"
 
 namespace Graphics {
 	class Mesh {
     public:
-        Mesh(std::shared_ptr<MeshSource> meshSource);
+        Mesh() {};
+        Mesh(std::shared_ptr<MeshSource> meshSource ): mMeshSource{ meshSource }{}
 
         const std::shared_ptr<MeshSource>& GetMeshSource() const { return mMeshSource; }
         void SetMeshSource(const std::shared_ptr<MeshSource>& meshSrc) { mMeshSource = meshSrc;}
