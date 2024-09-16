@@ -19,6 +19,10 @@ namespace ImGuiHelpers
   ************************************************************************/
   bool BeginDrapDropTargetWindow(const char* payloadName);
 
+	bool InputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled);
+  void InputDouble1(std::string propertyName, double& property, bool disabled);
+  bool InputCheckBox(std::string propertyName, bool& property, bool disabled);
+
 } // namespace ImGuiHelpers
 
 // operator overloads

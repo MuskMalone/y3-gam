@@ -5,6 +5,7 @@
 #include <Core/Component/Tag.h>
 #include <GUI/GUIManager.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
+#include <GUI/Dockable/Inspector.h>
 
 namespace GUI
 {
@@ -27,7 +28,15 @@ namespace GUI
       return;
     }
 
-    ImGui::Text(sceneName.c_str());
+    std::string sceneNameSave{ (Inspector::GetIsComponentEdited()) ? sceneName + " *" : sceneName };
+    ImGui::Text(sceneNameSave.c_str());
+
+    // TODO: MOVE SOMEWHERE ELSE
+    ImGuiIO& io = ImGui::GetIO();
+    if (io.KeyCtrl && ImGui::IsKeyPressed(ImGuiKey_S, false)) {
+      Inspector::SetIsComponentEdited(false);
+    }
+
     ImGui::Separator();
 
     if (ImGuiHelpers::BeginDrapDropTargetWindow(sDragDropPayload))

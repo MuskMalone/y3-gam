@@ -3,6 +3,7 @@
 #include <ImGui/imgui.h>
 //#include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <string>
+#include "Color.h"
 
 namespace ImGuiHelpers
 {
@@ -24,6 +25,73 @@ namespace ImGuiHelpers
         ImGui::EndDragDropTarget();
       }
     return false;
+  }
+
+  bool InputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled) {
+    bool valChanged{ false };
+
+    ImGui::BeginDisabled(disabled);
+
+    ImGui::TableNextColumn();
+    ImGui::Text(propertyName.c_str());
+
+    propertyName = "##" + propertyName;
+
+    ImGui::TableNextColumn();
+
+    // Convert IM_COL32 colors to ImVec4
+    auto Col32ToImVec4 = [](ImU32 col) -> ImVec4 {
+      return ImVec4(
+        ((col >> IM_COL32_R_SHIFT) & 0xFF) / 255.0f,
+        ((col >> IM_COL32_G_SHIFT) & 0xFF) / 255.0f,
+        ((col >> IM_COL32_B_SHIFT) & 0xFF) / 255.0f,
+        ((col >> IM_COL32_A_SHIFT) & 0xFF) / 255.0f
+      );
+    };
+
+    ImGui::SetNextItemWidth(fieldWidth);
+    ImGui::TextColored(Col32ToImVec4(Color::IMGUI_COLOR_RED), "X");
+    ImGui::SameLine();
+    if (ImGui::InputDouble((propertyName + "X").c_str(), &property.x, 0, 0, "%.5f")) { valChanged = true; }
+
+    ImGui::SameLine(0, 3);
+    ImGui::SetNextItemWidth(fieldWidth);
+    ImGui::TextColored(Col32ToImVec4(Color::IMGUI_COLOR_GREEN), "Y");
+    ImGui::SameLine();
+    if (ImGui::InputDouble((propertyName + "Y").c_str(), &property.y, 0, 0, "%.5f")) { valChanged = true; }
+
+    ImGui::SameLine(0, 3);
+    ImGui::SetNextItemWidth(fieldWidth);
+    ImGui::TextColored(Col32ToImVec4(Color::IMGUI_COLOR_BLUE), "Z");
+    ImGui::SameLine();
+    if (ImGui::InputDouble((propertyName + "Z").c_str(), &property.z, 0, 0, "%.5f")) { valChanged = true; }
+
+    ImGui::EndDisabled();
+
+    return valChanged;
+  }
+
+  void InputDouble1(std::string propertyName, double& property, bool disabled) {
+    ImGui::BeginDisabled(disabled);
+    ImGui::TableNextColumn();
+    ImGui::Text(propertyName.c_str());
+    ImGui::TableNextColumn();
+    ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
+    ImGui::InputDouble(("##" + propertyName).c_str(), &property, 0, 0, "%.2f");
+    ImGui::EndDisabled();
+  }
+
+  bool InputCheckBox(std::string propertyName, bool& property, bool disabled) {
+    ImGui::PushID(propertyName.c_str());
+    bool valChanged{ false };
+    ImGui::BeginDisabled(disabled);
+    ImGui::TableNextColumn();
+    ImGui::Text(propertyName.c_str());
+    ImGui::TableNextColumn();
+    valChanged = ImGui::Checkbox(("##" + propertyName).c_str(), &property);
+    ImGui::EndDisabled();
+    ImGui::PopID();
+    return valChanged;
   }
 
 } // namespace ImGuiHelpers
