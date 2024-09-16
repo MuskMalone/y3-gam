@@ -1,11 +1,6 @@
 #include <pch.h>
 #include "Application.h"
 
-#include <imgui/imgui.h>
-#include <imgui/backends/imgui_impl_glfw.h>
-#include <imgui/backends/imgui_impl_opengl3.h>
-
-#include <GUI/GUIManager.h>
 #include <Input/InputAssistant.h>
 #include <Events/EventManager.h>
 #include <Scenes/SceneManager.h>
@@ -14,14 +9,24 @@
 #include <Core/EntityManager.h>
 #include <Core/Component/Components.h>
 
+#ifndef IMGUI_DISABLE
+#include <imgui/imgui.h>
+#include <imgui/backends/imgui_impl_glfw.h>
+#include <imgui/backends/imgui_impl_opengl3.h>
+#include <GUI/GUIManager.h>
+#endif
+
 void Application::Init() {
   mScene->Init();
-  GUI::GUIManager::Init(mFramebuffers.front().first);
   Scenes::SceneManager::GetInstance().Init();
   InputAssistant::RegisterKeyPressEvent(GLFW_KEY_GRAVE_ACCENT, std::bind(&Application::ToggleImGuiActive, this));
 
   // @TODO: SETTINGS TO BE LOADED FROM CONFIG FILE
   FrameRateController::GetInstance().Init(120.f, 1.f, false);
+
+#ifndef IMGUI_DISABLE
+  GUI::GUIManager::Init(mFramebuffers.front().first);
+#endif
 
   // @TODO: REMOVE, FOR TESTING ONLY
   /*
@@ -72,9 +77,11 @@ void Application::Run() {
 
     glfwPollEvents();
 
+#ifndef IMGUI_DISABLE
     if (mImGuiActive) {
       ImGuiStartFrame();
     }
+#endif
 
     // @TODO: REPLACE WITH INPUT MANAGER UPDATE
     InputAssistant::Update();
@@ -83,12 +90,15 @@ void Application::Run() {
     static auto& eventManager{ Events::EventManager::GetInstance() };
     eventManager.DispatchAll();
 
+#ifndef IMGUI_DISABLE
     if (mImGuiActive) {
       GUI::GUIManager::UpdateGUI();
     }
+#endif
 
     mScene->Update(FrameRateController::GetInstance().GetDeltaTime());
 
+#ifndef IMGUI_DISABLE
     if (mImGuiActive)
     {
       UpdateFramebuffers();
@@ -105,6 +115,11 @@ void Application::Run() {
         glfwMakeContextCurrent(backup_current_context);
       }
     }
+#else
+    glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
+    mFramebuffers.front().second();
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+#endif
 
     // check and call events, swap buffers
     glfwSwapBuffers(mWindow);
@@ -135,6 +150,7 @@ Application::Application(const char* name, int width, int height) :
     throw std::runtime_error("Failed to initialize GLAD");
   }
 
+#ifndef IMGUI_DISABLE
   // Setup Dear ImGui context
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
@@ -152,6 +168,7 @@ Application::Application(const char* name, int width, int height) :
   // Setup Platform/Renderer backends
   ImGui_ImplGlfw_InitForOpenGL(mWindow, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
   ImGui_ImplOpenGL3_Init();
+#endif
 
   glfwSetWindowUserPointer(mWindow, this); // set the window to reference this class
   
@@ -176,14 +193,6 @@ void Application::UpdateFramebuffers()
 
     fb.Unbind();
   }
-}
-
-void Application::ImGuiStartFrame() const
-{
-  ImGui_ImplOpenGL3_NewFrame();
-  ImGui_ImplGlfw_NewFrame();
-  ImGui::NewFrame();
-  ImGui::DockSpaceOverViewport(); // convert the window into a dockspace
 }
 
 void Application::SetCallbacks()
@@ -217,6 +226,14 @@ void Application::ErrorCallback(int err, const char* desc)
 }
 
 #ifndef IMGUI_DISABLE
+void Application::ImGuiStartFrame() const
+{
+  ImGui_ImplOpenGL3_NewFrame();
+  ImGui_ImplGlfw_NewFrame();
+  ImGui::NewFrame();
+  ImGui::DockSpaceOverViewport(); // convert the window into a dockspace
+}
+
 void Application::WindowDropCallback(GLFWwindow*, int pathCount, const char* paths[]) {
   QUEUE_EVENT(Events::AddFilesFromExplorerEvent, pathCount, paths);
 }
@@ -224,9 +241,11 @@ void Application::WindowDropCallback(GLFWwindow*, int pathCount, const char* pat
 
 Application::~Application()
 {
+#ifndef IMGUI_DISABLE
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();
   ImGui::DestroyContext();
+#endif
 
   glfwTerminate();
 }

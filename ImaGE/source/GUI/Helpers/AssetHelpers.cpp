@@ -1,4 +1,5 @@
 #include <pch.h>
+#ifndef IMGUI_DISABLE
 #include "AssetHelpers.h"
 #include <fstream>
 
@@ -133,3 +134,5 @@ namespace AssetHelpers
   }
 
 } // namespace AssetHelpers
+
+#endif  // IMGUI_DISABLE

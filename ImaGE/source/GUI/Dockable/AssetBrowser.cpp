@@ -1,4 +1,5 @@
 #include <pch.h>
+#ifndef IMGUI_DISABLE
 #include "AssetBrowser.h"
 #include <imgui/imgui.h>
 #include <Globals.h>
@@ -156,15 +157,7 @@ namespace GUI
 
       // asset icon + input
       ImGui::ImageButton(0, ImVec2(imgSize, imgSize));
-      if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
-      {
-        mSelectedAsset = file;
-        mAssetMenuPopup = true;
-      }
-      else if (ImGui::IsItemClicked(ImGuiMouseButton_Left) && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-      {
-        AssetHelpers::OpenFileWithDefaultProgram(file.path().string());
-      }
+      CheckInput(file);
 
       // display file name below
       ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
@@ -192,15 +185,7 @@ namespace GUI
 
       // asset icon + input
       ImGui::ImageButton(0, ImVec2(imgSize, imgSize));
-      if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
-      {
-        mSelectedAsset = file;
-        mAssetMenuPopup = true;
-      }
-      else if (ImGui::IsItemClicked(ImGuiMouseButton_Left) && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-      {
-        AssetHelpers::OpenFileWithDefaultProgram(file.path().string());
-      }
+      CheckInput(file);
 
       // display file name below
       ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
@@ -211,6 +196,25 @@ namespace GUI
         ImGui::Text((secondRow.size() > maxChars ? secondRow.substr(0, maxChars - 2) + "..." : secondRow).c_str());
       }
       ImGui::NewLine();
+    }
+  }
+
+  void AssetBrowser::CheckInput(std::filesystem::path const& path)
+  {
+    if (ImGui::BeginDragDropSource()) {
+
+
+
+      ImGui::EndDragDropSource();
+    }
+    if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
+    {
+      mSelectedAsset = path;
+      mAssetMenuPopup = true;
+    }
+    else if (ImGui::IsItemClicked(ImGuiMouseButton_Left) && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+    {
+      AssetHelpers::OpenFileWithDefaultProgram(path.string());
     }
   }
 
@@ -386,3 +390,5 @@ namespace Helper
     return false;
   }
 }
+
+#endif  // IMGUI_DISABLE

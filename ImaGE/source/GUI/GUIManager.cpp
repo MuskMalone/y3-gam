@@ -1,4 +1,5 @@
 #include <pch.h>
+#ifndef IMGUI_DISABLE
 #include "GUIManager.h"
 #include <ImGui/imgui.h>
 #include <Core/Entity.h>
@@ -49,3 +50,5 @@ namespace GUI
   }
 
 } // namespace GUI
+
+#endif  // IMGUI_DISABLE

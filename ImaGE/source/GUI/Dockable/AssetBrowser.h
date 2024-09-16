@@ -1,4 +1,5 @@
 #pragma once
+#ifndef IMGUI_DISABLE
 #include <GUI/GUIWindow.h>
 #include <string>
 #include <filesystem>
@@ -38,6 +39,7 @@ namespace GUI
     void ContentViewer();
     void DisplayDirectory(float imgSize, unsigned maxChars);
     void DisplaySearchResults(float imgSize, unsigned maxChars);
+    void CheckInput(std::filesystem::path const& path);
 
     /*!*********************************************************************
     \brief
@@ -77,3 +79,5 @@ namespace GUI
   };
 
 } // namespace GUI
+
+#endif  // IMGUI_DISABLE

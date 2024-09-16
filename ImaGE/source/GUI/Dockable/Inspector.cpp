@@ -1,4 +1,5 @@
 #include <pch.h>
+#ifndef IMGUI_DISABLE
 #include <imgui/imgui.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include "Inspector.h"
@@ -97,3 +98,5 @@ namespace GUI {
     ImGui::Separator();
   }
 } // namespace GUI
+
+#endif  // IMGUI_DISABLE

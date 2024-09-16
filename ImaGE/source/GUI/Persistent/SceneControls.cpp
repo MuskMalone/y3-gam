@@ -1,4 +1,5 @@
 #include <pch.h>
+#ifndef IMGUI_DISABLE
 #include "SceneControls.h"
 #include <imgui/imgui.h>
 #include <ImGui/imgui_internal.h> // for BeginViewportSideBar
@@ -90,3 +91,5 @@ namespace GUI
   }
 
 } // namespace GUI
+
+#endif  // IMGUI_DISABLE

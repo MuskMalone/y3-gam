@@ -1,4 +1,5 @@
 #include <pch.h>
+#ifndef IMGUI_DISABLE
 #include "SceneHierarchy.h"
 #include <imgui/imgui.h>
 #include <Scenes/SceneManager.h>
@@ -168,3 +169,5 @@ namespace GUI
   }
 
 } // namespace GUI
+
+#endif  // IMGUI_DISABLE

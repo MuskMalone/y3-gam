@@ -1,4 +1,5 @@
 #pragma once
+#ifndef IMGUI_DISABLE
 #include "GUI/GUIWindow.h"
 #include "GUI/GUIManager.h"
 
@@ -25,3 +26,5 @@ namespace GUI {
     static bool sEntityChanged;
   };
 } // namespace GUI
+
+#endif  // IMGUI_DISABLE

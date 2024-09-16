@@ -1,4 +1,5 @@
 #pragma once
+#ifndef IMGUI_DISABLE
 #include <GUI/GUIWindow.h>
 #include <set>
 #include <Core/Entity.h>
@@ -31,3 +32,5 @@ namespace GUI
   };
 
 } // namespace GUI
+
+#endif  // IMGUI_DISABLE

@@ -28,9 +28,12 @@ private:
   int mWidth, mHeight;
   bool mImGuiActive;
 
-  void ImGuiStartFrame() const;
   void UpdateFramebuffers();
   void SetCallbacks();
+  
+#ifndef IMGUI_DISABLE
+  void ImGuiStartFrame() const;
+#endif
 
   static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
   static void ErrorCallback(int err, const char* desc);

@@ -1,4 +1,5 @@
 #pragma once
+#ifndef IMGUI_DISABLE
 #include <vector>
 #include <memory>
 #include <GUI/GUIWindow.h>
@@ -24,3 +25,5 @@ namespace GUI
   };
 
 } // namespace GUI
+
+#endif  // IMGUI_DISABLE
