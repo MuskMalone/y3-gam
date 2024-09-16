@@ -1,6 +1,6 @@
 #pragma once
 #include <GUI/GUIWindow.h>
-//#include <string>
+#include <string>
 #include <filesystem>
 #include <Events/EventCallback.h>
 
@@ -17,7 +17,8 @@ namespace GUI
   private:
     std::filesystem::path mCurrentDir, mRightClickedDir; 
     std::filesystem::path mSelectedAsset;
-    bool mDirMenuPopup;
+    std::string mSearchQuery;
+    bool mDirMenuPopup, mAssetMenuPopup;
 
     static constexpr float sMaxAssetSize = 100.f;
 
@@ -32,8 +33,11 @@ namespace GUI
     ************************************************************************/
     EVENT_CALLBACK_DECL(HandleEvent);
 
+    void MenuBar();
     void DirectoryTree();
     void ContentViewer();
+    void DisplayDirectory(float imgSize, unsigned maxChars);
+    void DisplaySearchResults(float imgSize, unsigned maxChars);
 
     /*!*********************************************************************
     \brief

@@ -5,7 +5,7 @@
 class FrameRateController : public Singleton <FrameRateController> {
 public:
   using TimeType = float;
-  using TimeFormat = std::chrono::milliseconds;
+  using TimeFormat = std::chrono::microseconds;
 
   void Init(float targetFPS = 60.f, float fpsCalculationInterval = 1.f, bool vsyncEnabled = false);
   void Start();

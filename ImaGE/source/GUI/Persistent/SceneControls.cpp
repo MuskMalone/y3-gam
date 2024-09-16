@@ -47,8 +47,7 @@ namespace GUI
           ImGui::PopStyleColor();
         }
         else {
-          ImGui::PopStyleColor();
-          ImGui::PopStyleColor();
+          ImGui::PopStyleColor(2);
         }
 
         // play / pause button
@@ -67,8 +66,7 @@ namespace GUI
           if (ImGui::Button("Play")) {
             QUEUE_EVENT(Events::StartSceneEvent);
           }
-          ImGui::PopStyleColor();
-          ImGui::PopStyleColor();
+          ImGui::PopStyleColor(2);
         }        
 
         // step button

@@ -15,6 +15,42 @@ namespace AssetHelpers
     return "." + filepath.substr(filepath.find(rootDir) + rootDir.size());
   }
 
+  std::vector<std::string> SelectFilesFromExplorer(const char* winTitle, const char* extensionsFilter,
+    unsigned numFilters, const char* initialDir)
+  {
+    OPENFILENAMEA fileName{};
+    CHAR size[MAX_PATH * 10]{};
+
+    ZeroMemory(&fileName, sizeof(fileName));
+    fileName.lStructSize = sizeof(fileName);
+    fileName.hwndOwner = NULL;
+    fileName.lpstrFile = size;
+    fileName.nMaxFile = sizeof(size);
+    fileName.lpstrFilter = extensionsFilter;
+    fileName.nFilterIndex = numFilters;			// number of filters
+    fileName.lpstrFileTitle = NULL;
+    fileName.nMaxFileTitle = 0;
+    fileName.lpstrInitialDir = initialDir;	// initial directory
+    fileName.lpstrTitle = winTitle;   // window title
+    fileName.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR | OFN_ALLOWMULTISELECT | OFN_EXPLORER;
+
+    if (GetOpenFileNameA(&fileName)) {
+      std::vector<std::string> files{};
+      char const* ptr{ fileName.lpstrFile };
+
+      std::string const dir{ ptr + std::string("\\") };
+      ptr += strlen(ptr) + 1;
+      while (*ptr) {
+        files.emplace_back(dir + ptr);
+        ptr += strlen(ptr) + 1;
+      }
+
+      return files;
+    }
+
+    return {};
+  }
+
   std::string LoadFileFromExplorer(const char* extensionsFilter, unsigned numFilters, const char* initialDir)
   {
     OPENFILENAMEA fileName{};

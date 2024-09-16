@@ -5,6 +5,7 @@
 #include <Events/EventManager.h>
 #include <Scenes/SceneManager.h>
 #include <GUI/Helpers/AssetHelpers.h>
+#include <ImGui/misc/cpp/imgui_stdlib.h>
 
 namespace Helper
 {
@@ -24,14 +25,15 @@ namespace GUI
 
   AssetBrowser::AssetBrowser(std::string const& name) :
     mCurrentDir{ gAssetsDirectory }, mRightClickedDir{},
-    mSelectedAsset{}, mDirMenuPopup{ false }, GUIWindow(name)
+    mSelectedAsset{}, mDirMenuPopup{ false }, mAssetMenuPopup{ false }, GUIWindow(name)
   {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::ADD_FILES, &AssetBrowser::HandleEvent, this);
   }
 
   void AssetBrowser::Run()
   {
-    ImGui::Begin(mWindowName.c_str());
+    ImGui::Begin(mWindowName.c_str(), 0, ImGuiWindowFlags_MenuBar);
+    MenuBar();
 
     ImGui::BeginChild("DirTree", ImVec2(), ImGuiChildFlags_Border | ImGuiChildFlags_ResizeX);
 
@@ -46,8 +48,41 @@ namespace GUI
     ImGui::EndChild();
 
     ImGui::End();
+  }
 
-    //ImGui::ShowDemoWindow();
+  void AssetBrowser::MenuBar()
+  {
+    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 50));
+    ImGui::BeginMenuBar();
+    ImGui::PopStyleVar();
+    bool const isSearching{ !mSearchQuery.empty() };
+    float const wWidth{ ImGui::GetWindowWidth() };
+    
+    if (ImGui::Button("Add")) {
+      auto const files{ AssetHelpers::SelectFilesFromExplorer("Add Files") };
+
+      if (!files.empty()) {
+        AddAssets(files);
+      }
+    }
+
+    if (isSearching) {
+      ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(255, 255, 255, 155));
+      ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 0, 0, 255));
+    }
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 25.f);
+
+    ImGui::SetCursorPosX(wWidth - wWidth * 0.25f);
+    ImGui::PushItemWidth(wWidth * 0.24f);
+    ImGui::InputTextWithHint("##SearchBar", "Search Assets", &mSearchQuery, ImGuiInputTextFlags_AutoSelectAll);
+    ImGui::PopItemWidth();
+
+    ImGui::PopStyleVar();
+    if (isSearching) {
+      ImGui::PopStyleColor(2);
+    }
+
+    ImGui::EndMenuBar();
   }
 
   void AssetBrowser::DirectoryTree()
@@ -81,11 +116,11 @@ namespace GUI
     DirectoryMenuPopup();
   }
 
+
   void AssetBrowser::ContentViewer()
   {
     if (mCurrentDir.empty()) { return; }
 
-    static bool mAssetMenuPopup{ false };
     float const regionAvailX{ 0.8f * ImGui::GetContentRegionAvail().x };
     int const assetsPerRow{ regionAvailX > sMaxAssetSize * 10.f ? 10 : regionAvailX < sMaxAssetSize * 4.f ? 3 : 6 };
     float const sizePerAsset{ regionAvailX / static_cast<float>(assetsPerRow) };
@@ -94,36 +129,12 @@ namespace GUI
     unsigned const maxChars{ static_cast<unsigned>(imgSize * 0.9f / ImGui::CalcTextSize("L").x) };
     if (ImGui::BeginTable("DirectoryTable", assetsPerRow, ImGuiTableFlags_Sortable | ImGuiTableFlags_ScrollY))
     {
-      for (auto const& file : std::filesystem::directory_iterator(mCurrentDir)) {
-        if (file.is_directory()) { continue; }
-
-        ImGui::TableNextColumn();
-        std::string const fileName{ file.path().filename().string() };
-        bool const exceed{ fileName.size() > maxChars };
-
-        // asset icon + input
-        ImGui::ImageButton(0, ImVec2(imgSize, imgSize));
-        if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
-        {
-          mSelectedAsset = file;
-          mAssetMenuPopup = true;
-        }
-        else if (ImGui::IsItemClicked(ImGuiMouseButton_Left) && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-        {
-          AssetHelpers::OpenFileWithDefaultProgram(file.path().string());
-        }
-
-        // display file name below
-        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
-        ImGui::Text((exceed ? fileName.substr(0, maxChars) : fileName).c_str());
-        if (exceed) {
-          ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
-          std::string const secondRow{ fileName.substr(maxChars) };
-          ImGui::Text((secondRow.size() > maxChars ? secondRow.substr(0, maxChars - 2) + "..." : secondRow).c_str());
-        }
-        ImGui::NewLine();
+      if (mSearchQuery.empty()) {
+        DisplayDirectory(imgSize, maxChars);
       }
-
+      else {
+        DisplaySearchResults(imgSize, maxChars);
+      }
       ImGui::EndTable();
     }
 
@@ -132,6 +143,75 @@ namespace GUI
       mAssetMenuPopup = false;
     }
     AssetMenuPopup();
+  }
+
+  void AssetBrowser::DisplayDirectory(float imgSize, unsigned maxChars)
+  {
+    for (auto const& file : std::filesystem::directory_iterator(mCurrentDir)) {
+      if (file.is_directory()) { continue; }
+
+      ImGui::TableNextColumn();
+      std::string const fileName{ file.path().filename().string() };
+      bool const exceed{ fileName.size() > maxChars };
+
+      // asset icon + input
+      ImGui::ImageButton(0, ImVec2(imgSize, imgSize));
+      if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
+      {
+        mSelectedAsset = file;
+        mAssetMenuPopup = true;
+      }
+      else if (ImGui::IsItemClicked(ImGuiMouseButton_Left) && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+      {
+        AssetHelpers::OpenFileWithDefaultProgram(file.path().string());
+      }
+
+      // display file name below
+      ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
+      ImGui::Text((exceed ? fileName.substr(0, maxChars) : fileName).c_str());
+      if (exceed) {
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
+        std::string const secondRow{ fileName.substr(maxChars) };
+        ImGui::Text((secondRow.size() > maxChars ? secondRow.substr(0, maxChars - 2) + "..." : secondRow).c_str());
+      }
+      ImGui::NewLine();
+    }
+  }
+
+  void AssetBrowser::DisplaySearchResults(float imgSize, unsigned maxChars)
+  {
+    for (auto const& file : std::filesystem::recursive_directory_iterator(gAssetsDirectory))
+    {
+      if (file.is_directory()) { continue; }
+
+      std::string const fileName{ file.path().filename().string() };
+      if (fileName.find(mSearchQuery) == std::string::npos) { continue; }
+
+      ImGui::TableNextColumn();
+      bool const exceed{ fileName.size() > maxChars };
+
+      // asset icon + input
+      ImGui::ImageButton(0, ImVec2(imgSize, imgSize));
+      if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
+      {
+        mSelectedAsset = file;
+        mAssetMenuPopup = true;
+      }
+      else if (ImGui::IsItemClicked(ImGuiMouseButton_Left) && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+      {
+        AssetHelpers::OpenFileWithDefaultProgram(file.path().string());
+      }
+
+      // display file name below
+      ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
+      ImGui::Text((exceed ? fileName.substr(0, maxChars) : fileName).c_str());
+      if (exceed) {
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
+        std::string const secondRow{ fileName.substr(maxChars) };
+        ImGui::Text((secondRow.size() > maxChars ? secondRow.substr(0, maxChars - 2) + "..." : secondRow).c_str());
+      }
+      ImGui::NewLine();
+    }
   }
 
   EVENT_CALLBACK_DEF(AssetBrowser, HandleEvent)
