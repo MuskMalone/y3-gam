@@ -6,22 +6,18 @@
 namespace GUI {
   // Static Initialization
   std::map<std::string, bool> Inspector::sComponentOpenStatusMap{};
-  bool Inspector::sFirstOpen{ true };
   ECS::Entity Inspector::sPreviousEntity{};
   bool Inspector::sEntityChanged{};
+  bool Inspector::sIsComponentEdited{ false };
 
-  Inspector::Inspector(std::string const& name) : GUIWindow(name) {}
+  Inspector::Inspector(std::string const& name) : GUIWindow(name) {
+    for (std::string const& component : Component::ComponentNameList) {
+      sComponentOpenStatusMap[component] = false;
+    }
+  }
 
   void Inspector::Run() {
-    if (sFirstOpen) {
-      for (std::string const& component : Component::ComponentNameList) {
-        sComponentOpenStatusMap[component] = false;
-      }
-      sFirstOpen = false;
-    }
-
     ImGui::Begin(mWindowName.c_str());
-
     ECS::Entity const& currentEntity{ GUIManager::GetSelectedEntity() };
     if (currentEntity) {
       if (currentEntity != sPreviousEntity) {
@@ -44,6 +40,14 @@ namespace GUI {
     ImGui::End();
   }
 
+  bool const Inspector::GetIsComponentEdited() const {
+    return sIsComponentEdited;
+  }
+
+  void Inspector::SetIsComponentEdited(bool isComponentEdited) {
+    sIsComponentEdited = isComponentEdited;
+  }
+
   void Inspector::TagComponentWindow(ECS::Entity entity) {
     bool isOpen{ WindowBegin("Tag") };
 
@@ -51,6 +55,7 @@ namespace GUI {
       std::string tag{ entity.GetTag() };
       if (ImGui::InputText("##Tag", &tag, ImGuiInputTextFlags_EnterReturnsTrue)) {
         entity.SetTag(tag);
+        SetIsComponentEdited(true);
       }
     }
 
