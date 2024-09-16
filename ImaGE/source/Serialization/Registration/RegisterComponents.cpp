@@ -21,6 +21,9 @@ RTTR_REGISTRATION
 
   rttr::registration::class_<Transform>("Transform")
     .constructor<>()
+    .property("localPos", &Transform::localPos)
+    .property("localScale", &Transform::localScale)
+    .property("localRot", &Transform::localRot)
     .property("worldPos", &Transform::worldPos)
     .property("worldScale", &Transform::worldScale)
     .property("worldRot", &Transform::worldRot);

@@ -30,6 +30,60 @@ namespace Helper
 namespace Serialization
 {
 
+#ifndef IMGUI_DISABLE
+  void Serializer::SerializeVariantPrefab(Prefabs::VariantPrefab const& prefab, std::string const& filePath)
+  {
+    std::ofstream ofs{ filePath };
+    if (!ofs) {
+      // log("Unable to serialize prefab into " + filePath);
+#ifdef _DEBUG
+      std::cout << "Unable to serialize prefab into " + filePath << "\n";
+#endif
+      return;
+    }
+
+    rapidjson::OStreamWrapper osw{ ofs };
+    WriterType writer{ osw };
+    writer.StartObject();
+
+    // serialize the base layer of the prefab
+    writer.Key(JsonPfbVerKey); writer.Uint(prefab.mVersion);
+
+    writer.Key(JsonPfbActiveKey); writer.Bool(true);
+
+    SerializeVariantComponents(prefab.mComponents, writer);
+
+    // serialize nested components if prefab has multiple layers
+    writer.Key(JsonPfbDataKey);
+    writer.StartArray();
+    for (Prefabs::PrefabSubData const& obj : prefab.mObjects)
+    {
+      writer.StartObject();
+      
+      writer.Key(JsonIdKey); writer.Uint(obj.mId);
+      writer.Key(JsonPfbActiveKey); writer.Bool(true);
+      writer.Key(JsonParentKey); writer.Uint(obj.mParent);
+      
+      SerializeVariantComponents(obj.mComponents, writer);
+
+      writer.EndObject();
+    }
+    writer.EndArray();
+
+    // serialize removed objects
+    if (!prefab.mRemovedChildren.empty()) {
+      SerializeRecursive(prefab.mRemovedChildren, writer);
+    }
+
+    if (!prefab.mRemovedComponents.empty()) {
+      SerializeRecursive(prefab.mRemovedComponents, writer);
+    }
+
+    writer.EndObject();
+    ofs.close();
+  }
+#endif
+
   void Serializer::SerializeAny(rttr::instance const& obj, std::string const& filename)
   {
     std::ofstream ofs{ filename };
@@ -43,7 +97,7 @@ namespace Serialization
 
     rapidjson::OStreamWrapper osw{ ofs };
     WriterType writer{ osw };
-    SerializeRecursive(obj, writer);
+    SerializeClassTypes(obj, writer);
     ofs.close();
   }
 
@@ -87,7 +141,7 @@ namespace Serialization
     rapidjson::Value prefabJson{ rapidjson::kNullType };
     auto const entityPrefab{ pm.GetEntityPrefab(id) };
     if (entityPrefab) {
-      SerializeRecursive(*entityPrefab, writer);
+      SerializeClassTypes(*entityPrefab, writer);
     }
     entity.AddMember(JsonPrefabKey, prefabJson, allocator);*/
 #endif
@@ -129,13 +183,13 @@ namespace Serialization
     {
       writer.StartObject();
       writer.Key(comp.get_type().get_name().to_string().c_str());
-      SerializeRecursive(comp, writer);
+      SerializeClassTypes(comp, writer);
       writer.EndObject();
     }
     writer.EndArray();
   }
 
-  void Serializer::SerializeRecursive(rttr::instance const& obj, WriterType& writer)
+  void Serializer::SerializeClassTypes(rttr::instance const& obj, WriterType& writer)
   {
     writer.StartObject();
 
@@ -155,7 +209,7 @@ namespace Serialization
 
       std::string const name{ property.get_name().to_string() };
       writer.String(name.c_str(), static_cast<rapidjson::SizeType>(name.length()), false);
-      if (!WriteVariant(propVal, writer))
+      if (!SerializeRecursive(propVal, writer))
       {
 #ifdef _DEBUG
         std::cout << "Unable to serialize property " << name << " of type " << property.get_type().get_name().to_string() << "\n";
@@ -196,9 +250,8 @@ namespace Serialization
     {
       bool result;
       std::string str{ var.to_string(&result) };
-      if (result)
-      {
-        writer.String(str.c_str(), str.length(), false);
+      if (result) {
+        writer.String(str.c_str(), static_cast<rapidjson::SizeType>(str.length()), false);
       }
       else
       {
@@ -234,7 +287,7 @@ namespace Serialization
         rttr::type const valType{ wrappedVar.get_type() };
         if (!WriteBasicTypes(valType, wrappedVar, writer))
         {
-          SerializeRecursive(wrappedVar, writer);
+          SerializeClassTypes(wrappedVar, writer);
         }
       }
     }
@@ -242,7 +295,7 @@ namespace Serialization
     writer.EndArray();
   }
 
-  bool Serializer::WriteVariant(rttr::variant const& var, WriterType& writer)
+  bool Serializer::SerializeRecursive(rttr::variant const& var, WriterType& writer)
   {
     bool const isWrapper{ var.get_type().is_wrapper() };
     rttr::type const type{ isWrapper ? var.get_type().get_wrapped_type().get_raw_type() :
@@ -265,7 +318,7 @@ namespace Serialization
       auto properties{ type.get_properties() };
       if (!properties.empty())
       {
-        SerializeRecursive(var, writer);
+        SerializeClassTypes(var, writer);
       }
       else
       {
@@ -288,7 +341,7 @@ namespace Serialization
     {
       for (auto const& elem : view)
       {
-        WriteVariant(elem.first, writer);
+        SerializeRecursive(elem.first, writer);
       }
     }
     else
@@ -297,10 +350,10 @@ namespace Serialization
       {
         writer.StartObject();
         writer.String("key", 3, false);
-        WriteVariant(elem.first, writer);
+        SerializeRecursive(elem.first, writer);
 
         writer.String("value", 5, false);
-        WriteVariant(elem.second, writer);
+        SerializeRecursive(elem.second, writer);
 
         writer.EndObject();
       }

@@ -28,7 +28,7 @@ namespace Prefabs
     using SubDataId = unsigned;
 
     PrefabSubData();
-    PrefabSubData(std::string name, SubDataId id, SubDataId parent = BasePrefabId);
+    PrefabSubData(SubDataId id, SubDataId parent = BasePrefabId);
 
     /*!*********************************************************************
     \brief
@@ -59,7 +59,6 @@ namespace Prefabs
     ************************************************************************/
     ECS::Entity Construct() const;
 
-    std::string mName;
     std::vector<rttr::variant> mComponents;
     SubDataId mId, mParent;
     bool mIsActive;

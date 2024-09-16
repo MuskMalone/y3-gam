@@ -126,7 +126,7 @@ namespace GUI
       if (ImGui::BeginDragDropSource())
       {
         ECS::EntityManager::EntityID id{ entity.GetRawEnttEntityID() };
-        ImGui::SetDragDropPayload(sDragDropPayload, &id, sizeof(ECS::EntityManager::EntityID));
+        ImGui::SetDragDropPayload(sDragDropPayload, &id, sizeof(ECS::EntityManager::EntityID), ImGuiCond_Once);
         // Anything between begin and end will be parented to the dragged object
         ImGui::Text(entityName.c_str());
         ImGui::EndDragDropSource();

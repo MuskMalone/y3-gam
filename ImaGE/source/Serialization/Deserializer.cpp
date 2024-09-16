@@ -144,6 +144,127 @@ namespace Serialization
     return ret;
   }
 
+  Prefabs::VariantPrefab Deserializer::DeserializePrefabToVariant(std::string const& json)
+  {
+    rapidjson::Document document{};
+    if (!ParseJsonIntoDocument(document, json)) { return {}; }
+
+    if (!ScanJsonFileForMembers(document, json, 4, JsonIdKey, rapidjson::kNumberType, JsonPfbNameKey, rapidjson::kStringType,
+      JsonComponentsKey, rapidjson::kArrayType, JsonParentKey, rapidjson::kNumberType)) {
+      return {};
+    }
+
+    Prefabs::VariantPrefab prefab{ document[JsonPfbNameKey].GetString(), document[JsonPfbVerKey].GetUint() };
+    prefab.mIsActive = (document.HasMember(JsonPfbActiveKey) ? document[JsonPfbActiveKey].GetBool() : true);
+
+    // iterate through component objects in json array
+    std::vector<rttr::variant>& compVector{ prefab.mComponents };
+    for (auto const& elem : document[JsonComponentsKey].GetArray())
+    {
+      rapidjson::Value::ConstMemberIterator comp{ elem.MemberBegin() };
+      std::string const compName{ comp->name.GetString() };
+      rapidjson::Value const& compJson{ comp->value };
+      rttr::type compType = rttr::type::get_by_name(compName);
+
+#ifdef DESERIALIZER_DEBUG
+      std::cout << "  [P] Deserializing " << compType << "\n";
+#endif
+
+      if (!compType.is_valid()) {
+        std::ostringstream oss{};
+        oss << "Trying to deserialize an invalid component: " << compName;
+        // log(oss.str());
+#ifdef _DEBUG
+        std::cout << oss.str() << "\n";
+#endif
+        continue;
+      }
+
+      rttr::variant compVar{};
+      DeserializeComponent(compVar, compType, compJson);
+
+      compVector.emplace_back(compVar);
+    }
+
+    for (auto const& elem : document[JsonPfbDataKey].GetArray())
+    {
+      if (!ScanJsonFileForMembers(elem, json, 3, JsonPfbDataKey, rapidjson::kArrayType,
+        JsonComponentsKey, rapidjson::kArrayType, JsonPfbVerKey, rapidjson::kNumberType)) {
+        continue;
+      }
+
+      Prefabs::PrefabSubData subObj{ elem[JsonIdKey].GetUint(), elem[JsonParentKey].GetUint() };
+      subObj.mIsActive = (elem.HasMember(JsonPfbActiveKey) ? elem[JsonPfbActiveKey].GetBool() : true);
+
+      for (auto const& component : elem[JsonComponentsKey].GetArray())
+      {
+        rapidjson::Value::ConstMemberIterator comp{ component.MemberBegin() };
+        std::string const compName{ comp->name.GetString() };
+        rapidjson::Value const& compJson{ comp->value };
+        rttr::type compType = rttr::type::get_by_name(compName);
+
+#ifdef DESERIALIZER_DEBUG
+        std::cout << "  [P] Deserializing " << compType << "\n";
+#endif
+
+        if (!compType.is_valid())
+        {
+          std::ostringstream oss{};
+          oss << "Trying to deserialize an invalid component: " << compName;
+          // log(oss.str());
+#ifdef _DEBUG
+          std::cout << oss.str() << "\n";
+#endif
+          continue;
+        }
+
+        rttr::variant compVar{};
+        DeserializeComponent(compVar, compType, compJson);
+
+        subObj.AddComponent(std::move(compVar));
+      }
+
+      prefab.mObjects.emplace_back(std::move(subObj));
+    }
+
+#ifndef IMGUI_DISABLE
+    if (document.HasMember(JsonRemovedChildrenKey))
+    {
+      rttr::variant removedChildrenVar{ std::vector<std::pair<Prefabs::PrefabSubData::SubDataId, Prefabs::PrefabVersion>>{} };
+      DeserializeRecursive(removedChildrenVar, document[JsonRemovedChildrenKey]);
+      if (removedChildrenVar.is_valid()) {
+        prefab.mRemovedChildren = std::move(removedChildrenVar.get_value<
+          std::vector<std::pair<Prefabs::PrefabSubData::SubDataId, Prefabs::PrefabVersion>>>());
+      }
+      else {
+        std::string const msg{ "Unable to deserialize m_removedChildren of prefab " + prefab.mName };
+        // log(msg);
+#ifdef _DEBUG
+        std::cout << msg << "\n";
+#endif
+      }
+    }
+
+    if (document.HasMember(JsonRemovedCompKey))
+    {
+      rttr::variant removedCompVar{ std::vector<Prefabs::VariantPrefab::RemovedComponent>{} };
+      DeserializeRecursive(removedCompVar, document[JsonRemovedCompKey]);
+      if (removedCompVar.is_valid()) {
+        prefab.mRemovedComponents = std::move(removedCompVar.get_value<std::vector<Prefabs::VariantPrefab::RemovedComponent>>());
+      }
+      else {
+        std::string const msg{ "Unable to deserialize m_removedComponents of prefab " + prefab.mName };
+        // log(msg);
+#ifdef _DEBUG
+        std::cout << msg << "\n";
+#endif
+      }
+    }
+#endif
+
+    return prefab;
+  }
+
   void Deserializer::DeserializeComponent(rttr::variant& compVar, rttr::type const& compType, rapidjson::Value const& compJson)
   {
 #ifdef DESERIALIZER_DEBUG
