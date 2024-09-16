@@ -24,12 +24,13 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <sstream>
 #ifndef IMGUI_DISABLE
 #include <Prefabs/PrefabManager.h>
+#include <Events/EventManager.h>
 #endif
 
 namespace Reflection
 {
 
-  void ObjectFactory::AddComponentsToEntity(ECS::Entity& id, std::vector<rttr::variant> const& components) const
+  void ObjectFactory::AddComponentsToEntity(ECS::Entity id, std::vector<rttr::variant> const& components) const
   {
     for (rttr::variant const& component : components) {
       AddComponentToEntity(id, component);
@@ -71,8 +72,7 @@ namespace Reflection
     // update entity's prefab if needed
     Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
     auto const entityPrefab{ pm.GetEntityPrefab(entity) };
-    if (entityPrefab)
-    {
+    if (entityPrefab) {
       pm.AttachPrefab(newEntity, *entityPrefab);
     }
 #endif
@@ -107,19 +107,17 @@ namespace Reflection
     }
 
 #ifndef IMGUI_DISABLE
-    /*if (Prefabs::PrefabManager::GetInstance().UpdateAllEntitiesFromPrefab())
-    {
-      Events::EventManager::GetInstance().Dispatch(Events::PrefabInstancesUpdatedEvent());
-    }*/
+    if (Prefabs::PrefabManager::GetInstance().UpdateAllEntitiesFromPrefab()) {
+      QUEUE_EVENT(Events::PrefabInstancesUpdatedEvent);
+    }
 #endif
   }
 
-  void ObjectFactory::LoadEntityData(std::string const& filePath)
-  {
+  void ObjectFactory::LoadEntityData(std::string const& filePath) {
     mRawEntities = Serialization::Deserializer::DeserializeScene(filePath);
   }
 
-  void ObjectFactory::AddComponentToEntity(ECS::Entity& entity, rttr::variant const& compVar) const
+  void ObjectFactory::AddComponentToEntity(ECS::Entity entity, rttr::variant const& compVar) const
   {
     rttr::type compType{ compVar.get_type() };
     // get underlying type if it's wrapped in a pointer
@@ -148,13 +146,13 @@ namespace Reflection
   rttr::variant ObjectFactory::GetEntityComponent(ECS::Entity const& entity, rttr::type const& compType) const
   {
     if (compType == rttr::type::get<Component::Transform>()) {
-      return entity.HasComponent<Component::Transform>() ? entity.GetComponent<Component::Transform>() : rttr::variant();
+      return entity.HasComponent<Component::Transform>() ? std::make_shared<Component::Transform>(entity.GetComponent<Component::Transform>()) : rttr::variant();
     }
     else if (compType == rttr::type::get<Component::Tag>()) {
-      return entity.HasComponent<Component::Tag>() ? entity.GetComponent<Component::Tag>() : rttr::variant();
+      return entity.HasComponent<Component::Tag>() ? std::make_shared<Component::Tag>(entity.GetComponent<Component::Tag>()) : rttr::variant();
     }
     else if (compType == rttr::type::get<Component::Layer>()) {
-      return entity.HasComponent<Component::Layer>() ? entity.GetComponent<Component::Layer>() : rttr::variant();
+      return entity.HasComponent<Component::Layer>() ? std::make_shared<Component::Layer>(entity.GetComponent<Component::Layer>()) : rttr::variant();
     }
     else
     {
@@ -165,7 +163,7 @@ namespace Reflection
     }
   }
 
-  void ObjectFactory::RemoveComponentFromEntity(ECS::Entity& entity, rttr::type compType) const
+  void ObjectFactory::RemoveComponentFromEntity(ECS::Entity entity, rttr::type compType) const
   {
     // get underlying type if it's wrapped in a pointer
     compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;

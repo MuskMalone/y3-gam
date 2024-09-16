@@ -1,7 +1,7 @@
 /*!*********************************************************************
 \file   VariantPrefab.h
 \author chengen.lau\@digipen.edu
-\date   12-December-2023
+\date   16-September-2024
 \brief  
   Contains the definition of the struct encapsulating deserialized
   prefab data. It is used during creation of entities from prefabs and
@@ -154,6 +154,6 @@ namespace Prefabs
     std::string mPrefab;
     std::unordered_map<PrefabSubData::SubDataId, ECS::EntityManager::EntityID> mObjToEntity;
     PrefabVersion mVersion;
-    bool mRegistered = true;  // whether the entity should be updated by the prefab
+    bool mRegistered;  // whether the entity should be updated by the prefab
   };
 }

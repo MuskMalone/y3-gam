@@ -1,7 +1,7 @@
 /*!*********************************************************************
 \file   VariantPrefab.cpp
 \author chengen.lau\@digipen.edu
-\date   14-September-2024
+\date   16-September-2024
 \brief
   Contains the definition of the struct encapsulating deserialized
   prefab data. It is used during creation of entities from prefabs and
@@ -103,7 +103,9 @@ void VariantPrefab::CreateSubData(std::vector<ECS::Entity> const& children, Pref
     }
 
     mObjects.emplace_back(std::move(obj));
-    CreateSubData(entityMan.GetChildEntity(const_cast<ECS::Entity&>(child)), currId);
+    if (entityMan.HasChild(child)) {
+      CreateSubData(entityMan.GetChildEntity(child), currId);
+    }
   }
 }
 

@@ -9,6 +9,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
 #include <rttr/registration>
+#include <Prefabs/VariantPrefab.h>
 
 RTTR_REGISTRATION
 {
@@ -47,4 +48,30 @@ RTTR_REGISTRATION
     .property("w", &glm::dvec4::w);
 
 
+#ifndef IMGUI_DISABLE
+  rttr::registration::class_<std::pair<std::string, unsigned>>("StringUnsignedPair")
+    .property("first", &std::pair<std::string, unsigned>::first)
+    .property("second", &std::pair<std::string, unsigned>::second)
+    ;
+
+  rttr::registration::class_<Prefabs::VariantPrefab::EntityMappings>("EntityMappings")
+    .property("name", &Prefabs::VariantPrefab::EntityMappings::mPrefab)
+    .property("version", &Prefabs::VariantPrefab::EntityMappings::mVersion)
+    .property("objToEntity", &Prefabs::VariantPrefab::EntityMappings::mObjToEntity)
+    .property("registered", &Prefabs::VariantPrefab::EntityMappings::mRegistered)
+    ;
+
+  rttr::registration::class_<Prefabs::VariantPrefab::RemovedComponent>("RemovedComponent")
+    .property("id", &Prefabs::VariantPrefab::RemovedComponent::mId)
+    .property("type", &Prefabs::VariantPrefab::RemovedComponent::mType)
+    .property("version", &Prefabs::VariantPrefab::RemovedComponent::mVersion)
+    ;
+
+  rttr::registration::class_<std::pair<Prefabs::PrefabSubData::SubDataId, Prefabs::PrefabVersion>>("UnsignedUnsignedPair")
+    .property("first", &std::pair<Prefabs::PrefabSubData::SubDataId, Prefabs::PrefabVersion>::first)
+    .property("second", &std::pair<Prefabs::PrefabSubData::SubDataId, Prefabs::PrefabVersion>::second)
+    ;
+
+  rttr::registration::class_<rttr::type>("RttrType");
+#endif
 }

@@ -40,6 +40,15 @@ namespace Scenes
     SUBSCRIBE_CLASS_FUNC(Events::EventType::LOAD_SCENE, &SceneManager::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SAVE_SCENE, &SceneManager::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &SceneManager::HandleEvent, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::PREFAB_INSTANCES_UPDATED, &SceneManager::HandleEvent, this);
+
+  /*  auto& em{ ECS::EntityManager::GetInstance() };
+    auto e2 = em.CreateEntityWithTag("e2");
+    auto e3 = em.CreateEntityWithTag("e3");
+    e2.EmplaceOrReplaceComponent<Component::Layer>().layerName = "wee";
+    e3.EmplaceOrReplaceComponent<Component::Layer>().layerName = "oof";
+    e3.GetComponent<Component::Transform>().worldPos = glm::vec3(3.f, 2.f, 1.f);
+    em.SetParentEntity(e2, e3);*/
   }
 
   void SceneManager::PauseScene() {
@@ -58,6 +67,8 @@ namespace Scenes
     // else it means we're loading back to a previous scene
     if (mSaveStates.empty()) {
       QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::STOPPED, mSceneName);
+      ClearScene();
+      UnloadScene();
     }
     else {
       LoadTemporarySave();
@@ -76,9 +87,8 @@ namespace Scenes
     mObjFactory->InitScene();
   }
 
-  void SceneManager::ClearScene()
-  {
-
+  void SceneManager::ClearScene() {
+    mSceneName.clear();
   }
 
   void SceneManager::UnloadScene()
@@ -108,6 +118,7 @@ namespace Scenes
     case Events::EventType::LOAD_SCENE:
     {
       if (!mSceneName.empty()) {
+        ClearScene();
         UnloadScene();
       }
       auto loadSceneEvent{ std::static_pointer_cast<Events::LoadSceneEvent>(event) };
@@ -133,6 +144,18 @@ namespace Scenes
       mSceneState = SceneState::PREFAB_EDITOR;
       mSceneName = std::static_pointer_cast<Events::EditPrefabEvent>(event)->mPrefab;
       break;
+    case Events::EventType::PREFAB_INSTANCES_UPDATED:
+      if (mSaveStates.empty()) {
+        SaveScene();
+      }
+      else {
+        Serialization::Serializer::SerializeScene(mSaveStates.top().mPath);
+      }
+      // replace with logger
+#ifdef _DEBUG
+      std::cout << "[SceneManager] " << mSceneName << "'s prefab instances have been updated\n";
+#endif
+      break;
     default: break;
     }
   }
@@ -141,7 +164,7 @@ namespace Scenes
   {
     // Save the scene
     std::ostringstream filepath{};
-    filepath << gAssetsDirectory << "Scenes/" << mSceneName << sSceneFileExtension;
+    filepath << gAssetsDirectory << "Scenes\\" << mSceneName << sSceneFileExtension;
     Serialization::Serializer::SerializeScene(filepath.str());
 
     // replace with logger

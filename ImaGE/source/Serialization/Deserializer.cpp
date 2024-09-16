@@ -86,6 +86,10 @@ namespace Serialization
 
     // okay code starts here
     Reflection::ObjectFactory::EntityDataContainer ret{};
+#ifndef IMGUI_DISABLE
+    Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
+    pm.ClearMappings();
+#endif
     for (auto const& entity : document.GetArray())
     {
       EntityID entityId{ entity[JsonIdKey].GetUint() };
@@ -97,14 +101,12 @@ namespace Serialization
       }
 
 #ifndef IMGUI_DISABLE
-      // @TODO: TO RESTORE PREFAB SYSTEM
-      /*Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
       if (entity.HasMember(JsonPrefabKey) && !entity[JsonPrefabKey].IsNull())
       {
         rttr::variant mappedData{ Prefabs::VariantPrefab::EntityMappings{} };
         DeserializeRecursive(mappedData, entity[JsonPrefabKey]);
         pm.AttachPrefab(entityId, std::move(mappedData.get_value<Prefabs::VariantPrefab::EntityMappings>()));
-      }*/
+      }
 #endif
 
       // restore components
@@ -149,8 +151,8 @@ namespace Serialization
     rapidjson::Document document{};
     if (!ParseJsonIntoDocument(document, json)) { return {}; }
 
-    if (!ScanJsonFileForMembers(document, json, 4, JsonIdKey, rapidjson::kNumberType, JsonPfbNameKey, rapidjson::kStringType,
-      JsonComponentsKey, rapidjson::kArrayType, JsonParentKey, rapidjson::kNumberType)) {
+    if (!ScanJsonFileForMembers(document, json, 5, JsonPfbNameKey, rapidjson::kStringType, JsonPfbVerKey, rapidjson::kNumberType,
+      JsonPfbNameKey, rapidjson::kStringType, JsonComponentsKey, rapidjson::kArrayType, JsonPfbDataKey, rapidjson::kArrayType)) {
       return {};
     }
 
@@ -188,8 +190,8 @@ namespace Serialization
 
     for (auto const& elem : document[JsonPfbDataKey].GetArray())
     {
-      if (!ScanJsonFileForMembers(elem, json, 3, JsonPfbDataKey, rapidjson::kArrayType,
-        JsonComponentsKey, rapidjson::kArrayType, JsonPfbVerKey, rapidjson::kNumberType)) {
+      if (!ScanJsonFileForMembers(elem, json, 3, JsonIdKey, rapidjson::kNumberType,
+        JsonComponentsKey, rapidjson::kArrayType, JsonParentKey, rapidjson::kNumberType)) {
         continue;
       }
 
@@ -533,6 +535,13 @@ namespace Serialization
           auto result{ view.insert(keyVar, valVar) };
           if (!result.second)
           {
+            // temp fix for entt::entity idk man conversion function didnt work
+            if (view.get_value_type() == rttr::type::get<entt::entity>()) {
+              valVar = static_cast<entt::entity>(valVar.get_value<uint32_t>());
+              if (view.insert(keyVar, valVar).second) {
+                continue;
+              }
+            }
 #ifdef _DEBUG
             std::cout << "[Associative View] Unable to insert key-value pair for element of type " << view.get_key_type().get_name().to_string()
               << "-" << view.get_value_type().get_name().to_string() << "\n";

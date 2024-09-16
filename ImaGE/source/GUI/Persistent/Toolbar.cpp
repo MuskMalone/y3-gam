@@ -7,6 +7,7 @@
 #include <Events/EventManager.h>
 #include <GUI/Helpers/AssetHelpers.h>
 #include <filesystem>
+#include <Prefabs/PrefabManager.h>
 
 namespace GUI
 {
@@ -195,55 +196,45 @@ namespace GUI
   void Toolbar::RunNewPrefabPopup()
   {
     ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
-    if (ImGui::BeginPopupModal("Create New Prefab", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+    if (ImGui::BeginPopupModal("Create Prefab", NULL, ImGuiWindowFlags_AlwaysAutoResize))
     {
-      static std::string prefabName{};
+      static std::string input{};
       static bool blankWarning{ false }, existingPrefabWarning{ false };
+      static auto& prefabMan{ Prefabs::PrefabManager::GetInstance() };
 
-      if (blankWarning)
-      {
+      if (blankWarning) {
         ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Name cannot be blank!!!");
       }
-      else if (existingPrefabWarning)
-      {
-        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Prefab already exists!");
+      else if (existingPrefabWarning) {
+        ImGui::TextColored(ImVec4(0.99f, 0.82f, 0.09f, 1.0f), "Warning: Prefab already exists.");
+        ImGui::TextColored(ImVec4(0.99f, 0.82f, 0.09f, 1.0f), "File will be overwritten!!");
       }
 
       ImGui::Text("Name of Prefab:");
       ImGui::SameLine();
-      if (ImGui::InputText("##PrefabNameInput", &prefabName))
-      {
-        blankWarning = existingPrefabWarning = false;
+      if (ImGui::InputText("##PrefabNameInput", &input)) {
+        existingPrefabWarning = prefabMan.DoesPrefabExist(input);
+        blankWarning = false;
       }
 
       ImGui::SetCursorPosX(0.5f * (ImGui::GetWindowContentRegionMax().x - ImGui::CalcTextSize("Cancel Create ").x));
-      if (ImGui::Button("Cancel"))
-      {
-        prefabName.clear();
+      if (ImGui::Button("Cancel")) {
+        input.clear();
         blankWarning = existingPrefabWarning = false;
         ImGui::CloseCurrentPopup();
       }
 
       ImGui::SameLine();
-      if (ImGui::Button("Create"))
-      {
+      if (ImGui::Button("Create")) {
         // if name is blank / whitespace, reject it
-        if (prefabName.find_first_not_of(" ") == std::string::npos)
-        {
+        if (input.find_first_not_of(" ") == std::string::npos) {
           blankWarning = true;
           existingPrefabWarning = false;
         }
-        // @TODO: ADD CHECK WHEN PREFAB MANAGER IS UP
-        /*else if (Prefabs::PrefabManager::GetInstance().DoesPrefabExist(prefabName))
-        {
-          existingPrefabWarning = true;
-          blankWarning = false;
-        }*/
-        else
-        {
-          QUEUE_EVENT(Events::EditPrefabEvent, prefabName, "");
-          blankWarning = existingPrefabWarning = false;;
-          prefabName.clear();
+        else {
+          QUEUE_EVENT(Events::EditPrefabEvent, input, std::string());
+          blankWarning = existingPrefabWarning = false;
+          input.clear();
           ImGui::CloseCurrentPopup();
         }
       }

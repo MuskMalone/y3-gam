@@ -6,14 +6,17 @@
 #include <GUI/GUIManager.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
 #include <Events/EventManager.h>
+#include <ImGui/misc/cpp/imgui_stdlib.h>
+#include <Prefabs/PrefabManager.h>
 
 namespace GUI
 {
 
-  SceneHierarchy::SceneHierarchy(std::string const& name) 
-    : mEntityManager{ ECS::EntityManager::GetInstance() },
-      mRightClickedEntity{}, mRightClickMenu{ false }, mEntityOptionsMenu{ false },
-      mPrefabPopup{ false }, mEditingPrefab{ false }, GUIWindow(name)
+  SceneHierarchy::SceneHierarchy(std::string const& name) : GUIWindow(name),
+    mEntityManager{ ECS::EntityManager::GetInstance() },
+    mSceneName{}, 
+    mRightClickedEntity{}, mRightClickMenu{ false }, mEntityOptionsMenu{ false },
+    mPrefabPopup{ false }, mFirstTimePfbPopup{ true }, mEditingPrefab{ false }
   {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &SceneHierarchy::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &SceneHierarchy::HandleEvent, this);
@@ -68,8 +71,14 @@ namespace GUI
       ImGui::OpenPopup("HierarchyOptions");
       mRightClickMenu = false;
     }
+    else if (mPrefabPopup) {
+      ImGui::OpenPopup("Create Prefab");
+      mPrefabPopup = false;
+      mFirstTimePfbPopup = true;
+    }
     RunRightClickMenu();
     RunEntityOptions();
+    RunPrefabPopup();
 
     ImGui::End();
   }
@@ -166,7 +175,7 @@ namespace GUI
     }
   }
 
-  void SceneHierarchy::RunRightClickMenu()
+  void SceneHierarchy::RunRightClickMenu() const
   {
     if (ImGui::BeginPopup("HierarchyOptions"))
     {
@@ -192,14 +201,68 @@ namespace GUI
         mEntityManager.CopyEntity(mRightClickedEntity);
       }
 
-      ImGui::BeginDisabled();
       if (ImGui::Selectable("Save as Prefab")) {
         mPrefabPopup = true;
       }
-      ImGui::EndDisabled();
 
       if (ImGui::Selectable("Delete")) {
         mEntityManager.RemoveEntity(mRightClickedEntity);
+      }
+
+      ImGui::EndPopup();
+    }
+  }
+
+  void SceneHierarchy::RunPrefabPopup()
+  {
+    ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    if (ImGui::BeginPopupModal("Create Prefab", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+    {
+      static std::string input{};
+      static bool blankWarning{ false }, existingPrefabWarning{ false };
+      static auto& prefabMan{ Prefabs::PrefabManager::GetInstance() };
+
+      if (mFirstTimePfbPopup) {
+        input = mRightClickedEntity.GetComponent<Component::Tag>().tag;
+        existingPrefabWarning = prefabMan.DoesPrefabExist(input);
+        mFirstTimePfbPopup = false;
+      }
+
+      if (blankWarning) {
+        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Name cannot be blank!!!");
+      }
+      else if (existingPrefabWarning) {
+        ImGui::TextColored(ImVec4(0.99f, 0.82f, 0.09f, 1.0f), "Warning: Prefab already exists.");
+        ImGui::TextColored(ImVec4(0.99f, 0.82f, 0.09f, 1.0f), "File will be overwritten!!");
+      }
+
+      ImGui::Text("Name of Prefab:");
+      ImGui::SameLine();
+      if (ImGui::InputText("##PrefabNameInput", &input)) {
+        existingPrefabWarning = prefabMan.DoesPrefabExist(input);
+        blankWarning = false;
+      }
+
+      ImGui::SetCursorPosX(0.5f * (ImGui::GetWindowContentRegionMax().x - ImGui::CalcTextSize("Cancel Create ").x));
+      if (ImGui::Button("Cancel")) {
+        input.clear();
+        blankWarning = existingPrefabWarning = false;
+        ImGui::CloseCurrentPopup();
+      }
+
+      ImGui::SameLine();
+      if (ImGui::Button("Create")) {
+        // if name is blank / whitespace, reject it
+        if (input.find_first_not_of(" ") == std::string::npos) {
+          blankWarning = true;
+          existingPrefabWarning = false;
+        }
+        else {
+          prefabMan.CreatePrefabFromEntity(mRightClickedEntity, input);
+          blankWarning = existingPrefabWarning = false;
+          input.clear();
+          ImGui::CloseCurrentPopup();
+        }
       }
 
       ImGui::EndPopup();

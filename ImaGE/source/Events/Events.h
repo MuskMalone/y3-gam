@@ -50,6 +50,20 @@ namespace Events
     inline std::string GetName() const noexcept override { return "Quit Game"; }
   };
 
+  // name, path, pos = {}, mapEntity = true
+  class SpawnPrefabEvent : public Event
+  {
+  public:
+    SpawnPrefabEvent(std::string name, std::string path, glm::vec3 const& pos = {}, bool mapEntity = true) : Event(EventType::SPAWN_PREFAB),
+      mName{ std::move(name) }, mPath{ std::move(path) }, mPos{ pos }, mMapEntity{ mapEntity } {}
+    inline std::string GetName() const noexcept override { return "Spawn Prefab: " + mName; }
+
+    std::string const mName, mPath;
+    glm::vec3 const mPos;
+    bool const mMapEntity;
+  };
+
+#ifndef IMGUI_DISABLE
   class DeletePrefabEvent : public Event
   {
   public:
@@ -68,6 +82,7 @@ namespace Events
     ECS::EntityManager::EntityID const mEntityId;
   };
 
+  // int pathCount, const char* paths[]
   class AddFilesFromExplorerEvent : public Event
   {
   public:
@@ -81,6 +96,14 @@ namespace Events
     std::vector<std::string> mPaths;
   };
 
+  class PrefabInstancesUpdatedEvent : public Event
+  {
+  public:
+    PrefabInstancesUpdatedEvent() : Event(EventType::PREFAB_INSTANCES_UPDATED) {}
+    inline std::string GetName() const noexcept override { return "Scene Updated with Prefab Instances"; }
+  };
+#endif
+
 #ifdef GAM200_EVENTS
 #ifndef IMGUI_DISABLE
 
@@ -91,13 +114,6 @@ namespace Events
     inline std::string GetName() const noexcept override { return "Prefab Saved: " + mPrefab; }
 
     std::string const mPrefab;
-  };
-
-  class PrefabInstancesUpdatedEvent : public Event
-  {
-  public:
-    PrefabInstancesUpdatedEvent() : Event(EventType::PREFAB_INSTANCES_UPDATED) {}
-    inline std::string GetName() const noexcept override { return "Scene Updated with Prefab Instances"; }
   };
 
   class DeleteAssetEvent : public Event

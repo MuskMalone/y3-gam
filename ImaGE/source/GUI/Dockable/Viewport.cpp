@@ -41,7 +41,9 @@ namespace GUI
           QUEUE_EVENT(Events::LoadSceneEvent, assetPayload.GetFileName(), assetPayload.GetFilePath());
           break;
         case AssetPayload::PREFAB:
-          
+          // @TODO: Convert screen to world pos when viewport is up
+          glm::vec3 const prefabPos{};
+          QUEUE_EVENT(Events::SpawnPrefabEvent, assetPayload.GetFileName(), assetPayload.GetFilePath(), prefabPos);
           break;
         case AssetPayload::SPRITE:
 

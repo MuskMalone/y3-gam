@@ -1,9 +1,10 @@
 #include <pch.h>
 #include "Application.h"
 
-#include <Input/InputAssistant.h>
 #include <Events/EventManager.h>
+#include <Input/InputAssistant.h>
 #include <Scenes/SceneManager.h>
+#include <Prefabs/PrefabManager.h>
 
 #include <Core/Entity.h>
 #include <Core/EntityManager.h>
@@ -18,6 +19,7 @@
 void Application::Init() {
   mScene->Init();
   Scenes::SceneManager::GetInstance().Init();
+  Prefabs::PrefabManager::GetInstance().Init();
   InputAssistant::RegisterKeyPressEvent(GLFW_KEY_GRAVE_ACCENT, std::bind(&Application::ToggleImGuiActive, this));
 
   // @TODO: SETTINGS TO BE LOADED FROM CONFIG FILE

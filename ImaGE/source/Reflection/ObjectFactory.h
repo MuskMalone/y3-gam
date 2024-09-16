@@ -68,7 +68,7 @@ namespace Reflection
     \param compVar
       The component to add
    ************************************************************************/
-    void AddComponentToEntity(ECS::Entity& entity, rttr::variant const& compVar) const;
+    void AddComponentToEntity(ECS::Entity entity, rttr::variant const& compVar) const;
 
     /*!*********************************************************************
     \brief
@@ -78,7 +78,7 @@ namespace Reflection
     \param components
       The vector of components
     ************************************************************************/
-    void AddComponentsToEntity(ECS::Entity& id, std::vector<rttr::variant> const& components) const;
+    void AddComponentsToEntity(ECS::Entity id, std::vector<rttr::variant> const& components) const;
 
     /*!*********************************************************************
     \brief
@@ -86,7 +86,7 @@ namespace Reflection
     \param compType
       The type of the component
     ************************************************************************/
-    void RemoveComponentFromEntity(ECS::Entity& entity, rttr::type compType) const;
+    void RemoveComponentFromEntity(ECS::Entity entity, rttr::type compType) const;
 
     /*!*********************************************************************
     \brief

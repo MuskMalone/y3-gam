@@ -224,7 +224,7 @@ namespace GUI
       }
       else {
         std::string const pathStr{ draggedAsset.relative_path().string() };
-        ImGui::SetDragDropPayload(sAssetDragDropPayload, pathStr.data(), pathStr.size() + 1);
+        ImGui::SetDragDropPayload(sAssetDragDropPayload, pathStr.data(), pathStr.size() + 1, ImGuiCond_Once);
       }
       
       ImGui::Text(draggedAsset.filename().string().c_str());

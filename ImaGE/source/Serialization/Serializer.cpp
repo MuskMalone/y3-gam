@@ -47,10 +47,11 @@ namespace Serialization
     writer.StartObject();
 
     // serialize the base layer of the prefab
+    writer.Key(JsonPfbNameKey); writer.String(prefab.mName.c_str());
     writer.Key(JsonPfbVerKey); writer.Uint(prefab.mVersion);
-
     writer.Key(JsonPfbActiveKey); writer.Bool(true);
 
+    writer.Key(JsonComponentsKey);
     SerializeVariantComponents(prefab.mComponents, writer);
 
     // serialize nested components if prefab has multiple layers
@@ -62,8 +63,15 @@ namespace Serialization
       
       writer.Key(JsonIdKey); writer.Uint(obj.mId);
       writer.Key(JsonPfbActiveKey); writer.Bool(true);
-      writer.Key(JsonParentKey); writer.Uint(obj.mParent);
+      writer.Key(JsonParentKey);
+      if (obj.mParent == entt::null) {
+        writer.Null();
+      }
+      else {
+        writer.Uint(obj.mParent);
+      }
       
+      writer.Key(JsonComponentsKey);
       SerializeVariantComponents(obj.mComponents, writer);
 
       writer.EndObject();
@@ -72,10 +80,12 @@ namespace Serialization
 
     // serialize removed objects
     if (!prefab.mRemovedChildren.empty()) {
+      writer.Key(JsonRemovedChildrenKey);
       SerializeRecursive(prefab.mRemovedChildren, writer);
     }
 
     if (!prefab.mRemovedComponents.empty()) {
+      writer.Key(JsonRemovedCompKey);
       SerializeRecursive(prefab.mRemovedComponents, writer);
     }
 
@@ -134,16 +144,16 @@ namespace Serialization
 
 #ifndef IMGUI_DISABLE
     // serialize prefab created from
-    writer.Key(JsonPrefabKey);
-    writer.Null();
-    /*Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
+    Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
 
-    rapidjson::Value prefabJson{ rapidjson::kNullType };
-    auto const entityPrefab{ pm.GetEntityPrefab(id) };
+    writer.Key(JsonPrefabKey);
+    auto const entityPrefab{ pm.GetEntityPrefab(entity) };
     if (entityPrefab) {
-      SerializeClassTypes(*entityPrefab, writer);
+      SerializeRecursive(*entityPrefab, writer);
     }
-    entity.AddMember(JsonPrefabKey, prefabJson, allocator);*/
+    else {
+      writer.Null();
+    }
 #endif
 
     // serialize state
@@ -182,7 +192,12 @@ namespace Serialization
     for (rttr::variant const& comp : components)
     {
       writer.StartObject();
-      writer.Key(comp.get_type().get_name().to_string().c_str());
+
+      rttr::type compType{ comp.get_type() };
+      // get underlying type if it's wrapped in a pointer
+      compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
+
+      writer.Key(compType.get_name().to_string().c_str());
       SerializeClassTypes(comp, writer);
       writer.EndObject();
     }
@@ -194,6 +209,7 @@ namespace Serialization
     writer.StartObject();
 
     rttr::instance wrappedObj{ obj.get_type().get_raw_type().is_wrapper() ? obj.get_wrapped_instance() : obj };
+
     auto const properties{ wrappedObj.get_derived_type().get_properties() };
     for (auto const& property : properties)
     {
@@ -319,6 +335,11 @@ namespace Serialization
       if (!properties.empty())
       {
         SerializeClassTypes(var, writer);
+      }
+      else if (var.get_type() == rttr::type::get<rttr::type>()) {
+        bool ok;
+        writer.String(var.convert<std::string>(&ok).c_str());
+        return true;
       }
       else
       {

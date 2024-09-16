@@ -6,6 +6,7 @@
 namespace Events
 {
 
+  // NewSceneState newState, std::string const& name
   class SceneStateChange : public Event
   {
   public:
@@ -25,6 +26,7 @@ namespace Events
     NewSceneState const mNewState;
   };
 
+  // name, path
   class LoadSceneEvent : public Event
   {
   public:
@@ -34,6 +36,13 @@ namespace Events
     std::string const mSceneName, mPath;
   };
 
+  class UnloadSceneEvent : public Event
+  {
+  public:
+    UnloadSceneEvent() : Event(EventType::UNLOAD_SCENE) {}
+    inline std::string GetName() const noexcept override { return "Unloading Scene"; }
+  };
+
   class SaveSceneEvent : public Event
   {
   public:
@@ -41,6 +50,7 @@ namespace Events
     inline std::string GetName() const noexcept override { return "Saving Scene"; }
   };
 
+  // name, path
   class EditPrefabEvent : public Event
   {
   public:
