@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Graphics\MeshSource.cpp" />
     <ClCompile Include="source\Graphics\ElementBuffer.cpp" />
     <ClCompile Include="source\Graphics\RenderAPI.cpp" />
     <ClCompile Include="source\Graphics\Renderer.cpp" />
@@ -115,6 +116,8 @@
     <ClCompile Include="source\Serialization\Registration.cpp" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
     <ClCompile Include="source\Graphics\Texture.cpp" />
+    <ClInclude Include="source\Graphics\Mesh.h" />
+    <ClInclude Include="source\Graphics\MeshSource.h" />
     <ClInclude Include="source\Graphics\ElementBuffer.h" />
     <ClInclude Include="source\Graphics\RenderAPI.h" />
     <ClInclude Include="source\Graphics\Renderer.h" />
@@ -126,6 +129,8 @@
     <ClInclude Include="source\Core\Entity.h" />
     <ClInclude Include="source\Core\EntityManager.h" />
     <ClInclude Include="Source\Core\TempObject.h" />
+    <ClInclude Include="source\Graphics\Submesh.h" />
+    <ClInclude Include="source\Graphics\Vertex.h" />
     <ClInclude Include="source\Graphics\VertexArray.h" />
     <ClInclude Include="source\Graphics\VertexBuffer.h" />
     <ClInclude Include="source\TempScene.h" />
