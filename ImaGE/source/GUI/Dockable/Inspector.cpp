@@ -82,7 +82,7 @@ namespace GUI {
       if (currentEntity.HasComponent<Component::Layer>())
         LayerComponentWindow(currentEntity);
 
-      if (currentEntity.HasComponent<Component::Transform>())
+      if (currentEntity.HasComponent<Component::Transform>()){
         TransformComponentWindow(currentEntity);
       }
 
@@ -132,9 +132,9 @@ namespace GUI {
     if (isOpen) {
         { // tch added for testing, pls remove if needed
             auto& xfm{ entity.GetComponent<Component::Transform>() };
-            ImGui::DragFloat3("World Position", &xfm.worldPos.x, 0.1f);
-            ImGui::DragFloat3("World Scale", &xfm.worldScale.x, 0.1f);
-            ImGui::DragFloat3("World Rotation", &xfm.worldRot.x, 0.1f);
+            ImGui::DragScalarN("World Position", ImGuiDataType_Double, &xfm.worldPos.x, 3, 0.1f);
+            ImGui::DragScalarN("World Scale", ImGuiDataType_Double, &xfm.worldScale.x, 3, 0.1f);
+            ImGui::DragScalarN("World Rotation", ImGuiDataType_Double, &xfm.worldRot.x, 3, 0.1f);
         }
     }
 
@@ -154,10 +154,12 @@ namespace GUI {
   }
 
   void Inspector::WindowEnd(bool isOpen) {
-    if (isOpen)
-      ImGui::TreePop();
+      if (isOpen)
+          ImGui::TreePop();
 
-    ImGui::Separator();
+      ImGui::Separator();
+
+  }
   void Inspector::RigidBodyComponentWindow(ECS::Entity entity) {
       ImGui::Separator();
       Component::RigidBody& rigidBody{entity.GetComponent<Component::RigidBody>()};
