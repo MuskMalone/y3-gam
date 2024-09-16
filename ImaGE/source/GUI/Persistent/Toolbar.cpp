@@ -5,16 +5,19 @@
 #include <ImGui/imgui_internal.h> // for BeginViewportSideBar
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <Events/EventManager.h>
-#include <Scenes/SceneManager.h>
 #include <GUI/Helpers/AssetHelpers.h>
 #include <filesystem>
 
 namespace GUI
 {
 
-  Toolbar::Toolbar(std::string const& name, std::vector<std::unique_ptr<GUIWindow>> const& windowsRef) :
-    mWindowsRef{ windowsRef }, mSceneManager{ Scenes::SceneManager::GetInstance() },
-    mScenePopup{ false }, mPrefabPopup{ false }, GUIWindow(name) {}
+  Toolbar::Toolbar(std::string const& name, std::vector<std::unique_ptr<GUIWindow>> const& windowsRef) : GUIWindow(name),
+    mWindowsRef{ windowsRef }, mScenePopup{ false }, mPrefabPopup{ false },
+    mDisableAll{ false }, mAllowCreationOnly{ true }
+  {
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &Toolbar::HandleEvent, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &Toolbar::HandleEvent, this);
+  }
 
   void Toolbar::Run()
   {
@@ -23,12 +26,11 @@ namespace GUI
       if (ImGui::BeginMenu("File"))
       {
         const char* const sceneFilter{ "Scenes (*.scn)\0*.scn" }, * const initialDir{ ".\\Assets\\Scenes" };
-        bool const noSceneSelected{ mSceneManager.NoSceneSelected() }
-          , lockControls{ mSceneManager.IsScenePlaying() || mSceneManager.GetSceneState() == Scenes::SceneState::PREFAB_EDITOR };
+        bool const creationMode{ !mDisableAll && mAllowCreationOnly };
 
         // im sorry this is messy
         // i need to disable different stuff based on the scene state
-        if (lockControls) {
+        if (mDisableAll) {
           ImGui::BeginDisabled();
         }
 
@@ -36,7 +38,7 @@ namespace GUI
           mScenePopup = true;
         }
 
-        if (noSceneSelected) {
+        if (creationMode) {
           ImGui::BeginDisabled();
         }
 
@@ -45,10 +47,10 @@ namespace GUI
         }
 
         if (ImGui::MenuItem("Save Scene")) {
-          mSceneManager.SaveScene();
+          QUEUE_EVENT(Events::SaveSceneEvent);
         }
 
-        if (noSceneSelected) {
+        if (creationMode) {
           ImGui::EndDisabled();
         }
 
@@ -60,7 +62,7 @@ namespace GUI
           }
         }
 
-        if (lockControls) {
+        if (mDisableAll) {
           ImGui::EndDisabled();
         }
 
@@ -98,6 +100,35 @@ namespace GUI
       RunNewPrefabPopup();
 
       ImGui::EndMainMenuBar();
+    }
+  }
+
+  EVENT_CALLBACK_DEF(Toolbar, HandleEvent)
+  {
+    switch (event->GetCategory())
+    {
+    case Events::EventType::EDIT_PREFAB:
+      mDisableAll = true;
+      break;
+    case Events::EventType::SCENE_STATE_CHANGE:
+    {
+      switch (CAST_TO_EVENT(Events::SceneStateChange)->mNewState)
+      {
+      case Events::SceneStateChange::STOPPED:
+        mAllowCreationOnly = true;
+        mDisableAll = false;
+        break;
+      case Events::SceneStateChange::NEW:
+        mAllowCreationOnly = mDisableAll = false;
+        break;
+      case Events::SceneStateChange::STARTED:
+      case Events::SceneStateChange::PAUSED:
+        mDisableAll = true;
+        break;
+      default: break;
+      }
+    }
+    default: break;
     }
   }
 

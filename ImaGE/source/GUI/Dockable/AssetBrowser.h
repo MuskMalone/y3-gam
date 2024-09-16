@@ -20,6 +20,7 @@ namespace GUI
     std::filesystem::path mSelectedAsset;
     std::string mSearchQuery;
     bool mDirMenuPopup, mAssetMenuPopup;
+    bool mDisableSceneChange;
 
     static constexpr float sMaxAssetSize = 100.f;
 
@@ -27,6 +28,8 @@ namespace GUI
     \brief
       Handles the events the AssetBrowser subscribed to.
 
+      SCENE_STATE_CHANGE
+        - Disables certain menu options based on the current scene state
       ADD_FILES
         - Adds a list of files into the engine from the explorer
     \param event
@@ -69,7 +72,7 @@ namespace GUI
     \brief
       Creates the popup menu for when an asset is right-clicked upon
     ************************************************************************/
-    void AssetMenuPopup() const;
+    void AssetMenuPopup();
 
     /*!*********************************************************************
     \brief

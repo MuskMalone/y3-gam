@@ -1,8 +1,8 @@
 #pragma once
 #ifndef IMGUI_DISABLE
 #include <GUI/GUIWindow.h>
-#include <set>
 #include <Core/Entity.h>
+#include <Events/EventCallback.h>
 
 // forward declaration
 namespace Scenes { class SceneManager; }
@@ -19,9 +19,10 @@ namespace GUI
 
   private:
     ECS::EntityManager& mEntityManager;
-    Scenes::SceneManager& mSceneManager;
+    std::string mSceneName;
     ECS::Entity mRightClickedEntity; // used to hold the entity the menu was opened on
     bool mRightClickMenu, mEntityOptionsMenu, mPrefabPopup;
+    bool mEditingPrefab;
 
     static constexpr char sDragDropPayload[] = "ENTITY";
 
@@ -29,6 +30,21 @@ namespace GUI
     void RecurseDownHierarchy(ECS::Entity entity);
     void RunRightClickMenu();
     void RunEntityOptions();
+
+    /*!*********************************************************************
+    \brief
+      This function handles the corresponding events the PrefabEditor
+      subscribed to.
+      
+      SCENE_STATE_CHANGE
+        - Disables certain menu options based on the current scene state
+      EDIT_PREFAB
+        - Switches the hierarchy to Prefab-editing mode
+
+    \param event
+      The event to be handled
+    ************************************************************************/
+    EVENT_CALLBACK_DECL(HandleEvent);
   };
 
 } // namespace GUI

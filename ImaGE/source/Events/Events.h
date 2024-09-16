@@ -10,10 +10,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Event.h"
 #include <Core/EntityManager.h>
 #include <vector>
+#include "InputEvents.h"
+#include "SceneEvents.h"
 
 namespace Events
 {
-
   class WindowGainFocus : public Event
   {
   public:
@@ -47,45 +48,6 @@ namespace Events
   public:
     QuitGame() : Event(EventType::QUIT_GAME) {}
     inline std::string GetName() const noexcept override { return "Quit Game"; }
-  };
-
-  class StartSceneEvent : public Event
-  {
-  public:
-    StartSceneEvent() : Event(EventType::START_SCENE) {}
-    inline std::string GetName() const noexcept override { return "Starting Scene"; }
-  };
-
-  class PauseSceneEvent : public Event
-  {
-  public:
-    PauseSceneEvent() : Event(EventType::PAUSE_SCENE) {}
-    inline std::string GetName() const noexcept override { return "Pausing Scene"; }
-  };
-
-  class StopSceneEvent : public Event
-  {
-  public:
-    StopSceneEvent() : Event(EventType::STOP_SCENE) {}
-    inline std::string GetName() const noexcept override { return "Stopping Scene"; }
-  };
-
-  class LoadSceneEvent : public Event
-  {
-  public:
-    LoadSceneEvent(std::string const& name, std::string const& path) : Event(EventType::LOAD_SCENE), mSceneName{ name }, mPath{ path } {}
-    inline std::string GetName() const noexcept override { return "Loading Scene " + mSceneName; }
-
-    std::string const mSceneName, mPath;
-  };
-
-  class EditPrefabEvent : public Event
-  {
-  public:
-    EditPrefabEvent(std::string prefab, std::string path) : Event(EventType::EDIT_PREFAB), mPrefab{ std::move(prefab) }, mPath{ std::move(path) } {}
-    inline std::string GetName() const noexcept override { return "Editing Prefab: " + mPrefab; }
-
-    std::string const mPrefab, mPath;
   };
 
   class DeletePrefabEvent : public Event

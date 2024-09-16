@@ -40,11 +40,10 @@ namespace GUI
       This function handles the corresponding events the PrefabEditor
       subscribed to.
 
+      SCENE_STATE_CHANGE
+        - Disables certain menu options based on the current scene state
       EDIT_PREFAB
         - Switches the editor to Prefab-editing mode
-
-      KEY_TRIGGERED
-        - Checks for ESC key input to return back to scene
 
     \param event
       The event to be handled

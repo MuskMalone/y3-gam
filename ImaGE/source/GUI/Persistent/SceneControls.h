@@ -14,7 +14,7 @@ namespace GUI
     void Run() override;
 
   private:
-    Scenes::SceneManager const& mSceneManager;
+    Scenes::SceneManager& mSceneManager;
   };
 
 } // namespace GUI

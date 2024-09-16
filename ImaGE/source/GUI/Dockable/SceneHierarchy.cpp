@@ -2,33 +2,43 @@
 #ifndef IMGUI_DISABLE
 #include "SceneHierarchy.h"
 #include <imgui/imgui.h>
-#include <Scenes/SceneManager.h>
 #include <Core/Component/Tag.h>
 #include <GUI/GUIManager.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
+#include <Events/EventManager.h>
 
 namespace GUI
 {
 
   SceneHierarchy::SceneHierarchy(std::string const& name) 
     : mEntityManager{ ECS::EntityManager::GetInstance() },
-      mSceneManager{ Scenes::SceneManager::GetInstance() }, 
       mRightClickedEntity{}, mRightClickMenu{ false }, mEntityOptionsMenu{ false },
-      mPrefabPopup{ false }, GUIWindow(name) {}
+      mPrefabPopup{ false }, mEditingPrefab{ false }, GUIWindow(name)
+  {
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &SceneHierarchy::HandleEvent, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &SceneHierarchy::HandleEvent, this);
+  }
 
   void SceneHierarchy::Run()
   {
     ImGui::Begin(mWindowName.c_str());
 
-    std::string const& sceneName{ mSceneManager.GetSceneName() };
-    if (sceneName.empty())
+    if (mSceneName.empty())
     {
       ImGui::Text("No Scene Selected");
       ImGui::End();
       return;
     }
 
-    ImGui::Text(sceneName.c_str());
+    if (mEditingPrefab) {
+      ImGui::Text(("Editing Prefab: " + mSceneName).c_str());
+      ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(253, 208, 23, 255));
+      ImGui::Text("Press ESC to return to scene");
+      ImGui::PopStyleColor();
+    }
+    else {
+      ImGui::Text(mSceneName.c_str());
+    }
     ImGui::Separator();
 
     if (ImGuiHelpers::BeginDrapDropTargetWindow(sDragDropPayload))
@@ -62,6 +72,34 @@ namespace GUI
     RunEntityOptions();
 
     ImGui::End();
+  }
+
+  EVENT_CALLBACK_DEF(SceneHierarchy, HandleEvent)
+  {
+    switch (event->GetCategory())
+    {
+    case Events::EventType::EDIT_PREFAB:
+      mSceneName = CAST_TO_EVENT(Events::EditPrefabEvent)->mPrefab;
+      mEditingPrefab = true;
+      break;
+    case Events::EventType::SCENE_STATE_CHANGE:
+    {
+      auto sceneStateEvent{ CAST_TO_EVENT(Events::SceneStateChange) };
+      switch (sceneStateEvent->mNewState)
+      {
+      case Events::SceneStateChange::NEW:
+        mSceneName = sceneStateEvent->mSceneName;
+        mEditingPrefab = false;
+        break;
+      case Events::SceneStateChange::STOPPED:
+        mEditingPrefab = false;
+        mSceneName.clear();
+        break;
+      default: break;
+      }
+    }
+    default:break;
+    }
   }
 
   ECS::Entity SceneHierarchy::CreateNewEntity() const

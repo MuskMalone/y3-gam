@@ -6,6 +6,10 @@
 #include <memory>
 #include <Graphics/Framebuffer.h>
 
+#ifndef IMGUI_DISABLE
+#include <GUI/GUIManager.h>
+#endif
+
 class Application
 {
 public:
@@ -20,6 +24,11 @@ public:
 
 private:
   using SceneDrawCall = std::function<void()>;
+
+#ifndef IMGUI_DISABLE
+  GUI::GUIManager mGUIManager;
+#endif
+
   std::unique_ptr<Scene> mScene;
   // vector of framebuffers to render to, each attached to a draw call
   std::vector<std::pair<Graphics::Framebuffer, SceneDrawCall>> mFramebuffers;

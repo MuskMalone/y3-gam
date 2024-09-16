@@ -56,3 +56,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #define EVENT_CALLBACK_DEF(ClassScope, FnName) \
   void ClassScope::FnName(std::shared_ptr<Events::Event> const& event)
+
+// macro to cast a shared_ptr to an event class
+#define CAST_TO_EVENT(eventClass) std::static_pointer_cast<eventClass>(event)

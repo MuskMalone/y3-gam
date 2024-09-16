@@ -4,7 +4,6 @@
 #include <imgui/imgui.h>
 #include <Globals.h>
 #include <Events/EventManager.h>
-#include <Scenes/SceneManager.h>
 #include <GUI/Helpers/AssetHelpers.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 
@@ -24,10 +23,11 @@ namespace Helper
 namespace GUI
 {
 
-  AssetBrowser::AssetBrowser(std::string const& name) :
+  AssetBrowser::AssetBrowser(std::string const& name) : GUIWindow(name),
     mCurrentDir{ gAssetsDirectory }, mRightClickedDir{},
-    mSelectedAsset{}, mDirMenuPopup{ false }, mAssetMenuPopup{ false }, GUIWindow(name)
+    mSelectedAsset{}, mDirMenuPopup{ false }, mAssetMenuPopup{ false }, mDisableSceneChange{ false }
   {
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &AssetBrowser::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::ADD_FILES, &AssetBrowser::HandleEvent, this);
   }
 
@@ -225,6 +225,21 @@ namespace GUI
     case Events::EventType::ADD_FILES:
       AddAssets(std::static_pointer_cast<Events::AddFilesFromExplorerEvent>(event)->mPaths);
       break;
+    case Events::EventType::SCENE_STATE_CHANGE:
+    {
+      switch (CAST_TO_EVENT(Events::SceneStateChange)->mNewState)
+      {
+      case Events::SceneStateChange::NEW:
+      case Events::SceneStateChange::STOPPED:
+        mDisableSceneChange = false;
+        break;
+      case Events::SceneStateChange::STARTED:
+      case Events::SceneStateChange::PAUSED:
+        mDisableSceneChange = true;
+        break;
+      default: break;
+      }
+    }
     }
   }
 
@@ -280,7 +295,7 @@ namespace GUI
     }
   }
 
-  void AssetBrowser::AssetMenuPopup() const
+  void AssetBrowser::AssetMenuPopup()
   {
     static bool deletePopup{ false };
     if (ImGui::BeginPopup("AssetsMenu"))
@@ -296,11 +311,12 @@ namespace GUI
       // only enabled for prefabs
       if (mSelectedAsset.extension().string() == ".pfb")
       {
-        ImGui::BeginDisabled(Scenes::SceneManager::GetInstance().GetSceneState() == Scenes::SceneState::PREFAB_EDITOR);
+        ImGui::BeginDisabled(mDisableSceneChange);
         if (ImGui::Selectable("Edit Prefab"))
         {
           QUEUE_EVENT(Events::EditPrefabEvent, mSelectedAsset.stem().string(),
             mSelectedAsset.relative_path().string());
+          mDisableSceneChange = true;
         }
         ImGui::EndDisabled();
       }

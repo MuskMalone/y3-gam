@@ -130,6 +130,7 @@
     <ClCompile Include="source\Serialization\Deserializer.cpp" />
     <ClCompile Include="Source\Serialization\Registration\RegisterComponents.cpp" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
+    <ClInclude Include="Source\Events\SceneEvents.h" />
     <ClInclude Include="Source\GUI\Helpers\AssetHelpers.h" />
     <ClInclude Include="Source\Reflection\ComponentTypes.h" />
     <ClInclude Include="Source\Reflection\ObjectFactory.h" />

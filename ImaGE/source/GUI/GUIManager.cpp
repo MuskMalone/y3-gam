@@ -15,8 +15,9 @@
 
 namespace GUI
 {
-  ECS::Entity GUIManager::mSelectedEntity{};
-  std::vector<std::unique_ptr<GUIWindow>> GUIManager::mPersistentElements, GUIManager::mWindows;
+  ECS::Entity GUIManager::sSelectedEntity{};
+
+  GUIManager::GUIManager() :mPersistentElements{}, mWindows{} {}
 
   void GUIManager::Init(Graphics::Framebuffer const& framebuffer)
   {

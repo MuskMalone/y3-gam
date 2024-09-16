@@ -13,7 +13,6 @@
 #include <imgui/imgui.h>
 #include <imgui/backends/imgui_impl_glfw.h>
 #include <imgui/backends/imgui_impl_opengl3.h>
-#include <GUI/GUIManager.h>
 #endif
 
 void Application::Init() {
@@ -25,7 +24,7 @@ void Application::Init() {
   FrameRateController::GetInstance().Init(120.f, 1.f, false);
 
 #ifndef IMGUI_DISABLE
-  GUI::GUIManager::Init(mFramebuffers.front().first);
+  mGUIManager.Init(mFramebuffers.front().first);
 #endif
 
   // @TODO: REMOVE, FOR TESTING ONLY
@@ -92,7 +91,7 @@ void Application::Run() {
 
 #ifndef IMGUI_DISABLE
     if (mImGuiActive) {
-      GUI::GUIManager::UpdateGUI();
+      mGUIManager.UpdateGUI();
     }
 #endif
 
@@ -129,6 +128,9 @@ void Application::Run() {
 }
 
 Application::Application(const char* name, int width, int height) :
+#ifndef IMGUI_DISABLE
+  mGUIManager{},
+#endif
   mScene{}, mWindow{},
   mWidth{ width }, mHeight{ height }, mImGuiActive{ true }
 {

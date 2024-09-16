@@ -14,11 +14,15 @@ namespace Scenes
   public:
 
     void Init();
-    void SaveScene() const;
+
+    void StopScene();
+    void PauseScene();
+    void PlayScene();
 
     inline std::string const& GetSceneName() const noexcept { return mSceneName; }
+    // SceneState makes use of bitflags for easy checking
     inline SceneState GetSceneState() const noexcept { return mSceneState; }
-    inline bool IsScenePlaying() const noexcept { return mSceneState <= Scenes::SceneState::PAUSED; }
+    inline bool IsScenePlaying() const noexcept { return mSceneState & (Scenes::SceneState::PAUSED | Scenes::SceneState::PLAYING); }
     // check if there is currently a scene selected
     inline bool NoSceneSelected() const noexcept { return mSceneName.empty(); }
 
@@ -32,6 +36,7 @@ namespace Scenes
 
     static constexpr char sSceneFileExtension[] = ".scn";
 
+    void SaveScene() const;
     void LoadScene(std::string const& path);
     void InitScene();
     void ClearScene();

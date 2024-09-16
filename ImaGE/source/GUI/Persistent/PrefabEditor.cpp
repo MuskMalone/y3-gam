@@ -20,6 +20,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Events/EventManager.h>
 #include <Events/InputEvents.h>
 #include <ImGui/imgui.h>
+#include <Scenes/SceneManager.h>
 
 namespace GUI
 {
@@ -28,15 +29,21 @@ namespace GUI
     mPrefabName{}, mPrefabPath{}, mPrefabInstance{},
     mIsEditing{ false }, mEscTriggered{ false }, GUIWindow(name)
   {
-    //SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &PrefabEditor::HandleEvent, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::KEY_TRIGGERED, &PrefabEditor::HandleEvent, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &PrefabEditor::HandleEvent, this);
   }
 
   void PrefabEditor::Run()
   {
-    if (mEscTriggered) {
-      ImGui::OpenPopup("Return to Scene");
-      mEscTriggered = false;
+    if (!mIsEditing) { return; }
+
+    if (ImGui::IsKeyPressed(ImGuiKey_Escape)) {
+      if (mEscTriggered) {
+        mEscTriggered = false;
+      }
+      else {
+        ImGui::OpenPopup("Return to Scene");
+        mEscTriggered = true;
+      }
     }
     BackToScenePopup();
   }
@@ -51,14 +58,6 @@ namespace GUI
       mIsEditing = true;
       break;
     }
-    case Events::EventType::KEY_TRIGGERED:
-    {
-      if (!mIsEditing) { return; }
-
-      auto keyTriggeredEvent{ std::static_pointer_cast<Events::EditPrefabEvent>(event) };
-      // check for ESC key
-      break;
-    }
     }
   }
 
@@ -66,6 +65,8 @@ namespace GUI
   {
     if (ImGui::BeginPopupModal("Return to Scene", NULL, ImGuiWindowFlags_AlwaysAutoResize))
     {
+      if (!mEscTriggered) { ImGui::CloseCurrentPopup(); }
+
       ImGui::Text("Save changes made to prefab?");
       ImGui::SetCursorPosX(0.5f * (ImGui::GetWindowContentRegionMax().x - ImGui::CalcTextSize("Cancel Discard Changes Save ").x));
 
@@ -78,7 +79,7 @@ namespace GUI
       ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.2f, 0.2f, 1.f));
       if (ImGui::Button("Discard Changes"))
       {
-        QUEUE_EVENT(Events::StopSceneEvent);
+        Scenes::SceneManager::GetInstance().StopScene();
 
         ResetPrefabEditor();
         ImGui::CloseCurrentPopup();
@@ -103,7 +104,7 @@ namespace GUI
 //#endif
 //          //pm.UpdatePrefabFromEditor(m_prefabInstance, mRemovedChildren, mRemovedComponents, m_prefabPath);
 //        }
-        QUEUE_EVENT(Events::StopSceneEvent);
+        Scenes::SceneManager::GetInstance().StopScene();
 
         ResetPrefabEditor();
         ImGui::CloseCurrentPopup();
