@@ -15,6 +15,8 @@ namespace GUI
 
     void Run() override;
 
+    static constexpr char sAssetDragDropPayload[] = "ASSET";
+
   private:
     std::filesystem::path mCurrentDir, mRightClickedDir; 
     std::filesystem::path mSelectedAsset;

@@ -201,20 +201,39 @@ namespace GUI
 
   void AssetBrowser::CheckInput(std::filesystem::path const& path)
   {
-    if (ImGui::BeginDragDropSource()) {
-
-
-
-      ImGui::EndDragDropSource();
-    }
+    static std::filesystem::path draggedAsset;
+    
     if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
     {
       mSelectedAsset = path;
       mAssetMenuPopup = true;
     }
-    else if (ImGui::IsItemClicked(ImGuiMouseButton_Left) && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+    else if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
     {
-      AssetHelpers::OpenFileWithDefaultProgram(path.string());
+      if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+        AssetHelpers::OpenFileWithDefaultProgram(path.string());
+      }
+      else {
+        draggedAsset = path;
+      }
+    }
+    
+    if (ImGui::BeginDragDropSource()) {
+      if (mDisableSceneChange) {
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+      }
+      else {
+        std::string const pathStr{ draggedAsset.relative_path().string() };
+        ImGui::SetDragDropPayload(sAssetDragDropPayload, pathStr.data(), pathStr.size() + 1);
+      }
+      
+      ImGui::Text(draggedAsset.filename().string().c_str());
+
+      if (mDisableSceneChange) {
+        ImGui::PopStyleColor();
+      }
+
+      ImGui::EndDragDropSource();
     }
   }
 
