@@ -16,7 +16,11 @@
 #include <imgui/backends/imgui_impl_opengl3.h>
 #endif
 
+#include <Physics/PhysicsSystem.h>
+
 void Application::Init() {
+    IGE::Physics::PhysicsSystem::InitAllocator();
+    IGE::Physics::PhysicsSystem::GetInstance()->Init();
   mScene->Init();
   Scenes::SceneManager::GetInstance().Init();
   Prefabs::PrefabManager::GetInstance().Init();

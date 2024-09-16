@@ -6,12 +6,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <fstream>
 #include <filesystem>
-
+#include <Physics/PhysicsSystem.h>
+std::vector<std::shared_ptr<Object>> Scene::mObjects;
 Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 const& clearClr)
   : m_shaders{}, m_defaultShaders{}, 
   m_light{ { 0.f, 25.f, 0.f }, { 0.4f, 0.4f, 0.4f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 1.0f } },
   m_material{ glm::vec3(1.f), glm::vec3(1.f), glm::vec3(1.f), 100.f }, m_cameras{},
-  mObjects{},
+  //mObjects{},
   m_leftClickHeld{ false }, m_leftClickTriggered{ true }, m_bvhModified{ true }, m_reconstructTree{ false }
 {
   glClearColor(clearClr.r, clearClr.g, clearClr.b, clearClr.a);
@@ -59,17 +60,21 @@ void Scene::Init()
   });
 
   // OTHER MODELS
-  mObjects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3(-5.f, 0.f, 0.f), glm::vec3(30.f)));
-  mObjects.emplace_back(std::make_shared<Object>("./assets/models/horse_high_poly.obj", glm::vec3(5.f), glm::vec3(30.f)));
-  mObjects.emplace_back(std::make_shared<Object>("./assets/models/teapot_mid_poly.obj", glm::vec3(), glm::vec3(1.f)));
+  //mObjects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3(-5.f, 0.f, 0.f), glm::vec3(30.f)));
+  //mObjects.emplace_back(std::make_shared<Object>("./assets/models/horse_high_poly.obj", glm::vec3(5.f), glm::vec3(30.f)));
+  //mObjects.emplace_back(std::make_shared<Object>("./assets/models/teapot_mid_poly.obj", glm::vec3(), glm::vec3(1.f)));
 }
 
 void Scene::Update(float deltaTime)
 {
   // update transforms
+    IGE::Physics::PhysicsSystem::GetInstance()->Update(deltaTime);
   for (auto& obj : mObjects)
   {
-    obj->Update(deltaTime);
+      obj->transform = obj->entity.GetComponent<Component::Transform>();
+      obj->modified = true;
+     obj->Update(deltaTime);
+    
   }
 
   // update camera
@@ -157,4 +162,16 @@ void Scene::DrawTopView()
 void Scene::ResetCamera()
 {
   m_cameras.front().Reset(glm::vec3(3.f, 3.f, 15.f), glm::vec3());
+}
+
+//tch: i just added this to visually test physics
+void Scene::AddMesh(ECS::Entity entity)
+{
+    auto xfm{ entity.GetComponent<Component::Transform>() };
+    mObjects.emplace_back(std::make_shared<Object>(
+        "./assets/models/cube_low_poly.obj",
+        xfm.worldPos, 
+        xfm.worldScale));
+    mObjects.back()->entity = entity;
+    entity.EmplaceComponent<Component::Mesh>(Component::Mesh{});
 }

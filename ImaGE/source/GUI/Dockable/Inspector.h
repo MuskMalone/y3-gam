@@ -16,6 +16,8 @@ namespace GUI {
     void TagComponentWindow(ECS::Entity entity);
     void LayerComponentWindow(ECS::Entity entity);
     void TransformComponentWindow(ECS::Entity entity);
+    void RigidBodyComponentWindow(ECS::Entity entity);
+    void ColliderComponentWindow(ECS::Entity entity);
     bool WindowBegin(std::string windowName);
     void WindowEnd(bool isOpen);
 
