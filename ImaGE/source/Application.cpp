@@ -2,7 +2,7 @@
 #include "Application.h"
 
 #include <Events/EventManager.h>
-#include <Input/InputAssistant.h>
+#include <Input/InputManager.h>
 #include <Scenes/SceneManager.h>
 #include <Prefabs/PrefabManager.h>
 
@@ -24,7 +24,7 @@ void Application::Init() {
   mScene->Init();
   Scenes::SceneManager::GetInstance().Init();
   Prefabs::PrefabManager::GetInstance().Init();
-  InputAssistant::RegisterKeyPressEvent(GLFW_KEY_GRAVE_ACCENT, std::bind(&Application::ToggleImGuiActive, this));
+ // InputAssistant::RegisterKeyPressEvent(GLFW_KEY_GRAVE_ACCENT, std::bind(&Application::ToggleImGuiActive, this));
 
   // @TODO: SETTINGS TO BE LOADED FROM CONFIG FILE
   FrameRateController::GetInstance().Init(120.f, 1.f, false);
@@ -74,13 +74,14 @@ void Application::Init() {
     std::cout << elem.first << " : " << elem.second << "\n";
   }
   */
+  //Input::InputManager* im = &Input::InputManager::GetInstance();
+  Input::InputManager::GetInstance().InitInputManager(mWindow, mWidth, mHeight, 0.3);
 }
 
 void Application::Run() {
   while (!glfwWindowShouldClose(mWindow)) {
     FrameRateController::GetInstance().Start();
-
-    glfwPollEvents();
+    
 
 #ifndef IMGUI_DISABLE
     if (mImGuiActive) {
@@ -89,7 +90,7 @@ void Application::Run() {
 #endif
 
     // @TODO: REPLACE WITH INPUT MANAGER UPDATE
-    InputAssistant::Update();
+    Input::InputManager::GetInstance().UpdateInput();
 
     // dispatch all events in the queue at the start of game loop
     static auto& eventManager{ Events::EventManager::GetInstance() };
@@ -175,7 +176,7 @@ Application::Application(const char* name, int width, int height) :
 
   // Setup Platform/Renderer backends
   ImGui_ImplGlfw_InitForOpenGL(mWindow, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
-  ImGui_ImplOpenGL3_Init();
+  ImGui_ImplOpenGL3_Init("#version 460 core");
 #endif
 
   glfwSetWindowUserPointer(mWindow, this); // set the window to reference this class

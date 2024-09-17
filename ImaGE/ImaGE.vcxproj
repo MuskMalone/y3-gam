@@ -28,6 +28,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GUI\Helpers\AssetHelpers.cpp" />
+    <ClCompile Include="Source\Input\InputAssistant.cpp" />
+    <ClCompile Include="source\Input\InputManager.cpp" />
     <ClCompile Include="Source\Reflection\ObjectFactory.cpp" />
     <ClCompile Include="Source\Core\TempObject.cpp" />
     <ClCompile Include="Source\External\glad.c">
@@ -114,7 +116,6 @@
     <ClCompile Include="source\GUI\GUIManager.cpp" />
     <ClCompile Include="Source\GUI\Helpers\ImGuiHelpers.cpp" />
     <ClCompile Include="source\GUI\Persistent\Toolbar.cpp" />
-    <ClCompile Include="Source\Input\InputAssistant.cpp" />
     <ClCompile Include="source\Graphics\MeshGen.cpp" />
     <ClCompile Include="Source\pch.cpp" />
     <ClCompile Include="Source\Core\Camera.cpp" />
@@ -134,6 +135,9 @@
     <ClInclude Include="Source\Events\SceneEvents.h" />
     <ClInclude Include="Source\GUI\Helpers\AssetHelpers.h" />
     <ClInclude Include="Source\GUI\Helpers\AssetPayload.h" />
+    <ClInclude Include="Source\Input\InputAssistant.h" />
+    <ClInclude Include="source\Input\InputManager.h" />
+    <ClInclude Include="source\Input\KeyCode.h" />
     <ClInclude Include="Source\Reflection\ComponentTypes.h" />
     <ClInclude Include="Source\Reflection\ObjectFactory.h" />
     <ClInclude Include="source\Core\Component\Collider.h" />
@@ -196,7 +200,6 @@
     <ClInclude Include="source\GUI\GUIWindow.h" />
     <ClInclude Include="source\GUI\Dockable\Viewport.h" />
     <ClInclude Include="Source\GUI\Helpers\ImGuiHelpers.h" />
-    <ClInclude Include="Source\Input\InputAssistant.h" />
     <ClInclude Include="source\Graphics\MeshGen.h" />
     <ClInclude Include="Source\pch.h" />
     <ClInclude Include="Source\Core\Camera.h" />
