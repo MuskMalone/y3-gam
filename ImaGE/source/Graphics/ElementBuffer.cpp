@@ -2,6 +2,13 @@
 #include "ElementBuffer.h"
 
 namespace Graphics {
+
+	ElementBuffer::ElementBuffer(unsigned int size) {
+		glCreateBuffers(1, &mEboHdl);               // Create the buffer object
+		ElementBuffer::Bind();                      // Bind the element buffer
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);  // Allocate memory for the buffer with dynamic draw
+	}
+
 	/*  _________________________________________________________________________ */
 	/*! ElementBuffer
 
@@ -31,6 +38,10 @@ namespace Graphics {
 		glDeleteBuffers(1, &mEboHdl);
 	}
 
+	std::shared_ptr<ElementBuffer> ElementBuffer::Create(unsigned int size) {
+		return std::make_shared<ElementBuffer>(size);
+	}
+
 	/*  _________________________________________________________________________ */
 	/*! Create
 
@@ -50,12 +61,11 @@ namespace Graphics {
 		return std::make_shared<ElementBuffer>(indices, count);
 	}
 
-	void ElementBuffer::SetData(unsigned int* indices, unsigned int count) {
-		mIdxCount = count; // Update the index count
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEboHdl);
-		// glBufferSubData is used to update buffer data without reallocating it
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), indices, GL_DYNAMIC_DRAW);
+	void ElementBuffer::SetData(void* const data, unsigned int size) {
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEboHdl);  // Bind the Element Buffer
+		glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, size, data);  // Update the buffer with new data
 	}
+
 
 	/*  _________________________________________________________________________ */
 	/*! Bind

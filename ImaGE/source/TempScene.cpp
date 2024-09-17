@@ -64,34 +64,104 @@ void Scene::Init()
   m_objects.emplace_back(std::make_shared<Object>("./assets/models/horse_high_poly.obj", glm::vec3(5.f), glm::vec3(30.f)));
   m_objects.emplace_back(std::make_shared<Object>("./assets/models/teapot_mid_poly.obj", glm::vec3(), glm::vec3(1.f)));
 
+
+
   //TEMP CODE===============================================================
-  std::vector<Vertex> cubeVertices {
+  //std::vector<Vertex> cubeVertices{
+  //    // Front face
+  //    {{-0.5f, -0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {}, {}, {0.0f, 0.0f}},  // Bottom-left
+  //    {{ 0.5f, -0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {}, {}, {1.0f, 0.0f}},  // Bottom-right
+  //    {{ 0.5f,  0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {}, {}, {1.0f, 1.0f}},  // Top-right
+  //    {{-0.5f,  0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {}, {}, {0.0f, 1.0f}},  // Top-left
+
+  //    // Back face
+  //    {{ 0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}, {}, {0.0f, 0.0f}},  // Bottom-right
+  //    {{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}, {}, {1.0f, 0.0f}},  // Bottom-left
+  //    {{-0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}, {}, {1.0f, 1.0f}},  // Top-left
+  //    {{ 0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}, {}, {0.0f, 1.0f}},  // Top-right
+
+  //    // Left face
+  //    {{-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}, {}, {0.0f, 0.0f}},  // Bottom-back
+  //    {{-0.5f, -0.5f,  0.5f}, {-1.0f, 0.0f, 0.0f}, {}, {}, {1.0f, 0.0f}},  // Bottom-front
+  //    {{-0.5f,  0.5f,  0.5f}, {-1.0f, 0.0f, 0.0f}, {}, {}, {1.0f, 1.0f}},  // Top-front
+  //    {{-0.5f,  0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}, {}, {0.0f, 1.0f}},  // Top-back
+
+  //    // Right face
+  //    {{ 0.5f, -0.5f,  0.5f}, {1.0f, 0.0f, 0.0f}, {}, {}, {0.0f, 0.0f}},  // Bottom-front
+  //    {{ 0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {}, {}, {1.0f, 0.0f}},  // Bottom-back
+  //    {{ 0.5f,  0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {}, {}, {1.0f, 1.0f}},  // Top-back
+  //    {{ 0.5f,  0.5f,  0.5f}, {1.0f, 0.0f, 0.0f}, {}, {}, {0.0f, 1.0f}},  // Top-front
+
+  //    // Top face
+  //    {{-0.5f,  0.5f,  0.5f}, {0.0f, 1.0f, 0.0f}, {}, {}, {0.0f, 0.0f}},  // Front-left
+  //    {{ 0.5f,  0.5f,  0.5f}, {0.0f, 1.0f, 0.0f}, {}, {}, {1.0f, 0.0f}},  // Front-right
+  //    {{ 0.5f,  0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {}, {}, {1.0f, 1.0f}},  // Back-right
+  //    {{-0.5f,  0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {}, {}, {0.0f, 1.0f}},  // Back-left
+
+  //    // Bottom face
+  //    {{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}, {}, {0.0f, 1.0f}},  // Back-left
+  //    {{ 0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}, {}, {1.0f, 1.0f}},  // Back-right
+  //    {{ 0.5f, -0.5f,  0.5f}, {0.0f, -1.0f, 0.0f}, {}, {}, {1.0f, 0.0f}},  // Front-right
+  //    {{-0.5f, -0.5f,  0.5f}, {0.0f, -1.0f, 0.0f}, {}, {}, {0.0f, 0.0f}}   // Front-left
+  //};
+
+  std::vector<Vertex> cubeVertices{
       // Front face
-      { {-0.5f, -0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {}, {}, {0.0f, 0.0f}},
-      {{ 0.5f, -0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {}, {}, {1.0f, 0.0f}},
-      {{ 0.5f,  0.5f,  0.5f}, {0.0f, 0.0f,  1.0f},{}, {}, {1.0f, 1.0f}},
-      {{-0.5f,  0.5f,  0.5f}, {0.0f, 0.0f,  1.0f},{}, {}, {0.0f, 1.0f}},
+      {{-0.5f, -0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {0.0f, 0.0f}, {}, {}},  // Bottom-left
+      {{ 0.5f, -0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {1.0f, 0.0f}, {}, {}},  // Bottom-right
+      {{ 0.5f,  0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {1.0f, 1.0f}, {}, {}},  // Top-right
+      {{-0.5f,  0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {0.0f, 1.0f}, {}, {}},  // Top-left
 
       // Back face
-      {{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}, {},{1.0f, 0.0f}},
-      {{ 0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f},{}, {}, {0.0f, 0.0f}},
-      {{ 0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}, {},{0.0f, 1.0f}},
-      {{-0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f},{}, {}, {1.0f, 1.0f}}
+      {{ 0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.0f, 0.0f}, {}, {}},  // Bottom-right
+      {{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.0f, 0.0f}, {}, {}},  // Bottom-left
+      {{-0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.0f, 1.0f}, {}, {}},  // Top-left
+      {{ 0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.0f, 1.0f}, {}, {}},  // Top-right
+
+      // Left face
+      {{-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}, {}, {}},  // Bottom-back
+      {{-0.5f, -0.5f,  0.5f}, {-1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}, {}, {}},  // Bottom-front
+      {{-0.5f,  0.5f,  0.5f}, {-1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}, {}, {}},  // Top-front
+      {{-0.5f,  0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}, {}, {}},  // Top-back
+
+      // Right face
+      {{ 0.5f, -0.5f,  0.5f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}, {}, {}},  // Bottom-front
+      {{ 0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}, {}, {}},  // Bottom-back
+      {{ 0.5f,  0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}, {}, {}},  // Top-back
+      {{ 0.5f,  0.5f,  0.5f}, {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}, {}, {}},  // Top-front
+
+      // Top face
+      {{-0.5f,  0.5f,  0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}, {}, {}},  // Front-left
+      {{ 0.5f,  0.5f,  0.5f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f}, {}, {}},  // Front-right
+      {{ 0.5f,  0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {1.0f, 1.0f}, {}, {}},  // Back-right
+      {{-0.5f,  0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 1.0f}, {}, {}},  // Back-left
+
+      // Bottom face
+      {{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 1.0f}, {}, {}},  // Back-left
+      {{ 0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f}, {}, {}},  // Back-right
+      {{ 0.5f, -0.5f,  0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 0.0f}, {}, {}},  // Front-right
+      {{-0.5f, -0.5f,  0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 0.0f}, {}, {}}   // Front-left
   };
+
 
   std::vector<uint32_t> cubeIndices = {
       // Front face
       0, 1, 2, 2, 3, 0,
+
       // Back face
       4, 5, 6, 6, 7, 4,
+
       // Left face
-      4, 0, 3, 3, 7, 4,
+      8, 9, 10, 10, 11, 8,
+
       // Right face
-      1, 5, 6, 6, 2, 1,
+      12, 13, 14, 14, 15, 12,
+
       // Top face
-      3, 2, 6, 6, 7, 3,
+      16, 17, 18, 18, 19, 16,
+
       // Bottom face
-      4, 5, 1, 1, 0, 4
+      20, 21, 22, 22, 23, 20
   };
 
   using namespace Graphics;
@@ -124,7 +194,8 @@ void Scene::Init()
     static_cast<uint32_t>(cubeVertices.size()),   // vtxCount = total number of vertices
     static_cast<uint32_t>(cubeIndices.size()),    // idxCount = total number of indices
     0,                                // materialIdx, assume 0 for now
-    glm::mat4(1.0f)                   // identity matrix for submesh transform
+    glm::mat4(1.0f),
+    cubeIndices// identity matrix for submesh transform
   };
 
   submeshes.push_back(cubeSubmesh);
@@ -166,24 +237,24 @@ void Scene::Draw()
   m_light.SetUniforms(m_shaders);
   m_material.SetUniforms(m_shaders);
 
-  for (auto& obj : m_objects)
-  {
-    m_shaders.SetUniform("uMdlTransform", obj->mdlTransform);
-    m_shaders.SetUniform("uVtxClr", obj->clr);
-    auto const& mdl{ *obj->meshRef };
+  //for (auto& obj : m_objects)
+  //{
+  //  m_shaders.SetUniform("uMdlTransform", obj->mdlTransform);
+  //  m_shaders.SetUniform("uVtxClr", obj->clr);
+  //  auto const& mdl{ *obj->meshRef };
 
-    glBindVertexArray(mdl.GetVAO());
+  //  glBindVertexArray(mdl.GetVAO());
 
-    // if primitive type is a point, render with GL_POINTS
-    if (mdl.isUsingIndices)
-    {
-      glDrawElements(mdl.primitiveType, static_cast<GLsizei>(mdl.drawCount), GL_UNSIGNED_SHORT, NULL);
-    }
-    // else draw as per normal
-    else {
-      glDrawArrays(mdl.primitiveType, 0, static_cast<GLsizei>(mdl.drawCount));
-    }
-  }
+  //  // if primitive type is a point, render with GL_POINTS
+  //  if (mdl.isUsingIndices)
+  //  {
+  //    glDrawElements(mdl.primitiveType, static_cast<GLsizei>(mdl.drawCount), GL_UNSIGNED_SHORT, NULL);
+  //  }
+  //  // else draw as per normal
+  //  else {
+  //    glDrawArrays(mdl.primitiveType, 0, static_cast<GLsizei>(mdl.drawCount));
+  //  }
+  //}
   m_shaders.Unuse();
   
   m_defaultShaders.Use();
@@ -206,34 +277,37 @@ void Scene::DebugDraw() {
 
     Graphics::Renderer::RenderSceneBegin(mtx);
 
-    Graphics::Renderer::DrawQuad({-1.f,0.f,0.f}, {0.5f,0.5f}, glm::vec4{0.9f,0.2f,0.8f,1.f});
-    Graphics::Renderer::DrawQuad({ 1.f,0.f,0.f }, { 0.5f,0.5f }, glm::vec4{ 0.2f,1.f,0.8f,1.f });
+    //Graphics::Renderer::DrawQuad({-1.f,0.f,0.f}, {0.5f,0.5f}, glm::vec4{0.9f,0.2f,0.8f,1.f});
+    //Graphics::Renderer::DrawQuad({ 1.f,0.f,0.f }, { 0.5f,0.5f }, glm::vec4{ 0.2f,1.f,0.8f,1.f });
     
 
-    Graphics::Renderer::SubmitMesh( mesh0 , { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 0.0f, 1.0f }, 0.0f);
+   // Graphics::Renderer::SubmitMesh( mesh0 , { 0.0f, 0.0f, 0.0f }, { 5.0f, 5.0f, 5.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }, 0.0f);
 
-    //Graphics::Renderer::SubmitCube(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 5.0f, 5.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 
-    //// Imagine a 5x5 grid of cubes, each placed at different positions, scales, and colors
-    //for (int x = -2; x <= 2; ++x) {
-    //    for (int y = -2; y <= 2; ++y) {
-    //        // Calculate the position offset based on grid coordinates
-    //        glm::vec3 position = glm::vec3(x * 6.0f, y * 6.0f, 0.0f); // Spacing the cubes 6 units apart
+   // Graphics::Renderer::SubmitCube(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 5.0f, 5.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
+    //Graphics::Renderer::SubmitCube(glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(5.0f, 5.0f, 5.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
 
-    //        // Random or incremental scaling
-    //        glm::vec3 scale = glm::vec3(1.0f + (x + 2) * 0.5f, 1.0f + (y + 2) * 0.5f, 1.0f);
 
-    //        // Assign a unique color for each cube (using normalized RGB values)
-    //        glm::vec4 color = glm::vec4(
-    //            (x + 2) * 0.2f, // Ranges from 0.0 to 1.0 as x goes from -2 to 2
-    //            (y + 2) * 0.2f, // Same for Y axis
-    //            1.0f - (x + 2) * 0.2f, // Creates a variety in color between cubes
-    //            1.0f);  // Alpha is always 1 (fully opaque)
+    // Imagine a 5x5 grid of cubes, each placed at different positions, scales, and colors
+    for (int x = -2; x <= 2; ++x) {
+        for (int y = -2; y <= 2; ++y) {
+            // Calculate the position offset based on grid coordinates
+            glm::vec3 position = glm::vec3(x * 6.0f, y * 6.0f, 0.0f); // Spacing the cubes 6 units apart
 
-    //        // Submit the cube with the calculated position, scale, and color
-    //        Graphics::Renderer::SubmitCube(position, scale, color, 0.0f);
-    //    }
-    //}
+            // Random or incremental scaling
+            glm::vec3 scale = glm::vec3(1.0f + (x + 2) * 0.5f, 1.0f + (y + 2) * 0.5f, 1.0f);
+
+            // Assign a unique color for each cube (using normalized RGB values)
+            glm::vec4 color = glm::vec4(
+                (x + 2) * 0.2f, // Ranges from 0.0 to 1.0 as x goes from -2 to 2
+                (y + 2) * 0.2f, // Same for Y axis
+                1.0f - (x + 2) * 0.2f, // Creates a variety in color between cubes
+                1.0f);  // Alpha is always 1 (fully opaque)
+
+            // Submit the cube with the calculated position, scale, and color
+            Graphics::Renderer::SubmitMesh(mesh0, position, scale, color, 0.0f);
+        }
+    }
 
     Graphics::Renderer::RenderSceneEnd();
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

@@ -3,12 +3,14 @@
 namespace Graphics{
 	class ElementBuffer {
 	public:
+		ElementBuffer(unsigned int size);
 		ElementBuffer(unsigned int* indices, unsigned int count);
 		~ElementBuffer();
 
+		static std::shared_ptr<ElementBuffer> Create(unsigned int size);
 		static std::shared_ptr<ElementBuffer> Create(unsigned int* indices, unsigned int count);
 
-		void SetData(unsigned int* indices, unsigned int count);
+		void SetData(void* const data, unsigned int size);
 
 		void Bind() const;
 		void Unbind() const;

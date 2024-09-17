@@ -9,6 +9,7 @@ in flat float v_TexIdx;
 uniform sampler2D u_Tex[32]; //TODO CHANGE THIS IN FUTURE
 
 void main(){
-	vec4 texColor = texture2D(u_Tex[int(v_TexIdx)], v_TexCoord);
+	//vec4 texColor = texture2D(u_Tex[int(v_TexIdx)], v_TexCoord);
+	vec4 texColor = texture2D(u_Tex[0], v_TexCoord);
 	fragColor = texColor * v_Color;
 }

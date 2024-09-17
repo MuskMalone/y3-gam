@@ -65,7 +65,7 @@ namespace Graphics {
 		mData.meshBuffer = std::vector<Vertex>(mData.cMaxVertices);
 
 
-		std::shared_ptr<ElementBuffer> meshEbo = ElementBuffer::Create(mData.meshIdxBuffer.data(), mData.cMaxIndices);
+		std::shared_ptr<ElementBuffer> meshEbo = ElementBuffer::Create(mData.cMaxIndices);
 		mData.meshVertexArray->SetElementBuffer(meshEbo);
 
 		//====================================================================
@@ -301,48 +301,8 @@ namespace Graphics {
 		glm::vec3 frontNormal = { 0.f, 0.f, 1.f };
 		glm::vec3 frontTangent = { 1.f, 0.f, 0.f };
 		glm::vec3 frontBitangent = { 0.f, 1.f, 0.f };
-		for (size_t i = 0; i < 4; ++i) {
+		for (size_t i = 0; i < 24; ++i) {
 			SetCubeBufferData(transformMtx * mData.cubeVtxPos[i], scale, frontNormal, texCoords[i], 0.f, frontTangent, frontBitangent, clr);
-		}
-
-		// Back Face (negative Z)
-		glm::vec3 backNormal = { 0.f, 0.f, -1.f };
-		glm::vec3 backTangent = { -1.f, 0.f, 0.f };
-		glm::vec3 backBitangent = { 0.f, 1.f, 0.f };
-		for (size_t i = 0; i < 4; ++i) {
-			SetCubeBufferData(transformMtx * mData.cubeVtxPos[i + 4], scale, backNormal, texCoords[i], 0.f, backTangent, backBitangent, clr);
-		}
-
-		// Left Face (negative X)
-		glm::vec3 leftNormal = { -1.f, 0.f, 0.f };
-		glm::vec3 leftTangent = { 0.f, 0.f, -1.f };
-		glm::vec3 leftBitangent = { 0.f, 1.f, 0.f };
-		for (size_t i = 0; i < 4; ++i) {
-			SetCubeBufferData(transformMtx * mData.cubeVtxPos[i + 8], scale, leftNormal, texCoords[i], 0.f, leftTangent, leftBitangent, clr);
-		}
-
-		// Right Face (positive X)
-		glm::vec3 rightNormal = { 1.f, 0.f, 0.f };
-		glm::vec3 rightTangent = { 0.f, 0.f, 1.f };
-		glm::vec3 rightBitangent = { 0.f, 1.f, 0.f };
-		for (size_t i = 0; i < 4; ++i) {
-			SetCubeBufferData(transformMtx * mData.cubeVtxPos[i + 12], scale, rightNormal, texCoords[i], 0.f, rightTangent, rightBitangent, clr);
-		}
-
-		// Top Face (positive Y)
-		glm::vec3 topNormal = { 0.f, 1.f, 0.f };
-		glm::vec3 topTangent = { 1.f, 0.f, 0.f };
-		glm::vec3 topBitangent = { 0.f, 0.f, -1.f };
-		for (size_t i = 0; i < 4; ++i) {
-			SetCubeBufferData(transformMtx * mData.cubeVtxPos[i + 16], scale, topNormal, texCoords[i], 0.f, topTangent, topBitangent, clr);
-		}
-
-		// Bottom Face (negative Y)
-		glm::vec3 bottomNormal = { 0.f, -1.f, 0.f };
-		glm::vec3 bottomTangent = { 1.f, 0.f, 0.f };
-		glm::vec3 bottomBitangent = { 0.f, 0.f, 1.f };
-		for (size_t i = 0; i < 4; ++i) {
-			SetCubeBufferData(transformMtx * mData.cubeVtxPos[i + 20], scale, bottomNormal, texCoords[i], 0.f, bottomTangent, bottomBitangent, clr);
 		}
 
 		mData.cubeIdxCount += 36; // 6 faces * 6 indices per face
@@ -366,7 +326,16 @@ namespace Graphics {
 			}
 
 			// Apply the instance's transformation to the submesh's transform
-			glm::mat4 finalxformMtx = transformMtx * submesh.transform;
+			glm::mat4 finalxformMtx = transformMtx/* * submesh.transform*/;
+
+			//// Collect index data from the submesh
+			//for (uint32_t i = 0; i < submesh.idxCount; ++i) {
+			//	mData.meshIdxBuffer.push_back(submesh.baseIdx + i + mData.meshVtxCount);
+			//}
+			for (const auto& idx : submesh.mIndices) {
+				// Adjust index by the current vertex count to maintain correct offsets
+				mData.meshIdxBuffer.push_back(idx + mData.meshVtxCount);
+			}
 
 			// Collect vertex data from the submesh
 			for (size_t i = 0; i < submesh.vtxCount; ++i) {
@@ -376,12 +345,7 @@ namespace Graphics {
 				SetMeshBufferData(finalxformMtx * glm::vec4(vtx.position, 1.0f), vtx.normal, vtx.texcoord, 0.f, vtx.tangent, vtx.bitangent, clr);
 			}
 
-			// Collect index data from the submesh
-			for (uint32_t i = 0; i < submesh.idxCount; ++i) {
-				mData.meshIdxBuffer.push_back(submesh.baseIdx + i + mData.meshVtxCount);
-			}
-
-			mData.meshVtxCount += submesh.vtxCount;
+			//mData.meshVtxCount += submesh.vtxCount;
 			mData.meshIdxCount += submesh.idxCount;
 		}
 	}
@@ -424,18 +388,16 @@ namespace Graphics {
 		}
 		if (mData.meshIdxCount) {
 
-
-			//std::shared_ptr<ElementBuffer> meshEbo = ElementBuffer::Create(mData.meshIdxBuffer.data(), mData.cMaxIndices);
-			//mData.meshVertexArray->SetElementBuffer(meshEbo);
 			// Calculate data size for mesh vertices
 			unsigned int dataSize = static_cast<unsigned int>(mData.meshVtxCount * sizeof(Vertex));
 
 			// Update the mesh vertex buffer with the batched data
 			mData.meshVertexBuffer->SetData(mData.meshBuffer.data(), dataSize);
 
-			unsigned int idxDataSize = static_cast<unsigned int>(mData.meshIdxCount * sizeof(uint32_t));
+ 			unsigned int idxDataSize = static_cast<unsigned int>(mData.meshIdxCount * sizeof(uint32_t));
+			mData.meshVertexArray->Bind();
 			mData.meshVertexArray->GetElementBuffer()->SetData(mData.meshIdxBuffer.data(), idxDataSize);
-
+			mData.meshVertexArray->Unbind();
 			// Bind the textures for the meshes
 			for (unsigned int i{}; i < mData.texUnitIdx; ++i) {
 				mData.texUnits[i]->Bind(i);
