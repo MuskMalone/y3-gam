@@ -1,10 +1,16 @@
 #pragma once
 #include <pch.h>
+#include "Color.h"
 
-//im just relocating struct Object's members to conform to the ECS
 namespace Component {
 	struct Material {
-		glm::vec4 clr;
-		//textures etc
+		Material() : color{ Color::COLOR_BLACK } {}
+		Material(glm::vec4 color) : color{ color } {}
+
+		inline void Clear() noexcept { color = Color::COLOR_BLACK; }
+
+		glm::vec4 color;
+
+		// @TODO: TEXTURES, ETC
 	};
 }

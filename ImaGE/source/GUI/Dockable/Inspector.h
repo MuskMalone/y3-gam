@@ -21,16 +21,16 @@ namespace GUI {
     static void SetIsComponentEdited(bool isComponentEdited);
 
   private:
-    
+    void ColliderComponentWindow(ECS::Entity entity);
     void LayerComponentWindow(ECS::Entity entity);
+    void MaterialComponentWindow(ECS::Entity entity);
+    void MeshComponentWindow(ECS::Entity entity);
+    void RigidBodyComponentWindow(ECS::Entity entity);
     void ScriptComponentWindow(ECS::Entity entity);
     void TagComponentWindow(ECS::Entity entity);
     void TextComponentWindow(ECS::Entity entity);
     void TransformComponentWindow(ECS::Entity entity);
-
-    void RigidBodyComponentWindow(ECS::Entity entity);
-    void ColliderComponentWindow(ECS::Entity entity);
-
+    
     template<typename Component>
     bool WindowBegin(std::string windowName);
 
@@ -38,10 +38,11 @@ namespace GUI {
     void DrawAddButton();
 
   private:
-    static std::map<std::string, bool> sComponentOpenStatusMap;
+    std::map<std::string, bool> mComponentOpenStatusMap;
     Reflection::ObjectFactory& mObjFactory;
-    static ECS::Entity sPreviousEntity;
-    static bool sEntityChanged;
+    ECS::Entity mPreviousEntity;
+    bool mEntityChanged;
+
     static bool sIsComponentEdited;
   };
 
@@ -49,17 +50,22 @@ namespace GUI {
   bool Inspector::WindowBegin(std::string windowName) {
     ImGui::Separator();
 
-    if (sEntityChanged) {
-      bool& openMapStatus = sComponentOpenStatusMap[windowName];
+    if (mEntityChanged) {
+      bool& openMapStatus = mComponentOpenStatusMap[windowName];
       ImGui::SetNextItemOpen(openMapStatus, ImGuiCond_Always);
     }
 
     bool isOpen{ ImGui::TreeNode(windowName.c_str()) };
 
-    if (isOpen)
-      DrawOptionsListButton<Component>(windowName);
+    if (isOpen) {
+      // Must close component window if a component was removed
+      if (!DrawOptionsListButton<Component>(windowName)) {
+        WindowEnd(true);
+        return false;
+      }
+    }
 
-    sComponentOpenStatusMap[windowName] = isOpen;
+    mComponentOpenStatusMap[windowName] = isOpen;
     return isOpen;
   }
 

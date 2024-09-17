@@ -1,53 +1,69 @@
 #include <pch.h>
 #ifndef IMGUI_DISABLE
+#include "Inspector.h"
+
 #include <imgui/imgui.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
-#include "Inspector.h"
-#include <Physics/PhysicsSystem.h>
-#include <functional>
-#include <Reflection/ComponentTypes.h>
 #include "Color.h"
 #include "GUI/Helpers/ImGuiHelpers.h"
 
+#include <Physics/PhysicsSystem.h>
+#include <functional>
+#include <Reflection/ComponentTypes.h>
+
 namespace GUI {
+
+  //Static Initialization
+  bool Inspector::sIsComponentEdited{};
+
   template<typename Component>
   void DrawAddComponentButton(std::string const& name);
 
   template<typename Component>
-  void DrawOptionButton(std::string const& name);
+  bool DrawOptionButton(std::string const& name);
 
   template<typename Component>
-  void DrawOptionsListButton(std::string windowName);
+  bool DrawOptionsListButton(std::string windowName);
 
-  // Static Initialization
-  std::map<std::string, bool> Inspector::sComponentOpenStatusMap{};
-  ECS::Entity Inspector::sPreviousEntity{};
-  bool Inspector::sEntityChanged{};
-  bool Inspector::sIsComponentEdited{ false };
-
-  Inspector::Inspector(std::string const& name) : GUIWindow(name) {
+  Inspector::Inspector(std::string const& name) : GUIWindow(name),
+    mComponentOpenStatusMap{}, mObjFactory{ Reflection::ObjectFactory::GetInstance() },
+    mPreviousEntity{}, mEntityChanged{ false } {
     for (std::string const& component : Component::ComponentNameList) {
-      sComponentOpenStatusMap[component] = true; // Default to all open
+      mComponentOpenStatusMap[component] = true; // Default to all open
     }
   }
 
   void Inspector::Run() {
     ImGui::Begin(mWindowName.c_str());
     ECS::Entity const& currentEntity{ GUIManager::GetSelectedEntity() };
+    
     if (currentEntity) {
-      if (currentEntity != sPreviousEntity) {
-        sPreviousEntity = currentEntity;
-        sEntityChanged = true;
+
+      if (currentEntity != mPreviousEntity) {
+        mPreviousEntity = currentEntity;
+        mEntityChanged = true;
       }
       else
-        sEntityChanged = false;
+        mEntityChanged = false;
 
       // @TODO: EDIT WHEN NEW COMPONENTS
       if (currentEntity.HasComponent<Component::Tag>())
         TagComponentWindow(currentEntity);
 
+      if (currentEntity.HasComponent<Component::Collider>())
+        ColliderComponentWindow(currentEntity);
+
       if (currentEntity.HasComponent<Component::Layer>())
         LayerComponentWindow(currentEntity);
+
+      if (currentEntity.HasComponent<Component::Material>())
+        MaterialComponentWindow(currentEntity);
+
+      if (currentEntity.HasComponent<Component::Mesh>())
+        MeshComponentWindow(currentEntity);
+
+      if (currentEntity.HasComponent<Component::RigidBody>())
+        RigidBodyComponentWindow(currentEntity);
 
       if (currentEntity.HasComponent<Component::Script>())
         ScriptComponentWindow(currentEntity);
@@ -57,20 +73,6 @@ namespace GUI {
 
       if (currentEntity.HasComponent<Component::Transform>())
         TransformComponentWindow(currentEntity);
-      }
-
-      if (currentEntity.HasComponent<Component::Mesh>()) {
-      
-      }
-
-      if (currentEntity.HasComponent<Component::RigidBody>()) {
-          RigidBodyComponentWindow(currentEntity);
-      }
-
-      if (currentEntity.HasComponent<Component::Collider>()) {
-          ColliderComponentWindow(currentEntity);
-      }
-
     }
 
     ImGui::End();
@@ -89,6 +91,16 @@ namespace GUI {
 
     if (isOpen) {
       
+    }
+
+    WindowEnd(isOpen);
+  }
+
+  void Inspector::MaterialComponentWindow(ECS::Entity entity) {
+    bool isOpen{ WindowBegin<Component::Material>("Material") };
+
+    if (isOpen) {
+
     }
 
     WindowEnd(isOpen);
@@ -184,18 +196,29 @@ namespace GUI {
     WindowEnd(isOpen);
   }
 
-  void Inspector::WindowEnd(bool isOpen) {
-      if (isOpen)
-          ImGui::TreePop();
+  void Inspector::MeshComponentWindow(ECS::Entity entity) {
+    bool isOpen{ WindowBegin<Component::Mesh>("Mesh") };
 
-      ImGui::Separator();
+    if (isOpen) {
 
+    }
+
+    WindowEnd(isOpen);
   }
-  void Inspector::RigidBodyComponentWindow(ECS::Entity entity) {
-      ImGui::Separator();
-      Component::RigidBody& rigidBody{entity.GetComponent<Component::RigidBody>()};
-      // Assuming 'rigidBody' is an instance of RigidBody
 
+  void Inspector::WindowEnd(bool isOpen) {
+    if (isOpen)
+        ImGui::TreePop();
+
+    ImGui::Separator();
+  }
+
+  void Inspector::RigidBodyComponentWindow(ECS::Entity entity) {
+    bool isOpen{ WindowBegin<Component::RigidBody>("RigidBody") };
+
+    if (isOpen) {
+      Component::RigidBody& rigidBody{ entity.GetComponent<Component::RigidBody>() };
+      // Assuming 'rigidBody' is an instance of RigidBody
       ImGui::DragFloat("Friction", &rigidBody.friction, 0.01f, 0.0f, 1.0f);
       ImGui::DragFloat("Restitution", &rigidBody.restitution, 0.01f, 0.0f, 1.0f);
       ImGui::DragFloat("Gravity Factor", &rigidBody.gravityFactor, 0.01f, 0.0f, 10.0f);
@@ -207,15 +230,20 @@ namespace GUI {
       const char* motionTypes[] = { "Static", "Kinematic", "Dynamic" };
       int currentMotionType = static_cast<int>(rigidBody.motionType);
       if (ImGui::Combo("Motion Type", &currentMotionType, motionTypes, IM_ARRAYSIZE(motionTypes))) {
-          rigidBody.motionType = static_cast<JPH::EMotionType>(currentMotionType);
-          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::MOTION);
+        rigidBody.motionType = static_cast<JPH::EMotionType>(currentMotionType);
+        IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::MOTION);
       }
+    }
+
+    WindowEnd(isOpen);
   }
 
   void Inspector::ColliderComponentWindow(ECS::Entity entity) {
-      ImGui::Separator();
+    bool isOpen{ WindowBegin<Component::RigidBody>("RigidBody") };
+
+    if (isOpen) {
       // Assuming 'collider' is an instance of Collider
-      Component::Collider& collider{entity.GetComponent<Component::Collider>()};
+      Component::Collider& collider{ entity.GetComponent<Component::Collider>() };
       ImGui::DragFloat3("Scale", collider.scale.mF32, 0.1f);
       ImGui::DragFloat3("Position Offset", collider.positionOffset.mF32, 0.1f);
       ImGui::DragFloat3("Rotation Offset", collider.rotationOffset.mF32, 0.1f);
@@ -224,8 +252,11 @@ namespace GUI {
       const char* shapeTypes[] = { "Unknown", "Sphere", "Capsule", "Box", "Triangle", "ConvexHull", "Mesh", "HeightField", "Compound" };
       int currentShapeType = static_cast<int>(collider.type);
       if (ImGui::Combo("Shape Type", &currentShapeType, shapeTypes, IM_ARRAYSIZE(shapeTypes))) {
-          collider.type = static_cast<JPH::EShapeSubType>(currentShapeType);
+        collider.type = static_cast<JPH::EShapeSubType>(currentShapeType);
       }
+    }
+
+    WindowEnd(isOpen);
   }
 
   void Inspector::DrawAddButton() {
@@ -248,12 +279,17 @@ namespace GUI {
 
       if (ImGui::BeginTable("##component_table", 1, ImGuiTableFlags_SizingStretchSame)) {
         ImGui::TableSetupColumn("ComponentNames", ImGuiTableColumnFlags_WidthFixed, 200.f);
+
         // @TODO: EDIT WHEN NEW COMPONENTS
         DrawAddComponentButton<Component::Layer>("Layer");
+        DrawAddComponentButton<Component::Material>("Material");
+        DrawAddComponentButton<Component::Mesh>("Mesh");
+        DrawAddComponentButton<Component::RigidBody>("RigidBody");
         DrawAddComponentButton<Component::Script>("Script");
         DrawAddComponentButton<Component::Tag>("Tag");
         DrawAddComponentButton<Component::Text>("Text");
         DrawAddComponentButton<Component::Transform>("Transform");  
+
         ImGui::EndTable();
       }
 
@@ -307,7 +343,8 @@ namespace GUI {
   }
 
   template<typename Component>
-  void DrawOptionButton(std::string const& name) {
+  bool DrawOptionButton(std::string const& name) {
+    bool openMainWindow{ true };
     auto fillRowWithColour = [](const ImColor& colour) {
       for (int column = 0; column < ImGui::TableGetColumnCount(); column++) {
         ImGui::TableSetBgColor(ImGuiTableBgTarget_CellBg, colour, column);
@@ -345,6 +382,7 @@ namespace GUI {
 
       if (name == "Remove Component") {
         ent.RemoveComponent<Component>();
+        openMainWindow = false;
       }
 
       else if (name == "Clear") {
@@ -354,10 +392,13 @@ namespace GUI {
 
       ImGui::CloseCurrentPopup();
     }
+
+    return openMainWindow;
   }
 
   template<typename Component>
-  void DrawOptionsListButton(std::string windowName) {
+  bool DrawOptionsListButton(std::string windowName) {
+    bool openMainWindow{ true };
     ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 25.f);
     ImVec2 addTextSize = ImGui::CalcTextSize("Options");
     ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
@@ -383,13 +424,15 @@ namespace GUI {
         ImGui::TableSetupColumn("OptionNames", ImGuiTableColumnFlags_WidthFixed, 200.f);
         DrawOptionButton<Component>("Clear");
         if (windowName != "Tag")
-          DrawOptionButton<Component>("Remove Component");
+          openMainWindow = DrawOptionButton<Component>("Remove Component");
 
         ImGui::EndTable();
       }
 
       ImGui::EndPopup();
     }
+
+    return openMainWindow;
   }
 } // namespace GUI
 

@@ -43,7 +43,7 @@ namespace GUI
     else {
       ImGui::Text(mSceneName.c_str());
     }
-    std::string sceneNameSave{ (Inspector::GetIsComponentEdited()) ? sceneName + " *" : sceneName };
+    std::string sceneNameSave{ (Inspector::GetIsComponentEdited()) ? mSceneName + " *" : mSceneName };
     ImGui::Text(sceneNameSave.c_str());
 
     // TODO: MOVE SOMEWHERE ELSE
