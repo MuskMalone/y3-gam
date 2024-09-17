@@ -6,7 +6,7 @@
 #include <Core/Camera.h>
 #include <Graphics/ShaderStructs.h>
 #include <variant>
-
+#include "Core/Entity.h"
 // forward declaration
 namespace GUI { class GUIWindow; class GUIManager; }
 
@@ -20,7 +20,7 @@ public:
   inline void RecomputeBVH() noexcept { m_bvhModified = true; }
   inline void ReconstructTree() noexcept { m_reconstructTree = true; }
   void ResetCamera();
-
+  static void AddMesh(ECS::Entity entity);
   void Draw();
   void DrawTopView();
 
@@ -37,7 +37,8 @@ private:
   // can encapsulate in a struct if more members are added
   // so that GUIWindow can allow access to relevant members
   // to derived classes
-  std::vector<std::shared_ptr<Object>> mObjects;
+  static //tch to remove, added for testing
+	  std::vector<std::shared_ptr<Object>> mObjects;
 
   bool m_leftClickHeld, m_leftClickTriggered;
   bool m_bvhModified, m_reconstructTree;

@@ -1,19 +1,24 @@
 #include <pch.h>
+#ifndef IMGUI_DISABLE
 #include "Toolbar.h"
 #include <imgui/imgui.h>
 #include <ImGui/imgui_internal.h> // for BeginViewportSideBar
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <Events/EventManager.h>
-#include <Scenes/SceneManager.h>
 #include <GUI/Helpers/AssetHelpers.h>
 #include <filesystem>
+#include <Prefabs/PrefabManager.h>
 
 namespace GUI
 {
 
-  Toolbar::Toolbar(std::string const& name, std::vector<std::unique_ptr<GUIWindow>> const& windowsRef) :
-    mWindowsRef{ windowsRef }, mSceneManager{ Scenes::SceneManager::GetInstance() },
-    mScenePopup{ false }, mPrefabPopup{ false }, GUIWindow(name) {}
+  Toolbar::Toolbar(std::string const& name, std::vector<std::unique_ptr<GUIWindow>> const& windowsRef) : GUIWindow(name),
+    mWindowsRef{ windowsRef }, mScenePopup{ false }, mPrefabPopup{ false },
+    mDisableAll{ false }, mAllowCreationOnly{ true }
+  {
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &Toolbar::HandleEvent, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &Toolbar::HandleEvent, this);
+  }
 
   void Toolbar::Run()
   {
@@ -22,12 +27,11 @@ namespace GUI
       if (ImGui::BeginMenu("File"))
       {
         const char* const sceneFilter{ "Scenes (*.scn)\0*.scn" }, * const initialDir{ ".\\Assets\\Scenes" };
-        bool const noSceneSelected{ mSceneManager.NoSceneSelected() }
-          , lockControls{ mSceneManager.IsScenePlaying() || mSceneManager.GetSceneState() == Scenes::SceneState::PREFAB_EDITOR };
+        bool const creationMode{ !mDisableAll && mAllowCreationOnly };
 
         // im sorry this is messy
         // i need to disable different stuff based on the scene state
-        if (lockControls) {
+        if (mDisableAll) {
           ImGui::BeginDisabled();
         }
 
@@ -35,7 +39,7 @@ namespace GUI
           mScenePopup = true;
         }
 
-        if (noSceneSelected) {
+        if (creationMode) {
           ImGui::BeginDisabled();
         }
 
@@ -44,10 +48,10 @@ namespace GUI
         }
 
         if (ImGui::MenuItem("Save Scene")) {
-          mSceneManager.SaveScene();
+          QUEUE_EVENT(Events::SaveSceneEvent);
         }
 
-        if (noSceneSelected) {
+        if (creationMode) {
           ImGui::EndDisabled();
         }
 
@@ -59,7 +63,7 @@ namespace GUI
           }
         }
 
-        if (lockControls) {
+        if (mDisableAll) {
           ImGui::EndDisabled();
         }
 
@@ -97,6 +101,35 @@ namespace GUI
       RunNewPrefabPopup();
 
       ImGui::EndMainMenuBar();
+    }
+  }
+
+  EVENT_CALLBACK_DEF(Toolbar, HandleEvent)
+  {
+    switch (event->GetCategory())
+    {
+    case Events::EventType::EDIT_PREFAB:
+      mDisableAll = true;
+      break;
+    case Events::EventType::SCENE_STATE_CHANGE:
+    {
+      switch (CAST_TO_EVENT(Events::SceneStateChange)->mNewState)
+      {
+      case Events::SceneStateChange::STOPPED:
+        mAllowCreationOnly = true;
+        mDisableAll = false;
+        break;
+      case Events::SceneStateChange::NEW:
+        mAllowCreationOnly = mDisableAll = false;
+        break;
+      case Events::SceneStateChange::STARTED:
+      case Events::SceneStateChange::PAUSED:
+        mDisableAll = true;
+        break;
+      default: break;
+      }
+    }
+    default: break;
     }
   }
 
@@ -163,55 +196,45 @@ namespace GUI
   void Toolbar::RunNewPrefabPopup()
   {
     ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
-    if (ImGui::BeginPopupModal("Create New Prefab", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+    if (ImGui::BeginPopupModal("Create Prefab", NULL, ImGuiWindowFlags_AlwaysAutoResize))
     {
-      static std::string prefabName{};
+      static std::string input{};
       static bool blankWarning{ false }, existingPrefabWarning{ false };
+      static auto& prefabMan{ Prefabs::PrefabManager::GetInstance() };
 
-      if (blankWarning)
-      {
+      if (blankWarning) {
         ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Name cannot be blank!!!");
       }
-      else if (existingPrefabWarning)
-      {
-        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Prefab already exists!");
+      else if (existingPrefabWarning) {
+        ImGui::TextColored(ImVec4(0.99f, 0.82f, 0.09f, 1.0f), "Warning: Prefab already exists.");
+        ImGui::TextColored(ImVec4(0.99f, 0.82f, 0.09f, 1.0f), "File will be overwritten!!");
       }
 
       ImGui::Text("Name of Prefab:");
       ImGui::SameLine();
-      if (ImGui::InputText("##PrefabNameInput", &prefabName))
-      {
-        blankWarning = existingPrefabWarning = false;
+      if (ImGui::InputText("##PrefabNameInput", &input)) {
+        existingPrefabWarning = prefabMan.DoesPrefabExist(input);
+        blankWarning = false;
       }
 
       ImGui::SetCursorPosX(0.5f * (ImGui::GetWindowContentRegionMax().x - ImGui::CalcTextSize("Cancel Create ").x));
-      if (ImGui::Button("Cancel"))
-      {
-        prefabName.clear();
+      if (ImGui::Button("Cancel")) {
+        input.clear();
         blankWarning = existingPrefabWarning = false;
         ImGui::CloseCurrentPopup();
       }
 
       ImGui::SameLine();
-      if (ImGui::Button("Create"))
-      {
+      if (ImGui::Button("Create")) {
         // if name is blank / whitespace, reject it
-        if (prefabName.find_first_not_of(" ") == std::string::npos)
-        {
+        if (input.find_first_not_of(" ") == std::string::npos) {
           blankWarning = true;
           existingPrefabWarning = false;
         }
-        // @TODO: ADD CHECK WHEN PREFAB MANAGER IS UP
-        /*else if (Prefabs::PrefabManager::GetInstance().DoesPrefabExist(prefabName))
-        {
-          existingPrefabWarning = true;
-          blankWarning = false;
-        }*/
-        else
-        {
-          QUEUE_EVENT(Events::EditPrefabEvent, prefabName, "");
-          blankWarning = existingPrefabWarning = false;;
-          prefabName.clear();
+        else {
+          QUEUE_EVENT(Events::EditPrefabEvent, input, std::string());
+          blankWarning = existingPrefabWarning = false;
+          input.clear();
           ImGui::CloseCurrentPopup();
         }
       }
@@ -221,3 +244,5 @@ namespace GUI
   }
 
 } // namespace GUI
+
+#endif  // IMGUI_DISABLE

@@ -1,4 +1,5 @@
 #include <pch.h>
+#ifndef IMGUI_DISABLE
 #include "ImGuiHelpers.h"
 #include <ImGui/imgui.h>
 //#include <ImGui/misc/cpp/imgui_stdlib.h>
@@ -176,3 +177,5 @@ ImVec4 operator-(ImVec4 const& lhs, ImVec4 const& rhs) {
 ImVec4 operator-(ImVec4 const& lhs, float rhs) {
   return { lhs.x - rhs, lhs.y - rhs, lhs.z - rhs, lhs.w - rhs };
 }
+
+#endif  // IMGUI_DISABLE

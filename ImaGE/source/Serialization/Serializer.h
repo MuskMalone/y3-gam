@@ -17,6 +17,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rapidjson/PrettyWriter.h>
 #include <rapidjson/ostreamwrapper.h>
 #include <string>
+#include <Prefabs/VariantPrefab.h>
 
 // forward declaration
 namespace ECS { class Entity; }
@@ -50,6 +51,20 @@ namespace Serialization
     ************************************************************************/
     static void SerializeScene(std::string const& filePath);
 
+#ifndef IMGUI_DISABLE
+    /*!*********************************************************************
+    \brief
+      Serializes a VariantPrefab object into a json file. The VariantPrefab
+      encapsulates a proxy entity by storing components in a vector each
+      with the form of an rttr::variant.
+    \param prefab
+      The VariantPrefab object
+    \param filename
+      The name of the output file
+    ************************************************************************/
+    static void SerializeVariantPrefab(Prefabs::VariantPrefab const& prefab, std::string const& filename);
+#endif
+
   private:
     using WriterType = rapidjson::PrettyWriter<rapidjson::OStreamWrapper>;
 
@@ -75,8 +90,7 @@ namespace Serialization
 
     /*!*********************************************************************
     \brief
-      Serializes an rttr::variant into a rapidjson::Value object based
-      on its type. (Whether its a C basic type, Enum or class type)
+      Serializes a class by iterating through its properties
     \param object
       The object to serialize
     \param writer
@@ -84,7 +98,7 @@ namespace Serialization
     \return
       The resulting rapidjson::Value object
     ************************************************************************/
-    static void SerializeRecursive(rttr::instance const& obj, WriterType& writer);
+    static void SerializeClassTypes(rttr::instance const& obj, WriterType& writer);
 
     /*!*********************************************************************
     \brief
@@ -114,8 +128,8 @@ namespace Serialization
 
     /*!*********************************************************************
     \brief
-      Used when serializing an associative container to write its
-      element.
+      Serializes an rttr::variant into a rapidjson::Value object based
+      on its type. (Whether its a C basic type, Enum or class type)
     \param var
       The rttr::variant of the object
     \param writer
@@ -123,7 +137,7 @@ namespace Serialization
     \return
       True if the object was serialized and false otherwise
     ************************************************************************/
-    static bool WriteVariant(rttr::variant const& var, WriterType& writer);
+    static bool SerializeRecursive(rttr::variant const& var, WriterType& writer);
 
     /*!*********************************************************************
     \brief

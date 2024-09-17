@@ -1,9 +1,9 @@
 #include <pch.h>
+#ifndef IMGUI_DISABLE
 #include "AssetBrowser.h"
 #include <imgui/imgui.h>
 #include <Globals.h>
 #include <Events/EventManager.h>
-#include <Scenes/SceneManager.h>
 #include <GUI/Helpers/AssetHelpers.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 
@@ -23,10 +23,11 @@ namespace Helper
 namespace GUI
 {
 
-  AssetBrowser::AssetBrowser(std::string const& name) :
+  AssetBrowser::AssetBrowser(std::string const& name) : GUIWindow(name),
     mCurrentDir{ gAssetsDirectory }, mRightClickedDir{},
-    mSelectedAsset{}, mDirMenuPopup{ false }, mAssetMenuPopup{ false }, GUIWindow(name)
+    mSelectedAsset{}, mDirMenuPopup{ false }, mAssetMenuPopup{ false }, mDisableSceneChange{ false }
   {
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &AssetBrowser::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::ADD_FILES, &AssetBrowser::HandleEvent, this);
   }
 
@@ -156,15 +157,7 @@ namespace GUI
 
       // asset icon + input
       ImGui::ImageButton(0, ImVec2(imgSize, imgSize));
-      if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
-      {
-        mSelectedAsset = file;
-        mAssetMenuPopup = true;
-      }
-      else if (ImGui::IsItemClicked(ImGuiMouseButton_Left) && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-      {
-        AssetHelpers::OpenFileWithDefaultProgram(file.path().string());
-      }
+      CheckInput(file);
 
       // display file name below
       ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
@@ -192,15 +185,7 @@ namespace GUI
 
       // asset icon + input
       ImGui::ImageButton(0, ImVec2(imgSize, imgSize));
-      if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
-      {
-        mSelectedAsset = file;
-        mAssetMenuPopup = true;
-      }
-      else if (ImGui::IsItemClicked(ImGuiMouseButton_Left) && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-      {
-        AssetHelpers::OpenFileWithDefaultProgram(file.path().string());
-      }
+      CheckInput(file);
 
       // display file name below
       ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
@@ -214,6 +199,44 @@ namespace GUI
     }
   }
 
+  void AssetBrowser::CheckInput(std::filesystem::path const& path)
+  {
+    static std::filesystem::path draggedAsset;
+    
+    if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
+    {
+      mSelectedAsset = path;
+      mAssetMenuPopup = true;
+    }
+    else if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
+    {
+      if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+        AssetHelpers::OpenFileWithDefaultProgram(path.string());
+      }
+      else {
+        draggedAsset = path;
+      }
+    }
+    
+    if (ImGui::BeginDragDropSource()) {
+      if (mDisableSceneChange) {
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+      }
+      else {
+        std::string const pathStr{ draggedAsset.relative_path().string() };
+        ImGui::SetDragDropPayload(sAssetDragDropPayload, pathStr.data(), pathStr.size() + 1, ImGuiCond_Once);
+      }
+      
+      ImGui::Text(draggedAsset.filename().string().c_str());
+
+      if (mDisableSceneChange) {
+        ImGui::PopStyleColor();
+      }
+
+      ImGui::EndDragDropSource();
+    }
+  }
+
   EVENT_CALLBACK_DEF(AssetBrowser, HandleEvent)
   {
     switch (event->GetCategory())
@@ -221,6 +244,21 @@ namespace GUI
     case Events::EventType::ADD_FILES:
       AddAssets(std::static_pointer_cast<Events::AddFilesFromExplorerEvent>(event)->mPaths);
       break;
+    case Events::EventType::SCENE_STATE_CHANGE:
+    {
+      switch (CAST_TO_EVENT(Events::SceneStateChange)->mNewState)
+      {
+      case Events::SceneStateChange::NEW:
+      case Events::SceneStateChange::STOPPED:
+        mDisableSceneChange = false;
+        break;
+      case Events::SceneStateChange::STARTED:
+      case Events::SceneStateChange::PAUSED:
+        mDisableSceneChange = true;
+        break;
+      default: break;
+      }
+    }
     }
   }
 
@@ -276,7 +314,7 @@ namespace GUI
     }
   }
 
-  void AssetBrowser::AssetMenuPopup() const
+  void AssetBrowser::AssetMenuPopup()
   {
     static bool deletePopup{ false };
     if (ImGui::BeginPopup("AssetsMenu"))
@@ -292,11 +330,12 @@ namespace GUI
       // only enabled for prefabs
       if (mSelectedAsset.extension().string() == ".pfb")
       {
-        ImGui::BeginDisabled(Scenes::SceneManager::GetInstance().GetSceneState() == Scenes::SceneState::PREFAB_EDITOR);
+        ImGui::BeginDisabled(mDisableSceneChange);
         if (ImGui::Selectable("Edit Prefab"))
         {
           QUEUE_EVENT(Events::EditPrefabEvent, mSelectedAsset.stem().string(),
             mSelectedAsset.relative_path().string());
+          mDisableSceneChange = true;
         }
         ImGui::EndDisabled();
       }
@@ -386,3 +425,5 @@ namespace Helper
     return false;
   }
 }
+
+#endif  // IMGUI_DISABLE

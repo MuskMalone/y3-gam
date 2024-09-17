@@ -1,4 +1,5 @@
 #pragma once
+#ifndef IMGUI_DISABLE
 #include "GUI/GUIWindow.h"
 #include "GUI/GUIManager.h"
 
@@ -8,6 +9,7 @@
 
 #include "Core/Entity.h"
 #include "Core/EntityManager.h"
+#include <Reflection/ObjectFactory.h>
 
 namespace GUI {
   class Inspector : public GUIWindow {
@@ -26,6 +28,9 @@ namespace GUI {
     void TextComponentWindow(ECS::Entity entity);
     void TransformComponentWindow(ECS::Entity entity);
 
+    void RigidBodyComponentWindow(ECS::Entity entity);
+    void ColliderComponentWindow(ECS::Entity entity);
+
     template<typename Component>
     bool WindowBegin(std::string windowName);
 
@@ -34,6 +39,7 @@ namespace GUI {
 
   private:
     static std::map<std::string, bool> sComponentOpenStatusMap;
+    Reflection::ObjectFactory& mObjFactory;
     static ECS::Entity sPreviousEntity;
     static bool sEntityChanged;
     static bool sIsComponentEdited;
@@ -58,3 +64,5 @@ namespace GUI {
   }
 
 } // namespace GUI
+
+#endif  // IMGUI_DISABLE

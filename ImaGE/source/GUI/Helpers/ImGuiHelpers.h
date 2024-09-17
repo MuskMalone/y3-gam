@@ -1,4 +1,5 @@
 #pragma once
+#ifndef IMGUI_DISABLE
 #include <ImGui/imgui_internal.h>
 
 namespace ImGuiHelpers
@@ -34,3 +35,5 @@ ImVec4 operator+(ImVec4 const& lhs, ImVec4 const& rhs);
 ImVec4 operator+(ImVec4 const& lhs, float rhs);
 ImVec4 operator-(ImVec4 const& lhs, ImVec4 const& rhs);
 ImVec4 operator-(ImVec4 const& lhs, float rhs);
+
+#endif  // IMGUI_DISABLE

@@ -22,17 +22,21 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "ComponentTypes.h"
 #include <Serialization/Deserializer.h>
 #include <sstream>
+#include <Physics/PhysicsSystem.h>
+#include <TempScene.h> //tch for testing to remove
+
 #ifndef IMGUI_DISABLE
 #include <Prefabs/PrefabManager.h>
+#include <Events/EventManager.h>
 #endif
 
 namespace Reflection
 {
 
-  void ObjectFactory::AddComponentsToEntity(ECS::Entity& id, std::vector<rttr::variant> const& components) const
+  void ObjectFactory::AddComponentsToEntity(ECS::Entity id, std::vector<rttr::variant> const& components) const
   {
     for (rttr::variant const& component : components) {
-      AddComponentToEntity(id, component);
+      AddComponentToEntity(id, component.get_type(), component);
     }
   }
 
@@ -40,17 +44,10 @@ namespace Reflection
   {
     std::vector<rttr::variant> ret{};
     
-    // should iterate through component signature in future
-    if (id.HasComponent<Component::Tag>()) {
-      ret.emplace_back(GetEntityComponent(id, rttr::type::get<Component::Tag>()));
+    for (rttr::type const& type : Reflection::gComponentTypes) {
+      auto compVar{ GetEntityComponent(id, type) };
+      if (compVar) { ret.emplace_back(std::move(compVar)); }
     }
-    if (id.HasComponent<Component::Layer>()) {
-      ret.emplace_back(GetEntityComponent(id, rttr::type::get<Component::Layer>()));
-    }
-    if (id.HasComponent<Component::Transform>()) {
-      ret.emplace_back(GetEntityComponent(id, rttr::type::get<Component::Transform>()));
-    }
-
 
     return ret;
   }
@@ -71,8 +68,7 @@ namespace Reflection
     // update entity's prefab if needed
     Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
     auto const entityPrefab{ pm.GetEntityPrefab(entity) };
-    if (entityPrefab)
-    {
+    if (entityPrefab) {
       pm.AttachPrefab(newEntity, *entityPrefab);
     }
 #endif
@@ -107,35 +103,44 @@ namespace Reflection
     }
 
 #ifndef IMGUI_DISABLE
-    /*if (Prefabs::PrefabManager::GetInstance().UpdateAllEntitiesFromPrefab())
-    {
-      Events::EventManager::GetInstance().Dispatch(Events::PrefabInstancesUpdatedEvent());
-    }*/
+    if (Prefabs::PrefabManager::GetInstance().UpdateAllEntitiesFromPrefab()) {
+      QUEUE_EVENT(Events::PrefabInstancesUpdatedEvent);
+    }
 #endif
   }
 
-  void ObjectFactory::LoadEntityData(std::string const& filePath)
-  {
+  void ObjectFactory::LoadEntityData(std::string const& filePath) {
     mRawEntities = Serialization::Deserializer::DeserializeScene(filePath);
   }
 
-  void ObjectFactory::AddComponentToEntity(ECS::Entity& entity, rttr::variant const& compVar) const
+  void ObjectFactory::AddComponentToEntity(ECS::Entity entity, rttr::type const& type, rttr::variant const& compVar) const
   {
-    rttr::type compType{ compVar.get_type() };
+    rttr::type compType{ type };
     // get underlying type if it's wrapped in a pointer
     compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
 
     if (compType == rttr::type::get<Component::Tag>()) {
-      auto tag = *compVar.get_value<std::shared_ptr<Component::Tag>>();
-      entity.EmplaceOrReplaceComponent<Component::Tag>(*compVar.get_value<std::shared_ptr<Component::Tag>>());
+      entity.EmplaceOrReplaceComponent<Component::Tag>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Tag>>());
     }
     else if (compType == rttr::type::get<Component::Transform>()) {
-      auto trans = *compVar.get_value<std::shared_ptr<Component::Transform>>();
-      entity.EmplaceOrReplaceComponent<Component::Transform>(*compVar.get_value<std::shared_ptr<Component::Transform>>());
+      entity.EmplaceOrReplaceComponent<Component::Transform>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Transform>>());
     }
     else if (compType == rttr::type::get<Component::Layer>()) {
-      auto l = *compVar.get_value<std::shared_ptr<Component::Layer>>();
-      entity.EmplaceOrReplaceComponent<Component::Layer>(*compVar.get_value<std::shared_ptr<Component::Layer>>());
+      entity.EmplaceOrReplaceComponent<Component::Layer>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Layer>>());
+    }
+    else if (compType == rttr::type::get<Component::Mesh>()) {
+      Scene::AddMesh(entity);
+    }
+    else if (compType == rttr::type::get<Component::RigidBody>()) {
+      if (!entity.HasComponent<Component::Collider>()) {
+        entity.EmplaceOrReplaceComponent<Component::Collider>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Collider>>());
+        IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(entity);
+      }
+      IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(entity);
+    }
+    else if (compType == rttr::type::get<Component::Collider>()) {
+      entity.EmplaceOrReplaceComponent<Component::Collider>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Collider>>());
+      IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(entity);
     }
     else
     {
@@ -145,17 +150,17 @@ namespace Reflection
     }
   }
 
+  #define IF_GET_ENTITY_COMP(ComponentClass) if (compType == rttr::type::get<ComponentClass>()) {\
+    return entity.HasComponent<ComponentClass>() ? std::make_shared<ComponentClass>(entity.GetComponent<ComponentClass>()) : rttr::variant(); }
+
   rttr::variant ObjectFactory::GetEntityComponent(ECS::Entity const& entity, rttr::type const& compType) const
   {
-    if (compType == rttr::type::get<Component::Transform>()) {
-      return entity.HasComponent<Component::Transform>() ? entity.GetComponent<Component::Transform>() : rttr::variant();
-    }
-    else if (compType == rttr::type::get<Component::Tag>()) {
-      return entity.HasComponent<Component::Tag>() ? entity.GetComponent<Component::Tag>() : rttr::variant();
-    }
-    else if (compType == rttr::type::get<Component::Layer>()) {
-      return entity.HasComponent<Component::Layer>() ? entity.GetComponent<Component::Layer>() : rttr::variant();
-    }
+    IF_GET_ENTITY_COMP(Component::Transform)
+    else IF_GET_ENTITY_COMP(Component::Tag)
+    else IF_GET_ENTITY_COMP(Component::Layer)
+    //else IF_GET_ENTITY_COMP(Component::Mesh)
+    //else IF_GET_ENTITY_COMP(Component::RigidBody)
+    //else IF_GET_ENTITY_COMP(Component::Collider)
     else
     {
       std::ostringstream oss{};
@@ -165,20 +170,19 @@ namespace Reflection
     }
   }
 
-  void ObjectFactory::RemoveComponentFromEntity(ECS::Entity& entity, rttr::type compType) const
+#define IF_REMOVE_COMP(ComponentClass) if (compType == rttr::type::get<ComponentClass>()) { entity.RemoveComponent<ComponentClass>(); }
+
+  void ObjectFactory::RemoveComponentFromEntity(ECS::Entity entity, rttr::type compType) const
   {
     // get underlying type if it's wrapped in a pointer
     compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
 
-    if (compType == rttr::type::get<Component::Transform>()) {
-      entity.RemoveComponent<Component::Transform>();
-    }
-    else if (compType == rttr::type::get<Component::Tag>()) {
-      entity.RemoveComponent<Component::Tag>();
-    }
-    else if (compType == rttr::type::get<Component::Layer>()) {
-      entity.RemoveComponent<Component::Layer>();
-    }
+    IF_REMOVE_COMP(Component::Transform)
+    else IF_REMOVE_COMP(Component::Tag)
+    else IF_REMOVE_COMP(Component::Layer)
+    else IF_REMOVE_COMP(Component::Mesh)
+    else IF_REMOVE_COMP(Component::RigidBody)
+    else IF_REMOVE_COMP(Component::Collider)
     else
     {
       std::ostringstream oss{};

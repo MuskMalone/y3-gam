@@ -14,6 +14,9 @@ namespace GUI
 
   private:
     Graphics::Framebuffer const& mFramebuffer;
+
+    void ReceivePayload();
+
   };
   
 } // namespace GUI

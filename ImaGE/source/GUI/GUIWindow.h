@@ -1,4 +1,5 @@
 #pragma once
+#ifndef IMGUI_DISABLE
 #include <string>
 
 namespace GUI
@@ -23,3 +24,5 @@ namespace GUI
   };
 
 };  // namespace GUI
+
+#endif  // IMGUI_DISABLE

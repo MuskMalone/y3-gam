@@ -3,9 +3,11 @@
 #include <GLFW/glfw3.h>
 #include "InputAssistant.h"
 
+#ifndef IMGUI_DISABLE
 #include <ImGui/imgui.h>
 #include <ImGui/backends/imgui_impl_glfw.h>
 #include <ImGui/backends/imgui_impl_opengl3.h>
+#endif
 
 std::unordered_map<int, std::pair<bool, std::vector<InputAssistant::InputEventCallback>>> InputAssistant::m_keyPressStates;
 std::unordered_map<int, std::pair<bool, std::vector<InputAssistant::InputEventCallback>>> InputAssistant::m_keyReleasedStates;
@@ -78,30 +80,33 @@ void InputAssistant::KeyCallback(GLFWwindow* pWindow, int key, int scanCode, int
     releaseSubscribers->second.first = action == GLFW_RELEASE;
   }
 
+#ifndef IMGUI_DISABLE
   ImGui_ImplGlfw_KeyCallback(pWindow, key, scanCode, action, mods);
+#endif
 }
 
 void InputAssistant::MouseButtonCallback(GLFWwindow* pWindow, int key, int action, int mods)
 {
+#ifndef IMGUI_DISABLE
   if (ImGui::GetIO().WantCaptureMouse)
   {
     ImGui_ImplGlfw_MouseButtonCallback(pWindow, key, action, mods);
+    return;
   }
-  else
-  {
-    {
-      auto pressSubscribers{ m_keyPressStates.find(key) };
-      if (pressSubscribers != m_keyPressStates.end())
-      {
-        pressSubscribers->second.first = action != GLFW_RELEASE;
-      }
-    }
+#endif
 
-    auto releaseSubscribers{ m_keyReleasedStates.find(key) };
-    if (releaseSubscribers != m_keyReleasedStates.end())
+  {
+    auto pressSubscribers{ m_keyPressStates.find(key) };
+    if (pressSubscribers != m_keyPressStates.end())
     {
-      releaseSubscribers->second.first = action == GLFW_RELEASE;
+      pressSubscribers->second.first = action != GLFW_RELEASE;
     }
+  }
+
+  auto releaseSubscribers{ m_keyReleasedStates.find(key) };
+  if (releaseSubscribers != m_keyReleasedStates.end())
+  {
+    releaseSubscribers->second.first = action == GLFW_RELEASE;
   }
 }
 
@@ -109,15 +114,18 @@ void InputAssistant::CursorPosCallback(GLFWwindow* pWindow, double xPos, double 
 {
   for (auto& fn : m_cursorEventCallbacks) { fn(xPos, yPos); }
 
+#ifndef IMGUI_DISABLE
   ImGui_ImplGlfw_CursorPosCallback(pWindow, xPos, yPos);
+#endif
 }
 
 
 void InputAssistant::ScrollCallback(GLFWwindow* pWindow, double xOffset, double yOffset)
 {
 
-
+#ifndef IMGUI_DISABLE
   ImGui_ImplGlfw_ScrollCallback(pWindow, xOffset, yOffset);
+#endif
 }
 
 void InputAssistant::SizeCallback(GLFWwindow* pWindow, int width, int height)

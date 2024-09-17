@@ -4,6 +4,10 @@
 #include "Tag.h"
 #include "Text.h"
 #include "Transform.h"
+#include "Collider.h"
+#include "RigidBody.h"
+#include "Material.h"
+#include "Mesh.h"
 
 // @TODO: EDIT WHEN NEW COMPONENTS
 namespace Component {

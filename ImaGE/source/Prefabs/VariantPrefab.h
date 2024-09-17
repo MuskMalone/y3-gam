@@ -1,7 +1,7 @@
 /*!*********************************************************************
 \file   VariantPrefab.h
 \author chengen.lau\@digipen.edu
-\date   12-December-2023
+\date   16-September-2024
 \brief  
   Contains the definition of the struct encapsulating deserialized
   prefab data. It is used during creation of entities from prefabs and
@@ -28,7 +28,7 @@ namespace Prefabs
     using SubDataId = unsigned;
 
     PrefabSubData();
-    PrefabSubData(std::string name, SubDataId id, SubDataId parent = BasePrefabId);
+    PrefabSubData(SubDataId id, SubDataId parent = BasePrefabId);
 
     /*!*********************************************************************
     \brief
@@ -59,7 +59,6 @@ namespace Prefabs
     ************************************************************************/
     ECS::Entity Construct() const;
 
-    std::string mName;
     std::vector<rttr::variant> mComponents;
     SubDataId mId, mParent;
     bool mIsActive;
@@ -155,6 +154,6 @@ namespace Prefabs
     std::string mPrefab;
     std::unordered_map<PrefabSubData::SubDataId, ECS::EntityManager::EntityID> mObjToEntity;
     PrefabVersion mVersion;
-    bool mRegistered = true;  // whether the entity should be updated by the prefab
+    bool mRegistered;  // whether the entity should be updated by the prefab
   };
 }

@@ -1,4 +1,5 @@
 #pragma once
+#ifndef IMGUI_DISABLE
 #include <GUI/GUIWindow.h>
 #include <Scenes/SceneManager.h>
 
@@ -13,7 +14,9 @@ namespace GUI
     void Run() override;
 
   private:
-    Scenes::SceneManager const& mSceneManager;
+    Scenes::SceneManager& mSceneManager;
   };
 
 } // namespace GUI
+
+#endif  // IMGUI_DISABLE

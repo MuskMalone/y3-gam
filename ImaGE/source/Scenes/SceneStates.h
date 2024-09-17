@@ -4,12 +4,12 @@
 namespace Scenes
 {
 
-  enum class SceneState : uint8_t
+  enum SceneState : uint8_t
   {
-    PLAYING,
-    PAUSED,
-    STOPPED,
-    PREFAB_EDITOR
+    PLAYING = 1,
+    PAUSED = 2,
+    STOPPED = 4,
+    PREFAB_EDITOR = 8
   };
 
 } // namespace Scenes

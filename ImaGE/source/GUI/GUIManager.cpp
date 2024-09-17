@@ -1,4 +1,5 @@
 #include <pch.h>
+#ifndef IMGUI_DISABLE
 #include "GUIManager.h"
 #include <ImGui/imgui.h>
 #include <Core/Entity.h>
@@ -14,8 +15,9 @@
 
 namespace GUI
 {
-  ECS::Entity GUIManager::mSelectedEntity{};
-  std::vector<std::unique_ptr<GUIWindow>> GUIManager::mPersistentElements, GUIManager::mWindows;
+  ECS::Entity GUIManager::sSelectedEntity{};
+
+  GUIManager::GUIManager() :mPersistentElements{}, mWindows{} {}
 
   void GUIManager::Init(Graphics::Framebuffer const& framebuffer)
   {
@@ -49,3 +51,5 @@ namespace GUI
   }
 
 } // namespace GUI
+
+#endif  // IMGUI_DISABLE

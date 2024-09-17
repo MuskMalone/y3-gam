@@ -1,4 +1,5 @@
 #include <pch.h>
+#ifndef IMGUI_DISABLE
 #include "SceneControls.h"
 #include <imgui/imgui.h>
 #include <ImGui/imgui_internal.h> // for BeginViewportSideBar
@@ -28,7 +29,7 @@ namespace GUI
         ImGui::SetCursorPosX(xOffset);
 
         // stop button
-        ImGui::BeginDisabled(mSceneManager.GetSceneState() == Scenes::SceneState::PREFAB_EDITOR || mSceneManager.NoSceneSelected());
+        ImGui::BeginDisabled((mSceneManager.GetSceneState() & Scenes::SceneState::PREFAB_EDITOR) || mSceneManager.NoSceneSelected());
         if (sceneStopped) {
           ImGui::BeginDisabled(sceneStopped);
           ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.f, 0.f, 0.5f));
@@ -39,7 +40,7 @@ namespace GUI
         }
 
         if (ImGui::Button("Stop")) {
-          QUEUE_EVENT(Events::StopSceneEvent);
+          mSceneManager.StopScene();
         }
 
         if (sceneStopped) {
@@ -51,11 +52,11 @@ namespace GUI
         }
 
         // play / pause button
-        if (mSceneManager.GetSceneState() == Scenes::SceneState::PLAYING)
+        if (mSceneManager.GetSceneState() & Scenes::SceneState::PLAYING)
         {
           ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.f, 0.f, 0.5f));
           if (ImGui::Button("Pause")) {
-            QUEUE_EVENT(Events::PauseSceneEvent);
+            mSceneManager.PauseScene();
           }
           ImGui::PopStyleColor();
         }
@@ -64,7 +65,7 @@ namespace GUI
           ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.6f, 0.f, 1.f));
           ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.f, 0.5f, 0.f, 0.7f));
           if (ImGui::Button("Play")) {
-            QUEUE_EVENT(Events::StartSceneEvent);
+            mSceneManager.PlayScene();
           }
           ImGui::PopStyleColor(2);
         }        
@@ -90,3 +91,5 @@ namespace GUI
   }
 
 } // namespace GUI
+
+#endif  // IMGUI_DISABLE

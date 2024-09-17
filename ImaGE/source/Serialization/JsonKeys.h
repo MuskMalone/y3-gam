@@ -21,6 +21,7 @@ namespace Serialization
   constexpr char JsonChildEntitiesKey[] = "Child Entities";
   constexpr char JsonComponentsKey[] = "Components";
   constexpr char JsonPrefabKey[] = "Prefab";
+  constexpr char JsonPfbNameKey[] = "Name";
   constexpr char JsonPfbVerKey[] = "Version";
   constexpr char JsonPfbActiveKey[] = "isActive";
   constexpr char JsonPfbDataKey[] = "SubData";

@@ -1,7 +1,7 @@
 /*!*********************************************************************
 \file   VariantPrefab.cpp
 \author chengen.lau\@digipen.edu
-\date   14-September-2024
+\date   16-September-2024
 \brief
   Contains the definition of the struct encapsulating deserialized
   prefab data. It is used during creation of entities from prefabs and
@@ -19,13 +19,13 @@ using namespace Prefabs;
 
 PrefabSubData::PrefabSubData() : mParent{ BasePrefabId } {}
 
-PrefabSubData::PrefabSubData(std::string name, SubDataId id, SubDataId parent) :
-  mName{ std::move(name) }, mComponents{}, mId{ id }, mParent{ parent } {}
+PrefabSubData::PrefabSubData(SubDataId id, SubDataId parent) :
+  mComponents{}, mId{ id }, mParent{ parent } {}
 
 ECS::Entity PrefabSubData::Construct() const
 {
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
-  ECS::Entity entity{ entityMan.CreateEntityWithTag(mName) };
+  ECS::Entity entity{ entityMan.CreateEntity() };
 
   //entityMan.SetIsActiveEntity(entity, mIsActive);
   Reflection::ObjectFactory::GetInstance().AddComponentsToEntity(entity, mComponents);
@@ -33,18 +33,10 @@ ECS::Entity PrefabSubData::Construct() const
   return entity;
 }
 
+
 VariantPrefab::VariantPrefab(std::string name, unsigned version) :
   mName{ std::move(name) }, mObjects{}, mComponents{},
   mRemovedChildren{}, mRemovedComponents{}, mVersion { version } {}
-
-void VariantPrefab::Clear() noexcept
-{
-  mName.clear();
-  mComponents.clear();
-  mObjects.clear();
-  mRemovedChildren.clear();
-  mVersion = 0;
-}
 
 std::pair<ECS::Entity, VariantPrefab::EntityMappings> VariantPrefab::Construct() const
 {
@@ -92,7 +84,7 @@ void VariantPrefab::CreateSubData(std::vector<ECS::Entity> const& children, Pref
   for (ECS::Entity const& child : children)
   {
     PrefabSubData::SubDataId const currId{ static_cast<PrefabSubData::SubDataId>(mObjects.size() + 1) };
-    PrefabSubData obj{ child.GetComponent<Component::Tag>().tag, currId, parent};
+    PrefabSubData obj{ currId, parent};
     obj.mIsActive = true; // entityMan.GetIsActiveEntity(child);
 
     obj.mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(child);
@@ -111,7 +103,9 @@ void VariantPrefab::CreateSubData(std::vector<ECS::Entity> const& children, Pref
     }
 
     mObjects.emplace_back(std::move(obj));
-    CreateSubData(entityMan.GetChildEntity(const_cast<ECS::Entity&>(child)), currId);
+    if (entityMan.HasChild(child)) {
+      CreateSubData(entityMan.GetChildEntity(child), currId);
+    }
   }
 }
 
@@ -129,4 +123,13 @@ void VariantPrefab::EntityMappings::Validate()
   //  }
   //  ++iter;
   //}
+}
+
+void VariantPrefab::Clear() noexcept
+{
+  mName.clear();
+  mComponents.clear();
+  mObjects.clear();
+  mRemovedChildren.clear();
+  mVersion = 0;
 }
