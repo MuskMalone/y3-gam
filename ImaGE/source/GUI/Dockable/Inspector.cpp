@@ -119,99 +119,45 @@ namespace GUI {
 
       float contentSize = ImGui::GetContentRegionAvail().x;
       float charSize = ImGui::CalcTextSize("012345678901234").x;
-      float inputWidth = (contentSize - charSize - 30) / 3;
+      float firstColumnCharSize = ImGui::CalcTextSize("Local Translation").x;
+      float inputWidth = (contentSize - charSize - 60) / 3;
 
-      /*
-      ImGui::BeginTable("TransformTable", 2, ImGuiTableFlags_BordersInnerV);
-      
-      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, charSize);
-      ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthFixed, inputWidth); // Fixed width for input fields
-      ImGui::TableHeadersRow(); // Optional header row
+      ImGui::BeginTable("LocalTransformTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
-      // Translation
-      ImGui::TableNextRow();
-      if (ImGuiHelpers::InputDouble3("Translation", transform.localPos, inputWidth, false)) {
-        SetIsComponentEdited(true);
-      }
-
-      // Rotation
-      ImGui::TableNextRow();
-      if (ImGuiHelpers::InputDouble3("Rotation", transform.localRot, inputWidth, false)) {
-        SetIsComponentEdited(true);
-      }
-
-      // Scale
-      ImGui::TableNextRow();
-      if (ImGuiHelpers::InputDouble3("Scale", transform.localScale, inputWidth, false)) {
-        SetIsComponentEdited(true);
-      }
-      */
-
-      // TEMP
-      ImGui::BeginTable("TransformTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
-
-      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, charSize);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, firstColumnCharSize);
       ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       ImGui::TableHeadersRow();
 
-      // Translation
-      ImGui::TableNextRow();
-      ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Translation");
-      ImGui::TableSetColumnIndex(1);
-      ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(1.0f, 0.0f, 0.0f, 1.0f)); // Red
-      ImGui::InputDouble("##XTranslation", &transform.localPos.x, 0.0, 0.0, "%.3f");
-      ImGui::PopStyleColor();
+      if (ImGuiHelpers::TableInputDouble3("Local Translation", transform.localPos, inputWidth, false)) {
+        SetIsComponentEdited(true);
+      }
+      if (ImGuiHelpers::TableInputDouble3("Local Rotation", transform.localRot, inputWidth, false)) {
+        SetIsComponentEdited(true);
+      }
+      if (ImGuiHelpers::TableInputDouble3("Local Scale", transform.localScale, inputWidth, false)) {
+        SetIsComponentEdited(true);
+      }
+      ImGui::EndTable();
 
-      ImGui::TableSetColumnIndex(2);
-      ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.0f, 1.0f, 0.0f, 1.0f)); // Green
-      ImGui::InputDouble("##YTranslation", &transform.localPos.y, 0.0, 0.0, "%.3f");
-      ImGui::PopStyleColor();
+      ImGui::BeginTable("WorldTransformTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
-      ImGui::TableSetColumnIndex(3);
-      ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.0f, 0.0f, 1.0f, 1.0f)); // Blue
-      ImGui::InputDouble("##ZTranslation", &transform.localPos.z, 0.0, 0.0, "%.3f");
-      ImGui::PopStyleColor();
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, firstColumnCharSize);
+      ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableHeadersRow();
 
-      // Rotation
-      ImGui::TableNextRow();
-      ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Rotation");
-      ImGui::TableSetColumnIndex(1);
-      ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(1.0f, 0.0f, 0.0f, 1.0f)); // Red
-      ImGui::InputDouble("##XRotation", &transform.localRot.x, 0.0, 0.0, "%.3f");
-      ImGui::PopStyleColor();
-
-      ImGui::TableSetColumnIndex(2);
-      ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.0f, 1.0f, 0.0f, 1.0f)); // Green
-      ImGui::InputDouble("##YRotation", &transform.localRot.y, 0.0, 0.0, "%.3f");
-      ImGui::PopStyleColor();
-
-      ImGui::TableSetColumnIndex(3);
-      ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.0f, 0.0f, 1.0f, 1.0f)); // Blue
-      ImGui::InputDouble("##ZRotation", &transform.localRot.z, 0.0, 0.0, "%.3f");
-      ImGui::PopStyleColor();
-
-      // Scale
-      ImGui::TableNextRow();
-      ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Scale");
-      ImGui::TableSetColumnIndex(1);
-      ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(1.0f, 0.0f, 0.0f, 1.0f)); // Red
-      ImGui::InputDouble("##XScale", &transform.localScale.x, 0.0, 0.0, "%.3f");
-      ImGui::PopStyleColor();
-
-      ImGui::TableSetColumnIndex(2);
-      ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.0f, 1.0f, 0.0f, 1.0f)); // Green
-      ImGui::InputDouble("##YScale", &transform.localScale.y, 0.0, 0.0, "%.3f");
-      ImGui::PopStyleColor();
-
-      ImGui::TableSetColumnIndex(3);
-      ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.0f, 0.0f, 1.0f, 1.0f)); // Blue
-      ImGui::InputDouble("##ZScale", &transform.localScale.z, 0.0, 0.0, "%.3f");
-      ImGui::PopStyleColor();
+      if (ImGuiHelpers::TableInputDouble3("World Translation", transform.worldPos, inputWidth, true)) {
+        SetIsComponentEdited(true);
+      }
+      if (ImGuiHelpers::TableInputDouble3("World Rotation", transform.worldRot, inputWidth, true)) {
+        SetIsComponentEdited(true);
+      }
+      if (ImGuiHelpers::TableInputDouble3("World Scale", transform.worldScale, inputWidth, true)) {
+        SetIsComponentEdited(true);
+      }
 
       ImGui::EndTable();
     }
