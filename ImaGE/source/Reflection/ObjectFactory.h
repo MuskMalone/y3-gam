@@ -68,7 +68,7 @@ namespace Reflection
     \param compVar
       The component to add
    ************************************************************************/
-    void AddComponentToEntity(ECS::Entity entity, rttr::variant const& compVar) const;
+    void AddComponentToEntity(ECS::Entity entity, rttr::type const& type, rttr::variant const& compVar = {}) const;
 
     /*!*********************************************************************
     \brief

@@ -47,6 +47,12 @@ RTTR_REGISTRATION
     .property("z", &glm::dvec4::z)
     .property("w", &glm::dvec4::w);
 
+ /* rttr::registration::class_<JPH::BodyID>("JPH_BodyID")
+    .constructor<JPH::uint32>()(
+      rttr::parameter_names("mID")
+    )
+    .property_readonly("mID", JPH::BodyID::GetIndexAndSequenceNumber)
+    ;*/
 
 #ifndef IMGUI_DISABLE
   rttr::registration::class_<std::pair<std::string, unsigned>>("StringUnsignedPair")

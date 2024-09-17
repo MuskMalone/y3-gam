@@ -18,7 +18,7 @@ namespace IGE {
 		}
 		PhysicsSystem::PhysicsSystem() :
 			mTempAllocator{ 10 * 1024 * 1024 },
-			mJobSystem{ cMaxPhysicsJobs, cMaxPhysicsBarriers, thread::hardware_concurrency() - 1 }
+			mJobSystem{ cMaxPhysicsJobs, cMaxPhysicsBarriers, static_cast<int>(thread::hardware_concurrency() - 1) }
 		{
 			
 		}

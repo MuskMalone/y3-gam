@@ -11,6 +11,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <pch.h>
 #include <rttr/registration>
 
+
 namespace
 {
   std::string StringFromRttrType(rttr::type const& type, bool& ok) {
@@ -21,12 +22,35 @@ namespace
     ok = true; return rttr::type::get_by_name(str);
   }
 }
+
 RTTR_REGISTRATION
 {
   /* ------------------- FUNCTIONS ------------------- */
   rttr::type::register_converter_func(StringFromRttrType);
   rttr::type::register_converter_func(RttrTypeFromString);
 
+  using namespace JPH;
   /* ------------------- ENUMERATIONS ------------------- */
-  
+  rttr::registration::enumeration<JPH::EShapeSubType>("JPH_EShapeSubType")(
+    rttr::value("Sphere", EShapeSubType::Sphere),
+    rttr::value("Box", EShapeSubType::Box),
+    rttr::value("Triangle", EShapeSubType::Triangle),
+    rttr::value("Capsule", EShapeSubType::Capsule),
+    rttr::value("TaperedCapsule", EShapeSubType::TaperedCapsule),
+    rttr::value("Cylinder", EShapeSubType::Cylinder),
+    rttr::value("ConvexHull", EShapeSubType::ConvexHull),
+    rttr::value("StaticCompound", EShapeSubType::StaticCompound),
+    rttr::value("MutableCompound", EShapeSubType::MutableCompound),
+    rttr::value("Mesh", EShapeSubType::Mesh),
+    rttr::value("HeightField", EShapeSubType::HeightField),
+    rttr::value("SoftBody", EShapeSubType::SoftBody),
+    rttr::value("SoftBody", EShapeSubType::Plane),
+    rttr::value("TaperedCylinder", EShapeSubType::TaperedCylinder)
+    );
+
+  rttr::registration::enumeration<JPH::EMotionType>("JPH_EMotionType")(
+    rttr::value("Static", EMotionType::Static),
+    rttr::value("Dynamic", EMotionType::Dynamic),
+    rttr::value("Kinematic", EMotionType::Kinematic)
+    );
 }

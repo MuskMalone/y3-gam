@@ -32,4 +32,25 @@ RTTR_REGISTRATION
     .constructor<>()
     .property("layerName", &Layer::layerName);
 
+  rttr::registration::class_<Mesh>("Mesh")
+    .constructor<>()
+    .property("meshRef", &Mesh::meshRef);
+
+  rttr::registration::class_<RigidBody>("RigidBody")
+    .constructor<>()
+    .property("velocity", &RigidBody::velocity)
+    .property("angularVelocity", &RigidBody::angularVelocity)
+    .property("friction", &RigidBody::friction)
+    .property("restitution", &RigidBody::restitution)
+    .property("gravityFactor", &RigidBody::gravityFactor)
+    //.property("bodyID", &RigidBody::bodyID)
+    .property("motionType", &RigidBody::motionType);
+
+  rttr::registration::class_<Collider>("Collider")
+    .constructor<>()
+    .property("scale", &Collider::scale)
+    .property("positionOffset", &Collider::positionOffset)
+    .property("rotationOffset", &Collider::rotationOffset)
+    //.property("bodyID", &Collider::bodyID)
+    .property("type", &Collider::type);
 }

@@ -1,5 +1,6 @@
 #pragma once
-#include <pch.h>
+#include <Jolt/Physics/Body/Body.h>
+
 namespace Component {
     enum class ColliderVars {   
         SCALE, POS, ROT
@@ -9,7 +10,7 @@ namespace Component {
         JPH::Vec3 positionOffset;
         JPH::Vec3 rotationOffset;
 
-        JPH::EShapeSubType type;
         JPH::BodyID bodyID;
+        JPH::EShapeSubType type;
     };
 }

@@ -5,6 +5,7 @@
 
 #include "Core/Entity.h"
 #include "Core/EntityManager.h"
+#include <Reflection/ObjectFactory.h>
 
 namespace GUI {
   class Inspector : public GUIWindow {
@@ -18,14 +19,16 @@ namespace GUI {
     void TransformComponentWindow(ECS::Entity entity);
     void RigidBodyComponentWindow(ECS::Entity entity);
     void ColliderComponentWindow(ECS::Entity entity);
+    void ShowAddComponentPopup();
     bool WindowBegin(std::string windowName);
     void WindowEnd(bool isOpen);
 
   private:
-    static std::map<std::string, bool> sComponentOpenStatusMap;
-    static bool sFirstOpen;
-    static ECS::Entity sPreviousEntity;
-    static bool sEntityChanged;
+    std::map<std::string, bool> mComponentOpenStatusMap;
+    Reflection::ObjectFactory& mObjFactory;
+    ECS::Entity mPreviousEntity;
+    bool mFirstOpen;
+    bool mEntityChanged;
   };
 } // namespace GUI
 

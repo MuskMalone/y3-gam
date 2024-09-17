@@ -4,77 +4,73 @@
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include "Inspector.h"
 #include <Physics/PhysicsSystem.h>
-#include <TempScene.h> //tch for testing to remove
 #include <functional>
+#include <Reflection/ComponentTypes.h>
+
 namespace GUI {
-  // Static Initialization
-  std::map<std::string, bool> Inspector::sComponentOpenStatusMap{};
-  bool Inspector::sFirstOpen{ true };
-  ECS::Entity Inspector::sPreviousEntity{};
-  bool Inspector::sEntityChanged{};
+  Inspector::Inspector(std::string const& name) : GUIWindow(name),
+    mComponentOpenStatusMap{}, mObjFactory{ Reflection::ObjectFactory::GetInstance() },
+    mPreviousEntity{}, mFirstOpen{ true }, mEntityChanged{ false } {}
 
-  Inspector::Inspector(std::string const& name) : GUIWindow(name) {}
-
-  std::vector<std::pair<std::string, std::function<void(ECS::Entity)>>> componentNames = {
-    { "Tag", [&](ECS::Entity) {
-    }},
-    { "Layer", [&](ECS::Entity) {
-    }},
-    { "Transform", [&](ECS::Entity) {
-
-    }},
-    { "Mesh",[&](ECS::Entity currentEntity) {
-        Scene::AddMesh(currentEntity);
-    }},
-    { "RigidBody", [&](ECS::Entity currentEntity) {
-        IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(currentEntity);
-    }},
-    { "Collider", [&](ECS::Entity currentEntity) {
-        IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(currentEntity);
-    }},
-  };
   // Function to show the "Add Component" button and component selection
-  void ShowAddComponentPopup() {
-      // List of component names (could also use an enum or type list for better type safety)
-      ECS::Entity const& currentEntity{ GUIManager::GetSelectedEntity() };
-
-      // Button to open the popup
-      if (ImGui::Button("Add Component")) {
-          ImGui::OpenPopup("AddComponentPopup");
-      }
-
+  void Inspector::ShowAddComponentPopup() {
       // Popup window
       if (ImGui::BeginPopup("AddComponentPopup")) {
-          // List of components
-          for (int i = 0; i < componentNames.size(); i++) {
-              if (ImGui::Selectable(componentNames[i].first.c_str())) {
-                  if (currentEntity) {
-                      componentNames[i].second(currentEntity);
-                  }
-              }
+        // Iterate through vector of rttr::types and add components via reflection
+        ImGui::Text("Components");
+        if (ImGui::BeginCombo("##Components", Reflection::gComponentTypes.front().get_name().to_string().c_str()))
+        {
+          for (int i = 0; i < Reflection::gComponentTypes.size(); ++i) {
+
+            // for now this is automated, but if we want to add QOL changes
+            // like preventing existing components to be added, we need to break this up
+            // similarly for deleting components, we can use ObjectFactory::RemoveComponentFromEntity
+            /*
+            Example:
+            if (ImGui::Selectable(Reflection::gComponentTypes[i].get_name().to_string().c_str())) {
+              if (Reflection::gComponentTypes[i] == rttr::type::get<Component::Tag>) {...}
+              else if (Reflection::gComponentTypes[i] == rttr::type::get<Component::Layer>) {...}
+              else if (Reflection::gComponentTypes[i] == rttr::type::get<Component::Collider>) {...}
+              else if (Reflection::gComponentTypes[i] == rttr::type::get<Component::RigidBody>) {...}
+            }
+            */
+            if (ImGui::Selectable(Reflection::gComponentTypes[i].get_name().to_string().c_str())) {
+              mObjFactory.AddComponentToEntity(GUIManager::GetSelectedEntity(), Reflection::gComponentTypes[i]);
+            }
+
           }
-          ImGui::EndPopup();
+          ImGui::EndCombo();
+        }
+        ImGui::EndPopup();
       }
   }
 
   void Inspector::Run() {
-    if (sFirstOpen) {
+    if (mFirstOpen) {
       for (std::string const& component : Component::ComponentNameList) {
-        sComponentOpenStatusMap[component] = false;
+        mComponentOpenStatusMap[component] = false;
       }
-      sFirstOpen = false;
+      mFirstOpen = false;
     }
 
     ImGui::Begin(mWindowName.c_str());
+
+    if (GUIManager::GetSelectedEntity()) {
+      // Button to open the popup
+      if (ImGui::Button("Add Component")) {
+        ImGui::OpenPopup("AddComponentPopup");
+      }
+    }
     ShowAddComponentPopup();
+
     ECS::Entity const& currentEntity{ GUIManager::GetSelectedEntity() };
     if (currentEntity) {
-      if (currentEntity != sPreviousEntity) {
-        sPreviousEntity = currentEntity;
-        sEntityChanged = true;
+      if (currentEntity != mPreviousEntity) {
+        mPreviousEntity = currentEntity;
+        mEntityChanged = true;
       }
       else
-        sEntityChanged = false;
+        mEntityChanged = false;
 
       if (currentEntity.HasComponent<Component::Tag>())
         TagComponentWindow(currentEntity);
@@ -143,13 +139,13 @@ namespace GUI {
 
   bool Inspector::WindowBegin(std::string windowName) {
     ImGui::Separator();
-    if (sEntityChanged) {
-      bool& openMapStatus = sComponentOpenStatusMap[windowName];
+    if (mEntityChanged) {
+      bool& openMapStatus = mComponentOpenStatusMap[windowName];
       ImGui::SetNextItemOpen(openMapStatus, ImGuiCond_Always);
     }
 
     bool isOpen{ ImGui::TreeNode(windowName.c_str()) };
-    sComponentOpenStatusMap[windowName] = isOpen;
+    mComponentOpenStatusMap[windowName] = isOpen;
     return isOpen;
   }
 
