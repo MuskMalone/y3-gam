@@ -39,14 +39,14 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GLFW/glfw3.h>
 #include <bitset>
 #include "KeyCode.h"
-#include "../FrameRateController/FrameRateController.h"
-#include "../Singleton.h"
+#include <FrameRateController/FrameRateController.h>
+#include <Singleton.h>
 #include <array>
 #include <map>
 #include <vector>
 #include <string>
 #include <iostream>
-//#include "../Math/GEM.h"
+#include <memory>
 
 	namespace Input
 	{
@@ -148,7 +148,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 				double holdTime
 				duration a key needs to be pressed to be recognized as a held
 			************************************************************************/
-			void InitInputManager(GLFWwindow* window, int width, int height, double holdTime = 0.5);
+			void InitInputManager(std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& window, int width, int height, double holdTime = 0.5);
 
 			/*!*********************************************************************
 			\brief

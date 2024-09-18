@@ -1,6 +1,7 @@
 #pragma once
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <External/GLFWwindowDestructor.h>
 #include <FrameRateController/FrameRateController.h>
 #include <TempScene.h>
 #include <memory>
@@ -24,6 +25,7 @@ public:
 
 private:
   using SceneDrawCall = std::function<void()>;
+  using WindowPtr = std::unique_ptr<GLFWwindow, GLFWwindowDestructor>;
 
 #ifndef IMGUI_DISABLE
   GUI::GUIManager mGUIManager;
@@ -33,7 +35,8 @@ private:
   // vector of framebuffers to render to, each attached to a draw call
   std::vector<std::pair<Graphics::Framebuffer, SceneDrawCall>> mFramebuffers;
 
-  GLFWwindow* mWindow;
+  WindowPtr mWindow;
+
   int mWidth, mHeight;
   bool mImGuiActive;
 

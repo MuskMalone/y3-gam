@@ -33,15 +33,13 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
+#include <External/GLFWwindowDestructor.h>
 #ifndef IMGUI_DISABLE
 #include <ImGui/backends/imgui_impl_glfw.h>
 #endif
 #include "InputManager.h"
-#include "../Events/InputEvents.h"
-#include "../Events/EventManager.h"
-#include "FrameRateController/FrameRateController.h"
-//#include <Graphics/GraphicsEngine.h>
-#define UNREFERENCED_PARAMETER(P) (P)
+#include <Events/EventManager.h>
+#include <FrameRateController/FrameRateController.h>
 
 using namespace Input;
 using namespace Events;
@@ -58,7 +56,7 @@ KEY_MAP InputManager::m_keysTriggered;
 KEY_PRESS_ARRAY InputManager::m_keyFramesHeld;
 size_t InputManager::m_currFramebuffer;
 
-void InputManager::InitInputManager(GLFWwindow* window, int width, int height, double holdTime)
+void InputManager::InitInputManager(std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& window, int width, int height, double holdTime)
 {
 	m_height = height;
 	m_width = width;
@@ -68,10 +66,10 @@ void InputManager::InitInputManager(GLFWwindow* window, int width, int height, d
 	m_keyHeldTime = holdTime;
 	
 	// Subscribe to the mouse/keyboard event
-	glfwSetKeyCallback(window, KeyCallback);
-	glfwSetCursorPosCallback(window, MousePosCallback);
-	glfwSetMouseButtonCallback(window, MouseButtonCallback);
-	glfwSetScrollCallback(window, MouseScrollCallback);
+	glfwSetKeyCallback(window.get(), KeyCallback);
+	glfwSetCursorPosCallback(window.get(), MousePosCallback);
+	glfwSetMouseButtonCallback(window.get(), MouseButtonCallback);
+	glfwSetScrollCallback(window.get(), MouseScrollCallback);
 }
 
 void InputManager::SetDim(int width, int height)
@@ -101,7 +99,6 @@ void InputManager::UpdateInput()
 
 void InputManager::QueueInputEvents()
 {
-	Events::EventManager& eventMan{ Events::EventManager::GetInstance() };
 	if (IsKeyHeld(GPK_MOUSE_LEFT))
 	{
 		//eventMan.Subscribe();
