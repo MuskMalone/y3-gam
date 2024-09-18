@@ -21,6 +21,7 @@ public:
   inline void ReconstructTree() noexcept { m_reconstructTree = true; }
   void ResetCamera();
   static void AddMesh(ECS::Entity entity);
+  static Camera& GetMainCamera() { return m_cameras.front(); }
   void Draw();
   void DrawTopView();
 
@@ -32,7 +33,8 @@ private:
   Graphics::ShaderProgram m_shaders, m_defaultShaders;
   Graphics::Light m_light;
   Graphics::Material m_material;
-  std::vector<Camera> m_cameras;
+  static // tch to remove added for testing 
+	  std::vector<Camera> m_cameras;
 
   // can encapsulate in a struct if more members are added
   // so that GUIWindow can allow access to relevant members

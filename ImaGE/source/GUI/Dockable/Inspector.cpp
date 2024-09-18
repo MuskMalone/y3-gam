@@ -161,12 +161,23 @@ namespace GUI {
       Component::RigidBody& rigidBody{entity.GetComponent<Component::RigidBody>()};
       // Assuming 'rigidBody' is an instance of RigidBody
 
-      ImGui::DragFloat("Friction", &rigidBody.friction, 0.01f, 0.0f, 1.0f);
-      ImGui::DragFloat("Restitution", &rigidBody.restitution, 0.01f, 0.0f, 1.0f);
-      ImGui::DragFloat("Gravity Factor", &rigidBody.gravityFactor, 0.01f, 0.0f, 10.0f);
+      if (ImGui::DragFloat("Friction", &rigidBody.friction, 0.01f, 0.0f, 1.0f)) {
+          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::FRICTION);
+      }
+      if (ImGui::DragFloat("Restitution", &rigidBody.restitution, 0.01f, 0.0f, 1.0f)) {
+          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::RESTITUTION);
+      }
 
-      ImGui::DragFloat3("Velocity", rigidBody.velocity.mF32, 0.1f);
-      ImGui::DragFloat3("Angular Velocity", rigidBody.angularVelocity.mF32, 0.1f);
+      if (ImGui::DragFloat("Gravity Factor", &rigidBody.gravityFactor, 0.01f, 0.0f, 10.0f)){
+          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::GRAVITY_FACTOR);
+      }
+
+      if (ImGui::DragFloat3("Velocity", rigidBody.velocity.mF32, 0.1f)){
+          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
+      }
+      if (ImGui::DragFloat3("Angular Velocity", rigidBody.angularVelocity.mF32, 0.1f)) {
+          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::ANGULAR_VELOCITY);
+      }
 
       // Motion Type Selection
       const char* motionTypes[] = { "Static", "Kinematic", "Dynamic" };

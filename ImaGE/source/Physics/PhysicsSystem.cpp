@@ -82,12 +82,25 @@ namespace IGE {
 			auto& bodyinterface = mPhysicsSystem.GetBodyInterface();
 			auto const& rb{ entity.GetComponent<Component::RigidBody>() };
 			switch (var) {
+			case Component::RigidBodyVars::FRICTION: {
+				bodyinterface.SetFriction(rb.bodyID, rb.friction);
+			}break;
+			case Component::RigidBodyVars::RESTITUTION: {
+				bodyinterface.SetRestitution(rb.bodyID, rb.restitution);
+			}break;
+			case Component::RigidBodyVars::GRAVITY_FACTOR: {
+				bodyinterface.SetGravityFactor(rb.bodyID, rb.gravityFactor);
+			}break;
+			case Component::RigidBodyVars::VELOCITY: {
+				bodyinterface.SetLinearVelocity(rb.bodyID, rb.velocity);
+			}break;
+			case Component::RigidBodyVars::ANGULAR_VELOCITY: {
+				bodyinterface.SetAngularVelocity(rb.bodyID, rb.angularVelocity);
+			}break;
 			case Component::RigidBodyVars::MOTION: {
 				bodyinterface.SetMotionType(rb.bodyID, rb.motionType, JPH::EActivation::Activate);
 			}break;
 			}
-			
-			
 		}
 
 		void PhysicsSystem::AddCollider(ECS::Entity entity)
