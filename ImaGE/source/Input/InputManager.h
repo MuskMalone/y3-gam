@@ -2,7 +2,7 @@
 /*!*********************************************************************
 \file   InputManager.h
 \author han.q\@digipen.edu
-\date   28-September-2023
+\date   19-September-2024
 \brief
 	Input Manager for Engine
 
@@ -13,22 +13,20 @@
 		 #include "../InputManager/InputManager.h"
 
 	2. // Initialize the Input Manager in your Game's Init after Create Window
-		 GE::Input::InputManager* im = &(GE::Input::InputManager::GetInstance());
-		 im->InitInputManager(GLHelper::ptr_window, GLHelper::width, GLHelper::height);
+		 Input::InputManager::GetInstance().InitInputManager(ptr_window, width, height);
 
 	3. // Call theUpdateInput() function at the start of each game loop ( Start of Update function )
-			GE::Input::InputManager* im = &(GE::Input::InputManager::GetInstance());
-			im->UpdateInput();
+		Input::InputManager::GetInstance().UpdateInput();
 
  ------------------------------------------------------------------------------------------------
 
 	How to use:
 
 	1. Get an instance of the Input Manager in your function/code:
-		 im->InitInputManager(GLHelper::ptr_window, GLHelper::width, GLHelper::height);
+		 Input::InputManager::GetInstance().InitInputManager(ptr_window, width, height);
 
 	2. Access the function through the instance:
-		 bool isTriggered = im->IsKeyTriggered(GPK_MOUSE_LEFT);
+		 bool isTriggered = Input::InputManager::GetInstance().IsKeyTriggered(IK_MOUSE_LEFT);
 
 
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
@@ -39,19 +37,19 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GLFW/glfw3.h>
 #include <bitset>
 #include "KeyCode.h"
-#include "../FrameRateController/FrameRateController.h"
-#include "../Singleton.h"
+#include <FrameRateController/FrameRateController.h>
+#include <Singleton.h>
 #include <array>
 #include <map>
 #include <vector>
 #include <string>
 #include <iostream>
-//#include "../Math/GEM.h"
+#include <memory>
 
 	namespace Input
 	{
-		using KEY_MAP = std::bitset<static_cast<size_t>(GPK_KEY_COUNT)>;
-		using KEY_PRESS_ARRAY = std::array<double, static_cast<size_t>(GPK_KEY_COUNT)>;
+		using KEY_MAP = std::bitset<static_cast<size_t>(IK_KEY_COUNT)>;
+		using KEY_PRESS_ARRAY = std::array<double, static_cast<size_t>(IK_KEY_COUNT)>;
 		using vec2 = glm::vec2;
 
 		class InputManager : public Singleton<InputManager>
@@ -148,7 +146,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 				double holdTime
 				duration a key needs to be pressed to be recognized as a held
 			************************************************************************/
-			void InitInputManager(GLFWwindow* window, int width, int height, double holdTime = 0.5);
+			void InitInputManager(std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& window, int width, int height, double holdTime = 0.5);
 
 			/*!*********************************************************************
 			\brief

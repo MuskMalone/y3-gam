@@ -1,47 +1,43 @@
 /*!*********************************************************************
 \file   InputManager.cpp
 \author han.q\@digipen.edu
-\date   28-September-2023
+\date   19-September-2024
 \brief
 	Input Manager for Engine
 
 
 	Setup:
 
-	1. // Include the header file in your files
+	1. // Include this header file in your files
 		 #include "../InputManager/InputManager.h"
 
 	2. // Initialize the Input Manager in your Game's Init after Create Window
-		 GE::Input::InputManager* im = &(GE::Input::InputManager::GetInstance());
-		 im->InitInputManager(GLHelper::ptr_window, GLHelper::width, GLHelper::height);
+		 Input::InputManager::GetInstance().InitInputManager(ptr_window, width, height);
 
 	3. // Call theUpdateInput() function at the start of each game loop ( Start of Update function )
-			GE::Input::InputManager* im = &(GE::Input::InputManager::GetInstance());
-			im->UpdateInput();
+		Input::InputManager::GetInstance().UpdateInput();
 
  ------------------------------------------------------------------------------------------------
 
 	How to use:
 
 	1. Get an instance of the Input Manager in your function/code:
-		 im->InitInputManager(GLHelper::ptr_window, GLHelper::width, GLHelper::height);
+		 Input::InputManager::GetInstance().InitInputManager(ptr_window, width, height);
 
 	2. Access the function through the instance:
-		 bool isTriggered = im->IsKeyTriggered(GPK_MOUSE_LEFT);
+		 bool isTriggered = Input::InputManager::GetInstance().IsKeyTriggered(IK_MOUSE_LEFT);
 
 
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
+#include <External/GLFWwindowDestructor.h>
 #ifndef IMGUI_DISABLE
 #include <ImGui/backends/imgui_impl_glfw.h>
 #endif
 #include "InputManager.h"
-#include "../Events/InputEvents.h"
-#include "../Events/EventManager.h"
-#include "FrameRateController/FrameRateController.h"
-//#include <Graphics/GraphicsEngine.h>
-#define UNREFERENCED_PARAMETER(P) (P)
+#include <Events/EventManager.h>
+#include <FrameRateController/FrameRateController.h>
 
 using namespace Input;
 using namespace Events;
@@ -58,7 +54,7 @@ KEY_MAP InputManager::m_keysTriggered;
 KEY_PRESS_ARRAY InputManager::m_keyFramesHeld;
 size_t InputManager::m_currFramebuffer;
 
-void InputManager::InitInputManager(GLFWwindow* window, int width, int height, double holdTime)
+void InputManager::InitInputManager(std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& window, int width, int height, double holdTime)
 {
 	m_height = height;
 	m_width = width;
@@ -68,10 +64,10 @@ void InputManager::InitInputManager(GLFWwindow* window, int width, int height, d
 	m_keyHeldTime = holdTime;
 	
 	// Subscribe to the mouse/keyboard event
-	glfwSetKeyCallback(window, KeyCallback);
-	glfwSetCursorPosCallback(window, MousePosCallback);
-	glfwSetMouseButtonCallback(window, MouseButtonCallback);
-	glfwSetScrollCallback(window, MouseScrollCallback);
+	glfwSetKeyCallback(window.get(), KeyCallback);
+	glfwSetCursorPosCallback(window.get(), MousePosCallback);
+	glfwSetMouseButtonCallback(window.get(), MouseButtonCallback);
+	glfwSetScrollCallback(window.get(), MouseScrollCallback);
 }
 
 void InputManager::SetDim(int width, int height)
@@ -87,7 +83,7 @@ void InputManager::UpdateInput()
 	m_scrollX = m_scrollY = 0;
 	glfwPollEvents();
 	double dt = FrameRateController::GetInstance().GetDeltaTime();
-	for (int i{ 0 }; i < static_cast<int>(GPK_KEY_COUNT); ++i)
+	for (int i{ 0 }; i < static_cast<int>(IK_KEY_COUNT); ++i)
 	{
 
 		m_keyFramesHeld[i] = (m_keyReleased[i]) ? 0: (m_keyFramesHeld[i] > 0.f || m_keysTriggered[i]) ? (m_keyFramesHeld[i] < m_keyHeldTime) ? m_keyFramesHeld[i] + dt: m_keyFramesHeld[i]: 0;
@@ -101,76 +97,75 @@ void InputManager::UpdateInput()
 
 void InputManager::QueueInputEvents()
 {
-	Events::EventManager& eventMan{ Events::EventManager::GetInstance() };
-	if (IsKeyHeld(GPK_MOUSE_LEFT))
+	if (IsKeyHeld(IK_MOUSE_LEFT))
 	{
 		//eventMan.Subscribe();
-		QUEUE_EVENT(Events::MouseHeldEvent, GPK_MOUSE_LEFT);
+		QUEUE_EVENT(Events::MouseHeldEvent, IK_MOUSE_LEFT);
 	}
-	if (IsKeyTriggered(GPK_MOUSE_LEFT))
+	if (IsKeyTriggered(IK_MOUSE_LEFT))
 	{
-		QUEUE_EVENT(Events::MouseTriggeredEvent, GPK_MOUSE_LEFT);
+		QUEUE_EVENT(Events::MouseTriggeredEvent, IK_MOUSE_LEFT);
 	}
-	else if (IsKeyReleased(GPK_MOUSE_LEFT))
+	else if (IsKeyReleased(IK_MOUSE_LEFT))
 	{
-		QUEUE_EVENT(Events::MouseReleasedEvent, GPK_MOUSE_LEFT);
-	}
-
-	if (IsKeyHeld(GPK_H))
-	{
-		QUEUE_EVENT(Events::KeyHeldEvent, GPK_H);
-	}
-	if (IsKeyHeld(GPK_J))
-	{
-		QUEUE_EVENT(Events::KeyHeldEvent, GPK_J);
-	}
-	if (IsKeyTriggered(GPK_H))
-	{
-		QUEUE_EVENT(Events::KeyTriggeredEvent, GPK_H);
+		QUEUE_EVENT(Events::MouseReleasedEvent, IK_MOUSE_LEFT);
 	}
 
-	if (IsKeyTriggered(GPK_K))
+	if (IsKeyHeld(IK_H))
 	{
-		QUEUE_EVENT(Events::KeyTriggeredEvent, GPK_K);
+		QUEUE_EVENT(Events::KeyHeldEvent, IK_H);
 	}
-	if (IsKeyTriggered(GPK_E))
+	if (IsKeyHeld(IK_J))
 	{
-		QUEUE_EVENT(Events::KeyTriggeredEvent, GPK_E);
+		QUEUE_EVENT(Events::KeyHeldEvent, IK_J);
 	}
-	if (IsKeyTriggered(GPK_Q))
+	if (IsKeyTriggered(IK_H))
 	{
-		QUEUE_EVENT(Events::KeyTriggeredEvent, GPK_Q);
+		QUEUE_EVENT(Events::KeyTriggeredEvent, IK_H);
 	}
-	if (IsKeyTriggered(GPK_R))
+
+	if (IsKeyTriggered(IK_K))
 	{
-		QUEUE_EVENT(Events::KeyTriggeredEvent, GPK_R);
+		QUEUE_EVENT(Events::KeyTriggeredEvent, IK_K);
 	}
-	if (IsKeyTriggered(GPK_ESCAPE))
+	if (IsKeyTriggered(IK_E))
 	{
-		QUEUE_EVENT(Events::KeyTriggeredEvent, GPK_ESCAPE);
+		QUEUE_EVENT(Events::KeyTriggeredEvent, IK_E);
 	}
-	if (IsKeyTriggered(GPK_DELETE))
+	if (IsKeyTriggered(IK_Q))
 	{
-		QUEUE_EVENT(Events::KeyTriggeredEvent, GPK_DELETE);
+		QUEUE_EVENT(Events::KeyTriggeredEvent, IK_Q);
 	}
-	if (IsKeyTriggered(GPK_F11))
+	if (IsKeyTriggered(IK_R))
 	{
-		QUEUE_EVENT(Events::KeyTriggeredEvent, GPK_F11);
+		QUEUE_EVENT(Events::KeyTriggeredEvent, IK_R);
 	}
-	if (IsKeyTriggered(GPK_M)) // TEST FOR PAUSE SO FAR
+	if (IsKeyTriggered(IK_ESCAPE))
 	{
-		QUEUE_EVENT(Events::KeyTriggeredEvent, GPK_M);
+		QUEUE_EVENT(Events::KeyTriggeredEvent, IK_ESCAPE);
 	}
-	if (IsKeyTriggered(GPK_1))
+	if (IsKeyTriggered(IK_DELETE))
 	{
-		QUEUE_EVENT(Events::KeyTriggeredEvent, GPK_1);
+		QUEUE_EVENT(Events::KeyTriggeredEvent, IK_DELETE);
 	}
-	if (IsKeyTriggered(GPK_2))
+	if (IsKeyTriggered(IK_F11))
 	{
-		QUEUE_EVENT(Events::KeyTriggeredEvent, GPK_2);
+		QUEUE_EVENT(Events::KeyTriggeredEvent, IK_F11);
+	}
+	if (IsKeyTriggered(IK_M)) // TEST FOR PAUSE SO FAR
+	{
+		QUEUE_EVENT(Events::KeyTriggeredEvent, IK_M);
+	}
+	if (IsKeyTriggered(IK_1))
+	{
+		QUEUE_EVENT(Events::KeyTriggeredEvent, IK_1);
+	}
+	if (IsKeyTriggered(IK_2))
+	{
+		QUEUE_EVENT(Events::KeyTriggeredEvent, IK_2);
 	}
 	// ALT TAB = MINIMIZE
-	if (IsKeyPressed(GPK_LEFT_ALT) && IsKeyTriggered(GPK_TAB))
+	if (IsKeyPressed(IK_LEFT_ALT) && IsKeyTriggered(IK_TAB))
 	{
 		QUEUE_EVENT(Events::WindowMinimized);
 		//eventMan.Dispatch(WindowMinimize());
@@ -301,17 +296,17 @@ void InputManager::MouseScrollCallback(GLFWwindow* pwin, double xoffset, double 
 
 //void InputManager::TestInputManager() {
 //	InputManager* im = &(GE::Input::InputManager::GetInstance());
-//	if (im->IsKeyTriggered(GPK_A)) {
+//	if (im->IsKeyTriggered(IK_A)) {
 //		 << "Key A is Triggered\n";
 //	}
-//	if (im->IsKeyHeld(GPK_A)) {
+//	if (im->IsKeyHeld(IK_A)) {
 //		 << "Key A is Held\n";
 //	}
-//	if (im->IsKeyReleased(GPK_A)) {
+//	if (im->IsKeyReleased(IK_A)) {
 //		 << "Key A is Released\n";
 //	}
 //
-//	if (im->IsKeyPressed(GPK_MOUSE_LEFT)) {
+//	if (im->IsKeyPressed(IK_MOUSE_LEFT)) {
 //		 << "Mouse Pos: " << im->GetMousePosWorld().x << "," << im->GetMousePosWorld().y << "\n";
 //	}
 //}

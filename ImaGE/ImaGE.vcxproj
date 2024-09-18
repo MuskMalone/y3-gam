@@ -28,7 +28,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GUI\Helpers\AssetHelpers.cpp" />
-    <ClCompile Include="Source\Input\InputAssistant.cpp" />
     <ClCompile Include="source\Input\InputManager.cpp" />
     <ClCompile Include="Source\Reflection\ObjectFactory.cpp" />
     <ClCompile Include="Source\Core\TempObject.cpp" />
@@ -133,9 +132,9 @@
     <ClCompile Include="Source\Serialization\Registration\RegisterComponents.cpp" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
     <ClInclude Include="Source\Events\SceneEvents.h" />
+    <ClInclude Include="source\External\GLFWwindowDestructor.h" />
     <ClInclude Include="Source\GUI\Helpers\AssetHelpers.h" />
     <ClInclude Include="Source\GUI\Helpers\AssetPayload.h" />
-    <ClInclude Include="Source\Input\InputAssistant.h" />
     <ClInclude Include="source\Input\InputManager.h" />
     <ClInclude Include="source\Input\KeyCode.h" />
     <ClInclude Include="Source\Reflection\ComponentTypes.h" />

@@ -53,7 +53,6 @@
 #include <Jolt/Physics/Collision/CollisionGroup.h> // Collision layer and group information
 
 #include <Globals.h>
-#include <Input/InputAssistant.h>
 
 #ifdef _DEBUG
 #include <Debug.h>

@@ -1,7 +1,6 @@
 #include <pch.h>
 #include "Camera.h"
 #include <glm/gtc/matrix_transform.hpp>
-#include <Input/InputAssistant.h>
 
 Camera::Camera(int width, int height,
   glm::vec3 const& eye, glm::vec3 const& target, glm::vec3 const& up, glm::vec3 const& right, bool canMove,
