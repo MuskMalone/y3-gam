@@ -121,8 +121,10 @@ namespace IGE {
 		void PhysicsSystem::Debug(float dt){
 		}
 
-		void PhysicsSystem::Release(){
+		PhysicsSystem::~PhysicsSystem(){
+			UnregisterTypes();
 			delete JPH::Factory::sInstance;
+			Factory::sInstance = nullptr;
 		}
 
 	}
