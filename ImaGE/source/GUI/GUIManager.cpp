@@ -49,8 +49,6 @@ namespace GUI
 
       window->Run();
     }
-
-    ImGui::ShowDemoWindow();
   }
 
   void GUIManager::StyleGUI() const

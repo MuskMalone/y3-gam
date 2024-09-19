@@ -16,7 +16,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "EventManager.h"
 
 #ifdef _DEBUG
-#define EVENT_DEBUG
+//#define EVENT_DEBUG
 #endif
 
 namespace Events

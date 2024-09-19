@@ -167,10 +167,7 @@ namespace Scenes
     filepath << gAssetsDirectory << "Scenes\\" << mSceneName << sSceneFileExtension;
     Serialization::Serializer::SerializeScene(filepath.str());
 
-    // replace with logger
-#ifdef _DEBUG
-   std::cout << "Successfully saved scene to " + filepath.str() << "\n";
-#endif
+    Debug::DebugLogger::GetInstance().LogInfo("Successfully saved scene to " + filepath.str());
   }
 
   void SceneManager::TemporarySave()
