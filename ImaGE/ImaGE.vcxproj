@@ -27,11 +27,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Graphics\CameraManager.cpp" />
+    <ClCompile Include="source\Graphics\EditorCamera.cpp" />
     <ClCompile Include="source\Graphics\MeshFactory.cpp" />
     <ClCompile Include="source\Graphics\MeshSource.cpp" />
     <ClCompile Include="source\Graphics\ElementBuffer.cpp" />
     <ClCompile Include="source\Graphics\RenderAPI.cpp" />
     <ClCompile Include="source\Graphics\Renderer.cpp" />
+    <ClCompile Include="source\Graphics\RenderSystem.cpp" />
     <ClCompile Include="source\Graphics\Shader.cpp" />
     <ClCompile Include="Source\Core\TempObject.cpp" />
     <ClCompile Include="source\Graphics\VertexArray.cpp" />
@@ -140,12 +143,17 @@
     <ClCompile Include="Source\Serialization\Registration\RegisterComponents.cpp" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
     <ClCompile Include="source\Graphics\Texture.cpp" />
+    <ClInclude Include="source\Core\Component\Camera.h" />
+    <ClInclude Include="source\Core\Component\CameraController.h" />
+    <ClInclude Include="source\Graphics\CameraManager.h" />
+    <ClInclude Include="source\Graphics\EditorCamera.h" />
     <ClInclude Include="source\Graphics\MeshFactory.h" />
     <ClInclude Include="source\Graphics\Mesh.h" />
     <ClInclude Include="source\Graphics\MeshSource.h" />
     <ClInclude Include="source\Graphics\ElementBuffer.h" />
     <ClInclude Include="source\Graphics\RenderAPI.h" />
     <ClInclude Include="source\Graphics\Renderer.h" />
+    <ClInclude Include="source\Graphics\RenderSystem.h" />
     <ClInclude Include="source\Graphics\Shader.h" />
     <ClInclude Include="Source\Events\SceneEvents.h" />
     <ClInclude Include="source\External\GLFWwindowDestructor.h" />
@@ -197,6 +205,7 @@
     <ClInclude Include="source\Serialization\Serializer.h" />
     <ClInclude Include="source\Singleton.h" />
     <ClInclude Include="source\Graphics\Texture.h" />
+    <ClInclude Include="source\Graphics\Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />

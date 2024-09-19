@@ -309,8 +309,8 @@ namespace Graphics {
 		//++mData.stats.quadCount;
 	}
 
-	void Renderer::SubmitMesh(Mesh const& mesh, glm::vec3 const& pos, glm::vec3 const& scale, glm::vec4 const& clr, float rot) {
-		auto const& meshSrc = mesh.GetMeshSource();
+	void Renderer::SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& scale, glm::vec4 const& clr, float rot) {
+		auto const& meshSrc = mesh->GetMeshSource();
 		auto const& submeshes = meshSrc->GetSubmeshes();
 
 		// Transformation matrices

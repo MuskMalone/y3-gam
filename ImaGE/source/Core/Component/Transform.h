@@ -11,7 +11,9 @@ namespace Component
       : localPos{}, localScale{}, localRot{}, worldPos{ _pos }, worldScale{ _scale }, worldRot{ _rot } {}
 
     glm::dvec3 localPos, localScale, localRot;
+
     glm::dvec3 worldPos, worldScale, worldRot;
+    //glm::quat rot; //change rot to quat
   };
 
 }

@@ -52,5 +52,5 @@ private:
   inline void StartPanning() noexcept { m_leftClickHeld = true; }
   inline void EndPanning() noexcept { m_leftClickHeld = false; m_leftClickTriggered = true; }
 public:
-	Graphics::Mesh mesh0; //temp
+	std::shared_ptr<Graphics::Mesh> mesh0, mesh1; //temp
 };

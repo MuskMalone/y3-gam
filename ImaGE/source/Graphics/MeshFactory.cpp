@@ -89,4 +89,68 @@ namespace Graphics {
         // Create MeshSource with the generated data
         return std::make_shared<MeshSource>(vao, submeshes, cubeVertices, cubeIndices);
 	}
+
+        std::shared_ptr<MeshSource> MeshFactory::CreatePyramid() {
+            std::vector<Vertex> pyramidVertices{
+                // Base (square)
+                {{-0.5f, 0.0f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 0.0f}, {}, {}},  // Bottom-left
+                {{ 0.5f, 0.0f, -0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 0.0f}, {}, {}},  // Bottom-right
+                {{ 0.5f, 0.0f,  0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f}, {}, {}},  // Top-right
+                {{-0.5f, 0.0f,  0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 1.0f}, {}, {}},  // Top-left
+
+                // Apex
+                {{ 0.0f,  0.75f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.5f, 1.0f}, {}, {}}  // Apex (top)
+            };
+
+            // Pyramid indices
+            std::vector<uint32_t> pyramidIndices = {
+                // Base (square)
+                0, 1, 2, 2, 3, 0,       // Base face
+
+                // Faces (triangles)
+                0, 1, 4,   // Front face
+                1, 2, 4,   // Right face
+                2, 3, 4,   // Back face
+                3, 0, 4    // Left face
+            };
+
+            // Create VAO and VBO
+            auto vao = VertexArray::Create();
+            auto vbo = VertexBuffer::Create(sizeof(pyramidVertices));
+
+            BufferLayout pyramidLayout = {
+                {AttributeType::VEC3, "a_Position"},
+                {AttributeType::VEC3, "a_Normal"},
+                {AttributeType::VEC2, "a_TexCoord"},
+                {AttributeType::FLOAT, "a_TexIdx"},
+                {AttributeType::VEC3, "a_Tangent"},
+                {AttributeType::VEC3, "a_Bitangent"},
+                {AttributeType::VEC4, "a_Color"},
+            };
+
+            vbo->SetLayout(pyramidLayout);
+            vao->AddVertexBuffer(vbo);
+
+            // Create and bind Element Buffer Object (EBO) for the indices
+            std::shared_ptr<ElementBuffer> ebo = ElementBuffer::Create(pyramidIndices.data(), static_cast<uint32_t>(pyramidIndices.size()));
+            vao->SetElementBuffer(ebo);
+
+            // Set up submesh
+            std::vector<Submesh> submeshes;
+            Submesh pyramidSubmesh{
+                0,                                 // baseVtx
+                0,                                 // baseIdx
+                static_cast<uint32_t>(pyramidVertices.size()),   // vtxCount
+                static_cast<uint32_t>(pyramidIndices.size()),    // idxCount
+                0,                                 // materialIdx
+                glm::mat4(1.0f),                   // Identity matrix for transform
+                pyramidIndices                     // Indices for the submesh
+            };
+
+            submeshes.push_back(pyramidSubmesh);
+
+            // Create MeshSource with the generated data
+            return std::make_shared<MeshSource>(vao, submeshes, pyramidVertices, pyramidIndices);
+        }
+
 }

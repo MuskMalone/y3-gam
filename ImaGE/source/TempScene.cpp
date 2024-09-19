@@ -43,7 +43,10 @@ void Scene::Init()
 
 
   std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateCube();
-  mesh0 = Graphics::Mesh{ cubeMeshSource };
+  mesh0 = std::make_shared<Graphics::Mesh>(cubeMeshSource);
+
+  std::shared_ptr<Graphics::MeshSource> pyrMeshSource = Graphics::MeshFactory::CreatePyramid();
+  mesh1 = std::make_shared<Graphics::Mesh>(pyrMeshSource);
   //=====================================================================================================================
 
 }
@@ -118,17 +121,6 @@ void Scene::DebugDraw() {
 
     Graphics::Renderer::RenderSceneBegin(mtx);
 
-    //Graphics::Renderer::DrawQuad({-1.f,0.f,0.f}, {0.5f,0.5f}, glm::vec4{0.9f,0.2f,0.8f,1.f});
-    //Graphics::Renderer::DrawQuad({ 1.f,0.f,0.f }, { 0.5f,0.5f }, glm::vec4{ 0.2f,1.f,0.8f,1.f });
-    
-
-   // Graphics::Renderer::SubmitMesh( mesh0 , { 0.0f, 0.0f, 0.0f }, { 5.0f, 5.0f, 5.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }, 0.0f);
-
-
-   // Graphics::Renderer::SubmitCube(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 5.0f, 5.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-    //Graphics::Renderer::SubmitCube(glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(5.0f, 5.0f, 5.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.0f);
-
-
     // Imagine a 5x5 grid of cubes, each placed at different positions, scales, and colors
     for (int x = -2; x <= 2; ++x) {
         for (int y = -2; y <= 2; ++y) {
@@ -146,6 +138,7 @@ void Scene::DebugDraw() {
                 1.0f);  // Alpha is always 1 (fully opaque)
 
             // Submit the cube with the calculated position, scale, and color
+            Graphics::Renderer::SubmitMesh(mesh1, position, scale, color, 0.0f);
             Graphics::Renderer::SubmitMesh(mesh0, position, scale, color, 0.0f);
         }
     }

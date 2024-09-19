@@ -6,5 +6,6 @@ namespace Graphics{
 	public:
 		// Static method to create a cube mesh
 		static std::shared_ptr<MeshSource> CreateCube();
+		static std::shared_ptr<MeshSource> CreatePyramid();
 	};
 }
