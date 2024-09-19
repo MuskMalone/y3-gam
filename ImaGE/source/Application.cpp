@@ -262,5 +262,6 @@ Application::~Application()
   ImGui::DestroyContext();
 #endif
 
+  glfwDestroyWindow(mWindow.get());
   glfwTerminate();
 }

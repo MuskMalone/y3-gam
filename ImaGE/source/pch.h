@@ -57,6 +57,9 @@
 
 #include <Globals.h>
 
+//glad
+#include <glad/glad.h>
+
 #ifdef _DEBUG
 #include <Debug.h>
 #endif

@@ -39,7 +39,6 @@
     <ClCompile Include="Source\GUI\Helpers\AssetHelpers.cpp" />
     <ClCompile Include="source\Input\InputManager.cpp" />
     <ClCompile Include="Source\Reflection\ObjectFactory.cpp" />
-    <ClCompile Include="Source\Core\TempObject.cpp" />
     <ClCompile Include="Source\External\glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='GAME_BUILD|x64'">NotUsing</PrecompiledHeader>

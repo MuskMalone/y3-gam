@@ -158,7 +158,7 @@ namespace Graphics {
 		for (unsigned int i{}; i < mData.maxTexUnits; ++i)
 			samplers[i] = i;
 
-		mData.texShader = std::make_shared<Shader>("./shaders/Default.vert.glsl", "./shaders/Default.frag.glsl");
+		mData.texShader = std::make_shared<Shader>("./assets/Shaders/Default.vert.glsl", "./assets/Shaders/Default.frag.glsl");
 		mData.texShader->Use();
 		mData.texShader->SetUniform("u_Tex", samplers.data(), mData.maxTexUnits);
 
@@ -196,7 +196,7 @@ namespace Graphics {
 			glm::vec4{-0.5f,  0.5f,  0.5f, 1.0f}, // Front-left
 			glm::vec4{ 0.5f,  0.5f,  0.5f, 1.0f}, // Front-right
 			glm::vec4{ 0.5f,  0.5f, -0.5f, 1.0f}, // Back-right
-			glm::vec4{-0.5f,  0.5f, -0.5f, 1.0f}, // Back-left
+			glm::vec4{-0.5f,  0.5f, -0.5f, 1.0f}, // Back-left	
 
 			// Bottom face (y = -0.5)
 			glm::vec4{-0.5f, -0.5f, -0.5f, 1.0f}, // Back-left
