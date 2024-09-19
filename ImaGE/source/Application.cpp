@@ -18,6 +18,29 @@
 
 #include <Physics/PhysicsSystem.h>
 
+
+namespace
+{
+  /*!*********************************************************************
+   \brief
+     Wrapper function to print out exceptions.
+
+   \param e
+     Exception caught
+   ************************************************************************/
+  void PrintException(Debug::ExceptionBase& e);
+
+  /*!*********************************************************************
+  \brief
+    Wrapper function to print out exceptions.
+
+  \param e
+    Exception caught
+  ************************************************************************/
+  void PrintException(std::exception& e);
+
+}
+
 void Application::Init() {
   IGE::Physics::PhysicsSystem::InitAllocator();
   IGE::Physics::PhysicsSystem::GetInstance()->Init();
@@ -83,55 +106,88 @@ void Application::Run() {
 
   while (!glfwWindowShouldClose(mWindow.get())) {
     FrameRateController::GetInstance().Start();
-    
-
-#ifndef IMGUI_DISABLE
-    if (mImGuiActive) {
-      ImGuiStartFrame();
-    }
-#endif
-
-    inputManager.UpdateInput();
-
-    // dispatch all events in the queue at the start of game loop
-    eventManager.DispatchAll();
-
-#ifndef IMGUI_DISABLE
-    if (mImGuiActive) {
-      mGUIManager.UpdateGUI();
-    }
-#endif
-
-    mScene->Update(FrameRateController::GetInstance().GetDeltaTime());
-
-#ifndef IMGUI_DISABLE
-    if (mImGuiActive)
+    try
     {
-      UpdateFramebuffers();
 
-      ImGui::Render();
-      ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-      // for floating windows feature
-      if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-      {
-        GLFWwindow* backup_current_context = glfwGetCurrentContext();
-        ImGui::UpdatePlatformWindows();
-        ImGui::RenderPlatformWindowsDefault();
-        glfwMakeContextCurrent(backup_current_context);
+#ifndef IMGUI_DISABLE
+      if (mImGuiActive) {
+        ImGuiStartFrame();
       }
-    }
-#else
-    glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
-    mFramebuffers.front().second();
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+#endif
+      try
+      {
+      inputManager.UpdateInput();
+
+      // dispatch all events in the queue at the start of game loop
+      eventManager.DispatchAll();
+
+#ifndef IMGUI_DISABLE
+      if (mImGuiActive) {
+        mGUIManager.UpdateGUI();
+      }
 #endif
 
-    // check and call events, swap buffers
-    glfwSwapBuffers(mWindow.get());
+      mScene->Update(FrameRateController::GetInstance().GetDeltaTime());
+      }
+      catch (Debug::ExceptionBase& e)
+      {
+        PrintException(e);
+      }
+      catch (std::exception& e)
+      {
+        PrintException(e);
+      }
 
-    FrameRateController::GetInstance().End();
+
+#ifndef IMGUI_DISABLE
+      try
+      {
+      if (mImGuiActive)
+      {
+        UpdateFramebuffers();
+
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        // for floating windows feature
+        if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
+          GLFWwindow* backup_current_context = glfwGetCurrentContext();
+          ImGui::UpdatePlatformWindows();
+          ImGui::RenderPlatformWindowsDefault();
+          glfwMakeContextCurrent(backup_current_context);
+        }
+      }
+#else
+      glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
+      mFramebuffers.front().second();
+      glBindFramebuffer(GL_FRAMEBUFFER, 0);
+#endif
+      }
+    catch (Debug::ExceptionBase& e)
+    {
+      PrintException(e);
+    }
+    catch (std::exception& e)
+    {
+      PrintException(e);
+    }
+      // check and call events, swap buffers
+      glfwSwapBuffers(mWindow.get());
+
+      FrameRateController::GetInstance().End();
+    }
+    catch (Debug::ExceptionBase& e)
+    {
+      PrintException(e);
+    }
+    catch (std::exception& e)
+    {
+      PrintException(e);
+    }
   }
+
+
 }
 
 Application::Application(const char* name, int width, int height) :
@@ -263,4 +319,17 @@ Application::~Application()
 
   mWindow.reset();  // release the GLFWwindow before we terminate
   glfwTerminate();
+}
+
+
+namespace {
+  void PrintException(Debug::ExceptionBase& e)
+  {
+    e.LogSource();
+  }
+
+  void PrintException(std::exception& e)
+  {
+    Debug::DebugLogger::GetInstance().LogCritical(e.what());
+  }
 }
