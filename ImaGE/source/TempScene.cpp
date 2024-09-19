@@ -5,7 +5,7 @@
 #include <fstream>
 #include <filesystem>
 #include "Graphics/Renderer.h"
-#include "Graphics/MeshSource.h"
+#include "Graphics/MeshFactory.h"
 
 Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 const& clearClr)
   : m_shaders{}, m_defaultShaders{}, 
@@ -64,148 +64,7 @@ void Scene::Init()
   m_objects.emplace_back(std::make_shared<Object>("./assets/models/horse_high_poly.obj", glm::vec3(5.f), glm::vec3(30.f)));
   m_objects.emplace_back(std::make_shared<Object>("./assets/models/teapot_mid_poly.obj", glm::vec3(), glm::vec3(1.f)));
 
-
-
-  //TEMP CODE===============================================================
-  //std::vector<Vertex> cubeVertices{
-  //    // Front face
-  //    {{-0.5f, -0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {}, {}, {0.0f, 0.0f}},  // Bottom-left
-  //    {{ 0.5f, -0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {}, {}, {1.0f, 0.0f}},  // Bottom-right
-  //    {{ 0.5f,  0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {}, {}, {1.0f, 1.0f}},  // Top-right
-  //    {{-0.5f,  0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {}, {}, {0.0f, 1.0f}},  // Top-left
-
-  //    // Back face
-  //    {{ 0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}, {}, {0.0f, 0.0f}},  // Bottom-right
-  //    {{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}, {}, {1.0f, 0.0f}},  // Bottom-left
-  //    {{-0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}, {}, {1.0f, 1.0f}},  // Top-left
-  //    {{ 0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}, {}, {0.0f, 1.0f}},  // Top-right
-
-  //    // Left face
-  //    {{-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}, {}, {0.0f, 0.0f}},  // Bottom-back
-  //    {{-0.5f, -0.5f,  0.5f}, {-1.0f, 0.0f, 0.0f}, {}, {}, {1.0f, 0.0f}},  // Bottom-front
-  //    {{-0.5f,  0.5f,  0.5f}, {-1.0f, 0.0f, 0.0f}, {}, {}, {1.0f, 1.0f}},  // Top-front
-  //    {{-0.5f,  0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}, {}, {0.0f, 1.0f}},  // Top-back
-
-  //    // Right face
-  //    {{ 0.5f, -0.5f,  0.5f}, {1.0f, 0.0f, 0.0f}, {}, {}, {0.0f, 0.0f}},  // Bottom-front
-  //    {{ 0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {}, {}, {1.0f, 0.0f}},  // Bottom-back
-  //    {{ 0.5f,  0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {}, {}, {1.0f, 1.0f}},  // Top-back
-  //    {{ 0.5f,  0.5f,  0.5f}, {1.0f, 0.0f, 0.0f}, {}, {}, {0.0f, 1.0f}},  // Top-front
-
-  //    // Top face
-  //    {{-0.5f,  0.5f,  0.5f}, {0.0f, 1.0f, 0.0f}, {}, {}, {0.0f, 0.0f}},  // Front-left
-  //    {{ 0.5f,  0.5f,  0.5f}, {0.0f, 1.0f, 0.0f}, {}, {}, {1.0f, 0.0f}},  // Front-right
-  //    {{ 0.5f,  0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {}, {}, {1.0f, 1.0f}},  // Back-right
-  //    {{-0.5f,  0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {}, {}, {0.0f, 1.0f}},  // Back-left
-
-  //    // Bottom face
-  //    {{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}, {}, {0.0f, 1.0f}},  // Back-left
-  //    {{ 0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}, {}, {1.0f, 1.0f}},  // Back-right
-  //    {{ 0.5f, -0.5f,  0.5f}, {0.0f, -1.0f, 0.0f}, {}, {}, {1.0f, 0.0f}},  // Front-right
-  //    {{-0.5f, -0.5f,  0.5f}, {0.0f, -1.0f, 0.0f}, {}, {}, {0.0f, 0.0f}}   // Front-left
-  //};
-
-  std::vector<Vertex> cubeVertices{
-      // Front face
-      {{-0.5f, -0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {0.0f, 0.0f}, {}, {}},  // Bottom-left
-      {{ 0.5f, -0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {1.0f, 0.0f}, {}, {}},  // Bottom-right
-      {{ 0.5f,  0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {1.0f, 1.0f}, {}, {}},  // Top-right
-      {{-0.5f,  0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {0.0f, 1.0f}, {}, {}},  // Top-left
-
-      // Back face
-      {{ 0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.0f, 0.0f}, {}, {}},  // Bottom-right
-      {{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.0f, 0.0f}, {}, {}},  // Bottom-left
-      {{-0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.0f, 1.0f}, {}, {}},  // Top-left
-      {{ 0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.0f, 1.0f}, {}, {}},  // Top-right
-
-      // Left face
-      {{-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}, {}, {}},  // Bottom-back
-      {{-0.5f, -0.5f,  0.5f}, {-1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}, {}, {}},  // Bottom-front
-      {{-0.5f,  0.5f,  0.5f}, {-1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}, {}, {}},  // Top-front
-      {{-0.5f,  0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}, {}, {}},  // Top-back
-
-      // Right face
-      {{ 0.5f, -0.5f,  0.5f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}, {}, {}},  // Bottom-front
-      {{ 0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}, {}, {}},  // Bottom-back
-      {{ 0.5f,  0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}, {}, {}},  // Top-back
-      {{ 0.5f,  0.5f,  0.5f}, {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}, {}, {}},  // Top-front
-
-      // Top face
-      {{-0.5f,  0.5f,  0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}, {}, {}},  // Front-left
-      {{ 0.5f,  0.5f,  0.5f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f}, {}, {}},  // Front-right
-      {{ 0.5f,  0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {1.0f, 1.0f}, {}, {}},  // Back-right
-      {{-0.5f,  0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 1.0f}, {}, {}},  // Back-left
-
-      // Bottom face
-      {{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 1.0f}, {}, {}},  // Back-left
-      {{ 0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f}, {}, {}},  // Back-right
-      {{ 0.5f, -0.5f,  0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 0.0f}, {}, {}},  // Front-right
-      {{-0.5f, -0.5f,  0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 0.0f}, {}, {}}   // Front-left
-  };
-
-
-  std::vector<uint32_t> cubeIndices = {
-      // Front face
-      0, 1, 2, 2, 3, 0,
-
-      // Back face
-      4, 5, 6, 6, 7, 4,
-
-      // Left face
-      8, 9, 10, 10, 11, 8,
-
-      // Right face
-      12, 13, 14, 14, 15, 12,
-
-      // Top face
-      16, 17, 18, 18, 19, 16,
-
-      // Bottom face
-      20, 21, 22, 22, 23, 20
-  };
-
-  using namespace Graphics;
-
-  //Cubes
-  auto vao = VertexArray::Create();
-  auto vbo = VertexBuffer::Create(sizeof(cubeVertices));
-
-  BufferLayout cubeLayout = {
-      {AttributeType::VEC3, "a_Position"},
-      {AttributeType::VEC3, "a_Normal"},
-      {AttributeType::VEC2, "a_TexCoord"},
-      {AttributeType::FLOAT, "a_TexIdx"},
-      {AttributeType::VEC3, "a_Tangent"},
-      {AttributeType::VEC3, "a_Bitangent"},
-      {AttributeType::VEC4, "a_Color"},
-  };
-
-  vbo->SetLayout(cubeLayout);
-  vao->AddVertexBuffer(vbo);
-
-  std::shared_ptr<ElementBuffer> cubeEbo = ElementBuffer::Create(cubeIndices.data(), 36);
-  vao->SetElementBuffer(cubeEbo);
-
-  std::vector<Graphics::Submesh> submeshes;
-
-  Graphics::Submesh cubeSubmesh{
-    0,                                // baseVtx starts at 0
-    0,                                // baseIdx starts at 0
-    static_cast<uint32_t>(cubeVertices.size()),   // vtxCount = total number of vertices
-    static_cast<uint32_t>(cubeIndices.size()),    // idxCount = total number of indices
-    0,                                // materialIdx, assume 0 for now
-    glm::mat4(1.0f),
-    cubeIndices// identity matrix for submesh transform
-  };
-
-  submeshes.push_back(cubeSubmesh);
-  auto cubeMeshSource = std::make_shared<MeshSource>(
-      vao,                            // Vertex array object
-      submeshes,                       // Submeshes
-      cubeVertices,                    // Vertex data
-      cubeIndices                      // Index data
-  );
-
+  std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateCube();
   mesh0 = Graphics::Mesh{ cubeMeshSource };
   //=====================================================================================================================
 
