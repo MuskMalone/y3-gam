@@ -129,7 +129,7 @@ void Application::Run() {
 
     // check and call events, swap buffers
     glfwSwapBuffers(mWindow.get());
-
+    
     FrameRateController::GetInstance().End();
   }
 }
@@ -183,6 +183,8 @@ Application::Application(const char* name, int width, int height) :
   // Setup Platform/Renderer backends
   ImGui_ImplGlfw_InitForOpenGL(mWindow.get(), true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
   ImGui_ImplOpenGL3_Init("#version 460 core");
+
+  mGUIManager.StyleGUI();
 #endif
 
   glfwSetWindowUserPointer(mWindow.get(), this); // set the window to reference this class

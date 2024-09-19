@@ -3,6 +3,7 @@
 #include "GUIManager.h"
 #include <ImGui/imgui.h>
 #include <Core/Entity.h>
+#include "Styles/FontAwesome6Icons.h"
 #pragma region IndivWindowIncludes
 #include "Persistent/Toolbar.h"
 #include "Persistent/SceneControls.h"
@@ -48,6 +49,21 @@ namespace GUI
 
       window->Run();
     }
+
+    ImGui::ShowDemoWindow();
+  }
+
+  void GUIManager::StyleGUI() const
+  {
+    ImGuiIO& io{ ImGui::GetIO() };
+    io.Fonts->AddFontDefault();
+
+    ImFontConfig cfg;
+    cfg.MergeMode = true;
+    cfg.GlyphMinAdvanceX = 13.f;  // make icons monospaced
+    cfg.GlyphOffset = ImVec2(0, 1);
+    static constexpr ImWchar icon_ranges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
+    io.Fonts->AddFontFromFileTTF(gIconsFontPath, 17.f * 2.0f / 3.0f, &cfg, icon_ranges);
   }
 
 } // namespace GUI

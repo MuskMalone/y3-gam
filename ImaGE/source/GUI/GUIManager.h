@@ -17,6 +17,7 @@ namespace GUI
     // taking in framebuffer to pass into viewport class
     void Init(Graphics::Framebuffer const& framebuffer);
     void UpdateGUI();
+    void StyleGUI() const;
 
     static inline ECS::Entity const& GetSelectedEntity() noexcept { return sSelectedEntity; }
     static inline void SetSelectedEntity(ECS::Entity const& entity) noexcept { sSelectedEntity = entity; }
