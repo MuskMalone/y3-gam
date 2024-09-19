@@ -19,12 +19,11 @@
 #include <Physics/PhysicsSystem.h>
 
 void Application::Init() {
-    IGE::Physics::PhysicsSystem::InitAllocator();
-    IGE::Physics::PhysicsSystem::GetInstance()->Init();
+  IGE::Physics::PhysicsSystem::InitAllocator();
+  IGE::Physics::PhysicsSystem::GetInstance()->Init();
   mScene->Init();
   Scenes::SceneManager::GetInstance().Init();
   Prefabs::PrefabManager::GetInstance().Init();
- // InputAssistant::RegisterKeyPressEvent(GLFW_KEY_GRAVE_ACCENT, std::bind(&Application::ToggleImGuiActive, this));
 
   // @TODO: SETTINGS TO BE LOADED FROM CONFIG FILE
   FrameRateController::GetInstance().Init(120.f, 1.f, false);
@@ -262,5 +261,6 @@ Application::~Application()
   ImGui::DestroyContext();
 #endif
 
+  mWindow.reset();  // release the GLFWwindow before we terminate
   glfwTerminate();
 }
