@@ -1,9 +1,12 @@
 #include <pch.h>
+#ifndef IMGUI_DISABLE
 #include "GUIManager.h"
 #include <ImGui/imgui.h>
+#include <Core/Entity.h>
 #pragma region IndivWindowIncludes
 #include "Persistent/Toolbar.h"
 #include "Persistent/SceneControls.h"
+#include "Persistent/PrefabEditor.h"
 #include "Dockable/Viewport.h"
 #include "Dockable/Inspector.h"
 #include "Dockable/SceneHierarchy.h"
@@ -12,13 +15,16 @@
 
 namespace GUI
 {
-  std::vector<std::unique_ptr<GUIWindow>> GUIManager::mPersistentElements, GUIManager::mWindows;
+  ECS::Entity GUIManager::sSelectedEntity{};
+
+  GUIManager::GUIManager() :mPersistentElements{}, mWindows{} {}
 
   void GUIManager::Init(Graphics::Framebuffer const& framebuffer)
   {
-    mPersistentElements.reserve(2);
+    mPersistentElements.reserve(3);
     mPersistentElements.emplace_back(std::make_unique<Toolbar>("Toolbar", mWindows));
     mPersistentElements.emplace_back(std::make_unique<SceneControls>("Scene Controls"));
+    mPersistentElements.emplace_back(std::make_unique<PrefabEditor>("Prefab Editor"));
 
     mWindows.reserve(4);
     mWindows.emplace_back(std::make_unique<Viewport>("Viewport", framebuffer));
@@ -45,3 +51,5 @@ namespace GUI
   }
 
 } // namespace GUI
+
+#endif  // IMGUI_DISABLE

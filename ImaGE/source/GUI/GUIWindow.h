@@ -1,4 +1,6 @@
 #pragma once
+#ifndef IMGUI_DISABLE
+#include <string>
 
 namespace GUI
 {
@@ -10,7 +12,9 @@ namespace GUI
     inline bool IsActive() const noexcept { return mActive; }
     inline std::string const& GetName() const noexcept { return mWindowName; }
 
+    //virtual void Init() {}
     virtual void Run() = 0;
+    virtual ~GUIWindow() {}
 
   protected:
     GUIWindow(std::string windowName) : mWindowName{ std::move(windowName) }, mActive{ true } {}
@@ -20,3 +24,5 @@ namespace GUI
   };
 
 };  // namespace GUI
+
+#endif  // IMGUI_DISABLE

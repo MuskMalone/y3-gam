@@ -39,7 +39,7 @@ namespace Graphics
       totalCount += face.mNumIndices;
       indices.reserve(totalCount);
       for (unsigned j{}; j < face.mNumIndices; ++j) {
-        indices.emplace_back(face.mIndices[j]);
+        indices.emplace_back(static_cast<GLushort>(face.mIndices[j]));
       }
     }
 
@@ -108,7 +108,7 @@ namespace Graphics
     }
 
     // Generate indices for triangle fan
-    for (int i = 1; i <= slices; ++i) {
+    for (GLushort i = 1; i <= slices; ++i) {
       mesh.indices.push_back(0);
       mesh.indices.push_back(i);
       mesh.indices.push_back(i + 1);
@@ -215,9 +215,10 @@ namespace Graphics
     // Generate the element list
     idx = 0;
     for (GLuint i = 0; i < nSlices; i++) {
-      GLuint stackStart = i * (nStacks + 1);
-      GLuint nextStackStart = (i + 1) * (nStacks + 1);
-      for (GLuint j = 0; j < nStacks; j++)
+      GLushort stackStart = static_cast<GLushort>(i * (nStacks + 1));
+      GLushort nextStackStart = static_cast<GLushort>((i + 1) * (nStacks + 1));
+      for (GLuint j = 0; j < nStacks; j++) {
+        GLushort const jShort{ static_cast<GLushort>(j) };
         if (j == 0)
         {
           mesh.indices[idx] = stackStart;
@@ -227,21 +228,22 @@ namespace Graphics
         }
         else if (j == nStacks - 1)
         {
-          mesh.indices[idx] = stackStart + j;
-          mesh.indices[idx + 1] = stackStart + j + 1;
-          mesh.indices[idx + 2] = nextStackStart + j;
+          mesh.indices[idx] = stackStart + jShort;
+          mesh.indices[idx + 1] = stackStart + jShort + 1;
+          mesh.indices[idx + 2] = nextStackStart + jShort;
           idx += 3;
         }
         else
         {
-          mesh.indices[idx] = stackStart + j;
-          mesh.indices[idx + 1] = stackStart + j + 1;
-          mesh.indices[idx + 2] = nextStackStart + j + 1;
-          mesh.indices[idx + 3] = nextStackStart + j;
-          mesh.indices[idx + 4] = stackStart + j;
-          mesh.indices[idx + 5] = nextStackStart + j + 1;
+          mesh.indices[idx] = stackStart + jShort;
+          mesh.indices[idx + 1] = stackStart + jShort + 1;
+          mesh.indices[idx + 2] = nextStackStart + jShort + 1;
+          mesh.indices[idx + 3] = nextStackStart + jShort;
+          mesh.indices[idx + 4] = stackStart + jShort;
+          mesh.indices[idx + 5] = nextStackStart + jShort + 1;
           idx += 6;
         }
+      }
     }
 
     return mesh;

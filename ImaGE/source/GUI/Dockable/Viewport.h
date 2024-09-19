@@ -10,10 +10,13 @@ namespace GUI
   public:
     Viewport(std::string const& name, Graphics::Framebuffer const& framebuffer);
     
-    void Run();
+    void Run() override;
 
   private:
     Graphics::Framebuffer const& mFramebuffer;
+
+    void ReceivePayload();
+
   };
   
 } // namespace GUI

@@ -3,6 +3,29 @@
 \author chengen.lau\@digipen.edu
 \date   10-September-2024
 \brief  Macros to simplify event callback declaration and definition.
+        Example usage:
+          // in .h
+          EVENT_CALLBACK_DECL(HandleEvent);
+
+          // in .cpp
+          EVENT_CALLBACK_DEF(PrefabEditor, HandleEvent)
+          {
+            switch (event->GetCategory())
+            {
+            case Events::EventType::EDIT_PREFAB:
+            {
+              auto editPrefabEvent{ std::static_pointer_cast<Events::EditPrefabEvent>(event) };
+              //...
+              break;
+            }
+            case Events::EventType::KEY_TRIGGERED:
+            {
+              auto keyTriggeredEvent{ std::static_pointer_cast<Events::EditPrefabEvent>(event) };
+              //...
+              break;
+            }
+            }
+          }
 
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
@@ -33,3 +56,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #define EVENT_CALLBACK_DEF(ClassScope, FnName) \
   void ClassScope::FnName(std::shared_ptr<Events::Event> const& event)
+
+// macro to cast a shared_ptr to an event class
+#define CAST_TO_EVENT(eventClass) std::static_pointer_cast<eventClass>(event)

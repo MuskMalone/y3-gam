@@ -5,47 +5,47 @@
 #include <memory>
 
 Object::Object(Graphics::MeshType type, glm::vec4 const& color,
-  glm::vec3 const& _pos, glm::vec3 const& _scale)
+  glm::dvec3 const& _pos, glm::dvec3 const& _scale)
   : mdlTransform{
-    1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f
+    1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0
   }, clr{ color }, transform{ _pos, _scale },
   modified{ true }, collided{ false }
 {
   meshRef = Graphics::MeshGen::GetMesh(type);
 }
 
-Object::Object(std::string const& filePath, glm::vec3 const& _pos, glm::vec3 const& _scale)
+Object::Object(std::string const& filePath, glm::dvec3 const& _pos, glm::dvec3 const& _scale)
   : mdlTransform{
-  1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f
+  1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0
   }, transform{ _pos, _scale },
   clr{ 1.f, 112.f / 255.f, 153.f / 255.f, 1.f },
   modified{ true }, collided{ false }
 {
   meshRef = Graphics::MeshGen::GetMesh(filePath);
-  Update(0.f);
+  Update(0.0);
 }
 
 
-void Object::Update(float deltaTime)
+void Object::Update([[maybe_unused]] float deltaTime)
 {
   // if values weren't touched, we don't have to recompute
   if (!modified) { return; }
 
   //scale
   mdlTransform = {
-    transform.scale.x, 0.f, 0.f, 0.f,
-    0.f,  transform.scale.y, 0.f, 0.f,
-    0.f, 0.f,  transform.scale.z, 0.f,
-    0.f, 0.f, 0.f, 1.f
+    transform.worldScale.x, 0.0, 0.0, 0.0,
+    0.0,  transform.worldScale.y, 0.0, 0.0,
+    0.0, 0.0,  transform.worldScale.z, 0.0,
+    0.0, 0.0, 0.0, 1.0
   };
 
   // rotate
-  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.rotation.x), glm::vec3(1.f, 0.f, 0.f));
-  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.rotation.y), glm::vec3(0.f, 1.f, 0.f));
-  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.rotation.z), glm::vec3(0.f, 0.f, 1.f));
+  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.worldRot.x), glm::dvec3(1.0, 0.0, 0.0));
+  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.worldRot.y), glm::dvec3(0.0, 1.0, 0.0));
+  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.worldRot.z), glm::dvec3(0.0, 0.0, 1.0));
 
   // translate
-  mdlTransform[3] = glm::vec4(transform.position, 1.f);
+  mdlTransform[3] = glm::dvec4(transform.worldPos, 1.0);
 
   modified = false;
 }

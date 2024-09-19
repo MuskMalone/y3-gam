@@ -2,11 +2,8 @@
 #include <entt.hpp>
 #include "EntityManager.h"
 
-namespace ECS
-{
-
-  class Entity
-  {
+namespace ECS {
+  class Entity {
   public:
     using EntityID = entt::entity;
 
@@ -16,7 +13,8 @@ namespace ECS
 
     uint32_t GetEntityID() const;
     EntityID GetRawEnttEntityID() const;
-    std::string GetTag() const;
+    std::string const& GetTag() const;
+    void SetTag(std::string const& tag);
 
     operator bool() const;
     bool operator==(const Entity& entity) const;
@@ -38,43 +36,42 @@ namespace ECS
     void RemoveComponent();
 
     template<typename... Components>
-    bool HasComponent();
+    bool HasComponent() const;
 
   private:
-    EntityID m_id{ entt::null };
+    EntityID mId{ entt::null };
   };
 
   // Use this function for new components (you know that the entity does not have the component)
   template<typename T, typename ...Args>
   inline T& Entity::EmplaceComponent(Args && ...args) {
-    return EntityManager::GetInstance().GetRegistry().emplace<T>(m_id, std::forward<Args>(args)...);
+    return EntityManager::GetInstance().GetRegistry().emplace<T>(mId, std::forward<Args>(args)...);
   }
 
   // Use this function when it is unknown whether the entity already owns the component
   template<typename T, typename ...Args>
   inline T& Entity::EmplaceOrReplaceComponent(Args && ...args) {
-    return EntityManager::GetInstance().GetRegistry().emplace_or_replace<T>(m_id, std::forward<Args>(args)...);
+    return EntityManager::GetInstance().GetRegistry().emplace_or_replace<T>(mId, std::forward<Args>(args)...);
   }
 
   template<typename T>
   inline T& Entity::GetComponent() {
-    return EntityManager::GetInstance().GetRegistry().get<T>(m_id);
+    return EntityManager::GetInstance().GetRegistry().get<T>(mId);
   }
 
   template<typename T>
   inline T const& Entity::GetComponent() const {
     const auto& cRegistry{ EntityManager::GetInstance().GetRegistry() };
-    return cRegistry.get<T>(m_id);
+    return cRegistry.get<T>(mId);
   }
 
   template<typename... Components>
   inline void Entity::RemoveComponent() {
-    EntityManager::GetInstance().GetRegistry().remove<Components...>(m_id);
+    EntityManager::GetInstance().GetRegistry().remove<Components...>(mId);
   }
 
   template<typename... Components>
-  inline bool Entity::HasComponent() {
-    return EntityManager::GetInstance().GetRegistry().all_of<Components...>(m_id);
+  inline bool Entity::HasComponent() const {
+    return EntityManager::GetInstance().GetRegistry().all_of<Components...>(mId);
   }
-
 } // namespace ECS

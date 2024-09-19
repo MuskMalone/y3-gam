@@ -1,19 +1,44 @@
 #pragma once
+#include <chrono>
+#include "Singleton.h"
 
-// Frame Rate Controller
-class FRC
-{
+class FrameRateController : public Singleton <FrameRateController> {
 public:
   using TimeType = float;
+  using TimeFormat = std::chrono::microseconds;
 
-  static void Update();
-  static TimeType GetDeltaTime() noexcept;
-  static TimeType GetFPS() noexcept;
+  void Init(float targetFPS = 60.f, float fpsCalculationInterval = 1.f, bool vsyncEnabled = false);
+  void Start();
+  void End();
+
+  // System Timers
+  void StartSystemTimer();
+  void EndSystemTimer(std::string systemName);
+  std::map<std::string, FrameRateController::TimeFormat> const& GetSystemTimerMap() const noexcept;
+
+  // Getters
+  TimeType GetFPSCalculationInterval() const noexcept;
+  TimeType GetTargetFPS() const noexcept;
+  TimeType GetDeltaTime() const noexcept;
+  TimeType GetFPS() const noexcept;
+  bool GetVsyncFlag() const noexcept;
+  
+  // Setters
+  void SetFPSCalculationInterval(float fpsCalculationInterval);
+  void SetTargetFPS(float target);
+  void SetVsync(bool vsyncEnabled);
+
+  void Reset();
 
 private:
-  static TimeType constexpr FPSCalcInterval = 1.0;
+  std::chrono::time_point<std::chrono::high_resolution_clock> mSystemTimeStart{};
+  std::map<std::string, TimeFormat> mSystemTimerMap;
 
-  static TimeType m_prevFrameTime, m_currFrameTime, m_deltaTime;
-  static TimeType m_fpsTimer, m_currFPS;
-  static unsigned m_framesElapsed;
+  bool mVsyncEnabled{};
+  TimeType mCurrFrameTime{}, mNewFrameTime{}, mDeltaTime{};
+  TimeType mFPSTimer{}, mCurrFPS{};
+  TimeType mTargetFPS{};
+  TimeType mTargetFrameTime{};
+  TimeType mFPSCalculationInterval{};
+  unsigned mFrameCounter{};
 };

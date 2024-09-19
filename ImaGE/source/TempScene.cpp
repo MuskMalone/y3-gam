@@ -1,5 +1,7 @@
 #include <pch.h>
 #include "TempScene.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <glm/gtc/constants.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <fstream>
@@ -7,11 +9,14 @@
 #include "Graphics/Renderer.h"
 #include "Graphics/MeshFactory.h"
 
+#include <Physics/PhysicsSystem.h>
+std::vector<std::shared_ptr<Object>> Scene::mObjects;
+std::vector<Camera> Scene::m_cameras;
 Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 const& clearClr)
   : m_shaders{}, m_defaultShaders{}, 
   m_light{ { 0.f, 25.f, 0.f }, { 0.4f, 0.4f, 0.4f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 1.0f } },
-  m_material{ glm::vec3(1.f), glm::vec3(1.f), glm::vec3(1.f), 100.f }, m_cameras{},
-  m_objects{},
+  m_material{ glm::vec3(1.f), glm::vec3(1.f), glm::vec3(1.f), 100.f },
+  //mObjects{},
   m_leftClickHeld{ false }, m_leftClickTriggered{ true }, m_bvhModified{ true }, m_reconstructTree{ false }
 {
   glClearColor(clearClr.r, clearClr.g, clearClr.b, clearClr.a);
@@ -25,7 +30,7 @@ Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 co
   glEnable(GL_BLEND);
 
   m_shaders.CompileShaderFile(vtxShaderFile, fragShaderFile);
-  m_defaultShaders.CompileShaderFile("./shaders/Framework.vert.glsl", "./shaders/Framework.frag.glsl");
+  m_defaultShaders.CompileShaderFile("./Assets/Shaders/Framework.vert.glsl", "./Assets/Shaders/Framework.frag.glsl");
   m_cameras.emplace_back(WINDOW_WIDTH<int>, WINDOW_HEIGHT<int>, glm::vec3(3.f, 3.f, 15.f));
   m_cameras.emplace_back(WINDOW_WIDTH<int>, WINDOW_HEIGHT<int>, glm::vec3(0.f, 15.f, 1.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, -1.f), glm::vec3(1.f, 0.f, 0.f), false);
 }
@@ -73,9 +78,13 @@ void Scene::Init()
 void Scene::Update(float deltaTime)
 {
   // update transforms
-  for (auto& obj : m_objects)
+    IGE::Physics::PhysicsSystem::GetInstance()->Update(deltaTime);
+  for (auto& obj : mObjects)
   {
-    obj->Update(deltaTime);
+      obj->transform = obj->entity.GetComponent<Component::Transform>();
+      obj->modified = true;
+     obj->Update(deltaTime);
+    
   }
 
   // update camera
@@ -183,7 +192,7 @@ void Scene::DrawTopView()
   m_light.SetUniforms(m_shaders);
   m_material.SetUniforms(m_shaders);
 
-  for (auto& obj : m_objects)
+  for (auto& obj : mObjects)
   {
     m_shaders.SetUniform("uMdlTransform", obj->mdlTransform);
     m_shaders.SetUniform("uVtxClr", obj->clr);
@@ -212,4 +221,16 @@ void Scene::DrawTopView()
 void Scene::ResetCamera()
 {
   m_cameras.front().Reset(glm::vec3(3.f, 3.f, 15.f), glm::vec3());
+}
+
+//tch: i just added this to visually test physics
+void Scene::AddMesh(ECS::Entity entity)
+{
+    auto xfm{ entity.GetComponent<Component::Transform>() };
+    mObjects.emplace_back(std::make_shared<Object>(
+        "./assets/models/cube_low_poly.obj",
+        xfm.worldPos, 
+        xfm.worldScale));
+    mObjects.back()->entity = entity;
+    entity.EmplaceComponent<Component::Mesh>(Component::Mesh{});
 }

@@ -5,31 +5,36 @@
 namespace ECS
 {
 
-  Entity::Entity(EntityID entityID) : m_id{ entityID } {}
+  Entity::Entity(EntityID entityID) : mId{ entityID } {}
 
   uint32_t Entity::GetEntityID() const {
-    return static_cast<uint32_t>(m_id);
+    return static_cast<uint32_t>(mId);
   }
 
   Entity::EntityID Entity::GetRawEnttEntityID() const {
-    return m_id;
+    return mId;
   }
 
-  std::string Entity::GetTag() const {
+  std::string const& Entity::GetTag() const {
     Component::Tag const& tagComponent{ this->GetComponent<Component::Tag>() };
     return tagComponent.tag;
   }
 
+  void Entity::SetTag(std::string const& tag) {
+    Component::Tag& tagRef{ this->GetComponent<Component::Tag>() };
+    tagRef = tag;
+  }
+
   Entity::operator bool() const {
-    return m_id != entt::null;
+    return mId != entt::null;
   }
 
   bool Entity::operator==(const Entity& entity) const {
-    return (*this).m_id == entity.m_id;
+    return (*this).mId == entity.mId;
   }
 
   bool Entity::operator!=(const Entity& entity) const {
-    return (*this).m_id != entity.m_id;
+    return (*this).mId != entity.mId;
   }
 
 } // namespace ECS

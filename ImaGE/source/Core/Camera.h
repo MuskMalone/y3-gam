@@ -25,17 +25,18 @@ public:
   void Right();
   void Forward();
   void Backward();
+  void MoveAlongPlane(float xDisplacement, float yDisplacement);
 
-private:
-  static constexpr float MOVEMENT_SPD = 30.f;
-  static constexpr float PANNING_SPD = 50.f;
+//private: //tch: i removed it
+  static constexpr float MOVEMENT_SPD = 15.f;
+  static constexpr float PANNING_SPD = 25.f;
 
   glm::mat4 m_viewMtx, m_projMtx;
   glm::vec3 m_eye, m_target;
   glm::vec3 const m_defaultUp;
   glm::vec3 m_up, m_right, m_front;
-  glm::vec3 m_rotation, m_panningThisFrame; // pitch, yaw, roll
-  glm::vec3 m_movementThisFrame;
+  glm::vec3 m_rotation, m_rotationDelta; // pitch, yaw, roll
+  glm::vec3 m_movementDelta, m_sideMovementDelta;
   float m_aspectRatio, m_fieldOfView;
   float m_near, m_far;
   bool m_modified;

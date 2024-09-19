@@ -8,6 +8,7 @@
 #include <variant>
 #include <Graphics/Mesh.h>
 
+#include "Core/Entity.h"
 // forward declaration
 namespace GUI { class GUIWindow; class GUIManager; }
 
@@ -21,7 +22,8 @@ public:
   inline void RecomputeBVH() noexcept { m_bvhModified = true; }
   inline void ReconstructTree() noexcept { m_reconstructTree = true; }
   void ResetCamera();
-
+  static void AddMesh(ECS::Entity entity);
+  static Camera& GetMainCamera() { return m_cameras.front(); }
   void Draw();
   void DrawTopView();
 
@@ -35,12 +37,14 @@ private:
   Graphics::ShaderProgram m_shaders, m_defaultShaders;
   Graphics::Light m_light;
   Graphics::Material m_material;
-  std::vector<Camera> m_cameras;
+  static // tch to remove added for testing 
+	  std::vector<Camera> m_cameras;
 
   // can encapsulate in a struct if more members are added
   // so that GUIWindow can allow access to relevant members
   // to derived classes
-  std::vector<std::shared_ptr<Object>> m_objects;
+  static //tch to remove, added for testing
+	  std::vector<std::shared_ptr<Object>> mObjects;
 
   bool m_leftClickHeld, m_leftClickTriggered;
   bool m_bvhModified, m_reconstructTree;

@@ -1,52 +1,111 @@
 #include <pch.h>
 #include "Application.h"
 
+#include <Events/EventManager.h>
+#include <Scenes/SceneManager.h>
+#include <Prefabs/PrefabManager.h>
+#include <Input/InputManager.h>
+
+#include <Core/Entity.h>
+#include <Core/EntityManager.h>
+#include <Core/Component/Components.h>
+
+#ifndef IMGUI_DISABLE
 #include <imgui/imgui.h>
 #include <imgui/backends/imgui_impl_glfw.h>
 #include <imgui/backends/imgui_impl_opengl3.h>
+#endif
 
-#include <GUI/GUIManager.h>
-#include <Input/InputAssistant.h>
-#include <Events/EventManager.h>
-#include <Scenes/SceneManager.h>
+#include <Physics/PhysicsSystem.h>
 
-#include <Core/EntityManager.h>
-
-void Application::Init()
-{
+void Application::Init() {
+    IGE::Physics::PhysicsSystem::InitAllocator();
+    IGE::Physics::PhysicsSystem::GetInstance()->Init();
   mScene->Init();
-  GUI::GUIManager::Init(mFramebuffers.front().first);
   Scenes::SceneManager::GetInstance().Init();
+  Prefabs::PrefabManager::GetInstance().Init();
+ // InputAssistant::RegisterKeyPressEvent(GLFW_KEY_GRAVE_ACCENT, std::bind(&Application::ToggleImGuiActive, this));
 
-  InputAssistant::RegisterKeyPressEvent(GLFW_KEY_GRAVE_ACCENT, std::bind(&Application::ToggleImGuiActive, this));
+  // @TODO: SETTINGS TO BE LOADED FROM CONFIG FILE
+  FrameRateController::GetInstance().Init(120.f, 1.f, false);
+  Input::InputManager::GetInstance().InitInputManager(mWindow, mWidth, mHeight, 0.3);
+
+#ifndef IMGUI_DISABLE
+  mGUIManager.Init(mFramebuffers.front().first);
+#endif
+
+  // @TODO: REMOVE, FOR TESTING ONLY
+  /*
+  ECS::Entity one = ECS::EntityManager::GetInstance().CreateEntityWithTag("one");
+  ECS::Entity two = ECS::EntityManager::GetInstance().CreateEntityWithTag("two");
+  ECS::Entity three = ECS::EntityManager::GetInstance().CreateEntityWithTag("three");
+  ECS::Entity four = ECS::EntityManager::GetInstance().CreateEntityWithTag("four");
+  ECS::Entity five = ECS::EntityManager::GetInstance().CreateEntityWithTag("five");
+  ECS::Entity six = ECS::EntityManager::GetInstance().CreateEntityWithTag("six");
+  ECS::Entity seven = ECS::EntityManager::GetInstance().CreateEntityWithTag("seven");
+
+  ECS::EntityManager::GetInstance().SetChildEntity(one, two);
+  ECS::EntityManager::GetInstance().SetChildEntity(one, three);
+  ECS::EntityManager::GetInstance().SetChildEntity(two, four);
+  ECS::EntityManager::GetInstance().SetChildEntity(two, five);
+  ECS::EntityManager::GetInstance().RemoveParent(four);
+
+  std::vector<ECS::Entity> list =
+    ECS::EntityManager::GetInstance().GetChildEntity(two);
+
+  std::cout << "First List: ";
+  for (const auto& element : list) {
+    std::cout << element.GetTag() << " ";
+  }
+
+  std::vector<ECS::Entity> listTwo =
+    ECS::EntityManager::GetInstance().GetChildEntity(one);
+
+  std::cout << "Second List: ";
+  for (const auto& element : listTwo) {
+    std::cout << element.GetTag() << " ";
+  }
+
+  FrameRateController::GetInstance().StartSystemTimer();
+
+  FrameRateController::GetInstance().EndSystemTimer("Cool System");
+
+  auto const& map{ FrameRateController::GetInstance().GetSystemTimerMap() };
+  for (auto const& elem : map) {
+    std::cout << elem.first << " : " << elem.second << "\n";
+  }
+  */
+
 }
 
-void Application::Run()
-{
-  while (!glfwWindowShouldClose(mWindow))
-  {
-    // @TODO: REPLACE WITH FRAME RATE CONTROLLER UPDATE
-    mFRC.Update();
+void Application::Run() {
+  static auto& eventManager{ Events::EventManager::GetInstance() };
+  static auto& inputManager{ Input::InputManager::GetInstance() };
 
-    glfwPollEvents();
+  while (!glfwWindowShouldClose(mWindow.get())) {
+    FrameRateController::GetInstance().Start();
+    
 
+#ifndef IMGUI_DISABLE
     if (mImGuiActive) {
       ImGuiStartFrame();
     }
+#endif
 
-    // @TODO: REPLACE WITH INPUT MANAGER UPDATE
-    InputAssistant::Update();
+    inputManager.UpdateInput();
 
     // dispatch all events in the queue at the start of game loop
-    static auto& eventManager{ Events::EventManager::GetInstance() };
     eventManager.DispatchAll();
 
+#ifndef IMGUI_DISABLE
     if (mImGuiActive) {
-      GUI::GUIManager::UpdateGUI();
+      mGUIManager.UpdateGUI();
     }
+#endif
 
-    mScene->Update(mFRC.GetDeltaTime());
+    mScene->Update(FrameRateController::GetInstance().GetDeltaTime());
 
+#ifndef IMGUI_DISABLE
     if (mImGuiActive)
     {
       UpdateFramebuffers();
@@ -63,14 +122,24 @@ void Application::Run()
         glfwMakeContextCurrent(backup_current_context);
       }
     }
+#else
+    glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
+    mFramebuffers.front().second();
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+#endif
 
     // check and call events, swap buffers
-    glfwSwapBuffers(mWindow);
+    glfwSwapBuffers(mWindow.get());
+
+    FrameRateController::GetInstance().End();
   }
 }
 
 Application::Application(const char* name, int width, int height) :
-  mFRC{}, mScene{}, mWindow{},
+#ifndef IMGUI_DISABLE
+  mGUIManager{},
+#endif
+  mScene{}, mWindow{},
   mWidth{ width }, mHeight{ height }, mImGuiActive{ true }
 {
   glfwInit();
@@ -81,16 +150,23 @@ Application::Application(const char* name, int width, int height) :
   glfwWindowHint(GLFW_RED_BITS, 8); glfwWindowHint(GLFW_GREEN_BITS, 8);
   glfwWindowHint(GLFW_BLUE_BITS, 8); glfwWindowHint(GLFW_ALPHA_BITS, 8);
 
-  mWindow = glfwCreateWindow(width, height, name, NULL, NULL);
+  // initialize window ptr
+  // have to do this because i can't make_unique with custom dtor
+  {
+    WindowPtr temp{ glfwCreateWindow(width, height, name, NULL, NULL) };
+    mWindow = std::move(temp);
+  }
+
   if (!mWindow) {
     throw std::runtime_error("Unable to create window for application");
   }
 
-  glfwMakeContextCurrent(mWindow);
+  glfwMakeContextCurrent(mWindow.get());
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
     throw std::runtime_error("Failed to initialize GLAD");
   }
 
+#ifndef IMGUI_DISABLE
   // Setup Dear ImGui context
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
@@ -106,15 +182,16 @@ Application::Application(const char* name, int width, int height) :
   }
 
   // Setup Platform/Renderer backends
-  ImGui_ImplGlfw_InitForOpenGL(mWindow, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
-  ImGui_ImplOpenGL3_Init();
+  ImGui_ImplGlfw_InitForOpenGL(mWindow.get(), true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
+  ImGui_ImplOpenGL3_Init("#version 460 core");
+#endif
 
-  glfwSetWindowUserPointer(mWindow, this); // set the window to reference this class
+  glfwSetWindowUserPointer(mWindow.get(), this); // set the window to reference this class
   
   glViewport(0, 0, width, height); // specify size of viewport
   SetCallbacks();
 
-  mScene = std::make_unique<Scene>("./shaders/BlinnPhong.vert.glsl", "./shaders/BlinnPhong.frag.glsl");
+  mScene = std::make_unique<Scene>("./Assets/Shaders/BlinnPhong.vert.glsl", "./Assets/Shaders/BlinnPhong.frag.glsl");
   // attach each draw function to its framebuffer
   mFramebuffers.emplace_back(std::piecewise_construct, std::forward_as_tuple(width, height),
     std::forward_as_tuple(std::bind(&Scene::Draw, mScene.get())));
@@ -134,19 +211,14 @@ void Application::UpdateFramebuffers()
   }
 }
 
-void Application::ImGuiStartFrame() const
-{
-  ImGui_ImplOpenGL3_NewFrame();
-  ImGui_ImplGlfw_NewFrame();
-  ImGui::NewFrame();
-  ImGui::DockSpaceOverViewport(); // convert the window into a dockspace
-}
-
 void Application::SetCallbacks()
 {
-  glfwSetFramebufferSizeCallback(mWindow, FramebufferSizeCallback);
+  glfwSetFramebufferSizeCallback(mWindow.get(), FramebufferSizeCallback);
   glfwSetErrorCallback(ErrorCallback);
-  InputAssistant::Init(mWindow);
+
+#ifndef IMGUI_DISABLE
+  glfwSetDropCallback(mWindow.get(), WindowDropCallback);           // file drag n drop callback
+#endif
 }
 
 void Application::FramebufferSizeCallback(GLFWwindow* window, int width, int height)
@@ -162,16 +234,33 @@ void Application::FramebufferSizeCallback(GLFWwindow* window, int width, int hei
 
 void Application::ErrorCallback(int err, const char* desc)
 {
+  UNREFERENCED_PARAMETER(err);
 #ifdef _DEBUG
   std::cerr << "GLFW ERROR: \"" << desc << "\"" << " | Error code: " << std::endl;
 #endif
 }
 
+#ifndef IMGUI_DISABLE
+void Application::ImGuiStartFrame() const
+{
+  ImGui_ImplOpenGL3_NewFrame();
+  ImGui_ImplGlfw_NewFrame();
+  ImGui::NewFrame();
+  ImGui::DockSpaceOverViewport(); // convert the window into a dockspace
+}
+
+void Application::WindowDropCallback(GLFWwindow*, int pathCount, const char* paths[]) {
+  QUEUE_EVENT(Events::AddFilesFromExplorerEvent, pathCount, paths);
+}
+#endif
+
 Application::~Application()
 {
+#ifndef IMGUI_DISABLE
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();
   ImGui::DestroyContext();
+#endif
 
   glfwTerminate();
 }
