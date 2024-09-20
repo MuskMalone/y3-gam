@@ -13,6 +13,11 @@ namespace Graphics {
             const std::vector<Vertex>& vertices,
             const std::vector<uint32_t>& indices)
             : mVertexArray{ vao }, mSubmeshes{ submeshes }, mVertices{ vertices }, mIndices{ indices } {}
+        MeshSource(std::shared_ptr<VertexArray>&& vao,
+          std::vector<Submesh>&& submeshes,
+          std::vector<Vertex>&& vertices,
+          std::vector<uint32_t>&& indices)
+          : mVertexArray{ std::move(vao) }, mSubmeshes{ std::move(submeshes) }, mVertices{ std::move(vertices) }, mIndices{ std::move(indices) } {}
 
         const std::vector<Vertex>& GetVertices() const { return mVertices; }
         const std::vector<uint32_t>& GetIndices() const { return mIndices; }

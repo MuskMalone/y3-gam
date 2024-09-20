@@ -21,8 +21,6 @@ public:
 
   void Init();
   void Update(float deltaTime);
-  inline void RecomputeBVH() noexcept { m_bvhModified = true; }
-  inline void ReconstructTree() noexcept { m_reconstructTree = true; }
   void ResetCamera();
   static void AddMesh(ECS::Entity entity);
   static Camera& GetMainCamera() { return m_cameras.front(); }
@@ -30,10 +28,6 @@ public:
   void DrawTopView();
 
   void DebugDraw(); //@todo TEMP
-
-  // allow ObjectEditor to access objects,
-  friend class GUI::GUIWindow;
-  friend class GUI::GUIManager;
 
 private:
 	Graphics::EditorCamera mEcam;
@@ -43,14 +37,10 @@ private:
   static // tch to remove added for testing 
 	  std::vector<Camera> m_cameras;
 
-  // can encapsulate in a struct if more members are added
-  // so that GUIWindow can allow access to relevant members
-  // to derived classes
-  static //tch to remove, added for testing
-	  std::vector<std::shared_ptr<Object>> mObjects;
+  //static //tch to remove, added for testing
+	 // std::vector<std::shared_ptr<Object>> mObjects;
 
   bool m_leftClickHeld, m_leftClickTriggered;
-  bool m_bvhModified, m_reconstructTree;
 
   inline void StartPanning() noexcept { m_leftClickHeld = true; }
   inline void EndPanning() noexcept { m_leftClickHeld = false; m_leftClickTriggered = true; }

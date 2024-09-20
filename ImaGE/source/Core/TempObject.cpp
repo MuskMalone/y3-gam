@@ -1,7 +1,6 @@
 #include <pch.h>
 #include "TempObject.h"
 #include <glm/gtx/transform.hpp>
-#include <Graphics/MeshGen.h>
 #include <memory>
 
 Object::Object(Graphics::MeshType type, glm::vec4 const& color,
@@ -11,7 +10,7 @@ Object::Object(Graphics::MeshType type, glm::vec4 const& color,
   }, clr{ color }, transform{ _pos, _scale },
   modified{ true }, collided{ false }
 {
-  meshRef = Graphics::MeshGen::GetMesh(type);
+  
 }
 
 Object::Object(std::string const& filePath, glm::dvec3 const& _pos, glm::dvec3 const& _scale)
@@ -21,7 +20,6 @@ Object::Object(std::string const& filePath, glm::dvec3 const& _pos, glm::dvec3 c
   clr{ 1.f, 112.f / 255.f, 153.f / 255.f, 1.f },
   modified{ true }, collided{ false }
 {
-  meshRef = Graphics::MeshGen::GetMesh(filePath);
   Update(0.0);
 }
 

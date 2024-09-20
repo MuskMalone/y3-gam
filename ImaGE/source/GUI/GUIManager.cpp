@@ -27,7 +27,7 @@ namespace GUI
     mPersistentElements.emplace_back(std::make_unique<SceneControls>("Scene Controls"));
     mPersistentElements.emplace_back(std::make_unique<PrefabEditor>("Prefab Editor"));
 
-    mWindows.reserve(4);
+    mWindows.reserve(5);
     mWindows.emplace_back(std::make_unique<Viewport>("Viewport", framebuffer));
     mWindows.emplace_back(std::make_unique<Inspector>("Inspector"));
     mWindows.emplace_back(std::make_unique<SceneHierarchy>("Scene Hierarchy"));

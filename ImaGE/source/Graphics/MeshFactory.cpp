@@ -2,7 +2,7 @@
 #include "MeshFactory.h"
 
 namespace Graphics {
-	std::shared_ptr<MeshSource> MeshFactory::CreateCube() {
+	MeshFactory::MeshSourcePtr MeshFactory::CreateCube() {
         std::vector<Vertex> cubeVertices{
             // Front face
             {{-0.5f, -0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {0.0f, 0.0f}, {}, {}},  // Bottom-left
@@ -90,7 +90,7 @@ namespace Graphics {
         return std::make_shared<MeshSource>(vao, submeshes, cubeVertices, cubeIndices);
 	}
 
-        std::shared_ptr<MeshSource> MeshFactory::CreatePyramid() {
+        MeshFactory::MeshSourcePtr MeshFactory::CreatePyramid() {
             std::vector<Vertex> pyramidVertices{
                 // Base (square)
                 {{-0.5f, 0.0f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 0.0f}, {}, {}},  // Bottom-left
@@ -153,4 +153,9 @@ namespace Graphics {
             return std::make_shared<MeshSource>(vao, submeshes, pyramidVertices, pyramidIndices);
         }
 
+#ifndef IMGUI_DISABLE
+        static MeshFactory::MeshSourcePtr CreateModelFromImport() {
+
+        }
+#endif
 }

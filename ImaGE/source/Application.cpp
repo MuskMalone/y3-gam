@@ -311,6 +311,11 @@ void Application::WindowDropCallback(GLFWwindow*, int pathCount, const char* pat
 }
 #endif
 
+void Application::Shutdown()
+{
+  Scenes::SceneManager::GetInstance().Shutdown();
+}
+
 Application::~Application()
 {
 #ifndef IMGUI_DISABLE
