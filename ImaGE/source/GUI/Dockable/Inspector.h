@@ -21,6 +21,7 @@ namespace GUI {
     static void SetIsComponentEdited(bool isComponentEdited);
 
   private:
+    // Kindly put in alphabetical order, thank you!
     void ColliderComponentWindow(ECS::Entity entity);
     void LayerComponentWindow(ECS::Entity entity);
     void MaterialComponentWindow(ECS::Entity entity);

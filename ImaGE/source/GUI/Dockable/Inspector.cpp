@@ -28,8 +28,8 @@ namespace GUI {
   Inspector::Inspector(std::string const& name) : GUIWindow(name),
     mComponentOpenStatusMap{}, mObjFactory{ Reflection::ObjectFactory::GetInstance() },
     mPreviousEntity{}, mEntityChanged{ false } {
-    for (std::string const& component : Component::ComponentNameList) {
-      mComponentOpenStatusMap[component] = true; // Default to all open
+    for (auto const& component : Reflection::gComponentTypes) {
+      mComponentOpenStatusMap[component.get_name().to_string().c_str()] = true;
     }
   }
 
@@ -42,11 +42,12 @@ namespace GUI {
       if (currentEntity != mPreviousEntity) {
         mPreviousEntity = currentEntity;
         mEntityChanged = true;
+        Inspector::SetIsComponentEdited(false);
       }
       else
         mEntityChanged = false;
 
-      // @TODO: EDIT WHEN NEW COMPONENTS
+      // @TODO: EDIT WHEN NEW COMPONENTS (ALSO ITS OWN WINDOW FUNCTION)
       if (currentEntity.HasComponent<Component::Tag>())
         TagComponentWindow(currentEntity);
 
@@ -239,7 +240,7 @@ namespace GUI {
   }
 
   void Inspector::ColliderComponentWindow(ECS::Entity entity) {
-    bool isOpen{ WindowBegin<Component::RigidBody>("RigidBody") };
+    bool isOpen{ WindowBegin<Component::Collider>("Collider") };
 
     if (isOpen) {
       // Assuming 'collider' is an instance of Collider
@@ -281,6 +282,7 @@ namespace GUI {
         ImGui::TableSetupColumn("ComponentNames", ImGuiTableColumnFlags_WidthFixed, 200.f);
 
         // @TODO: EDIT WHEN NEW COMPONENTS
+        DrawAddComponentButton<Component::Collider>("Collider");
         DrawAddComponentButton<Component::Layer>("Layer");
         DrawAddComponentButton<Component::Material>("Material");
         DrawAddComponentButton<Component::Mesh>("Mesh");
@@ -288,7 +290,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Script>("Script");
         DrawAddComponentButton<Component::Tag>("Tag");
         DrawAddComponentButton<Component::Text>("Text");
-        DrawAddComponentButton<Component::Transform>("Transform");  
+        DrawAddComponentButton<Component::Transform>("Transform");
 
         ImGui::EndTable();
       }
@@ -362,8 +364,6 @@ namespace GUI {
     const ImVec2 rowAreaMin = ImGui::TableGetCellBgRect(ImGui::GetCurrentTable(), 0).Min;
     const ImVec2 rowAreaMax = { ImGui::TableGetCellBgRect(ImGui::GetCurrentTable(),
       ImGui::TableGetColumnCount() - 1).Max.x, rowAreaMin.y + rowHeight };
-
-    //ImGui::GetWindowDrawList()->AddRect(rowAreaMin, rowAreaMax, Color::IMGUI_COLOR_RED); // Debug
 
     ImGui::PushClipRect(rowAreaMin, rowAreaMax, false);
     bool isRowHovered, isRowClicked;

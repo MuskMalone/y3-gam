@@ -34,19 +34,20 @@ namespace GUI
       return;
     }
 
+    std::string sceneNameSave{ (Inspector::GetIsComponentEdited()) ? mSceneName + " *" : mSceneName };
+
     if (mEditingPrefab) {
-      ImGui::Text(("Editing Prefab: " + mSceneName).c_str());
+      ImGui::Text(("Editing Prefab: " + sceneNameSave).c_str());
       ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(253, 208, 23, 255));
       ImGui::Text("Press ESC to return to scene");
       ImGui::PopStyleColor();
     }
     else {
-      ImGui::Text(mSceneName.c_str());
+      ImGui::Text(sceneNameSave.c_str());
     }
-    std::string sceneNameSave{ (Inspector::GetIsComponentEdited()) ? mSceneName + " *" : mSceneName };
-    ImGui::Text(sceneNameSave.c_str());
 
-    // TODO: MOVE SOMEWHERE ELSE
+
+    // TODO: TEMPORARY FOR TESTING, MOVE SOMEWHERE ELSE
     ImGuiIO& io = ImGui::GetIO();
     if (io.KeyCtrl && ImGui::IsKeyPressed(ImGuiKey_S, false)) {
       Inspector::SetIsComponentEdited(false);
