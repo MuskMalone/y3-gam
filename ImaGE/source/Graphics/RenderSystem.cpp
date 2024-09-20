@@ -25,14 +25,17 @@ namespace Graphics {
 		auto& entManager = ECS::EntityManager::GetInstance();
 		auto entityList = entManager.GetAllEntitiesWithComponents<Component::Transform, Component::Mesh>();
 
-		{Utils::RenderContext renderContext(eCam.GetViewProjMatrix());
+		{//Render Start
+			Utils::RenderContext renderContext(eCam.GetViewProjMatrix());
 
-		for (ECS::Entity entity : entityList) {
-			auto const& xfm = entity.GetComponent<Component::Transform>();
-			auto const& mesh = entity.GetComponent<Component::Mesh>();
+			for (ECS::Entity entity : entityList) {
+				auto const& xfm = entity.GetComponent<Component::Transform>();
+				auto const& mesh = entity.GetComponent<Component::Mesh>();
+				if (mesh.mesh == nullptr) continue;
 
-			Graphics::Renderer::SubmitMesh(mesh.mesh, xfm.worldPos, xfm.worldScale, { 1.f,1.f,1.f,1.f }, {}); //@TODO change clr and rot 
-		}
-		}
+				Graphics::Renderer::SubmitMesh(mesh.mesh, xfm.worldPos, xfm.worldScale, { 1.f,1.f,1.f,1.f }, {}); //@TODO change clr and rot 
+			}
+
+		} // Render End
 	}
 }

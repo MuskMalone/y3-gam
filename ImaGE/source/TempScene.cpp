@@ -112,6 +112,8 @@ void Scene::Update(float deltaTime)
   {
     cam.Update(deltaTime);
   }
+
+  mEcam.UpdateCamera(deltaTime);
 }
 
 void Scene::Draw()

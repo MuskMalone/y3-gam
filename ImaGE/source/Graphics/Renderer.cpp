@@ -310,6 +310,7 @@ namespace Graphics {
 	}
 
 	void Renderer::SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& scale, glm::vec4 const& clr, float rot) {
+		if (mesh == nullptr) return;
 		auto const& meshSrc = mesh->GetMeshSource();
 		auto const& submeshes = meshSrc->GetSubmeshes();
 

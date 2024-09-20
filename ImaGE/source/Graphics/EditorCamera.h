@@ -18,6 +18,16 @@ namespace Graphics {
 		glm::mat4 GetViewMatrix() const;
 		glm::mat4 GetProjMatrix() const;
 		glm::mat4 GetViewProjMatrix() const;
+
+		void UpdateCamera(float dt);
+
+		glm::vec3 GetForwardVector() const;
+		glm::vec3 GetRightVector() const;
+		glm::vec3 GetUpVector() const;
+
+		void ProcessKeyboardInput(float deltaTime);
+		void ProcessMouseInput(float offsetX, float offsetY);
+		void ProcessMouseScroll(float scrollOffset);
 	private:
 		glm::vec3 mPosition;
 		float mYaw;
@@ -27,7 +37,8 @@ namespace Graphics {
 		float mNearClip;
 		float mFarClip;
 
-		float mMoveSpeed{2.5f};
-		float mMouseSense{ 0.1f };
+		float mMoveSpeed{10.f};
+		float mMouseSense{ 0.0f };
+		float mZoomSpeed{5.f};
 	};
 }

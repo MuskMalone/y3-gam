@@ -11,6 +11,7 @@ namespace IGE {
 		public:
 			static std::shared_ptr<IGE::Physics::PhysicsSystem> GetInstance();
 			PhysicsSystem();
+			~PhysicsSystem();
 			static void InitAllocator();
 			void Init();
 			void Update(float dt);
