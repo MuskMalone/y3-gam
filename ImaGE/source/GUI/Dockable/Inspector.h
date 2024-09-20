@@ -58,6 +58,8 @@ namespace GUI {
 
     bool isOpen{ ImGui::TreeNode(windowName.c_str()) };
 
+    ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::RobotoMedium]);
+
     if (isOpen) {
       // Must close component window if a component was removed
       if (!DrawOptionsListButton<Component>(windowName)) {

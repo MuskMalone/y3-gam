@@ -38,6 +38,7 @@ namespace GUI {
 
   void Inspector::Run() {
     ImGui::Begin(mWindowName.c_str());
+    ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::RobotoBold]);
     ECS::Entity const& currentEntity{ GUIManager::GetSelectedEntity() };
     
     if (currentEntity) {
@@ -77,7 +78,7 @@ namespace GUI {
       if (currentEntity.HasComponent<Component::Transform>())
         TransformComponentWindow(currentEntity);
     }
-
+    ImGui::PopFont();
     ImGui::End();
   }
 
@@ -352,6 +353,7 @@ namespace GUI {
         ImGui::TreePop();
 
     ImGui::Separator();
+    ImGui::PopFont();
   }
 
   void Inspector::RigidBodyComponentWindow(ECS::Entity entity) {

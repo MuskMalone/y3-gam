@@ -19,14 +19,22 @@ namespace GUI
     void UpdateGUI();
     void StyleGUI() const;
 
+    static inline std::vector<ImFont*> const& GetCustomFonts() noexcept { return sCustomFonts; }
     static inline ECS::Entity const& GetSelectedEntity() noexcept { return sSelectedEntity; }
     static inline void SetSelectedEntity(ECS::Entity const& entity) noexcept { sSelectedEntity = entity; }
+    
+    enum CustomFonts {
+      RobotoBold,
+      RobotoMedium,
+      RobotoThin
+    };
 
   private:
     std::vector<std::unique_ptr<GUIWindow>> mPersistentElements;  // contains controls outside of the dockspace
     std::vector<std::unique_ptr<GUIWindow>> mWindows; // dockable/hideable windows
 
     static ECS::Entity sSelectedEntity; // currently selected entity
+    static std::vector<ImFont*> sCustomFonts;
   };
 
 } // namespace GUI

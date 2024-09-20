@@ -15,3 +15,6 @@ constexpr char gPrefabsDirectory[] = ".\\Assets\\Prefabs\\";
 constexpr char gSceneFileExt[] = ".scn";
 constexpr char gPrefabFileExt[] = ".pfb";
 constexpr char gIconsFontPath[] = ".\\Source\\External\\ImGui\\misc\\fonts\\fa-solid-900.ttf";
+constexpr char gRobotoBoldFontPath[] = ".\\Source\\External\\ImGui\\misc\\fonts\\Roboto-Bold.ttf";
+constexpr char gRobotoMediumFontPath[] = ".\\Source\\External\\ImGui\\misc\\fonts\\Roboto-Medium.ttf";
+constexpr char gRobotoThinFontPath[] = ".\\Source\\External\\ImGui\\misc\\fonts\\Roboto-Thin.ttf";

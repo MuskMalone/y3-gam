@@ -16,7 +16,9 @@
 
 namespace GUI
 {
+  // Static Initialization
   ECS::Entity GUIManager::sSelectedEntity{};
+  std::vector<ImFont*> GUIManager::sCustomFonts{};
 
   GUIManager::GUIManager() :mPersistentElements{}, mWindows{} {}
 
@@ -46,7 +48,6 @@ namespace GUI
     for (auto const& window : mWindows)
     {
       if (!window->IsActive()) { continue; }
-
       window->Run();
     }
   }
@@ -62,6 +63,10 @@ namespace GUI
     cfg.GlyphOffset = ImVec2(0, 1);
     static constexpr ImWchar icon_ranges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
     io.Fonts->AddFontFromFileTTF(gIconsFontPath, 17.f * 2.0f / 3.0f, &cfg, icon_ranges);
+
+    sCustomFonts.emplace_back(io.Fonts->AddFontFromFileTTF(gRobotoBoldFontPath, 24.f));
+    sCustomFonts.emplace_back(io.Fonts->AddFontFromFileTTF(gRobotoMediumFontPath, 16.f));
+    sCustomFonts.emplace_back(io.Fonts->AddFontFromFileTTF(gRobotoThinFontPath, 16.f));
   }
 
 } // namespace GUI
