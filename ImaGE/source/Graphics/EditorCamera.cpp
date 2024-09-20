@@ -16,10 +16,22 @@ namespace Graphics {
     }
 
     void EditorCamera::UpdateCamera(float dt) {
-        //ProcessKeyboardInput(dt);
+
+        if (Input::InputManager::IsKeyHeld(IK_W))
+            ProcessKeyboardInput(CameraMovement::FORWARD, dt);
+        if (Input::InputManager::IsKeyHeld(IK_S))
+            ProcessKeyboardInput(CameraMovement::BACKWARD, dt);
+        if (Input::InputManager::IsKeyHeld(IK_A))
+            ProcessKeyboardInput(CameraMovement::LEFT, dt);
+        if (Input::InputManager::IsKeyHeld(IK_D))
+            ProcessKeyboardInput(CameraMovement::RIGHT, dt);
+        if (Input::InputManager::IsKeyHeld(IK_Q))
+            ProcessKeyboardInput(CameraMovement::DOWN, dt);
+        if (Input::InputManager::IsKeyHeld(IK_E))
+            ProcessKeyboardInput(CameraMovement::UP, dt);
 
         // Mouse input for looking around
-        auto mouseDelta = Input::InputManager::GetInstance().GetMousePos();  // Get mouse delta from InputManager
+        auto mouseDelta = Input::InputManager::GetInstance().GetMouseDelta();  // Get mouse delta from InputManager
         ProcessMouseInput(mouseDelta.x, mouseDelta.y);
 
         // Scroll input for zooming
@@ -63,20 +75,40 @@ namespace Graphics {
         //    mPosition += glm::vec3{ 0.0f, 1.0f, 0.0f } *mMoveSpeed * dt;
         //}
         float velocity = mMoveSpeed * dt;
-        switch (dir) {
-        case CameraMovement::FORWARD:
+
+        if(dir == CameraMovement::FORWARD)
             mPosition += GetForwardVector() * velocity;
-            break;
-        case CameraMovement::BACKWARD:
+        if(dir == CameraMovement::BACKWARD)
             mPosition -= GetForwardVector() * velocity;
-            break;
-        case CameraMovement::LEFT:
+        if(dir == CameraMovement::LEFT)
             mPosition -= GetRightVector() * velocity;
-            break;
-        case CameraMovement::RIGHT:
+        if(dir == CameraMovement::RIGHT)
             mPosition += GetRightVector() * velocity;
-            break;
-        }
+        if (dir == CameraMovement::DOWN)
+            mPosition -= glm::vec3{ 0.0f, 1.0f, 0.0f } *velocity;
+        if(dir == CameraMovement::UP)
+            mPosition += glm::vec3{ 0.f, 1.f, 0.f } * velocity;
+
+        //switch(dir) {
+        //case CameraMovement::FORWARD:
+        //    mPosition += GetForwardVector() * velocity;
+        //    break;
+        //case CameraMovement::BACKWARD:
+        //    mPosition -= GetForwardVector() * velocity;
+        //    break;
+        //case CameraMovement::LEFT:
+        //    mPosition -= GetRightVector() * velocity;
+        //    break;
+        //case CameraMovement::RIGHT:
+        //    mPosition += GetRightVector() * velocity;
+        //    break;
+        //case CameraMovement::DOWN:
+        //    mPosition -= glm::vec3{ 0.0f, 1.0f, 0.0f } * velocity;
+        //    break;
+        //case CameraMovement::UP:
+        //    mPosition += glm::vec3{ 0.f, 1.f, 0.f} * velocity;
+        //    break;
+        //}
     }
     void EditorCamera::ProcessMouseInput(float offsetX, float offsetY) {
         offsetX *= mMouseSense;

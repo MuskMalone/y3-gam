@@ -97,6 +97,7 @@ void Scene::Init()
 
 void Scene::Update(float deltaTime)
 {
+    mEcam.UpdateCamera(deltaTime);
   // update transforms
     IGE::Physics::PhysicsSystem::GetInstance()->Update(deltaTime);
   for (auto& obj : mObjects)
@@ -107,13 +108,13 @@ void Scene::Update(float deltaTime)
     
   }
 
+
   // update camera
   for (auto& cam : m_cameras)
   {
     cam.Update(deltaTime);
   }
 
-  mEcam.UpdateCamera(deltaTime);
 }
 
 void Scene::Draw()

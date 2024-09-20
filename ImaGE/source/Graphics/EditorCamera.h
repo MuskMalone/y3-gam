@@ -8,7 +8,9 @@ namespace Graphics {
 			FORWARD,
 			BACKWARD,
 			LEFT,
-			RIGHT
+			RIGHT,
+			DOWN,
+			UP
 		};
 	public:
 		EditorCamera(
@@ -45,7 +47,7 @@ namespace Graphics {
 		float mFarClip;
 
 		float mMoveSpeed{10.f};
-		float mMouseSense{ 0.0f };
+		float mMouseSense{ 0.1f };
 		float mZoomSpeed{5.f};
 	};
 }
