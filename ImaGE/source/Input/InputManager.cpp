@@ -12,7 +12,7 @@
 		 #include "../InputManager/InputManager.h"
 
 	2. // Initialize the Input Manager in your Game's Init after Create Window
-		 Input::InputManager::GetInstance().InitInputManager(ptr_window, width, height);
+		 Input::InputManager::GetInstance().InitInputManager(ptr_window, width, height);mMousePos
 
 	3. // Call theUpdateInput() function at the start of each game loop ( Start of Update function )
 		Input::InputManager::GetInstance().UpdateInput();
@@ -42,26 +42,27 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 using namespace Input;
 using namespace Events;
 
-int InputManager::m_width;
-double InputManager::m_scrollX;
-double InputManager::m_scrollY;
-int InputManager::m_height;
-double InputManager::m_keyHeldTime;
-glm::vec2 InputManager::m_mousePos;
-KEY_MAP InputManager::m_keyReleased;
-KEY_MAP InputManager::m_keyHeld;
-KEY_MAP InputManager::m_keysTriggered;
-KEY_PRESS_ARRAY InputManager::m_keyFramesHeld;
-size_t InputManager::m_currFramebuffer;
+int InputManager::mWidth;
+double InputManager::mScrollX;
+double InputManager::mScrollY;
+int InputManager::mHeight;
+double InputManager::mKeyHeldTime;
+glm::vec2 InputManager::mPrevMousePos;
+glm::vec2 InputManager::mCurrMousePos;
+KEY_MAP InputManager::mKeyReleased;
+KEY_MAP InputManager::mKeyHeld;
+KEY_MAP InputManager::mKeysTriggered;
+KEY_PRESS_ARRAY InputManager::mKeyFramesHeld;
+size_t InputManager::mCurrFramebuffer;
 
 void InputManager::InitInputManager(std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& window, int width, int height, double holdTime)
 {
-	m_height = height;
-	m_width = width;
-	m_keyHeld.reset();
-	m_keysTriggered.reset();
-	m_keyFramesHeld.fill(0);
-	m_keyHeldTime = holdTime;
+	mHeight = height;
+	mWidth = width;
+	mKeyHeld.reset();
+	mKeysTriggered.reset();
+	mKeyFramesHeld.fill(0);
+	mKeyHeldTime = holdTime;
 	
 	// Subscribe to the mouse/keyboard event
 	glfwSetKeyCallback(window.get(), KeyCallback);
@@ -72,22 +73,23 @@ void InputManager::InitInputManager(std::unique_ptr<GLFWwindow, GLFWwindowDestru
 
 void InputManager::SetDim(int width, int height)
 {
-	m_height = height;
-	m_width = width;
+	mHeight = height;
+	mWidth = width;
 }
 
 void InputManager::UpdateInput()
 {
-	m_keyReleased.reset();
-	m_keysTriggered.reset();
-	m_scrollX = m_scrollY = 0;
+	mPrevMousePos = mCurrMousePos;
+	mKeyReleased.reset();
+	mKeysTriggered.reset();
+	mScrollX = mScrollY = 0;
 	glfwPollEvents();
 	double dt = FrameRateController::GetInstance().GetDeltaTime();
 	for (int i{ 0 }; i < static_cast<int>(IK_KEY_COUNT); ++i)
 	{
 
-		m_keyFramesHeld[i] = (m_keyReleased[i]) ? 0: (m_keyFramesHeld[i] > 0.f || m_keysTriggered[i]) ? (m_keyFramesHeld[i] < m_keyHeldTime) ? m_keyFramesHeld[i] + dt: m_keyFramesHeld[i]: 0;
-		m_keyHeld[i] = (m_keyFramesHeld[i] >= m_keyHeldTime);
+		mKeyFramesHeld[i] = (mKeyReleased[i]) ? 0: (mKeyFramesHeld[i] > 0.f || mKeysTriggered[i]) ? (mKeyFramesHeld[i] < mKeyHeldTime) ? mKeyFramesHeld[i] + dt: mKeyFramesHeld[i]: 0;
+		mKeyHeld[i] = (mKeyFramesHeld[i] >= mKeyHeldTime);
 	}
 
 	QueueInputEvents();
@@ -122,6 +124,7 @@ void InputManager::QueueInputEvents()
 	if (IsKeyTriggered(IK_H))
 	{
 		QUEUE_EVENT(Events::KeyTriggeredEvent, IK_H);
+		
 		//Debug::DebugLogger::GetInstance().LogInfo("Testies");
 		//throw Debug::Exception<InputManager>(Debug::LVL_CRITICAL, Msg("ThrowTesties"));
 	}
@@ -176,38 +179,38 @@ void InputManager::QueueInputEvents()
 
 bool InputManager::IsKeyTriggered(KEY_CODE key)
 {
-	return (m_keysTriggered[static_cast<int>(key)]);
+	return (mKeysTriggered[static_cast<int>(key)]);
 }
 bool InputManager::IsKeyHeld(KEY_CODE key)
 {
-	return (m_keyHeld[static_cast<int>(key)]);
+	return (mKeyHeld[static_cast<int>(key)]);
 }
 bool InputManager::IsKeyReleased(KEY_CODE key)
 {
-	return (m_keyReleased[static_cast<int>(key)]);
+	return (mKeyReleased[static_cast<int>(key)]);
 }
 bool InputManager::IsKeyPressed(KEY_CODE key)
 {
-	return (m_keyFramesHeld[static_cast<int>(key)] > 0.f);
+	return (mKeyFramesHeld[static_cast<int>(key)] > 0.f);
 }
 
 
 
 vec2  InputManager::GetMousePos()
 {
-	return m_mousePos;
+	return mCurrMousePos;
 }
 
 void Input::InputManager::SetCurrFramebuffer(size_t framebufferID)
 {
-	m_currFramebuffer = framebufferID;
+	mCurrFramebuffer = framebufferID;
 }
 
 vec2 InputManager::GetMousePosWorld()
 {
 	//auto& gEngine{ Graphics::GraphicsEngine::GetInstance() };
 	//// TODO: change to current framebuffer
-	//Graphics::gVec2 worldPosF32{ gEngine.ScreenToWS({ static_cast<GLfloat>(m_mousePos.x), static_cast<GLfloat>(m_height - m_mousePos.y) }, m_currFramebuffer) };
+	//Graphics::gVec2 worldPosF32{ gEngine.ScreenToWS({ static_cast<GLfloat>(mMousePos.x), static_cast<GLfloat>(mHeight - mMousePos.y) }, m_currFramebuffer) };
 	//return  {worldPosF32.x, worldPosF32.y};
 	return { 0,0 };
 }
@@ -215,12 +218,17 @@ vec2 InputManager::GetMousePosWorld()
 
 double InputManager::GetMouseScrollVert()
 {
-	return m_scrollY;
+	return mScrollY;
 }
 
 double InputManager::GetMouseScrollHor()
 {
-	return m_scrollX;
+	return mScrollX;
+}
+
+vec2 InputManager::GetMouseDelta()
+{
+	return (mCurrMousePos - mPrevMousePos);
 }
 
 void InputManager::KeyCallback(GLFWwindow* window, int key, int scanCode, int action, int mod)
@@ -242,8 +250,8 @@ void InputManager::KeyCallback(GLFWwindow* window, int key, int scanCode, int ac
 	if (key < 0)
 		return;
 
-	m_keyReleased[key] = (GLFW_RELEASE == action);
-	m_keysTriggered[key] = (GLFW_PRESS == action);
+	mKeyReleased[key] = (GLFW_RELEASE == action);
+	mKeysTriggered[key] = (GLFW_PRESS == action);
 }
 
 // Mouse callback function
@@ -254,8 +262,10 @@ void InputManager::MousePosCallback(GLFWwindow* window, double xpos, double ypos
 #else
 	UNREFERENCED_PARAMETER(window);
 #endif
-	m_mousePos.x = static_cast<float>(xpos);
-	m_mousePos.y = static_cast<float>(ypos);
+	
+	mCurrMousePos.x = static_cast<float>(xpos);
+	mCurrMousePos.y = static_cast<float>(ypos);
+
 
 }
 
@@ -273,16 +283,18 @@ void InputManager::MouseButtonCallback(GLFWwindow* pwin, int button, int action,
 	}
 #endif
 
-	m_keyReleased[button] = (GLFW_RELEASE == action);
-	m_keysTriggered[button] = (GLFW_PRESS == action);
+
+
+	mKeyReleased[button] = (GLFW_RELEASE == action);
+	mKeysTriggered[button] = (GLFW_PRESS == action);
 
 }
 
 void InputManager::MouseScrollCallback(GLFWwindow* pwin, double xoffset, double yoffset)
 {
 	UNREFERENCED_PARAMETER(pwin);
-	m_scrollX = xoffset;
-	m_scrollY = yoffset;
+	mScrollX = xoffset;
+	mScrollY = yoffset;
 
 #ifndef IMGUI_DISABLE
 	ImGui_ImplGlfw_ScrollCallback(pwin, xoffset, yoffset);

@@ -156,6 +156,8 @@
     <ClInclude Include="source\Graphics\Renderer.h" />
     <ClInclude Include="source\Graphics\RenderSystem.h" />
     <ClInclude Include="source\Graphics\Shader.h" />
+    <ClInclude Include="source\Asset\AssetManager.h" />
+    <ClInclude Include="source\Asset\IGEAssets.h" />
     <ClInclude Include="source\DebugTools\DebugLogger\DebugLogger.h" />
     <ClInclude Include="source\DebugTools\Exception\Exception.h" />
     <ClInclude Include="source\DebugTools\Exception\ExceptionBase.h" />

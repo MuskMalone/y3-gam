@@ -57,15 +57,16 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 		{
 
 		private:
-			static int m_width, m_height;
-			static double m_keyHeldTime;
-			static double m_scrollX, m_scrollY;
-			static glm::vec2 m_mousePos;
-			static KEY_MAP m_keyReleased;
-			static KEY_MAP m_keyHeld;
-			static KEY_MAP m_keysTriggered;
-			static KEY_PRESS_ARRAY m_keyFramesHeld;
-			static size_t m_currFramebuffer; //!< id of curr buffer (for mouse to WorldSpace)
+			static int mWidth, mHeight;
+			static double mKeyHeldTime;
+			static double mScrollX, mScrollY;
+			static glm::vec2 mCurrMousePos;
+			static glm::vec2 mPrevMousePos;
+			static KEY_MAP mKeyReleased;
+			static KEY_MAP mKeyHeld;
+			static KEY_MAP mKeysTriggered;
+			static KEY_PRESS_ARRAY mKeyFramesHeld;
+			static size_t mCurrFramebuffer; //!< id of curr buffer (for mouse to WorldSpace)
 
 		public:
 			/*!*********************************************************************
@@ -130,6 +131,16 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 				xoffset of  mouse scroll
 			************************************************************************/
 			static double GetMouseScrollHor();
+
+
+
+			/*!*********************************************************************
+			\brief
+				.Function to get the distance travelled by the mouse
+			\return
+				xoffset of  mouse scroll
+			************************************************************************/
+			static vec2 GetMouseDelta();
 
 			/*!*********************************************************************
 			\brief
