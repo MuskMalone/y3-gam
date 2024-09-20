@@ -8,6 +8,8 @@
 #include <variant>
 #include <Graphics/Mesh.h>
 
+#include <Graphics/EditorCamera.h>
+
 #include "Core/Entity.h"
 // forward declaration
 namespace GUI { class GUIWindow; class GUIManager; }
@@ -34,6 +36,7 @@ public:
   friend class GUI::GUIManager;
 
 private:
+	Graphics::EditorCamera mEcam;
   Graphics::ShaderProgram m_shaders, m_defaultShaders;
   Graphics::Light m_light;
   Graphics::Material m_material;

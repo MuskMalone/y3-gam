@@ -2,7 +2,12 @@
 #include "EditorCamera.h"
 namespace Graphics {
 	class RenderSystem {
-		void RenderScene(const EditorCamera& eCam);
+
+	public:
+		static void Init();
+		static void Release();
+		static void RenderScene();
+		static void RenderEditorScene(const EditorCamera& eCam);
 
 	};
 }

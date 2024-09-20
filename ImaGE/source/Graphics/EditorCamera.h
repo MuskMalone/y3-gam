@@ -4,6 +4,17 @@
 namespace Graphics {
 	class EditorCamera {
 	public:
+		EditorCamera(
+			glm::vec3 position = glm::vec3(0.0f, 0.0f, 3.0f),  // Default position
+			float yaw = -90.0f,                               // Default yaw
+			float pitch = 0.0f,                               // Default pitch
+			float fov = 45.0f,                                // Default field of view
+			float aspectRatio = 16.0f / 9.0f,                 // Default aspect ratio
+			float nearClip = 0.1f,                            // Near clipping plane
+			float farClip = 100.0f)                           // Far clipping plane
+			: mPosition(position), mYaw(yaw), mPitch(pitch), mFov(fov),
+			mAspectRatio(aspectRatio), mNearClip(nearClip), mFarClip(farClip) {}
+
 		glm::mat4 GetViewMatrix() const;
 		glm::mat4 GetProjMatrix() const;
 		glm::mat4 GetViewProjMatrix() const;
