@@ -132,6 +132,8 @@
     <ClCompile Include="source\Serialization\Deserializer.cpp" />
     <ClCompile Include="Source\Serialization\Registration\RegisterComponents.cpp" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
+    <ClInclude Include="source\Asset\AssetManager.h" />
+    <ClInclude Include="source\Asset\IGEAssets.h" />
     <ClInclude Include="source\DebugTools\DebugLogger\DebugLogger.h" />
     <ClInclude Include="source\DebugTools\Exception\Exception.h" />
     <ClInclude Include="source\DebugTools\Exception\ExceptionBase.h" />
