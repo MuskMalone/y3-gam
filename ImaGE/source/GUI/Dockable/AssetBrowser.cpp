@@ -6,6 +6,7 @@
 #include <Events/EventManager.h>
 #include <GUI/Helpers/AssetHelpers.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
+#include <GUI/Styles/FontAwesome6Icons.h>
 
 namespace Helper
 {
@@ -75,7 +76,7 @@ namespace GUI
 
     ImGui::SetCursorPosX(wWidth - wWidth * 0.25f);
     ImGui::PushItemWidth(wWidth * 0.24f);
-    ImGui::InputTextWithHint("##SearchBar", "Search Assets", &mSearchQuery, ImGuiInputTextFlags_AutoSelectAll);
+    ImGui::InputTextWithHint("##SearchBar", ICON_FA_MAGNIFYING_GLASS " Search Assets", &mSearchQuery, ImGuiInputTextFlags_AutoSelectAll);
     ImGui::PopItemWidth();
 
     ImGui::PopStyleVar();

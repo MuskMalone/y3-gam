@@ -167,10 +167,7 @@ namespace Scenes
     filepath << gAssetsDirectory << "Scenes\\" << mSceneName << sSceneFileExtension;
     Serialization::Serializer::SerializeScene(filepath.str());
 
-    // replace with logger
-#ifdef _DEBUG
-   std::cout << "Successfully saved scene to " + filepath.str() << "\n";
-#endif
+    Debug::DebugLogger::GetInstance().LogInfo("Successfully saved scene to " + filepath.str());
   }
 
   void SceneManager::TemporarySave()
@@ -195,7 +192,20 @@ namespace Scenes
     mSaveStates.pop();
     mSceneName = std::move(saveState.mName);
     LoadScene(saveState.mPath);
-    std::remove(saveState.mPath.c_str()); // delete the temp scene file
+    std::filesystem::remove(saveState.mPath); // delete the temp scene file
+  }
+
+  // cleanup any extra tmp files
+  SceneManager::~SceneManager()
+  {
+    std::vector<std::filesystem::path> filesToRemove;
+    for (auto const& file : std::filesystem::directory_iterator(mTempDir)) {
+      filesToRemove.emplace_back(file.path());
+    }
+
+    for (auto const& file : filesToRemove) {
+      std::filesystem::remove(file);
+    }
   }
 
 } // namespace Scenes

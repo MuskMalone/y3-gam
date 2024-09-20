@@ -35,7 +35,7 @@ namespace Serialization
   {
     std::ofstream ofs{ filePath };
     if (!ofs) {
-      // log("Unable to serialize prefab into " + filePath);
+      Debug::DebugLogger::GetInstance().LogCritical("Unable to serialize prefab into " + filePath);
 #ifdef _DEBUG
       std::cout << "Unable to serialize prefab into " + filePath << "\n";
 #endif
@@ -99,6 +99,7 @@ namespace Serialization
     std::ofstream ofs{ filename };
     if (!ofs)
     {
+      Debug::DebugLogger::GetInstance().LogError("Unable to open file " + filename);
 #ifdef _DEBUG
       std::cout << "Unable to open file " << filename << "\n";
 #endif

@@ -55,6 +55,11 @@
 #include <Jolt/Math/Quat.h>                 // Quaternion math (Quat)
 #include <Jolt/Physics/Collision/CollisionGroup.h> // Collision layer and group information
 
+
+
+#include <DebugTools/Exception/Exception.h>			//Exception Class for Logging
+#include <DebugTools/DebugLogger/DebugLogger.h> //Logging Tool
+
 #include <Globals.h>
 
 //glad

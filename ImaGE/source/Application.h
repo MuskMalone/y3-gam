@@ -5,6 +5,7 @@
 #include <FrameRateController/FrameRateController.h>
 #include <TempScene.h>
 #include <memory>
+#include <DebugTools/Exception/Exception.h>
 #include <Graphics/Framebuffer.h>
 
 #ifndef IMGUI_DISABLE

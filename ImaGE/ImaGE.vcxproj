@@ -39,6 +39,7 @@
     <ClCompile Include="Source\Core\TempObject.cpp" />
     <ClCompile Include="source\Graphics\VertexArray.cpp" />
     <ClCompile Include="source\Graphics\VertexBuffer.cpp" />
+    <ClCompile Include="source\DebugTools\DebugLogger\DebugLogger.cpp" />
     <ClCompile Include="Source\GUI\Helpers\AssetHelpers.cpp" />
     <ClCompile Include="source\Input\InputManager.cpp" />
     <ClCompile Include="Source\Reflection\ObjectFactory.cpp" />
@@ -155,8 +156,12 @@
     <ClInclude Include="source\Graphics\Renderer.h" />
     <ClInclude Include="source\Graphics\RenderSystem.h" />
     <ClInclude Include="source\Graphics\Shader.h" />
+    <ClInclude Include="source\DebugTools\DebugLogger\DebugLogger.h" />
+    <ClInclude Include="source\DebugTools\Exception\Exception.h" />
+    <ClInclude Include="source\DebugTools\Exception\ExceptionBase.h" />
     <ClInclude Include="Source\Events\SceneEvents.h" />
     <ClInclude Include="source\External\GLFWwindowDestructor.h" />
+    <ClInclude Include="Source\GUI\Styles\FontAwesome6Icons.h" />
     <ClInclude Include="Source\GUI\Helpers\AssetHelpers.h" />
     <ClInclude Include="Source\GUI\Helpers\AssetPayload.h" />
     <ClInclude Include="source\Input\InputManager.h" />
@@ -349,7 +354,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)lib\spdlog;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NO_IMGUI_D|x64'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GAME_BUILD|x64'" />
@@ -430,7 +437,7 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);JPH_DEBUG_RENDERER;JPH_PROFILE_ENABLED;JPH_OBJECT_STREAM;JPH_USE_AVX2;JPH_USE_AVX;JPH_USE_SSE4_1;JPH_USE_SSE4_2;JPH_USE_LZCNT;JPH_USE_TZCNT;JPH_USE_F16C;JPH_USE_FMADD</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);JPH_DEBUG_RENDERER;JPH_PROFILE_ENABLED;JPH_OBJECT_STREAM;JPH_USE_AVX2;JPH_USE_AVX;JPH_USE_SSE4_1;JPH_USE_SSE4_2;JPH_USE_LZCNT;JPH_USE_TZCNT;JPH_USE_F16C;JPH_USE_FMADD;_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>false</TreatWarningAsError>
       <PrecompiledHeader>Use</PrecompiledHeader>
