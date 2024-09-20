@@ -43,24 +43,39 @@ namespace Graphics {
         return glm::normalize(glm::cross(GetRightVector(), GetForwardVector()));
     }
 
-    void EditorCamera::ProcessKeyboardInput(float dt) {
-        if (Input::InputManager::GetInstance().IsKeyHeld(IK_W)) {
-            mPosition += GetForwardVector() * mMoveSpeed * dt;
-        }
-        if (Input::InputManager::GetInstance().IsKeyHeld(IK_S)) {
-            mPosition -= GetForwardVector() * mMoveSpeed * dt;
-        }
-        if (Input::InputManager::GetInstance().IsKeyHeld(IK_A)) {
-            mPosition -= GetRightVector() * mMoveSpeed * dt;
-        }
-        if (Input::InputManager::GetInstance().IsKeyHeld(IK_D)) {
-            mPosition += GetRightVector() * mMoveSpeed * dt;
-        }
-        if (Input::InputManager::GetInstance().IsKeyHeld(IK_Q)) {  // Move down
-            mPosition -= glm::vec3{ 0.0f, 1.0f, 0.0f } *mMoveSpeed * dt;
-        }
-        if (Input::InputManager::GetInstance().IsKeyHeld(IK_E)) {  // Move up
-            mPosition += glm::vec3{ 0.0f, 1.0f, 0.0f } *mMoveSpeed * dt;
+    void EditorCamera::ProcessKeyboardInput(CameraMovement dir, float dt) {
+        //if (Input::InputManager::GetInstance().IsKeyHeld(IK_W)) {
+        //    mPosition += GetForwardVector() * mMoveSpeed * dt;
+        //}
+        //if (Input::InputManager::GetInstance().IsKeyHeld(IK_S)) {
+        //    mPosition -= GetForwardVector() * mMoveSpeed * dt;
+        //}
+        //if (Input::InputManager::GetInstance().IsKeyHeld(IK_A)) {
+        //    mPosition -= GetRightVector() * mMoveSpeed * dt;
+        //}
+        //if (Input::InputManager::GetInstance().IsKeyHeld(IK_D)) {
+        //    mPosition += GetRightVector() * mMoveSpeed * dt;
+        //}
+        //if (Input::InputManager::GetInstance().IsKeyHeld(IK_Q)) {  // Move down
+        //    mPosition -= glm::vec3{ 0.0f, 1.0f, 0.0f } *mMoveSpeed * dt;
+        //}
+        //if (Input::InputManager::GetInstance().IsKeyHeld(IK_E)) {  // Move up
+        //    mPosition += glm::vec3{ 0.0f, 1.0f, 0.0f } *mMoveSpeed * dt;
+        //}
+        float velocity = mMoveSpeed * dt;
+        switch (dir) {
+        case CameraMovement::FORWARD:
+            mPosition += GetForwardVector() * velocity;
+            break;
+        case CameraMovement::BACKWARD:
+            mPosition -= GetForwardVector() * velocity;
+            break;
+        case CameraMovement::LEFT:
+            mPosition -= GetRightVector() * velocity;
+            break;
+        case CameraMovement::RIGHT:
+            mPosition += GetRightVector() * velocity;
+            break;
         }
     }
     void EditorCamera::ProcessMouseInput(float offsetX, float offsetY) {
