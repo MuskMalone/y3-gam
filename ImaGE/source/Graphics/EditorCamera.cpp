@@ -16,7 +16,7 @@ namespace Graphics {
     }
 
     void EditorCamera::UpdateCamera(float dt) {
-        ProcessKeyboardInput(dt);
+        //ProcessKeyboardInput(dt);
 
         // Mouse input for looking around
         auto mouseDelta = Input::InputManager::GetInstance().GetMousePos();  // Get mouse delta from InputManager

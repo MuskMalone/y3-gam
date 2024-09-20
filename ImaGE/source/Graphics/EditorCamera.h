@@ -3,6 +3,13 @@
 
 namespace Graphics {
 	class EditorCamera {
+
+		enum class CameraMovement {
+			FORWARD,
+			BACKWARD,
+			LEFT,
+			RIGHT
+		};
 	public:
 		EditorCamera(
 			glm::vec3 position = glm::vec3(0.0f, 0.0f, 3.0f),  // Default position
@@ -25,7 +32,7 @@ namespace Graphics {
 		glm::vec3 GetRightVector() const;
 		glm::vec3 GetUpVector() const;
 
-		void ProcessKeyboardInput(float deltaTime);
+		void ProcessKeyboardInput(CameraMovement dir, float dt);
 		void ProcessMouseInput(float offsetX, float offsetY);
 		void ProcessMouseScroll(float scrollOffset);
 	private:
