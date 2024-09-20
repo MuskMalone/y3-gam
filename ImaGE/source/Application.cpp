@@ -2,9 +2,9 @@
 #include "Application.h"
 
 #include <Events/EventManager.h>
-#include <Input/InputAssistant.h>
 #include <Scenes/SceneManager.h>
 #include <Prefabs/PrefabManager.h>
+#include <Input/InputManager.h>
 
 #include <Core/Entity.h>
 #include <Core/EntityManager.h>
@@ -18,16 +18,39 @@
 
 #include <Physics/PhysicsSystem.h>
 
+
+namespace
+{
+  /*!*********************************************************************
+   \brief
+     Wrapper function to print out exceptions.
+
+   \param e
+     Exception caught
+   ************************************************************************/
+  void PrintException(Debug::ExceptionBase& e);
+
+  /*!*********************************************************************
+  \brief
+    Wrapper function to print out exceptions.
+
+  \param e
+    Exception caught
+  ************************************************************************/
+  void PrintException(std::exception& e);
+
+}
+
 void Application::Init() {
-    IGE::Physics::PhysicsSystem::InitAllocator();
-    IGE::Physics::PhysicsSystem::GetInstance()->Init();
+  IGE::Physics::PhysicsSystem::InitAllocator();
+  IGE::Physics::PhysicsSystem::GetInstance()->Init();
   mScene->Init();
   Scenes::SceneManager::GetInstance().Init();
   Prefabs::PrefabManager::GetInstance().Init();
-  InputAssistant::RegisterKeyPressEvent(GLFW_KEY_GRAVE_ACCENT, std::bind(&Application::ToggleImGuiActive, this));
 
   // @TODO: SETTINGS TO BE LOADED FROM CONFIG FILE
   FrameRateController::GetInstance().Init(120.f, 1.f, false);
+  Input::InputManager::GetInstance().InitInputManager(mWindow, mWidth, mHeight, 0.3);
 
 #ifndef IMGUI_DISABLE
   mGUIManager.Init(mFramebuffers.front().first);
@@ -74,63 +97,97 @@ void Application::Init() {
     std::cout << elem.first << " : " << elem.second << "\n";
   }
   */
+
 }
 
 void Application::Run() {
-  while (!glfwWindowShouldClose(mWindow)) {
+  static auto& eventManager{ Events::EventManager::GetInstance() };
+  static auto& inputManager{ Input::InputManager::GetInstance() };
+
+  while (!glfwWindowShouldClose(mWindow.get())) {
     FrameRateController::GetInstance().Start();
-
-    glfwPollEvents();
-
-#ifndef IMGUI_DISABLE
-    if (mImGuiActive) {
-      ImGuiStartFrame();
-    }
-#endif
-
-    // @TODO: REPLACE WITH INPUT MANAGER UPDATE
-    InputAssistant::Update();
-
-    // dispatch all events in the queue at the start of game loop
-    static auto& eventManager{ Events::EventManager::GetInstance() };
-    eventManager.DispatchAll();
-
-#ifndef IMGUI_DISABLE
-    if (mImGuiActive) {
-      mGUIManager.UpdateGUI();
-    }
-#endif
-
-    mScene->Update(FrameRateController::GetInstance().GetDeltaTime());
-
-#ifndef IMGUI_DISABLE
-    if (mImGuiActive)
+    try
     {
-      UpdateFramebuffers();
 
-      ImGui::Render();
-      ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-      // for floating windows feature
-      if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-      {
-        GLFWwindow* backup_current_context = glfwGetCurrentContext();
-        ImGui::UpdatePlatformWindows();
-        ImGui::RenderPlatformWindowsDefault();
-        glfwMakeContextCurrent(backup_current_context);
+#ifndef IMGUI_DISABLE
+      if (mImGuiActive) {
+        ImGuiStartFrame();
       }
-    }
-#else
-    glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
-    mFramebuffers.front().second();
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+#endif
+      try
+      {
+      inputManager.UpdateInput();
+
+      // dispatch all events in the queue at the start of game loop
+      eventManager.DispatchAll();
+
+#ifndef IMGUI_DISABLE
+      if (mImGuiActive) {
+        mGUIManager.UpdateGUI();
+      }
 #endif
 
-    // check and call events, swap buffers
-    glfwSwapBuffers(mWindow);
+      mScene->Update(FrameRateController::GetInstance().GetDeltaTime());
+      }
+      catch (Debug::ExceptionBase& e)
+      {
+        PrintException(e);
+      }
+      catch (std::exception& e)
+      {
+        PrintException(e);
+      }
 
-    FrameRateController::GetInstance().End();
+
+#ifndef IMGUI_DISABLE
+      try
+      {
+      if (mImGuiActive)
+      {
+        UpdateFramebuffers();
+
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        // for floating windows feature
+        if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
+          GLFWwindow* backup_current_context = glfwGetCurrentContext();
+          ImGui::UpdatePlatformWindows();
+          ImGui::RenderPlatformWindowsDefault();
+          glfwMakeContextCurrent(backup_current_context);
+        }
+      }
+#else
+      glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
+      mFramebuffers.front().second();
+      glBindFramebuffer(GL_FRAMEBUFFER, 0);
+#endif
+      }
+    catch (Debug::ExceptionBase& e)
+    {
+      PrintException(e);
+    }
+    catch (std::exception& e)
+    {
+      PrintException(e);
+    }
+      // check and call events, swap buffers
+      glfwSwapBuffers(mWindow.get());
+
+      FrameRateController::GetInstance().End();
+    }
+    catch (Debug::ExceptionBase& e)
+    {
+      PrintException(e);
+    }
+    catch (std::exception& e)
+    {
+      PrintException(e);
+    }
   }
+
+
 }
 
 Application::Application(const char* name, int width, int height) :
@@ -148,12 +205,18 @@ Application::Application(const char* name, int width, int height) :
   glfwWindowHint(GLFW_RED_BITS, 8); glfwWindowHint(GLFW_GREEN_BITS, 8);
   glfwWindowHint(GLFW_BLUE_BITS, 8); glfwWindowHint(GLFW_ALPHA_BITS, 8);
 
-  mWindow = glfwCreateWindow(width, height, name, NULL, NULL);
+  // initialize window ptr
+  // have to do this because i can't make_unique with custom dtor
+  {
+    WindowPtr temp{ glfwCreateWindow(width, height, name, NULL, NULL) };
+    mWindow = std::move(temp);
+  }
+
   if (!mWindow) {
     throw std::runtime_error("Unable to create window for application");
   }
 
-  glfwMakeContextCurrent(mWindow);
+  glfwMakeContextCurrent(mWindow.get());
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
     throw std::runtime_error("Failed to initialize GLAD");
   }
@@ -174,11 +237,13 @@ Application::Application(const char* name, int width, int height) :
   }
 
   // Setup Platform/Renderer backends
-  ImGui_ImplGlfw_InitForOpenGL(mWindow, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
-  ImGui_ImplOpenGL3_Init();
+  ImGui_ImplGlfw_InitForOpenGL(mWindow.get(), true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
+  ImGui_ImplOpenGL3_Init("#version 460 core");
 #endif
 
-  glfwSetWindowUserPointer(mWindow, this); // set the window to reference this class
+  mGUIManager.StyleGUI();
+
+  glfwSetWindowUserPointer(mWindow.get(), this); // set the window to reference this class
   
   glViewport(0, 0, width, height); // specify size of viewport
   SetCallbacks();
@@ -205,12 +270,11 @@ void Application::UpdateFramebuffers()
 
 void Application::SetCallbacks()
 {
-  glfwSetFramebufferSizeCallback(mWindow, FramebufferSizeCallback);
+  glfwSetFramebufferSizeCallback(mWindow.get(), FramebufferSizeCallback);
   glfwSetErrorCallback(ErrorCallback);
-  InputAssistant::Init(mWindow);
 
 #ifndef IMGUI_DISABLE
-  glfwSetDropCallback(mWindow, WindowDropCallback);           // file drag n drop callback
+  glfwSetDropCallback(mWindow.get(), WindowDropCallback);           // file drag n drop callback
 #endif
 }
 
@@ -255,5 +319,19 @@ Application::~Application()
   ImGui::DestroyContext();
 #endif
 
+  mWindow.reset();  // release the GLFWwindow before we terminate
   glfwTerminate();
+}
+
+
+namespace {
+  void PrintException(Debug::ExceptionBase& e)
+  {
+    e.LogSource();
+  }
+
+  void PrintException(std::exception& e)
+  {
+    Debug::DebugLogger::GetInstance().LogCritical(e.what());
+  }
 }

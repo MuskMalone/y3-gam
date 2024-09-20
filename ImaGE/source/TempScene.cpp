@@ -8,10 +8,11 @@
 #include <filesystem>
 #include <Physics/PhysicsSystem.h>
 std::vector<std::shared_ptr<Object>> Scene::mObjects;
+std::vector<Camera> Scene::m_cameras;
 Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 const& clearClr)
   : m_shaders{}, m_defaultShaders{}, 
   m_light{ { 0.f, 25.f, 0.f }, { 0.4f, 0.4f, 0.4f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 1.0f } },
-  m_material{ glm::vec3(1.f), glm::vec3(1.f), glm::vec3(1.f), 100.f }, m_cameras{},
+  m_material{ glm::vec3(1.f), glm::vec3(1.f), glm::vec3(1.f), 100.f },
   //mObjects{},
   m_leftClickHeld{ false }, m_leftClickTriggered{ true }, m_bvhModified{ true }, m_reconstructTree{ false }
 {
@@ -33,32 +34,6 @@ Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 co
 
 void Scene::Init()
 {
-  InputAssistant::RegisterKeyPressEvent(GLFW_KEY_W, std::bind(&Camera::Forward, &m_cameras.front()));
-  InputAssistant::RegisterKeyPressEvent(GLFW_KEY_S, std::bind(&Camera::Backward, &m_cameras.front()));
-  InputAssistant::RegisterKeyPressEvent(GLFW_KEY_D, std::bind(&Camera::Right, &m_cameras.front()));
-  InputAssistant::RegisterKeyPressEvent(GLFW_KEY_A, std::bind(&Camera::Left, &m_cameras.front()));
-  InputAssistant::RegisterKeyPressEvent(GLFW_MOUSE_BUTTON_1, std::bind(&Scene::StartPanning, this));
-  InputAssistant::RegisterKeyReleaseEvent(GLFW_MOUSE_BUTTON_1, std::bind(&Scene::EndPanning, this));
-
-  InputAssistant::RegisterCursorEvent([this](double x, double y) {
-    static glm::dvec2 prevPos{ x, y };
-
-    if (!m_leftClickHeld) {
-      prevPos = { x, y }; // Update prevPos when the left click is not held
-      return;
-    }
-    if (m_leftClickTriggered)
-    {
-      prevPos = { x, y };
-      m_leftClickTriggered = false;
-    }
-    else
-    {
-      m_cameras.front().onCursor(x - prevPos.x, y - prevPos.y);
-      prevPos = { x, y }; // Update prevPos after calling onCursor
-    }
-  });
-
   // OTHER MODELS
   //mObjects.emplace_back(std::make_shared<Object>("./assets/models/bunny_high_poly.obj", glm::vec3(-5.f, 0.f, 0.f), glm::vec3(30.f)));
   //mObjects.emplace_back(std::make_shared<Object>("./assets/models/horse_high_poly.obj", glm::vec3(5.f), glm::vec3(30.f)));

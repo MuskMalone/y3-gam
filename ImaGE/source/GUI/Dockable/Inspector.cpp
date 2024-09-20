@@ -404,6 +404,16 @@ namespace GUI {
       if (ImGui::DragFloat("##RigidBodyRestitution", &rigidBody.restitution, 0.01f, 0.0f, 1.0f)) {
         SetIsComponentEdited(true);
       }
+      if (ImGui::DragFloat("Friction", &rigidBody.friction, 0.01f, 0.0f, 1.0f)) {
+          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::FRICTION);
+      }
+      if (ImGui::DragFloat("Restitution", &rigidBody.restitution, 0.01f, 0.0f, 1.0f)) {
+          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::RESTITUTION);
+      }
+
+      if (ImGui::DragFloat("Gravity Factor", &rigidBody.gravityFactor, 0.01f, 0.0f, 10.0f)){
+          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::GRAVITY_FACTOR);
+      }
 
       ImGui::TableNextRow();
       ImGui::TableSetColumnIndex(0);
@@ -412,6 +422,12 @@ namespace GUI {
       ImGui::SetNextItemWidth(INPUT_SIZE);
       if (ImGui::DragFloat("##RigidBodyGravityFactor", &rigidBody.gravityFactor, 0.01f, 0.0f, 10.0f)) {
         SetIsComponentEdited(true);
+      }
+      if (ImGui::DragFloat3("Velocity", rigidBody.velocity.mF32, 0.1f)){
+          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
+      }
+      if (ImGui::DragFloat3("Angular Velocity", rigidBody.angularVelocity.mF32, 0.1f)) {
+          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::ANGULAR_VELOCITY);
       }
 
       // Motion Type Selection

@@ -132,14 +132,9 @@ namespace Reflection
       Scene::AddMesh(entity);
     }
     else if (compType == rttr::type::get<Component::RigidBody>()) {
-      if (!entity.HasComponent<Component::Collider>()) {
-        entity.EmplaceOrReplaceComponent<Component::Collider>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Collider>>());
-        IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(entity);
-      }
       IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(entity);
     }
     else if (compType == rttr::type::get<Component::Collider>()) {
-      entity.EmplaceOrReplaceComponent<Component::Collider>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Collider>>());
       IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(entity);
     }
     else

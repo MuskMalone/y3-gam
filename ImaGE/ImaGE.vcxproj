@@ -27,7 +27,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\DebugTools\DebugLogger\DebugLogger.cpp" />
     <ClCompile Include="Source\GUI\Helpers\AssetHelpers.cpp" />
+    <ClCompile Include="source\Input\InputManager.cpp" />
     <ClCompile Include="Source\Reflection\ObjectFactory.cpp" />
     <ClCompile Include="Source\Core\TempObject.cpp" />
     <ClCompile Include="Source\External\glad.c">
@@ -114,7 +116,6 @@
     <ClCompile Include="source\GUI\GUIManager.cpp" />
     <ClCompile Include="Source\GUI\Helpers\ImGuiHelpers.cpp" />
     <ClCompile Include="source\GUI\Persistent\Toolbar.cpp" />
-    <ClCompile Include="Source\Input\InputAssistant.cpp" />
     <ClCompile Include="source\Graphics\MeshGen.cpp" />
     <ClCompile Include="Source\pch.cpp" />
     <ClCompile Include="Source\Core\Camera.cpp" />
@@ -131,12 +132,21 @@
     <ClCompile Include="source\Serialization\Deserializer.cpp" />
     <ClCompile Include="Source\Serialization\Registration\RegisterComponents.cpp" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
+    <ClInclude Include="source\Asset\AssetManager.h" />
+    <ClInclude Include="source\Asset\IGEAssets.h" />
+    <ClInclude Include="source\DebugTools\DebugLogger\DebugLogger.h" />
+    <ClInclude Include="source\DebugTools\Exception\Exception.h" />
+    <ClInclude Include="source\DebugTools\Exception\ExceptionBase.h" />
     <ClInclude Include="source\Color.h" />
     <ClInclude Include="source\Core\Component\Script.h" />
     <ClInclude Include="source\Core\Component\Text.h" />
     <ClInclude Include="Source\Events\SceneEvents.h" />
+    <ClInclude Include="source\External\GLFWwindowDestructor.h" />
+    <ClInclude Include="Source\GUI\Styles\FontAwesome6Icons.h" />
     <ClInclude Include="Source\GUI\Helpers\AssetHelpers.h" />
     <ClInclude Include="Source\GUI\Helpers\AssetPayload.h" />
+    <ClInclude Include="source\Input\InputManager.h" />
+    <ClInclude Include="source\Input\KeyCode.h" />
     <ClInclude Include="Source\Reflection\ComponentTypes.h" />
     <ClInclude Include="Source\Reflection\ObjectFactory.h" />
     <ClInclude Include="source\Core\Component\Collider.h" />
@@ -199,7 +209,6 @@
     <ClInclude Include="source\GUI\GUIWindow.h" />
     <ClInclude Include="source\GUI\Dockable\Viewport.h" />
     <ClInclude Include="Source\GUI\Helpers\ImGuiHelpers.h" />
-    <ClInclude Include="Source\Input\InputAssistant.h" />
     <ClInclude Include="source\Graphics\MeshGen.h" />
     <ClInclude Include="Source\pch.h" />
     <ClInclude Include="Source\Core\Camera.h" />
@@ -316,7 +325,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)lib\spdlog;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NO_IMGUI_D|x64'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GAME_BUILD|x64'" />
@@ -397,7 +408,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);JPH_FLOATING_POINT_EXCEPTIONS_ENABLED;JPH_DEBUG_RENDERER;JPH_PROFILE_ENABLED;JPH_OBJECT_STREAM;JPH_USE_AVX2;JPH_USE_AVX;JPH_USE_SSE4_1;JPH_USE_SSE4_2;JPH_USE_LZCNT;JPH_USE_TZCNT;JPH_USE_F16C;JPH_USE_FMADD</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);JPH_DEBUG_RENDERER;JPH_PROFILE_ENABLED;JPH_OBJECT_STREAM;JPH_USE_AVX2;JPH_USE_AVX;JPH_USE_SSE4_1;JPH_USE_SSE4_2;JPH_USE_LZCNT;JPH_USE_TZCNT;JPH_USE_F16C;JPH_USE_FMADD;_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>false</TreatWarningAsError>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -460,7 +471,7 @@ xcopy "$(ProjectDir)assets" "$(OutDir)assets" /s /r /y /q</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);JPH_FLOATING_POINT_EXCEPTIONS_ENABLED;JPH_DEBUG_RENDERER;JPH_PROFILE_ENABLED;JPH_OBJECT_STREAM;JPH_USE_AVX2;JPH_USE_AVX;JPH_USE_SSE4_1;JPH_USE_SSE4_2;JPH_USE_LZCNT;JPH_USE_TZCNT;JPH_USE_F16C;JPH_USE_FMADD</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);JPH_DEBUG_RENDERER;JPH_PROFILE_ENABLED;JPH_OBJECT_STREAM;JPH_USE_AVX2;JPH_USE_AVX;JPH_USE_SSE4_1;JPH_USE_SSE4_2;JPH_USE_LZCNT;JPH_USE_TZCNT;JPH_USE_F16C;JPH_USE_FMADD</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>false</TreatWarningAsError>
       <PrecompiledHeader>Use</PrecompiledHeader>

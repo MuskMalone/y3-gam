@@ -43,7 +43,6 @@ RTTR_REGISTRATION
     .property("friction", &RigidBody::friction)
     .property("restitution", &RigidBody::restitution)
     .property("gravityFactor", &RigidBody::gravityFactor)
-    //.property("bodyID", &RigidBody::bodyID)
     .property("motionType", &RigidBody::motionType);
 
   rttr::registration::class_<Collider>("Collider")
@@ -51,6 +50,5 @@ RTTR_REGISTRATION
     .property("scale", &Collider::scale)
     .property("positionOffset", &Collider::positionOffset)
     .property("rotationOffset", &Collider::rotationOffset)
-    //.property("bodyID", &Collider::bodyID)
     .property("type", &Collider::type);
 }
