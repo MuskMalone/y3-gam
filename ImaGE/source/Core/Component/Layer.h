@@ -3,11 +3,11 @@
 
 namespace Component {
   struct Layer {
-    Layer() : layerName{ "NoLayer" } {}
-    Layer(std::string const& layer) : layerName{ layer } {}
+    Layer() : name{ "Default" } {}
+    Layer(std::string const& layer) : name{ layer } {}
 
-    inline void Clear() noexcept { layerName = "NoLayer"; }
+    inline void Clear() noexcept { name = "Default"; }
 
-    std::string layerName;
+    std::string name;
   };
 } // namespace Component

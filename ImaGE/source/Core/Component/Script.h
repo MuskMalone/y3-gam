@@ -5,10 +5,10 @@
 namespace Component {
   struct Script {
     Script() : Script{ "None" } {}
-    Script(std::string const& scriptName) : scriptName{ scriptName } {}
+    Script(std::string const& scriptName) : name{ scriptName } {}
 
-    inline void Clear() noexcept { scriptName = "None"; }
+    inline void Clear() noexcept { name = "None"; }
 
-    std::string scriptName;
+    std::string name;
   };
 } // namespace Component

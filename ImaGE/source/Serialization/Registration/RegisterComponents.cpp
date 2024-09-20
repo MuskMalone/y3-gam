@@ -30,7 +30,7 @@ RTTR_REGISTRATION
 
   rttr::registration::class_<Layer>("Layer")
     .constructor<>()
-    .property("layerName", &Layer::layerName);
+    .property("layerName", &Layer::name);
 
   rttr::registration::class_<Mesh>("Mesh")
     .constructor<>()

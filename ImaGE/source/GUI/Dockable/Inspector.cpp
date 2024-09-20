@@ -13,7 +13,7 @@
 
 namespace GUI {
 
-  //Static Initialization
+  // Static Initialization
   bool Inspector::sIsComponentEdited{};
 
   template<typename Component>
@@ -24,6 +24,9 @@ namespace GUI {
 
   template<typename Component>
   bool DrawOptionsListButton(std::string windowName);
+
+  constexpr int INPUT_SIZE{ 200 };
+  constexpr float FIRST_COLUMN_LENGTH{ 130 };
 
   Inspector::Inspector(std::string const& name) : GUIWindow(name),
     mComponentOpenStatusMap{}, mObjFactory{ Reflection::ObjectFactory::GetInstance() },
@@ -42,7 +45,6 @@ namespace GUI {
       if (currentEntity != mPreviousEntity) {
         mPreviousEntity = currentEntity;
         mEntityChanged = true;
-        Inspector::SetIsComponentEdited(false);
       }
       else
         mEntityChanged = false;
@@ -91,7 +93,38 @@ namespace GUI {
     bool isOpen{ WindowBegin<Component::Layer>("Layer") };
 
     if (isOpen) {
-      
+      auto& layer = entity.GetComponent<Component::Layer>();
+
+      // @TODO: TEMP, TO BE REPLACED WITH ACTUAL LAYERS
+      std::vector<const char*> availableLayers{ "Default", "Test1", "Test2" };
+
+      float contentSize = ImGui::GetContentRegionAvail().x;
+      float charSize = ImGui::CalcTextSize("012345678901234").x;
+      float inputWidth = (contentSize - charSize - 60);
+
+      ImGui::BeginTable("LayerTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Assigned Layer");
+
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+
+      if (ImGui::BeginCombo("##LayerName", layer.name.c_str())) {
+        for (const char* layerName : availableLayers) {
+          if (ImGui::Selectable(layerName)) {
+            layer.name = layerName;
+            SetIsComponentEdited(true);
+          }
+        }
+        ImGui::EndCombo();
+      }
+
+      ImGui::EndTable();
     }
 
     WindowEnd(isOpen);
@@ -101,7 +134,27 @@ namespace GUI {
     bool isOpen{ WindowBegin<Component::Material>("Material") };
 
     if (isOpen) {
+      auto& material = entity.GetComponent<Component::Material>();
 
+      float contentSize = ImGui::GetContentRegionAvail().x;
+      float charSize = ImGui::CalcTextSize("012345678901234").x;
+      float inputWidth = (contentSize - charSize - 60);
+
+      ImGui::BeginTable("MaterialTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Color");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::ColorEdit4("##MaterialColor", &material.color[0])) {
+        SetIsComponentEdited(true);
+      }
+
+      ImGui::EndTable();
     }
 
     WindowEnd(isOpen);
@@ -111,7 +164,38 @@ namespace GUI {
     bool isOpen{ WindowBegin<Component::Script>("Script") };
 
     if (isOpen) {
+      auto& script = entity.GetComponent<Component::Script>();
 
+      // @TODO: TEMP, TO BE REPLACED WITH ACTUAL SCRIPTS
+      std::vector<const char*> availableScripts{ "None", "Test1", "Test2" };
+
+      float contentSize = ImGui::GetContentRegionAvail().x;
+      float charSize = ImGui::CalcTextSize("012345678901234").x;
+      float inputWidth = (contentSize - charSize - 60);
+
+      ImGui::BeginTable("ScriptTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Assigned Script");
+
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+
+      if (ImGui::BeginCombo("##ScriptName", script.name.c_str())) {
+        for (const char* scriptName : availableScripts) {
+          if (ImGui::Selectable(scriptName)) {
+            script.name = scriptName;
+            SetIsComponentEdited(true);
+          }
+        }
+        ImGui::EndCombo();
+      }
+
+      ImGui::EndTable();
     }
 
     WindowEnd(isOpen);
@@ -122,6 +206,7 @@ namespace GUI {
 
     if (isOpen) {
       std::string tag{ entity.GetTag() };
+      ImGui::SetNextItemWidth(INPUT_SIZE);
       if (ImGui::InputText("##Tag", &tag, ImGuiInputTextFlags_EnterReturnsTrue)) {
         entity.SetTag(tag);
         SetIsComponentEdited(true);
@@ -137,7 +222,63 @@ namespace GUI {
     bool isOpen{ WindowBegin<Component::Text>("Text") };
 
     if (isOpen) {
+      auto& text = entity.GetComponent<Component::Text>();
+
+      // @TODO: TEMP, TO BE REPLACED WITH ACTUAL FONTS
+      std::vector<const char*> availableFonts{ "Arial", "Test1", "Test2" };
+
+      float contentSize = ImGui::GetContentRegionAvail().x;
+      float charSize = ImGui::CalcTextSize("012345678901234").x;
+      float inputWidth = (contentSize - charSize - 60);
+
+      ImGui::BeginTable("TextTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Font Family");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::BeginCombo("##TextName", text.fontName.c_str())) {
+        for (const char* fontName : availableFonts) {
+          if (ImGui::Selectable(fontName)) {
+            text.fontName = fontName;
+            SetIsComponentEdited(true);
+          }
+        }
+        ImGui::EndCombo();
+      }
+      
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Color");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::ColorEdit4("##TextColor", &text.color[0])) {
+        SetIsComponentEdited(true);
+      }
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Text Input");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::InputTextMultiline("##TextInput", &text.textContent)) {
+        SetIsComponentEdited(true);
+      }
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Scale");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::DragFloat("##TextScale", &text.scale, .001f, 0.f, 5.f)) {
+        SetIsComponentEdited(true);
+      }
+
+      ImGui::EndTable();
     }
 
     WindowEnd(isOpen);
@@ -151,12 +292,11 @@ namespace GUI {
 
       float contentSize = ImGui::GetContentRegionAvail().x;
       float charSize = ImGui::CalcTextSize("012345678901234").x;
-      float firstColumnCharSize = ImGui::CalcTextSize("Local Translation").x;
-      float inputWidth = (contentSize - charSize - 60) / 3;
+      float inputWidth = (contentSize - charSize - 50) / 3;
 
       ImGui::BeginTable("LocalTransformTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
-      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, firstColumnCharSize);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
@@ -175,7 +315,7 @@ namespace GUI {
 
       ImGui::BeginTable("WorldTransformTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
-      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, firstColumnCharSize);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
@@ -218,22 +358,78 @@ namespace GUI {
     bool isOpen{ WindowBegin<Component::RigidBody>("RigidBody") };
 
     if (isOpen) {
-      Component::RigidBody& rigidBody{ entity.GetComponent<Component::RigidBody>() };
       // Assuming 'rigidBody' is an instance of RigidBody
-      ImGui::DragFloat("Friction", &rigidBody.friction, 0.01f, 0.0f, 1.0f);
-      ImGui::DragFloat("Restitution", &rigidBody.restitution, 0.01f, 0.0f, 1.0f);
-      ImGui::DragFloat("Gravity Factor", &rigidBody.gravityFactor, 0.01f, 0.0f, 10.0f);
+      Component::RigidBody& rigidBody{ entity.GetComponent<Component::RigidBody>() };
 
-      ImGui::DragFloat3("Velocity", rigidBody.velocity.mF32, 0.1f);
-      ImGui::DragFloat3("Angular Velocity", rigidBody.angularVelocity.mF32, 0.1f);
+      float contentSize = ImGui::GetContentRegionAvail().x;
+      float charSize = ImGui::CalcTextSize("012345678901234").x;
+      float inputWidth = (contentSize - charSize - 50) / 3;
+
+      ImGui::BeginTable("RigidBodyTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableHeadersRow();
+
+      if (ImGuiHelpers::TableInputFloat3("Velocity", rigidBody.velocity.mF32, inputWidth, false)) {
+        SetIsComponentEdited(true);
+      }
+      if (ImGuiHelpers::TableInputFloat3("Angular Velocity", rigidBody.angularVelocity.mF32, inputWidth, false)) {
+        SetIsComponentEdited(true);
+      }
+
+      ImGui::EndTable();
+
+      ImGui::BeginTable("ShapeSelectionTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Friction");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::DragFloat("##RigidBodyFriction", &rigidBody.friction, 0.01f, 0.0f, 1.0f)) {
+        SetIsComponentEdited(true);
+      }
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Restitution");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::DragFloat("##RigidBodyRestitution", &rigidBody.restitution, 0.01f, 0.0f, 1.0f)) {
+        SetIsComponentEdited(true);
+      }
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Gravity Factor");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::DragFloat("##RigidBodyGravityFactor", &rigidBody.gravityFactor, 0.01f, 0.0f, 10.0f)) {
+        SetIsComponentEdited(true);
+      }
 
       // Motion Type Selection
       const char* motionTypes[] = { "Static", "Kinematic", "Dynamic" };
       int currentMotionType = static_cast<int>(rigidBody.motionType);
-      if (ImGui::Combo("Motion Type", &currentMotionType, motionTypes, IM_ARRAYSIZE(motionTypes))) {
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Motion Type");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::Combo("##Motion Type", &currentMotionType, motionTypes, IM_ARRAYSIZE(motionTypes))) {
         rigidBody.motionType = static_cast<JPH::EMotionType>(currentMotionType);
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::MOTION);
+        SetIsComponentEdited(true);
       }
+
+      ImGui::EndTable();
     }
 
     WindowEnd(isOpen);
@@ -245,16 +441,50 @@ namespace GUI {
     if (isOpen) {
       // Assuming 'collider' is an instance of Collider
       Component::Collider& collider{ entity.GetComponent<Component::Collider>() };
-      ImGui::DragFloat3("Scale", collider.scale.mF32, 0.1f);
-      ImGui::DragFloat3("Position Offset", collider.positionOffset.mF32, 0.1f);
-      ImGui::DragFloat3("Rotation Offset", collider.rotationOffset.mF32, 0.1f);
+      float contentSize = ImGui::GetContentRegionAvail().x;
+      float charSize = ImGui::CalcTextSize("012345678901234").x;
+      float inputWidth = (contentSize - charSize - 50) / 3;
+
+      ImGui::BeginTable("ColliderTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableHeadersRow();
+
+      if (ImGuiHelpers::TableInputFloat3("Scale", collider.scale.mF32, inputWidth, false)) {
+        SetIsComponentEdited(true);
+      }
+      if (ImGuiHelpers::TableInputFloat3("Position Offset", collider.positionOffset.mF32, inputWidth, false)) {
+        SetIsComponentEdited(true);
+      }
+      if (ImGuiHelpers::TableInputFloat3("Rotation Offset", collider.rotationOffset.mF32, inputWidth, false)) {
+        SetIsComponentEdited(true);
+      }
+
+      ImGui::EndTable();
 
       // Shape Type Selection
       const char* shapeTypes[] = { "Unknown", "Sphere", "Capsule", "Box", "Triangle", "ConvexHull", "Mesh", "HeightField", "Compound" };
       int currentShapeType = static_cast<int>(collider.type);
-      if (ImGui::Combo("Shape Type", &currentShapeType, shapeTypes, IM_ARRAYSIZE(shapeTypes))) {
+
+      ImGui::BeginTable("ShapeSelectionTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Shape Type");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::Combo("##ShapeType", &currentShapeType, shapeTypes, IM_ARRAYSIZE(shapeTypes))) {
         collider.type = static_cast<JPH::EShapeSubType>(currentShapeType);
+        SetIsComponentEdited(true);
       }
+
+      ImGui::EndTable();
     }
 
     WindowEnd(isOpen);
