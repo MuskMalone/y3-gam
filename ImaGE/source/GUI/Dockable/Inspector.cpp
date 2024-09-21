@@ -17,7 +17,7 @@ namespace GUI {
   bool Inspector::sIsComponentEdited{};
 
   template<typename Component>
-  void DrawAddComponentButton(std::string const& name);
+  void DrawAddComponentButton(std::string const& name, std::string const& icon);
 
   template<typename Component>
   bool DrawOptionButton(std::string const& name);
@@ -50,33 +50,34 @@ namespace GUI {
       else
         mEntityChanged = false;
 
-      // @TODO: EDIT WHEN NEW COMPONENTS (ALSO ITS OWN WINDOW FUNCTION)
+      // @TODO: EDIT WHEN NEW COMPONENTS (ALSO ITS OWN WINDOW FUNCTION) 
+
       if (currentEntity.HasComponent<Component::Tag>())
-        TagComponentWindow(currentEntity);
+        TagComponentWindow(currentEntity, std::string(ICON_FA_TAG));
 
       if (currentEntity.HasComponent<Component::Collider>())
-        ColliderComponentWindow(currentEntity);
+        ColliderComponentWindow(currentEntity, std::string(ICON_FA_BOMB));
 
       if (currentEntity.HasComponent<Component::Layer>())
-        LayerComponentWindow(currentEntity);
+        LayerComponentWindow(currentEntity, std::string(ICON_FA_LAYER_GROUP));
 
       if (currentEntity.HasComponent<Component::Material>())
-        MaterialComponentWindow(currentEntity);
+        MaterialComponentWindow(currentEntity, std::string(ICON_FA_GEM));
 
       if (currentEntity.HasComponent<Component::Mesh>())
-        MeshComponentWindow(currentEntity);
+        MeshComponentWindow(currentEntity, std::string(ICON_FA_CUBE));
 
       if (currentEntity.HasComponent<Component::RigidBody>())
-        RigidBodyComponentWindow(currentEntity);
+        RigidBodyComponentWindow(currentEntity, std::string(ICON_FA_CAR));
 
       if (currentEntity.HasComponent<Component::Script>())
-        ScriptComponentWindow(currentEntity);
+        ScriptComponentWindow(currentEntity, std::string(ICON_FA_CODE));
 
       if (currentEntity.HasComponent<Component::Text>())
-        TextComponentWindow(currentEntity);
+        TextComponentWindow(currentEntity, std::string(ICON_FA_FONT));
 
       if (currentEntity.HasComponent<Component::Transform>())
-        TransformComponentWindow(currentEntity);
+        TransformComponentWindow(currentEntity,std::string(ICON_FA_ROTATE));
     }
     ImGui::PopFont();
     ImGui::End();
@@ -90,8 +91,8 @@ namespace GUI {
     sIsComponentEdited = isComponentEdited;
   }
 
-  void Inspector::LayerComponentWindow(ECS::Entity entity) {
-    bool isOpen{ WindowBegin<Component::Layer>("Layer") };
+  void Inspector::LayerComponentWindow(ECS::Entity entity, std::string const& icon) {
+    bool isOpen{ WindowBegin<Component::Layer>("Layer", icon) };
 
     if (isOpen) {
       auto& layer = entity.GetComponent<Component::Layer>();
@@ -131,8 +132,8 @@ namespace GUI {
     WindowEnd(isOpen);
   }
 
-  void Inspector::MaterialComponentWindow(ECS::Entity entity) {
-    bool isOpen{ WindowBegin<Component::Material>("Material") };
+  void Inspector::MaterialComponentWindow(ECS::Entity entity, std::string const& icon) {
+    bool isOpen{ WindowBegin<Component::Material>("Material", icon) };
 
     if (isOpen) {
       auto& material = entity.GetComponent<Component::Material>();
@@ -161,8 +162,8 @@ namespace GUI {
     WindowEnd(isOpen);
   }
 
-  void Inspector::ScriptComponentWindow(ECS::Entity entity) {
-    bool isOpen{ WindowBegin<Component::Script>("Script") };
+  void Inspector::ScriptComponentWindow(ECS::Entity entity, std::string const& icon) {
+    bool isOpen{ WindowBegin<Component::Script>("Script", icon) };
 
     if (isOpen) {
       auto& script = entity.GetComponent<Component::Script>();
@@ -202,16 +203,18 @@ namespace GUI {
     WindowEnd(isOpen);
   }
 
-  void Inspector::TagComponentWindow(ECS::Entity entity) {
-    bool isOpen{ WindowBegin<Component::Tag>("Tag") };
+  void Inspector::TagComponentWindow(ECS::Entity entity, std::string const& icon) {
+    bool isOpen{ WindowBegin<Component::Tag>("Tag", icon) };
 
     if (isOpen) {
       std::string tag{ entity.GetTag() };
+      ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::RobotoBold]);
       ImGui::SetNextItemWidth(INPUT_SIZE);
       if (ImGui::InputText("##Tag", &tag, ImGuiInputTextFlags_EnterReturnsTrue)) {
         entity.SetTag(tag);
         SetIsComponentEdited(true);
       }
+      ImGui::PopFont();
 
       DrawAddButton();
     }
@@ -219,8 +222,8 @@ namespace GUI {
     WindowEnd(isOpen);
   }
 
-  void Inspector::TextComponentWindow(ECS::Entity entity) {
-    bool isOpen{ WindowBegin<Component::Text>("Text") };
+  void Inspector::TextComponentWindow(ECS::Entity entity, std::string const& icon) {
+    bool isOpen{ WindowBegin<Component::Text>("Text", icon) };
 
     if (isOpen) {
       auto& text = entity.GetComponent<Component::Text>();
@@ -285,8 +288,8 @@ namespace GUI {
     WindowEnd(isOpen);
   }
 
-  void Inspector::TransformComponentWindow(ECS::Entity entity) {
-    bool isOpen{ WindowBegin<Component::Transform>("Transform") };
+  void Inspector::TransformComponentWindow(ECS::Entity entity, std::string const& icon) {
+    bool isOpen{ WindowBegin<Component::Transform>("Transform", icon) };
 
     if (isOpen) {
       auto& transform = entity.GetComponent<Component::Transform>();
@@ -338,8 +341,8 @@ namespace GUI {
     WindowEnd(isOpen);
   }
 
-  void Inspector::MeshComponentWindow(ECS::Entity entity) {
-    bool isOpen{ WindowBegin<Component::Mesh>("Mesh") };
+  void Inspector::MeshComponentWindow(ECS::Entity entity, std::string const& icon) {
+    bool isOpen{ WindowBegin<Component::Mesh>("Mesh", icon) };
 
     if (isOpen) {
 
@@ -356,8 +359,8 @@ namespace GUI {
     ImGui::PopFont();
   }
 
-  void Inspector::RigidBodyComponentWindow(ECS::Entity entity) {
-    bool isOpen{ WindowBegin<Component::RigidBody>("RigidBody") };
+  void Inspector::RigidBodyComponentWindow(ECS::Entity entity, std::string const& icon) {
+    bool isOpen{ WindowBegin<Component::RigidBody>("RigidBody", icon) };
 
     if (isOpen) {
       // Assuming 'rigidBody' is an instance of RigidBody
@@ -442,8 +445,8 @@ namespace GUI {
     WindowEnd(isOpen);
   }
 
-  void Inspector::ColliderComponentWindow(ECS::Entity entity) {
-    bool isOpen{ WindowBegin<Component::Collider>("Collider") };
+  void Inspector::ColliderComponentWindow(ECS::Entity entity, std::string const& icon) {
+    bool isOpen{ WindowBegin<Component::Collider>("Collider", icon) };
 
     if (isOpen) {
       // Assuming 'collider' is an instance of Collider
@@ -503,7 +506,14 @@ namespace GUI {
     float paddingX = 5.0f;
     float buttonWidth = addTextSize.x + paddingX * 2.0f;
     ImGui::SameLine(contentRegionAvailable.x - addTextSize.x);
-    if (ImGui::Button("Add", ImVec2(buttonWidth, 0))) {
+    //if (ImGui::Button("Add", ImVec2(buttonWidth, 0))) {
+
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0, 0, 0, 0));
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0, 0, 0, 0));
+    ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::RobotoBold]);
+    
+    if (ImGui::Button(ICON_FA_CALENDAR_PLUS)) {
       ImVec2 buttonPos = ImGui::GetItemRectMin();
       ImVec2 buttonSize = ImGui::GetItemRectSize();
 
@@ -513,21 +523,24 @@ namespace GUI {
       ImGui::OpenPopup("AddComponentPanel");
     }
 
+    ImGui::PopFont();
+    ImGui::PopStyleColor(3);
+
     if (ImGui::BeginPopup("AddComponentPanel", ImGuiWindowFlags_NoMove)) {
 
       if (ImGui::BeginTable("##component_table", 1, ImGuiTableFlags_SizingStretchSame)) {
         ImGui::TableSetupColumn("ComponentNames", ImGuiTableColumnFlags_WidthFixed, 200.f);
 
         // @TODO: EDIT WHEN NEW COMPONENTS
-        DrawAddComponentButton<Component::Collider>("Collider");
-        DrawAddComponentButton<Component::Layer>("Layer");
-        DrawAddComponentButton<Component::Material>("Material");
-        DrawAddComponentButton<Component::Mesh>("Mesh");
-        DrawAddComponentButton<Component::RigidBody>("RigidBody");
-        DrawAddComponentButton<Component::Script>("Script");
-        DrawAddComponentButton<Component::Tag>("Tag");
-        DrawAddComponentButton<Component::Text>("Text");
-        DrawAddComponentButton<Component::Transform>("Transform");
+        DrawAddComponentButton<Component::Collider>("Collider", ICON_FA_BOMB);
+        DrawAddComponentButton<Component::Layer>("Layer", ICON_FA_LAYER_GROUP);
+        DrawAddComponentButton<Component::Material>("Material", ICON_FA_GEM);
+        DrawAddComponentButton<Component::Mesh>("Mesh", ICON_FA_CUBE);
+        DrawAddComponentButton<Component::RigidBody>("RigidBody", ICON_FA_CAR);
+        DrawAddComponentButton<Component::Script>("Script", ICON_FA_CODE);
+        DrawAddComponentButton<Component::Tag>("Tag", ICON_FA_TAG);
+        DrawAddComponentButton<Component::Text>("Text", ICON_FA_FONT);
+        DrawAddComponentButton<Component::Transform>("Transform", std::string(ICON_FA_ROTATE));
 
         ImGui::EndTable();
       }
@@ -537,7 +550,7 @@ namespace GUI {
   }
 
   template<typename Component>
-  void DrawAddComponentButton(std::string const& name) {
+  void DrawAddComponentButton(std::string const& name, std::string const& icon) {
     if (GUIManager::GetSelectedEntity().HasComponent<Component>()) {
       return;
     }
@@ -569,7 +582,11 @@ namespace GUI {
     ImGui::SetItemAllowOverlap();
     ImGui::PopClipRect();
 
-    ImGui::TextUnformatted(name.c_str());
+    std::string display{ icon + "   " + name};
+    
+    ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::RobotoBold]);
+    ImGui::TextUnformatted(display.c_str());
+    ImGui::PopFont();
 
     if (isRowHovered)
       fillRowWithColour(Color::IMGUI_COLOR_ORANGE);

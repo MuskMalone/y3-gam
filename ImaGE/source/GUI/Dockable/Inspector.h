@@ -6,6 +6,7 @@
 #include <imgui/imgui.h>
 #include <ImGui/imgui_internal.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
+#include <GUI/Styles/FontAwesome6Icons.h>
 
 #include "Core/Entity.h"
 #include "Core/EntityManager.h"
@@ -22,18 +23,18 @@ namespace GUI {
 
   private:
     // Kindly put in alphabetical order, thank you!
-    void ColliderComponentWindow(ECS::Entity entity);
-    void LayerComponentWindow(ECS::Entity entity);
-    void MaterialComponentWindow(ECS::Entity entity);
-    void MeshComponentWindow(ECS::Entity entity);
-    void RigidBodyComponentWindow(ECS::Entity entity);
-    void ScriptComponentWindow(ECS::Entity entity);
-    void TagComponentWindow(ECS::Entity entity);
-    void TextComponentWindow(ECS::Entity entity);
-    void TransformComponentWindow(ECS::Entity entity);
+    void ColliderComponentWindow(ECS::Entity entity, std::string const& icon);
+    void LayerComponentWindow(ECS::Entity entity, std::string const& icon);
+    void MaterialComponentWindow(ECS::Entity entity, std::string const& icon);
+    void MeshComponentWindow(ECS::Entity entity, std::string const& icon);
+    void RigidBodyComponentWindow(ECS::Entity entity, std::string const& icon);
+    void ScriptComponentWindow(ECS::Entity entity, std::string const& icon);
+    void TagComponentWindow(ECS::Entity entity, std::string const& icon);
+    void TextComponentWindow(ECS::Entity entity, std::string const& icon);
+    void TransformComponentWindow(ECS::Entity entity, std::string const& icon);
     
     template<typename Component>
-    bool WindowBegin(std::string windowName);
+    bool WindowBegin(std::string windowName, std::string const& icon);
 
     void WindowEnd(bool isOpen);
     void DrawAddButton();
@@ -48,7 +49,7 @@ namespace GUI {
   };
 
   template<typename Component>
-  bool Inspector::WindowBegin(std::string windowName) {
+  bool Inspector::WindowBegin(std::string windowName, std::string const& icon) {
     ImGui::Separator();
 
     if (mEntityChanged) {
@@ -56,7 +57,8 @@ namespace GUI {
       ImGui::SetNextItemOpen(openMapStatus, ImGuiCond_Always);
     }
 
-    bool isOpen{ ImGui::TreeNode(windowName.c_str()) };
+    std::string display{ icon + " " + windowName };
+    bool isOpen{ ImGui::TreeNode(display.c_str())};
 
     ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::RobotoMedium]);
 

@@ -24,10 +24,14 @@ namespace GUI
     static inline void SetSelectedEntity(ECS::Entity const& entity) noexcept { sSelectedEntity = entity; }
     
     enum CustomFonts {
+      Default,
       RobotoBold,
       RobotoMedium,
       RobotoThin
     };
+
+  private:
+    void FontAwesomeMerge(ImGuiIO& io, float size) const;
 
   private:
     std::vector<std::unique_ptr<GUIWindow>> mPersistentElements;  // contains controls outside of the dockspace

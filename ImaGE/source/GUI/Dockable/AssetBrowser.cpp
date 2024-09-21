@@ -7,6 +7,7 @@
 #include <GUI/Helpers/AssetHelpers.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <GUI/Styles/FontAwesome6Icons.h>
+#include "GUI/GUIManager.h"
 
 namespace Helper
 {

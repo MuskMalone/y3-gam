@@ -22,8 +22,7 @@ namespace GUI
 
   GUIManager::GUIManager() :mPersistentElements{}, mWindows{} {}
 
-  void GUIManager::Init(Graphics::Framebuffer const& framebuffer)
-  {
+  void GUIManager::Init(Graphics::Framebuffer const& framebuffer) {
     mPersistentElements.reserve(3);
     mPersistentElements.emplace_back(std::make_unique<Toolbar>("Toolbar", mWindows));
     mPersistentElements.emplace_back(std::make_unique<SceneControls>("Scene Controls"));
@@ -36,8 +35,7 @@ namespace GUI
     mWindows.emplace_back(std::make_unique<AssetBrowser>("Asset Browser"));
   }
 
-  void GUIManager::UpdateGUI()
-  {
+  void GUIManager::UpdateGUI() {
     // always run persistent windows
     for (auto const& elem : mPersistentElements)
     {
@@ -52,21 +50,39 @@ namespace GUI
     }
   }
 
-  void GUIManager::StyleGUI() const
-  {
-    ImGuiIO& io{ ImGui::GetIO() };
-    io.Fonts->AddFontDefault();
+  void GUIManager::StyleGUI() const {
+    ImGuiIO& io = ImGui::GetIO();
 
-    ImFontConfig cfg;
-    cfg.MergeMode = true;
-    cfg.GlyphMinAdvanceX = 13.f;  // make icons monospaced
-    cfg.GlyphOffset = ImVec2(0, 1);
+    static constexpr float defaultFontSize{ 13.f };
+    static constexpr float largeFontSize{ 24.f };
+    static constexpr float smallIconFontSize{ 13.0f };
+    static constexpr float largeIconFontSize{ 24.0f };
+
+    ImFontConfig fontConfig;
+    fontConfig.SizePixels = defaultFontSize;
+    ImFont* defaultFont = io.Fonts->AddFontDefault(&fontConfig);
+    GUIManager::FontAwesomeMerge(io, defaultFontSize);
+    sCustomFonts.emplace_back(defaultFont);
+
+    sCustomFonts.emplace_back(io.Fonts->AddFontFromFileTTF(gRobotoBoldFontPath, largeFontSize));
+    GUIManager::FontAwesomeMerge(io, largeFontSize);
+    sCustomFonts.emplace_back(io.Fonts->AddFontFromFileTTF(gRobotoMediumFontPath, defaultFontSize));
+    GUIManager::FontAwesomeMerge(io, defaultFontSize);
+    sCustomFonts.emplace_back(io.Fonts->AddFontFromFileTTF(gRobotoThinFontPath, defaultFontSize));
+    GUIManager::FontAwesomeMerge(io, defaultFontSize);
+
+    io.Fonts->Build();
+  }
+
+  void GUIManager::FontAwesomeMerge(ImGuiIO& io, float size) const {
+    ImFontConfig iconFontConfig;
+    iconFontConfig.MergeMode = true;
+    iconFontConfig.GlyphMinAdvanceX = size;
+    iconFontConfig.GlyphOffset = ImVec2(0, 1);
+
     static constexpr ImWchar icon_ranges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
-    io.Fonts->AddFontFromFileTTF(gIconsFontPath, 17.f * 2.0f / 3.0f, &cfg, icon_ranges);
 
-    sCustomFonts.emplace_back(io.Fonts->AddFontFromFileTTF(gRobotoBoldFontPath, 24.f));
-    sCustomFonts.emplace_back(io.Fonts->AddFontFromFileTTF(gRobotoMediumFontPath, 16.f));
-    sCustomFonts.emplace_back(io.Fonts->AddFontFromFileTTF(gRobotoThinFontPath, 16.f));
+    io.Fonts->AddFontFromFileTTF(gIconsFontPath, size, &iconFontConfig, icon_ranges);
   }
 
 } // namespace GUI
