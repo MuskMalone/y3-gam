@@ -8,7 +8,7 @@
 struct Object
 {
   glm::dmat4 mdlTransform;
-    ECS::Entity entity;
+  ECS::Entity entity;
   Component::Transform transform;
   glm::vec4 clr;
   

@@ -7,6 +7,8 @@
 #include <GUI/Helpers/AssetHelpers.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <GUI/Styles/FontAwesome6Icons.h>
+#include "GUI/GUIManager.h"
+#include <Graphics/AssetIO/IMSH.h>
 
 namespace Helper
 {
@@ -54,18 +56,19 @@ namespace GUI
 
   void AssetBrowser::MenuBar()
   {
-    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 50));
     ImGui::BeginMenuBar();
-    ImGui::PopStyleVar();
     bool const isSearching{ !mSearchQuery.empty() };
     float const wWidth{ ImGui::GetWindowWidth() };
     
-    if (ImGui::Button("Add")) {
+    if (ImGui::Button(ICON_FA_PLUS " Add")) {
       auto const files{ AssetHelpers::SelectFilesFromExplorer("Add Files") };
 
       if (!files.empty()) {
         AddAssets(files);
       }
+    }
+    if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+      ImGui::SetTooltip("Add Files");
     }
 
     if (isSearching) {
@@ -218,6 +221,9 @@ namespace GUI
         draggedAsset = path;
       }
     }
+    else if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+      ImGui::SetTooltip(path.filename().string().c_str());
+    }
     
     if (ImGui::BeginDragDropSource()) {
       if (mDisableSceneChange) {
@@ -298,6 +304,14 @@ namespace GUI
   void AssetBrowser::AddAssets(std::vector<std::string> const& files)
   {
     for (std::string const& file : files) {
+      // @TODO: SHOULD BE DONE BY ASSET MANAGER
+      std::filesystem::path const path{ file };
+      if (std::string(gSupportedModelFormats).find(path.extension().string()) != std::string::npos) {
+        Graphics::AssetIO::IMSH imsh{ file };
+        imsh.WriteToBinFile(path.stem().string(), file);
+        continue;
+      }
+
       std::filesystem::copy(file, mCurrentDir);
     }
   }

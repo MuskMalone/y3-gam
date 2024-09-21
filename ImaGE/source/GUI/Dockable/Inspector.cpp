@@ -1,70 +1,48 @@
 #include <pch.h>
 #ifndef IMGUI_DISABLE
+#include "Inspector.h"
+
 #include <imgui/imgui.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
-#include "Inspector.h"
+#include "Color.h"
+#include "GUI/Helpers/ImGuiHelpers.h"
+
 #include <Physics/PhysicsSystem.h>
 #include <functional>
 #include <Reflection/ComponentTypes.h>
 
 namespace GUI {
+
+  // Static Initialization
+  bool Inspector::sIsComponentEdited{};
+
+  template<typename Component>
+  void DrawAddComponentButton(std::string const& name, std::string const& icon);
+
+  template<typename Component>
+  bool DrawOptionButton(std::string const& name);
+
+  template<typename Component>
+  bool DrawOptionsListButton(std::string windowName);
+
+  constexpr int INPUT_SIZE{ 200 };
+  constexpr float FIRST_COLUMN_LENGTH{ 130 };
+
   Inspector::Inspector(std::string const& name) : GUIWindow(name),
     mComponentOpenStatusMap{}, mObjFactory{ Reflection::ObjectFactory::GetInstance() },
-    mPreviousEntity{}, mFirstOpen{ true }, mEntityChanged{ false } {}
-
-  // Function to show the "Add Component" button and component selection
-  void Inspector::ShowAddComponentPopup() {
-      // Popup window
-      if (ImGui::BeginPopup("AddComponentPopup")) {
-        // Iterate through vector of rttr::types and add components via reflection
-        ImGui::Text("Components");
-        if (ImGui::BeginCombo("##Components", Reflection::gComponentTypes.front().get_name().to_string().c_str()))
-        {
-          for (int i = 0; i < Reflection::gComponentTypes.size(); ++i) {
-
-            // for now this is automated, but if we want to add QOL changes
-            // like preventing existing components to be added, we need to break this up
-            // similarly for deleting components, we can use ObjectFactory::RemoveComponentFromEntity
-            /*
-            Example:
-            if (ImGui::Selectable(Reflection::gComponentTypes[i].get_name().to_string().c_str())) {
-              if (Reflection::gComponentTypes[i] == rttr::type::get<Component::Tag>) {...}
-              else if (Reflection::gComponentTypes[i] == rttr::type::get<Component::Layer>) {...}
-              else if (Reflection::gComponentTypes[i] == rttr::type::get<Component::Collider>) {...}
-              else if (Reflection::gComponentTypes[i] == rttr::type::get<Component::RigidBody>) {...}
-            }
-            */
-            if (ImGui::Selectable(Reflection::gComponentTypes[i].get_name().to_string().c_str())) {
-              mObjFactory.AddComponentToEntity(GUIManager::GetSelectedEntity(), Reflection::gComponentTypes[i]);
-            }
-
-          }
-          ImGui::EndCombo();
-        }
-        ImGui::EndPopup();
-      }
+    mPreviousEntity{}, mEntityChanged{ false } {
+    for (auto const& component : Reflection::gComponentTypes) {
+      mComponentOpenStatusMap[component.get_name().to_string().c_str()] = true;
+    }
   }
 
   void Inspector::Run() {
-    if (mFirstOpen) {
-      for (std::string const& component : Component::ComponentNameList) {
-        mComponentOpenStatusMap[component] = false;
-      }
-      mFirstOpen = false;
-    }
-
     ImGui::Begin(mWindowName.c_str());
-
-    if (GUIManager::GetSelectedEntity()) {
-      // Button to open the popup
-      if (ImGui::Button("Add Component")) {
-        ImGui::OpenPopup("AddComponentPopup");
-      }
-    }
-    ShowAddComponentPopup();
-
+    ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::MontserratSemiBold]);
     ECS::Entity const& currentEntity{ GUIManager::GetSelectedEntity() };
+    
     if (currentEntity) {
+
       if (currentEntity != mPreviousEntity) {
         mPreviousEntity = currentEntity;
         mEntityChanged = true;
@@ -72,136 +50,646 @@ namespace GUI {
       else
         mEntityChanged = false;
 
+      // @TODO: EDIT WHEN NEW COMPONENTS (ALSO ITS OWN WINDOW FUNCTION) 
+
       if (currentEntity.HasComponent<Component::Tag>())
-        TagComponentWindow(currentEntity);
+        TagComponentWindow(currentEntity, std::string(ICON_FA_TAG));
+
+      if (currentEntity.HasComponent<Component::Collider>())
+        ColliderComponentWindow(currentEntity, std::string(ICON_FA_BOMB));
 
       if (currentEntity.HasComponent<Component::Layer>())
-        LayerComponentWindow(currentEntity);
+        LayerComponentWindow(currentEntity, std::string(ICON_FA_LAYER_GROUP));
 
-      if (currentEntity.HasComponent<Component::Transform>()){
-        TransformComponentWindow(currentEntity);
-      }
+      if (currentEntity.HasComponent<Component::Material>())
+        MaterialComponentWindow(currentEntity, std::string(ICON_FA_GEM));
 
-      if (currentEntity.HasComponent<Component::Mesh>()) {
-      
-      }
+      if (currentEntity.HasComponent<Component::Mesh>())
+        MeshComponentWindow(currentEntity, std::string(ICON_FA_CUBE));
 
-      if (currentEntity.HasComponent<Component::RigidBody>()) {
-          RigidBodyComponentWindow(currentEntity);
-      }
+      if (currentEntity.HasComponent<Component::RigidBody>())
+        RigidBodyComponentWindow(currentEntity, std::string(ICON_FA_CAR));
 
-      if (currentEntity.HasComponent<Component::Collider>()) {
-          ColliderComponentWindow(currentEntity);
-      }
+      if (currentEntity.HasComponent<Component::Script>())
+        ScriptComponentWindow(currentEntity, std::string(ICON_FA_FILE_CODE));
 
+      if (currentEntity.HasComponent<Component::Text>())
+        TextComponentWindow(currentEntity, std::string(ICON_FA_FONT));
+
+      if (currentEntity.HasComponent<Component::Transform>())
+        TransformComponentWindow(currentEntity,std::string(ICON_FA_ROTATE));
     }
-
+    ImGui::PopFont();
     ImGui::End();
   }
 
-  void Inspector::TagComponentWindow(ECS::Entity entity) {
-    bool isOpen{ WindowBegin("Tag") };
+  bool const Inspector::GetIsComponentEdited() {
+    return sIsComponentEdited;
+  }
+
+  void Inspector::SetIsComponentEdited(bool isComponentEdited) {
+    sIsComponentEdited = isComponentEdited;
+  }
+
+  void Inspector::LayerComponentWindow(ECS::Entity entity, std::string const& icon) {
+    bool isOpen{ WindowBegin<Component::Layer>("Layer", icon) };
+
+    if (isOpen) {
+      auto& layer = entity.GetComponent<Component::Layer>();
+
+      // @TODO: TEMP, TO BE REPLACED WITH ACTUAL LAYERS
+      std::vector<const char*> availableLayers{ "Default", "Test1", "Test2" };
+
+      float contentSize = ImGui::GetContentRegionAvail().x;
+      float charSize = ImGui::CalcTextSize("012345678901234").x;
+      float inputWidth = (contentSize - charSize - 60);
+
+      ImGui::BeginTable("LayerTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Assigned Layer");
+
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+
+      if (ImGui::BeginCombo("##LayerName", layer.name.c_str())) {
+        for (const char* layerName : availableLayers) {
+          if (ImGui::Selectable(layerName)) {
+            layer.name = layerName;
+            SetIsComponentEdited(true);
+          }
+        }
+        ImGui::EndCombo();
+      }
+
+      ImGui::EndTable();
+    }
+
+    WindowEnd(isOpen);
+  }
+
+  void Inspector::MaterialComponentWindow(ECS::Entity entity, std::string const& icon) {
+    bool isOpen{ WindowBegin<Component::Material>("Material", icon) };
+
+    if (isOpen) {
+      auto& material = entity.GetComponent<Component::Material>();
+
+      float contentSize = ImGui::GetContentRegionAvail().x;
+      float charSize = ImGui::CalcTextSize("012345678901234").x;
+      float inputWidth = (contentSize - charSize - 60);
+
+      ImGui::BeginTable("MaterialTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Color");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::ColorEdit4("##MaterialColor", &material.color[0])) {
+        SetIsComponentEdited(true);
+      }
+
+      ImGui::EndTable();
+    }
+
+    WindowEnd(isOpen);
+  }
+
+  void Inspector::ScriptComponentWindow(ECS::Entity entity, std::string const& icon) {
+    bool isOpen{ WindowBegin<Component::Script>("Script", icon) };
+
+    if (isOpen) {
+      auto& script = entity.GetComponent<Component::Script>();
+
+      // @TODO: TEMP, TO BE REPLACED WITH ACTUAL SCRIPTS
+      std::vector<const char*> availableScripts{ "None", "Test1", "Test2" };
+
+      float contentSize = ImGui::GetContentRegionAvail().x;
+      float charSize = ImGui::CalcTextSize("012345678901234").x;
+      float inputWidth = (contentSize - charSize - 60);
+
+      ImGui::BeginTable("ScriptTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Assigned Script");
+
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+
+      if (ImGui::BeginCombo("##ScriptName", script.name.c_str())) {
+        for (const char* scriptName : availableScripts) {
+          if (ImGui::Selectable(scriptName)) {
+            script.name = scriptName;
+            SetIsComponentEdited(true);
+          }
+        }
+        ImGui::EndCombo();
+      }
+
+      ImGui::EndTable();
+    }
+
+    WindowEnd(isOpen);
+  }
+
+  void Inspector::TagComponentWindow(ECS::Entity entity, std::string const& icon) {
+    bool isOpen{ WindowBegin<Component::Tag>("Tag", icon) };
 
     if (isOpen) {
       std::string tag{ entity.GetTag() };
+      ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::MontserratSemiBold]);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
       if (ImGui::InputText("##Tag", &tag, ImGuiInputTextFlags_EnterReturnsTrue)) {
         entity.SetTag(tag);
+        SetIsComponentEdited(true);
       }
+      ImGui::PopFont();
+
+      DrawAddButton();
     }
 
     WindowEnd(isOpen);
   }
 
-  void Inspector::LayerComponentWindow(ECS::Entity entity) {
-    bool isOpen{ WindowBegin("Layer") };
+  void Inspector::TextComponentWindow(ECS::Entity entity, std::string const& icon) {
+    bool isOpen{ WindowBegin<Component::Text>("Text", icon) };
 
     if (isOpen) {
+      auto& text = entity.GetComponent<Component::Text>();
+
+      // @TODO: TEMP, TO BE REPLACED WITH ACTUAL FONTS
+      std::vector<const char*> availableFonts{ "Arial", "Test1", "Test2" };
+
+      float contentSize = ImGui::GetContentRegionAvail().x;
+      float charSize = ImGui::CalcTextSize("012345678901234").x;
+      float inputWidth = (contentSize - charSize - 60);
+
+      ImGui::BeginTable("TextTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Font Family");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::BeginCombo("##TextName", text.fontName.c_str())) {
+        for (const char* fontName : availableFonts) {
+          if (ImGui::Selectable(fontName)) {
+            text.fontName = fontName;
+            SetIsComponentEdited(true);
+          }
+        }
+        ImGui::EndCombo();
+      }
+      
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Color");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::ColorEdit4("##TextColor", &text.color[0])) {
+        SetIsComponentEdited(true);
+      }
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Text Input");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::InputTextMultiline("##TextInput", &text.textContent)) {
+        SetIsComponentEdited(true);
+      }
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Scale");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::DragFloat("##TextScale", &text.scale, .001f, 0.f, 5.f)) {
+        SetIsComponentEdited(true);
+      }
+
+      ImGui::EndTable();
     }
 
     WindowEnd(isOpen);
   }
 
-  void Inspector::TransformComponentWindow(ECS::Entity entity) {
-    bool isOpen{ WindowBegin("Transform") };
+  void Inspector::TransformComponentWindow(ECS::Entity entity, std::string const& icon) {
+    bool isOpen{ WindowBegin<Component::Transform>("Transform", icon) };
 
     if (isOpen) {
-        { // tch added for testing, pls remove if needed
-            auto& xfm{ entity.GetComponent<Component::Transform>() };
-            ImGui::DragScalarN("World Position", ImGuiDataType_Double, &xfm.worldPos.x, 3, 0.1f);
-            ImGui::DragScalarN("World Scale", ImGuiDataType_Double, &xfm.worldScale.x, 3, 0.1f);
-            ImGui::DragScalarN("World Rotation", ImGuiDataType_Double, &xfm.worldRot.x, 3, 0.1f);
-        }
+      auto& transform = entity.GetComponent<Component::Transform>();
+
+      float contentSize = ImGui::GetContentRegionAvail().x;
+      float charSize = ImGui::CalcTextSize("012345678901234").x;
+      float inputWidth = (contentSize - charSize - 50) / 3;
+
+      ImGui::BeginTable("LocalTransformTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableHeadersRow();
+
+      if (ImGuiHelpers::TableInputDouble3("Local Translation", transform.localPos, inputWidth, false)) {
+        SetIsComponentEdited(true);
+      }
+      if (ImGuiHelpers::TableInputDouble3("Local Rotation", transform.localRot, inputWidth, false)) {
+        SetIsComponentEdited(true);
+      }
+      if (ImGuiHelpers::TableInputDouble3("Local Scale", transform.localScale, inputWidth, false)) {
+        SetIsComponentEdited(true);
+      }
+      ImGui::EndTable();
+
+      ImGui::BeginTable("WorldTransformTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableHeadersRow();
+
+      if (ImGuiHelpers::TableInputDouble3("World Translation", transform.worldPos, inputWidth, true)) {
+        SetIsComponentEdited(true);
+      }
+      if (ImGuiHelpers::TableInputDouble3("World Rotation", transform.worldRot, inputWidth, true)) {
+        SetIsComponentEdited(true);
+      }
+      if (ImGuiHelpers::TableInputDouble3("World Scale", transform.worldScale, inputWidth, true)) {
+        SetIsComponentEdited(true);
+      }
+
+      ImGui::EndTable();
     }
 
     WindowEnd(isOpen);
   }
 
-  bool Inspector::WindowBegin(std::string windowName) {
-    ImGui::Separator();
-    if (mEntityChanged) {
-      bool& openMapStatus = mComponentOpenStatusMap[windowName];
-      ImGui::SetNextItemOpen(openMapStatus, ImGuiCond_Always);
+  void Inspector::MeshComponentWindow(ECS::Entity entity, std::string const& icon) {
+    bool isOpen{ WindowBegin<Component::Mesh>("Mesh", icon) };
+
+    if (isOpen) {
+
     }
 
-    bool isOpen{ ImGui::TreeNode(windowName.c_str()) };
-    mComponentOpenStatusMap[windowName] = isOpen;
-    return isOpen;
+    WindowEnd(isOpen);
   }
 
   void Inspector::WindowEnd(bool isOpen) {
-      if (isOpen)
-          ImGui::TreePop();
+    if (isOpen) {
+      ImGui::TreePop();
+      ImGui::PopFont();
+    }
 
-      ImGui::Separator();
-
+    ImGui::Separator();
   }
-  void Inspector::RigidBodyComponentWindow(ECS::Entity entity) {
-      ImGui::Separator();
-      Component::RigidBody& rigidBody{entity.GetComponent<Component::RigidBody>()};
+
+  void Inspector::RigidBodyComponentWindow(ECS::Entity entity, std::string const& icon) {
+    bool isOpen{ WindowBegin<Component::RigidBody>("RigidBody", icon) };
+
+    if (isOpen) {
       // Assuming 'rigidBody' is an instance of RigidBody
+      Component::RigidBody& rigidBody{ entity.GetComponent<Component::RigidBody>() };
 
-      if (ImGui::DragFloat("Friction", &rigidBody.friction, 0.01f, 0.0f, 1.0f)) {
-          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::FRICTION);
+      float contentSize = ImGui::GetContentRegionAvail().x;
+      float charSize = ImGui::CalcTextSize("012345678901234").x;
+      float inputWidth = (contentSize - charSize - 50) / 3;
+
+      ImGui::BeginTable("RigidBodyTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableHeadersRow();
+
+      if (ImGuiHelpers::TableInputFloat3("Velocity", rigidBody.velocity.mF32, inputWidth, false)) {
+        IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
+        SetIsComponentEdited(true);
       }
-      if (ImGui::DragFloat("Restitution", &rigidBody.restitution, 0.01f, 0.0f, 1.0f)) {
-          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::RESTITUTION);
+      if (ImGuiHelpers::TableInputFloat3("Angular Velocity", rigidBody.angularVelocity.mF32, inputWidth, false)) {
+        IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::ANGULAR_VELOCITY);
+        SetIsComponentEdited(true);
       }
 
-      if (ImGui::DragFloat("Gravity Factor", &rigidBody.gravityFactor, 0.01f, 0.0f, 10.0f)){
-          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::GRAVITY_FACTOR);
+      ImGui::EndTable();
+
+      ImGui::BeginTable("ShapeSelectionTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Friction");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::DragFloat("##RigidBodyFriction", &rigidBody.friction, 0.01f, 0.0f, 1.0f)) {
+        IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::FRICTION);
+        SetIsComponentEdited(true);
       }
 
-      if (ImGui::DragFloat3("Velocity", rigidBody.velocity.mF32, 0.1f)){
-          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Restitution");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::DragFloat("##RigidBodyRestitution", &rigidBody.restitution, 0.01f, 0.0f, 1.0f)) {
+        IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::RESTITUTION);
+        SetIsComponentEdited(true);
       }
-      if (ImGui::DragFloat3("Angular Velocity", rigidBody.angularVelocity.mF32, 0.1f)) {
-          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::ANGULAR_VELOCITY);
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Gravity Factor");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::DragFloat("##RigidBodyGravityFactor", &rigidBody.gravityFactor, 0.01f, 0.0f, 10.0f)) {
+        IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::GRAVITY_FACTOR);
+        SetIsComponentEdited(true);
       }
 
       // Motion Type Selection
       const char* motionTypes[] = { "Static", "Kinematic", "Dynamic" };
       int currentMotionType = static_cast<int>(rigidBody.motionType);
-      if (ImGui::Combo("Motion Type", &currentMotionType, motionTypes, IM_ARRAYSIZE(motionTypes))) {
-          rigidBody.motionType = static_cast<JPH::EMotionType>(currentMotionType);
-          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::MOTION);
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Motion Type");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::Combo("##Motion Type", &currentMotionType, motionTypes, IM_ARRAYSIZE(motionTypes))) {
+        rigidBody.motionType = static_cast<JPH::EMotionType>(currentMotionType);
+        IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::MOTION);
+        SetIsComponentEdited(true);
       }
+
+      ImGui::EndTable();
+    }
+
+    WindowEnd(isOpen);
   }
 
-  void Inspector::ColliderComponentWindow(ECS::Entity entity) {
-      ImGui::Separator();
+  void Inspector::ColliderComponentWindow(ECS::Entity entity, std::string const& icon) {
+    bool isOpen{ WindowBegin<Component::Collider>("Collider", icon) };
+
+    if (isOpen) {
       // Assuming 'collider' is an instance of Collider
-      Component::Collider& collider{entity.GetComponent<Component::Collider>()};
-      ImGui::DragFloat3("Scale", collider.scale.mF32, 0.1f);
-      ImGui::DragFloat3("Position Offset", collider.positionOffset.mF32, 0.1f);
-      ImGui::DragFloat3("Rotation Offset", collider.rotationOffset.mF32, 0.1f);
+      Component::Collider& collider{ entity.GetComponent<Component::Collider>() };
+      float contentSize = ImGui::GetContentRegionAvail().x;
+      float charSize = ImGui::CalcTextSize("012345678901234").x;
+      float inputWidth = (contentSize - charSize - 50) / 3;
+
+      ImGui::BeginTable("ColliderTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableHeadersRow();
+
+      if (ImGuiHelpers::TableInputFloat3("Scale", collider.scale.mF32, inputWidth, false)) {
+        SetIsComponentEdited(true);
+      }
+      if (ImGuiHelpers::TableInputFloat3("Position Offset", collider.positionOffset.mF32, inputWidth, false)) {
+        SetIsComponentEdited(true);
+      }
+      if (ImGuiHelpers::TableInputFloat3("Rotation Offset", collider.rotationOffset.mF32, inputWidth, false)) {
+        SetIsComponentEdited(true);
+      }
+
+      ImGui::EndTable();
 
       // Shape Type Selection
       const char* shapeTypes[] = { "Unknown", "Sphere", "Capsule", "Box", "Triangle", "ConvexHull", "Mesh", "HeightField", "Compound" };
       int currentShapeType = static_cast<int>(collider.type);
-      if (ImGui::Combo("Shape Type", &currentShapeType, shapeTypes, IM_ARRAYSIZE(shapeTypes))) {
-          collider.type = static_cast<JPH::EShapeSubType>(currentShapeType);
+
+      ImGui::BeginTable("ShapeSelectionTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Shape Type");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::Combo("##ShapeType", &currentShapeType, shapeTypes, IM_ARRAYSIZE(shapeTypes))) {
+        collider.type = static_cast<JPH::EShapeSubType>(currentShapeType);
+        SetIsComponentEdited(true);
       }
+
+      ImGui::EndTable();
+    }
+
+    WindowEnd(isOpen);
+  }
+
+  void Inspector::DrawAddButton() {
+    ImVec2 addTextSize = ImGui::CalcTextSize("Add");
+    ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
+    float paddingX = 5.0f;
+    float buttonWidth = addTextSize.x + paddingX * 2.0f;
+    ImGui::SameLine(contentRegionAvailable.x - addTextSize.x);
+
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0, 0, 0, 0));
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0, 0, 0, 0));
+    ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::MontserratSemiBold]);
+    
+    if (ImGui::Button(ICON_FA_CIRCLE_PLUS)) {
+      ImVec2 buttonPos = ImGui::GetItemRectMin();
+      ImVec2 buttonSize = ImGui::GetItemRectSize();
+
+      ImVec2 popupPos(buttonPos.x, buttonPos.y + buttonSize.y);
+      ImGui::SetNextWindowPos(popupPos);
+
+      ImGui::OpenPopup("AddComponentPanel");
+    }
+
+    ImGui::PopFont();
+    ImGui::PopStyleColor(3);
+
+    if (ImGui::BeginPopup("AddComponentPanel", ImGuiWindowFlags_NoMove)) {
+
+      if (ImGui::BeginTable("##component_table", 1, ImGuiTableFlags_SizingStretchSame)) {
+        ImGui::TableSetupColumn("ComponentNames", ImGuiTableColumnFlags_WidthFixed, 200.f);
+
+        // @TODO: EDIT WHEN NEW COMPONENTS
+        DrawAddComponentButton<Component::Collider>("Collider", ICON_FA_BOMB);
+        DrawAddComponentButton<Component::Layer>("Layer", ICON_FA_LAYER_GROUP);
+        DrawAddComponentButton<Component::Material>("Material", ICON_FA_GEM);
+        DrawAddComponentButton<Component::Mesh>("Mesh", ICON_FA_CUBE);
+        DrawAddComponentButton<Component::RigidBody>("RigidBody", ICON_FA_CAR);
+        DrawAddComponentButton<Component::Script>("Script", ICON_FA_FILE_CODE);
+        DrawAddComponentButton<Component::Tag>("Tag", ICON_FA_TAG);
+        DrawAddComponentButton<Component::Text>("Text", ICON_FA_FONT);
+        DrawAddComponentButton<Component::Transform>("Transform", std::string(ICON_FA_ROTATE));
+
+        ImGui::EndTable();
+      }
+
+      ImGui::EndPopup();
+    }
+  }
+
+  template<typename Component>
+  void DrawAddComponentButton(std::string const& name, std::string const& icon) {
+    if (GUIManager::GetSelectedEntity().HasComponent<Component>()) {
+      return;
+    }
+    
+    auto fillRowWithColour = [](const ImColor& colour) {
+      for (int column = 0; column < ImGui::TableGetColumnCount(); column++) {
+        ImGui::TableSetBgColor(ImGuiTableBgTarget_CellBg, colour, column);
+      }
+    };
+    
+    const float rowHeight = 25.0f;
+    auto* window = ImGui::GetCurrentWindow();
+    window->DC.CurrLineSize.y = rowHeight;
+    ImGui::TableNextRow(0, rowHeight);
+    ImGui::TableSetColumnIndex(0);
+
+    window->DC.CurrLineTextBaseOffset = 3.0f;
+
+    const ImVec2 rowAreaMin = ImGui::TableGetCellBgRect(ImGui::GetCurrentTable(), 0).Min;
+    const ImVec2 rowAreaMax = { ImGui::TableGetCellBgRect(ImGui::GetCurrentTable(), 
+      ImGui::TableGetColumnCount() - 1).Max.x, rowAreaMin.y + rowHeight };
+
+    //ImGui::GetWindowDrawList()->AddRect(rowAreaMin, rowAreaMax, Color::IMGUI_COLOR_RED); // Debug
+
+    ImGui::PushClipRect(rowAreaMin, rowAreaMax, false);
+    bool isRowHovered, isRowClicked;
+    ImGui::ButtonBehavior(ImRect(rowAreaMin, rowAreaMax), ImGui::GetID(name.c_str()), 
+      &isRowHovered, &isRowClicked, ImGuiButtonFlags_MouseButtonLeft);
+    ImGui::SetItemAllowOverlap();
+    ImGui::PopClipRect();
+
+    std::string display{ icon + "   " + name};
+    
+    ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::MontserratSemiBold]);
+    ImGui::TextUnformatted(display.c_str());
+    ImGui::PopFont();
+
+    if (isRowHovered)
+      fillRowWithColour(Color::IMGUI_COLOR_ORANGE);
+
+    if (isRowClicked) {
+      ECS::Entity ent{ GUIManager::GetSelectedEntity().GetRawEnttEntityID() };
+      ent.EmplaceComponent<Component>();
+      GUI::Inspector::SetIsComponentEdited(true);
+      ImGui::CloseCurrentPopup();
+    }
+  }
+
+  template<typename Component>
+  bool DrawOptionButton(std::string const& name) {
+    bool openMainWindow{ true };
+    auto fillRowWithColour = [](const ImColor& colour) {
+      for (int column = 0; column < ImGui::TableGetColumnCount(); column++) {
+        ImGui::TableSetBgColor(ImGuiTableBgTarget_CellBg, colour, column);
+      }
+    };
+
+    const float rowHeight = 25.0f;
+    auto* window = ImGui::GetCurrentWindow();
+    window->DC.CurrLineSize.y = rowHeight;
+    ImGui::TableNextRow(0, rowHeight);
+    ImGui::TableSetColumnIndex(0);
+
+    window->DC.CurrLineTextBaseOffset = 3.0f;
+
+    const ImVec2 rowAreaMin = ImGui::TableGetCellBgRect(ImGui::GetCurrentTable(), 0).Min;
+    const ImVec2 rowAreaMax = { ImGui::TableGetCellBgRect(ImGui::GetCurrentTable(),
+      ImGui::TableGetColumnCount() - 1).Max.x, rowAreaMin.y + rowHeight };
+
+    ImGui::PushClipRect(rowAreaMin, rowAreaMax, false);
+    bool isRowHovered, isRowClicked;
+    ImGui::ButtonBehavior(ImRect(rowAreaMin, rowAreaMax), ImGui::GetID(name.c_str()),
+      &isRowHovered, &isRowClicked, ImGuiButtonFlags_MouseButtonLeft);
+    ImGui::SetItemAllowOverlap();
+    ImGui::PopClipRect();
+
+    ImGui::TextUnformatted(name.c_str());
+
+    if (isRowHovered)
+      fillRowWithColour(Color::IMGUI_COLOR_RED);
+
+    if (isRowClicked) {
+      ECS::Entity ent{ GUIManager::GetSelectedEntity().GetRawEnttEntityID() };
+
+      if (name == "Remove Component") {
+        ent.RemoveComponent<Component>();
+        GUI::Inspector::SetIsComponentEdited(true);
+        openMainWindow = false;
+      }
+
+      else if (name == "Clear") {
+        auto& component = ent.GetComponent<Component>();
+        GUI::Inspector::SetIsComponentEdited(true);
+        component.Clear();
+      }
+
+      ImGui::CloseCurrentPopup();
+    }
+
+    return openMainWindow;
+  }
+
+  template<typename Component>
+  bool DrawOptionsListButton(std::string windowName) {
+    bool openMainWindow{ true };
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 25.f);
+    ImVec2 addTextSize = ImGui::CalcTextSize("Options");
+    ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
+    float paddingX = 10.0f;
+    float buttonWidth = addTextSize.x + paddingX * 2.0f;
+    ImGui::SameLine(contentRegionAvailable.x - addTextSize.x - paddingX);
+
+    if (ImGui::Button("Options", ImVec2(buttonWidth, 0))) {
+      ImVec2 buttonPos = ImGui::GetItemRectMin();
+      ImVec2 buttonSize = ImGui::GetItemRectSize();
+
+      ImVec2 popupPos(buttonPos.x, buttonPos.y + buttonSize.y);
+      ImGui::SetNextWindowPos(popupPos);
+
+      ImGui::OpenPopup("OptionsPanel");
+    }
+
+    ImGui::PopStyleVar();
+
+    if (ImGui::BeginPopup("OptionsPanel", ImGuiWindowFlags_NoMove)) {
+
+      if (ImGui::BeginTable("##options_table", 1, ImGuiTableFlags_SizingStretchSame)) {
+        ImGui::TableSetupColumn("OptionNames", ImGuiTableColumnFlags_WidthFixed, 200.f);
+        DrawOptionButton<Component>("Clear");
+        if (windowName != "Tag")
+          openMainWindow = DrawOptionButton<Component>("Remove Component");
+
+        ImGui::EndTable();
+      }
+
+      ImGui::EndPopup();
+    }
+
+    return openMainWindow;
   }
 } // namespace GUI
 

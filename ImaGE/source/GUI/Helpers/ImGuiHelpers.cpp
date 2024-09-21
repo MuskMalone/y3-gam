@@ -4,6 +4,7 @@
 #include <ImGui/imgui.h>
 //#include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <string>
+#include "Color.h"
 
 namespace ImGuiHelpers
 {
@@ -25,6 +26,167 @@ namespace ImGuiHelpers
         ImGui::EndDragDropTarget();
       }
     return false;
+  }
+
+  bool TableInputFloat3(std::string propertyName, float* property, float fieldWidth, bool disabled) {
+    ImGui::BeginDisabled(disabled);
+
+    // Convert IM_COL32 colors to ImVec4
+    auto Col32ToImVec4 = [](ImU32 col) -> ImVec4 {
+      return ImVec4(
+        ((col >> IM_COL32_R_SHIFT) & 0xFF) / 255.0f,
+        ((col >> IM_COL32_G_SHIFT) & 0xFF) / 255.0f,
+        ((col >> IM_COL32_B_SHIFT) & 0xFF) / 255.0f,
+        ((col >> IM_COL32_A_SHIFT) & 0xFF) / 255.0f
+      );
+      };
+
+    bool valChanged{ false };
+    ImGui::TableNextRow();
+    ImGui::TableSetColumnIndex(0);
+    ImGui::Text(propertyName.c_str());
+    ImGui::TableSetColumnIndex(1);
+    ImGui::PushStyleColor(ImGuiCol_FrameBg, Col32ToImVec4(Color::IMGUI_COLOR_RED));
+    std::string labelX{ "##X" + propertyName };
+    if (ImGui::DragFloat(labelX.c_str(), &property[0], 0.0, 0.0)) {
+      valChanged = true;
+    }
+    ImGui::PopStyleColor();
+
+    ImGui::TableSetColumnIndex(2);
+    ImGui::PushStyleColor(ImGuiCol_FrameBg, Col32ToImVec4(Color::IMGUI_COLOR_GREEN));
+    std::string labelY{ "##Y" + propertyName };
+    if (ImGui::DragFloat(labelY.c_str(), &property[1], 0.0, 0.0)) {
+      valChanged = true;
+    }
+
+    ImGui::PopStyleColor();
+
+    ImGui::TableSetColumnIndex(3);
+    ImGui::PushStyleColor(ImGuiCol_FrameBg, Col32ToImVec4(Color::IMGUI_COLOR_BLUE));
+    std::string labelZ{ "##Z" + propertyName };
+    if (ImGui::DragFloat(labelZ.c_str(), &property[2], 0.0, 0.0)) {
+      valChanged = true;
+    }
+    ImGui::PopStyleColor();
+
+    ImGui::EndDisabled();
+
+    return valChanged;
+  }
+
+  bool TableInputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled) {
+    ImGui::BeginDisabled(disabled);
+
+    // Convert IM_COL32 colors to ImVec4
+    auto Col32ToImVec4 = [](ImU32 col) -> ImVec4 {
+      return ImVec4(
+        ((col >> IM_COL32_R_SHIFT) & 0xFF) / 255.0f,
+        ((col >> IM_COL32_G_SHIFT) & 0xFF) / 255.0f,
+        ((col >> IM_COL32_B_SHIFT) & 0xFF) / 255.0f,
+        ((col >> IM_COL32_A_SHIFT) & 0xFF) / 255.0f
+      );
+    };
+
+    bool valChanged{ false };
+    ImGui::TableNextRow();
+    ImGui::TableSetColumnIndex(0);
+    ImGui::Text(propertyName.c_str());
+    ImGui::TableSetColumnIndex(1);
+    ImGui::PushStyleColor(ImGuiCol_FrameBg, Col32ToImVec4(Color::IMGUI_COLOR_RED));
+    std::string labelX{ "##X" + propertyName };
+    if (ImGui::InputDouble(labelX.c_str(), &property.x, 0.0, 0.0, "%.3f")) {
+      valChanged = true;
+    }
+    ImGui::PopStyleColor();
+
+    ImGui::TableSetColumnIndex(2);
+    ImGui::PushStyleColor(ImGuiCol_FrameBg, Col32ToImVec4(Color::IMGUI_COLOR_GREEN));
+    std::string labelY{ "##Y" + propertyName };
+    if (ImGui::InputDouble(labelY.c_str(), &property.y, 0.0, 0.0, "%.3f")) {
+      valChanged = true;
+    }
+
+    ImGui::PopStyleColor();
+
+    ImGui::TableSetColumnIndex(3);
+    ImGui::PushStyleColor(ImGuiCol_FrameBg, Col32ToImVec4(Color::IMGUI_COLOR_BLUE));
+    std::string labelZ{ "##Z" + propertyName };
+    if (ImGui::InputDouble(labelZ.c_str(), &property.z, 0.0, 0.0, "%.3f")) {
+      valChanged = true;
+    }
+    ImGui::PopStyleColor();
+
+    ImGui::EndDisabled();
+
+    return valChanged;
+  }
+
+  bool InputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled) {
+    bool valChanged{ false };
+
+    ImGui::BeginDisabled(disabled);
+
+    ImGui::TableNextColumn();
+    ImGui::Text(propertyName.c_str());
+
+    propertyName = "##" + propertyName;
+
+    ImGui::TableNextColumn();
+
+    // Convert IM_COL32 colors to ImVec4
+    auto Col32ToImVec4 = [](ImU32 col) -> ImVec4 {
+      return ImVec4(
+        ((col >> IM_COL32_R_SHIFT) & 0xFF) / 255.0f,
+        ((col >> IM_COL32_G_SHIFT) & 0xFF) / 255.0f,
+        ((col >> IM_COL32_B_SHIFT) & 0xFF) / 255.0f,
+        ((col >> IM_COL32_A_SHIFT) & 0xFF) / 255.0f
+      );
+    };
+
+    ImGui::SetNextItemWidth(fieldWidth);
+    ImGui::TextColored(Col32ToImVec4(Color::IMGUI_COLOR_RED), "X");
+    ImGui::SameLine();
+    if (ImGui::InputDouble((propertyName + "X").c_str(), &property.x, 0, 0, "%.5f")) { valChanged = true; }
+
+    ImGui::SameLine(0, 3);
+    ImGui::SetNextItemWidth(fieldWidth);
+    ImGui::TextColored(Col32ToImVec4(Color::IMGUI_COLOR_GREEN), "Y");
+    ImGui::SameLine();
+    if (ImGui::InputDouble((propertyName + "Y").c_str(), &property.y, 0, 0, "%.5f")) { valChanged = true; }
+
+    ImGui::SameLine(0, 3);
+    ImGui::SetNextItemWidth(fieldWidth);
+    ImGui::TextColored(Col32ToImVec4(Color::IMGUI_COLOR_BLUE), "Z");
+    ImGui::SameLine();
+    if (ImGui::InputDouble((propertyName + "Z").c_str(), &property.z, 0, 0, "%.5f")) { valChanged = true; }
+
+    ImGui::EndDisabled();
+
+    return valChanged;
+  }
+
+  void InputDouble1(std::string propertyName, double& property, bool disabled) {
+    ImGui::BeginDisabled(disabled);
+    ImGui::TableNextColumn();
+    ImGui::Text(propertyName.c_str());
+    ImGui::TableNextColumn();
+    ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
+    ImGui::InputDouble(("##" + propertyName).c_str(), &property, 0, 0, "%.2f");
+    ImGui::EndDisabled();
+  }
+
+  bool InputCheckBox(std::string propertyName, bool& property, bool disabled) {
+    ImGui::PushID(propertyName.c_str());
+    bool valChanged{ false };
+    ImGui::BeginDisabled(disabled);
+    ImGui::TableNextColumn();
+    ImGui::Text(propertyName.c_str());
+    ImGui::TableNextColumn();
+    valChanged = ImGui::Checkbox(("##" + propertyName).c_str(), &property);
+    ImGui::EndDisabled();
+    ImGui::PopID();
+    return valChanged;
   }
 
 } // namespace ImGuiHelpers

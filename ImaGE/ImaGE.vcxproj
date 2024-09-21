@@ -27,11 +27,24 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Graphics\AssetIO\IMSH.cpp" />
+    <ClCompile Include="source\Graphics\CameraManager.cpp" />
+    <ClCompile Include="source\Graphics\EditorCamera.cpp" />
+    <ClCompile Include="source\Graphics\MeshFactory.cpp" />
+    <ClCompile Include="source\Graphics\MeshSource.cpp" />
+    <ClCompile Include="source\Graphics\ElementBuffer.cpp" />
+    <ClCompile Include="source\Graphics\RenderAPI.cpp" />
+    <ClCompile Include="source\Graphics\Renderer.cpp" />
+    <ClCompile Include="source\Graphics\RenderSystem.cpp" />
+    <ClCompile Include="source\Graphics\Shader.cpp" />
+    <ClCompile Include="source\Graphics\ShaderProgram.cpp" />
+    <ClCompile Include="source\Graphics\ShaderStructs.cpp" />
+    <ClCompile Include="source\Graphics\VertexArray.cpp" />
+    <ClCompile Include="source\Graphics\VertexBuffer.cpp" />
     <ClCompile Include="source\DebugTools\DebugLogger\DebugLogger.cpp" />
     <ClCompile Include="Source\GUI\Helpers\AssetHelpers.cpp" />
     <ClCompile Include="source\Input\InputManager.cpp" />
     <ClCompile Include="Source\Reflection\ObjectFactory.cpp" />
-    <ClCompile Include="Source\Core\TempObject.cpp" />
     <ClCompile Include="Source\External\glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='GAME_BUILD|x64'">NotUsing</PrecompiledHeader>
@@ -50,7 +63,6 @@
     <ClCompile Include="source\Events\EventManager.cpp" />
     <ClCompile Include="source\FrameRateController\FrameRateController.cpp" />
     <ClCompile Include="source\Graphics\Framebuffer.cpp" />
-    <ClCompile Include="source\Graphics\Model.cpp" />
     <ClCompile Include="source\External\ImGui\backends\imgui_impl_glfw.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='NO_IMGUI_D|x64'">NotUsing</PrecompiledHeader>
@@ -107,7 +119,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='GAME_BUILD|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='NO_IMGUI_R|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="source\Graphics\ShaderStructs.cpp" />
     <ClCompile Include="source\GUI\Dockable\AssetBrowser.cpp" />
     <ClCompile Include="source\GUI\Dockable\Inspector.cpp" />
     <ClCompile Include="source\GUI\Persistent\SceneControls.cpp" />
@@ -116,7 +127,6 @@
     <ClCompile Include="source\GUI\GUIManager.cpp" />
     <ClCompile Include="Source\GUI\Helpers\ImGuiHelpers.cpp" />
     <ClCompile Include="source\GUI\Persistent\Toolbar.cpp" />
-    <ClCompile Include="source\Graphics\MeshGen.cpp" />
     <ClCompile Include="Source\pch.cpp" />
     <ClCompile Include="Source\Core\Camera.cpp" />
     <ClCompile Include="Source\main.cpp">
@@ -127,18 +137,35 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='NO_IMGUI_R|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="source\Physics\PhysicsSystem.cpp" />
-    <ClCompile Include="source\Graphics\ShaderProgram.cpp" />
-    <ClCompile Include="source\Graphics\VertexAttribs.cpp" />
     <ClCompile Include="source\Serialization\Deserializer.cpp" />
     <ClCompile Include="Source\Serialization\Registration\RegisterComponents.cpp" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
+    <ClCompile Include="source\Graphics\Texture.cpp" />
+    <ClInclude Include="Source\Graphics\AssetIO\IMSH.h" />
+    <ClInclude Include="source\Core\Component\Camera.h" />
+    <ClInclude Include="source\Core\Component\CameraController.h" />
+    <ClInclude Include="source\Graphics\CameraManager.h" />
+    <ClInclude Include="source\Graphics\EditorCamera.h" />
+    <ClInclude Include="source\Graphics\MeshFactory.h" />
+    <ClInclude Include="source\Graphics\Mesh.h" />
+    <ClInclude Include="source\Graphics\MeshSource.h" />
+    <ClInclude Include="source\Graphics\ElementBuffer.h" />
+    <ClInclude Include="source\Graphics\RenderAPI.h" />
+    <ClInclude Include="source\Graphics\Renderer.h" />
+    <ClInclude Include="source\Graphics\RenderSystem.h" />
+    <ClInclude Include="source\Graphics\Shader.h" />
     <ClInclude Include="source\Asset\AssetManager.h" />
     <ClInclude Include="source\Asset\IGEAssets.h" />
     <ClInclude Include="source\DebugTools\DebugLogger\DebugLogger.h" />
     <ClInclude Include="source\DebugTools\Exception\Exception.h" />
     <ClInclude Include="source\DebugTools\Exception\ExceptionBase.h" />
+    <ClInclude Include="source\Color.h" />
+    <ClInclude Include="source\Core\Component\Script.h" />
+    <ClInclude Include="source\Core\Component\Text.h" />
     <ClInclude Include="Source\Events\SceneEvents.h" />
     <ClInclude Include="source\External\GLFWwindowDestructor.h" />
+    <ClInclude Include="source\Graphics\ShaderProgram.h" />
+    <ClInclude Include="source\Graphics\ShaderStructs.h" />
     <ClInclude Include="Source\GUI\Styles\FontAwesome6Icons.h" />
     <ClInclude Include="Source\GUI\Helpers\AssetHelpers.h" />
     <ClInclude Include="Source\GUI\Helpers\AssetPayload.h" />
@@ -156,7 +183,10 @@
     <ClInclude Include="source\Core\Component\Transform.h" />
     <ClInclude Include="source\Core\Entity.h" />
     <ClInclude Include="source\Core\EntityManager.h" />
-    <ClInclude Include="Source\Core\TempObject.h" />
+    <ClInclude Include="source\Graphics\Submesh.h" />
+    <ClInclude Include="source\Graphics\Vertex.h" />
+    <ClInclude Include="source\Graphics\VertexArray.h" />
+    <ClInclude Include="source\Graphics\VertexBuffer.h" />
     <ClInclude Include="Source\GUI\Persistent\PrefabEditor.h" />
     <ClInclude Include="source\Physics\PhysicsHelpers.h" />
     <ClInclude Include="Source\Prefabs\PrefabManager.h" />
@@ -183,14 +213,13 @@
     <ClInclude Include="source\Serialization\Deserializer.h" />
     <ClInclude Include="source\Serialization\Serializer.h" />
     <ClInclude Include="source\Singleton.h" />
+    <ClInclude Include="source\Graphics\Texture.h" />
+    <ClInclude Include="source\Graphics\Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="source\Debug.h" />
-    <ClInclude Include="source\Graphics\ShaderStructs.h" />
     <ClInclude Include="source\Graphics\Framebuffer.h" />
-    <ClInclude Include="source\Graphics\MeshType.h" />
-    <ClInclude Include="source\Graphics\Model.h" />
     <ClInclude Include="source\External\ImGui\backends\imgui_impl_glfw.h" />
     <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl3_loader.h" />
@@ -206,11 +235,12 @@
     <ClInclude Include="source\GUI\GUIWindow.h" />
     <ClInclude Include="source\GUI\Dockable\Viewport.h" />
     <ClInclude Include="Source\GUI\Helpers\ImGuiHelpers.h" />
-    <ClInclude Include="source\Graphics\MeshGen.h" />
     <ClInclude Include="Source\pch.h" />
     <ClInclude Include="Source\Core\Camera.h" />
-    <ClInclude Include="source\Graphics\ShaderProgram.h" />
-    <ClInclude Include="source\Graphics\VertexAttribs.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\Default.frag.glsl" />
+    <None Include="shaders\Default.vert.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -403,7 +433,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);JPH_DEBUG_RENDERER;JPH_PROFILE_ENABLED;JPH_OBJECT_STREAM;JPH_USE_AVX2;JPH_USE_AVX;JPH_USE_SSE4_1;JPH_USE_SSE4_2;JPH_USE_LZCNT;JPH_USE_TZCNT;JPH_USE_F16C;JPH_USE_FMADD;_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>

@@ -1,15 +1,13 @@
 #pragma once
 #include <string>
 
-namespace Component
-{
+namespace Component {
+  struct Layer {
+    Layer() : name{ "Default" } {}
+    Layer(std::string const& layer) : name{ layer } {}
 
-  struct Layer
-  {
-    Layer() : layerName{ "NoLayer" } {};
-    Layer(std::string const& layer) : layerName{ layer } {};
+    inline void Clear() noexcept { name = "Default"; }
 
-    std::string layerName;
+    std::string name;
   };
-
 } // namespace Component

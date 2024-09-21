@@ -8,6 +8,7 @@
 #include <Events/EventManager.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <Prefabs/PrefabManager.h>
+#include <GUI/Dockable/Inspector.h>
 
 namespace GUI
 {
@@ -33,15 +34,25 @@ namespace GUI
       return;
     }
 
+    std::string sceneNameSave{ (Inspector::GetIsComponentEdited()) ? mSceneName + " *" : mSceneName };
+
     if (mEditingPrefab) {
-      ImGui::Text(("Editing Prefab: " + mSceneName).c_str());
+      ImGui::Text(("Editing Prefab: " + sceneNameSave).c_str());
       ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(253, 208, 23, 255));
       ImGui::Text("Press ESC to return to scene");
       ImGui::PopStyleColor();
     }
     else {
-      ImGui::Text(mSceneName.c_str());
+      ImGui::Text(sceneNameSave.c_str());
     }
+
+
+    // TODO: TEMPORARY FOR TESTING, MOVE SOMEWHERE ELSE
+    ImGuiIO& io = ImGui::GetIO();
+    if (io.KeyCtrl && ImGui::IsKeyPressed(ImGuiKey_S, false)) {
+      Inspector::SetIsComponentEdited(false);
+    }
+
     ImGui::Separator();
 
     if (ImGuiHelpers::BeginDrapDropTargetWindow(sDragDropPayload))
@@ -49,9 +60,6 @@ namespace GUI
       ImGuiPayload const* drop{ ImGui::AcceptDragDropPayload(sDragDropPayload) };
       ECS::Entity const droppedEntity{ *reinterpret_cast<ECS::Entity*>(drop->Data) };
       mEntityManager.RemoveParent(droppedEntity);
-#ifdef HEIRARCHY_DEBUG
-      std::cout << "Unparented Entity " << droppedEntity << "\n";
-#endif
 
       ImGui::EndDragDropTarget();
     }
@@ -120,18 +128,34 @@ namespace GUI
 
   void SceneHierarchy::RecurseDownHierarchy(ECS::Entity entity)
   {
+    static bool editNameMode{ false };
     // set the flag accordingly
     ImGuiTreeNodeFlags treeFlag{ ImGuiTreeNodeFlags_SpanFullWidth };
     bool const hasChildren{ mEntityManager.HasChild(entity) };
     treeFlag |= hasChildren  ? ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen
       : ImGuiTreeNodeFlags_Leaf;
 
-    if (GUIManager::GetSelectedEntity() == entity) { treeFlag |= ImGuiTreeNodeFlags_Selected; }
+    bool const isCurrentEntity{ GUIManager::GetSelectedEntity() == entity }, isEditMode{ isCurrentEntity && editNameMode };
+    if (isCurrentEntity) { treeFlag |= ImGuiTreeNodeFlags_Selected; }
 
     // create the tree nodes
-    std::string const& entityName{ entity.GetComponent<Component::Tag>().tag };
-    if (ImGui::TreeNodeEx((entityName + "##" + std::to_string(entity.GetEntityID())).c_str(), treeFlag))
+    std::string entityName{ entity.GetComponent<Component::Tag>().tag };
+    std::string const displayName{ isEditMode ? "##" : "" + entityName };
+    if (ImGui::TreeNodeEx((displayName + "##" + std::to_string(entity.GetEntityID())).c_str(), treeFlag))
     {
+      if (isEditMode) {
+        ImGui::SetItemAllowOverlap();
+        ImGui::SameLine();
+        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX()  - 9.f);
+        ImGui::SetKeyboardFocusHere();
+        if (ImGui::InputText("##testtt", &entityName, ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue)) {
+          entity.GetComponent<Component::Tag>().tag = entityName;
+          editNameMode = false;
+        }
+        ImGui::PopStyleVar();
+      }
+
       if (ImGui::BeginDragDropSource())
       {
         ECS::EntityManager::EntityID id{ entity.GetRawEnttEntityID() };
@@ -155,7 +179,13 @@ namespace GUI
       }
 
       if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-        GUIManager::SetSelectedEntity(entity);
+        if (isCurrentEntity) {
+          editNameMode = true;
+        }
+        else {
+          GUIManager::SetSelectedEntity(entity);
+          editNameMode = false;
+        }
       }
 
       if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
@@ -238,6 +268,7 @@ namespace GUI
 
       ImGui::Text("Name of Prefab:");
       ImGui::SameLine();
+      if (!ImGui::IsAnyItemActive()) ImGui::SetKeyboardFocusHere();
       if (ImGui::InputText("##PrefabNameInput", &input)) {
         existingPrefabWarning = prefabMan.DoesPrefabExist(input);
         blankWarning = false;

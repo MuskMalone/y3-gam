@@ -23,6 +23,7 @@ public:
 
   void Init();
   void Run();
+  void Shutdown();
 
 private:
   using SceneDrawCall = std::function<void()>;

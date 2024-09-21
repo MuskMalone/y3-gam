@@ -8,6 +8,7 @@
 #include <GUI/Helpers/AssetHelpers.h>
 #include <filesystem>
 #include <Prefabs/PrefabManager.h>
+#include "GUI/GUIManager.h"
 
 namespace GUI
 {
@@ -88,6 +89,19 @@ namespace GUI
         ImGui::EndMenu();
       }
 
+      if (ImGui::BeginMenu("Theme")) {
+        for (int i{}; i < static_cast<int>(GUI::GUIManager::CustomTheme::NumItems); ++i) {
+          bool currentlyActive{ (static_cast<GUI::GUIManager::CustomTheme>(i) == GUI::GUIManager::GetCurrentTheme()) ? true : false };
+
+          if (ImGui::MenuItem(GUI::GUIManager::GetCustomThemeString(static_cast<GUI::GUIManager::CustomTheme>(i)).c_str(), 
+            nullptr, currentlyActive)) {
+            GUI::GUIManager::SetCurrentTheme(static_cast<GUI::GUIManager::CustomTheme>(i));
+          }
+        }
+
+        ImGui::EndMenu();
+      }
+
       // update popups
       if (mScenePopup) {
         ImGui::OpenPopup("Create New Scene");
@@ -152,25 +166,22 @@ namespace GUI
 
       ImGui::Text("Name of Scene:");
       ImGui::SameLine();
-      if (ImGui::InputText(".scn", &sceneName))
-      {
+      if (!ImGui::IsAnyItemActive()) ImGui::SetKeyboardFocusHere();
+      if (ImGui::InputText(".scn", &sceneName)) {
         blankWarning = existingSceneWarning = false;
       }
 
       ImGui::SetCursorPosX(0.5f * (ImGui::GetWindowContentRegionMax().x - ImGui::CalcTextSize("Cancel Create ").x));
-      if (ImGui::Button("Cancel"))
-      {
+      if (ImGui::Button("Cancel")) {
         sceneName.clear();
         blankWarning = existingSceneWarning = false;
         ImGui::CloseCurrentPopup();
       }
 
       ImGui::SameLine();
-      if (ImGui::Button("Create"))
-      {
+      if (ImGui::Button("Create")) {
         // if name is blank / whitespace, reject it
-        if (sceneName.find_first_not_of(" ") == std::string::npos)
-        {
+        if (sceneName.find_first_not_of(" ") == std::string::npos) {
           blankWarning = true;
           existingSceneWarning = false;
         }
@@ -180,8 +191,7 @@ namespace GUI
           existingSceneWarning = true;
           blankWarning = false;
         }*/
-        else
-        {
+        else {
           QUEUE_EVENT(Events::LoadSceneEvent, sceneName, std::string());
           blankWarning = existingSceneWarning = false;
           sceneName.clear();
@@ -212,6 +222,7 @@ namespace GUI
 
       ImGui::Text("Name of Prefab:");
       ImGui::SameLine();
+      if (!ImGui::IsAnyItemActive()) ImGui::SetKeyboardFocusHere();
       if (ImGui::InputText("##PrefabNameInput", &input)) {
         existingPrefabWarning = prefabMan.DoesPrefabExist(input);
         blankWarning = false;

@@ -196,7 +196,7 @@ namespace Scenes
   }
 
   // cleanup any extra tmp files
-  SceneManager::~SceneManager()
+  void SceneManager::Shutdown()
   {
     std::vector<std::filesystem::path> filesToRemove;
     for (auto const& file : std::filesystem::directory_iterator(mTempDir)) {

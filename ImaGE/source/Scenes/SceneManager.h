@@ -14,7 +14,7 @@ namespace Scenes
   public:
 
     void Init();
-    ~SceneManager();
+    void Shutdown();
 
     void StopScene();
     void PauseScene();
