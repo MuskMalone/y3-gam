@@ -333,5 +333,6 @@ namespace {
   void PrintException(std::exception& e)
   {
     Debug::DebugLogger::GetInstance().LogCritical(e.what());
+    Debug::DebugLogger::GetInstance().PrintToCout(e.what(), Debug::LVL_CRITICAL);
   }
 }

@@ -25,6 +25,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 using namespace Debug;
 
+
 DebugLogger::DebugLogger()
 {
 	// Get curret system time
@@ -105,6 +106,9 @@ void DebugLogger::SuppressLogMessages(bool flag)
 
 std::string DebugLogger::LogInfo(std::string msg, bool logToFile)
 {
+#ifdef PRINTTOCOUT
+	PrintToCout(msg, LVL_INFO);
+#endif
 	// Don't log messages
   if (logToFile)
   {
@@ -120,6 +124,9 @@ std::string DebugLogger::LogInfo(std::string msg, bool logToFile)
 
 std::string DebugLogger::LogWarning(std::string msg, bool logToFile)
 {
+#ifdef PRINTTOCOUT
+	PrintToCout(msg, LVL_WARN);
+#endif
 	if (logToFile)
 	{
 		mFileLogger->warn(msg);
@@ -134,6 +141,9 @@ std::string DebugLogger::LogWarning(std::string msg, bool logToFile)
 
 std::string DebugLogger::LogError(std::string msg, bool logToFile)
 {
+#ifdef PRINTTOCOUT
+	PrintToCout(msg, LVL_ERROR);
+#endif
 	if (logToFile)
 	{
 		mFileLogger->error(msg);
@@ -148,6 +158,10 @@ std::string DebugLogger::LogError(std::string msg, bool logToFile)
 
 std::string DebugLogger::LogCritical(std::string msg, bool logToFile)
 {
+
+#ifdef PRINTTOCOUT
+	PrintToCout(msg, LVL_CRITICAL);
+#endif
 	if (logToFile)
 	{
 		mFileLogger->critical(msg);
@@ -157,6 +171,56 @@ std::string DebugLogger::LogCritical(std::string msg, bool logToFile)
 		mLogger->critical(msg);
 	}
 
+
 	return msg;
 }
+
+void DebugLogger::PrintToCout(std::string msg, EXCEPTION_LEVEL lvl)
+{
+	// Get the current time as a time_point
+	auto now = std::chrono::system_clock::now();
+
+	// Convert to time_t to extract the calendar time
+	std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+
+	// Convert to a tm structure for local time representation
+	std::tm now_tm = *std::localtime(&now_time);
+
+	// Extract milliseconds
+	auto now_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+		now.time_since_epoch()) % 1000;
+
+	// Print the formatted time
+	std::cout << '['
+		<< std::put_time(&now_tm, "%Y-%m-%d %H:%M:%S")   // Format date and time
+		<< '.' << std::setfill('0') << std::setw(3)      // Add milliseconds
+		<< now_ms.count()
+		<< ']';
+	
+	switch (lvl)
+	{
+		case LVL_INFO:
+		{
+			std::cout << " [info] " << msg << "\n";
+			break;
+		}
+		case LVL_WARN:
+		{
+			std::cout << " [warning] " << msg << "\n";
+			break;
+		}
+		case LVL_ERROR:
+		{
+			std::cout << " [error] " << msg << "\n";
+			break;
+		}
+		case LVL_CRITICAL:
+		{
+			std::cout << " [critical] " << msg << "\n";
+			break;
+		}
+	}
+}
+
+
 #endif
