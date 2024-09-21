@@ -28,9 +28,9 @@ namespace GUI {
     };
 
     enum class CustomTheme {
-      Dark,
-      Gray,
-      Light,
+      Black,
+      Cloudy,
+      Coconut,
       NumItems
     };
 

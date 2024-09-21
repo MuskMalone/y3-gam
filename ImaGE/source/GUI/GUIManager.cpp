@@ -23,11 +23,11 @@ namespace GUI {
   // Static Initialization
   ECS::Entity GUIManager::sSelectedEntity{};
   std::vector<ImFont*> GUIManager::sCustomFonts{};
-  GUIManager::CustomTheme GUIManager::sCurrentTheme{ CustomTheme::Light }; // Default theme should be read from settings file
+  GUIManager::CustomTheme GUIManager::sCurrentTheme{ CustomTheme::Cloudy }; // Default theme should be read from settings file
   std::unordered_map<GUIManager::CustomTheme, std::string> GUIManager::sCustomThemeStringMap{
-    {GUIManager::CustomTheme::Dark, "Dark"},
-    {GUIManager::CustomTheme::Gray, "Gray"},
-    {GUIManager::CustomTheme::Light, "Light"}
+    {GUIManager::CustomTheme::Black, "Black"},
+    {GUIManager::CustomTheme::Cloudy, "Gray Sky"},
+    {GUIManager::CustomTheme::Coconut, "Coconut"}
   };
 
   GUIManager::GUIManager() :mPersistentElements{}, mWindows{} {}
@@ -38,7 +38,7 @@ namespace GUI {
     mPersistentElements.emplace_back(std::make_unique<SceneControls>("Scene Controls"));
     mPersistentElements.emplace_back(std::make_unique<PrefabEditor>("Prefab Editor"));
 
-    mWindows.reserve(4);
+    mWindows.reserve(5);
     mWindows.emplace_back(std::make_unique<Viewport>("Viewport", framebuffer));
     mWindows.emplace_back(std::make_unique<Inspector>("Inspector"));
     mWindows.emplace_back(std::make_unique<SceneHierarchy>("Scene Hierarchy"));
@@ -47,15 +47,15 @@ namespace GUI {
 
   void GUIManager::UpdateGUI() {
     switch (sCurrentTheme) {
-    case CustomTheme::Dark:
+    case CustomTheme::Black:
       ApplyDarkTheme();
       break;
 
-    case CustomTheme::Gray:
+    case CustomTheme::Cloudy:
       ApplyGrayTheme();
       break;
 
-    case CustomTheme::Light:
+    case CustomTheme::Coconut:
       ApplyLightTheme();
       break;
     }
@@ -158,7 +158,6 @@ namespace GUI {
     style->Colors[ImGuiCol_PlotHistogram] = ImVec4(0.40f, 0.39f, 0.38f, 0.63f);
     style->Colors[ImGuiCol_PlotHistogramHovered] = ImVec4(0.25f, 1.00f, 0.00f, 1.00f);
     style->Colors[ImGuiCol_TextSelectedBg] = ImVec4(0.25f, 1.00f, 0.00f, 0.43f);
-
     style->Colors[ImGuiCol_ChildBg] = ImVec4(0.07f, 0.07f, 0.09f, 1.00f);
     style->Colors[ImGuiCol_Separator] = ImVec4(0.80f, 0.80f, 0.83f, 0.31f);
     style->Colors[ImGuiCol_SeparatorHovered] = ImVec4(0.24f, 0.23f, 0.29f, 1.00f);
@@ -218,7 +217,6 @@ namespace GUI {
     style->Colors[ImGuiCol_PlotHistogram] = ImVec4(0.40f, 0.39f, 0.38f, 0.63f);
     style->Colors[ImGuiCol_PlotHistogramHovered] = ImVec4(0.25f, 1.00f, 0.00f, 1.00f);
     style->Colors[ImGuiCol_TextSelectedBg] = ImVec4(0.25f, 1.00f, 0.00f, 0.43f);
-
     style->Colors[ImGuiCol_ChildBg] = ImVec4(0.07f, 0.07f, 0.09f, 1.00f);
     style->Colors[ImGuiCol_Separator] = ImVec4(0.80f, 0.80f, 0.83f, 0.31f);
     style->Colors[ImGuiCol_SeparatorHovered] = ImVec4(0.24f, 0.23f, 0.29f, 1.00f);
@@ -295,14 +293,6 @@ namespace GUI {
     colors[ImGuiCol_NavWindowingHighlight] = ImVec4(0.70f, 0.70f, 0.70f, 0.70f);
     colors[ImGuiCol_NavWindowingDimBg] = ImVec4(0.20f, 0.20f, 0.20f, 0.20f);
     colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.20f, 0.20f, 0.20f, 0.35f);
-
-    colors[ImGuiCol_Separator] = ImVec4(0.32f, 0.32f, 0.32f, 0.60f);
-    colors[ImGuiCol_SeparatorHovered] = ImVec4(0.50f, 0.50f, 0.50f, 0.80f);
-    colors[ImGuiCol_Tab] = ImVec4(0.95f, 0.95f, 0.95f, 1.00f);
-    colors[ImGuiCol_TabHovered] = ImVec4(0.80f, 0.80f, 0.80f, 0.80f);
-    colors[ImGuiCol_TabActive] = ImVec4(0.70f, 0.70f, 0.70f, 1.00f);
-    colors[ImGuiCol_TabUnfocused] = ImVec4(0.85f, 0.85f, 0.85f, 0.70f);
-    colors[ImGuiCol_TabUnfocusedActive] = ImVec4(0.75f, 0.75f, 0.75f, 1.00f);
   }
 
 } // namespace GUI
