@@ -11,6 +11,7 @@
 #include "Core/Entity.h"
 #include "Core/EntityManager.h"
 #include <Reflection/ObjectFactory.h>
+#include <Events/EventCallback.h>
 
 namespace GUI {
   class Inspector : public GUIWindow {
@@ -18,8 +19,7 @@ namespace GUI {
     Inspector(std::string const& name);
     void Run() override;
 
-    static bool const GetIsComponentEdited();
-    static void SetIsComponentEdited(bool isComponentEdited);
+    inline void SetIsComponentEdited(bool isComponentEdited) noexcept { mIsComponentEdited = isComponentEdited; }
 
   private:
     // Kindly put in alphabetical order, thank you!
@@ -43,36 +43,36 @@ namespace GUI {
     std::map<std::string, bool> mComponentOpenStatusMap;
     Reflection::ObjectFactory& mObjFactory;
     ECS::Entity mPreviousEntity;
+    bool mIsComponentEdited, mFirstEdit;
     bool mEntityChanged;
 
-    static bool sIsComponentEdited;
+    static inline constexpr int INPUT_SIZE{ 200 };
+    static inline constexpr float FIRST_COLUMN_LENGTH{ 130 };
+
+    /*!*********************************************************************
+    \brief
+      This function handles the corresponding events the Inspector
+      subscribed to.
+
+      SAVE_SCENE
+        - Resets the mIsComponentEdited flag when the scene is saved
+      SCENE_STATE_CHANGE
+        - Resets the mIsComponentEdited flag when another scene is loaded
+    \param event
+      The event to be handled
+    ************************************************************************/
+    EVENT_CALLBACK_DECL(HandleEvent);
+
+    template<typename Component>
+    void DrawAddComponentButton(std::string const& name, std::string const& icon);
+
+    template<typename Component>
+    bool DrawOptionButton(std::string const& name);
+
+    template<typename Component>
+    bool DrawOptionsListButton(std::string windowName);
   };
-
-  template<typename Component>
-  bool Inspector::WindowBegin(std::string windowName, std::string const& icon) {
-    ImGui::Separator();
-
-    if (mEntityChanged) {
-      bool& openMapStatus = mComponentOpenStatusMap[windowName];
-      ImGui::SetNextItemOpen(openMapStatus, ImGuiCond_Always);
-    }
-
-    std::string display{ icon + "   " + windowName };
-    bool isOpen{ ImGui::TreeNode(display.c_str())};
-
-    if (isOpen) {
-      ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::MontserratLight]);
-      // Must close component window if a component was removed
-      if (!DrawOptionsListButton<Component>(windowName)) {
-        WindowEnd(true);
-        return false;
-      }
-    }
-
-    mComponentOpenStatusMap[windowName] = isOpen;
-    return isOpen;
-  }
-
+#include "Inspector.tpp"
 } // namespace GUI
 
 #endif  // IMGUI_DISABLE

@@ -13,6 +13,7 @@ namespace Events
     enum NewSceneState
     {
       NEW,
+      CHANGED,
       STARTED,
       PAUSED,
       STOPPED
@@ -48,6 +49,13 @@ namespace Events
   public:
     SaveSceneEvent() : Event(EventType::SAVE_SCENE) {}
     inline std::string GetName() const noexcept override { return "Saving Scene"; }
+  };
+
+  class SceneModifiedEvent : public Event
+  {
+  public:
+    SceneModifiedEvent() : Event(EventType::SCENE_MODIFIED) {}
+    inline std::string GetName() const noexcept override { return "Scene modified"; }
   };
 
   // name, path

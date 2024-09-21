@@ -241,6 +241,7 @@
   <ItemGroup>
     <None Include="shaders\Default.frag.glsl" />
     <None Include="shaders\Default.vert.glsl" />
+    <None Include="Source\GUI\Dockable\Inspector.tpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

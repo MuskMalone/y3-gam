@@ -21,6 +21,8 @@ namespace GUI
   {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &SceneHierarchy::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &SceneHierarchy::HandleEvent, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_MODIFIED, &SceneHierarchy::HandleEvent, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SAVE_SCENE, &SceneHierarchy::HandleEvent, this);
   }
 
   void SceneHierarchy::Run()
@@ -34,23 +36,22 @@ namespace GUI
       return;
     }
 
-    std::string sceneNameSave{ (Inspector::GetIsComponentEdited()) ? mSceneName + " *" : mSceneName };
 
-    if (mEditingPrefab) {
+    std::string sceneNameSave{ mSceneName };
+
+    if (!mEditingPrefab) {
+      // Ctrl + S to save
+      if (ImGui::GetIO().KeyCtrl && ImGui::IsKeyPressed(ImGuiKey_S, false)) {
+        QUEUE_EVENT(Events::SaveSceneEvent);
+      }
+
+      ImGui::Text(sceneNameSave.c_str());
+    }
+    else {
       ImGui::Text(("Editing Prefab: " + sceneNameSave).c_str());
       ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(253, 208, 23, 255));
       ImGui::Text("Press ESC to return to scene");
       ImGui::PopStyleColor();
-    }
-    else {
-      ImGui::Text(sceneNameSave.c_str());
-    }
-
-
-    // TODO: TEMPORARY FOR TESTING, MOVE SOMEWHERE ELSE
-    ImGuiIO& io = ImGui::GetIO();
-    if (io.KeyCtrl && ImGui::IsKeyPressed(ImGuiKey_S, false)) {
-      Inspector::SetIsComponentEdited(false);
     }
 
     ImGui::Separator();
@@ -105,6 +106,7 @@ namespace GUI
       switch (sceneStateEvent->mNewState)
       {
       case Events::SceneStateChange::NEW:
+      case Events::SceneStateChange::CHANGED:
         mSceneName = sceneStateEvent->mSceneName;
         mEditingPrefab = false;
         break;
@@ -114,7 +116,15 @@ namespace GUI
         break;
       default: break;
       }
+
+      break;
     }
+    case Events::EventType::SCENE_MODIFIED:
+      mSceneName += " *";
+      break;
+    case Events::EventType::SAVE_SCENE:
+      mSceneName.erase(mSceneName.size() - 2);
+      break;
     default:break;
     }
   }
@@ -147,11 +157,12 @@ namespace GUI
         ImGui::SetItemAllowOverlap();
         ImGui::SameLine();
         ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
-        ImGui::SetCursorPosX(ImGui::GetCursorPosX()  - 9.f);
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX()  - 12.f);
         ImGui::SetKeyboardFocusHere();
-        if (ImGui::InputText("##testtt", &entityName, ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue)) {
+        if (ImGui::InputText("##EntityRename", &entityName, ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue)) {
           entity.GetComponent<Component::Tag>().tag = entityName;
           editNameMode = false;
+          QUEUE_EVENT(Events::SceneModifiedEvent);
         }
         ImGui::PopStyleVar();
       }

@@ -10,30 +10,19 @@
 #include <Physics/PhysicsSystem.h>
 #include <functional>
 #include <Reflection/ComponentTypes.h>
+#include <Events/EventManager.h>
 
 namespace GUI {
-
-  // Static Initialization
-  bool Inspector::sIsComponentEdited{};
-
-  template<typename Component>
-  void DrawAddComponentButton(std::string const& name, std::string const& icon);
-
-  template<typename Component>
-  bool DrawOptionButton(std::string const& name);
-
-  template<typename Component>
-  bool DrawOptionsListButton(std::string windowName);
-
-  constexpr int INPUT_SIZE{ 200 };
-  constexpr float FIRST_COLUMN_LENGTH{ 130 };
-
   Inspector::Inspector(std::string const& name) : GUIWindow(name),
     mComponentOpenStatusMap{}, mObjFactory{ Reflection::ObjectFactory::GetInstance() },
-    mPreviousEntity{}, mEntityChanged{ false } {
+    mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEntityChanged{ false } {
     for (auto const& component : Reflection::gComponentTypes) {
       mComponentOpenStatusMap[component.get_name().to_string().c_str()] = true;
     }
+
+    // get notified when scene is saved
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SAVE_SCENE, &Inspector::HandleEvent, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &Inspector::HandleEvent, this);
   }
 
   void Inspector::Run() {
@@ -81,14 +70,34 @@ namespace GUI {
     }
     ImGui::PopFont();
     ImGui::End();
+
+    // if edit is the first of this session, dispatch a SceneModifiedEvent
+    if (!mFirstEdit && mIsComponentEdited) {
+      QUEUE_EVENT(Events::SceneModifiedEvent);
+      mFirstEdit = true;
+    }
   }
 
-  bool const Inspector::GetIsComponentEdited() {
-    return sIsComponentEdited;
-  }
-
-  void Inspector::SetIsComponentEdited(bool isComponentEdited) {
-    sIsComponentEdited = isComponentEdited;
+  EVENT_CALLBACK_DEF(Inspector, HandleEvent) {
+    switch (event->GetCategory()) {
+    case Events::EventType::SAVE_SCENE:
+      mIsComponentEdited = mFirstEdit = false;
+      break;
+    case Events::EventType::SCENE_STATE_CHANGE:
+    {
+      auto state{ CAST_TO_EVENT(Events::SceneStateChange)->mNewState };
+      // if changing to another scene, reset modified flag
+      if (state == Events::SceneStateChange::CHANGED) {
+        mIsComponentEdited = mFirstEdit = false;
+      }
+      else if (state == Events::SceneStateChange::NEW) {
+        mIsComponentEdited = true;
+        mFirstEdit = false;
+      }
+      break;
+    }
+    default: break;
+    }
   }
 
   void Inspector::LayerComponentWindow(ECS::Entity entity, std::string const& icon) {
@@ -547,149 +556,6 @@ namespace GUI {
 
       ImGui::EndPopup();
     }
-  }
-
-  template<typename Component>
-  void DrawAddComponentButton(std::string const& name, std::string const& icon) {
-    if (GUIManager::GetSelectedEntity().HasComponent<Component>()) {
-      return;
-    }
-    
-    auto fillRowWithColour = [](const ImColor& colour) {
-      for (int column = 0; column < ImGui::TableGetColumnCount(); column++) {
-        ImGui::TableSetBgColor(ImGuiTableBgTarget_CellBg, colour, column);
-      }
-    };
-    
-    const float rowHeight = 25.0f;
-    auto* window = ImGui::GetCurrentWindow();
-    window->DC.CurrLineSize.y = rowHeight;
-    ImGui::TableNextRow(0, rowHeight);
-    ImGui::TableSetColumnIndex(0);
-
-    window->DC.CurrLineTextBaseOffset = 3.0f;
-
-    const ImVec2 rowAreaMin = ImGui::TableGetCellBgRect(ImGui::GetCurrentTable(), 0).Min;
-    const ImVec2 rowAreaMax = { ImGui::TableGetCellBgRect(ImGui::GetCurrentTable(), 
-      ImGui::TableGetColumnCount() - 1).Max.x, rowAreaMin.y + rowHeight };
-
-    //ImGui::GetWindowDrawList()->AddRect(rowAreaMin, rowAreaMax, Color::IMGUI_COLOR_RED); // Debug
-
-    ImGui::PushClipRect(rowAreaMin, rowAreaMax, false);
-    bool isRowHovered, isRowClicked;
-    ImGui::ButtonBehavior(ImRect(rowAreaMin, rowAreaMax), ImGui::GetID(name.c_str()), 
-      &isRowHovered, &isRowClicked, ImGuiButtonFlags_MouseButtonLeft);
-    ImGui::SetItemAllowOverlap();
-    ImGui::PopClipRect();
-
-    std::string display{ icon + "   " + name};
-    
-    ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::MontserratSemiBold]);
-    ImGui::TextUnformatted(display.c_str());
-    ImGui::PopFont();
-
-    if (isRowHovered)
-      fillRowWithColour(Color::IMGUI_COLOR_ORANGE);
-
-    if (isRowClicked) {
-      ECS::Entity ent{ GUIManager::GetSelectedEntity().GetRawEnttEntityID() };
-      ent.EmplaceComponent<Component>();
-      GUI::Inspector::SetIsComponentEdited(true);
-      ImGui::CloseCurrentPopup();
-    }
-  }
-
-  template<typename Component>
-  bool DrawOptionButton(std::string const& name) {
-    bool openMainWindow{ true };
-    auto fillRowWithColour = [](const ImColor& colour) {
-      for (int column = 0; column < ImGui::TableGetColumnCount(); column++) {
-        ImGui::TableSetBgColor(ImGuiTableBgTarget_CellBg, colour, column);
-      }
-    };
-
-    const float rowHeight = 25.0f;
-    auto* window = ImGui::GetCurrentWindow();
-    window->DC.CurrLineSize.y = rowHeight;
-    ImGui::TableNextRow(0, rowHeight);
-    ImGui::TableSetColumnIndex(0);
-
-    window->DC.CurrLineTextBaseOffset = 3.0f;
-
-    const ImVec2 rowAreaMin = ImGui::TableGetCellBgRect(ImGui::GetCurrentTable(), 0).Min;
-    const ImVec2 rowAreaMax = { ImGui::TableGetCellBgRect(ImGui::GetCurrentTable(),
-      ImGui::TableGetColumnCount() - 1).Max.x, rowAreaMin.y + rowHeight };
-
-    ImGui::PushClipRect(rowAreaMin, rowAreaMax, false);
-    bool isRowHovered, isRowClicked;
-    ImGui::ButtonBehavior(ImRect(rowAreaMin, rowAreaMax), ImGui::GetID(name.c_str()),
-      &isRowHovered, &isRowClicked, ImGuiButtonFlags_MouseButtonLeft);
-    ImGui::SetItemAllowOverlap();
-    ImGui::PopClipRect();
-
-    ImGui::TextUnformatted(name.c_str());
-
-    if (isRowHovered)
-      fillRowWithColour(Color::IMGUI_COLOR_RED);
-
-    if (isRowClicked) {
-      ECS::Entity ent{ GUIManager::GetSelectedEntity().GetRawEnttEntityID() };
-
-      if (name == "Remove Component") {
-        ent.RemoveComponent<Component>();
-        GUI::Inspector::SetIsComponentEdited(true);
-        openMainWindow = false;
-      }
-
-      else if (name == "Clear") {
-        auto& component = ent.GetComponent<Component>();
-        GUI::Inspector::SetIsComponentEdited(true);
-        component.Clear();
-      }
-
-      ImGui::CloseCurrentPopup();
-    }
-
-    return openMainWindow;
-  }
-
-  template<typename Component>
-  bool DrawOptionsListButton(std::string windowName) {
-    bool openMainWindow{ true };
-    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 25.f);
-    ImVec2 addTextSize = ImGui::CalcTextSize("Options");
-    ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
-    float paddingX = 10.0f;
-    float buttonWidth = addTextSize.x + paddingX * 2.0f;
-    ImGui::SameLine(contentRegionAvailable.x - addTextSize.x - paddingX);
-
-    if (ImGui::Button("Options", ImVec2(buttonWidth, 0))) {
-      ImVec2 buttonPos = ImGui::GetItemRectMin();
-      ImVec2 buttonSize = ImGui::GetItemRectSize();
-
-      ImVec2 popupPos(buttonPos.x, buttonPos.y + buttonSize.y);
-      ImGui::SetNextWindowPos(popupPos);
-
-      ImGui::OpenPopup("OptionsPanel");
-    }
-
-    ImGui::PopStyleVar();
-
-    if (ImGui::BeginPopup("OptionsPanel", ImGuiWindowFlags_NoMove)) {
-
-      if (ImGui::BeginTable("##options_table", 1, ImGuiTableFlags_SizingStretchSame)) {
-        ImGui::TableSetupColumn("OptionNames", ImGuiTableColumnFlags_WidthFixed, 200.f);
-        DrawOptionButton<Component>("Clear");
-        if (windowName != "Tag")
-          openMainWindow = DrawOptionButton<Component>("Remove Component");
-
-        ImGui::EndTable();
-      }
-
-      ImGui::EndPopup();
-    }
-
-    return openMainWindow;
   }
 } // namespace GUI
 

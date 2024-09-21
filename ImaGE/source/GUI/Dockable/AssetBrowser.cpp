@@ -60,6 +60,7 @@ namespace GUI
     bool const isSearching{ !mSearchQuery.empty() };
     float const wWidth{ ImGui::GetWindowWidth() };
     
+    ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(0, 0, 0, 50));
     if (ImGui::Button(ICON_FA_PLUS " Add")) {
       auto const files{ AssetHelpers::SelectFilesFromExplorer("Add Files") };
 
@@ -67,6 +68,8 @@ namespace GUI
         AddAssets(files);
       }
     }
+    ImGui::PopStyleColor();
+
     if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
       ImGui::SetTooltip("Add Files");
     }
@@ -74,6 +77,9 @@ namespace GUI
     if (isSearching) {
       ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(255, 255, 255, 155));
       ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 0, 0, 255));
+    }
+    else {
+      ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(0, 0, 0, 255));
     }
     ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 25.f);
 
@@ -85,6 +91,9 @@ namespace GUI
     ImGui::PopStyleVar();
     if (isSearching) {
       ImGui::PopStyleColor(2);
+    }
+    else {
+      ImGui::PopStyleColor();
     }
 
     ImGui::EndMenuBar();
@@ -256,6 +265,7 @@ namespace GUI
       switch (CAST_TO_EVENT(Events::SceneStateChange)->mNewState)
       {
       case Events::SceneStateChange::NEW:
+      case Events::SceneStateChange::CHANGED:
       case Events::SceneStateChange::STOPPED:
         mDisableSceneChange = false;
         break;

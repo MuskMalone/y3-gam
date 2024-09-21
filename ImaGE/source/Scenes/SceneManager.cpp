@@ -73,7 +73,7 @@ namespace Scenes
     else {
       LoadTemporarySave();
       InitScene();
-      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::NEW, mSceneName);
+      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mSceneName);
     }
 
     mSceneState = SceneState::STOPPED;
@@ -126,9 +126,12 @@ namespace Scenes
       if (!loadSceneEvent->mPath.empty()) {
         LoadScene(loadSceneEvent->mPath);
         InitScene();
+        QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mSceneName);
       }
-
-      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::NEW, mSceneName);
+      else {
+        QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::NEW, mSceneName);
+      }
+      
       break;
     }
     case Events::EventType::SAVE_SCENE:

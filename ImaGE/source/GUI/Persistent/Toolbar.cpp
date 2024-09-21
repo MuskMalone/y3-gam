@@ -48,7 +48,7 @@ namespace GUI
           mPrefabPopup = true;
         }
 
-        if (ImGui::MenuItem("Save Scene")) {
+        if (ImGui::MenuItem("Save Scene (Ctrl+S)")) {
           QUEUE_EVENT(Events::SaveSceneEvent);
         }
 
@@ -134,6 +134,7 @@ namespace GUI
         mDisableAll = false;
         break;
       case Events::SceneStateChange::NEW:
+      case Events::SceneStateChange::CHANGED:
         mAllowCreationOnly = mDisableAll = false;
         break;
       case Events::SceneStateChange::STARTED:
