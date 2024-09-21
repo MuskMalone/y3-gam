@@ -20,7 +20,7 @@ namespace GUI
 
   GUIManager::GUIManager() :mPersistentElements{}, mWindows{} {}
 
-  void GUIManager::Init(Graphics::Framebuffer const& framebuffer)
+  void GUIManager::Init(Graphics::Temp::Framebuffer const& framebuffer)
   {
     mPersistentElements.reserve(3);
     mPersistentElements.emplace_back(std::make_unique<Toolbar>("Toolbar", mWindows));

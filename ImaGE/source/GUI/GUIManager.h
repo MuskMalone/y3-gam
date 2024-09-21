@@ -15,7 +15,7 @@ namespace GUI
     GUIManager();
 
     // taking in framebuffer to pass into viewport class
-    void Init(Graphics::Framebuffer const& framebuffer);
+    void Init(Graphics::Temp::Framebuffer const& framebuffer);
     void UpdateGUI();
     void StyleGUI() const;
 

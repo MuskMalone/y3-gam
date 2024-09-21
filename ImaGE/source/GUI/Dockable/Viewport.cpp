@@ -12,7 +12,7 @@
 namespace GUI
 {
 
-  Viewport::Viewport(std::string const& name, Graphics::Framebuffer const& framebuffer) : mFramebuffer{ framebuffer }, GUIWindow(name) {}
+  Viewport::Viewport(std::string const& name, Graphics::Temp::Framebuffer const& framebuffer) : mFramebuffer{ framebuffer }, GUIWindow(name) {}
 
   void Viewport::Run()
   {

@@ -8,12 +8,12 @@ namespace GUI
   class Viewport : public GUIWindow
   {
   public:
-    Viewport(std::string const& name, Graphics::Framebuffer const& framebuffer);
+    Viewport(std::string const& name, Graphics::Temp::Framebuffer const& framebuffer);
     
     void Run() override;
 
   private:
-    Graphics::Framebuffer const& mFramebuffer;
+    Graphics::Temp::Framebuffer const& mFramebuffer;
 
     void ReceivePayload();
 
