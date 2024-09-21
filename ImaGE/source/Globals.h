@@ -18,3 +18,6 @@ constexpr char gIconsFontPath[] = ".\\Source\\External\\ImGui\\misc\\fonts\\fa-s
 constexpr char gRobotoBoldFontPath[] = ".\\Source\\External\\ImGui\\misc\\fonts\\Roboto-Bold.ttf";
 constexpr char gRobotoMediumFontPath[] = ".\\Source\\External\\ImGui\\misc\\fonts\\Roboto-Medium.ttf";
 constexpr char gRobotoThinFontPath[] = ".\\Source\\External\\ImGui\\misc\\fonts\\Roboto-Thin.ttf";
+constexpr char gMontserratSemiBoldFontPath[] = ".\\Source\\External\\ImGui\\misc\\fonts\\Montserrat-SemiBold.ttf";
+constexpr char gMontserratLightFontPath[] = ".\\Source\\External\\ImGui\\misc\\fonts\\Montserrat-Light.ttf";
+constexpr char gMontserratRegularFontPath[] = ".\\Source\\External\\ImGui\\misc\\fonts\\Montserrat-Regular.ttf";

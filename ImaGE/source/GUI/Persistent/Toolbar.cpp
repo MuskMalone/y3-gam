@@ -8,6 +8,7 @@
 #include <GUI/Helpers/AssetHelpers.h>
 #include <filesystem>
 #include <Prefabs/PrefabManager.h>
+#include "GUI/GUIManager.h"
 
 namespace GUI
 {
@@ -84,6 +85,19 @@ namespace GUI
 
       if (ImGui::BeginMenu("Options"))
       {
+
+        ImGui::EndMenu();
+      }
+
+      if (ImGui::BeginMenu("Theme")) {
+        for (int i{}; i < static_cast<int>(GUI::GUIManager::CustomTheme::NumItems); ++i) {
+          bool currentlyActive{ (static_cast<GUI::GUIManager::CustomTheme>(i) == GUI::GUIManager::GetCurrentTheme()) ? true : false };
+
+          if (ImGui::MenuItem(GUI::GUIManager::GetCustomThemeString(static_cast<GUI::GUIManager::CustomTheme>(i)).c_str(), 
+            nullptr, currentlyActive)) {
+            GUI::GUIManager::SetCurrentTheme(static_cast<GUI::GUIManager::CustomTheme>(i));
+          }
+        }
 
         ImGui::EndMenu();
       }

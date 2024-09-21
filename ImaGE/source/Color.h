@@ -20,7 +20,7 @@ namespace Color {
   constexpr auto COLOR_LIME = glm::vec4(0.5f, 1.0f, 0.0f, 1.0f);
 
   constexpr auto IMGUI_COLOR_RED = IM_COL32(255, 0, 0, 255);
-  constexpr auto IMGUI_COLOR_GREEN = IM_COL32(0, 255, 0, 255);
+  constexpr auto IMGUI_COLOR_GREEN = IM_COL32(0, 200, 0, 255);
   constexpr auto IMGUI_COLOR_BLUE = IM_COL32(0, 0, 255, 255);
   constexpr auto IMGUI_COLOR_WHITE = IM_COL32(255, 255, 255, 255);
   constexpr auto IMGUI_COLOR_BLACK = IM_COL32(0, 0, 0, 255);

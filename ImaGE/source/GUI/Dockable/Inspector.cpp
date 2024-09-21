@@ -38,7 +38,7 @@ namespace GUI {
 
   void Inspector::Run() {
     ImGui::Begin(mWindowName.c_str());
-    ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::RobotoBold]);
+    ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::MontserratSemiBold]);
     ECS::Entity const& currentEntity{ GUIManager::GetSelectedEntity() };
     
     if (currentEntity) {
@@ -71,7 +71,7 @@ namespace GUI {
         RigidBodyComponentWindow(currentEntity, std::string(ICON_FA_CAR));
 
       if (currentEntity.HasComponent<Component::Script>())
-        ScriptComponentWindow(currentEntity, std::string(ICON_FA_CODE));
+        ScriptComponentWindow(currentEntity, std::string(ICON_FA_FILE_CODE));
 
       if (currentEntity.HasComponent<Component::Text>())
         TextComponentWindow(currentEntity, std::string(ICON_FA_FONT));
@@ -208,7 +208,7 @@ namespace GUI {
 
     if (isOpen) {
       std::string tag{ entity.GetTag() };
-      ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::RobotoBold]);
+      ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::MontserratSemiBold]);
       ImGui::SetNextItemWidth(INPUT_SIZE);
       if (ImGui::InputText("##Tag", &tag, ImGuiInputTextFlags_EnterReturnsTrue)) {
         entity.SetTag(tag);
@@ -352,11 +352,12 @@ namespace GUI {
   }
 
   void Inspector::WindowEnd(bool isOpen) {
-    if (isOpen)
-        ImGui::TreePop();
+    if (isOpen) {
+      ImGui::TreePop();
+      ImGui::PopFont();
+    }
 
     ImGui::Separator();
-    ImGui::PopFont();
   }
 
   void Inspector::RigidBodyComponentWindow(ECS::Entity entity, std::string const& icon) {
@@ -506,14 +507,13 @@ namespace GUI {
     float paddingX = 5.0f;
     float buttonWidth = addTextSize.x + paddingX * 2.0f;
     ImGui::SameLine(contentRegionAvailable.x - addTextSize.x);
-    //if (ImGui::Button("Add", ImVec2(buttonWidth, 0))) {
 
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0, 0, 0, 0));
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0, 0, 0, 0));
-    ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::RobotoBold]);
+    ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::MontserratSemiBold]);
     
-    if (ImGui::Button(ICON_FA_CALENDAR_PLUS)) {
+    if (ImGui::Button(ICON_FA_CIRCLE_PLUS)) {
       ImVec2 buttonPos = ImGui::GetItemRectMin();
       ImVec2 buttonSize = ImGui::GetItemRectSize();
 
@@ -537,7 +537,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Material>("Material", ICON_FA_GEM);
         DrawAddComponentButton<Component::Mesh>("Mesh", ICON_FA_CUBE);
         DrawAddComponentButton<Component::RigidBody>("RigidBody", ICON_FA_CAR);
-        DrawAddComponentButton<Component::Script>("Script", ICON_FA_CODE);
+        DrawAddComponentButton<Component::Script>("Script", ICON_FA_FILE_CODE);
         DrawAddComponentButton<Component::Tag>("Tag", ICON_FA_TAG);
         DrawAddComponentButton<Component::Text>("Text", ICON_FA_FONT);
         DrawAddComponentButton<Component::Transform>("Transform", std::string(ICON_FA_ROTATE));
@@ -584,7 +584,7 @@ namespace GUI {
 
     std::string display{ icon + "   " + name};
     
-    ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::RobotoBold]);
+    ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::MontserratSemiBold]);
     ImGui::TextUnformatted(display.c_str());
     ImGui::PopFont();
 
@@ -594,6 +594,7 @@ namespace GUI {
     if (isRowClicked) {
       ECS::Entity ent{ GUIManager::GetSelectedEntity().GetRawEnttEntityID() };
       ent.EmplaceComponent<Component>();
+      GUI::Inspector::SetIsComponentEdited(true);
       ImGui::CloseCurrentPopup();
     }
   }
@@ -636,11 +637,13 @@ namespace GUI {
 
       if (name == "Remove Component") {
         ent.RemoveComponent<Component>();
+        GUI::Inspector::SetIsComponentEdited(true);
         openMainWindow = false;
       }
 
       else if (name == "Clear") {
         auto& component = ent.GetComponent<Component>();
+        GUI::Inspector::SetIsComponentEdited(true);
         component.Clear();
       }
 

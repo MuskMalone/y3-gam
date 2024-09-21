@@ -57,12 +57,11 @@ namespace GUI {
       ImGui::SetNextItemOpen(openMapStatus, ImGuiCond_Always);
     }
 
-    std::string display{ icon + " " + windowName };
+    std::string display{ icon + "   " + windowName };
     bool isOpen{ ImGui::TreeNode(display.c_str())};
 
-    ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::RobotoMedium]);
-
     if (isOpen) {
+      ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::MontserratLight]);
       // Must close component window if a component was removed
       if (!DrawOptionsListButton<Component>(windowName)) {
         WindowEnd(true);
