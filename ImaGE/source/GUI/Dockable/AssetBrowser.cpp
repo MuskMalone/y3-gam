@@ -55,18 +55,19 @@ namespace GUI
 
   void AssetBrowser::MenuBar()
   {
-    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 50));
     ImGui::BeginMenuBar();
-    ImGui::PopStyleVar();
     bool const isSearching{ !mSearchQuery.empty() };
     float const wWidth{ ImGui::GetWindowWidth() };
     
-    if (ImGui::Button("Add")) {
+    if (ImGui::Button(ICON_FA_PLUS " Add")) {
       auto const files{ AssetHelpers::SelectFilesFromExplorer("Add Files") };
 
       if (!files.empty()) {
         AddAssets(files);
       }
+    }
+    if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+      ImGui::SetTooltip("Add Files");
     }
 
     if (isSearching) {
@@ -218,6 +219,9 @@ namespace GUI
       else {
         draggedAsset = path;
       }
+    }
+    else if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+      ImGui::SetTooltip(path.filename().string().c_str());
     }
     
     if (ImGui::BeginDragDropSource()) {
