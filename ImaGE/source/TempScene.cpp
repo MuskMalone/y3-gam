@@ -60,7 +60,7 @@ void Scene::Init()
 
  
   mEcam = editorCam;
-  std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateCube();
+  std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateModelFromImport("./Assets/Models/sphere_mid_poly.imsh");
   mesh0 = std::make_shared<Graphics::Mesh>(cubeMeshSource);
 
   std::shared_ptr<Graphics::MeshSource> pyrMeshSource = Graphics::MeshFactory::CreatePyramid();

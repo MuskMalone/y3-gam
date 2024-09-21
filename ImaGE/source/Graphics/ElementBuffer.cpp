@@ -21,7 +21,7 @@ namespace Graphics {
 	This constructor initializes the ElementBuffer with the provided indices data
 	and count and sets the buffer data storage with static draw usage.
 	*/
-	ElementBuffer::ElementBuffer(unsigned int* indices, unsigned int count) {
+	ElementBuffer::ElementBuffer(unsigned int const* indices, unsigned int count) {
 		glCreateBuffers(1, &mEboHdl);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEboHdl);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), indices, GL_STATIC_DRAW);
@@ -57,7 +57,7 @@ namespace Graphics {
 	This static function creates a new ElementBuffer with the provided indices data
 	and count.
 	*/
-	std::shared_ptr<ElementBuffer> ElementBuffer::Create(unsigned int* indices, unsigned int count) {
+	std::shared_ptr<ElementBuffer> ElementBuffer::Create(unsigned int const* indices, unsigned int count) {
 		return std::make_shared<ElementBuffer>(indices, count);
 	}
 

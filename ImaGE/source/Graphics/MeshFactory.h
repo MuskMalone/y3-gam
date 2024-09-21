@@ -10,7 +10,7 @@ namespace Graphics{
 		static MeshSourcePtr CreateCube();
 		static MeshSourcePtr CreatePyramid();
 #ifndef IMGUI_DISABLE
-		static MeshSourcePtr CreateModelFromImport();	// load from file (obj, fbx etc.)
+		static MeshSourcePtr CreateModelFromImport(std::string const& file);	// load from file (obj, fbx etc.)
 #endif
 	};
 }

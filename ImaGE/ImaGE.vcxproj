@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Graphics\AssetIO\MeshConverter.cpp" />
+    <ClCompile Include="Source\Graphics\AssetIO\IMSH.cpp" />
     <ClCompile Include="source\Graphics\CameraManager.cpp" />
     <ClCompile Include="source\Graphics\EditorCamera.cpp" />
     <ClCompile Include="source\Graphics\MeshFactory.cpp" />
@@ -141,7 +141,7 @@
     <ClCompile Include="Source\Serialization\Registration\RegisterComponents.cpp" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
     <ClCompile Include="source\Graphics\Texture.cpp" />
-    <ClInclude Include="Source\Graphics\AssetIO\MeshConverter.h" />
+    <ClInclude Include="Source\Graphics\AssetIO\IMSH.h" />
     <ClInclude Include="source\Core\Component\Camera.h" />
     <ClInclude Include="source\Core\Component\CameraController.h" />
     <ClInclude Include="source\Graphics\CameraManager.h" />

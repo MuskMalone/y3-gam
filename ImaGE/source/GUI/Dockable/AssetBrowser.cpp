@@ -7,6 +7,7 @@
 #include <GUI/Helpers/AssetHelpers.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <GUI/Styles/FontAwesome6Icons.h>
+#include <Graphics/AssetIO/IMSH.h>
 
 namespace Helper
 {
@@ -298,6 +299,14 @@ namespace GUI
   void AssetBrowser::AddAssets(std::vector<std::string> const& files)
   {
     for (std::string const& file : files) {
+      // @TODO: SHOULD BE DONE BY ASSET MANAGER
+      std::filesystem::path const path{ file };
+      if (std::string(gSupportedModelFormats).find(path.extension().string()) != std::string::npos) {
+        Graphics::AssetIO::IMSH imsh{ file };
+        imsh.WriteToBinFile(path.stem().string(), file);
+        continue;
+      }
+
       std::filesystem::copy(file, mCurrentDir);
     }
   }

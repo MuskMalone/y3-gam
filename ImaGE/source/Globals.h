@@ -14,4 +14,8 @@ constexpr char gScenesDirectory[] = ".\\Assets\\Scenes\\";
 constexpr char gPrefabsDirectory[] = ".\\Assets\\Prefabs\\";
 constexpr char gSceneFileExt[] = ".scn";
 constexpr char gPrefabFileExt[] = ".pfb";
-constexpr char gIconsFontPath[] = ".\\Source\\External\\ImGui\\misc\\fonts\\fa-solid-900.ttf";
+constexpr char gIconsFontPath[] = ".\\Assets\\Editor\\fa-solid-900.ttf";
+constexpr char gSupportedModelFormats[] = ".fbx.obj";
+constexpr char gMeshOutputDir[] = ".\\Assets\\Models\\";
+constexpr char gMeshFileExt[] = ".imsh";
+
