@@ -27,6 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Asset\SmartPointer.cpp" />
     <ClCompile Include="source\DebugTools\DebugLogger\DebugLogger.cpp" />
     <ClCompile Include="Source\GUI\Helpers\AssetHelpers.cpp" />
     <ClCompile Include="source\Input\InputManager.cpp" />
@@ -134,6 +135,8 @@
     <ClCompile Include="source\Serialization\Serializer.cpp" />
     <ClInclude Include="source\Asset\AssetManager.h" />
     <ClInclude Include="source\Asset\IGEAssets.h" />
+    <ClInclude Include="source\Asset\SmartPointer.h" />
+    <ClInclude Include="source\Core\GUID.h" />
     <ClInclude Include="source\DebugTools\DebugLogger\DebugLogger.h" />
     <ClInclude Include="source\DebugTools\Exception\Exception.h" />
     <ClInclude Include="source\DebugTools\Exception\ExceptionBase.h" />
