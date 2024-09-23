@@ -241,8 +241,6 @@ Application::Application(const char* name, int width, int height) :
   ImGui_ImplOpenGL3_Init("#version 460 core");
 #endif
 
-  mGUIManager.StyleGUI();
-
   glfwSetWindowUserPointer(mWindow.get(), this); // set the window to reference this class
   
   glViewport(0, 0, width, height); // specify size of viewport

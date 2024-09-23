@@ -60,7 +60,7 @@ namespace GUI
     bool const isSearching{ !mSearchQuery.empty() };
     float const wWidth{ ImGui::GetWindowWidth() };
     
-    ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(0, 0, 0, 50));
+    ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(0, 0, 0, 70));
     if (ImGui::Button(ICON_FA_PLUS " Add")) {
       auto const files{ AssetHelpers::SelectFilesFromExplorer("Add Files") };
 

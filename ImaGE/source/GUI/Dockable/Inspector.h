@@ -41,6 +41,7 @@ namespace GUI {
 
   private:
     std::map<std::string, bool> mComponentOpenStatusMap;
+    GUI::Styler& mStyler;
     Reflection::ObjectFactory& mObjFactory;
     ECS::Entity mPreviousEntity;
     bool mIsComponentEdited, mFirstEdit;

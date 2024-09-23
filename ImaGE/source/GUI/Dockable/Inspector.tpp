@@ -11,7 +11,7 @@ bool Inspector::WindowBegin(std::string windowName, std::string const& icon) {
   bool isOpen{ ImGui::TreeNode(display.c_str())};
 
   if (isOpen) {
-    ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::MontserratLight]);
+    ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_LIGHT));
     // Must close component window if a component was removed
     if (!DrawOptionsListButton<Component>(windowName)) {
       WindowEnd(true);
@@ -58,7 +58,7 @@ void Inspector::DrawAddComponentButton(std::string const& name, std::string cons
 
   std::string display{ icon + "   " + name};
     
-  ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::MontserratSemiBold]);
+  ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
   ImGui::TextUnformatted(display.c_str());
   ImGui::PopFont();
 

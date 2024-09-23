@@ -90,12 +90,12 @@ namespace GUI
       }
 
       if (ImGui::BeginMenu("Theme")) {
-        for (int i{}; i < static_cast<int>(GUI::GUIManager::CustomTheme::NumItems); ++i) {
-          bool currentlyActive{ (static_cast<GUI::GUIManager::CustomTheme>(i) == GUI::GUIManager::GetCurrentTheme()) ? true : false };
+        GUI::Styler& styler{ GUIManager::GetStyler() };
+        for (GUI::CustomTheme i{}; i < GUI::CustomTheme::NUM_ITEMS; ++i) {
+          bool const currentlyActive{ (i == styler.GetCurrentTheme()) ? true : false };
 
-          if (ImGui::MenuItem(GUI::GUIManager::GetCustomThemeString(static_cast<GUI::GUIManager::CustomTheme>(i)).c_str(), 
-            nullptr, currentlyActive)) {
-            GUI::GUIManager::SetCurrentTheme(static_cast<GUI::GUIManager::CustomTheme>(i));
+          if (ImGui::MenuItem(styler.GetCustomThemeString(i).c_str(), nullptr, currentlyActive)) {
+            styler.SetCurrentTheme(i);
           }
         }
 

@@ -14,7 +14,7 @@
 
 namespace GUI {
   Inspector::Inspector(std::string const& name) : GUIWindow(name),
-    mComponentOpenStatusMap{}, mObjFactory{ Reflection::ObjectFactory::GetInstance() },
+    mComponentOpenStatusMap{}, mStyler{ GUIManager::GetStyler() }, mObjFactory{Reflection::ObjectFactory::GetInstance()},
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEntityChanged{ false } {
     for (auto const& component : Reflection::gComponentTypes) {
       mComponentOpenStatusMap[component.get_name().to_string().c_str()] = true;
@@ -27,7 +27,7 @@ namespace GUI {
 
   void Inspector::Run() {
     ImGui::Begin(mWindowName.c_str());
-    ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::MontserratSemiBold]);
+    ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
     ECS::Entity const& currentEntity{ GUIManager::GetSelectedEntity() };
     
     if (currentEntity) {
@@ -217,7 +217,7 @@ namespace GUI {
 
     if (isOpen) {
       std::string tag{ entity.GetTag() };
-      ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::MontserratSemiBold]);
+      ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
       ImGui::SetNextItemWidth(INPUT_SIZE);
       if (ImGui::InputText("##Tag", &tag, ImGuiInputTextFlags_EnterReturnsTrue)) {
         entity.SetTag(tag);
@@ -522,7 +522,7 @@ namespace GUI {
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0, 0, 0, 0));
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0, 0, 0, 0));
-    ImGui::PushFont(GUIManager::GetCustomFonts()[(int)GUIManager::MontserratSemiBold]);
+    ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
     
     if (ImGui::Button(ICON_FA_CIRCLE_PLUS)) {
       ImVec2 buttonPos = ImGui::GetItemRectMin();

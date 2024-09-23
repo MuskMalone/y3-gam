@@ -141,6 +141,7 @@
     <ClCompile Include="Source\Serialization\Registration\RegisterComponents.cpp" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
     <ClCompile Include="source\Graphics\Texture.cpp" />
+    <ClCompile Include="Source\GUI\Styles\Styler.cpp" />
     <ClInclude Include="Source\Graphics\AssetIO\IMSH.h" />
     <ClInclude Include="source\Core\Component\Camera.h" />
     <ClInclude Include="source\Core\Component\CameraController.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Source\GUI\Styles\FontAwesome6Icons.h" />
     <ClInclude Include="Source\GUI\Helpers\AssetHelpers.h" />
     <ClInclude Include="Source\GUI\Helpers\AssetPayload.h" />
+    <ClInclude Include="Source\GUI\Styles\StyleEnums.h" />
     <ClInclude Include="source\Input\InputManager.h" />
     <ClInclude Include="source\Input\KeyCode.h" />
     <ClInclude Include="Source\Reflection\ComponentTypes.h" />
@@ -215,6 +217,7 @@
     <ClInclude Include="source\Singleton.h" />
     <ClInclude Include="source\Graphics\Texture.h" />
     <ClInclude Include="source\Graphics\Utils.h" />
+    <ClInclude Include="Source\GUI\Styles\Styler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />

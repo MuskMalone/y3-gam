@@ -4,7 +4,7 @@
 // for use with font https://github.com/FortAwesome/Font-Awesome/blob/6.x/webfonts/fa-regular-400.ttf, https://github.com/FortAwesome/Font-Awesome/blob/6.x/webfonts/fa-solid-900.ttf
 
 #pragma once
-
+#ifndef IMGUI_DISABLE
 /*
 // Usage, e.g.
 ImGui::Text("%s among %d items", ICON_FA_SEARCH, count);
@@ -1415,3 +1415,5 @@ ImGui::Button(ICON_FA_SEARCH " Search");
 #define ICON_FA_YEN_SIGN "\xef\x85\x97"	// U+f157
 #define ICON_FA_YIN_YANG "\xef\x9a\xad"	// U+f6ad
 #define ICON_FA_Z "Z"	// U+005a
+
+#endif  // IMGUI_DISABLE
