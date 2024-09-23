@@ -2,7 +2,6 @@
 #ifndef IMGUI_DISABLE
 #include "AssetBrowser.h"
 #include <imgui/imgui.h>
-#include <Globals.h>
 #include <Events/EventManager.h>
 #include <GUI/Helpers/AssetHelpers.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>

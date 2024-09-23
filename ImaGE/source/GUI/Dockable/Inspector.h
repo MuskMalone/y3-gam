@@ -1,7 +1,7 @@
 #pragma once
 #ifndef IMGUI_DISABLE
-#include "GUI/GUIWindow.h"
-#include "GUI/GUIManager.h"
+#include <GUI/GUIWindow.h>
+#include <GUI/GUIManager.h>
 
 #include <imgui/imgui.h>
 #include <ImGui/imgui_internal.h>

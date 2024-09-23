@@ -52,7 +52,7 @@ namespace Debug
       Flushes all loggers into their streams and renames output file
       to match the current time of exit.
     ********************************************************************/
-    ~DebugLogger();
+    void Shutdown();
 
     /*!******************************************************************
     \brief
@@ -230,8 +230,6 @@ namespace Debug
       Logged message.
     ********************************************************************/
     std::string LogCritical(std::string msg, bool logToFile = LOG_TO_FILE);
-
-    
   };
 
 #include "DebugLogger.tpp"

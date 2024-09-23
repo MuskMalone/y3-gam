@@ -35,7 +35,7 @@ private:
 
   std::unique_ptr<Scene> mScene;
   // vector of framebuffers to render to, each attached to a draw call
-  std::vector<std::pair<Graphics::Framebuffer, SceneDrawCall>> mFramebuffers;
+  std::vector<std::pair<std::shared_ptr<Graphics::Framebuffer>, SceneDrawCall>> mFramebuffers;
 
   WindowPtr mWindow;
 

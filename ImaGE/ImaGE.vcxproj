@@ -27,6 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\GUI\Dockable\Console.cpp" />
     <ClCompile Include="Source\Graphics\AssetIO\IMSH.cpp" />
     <ClCompile Include="source\Graphics\CameraManager.cpp" />
     <ClCompile Include="source\Graphics\EditorCamera.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="source\Serialization\Serializer.cpp" />
     <ClCompile Include="source\Graphics\Texture.cpp" />
     <ClCompile Include="Source\GUI\Styles\Styler.cpp" />
+    <ClInclude Include="Source\GUI\Dockable\Console.h" />
     <ClInclude Include="Source\Graphics\AssetIO\IMSH.h" />
     <ClInclude Include="source\Core\Component\Camera.h" />
     <ClInclude Include="source\Core\Component\CameraController.h" />

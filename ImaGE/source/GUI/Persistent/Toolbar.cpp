@@ -13,7 +13,7 @@
 namespace GUI
 {
 
-  Toolbar::Toolbar(std::string const& name, std::vector<std::unique_ptr<GUIWindow>> const& windowsRef) : GUIWindow(name),
+  Toolbar::Toolbar(std::string const& name, std::vector<std::shared_ptr<GUIWindow>> const& windowsRef) : GUIWindow(name),
     mWindowsRef{ windowsRef }, mScenePopup{ false }, mPrefabPopup{ false },
     mDisableAll{ false }, mAllowCreationOnly{ true }
   {

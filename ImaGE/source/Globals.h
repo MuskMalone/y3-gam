@@ -25,4 +25,5 @@ constexpr char gIconsFontPath[] = ".\\Assets\\Editor\\fa-solid-900.ttf";
 constexpr char gSupportedModelFormats[] = ".fbx.obj";
 constexpr char gMeshOutputDir[] = ".\\Assets\\Models\\";
 constexpr char gMeshFileExt[] = ".imsh";
+constexpr int gEditorDefaultTheme = 1;
 
