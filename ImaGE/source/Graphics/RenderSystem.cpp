@@ -9,7 +9,7 @@
 namespace Graphics {
 
 	void RenderSystem::Init() {
-
+		Renderer::Init();
 	}
 
 	void RenderSystem::Release() {
@@ -25,6 +25,8 @@ namespace Graphics {
 		auto& entManager = ECS::EntityManager::GetInstance();
 		auto entityList = entManager.GetAllEntitiesWithComponents<Component::Transform, Component::Mesh>();
 
+
+		//Renderer::mGeomPass->Begin();
 		{//Render Start
 			Utils::RenderContext renderContext(eCam.GetViewProjMatrix());
 
@@ -37,5 +39,7 @@ namespace Graphics {
 			}
 
 		} // Render End
+
+		//Renderer::mGeomPass->End();
 	}
 }

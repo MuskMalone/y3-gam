@@ -1,9 +1,11 @@
 #include <pch.h>
 #include "Renderer.h"
 #include "RenderAPI.h"
+#include "RenderPass.h"
 
 namespace Graphics {
 	RendererData Renderer::mData;
+	std::shared_ptr<RenderPass> Renderer::mGeomPass;
 
 	void Renderer::Init() {
 
@@ -205,6 +207,17 @@ namespace Graphics {
 			glm::vec4{-0.5f, -0.5f,  0.5f, 1.0f}, // Front-left
 		};
 
+
+		//Init RenderPasses
+		PipelineSpec geomPipelineSpec;
+		geomPipelineSpec.shader = mData.texShader;
+		geomPipelineSpec.targetFramebuffer = nullptr;
+
+		RenderPassSpec geomPassSpec;
+		geomPassSpec.pipeline = Pipeline::Create(geomPipelineSpec);
+		geomPassSpec.debugName = "Geometry Pass";
+
+		mGeomPass = RenderPass::Create(geomPassSpec);
 
 	}
 

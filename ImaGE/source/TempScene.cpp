@@ -47,7 +47,6 @@ Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 co
 void Scene::Init()
 {
    Graphics::RenderSystem::Init();
-  Graphics::Renderer::Init();
 
   Graphics::EditorCamera editorCam(
       glm::vec3(0.0f, 5.0f, 10.0f),  // Position

@@ -42,7 +42,7 @@ namespace Graphics
 
         void Bind();
         void Unbind();
-
+        static void BindDefault();
         void Resize(uint32_t width, uint32_t height);
         uint32_t GetColorAttachmentID(uint32_t index = 0) const;
         FramebufferSpec const& GetFramebufferSpec() const;

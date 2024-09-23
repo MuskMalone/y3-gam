@@ -5,6 +5,7 @@
 #include "VertexBuffer.h"
 #include "ElementBuffer.h"
 #include "Mesh.h"
+#include "RenderPass.h"
 
 namespace Graphics {
 	struct Statistics {
@@ -132,5 +133,7 @@ namespace Graphics {
 
 	private:
 		static RendererData mData;
+	public: // temp
+		static std::shared_ptr<RenderPass> mGeomPass;
 	};
 }

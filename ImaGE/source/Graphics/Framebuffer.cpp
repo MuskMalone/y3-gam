@@ -153,6 +153,10 @@ namespace Graphics
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
+    void Framebuffer::BindDefault() {
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    }
+
     void Framebuffer::Resize(uint32_t width, uint32_t height) {
         mSpec.width = width;
         mSpec.height = height;
