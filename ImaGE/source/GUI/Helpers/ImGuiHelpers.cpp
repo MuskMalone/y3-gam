@@ -28,7 +28,7 @@ namespace ImGuiHelpers
     return false;
   }
 
-  bool TableInputFloat3(std::string propertyName, float* property, float fieldWidth, bool disabled) {
+  bool TableInputFloat3(std::string propertyName, float* property, float fieldWidth, bool disabled, float minVal, float maxVal, float step) {
     ImGui::BeginDisabled(disabled);
 
     // Convert IM_COL32 colors to ImVec4
@@ -48,7 +48,7 @@ namespace ImGuiHelpers
     ImGui::TableSetColumnIndex(1);
     ImGui::PushStyleColor(ImGuiCol_FrameBg, Col32ToImVec4(Color::IMGUI_COLOR_RED));
     std::string labelX{ "##X" + propertyName };
-    if (ImGui::DragFloat(labelX.c_str(), &property[0], 0.0, 0.0)) {
+    if (ImGui::DragFloat(labelX.c_str(), &property[0], step, minVal, maxVal)) {
       valChanged = true;
     }
     ImGui::PopStyleColor();
@@ -56,7 +56,7 @@ namespace ImGuiHelpers
     ImGui::TableSetColumnIndex(2);
     ImGui::PushStyleColor(ImGuiCol_FrameBg, Col32ToImVec4(Color::IMGUI_COLOR_GREEN));
     std::string labelY{ "##Y" + propertyName };
-    if (ImGui::DragFloat(labelY.c_str(), &property[1], 0.0, 0.0)) {
+    if (ImGui::DragFloat(labelY.c_str(), &property[1], step, minVal, maxVal)) {
       valChanged = true;
     }
 
@@ -65,7 +65,7 @@ namespace ImGuiHelpers
     ImGui::TableSetColumnIndex(3);
     ImGui::PushStyleColor(ImGuiCol_FrameBg, Col32ToImVec4(Color::IMGUI_COLOR_BLUE));
     std::string labelZ{ "##Z" + propertyName };
-    if (ImGui::DragFloat(labelZ.c_str(), &property[2], 0.0, 0.0)) {
+    if (ImGui::DragFloat(labelZ.c_str(), &property[2], step, minVal, maxVal)) {
       valChanged = true;
     }
     ImGui::PopStyleColor();

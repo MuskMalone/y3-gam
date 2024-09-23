@@ -315,13 +315,14 @@ namespace GUI {
       ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       ImGui::TableHeadersRow();
 
-      if (ImGuiHelpers::TableInputDouble3("Local Translation", transform.localPos, inputWidth, false)) {
+      // @TODO: Replace min and max with the world min and max
+      if (ImGuiHelpers::TableInputFloat3("Local Translation", &transform.localPos[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
         SetIsComponentEdited(true);
       }
-      if (ImGuiHelpers::TableInputDouble3("Local Rotation", transform.localRot, inputWidth, false)) {
+      if (ImGuiHelpers::TableInputFloat3("Local Rotation", &transform.localRot[0], inputWidth, false, 0.f, 360.f, 0.1f)) {
         SetIsComponentEdited(true);
       }
-      if (ImGuiHelpers::TableInputDouble3("Local Scale", transform.localScale, inputWidth, false)) {
+      if (ImGuiHelpers::TableInputFloat3("Local Scale", &transform.localScale[0], inputWidth, false, 0.f, 100.f, 1.f)) {
         SetIsComponentEdited(true);
       }
       ImGui::EndTable();
@@ -334,13 +335,14 @@ namespace GUI {
       ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       ImGui::TableHeadersRow();
 
-      if (ImGuiHelpers::TableInputDouble3("World Translation", transform.worldPos, inputWidth, true)) {
+      // @TODO: Replace min and max with the world min and max
+      if (ImGuiHelpers::TableInputFloat3("World Translation", &transform.worldPos[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
         SetIsComponentEdited(true);
       }
-      if (ImGuiHelpers::TableInputDouble3("World Rotation", transform.worldRot, inputWidth, true)) {
+      if (ImGuiHelpers::TableInputFloat3("World Rotation", &transform.worldRot[0], inputWidth, false, 0.f, 360.f, 0.1f)) {
         SetIsComponentEdited(true);
       }
-      if (ImGuiHelpers::TableInputDouble3("World Scale", transform.worldScale, inputWidth, true)) {
+      if (ImGuiHelpers::TableInputFloat3("World Scale", &transform.worldScale[0], inputWidth, false, 0.f, 100.f, 1.f)) {
         SetIsComponentEdited(true);
       }
 
@@ -388,11 +390,11 @@ namespace GUI {
       ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       ImGui::TableHeadersRow();
 
-      if (ImGuiHelpers::TableInputFloat3("Velocity", rigidBody.velocity.mF32, inputWidth, false)) {
+      if (ImGuiHelpers::TableInputFloat3("Velocity", rigidBody.velocity.mF32, inputWidth, false, -100.f, 100.f, 0.1f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
         SetIsComponentEdited(true);
       }
-      if (ImGuiHelpers::TableInputFloat3("Angular Velocity", rigidBody.angularVelocity.mF32, inputWidth, false)) {
+      if (ImGuiHelpers::TableInputFloat3("Angular Velocity", rigidBody.angularVelocity.mF32, inputWidth, false, -100.f, 100.f, 0.1f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::ANGULAR_VELOCITY);
         SetIsComponentEdited(true);
       }
@@ -473,13 +475,13 @@ namespace GUI {
       ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       ImGui::TableHeadersRow();
 
-      if (ImGuiHelpers::TableInputFloat3("Scale", collider.scale.mF32, inputWidth, false)) {
+      if (ImGuiHelpers::TableInputFloat3("Scale", collider.scale.mF32, inputWidth, false, 0.f, 100.f, 1.f)) {
         SetIsComponentEdited(true);
       }
-      if (ImGuiHelpers::TableInputFloat3("Position Offset", collider.positionOffset.mF32, inputWidth, false)) {
+      if (ImGuiHelpers::TableInputFloat3("Position Offset", collider.positionOffset.mF32, inputWidth, false, -100.f, 100.f, 0.1f)) {
         SetIsComponentEdited(true);
       }
-      if (ImGuiHelpers::TableInputFloat3("Rotation Offset", collider.rotationOffset.mF32, inputWidth, false)) {
+      if (ImGuiHelpers::TableInputFloat3("Rotation Offset", collider.rotationOffset.mF32, inputWidth, false, 0.f, 360.f, 0.1f)) {
         SetIsComponentEdited(true);
       }
 
