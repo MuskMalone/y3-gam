@@ -13,7 +13,7 @@ namespace GUI
     Viewport(std::string const& name);
     
     void Run() override {}  // not in use
-    void Update(std::shared_ptr<Graphics::Framebuffer> const& framebuffer);
+    void Update(std::shared_ptr<Graphics::Temp::Framebuffer> const& framebuffer);
 
   private:
     void ReceivePayload();

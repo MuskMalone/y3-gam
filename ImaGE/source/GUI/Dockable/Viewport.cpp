@@ -14,7 +14,7 @@ namespace GUI
 
   Viewport::Viewport(std::string const& name) : GUIWindow(name) {}
 
-  void Viewport::Update(std::shared_ptr<Graphics::Framebuffer> const& framebuffer)
+  void Viewport::Update(std::shared_ptr<Graphics::Temp::Framebuffer> const& framebuffer)
   {
     ImGui::Begin(mWindowName.c_str());
     ImGui::Image(

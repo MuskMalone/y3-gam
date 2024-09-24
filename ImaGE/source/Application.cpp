@@ -235,7 +235,7 @@ Application::Application(const char* name, int width, int height) :
 
   mScene = std::make_unique<Scene>("./Assets/Shaders/BlinnPhong.vert.glsl", "./Assets/Shaders/BlinnPhong.frag.glsl");
   // attach each draw function to its framebuffer
-  mFramebuffers.emplace_back(std::make_shared<Graphics::Framebuffer>(width, height), std::bind(&Scene::Draw, mScene.get()));
+  mFramebuffers.emplace_back(std::make_shared<Graphics::Temp::Framebuffer>(width, height), std::bind(&Scene::Draw, mScene.get()));
 }
 
 void Application::UpdateFramebuffers()

@@ -38,9 +38,9 @@ void Object::Update([[maybe_unused]] float deltaTime)
   };
 
   // rotate
-  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.worldRot.x), glm::dvec3(1.0, 0.0, 0.0));
-  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.worldRot.y), glm::dvec3(0.0, 1.0, 0.0));
-  mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.worldRot.z), glm::dvec3(0.0, 0.0, 1.0));
+  //mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.worldRot.x), glm::dvec3(1.0, 0.0, 0.0));
+  //mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.worldRot.y), glm::dvec3(0.0, 1.0, 0.0));
+  //mdlTransform = glm::rotate(mdlTransform, glm::radians(transform.worldRot.z), glm::dvec3(0.0, 0.0, 1.0));
 
   // translate
   mdlTransform[3] = glm::dvec4(transform.worldPos, 1.0);
