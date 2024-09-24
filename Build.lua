@@ -15,5 +15,5 @@ group "Core"
 group ""
 
 group "Editor"
-include "ImaGE-Editor/Build-ImaGE-Editor.lua"
+   include "ImaGE-Editor/Build-ImaGE-Editor.lua"
 group ""

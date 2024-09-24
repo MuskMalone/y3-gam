@@ -19,26 +19,30 @@ project "ImaGE-Core"
     "JPH_USE_FMADD",
     "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
     "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
-    "IMGUI_DISABLE",
+    "IMGUI_DISABLE"
     }
 
    files { "source/**.h", "source/**.cpp" }
 
-   includedirs
+   includedirs 
    {
-      "source/",
-      "source/External/",
-      "source/External/ImGui/",
-      "lib/",
-      "lib/spdlog",
-      "lib/entt/include",
-      "lib/jolt/include",
-      "lib/rttr-0.9.6/include",
-      "lib/rapidjson-1.1.0/include",
-      "lib/glm/include",
-      "lib/assimp/include",
-      "lib/glad-gl-4.6/include",
-      "lib/glfw-3.3.8.bin.WIN64/include"
+      "source"
+   }
+
+   externalincludedirs
+   {
+      "source/External",
+      "source/External/ImGui",
+      "../Libraries/**"
+      --"../Libraries/spdlog/**",
+      --"../Libraries/entt/include/**",
+      --"../Libraries/jolt/include/**",
+      --"../Libraries/rttr-0.9.6/include/**",
+      --"../Libraries/rapidjson-1.1.0/include/**",
+      --"../Libraries/glm/include/**",
+      --"../Libraries/assimp/includ/**",
+      --"../Libraries/glad-gl-4.6/include/**",
+      --"../Libraries/glfw-3.3.8.bin.WIN64/include/**"
    }
 
    pchheader "pch.h"
