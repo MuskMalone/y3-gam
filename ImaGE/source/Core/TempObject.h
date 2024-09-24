@@ -8,7 +8,7 @@
 struct Object
 {
   glm::dmat4 mdlTransform;
-    ECS::Entity entity;
+  ECS::Entity entity;
   Component::Transform transform;
   glm::vec4 clr;
   
@@ -23,9 +23,9 @@ struct Object
 
   void Update(float deltaTime);
 
-  inline glm::dvec3& GetPos() noexcept { return transform.worldPos; }
-  inline glm::dvec3 const& GetPos() const noexcept { return transform.worldPos; }
-  inline glm::dvec3& GetScale() noexcept { return transform.worldScale; }
-  inline glm::dvec3 const& GetScale() const noexcept { return transform.worldScale; }
+  inline glm::vec3& GetPos() noexcept { return transform.worldPos; }
+  inline glm::vec3 const& GetPos() const noexcept { return transform.worldPos; }
+  inline glm::vec3& GetScale() noexcept { return transform.worldScale; }
+  inline glm::vec3 const& GetScale() const noexcept { return transform.worldScale; }
 };
 

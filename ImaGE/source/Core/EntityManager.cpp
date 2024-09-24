@@ -47,7 +47,7 @@ namespace ECS {
 
     if (entity.HasComponent<Component::Layer>()) {
       entityCopy.EmplaceComponent<Component::Layer>() =
-        entity.GetComponent<Component::Layer>().layerName;
+        entity.GetComponent<Component::Layer>().name;
     }
 
     if (entity.HasComponent<Component::Transform>()) {

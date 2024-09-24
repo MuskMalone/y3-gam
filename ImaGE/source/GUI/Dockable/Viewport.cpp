@@ -12,13 +12,13 @@
 namespace GUI
 {
 
-  Viewport::Viewport(std::string const& name, Graphics::Temp::Framebuffer const& framebuffer) : mFramebuffer{ framebuffer }, GUIWindow(name) {}
+  Viewport::Viewport(std::string const& name) : GUIWindow(name) {}
 
-  void Viewport::Run()
+  void Viewport::Update(std::shared_ptr<Graphics::Framebuffer> const& framebuffer)
   {
     ImGui::Begin(mWindowName.c_str());
     ImGui::Image(
-        (ImTextureID)(uintptr_t)mFramebuffer.GetTextureID(),
+        (ImTextureID)(uintptr_t)framebuffer->GetTextureID(),
         ImGui::GetContentRegionAvail(),
         ImVec2(0, 1),
         ImVec2(1, 0)

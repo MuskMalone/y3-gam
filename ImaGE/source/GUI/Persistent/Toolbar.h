@@ -11,12 +11,12 @@ namespace GUI
   class Toolbar : public GUIWindow
   {
   public:
-    Toolbar(std::string const& name, std::vector<std::unique_ptr<GUIWindow>> const& windowsRef);
+    Toolbar(std::string const& name, std::vector<std::shared_ptr<GUIWindow>> const& windowsRef);
 
     void Run() override;
 
   private:
-    std::vector<std::unique_ptr<GUIWindow>> const& mWindowsRef;  // to manage active states
+    std::vector<std::shared_ptr<GUIWindow>> const& mWindowsRef;  // to manage active states
     bool mScenePopup, mPrefabPopup;
     bool mDisableAll, mAllowCreationOnly;
 

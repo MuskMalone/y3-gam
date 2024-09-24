@@ -18,15 +18,14 @@
 
 
 #include <Physics/PhysicsSystem.h>
-std::vector<std::shared_ptr<Object>> Scene::mObjects;
+//std::vector<std::shared_ptr<Object>> Scene::mObjects;
 std::vector<Camera> Scene::m_cameras;
 
 Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 const& clearClr)
   : m_shaders{}, m_defaultShaders{}, 
   m_light{ { 0.f, 25.f, 0.f }, { 0.4f, 0.4f, 0.4f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 1.0f } },
   m_material{ glm::vec3(1.f), glm::vec3(1.f), glm::vec3(1.f), 100.f },
-  //mObjects{},
-  m_leftClickHeld{ false }, m_leftClickTriggered{ true }, m_bvhModified{ true }, m_reconstructTree{ false }
+  m_leftClickHeld{ false }, m_leftClickTriggered{ true }
 {
   glClearColor(clearClr.r, clearClr.g, clearClr.b, clearClr.a);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -60,7 +59,7 @@ void Scene::Init()
 
  
   mEcam = editorCam;
-  std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateCube();
+  std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateModelFromImport("./Assets/Models/cube_low_poly.imsh");
   mesh0 = std::make_shared<Graphics::Mesh>(cubeMeshSource);
 
   std::shared_ptr<Graphics::MeshSource> pyrMeshSource = Graphics::MeshFactory::CreatePyramid();
@@ -99,13 +98,13 @@ void Scene::Update(float deltaTime)
     mEcam.UpdateCamera(deltaTime);
   // update transforms
     IGE::Physics::PhysicsSystem::GetInstance()->Update(deltaTime);
-  for (auto& obj : mObjects)
-  {
-      obj->transform = obj->entity.GetComponent<Component::Transform>();
-      obj->modified = true;
-     obj->Update(deltaTime);
-    
-  }
+  //for (auto& obj : mObjects)
+  //{
+  //    obj->transform = obj->entity.GetComponent<Component::Transform>();
+  //    obj->modified = true;
+  //   obj->Update(deltaTime);
+  //  
+  //}
 
 
   // update camera
@@ -120,11 +119,11 @@ void Scene::Draw()
 {
   glClear(GL_COLOR_BUFFER_BIT);
   glClear(GL_DEPTH_BUFFER_BIT);
-  m_shaders.Use();
+  //m_shaders.Use();
 
-  m_cameras.front().SetUniforms(m_shaders);
-  m_light.SetUniforms(m_shaders);
-  m_material.SetUniforms(m_shaders);
+  //m_cameras.front().SetUniforms(m_shaders);
+  //m_light.SetUniforms(m_shaders);
+  //m_material.SetUniforms(m_shaders);
 
   //for (auto& obj : m_objects)
   //{
@@ -144,7 +143,7 @@ void Scene::Draw()
   //    glDrawArrays(mdl.primitiveType, 0, static_cast<GLsizei>(mdl.drawCount));
   //  }
   //}
-  m_shaders.Unuse();
+  //m_shaders.Unuse();
   
   m_defaultShaders.Use();
   m_cameras.front().SetUniforms(m_defaultShaders);
@@ -205,23 +204,23 @@ void Scene::DrawTopView()
   m_light.SetUniforms(m_shaders);
   m_material.SetUniforms(m_shaders);
 
-  for (auto& obj : mObjects)
-  {
-    m_shaders.SetUniform("uMdlTransform", obj->mdlTransform);
-    m_shaders.SetUniform("uVtxClr", obj->clr);
-    auto const& mdl{ *obj->meshRef };
-    glBindVertexArray(mdl.GetVAO());
+  //for (auto& obj : mObjects)
+  //{
+  //  m_shaders.SetUniform("uMdlTransform", obj->mdlTransform);
+  //  m_shaders.SetUniform("uVtxClr", obj->clr);
+  //  auto const& mdl{ *obj->meshRef };
+  //  glBindVertexArray(mdl.GetVAO());
 
-    // if primitive type is a point, render with GL_POINTS
-    if (mdl.isUsingIndices)
-    {
-      glDrawElements(mdl.primitiveType, static_cast<GLsizei>(mdl.drawCount), GL_UNSIGNED_SHORT, NULL);
-    }
-    // else draw as per normal
-    else {
-      glDrawArrays(mdl.primitiveType, 0, static_cast<GLsizei>(mdl.drawCount));
-    }
-  }
+  //  // if primitive type is a point, render with GL_POINTS
+  //  if (mdl.isUsingIndices)
+  //  {
+  //    glDrawElements(mdl.primitiveType, static_cast<GLsizei>(mdl.drawCount), GL_UNSIGNED_SHORT, NULL);
+  //  }
+  //  // else draw as per normal
+  //  else {
+  //    glDrawArrays(mdl.primitiveType, 0, static_cast<GLsizei>(mdl.drawCount));
+  //  }
+  //}
   m_shaders.Unuse();
 
   m_defaultShaders.Use();
@@ -239,11 +238,11 @@ void Scene::ResetCamera()
 //tch: i just added this to visually test physics
 void Scene::AddMesh(ECS::Entity entity)
 {
-    auto xfm{ entity.GetComponent<Component::Transform>() };
+  /*  auto xfm{ entity.GetComponent<Component::Transform>() };
     mObjects.emplace_back(std::make_shared<Object>(
         "./assets/models/cube_low_poly.obj",
         xfm.worldPos, 
         xfm.worldScale));
     mObjects.back()->entity = entity;
-    entity.EmplaceComponent<Component::Mesh>(Component::Mesh{});
+    entity.EmplaceComponent<Component::Mesh>(Component::Mesh{});*/
 }

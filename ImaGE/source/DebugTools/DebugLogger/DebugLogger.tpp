@@ -1,6 +1,10 @@
 template <typename T>
 std::string DebugLogger::LogInfo(std::string msg, bool logToFile)
 {
+#ifdef PRINTTOCOUT
+	PrintToCout(typeid(T).name() + (": " + msg), LVL_INFO);
+#endif
+
   if (!logToFile)
   {
     mLogger->info(typeid(T).name() + (": " + msg));
@@ -16,6 +20,10 @@ std::string DebugLogger::LogInfo(std::string msg, bool logToFile)
 template <typename T>
 std::string DebugLogger::LogWarning(std::string msg, bool logToFile)
 {
+#ifdef PRINTTOCOUT
+	PrintToCout(typeid(T).name() + (": " + msg), LVL_WARN);
+#endif
+
   if (!logToFile)
   {
     mLogger->warn(typeid(T).name() + (": " + msg));
@@ -31,6 +39,9 @@ std::string DebugLogger::LogWarning(std::string msg, bool logToFile)
 template <typename T>
 std::string DebugLogger::LogError(std::string msg, bool logToFile)
 {
+#ifdef PRINTTOCOUT
+	PrintToCout(typeid(T).name() + (": " + msg), LVL_ERROR);
+#endif
   if (!logToFile)
   {
     mLogger->error(typeid(T).name() + (": " + msg));
@@ -46,6 +57,9 @@ std::string DebugLogger::LogError(std::string msg, bool logToFile)
 template <typename T>
 std::string DebugLogger::LogCritical(std::string msg, bool logToFile)
 {
+#ifdef PRINTTOCOUT
+	PrintToCout(typeid(T).name() + (": " + msg), LVL_CRITICAL);
+#endif
   if (!logToFile)
   {
     mLogger->critical(typeid(T).name() + (": " + msg));

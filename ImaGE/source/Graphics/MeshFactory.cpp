@@ -1,8 +1,9 @@
 #include <pch.h>
 #include "MeshFactory.h"
+#include "AssetIO/IMSH.h"
 
 namespace Graphics {
-	std::shared_ptr<MeshSource> MeshFactory::CreateCube() {
+	MeshFactory::MeshSourcePtr MeshFactory::CreateCube() {
         std::vector<Vertex> cubeVertices{
             // Front face
             {{-0.5f, -0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {0.0f, 0.0f}, {}, {}},  // Bottom-left
@@ -90,7 +91,7 @@ namespace Graphics {
         return std::make_shared<MeshSource>(vao, submeshes, cubeVertices, cubeIndices);
 	}
 
-        std::shared_ptr<MeshSource> MeshFactory::CreatePyramid() {
+        MeshFactory::MeshSourcePtr MeshFactory::CreatePyramid() {
             std::vector<Vertex> pyramidVertices{
                 // Base (square)
                 {{-0.5f, 0.0f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 0.0f}, {}, {}},  // Bottom-left
@@ -153,4 +154,34 @@ namespace Graphics {
             return std::make_shared<MeshSource>(vao, submeshes, pyramidVertices, pyramidIndices);
         }
 
+#ifndef IMGUI_DISABLE
+        MeshFactory::MeshSourcePtr MeshFactory::CreateModelFromImport(std::string const& imshFile) {
+          AssetIO::IMSH imsh{};
+          imsh.ReadFromBinFile(imshFile);
+          if (!imsh) { Debug::DebugLogger::GetInstance().LogError("Unable to read binary file: " + imshFile); }
+
+          // Create VAO and VBO
+          auto vao = VertexArray::Create();
+          auto vbo = VertexBuffer::Create(static_cast<unsigned>(imsh.GetVertexBuffer().size()));
+
+          BufferLayout modelLayout = {
+              {AttributeType::VEC3, "a_Position"},
+              {AttributeType::VEC3, "a_Normal"},
+              {AttributeType::VEC2, "a_TexCoord"},
+              {AttributeType::FLOAT, "a_TexIdx"},
+              {AttributeType::VEC3, "a_Tangent"},
+              {AttributeType::VEC3, "a_Bitangent"},
+              {AttributeType::VEC4, "a_Color"},
+          };
+
+          vbo->SetLayout(modelLayout);
+          vao->AddVertexBuffer(vbo);
+
+          // Create and bind Element Buffer Object (EBO) for the indices
+          std::shared_ptr<ElementBuffer> ebo = ElementBuffer::Create(imsh.GetIndices().data(), static_cast<uint32_t>(imsh.GetIndices().size()));
+          vao->SetElementBuffer(ebo);
+
+          return imsh.ToMeshSource(vao);
+        }
+#endif
 }

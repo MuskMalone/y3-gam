@@ -8,12 +8,12 @@ namespace GUI
   class GUIWindow
   {
   public:
-    inline void Toggle() noexcept { mActive = !mActive; }
     inline bool IsActive() const noexcept { return mActive; }
     inline std::string const& GetName() const noexcept { return mWindowName; }
 
     //virtual void Init() {}
     virtual void Run() = 0;
+    virtual void Toggle() { mActive = !mActive; }
     virtual ~GUIWindow() {}
 
   protected:

@@ -50,10 +50,10 @@ void Application::Init() {
 
   // @TODO: SETTINGS TO BE LOADED FROM CONFIG FILE
   FrameRateController::GetInstance().Init(120.f, 1.f, false);
-  Input::InputManager::GetInstance().InitInputManager(mWindow, mWidth, mHeight, 0.3);
+  Input::InputManager::GetInstance().InitInputManager(mWindow, mWidth, mHeight, 0.1);
 
 #ifndef IMGUI_DISABLE
-  mGUIManager.Init(mFramebuffers.front().first);
+  mGUIManager.Init();
 #endif
 
   // @TODO: REMOVE, FOR TESTING ONLY
@@ -106,35 +106,25 @@ void Application::Run() {
 
   while (!glfwWindowShouldClose(mWindow.get())) {
     FrameRateController::GetInstance().Start();
-    try
-    {
+    try {
 
 #ifndef IMGUI_DISABLE
       if (mImGuiActive) {
         ImGuiStartFrame();
       }
 #endif
-      try
-      {
-      inputManager.UpdateInput();
+      try {
+        inputManager.UpdateInput();
 
-      // dispatch all events in the queue at the start of game loop
-      eventManager.DispatchAll();
+        // dispatch all events in the queue at the start of game loop
+        eventManager.DispatchAll();
 
-#ifndef IMGUI_DISABLE
-      if (mImGuiActive) {
-        mGUIManager.UpdateGUI();
+        mScene->Update(FrameRateController::GetInstance().GetDeltaTime());
       }
-#endif
-
-      mScene->Update(FrameRateController::GetInstance().GetDeltaTime());
-      }
-      catch (Debug::ExceptionBase& e)
-      {
+      catch (Debug::ExceptionBase& e) {
         PrintException(e);
       }
-      catch (std::exception& e)
-      {
+      catch (std::exception& e) {
         PrintException(e);
       }
 
@@ -142,52 +132,49 @@ void Application::Run() {
 #ifndef IMGUI_DISABLE
       try
       {
-      if (mImGuiActive)
-      {
-        UpdateFramebuffers();
-
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-        // for floating windows feature
-        if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        if (mImGuiActive)
         {
-          GLFWwindow* backup_current_context = glfwGetCurrentContext();
-          ImGui::UpdatePlatformWindows();
-          ImGui::RenderPlatformWindowsDefault();
-          glfwMakeContextCurrent(backup_current_context);
+          UpdateFramebuffers();
+
+          // Update ImGui
+          mGUIManager.UpdateGUI(mFramebuffers.front().first);
+
+          ImGui::Render();
+          ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+          // for floating windows feature
+          if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+          {
+            GLFWwindow* backup_current_context = glfwGetCurrentContext();
+            ImGui::UpdatePlatformWindows();
+            ImGui::RenderPlatformWindowsDefault();
+            glfwMakeContextCurrent(backup_current_context);
+          }
         }
-      }
 #else
       glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
       mFramebuffers.front().second();
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
 #endif
       }
-    catch (Debug::ExceptionBase& e)
-    {
-      PrintException(e);
-    }
-    catch (std::exception& e)
-    {
-      PrintException(e);
-    }
+      catch (Debug::ExceptionBase& e) {
+        PrintException(e);
+      }
+      catch (std::exception& e) {
+        PrintException(e);
+      }
       // check and call events, swap buffers
       glfwSwapBuffers(mWindow.get());
 
       FrameRateController::GetInstance().End();
     }
-    catch (Debug::ExceptionBase& e)
-    {
+    catch (Debug::ExceptionBase& e) {
       PrintException(e);
     }
-    catch (std::exception& e)
-    {
+    catch (std::exception& e) {
       PrintException(e);
     }
   }
-
-
 }
 
 Application::Application(const char* name, int width, int height) :
@@ -241,8 +228,6 @@ Application::Application(const char* name, int width, int height) :
   ImGui_ImplOpenGL3_Init("#version 460 core");
 #endif
 
-  mGUIManager.StyleGUI();
-
   glfwSetWindowUserPointer(mWindow.get(), this); // set the window to reference this class
   
   glViewport(0, 0, width, height); // specify size of viewport
@@ -250,8 +235,7 @@ Application::Application(const char* name, int width, int height) :
 
   mScene = std::make_unique<Scene>("./Assets/Shaders/BlinnPhong.vert.glsl", "./Assets/Shaders/BlinnPhong.frag.glsl");
   // attach each draw function to its framebuffer
-  mFramebuffers.emplace_back(std::piecewise_construct, std::forward_as_tuple(width, height),
-    std::forward_as_tuple(std::bind(&Scene::Draw, mScene.get())));
+  mFramebuffers.emplace_back(std::make_shared<Graphics::Framebuffer>(width, height), std::bind(&Scene::Draw, mScene.get()));
 }
 
 void Application::UpdateFramebuffers()
@@ -260,11 +244,11 @@ void Application::UpdateFramebuffers()
   // draw function associated with it
   for (auto const& [fb, drawFn] : mFramebuffers)
   {
-    fb.Bind();
+    fb->Bind();
 
     drawFn();
 
-    fb.Unbind();
+    fb->Unbind();
   }
 }
 
@@ -283,9 +267,8 @@ void Application::FramebufferSizeCallback(GLFWwindow* window, int width, int hei
   glViewport(0, 0, width, height);
 
   Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
-  for (auto& elem : app->mFramebuffers)
-  {
-    elem.first.Resize(width, height);
+  for (auto&[fb, fn] : app->mFramebuffers) {
+    fb->Resize(width, height);
   }
 }
 
@@ -311,6 +294,12 @@ void Application::WindowDropCallback(GLFWwindow*, int pathCount, const char* pat
 }
 #endif
 
+void Application::Shutdown()
+{
+  Scenes::SceneManager::GetInstance().Shutdown();
+  Debug::DebugLogger::GetInstance().Shutdown();
+}
+
 Application::~Application()
 {
 #ifndef IMGUI_DISABLE
@@ -333,5 +322,6 @@ namespace {
   void PrintException(std::exception& e)
   {
     Debug::DebugLogger::GetInstance().LogCritical(e.what());
+    Debug::DebugLogger::GetInstance().PrintToCout(e.what(), Debug::LVL_CRITICAL);
   }
 }

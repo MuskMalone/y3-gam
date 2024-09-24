@@ -12,6 +12,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma once
 #include <spdlog/spdlog.h>
 #include <Singleton.h>
+#include <DebugTools/Exception/ExceptionBase.h>
 #include <memory>
 #include <map>
 #include <spdlog/sinks/basic_file_sink.h>
@@ -24,7 +25,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #endif
 
 using namespace spdlog;
-
+#define PRINTTOCOUT
 namespace Debug
 {
   class DebugLogger : public Singleton<DebugLogger>
@@ -51,7 +52,7 @@ namespace Debug
       Flushes all loggers into their streams and renames output file
       to match the current time of exit.
     ********************************************************************/
-    ~DebugLogger();
+    void Shutdown();
 
     /*!******************************************************************
     \brief
@@ -80,6 +81,8 @@ namespace Debug
     ********************************************************************/
     void SuppressLogMessages(bool flag);
 
+
+    void PrintToCout(std::string msg, EXCEPTION_LEVEL lvl);
 
     /*****************************************************************/
     /*                 Logging with Source location                  */

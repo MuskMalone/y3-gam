@@ -3,10 +3,10 @@
 
 int main()
 {
+  Application myApp{ "ImaGE", WINDOW_WIDTH<int>, WINDOW_HEIGHT<int> };
+
   try
   {
-    Application myApp{ "ImaGE", WINDOW_WIDTH<int>, WINDOW_HEIGHT<int> };
-
     myApp.Init();
 
     myApp.Run();
@@ -22,5 +22,7 @@ int main()
 
   }
 #endif
+
+  myApp.Shutdown();
   return 0;
 }

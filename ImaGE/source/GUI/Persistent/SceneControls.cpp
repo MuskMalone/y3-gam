@@ -44,6 +44,9 @@ namespace GUI
         if (ImGui::Button(ICON_FA_STOP)) {
           mSceneManager.StopScene();
         }
+        if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+          ImGui::SetTooltip("Stop");
+        }
 
         if (sceneStopped) {
           ImGui::EndDisabled();
@@ -58,6 +61,9 @@ namespace GUI
           if (ImGui::Button(ICON_FA_PAUSE)) {
             mSceneManager.PauseScene();
           }
+          if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+            ImGui::SetTooltip("Pause");
+          }
         }
         else
         {
@@ -68,6 +74,9 @@ namespace GUI
           if (ImGui::Button(ICON_FA_PLAY)) {
             mSceneManager.PlayScene();
           }
+          if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+            ImGui::SetTooltip("Play");
+          }
           ImGui::PopStyleColor(sceneStopped ? 2 : 1);
         }        
 
@@ -75,6 +84,9 @@ namespace GUI
         ImGui::BeginDisabled(sceneNotPlaying);
         if (ImGui::Button(ICON_FA_STAIRS)) {
 
+        }
+        if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+          ImGui::SetTooltip("Step");
         }
         ImGui::PopStyleColor();
         ImGui::EndDisabled();

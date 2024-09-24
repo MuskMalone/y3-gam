@@ -39,6 +39,9 @@ namespace GUI
       
       SCENE_STATE_CHANGE
         - Disables certain menu options based on the current scene state
+      SCENE_MODIFIED
+        - Adds an asterik (*) to the scene name to indicate changes have
+          been made
       EDIT_PREFAB
         - Switches the hierarchy to Prefab-editing mode
 
