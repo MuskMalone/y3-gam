@@ -1,0 +1,310 @@
+[
+    {
+        "ID": 1048581,
+        "Prefab": null,
+        "isActive": true,
+        "Parent": 1048579,
+        "Child Entities": [],
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "Entity 1048581"
+                }
+            },
+            {
+                "Tag": {
+                    "tag": "Entity 1048581"
+                }
+            },
+            {
+                "Transform": {
+                    "localPos": {
+                        "x": 4.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "localScale": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "localRot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldScale": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldRot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 1048579,
+        "Prefab": null,
+        "isActive": true,
+        "Parent": 1048576,
+        "Child Entities": [
+            1048581
+        ],
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "Entity 1048579"
+                }
+            },
+            {
+                "Tag": {
+                    "tag": "Entity 1048579"
+                }
+            },
+            {
+                "Transform": {
+                    "localPos": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "localScale": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "localRot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldScale": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldRot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 1048576,
+        "Prefab": null,
+        "isActive": true,
+        "Parent": 1048577,
+        "Child Entities": [
+            1048579
+        ],
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "Entity 1048577"
+                }
+            },
+            {
+                "Tag": {
+                    "tag": "Entity 1048577"
+                }
+            },
+            {
+                "Transform": {
+                    "localPos": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "localScale": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "localRot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldScale": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldRot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 1048578,
+        "Prefab": null,
+        "isActive": true,
+        "Parent": 1048577,
+        "Child Entities": [],
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "e3"
+                }
+            },
+            {
+                "Layer": {
+                    "layerName": "oof"
+                }
+            },
+            {
+                "Tag": {
+                    "tag": "e3"
+                }
+            },
+            {
+                "Transform": {
+                    "localPos": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "localScale": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "localRot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldScale": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldRot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 1048577,
+        "Prefab": {
+            "name": "e2",
+            "version": 37,
+            "objToEntity": [
+                {
+                    "key": 0,
+                    "value": 1048577
+                },
+                {
+                    "key": 1,
+                    "value": 1048578
+                },
+                {
+                    "key": 2,
+                    "value": 1048576
+                },
+                {
+                    "key": 3,
+                    "value": 1048579
+                },
+                {
+                    "key": 4,
+                    "value": 1048581
+                }
+            ],
+            "registered": true
+        },
+        "isActive": true,
+        "Parent": null,
+        "Child Entities": [
+            1048576,
+            1048578
+        ],
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "e2"
+                }
+            },
+            {
+                "Layer": {
+                    "layerName": "wee"
+                }
+            },
+            {
+                "Tag": {
+                    "tag": "e2"
+                }
+            },
+            {
+                "Transform": {
+                    "localPos": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "localScale": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "localRot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldScale": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldRot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                }
+            }
+        ]
+    }
+]

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{2AEC870B-96F5-877C-1F71-9E7C8B79937C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\Dockable">
+      <UniqueIdentifier>{2EB278CE-1A15-0873-C39A-4029AFDCD3F5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\Helpers">
+      <UniqueIdentifier>{EC261071-58DC-8866-E1D0-823D4D857F6A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\Persistent">
+      <UniqueIdentifier>{AA0F9F46-96DD-924C-7F71-03736BDE6EB1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\Styles">
+      <UniqueIdentifier>{BDF9B74C-A9B1-F999-12B9-D2F5FE8F948A}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\GUI\Dockable\AssetBrowser.h">
+      <Filter>GUI\Dockable</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GUI\Dockable\Inspector.h">
+      <Filter>GUI\Dockable</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GUI\Dockable\SceneHierarchy.h">
+      <Filter>GUI\Dockable</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GUI\Dockable\Viewport.h">
+      <Filter>GUI\Dockable</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GUI\GUIManager.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GUI\GUIWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GUI\Helpers\AssetHelpers.h">
+      <Filter>GUI\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GUI\Helpers\AssetPayload.h">
+      <Filter>GUI\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GUI\Helpers\ImGuiHelpers.h">
+      <Filter>GUI\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GUI\Persistent\PrefabEditor.h">
+      <Filter>GUI\Persistent</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GUI\Persistent\SceneControls.h">
+      <Filter>GUI\Persistent</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GUI\Persistent\Toolbar.h">
+      <Filter>GUI\Persistent</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GUI\Styles\FontAwesome6Icons.h">
+      <Filter>GUI\Styles</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\GUI\Dockable\AssetBrowser.cpp">
+      <Filter>GUI\Dockable</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\Dockable\Inspector.cpp">
+      <Filter>GUI\Dockable</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\Dockable\SceneHierarchy.cpp">
+      <Filter>GUI\Dockable</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\Dockable\Viewport.cpp">
+      <Filter>GUI\Dockable</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\GUIManager.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\Helpers\AssetHelpers.cpp">
+      <Filter>GUI\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\Helpers\ImGuiHelpers.cpp">
+      <Filter>GUI\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\Persistent\PrefabEditor.cpp">
+      <Filter>GUI\Persistent</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\Persistent\SceneControls.cpp">
+      <Filter>GUI\Persistent</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\Persistent\Toolbar.cpp">
+      <Filter>GUI\Persistent</Filter>
+    </ClCompile>
+    <ClCompile Include="source\main.cpp" />
+  </ItemGroup>
+</Project>

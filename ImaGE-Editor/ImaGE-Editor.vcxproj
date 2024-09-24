@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{FC0A02CB-E86D-916F-91F3-C9257D355DF2}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>ImaGE-Editor</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\Binaries\windows-x86_64\Debug\ImaGE-Editor\</OutDir>
+    <IntDir>..\Binaries\Intermediates\windows-x86_64\Debug\ImaGE-Editor\</IntDir>
+    <TargetName>ImaGE-Editor</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\Binaries\windows-x86_64\Release\ImaGE-Editor\</OutDir>
+    <IntDir>..\Binaries\Intermediates\windows-x86_64\Release\ImaGE-Editor\</IntDir>
+    <TargetName>ImaGE-Editor</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WINDOWS;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>source;..\ImaGE-Core\source;..\ImaGE-Core\source\External;..\ImaGE-Core\source\External\ImGui;ImaGE-Core\lib\spdlog;ImaGE-Core\lib\entt\include;ImaGE-Core\lib\jolt\include;ImaGE-Core\lib\rttr-0.9.6\include;ImaGE-Core\lib\rapidjson-1.1.0\include;ImaGE-Core\lib\glm\include;ImaGE-Core\lib\assimp\include;ImaGE-Core\lib\glad-gl-4.6\include;ImaGE-Core\lib\glfw-3.3.8.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WINDOWS;RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>source;..\ImaGE-Core\source;..\ImaGE-Core\source\External;..\ImaGE-Core\source\External\ImGui;ImaGE-Core\lib\spdlog;ImaGE-Core\lib\entt\include;ImaGE-Core\lib\jolt\include;ImaGE-Core\lib\rttr-0.9.6\include;ImaGE-Core\lib\rapidjson-1.1.0\include;ImaGE-Core\lib\glm\include;ImaGE-Core\lib\assimp\include;ImaGE-Core\lib\glad-gl-4.6\include;ImaGE-Core\lib\glfw-3.3.8.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="source\GUI\Dockable\AssetBrowser.h" />
+    <ClInclude Include="source\GUI\Dockable\Inspector.h" />
+    <ClInclude Include="source\GUI\Dockable\SceneHierarchy.h" />
+    <ClInclude Include="source\GUI\Dockable\Viewport.h" />
+    <ClInclude Include="source\GUI\GUIManager.h" />
+    <ClInclude Include="source\GUI\GUIWindow.h" />
+    <ClInclude Include="source\GUI\Helpers\AssetHelpers.h" />
+    <ClInclude Include="source\GUI\Helpers\AssetPayload.h" />
+    <ClInclude Include="source\GUI\Helpers\ImGuiHelpers.h" />
+    <ClInclude Include="source\GUI\Persistent\PrefabEditor.h" />
+    <ClInclude Include="source\GUI\Persistent\SceneControls.h" />
+    <ClInclude Include="source\GUI\Persistent\Toolbar.h" />
+    <ClInclude Include="source\GUI\Styles\FontAwesome6Icons.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\GUI\Dockable\AssetBrowser.cpp" />
+    <ClCompile Include="source\GUI\Dockable\Inspector.cpp" />
+    <ClCompile Include="source\GUI\Dockable\SceneHierarchy.cpp" />
+    <ClCompile Include="source\GUI\Dockable\Viewport.cpp" />
+    <ClCompile Include="source\GUI\GUIManager.cpp" />
+    <ClCompile Include="source\GUI\Helpers\AssetHelpers.cpp" />
+    <ClCompile Include="source\GUI\Helpers\ImGuiHelpers.cpp" />
+    <ClCompile Include="source\GUI\Persistent\PrefabEditor.cpp" />
+    <ClCompile Include="source\GUI\Persistent\SceneControls.cpp" />
+    <ClCompile Include="source\GUI\Persistent\Toolbar.cpp" />
+    <ClCompile Include="source\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImaGE-Core\ImaGE-Core.vcxproj">
+      <Project>{9EC84E78-8A80-90C5-F387-6921DF5E2BB6}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
