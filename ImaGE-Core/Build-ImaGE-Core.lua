@@ -19,7 +19,6 @@ project "ImaGE-Core"
     "JPH_USE_FMADD",
     "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
     "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
-    "IMGUI_DISABLE"
     }
 
    files { "source/**.h", "source/**.cpp" }
@@ -33,16 +32,21 @@ project "ImaGE-Core"
    {
       "source/External",
       "source/External/ImGui",
+      "../Libraries/**",
+   }
+
+   links {
+    "opengl32.lib",
+    "glfw3dll.lib",
+    "glfw3.lib",
+    "assimp-vc143-mt.lib",
+    "Jolt.lib",
+    "rttr_core_d.lib"
+   }
+
+   libdirs 
+   {
       "../Libraries/**"
-      --"../Libraries/spdlog/**",
-      --"../Libraries/entt/include/**",
-      --"../Libraries/jolt/include/**",
-      --"../Libraries/rttr-0.9.6/include/**",
-      --"../Libraries/rapidjson-1.1.0/include/**",
-      --"../Libraries/glm/include/**",
-      --"../Libraries/assimp/includ/**",
-      --"../Libraries/glad-gl-4.6/include/**",
-      --"../Libraries/glfw-3.3.8.bin.WIN64/include/**"
    }
 
    pchheader "pch.h"
@@ -71,13 +75,16 @@ project "ImaGE-Core"
 
    filter "files:source/External/**.cpp"
        flags {"NoPCH"}
+    
+   filter "files:source/External/**.c"
+       flags {"NoPCH"}
 
-    postbuildcommands {
-        '{COPY} "$(ProjectDir)lib/glfw-3.3.8.bin.WIN64/lib-vc2022/glfw3.dll" "$(OutDir)"',
-        '{COPY} "$(ProjectDir)lib/assimp/assimp-vc143-mt.dll" "$(OutDir)"',
-        '{COPY} "$(ProjectDir)imgui.ini" "$(OutDir)"',
-        '{MKDIR} "$(OutDir)Shaders"',
-        '{COPYDIR} "$(ProjectDir)Shaders" "$(OutDir)Shaders"',
-        '{MKDIR} "$(OutDir)assets"',
-        '{COPYDIR} "$(ProjectDir)assets" "$(OutDir)assets"'
+   postbuildcommands {
+        '{COPYFILE} "%{prj.location}lib/glfw-3.3.8.bin.WIN64/lib-vc2022/glfw3.dll" "%{cfg.buildtarget.directory}"',
+        '{COPYFILE} "%{prj.location}lib/assimp/assimp-vc143-mt.dll" "%{cfg.buildtarget.directory}"',
+        '{COPYFILE} "%{prj.location}imgui.ini" "%{cfg.buildtarget.directory}"',
+        '{MKDIR} "%{cfg.buildtarget.directory}/Shaders"',
+        '{COPYDIR} "%{prj.location}Shaders" "%{cfg.buildtarget.directory}/Shaders"',
+        '{MKDIR} "%{cfg.buildtarget.directory}/assets"',
+        '{COPYDIR} "%{prj.location}assets" "%{cfg.buildtarget.directory}/assets"'
     }

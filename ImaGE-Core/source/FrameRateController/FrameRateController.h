@@ -1,5 +1,6 @@
 #pragma once
 #include <chrono>
+#include <map>
 #include "Singleton.h"
 
 class FrameRateController : public Singleton <FrameRateController> {

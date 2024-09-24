@@ -1,5 +1,7 @@
 #pragma once
 #ifndef IMGUI_DISABLE
+#include "pch.h"
+
 #include <GUI/GUIWindow.h>
 #include <Core/Entity.h>
 #include <Events/EventCallback.h>

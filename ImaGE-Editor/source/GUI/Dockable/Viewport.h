@@ -1,4 +1,6 @@
 #pragma once
+#include "pch.h"
+
 #include <GUI/GUIWindow.h>
 #include <Graphics/Framebuffer.h>
 

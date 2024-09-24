@@ -25,29 +25,22 @@ project "ImaGE-Editor"
 
    includedirs
    {
-      "source/**",
+      "source",
 
 	  -- Include Core
-	  "../ImaGE-Core/source/**",
+	  "../ImaGE-Core/source",
    }
 
    externalincludedirs
    {
-      "../ImaGE-Core/source/External/**",
-      "../Libraries/spdlog/**",
-      "../Libraries/entt/include/**",
-      "../Libraries/jolt/include/**",
-      "../Libraries/rttr-0.9.6/include/**",
-      "../Libraries/rapidjson-1.1.0/include/**",
-      "../Libraries/glm/include/**",
-      "../Libraries/assimp/include/**",
-      "../Libraries/glad-gl-4.6/include/**",
-      "../Libraries/glfw-3.3.8.bin.WIN64/include/**"
+      "../ImaGE-Core/source/External",
+      "./ImaGE-Core/source/External/ImGui",
+      "../Libraries/**",
    }
 
    links
    {
-      "ImaGE-Core"
+      "ImaGE-Core",
    }
 
    targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")

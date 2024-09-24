@@ -1,5 +1,6 @@
 #pragma once
 #ifndef IMGUI_DISABLE
+#include "pch.h"
 #include <ImGui/imgui_internal.h>
 
 namespace ImGuiHelpers

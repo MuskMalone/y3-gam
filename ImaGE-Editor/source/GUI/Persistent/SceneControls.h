@@ -1,5 +1,6 @@
 #pragma once
 #ifndef IMGUI_DISABLE
+#include "pch.h"
 #include <GUI/GUIWindow.h>
 #include <Scenes/SceneManager.h>
 #include "GUI/GUIManager.h"
