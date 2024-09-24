@@ -105,10 +105,7 @@ namespace GUI
         }
         else
         {
-          //CheckForDeletions();
-#ifdef _DEBUG
-          std::cout << "[PrefabEditor] Saving...\n";
-#endif
+          Debug::DebugLogger::GetInstance().LogInfo("[PrefabEditor] Saved " + mPrefabName);
           pm.UpdatePrefabFromEditor(mPrefabInstance, mRemovedChildren, mRemovedComponents, mPrefabPath);
           pm.ClearMappings();
         }
@@ -120,82 +117,6 @@ namespace GUI
       ImGui::PopStyleColor();
 
       ImGui::EndPopup();
-    }
-  }
-
-  void PrefabEditor::CheckForDeletions()
-  {
-    // if its a new prefab, ignore
-    if (mPrefabPath.empty()) { return; }
-
-#ifdef _DEBUG
-    //std::cout << "[PrefabEditor] Checking for deleted objects...\n";
-#endif
-    Reflection::ObjectFactory const& of{ Reflection::ObjectFactory::GetInstance() };
-    Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
-    Prefabs::VariantPrefab const& ref{ pm.GetVariantPrefab(mPrefabName) };
-
-    // check base entity first
-    for (rttr::variant const& comp : ref.mComponents)
-    {
-      rttr::type const compType{ comp.get_type().get_wrapped_type().get_raw_type() };
-      auto iter{ std::find(Reflection::gComponentTypes.cbegin(), Reflection::gComponentTypes.cend(), compType) };
-      if (iter == Reflection::gComponentTypes.cend())
-      {
-        // replace with logger
-#ifdef _DEBUG
-        std::cout << "Unable to find " + compType.get_name().to_string() + " component type in Reflection::gComponentTypes\n";
-#endif
-        continue;
-      }
-
-      // if entity no longer contains component, means it was removed
-      if (!of.GetEntityComponent(mPrefabInstance, *iter).is_valid())
-      {
-#ifdef _DEBUG
-        std::cout << "  Added <0, " << compType.get_name().to_string() << "> to mRemovedComponents\n";
-#endif
-        mRemovedComponents.emplace_back(Prefabs::PrefabSubData::BasePrefabId, compType);
-      } 
-    }
-
-    // now check its children and their components
-    auto const mappings{ pm.GetEntityPrefab(mPrefabInstance)->get().mObjToEntity };
-    for (auto const& subData : ref.mObjects)
-    {
-      // if child was removed, skip
-      if (std::find(mRemovedChildren.cbegin(), mRemovedChildren.cend(), subData.mId) != mRemovedChildren.cend())
-      {
-#ifdef _DEBUG
-        std::cout << "  Skipping id " << subData.mId << " since it was removed\n";
-#endif
-        continue;
-      }
-
-      // else continue to check components
-      ECS::Entity const& currEntity{ mappings.at(subData.mId) };
-      for (rttr::variant const& comp : subData.mComponents)
-      {
-        rttr::type const compType{ comp.get_type().get_wrapped_type().get_raw_type() };
-        auto iter{ std::find(Reflection::gComponentTypes.cbegin(), Reflection::gComponentTypes.cend(), compType) };
-        if (iter == Reflection::gComponentTypes.cend())
-        {
-          // replace with logger
-#ifdef _DEBUG
-          std::cout << "Unable to find " + compType.get_name().to_string() + " component type in Reflection::gComponentTypes\n";
-#endif
-          continue;
-        }
-
-        // if entity no longer contains component, means it was removed
-        if (!of.GetEntityComponent(currEntity, *iter).is_valid())
-        {
-#ifdef _DEBUG
-          std::cout << "  Added <" << subData.mId << ", " << compType.get_name().to_string() << "> to mRemovedComponents\n";
-#endif
-          mRemovedComponents.emplace_back(subData.mId, compType);
-        }
-      }
     }
   }
 

@@ -200,12 +200,12 @@ Application::Application(const char* name, int width, int height) :
   }
 
   if (!mWindow) {
-    throw std::runtime_error("Unable to create window for application");
+    throw Debug::Exception<Application>(Debug::LVL_CRITICAL, Msg("Unable to create window for application"));
   }
 
   glfwMakeContextCurrent(mWindow.get());
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-    throw std::runtime_error("Failed to initialize GLAD");
+    throw Debug::Exception<Application>(Debug::LVL_CRITICAL, Msg("Failed to initialize GLAD"));
   }
 
 #ifndef IMGUI_DISABLE
@@ -275,9 +275,9 @@ void Application::FramebufferSizeCallback(GLFWwindow* window, int width, int hei
 void Application::ErrorCallback(int err, const char* desc)
 {
   UNREFERENCED_PARAMETER(err);
-#ifdef _DEBUG
-  std::cerr << "GLFW ERROR: \"" << desc << "\"" << " | Error code: " << std::endl;
-#endif
+  std::ostringstream oss{};
+  oss << "GLFW ERROR: \"" << desc << "\"" << " | Error code: ";
+  Debug::DebugLogger::GetInstance().LogError(oss.str());
 }
 
 #ifndef IMGUI_DISABLE
@@ -314,13 +314,11 @@ Application::~Application()
 
 
 namespace {
-  void PrintException(Debug::ExceptionBase& e)
-  {
+  void PrintException(Debug::ExceptionBase& e) {
     e.LogSource();
   }
 
-  void PrintException(std::exception& e)
-  {
+  void PrintException(std::exception& e) {
     Debug::DebugLogger::GetInstance().LogCritical(e.what());
     Debug::DebugLogger::GetInstance().PrintToCout(e.what(), Debug::LVL_CRITICAL);
   }

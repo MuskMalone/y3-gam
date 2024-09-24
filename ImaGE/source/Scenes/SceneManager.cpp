@@ -7,7 +7,7 @@
 #include <Core/Entity.h>
 
 #ifdef _DEBUG
-#define EVENTS_DEBUG
+//#define EVENTS_DEBUG
 #endif
 
 namespace Scenes
@@ -23,16 +23,10 @@ namespace Scenes
     if (!std::filesystem::exists(mTempDir) || !std::filesystem::is_directory(mTempDir))
     {
       if (std::filesystem::create_directory(mTempDir)) {
-        // replace with logger
-#ifdef _DEBUG
-        std::cout << "Temp directory doesn't exist. Created at: " + mTempDir << "\n";
-#endif
+        Debug::DebugLogger::GetInstance().LogInfo("Temp directory doesn't exist. Created at: " + mTempDir);
       }
       else {
-        // replace with logger
-#ifdef _DEBUG
-        std::cout << "Unable to create temp directory at: " + mTempDir + ". Scene reloading features may be unavailable!" << "\n";
-#endif
+        Debug::DebugLogger::GetInstance().LogWarning("Unable to create temp directory at: " + mTempDir + ". Scene reloading features may be unavailable!");
       }
     }
 
@@ -41,14 +35,6 @@ namespace Scenes
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SAVE_SCENE, &SceneManager::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &SceneManager::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::PREFAB_INSTANCES_UPDATED, &SceneManager::HandleEvent, this);
-
-  /*  auto& em{ ECS::EntityManager::GetInstance() };
-    auto e2 = em.CreateEntityWithTag("e2");
-    auto e3 = em.CreateEntityWithTag("e3");
-    e2.EmplaceOrReplaceComponent<Component::Layer>().layerName = "wee";
-    e3.EmplaceOrReplaceComponent<Component::Layer>().layerName = "oof";
-    e3.GetComponent<Component::Transform>().worldPos = glm::vec3(3.f, 2.f, 1.f);
-    em.SetParentEntity(e2, e3);*/
   }
 
   void SceneManager::PauseScene() {
@@ -109,10 +95,6 @@ namespace Scenes
 
   EVENT_CALLBACK_DEF(SceneManager, HandleEvent)
   {
-#ifdef EVENTS_DEBUG
-    std::cout << "[SceneManager] Handled Event: " << event->GetName() << "\n";
-#endif
-
     switch (event->GetCategory())
     {
     case Events::EventType::LOAD_SCENE:
@@ -131,13 +113,15 @@ namespace Scenes
       else {
         QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::NEW, mSceneName);
       }
-      
+      Debug::DebugLogger::GetInstance().LogInfo("Loading scene: " + mSceneName + "...");
+
       break;
     }
     case Events::EventType::SAVE_SCENE:
       SaveScene();
       break;
     case Events::EventType::EDIT_PREFAB:
+    {
       // save and unload
       if (!mSceneName.empty()) {
         TemporarySave();
@@ -145,8 +129,11 @@ namespace Scenes
         UnloadScene();
       }
       mSceneState = SceneState::PREFAB_EDITOR;
-      mSceneName = std::static_pointer_cast<Events::EditPrefabEvent>(event)->mPrefab;
+      auto prefabEvent{ std::static_pointer_cast<Events::EditPrefabEvent>(event) };
+      mSceneName = prefabEvent->mPrefab;
+      Debug::DebugLogger::GetInstance().LogInfo("Entering prefab editor for: " + prefabEvent->mPrefab + "...");
       break;
+    }
     case Events::EventType::PREFAB_INSTANCES_UPDATED:
       if (mSaveStates.empty()) {
         SaveScene();
@@ -154,10 +141,7 @@ namespace Scenes
       else {
         Serialization::Serializer::SerializeScene(mSaveStates.top().mPath);
       }
-      // replace with logger
-#ifdef _DEBUG
-      std::cout << "[SceneManager] " << mSceneName << "'s prefab instances have been updated\n";
-#endif
+      Debug::DebugLogger::GetInstance().LogInfo("[SceneManager] " + mSceneName + "'s prefab instances have been updated");
       break;
     default: break;
     }
@@ -180,10 +164,7 @@ namespace Scenes
     mSaveStates.emplace(mSceneName, path);
     Serialization::Serializer::SerializeScene(path);
 
-    // replace with logger
-#ifdef _DEBUG
-    std::cout << "Temporarily saved scene to " + path << "\n";
-#endif
+    Debug::DebugLogger::GetInstance().LogInfo("Temporarily saved scene to " + path);
   }
 
   void SceneManager::LoadTemporarySave()
@@ -196,6 +177,8 @@ namespace Scenes
     mSceneName = std::move(saveState.mName);
     LoadScene(saveState.mPath);
     std::filesystem::remove(saveState.mPath); // delete the temp scene file
+
+    Debug::DebugLogger::GetInstance().LogInfo("Scene reverted to previous state");
   }
 
   // cleanup any extra tmp files

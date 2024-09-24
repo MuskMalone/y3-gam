@@ -43,7 +43,7 @@ namespace ECS {
     // There has to be a better method...
     // But for now it is what it is...
     entityCopy.GetComponent<Component::Tag>().tag =
-      entity.GetComponent<Component::Tag>().tag + "Copy";
+      entity.GetComponent<Component::Tag>().tag + " (Copy)";
 
     if (entity.HasComponent<Component::Layer>()) {
       entityCopy.EmplaceComponent<Component::Layer>() =
@@ -60,8 +60,7 @@ namespace ECS {
 
   bool EntityManager::HasParent(Entity entity) const {
     if (!mRegistry.valid(entity.GetRawEnttEntityID())) {
-      // @TODO: REPLACE WITH LOGGING SYSTEM
-      std::cout << "Entity is not valid!" << std::endl;
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity is not valid!");
       return false;
     }
 
@@ -71,8 +70,7 @@ namespace ECS {
 
   bool EntityManager::HasChild(Entity entity) const {
     if (!mRegistry.valid(entity.GetRawEnttEntityID())) {
-      // @TODO: REPLACE WITH LOGGING SYSTEM
-      std::cout << "Entity is not valid!" << std::endl;
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity is not valid!");
       return Entity();
     }
 
@@ -91,24 +89,20 @@ namespace ECS {
       }
     }
 
-    // @TODO: REPLACE WITH LOGGING SYSTEM
-    std::cout << "No Entities have the specified Tag!\n";
-
+    Debug::DebugLogger::GetInstance().LogError("[EntityManager] No Entities have the specified Tag!");
     return Entity();
   }
 
   Entity EntityManager::GetParentEntity(Entity const& child) const {
     if (!mRegistry.valid(child.GetRawEnttEntityID())) {
-      // @TODO: REPLACE WITH LOGGING SYSTEM
-      std::cout << "Child is not valid!" << std::endl;
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Child is not valid!");
       return Entity();
     }
 
     auto iter{ mParent.find(child.GetRawEnttEntityID()) };
 
     if (iter == mParent.end()) {
-      // @TODO: REPLACE WITH LOGGING SYSTEM
-      std::cout << "Entity: " << child.GetTag() << " does not have a Parent!\n";
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity: " + child.GetTag() + " does not have a Parent!");
     }
 
     return iter->second;
@@ -116,16 +110,14 @@ namespace ECS {
 
   std::vector<Entity> EntityManager::GetChildEntity(Entity const& parent) {
     if (!mRegistry.valid(parent.GetRawEnttEntityID())) {
-      // @TODO: REPLACE WITH LOGGING SYSTEM
-      std::cout << "Parent is not valid!" << std::endl;
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent is not valid!");
       return std::vector<Entity>();
     }
 
     auto iter{ mChildren.find(parent.GetRawEnttEntityID()) };
 
     if (iter == mChildren.end()) {
-      // @TODO: REPLACE WITH LOGGING SYSTEM
-      std::cout << "Entity: " << parent.GetTag() << " does not have a Child!\n";
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity: " + parent.GetTag() + " does not have a Child!");
       return std::vector<Entity>();
     }
 
@@ -147,8 +139,7 @@ namespace ECS {
   void EntityManager::SetParentEntity(Entity const& parent, Entity const& child) {
     if (!mRegistry.valid(parent.GetRawEnttEntityID()) || 
       !mRegistry.valid(child.GetRawEnttEntityID())) {
-      // @TODO: REPLACE WITH LOGGING SYSTEM
-      std::cout << "Parent/Child is not valid!" << std::endl;
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent/Child is not valid!");
       return;
     }
 
@@ -159,8 +150,7 @@ namespace ECS {
   void EntityManager::SetChildEntity(Entity const& parent, Entity const& child) {
     if (!mRegistry.valid(parent.GetRawEnttEntityID()) || 
       !mRegistry.valid(child.GetRawEnttEntityID())) {
-      // @TODO: REPLACE WITH LOGGING SYSTEM
-      std::cout << "Parent/Child is not valid!" << std::endl;
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent/Child is not valid!");
       return;
     }
 
@@ -170,16 +160,14 @@ namespace ECS {
 
   bool EntityManager::RemoveParent(Entity const& child) {
     if (!mRegistry.valid(child.GetRawEnttEntityID())) {
-      // @TODO: REPLACE WITH LOGGING SYSTEM
-      std::cout << "Entity is not valid!" << std::endl;
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity is not valid!");
       return false;
     }
 
     auto iter{ mParent.find(child.GetRawEnttEntityID()) };
 
     if (iter == mParent.end()) {
-      // @TODO: REPLACE WITH LOGGING SYSTEM
-      std::cout << "Removing Non-existent Parent!\n";
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Removing Non-existent Parent!");
       return false;
     }
 
@@ -193,8 +181,7 @@ namespace ECS {
 
   void EntityManager::RemoveEntity(Entity const& entity) {
     if (!mRegistry.valid(entity.GetRawEnttEntityID())) {
-      // @TODO: REPLACE WITH LOGGING SYSTEM
-      std::cout << "Entity is not valid!" << std::endl;
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity is not valid!");
       return;
     }
 
@@ -232,8 +219,7 @@ namespace ECS {
 
   void EntityManager::DeleteEntity(Entity entity) {
     if (!mRegistry.valid(entity.GetRawEnttEntityID())) {
-      // @TODO: REPLACE WITH LOGGING SYSTEM
-      std::cout << "Entity is not valid!" << std::endl;
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity is not valid!");
       return;
     }
     mRegistry.destroy(entity.GetRawEnttEntityID());

@@ -317,11 +317,14 @@ namespace GUI
       std::filesystem::path const path{ file };
       if (std::string(gSupportedModelFormats).find(path.extension().string()) != std::string::npos) {
         Graphics::AssetIO::IMSH imsh{ file };
+        Debug::DebugLogger::GetInstance().LogInfo("Model detected. Converting to .imsh file...");
         imsh.WriteToBinFile(path.stem().string(), file);
+        Debug::DebugLogger::GetInstance().LogInfo(("Added " + path.stem().string() + gMeshFileExt) + " to assets");
         continue;
       }
 
       std::filesystem::copy(file, mCurrentDir);
+      Debug::DebugLogger::GetInstance().LogInfo("Added " + file + " to assets");
     }
   }
 

@@ -25,7 +25,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #endif
 
 using namespace spdlog;
-#define PRINTTOCOUT
+//#define PRINTTOCOUT
 namespace Debug
 {
   class DebugLogger : public Singleton<DebugLogger>

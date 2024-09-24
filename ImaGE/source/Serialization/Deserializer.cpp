@@ -22,10 +22,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 //#define DESERIALIZER_DEBUG
 
 #ifdef _DEBUG
-std::ostream& operator<<(std::ostream& os, rttr::type const& type)
-{
+std::ostream& operator<<(std::ostream& os, rttr::type const& type) {
   os << type.get_name().to_string();
-
   return os;
 }
 #endif
@@ -36,11 +34,8 @@ namespace Serialization
   void Deserializer::DeserializeAny(rttr::instance inst, std::string const& filename)
   {
     std::ifstream ifs{ filename };
-    if (!ifs)
-    {
-#ifdef _DEBUG
-      std::cout << "Unable to read " << filename << "\n";
-#endif
+    if (!ifs) {
+      Debug::DebugLogger::GetInstance().LogError("[Desrializer] Unable to read " + filename);
       return;
     }
 
@@ -49,9 +44,7 @@ namespace Serialization
     if (document.ParseStream(isw).HasParseError())
     {
       ifs.close();
-#ifdef _DEBUG
-      std::cout << "Unable to parse " + filename << "\n";
-#endif
+      Debug::DebugLogger::GetInstance().LogError("[Desrializer] Unable to parse " + filename);
       return;
     }
 
@@ -69,7 +62,7 @@ namespace Serialization
     }
 
     if (!document.IsArray()) {
-      // log(filepath + ": root is not an array!");
+      Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + filepath + ": root is not an array!");
 #ifdef _DEBUG
       std::cout << filepath + ": root is not an array!" << "\n";
 #endif
@@ -126,7 +119,7 @@ namespace Serialization
           {
             std::ostringstream oss{};
             oss << "Trying to deserialize an invalid component: " << compName;
-            // log(oss.str());
+            Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + oss.str());
 #ifdef _DEBUG
             std::cout << oss.str() << "\n";
 #endif
@@ -175,7 +168,7 @@ namespace Serialization
       if (!compType.is_valid()) {
         std::ostringstream oss{};
         oss << "Trying to deserialize an invalid component: " << compName;
-        // log(oss.str());
+        Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + oss.str());
 #ifdef _DEBUG
         std::cout << oss.str() << "\n";
 #endif
@@ -213,7 +206,7 @@ namespace Serialization
         {
           std::ostringstream oss{};
           oss << "Trying to deserialize an invalid component: " << compName;
-          // log(oss.str());
+          Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + oss.str());
 #ifdef _DEBUG
           std::cout << oss.str() << "\n";
 #endif
@@ -240,7 +233,7 @@ namespace Serialization
       }
       else {
         std::string const msg{ "Unable to deserialize m_removedChildren of prefab " + prefab.mName };
-        // log(msg);
+        Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + msg);
 #ifdef _DEBUG
         std::cout << msg << "\n";
 #endif
@@ -256,7 +249,7 @@ namespace Serialization
       }
       else {
         std::string const msg{ "Unable to deserialize m_removedComponents of prefab " + prefab.mName };
-        // log(msg);
+        Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + msg);
 #ifdef _DEBUG
         std::cout << msg << "\n";
 #endif
@@ -310,7 +303,7 @@ namespace Serialization
               std::ostringstream oss{};
               oss << "Unable to find " << prop.get_name().to_string()
                 << " property in " << compType.get_name().to_string();
-              // log(oss.str());
+              Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
               continue;
             }
 
@@ -355,8 +348,10 @@ namespace Serialization
       auto ret{ jsonObj.FindMember(prop.get_name().data()) };
       if (ret == jsonObj.MemberEnd())
       {
+        std::string const msg{ "Unable to find property with name: " + prop.get_name().to_string() };
+        Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + msg);
 #ifdef _DEBUG
-        std::cout << "Unable to find property with name: " << prop.get_name().to_string() << "\n";
+        std::cout << msg << "\n";
 #endif
         continue;
       }
@@ -398,10 +393,11 @@ namespace Serialization
       default:
       {
         rttr::variant extractedVal{ ExtractBasicTypes(jsonVal) };
-        if (!extractedVal.convert(propType))
-        {
+        if (!extractedVal.convert(propType)) {
+          std::string const msg{ "Unable to convert element to type " + propType.get_name().to_string() };
+          Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + msg);
 #ifdef _DEBUG
-          std::cout << "Unable to convert element to type " << propType.get_name().to_string() << "\n";
+          std::cout << msg << "\n";
 #endif
           continue;
         }
@@ -470,10 +466,11 @@ namespace Serialization
       else
       {
         rttr::variant result{ ExtractBasicTypes(idxVal) };
-        if (!seqView.set_value(i, result))
-        {
+        if (!seqView.set_value(i, result)) {
+          std::string const msg{ "Unable to set sequential view of type " + seqView.get_type().get_name().to_string() };
+          Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + msg);
 #ifdef _DEBUG
-          std::cout << "Unable to set sequential view of type " << seqView.get_type().get_name().to_string() << "\n";
+          std::cout << msg << "\n";
 #endif
         }
       }
@@ -514,20 +511,24 @@ namespace Serialization
       {
         auto keyIter{ idxVal.FindMember("key") }, valIter{ idxVal.FindMember("value") };
 
-        if (keyIter == idxVal.MemberEnd() || valIter == idxVal.MemberEnd())
-        {
+        if (keyIter == idxVal.MemberEnd() || valIter == idxVal.MemberEnd()) {
+          std::ostringstream oss{};
+          oss << "Unable to find key-value pair for element of type " << view.get_key_type().get_name().to_string()
+            << "-" << view.get_value_type().get_name().to_string() << " in associative view";
+          Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + oss.str());
 #ifdef _DEBUG
-          std::cout << "[Associative View] Unable to find key-value pair for element of type " << view.get_key_type().get_name().to_string()
-            << "-" << view.get_value_type().get_name().to_string() << "\n";
+          std::cout << oss.str() << "\n";
 #endif
         }
 
         auto keyVar{ ExtractValue(keyIter->value, view.get_key_type()) }, valVar{ ExtractValue(valIter->value, view.get_value_type()) };
-        if (!keyVar || !valVar)
-        {
+        if (!keyVar || !valVar) {
+          std::ostringstream oss{};
+          oss << "Unable to extract key-value pair for element of type " << view.get_key_type().get_name().to_string()
+            << "-" << view.get_value_type().get_name().to_string() << " in associative view ";
+          Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + oss.str());
 #ifdef _DEBUG
-          std::cout << "[Associative View] Unable to extract key-value pair for element of type " << view.get_key_type().get_name().to_string()
-            << "-" << view.get_value_type().get_name().to_string() << "\n";
+          std::cout << oss.str() << "\n";
 #endif
         }
         else
@@ -542,9 +543,12 @@ namespace Serialization
                 continue;
               }
             }
+            std::ostringstream oss{};
+            oss << "Unable to insert key-value pair for element of type " << view.get_key_type().get_name().to_string()
+              << "-" << view.get_value_type().get_name().to_string();
+            Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + oss.str());
 #ifdef _DEBUG
-            std::cout << "[Associative View] Unable to insert key-value pair for element of type " << view.get_key_type().get_name().to_string()
-              << "-" << view.get_value_type().get_name().to_string() << "\n";
+            std::cout << oss.str() << "\n";
             std::cout << "Types are " << keyVar.get_type().get_name().to_string() << " and " << valVar.get_type().get_name().to_string() << "\n";
 #endif
           }
@@ -554,18 +558,20 @@ namespace Serialization
       else
       {
         rttr::variant extractedVal{ ExtractBasicTypes(idxVal) };
-        if (!extractedVal || !extractedVal.convert(view.get_key_type()))
-        {
+        if (!extractedVal || !extractedVal.convert(view.get_key_type())) {
+          std::string const msg{ "Unable to extract key-only type of " + view.get_key_type().get_name().to_string() };
+          Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + msg);
 #ifdef _DEBUG
-          std::cout << "[Associative View] Unable to extract key-only type of " << view.get_key_type().get_name().to_string() << "\n";
+          std::cout << msg << "\n";
 #endif
         }
 
         auto result{ view.insert(extractedVal) };
-        if (!result.second)
-        {
+        if (!result.second) {
+          std::string const msg{ "Unable to insert key-only type of " + view.get_key_type().get_name().to_string() };
+          Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + msg);
 #ifdef _DEBUG
-          std::cout << "[Associative View] Unable to insert key-only type of " << view.get_key_type().get_name().to_string() << "\n";
+          std::cout << msg  << "\n";
 #endif
         }
       }
@@ -575,9 +581,8 @@ namespace Serialization
   bool Deserializer::ParseJsonIntoDocument(rapidjson::Document& document, std::string const& filepath)
   {
     std::ifstream ifs{ filepath };
-    if (!ifs)
-    {
-      // log ("Unable to read " + filepath);
+    if (!ifs) {
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to read " + filepath);
 #ifdef _DEBUG
       std::cout << "Unable to read " << filepath << "\n";
 #endif
@@ -593,7 +598,8 @@ namespace Serialization
 
     if (document.ParseStream(isw).HasParseError())
     {
-      ifs.close(); // log ("Unable to parse " + filepath);
+      ifs.close();
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to parse " + filepath);
 #ifdef _DEBUG
       std::cout << "Unable to parse " + filepath << "\n";
 #endif
@@ -628,7 +634,7 @@ namespace Serialization
           {
             std::ostringstream oss{};
             oss << filename << ": Unable to find key \"" + keyName + "\" of element: " << i << " in rapidjson value";
-            // log
+            Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
             std::cout << oss.str() << "\n";
 #endif
@@ -642,7 +648,7 @@ namespace Serialization
             {
               std::ostringstream oss{};
               oss << filename << ": Element \"" << keyName << "\" is not of type bool";
-              // log
+              Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
               std::cout << oss.str() << "\n";
 #endif
@@ -653,7 +659,7 @@ namespace Serialization
           {
             std::ostringstream oss{};
             oss << filename << ": Element \"" << keyName << "\" is not of rapidjson type:" << type;
-            // log
+            Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
             std::cout << oss.str() << "\n";
 #endif
@@ -671,7 +677,7 @@ namespace Serialization
         {
           std::ostringstream oss{};
           oss << filename << ": Unable to find key \"" << keyName << "\" in rapidjson value";
-          // log
+          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
           std::cout << oss.str() << "\n";
 #endif
@@ -685,7 +691,7 @@ namespace Serialization
           {
             std::ostringstream oss{};
             oss << filename << ": Element \"" << keyName << "\" is not of type bool";
-            // log
+            Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
             std::cout << oss.str() << "\n";
 #endif
@@ -696,7 +702,7 @@ namespace Serialization
         {
           std::ostringstream oss{};
           oss << filename << ": Element \"" << keyName << "\" is not of rapidjson type:" << type;
-          // log
+          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
           std::cout << oss.str() << "\n";
 #endif

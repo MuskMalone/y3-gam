@@ -143,6 +143,10 @@
     <ClCompile Include="source\Serialization\Serializer.cpp" />
     <ClCompile Include="source\Graphics\Texture.cpp" />
     <ClCompile Include="Source\GUI\Styles\Styler.cpp" />
+    <ClInclude Include="source\External\ImTerm\misc.hpp" />
+    <ClInclude Include="source\External\ImTerm\terminal.hpp" />
+    <ClInclude Include="source\External\ImTerm\terminal_helpers.hpp" />
+    <ClInclude Include="source\External\ImTerm\utils.hpp" />
     <ClInclude Include="Source\GUI\Dockable\Console.h" />
     <ClInclude Include="Source\Graphics\AssetIO\IMSH.h" />
     <ClInclude Include="source\Core\Component\Camera.h" />

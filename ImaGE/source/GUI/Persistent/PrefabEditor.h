@@ -61,15 +61,6 @@ namespace GUI
 
     /*!*********************************************************************
     \brief
-      This function is called after a prefab has been modified. It compares
-      the current set of components with the previous copy and keeps track
-      of any component deletions. These components will then be recorded
-      to update any existing instances in future.
-    ************************************************************************/
-    void CheckForDeletions();
-
-    /*!*********************************************************************
-    \brief
       Clears and resets all variables of the prefab editor
     ************************************************************************/
     void ResetPrefabEditor();

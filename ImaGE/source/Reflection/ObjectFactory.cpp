@@ -141,7 +141,7 @@ namespace Reflection
     {
       std::ostringstream oss{};
       oss << "Trying to add unknown component type: " << compType.get_name().to_string() << " to entity " << entity << " | Update ObjectFactory::AddComponentToEntity";
-      // log
+      Debug::DebugLogger::GetInstance().LogError(oss.str());
     }
   }
 
@@ -160,7 +160,7 @@ namespace Reflection
     {
       std::ostringstream oss{};
       oss << "Trying to get unsupported component type (" << compType.get_name().to_string() << ") from Entity " << entity.GetEntityID();
-      // log
+      Debug::DebugLogger::GetInstance().LogError(oss.str());
       return rttr::variant();
     }
   }
@@ -182,7 +182,7 @@ namespace Reflection
     {
       std::ostringstream oss{};
       oss << "Trying to remove unknown component type: " << compType.get_name().to_string() << " to entity " << entity << " | Update ObjectFactory::RemoveComponentFromEntity";
-      // log
+      Debug::DebugLogger::GetInstance().LogError(oss.str());
     }
   }
 
