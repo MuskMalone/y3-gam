@@ -2,11 +2,12 @@
 #ifndef IMGUI_DISABLE
 #include "AssetBrowser.h"
 #include <imgui/imgui.h>
-#include <Globals.h>
 #include <Events/EventManager.h>
 #include <GUI/Helpers/AssetHelpers.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <GUI/Styles/FontAwesome6Icons.h>
+#include "GUI/GUIManager.h"
+#include <Graphics/AssetIO/IMSH.h>
 
 namespace Helper
 {
@@ -54,23 +55,30 @@ namespace GUI
 
   void AssetBrowser::MenuBar()
   {
-    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 50));
     ImGui::BeginMenuBar();
-    ImGui::PopStyleVar();
     bool const isSearching{ !mSearchQuery.empty() };
     float const wWidth{ ImGui::GetWindowWidth() };
     
-    if (ImGui::Button("Add")) {
+    ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(0, 0, 0, 70));
+    if (ImGui::Button(ICON_FA_PLUS " Add")) {
       auto const files{ AssetHelpers::SelectFilesFromExplorer("Add Files") };
 
       if (!files.empty()) {
         AddAssets(files);
       }
     }
+    ImGui::PopStyleColor();
+
+    if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+      ImGui::SetTooltip("Add Files");
+    }
 
     if (isSearching) {
       ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(255, 255, 255, 155));
       ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 0, 0, 255));
+    }
+    else {
+      ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(0, 0, 0, 255));
     }
     ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 25.f);
 
@@ -82,6 +90,9 @@ namespace GUI
     ImGui::PopStyleVar();
     if (isSearching) {
       ImGui::PopStyleColor(2);
+    }
+    else {
+      ImGui::PopStyleColor();
     }
 
     ImGui::EndMenuBar();
@@ -218,6 +229,9 @@ namespace GUI
         draggedAsset = path;
       }
     }
+    else if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+      ImGui::SetTooltip(path.filename().string().c_str());
+    }
     
     if (ImGui::BeginDragDropSource()) {
       if (mDisableSceneChange) {
@@ -250,6 +264,7 @@ namespace GUI
       switch (CAST_TO_EVENT(Events::SceneStateChange)->mNewState)
       {
       case Events::SceneStateChange::NEW:
+      case Events::SceneStateChange::CHANGED:
       case Events::SceneStateChange::STOPPED:
         mDisableSceneChange = false;
         break;
@@ -298,7 +313,18 @@ namespace GUI
   void AssetBrowser::AddAssets(std::vector<std::string> const& files)
   {
     for (std::string const& file : files) {
+      // @TODO: SHOULD BE DONE BY ASSET MANAGER
+      std::filesystem::path const path{ file };
+      if (std::string(gSupportedModelFormats).find(path.extension().string()) != std::string::npos) {
+        Graphics::AssetIO::IMSH imsh{ file };
+        Debug::DebugLogger::GetInstance().LogInfo("Model detected. Converting to .imsh file...");
+        imsh.WriteToBinFile(path.stem().string(), file);
+        Debug::DebugLogger::GetInstance().LogInfo(("Added " + path.stem().string() + gMeshFileExt) + " to assets");
+        continue;
+      }
+
       std::filesystem::copy(file, mCurrentDir);
+      Debug::DebugLogger::GetInstance().LogInfo("Added " + file + " to assets");
     }
   }
 

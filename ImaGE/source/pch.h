@@ -12,6 +12,8 @@
 #include <unordered_set>
 #include <set>
 #include <array>
+#include <sstream>
+#include <fstream>
 #include <chrono>
 //#include <sstream>
 //#include <fstream>
@@ -27,6 +29,7 @@
 #include <cstdarg>
 #include <thread>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 //jolt
 #include <Jolt/Jolt.h>                      // General Jolt Physics include
@@ -58,6 +61,9 @@
 #include <DebugTools/DebugLogger/DebugLogger.h> //Logging Tool
 
 #include <Globals.h>
+
+//glad
+#include <glad/glad.h>
 
 #ifdef _DEBUG
 #include <Debug.h>

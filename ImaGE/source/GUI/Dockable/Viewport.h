@@ -1,6 +1,8 @@
 #pragma once
+#ifndef IMGUI_DISABLE
 #include <GUI/GUIWindow.h>
 #include <Graphics/Framebuffer.h>
+#include <memory>
 
 namespace GUI
 {
@@ -8,15 +10,15 @@ namespace GUI
   class Viewport : public GUIWindow
   {
   public:
-    Viewport(std::string const& name, Graphics::Framebuffer const& framebuffer);
+    Viewport(std::string const& name);
     
-    void Run() override;
+    void Run() override {}  // not in use
+    void Update(std::shared_ptr<Graphics::Framebuffer> const& framebuffer);
 
   private:
-    Graphics::Framebuffer const& mFramebuffer;
-
     void ReceivePayload();
 
   };
   
 } // namespace GUI
+#endif  // IMGUI_DISABLE

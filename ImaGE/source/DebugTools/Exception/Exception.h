@@ -25,13 +25,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
   namespace Debug
   {
-    enum EXCEPTION_LEVEL
-    {
-      LVL_INFO = 0,     // Minor issues
-      LVL_WARN,         // Potential issues 
-      LVL_ERROR,        // Errors that can crash the program.
-      LVL_CRITICAL,     // Errors that will crash the program.
-    };
+
 
     template <typename T>
     class Exception : public ExceptionBase

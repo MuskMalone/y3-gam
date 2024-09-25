@@ -45,6 +45,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <string>
 #include <iostream>
 #include <memory>
+#include <External/GLFWwindowDestructor.h>
 
 	namespace Input
 	{

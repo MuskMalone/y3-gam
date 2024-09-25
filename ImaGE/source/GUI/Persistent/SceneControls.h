@@ -2,6 +2,7 @@
 #ifndef IMGUI_DISABLE
 #include <GUI/GUIWindow.h>
 #include <Scenes/SceneManager.h>
+#include "GUI/GUIManager.h"
 
 namespace GUI
 {

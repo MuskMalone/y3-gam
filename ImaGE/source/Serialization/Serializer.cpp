@@ -21,8 +21,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Prefabs/PrefabManager.h>
 #endif
 
-namespace Helper
-{
+namespace Helper {
   template <typename T>
   bool IsType(rttr::type const& t) { return t == rttr::type::get<T>(); }
 }
@@ -99,7 +98,7 @@ namespace Serialization
     std::ofstream ofs{ filename };
     if (!ofs)
     {
-      Debug::DebugLogger::GetInstance().LogError("Unable to open file " + filename);
+      Debug::DebugLogger::GetInstance().LogError("[Serializer] Unable to create file: " + filename);
 #ifdef _DEBUG
       std::cout << "Unable to open file " << filename << "\n";
 #endif
@@ -116,7 +115,7 @@ namespace Serialization
   {
     std::ofstream ofs{ filePath };
     if (!ofs) {
-      // log("Unable to serialize scene into " + filePath);
+      Debug::DebugLogger::GetInstance().LogError("[Serializer] Unable to create scene file: " + filePath);
     }
     rapidjson::OStreamWrapper osw{ ofs };
     WriterType writer{ osw };
@@ -216,10 +215,12 @@ namespace Serialization
     {
       //if (property.get_metadata("NO_SERIALIZE")) { continue; }
       rttr::variant propVal{ property.get_value(wrappedObj) };
-      if (!propVal)
-      {
+      if (!propVal) {
+        std::ostringstream oss{};
+        oss << "Unable to serialize property " << property.get_name().to_string() << " of type " << property.get_type().get_name().to_string();
+        Debug::DebugLogger::GetInstance().LogError("[Serializer] " + oss.str());
 #ifdef _DEBUG
-        std::cout << "Unable to serialize property " << property.get_name().to_string() << " of type " << property.get_type().get_name().to_string() << "\n";
+        std::cout << oss.str() << "\n";
 #endif
         continue;
       }
@@ -228,8 +229,11 @@ namespace Serialization
       writer.String(name.c_str(), static_cast<rapidjson::SizeType>(name.length()), false);
       if (!SerializeRecursive(propVal, writer))
       {
+        std::ostringstream oss{};
+        oss << "Unable to serialize property " << name << " of type " << property.get_type().get_name().to_string();
+        Debug::DebugLogger::GetInstance().LogError("[Serializer] " + oss.str());
 #ifdef _DEBUG
-        std::cout << "Unable to serialize property " << name << " of type " << property.get_type().get_name().to_string() << "\n";
+        std::cout << oss.str() << "\n";
 #endif
       }
     }
@@ -294,8 +298,7 @@ namespace Serialization
     for (auto const& elem : seqView)
     {
       // if elem is another sequential container, call this function again
-      if (elem.is_sequential_container())
-      {
+      if (elem.is_sequential_container()) {
         WriteSequentialContainer(elem.create_sequential_view(), writer);
       }
       else
@@ -318,8 +321,7 @@ namespace Serialization
     rttr::type const type{ isWrapper ? var.get_type().get_wrapped_type().get_raw_type() :
           var.get_type().is_pointer() ? var.get_type().get_raw_type() : var.get_type() };
 
-    if (WriteBasicTypes(type, isWrapper ? var.extract_wrapped_value() : var, writer))
-    {
+    if (WriteBasicTypes(type, isWrapper ? var.extract_wrapped_value() : var, writer)) {
 
     }
     else if (var.is_sequential_container())
@@ -342,10 +344,11 @@ namespace Serialization
         writer.String(var.convert<std::string>(&ok).c_str());
         return true;
       }
-      else
-      {
+      else {
+        std::string const msg{ "Unable to write variant of type " + (isWrapper ? type.get_name().to_string() : type.get_name().to_string()) };
+        Debug::DebugLogger::GetInstance().LogError("[Serializer] " + msg);
 #ifdef _DEBUG
-        std::cout << "Unable to write variant of type " << (isWrapper ? type.get_name().to_string() : type.get_name().to_string()) << "\n";
+        std::cout << msg << "\n";
 #endif
 
         return false;
@@ -359,15 +362,12 @@ namespace Serialization
   {
     writer.StartArray();
 
-    if (view.is_key_only_type())
-    {
-      for (auto const& elem : view)
-      {
+    if (view.is_key_only_type()) {
+      for (auto const& elem : view) {
         SerializeRecursive(elem.first, writer);
       }
     }
-    else
-    {
+    else {
       for (auto const& elem : view)
       {
         writer.StartObject();

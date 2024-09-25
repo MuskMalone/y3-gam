@@ -125,8 +125,8 @@ void InputManager::QueueInputEvents()
 	{
 		QUEUE_EVENT(Events::KeyTriggeredEvent, IK_H);
 		
-		//Debug::DebugLogger::GetInstance().LogInfo("Testies");
-		//throw Debug::Exception<InputManager>(Debug::LVL_CRITICAL, Msg("ThrowTesties"));
+		Debug::DebugLogger::GetInstance().LogInfo("Testies");
+		throw Debug::Exception<InputManager>(Debug::LVL_CRITICAL, Msg("ThrowTesties"));
 	}
 
 	if (IsKeyTriggered(IK_K))

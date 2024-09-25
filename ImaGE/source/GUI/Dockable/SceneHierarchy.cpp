@@ -8,6 +8,7 @@
 #include <Events/EventManager.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <Prefabs/PrefabManager.h>
+#include <GUI/Dockable/Inspector.h>
 
 namespace GUI
 {
@@ -20,6 +21,8 @@ namespace GUI
   {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &SceneHierarchy::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &SceneHierarchy::HandleEvent, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_MODIFIED, &SceneHierarchy::HandleEvent, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SAVE_SCENE, &SceneHierarchy::HandleEvent, this);
   }
 
   void SceneHierarchy::Run()
@@ -33,15 +36,24 @@ namespace GUI
       return;
     }
 
-    if (mEditingPrefab) {
-      ImGui::Text(("Editing Prefab: " + mSceneName).c_str());
+
+    std::string sceneNameSave{ mSceneName };
+
+    if (!mEditingPrefab) {
+      // Ctrl + S to save
+      if (ImGui::GetIO().KeyCtrl && ImGui::IsKeyPressed(ImGuiKey_S, false)) {
+        QUEUE_EVENT(Events::SaveSceneEvent);
+      }
+
+      ImGui::Text(sceneNameSave.c_str());
+    }
+    else {
+      ImGui::Text(("Editing Prefab: " + sceneNameSave).c_str());
       ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(253, 208, 23, 255));
       ImGui::Text("Press ESC to return to scene");
       ImGui::PopStyleColor();
     }
-    else {
-      ImGui::Text(mSceneName.c_str());
-    }
+
     ImGui::Separator();
 
     if (ImGuiHelpers::BeginDrapDropTargetWindow(sDragDropPayload))
@@ -49,9 +61,6 @@ namespace GUI
       ImGuiPayload const* drop{ ImGui::AcceptDragDropPayload(sDragDropPayload) };
       ECS::Entity const droppedEntity{ *reinterpret_cast<ECS::Entity*>(drop->Data) };
       mEntityManager.RemoveParent(droppedEntity);
-#ifdef HEIRARCHY_DEBUG
-      std::cout << "Unparented Entity " << droppedEntity << "\n";
-#endif
 
       ImGui::EndDragDropTarget();
     }
@@ -97,6 +106,7 @@ namespace GUI
       switch (sceneStateEvent->mNewState)
       {
       case Events::SceneStateChange::NEW:
+      case Events::SceneStateChange::CHANGED:
         mSceneName = sceneStateEvent->mSceneName;
         mEditingPrefab = false;
         break;
@@ -106,7 +116,15 @@ namespace GUI
         break;
       default: break;
       }
+
+      break;
     }
+    case Events::EventType::SCENE_MODIFIED:
+      mSceneName += " *";
+      break;
+    case Events::EventType::SAVE_SCENE:
+      mSceneName.erase(mSceneName.size() - 2);
+      break;
     default:break;
     }
   }
@@ -120,18 +138,35 @@ namespace GUI
 
   void SceneHierarchy::RecurseDownHierarchy(ECS::Entity entity)
   {
+    static bool editNameMode{ false };
     // set the flag accordingly
     ImGuiTreeNodeFlags treeFlag{ ImGuiTreeNodeFlags_SpanFullWidth };
     bool const hasChildren{ mEntityManager.HasChild(entity) };
     treeFlag |= hasChildren  ? ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen
       : ImGuiTreeNodeFlags_Leaf;
 
-    if (GUIManager::GetSelectedEntity() == entity) { treeFlag |= ImGuiTreeNodeFlags_Selected; }
+    bool const isCurrentEntity{ GUIManager::GetSelectedEntity() == entity }, isEditMode{ isCurrentEntity && editNameMode };
+    if (isCurrentEntity) { treeFlag |= ImGuiTreeNodeFlags_Selected; }
 
     // create the tree nodes
-    std::string const& entityName{ entity.GetComponent<Component::Tag>().tag };
-    if (ImGui::TreeNodeEx((entityName + "##" + std::to_string(entity.GetEntityID())).c_str(), treeFlag))
+    std::string entityName{ entity.GetComponent<Component::Tag>().tag };
+    std::string const displayName{ isEditMode ? "##" : "" + entityName };
+    if (ImGui::TreeNodeEx((displayName + "##" + std::to_string(entity.GetEntityID())).c_str(), treeFlag))
     {
+      if (isEditMode) {
+        ImGui::SetItemAllowOverlap();
+        ImGui::SameLine();
+        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX()  - 12.f);
+        ImGui::SetKeyboardFocusHere();
+        if (ImGui::InputText("##EntityRename", &entityName, ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue)) {
+          entity.GetComponent<Component::Tag>().tag = entityName;
+          editNameMode = false;
+          QUEUE_EVENT(Events::SceneModifiedEvent);
+        }
+        ImGui::PopStyleVar();
+      }
+
       if (ImGui::BeginDragDropSource())
       {
         ECS::EntityManager::EntityID id{ entity.GetRawEnttEntityID() };
@@ -155,7 +190,13 @@ namespace GUI
       }
 
       if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-        GUIManager::SetSelectedEntity(entity);
+        if (isCurrentEntity) {
+          editNameMode = true;
+        }
+        else {
+          GUIManager::SetSelectedEntity(entity);
+          editNameMode = false;
+        }
       }
 
       if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
@@ -238,6 +279,7 @@ namespace GUI
 
       ImGui::Text("Name of Prefab:");
       ImGui::SameLine();
+      if (!ImGui::IsAnyItemActive()) ImGui::SetKeyboardFocusHere();
       if (ImGui::InputText("##PrefabNameInput", &input)) {
         existingPrefabWarning = prefabMan.DoesPrefabExist(input);
         blankWarning = false;

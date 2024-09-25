@@ -44,8 +44,7 @@ ECS::Entity PrefabManager::SpawnPrefab(const std::string& key, glm::dvec3 const&
 {
   PrefabDataContainer::const_iterator iter{ mPrefabs.find(key) };
   if (iter == mPrefabs.end()) {
-    // logger
-    throw std::runtime_error("Unable to load prefab " + key);
+    throw Debug::Exception<PrefabManager>(Debug::LVL_ERROR, Msg("Unable to load prefab " + key));
   }
 
   auto entityData{ iter->second.Construct() };
@@ -64,8 +63,7 @@ VariantPrefab const& PrefabManager::GetVariantPrefab(std::string const& name) co
 {
   PrefabDataContainer::const_iterator ret{ mPrefabs.find(name) };
   if (ret == mPrefabs.cend()) {
-    // logger
-    throw std::runtime_error("Unable to find prefab with name: " + name);
+    throw Debug::Exception<PrefabManager>(Debug::LVL_ERROR, Msg("Unable to find prefab with name: " + name));
   }
 
   return ret->second;
@@ -185,7 +183,6 @@ bool PrefabManager::UpdateEntitiesFromPrefab(std::string const& prefab)
       {
         std::ostringstream oss{};
         oss << "Unable to remove obj ID " << childIter->first << " when updating prefab instances of " << prefab;
-        // log
         continue;
       }
 #ifdef PREFAB_MANAGER_DEBUG
@@ -206,7 +203,6 @@ bool PrefabManager::UpdateEntitiesFromPrefab(std::string const& prefab)
         std::ostringstream oss{};
         oss << "  Unable to remove " << compIter->mType.get_name().to_string() << " component from obj with ID "
           << compIter->mId << " when updating prefab instances of " << prefab;
-        // log
         continue;
       }
 
@@ -272,11 +268,8 @@ bool PrefabManager::UpdateAllEntitiesFromPrefab()
     try {
       if (UpdateEntitiesFromPrefab(prefab)) { instanceUpdated = true; }
     }
-    // replace with logger
-    catch ([[maybe_unused]] std::exception const& e) {
-#ifdef _DEBUG
-      std::cout << e.what() << "\n";
-#endif
+    catch (Debug::ExceptionBase& e) {
+      e.LogSource();
     }
   }
 
@@ -287,12 +280,8 @@ void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::vect
   std::vector<std::pair<Prefabs::PrefabSubData::SubDataId, rttr::type>> const& removedComponents, std::string const& filePath)
 {
   PrefabDataContainer::iterator iter{ mPrefabs.find(prefabInstance.GetComponent<Component::Tag>().tag) };
-  if (iter == mPrefabs.end())
-  {
-    // replace with logger
-#ifdef _DEBUG
-    std::cout << "Trying to update non-existent prefab: " + prefabInstance.GetComponent<Component::Tag>().tag << "\n";
-#endif
+  if (iter == mPrefabs.end()) {
+    Debug::DebugLogger::GetInstance().LogError("[PrefabManager] Trying to update non-existent prefab: " + prefabInstance.GetComponent<Component::Tag>().tag);
     return;
   }
   VariantPrefab& original{ iter->second };
@@ -343,10 +332,7 @@ void PrefabManager::CreatePrefabFromEntity(ECS::Entity const& entity, std::strin
   Serialization::Serializer::SerializeVariantPrefab(prefab, savePath);
 
   //am.ReloadFiles(Assets::AssetType::PREFAB);
-  // replace with logger
-#ifdef _DEBUG
-  std::cout << "Prefab " << name << " saved to " << savePath << "\n";
-#endif
+  Debug::DebugLogger::GetInstance().LogInfo("Prefab " + name + " saved to " + savePath);
 }
 #endif
 

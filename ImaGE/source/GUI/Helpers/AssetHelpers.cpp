@@ -103,8 +103,7 @@ namespace AssetHelpers
       }
     }
 
-    // @TODO: replace with logger
-    throw std::runtime_error("Unable to save file");
+    return {};
   }
 
   void OpenFileWithDefaultProgram(std::filesystem::path const& path)
@@ -123,7 +122,7 @@ namespace AssetHelpers
       ILFree(pidl);
     }
     else {
-      // log error
+      Debug::DebugLogger::GetInstance().LogError("Unable to open " + filePath.string() + " in explorer");
     }
   }
 

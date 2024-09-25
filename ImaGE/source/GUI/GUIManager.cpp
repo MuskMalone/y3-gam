@@ -3,7 +3,6 @@
 #include "GUIManager.h"
 #include <ImGui/imgui.h>
 #include <Core/Entity.h>
-#include "Styles/FontAwesome6Icons.h"
 #pragma region IndivWindowIncludes
 #include "Persistent/Toolbar.h"
 #include "Persistent/SceneControls.h"
@@ -12,56 +11,54 @@
 #include "Dockable/Inspector.h"
 #include "Dockable/SceneHierarchy.h"
 #include "Dockable/AssetBrowser.h"
+#include "Dockable/Console.h"
 #pragma endregion
 
-namespace GUI
-{
+namespace GUI {
+  // Static Initialization
   ECS::Entity GUIManager::sSelectedEntity{};
+  Styler GUIManager::mStyler{};
 
-  GUIManager::GUIManager() :mPersistentElements{}, mWindows{} {}
+  GUIManager::GUIManager() : mPersistentElements{}, mWindows{}, mEditorViewport{} {
+  
+  }
 
-  void GUIManager::Init(Graphics::Framebuffer const& framebuffer)
-  {
+  void GUIManager::Init() {
     mPersistentElements.reserve(3);
     mPersistentElements.emplace_back(std::make_unique<Toolbar>("Toolbar", mWindows));
     mPersistentElements.emplace_back(std::make_unique<SceneControls>("Scene Controls"));
     mPersistentElements.emplace_back(std::make_unique<PrefabEditor>("Prefab Editor"));
 
-    mWindows.reserve(4);
-    mWindows.emplace_back(std::make_unique<Viewport>("Viewport", framebuffer));
-    mWindows.emplace_back(std::make_unique<Inspector>("Inspector"));
-    mWindows.emplace_back(std::make_unique<SceneHierarchy>("Scene Hierarchy"));
-    mWindows.emplace_back(std::make_unique<AssetBrowser>("Asset Browser"));
+    mWindows.reserve(5);
+    auto vp{ std::make_shared<Viewport>("Viewport") };
+    mEditorViewport = vp; // hold a ptr to the viewport
+    mWindows.emplace_back(std::move(vp)); // viewport should always be first
+
+    mWindows.emplace_back(std::make_shared<Inspector>("Inspector"));
+    mWindows.emplace_back(std::make_shared<SceneHierarchy>("Scene Hierarchy"));
+    mWindows.emplace_back(std::make_shared<AssetBrowser>("Asset Browser"));
+    mWindows.emplace_back(std::make_shared<Console>("Console"));
+
+    mStyler.LoadFonts();
+    mStyler.SetCurrentTheme(static_cast<CustomTheme>(gEditorDefaultTheme)); // Default theme should be read from settings file
   }
 
-  void GUIManager::UpdateGUI()
-  {
-    // always run persistent windows
-    for (auto const& elem : mPersistentElements)
-    {
+  void GUIManager::UpdateGUI(std::shared_ptr<Graphics::Framebuffer> const& framebuffer) {
+    // Always run persistent windows
+    for (auto const& elem : mPersistentElements) {
       elem->Run();
     }
 
-    // run all active windows
-    for (auto const& window : mWindows)
-    {
-      if (!window->IsActive()) { continue; }
-
-      window->Run();
+    // Run all active windows except viewport
+    for (unsigned i{ 1 }; i < mWindows.size(); ++i) {
+      if (!mWindows[i]->IsActive()) { continue; }
+      mWindows[i]->Run();
     }
-  }
 
-  void GUIManager::StyleGUI() const
-  {
-    ImGuiIO& io{ ImGui::GetIO() };
-    io.Fonts->AddFontDefault();
-
-    ImFontConfig cfg;
-    cfg.MergeMode = true;
-    cfg.GlyphMinAdvanceX = 13.f;  // make icons monospaced
-    cfg.GlyphOffset = ImVec2(0, 1);
-    static constexpr ImWchar icon_ranges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
-    io.Fonts->AddFontFromFileTTF(gIconsFontPath, 17.f * 2.0f / 3.0f, &cfg, icon_ranges);
+    // Update viewport if active
+    if (mEditorViewport->IsActive()) {
+      mEditorViewport->Update(framebuffer);
+    }
   }
 
 } // namespace GUI

@@ -8,11 +8,12 @@
 #include <GUI/Helpers/AssetHelpers.h>
 #include <filesystem>
 #include <Prefabs/PrefabManager.h>
+#include "GUI/GUIManager.h"
 
 namespace GUI
 {
 
-  Toolbar::Toolbar(std::string const& name, std::vector<std::unique_ptr<GUIWindow>> const& windowsRef) : GUIWindow(name),
+  Toolbar::Toolbar(std::string const& name, std::vector<std::shared_ptr<GUIWindow>> const& windowsRef) : GUIWindow(name),
     mWindowsRef{ windowsRef }, mScenePopup{ false }, mPrefabPopup{ false },
     mDisableAll{ false }, mAllowCreationOnly{ true }
   {
@@ -47,7 +48,7 @@ namespace GUI
           mPrefabPopup = true;
         }
 
-        if (ImGui::MenuItem("Save Scene")) {
+        if (ImGui::MenuItem("Save Scene (Ctrl+S)")) {
           QUEUE_EVENT(Events::SaveSceneEvent);
         }
 
@@ -88,6 +89,19 @@ namespace GUI
         ImGui::EndMenu();
       }
 
+      if (ImGui::BeginMenu("Theme")) {
+        GUI::Styler& styler{ GUIManager::GetStyler() };
+        for (GUI::CustomTheme i{}; i < GUI::CustomTheme::NUM_ITEMS; ++i) {
+          bool const currentlyActive{ (i == styler.GetCurrentTheme()) ? true : false };
+
+          if (ImGui::MenuItem(styler.GetCustomThemeString(i).c_str(), nullptr, currentlyActive)) {
+            styler.SetCurrentTheme(i);
+          }
+        }
+
+        ImGui::EndMenu();
+      }
+
       // update popups
       if (mScenePopup) {
         ImGui::OpenPopup("Create New Scene");
@@ -120,6 +134,7 @@ namespace GUI
         mDisableAll = false;
         break;
       case Events::SceneStateChange::NEW:
+      case Events::SceneStateChange::CHANGED:
         mAllowCreationOnly = mDisableAll = false;
         break;
       case Events::SceneStateChange::STARTED:
@@ -152,25 +167,22 @@ namespace GUI
 
       ImGui::Text("Name of Scene:");
       ImGui::SameLine();
-      if (ImGui::InputText(".scn", &sceneName))
-      {
+      if (!ImGui::IsAnyItemActive()) ImGui::SetKeyboardFocusHere();
+      if (ImGui::InputText(".scn", &sceneName)) {
         blankWarning = existingSceneWarning = false;
       }
 
       ImGui::SetCursorPosX(0.5f * (ImGui::GetWindowContentRegionMax().x - ImGui::CalcTextSize("Cancel Create ").x));
-      if (ImGui::Button("Cancel"))
-      {
+      if (ImGui::Button("Cancel")) {
         sceneName.clear();
         blankWarning = existingSceneWarning = false;
         ImGui::CloseCurrentPopup();
       }
 
       ImGui::SameLine();
-      if (ImGui::Button("Create"))
-      {
+      if (ImGui::Button("Create")) {
         // if name is blank / whitespace, reject it
-        if (sceneName.find_first_not_of(" ") == std::string::npos)
-        {
+        if (sceneName.find_first_not_of(" ") == std::string::npos) {
           blankWarning = true;
           existingSceneWarning = false;
         }
@@ -180,8 +192,7 @@ namespace GUI
           existingSceneWarning = true;
           blankWarning = false;
         }*/
-        else
-        {
+        else {
           QUEUE_EVENT(Events::LoadSceneEvent, sceneName, std::string());
           blankWarning = existingSceneWarning = false;
           sceneName.clear();
@@ -212,6 +223,7 @@ namespace GUI
 
       ImGui::Text("Name of Prefab:");
       ImGui::SameLine();
+      if (!ImGui::IsAnyItemActive()) ImGui::SetKeyboardFocusHere();
       if (ImGui::InputText("##PrefabNameInput", &input)) {
         existingPrefabWarning = prefabMan.DoesPrefabExist(input);
         blankWarning = false;

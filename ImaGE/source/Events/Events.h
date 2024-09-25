@@ -43,13 +43,6 @@ namespace Events
     inline std::string GetName() const noexcept override { return "Toggle Fullscreen"; }
   };
 
-  class QuitGame : public Event
-  {
-  public:
-    QuitGame() : Event(EventType::QUIT_GAME) {}
-    inline std::string GetName() const noexcept override { return "Quit Game"; }
-  };
-
   // name, path, pos = {}, mapEntity = true
   class SpawnPrefabEvent : public Event
   {

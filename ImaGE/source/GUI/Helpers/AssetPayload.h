@@ -10,6 +10,7 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
+#ifndef IMGUI_DISABLE
 #include <filesystem>
 #include <string>
 #include <Globals.h>
@@ -47,3 +48,4 @@ namespace GUI
   };
 
 } // namespace GUI
+#endif  // IMGUI_DISABLE
