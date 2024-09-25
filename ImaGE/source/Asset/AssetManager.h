@@ -78,7 +78,7 @@ namespace IGE {
                     Ref<T> ref{
                         IGE::Assets::UniversalRef{ PartialRef{ guid, nullptr }, typeguid }, 
                         IGE::Assets::Details::UniversalInfo{ mRegisteredTypes.at(typeguid) },
-                        IGE::Assets::Details::InstanceInfo{ guid, typeguid, 1, absolutepath} 
+                        IGE::Assets::Details::InstanceInfo{ guid, typeguid, 1, absolutepath, false }
                     };
 
                     mAssetRefs.emplace(key, ref);
@@ -129,6 +129,13 @@ namespace IGE {
             void LoadRef(Ref<T>& ref) {
                 ref.Load();
             }
+            template <typename T>
+            void LoadRef(GUID guid) {
+                TypeGUID typeguid{ GetTypeName<T>() };
+                TypeAssetKey key{ typeguid ^ guid };
+                if (mAssetRefs.find(key) != mAssetRefs.end())
+                    return LoadRef<T>(std::any_cast<Ref<T>&>(mAssetRefs.at(key)));
+            }
             template< typename T >
             void UnloadRef(Ref<T>& ref){
                 ref.Unload();
@@ -139,19 +146,15 @@ namespace IGE {
                 TypeGUID typeguid{ GetTypeName<T>() };
                 TypeAssetKey key{ typeguid ^ guid };
                 if (mAssetRefs.find(key) != mAssetRefs.end())
-                    return UnloadRef<T>(std::any_cast<Ref<T>>(mAssetRefs.at(key)));
+                    return UnloadRef<T>(std::any_cast<Ref<T>&>(mAssetRefs.at(key)));
             }
 
             template< typename T >
-            GUID getInstanceGuid(const Ref<T>& ref) const
+            Details::InstanceInfo GetInstanceInfo(Ref<T>& ref) const
             {
-                return ref.mInstance.partialRef.guid;
+                return ref.GetInfo();
             }
 
-            uint64_t getResourceCount()
-            {
-                return mAssetRefs.size();
-            }
 
         protected:
 

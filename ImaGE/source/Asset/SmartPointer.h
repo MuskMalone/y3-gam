@@ -18,8 +18,18 @@ namespace IGE {
 				TypeGUID typeGUID;
 				int refCount{ 1 };
 				std::string filepath;
-			};
+				bool isLive{ false };
 
+			};
+			inline std::ostream& operator<<(std::ostream& os, InstanceInfo const& ii){
+				os << "IGE::Assets::Details::InstanceInfo: \n";
+				os << "GUID : " << ii.guid << std::endl;
+				os << "TypeGUID : " << ii.typeGUID << std::endl;
+				os << "References : " << ii.refCount << std::endl;
+				os << "filepath : " << ii.filepath << std::endl;
+				os << "is live : " << ii.isLive << std::endl;
+				return os;  // Return the ostream object to allow chaining
+			}
 			struct UniversalInfo
 			{
 				using OnLoad = std::function<void* (GUID)>;
@@ -43,9 +53,9 @@ namespace IGE {
 			TypeGUID typeGUID;
 			operator bool() const { return static_cast<bool>(partialRef); }
 			template <typename T>
-			void DecRefCount() const { reinterpret_cast<T*>(partialRef.pointer)->DecRefCount(); }
+			void DecRefCount() const { if (partialRef) reinterpret_cast<T*>(partialRef.pointer)->DecRefCount(); }
 			template <typename T>
-			void IncRefCount() const { reinterpret_cast<T*>(partialRef.pointer)->IncRefCount(); }
+			void IncRefCount() const { if (partialRef) reinterpret_cast<T*>(partialRef.pointer)->IncRefCount(); }
 			
 		};
 		class RefCounted
@@ -183,10 +193,22 @@ namespace IGE {
 			operator bool() { return mInstance != nullptr; }
 			operator bool() const { return mInstance != nullptr; }
 
-			T* operator->() const { return reinterpret_cast<T*>(mInstance.partialRef.pointer); }
+			T* operator->() const { 
+				if (RefUtils::IsLive(mInstance.partialRef.guid)) return reinterpret_cast<T*>(mInstance.partialRef.pointer);
+				else { 
+					mInstance.partialRef.pointer = nullptr; // in case the ref has already been unloaded
+					return nullptr;
+				}
+			}
 			//const T* operator->() const { return mInstance.partialRef.pointer; }
 
-			T& operator*() const { return *reinterpret_cast<T*>(mInstance.partialRef.pointer); }
+			T& operator*() const {
+				if (RefUtils::IsLive(mInstance.partialRef.guid)) return *reinterpret_cast<T*>(mInstance.partialRef.pointer);
+				else {
+					mInstance.partialRef.pointer = nullptr; // in case the ref has already been unloaded
+					throw std::runtime_error{"Asset::Ref pointer is unallocated!"};
+				}
+			}
 			//const T& operator*() const { return *mInstance.partialRef.pointer; }
 
 			T* Raw() { return  mInstance; }
@@ -227,18 +249,35 @@ namespace IGE {
 
 			//	return *mInstance == *other.mInstance;
 			//}
-			const UniversalRef& GetUniversalRef() const{
+
+		private:
+			Details::InstanceInfo GetInfo() {
+				if (mInstance.partialRef) {
+					mInfo.refCount = reinterpret_cast<T*>(mInstance.partialRef.pointer)->GetRefCount();
+					mInfo.isLive = RefUtils::IsLive(mInstance.partialRef.guid);
+				}
+				else {
+					mInfo.refCount = 0;
+					mInfo.isLive = false;
+				}
+
+				return mInfo;
+			}
+			const UniversalRef& GetUniversalRef() const {
 				return mInstance;
 			}
-		private:
 			void Load() {
+				if (!RefUtils::IsLive(mInstance.partialRef.guid));
 				mInstance.partialRef.pointer = mUInfo.loadFunc(mInstance.partialRef.guid);
 				RefUtils::AddToLiveReferences(mInstance.partialRef.guid);
+				mInfo.isLive = true;
 			}
 			void Unload() {
+				if (RefUtils::IsLive(mInstance.partialRef.guid));
 				mUInfo.destroyFunc(mInstance.partialRef.pointer, mInstance.partialRef.guid);
 				mInstance.partialRef.pointer = nullptr;
 				RefUtils::RemoveFromLiveReferences(mInstance.partialRef.guid);
+				mInfo.isLive = false;
 			}
 			void IncRef() //const
 			{
@@ -267,7 +306,7 @@ namespace IGE {
 			friend class Ref;
 			friend class AssetManager;
 			//mutable T* mInstance;
-			UniversalRef mInstance;
+			mutable UniversalRef mInstance;
 			Details::UniversalInfo mUInfo;
 			Details::InstanceInfo mInfo;
 		};
