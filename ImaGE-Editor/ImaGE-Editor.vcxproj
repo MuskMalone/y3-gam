@@ -60,7 +60,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>JPH_DEBUG_RENDERER;JPH_PROFILE_ENABLED;JPH_OBJECT_STREAM;JPH_USE_AVX2;JPH_USE_AVX;JPH_USE_SSE4_1;JPH_USE_SSE4_2;JPH_USE_LZCNT;JPH_USE_TZCNT;JPH_USE_F16C;JPH_USE_FMADD;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;WINDOWS;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WINDOWS;DEBUG;_DEBUG;_CONSOLE;JPH_DEBUG_RENDERER;JPH_PROFILE_ENABLED;JPH_OBJECT_STREAM;JPH_USE_AVX2;JPH_USE_AVX;JPH_USE_SSE4_1;JPH_USE_SSE4_2;JPH_USE_LZCNT;JPH_USE_TZCNT;JPH_USE_F16C;JPH_USE_FMADD;_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>source;..\ImaGE-Core\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -72,15 +72,22 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\Binaries\windows-x86_64\Debug\ImaGE-Core;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ImaGE-Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/ignore:4099 /ignore:4006 %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /B /Y "$(SolutionDir)Libraries\glfw-3.3.8.bin.WIN64\lib-vc2022\glfw3.dll" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor"
+copy /B /Y "$(SolutionDir)Libraries\assimp\assimp-vc143-mt.dll" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor"
+copy /B /Y "$(SolutionDir)Libraries\rttr-0.9.6\lib\Debug\rttr_core_d.dll" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor"
+copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor"
+IF NOT EXIST "$(TargetDir)\assets" (mkdir "$(TargetDir)\assets")
+xcopy /Q /E /Y /I "$(ProjectDir)assets" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor\assets"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>JPH_DEBUG_RENDERER;JPH_PROFILE_ENABLED;JPH_OBJECT_STREAM;JPH_USE_AVX2;JPH_USE_AVX;JPH_USE_SSE4_1;JPH_USE_SSE4_2;JPH_USE_LZCNT;JPH_USE_TZCNT;JPH_USE_F16C;JPH_USE_FMADD;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;WINDOWS;RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WINDOWS;RELEASE;NDEBUG;_CONSOLE;JPH_OBJECT_STREAM;JPH_USE_AVX2;JPH_USE_AVX;JPH_USE_SSE4_1;JPH_USE_SSE4_2;JPH_USE_LZCNT;JPH_USE_TZCNT;JPH_USE_F16C;JPH_USE_FMADD;_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>source;..\ImaGE-Core\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
@@ -98,7 +105,16 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalOptions>/ignore:4099 /ignore:4006 %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /B /Y "$(SolutionDir)Libraries\glfw-3.3.8.bin.WIN64\lib-vc2022\glfw3.dll" "..\Binaries\windows-x86_64\Release\ImaGE-Editor"
+copy /B /Y "$(SolutionDir)Libraries\assimp\assimp-vc143-mt.dll" "..\Binaries\windows-x86_64\Release\ImaGE-Editor"
+copy /B /Y "$(SolutionDir)Libraries\rttr-0.9.6\lib\Release\rttr_core.dll" "..\Binaries\windows-x86_64\Release\ImaGE-Editor"
+copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Release\ImaGE-Editor"
+IF NOT EXIST "$(TargetDir)\assets" (mkdir "$(TargetDir)\assets")
+xcopy /Q /E /Y /I "$(ProjectDir)assets" "..\Binaries\windows-x86_64\Release\ImaGE-Editor\assets"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="source\Application.h" />

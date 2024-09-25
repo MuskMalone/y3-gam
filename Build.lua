@@ -10,6 +10,10 @@ workspace "ImaGE"
 
 OutputDir = "%{cfg.system}-%{cfg.architecture}/%{cfg.buildcfg}"
 
+filter "action:vs*"
+   linkoptions { "/ignore:4099" }
+   linkoptions { "/ignore:4006" }
+
 group "Core"
 	include "ImaGE-Core/Build-ImaGE-Core.lua"
 group ""

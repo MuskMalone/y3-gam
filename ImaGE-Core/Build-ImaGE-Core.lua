@@ -5,23 +5,7 @@ project "ImaGE-Core"
    targetdir "Binaries/%{cfg.buildcfg}"
    staticruntime "off"
 
-   defines {
-    "JPH_DEBUG_RENDERER",
-    "JPH_PROFILE_ENABLED",
-    "JPH_OBJECT_STREAM",
-    "JPH_USE_AVX2",
-    "JPH_USE_AVX",
-    "JPH_USE_SSE4_1",
-    "JPH_USE_SSE4_2",
-    "JPH_USE_LZCNT",
-    "JPH_USE_TZCNT",
-    "JPH_USE_F16C",
-    "JPH_USE_FMADD",
-    "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
-    "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
-    }
-
-   files { "source/**.h", "source/**.cpp" }
+   files { "source/**.h", "source/**.cpp", "source/**.c" }
 
    includedirs 
    {
@@ -35,15 +19,6 @@ project "ImaGE-Core"
       "../Libraries/**",
    }
 
-   links {
-    "opengl32.lib",
-    "glfw3dll.lib",
-    "glfw3.lib",
-    "assimp-vc143-mt.lib",
-    "Jolt.lib",
-    "rttr_core_d.lib"
-   }
-
    libdirs 
    {
       "../Libraries/**"
@@ -55,20 +30,80 @@ project "ImaGE-Core"
    targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
    objdir ("../Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
 
+   removefiles 
+   { 
+       "source/External/ImGui/backends/imgui_impl_vulkan.cpp",
+       "source/External/ImGui/backends/imgui_impl_vulkan.h",
+   }
+
    filter "system:windows"
        systemversion "latest"
        defines { }
 
    filter "configurations:Debug"
-       defines { "DEBUG" }
        runtime "Debug"
        symbols "On"
 
+       defines {
+        "DEBUG",
+        "_DEBUG",
+        "_CONSOLE",
+        "JPH_DEBUG_RENDERER",
+        "JPH_PROFILE_ENABLED",
+        "JPH_OBJECT_STREAM",
+        "JPH_USE_AVX2",
+        "JPH_USE_AVX",
+        "JPH_USE_SSE4_1",
+        "JPH_USE_SSE4_2",
+        "JPH_USE_LZCNT",
+        "JPH_USE_TZCNT",
+        "JPH_USE_F16C",
+        "JPH_USE_FMADD",
+        "_CRT_SECURE_NO_WARNINGS",
+        "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
+        "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"
+        }
+
+       links {
+        "opengl32.lib",
+        "glfw3dll.lib",
+        "glfw3.lib",
+        "assimp-vc143-mt.lib",
+        "Jolt_d.lib",
+        "rttr_core_d.lib"
+       }
+
    filter "configurations:Release"
-       defines { "RELEASE" }
        runtime "Release"
        optimize "On"
        symbols "On"
+
+       defines {
+        "RELEASE",
+        "NDEBUG",
+        "_CONSOLE",
+        "JPH_OBJECT_STREAM",
+        "JPH_USE_AVX2",
+        "JPH_USE_AVX",
+        "JPH_USE_SSE4_1",
+        "JPH_USE_SSE4_2",
+        "JPH_USE_LZCNT",
+        "JPH_USE_TZCNT",
+        "JPH_USE_F16C",
+        "JPH_USE_FMADD",
+        "_CRT_SECURE_NO_WARNINGS",
+        "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
+        "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"
+        }
+
+       links {
+        "opengl32.lib",
+        "glfw3dll.lib",
+        "glfw3.lib",
+        "assimp-vc143-mt.lib",
+        "Jolt.lib",
+        "rttr_core.lib"
+       }
 
    filter "files:**.c"
        flags {"NoPCH"}
@@ -78,13 +113,3 @@ project "ImaGE-Core"
     
    filter "files:source/External/**.c"
        flags {"NoPCH"}
-
-   postbuildcommands {
-        '{COPYFILE} "%{prj.location}lib/glfw-3.3.8.bin.WIN64/lib-vc2022/glfw3.dll" "%{cfg.buildtarget.directory}"',
-        '{COPYFILE} "%{prj.location}lib/assimp/assimp-vc143-mt.dll" "%{cfg.buildtarget.directory}"',
-        '{COPYFILE} "%{prj.location}imgui.ini" "%{cfg.buildtarget.directory}"',
-        '{MKDIR} "%{cfg.buildtarget.directory}/Shaders"',
-        '{COPYDIR} "%{prj.location}Shaders" "%{cfg.buildtarget.directory}/Shaders"',
-        '{MKDIR} "%{cfg.buildtarget.directory}/assets"',
-        '{COPYDIR} "%{prj.location}assets" "%{cfg.buildtarget.directory}/assets"'
-    }

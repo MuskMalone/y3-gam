@@ -288,7 +288,6 @@
     <ClInclude Include="source\Input\KeyCode.h">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="source\Main.h" />
     <ClInclude Include="source\Physics\Physics.h">
       <Filter>Physics</Filter>
     </ClInclude>
@@ -383,6 +382,9 @@
     </ClCompile>
     <ClCompile Include="source\External\ImGui\misc\freetype\imgui_freetype.cpp">
       <Filter>External\ImGui\misc\freetype</Filter>
+    </ClCompile>
+    <ClCompile Include="source\External\glad.c">
+      <Filter>External</Filter>
     </ClCompile>
     <ClCompile Include="source\FrameRateController\FrameRateController.cpp">
       <Filter>FrameRateController</Filter>
@@ -485,6 +487,5 @@
     </ClCompile>
     <ClCompile Include="source\TempScene.cpp" />
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\External\glad.c" />
   </ItemGroup>
 </Project>
