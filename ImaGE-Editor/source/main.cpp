@@ -36,7 +36,7 @@ int Main(int argc, char** argv) {
   return 0;
 }
 
-#if NDEBUG
+#if DISTRIBUTION
 
 int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow)
 {

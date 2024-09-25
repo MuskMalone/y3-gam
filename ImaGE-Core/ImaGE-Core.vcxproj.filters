@@ -85,6 +85,7 @@
     <ClInclude Include="source\Asset\IGEAssets.h">
       <Filter>Asset</Filter>
     </ClInclude>
+    <ClInclude Include="source\Color.h" />
     <ClInclude Include="source\Core\Camera.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -330,7 +331,6 @@
     <ClInclude Include="source\Singleton.h" />
     <ClInclude Include="source\TempScene.h" />
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Color.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
