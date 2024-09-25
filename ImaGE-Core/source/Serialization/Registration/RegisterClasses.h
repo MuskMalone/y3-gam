@@ -7,11 +7,17 @@
 
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
-#include <pch.h>
 #include <rttr/registration>
 #include <Prefabs/VariantPrefab.h>
+#include <glm/glm.hpp>
 
-RTTR_REGISTRATION
+static void rttr_auto_register_reflection_function_(); namespace {
+  struct rttr__auto__register__ {
+    rttr__auto__register__() {
+      rttr_auto_register_reflection_function_();
+    }
+  };
+} static const rttr__auto__register__ RTTR_CAT(auto_register__, __LINE__); static void rttr_auto_register_reflection_function_()
 {
   /* ------------------- GLM ------------------- */
   rttr::registration::class_<glm::vec2>("Vec2")

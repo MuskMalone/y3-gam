@@ -1,7 +1,7 @@
 #pragma once
-#include <pch.h>
 #include <Graphics/Model.h>
 #include "Graphics/Mesh.h"
+
 //im just relocating struct Object's members to conform to the ECS
 namespace Component {
 	struct Mesh{

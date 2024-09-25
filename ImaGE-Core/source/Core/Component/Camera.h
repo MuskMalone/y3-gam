@@ -1,6 +1,6 @@
 #pragma once
-#include <pch.h>
 #include "Graphics/Utils.h"
+
 namespace Component {
     struct Camera {
         glm::vec3 position{ glm::vec3{ 0.0f, 0.0f, 3.0f } };

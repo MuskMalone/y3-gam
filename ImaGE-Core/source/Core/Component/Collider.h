@@ -1,5 +1,9 @@
 #pragma once
+#include <Jolt/Jolt.h>
+#include <Jolt/Math/Vector.h>
+#include <Jolt/Math/Vec3.h>
 #include <Jolt/Physics/Body/Body.h>
+#include <Jolt/Physics/Collision/Shape/Shape.h>
 
 namespace Component {
     enum class ColliderVars {   

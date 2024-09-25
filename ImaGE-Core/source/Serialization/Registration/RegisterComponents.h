@@ -7,11 +7,16 @@
 
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
-#include <pch.h>
 #include <rttr/registration>
 #include <Core/Component/Components.h>
 
-RTTR_REGISTRATION
+static void rttr_auto_register_reflection_function2_(); namespace {
+  struct rttr__auto__register2__ {
+    rttr__auto__register2__() {
+      rttr_auto_register_reflection_function2_();
+    }
+  };
+} static const rttr__auto__register2__ RTTR_CAT(auto_register__, __LINE__); static void rttr_auto_register_reflection_function2_()
 {
   using namespace Component;
 

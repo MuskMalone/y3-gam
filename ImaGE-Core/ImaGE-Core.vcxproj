@@ -322,9 +322,9 @@
     <ClCompile Include="source\Reflection\ObjectFactory.cpp" />
     <ClCompile Include="source\Scenes\SceneManager.cpp" />
     <ClCompile Include="source\Serialization\Deserializer.cpp" />
-    <ClCompile Include="source\Serialization\Registration\RegisterClasses.cpp" />
-    <ClCompile Include="source\Serialization\Registration\RegisterComponents.cpp" />
-    <ClCompile Include="source\Serialization\Registration\RegisterEnumsAndFuncs.cpp" />
+    <ClInclude Include="source\Serialization\Registration\RegisterClasses.h" />
+    <ClInclude Include="source\Serialization\Registration\RegisterComponents.h" />
+    <ClInclude Include="source\Serialization\Registration\RegisterEnumsAndFuncs.h" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
     <ClCompile Include="source\TempScene.cpp" />
     <ClCompile Include="source\pch.cpp">

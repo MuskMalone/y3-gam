@@ -1,4 +1,8 @@
 #pragma once
+#include <Jolt/Jolt.h>
+#include <Jolt/Math/Vector.h>
+#include <Jolt/Physics/Body/Body.h>
+#include <Jolt/Physics/Body/MotionType.h>
 
 namespace Component {
 	enum class RigidBodyVars {

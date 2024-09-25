@@ -331,6 +331,15 @@
     <ClInclude Include="source\Singleton.h" />
     <ClInclude Include="source\TempScene.h" />
     <ClInclude Include="source\pch.h" />
+    <ClInclude Include="source\Serialization\Registration\RegisterClasses.h">
+      <Filter>Serialization\Registration</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Serialization\Registration\RegisterComponents.h">
+      <Filter>Serialization\Registration</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Serialization\Registration\RegisterEnumsAndFuncs.h">
+      <Filter>Serialization\Registration</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -474,15 +483,6 @@
     </ClCompile>
     <ClCompile Include="source\Serialization\Deserializer.cpp">
       <Filter>Serialization</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Serialization\Registration\RegisterClasses.cpp">
-      <Filter>Serialization\Registration</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Serialization\Registration\RegisterComponents.cpp">
-      <Filter>Serialization\Registration</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Serialization\Registration\RegisterEnumsAndFuncs.cpp">
-      <Filter>Serialization\Registration</Filter>
     </ClCompile>
     <ClCompile Include="source\Serialization\Serializer.cpp">
       <Filter>Serialization</Filter>

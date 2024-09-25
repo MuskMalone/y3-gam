@@ -8,9 +8,11 @@
 
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
-#include <pch.h>
+#include <Jolt/Jolt.h>
+#include <Jolt/Physics/Collision/Shape/Shape.h>
+#include <Jolt/Physics/Body/MotionType.h>
+#include <rttr/type.h>
 #include <rttr/registration>
-
 
 namespace
 {
@@ -23,7 +25,13 @@ namespace
   }
 }
 
-RTTR_REGISTRATION
+static void rttr_auto_register_reflection_function3_(); namespace {
+  struct rttr__auto__register3__ {
+    rttr__auto__register3__() {
+      rttr_auto_register_reflection_function3_();
+    }
+  };
+} static const rttr__auto__register3__ RTTR_CAT(auto_register__, __LINE__); static void rttr_auto_register_reflection_function3_()
 {
   /* ------------------- FUNCTIONS ------------------- */
   rttr::type::register_converter_func(StringFromRttrType);
