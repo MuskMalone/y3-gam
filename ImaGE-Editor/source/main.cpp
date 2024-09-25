@@ -1,9 +1,19 @@
 #include "pch.h"
-#include <Application.h>
+#include <EditorApplication.h>
 
-int Main() {
-  Application myApp{ "ImaGE", WINDOW_WIDTH<int>, WINDOW_HEIGHT<int> };
+int Main(int argc, char** argv) {
+  // To be read from settings file
+  EditorApplication::ApplicationSpecification spec;
+  spec.EnableImGui = true;
+  spec.Fullscreen = false;
+  spec.Name = "ImaGE Editor";
+  spec.Resizable = true;
+  spec.StartMaximized = false;
+  spec.VSync = true;
+  spec.WindowHeight = 1080;
+  spec.WindowWidth = 1920;
 
+  EditorApplication myApp{ spec };
   try
   {
     myApp.Init();
@@ -26,6 +36,17 @@ int Main() {
   return 0;
 }
 
-int main() {
-  return Main();
+#if NDEBUG
+
+int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow)
+{
+  return Main(__argc, __argv);
 }
+
+#else
+
+int main(int argc, char** argv) {
+  return Main(argc, argv);
+}
+
+#endif

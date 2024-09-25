@@ -10,12 +10,6 @@
 #include <Core/EntityManager.h>
 #include <Core/Component/Components.h>
 
-#ifndef IMGUI_DISABLE
-#include <imgui/imgui.h>
-#include <imgui/backends/imgui_impl_glfw.h>
-#include <imgui/backends/imgui_impl_opengl3.h>
-#endif
-
 #include <Physics/PhysicsSystem.h>
 
 namespace
@@ -40,20 +34,16 @@ namespace
 
 }
 
+Application::ApplicationSpecification Application::mSpecification{};
+
 void Application::Init() {
   IGE::Physics::PhysicsSystem::InitAllocator();
   IGE::Physics::PhysicsSystem::GetInstance()->Init();
   mScene->Init();
   Scenes::SceneManager::GetInstance().Init();
   Prefabs::PrefabManager::GetInstance().Init();
-
-  // @TODO: SETTINGS TO BE LOADED FROM CONFIG FILE
   FrameRateController::GetInstance().Init(120.f, 1.f, false);
-  Input::InputManager::GetInstance().InitInputManager(mWindow, mWidth, mHeight, 0.3);
-
-#ifndef IMGUI_DISABLE
-  mGUIManager.Init(mFramebuffers.front().first);
-#endif
+  Input::InputManager::GetInstance().InitInputManager(mWindow, mSpecification.WindowWidth, mSpecification.WindowHeight, 0.3);
 }
 
 void Application::Run() {
@@ -63,23 +53,11 @@ void Application::Run() {
   while (!glfwWindowShouldClose(mWindow.get())) {
     FrameRateController::GetInstance().Start();
     try {
-
-#ifndef IMGUI_DISABLE
-      if (mImGuiActive) {
-        ImGuiStartFrame();
-      }
-#endif
       try {
         inputManager.UpdateInput();
 
         // dispatch all events in the queue at the start of game loop
         eventManager.DispatchAll();
-
-#ifndef IMGUI_DISABLE
-        if (mImGuiActive) {
-          mGUIManager.UpdateGUI();
-        }
-#endif
 
         mScene->Update(FrameRateController::GetInstance().GetDeltaTime());
       }
@@ -92,32 +70,11 @@ void Application::Run() {
         PrintException(e);
       }
 
-
-#ifndef IMGUI_DISABLE
-      try {
-        if (mImGuiActive) {
-          UpdateFramebuffers();
-
-          ImGui::Render();
-          ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-          // for floating windows feature
-          if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-          {
-            GLFWwindow* backup_current_context = glfwGetCurrentContext();
-            ImGui::UpdatePlatformWindows();
-            ImGui::RenderPlatformWindowsDefault();
-            glfwMakeContextCurrent(backup_current_context);
-          }
-        }
-      }
-#else
       try {
         glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
         mFramebuffers.front().second();
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
       }
-#endif
       
       catch (Debug::ExceptionBase& e)
       {
@@ -144,13 +101,10 @@ void Application::Run() {
   }
 }
 
-Application::Application(const char* name, int width, int height) :
-#ifndef IMGUI_DISABLE
-  mGUIManager{},
-#endif
-  mScene{}, mWindow{},
-  mWidth{ width }, mHeight{ height }, mImGuiActive{ true }
+Application::Application(ApplicationSpecification spec) :
+  mScene{}, mWindow{}
 {
+  mSpecification = spec;
   glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
@@ -162,7 +116,7 @@ Application::Application(const char* name, int width, int height) :
   // initialize window ptr
   // have to do this because i can't make_unique with custom dtor
   {
-    WindowPtr temp{ glfwCreateWindow(width, height, name, NULL, NULL) };
+    WindowPtr temp{ glfwCreateWindow(spec.WindowWidth, spec.WindowHeight, spec.Name.c_str(), NULL, NULL) };
     mWindow = std::move(temp);
   }
 
@@ -175,36 +129,14 @@ Application::Application(const char* name, int width, int height) :
     throw std::runtime_error("Failed to initialize GLAD");
   }
 
-#ifndef IMGUI_DISABLE
-  // Setup Dear ImGui context
-  IMGUI_CHECKVERSION();
-  ImGui::CreateContext();
-  ImGuiIO& io = ImGui::GetIO();
-  io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-  io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // IF using Docking Branch
-  io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // floating windows
-
-  ImGuiStyle& style = ImGui::GetStyle();
-  if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
-    //style.WindowRounding = 0.0f;
-    style.Colors[ImGuiCol_WindowBg].w = 0.65f;
-  }
-
-  // Setup Platform/Renderer backends
-  ImGui_ImplGlfw_InitForOpenGL(mWindow.get(), true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
-  ImGui_ImplOpenGL3_Init("#version 460 core");
-
-  mGUIManager.StyleGUI();
-#endif
-
   glfwSetWindowUserPointer(mWindow.get(), this); // set the window to reference this class
   
-  glViewport(0, 0, width, height); // specify size of viewport
+  glViewport(0, 0, spec.WindowWidth, spec.WindowHeight); // specify size of viewport
   SetCallbacks();
 
   mScene = std::make_unique<Scene>("./assets/Shaders/BlinnPhong.vert.glsl", "./assets/Shaders/BlinnPhong.frag.glsl");
   // attach each draw function to its framebuffer
-  mFramebuffers.emplace_back(std::piecewise_construct, std::forward_as_tuple(width, height),
+  mFramebuffers.emplace_back(std::piecewise_construct, std::forward_as_tuple(spec.WindowWidth, spec.WindowHeight),
     std::forward_as_tuple(std::bind(&Scene::Draw, mScene.get())));
 }
 
@@ -222,48 +154,35 @@ void Application::UpdateFramebuffers()
   }
 }
 
-void Application::SetCallbacks()
-{
+void Application::SetCallbacks() {
   glfwSetFramebufferSizeCallback(mWindow.get(), FramebufferSizeCallback);
   glfwSetErrorCallback(ErrorCallback);
-
-#ifndef IMGUI_DISABLE
-  glfwSetDropCallback(mWindow.get(), WindowDropCallback);           // file drag n drop callback
-#endif
 }
 
-void Application::FramebufferSizeCallback(GLFWwindow* window, int width, int height)
-{
+void Application::FramebufferSizeCallback(GLFWwindow* window, int width, int height) {
   glViewport(0, 0, width, height);
 
   Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
-  for (auto& elem : app->mFramebuffers)
-  {
+  for (auto& elem : app->mFramebuffers) {
     elem.first.Resize(width, height);
   }
 }
 
-void Application::ErrorCallback(int err, const char* desc)
-{
+void Application::ErrorCallback(int err, const char* desc) {
   UNREFERENCED_PARAMETER(err);
 #ifdef _DEBUG
   std::cerr << "GLFW ERROR: \"" << desc << "\"" << " | Error code: " << std::endl;
 #endif
 }
 
-#ifndef IMGUI_DISABLE
-void Application::ImGuiStartFrame() const
-{
-  ImGui_ImplOpenGL3_NewFrame();
-  ImGui_ImplGlfw_NewFrame();
-  ImGui::NewFrame();
-  ImGui::DockSpaceOverViewport(); // convert the window into a dockspace
+void Application::PrintException(Debug::ExceptionBase& e) {
+  e.LogSource();
 }
 
-void Application::WindowDropCallback(GLFWwindow*, int pathCount, const char* paths[]) {
-  QUEUE_EVENT(Events::AddFilesFromExplorerEvent, pathCount, paths);
+void Application::PrintException(std::exception& e) {
+  Debug::DebugLogger::GetInstance().LogCritical(e.what());
+  Debug::DebugLogger::GetInstance().PrintToCout(e.what(), Debug::LVL_CRITICAL);
 }
-#endif
 
 void Application::Shutdown()
 {
@@ -272,16 +191,9 @@ void Application::Shutdown()
 
 Application::~Application()
 {
-#ifndef IMGUI_DISABLE
-  ImGui_ImplOpenGL3_Shutdown();
-  ImGui_ImplGlfw_Shutdown();
-  ImGui::DestroyContext();
-#endif
-
   mWindow.reset();  // release the GLFWwindow before we terminate
   glfwTerminate();
 }
-
 
 namespace {
   void PrintException(Debug::ExceptionBase& e)
@@ -291,9 +203,10 @@ namespace {
 
   void PrintException(std::exception& e)
   {
-#ifndef IMGUI_DISABLE
-    Debug::DebugLogger::GetInstance().LogCritical(e.what());
-    Debug::DebugLogger::GetInstance().PrintToCout(e.what(), Debug::LVL_CRITICAL);
-#endif
+    if (Application::IsImGUIActive()) {
+      Debug::DebugLogger::GetInstance().LogCritical(e.what());
+      Debug::DebugLogger::GetInstance().PrintToCout(e.what(), Debug::LVL_CRITICAL);
+    }
+
   }
 }

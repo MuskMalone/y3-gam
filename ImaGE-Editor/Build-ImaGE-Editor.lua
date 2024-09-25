@@ -36,7 +36,6 @@ project "ImaGE-Editor"
 
    filter "configurations:Debug"
       defines {
-         "DEBUG",
          "_DEBUG",
          "_CONSOLE",
          "JPH_DEBUG_RENDERER",
@@ -69,7 +68,6 @@ project "ImaGE-Editor"
 
    filter "configurations:Release"
       defines {
-         "RELEASE",
          "NDEBUG",
          "_CONSOLE",
          "JPH_OBJECT_STREAM",

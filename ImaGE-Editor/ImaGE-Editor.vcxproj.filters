@@ -18,7 +18,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\Application.h" />
     <ClInclude Include="source\GUI\Dockable\AssetBrowser.h">
       <Filter>GUI\Dockable</Filter>
     </ClInclude>
@@ -60,7 +59,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\Application.cpp" />
     <ClCompile Include="source\GUI\Dockable\AssetBrowser.cpp">
       <Filter>GUI\Dockable</Filter>
     </ClCompile>
@@ -92,5 +90,7 @@
       <Filter>GUI\Persistent</Filter>
     </ClCompile>
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\EditorApplication.h" />
+    <ClCompile Include="source\EditorApplication.cpp" />
   </ItemGroup>
 </Project>

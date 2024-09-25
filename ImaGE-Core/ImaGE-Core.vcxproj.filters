@@ -330,6 +330,7 @@
     <ClInclude Include="source\Singleton.h" />
     <ClInclude Include="source\TempScene.h" />
     <ClInclude Include="source\pch.h" />
+    <ClInclude Include="source\Application.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Core\Camera.cpp">
@@ -487,5 +488,6 @@
     </ClCompile>
     <ClCompile Include="source\TempScene.cpp" />
     <ClCompile Include="source\pch.cpp" />
+    <ClCompile Include="source\Application.cpp" />
   </ItemGroup>
 </Project>

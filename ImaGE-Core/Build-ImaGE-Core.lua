@@ -45,7 +45,6 @@ project "ImaGE-Core"
        symbols "On"
 
        defines {
-        "DEBUG",
         "_DEBUG",
         "_CONSOLE",
         "JPH_DEBUG_RENDERER",
@@ -70,6 +69,7 @@ project "ImaGE-Core"
         "glfw3.lib",
         "assimp-vc143-mt.lib",
         "Jolt_d.lib",
+        "Jolt1_d.lib",
         "rttr_core_d.lib"
        }
 
@@ -79,7 +79,6 @@ project "ImaGE-Core"
        symbols "On"
 
        defines {
-        "RELEASE",
         "NDEBUG",
         "_CONSOLE",
         "JPH_OBJECT_STREAM",
@@ -102,6 +101,7 @@ project "ImaGE-Core"
         "glfw3.lib",
         "assimp-vc143-mt.lib",
         "Jolt.lib",
+        "Jolt1.lib",
         "rttr_core.lib"
        }
 

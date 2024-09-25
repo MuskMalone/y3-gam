@@ -55,6 +55,7 @@ namespace Events
     using SubscriberMap = std::unordered_map<EventType, SubscriberList>;
 
     friend class Application; // allow only application to invoke DispatchAll function
+    friend class EditorApplication;
 
     /*!*********************************************************************
     \brief
