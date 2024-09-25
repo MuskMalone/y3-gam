@@ -1,7 +1,7 @@
 -- premake5.lua
 workspace "ImaGE"
    architecture "x64"
-   configurations { "Debug", "Release" }
+   configurations { "Debug", "Release", "Distribution" }
    startproject "ImaGE-Editor"
 
    -- Workspace-wide build options for MSVC
@@ -21,4 +21,8 @@ group ""
 
 group "Editor"
    include "ImaGE-Editor/Build-ImaGE-Editor.lua"
+group ""
+
+group "Game"
+   include "ImaGE-Game/Build-ImaGE-Game.lua"
 group ""

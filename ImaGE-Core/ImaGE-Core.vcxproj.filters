@@ -78,6 +78,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Application.h" />
     <ClInclude Include="source\Asset\AssetManager.h">
       <Filter>Asset</Filter>
     </ClInclude>
@@ -330,9 +331,9 @@
     <ClInclude Include="source\Singleton.h" />
     <ClInclude Include="source\TempScene.h" />
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Application.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Application.cpp" />
     <ClCompile Include="source\Core\Camera.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -488,6 +489,5 @@
     </ClCompile>
     <ClCompile Include="source\TempScene.cpp" />
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\Application.cpp" />
   </ItemGroup>
 </Project>

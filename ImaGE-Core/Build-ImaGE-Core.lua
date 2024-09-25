@@ -105,6 +105,36 @@ project "ImaGE-Core"
         "rttr_core.lib"
        }
 
+    filter "configurations:Distribution"
+       defines {
+          "DISTRIBUTION",
+          "JPH_OBJECT_STREAM",
+          "JPH_USE_AVX2",
+          "JPH_USE_AVX",
+          "JPH_USE_SSE4_1",
+          "JPH_USE_SSE4_2",
+          "JPH_USE_LZCNT",
+          "JPH_USE_TZCNT",
+          "JPH_USE_F16C",
+          "JPH_USE_FMADD",
+          "_CRT_SECURE_NO_WARNINGS",
+          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
+          "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"
+       }
+       runtime "Release"
+       optimize "On"
+       symbols "Off"
+
+       links {
+        "opengl32.lib",
+        "glfw3dll.lib",
+        "glfw3.lib",
+        "assimp-vc143-mt.lib",
+        "Jolt.lib",
+        "Jolt1.lib",
+        "rttr_core.lib"
+       }
+
    filter "files:**.c"
        flags {"NoPCH"}
 
