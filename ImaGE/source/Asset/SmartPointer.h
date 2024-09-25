@@ -22,8 +22,8 @@ namespace IGE {
 
 			struct UniversalInfo
 			{
-				using OnLoad = std::function<void* ()>;
-				using OnDestroy = std::function<void()>;
+				using OnLoad = std::function<void* (GUID)>;
+				using OnDestroy = std::function<void(void*, GUID)>;
 
 				IGE::Assets::TypeGUID typeGUID; // the type of asset
 				OnLoad loadFunc;
@@ -35,11 +35,18 @@ namespace IGE {
 			GUID guid; //64bit mersenne twister rand
 			void* pointer; //64bit ptr
 
-			bool IsPointer() const { return (guid & static_cast<uint64_t>(1)) == 0; }
+			bool IsPointer() const { return pointer; }
+			operator bool() const { return IsPointer(); }
 		};
 		struct UniversalRef {
 			PartialRef partialRef;
 			TypeGUID typeGUID;
+			operator bool() const { return static_cast<bool>(partialRef); }
+			template <typename T>
+			void DecRefCount() const { reinterpret_cast<T*>(partialRef.pointer)->DecRefCount(); }
+			template <typename T>
+			void IncRefCount() const { reinterpret_cast<T*>(partialRef.pointer)->IncRefCount(); }
+			
 		};
 		class RefCounted
 		{
@@ -71,53 +78,57 @@ namespace IGE {
 		};
 
 		namespace RefUtils {
-			void AddToLiveReferences(void* instance);
-			void RemoveFromLiveReferences(void* instance);
-			bool IsLive(void* instance);
+			void AddToLiveReferences(GUID instance);
+			void RemoveFromLiveReferences(GUID instance);
+			bool IsLive(GUID instance);
 		}
 
 		template<typename T>
 		class Ref
 		{
 		public:
-			Ref()
-				: mInstance(nullptr)
+			Ref(UniversalRef const& instance, Details::UniversalInfo const& uinfo, Details::InstanceInfo const& info)
+				: mInstance{ instance }, mUInfo{ uinfo }, mInfo{ info }
 			{
 			}
 
-			Ref(std::nullptr_t n)
-				: mInstance(nullptr)
-			{
-			}
+			//Ref(std::nullptr_t n)
+			//	: mInstance(nullptr)
+			//{
+			//}
 
-			Ref(T* instance)
-				: mInstance(instance)
-			{
-				static_assert(std::is_base_of<RefCounted, T>::value, "Class is not RefCounted!");
+			//Ref(T* instance)
+			//	: mInstance(instance)
+			//{
+			//	static_assert(std::is_base_of<RefCounted, T>::value, "Class is not RefCounted!");
 
-				IncRef();
-			}
+			//	IncRef();
+			//}
 
 			template<typename T2>
 			Ref(const Ref<T2>& other)
 			{
-				mInstance = (T*)other.mInstance;
+				mInstance = other.mInstance;
+				mUInfo = other.mUInfo;
+				mInfo = other.mInfo;
 				IncRef();
 			}
 
-			template<typename T2>
-			Ref(Ref<T2>&& other)
-			{
-				mInstance = (T*)other.mInstance;
-				other.mInstance = nullptr;
-			}
+			//template<typename T2>
+			//Ref(Ref<T2>&& other)
+			//{
+			//	mInstance = other.mInstance;
+			//	mUInfo = other.mUInfo;
+			//	mInfo = other.mInfo;
+			//	//other.mInstance = nullptr;
+			//}
 
-			static Ref<T> CopyWithoutIncrement(const Ref<T>& other)
-			{
-				Ref<T> result = nullptr;
-				result->mInstance = other.mInstance;
-				return result;
-			}
+			//static Ref<T> CopyWithoutIncrement(const Ref<T>& other)
+			//{
+			//	Ref<T> result = nullptr;
+			//	result->mInstance = other.mInstance;
+			//	return result;
+			//}
 
 			~Ref()
 			{
@@ -125,17 +136,17 @@ namespace IGE {
 			}
 
 			Ref(const Ref<T>& other)
-				: mInstance(other.mInstance)
+				: mInstance(other.mInstance), mUInfo{ other.mUInfo }, mInfo{ other.mInfo }
 			{
 				IncRef();
 			}
 
-			Ref& operator=(std::nullptr_t)
-			{
-				DecRef();
-				mInstance = nullptr;
-				return *this;
-			}
+			//Ref& operator=(std::nullptr_t)
+			//{
+			//	//DecRef();
+			//	mInstance = nullptr;
+			//	return *this;
+			//}
 
 			Ref& operator=(const Ref<T>& other)
 			{
@@ -172,11 +183,11 @@ namespace IGE {
 			operator bool() { return mInstance != nullptr; }
 			operator bool() const { return mInstance != nullptr; }
 
-			T* operator->() { return mInstance; }
-			const T* operator->() const { return mInstance; }
+			T* operator->() const { return reinterpret_cast<T*>(mInstance.partialRef.pointer); }
+			//const T* operator->() const { return mInstance.partialRef.pointer; }
 
-			T& operator*() { return *mInstance; }
-			const T& operator*() const { return *mInstance; }
+			T& operator*() const { return *reinterpret_cast<T*>(mInstance.partialRef.pointer); }
+			//const T& operator*() const { return *mInstance.partialRef.pointer; }
 
 			T* Raw() { return  mInstance; }
 			const T* Raw() const { return  mInstance; }
@@ -184,7 +195,7 @@ namespace IGE {
 			void Reset(T* instance = nullptr)
 			{
 				DecRef();
-				mInstance = instance;
+				mInstance.partialRef.pointer = reinterpret_cast<void*>(instance);
 			}
 
 			template<typename T2>
@@ -193,11 +204,11 @@ namespace IGE {
 				return Ref<T2>(*this);
 			}
 
-			template<typename... Args>
-			static Ref<T> Create(Args&&... args)
-			{
-				return Ref<T>(new T(std::forward<Args>(args)...));
-			}
+			//template<typename... Args>
+			//static Ref<T> Create(Args&&... args)
+			//{
+			//	return Ref<T>(new T(std::forward<Args>(args)...));
+			//}
 
 			bool operator==(const Ref<T>& other) const
 			{
@@ -209,37 +220,45 @@ namespace IGE {
 				return !(*this == other);
 			}
 
-			bool EqualsObject(const Ref<T>& other)
-			{
-				if (!mInstance || !other.mInstance)
-					return false;
+			//bool EqualsObject(const Ref<T>& other)
+			//{
+			//	if (!mInstance || !other.mInstance)
+			//		return false;
 
-				return *mInstance == *other.mInstance;
-			}
+			//	return *mInstance == *other.mInstance;
+			//}
 			const UniversalRef& GetUniversalRef() const{
 				return mInstance;
 			}
 		private:
-			void IncRef() const
+			void Load() {
+				mInstance.partialRef.pointer = mUInfo.loadFunc(mInstance.partialRef.guid);
+				RefUtils::AddToLiveReferences(mInstance.partialRef.guid);
+			}
+			void Unload() {
+				mUInfo.destroyFunc(mInstance.partialRef.pointer, mInstance.partialRef.guid);
+				mInstance.partialRef.pointer = nullptr;
+				RefUtils::RemoveFromLiveReferences(mInstance.partialRef.guid);
+			}
+			void IncRef() //const
 			{
 				if (mInstance)
 				{
-					mInstance->IncRefCount();
-					RefUtils::AddToLiveReferences((void*)mInstance);
+					mInstance.IncRefCount<T>();
+					if (mInstance) RefUtils::AddToLiveReferences(mInstance.partialRef.guid);
 				}
 			}
 
-			void DecRef() const
+			void DecRef() //const
 			{
 				if (mInstance)
 				{
-					mInstance->DecRefCount();
+					mInstance.DecRefCount<T>();
 
-					if (mInstance->GetRefCount() == 0)
+					if (reinterpret_cast<T*>(mInstance.partialRef.pointer)->GetRefCount() == 0)
 					{
-						delete mInstance;
-						RefUtils::RemoveFromLiveReferences((void*)mInstance);
-						mInstance = nullptr;
+						Unload();
+						RefUtils::RemoveFromLiveReferences(mInstance.partialRef.guid);
 					}
 				}
 			}
@@ -248,7 +267,7 @@ namespace IGE {
 			friend class Ref;
 			friend class AssetManager;
 			//mutable T* mInstance;
-			mutable UniversalRef mInstance;
+			UniversalRef mInstance;
 			Details::UniversalInfo mUInfo;
 			Details::InstanceInfo mInfo;
 		};
