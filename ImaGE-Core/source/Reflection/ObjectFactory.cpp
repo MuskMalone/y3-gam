@@ -24,11 +24,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <sstream>
 #include <Physics/PhysicsSystem.h>
 #include <TempScene.h> //tch for testing to remove
-
-#ifndef IMGUI_DISABLE
 #include <Prefabs/PrefabManager.h>
 #include <Events/EventManager.h>
-#endif
 
 namespace Reflection
 {
@@ -64,14 +61,16 @@ namespace Reflection
 
     AddComponentsToEntity(newEntity, components);
 
-#ifndef IMGUI_DISABLE
+//#ifndef IMGUI_DISABLE
     // update entity's prefab if needed
-    Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
-    auto const entityPrefab{ pm.GetEntityPrefab(entity) };
-    if (entityPrefab) {
-      pm.AttachPrefab(newEntity, *entityPrefab);
+    if (gImGuiEnabled) {
+      Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
+      auto const entityPrefab{ pm.GetEntityPrefab(entity) };
+      if (entityPrefab) {
+        pm.AttachPrefab(newEntity, *entityPrefab);
+      }
     }
-#endif
+//#endif
 
     // set parent/child
     entityMan.SetParentEntity(parent, newEntity);
@@ -102,11 +101,11 @@ namespace Reflection
       }
     }
 
-#ifndef IMGUI_DISABLE
-    if (Prefabs::PrefabManager::GetInstance().UpdateAllEntitiesFromPrefab()) {
+//#ifndef IMGUI_DISABLE
+    if (gImGuiEnabled && Prefabs::PrefabManager::GetInstance().UpdateAllEntitiesFromPrefab()) {
       QUEUE_EVENT(Events::PrefabInstancesUpdatedEvent);
     }
-#endif
+//#endif
   }
 
   void ObjectFactory::LoadEntityData(std::string const& filePath) {

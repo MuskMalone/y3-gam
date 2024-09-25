@@ -13,7 +13,6 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
-#ifndef IMGUI_DISABLE
 #include "DebugLogger.h"
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/rotating_file_sink.h>
@@ -221,6 +220,3 @@ void DebugLogger::PrintToCout(std::string msg, EXCEPTION_LEVEL lvl)
 		}
 	}
 }
-
-
-#endif

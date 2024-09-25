@@ -56,7 +56,7 @@ namespace Events
     bool const mMapEntity;
   };
 
-#ifndef IMGUI_DISABLE
+//#ifndef IMGUI_DISABLE
   class DeletePrefabEvent : public Event
   {
   public:
@@ -95,10 +95,10 @@ namespace Events
     PrefabInstancesUpdatedEvent() : Event(EventType::PREFAB_INSTANCES_UPDATED) {}
     inline std::string GetName() const noexcept override { return "Scene Updated with Prefab Instances"; }
   };
-#endif
+//#endif
 
 #ifdef GAM200_EVENTS
-#ifndef IMGUI_DISABLE
+//#ifndef IMGUI_DISABLE
 
   class PrefabSavedEvent : public Event
   {
@@ -128,6 +128,6 @@ namespace Events
     ECS::Entity const mEntity;
   };
 
-#endif
+//#endif
 #endif
 }

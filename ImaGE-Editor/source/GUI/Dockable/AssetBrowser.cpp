@@ -1,4 +1,3 @@
-#ifndef IMGUI_DISABLE
 #include "AssetBrowser.h"
 #include <imgui/imgui.h>
 #include <Globals.h>
@@ -449,5 +448,3 @@ namespace Helper
     return false;
   }
 }
-
-#endif  // IMGUI_DISABLE

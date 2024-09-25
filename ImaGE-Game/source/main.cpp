@@ -1,9 +1,10 @@
 #include "pch.h"
-#include <GameApplication.h>
+#include "Application.h"
+//#include <GameApplication.h>
 
 int Main(int argc, char** argv) {
   // To be read from settings file
-  GameApplication::ApplicationSpecification spec;
+  Application::ApplicationSpecification spec;
   spec.EnableImGui = false;
   spec.Fullscreen = false;
   spec.Name = "ImaGE Editor";
@@ -13,7 +14,8 @@ int Main(int argc, char** argv) {
   spec.WindowHeight = 1080;
   spec.WindowWidth = 1920;
 
-  GameApplication myApp{ spec };
+  //GameApplication myApp{ spec };
+  Application myApp{ spec };
   try
   {
     myApp.Init();

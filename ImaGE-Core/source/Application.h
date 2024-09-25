@@ -55,9 +55,5 @@ private:
 protected:
   static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
   static void ErrorCallback(int err, const char* desc);
-
-  void PrintException(Debug::ExceptionBase& e);
-  void PrintException(std::exception& e);
-
   void UpdateFramebuffers();
 };

@@ -149,7 +149,6 @@ namespace Prefabs
 
   public:
     /*---------------------------- EDITOR - ONLY FUNCTIONS ----------------------------*/
-#ifndef IMGUI_DISABLE
       /*!*********************************************************************
       \brief
         Assigns a prefab to an entity
@@ -231,8 +230,6 @@ namespace Prefabs
       True if any instance was updated and false otherwise
     ************************************************************************/
     bool UpdateAllEntitiesFromPrefab();
-
-#endif
 
   private:
     EntityPrefabMap mEntitiesToPrefabs;

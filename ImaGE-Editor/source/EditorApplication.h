@@ -17,4 +17,7 @@ private:
 private:
   void ImGuiStartFrame() const;
   static void WindowDropCallback(GLFWwindow*, int pathCount, const char* paths[]);
+
+  void PrintException(Debug::ExceptionBase& e);
+  void PrintException(std::exception& e);
 };

@@ -86,10 +86,12 @@ namespace Serialization
 
     // okay code starts here
     Reflection::ObjectFactory::EntityDataContainer ret{};
-#ifndef IMGUI_DISABLE
-    Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
-    pm.ClearMappings();
-#endif
+//#ifndef IMGUI_DISABLE
+    if (gImGuiEnabled) {
+      Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
+      pm.ClearMappings();
+    }
+//#endif
     for (auto const& entity : document.GetArray())
     {
       EntityID entityId{ entity[JsonIdKey].GetUint() };
@@ -100,14 +102,12 @@ namespace Serialization
         entityVar.mChildEntities.emplace_back(EntityID(child.GetUint()));
       }
 
-#ifndef IMGUI_DISABLE
-      if (entity.HasMember(JsonPrefabKey) && !entity[JsonPrefabKey].IsNull())
+      if (gImGuiEnabled && entity.HasMember(JsonPrefabKey) && !entity[JsonPrefabKey].IsNull())
       {
         rttr::variant mappedData{ Prefabs::VariantPrefab::EntityMappings{} };
         DeserializeRecursive(mappedData, entity[JsonPrefabKey]);
-        pm.AttachPrefab(entityId, std::move(mappedData.get_value<Prefabs::VariantPrefab::EntityMappings>()));
+        Prefabs::PrefabManager::GetInstance().AttachPrefab(entityId, std::move(mappedData.get_value<Prefabs::VariantPrefab::EntityMappings>()));
       }
-#endif
 
       // restore components
       std::vector<rttr::variant>& compVector{ entityVar.mComponents };
@@ -229,8 +229,8 @@ namespace Serialization
       prefab.mObjects.emplace_back(std::move(subObj));
     }
 
-#ifndef IMGUI_DISABLE
-    if (document.HasMember(JsonRemovedChildrenKey))
+//#ifndef IMGUI_DISABLE
+    if (gImGuiEnabled && document.HasMember(JsonRemovedChildrenKey))
     {
       rttr::variant removedChildrenVar{ std::vector<std::pair<Prefabs::PrefabSubData::SubDataId, Prefabs::PrefabVersion>>{} };
       DeserializeRecursive(removedChildrenVar, document[JsonRemovedChildrenKey]);
@@ -247,7 +247,7 @@ namespace Serialization
       }
     }
 
-    if (document.HasMember(JsonRemovedCompKey))
+    if (gImGuiEnabled && document.HasMember(JsonRemovedCompKey))
     {
       rttr::variant removedCompVar{ std::vector<Prefabs::VariantPrefab::RemovedComponent>{} };
       DeserializeRecursive(removedCompVar, document[JsonRemovedCompKey]);
@@ -262,7 +262,7 @@ namespace Serialization
 #endif
       }
     }
-#endif
+//#endif
 
     return prefab;
   }

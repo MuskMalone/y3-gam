@@ -32,9 +32,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
 #include <External/GLFWwindowDestructor.h>
-#ifndef IMGUI_DISABLE
 #include <ImGui/backends/imgui_impl_glfw.h>
-#endif
 #include "InputManager.h"
 #include <Events/EventManager.h>
 #include <FrameRateController/FrameRateController.h>
@@ -124,10 +122,12 @@ void InputManager::QueueInputEvents()
 	if (IsKeyTriggered(IK_H))
 	{
 		QUEUE_EVENT(Events::KeyTriggeredEvent, IK_H);
-#ifndef IMGUI_DISABLE
-		Debug::DebugLogger::GetInstance().LogInfo("Testies");
-		throw Debug::Exception<InputManager>(Debug::LVL_CRITICAL, Msg("ThrowTesties"));
-#endif
+//#ifndef IMGUI_DISABLE
+		if (gImGuiEnabled) {
+			Debug::DebugLogger::GetInstance().LogInfo("Testies");
+			throw Debug::Exception<InputManager>(Debug::LVL_CRITICAL, Msg("ThrowTesties"));
+		}
+//#endif
 	}
 
 	if (IsKeyTriggered(IK_K))
@@ -237,15 +237,20 @@ void InputManager::KeyCallback(GLFWwindow* window, int key, int scanCode, int ac
 	UNREFERENCED_PARAMETER(scanCode);
 	UNREFERENCED_PARAMETER(mod);
 
-#ifndef IMGUI_DISABLE
-	ImGuiIO& io = ImGui::GetIO();
-	if (io.WantCaptureKeyboard)
-	{
-		ImGui_ImplGlfw_KeyCallback(window, key, scanCode, action, mod);
+//#ifndef IMGUI_DISABLE
+	if (gImGuiEnabled) {
+		ImGuiIO& io = ImGui::GetIO();
+		if (io.WantCaptureKeyboard)
+		{
+			ImGui_ImplGlfw_KeyCallback(window, key, scanCode, action, mod);
+		}
 	}
-#else
-	UNREFERENCED_PARAMETER(window);
-#endif
+	else {
+		UNREFERENCED_PARAMETER(window);
+	}
+//#else
+	//UNREFERENCED_PARAMETER(window);
+//#endif
 
 	// returns -1 when keyboard functions such as change laptop brightness happens
 	if (key < 0)
@@ -258,11 +263,14 @@ void InputManager::KeyCallback(GLFWwindow* window, int key, int scanCode, int ac
 // Mouse callback function
 void InputManager::MousePosCallback(GLFWwindow* window, double xpos, double ypos)
 {
-#ifndef IMGUI_DISABLE
-	ImGui_ImplGlfw_CursorPosCallback(window, xpos, ypos);
-#else
-	UNREFERENCED_PARAMETER(window);
-#endif
+//#ifndef IMGUI_DISABLE
+	if (gImGuiEnabled)
+		ImGui_ImplGlfw_CursorPosCallback(window, xpos, ypos);
+	else 
+		UNREFERENCED_PARAMETER(window);
+//#else
+	//UNREFERENCED_PARAMETER(window);
+//#endif
 	
 	mCurrMousePos.x = static_cast<float>(xpos);
 	mCurrMousePos.y = static_cast<float>(ypos);
@@ -275,14 +283,16 @@ void InputManager::MouseButtonCallback(GLFWwindow* pwin, int button, int action,
 	UNREFERENCED_PARAMETER(pwin);
 	UNREFERENCED_PARAMETER(mod);
 
-#ifndef IMGUI_DISABLE
-	ImGuiIO& io = ImGui::GetIO();
+//#ifndef IMGUI_DISABLE
+	if (gImGuiEnabled) {
+		ImGuiIO& io = ImGui::GetIO();
 
-	if (io.WantCaptureMouse)
-	{
-		ImGui_ImplGlfw_MouseButtonCallback(pwin, button, action, mod);
+		if (io.WantCaptureMouse)
+		{
+			ImGui_ImplGlfw_MouseButtonCallback(pwin, button, action, mod);
+		}
 	}
-#endif
+//#endif
 
 
 
@@ -297,9 +307,10 @@ void InputManager::MouseScrollCallback(GLFWwindow* pwin, double xoffset, double 
 	mScrollX = xoffset;
 	mScrollY = yoffset;
 
-#ifndef IMGUI_DISABLE
-	ImGui_ImplGlfw_ScrollCallback(pwin, xoffset, yoffset);
-#endif
+//#ifndef IMGUI_DISABLE
+	if (gImGuiEnabled)
+		ImGui_ImplGlfw_ScrollCallback(pwin, xoffset, yoffset);
+//#endif
 	//y_off = ((y_off + yoffset) > 4) ? 4 : ((y_off + yoffset) < -4) ? -4 : y_off + yoffset;
 	// << y_off << "\n";
 	////#ifdef _DEBUG

@@ -35,9 +35,7 @@ using namespace Prefabs;
 void PrefabManager::Init()
 {
   SUBSCRIBE_CLASS_FUNC(Events::EventType::SPAWN_PREFAB, &PrefabManager::HandleEvent, this);
-#ifndef IMGUI_DISABLE
   SUBSCRIBE_CLASS_FUNC(Events::EventType::DELETE_PREFAB, &PrefabManager::HandleEvent, this);
-#endif
 }
 
 ECS::Entity PrefabManager::SpawnPrefab(const std::string& key, glm::dvec3 const& pos, bool mapEntity)
@@ -92,7 +90,7 @@ EVENT_CALLBACK_DEF(PrefabManager, HandleEvent)
     SpawnPrefab(pfbEvent->mName, pfbEvent->mPos, pfbEvent->mMapEntity);
     break;
   }
-#ifndef IMGUI_DISABLE
+
   case Events::EventType::REMOVE_ENTITY:
   {
     EntityPrefabMap::const_iterator iter{ mEntitiesToPrefabs.find(std::static_pointer_cast<Events::RemoveEntityEvent>(event)->mEntityId) };
@@ -105,13 +103,11 @@ EVENT_CALLBACK_DEF(PrefabManager, HandleEvent)
     if (iter != mPrefabs.cend()) { mPrefabs.erase(iter); }
     break;
   }
-#endif
   }
 }
 
 
 /*---------------------------- EDITOR - ONLY FUNCTIONS ----------------------------*/
-#ifndef IMGUI_DISABLE
 void PrefabManager::AttachPrefab(ECS::Entity entity, EntityPrefabMap::mapped_type const& prefab)
 {
 #ifdef PREFAB_MANAGER_DEBUG
@@ -348,7 +344,6 @@ void PrefabManager::CreatePrefabFromEntity(ECS::Entity const& entity, std::strin
   std::cout << "Prefab " << name << " saved to " << savePath << "\n";
 #endif
 }
-#endif
 
 bool PrefabManager::DoesPrefabExist(std::string const& name) const
 {

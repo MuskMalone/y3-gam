@@ -12,28 +12,7 @@
 
 #include <Physics/PhysicsSystem.h>
 
-namespace
-{
-  /*!*********************************************************************
-   \brief
-     Wrapper function to print out exceptions.
-
-   \param e
-     Exception caught
-   ************************************************************************/
-  void PrintException(Debug::ExceptionBase& e);
-
-  /*!*********************************************************************
-  \brief
-    Wrapper function to print out exceptions.
-
-  \param e
-    Exception caught
-  ************************************************************************/
-  void PrintException(std::exception& e);
-
-}
-
+// Static Initialization
 Application::ApplicationSpecification Application::mSpecification{};
 
 void Application::Init() {
@@ -49,55 +28,24 @@ void Application::Init() {
 void Application::Run() {
   static auto& eventManager{ Events::EventManager::GetInstance() };
   static auto& inputManager{ Input::InputManager::GetInstance() };
-
+ 
   while (!glfwWindowShouldClose(mWindow.get())) {
     FrameRateController::GetInstance().Start();
-    try {
-      try {
-        inputManager.UpdateInput();
+    inputManager.UpdateInput();
 
-        // dispatch all events in the queue at the start of game loop
-        eventManager.DispatchAll();
+    // dispatch all events in the queue at the start of game loop
+    eventManager.DispatchAll();
 
-        mScene->Update(FrameRateController::GetInstance().GetDeltaTime());
-      }
-      catch (Debug::ExceptionBase& e)
-      {
-        PrintException(e);
-      }
-      catch (std::exception& e)
-      {
-        PrintException(e);
-      }
+    mScene->Update(FrameRateController::GetInstance().GetDeltaTime());
 
-      try {
-        glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
-        mFramebuffers.front().second();
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-      }
-      
-      catch (Debug::ExceptionBase& e)
-      {
-        PrintException(e);
-      }
-      catch (std::exception& e)
-      {
-        PrintException(e);
-      }
+    glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
+    mFramebuffers.front().second();
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-      // check and call events, swap buffers
-      glfwSwapBuffers(mWindow.get());
+    // check and call events, swap buffers
+    glfwSwapBuffers(mWindow.get());
 
-      FrameRateController::GetInstance().End();
-    }
-    catch (Debug::ExceptionBase& e)
-    {
-      PrintException(e);
-    }
-    catch (std::exception& e)
-    {
-      PrintException(e);
-    }
+    FrameRateController::GetInstance().End();
   }
 }
 
@@ -105,6 +53,7 @@ Application::Application(ApplicationSpecification spec) :
   mScene{}, mWindow{}
 {
   mSpecification = spec;
+  gImGuiEnabled = spec.EnableImGui;
   glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
@@ -175,15 +124,6 @@ void Application::ErrorCallback(int err, const char* desc) {
 #endif
 }
 
-void Application::PrintException(Debug::ExceptionBase& e) {
-  e.LogSource();
-}
-
-void Application::PrintException(std::exception& e) {
-  Debug::DebugLogger::GetInstance().LogCritical(e.what());
-  Debug::DebugLogger::GetInstance().PrintToCout(e.what(), Debug::LVL_CRITICAL);
-}
-
 void Application::Shutdown()
 {
   Scenes::SceneManager::GetInstance().Shutdown();
@@ -193,20 +133,4 @@ Application::~Application()
 {
   mWindow.reset();  // release the GLFWwindow before we terminate
   glfwTerminate();
-}
-
-namespace {
-  void PrintException(Debug::ExceptionBase& e)
-  {
-    e.LogSource();
-  }
-
-  void PrintException(std::exception& e)
-  {
-    if (Application::IsImGUIActive()) {
-      Debug::DebugLogger::GetInstance().LogCritical(e.what());
-      Debug::DebugLogger::GetInstance().PrintToCout(e.what(), Debug::LVL_CRITICAL);
-    }
-
-  }
 }

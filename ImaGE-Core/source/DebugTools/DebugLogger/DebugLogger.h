@@ -30,7 +30,7 @@ namespace Debug
 {
   class DebugLogger : public Singleton<DebugLogger>
   {
-#ifndef IMGUI_DISABLE
+//#ifndef IMGUI_DISABLE
   private:
     // Alias
     using LoggerPtr = std::unique_ptr<spdlog::logger>;
@@ -235,7 +235,8 @@ namespace Debug
   };
 
 #include "DebugLogger.tpp"
-#else
+//#else
+  /*
   public:
     template <typename T> std::string LogMessage(std::string, bool = true) { return {}; }
     std::string LogMessage(std::string, bool = true) { return {}; }
@@ -245,7 +246,8 @@ namespace Debug
     std::string LogError(std::string, bool = true) { return {}; }
     template <typename T> std::string LogCritical(std::string, bool = true) { return {}; }
     std::string LogCritical(std::string, bool = true) { return {}; }
-};
-#endif
+    */
+//};
+//#endif
   }
 

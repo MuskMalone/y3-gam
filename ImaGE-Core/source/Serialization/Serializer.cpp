@@ -17,9 +17,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Component/Components.h>
 #include <fstream>
 #include <Reflection/ObjectFactory.h>
-#ifndef IMGUI_DISABLE
 #include <Prefabs/PrefabManager.h>
-#endif
 
 namespace Helper
 {
@@ -30,7 +28,6 @@ namespace Helper
 namespace Serialization
 {
 
-#ifndef IMGUI_DISABLE
   void Serializer::SerializeVariantPrefab(Prefabs::VariantPrefab const& prefab, std::string const& filePath)
   {
     std::ofstream ofs{ filePath };
@@ -92,7 +89,6 @@ namespace Serialization
     writer.EndObject();
     ofs.close();
   }
-#endif
 
   void Serializer::SerializeAny(rttr::instance const& obj, std::string const& filename)
   {
@@ -143,7 +139,6 @@ namespace Serialization
     writer.Uint(entity.GetEntityID());
 
 
-#ifndef IMGUI_DISABLE
     // serialize prefab created from
     Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
 
@@ -155,7 +150,6 @@ namespace Serialization
     else {
       writer.Null();
     }
-#endif
 
     // serialize state
     writer.Key(JsonEntityStateKey);

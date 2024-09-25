@@ -15,9 +15,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/MeshSource.h>
 
 // forward declarations
-#ifndef IMGUI_DISABLE
+//#ifndef IMGUI_DISABLE
 struct aiScene; struct aiNode;
-#endif
+//#endif
 
 namespace Graphics::AssetIO
 {
@@ -83,10 +83,10 @@ namespace Graphics::AssetIO
 
     static unsigned sAssimpImportFlags;
 
-#ifndef IMGUI_DISABLE
+//#ifndef IMGUI_DISABLE
     void ProcessSubmeshes(aiNode* node, aiScene const* scene);
     void ProcessMeshes(aiNode* node, aiScene const* scene);
-#endif
+//#endif
   };
 
 } // namespace Graphics::AssetIO

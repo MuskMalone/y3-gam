@@ -14,7 +14,6 @@
 
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
-#ifndef IMGUI_DISABLE
 #include "PrefabEditor.h"
 #include <Events/EventManager.h>
 #include <Events/InputEvents.h>
@@ -209,5 +208,3 @@ namespace GUI
   }
 
 } // namespace GUI
-
-#endif  // IMGUI_DISABLE

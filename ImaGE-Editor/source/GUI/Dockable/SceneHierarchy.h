@@ -1,5 +1,4 @@
 #pragma once
-#ifndef IMGUI_DISABLE
 #include "pch.h"
 
 #include <GUI/GUIWindow.h>
@@ -54,5 +53,3 @@ namespace GUI
   };
 
 } // namespace GUI
-
-#endif  // IMGUI_DISABLE

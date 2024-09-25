@@ -26,3 +26,5 @@ constexpr char gMontserratSemiBoldFontPath[] = ".\\Assets\\Editor-Fonts\\Montser
 constexpr char gMontserratLightFontPath[] = ".\\Assets\\Editor-Fonts\\Montserrat-Light.ttf";
 constexpr char gMontserratRegularFontPath[] = ".\\Assets\\Editor-Fonts\\Montserrat-Regular.ttf";
 constexpr char gIconsFontPath[] = ".\\Assets\\Editor-Fonts\\fa-solid-900.ttf";
+
+static bool gImGuiEnabled{};

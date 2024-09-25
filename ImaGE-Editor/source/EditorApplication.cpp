@@ -154,3 +154,28 @@ void EditorApplication::ImGuiStartFrame() const {
 void EditorApplication::WindowDropCallback(GLFWwindow*, int pathCount, const char* paths[]) {
   QUEUE_EVENT(Events::AddFilesFromExplorerEvent, pathCount, paths);
 }
+
+/*!*********************************************************************
+\brief
+  Wrapper function to print out exceptions.
+
+\param e
+  Exception caught
+************************************************************************/
+void EditorApplication::PrintException(Debug::ExceptionBase& e) {
+  e.LogSource();
+}
+
+/*!*********************************************************************
+\brief
+  Wrapper function to print out exceptions.
+
+\param e
+  Exception caught
+************************************************************************/
+void EditorApplication::PrintException(std::exception& e) {
+  if (Application::IsImGUIActive()) {
+    Debug::DebugLogger::GetInstance().LogCritical(e.what());
+    Debug::DebugLogger::GetInstance().PrintToCout(e.what(), Debug::LVL_CRITICAL);
+  }
+}
