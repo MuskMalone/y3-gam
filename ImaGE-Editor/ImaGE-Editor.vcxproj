@@ -100,8 +100,8 @@
 copy /B /Y "$(SolutionDir)Libraries\assimp\assimp-vc143-mt.dll" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor"
 copy /B /Y "$(SolutionDir)Libraries\rttr-0.9.6\lib\Debug\rttr_core_d.dll" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor"
 copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor"
-IF NOT EXIST "$(TargetDir)\assets" (mkdir "$(TargetDir)\assets")
-xcopy /Q /E /Y /I "$(ProjectDir)assets" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor\assets"</Command>
+IF NOT EXIST "$(TargetDir)\Assets" (mkdir "$(TargetDir)\Assets")
+xcopy /Q /E /Y /I "..\Assets" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor\Assets"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -133,8 +133,8 @@ xcopy /Q /E /Y /I "$(ProjectDir)assets" "..\Binaries\windows-x86_64\Debug\ImaGE-
 copy /B /Y "$(SolutionDir)Libraries\assimp\assimp-vc143-mt.dll" "..\Binaries\windows-x86_64\Release\ImaGE-Editor"
 copy /B /Y "$(SolutionDir)Libraries\rttr-0.9.6\lib\Release\rttr_core.dll" "..\Binaries\windows-x86_64\Release\ImaGE-Editor"
 copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Release\ImaGE-Editor"
-IF NOT EXIST "$(TargetDir)\assets" (mkdir "$(TargetDir)\assets")
-xcopy /Q /E /Y /I "$(ProjectDir)assets" "..\Binaries\windows-x86_64\Release\ImaGE-Editor\assets"</Command>
+IF NOT EXIST "$(TargetDir)\Assets" (mkdir "$(TargetDir)\Assets")
+xcopy /Q /E /Y /I "..\Assets" "..\Binaries\windows-x86_64\Release\ImaGE-Editor\Assets"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
@@ -166,8 +166,8 @@ xcopy /Q /E /Y /I "$(ProjectDir)assets" "..\Binaries\windows-x86_64\Release\ImaG
 copy /B /Y "$(SolutionDir)Libraries\assimp\assimp-vc143-mt.dll" "..\Binaries\windows-x86_64\Distribution\ImaGE-Editor"
 copy /B /Y "$(SolutionDir)Libraries\rttr-0.9.6\lib\Release\rttr_core.dll" "..\Binaries\windows-x86_64\Distribution\ImaGE-Editor"
 copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Distribution\ImaGE-Editor"
-IF NOT EXIST "$(TargetDir)\assets" (mkdir "$(TargetDir)\assets")
-xcopy /Q /E /Y /I "$(ProjectDir)assets" "..\Binaries\windows-x86_64\Distribution\ImaGE-Editor\assets"</Command>
+IF NOT EXIST "$(TargetDir)\Assets" (mkdir "$(TargetDir)\Assets")
+xcopy /Q /E /Y /I "..\Assets" "..\Binaries\windows-x86_64\Distribution\ImaGE-Editor\Assets"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

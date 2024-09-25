@@ -82,7 +82,7 @@ Application::Application(ApplicationSpecification spec) :
   glViewport(0, 0, spec.WindowWidth, spec.WindowHeight); // specify size of viewport
   SetCallbacks();
 
-  mScene = std::make_unique<Scene>("./assets/Shaders/BlinnPhong.vert.glsl", "./assets/Shaders/BlinnPhong.frag.glsl");
+  mScene = std::make_unique<Scene>("../Assets/Shaders/BlinnPhong.vert.glsl", "../Assets/Shaders/BlinnPhong.frag.glsl");
   // attach each draw function to its framebuffer
   mFramebuffers.emplace_back(std::piecewise_construct, std::forward_as_tuple(spec.WindowWidth, spec.WindowHeight),
     std::forward_as_tuple(std::bind(&Scene::Draw, mScene.get())));

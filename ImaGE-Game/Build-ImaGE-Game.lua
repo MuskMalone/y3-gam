@@ -62,8 +62,8 @@ project "ImaGE-Game"
          "{COPYFILE} %[%{wks.location}Libraries/assimp/assimp-vc143-mt.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}Libraries/rttr-0.9.6/lib/Debug/rttr_core_d.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
-         "{MKDIR} %[%{cfg.buildtarget.directory}/assets]",
-         "{COPYDIR} %[%{prj.location}assets] %[%{cfg.targetdir}/assets]"
+         "{MKDIR} %[%{cfg.buildtarget.directory}/Assets]",
+         "{COPYDIR} %[../Assets] %[%{cfg.targetdir}/Assets]"
       }
 
    filter "configurations:Release"
@@ -92,8 +92,8 @@ project "ImaGE-Game"
          "{COPYFILE} %[%{wks.location}Libraries/assimp/assimp-vc143-mt.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}Libraries/rttr-0.9.6/lib/Release/rttr_core.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
-         "{MKDIR} %[%{cfg.buildtarget.directory}/assets]",
-         "{COPYDIR} %[%{prj.location}assets] %[%{cfg.targetdir}/assets]"
+         "{MKDIR} %[%{cfg.buildtarget.directory}/Assets]",
+         "{COPYDIR} %[../Assets] %[%{cfg.targetdir}/Assets]"
       }
 
    filter "configurations:Distribution"
@@ -122,6 +122,6 @@ project "ImaGE-Game"
          "{COPYFILE} %[%{wks.location}Libraries/assimp/assimp-vc143-mt.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}Libraries/rttr-0.9.6/lib/Release/rttr_core.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
-         "{MKDIR} %[%{cfg.buildtarget.directory}/assets]",
-         "{COPYDIR} %[%{prj.location}assets] %[%{cfg.targetdir}/assets]"
+         "{MKDIR} %[%{cfg.buildtarget.directory}/Assets]",
+         "{COPYDIR} %[../Assets] %[%{cfg.targetdir}/Assets]"
       }

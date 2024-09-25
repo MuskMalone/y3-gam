@@ -158,7 +158,7 @@ namespace Graphics {
 		for (unsigned int i{}; i < mData.maxTexUnits; ++i)
 			samplers[i] = i;
 
-		mData.texShader = std::make_shared<Shader>("./assets/Shaders/Default.vert.glsl", "./assets/Shaders/Default.frag.glsl");
+		mData.texShader = std::make_shared<Shader>("../Assets/Shaders/Default.vert.glsl", "../Assets/Shaders/Default.frag.glsl");
 		mData.texShader->Use();
 		mData.texShader->SetUniform("u_Tex", samplers.data(), mData.maxTexUnits);
 

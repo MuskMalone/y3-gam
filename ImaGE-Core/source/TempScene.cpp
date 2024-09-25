@@ -39,7 +39,7 @@ Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 co
   glEnable(GL_BLEND);
 
   m_shaders.CompileShaderFile(vtxShaderFile, fragShaderFile);
-  m_defaultShaders.CompileShaderFile("./assets/Shaders/Framework.vert.glsl", "./assets/Shaders/Framework.frag.glsl");
+  m_defaultShaders.CompileShaderFile("../Assets/Shaders/Framework.vert.glsl", "../Assets/Shaders/Framework.frag.glsl");
   m_cameras.emplace_back(WINDOW_WIDTH<int>, WINDOW_HEIGHT<int>, glm::vec3(3.f, 3.f, 15.f));
   m_cameras.emplace_back(WINDOW_WIDTH<int>, WINDOW_HEIGHT<int>, glm::vec3(0.f, 15.f, 1.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, -1.f), glm::vec3(1.f, 0.f, 0.f), false);
 }
@@ -61,7 +61,7 @@ void Scene::Init()
 
  
   mEcam = editorCam;
-  std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateModelFromImport("./Assets/Models/cube_low_poly.imsh");
+  std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateModelFromImport("../Assets/Models/cube_low_poly.imsh");
   mesh0 = std::make_shared<Graphics::Mesh>(cubeMeshSource);
 
   std::shared_ptr<Graphics::MeshSource> pyrMeshSource = Graphics::MeshFactory::CreatePyramid();
