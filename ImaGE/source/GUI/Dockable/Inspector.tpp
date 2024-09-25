@@ -1,5 +1,5 @@
 template<typename Component>
-bool Inspector::WindowBegin(std::string windowName, std::string const& icon) {
+bool Inspector::WindowBegin(std::string const& windowName, std::string const& icon, bool highlight) {
   ImGui::Separator();
 
   if (mEntityChanged) {
@@ -8,7 +8,10 @@ bool Inspector::WindowBegin(std::string windowName, std::string const& icon) {
   }
 
   std::string display{ icon + "   " + windowName };
-  bool isOpen{ ImGui::TreeNode(display.c_str())};
+
+  if (highlight) { ImGui::PushStyleColor(ImGuiCol_Text, sComponentHighlightCol); }
+  bool const isOpen{ ImGui::TreeNode(display.c_str())};
+  if (highlight) { ImGui::PopStyleColor(); }
 
   if (isOpen) {
     ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_LIGHT));
@@ -128,7 +131,7 @@ bool Inspector::DrawOptionButton(std::string const& name) {
 }
 
 template<typename Component>
-bool Inspector::DrawOptionsListButton(std::string windowName) {
+bool Inspector::DrawOptionsListButton(std::string const& windowName) {
   bool openMainWindow{ true };
   ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 25.f);
   ImVec2 addTextSize = ImGui::CalcTextSize("Options");

@@ -48,15 +48,6 @@ RTTR_REGISTRATION
     .property("w", &glm::dvec4::w);
   
   /* ------------------- Other ------------------- */
-  rttr::registration::class_<Component::PropOverride>("PropOverride")
-    .property("propName", &Component::PropOverride::propName)
-    .property("propVal", &Component::PropOverride::propVal)
-    ;
-
-  rttr::registration::class_<Component::PrefabOverrides::TypeWrapper>("TypeWrapper")
-    .property("type", &Component::PrefabOverrides::TypeWrapper::type)
-    ;
-
   rttr::registration::class_<rttr::type>("RttrType");
 
 #ifndef IMGUI_DISABLE

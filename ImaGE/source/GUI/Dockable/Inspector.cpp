@@ -15,7 +15,7 @@
 namespace GUI {
   Inspector::Inspector(std::string const& name) : GUIWindow(name),
     mComponentOpenStatusMap{}, mStyler{ GUIManager::GetStyler() }, mObjFactory{Reflection::ObjectFactory::GetInstance()},
-    mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEntityChanged{ false } {
+    mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
     for (auto const& component : Reflection::gComponentTypes) {
       mComponentOpenStatusMap[component.get_name().to_string().c_str()] = true;
     }
@@ -23,12 +23,13 @@ namespace GUI {
     // get notified when scene is saved
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SAVE_SCENE, &Inspector::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &Inspector::HandleEvent, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &Inspector::HandleEvent, this);
   }
 
   void Inspector::Run() {
     ImGui::Begin(mWindowName.c_str());
     ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
-    ECS::Entity const& currentEntity{ GUIManager::GetSelectedEntity() };
+    ECS::Entity currentEntity{ GUIManager::GetSelectedEntity() };
     
     if (currentEntity) {
 
@@ -39,34 +40,126 @@ namespace GUI {
       else
         mEntityChanged = false;
 
-      // @TODO: EDIT WHEN NEW COMPONENTS (ALSO ITS OWN WINDOW FUNCTION) 
+      static Component::PrefabOverrides* prefabOverride{ nullptr };
+      static bool componentOverriden{ false };
+      if (currentEntity.HasComponent<Component::PrefabOverrides>()) {
+        prefabOverride = &currentEntity.GetComponent<Component::PrefabOverrides>();
+        ImGui::PushStyleColor(ImGuiCol_Text, sComponentHighlightCol);
+        ImGui::Text(("Prefab Source: " + prefabOverride->prefabName).c_str());
+        ImGui::PopStyleColor();
+      }
+      else {
+        prefabOverride = nullptr;
+      }
 
-      if (currentEntity.HasComponent<Component::Tag>())
-        TagComponentWindow(currentEntity, std::string(ICON_FA_TAG));
+      // @TODO: EDIT WHEN NEW COMPONENTS (ALSO ITS OWN WINDOW FUNCTION)
+      if (currentEntity.HasComponent<Component::Tag>()) {
+        rttr::type const tagType{ rttr::type::get<Component::Tag>() };
+        componentOverriden = componentOverriden && prefabOverride->IsComponentModified(tagType);
 
-      if (currentEntity.HasComponent<Component::Collider>())
-        ColliderComponentWindow(currentEntity, std::string(ICON_FA_BOMB));
+        if (TagComponentWindow(currentEntity, std::string(ICON_FA_TAG), componentOverriden)) {
+          SetIsComponentEdited(true);
+          if (prefabOverride && !componentOverriden) {
+            prefabOverride->AddComponentModification(tagType);
+          }
+        }
+      }
 
-      if (currentEntity.HasComponent<Component::Layer>())
-        LayerComponentWindow(currentEntity, std::string(ICON_FA_LAYER_GROUP));
+      if (currentEntity.HasComponent<Component::Transform>()) {
+        rttr::type const transformType{ rttr::type::get<Component::Transform>() };
+        componentOverriden = componentOverriden && prefabOverride->IsComponentModified(transformType);
 
-      if (currentEntity.HasComponent<Component::Material>())
-        MaterialComponentWindow(currentEntity, std::string(ICON_FA_GEM));
+        if (TransformComponentWindow(currentEntity, std::string(ICON_FA_ROTATE), componentOverriden)) {
+          SetIsComponentEdited(true);
+          if (prefabOverride && !componentOverriden) {
+            prefabOverride->AddComponentModification(transformType);
+          }
+        }
+      }
 
-      if (currentEntity.HasComponent<Component::Mesh>())
-        MeshComponentWindow(currentEntity, std::string(ICON_FA_CUBE));
+      if (currentEntity.HasComponent<Component::Collider>()) {
+        rttr::type const colliderType{ rttr::type::get<Component::Collider>() };
+        componentOverriden = componentOverriden && prefabOverride->IsComponentModified(colliderType);
 
-      if (currentEntity.HasComponent<Component::RigidBody>())
-        RigidBodyComponentWindow(currentEntity, std::string(ICON_FA_CAR));
+        if (ColliderComponentWindow(currentEntity, std::string(ICON_FA_BOMB), componentOverriden)) {
+          SetIsComponentEdited(true);
+          if (prefabOverride && !componentOverriden) {
+            prefabOverride->AddComponentModification(colliderType);
+          }
+        }
+      }
 
-      if (currentEntity.HasComponent<Component::Script>())
-        ScriptComponentWindow(currentEntity, std::string(ICON_FA_FILE_CODE));
+      if (currentEntity.HasComponent<Component::Layer>()) {
+        rttr::type const layerType{ rttr::type::get<Component::Layer>() };
+        componentOverriden = componentOverriden && prefabOverride->IsComponentModified(layerType);
 
-      if (currentEntity.HasComponent<Component::Text>())
-        TextComponentWindow(currentEntity, std::string(ICON_FA_FONT));
+        if (LayerComponentWindow(currentEntity, std::string(ICON_FA_LAYER_GROUP), componentOverriden)) {
+          SetIsComponentEdited(true);
+          if (prefabOverride && !componentOverriden) {
+            prefabOverride->AddComponentModification(layerType);
+          }
+        }
+      }
 
-      if (currentEntity.HasComponent<Component::Transform>())
-        TransformComponentWindow(currentEntity,std::string(ICON_FA_ROTATE));
+      if (currentEntity.HasComponent<Component::Material>()) {
+        rttr::type const materialType{ rttr::type::get<Component::Material>() };
+        componentOverriden = componentOverriden && prefabOverride->IsComponentModified(materialType);
+
+        if (MaterialComponentWindow(currentEntity, std::string(ICON_FA_GEM), componentOverriden)) {
+          SetIsComponentEdited(true);
+          if (prefabOverride && !componentOverriden) {
+            prefabOverride->AddComponentModification(materialType);
+          }
+        }
+      }
+
+      if (currentEntity.HasComponent<Component::Mesh>()) {
+        rttr::type const meshType{ rttr::type::get<Component::Mesh>() };
+        componentOverriden = componentOverriden && prefabOverride->IsComponentModified(meshType);
+
+        if (MeshComponentWindow(currentEntity, std::string(ICON_FA_CUBE), componentOverriden)) {
+          SetIsComponentEdited(true);
+          if (prefabOverride && !componentOverriden) {
+            prefabOverride->AddComponentModification(meshType);
+          }
+        }
+      }
+
+      if (currentEntity.HasComponent<Component::RigidBody>()) {
+        rttr::type const rigidBodyType{ rttr::type::get<Component::RigidBody>() };
+        componentOverriden = componentOverriden && prefabOverride->IsComponentModified(rigidBodyType);
+
+        if (RigidBodyComponentWindow(currentEntity, std::string(ICON_FA_CAR), componentOverriden)) {
+          SetIsComponentEdited(true);
+          if (prefabOverride && !componentOverriden) {
+            prefabOverride->AddComponentModification(rigidBodyType);
+          }
+        }
+      }
+
+      if (currentEntity.HasComponent<Component::Script>()) {
+        rttr::type const scriptType{ rttr::type::get<Component::Script>() };
+        componentOverriden = componentOverriden && prefabOverride->IsComponentModified(scriptType);
+
+        if (ScriptComponentWindow(currentEntity, std::string(ICON_FA_FILE_CODE), componentOverriden)) {
+          SetIsComponentEdited(true);
+          if (prefabOverride && !componentOverriden) {
+            prefabOverride->AddComponentModification(scriptType);
+          }
+        }
+      }
+
+      if (currentEntity.HasComponent<Component::Text>()) {
+        rttr::type const textType{ rttr::type::get<Component::Text>() };
+        componentOverriden = componentOverriden && prefabOverride->IsComponentModified(textType);
+
+        if (TextComponentWindow(currentEntity, std::string(ICON_FA_FONT), componentOverriden)) {
+          SetIsComponentEdited(true);
+          if (prefabOverride && !componentOverriden) {
+            prefabOverride->AddComponentModification(textType);
+          }
+        }
+      }
     }
     ImGui::PopFont();
     ImGui::End();
@@ -88,21 +181,25 @@ namespace GUI {
       auto state{ CAST_TO_EVENT(Events::SceneStateChange)->mNewState };
       // if changing to another scene, reset modified flag
       if (state == Events::SceneStateChange::CHANGED) {
-        mIsComponentEdited = mFirstEdit = false;
+        mIsComponentEdited = mFirstEdit = mEditingPrefab = false;
       }
       else if (state == Events::SceneStateChange::NEW) {
         mIsComponentEdited = true;
-        mFirstEdit = false;
+        mFirstEdit = mEditingPrefab = false;
       }
       break;
     }
+    case Events::EventType::EDIT_PREFAB:
+      mEditingPrefab = true;
+      break;
     default: break;
     }
   }
 
-  void Inspector::LayerComponentWindow(ECS::Entity entity, std::string const& icon) {
-    bool isOpen{ WindowBegin<Component::Layer>("Layer", icon) };
-
+  bool Inspector::LayerComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Layer>("Layer", icon, true) };
+    bool modified{ false };
+    
     if (isOpen) {
       auto& layer = entity.GetComponent<Component::Layer>();
 
@@ -129,7 +226,7 @@ namespace GUI {
         for (const char* layerName : availableLayers) {
           if (ImGui::Selectable(layerName)) {
             layer.name = layerName;
-            SetIsComponentEdited(true);
+            modified = true;
           }
         }
         ImGui::EndCombo();
@@ -139,10 +236,12 @@ namespace GUI {
     }
 
     WindowEnd(isOpen);
+    return modified;
   }
 
-  void Inspector::MaterialComponentWindow(ECS::Entity entity, std::string const& icon) {
-    bool isOpen{ WindowBegin<Component::Material>("Material", icon) };
+  bool Inspector::MaterialComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Material>("Material", icon, highlight) };
+    bool modified{ false };
 
     if (isOpen) {
       auto& material = entity.GetComponent<Component::Material>();
@@ -162,17 +261,19 @@ namespace GUI {
       ImGui::TableSetColumnIndex(1);
       ImGui::SetNextItemWidth(INPUT_SIZE);
       if (ImGui::ColorEdit4("##MaterialColor", &material.color[0])) {
-        SetIsComponentEdited(true);
+        modified = true;
       }
 
       ImGui::EndTable();
     }
 
     WindowEnd(isOpen);
+    return false;
   }
 
-  void Inspector::ScriptComponentWindow(ECS::Entity entity, std::string const& icon) {
-    bool isOpen{ WindowBegin<Component::Script>("Script", icon) };
+  bool Inspector::ScriptComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Script>("Script", icon, highlight) };
+    bool modified{ false };
 
     if (isOpen) {
       auto& script = entity.GetComponent<Component::Script>();
@@ -200,7 +301,7 @@ namespace GUI {
         for (const char* scriptName : availableScripts) {
           if (ImGui::Selectable(scriptName)) {
             script.name = scriptName;
-            SetIsComponentEdited(true);
+            modified = true;
           }
         }
         ImGui::EndCombo();
@@ -210,10 +311,12 @@ namespace GUI {
     }
 
     WindowEnd(isOpen);
+    return modified;
   }
 
-  void Inspector::TagComponentWindow(ECS::Entity entity, std::string const& icon) {
-    bool isOpen{ WindowBegin<Component::Tag>("Tag", icon) };
+  bool Inspector::TagComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Tag>("Tag", icon, highlight) };
+    bool modified{ false };
 
     if (isOpen) {
       std::string tag{ entity.GetTag() };
@@ -221,7 +324,7 @@ namespace GUI {
       ImGui::SetNextItemWidth(INPUT_SIZE);
       if (ImGui::InputText("##Tag", &tag, ImGuiInputTextFlags_EnterReturnsTrue)) {
         entity.SetTag(tag);
-        SetIsComponentEdited(true);
+        modified = true;
       }
       ImGui::PopFont();
 
@@ -229,10 +332,12 @@ namespace GUI {
     }
 
     WindowEnd(isOpen);
+    return modified;
   }
 
-  void Inspector::TextComponentWindow(ECS::Entity entity, std::string const& icon) {
-    bool isOpen{ WindowBegin<Component::Text>("Text", icon) };
+  bool Inspector::TextComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Text>("Text", icon, highlight) };
+    bool modified{ false };
 
     if (isOpen) {
       auto& text = entity.GetComponent<Component::Text>();
@@ -258,7 +363,7 @@ namespace GUI {
         for (const char* fontName : availableFonts) {
           if (ImGui::Selectable(fontName)) {
             text.fontName = fontName;
-            SetIsComponentEdited(true);
+            modified = true;
           }
         }
         ImGui::EndCombo();
@@ -270,7 +375,7 @@ namespace GUI {
       ImGui::TableSetColumnIndex(1);
       ImGui::SetNextItemWidth(INPUT_SIZE);
       if (ImGui::ColorEdit4("##TextColor", &text.color[0])) {
-        SetIsComponentEdited(true);
+        modified = true;
       }
 
       ImGui::TableNextRow();
@@ -279,7 +384,7 @@ namespace GUI {
       ImGui::TableSetColumnIndex(1);
       ImGui::SetNextItemWidth(INPUT_SIZE);
       if (ImGui::InputTextMultiline("##TextInput", &text.textContent)) {
-        SetIsComponentEdited(true);
+        modified = true;
       }
 
       ImGui::TableNextRow();
@@ -288,17 +393,19 @@ namespace GUI {
       ImGui::TableSetColumnIndex(1);
       ImGui::SetNextItemWidth(INPUT_SIZE);
       if (ImGui::DragFloat("##TextScale", &text.scale, .001f, 0.f, 5.f)) {
-        SetIsComponentEdited(true);
+        modified = true;
       }
 
       ImGui::EndTable();
     }
 
     WindowEnd(isOpen);
+    return modified;
   }
 
-  void Inspector::TransformComponentWindow(ECS::Entity entity, std::string const& icon) {
-    bool isOpen{ WindowBegin<Component::Transform>("Transform", icon) };
+  bool Inspector::TransformComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Transform>("Transform", icon, highlight) };
+    bool modified{ false };
 
     if (isOpen) {
       auto& transform = entity.GetComponent<Component::Transform>();
@@ -317,13 +424,13 @@ namespace GUI {
 
       // @TODO: Replace min and max with the world min and max
       if (ImGuiHelpers::TableInputFloat3("Local Translation", &transform.localPos[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
-        SetIsComponentEdited(true);
+        modified = true;
       }
       if (ImGuiHelpers::TableInputFloat3("Local Rotation", &transform.localRot[0], inputWidth, false, 0.f, 360.f, 0.1f)) {
-        SetIsComponentEdited(true);
+        modified = true;
       }
       if (ImGuiHelpers::TableInputFloat3("Local Scale", &transform.localScale[0], inputWidth, false, 0.f, 100.f, 1.f)) {
-        SetIsComponentEdited(true);
+        modified = true;
       }
       ImGui::EndTable();
 
@@ -337,32 +444,35 @@ namespace GUI {
 
       // @TODO: Replace min and max with the world min and max
       if (ImGuiHelpers::TableInputFloat3("World Translation", &transform.worldPos[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
-        SetIsComponentEdited(true);
+        modified = true;
       }
       if (ImGuiHelpers::TableInputFloat3("World Rotation", &transform.worldRot[0], inputWidth, false, 0.f, 360.f, 0.1f)) {
-        SetIsComponentEdited(true);
+        modified = true;
       }
       if (ImGuiHelpers::TableInputFloat3("World Scale", &transform.worldScale[0], inputWidth, false, 0.f, 100.f, 1.f)) {
-        SetIsComponentEdited(true);
+        modified = true;
       }
 
       ImGui::EndTable();
     }
 
     WindowEnd(isOpen);
+    return modified;
   }
 
-  void Inspector::MeshComponentWindow(ECS::Entity entity, std::string const& icon) {
-    bool isOpen{ WindowBegin<Component::Mesh>("Mesh", icon) };
+  bool Inspector::MeshComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Mesh>("Mesh", icon, highlight) };
+    bool modified{ false };
 
     if (isOpen) {
 
     }
 
     WindowEnd(isOpen);
+    return modified;
   }
 
-  void Inspector::WindowEnd(bool isOpen) {
+  void Inspector::WindowEnd(bool const isOpen) {
     if (isOpen) {
       ImGui::TreePop();
       ImGui::PopFont();
@@ -371,8 +481,9 @@ namespace GUI {
     ImGui::Separator();
   }
 
-  void Inspector::RigidBodyComponentWindow(ECS::Entity entity, std::string const& icon) {
-    bool isOpen{ WindowBegin<Component::RigidBody>("RigidBody", icon) };
+  bool Inspector::RigidBodyComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::RigidBody>("RigidBody", icon, highlight) };
+    bool modified{ false };
 
     if (isOpen) {
       // Assuming 'rigidBody' is an instance of RigidBody
@@ -392,11 +503,11 @@ namespace GUI {
 
       if (ImGuiHelpers::TableInputFloat3("Velocity", rigidBody.velocity.mF32, inputWidth, false, -100.f, 100.f, 0.1f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
-        SetIsComponentEdited(true);
+        modified = true;
       }
       if (ImGuiHelpers::TableInputFloat3("Angular Velocity", rigidBody.angularVelocity.mF32, inputWidth, false, -100.f, 100.f, 0.1f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::ANGULAR_VELOCITY);
-        SetIsComponentEdited(true);
+        modified = true;
       }
 
       ImGui::EndTable();
@@ -413,7 +524,7 @@ namespace GUI {
       ImGui::SetNextItemWidth(INPUT_SIZE);
       if (ImGui::DragFloat("##RigidBodyFriction", &rigidBody.friction, 0.01f, 0.0f, 1.0f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::FRICTION);
-        SetIsComponentEdited(true);
+        modified = true;
       }
 
       ImGui::TableNextRow();
@@ -423,7 +534,7 @@ namespace GUI {
       ImGui::SetNextItemWidth(INPUT_SIZE);
       if (ImGui::DragFloat("##RigidBodyRestitution", &rigidBody.restitution, 0.01f, 0.0f, 1.0f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::RESTITUTION);
-        SetIsComponentEdited(true);
+        modified = true;
       }
 
       ImGui::TableNextRow();
@@ -433,7 +544,7 @@ namespace GUI {
       ImGui::SetNextItemWidth(INPUT_SIZE);
       if (ImGui::DragFloat("##RigidBodyGravityFactor", &rigidBody.gravityFactor, 0.01f, 0.0f, 10.0f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::GRAVITY_FACTOR);
-        SetIsComponentEdited(true);
+        modified = true;
       }
 
       // Motion Type Selection
@@ -448,17 +559,19 @@ namespace GUI {
       if (ImGui::Combo("##Motion Type", &currentMotionType, motionTypes, IM_ARRAYSIZE(motionTypes))) {
         rigidBody.motionType = static_cast<JPH::EMotionType>(currentMotionType);
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::MOTION);
-        SetIsComponentEdited(true);
+        modified = true;
       }
 
       ImGui::EndTable();
     }
 
     WindowEnd(isOpen);
+    return modified;
   }
 
-  void Inspector::ColliderComponentWindow(ECS::Entity entity, std::string const& icon) {
-    bool isOpen{ WindowBegin<Component::Collider>("Collider", icon) };
+  bool Inspector::ColliderComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Collider>("Collider", icon, highlight) };
+    bool modified{ false };
 
     if (isOpen) {
       // Assuming 'collider' is an instance of Collider
@@ -476,13 +589,13 @@ namespace GUI {
       ImGui::TableHeadersRow();
 
       if (ImGuiHelpers::TableInputFloat3("Scale", collider.scale.mF32, inputWidth, false, 0.f, 100.f, 1.f)) {
-        SetIsComponentEdited(true);
+        modified = true;
       }
       if (ImGuiHelpers::TableInputFloat3("Position Offset", collider.positionOffset.mF32, inputWidth, false, -100.f, 100.f, 0.1f)) {
-        SetIsComponentEdited(true);
+        modified = true;
       }
       if (ImGuiHelpers::TableInputFloat3("Rotation Offset", collider.rotationOffset.mF32, inputWidth, false, 0.f, 360.f, 0.1f)) {
-        SetIsComponentEdited(true);
+        modified = true;
       }
 
       ImGui::EndTable();
@@ -503,13 +616,14 @@ namespace GUI {
       ImGui::SetNextItemWidth(INPUT_SIZE);
       if (ImGui::Combo("##ShapeType", &currentShapeType, shapeTypes, IM_ARRAYSIZE(shapeTypes))) {
         collider.type = static_cast<JPH::EShapeSubType>(currentShapeType);
-        SetIsComponentEdited(true);
+        modified = true;
       }
 
       ImGui::EndTable();
     }
 
     WindowEnd(isOpen);
+    return modified;
   }
 
   void Inspector::DrawAddButton() {

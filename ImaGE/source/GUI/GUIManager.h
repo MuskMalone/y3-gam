@@ -20,7 +20,7 @@ namespace GUI {
     void UpdateGUI(std::shared_ptr<Graphics::Framebuffer> const& framebuffer);
 
     static inline Styler& GetStyler() noexcept { return mStyler; }
-    static inline ECS::Entity const& GetSelectedEntity() noexcept { return sSelectedEntity; }
+    static inline ECS::Entity GetSelectedEntity() noexcept { return sSelectedEntity; }
     static inline void SetSelectedEntity(ECS::Entity const& entity) noexcept { sSelectedEntity = entity; }
     
   private:

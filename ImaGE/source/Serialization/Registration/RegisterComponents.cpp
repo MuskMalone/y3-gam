@@ -55,7 +55,6 @@ RTTR_REGISTRATION
   rttr::registration::class_<PrefabOverrides>("PrefabOverrides")
     .constructor<>()
     .property("prefabName", &PrefabOverrides::prefabName)
-    .property("propOverrides", &PrefabOverrides::propOverrides)
-    .property("addedComponents", &PrefabOverrides::addedComponents)
+    .property("modifiedComponents", &PrefabOverrides::modifiedComponents)
     .property("removedComponents", &PrefabOverrides::removedComponents);
 }
