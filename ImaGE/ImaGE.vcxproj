@@ -27,6 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Asset\AssetManager.cpp" />
     <ClCompile Include="source\Asset\SmartPointer.cpp" />
     <ClCompile Include="source\DebugTools\DebugLogger\DebugLogger.cpp" />
     <ClCompile Include="Source\GUI\Helpers\AssetHelpers.cpp" />

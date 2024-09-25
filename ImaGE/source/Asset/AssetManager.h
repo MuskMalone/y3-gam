@@ -6,6 +6,8 @@
 #include <any>
 #include <filesystem>
 #include <type_traits>
+#include <memory>
+#include <mutex>
 namespace IGE {
 	namespace Assets {
         class AssetManager
@@ -29,9 +31,7 @@ namespace IGE {
             auto GetTypeName() { return rttr::type::get<T>().get_name().to_string(); }
         public:
             //-------------------------------------------------------------------------
-            AssetManager()
-            {
-            }
+            AssetManager() = default;
 
             //-------------------------------------------------------------------------
             template< typename...T_ARGS >
@@ -155,6 +155,7 @@ namespace IGE {
                 return ref.GetInfo();
             }
 
+            static std::shared_ptr<AssetManager> GetInstance();
 
         protected:
 
@@ -167,6 +168,12 @@ namespace IGE {
 
             //keep in mind that any instance of Ref<T> always has a minimum of 1 reference
             std::unordered_map<TypeAssetKey, RefAny> mAssetRefs; //bitwise xor the typeguid and guid for the key;
+        private:
+            static std::shared_ptr<AssetManager> _mSelf;
+            static std::mutex _mMutex;
+
+            AssetManager(AssetManager& other) = delete;
+            void operator=(const AssetManager&) = delete;
         };
 	}
 }
