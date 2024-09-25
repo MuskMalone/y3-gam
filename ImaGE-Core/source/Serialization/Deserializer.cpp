@@ -87,7 +87,7 @@ namespace Serialization
     // okay code starts here
     Reflection::ObjectFactory::EntityDataContainer ret{};
 //#ifndef IMGUI_DISABLE
-    if (gImGuiEnabled) {
+    if (Application::GetImGuiEnabled()) {
       Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
       pm.ClearMappings();
     }
@@ -102,7 +102,7 @@ namespace Serialization
         entityVar.mChildEntities.emplace_back(EntityID(child.GetUint()));
       }
 
-      if (gImGuiEnabled && entity.HasMember(JsonPrefabKey) && !entity[JsonPrefabKey].IsNull())
+      if (Application::GetImGuiEnabled() && entity.HasMember(JsonPrefabKey) && !entity[JsonPrefabKey].IsNull())
       {
         rttr::variant mappedData{ Prefabs::VariantPrefab::EntityMappings{} };
         DeserializeRecursive(mappedData, entity[JsonPrefabKey]);
@@ -230,7 +230,7 @@ namespace Serialization
     }
 
 //#ifndef IMGUI_DISABLE
-    if (gImGuiEnabled && document.HasMember(JsonRemovedChildrenKey))
+    if (Application::GetImGuiEnabled() && document.HasMember(JsonRemovedChildrenKey))
     {
       rttr::variant removedChildrenVar{ std::vector<std::pair<Prefabs::PrefabSubData::SubDataId, Prefabs::PrefabVersion>>{} };
       DeserializeRecursive(removedChildrenVar, document[JsonRemovedChildrenKey]);
@@ -247,7 +247,7 @@ namespace Serialization
       }
     }
 
-    if (gImGuiEnabled && document.HasMember(JsonRemovedCompKey))
+    if (Application::GetImGuiEnabled() && document.HasMember(JsonRemovedCompKey))
     {
       rttr::variant removedCompVar{ std::vector<Prefabs::VariantPrefab::RemovedComponent>{} };
       DeserializeRecursive(removedCompVar, document[JsonRemovedCompKey]);

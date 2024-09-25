@@ -63,7 +63,7 @@ namespace Reflection
 
 //#ifndef IMGUI_DISABLE
     // update entity's prefab if needed
-    if (gImGuiEnabled) {
+    if (Application::GetImGuiEnabled()) {
       Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
       auto const entityPrefab{ pm.GetEntityPrefab(entity) };
       if (entityPrefab) {
@@ -102,7 +102,7 @@ namespace Reflection
     }
 
 //#ifndef IMGUI_DISABLE
-    if (gImGuiEnabled && Prefabs::PrefabManager::GetInstance().UpdateAllEntitiesFromPrefab()) {
+    if (Application::GetImGuiEnabled() && Prefabs::PrefabManager::GetInstance().UpdateAllEntitiesFromPrefab()) {
       QUEUE_EVENT(Events::PrefabInstancesUpdatedEvent);
     }
 //#endif

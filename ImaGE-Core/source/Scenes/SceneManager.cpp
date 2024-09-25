@@ -171,7 +171,7 @@ namespace Scenes
     Serialization::Serializer::SerializeScene(filepath.str());
 
 //#ifndef IMGUI_DISABLE
-    if (gImGuiEnabled)
+    if (Application::GetImGuiEnabled())
       Debug::DebugLogger::GetInstance().LogInfo("Successfully saved scene to " + filepath.str());
 //#endif
   }

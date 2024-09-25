@@ -17,7 +17,7 @@ public:
     bool VSync = true;
     bool StartMaximized = true;
     bool Resizable = true;
-    bool EnableImGui = false;
+    bool EnableImGui = true;
   };
 
 public:
@@ -43,6 +43,7 @@ public:
   inline std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& GetWindowPointer() { return mWindow; }
 
   inline std::vector<std::pair<Graphics::Framebuffer, SceneDrawCall>>& GetFrameBuffer() { return mFramebuffers; }
+  inline static bool GetImGuiEnabled() { return mSpecification.EnableImGui; }
 
 private:
   std::unique_ptr<Scene> mScene;

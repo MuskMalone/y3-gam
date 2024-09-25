@@ -53,7 +53,6 @@ Application::Application(ApplicationSpecification spec) :
   mScene{}, mWindow{}
 {
   mSpecification = spec;
-  gImGuiEnabled = spec.EnableImGui;
   glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);

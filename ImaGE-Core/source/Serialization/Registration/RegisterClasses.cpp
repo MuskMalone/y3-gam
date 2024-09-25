@@ -55,7 +55,7 @@ RTTR_REGISTRATION
     ;*/
 
 //#ifndef IMGUI_DISABLE
-  if (gImGuiEnabled) {
+  if (Application::GetImGuiEnabled()) {
     rttr::registration::class_<std::pair<std::string, unsigned>>("StringUnsignedPair")
       .property("first", &std::pair<std::string, unsigned>::first)
       .property("second", &std::pair<std::string, unsigned>::second)
