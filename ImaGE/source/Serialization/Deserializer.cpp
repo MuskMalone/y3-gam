@@ -96,9 +96,9 @@ namespace Serialization
 #ifndef IMGUI_DISABLE
       if (entity.HasMember(JsonPrefabKey) && !entity[JsonPrefabKey].IsNull())
       {
-        rttr::variant mappedData{ Prefabs::VariantPrefab::EntityMappings{} };
+        rttr::variant mappedData{ Prefabs::Prefab::EntityMappings{} };
         DeserializeRecursive(mappedData, entity[JsonPrefabKey]);
-        pm.AttachPrefab(entityId, std::move(mappedData.get_value<Prefabs::VariantPrefab::EntityMappings>()));
+        pm.AttachPrefab(entityId, std::move(mappedData.get_value<Prefabs::Prefab::EntityMappings>()));
       }
 #endif
 
@@ -139,7 +139,7 @@ namespace Serialization
     return ret;
   }
 
-  Prefabs::VariantPrefab Deserializer::DeserializePrefabToVariant(std::string const& json)
+  Prefabs::Prefab Deserializer::DeserializePrefabToVariant(std::string const& json)
   {
     rapidjson::Document document{};
     if (!ParseJsonIntoDocument(document, json)) { return {}; }
@@ -149,7 +149,7 @@ namespace Serialization
       return {};
     }
 
-    Prefabs::VariantPrefab prefab{ document[JsonPfbNameKey].GetString(), document[JsonPfbVerKey].GetUint() };
+    Prefabs::Prefab prefab{ document[JsonPfbNameKey].GetString() };
     prefab.mIsActive = (document.HasMember(JsonPfbActiveKey) ? document[JsonPfbActiveKey].GetBool() : true);
 
     // iterate through component objects in json array
@@ -221,41 +221,6 @@ namespace Serialization
 
       prefab.mObjects.emplace_back(std::move(subObj));
     }
-
-#ifndef IMGUI_DISABLE
-    if (document.HasMember(JsonRemovedChildrenKey))
-    {
-      rttr::variant removedChildrenVar{ std::vector<std::pair<Prefabs::PrefabSubData::SubDataId, Prefabs::PrefabVersion>>{} };
-      DeserializeRecursive(removedChildrenVar, document[JsonRemovedChildrenKey]);
-      if (removedChildrenVar.is_valid()) {
-        prefab.mRemovedChildren = std::move(removedChildrenVar.get_value<
-          std::vector<std::pair<Prefabs::PrefabSubData::SubDataId, Prefabs::PrefabVersion>>>());
-      }
-      else {
-        std::string const msg{ "Unable to deserialize m_removedChildren of prefab " + prefab.mName };
-        Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + msg);
-#ifdef _DEBUG
-        std::cout << msg << "\n";
-#endif
-      }
-    }
-
-    if (document.HasMember(JsonRemovedCompKey))
-    {
-      rttr::variant removedCompVar{ std::vector<Prefabs::VariantPrefab::RemovedComponent>{} };
-      DeserializeRecursive(removedCompVar, document[JsonRemovedCompKey]);
-      if (removedCompVar.is_valid()) {
-        prefab.mRemovedComponents = std::move(removedCompVar.get_value<std::vector<Prefabs::VariantPrefab::RemovedComponent>>());
-      }
-      else {
-        std::string const msg{ "Unable to deserialize m_removedComponents of prefab " + prefab.mName };
-        Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + msg);
-#ifdef _DEBUG
-        std::cout << msg << "\n";
-#endif
-      }
-    }
-#endif
 
     return prefab;
   }

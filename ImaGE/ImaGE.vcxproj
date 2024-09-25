@@ -53,7 +53,7 @@
     </ClCompile>
     <ClCompile Include="Source\GUI\Persistent\PrefabEditor.cpp" />
     <ClCompile Include="Source\Prefabs\PrefabManager.cpp" />
-    <ClCompile Include="Source\Prefabs\VariantPrefab.cpp" />
+    <ClCompile Include="Source\Prefabs\Prefab.cpp" />
     <ClCompile Include="Source\Serialization\Registration\RegisterClasses.cpp" />
     <ClCompile Include="Source\Serialization\Registration\RegisterEnumsAndFuncs.cpp" />
     <ClCompile Include="source\TempScene.cpp" />
@@ -143,6 +143,7 @@
     <ClCompile Include="source\Serialization\Serializer.cpp" />
     <ClCompile Include="source\Graphics\Texture.cpp" />
     <ClCompile Include="Source\GUI\Styles\Styler.cpp" />
+    <ClInclude Include="Source\Core\Component\PrefabOverrides.h" />
     <ClInclude Include="source\External\ImTerm\misc.hpp" />
     <ClInclude Include="source\External\ImTerm\terminal.hpp" />
     <ClInclude Include="source\External\ImTerm\terminal_helpers.hpp" />
@@ -198,7 +199,7 @@
     <ClInclude Include="Source\GUI\Persistent\PrefabEditor.h" />
     <ClInclude Include="source\Physics\PhysicsHelpers.h" />
     <ClInclude Include="Source\Prefabs\PrefabManager.h" />
-    <ClInclude Include="Source\Prefabs\VariantPrefab.h" />
+    <ClInclude Include="Source\Prefabs\Prefab.h" />
     <ClInclude Include="Source\Reflection\VariantEntity.h" />
     <ClInclude Include="Source\Serialization\JsonKeys.h" />
     <ClInclude Include="source\TempScene.h" />

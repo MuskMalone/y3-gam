@@ -11,7 +11,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <pch.h>
 #include <rttr/registration>
 
-
 namespace
 {
   std::string StringFromRttrType(rttr::type const& type, bool& ok) {
@@ -21,6 +20,10 @@ namespace
   rttr::type RttrTypeFromString(std::string const& str, bool& ok) {
     ok = true; return rttr::type::get_by_name(str);
   }
+
+  std::string StringFromRttrProp(rttr::property const& prop, bool& ok) {
+    ok = true; return prop.get_name().to_string();
+  }
 }
 
 RTTR_REGISTRATION
@@ -28,6 +31,7 @@ RTTR_REGISTRATION
   /* ------------------- FUNCTIONS ------------------- */
   rttr::type::register_converter_func(StringFromRttrType);
   rttr::type::register_converter_func(RttrTypeFromString);
+  rttr::type::register_converter_func(StringFromRttrProp);
 
   using namespace JPH;
   /* ------------------- ENUMERATIONS ------------------- */

@@ -8,3 +8,4 @@
 #include "RigidBody.h"
 #include "Material.h"
 #include "Mesh.h"
+#include "PrefabOverrides.h"

@@ -30,7 +30,7 @@ namespace Serialization
 {
 
 #ifndef IMGUI_DISABLE
-  void Serializer::SerializeVariantPrefab(Prefabs::VariantPrefab const& prefab, std::string const& filePath)
+  void Serializer::SerializePrefab(Prefabs::Prefab const& prefab, std::string const& filePath)
   {
     std::ofstream ofs{ filePath };
     if (!ofs) {
@@ -47,7 +47,6 @@ namespace Serialization
 
     // serialize the base layer of the prefab
     writer.Key(JsonPfbNameKey); writer.String(prefab.mName.c_str());
-    writer.Key(JsonPfbVerKey); writer.Uint(prefab.mVersion);
     writer.Key(JsonPfbActiveKey); writer.Bool(true);
 
     writer.Key(JsonComponentsKey);
@@ -76,17 +75,6 @@ namespace Serialization
       writer.EndObject();
     }
     writer.EndArray();
-
-    // serialize removed objects
-    if (!prefab.mRemovedChildren.empty()) {
-      writer.Key(JsonRemovedChildrenKey);
-      SerializeRecursive(prefab.mRemovedChildren, writer);
-    }
-
-    if (!prefab.mRemovedComponents.empty()) {
-      writer.Key(JsonRemovedCompKey);
-      SerializeRecursive(prefab.mRemovedComponents, writer);
-    }
 
     writer.EndObject();
     ofs.close();

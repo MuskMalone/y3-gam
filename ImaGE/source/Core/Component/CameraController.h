@@ -1,5 +1,4 @@
 #pragma once
-#include <pch.h>
 namespace Component {
     struct CameraController {
         CameraController(float speed = 2.5f, float sense = 0.1f)

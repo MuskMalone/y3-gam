@@ -51,4 +51,11 @@ RTTR_REGISTRATION
     .property("positionOffset", &Collider::positionOffset)
     .property("rotationOffset", &Collider::rotationOffset)
     .property("type", &Collider::type);
+
+  rttr::registration::class_<PrefabOverrides>("PrefabOverrides")
+    .constructor<>()
+    .property("prefabName", &PrefabOverrides::prefabName)
+    .property("propOverrides", &PrefabOverrides::propOverrides)
+    .property("addedComponents", &PrefabOverrides::addedComponents)
+    .property("removedComponents", &PrefabOverrides::removedComponents);
 }

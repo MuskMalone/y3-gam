@@ -1,5 +1,5 @@
 /*!*********************************************************************
-\file   VariantPrefab.cpp
+\file   Prefab.cpp
 \author chengen.lau\@digipen.edu
 \date   16-September-2024
 \brief
@@ -12,7 +12,7 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
-#include "VariantPrefab.h"
+#include "Prefab.h"
 #include <Reflection/ObjectFactory.h>
 
 using namespace Prefabs;
@@ -34,14 +34,12 @@ ECS::Entity PrefabSubData::Construct() const
 }
 
 
-VariantPrefab::VariantPrefab(std::string name, unsigned version) :
-  mName{ std::move(name) }, mObjects{}, mComponents{},
-  mRemovedChildren{}, mRemovedComponents{}, mVersion { version } {}
+Prefab::Prefab(std::string name) : mName{ std::move(name) }, mObjects{}, mComponents{} {}
 
-std::pair<ECS::Entity, VariantPrefab::EntityMappings> VariantPrefab::Construct() const
+std::pair<ECS::Entity, Prefab::EntityMappings> Prefab::Construct() const
 {
   std::unordered_map<PrefabSubData::SubDataId, ECS::Entity> idsToEntities;
-  EntityMappings mappedData{ mName, mVersion };
+  EntityMappings mappedData{ mName };
   size_t const numObjs{ mObjects.size() + 1 };
   idsToEntities.reserve(numObjs);
   mappedData.mObjToEntity.reserve(numObjs);
@@ -75,7 +73,7 @@ std::pair<ECS::Entity, VariantPrefab::EntityMappings> VariantPrefab::Construct()
   return { entity, mappedData };
 }
 
-void VariantPrefab::CreateSubData(std::vector<ECS::Entity> const& children, PrefabSubData::SubDataId parent)
+void Prefab::CreateSubData(std::vector<ECS::Entity> const& children, PrefabSubData::SubDataId parent)
 {
   if (children.empty()) { return; }
 
@@ -109,7 +107,7 @@ void VariantPrefab::CreateSubData(std::vector<ECS::Entity> const& children, Pref
   }
 }
 
-void VariantPrefab::EntityMappings::Validate()
+void Prefab::EntityMappings::Validate()
 {
   //ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
   //for (auto iter{ mObjToEntity.begin() }; iter != mObjToEntity.end();)
@@ -125,11 +123,9 @@ void VariantPrefab::EntityMappings::Validate()
   //}
 }
 
-void VariantPrefab::Clear() noexcept
+void Prefab::Clear() noexcept
 {
   mName.clear();
   mComponents.clear();
   mObjects.clear();
-  mRemovedChildren.clear();
-  mVersion = 0;
 }

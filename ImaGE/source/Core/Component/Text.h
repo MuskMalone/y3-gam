@@ -1,5 +1,4 @@
 #pragma once
-
 #include <string>
 #include <glm/vec4.hpp>
 #include "Color.h"

@@ -21,7 +21,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
 #include <Singleton.h>
-#include "VariantPrefab.h"
+#include "Prefab.h"
 #include <unordered_map>
 #include <Core/Entity.h>
 #include <optional>
@@ -33,8 +33,8 @@ namespace Prefabs
   class PrefabManager : public Singleton<PrefabManager>
   {
   public:
-    using PrefabDataContainer = std::unordered_map<std::string, VariantPrefab>;
-    using EntityPrefabMap = std::unordered_map<ECS::EntityManager::EntityID, VariantPrefab::EntityMappings>;
+    using PrefabDataContainer = std::unordered_map<std::string, Prefab>;
+    using EntityPrefabMap = std::unordered_map<ECS::EntityManager::EntityID, Prefab::EntityMappings>;
 
     /*!*********************************************************************
     \brief
@@ -76,14 +76,14 @@ namespace Prefabs
 
     /*!*********************************************************************
     \brief
-      Gets the deserialized data of a prefab in the form of a VariantPrefab
+      Gets the deserialized data of a prefab in the form of a Prefab
       object. Throws a GE::Debug::Exception if not found.
     \param name
       The name of the prefab
     \return
-      The VariantPrefab object
+      The Prefab object
     ************************************************************************/
-    VariantPrefab const& GetVariantPrefab(std::string const& name) const;
+    Prefab const& GetVariantPrefab(std::string const& name) const;
 
     /*!*********************************************************************
     \brief
@@ -171,16 +171,16 @@ namespace Prefabs
 
     /*!*********************************************************************
     \brief
-      Creates a VariantPrefab with the current entity. The prefab will be
+      Creates a Prefab with the current entity. The prefab will be
       a copy of the entity, together with its children.
     \param entity
       The entity to create the prefab from
     \param name
       The name of the prefab to create
     \return
-      The VariantPrefab object of an entity
+      The Prefab object of an entity
     ************************************************************************/
-    VariantPrefab CreateVariantPrefab(ECS::Entity entity, std::string const& name);
+    Prefab CreateVariantPrefab(ECS::Entity entity, std::string const& name);
 
     /*!*********************************************************************
     \brief
@@ -199,7 +199,7 @@ namespace Prefabs
     /*!*********************************************************************
      \brief
        Updates a prefab and saves it to file after modification. The current
-       VariantPrefab in the prefab manager is replaced with a new copy and
+       Prefab in the prefab manager is replaced with a new copy and
        updated with any removed objects passed from the prefab editor.
      \param prefabInstance
        The entity ID of the prefab instance

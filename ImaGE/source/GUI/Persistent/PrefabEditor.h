@@ -18,7 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #ifndef IMGUI_DISABLE
 #include <GUI/GUIWindow.h>
 #include <Events/EventCallback.h>
-#include <Prefabs/VariantPrefab.h>
+#include <Prefabs/Prefab.h>
 
 namespace GUI
 {

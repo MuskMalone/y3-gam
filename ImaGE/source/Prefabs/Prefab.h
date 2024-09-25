@@ -1,5 +1,5 @@
 /*!*********************************************************************
-\file   VariantPrefab.h
+\file   Prefab.h
 \author chengen.lau\@digipen.edu
 \date   16-September-2024
 \brief  
@@ -22,7 +22,7 @@ namespace Prefabs
   using PrefabVersion = unsigned;
 
   // struct encapsulating deserialized data of a prefab's child components
-  // this should only be instantiated for use with a VariantPrefab
+  // this should only be instantiated for use with a Prefab
   struct PrefabSubData
   {
     using SubDataId = unsigned;
@@ -68,12 +68,12 @@ namespace Prefabs
   };
   // struct encapsulating deserialized prefab data
   // components are stored in an std::vector of rttr::variants
-  struct VariantPrefab
+  struct Prefab
   {
     struct EntityMappings;  // forward declaration; definition below
 
-    VariantPrefab() = default;
-    VariantPrefab(std::string name, unsigned version = 0);
+    Prefab() = default;
+    Prefab(std::string name);
 
     /*!*********************************************************************
     \brief
@@ -85,7 +85,7 @@ namespace Prefabs
 
     /*!*********************************************************************
     \brief
-      Constructs an entity with the data in the current VariantPrefab.
+      Constructs an entity with the data in the current Prefab.
       The entity will be created along with it's relevant hierarchy and
       is automatically added to the ECS.
     \return
@@ -109,40 +109,23 @@ namespace Prefabs
     ************************************************************************/
     void CreateSubData(std::vector<ECS::Entity> const& children, PrefabSubData::SubDataId parent = PrefabSubData::BasePrefabId);
 
-
-
     /*!*********************************************************************
     \brief
-      Resets the VariantPrefab object 
+      Resets the Prefab object 
     ************************************************************************/
     void Clear() noexcept;
-
-    // stores data relating to a removed component
-    struct RemovedComponent
-    {
-      RemovedComponent() : mId{}, mType{ rttr::type::get<void>() }, mVersion{} {}
-      RemovedComponent(PrefabSubData::SubDataId id, rttr::type const& type, PrefabVersion ver) :
-        mId{ id }, mType{ type }, mVersion{ ver } {}
-
-      PrefabSubData::SubDataId mId;
-      rttr::type mType;
-      PrefabVersion mVersion;
-    };
 
     std::string mName;
     std::vector<PrefabSubData> mObjects;
     std::vector<rttr::variant> mComponents;
-    std::vector<std::pair<PrefabSubData::SubDataId, PrefabVersion>> mRemovedChildren;
-    std::vector<RemovedComponent> mRemovedComponents;
-    PrefabVersion mVersion;
     bool mIsActive;
   };
 
   // stores information pertaining to each prefab instance
-  struct VariantPrefab::EntityMappings
+  struct Prefab::EntityMappings
   {
-    EntityMappings() : mPrefab{}, mObjToEntity{}, mVersion{}, mRegistered{ true } {}
-    EntityMappings(std::string prefab, PrefabVersion version) : mPrefab{ std::move(prefab) }, mObjToEntity{}, mVersion{ version }, mRegistered{ true } {}
+    EntityMappings() : mPrefab{}, mObjToEntity{} {}
+    EntityMappings(std::string prefab) : mPrefab{ std::move(prefab) }, mObjToEntity{} {}
 
     /*!*********************************************************************
     \brief
@@ -153,7 +136,5 @@ namespace Prefabs
 
     std::string mPrefab;
     std::unordered_map<PrefabSubData::SubDataId, ECS::EntityManager::EntityID> mObjToEntity;
-    PrefabVersion mVersion;
-    bool mRegistered;  // whether the entity should be updated by the prefab
   };
 }

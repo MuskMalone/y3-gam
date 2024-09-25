@@ -15,7 +15,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rttr/variant.h>
 #include <string>
 #include <Reflection/ObjectFactory.h>
-#include <Prefabs/VariantPrefab.h>
+#include <Prefabs/Prefab.h>
 
 namespace Serialization
 {
@@ -53,15 +53,15 @@ namespace Serialization
 
     /*!*********************************************************************
      \brief
-       Deserializes a prefab from a json file into a VariantPrefab object.
+       Deserializes a prefab from a json file into a Prefab object.
        It contains the prefab name along with a vector of its components
        stored in an rttr::variant object.
      \param json
        The file containing the prefab data
      \return
-       The VariantPrefab object
+       The Prefab object
      ************************************************************************/
-    static Prefabs::VariantPrefab DeserializePrefabToVariant(std::string const& json);
+    static Prefabs::Prefab DeserializePrefabToVariant(std::string const& json);
 
   private:
     using EntityID = ECS::EntityManager::EntityID;

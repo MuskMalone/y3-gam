@@ -17,7 +17,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rapidjson/PrettyWriter.h>
 #include <rapidjson/ostreamwrapper.h>
 #include <string>
-#include <Prefabs/VariantPrefab.h>
+#include <Prefabs/Prefab.h>
 
 // forward declaration
 namespace ECS { class Entity; }
@@ -62,7 +62,7 @@ namespace Serialization
     \param filename
       The name of the output file
     ************************************************************************/
-    static void SerializeVariantPrefab(Prefabs::VariantPrefab const& prefab, std::string const& filename);
+    static void SerializePrefab(Prefabs::Prefab const& prefab, std::string const& filename);
 #endif
 
   private:
