@@ -140,10 +140,11 @@ namespace Graphics {
 
 	void Renderer::SetTriangleBufferData(glm::vec3 const& pos, glm::vec4 const& clr) {
 		if (mData.triVtxCount < mData.triBuffer.size()) {
-			TriVtx& vtx = mData.triBuffer[mData.triVtxCount];
+			TriVtx& vtx = mData.triBuffer[mData.triBufferIndex];
 			vtx.pos = pos;
 			vtx.clr = clr;
 		}
+		++mData.triBufferIndex;
 		++mData.triVtxCount;
 	}
 
@@ -323,6 +324,8 @@ namespace Graphics {
 
 	void Renderer::RenderSceneBegin(glm::mat4 const& viewProjMtx) {
 
+		mData.lineShader->Use();
+		mData.lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
 		mData.texShader->Use();
 		mData.texShader->SetUniform("u_ViewProjMtx", viewProjMtx);
 

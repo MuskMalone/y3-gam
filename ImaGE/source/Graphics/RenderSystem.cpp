@@ -35,16 +35,23 @@ namespace Graphics {
 				auto const& mesh = entity.GetComponent<Component::Mesh>();
 				if (mesh.mesh == nullptr) continue;
 
-				
-				//Graphics::Renderer::SubmitMesh(mesh.mesh, {2.f,2.f,2.f}, xfm.worldScale, {1.f,1.f,1.f,1.f}, {}); //@TODO change clr and rot 
-				
+
+				Graphics::Renderer::SubmitMesh(mesh.mesh, xfm.worldPos, xfm.worldScale, { 1.f,1.f,1.f,1.f }, {}); //@TODO change clr and rot 
+				// Assuming xfm.worldPos is a glm::vec3 that contains the position in world space
+
 				//Graphics::Renderer::SubmitMesh(mesh.mesh, {5.f,5.f,2.f}, xfm.worldScale, { 1.f,1.f,1.f,1.f }, {});
 			}
-
-			//Graphics::Renderer::SubmitTriangle({ 1.f,1.f,1.f }, {}, { 2.f,2.f,2.f });
 
 		} // Render End
 
 		//Renderer::mGeomPass->End();
 	}
 }
+
+
+
+
+
+
+
+
