@@ -26,13 +26,8 @@ namespace Graphics {
 		glm::vec4 clr;
 	};
 
-	struct CubeVtx {
+	struct TriVtx {
 		glm::vec3 pos;
-		glm::vec3 normal;
-		glm::vec2 texCoord;
-		float texIdx; // float as it is passed to shader
-		glm::vec3 tangent;
-		glm::vec3 bitangent;
 		glm::vec4 clr;
 	};
 
@@ -62,25 +57,27 @@ namespace Graphics {
 		//static const uint32_t cMaxVertices{ cMaxCubes * 24 }; // 6 faces * 4 vertices per cube
 		//static const uint32_t cMaxIndices{ cMaxCubes * 360 };  // 6 faces * 6 indices per face
 
-		std::shared_ptr<VertexArray> cubeVertexArray;
-		std::shared_ptr<VertexBuffer> cubeVertexBuffer;
+		std::shared_ptr<VertexArray> triVertexArray;
+		std::shared_ptr<VertexBuffer> triVertexBuffer;
 
 		std::shared_ptr<VertexArray> quadVertexArray;
 		std::shared_ptr<VertexBuffer> quadVertexBuffer;
 		std::shared_ptr<Shader> texShader;
 		std::shared_ptr<Texture> whiteTex;
 
+		std::shared_ptr<Shader> lineShader;
+
 		uint32_t quadIdxCount{};
-		uint32_t cubeIdxCount{};
+		uint32_t triVtxCount{};
 		std::vector<QuadVtx> quadBuffer; // Dynamic buffer to hold vertex data for batching
-		std::vector<CubeVtx> cubeBuffer; // Dynamic buffer to hold vertex data for batching
+		std::vector<TriVtx> triBuffer; // Dynamic buffer to hold vertex data for batching
 		//QuadVtx* quadBufferPtr{ nullptr }; // Pointer to the current position in the buffer
 
 		uint32_t quadBufferIndex = 0;     // Index into the quadBuffer instead of a pointer
-		uint32_t cubeBufferIndex = 0;     // Index into the quadBuffer instead of a pointer
+		uint32_t triBufferIndex = 0;     // Index into the quadBuffer instead of a pointer
 
 		std::array<glm::vec4, 4> quadVtxPos{};
-		std::array<glm::vec4, 24> cubeVtxPos{};
+
 		std::vector<std::shared_ptr<Texture>> texUnits; // Array of Texture pointers
 		uint32_t texUnitIdx{ 1 }; // 0 = white tex
 
@@ -96,8 +93,8 @@ namespace Graphics {
 		// Quads
 		static void DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::vec4 const& clr, float rot = 0.f);
 
-		static void SubmitCube(glm::vec3 const& pos, glm::vec3 const& scale, glm::vec4 const& clr, float rot = 0.f);
-		static void SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& scale, glm::vec4 const& clr = {1.f,1.f,1.f,1.f}, float rot = 0.f);
+		static void SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& scale, glm::vec4 const& clr = { 1.f,1.f,1.f,1.f }, float rot = 0.f);
+		static void SubmitTriangle(glm::vec3 const& v1, glm::vec3 const& v2, glm::vec3 const& v3, glm::vec4 const& clr = { 1.f,1.f,1.f,1.f });
 
 		// Batching
 		static void FlushBatch();
@@ -108,14 +105,11 @@ namespace Graphics {
 		static unsigned int GetMaxTextureUnits();
 	private:
 		static void SetQuadBufferData(glm::vec3 const& pos, glm::vec2 const& scale,
-									  glm::vec3 const& norm, glm::vec2 const& texCoord,
-									  float texIdx, glm::vec3 const& tangent, glm::vec3 const& bitangent,
-									  glm::vec4 const& clr);
-
-		static void SetCubeBufferData(glm::vec3 const& pos, glm::vec2 const& scale,
 			glm::vec3 const& norm, glm::vec2 const& texCoord,
 			float texIdx, glm::vec3 const& tangent, glm::vec3 const& bitangent,
 			glm::vec4 const& clr);
+
+		static void SetTriangleBufferData(glm::vec3 const& pos, glm::vec4 const& clr);
 
 		static void SetMeshBufferData(glm::vec3 const& pos, glm::vec3 const& norm,
 			glm::vec2 const& texCoord, float texIdx,

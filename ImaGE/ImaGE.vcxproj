@@ -250,6 +250,8 @@
     <ClInclude Include="Source\Core\Camera.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\Shaders\Tri.frag.glsl" />
+    <None Include="assets\Shaders\Tri.vert.glsl" />
     <None Include="shaders\Default.frag.glsl" />
     <None Include="shaders\Default.vert.glsl" />
     <None Include="Source\GUI\Dockable\Inspector.tpp" />
