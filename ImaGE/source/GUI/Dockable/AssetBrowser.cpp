@@ -318,7 +318,7 @@ namespace GUI
       if (std::string(gSupportedModelFormats).find(path.extension().string()) != std::string::npos) {
         Graphics::AssetIO::IMSH imsh{ file };
         Debug::DebugLogger::GetInstance().LogInfo("Model detected. Converting to .imsh file...");
-        imsh.WriteToBinFile(path.stem().string(), file);
+        imsh.WriteToBinFile(path.stem().string());
         Debug::DebugLogger::GetInstance().LogInfo(("Added " + path.stem().string() + gMeshFileExt) + " to assets");
         continue;
       }

@@ -2,21 +2,16 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <unordered_set>
 #include <rttr/variant.h>
+#include <Prefabs/Prefab.h>
 
 namespace Component {
-  /*struct PropOverride {
-    PropOverride() : propName{}, propVal{} {}
-    PropOverride(rttr::property const& prop) : propName{ prop.get_name().to_string() }, propVal{ prop } {}
-
-    std::string propName;
-    rttr::variant propVal;
-  };*/
-
   struct PrefabOverrides
   {
     PrefabOverrides() = default;
-    PrefabOverrides(std::string const& prefab) : prefabName{ prefab }, /*propOverrides{}, */modifiedComponents{}, removedComponents{} {}
+    PrefabOverrides(std::string const& prefab, Prefabs::SubDataId id = Prefabs::PrefabSubData::BasePrefabId) :
+      prefabName{ prefab }, modifiedComponents{}, removedComponents{}, subDataId{ id } {}
 
     inline bool IsDefault() const noexcept { return /*propOverrides.empty() &&*/ modifiedComponents.empty() && removedComponents.empty(); }
     
@@ -29,14 +24,17 @@ namespace Component {
     inline bool IsComponentRemoved() const { return removedComponents.contains(rttr::type::get<T>()); }
     inline bool IsComponentRemoved(rttr::type const& type) const { return removedComponents.contains(type); }
 
-    void AddComponentModification(rttr::type const& type) { removedComponents.erase(type); modifiedComponents.emplace(type); }
+    void AddComponentModification(rttr::variant const& comp) {
+      rttr::type const compType{ comp.get_type() };
+      removedComponents.erase(compType);
+      modifiedComponents[compType] = comp;
+    }
     void AddComponentRemoval(rttr::type const& type) { modifiedComponents.erase(type); removedComponents.emplace(type); }
-    /*inline void AddProperty(rttr::property const& prop) { propOverrides.emplace(std::piecewise_construct,
-      std::forward_as_tuple(prop.get_declaring_type()), std::forward_as_tuple(prop)); }*/
 
     std::string prefabName; // @TODO: SHOULD USE GUID WHEN ASSET MANAGER DONE
-    //std::unordered_map<rttr::type, PropOverride> propOverrides; // <component, property>
-    std::unordered_set<rttr::type> modifiedComponents, removedComponents;
+    std::unordered_map<rttr::type, rttr::variant> modifiedComponents;
+    std::unordered_set<rttr::type> removedComponents;
+    Prefabs::SubDataId subDataId;
   };
 
 } // namespace Component

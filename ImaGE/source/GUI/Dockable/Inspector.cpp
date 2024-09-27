@@ -42,11 +42,15 @@ namespace GUI {
 
       static Component::PrefabOverrides* prefabOverride{ nullptr };
       static bool componentOverriden{ false };
-      if (currentEntity.HasComponent<Component::PrefabOverrides>()) {
+      if (!mEditingPrefab && currentEntity.HasComponent<Component::PrefabOverrides>()) {
         prefabOverride = &currentEntity.GetComponent<Component::PrefabOverrides>();
+        ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
+        ImGui::Text("Prefab instance of");
+        ImGui::SameLine();
         ImGui::PushStyleColor(ImGuiCol_Text, sComponentHighlightCol);
-        ImGui::Text(("Prefab Source: " + prefabOverride->prefabName).c_str());
+        ImGui::Text(prefabOverride->prefabName.c_str());
         ImGui::PopStyleColor();
+        ImGui::PopFont();
       }
       else {
         prefabOverride = nullptr;
@@ -55,108 +59,118 @@ namespace GUI {
       // @TODO: EDIT WHEN NEW COMPONENTS (ALSO ITS OWN WINDOW FUNCTION)
       if (currentEntity.HasComponent<Component::Tag>()) {
         rttr::type const tagType{ rttr::type::get<Component::Tag>() };
-        componentOverriden = componentOverriden && prefabOverride->IsComponentModified(tagType);
+        componentOverriden = prefabOverride && prefabOverride->IsComponentModified(tagType);
 
         if (TagComponentWindow(currentEntity, std::string(ICON_FA_TAG), componentOverriden)) {
           SetIsComponentEdited(true);
-          if (prefabOverride && !componentOverriden) {
-            prefabOverride->AddComponentModification(tagType);
+          if (prefabOverride) {
+            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Tag>());
           }
         }
       }
 
       if (currentEntity.HasComponent<Component::Transform>()) {
-        rttr::type const transformType{ rttr::type::get<Component::Transform>() };
-        componentOverriden = componentOverriden && prefabOverride->IsComponentModified(transformType);
-
+        componentOverriden = prefabOverride && prefabOverride->IsComponentModified(rttr::type::get<Component::Transform>());
+        Component::Transform const& trans{ currentEntity.GetComponent<Component::Transform>() };
+        glm::vec3 const oldPos{ trans.worldPos };
         if (TransformComponentWindow(currentEntity, std::string(ICON_FA_ROTATE), componentOverriden)) {
           SetIsComponentEdited(true);
-          if (prefabOverride && !componentOverriden) {
-            prefabOverride->AddComponentModification(transformType);
+          if (prefabOverride) {
+            if (prefabOverride->subDataId == Prefabs::PrefabSubData::BasePrefabId) {
+              // if root entity, ignore position changes
+              // here, im assuming only 1 value can be modified per frame.
+              // So if position wasn't modified, it means either rot or scale was
+              if (oldPos == trans.worldPos) {
+                prefabOverride->AddComponentModification(trans);
+              }
+            }
+            else {
+              prefabOverride->AddComponentModification(trans);
+            }
           }
         }
       }
 
       if (currentEntity.HasComponent<Component::Collider>()) {
         rttr::type const colliderType{ rttr::type::get<Component::Collider>() };
-        componentOverriden = componentOverriden && prefabOverride->IsComponentModified(colliderType);
+        componentOverriden = prefabOverride && prefabOverride->IsComponentModified(colliderType);
 
         if (ColliderComponentWindow(currentEntity, std::string(ICON_FA_BOMB), componentOverriden)) {
           SetIsComponentEdited(true);
-          if (prefabOverride && !componentOverriden) {
-            prefabOverride->AddComponentModification(colliderType);
+          if (prefabOverride) {
+            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Collider>());
           }
         }
       }
 
       if (currentEntity.HasComponent<Component::Layer>()) {
         rttr::type const layerType{ rttr::type::get<Component::Layer>() };
-        componentOverriden = componentOverriden && prefabOverride->IsComponentModified(layerType);
+        componentOverriden = prefabOverride && prefabOverride->IsComponentModified(layerType);
 
         if (LayerComponentWindow(currentEntity, std::string(ICON_FA_LAYER_GROUP), componentOverriden)) {
           SetIsComponentEdited(true);
-          if (prefabOverride && !componentOverriden) {
-            prefabOverride->AddComponentModification(layerType);
+          if (prefabOverride) {
+            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Layer>());
           }
         }
       }
 
       if (currentEntity.HasComponent<Component::Material>()) {
         rttr::type const materialType{ rttr::type::get<Component::Material>() };
-        componentOverriden = componentOverriden && prefabOverride->IsComponentModified(materialType);
+        componentOverriden = prefabOverride && prefabOverride->IsComponentModified(materialType);
 
         if (MaterialComponentWindow(currentEntity, std::string(ICON_FA_GEM), componentOverriden)) {
           SetIsComponentEdited(true);
-          if (prefabOverride && !componentOverriden) {
-            prefabOverride->AddComponentModification(materialType);
+          if (prefabOverride) {
+            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Material>());
           }
         }
       }
 
       if (currentEntity.HasComponent<Component::Mesh>()) {
         rttr::type const meshType{ rttr::type::get<Component::Mesh>() };
-        componentOverriden = componentOverriden && prefabOverride->IsComponentModified(meshType);
+        componentOverriden = prefabOverride && prefabOverride->IsComponentModified(meshType);
 
         if (MeshComponentWindow(currentEntity, std::string(ICON_FA_CUBE), componentOverriden)) {
           SetIsComponentEdited(true);
-          if (prefabOverride && !componentOverriden) {
-            prefabOverride->AddComponentModification(meshType);
+          if (prefabOverride) {
+            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Mesh>());
           }
         }
       }
 
       if (currentEntity.HasComponent<Component::RigidBody>()) {
         rttr::type const rigidBodyType{ rttr::type::get<Component::RigidBody>() };
-        componentOverriden = componentOverriden && prefabOverride->IsComponentModified(rigidBodyType);
+        componentOverriden = prefabOverride && prefabOverride->IsComponentModified(rigidBodyType);
 
         if (RigidBodyComponentWindow(currentEntity, std::string(ICON_FA_CAR), componentOverriden)) {
           SetIsComponentEdited(true);
-          if (prefabOverride && !componentOverriden) {
-            prefabOverride->AddComponentModification(rigidBodyType);
+          if (prefabOverride) {
+            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::RigidBody>());
           }
         }
       }
 
       if (currentEntity.HasComponent<Component::Script>()) {
         rttr::type const scriptType{ rttr::type::get<Component::Script>() };
-        componentOverriden = componentOverriden && prefabOverride->IsComponentModified(scriptType);
+        componentOverriden = prefabOverride && prefabOverride->IsComponentModified(scriptType);
 
         if (ScriptComponentWindow(currentEntity, std::string(ICON_FA_FILE_CODE), componentOverriden)) {
           SetIsComponentEdited(true);
-          if (prefabOverride && !componentOverriden) {
-            prefabOverride->AddComponentModification(scriptType);
+          if (prefabOverride) {
+            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Script>());
           }
         }
       }
 
       if (currentEntity.HasComponent<Component::Text>()) {
         rttr::type const textType{ rttr::type::get<Component::Text>() };
-        componentOverriden = componentOverriden && prefabOverride->IsComponentModified(textType);
+        componentOverriden = prefabOverride && prefabOverride->IsComponentModified(textType);
 
         if (TextComponentWindow(currentEntity, std::string(ICON_FA_FONT), componentOverriden)) {
           SetIsComponentEdited(true);
-          if (prefabOverride && !componentOverriden) {
-            prefabOverride->AddComponentModification(textType);
+          if (prefabOverride) {
+            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Text>());
           }
         }
       }
@@ -197,7 +211,7 @@ namespace GUI {
   }
 
   bool Inspector::LayerComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
-    bool const isOpen{ WindowBegin<Component::Layer>("Layer", icon, true) };
+    bool const isOpen{ WindowBegin<Component::Layer>("Layer", icon, highlight) };
     bool modified{ false };
     
     if (isOpen) {
@@ -655,7 +669,7 @@ namespace GUI {
 
       if (ImGui::BeginTable("##component_table", 1, ImGuiTableFlags_SizingStretchSame)) {
         ImGui::TableSetupColumn("ComponentNames", ImGuiTableColumnFlags_WidthFixed, 200.f);
-
+        
         // @TODO: EDIT WHEN NEW COMPONENTS
         DrawAddComponentButton<Component::Collider>("Collider", ICON_FA_BOMB);
         DrawAddComponentButton<Component::Layer>("Layer", ICON_FA_LAYER_GROUP);

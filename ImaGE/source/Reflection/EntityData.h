@@ -1,5 +1,5 @@
 /*!*********************************************************************
-\file       VariantEntity.h
+\file       EntityData.h
 \author     chengen.lau\@digipen.edu
 \date       15-September-2024
 \brief
@@ -13,6 +13,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <string>
 #include <rttr/type.h>
 #include <Core/EntityManager.h>
+#include <Core/Component/PrefabOverrides.h>
+#include <optional>
+#include <glm/glm.hpp>
 
 namespace Reflection
 {
@@ -24,15 +27,21 @@ namespace Reflection
   {
     using EntityID = ECS::EntityManager::EntityID;
 
-    VariantEntity() = default;
-    VariantEntity(EntityID parent = entt::null, bool active = true)
-      : mPrefab{}, mComponents {}, mChildEntities{}, mParent{ parent }, mIsActive{ active } {}
+    VariantEntity(EntityID id, EntityID parent = entt::null, bool active = true)
+      : mComponents {}, mChildEntities{}, mID{ id }, mParent{ parent }, mIsActive{ active } {}
 
-    std::string mPrefab;
     std::vector<rttr::variant> mComponents;
     std::vector<EntityID> mChildEntities;
-    EntityID mParent = entt::null;
+    EntityID mID, mParent;
     bool mIsActive;
+  };
+
+  struct PrefabInst
+  {
+    PrefabInst() : mPosition{}, mOverrides{} {}
+
+    std::optional<glm::vec3> mPosition; // only for root entity
+    Component::PrefabOverrides mOverrides;
   };
 
 } // namespace Reflection

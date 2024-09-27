@@ -25,6 +25,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Serialization/Deserializer.h>
 #include <Events/EventManager.h>
 #include <filesystem>
+#include <Core/Component/Transform.h>
 
 #ifdef _DEBUG
 //#define PREFAB_MANAGER_DEBUG
@@ -47,9 +48,7 @@ ECS::Entity PrefabManager::SpawnPrefab(const std::string& key, glm::dvec3 const&
     throw Debug::Exception<PrefabManager>(Debug::LVL_ERROR, Msg("Unable to load prefab " + key));
   }
 
-  auto entityData{ iter->second.Construct() };
-  Component::Transform& trans{ entityData.first.GetComponent<Component::Transform>() };
-  trans.worldPos = pos;
+  auto entityData{ iter->second.Construct(pos) };
 
   if (mapEntity) {
     // set entity's prefab source
@@ -84,7 +83,7 @@ EVENT_CALLBACK_DEF(PrefabManager, HandleEvent)
     auto pfbEvent{ CAST_TO_EVENT(Events::SpawnPrefabEvent) };
     // if its already loaded, simply create an instance
     if (!IsPrefabLoaded(pfbEvent->mName)) {
-      LoadPrefab(pfbEvent->mName, pfbEvent->mPath);
+      LoadPrefab(pfbEvent->mName);
     }
 
     SpawnPrefab(pfbEvent->mName, pfbEvent->mPos, pfbEvent->mMapEntity);
@@ -277,8 +276,8 @@ bool PrefabManager::UpdateAllEntitiesFromPrefab()
   return instanceUpdated;
 }
 
-void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::vector<Prefabs::PrefabSubData::SubDataId> const& removedChildren,
-  std::vector<std::pair<Prefabs::PrefabSubData::SubDataId, rttr::type>> const& removedComponents, std::string const& filePath)
+void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::vector<Prefabs::SubDataId> const& removedChildren,
+  std::vector<std::pair<Prefabs::SubDataId, rttr::type>> const& removedComponents, std::string const& filePath)
 {
   //PrefabDataContainer::iterator iter{ mPrefabs.find(prefabInstance.GetComponent<Component::Tag>().tag) };
   //if (iter == mPrefabs.end()) {
@@ -320,12 +319,6 @@ Prefab PrefabManager::CreateVariantPrefab(ECS::Entity entity, std::string const&
 
 void PrefabManager::CreatePrefabFromEntity(ECS::Entity const& entity, std::string const& name, std::string const& path)
 {
-  // if prefab already exists, append " (Copy)" to it
-  /*std::string prefabName{ name };
-  while (DoesPrefabExist(prefabName)) {
-    prefabName += " (Copy)";
-  }*/
-
   Prefab prefab{ CreateVariantPrefab(entity, name) };
 
   //Assets::AssetManager& am{ Assets::AssetManager::GetInstance() };
@@ -354,8 +347,8 @@ void PrefabManager::ReloadPrefab(std::string const& name, std::string const& fil
   mPrefabs[name] = Serialization::Deserializer::DeserializePrefabToVariant(filePath);
 }
 
-void PrefabManager::LoadPrefab(std::string const& name, std::string const& filePath) {
+void PrefabManager::LoadPrefab(std::string const& name) {
   if (IsPrefabLoaded(name)) { return; }
 
-  mPrefabs.emplace(name, Serialization::Deserializer::DeserializePrefabToVariant(filePath));
+  mPrefabs.emplace(name, Serialization::Deserializer::DeserializePrefabToVariant(gPrefabsDirectory + name + gPrefabFileExt));
 }

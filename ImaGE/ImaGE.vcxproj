@@ -200,7 +200,7 @@
     <ClInclude Include="source\Physics\PhysicsHelpers.h" />
     <ClInclude Include="Source\Prefabs\PrefabManager.h" />
     <ClInclude Include="Source\Prefabs\Prefab.h" />
-    <ClInclude Include="Source\Reflection\VariantEntity.h" />
+    <ClInclude Include="Source\Reflection\EntityData.h" />
     <ClInclude Include="Source\Serialization\JsonKeys.h" />
     <ClInclude Include="source\TempScene.h" />
     <ClInclude Include="source\Scenes\SceneManager.h" />
@@ -364,13 +364,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)lib\spdlog;$(IncludePath)</IncludePath>
+    <IncludePath>
+    </IncludePath>
+    <ExternalIncludePath>$(SolutionDir)lib\spdlog;$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)lib\glad-gl-4.6\include;$(SolutionDir)lib\assimp\include;$(ProjectDir)Source\External;$(SolutionDir)lib\glm\include;$(SolutionDir)lib\rapidjson-1.1.0\include;$(SolutionDir)lib\rttr-0.9.6\include;$(SolutionDir)lib\jolt\include;$(SolutionDir)lib\entt\include;$(SolutionDir)lib\ImTerm;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NO_IMGUI_D|x64'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)lib\spdlog;$(IncludePath)</IncludePath>
+    <IncludePath>
+    </IncludePath>
+    <ExternalIncludePath>$(SolutionDir)lib\spdlog;$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)lib\glad-gl-4.6\include;$(SolutionDir)lib\assimp\include;$(ProjectDir)Source\External;$(SolutionDir)lib\glm\include;$(SolutionDir)lib\rapidjson-1.1.0\include;$(SolutionDir)lib\rttr-0.9.6\include;$(SolutionDir)lib\jolt\include;$(SolutionDir)lib\entt\include;$(SolutionDir)lib\ImTerm;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GAME_BUILD|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GAME_BUILD|x64'">
+    <IncludePath />
+    <ExternalIncludePath>$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)lib\glad-gl-4.6\include;$(SolutionDir)lib\glm\include;$(SolutionDir)lib\rapidjson-1.1.0\include;$(SolutionDir)lib\rttr-0.9.6\include;$(SolutionDir)lib\jolt\include;$(SolutionDir)lib\entt\include;$(ExternalIncludePath)</ExternalIncludePath>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NO_IMGUI_R|x64'" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -446,14 +453,14 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);JPH_DEBUG_RENDERER;JPH_PROFILE_ENABLED;JPH_OBJECT_STREAM;JPH_USE_AVX2;JPH_USE_AVX;JPH_USE_SSE4_1;JPH_USE_SSE4_2;JPH_USE_LZCNT;JPH_USE_TZCNT;JPH_USE_F16C;JPH_USE_FMADD;_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>false</TreatWarningAsError>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(ProjectDir)Shaders;$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)lib\glad-gl-4.6\include;$(ProjectDir)Source\External;$(SolutionDir)lib\assimp\include;$(SolutionDir)lib\glm\include;$(SolutionDir)lib\rapidjson-1.1.0\include;$(SolutionDir)lib\rttr-0.9.6\include;$(SolutionDir)lib\entt\include;$(SolutionDir)lib\jolt\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(ProjectDir)Shaders</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <DisableSpecificWarnings>26827;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
@@ -516,7 +523,7 @@ xcopy "$(ProjectDir)assets" "$(OutDir)assets" /s /r /y /q</Command>
       <TreatWarningAsError>false</TreatWarningAsError>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(ProjectDir)Shaders;$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)lib\glad-gl-4.6\include;$(ProjectDir)Source\External;$(SolutionDir)lib\assimp\include;$(SolutionDir)lib\glm\include;$(SolutionDir)lib\rapidjson-1.1.0\include;$(SolutionDir)lib\rttr-0.9.6\include;$(SolutionDir)lib\jolt\include;$(SolutionDir)lib\entt\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(ProjectDir)Shaders</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -550,7 +557,7 @@ xcopy "$(ProjectDir)assets" "$(OutDir)assets" /s /r /y /q</Command>
       <TreatWarningAsError>false</TreatWarningAsError>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(ProjectDir)Shaders;$(SolutionDir)lib\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)lib\glad-gl-4.6\include;$(ProjectDir)Source\External;$(SolutionDir)lib\assimp\include;$(SolutionDir)lib\glm\include;$(SolutionDir)lib\rapidjson-1.1.0\include;$(SolutionDir)lib\rttr-0.9.6\include;$(SolutionDir)lib\entt\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(ProjectDir)Shaders</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>

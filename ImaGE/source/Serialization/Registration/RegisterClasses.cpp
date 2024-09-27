@@ -56,15 +56,5 @@ RTTR_REGISTRATION
     .property("second", &std::pair<std::string, unsigned>::second)
     ;
 
-  rttr::registration::class_<Prefabs::Prefab::EntityMappings>("EntityMappings")
-    .property("name", &Prefabs::Prefab::EntityMappings::mPrefab)
-    .property("objToEntity", &Prefabs::Prefab::EntityMappings::mObjToEntity)
-    ;
-
-  rttr::registration::class_<std::pair<Prefabs::PrefabSubData::SubDataId, Prefabs::PrefabVersion>>("UnsignedUnsignedPair")
-    .property("first", &std::pair<Prefabs::PrefabSubData::SubDataId, Prefabs::PrefabVersion>::first)
-    .property("second", &std::pair<Prefabs::PrefabSubData::SubDataId, Prefabs::PrefabVersion>::second)
-    ;
-
 #endif
 }

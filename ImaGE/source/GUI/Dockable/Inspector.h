@@ -8,10 +8,10 @@
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <GUI/Styles/FontAwesome6Icons.h>
 
-#include "Core/Entity.h"
 #include "Core/EntityManager.h"
 #include <Reflection/ObjectFactory.h>
 #include <Events/EventCallback.h>
+#include <Core/Component/Components.h>
 
 namespace GUI {
   class Inspector : public GUIWindow {

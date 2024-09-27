@@ -126,7 +126,7 @@ namespace Prefabs
     \param filePath
       The file to deserialize from
     ************************************************************************/
-    void LoadPrefab(std::string const& name, std::string const& filePath);
+    void LoadPrefab(std::string const& name);
 
   private:
     /*!*********************************************************************
@@ -210,8 +210,8 @@ namespace Prefabs
      \param filepath
        The path to save the prefab to
     ************************************************************************/
-    void UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::vector<Prefabs::PrefabSubData::SubDataId> const& removedChildren,
-      std::vector<std::pair<Prefabs::PrefabSubData::SubDataId, rttr::type>> const& removedComponents, std::string const& filepath);
+    void UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::vector<Prefabs::SubDataId> const& removedChildren,
+      std::vector<std::pair<Prefabs::SubDataId, rttr::type>> const& removedComponents, std::string const& filepath);
 
     /*!*********************************************************************
     \brief

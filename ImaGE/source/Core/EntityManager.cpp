@@ -1,6 +1,7 @@
 #include <pch.h>
 #include "EntityManager.h"
 #include "Entity.h"
+#include <Core/Component/Components.h>
 
 namespace ECS {
   Entity EntityManager::CreateEntity() {

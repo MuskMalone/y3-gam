@@ -14,19 +14,18 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma once
 #include <vector>
 #include <string>
+#include <unordered_map>
 #include <rttr/type.h>
-#include <Core/Entity.h>
+#include <Core/EntityManager.h>
 
 namespace Prefabs
 {
-  using PrefabVersion = unsigned;
+  using SubDataId = unsigned;
 
   // struct encapsulating deserialized data of a prefab's child components
   // this should only be instantiated for use with a Prefab
   struct PrefabSubData
   {
-    using SubDataId = unsigned;
-
     PrefabSubData();
     PrefabSubData(SubDataId id, SubDataId parent = BasePrefabId);
 
@@ -57,20 +56,20 @@ namespace Prefabs
     \return
       The ID of the created entity
     ************************************************************************/
-    ECS::Entity Construct() const;
+    ECS::Entity Construct(std::string const& name) const;
 
     std::vector<rttr::variant> mComponents;
     SubDataId mId, mParent;
     bool mIsActive;
 
     // id of the first layer of the prefab
-    static SubDataId const BasePrefabId = 0;
+    static constexpr SubDataId BasePrefabId = 0;
   };
   // struct encapsulating deserialized prefab data
   // components are stored in an std::vector of rttr::variants
   struct Prefab
   {
-    struct EntityMappings;  // forward declaration; definition below
+    using EntityMappings = std::unordered_map<SubDataId, ECS::Entity>;
 
     Prefab() = default;
     Prefab(std::string name);
@@ -91,7 +90,7 @@ namespace Prefabs
     \return
       The ID of the created entity
     ************************************************************************/
-    std::pair<ECS::Entity, EntityMappings> Construct() const;
+    std::pair<ECS::Entity, EntityMappings> Construct(glm::vec3 const& pos = {}) const;
 
     /*!*********************************************************************
     \brief
@@ -107,7 +106,7 @@ namespace Prefabs
       This is defaulted to the BasePrefabId and should not be used
       externally.
     ************************************************************************/
-    void CreateSubData(std::vector<ECS::Entity> const& children, PrefabSubData::SubDataId parent = PrefabSubData::BasePrefabId);
+    void CreateSubData(std::vector<ECS::Entity> const& children, SubDataId parent = PrefabSubData::BasePrefabId);
 
     /*!*********************************************************************
     \brief
@@ -119,22 +118,5 @@ namespace Prefabs
     std::vector<PrefabSubData> mObjects;
     std::vector<rttr::variant> mComponents;
     bool mIsActive;
-  };
-
-  // stores information pertaining to each prefab instance
-  struct Prefab::EntityMappings
-  {
-    EntityMappings() : mPrefab{}, mObjToEntity{} {}
-    EntityMappings(std::string prefab) : mPrefab{ std::move(prefab) }, mObjToEntity{} {}
-
-    /*!*********************************************************************
-    \brief
-      Checks through the mappings of the current prefab based on the scene
-      and removes any obsolete entries corresponding to destroyed entities.
-    ************************************************************************/
-    void Validate();
-
-    std::string mPrefab;
-    std::unordered_map<PrefabSubData::SubDataId, ECS::EntityManager::EntityID> mObjToEntity;
   };
 }

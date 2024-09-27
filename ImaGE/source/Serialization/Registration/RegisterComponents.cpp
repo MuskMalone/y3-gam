@@ -56,5 +56,6 @@ RTTR_REGISTRATION
     .constructor<>()
     .property("prefabName", &PrefabOverrides::prefabName)
     .property("modifiedComponents", &PrefabOverrides::modifiedComponents)
-    .property("removedComponents", &PrefabOverrides::removedComponents);
+    .property("removedComponents", &PrefabOverrides::removedComponents)
+    .property("subDataId", &PrefabOverrides::subDataId);
 }

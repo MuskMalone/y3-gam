@@ -1,6 +1,5 @@
 {
     "Name": "e2",
-    "Version": 37,
     "isActive": true,
     "Components": [
         {
@@ -11,6 +10,11 @@
         {
             "Layer": {
                 "layerName": "wee"
+            }
+        },
+        {
+            "Tag": {
+                "tag": "e2"
             }
         },
         {
@@ -56,12 +60,12 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "e3"
+                        "tag": "Entity 1048577"
                     }
                 },
                 {
-                    "Layer": {
-                        "layerName": "oof"
+                    "Tag": {
+                        "tag": "Entity 1048577"
                     }
                 },
                 {
@@ -103,11 +107,16 @@
         {
             "ID": 2,
             "isActive": true,
-            "Parent": 0,
+            "Parent": 1,
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Entity 1048577"
+                        "tag": "Entity 1048579"
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "Entity 1048579"
                     }
                 },
                 {
@@ -153,7 +162,12 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Entity 1048579"
+                        "tag": "Entity 1048581"
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "Entity 1048581"
                     }
                 },
                 {
@@ -195,11 +209,21 @@
         {
             "ID": 4,
             "isActive": true,
-            "Parent": 3,
+            "Parent": 0,
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Entity 1048581"
+                        "tag": "e3"
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "e3"
                     }
                 },
                 {

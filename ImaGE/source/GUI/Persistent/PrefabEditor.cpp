@@ -59,8 +59,7 @@ namespace GUI
       auto editPrefabEvent{ std::static_pointer_cast<Events::EditPrefabEvent>(event) };
       auto& prefabMan{ Prefabs::PrefabManager().GetInstance() };
       mPrefabName = editPrefabEvent->mPrefab;
-      mPrefabPath = editPrefabEvent->mPath;
-      prefabMan.LoadPrefab(mPrefabName, mPrefabPath); // force load the prefab first
+      prefabMan.LoadPrefab(mPrefabName); // force load the prefab first
       mPrefabInstance = prefabMan.SpawnPrefab(mPrefabName);
       mIsEditing = true;
       break;
@@ -106,7 +105,7 @@ namespace GUI
         else
         {
           Debug::DebugLogger::GetInstance().LogInfo("[PrefabEditor] Saved " + mPrefabName);
-          pm.UpdatePrefabFromEditor(mPrefabInstance, mRemovedChildren, mRemovedComponents, mPrefabPath);
+          //pm.UpdatePrefabFromEditor(mPrefabInstance, mRemovedChildren, mRemovedComponents, mPrefabPath);
           pm.ClearMappings();
         }
         Scenes::SceneManager::GetInstance().StopScene();

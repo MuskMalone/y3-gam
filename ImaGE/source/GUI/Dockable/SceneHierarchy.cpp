@@ -72,6 +72,11 @@ namespace GUI
       }
     }
 
+    if (ImGui::IsKeyPressed(ImGuiKey_Delete) && GUIManager::GetSelectedEntity()) {
+      ECS::EntityManager::GetInstance().RemoveEntity(GUIManager::GetSelectedEntity());
+      GUIManager::SetSelectedEntity(ECS::Entity());
+    }
+
     if (mEntityOptionsMenu) {
       ImGui::OpenPopup("EntityOptions");
       mEntityOptionsMenu = false;

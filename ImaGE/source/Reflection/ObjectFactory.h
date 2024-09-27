@@ -19,8 +19,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
 #include "Singleton.h"
-#include "VariantEntity.h"
+#include "EntityData.h"
 #include <Core/Entity.h>
+#include <variant>
 
 namespace Reflection
 {
@@ -28,8 +29,7 @@ namespace Reflection
   class ObjectFactory : public Singleton<ObjectFactory>
   {
   public:
-    using EntityData = std::pair<ECS::EntityManager::EntityID, VariantEntity>;
-    using EntityDataContainer = std::vector<EntityData>;
+    using PrefabInstanceContainer = std::unordered_map<std::string, std::vector<PrefabInst>>;
 
     /*!*********************************************************************
     \brief
@@ -114,7 +114,10 @@ namespace Reflection
     std::vector<rttr::variant> GetEntityComponents(ECS::Entity const& id) const;
 
   private:
-    EntityDataContainer mRawEntities;   // Container of deserialized entity data in format <id, data>
+    std::vector<VariantEntity> mRawEntities; // stores deserialized entity data
+    PrefabInstanceContainer mPrefabInstances;   // stores deserialized prefab instances
+
+    void LoadPrefabInstances();
   };
 
 } // namespace Reflection

@@ -122,28 +122,32 @@ namespace Serialization
 
   void Serializer::SerializeEntity(ECS::Entity const& entity, WriterType& writer)
   {
-    ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
     writer.StartObject();
+    ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
 
     // serialize entity id
     writer.Key(JsonIdKey);
     writer.Uint(entity.GetEntityID());
 
+    // if its a prefab instance, only serialize the overrides
+    if (entity.HasComponent<Component::PrefabOverrides>()) {
+      Component::PrefabOverrides const& overrides{ entity.GetComponent<Component::PrefabOverrides>() };
 
-#ifndef IMGUI_DISABLE
-    // serialize prefab created from
-    Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
+      // if position exists, serialize it
+      if (overrides.subDataId == Prefabs::PrefabSubData::BasePrefabId && !overrides.IsComponentModified(rttr::type::get<Component::Transform>())) {
+        writer.Key(JsonPfbPosKey);
+        SerializeRecursive(entity.GetComponent<Component::Transform>().worldPos, writer);
+      }
 
-    writer.Key(JsonPrefabKey);
-    auto const entityPrefab{ pm.GetEntityPrefab(entity) };
-    if (entityPrefab) {
-      SerializeRecursive(*entityPrefab, writer);
+      // serialize the components
+      writer.Key(JsonPrefabKey);
+      SerializeRecursive(overrides, writer);
+      writer.EndObject();
+      return;
     }
-    else {
-      writer.Null();
-    }
-#endif
 
+    // if not, serialize the entity as per normal
+    // 
     // serialize state
     writer.Key(JsonEntityStateKey);
     writer.Bool(true);// entityMan.GetIsActiveEntity(entity));
@@ -327,7 +331,7 @@ namespace Serialization
       {
         SerializeClassTypes(var, writer);
       }
-      else if (var.get_type() == rttr::type::get<rttr::type>()) {
+      else if (type == rttr::type::get<rttr::type>()) {
         bool ok;
         writer.String(var.convert<std::string>(&ok).c_str());
         return true;
@@ -363,7 +367,7 @@ namespace Serialization
         SerializeRecursive(elem.first, writer);
 
         writer.String("value", 5, false);
-        SerializeRecursive(elem.second, writer);
+        SerializeRecursive(elem.second.get_type().is_wrapper() ? elem.second.extract_wrapped_value() : elem.second, writer);
 
         writer.EndObject();
       }

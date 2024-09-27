@@ -79,7 +79,7 @@ namespace Graphics::AssetIO
     }
   }
 
-  void IMSH::WriteToBinFile(std::string const& name, std::string const& path) const {
+  void IMSH::WriteToBinFile(std::string const& name) const {
     std::string const outputFile{ gMeshOutputDir + name + gMeshFileExt };
     std::ofstream ofs{ outputFile, std::ios::binary};
     if (!ofs) { throw Debug::Exception<IMSH>(Debug::LVL_ERROR, Msg("Unable to create binary file: " + outputFile)); }

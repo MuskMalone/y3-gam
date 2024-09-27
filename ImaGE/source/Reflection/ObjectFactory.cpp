@@ -81,36 +81,71 @@ namespace Reflection
     }
   }
 
+  void ObjectFactory::LoadPrefabInstances() {
+    Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
+    for (auto const&[pfb, data] : mPrefabInstances) {
+      pm.LoadPrefab(pfb);
+      // create an instance of the original
+      auto mappings{ pm.GetVariantPrefab(pfb).Construct() };
+
+      // override components of each entity if necessary
+      for (Reflection::PrefabInst const& inst : data) {
+        if (inst.mPosition) {
+          Component::Transform& trans{ mappings.first.GetComponent<Component::Transform>() };
+          trans.worldPos = trans.localPos = *inst.mPosition;
+        }
+
+        // each entity's PrefabOverrides component should 
+        // contain an id that corresponds to a sub-object
+        Component::PrefabOverrides const& overrides{ inst.mOverrides };
+        ECS::Entity& currEntity{ mappings.second[overrides.subDataId] };
+        currEntity.EmplaceOrReplaceComponent<Component::PrefabOverrides>(overrides);  // restore its PrefabOverrides
+
+        // replace any modified components
+        if (!overrides.modifiedComponents.empty()) {
+          for (auto const&[compType, compVar] : overrides.modifiedComponents) {
+            AddComponentToEntity(currEntity, compType, compVar);
+          }
+        }
+        // remove components if necessary
+        if (!overrides.removedComponents.empty()) {
+          for (rttr::variant const& comp : overrides.modifiedComponents) {
+            RemoveComponentFromEntity(currEntity, comp.get_type());
+          }
+        }
+      }
+    }
+  }
+
   void ObjectFactory::InitScene()
   {
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
 
-    for (auto const& [id, data] : mRawEntities)
+    // iterate through data and create entities
+    for (auto const& data : mRawEntities)
     {
-      ECS::Entity newEntity{ entityMan.CreateEntityWithID({}, id) };
-      //entityMan.SetIsActiveEntity(id, data.mIsActive);
+      ECS::Entity newEntity{ entityMan.CreateEntityWithID({}, data.mID) };
+      //entityMan.SetIsActiveEntity(id, arg.mIsActive);
       AddComponentsToEntity(newEntity, data.mComponents);
     }
 
-    for (auto const& [id, data] : mRawEntities) {
+    // restore the hierarchy
+    for (auto const& data : mRawEntities)
+    {
       if (data.mParent != entt::null) {
-        entityMan.SetParentEntity(data.mParent, id);
+        entityMan.SetParentEntity(data.mParent, data.mID);
       }
 
       for (ECS::Entity const& child : data.mChildEntities) {
-        entityMan.SetChildEntity(id, child);
+        entityMan.SetChildEntity(data.mID, child);
       }
     }
 
-#ifndef IMGUI_DISABLE
-    if (Prefabs::PrefabManager::GetInstance().UpdateAllEntitiesFromPrefab()) {
-      QUEUE_EVENT(Events::PrefabInstancesUpdatedEvent);
-    }
-#endif
+    LoadPrefabInstances();
   }
 
   void ObjectFactory::LoadEntityData(std::string const& filePath) {
-    mRawEntities = Serialization::Deserializer::DeserializeScene(filePath);
+    Serialization::Deserializer::DeserializeScene(mRawEntities, mPrefabInstances, filePath);
   }
 
   void ObjectFactory::AddComponentToEntity(ECS::Entity entity, rttr::type const& type, rttr::variant const& compVar) const

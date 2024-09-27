@@ -49,7 +49,8 @@ namespace Serialization
       An std::vector<std::pair<EntityID,VariantEntity>> with the
       deserailized data
     ************************************************************************/
-    static Reflection::ObjectFactory::EntityDataContainer DeserializeScene(std::string const& filepath);
+    static void DeserializeScene(std::vector<Reflection::VariantEntity>& entities,
+      Reflection::ObjectFactory::PrefabInstanceContainer& prefabInstances, std::string const& filepath);
 
     /*!*********************************************************************
      \brief
@@ -80,6 +81,8 @@ namespace Serialization
       The json data corresponding to the component
     ************************************************************************/
     static void DeserializeComponent(rttr::variant& compVar, rttr::type const& compType, rapidjson::Value const& compJson);
+
+    static void DeserializePrefabOverrides(Component::PrefabOverrides& prefabOverride, rapidjson::Value const& json);
 
     /*!*********************************************************************
     \brief
