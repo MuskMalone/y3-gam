@@ -15,7 +15,7 @@ namespace AssetHelpers
 	\return
 		The filepath relative to the given root directory
 	************************************************************************/
-	std::string GetRelativeFilePath(std::string const& filepath, std::string const& rootDir = "ImaGE");
+	std::string GetRelativeFilePath(std::string const& filepath, std::string const& rootDir = "y3-gam");
 
 	/*!*********************************************************************
 	\brief

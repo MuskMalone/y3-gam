@@ -99,9 +99,7 @@
       <Command>copy /B /Y "$(SolutionDir)Libraries\glfw-3.3.8.bin.WIN64\lib-vc2022\glfw3.dll" "..\Binaries\windows-x86_64\Debug\ImaGE-Game"
 copy /B /Y "$(SolutionDir)Libraries\assimp\assimp-vc143-mt.dll" "..\Binaries\windows-x86_64\Debug\ImaGE-Game"
 copy /B /Y "$(SolutionDir)Libraries\rttr-0.9.6\lib\Debug\rttr_core_d.dll" "..\Binaries\windows-x86_64\Debug\ImaGE-Game"
-copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Debug\ImaGE-Game"
-IF NOT EXIST "$(TargetDir)\Assets" (mkdir "$(TargetDir)\Assets")
-xcopy /Q /E /Y /I "..\Assets" "..\Binaries\windows-x86_64\Debug\ImaGE-Game\Assets"</Command>
+copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Debug\ImaGE-Game"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -132,9 +130,7 @@ xcopy /Q /E /Y /I "..\Assets" "..\Binaries\windows-x86_64\Debug\ImaGE-Game\Asset
       <Command>copy /B /Y "$(SolutionDir)Libraries\glfw-3.3.8.bin.WIN64\lib-vc2022\glfw3.dll" "..\Binaries\windows-x86_64\Release\ImaGE-Game"
 copy /B /Y "$(SolutionDir)Libraries\assimp\assimp-vc143-mt.dll" "..\Binaries\windows-x86_64\Release\ImaGE-Game"
 copy /B /Y "$(SolutionDir)Libraries\rttr-0.9.6\lib\Release\rttr_core.dll" "..\Binaries\windows-x86_64\Release\ImaGE-Game"
-copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Release\ImaGE-Game"
-IF NOT EXIST "$(TargetDir)\Assets" (mkdir "$(TargetDir)\Assets")
-xcopy /Q /E /Y /I "..\Assets" "..\Binaries\windows-x86_64\Release\ImaGE-Game\Assets"</Command>
+copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Release\ImaGE-Game"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
@@ -165,9 +161,7 @@ xcopy /Q /E /Y /I "..\Assets" "..\Binaries\windows-x86_64\Release\ImaGE-Game\Ass
       <Command>copy /B /Y "$(SolutionDir)Libraries\glfw-3.3.8.bin.WIN64\lib-vc2022\glfw3.dll" "..\Binaries\windows-x86_64\Distribution\ImaGE-Game"
 copy /B /Y "$(SolutionDir)Libraries\assimp\assimp-vc143-mt.dll" "..\Binaries\windows-x86_64\Distribution\ImaGE-Game"
 copy /B /Y "$(SolutionDir)Libraries\rttr-0.9.6\lib\Release\rttr_core.dll" "..\Binaries\windows-x86_64\Distribution\ImaGE-Game"
-copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Distribution\ImaGE-Game"
-IF NOT EXIST "$(TargetDir)\Assets" (mkdir "$(TargetDir)\Assets")
-xcopy /Q /E /Y /I "..\Assets" "..\Binaries\windows-x86_64\Distribution\ImaGE-Game\Assets"</Command>
+copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Distribution\ImaGE-Game"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

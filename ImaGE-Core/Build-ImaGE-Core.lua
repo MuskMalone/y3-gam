@@ -74,6 +74,11 @@ project "ImaGE-Core"
         "rttr_core_d.lib"
        }
 
+       postbuildcommands {
+            "{MKDIR} %[%{wks.location}/Binaries/" .. OutputDir .. "/Assets]",
+            "{COPYDIR} %[%{wks.location}/Assets] %[%{wks.location}/Binaries/" .. OutputDir .. "/Assets]"
+        }
+
    filter "configurations:Release"
        runtime "Release"
        optimize "On"
