@@ -325,12 +325,9 @@
     <ClInclude Include="source\Serialization\JsonKeys.h">
       <Filter>Serialization</Filter>
     </ClInclude>
-    <ClInclude Include="source\Serialization\Serializer.h">
-      <Filter>Serialization</Filter>
+    <ClInclude Include="source\Serialization\Registration\ConverterFuncs.h">
+      <Filter>Serialization\Registration</Filter>
     </ClInclude>
-    <ClInclude Include="source\Singleton.h" />
-    <ClInclude Include="source\TempScene.h" />
-    <ClInclude Include="source\pch.h" />
     <ClInclude Include="source\Serialization\Registration\RegisterClasses.h">
       <Filter>Serialization\Registration</Filter>
     </ClInclude>
@@ -340,6 +337,12 @@
     <ClInclude Include="source\Serialization\Registration\RegisterEnumsAndFuncs.h">
       <Filter>Serialization\Registration</Filter>
     </ClInclude>
+    <ClInclude Include="source\Serialization\Serializer.h">
+      <Filter>Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Singleton.h" />
+    <ClInclude Include="source\TempScene.h" />
+    <ClInclude Include="source\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />

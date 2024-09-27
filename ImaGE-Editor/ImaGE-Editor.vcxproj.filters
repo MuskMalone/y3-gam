@@ -22,6 +22,9 @@
     <ClInclude Include="source\GUI\Dockable\AssetBrowser.h">
       <Filter>GUI\Dockable</Filter>
     </ClInclude>
+    <ClInclude Include="source\GUI\Dockable\Console.h">
+      <Filter>GUI\Dockable</Filter>
+    </ClInclude>
     <ClInclude Include="source\GUI\Dockable\Inspector.h">
       <Filter>GUI\Dockable</Filter>
     </ClInclude>
@@ -58,10 +61,19 @@
     <ClInclude Include="source\GUI\Styles\FontAwesome6Icons.h">
       <Filter>GUI\Styles</Filter>
     </ClInclude>
+    <ClInclude Include="source\GUI\Styles\StyleEnums.h">
+      <Filter>GUI\Styles</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GUI\Styles\Styler.h">
+      <Filter>GUI\Styles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\EditorApplication.cpp" />
     <ClCompile Include="source\GUI\Dockable\AssetBrowser.cpp">
+      <Filter>GUI\Dockable</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\Dockable\Console.cpp">
       <Filter>GUI\Dockable</Filter>
     </ClCompile>
     <ClCompile Include="source\GUI\Dockable\Inspector.cpp">
@@ -90,6 +102,9 @@
     </ClCompile>
     <ClCompile Include="source\GUI\Persistent\Toolbar.cpp">
       <Filter>GUI\Persistent</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\Styles\Styler.cpp">
+      <Filter>GUI\Styles</Filter>
     </ClCompile>
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>

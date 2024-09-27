@@ -1,5 +1,4 @@
 #pragma once
-#include <pch.h>
 #include <GLFW/glfw3.h>
 #include <External/GLFWwindowDestructor.h>
 #include <FrameRateController/FrameRateController.h>
@@ -42,12 +41,13 @@ public:
   inline std::unique_ptr<Scene>& GetScene() { return mScene; }
   inline std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& GetWindowPointer() { return mWindow; }
 
-  inline std::vector<std::pair<Graphics::Framebuffer, SceneDrawCall>>& GetFrameBuffer() { return mFramebuffers; }
+  //inline std::vector<std::pair<Graphics::Framebuffer, SceneDrawCall>>& GetFrameBuffer() { return mFramebuffers; }
+  inline std::vector<std::pair<std::shared_ptr<Graphics::Framebuffer>, SceneDrawCall>> const& GetFrameBuffer() { return mFramebuffers; } const
   inline static bool GetImGuiEnabled() { return mSpecification.EnableImGui; }
 
 private:
   std::unique_ptr<Scene> mScene;
-  std::vector<std::pair<Graphics::Framebuffer, SceneDrawCall>> mFramebuffers;
+  std::vector<std::pair<std::shared_ptr<Graphics::Framebuffer>, SceneDrawCall>> mFramebuffers;
 
   WindowPtr mWindow;
   static ApplicationSpecification mSpecification;

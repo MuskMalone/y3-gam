@@ -18,7 +18,8 @@ project "ImaGE-Game"
    externalincludedirs
    {
       "../ImaGE-Core/source/External",
-      "./ImaGE-Core/source/External/ImGui",
+      "../ImaGE-Core/source/External/ImGui",
+      "../ImaGE-Core/source/External/ImTerm",
       "../Libraries/**",
    }
 

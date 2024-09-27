@@ -1,3 +1,4 @@
+#include <pch.h>
 #include "EditorApplication.h"
 
 #include <Events/EventManager.h>
@@ -27,8 +28,6 @@ EditorApplication::EditorApplication(Application::ApplicationSpecification const
   // Setup Platform/Renderer backends
   ImGui_ImplGlfw_InitForOpenGL(GetWindowPointer().get(), true);
   ImGui_ImplOpenGL3_Init("#version 460 core");
-    
-  mGUIManager.StyleGUI();
 }
 
 EditorApplication::~EditorApplication() {
@@ -48,7 +47,7 @@ void EditorApplication::Init() {
   FrameRateController::GetInstance().Init(120.f, 1.f, false);
   Input::InputManager::GetInstance().InitInputManager(GetWindowPointer(),
     GetApplicationSpecification().WindowWidth, GetApplicationSpecification().WindowHeight, 0.3);
-  mGUIManager.Init(GetFrameBuffer().front().first);
+  mGUIManager.Init();
 }
 
 void EditorApplication::Run() {
@@ -68,11 +67,6 @@ void EditorApplication::Run() {
         // dispatch all events in the queue at the start of game loop
         eventManager.DispatchAll();
 
-        if (GetApplicationSpecification().EnableImGui) {
-          mGUIManager.UpdateGUI();
-        }
-
-
         GetScene()->Update(FrameRateController::GetInstance().GetDeltaTime());
       }
       catch (Debug::ExceptionBase& e)
@@ -87,6 +81,8 @@ void EditorApplication::Run() {
       try {
         if (GetApplicationSpecification().EnableImGui) {
           UpdateFramebuffers();
+
+          mGUIManager.UpdateGUI(GetFrameBuffer().front().first);
 
           ImGui::Render();
           ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

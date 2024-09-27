@@ -1,4 +1,4 @@
-#ifndef IMGUI_DISABLE
+#include <pch.h>
 #include "SceneHierarchy.h"
 #include <imgui/imgui.h>
 #include <Core/Component/Tag.h>
@@ -311,5 +311,3 @@ namespace GUI
   }
 
 } // namespace GUI
-
-#endif  // IMGUI_DISABLE

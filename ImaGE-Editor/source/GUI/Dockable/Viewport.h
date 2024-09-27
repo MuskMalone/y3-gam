@@ -1,6 +1,5 @@
 #pragma once
 #include "pch.h"
-
 #include <GUI/GUIWindow.h>
 #include <Graphics/Framebuffer.h>
 #include <memory>
@@ -22,4 +21,3 @@ namespace GUI
   };
   
 } // namespace GUI
-#endif  // IMGUI_DISABLE

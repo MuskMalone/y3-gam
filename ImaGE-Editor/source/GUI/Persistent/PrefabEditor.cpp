@@ -14,6 +14,7 @@
 
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
+#include <pch.h>
 #include "PrefabEditor.h"
 #include <Events/EventManager.h>
 #include <Events/InputEvents.h>

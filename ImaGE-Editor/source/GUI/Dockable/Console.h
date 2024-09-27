@@ -1,5 +1,4 @@
 #pragma once
-#ifndef IMGUI_DISABLE
 #include <GUI/GUIWindow.h>
 #include <External/ImTerm/terminal.hpp>
 #include <External/ImTerm/terminal_helpers.hpp>
@@ -22,4 +21,3 @@ namespace GUI {
   };
 
 } // namespace GUI
-#endif  // IMGUI_DISABLE

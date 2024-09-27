@@ -84,8 +84,7 @@ Application::Application(ApplicationSpecification spec) :
 
   mScene = std::make_unique<Scene>("../Assets/Shaders/BlinnPhong.vert.glsl", "../Assets/Shaders/BlinnPhong.frag.glsl");
   // attach each draw function to its framebuffer
-  mFramebuffers.emplace_back(std::piecewise_construct, std::forward_as_tuple(spec.WindowWidth, spec.WindowHeight),
-    std::forward_as_tuple(std::bind(&Scene::Draw, mScene.get())));
+  mFramebuffers.emplace_back(std::make_shared<Graphics::Framebuffer>(spec.WindowWidth, spec.WindowHeight), std::bind(&Scene::Draw, mScene.get()));
 }
 
 void Application::UpdateFramebuffers()
@@ -94,11 +93,11 @@ void Application::UpdateFramebuffers()
   // draw function associated with it
   for (auto const& [fb, drawFn] : mFramebuffers)
   {
-    fb.Bind();
+    fb->Bind();
 
     drawFn();
 
-    fb.Unbind();
+    fb->Unbind();
   }
 }
 
@@ -111,8 +110,8 @@ void Application::FramebufferSizeCallback(GLFWwindow* window, int width, int hei
   glViewport(0, 0, width, height);
 
   Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
-  for (auto& elem : app->mFramebuffers) {
-    elem.first.Resize(width, height);
+  for (auto& [fb, fn] : app->mFramebuffers) {
+    fb->Resize(width, height);
   }
 }
 
@@ -126,6 +125,7 @@ void Application::ErrorCallback(int err, const char* desc) {
 void Application::Shutdown()
 {
   Scenes::SceneManager::GetInstance().Shutdown();
+  Debug::DebugLogger::GetInstance().Shutdown();
 }
 
 Application::~Application()

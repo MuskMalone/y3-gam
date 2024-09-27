@@ -16,6 +16,7 @@ project "ImaGE-Core"
    {
       "source/External",
       "source/External/ImGui",
+      "source/External/ImTerm",
       "../Libraries/**",
    }
 

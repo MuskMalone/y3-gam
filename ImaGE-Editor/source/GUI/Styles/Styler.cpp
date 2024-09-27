@@ -1,5 +1,4 @@
 #include "pch.h"
-#ifndef IMGUI_DISABLE
 #include "Styler.h"
 #include <ImGui/imgui.h>
 #include "FontAwesome6Icons.h"
@@ -244,7 +243,4 @@ namespace GUI
   }
 
 } // namespace GUI
-
-#endif  // IMGUI_DISABLE
-
 

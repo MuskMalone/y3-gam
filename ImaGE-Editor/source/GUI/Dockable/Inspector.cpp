@@ -1,4 +1,4 @@
-#ifndef IMGUI_DISABLE
+#include <pch.h>
 #include "Inspector.h"
 
 #include <imgui/imgui.h>
@@ -559,5 +559,3 @@ namespace GUI {
     }
   }
 } // namespace GUI
-
-#endif  // IMGUI_DISABLE
