@@ -19,15 +19,15 @@ namespace Reflection
 	std::vector<rttr::type> const gComponentTypes
 	{
 		rttr::type::get<Component::Tag>(),
-		rttr::type::get<Component::Collider>(),
-		rttr::type::get<Component::Layer>(),
+		rttr::type::get<Component::Transform>(),
+		rttr::type::get<Component::Layer>()
+		/*rttr::type::get<Component::Collider>(),
 		rttr::type::get<Component::Material>(),
 		rttr::type::get<Component::Mesh>(),
 		rttr::type::get<Component::RigidBody>(),
 		rttr::type::get<Component::Script>(),
 		rttr::type::get<Component::Tag>(),
-		rttr::type::get<Component::Text>(),
-		rttr::type::get<Component::Transform>(),
+		rttr::type::get<Component::Text>(),*/
 	};
 
 } // namespace Reflection

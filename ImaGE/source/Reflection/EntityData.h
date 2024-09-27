@@ -36,6 +36,7 @@ namespace Reflection
     bool mIsActive;
   };
 
+  // add ID and ParentID
   struct PrefabInst
   {
     PrefabInst() : mPosition{}, mOverrides{} {}

@@ -88,13 +88,6 @@ namespace Events
 
     std::vector<std::string> mPaths;
   };
-
-  class PrefabInstancesUpdatedEvent : public Event
-  {
-  public:
-    PrefabInstancesUpdatedEvent() : Event(EventType::PREFAB_INSTANCES_UPDATED) {}
-    inline std::string GetName() const noexcept override { return "Scene Updated with Prefab Instances"; }
-  };
 #endif
 
 #ifdef GAM200_EVENTS

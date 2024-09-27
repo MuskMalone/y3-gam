@@ -57,11 +57,19 @@ namespace GUI
     case Events::EventType::EDIT_PREFAB:
     {
       auto editPrefabEvent{ std::static_pointer_cast<Events::EditPrefabEvent>(event) };
-      auto& prefabMan{ Prefabs::PrefabManager().GetInstance() };
       mPrefabName = editPrefabEvent->mPrefab;
+      mIsEditing = true;
+      // if new prefab, create an entity with the prefab's name
+      if (editPrefabEvent->mPath.empty()) {
+        mPrefabInstance = ECS::EntityManager::GetInstance().CreateEntity();
+        mPrefabInstance.GetComponent<Component::Tag>().tag = mPrefabName;
+        return;
+      }
+
+      auto& prefabMan{ Prefabs::PrefabManager().GetInstance() };
       prefabMan.LoadPrefab(mPrefabName); // force load the prefab first
       mPrefabInstance = prefabMan.SpawnPrefab(mPrefabName);
-      mIsEditing = true;
+      mPrefabPath = editPrefabEvent->mPath;
       break;
     }
     }
@@ -96,17 +104,27 @@ namespace GUI
       ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.65f, 0.f, 1.f));
       if (ImGui::Button("Save"))
       {
+        ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
+        if (!mPrefabInstance) { // should also check if its valid
+          // if the current prefabInstance isnt valid,
+          // search for the first entity without a parent
+          for (auto const& e : entityMan.GetAllEntities()) {
+            if (!entityMan.HasParent(e)) {
+              mPrefabInstance = e;
+              break;
+            }
+          }
+        }
+        
         Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
 
-        if (mPrefabPath.empty())
-        {
+        if (mPrefabPath.empty()) {
           pm.CreatePrefabFromEntity(mPrefabInstance, mPrefabName);
         }
         else
         {
           Debug::DebugLogger::GetInstance().LogInfo("[PrefabEditor] Saved " + mPrefabName);
-          //pm.UpdatePrefabFromEditor(mPrefabInstance, mRemovedChildren, mRemovedComponents, mPrefabPath);
-          pm.ClearMappings();
+          pm.UpdatePrefabFromEditor(mPrefabInstance, mPrefabPath);
         }
         Scenes::SceneManager::GetInstance().StopScene();
 

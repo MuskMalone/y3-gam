@@ -49,12 +49,6 @@ ECS::Entity PrefabManager::SpawnPrefab(const std::string& key, glm::dvec3 const&
   }
 
   auto entityData{ iter->second.Construct(pos) };
-
-  if (mapEntity) {
-    // set entity's prefab source
-    mEntitiesToPrefabs[entityData.first.GetRawEnttEntityID()] = std::move(entityData.second);
-  }
-
   return entityData.first;
 }
 
@@ -90,12 +84,6 @@ EVENT_CALLBACK_DEF(PrefabManager, HandleEvent)
     break;
   }
 #ifndef IMGUI_DISABLE
-  case Events::EventType::REMOVE_ENTITY:
-  {
-    EntityPrefabMap::const_iterator iter{ mEntitiesToPrefabs.find(std::static_pointer_cast<Events::RemoveEntityEvent>(event)->mEntityId) };
-    if (iter != mEntitiesToPrefabs.cend()) { mEntitiesToPrefabs.erase(iter); }
-    break;
-  }
   case Events::EventType::DELETE_PREFAB:
   {
     PrefabDataContainer::const_iterator iter{ mPrefabs.find(std::static_pointer_cast<Events::DeletePrefabEvent>(event)->mName) };
@@ -106,41 +94,35 @@ EVENT_CALLBACK_DEF(PrefabManager, HandleEvent)
   }
 }
 
+bool PrefabManager::DoesPrefabExist(std::string const& name) const
+{
+  // if a loaded version exists, return
+  if (IsPrefabLoaded(name)) { return true; }
+
+  // else check the Prefabs dir
+  for (auto const& file : std::filesystem::recursive_directory_iterator(gPrefabsDirectory)) {
+    if (file.path().stem() == name) { return true; }
+  }
+
+  return false;
+}
+
+void PrefabManager::ReloadPrefab(std::string const& name, std::string const& filePath) {
+  mPrefabs[name] = Serialization::Deserializer::DeserializePrefabToVariant(filePath);
+}
+
+void PrefabManager::LoadPrefab(std::string const& name) {
+  if (IsPrefabLoaded(name)) { return; }
+
+  mPrefabs.emplace(name, Serialization::Deserializer::DeserializePrefabToVariant(gPrefabsDirectory + name + gPrefabFileExt));
+}
+
+void PrefabManager::Shutdown() {
+  mPrefabs.clear();
+}
 
 /*---------------------------- EDITOR - ONLY FUNCTIONS ----------------------------*/
 #ifndef IMGUI_DISABLE
-void PrefabManager::AttachPrefab(ECS::Entity entity, EntityPrefabMap::mapped_type const& prefab)
-{
-#ifdef PREFAB_MANAGER_DEBUG
-  std::cout << "Entity " << entity.GetEntityID() << ": " << prefab.mPrefab << ", version " << prefab.mVersion << "\n";
-#endif
-  mEntitiesToPrefabs[entity.GetRawEnttEntityID()] = prefab;
-}
-void PrefabManager::AttachPrefab(ECS::Entity entity, EntityPrefabMap::mapped_type&& prefab)
-{
-#ifdef PREFAB_MANAGER_DEBUG
-  std::cout << "Entity " << entity.GetEntityID() << ": " << prefab.mPrefab << ", version " << prefab.mVersion << "\n";
-#endif
-  mEntitiesToPrefabs[entity.GetRawEnttEntityID()] = std::move(prefab);
-}
-
-void PrefabManager::DetachPrefab(ECS::Entity entity)
-{
-  EntityPrefabMap::const_iterator entry{ mEntitiesToPrefabs.find(entity.GetRawEnttEntityID()) };
-  if (entry == mEntitiesToPrefabs.cend()) { return; }
-
-  // remove entry if it exists
-  mEntitiesToPrefabs.erase(entry);
-}
-
-std::optional<std::reference_wrapper<PrefabManager::EntityPrefabMap::mapped_type>> PrefabManager::GetEntityPrefab(ECS::Entity entity)
-{
-  EntityPrefabMap::iterator entry{ mEntitiesToPrefabs.find(entity.GetRawEnttEntityID()) };
-  if (entry == mEntitiesToPrefabs.end()) { return std::nullopt; }
-
-  return entry->second;
-}
-
 bool PrefabManager::UpdateEntitiesFromPrefab(std::string const& prefab)
 {
 //  Reflection::ObjectFactory const& of{ Reflection::ObjectFactory::GetInstance() };
@@ -276,32 +258,18 @@ bool PrefabManager::UpdateAllEntitiesFromPrefab()
   return instanceUpdated;
 }
 
-void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::vector<Prefabs::SubDataId> const& removedChildren,
-  std::vector<std::pair<Prefabs::SubDataId, rttr::type>> const& removedComponents, std::string const& filePath)
+void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::string const& filePath)
 {
-  //PrefabDataContainer::iterator iter{ mPrefabs.find(prefabInstance.GetComponent<Component::Tag>().tag) };
-  //if (iter == mPrefabs.end()) {
-  //  Debug::DebugLogger::GetInstance().LogError("[PrefabManager] Trying to update non-existent prefab: " + prefabInstance.GetComponent<Component::Tag>().tag);
-  //  return;
-  //}
-  //Prefab& original{ iter->second };
-  //Prefab newPrefab{ CreateVariantPrefab(prefabInstance, original.mName) };
-  //newPrefab.mVersion = original.mVersion + 1;
+  PrefabDataContainer::iterator iter{ mPrefabs.find(prefabInstance.GetComponent<Component::Tag>().tag) };
+  if (iter == mPrefabs.end()) {
+    Debug::DebugLogger::GetInstance().LogError("[PrefabManager] Trying to update non-existent prefab: " + prefabInstance.GetComponent<Component::Tag>().tag);
+    return;
+  }
+  Prefab& original{ iter->second };
+  Prefab newPrefab{ CreateVariantPrefab(prefabInstance, original.mName) };
 
-  //// update prefab with removed objects
-  //for (auto const& elem : removedChildren)
-  //{
-  //  original.mRemovedChildren.emplace_back(elem, newPrefab.mVersion);
-  //}
-  //for (auto const& [id, type] : removedComponents)
-  //{
-  //  original.mRemovedComponents.emplace_back(id, type, newPrefab.mVersion);
-  //}
-  //newPrefab.mRemovedChildren = std::move(original.mRemovedChildren);
-  //newPrefab.mRemovedComponents = std::move(original.mRemovedComponents);
-
-  //Serialization::Serializer::SerializePrefab(newPrefab, filePath);
-  //iter->second = std::move(newPrefab);
+  Serialization::Serializer::SerializePrefab(newPrefab, filePath);
+  iter->second = std::move(newPrefab);
 }
 
 Prefab PrefabManager::CreateVariantPrefab(ECS::Entity entity, std::string const& name)
@@ -329,26 +297,3 @@ void PrefabManager::CreatePrefabFromEntity(ECS::Entity const& entity, std::strin
   Debug::DebugLogger::GetInstance().LogInfo("Prefab " + name + " saved to " + savePath);
 }
 #endif
-
-bool PrefabManager::DoesPrefabExist(std::string const& name) const
-{
-  // if a loaded version exists, return
-  if (IsPrefabLoaded(name)) { return true; }
-
-  // else check the Prefabs dir
-  for (auto const& file : std::filesystem::recursive_directory_iterator(gPrefabsDirectory)) {
-    if (file.path().stem() == name) { return true; }
-  }
-
-  return false;
-}
-
-void PrefabManager::ReloadPrefab(std::string const& name, std::string const& filePath) {
-  mPrefabs[name] = Serialization::Deserializer::DeserializePrefabToVariant(filePath);
-}
-
-void PrefabManager::LoadPrefab(std::string const& name) {
-  if (IsPrefabLoaded(name)) { return; }
-
-  mPrefabs.emplace(name, Serialization::Deserializer::DeserializePrefabToVariant(gPrefabsDirectory + name + gPrefabFileExt));
-}

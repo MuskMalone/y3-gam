@@ -103,23 +103,6 @@ namespace Prefabs
 
     /*!*********************************************************************
     \brief
-      Clears the mappings for each prefab instance in the scene
-    ************************************************************************/
-    inline void ClearMappings() { mEntitiesToPrefabs.clear(); }
-
-    /*!*********************************************************************
-    \brief
-      Gets the prefab an entity if it was created from one and std::nullopt
-      otherwise
-    \param entity
-      The entity to get the prefab of
-    \return
-      std::optional containing the prefab an entity was created from
-    ************************************************************************/
-    std::optional<std::reference_wrapper<PrefabManager::EntityPrefabMap::mapped_type>> GetEntityPrefab(ECS::Entity entity);
-
-    /*!*********************************************************************
-    \brief
       Loads a prefab given its name and the file path
     \param name
       The name of the prefab
@@ -127,7 +110,12 @@ namespace Prefabs
       The file to deserialize from
     ************************************************************************/
     void LoadPrefab(std::string const& name);
-
+    
+    /*!*********************************************************************
+    \brief
+      Clears all data from the PrefabManager
+    ************************************************************************/
+    void Shutdown();
   private:
     /*!*********************************************************************
     \brief
@@ -210,8 +198,7 @@ namespace Prefabs
      \param filepath
        The path to save the prefab to
     ************************************************************************/
-    void UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::vector<Prefabs::SubDataId> const& removedChildren,
-      std::vector<std::pair<Prefabs::SubDataId, rttr::type>> const& removedComponents, std::string const& filepath);
+    void UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::string const& filepath);
 
     /*!*********************************************************************
     \brief
@@ -235,7 +222,6 @@ namespace Prefabs
 #endif
 
   private:
-    EntityPrefabMap mEntitiesToPrefabs;
     PrefabDataContainer mPrefabs;  // Map of deserialized prefab data in format <name, data>
   };
 }

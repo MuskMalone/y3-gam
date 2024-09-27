@@ -100,6 +100,18 @@ void Prefab::CreateSubData(std::vector<ECS::Entity> const& children, SubDataId p
   }
 }
 
+Prefab::SubObjectComponentMap Prefab::GetSubObjectComponentMappings() const
+{
+  SubObjectComponentMap ret;
+  ret.emplace(PrefabSubData::BasePrefabId, mComponents);
+
+  for (PrefabSubData const& subObj : mObjects) {
+    ret.emplace(subObj.mId, subObj.mComponents);
+  }
+
+  return ret;
+}
+
 void Prefab::Clear() noexcept
 {
   mName.clear();

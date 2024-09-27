@@ -64,15 +64,6 @@ namespace Reflection
 
     AddComponentsToEntity(newEntity, components);
 
-#ifndef IMGUI_DISABLE
-    // update entity's prefab if needed
-    Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
-    auto const entityPrefab{ pm.GetEntityPrefab(entity) };
-    if (entityPrefab) {
-      pm.AttachPrefab(newEntity, *entityPrefab);
-    }
-#endif
-
     // set parent/child
     entityMan.SetParentEntity(parent, newEntity);
     if (parent) { entityMan.SetChildEntity(parent, newEntity); }
@@ -86,34 +77,39 @@ namespace Reflection
     for (auto const&[pfb, data] : mPrefabInstances) {
       pm.LoadPrefab(pfb);
       // create an instance of the original
-      auto mappings{ pm.GetVariantPrefab(pfb).Construct() };
+      auto mappings{ pm.GetVariantPrefab(pfb).GetSubObjectComponentMappings() };
 
+      // for every instance, create an entity with its ID,
+      // use the mappings to get the referenced subdata and
+      // add its components to it, overidding as necessary
+      // afterwards, iterate once more to establish hierarchy
+      
       // override components of each entity if necessary
-      for (Reflection::PrefabInst const& inst : data) {
-        if (inst.mPosition) {
-          Component::Transform& trans{ mappings.first.GetComponent<Component::Transform>() };
-          trans.worldPos = trans.localPos = *inst.mPosition;
-        }
+      //for (Reflection::PrefabInst const& inst : data) {
+      //  if (inst.mPosition) {
+      //    Component::Transform& trans{ mappings.first.GetComponent<Component::Transform>() };
+      //    trans.worldPos = trans.localPos = *inst.mPosition;
+      //  }
 
-        // each entity's PrefabOverrides component should 
-        // contain an id that corresponds to a sub-object
-        Component::PrefabOverrides const& overrides{ inst.mOverrides };
-        ECS::Entity& currEntity{ mappings.second[overrides.subDataId] };
-        currEntity.EmplaceOrReplaceComponent<Component::PrefabOverrides>(overrides);  // restore its PrefabOverrides
+      //  // each entity's PrefabOverrides component should 
+      //  // contain an id that corresponds to a sub-object
+      //  Component::PrefabOverrides const& overrides{ inst.mOverrides };
+      //  ECS::Entity& currEntity{ mappings.second[overrides.subDataId] };
+      //  currEntity.EmplaceOrReplaceComponent<Component::PrefabOverrides>(overrides);  // restore its PrefabOverrides
 
-        // replace any modified components
-        if (!overrides.modifiedComponents.empty()) {
-          for (auto const&[compType, compVar] : overrides.modifiedComponents) {
-            AddComponentToEntity(currEntity, compType, compVar);
-          }
-        }
-        // remove components if necessary
-        if (!overrides.removedComponents.empty()) {
-          for (rttr::variant const& comp : overrides.modifiedComponents) {
-            RemoveComponentFromEntity(currEntity, comp.get_type());
-          }
-        }
-      }
+      //  // replace any modified components
+      //  if (!overrides.modifiedComponents.empty()) {
+      //    for (auto const&[compType, compVar] : overrides.modifiedComponents) {
+      //      AddComponentToEntity(currEntity, compType, compVar);
+      //    }
+      //  }
+      //  // remove components if necessary
+      //  if (!overrides.removedComponents.empty()) {
+      //    for (rttr::variant const& comp : overrides.modifiedComponents) {
+      //      RemoveComponentFromEntity(currEntity, comp.get_type());
+      //    }
+      //  }
+      //}
     }
   }
 
@@ -132,16 +128,20 @@ namespace Reflection
     // restore the hierarchy
     for (auto const& data : mRawEntities)
     {
-      if (data.mParent != entt::null) {
-        entityMan.SetParentEntity(data.mParent, data.mID);
-      }
+      if (data.mParent == entt::null) { continue; }
 
-      for (ECS::Entity const& child : data.mChildEntities) {
+      entityMan.SetParentEntity(data.mParent, data.mID);
+      /*for (ECS::Entity const& child : data.mChildEntities) {
         entityMan.SetChildEntity(data.mID, child);
-      }
+      }*/
     }
 
     LoadPrefabInstances();
+  }
+
+  void ObjectFactory::ClearData() {
+    mRawEntities.clear();
+    mPrefabInstances.clear();
   }
 
   void ObjectFactory::LoadEntityData(std::string const& filePath) {

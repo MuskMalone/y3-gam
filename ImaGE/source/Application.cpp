@@ -297,6 +297,7 @@ void Application::WindowDropCallback(GLFWwindow*, int pathCount, const char* pat
 void Application::Shutdown()
 {
   Scenes::SceneManager::GetInstance().Shutdown();
+  Prefabs::PrefabManager::GetInstance().Shutdown();
   Debug::DebugLogger::GetInstance().Shutdown();
 }
 

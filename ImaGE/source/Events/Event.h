@@ -38,7 +38,6 @@ namespace Events
     SAVE_SCENE,
     SCENE_MODIFIED,
     SCENE_STATE_CHANGE,
-    PREFAB_INSTANCES_UPDATED
 #endif
   };
 

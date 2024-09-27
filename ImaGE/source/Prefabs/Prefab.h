@@ -70,6 +70,7 @@ namespace Prefabs
   struct Prefab
   {
     using EntityMappings = std::unordered_map<SubDataId, ECS::Entity>;
+    using SubObjectComponentMap = std::unordered_map<SubDataId, std::vector<rttr::variant>>;
 
     Prefab() = default;
     Prefab(std::string name);
@@ -107,6 +108,12 @@ namespace Prefabs
       externally.
     ************************************************************************/
     void CreateSubData(std::vector<ECS::Entity> const& children, SubDataId parent = PrefabSubData::BasePrefabId);
+
+    /*!*********************************************************************
+    \brief
+      Returns a map of SubDataId to components
+    ************************************************************************/
+    SubObjectComponentMap GetSubObjectComponentMappings() const;
 
     /*!*********************************************************************
     \brief

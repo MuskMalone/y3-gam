@@ -53,6 +53,12 @@ namespace Reflection
 
     /*!*********************************************************************
     \brief
+      Clears data stored in the ObjectFactory
+    ************************************************************************/
+    void ClearData();
+
+    /*!*********************************************************************
+    \brief
       Deserializes data from the scene file into the container held by the
       class
     \param filePath
