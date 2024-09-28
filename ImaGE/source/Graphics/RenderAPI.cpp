@@ -36,7 +36,8 @@ namespace Graphics {
 	void RenderAPI::DrawLines(std::shared_ptr<VertexArray> const& vao, unsigned int vtxCount)
 	{
 		vao->Bind();
-		glDrawArrays(GL_LINES, 0, vtxCount);
+		//glDrawArrays(GL_LINES, 0, vtxCount);
+		glDrawArrays(GL_TRIANGLES, 0, vtxCount);
 	}
 
 	void RenderAPI::SetLineWidth(float width)

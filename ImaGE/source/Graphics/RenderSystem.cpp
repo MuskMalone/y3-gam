@@ -9,7 +9,7 @@
 namespace Graphics {
 
 	void RenderSystem::Init() {
-
+		Renderer::Init();
 	}
 
 	void RenderSystem::Release() {
@@ -25,6 +25,8 @@ namespace Graphics {
 		auto& entManager = ECS::EntityManager::GetInstance();
 		auto entityList = entManager.GetAllEntitiesWithComponents<Component::Transform, Component::Mesh>();
 
+
+		Renderer::mGeomPass->Begin();
 		{//Render Start
 			Utils::RenderContext renderContext(eCam.GetViewProjMatrix());
 
@@ -33,9 +35,24 @@ namespace Graphics {
 				auto const& mesh = entity.GetComponent<Component::Mesh>();
 				if (mesh.mesh == nullptr) continue;
 
+				
 				Graphics::Renderer::SubmitMesh(mesh.mesh, xfm.worldPos, xfm.worldScale, { 1.f,1.f,1.f,1.f }, {}); //@TODO change clr and rot 
+				// Assuming xfm.worldPos is a glm::vec3 that contains the position in world space
+
+				//Graphics::Renderer::SubmitMesh(mesh.mesh, {5.f,5.f,2.f}, xfm.worldScale, { 1.f,1.f,1.f,1.f }, {});
 			}
 
 		} // Render End
+
+		Renderer::mGeomPass->End();
+
 	}
 }
+
+
+
+
+
+
+
+

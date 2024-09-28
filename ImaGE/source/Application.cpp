@@ -17,6 +17,7 @@
 #endif
 
 #include <Physics/PhysicsSystem.h>
+#include "Graphics/Renderer.h"
 
 
 namespace
@@ -97,7 +98,6 @@ void Application::Init() {
     std::cout << elem.first << " : " << elem.second << "\n";
   }
   */
-
 }
 
 void Application::Run() {
@@ -137,7 +137,11 @@ void Application::Run() {
           UpdateFramebuffers();
 
           // Update ImGui
+
+         auto fb = Graphics::Renderer::GetFinalFramebuffer();
+          mFramebuffers.front().first = fb;
           mGUIManager.UpdateGUI(mFramebuffers.front().first);
+
 
           ImGui::Render();
           ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -235,7 +239,16 @@ Application::Application(const char* name, int width, int height) :
 
   mScene = std::make_unique<Scene>("./Assets/Shaders/BlinnPhong.vert.glsl", "./Assets/Shaders/BlinnPhong.frag.glsl");
   // attach each draw function to its framebuffer
-  mFramebuffers.emplace_back(std::make_shared<Graphics::Framebuffer>(width, height), std::bind(&Scene::Draw, mScene.get()));
+
+  //framebuffer init
+  Graphics::FramebufferSpec framebufferSpec;
+  framebufferSpec.width = width;
+  framebufferSpec.height = height;
+  framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
+
+  mFramebuffers.emplace_back(Graphics::Framebuffer::Create(framebufferSpec), std::bind(&Scene::Draw, mScene.get()));
+
+  //mFramebuffers.emplace_back(std::make_shared<Graphics::Temp::Framebuffer>(width, height), std::bind(&Scene::Draw, mScene.get()));
 }
 
 void Application::UpdateFramebuffers()

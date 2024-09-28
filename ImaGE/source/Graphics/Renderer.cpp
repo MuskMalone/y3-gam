@@ -1,9 +1,12 @@
 #include <pch.h>
 #include "Renderer.h"
 #include "RenderAPI.h"
+#include "RenderPass.h"
 
 namespace Graphics {
 	RendererData Renderer::mData;
+	std::shared_ptr<Framebuffer> Renderer::mFinalFramebuffer;
+	std::shared_ptr<RenderPass> Renderer::mGeomPass;
 
 	void Renderer::Init() {
 
@@ -70,82 +73,18 @@ namespace Graphics {
 
 		//====================================================================
 
-		//Cubes
-		mData.cubeVertexArray = VertexArray::Create();
-		mData.cubeVertexBuffer = VertexBuffer::Create(mData.cMaxVertices * sizeof(QuadVtx));
+		//Triangles
+		mData.triVertexArray = VertexArray::Create();
+		mData.triVertexBuffer = VertexBuffer::Create(mData.cMaxVertices * sizeof(TriVtx));
 
-		BufferLayout cubeLayout = {
+		BufferLayout triLayout = {
 			{AttributeType::VEC3, "a_Position"},
-			{AttributeType::VEC3, "a_Normal"},
-			{AttributeType::VEC2, "a_TexCoord"},
-			{AttributeType::FLOAT, "a_TexIdx"},
-			{AttributeType::VEC3, "a_Tangent"},
-			{AttributeType::VEC3, "a_Bitangent"},
 			{AttributeType::VEC4, "a_Color"},
 		};
 
-		mData.cubeVertexBuffer->SetLayout(cubeLayout);
-		mData.cubeVertexArray->AddVertexBuffer(mData.cubeVertexBuffer);
-		mData.cubeBuffer = std::vector<CubeVtx>(mData.cMaxVertices);
-
-		// Setup for cubes
-		std::vector<unsigned int> cubeIndices(mData.cMaxIndices); // 36 indices per cube
-
-		unsigned int cubeOffset{};
-		for (size_t i{}; i < mData.cMaxIndices; i += 36) {
-			// Front face
-			cubeIndices[i + 0] = cubeOffset + 0; // Bottom-left
-			cubeIndices[i + 1] = cubeOffset + 1; // Bottom-right
-			cubeIndices[i + 2] = cubeOffset + 2; // Top-right
-			cubeIndices[i + 3] = cubeOffset + 2; // Top-right
-			cubeIndices[i + 4] = cubeOffset + 3; // Top-left
-			cubeIndices[i + 5] = cubeOffset + 0; // Bottom-left
-
-			// Back face
-			cubeIndices[i + 6] = cubeOffset + 4; // Bottom-right
-			cubeIndices[i + 7] = cubeOffset + 5; // Bottom-left
-			cubeIndices[i + 8] = cubeOffset + 6; // Top-left
-			cubeIndices[i + 9] = cubeOffset + 6; // Top-left
-			cubeIndices[i + 10] = cubeOffset + 7; // Top-right
-			cubeIndices[i + 11] = cubeOffset + 4; // Bottom-right
-
-			// Left face
-			cubeIndices[i + 12] = cubeOffset + 8; // Bottom-back
-			cubeIndices[i + 13] = cubeOffset + 9; // Bottom-front
-			cubeIndices[i + 14] = cubeOffset + 10; // Top-front
-			cubeIndices[i + 15] = cubeOffset + 10; // Top-front
-			cubeIndices[i + 16] = cubeOffset + 11; // Top-back
-			cubeIndices[i + 17] = cubeOffset + 8; // Bottom-back
-
-			// Right face
-			cubeIndices[i + 18] = cubeOffset + 12; // Bottom-front
-			cubeIndices[i + 19] = cubeOffset + 13; // Bottom-back
-			cubeIndices[i + 20] = cubeOffset + 14; // Top-back
-			cubeIndices[i + 21] = cubeOffset + 14; // Top-back
-			cubeIndices[i + 22] = cubeOffset + 15; // Top-front
-			cubeIndices[i + 23] = cubeOffset + 12; // Bottom-front
-
-			// Top face
-			cubeIndices[i + 24] = cubeOffset + 16; // Front-left
-			cubeIndices[i + 25] = cubeOffset + 17; // Front-right
-			cubeIndices[i + 26] = cubeOffset + 18; // Back-right
-			cubeIndices[i + 27] = cubeOffset + 18; // Back-right
-			cubeIndices[i + 28] = cubeOffset + 19; // Back-left
-			cubeIndices[i + 29] = cubeOffset + 16; // Front-left
-
-			// Bottom face
-			cubeIndices[i + 30] = cubeOffset + 20; // Back-left
-			cubeIndices[i + 31] = cubeOffset + 21; // Back-right
-			cubeIndices[i + 32] = cubeOffset + 22; // Front-right
-			cubeIndices[i + 33] = cubeOffset + 22; // Front-right
-			cubeIndices[i + 34] = cubeOffset + 23; // Front-left
-			cubeIndices[i + 35] = cubeOffset + 20; // Back-left
-
-			cubeOffset += 24; // Each cube has 24 vertices (6 faces, 4 vertices per face)
-		}
-
-		std::shared_ptr<ElementBuffer> cubeEbo = ElementBuffer::Create(cubeIndices.data(), mData.cMaxIndices);
-		mData.cubeVertexArray->SetElementBuffer(cubeEbo);
+		mData.triVertexBuffer->SetLayout(triLayout);
+		mData.triVertexArray->AddVertexBuffer(mData.triVertexBuffer);
+		mData.triBuffer = std::vector<TriVtx>(mData.cMaxVertices);
 
 		//========================================================
 
@@ -158,6 +97,7 @@ namespace Graphics {
 		for (unsigned int i{}; i < mData.maxTexUnits; ++i)
 			samplers[i] = i;
 
+		mData.lineShader = std::make_shared<Shader>("./assets/Shaders/Tri.vert.glsl", "./assets/Shaders/Tri.frag.glsl");
 		mData.texShader = std::make_shared<Shader>("./assets/Shaders/Default.vert.glsl", "./assets/Shaders/Default.frag.glsl");
 		mData.texShader->Use();
 		mData.texShader->SetUniform("u_Tex", samplers.data(), mData.maxTexUnits);
@@ -167,46 +107,27 @@ namespace Graphics {
 		mData.quadVtxPos[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
 		mData.quadVtxPos[3] = { -0.5f, 0.5f, 0.0f, 1.0f };
 
-		mData.cubeVtxPos = {
-			// Front face (z = +0.5)
-			glm::vec4{-0.5f, -0.5f,  0.5f, 1.0f}, // Bottom-left
-			glm::vec4{ 0.5f, -0.5f,  0.5f, 1.0f}, // Bottom-right
-			glm::vec4{ 0.5f,  0.5f,  0.5f, 1.0f}, // Top-right
-			glm::vec4{-0.5f,  0.5f,  0.5f, 1.0f}, // Top-left
+		//Init framebuffer
+		Graphics::FramebufferSpec framebufferSpec;
+		framebufferSpec.width = WINDOW_WIDTH<int>;
+		framebufferSpec.height = WINDOW_HEIGHT<int>;
+		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
 
-			// Back face (z = -0.5)
-			glm::vec4{ 0.5f, -0.5f, -0.5f, 1.0f}, // Bottom-right
-			glm::vec4{-0.5f, -0.5f, -0.5f, 1.0f}, // Bottom-left
-			glm::vec4{-0.5f,  0.5f, -0.5f, 1.0f}, // Top-left
-			glm::vec4{ 0.5f,  0.5f, -0.5f, 1.0f}, // Top-right
+		//Init RenderPasses
+		PipelineSpec geomPipelineSpec;
+		geomPipelineSpec.shader = mData.texShader;
+		geomPipelineSpec.targetFramebuffer = Framebuffer::Create(framebufferSpec);
 
-			// Left face (x = -0.5)
-			glm::vec4{-0.5f, -0.5f, -0.5f, 1.0f}, // Bottom-back
-			glm::vec4{-0.5f, -0.5f,  0.5f, 1.0f}, // Bottom-front
-			glm::vec4{-0.5f,  0.5f,  0.5f, 1.0f}, // Top-front
-			glm::vec4{-0.5f,  0.5f, -0.5f, 1.0f}, // Top-back
+		RenderPassSpec geomPassSpec;
+		geomPassSpec.pipeline = Pipeline::Create(geomPipelineSpec);
+		geomPassSpec.debugName = "Geometry Pass";
 
-			// Right face (x = +0.5)
-			glm::vec4{ 0.5f, -0.5f,  0.5f, 1.0f}, // Bottom-front
-			glm::vec4{ 0.5f, -0.5f, -0.5f, 1.0f}, // Bottom-back
-			glm::vec4{ 0.5f,  0.5f, -0.5f, 1.0f}, // Top-back
-			glm::vec4{ 0.5f,  0.5f,  0.5f, 1.0f}, // Top-front
+		mGeomPass = RenderPass::Create(geomPassSpec);
 
-			// Top face (y = +0.5)
-			glm::vec4{-0.5f,  0.5f,  0.5f, 1.0f}, // Front-left
-			glm::vec4{ 0.5f,  0.5f,  0.5f, 1.0f}, // Front-right
-			glm::vec4{ 0.5f,  0.5f, -0.5f, 1.0f}, // Back-right
-			glm::vec4{-0.5f,  0.5f, -0.5f, 1.0f}, // Back-left	
+		mFinalFramebuffer = mGeomPass->GetTargetFramebuffer();
+		//mFinalFramebuffer = Framebuffer::Create(framebufferSpec);
+;	}
 
-			// Bottom face (y = -0.5)
-			glm::vec4{-0.5f, -0.5f, -0.5f, 1.0f}, // Back-left
-			glm::vec4{ 0.5f, -0.5f, -0.5f, 1.0f}, // Back-right
-			glm::vec4{ 0.5f, -0.5f,  0.5f, 1.0f}, // Front-right
-			glm::vec4{-0.5f, -0.5f,  0.5f, 1.0f}, // Front-left
-		};
-
-
-	}
 
 	void Renderer::Shutdown() {
 		// Add shutdown logic if necessary
@@ -226,18 +147,14 @@ namespace Graphics {
 		++mData.quadBufferIndex;
 	}
 
-	void Renderer::SetCubeBufferData(glm::vec3 const& pos, glm::vec2 const& scale, glm::vec3 const& norm, glm::vec2 const& texCoord, float texIdx, glm::vec3 const& tangent, glm::vec3 const& bitangent, glm::vec4 const& clr) {
-		if (mData.cubeBufferIndex < mData.cubeBuffer.size()) {
-			CubeVtx& vtx = mData.cubeBuffer[mData.cubeBufferIndex];
+	void Renderer::SetTriangleBufferData(glm::vec3 const& pos, glm::vec4 const& clr) {
+		if (mData.triVtxCount < mData.triBuffer.size()) {
+			TriVtx& vtx = mData.triBuffer[mData.triBufferIndex];
 			vtx.pos = pos;
-			vtx.normal = norm;
-			vtx.texCoord = texCoord;
-			vtx.texIdx = texIdx;
-			vtx.tangent = tangent;
-			vtx.bitangent = bitangent;
 			vtx.clr = clr;
 		}
-		++mData.cubeBufferIndex;
+		++mData.triBufferIndex;
+		++mData.triVtxCount;
 	}
 
 	void Renderer::SetMeshBufferData(glm::vec3 const& pos, glm::vec3 const& norm, glm::vec2 const& texCoord, float texIdx, glm::vec3 const& tangent, glm::vec3 const& bitangent, glm::vec4 const& clr) {
@@ -284,31 +201,6 @@ namespace Graphics {
 		++mData.stats.quadCount;
 	}
 
-	void Renderer::SubmitCube(glm::vec3 const& pos, glm::vec3 const& scale, glm::vec4 const& clr, float rot) {
-		if (mData.cubeIdxCount >= RendererData::cMaxIndices)
-			NextBatch();
-
-		// Define texture coordinates (same for all faces)
-		constexpr glm::vec2 texCoords[4]{ { 0.f, 0.f }, {1.f, 0.f}, {1.f, 1.f}, {0.f, 1.f} };
-
-		// Transformation matrices
-		glm::mat4 translateMtx{ glm::translate(glm::mat4{ 1.f }, pos) };
-		glm::mat4 rotateMtx{ glm::rotate(glm::mat4{ 1.f }, glm::radians(rot), {0.f, 1.f, 0.f}) };
-		glm::mat4 scaleMtx{ glm::scale(glm::mat4{ 1.f }, scale) };
-		glm::mat4 transformMtx{ translateMtx * rotateMtx * scaleMtx };
-
-		// Front Face (positive Z)
-		glm::vec3 frontNormal = { 0.f, 0.f, 1.f };
-		glm::vec3 frontTangent = { 1.f, 0.f, 0.f };
-		glm::vec3 frontBitangent = { 0.f, 1.f, 0.f };
-		for (size_t i = 0; i < 24; ++i) {
-			SetCubeBufferData(transformMtx * mData.cubeVtxPos[i], scale, frontNormal, texCoords[i], 0.f, frontTangent, frontBitangent, clr);
-		}
-
-		mData.cubeIdxCount += 36; // 6 faces * 6 indices per face
-		//++mData.stats.quadCount;
-	}
-
 	void Renderer::SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& scale, glm::vec4 const& clr, float rot) {
 		if (mesh == nullptr) return;
 		auto const& meshSrc = mesh->GetMeshSource();
@@ -351,6 +243,15 @@ namespace Graphics {
 		}
 	}
 
+	void Renderer::SubmitTriangle(glm::vec3 const& v1, glm::vec3 const& v2, glm::vec3 const& v3, glm::vec4 const& clr) {
+		if (mData.triVtxCount >= RendererData::cMaxVertices)
+			NextBatch();
+
+		SetTriangleBufferData(v1, clr);
+		SetTriangleBufferData(v2, clr);
+		SetTriangleBufferData(v3, clr);
+	}
+
 	void Renderer::FlushBatch() {
 		if (mData.quadIdxCount) {
 			//ptrdiff_t difference{ reinterpret_cast<unsigned char*>(mData.quadBufferPtr)
@@ -372,18 +273,14 @@ namespace Graphics {
 
 			++mData.stats.drawCalls;
 		}
-		if (mData.cubeIdxCount) {
+		if (mData.triVtxCount) {
 
-			unsigned int dataSize = static_cast<unsigned int>(mData.cubeBufferIndex * sizeof(CubeVtx));
+			unsigned int dataSize = static_cast<unsigned int>(mData.triBufferIndex * sizeof(TriVtx));
 
-			mData.cubeVertexBuffer->SetData(mData.cubeBuffer.data(), dataSize);
+			mData.triVertexBuffer->SetData(mData.triBuffer.data(), dataSize);
 
-			//Bind all the textures that has been set
-			for (unsigned int i{}; i < mData.texUnitIdx; ++i) {
-				mData.texUnits[i]->Bind(i);
-			}
-			mData.texShader->Use();
-			RenderAPI::DrawIndices(mData.cubeVertexArray, mData.cubeIdxCount);
+			mData.lineShader->Use();
+			RenderAPI::DrawLines(mData.triVertexArray, mData.triVtxCount);
 
 			++mData.stats.drawCalls;
 		}
@@ -416,10 +313,10 @@ namespace Graphics {
 
 	void Renderer::BeginBatch() {
 		mData.quadIdxCount = 0;
-		mData.cubeIdxCount = 0;
+		mData.triVtxCount = 0;
 		//mData.quadBufferPtr = mData.quadBuffer.data();
 		mData.quadBufferIndex = 0;  // Reset the index for the new batch
-		mData.cubeBufferIndex = 0;
+		mData.triBufferIndex = 0;
 		mData.texUnitIdx = 1;
 
 		// Reset for general meshes
@@ -436,6 +333,8 @@ namespace Graphics {
 
 	void Renderer::RenderSceneBegin(glm::mat4 const& viewProjMtx) {
 
+		mData.lineShader->Use();
+		mData.lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
 		mData.texShader->Use();
 		mData.texShader->SetUniform("u_ViewProjMtx", viewProjMtx);
 
@@ -467,6 +366,14 @@ namespace Graphics {
 		int maxTexUnits;
 		glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTexUnits);
 		return static_cast<unsigned int>(maxTexUnits);
+	}
+
+	std::shared_ptr<Graphics::Framebuffer> Renderer::GetFinalFramebuffer() {
+		return mFinalFramebuffer; // Assuming `mFinalFramebuffer` holds the final rendered result
+	}
+
+	void Renderer::SetFinalFramebuffer(std::shared_ptr<Graphics::Framebuffer> const& framebuffer) {
+		mFinalFramebuffer = framebuffer;
 	}
 
 }
