@@ -119,31 +119,6 @@ void Scene::Draw()
 {
   glClear(GL_COLOR_BUFFER_BIT);
   glClear(GL_DEPTH_BUFFER_BIT);
-  //m_shaders.Use();
-
-  //m_cameras.front().SetUniforms(m_shaders);
-  //m_light.SetUniforms(m_shaders);
-  //m_material.SetUniforms(m_shaders);
-
-  //for (auto& obj : m_objects)
-  //{
-  //  m_shaders.SetUniform("uMdlTransform", obj->mdlTransform);
-  //  m_shaders.SetUniform("uVtxClr", obj->clr);
-  //  auto const& mdl{ *obj->meshRef };
-
-  //  glBindVertexArray(mdl.GetVAO());
-
-  //  // if primitive type is a point, render with GL_POINTS
-  //  if (mdl.isUsingIndices)
-  //  {
-  //    glDrawElements(mdl.primitiveType, static_cast<GLsizei>(mdl.drawCount), GL_UNSIGNED_SHORT, NULL);
-  //  }
-  //  // else draw as per normal
-  //  else {
-  //    glDrawArrays(mdl.primitiveType, 0, static_cast<GLsizei>(mdl.drawCount));
-  //  }
-  //}
-  //m_shaders.Unuse();
   
   m_defaultShaders.Use();
   m_cameras.front().SetUniforms(m_defaultShaders);
@@ -165,31 +140,6 @@ void Scene::DebugDraw() {
 
     Graphics::RenderSystem::RenderEditorScene(mEcam);
 
-    //Graphics::Renderer::RenderSceneBegin(mtx);
-
-    //// Imagine a 5x5 grid of cubes, each placed at different positions, scales, and colors
-    //for (int x = -2; x <= 2; ++x) {
-    //    for (int y = -2; y <= 2; ++y) {
-    //        // Calculate the position offset based on grid coordinates
-    //        glm::vec3 position = glm::vec3(x * 6.0f, y * 6.0f, 0.0f); // Spacing the cubes 6 units apart
-
-    //        // Random or incremental scaling
-    //        glm::vec3 scale = glm::vec3(1.0f + (x + 2) * 0.5f, 1.0f + (y + 2) * 0.5f, 1.0f);
-
-    //        // Assign a unique color for each cube (using normalized RGB values)
-    //        glm::vec4 color = glm::vec4(
-    //            (x + 2) * 0.2f, // Ranges from 0.0 to 1.0 as x goes from -2 to 2
-    //            (y + 2) * 0.2f, // Same for Y axis
-    //            1.0f - (x + 2) * 0.2f, // Creates a variety in color between cubes
-    //            1.0f);  // Alpha is always 1 (fully opaque)
-
-    //        // Submit the cube with the calculated position, scale, and color
-    //        Graphics::Renderer::SubmitMesh(mesh1, position, scale, color, 0.0f);
-    //        Graphics::Renderer::SubmitMesh(mesh0, position, scale, color, 0.0f);
-    //    }
-    //}
-
-    //Graphics::Renderer::RenderSceneEnd();
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 

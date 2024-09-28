@@ -5,6 +5,7 @@
 
 namespace Graphics {
 	RendererData Renderer::mData;
+	std::shared_ptr<Framebuffer> Renderer::mFinalFramebuffer;
 	std::shared_ptr<RenderPass> Renderer::mGeomPass;
 
 	void Renderer::Init() {
@@ -106,10 +107,16 @@ namespace Graphics {
 		mData.quadVtxPos[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
 		mData.quadVtxPos[3] = { -0.5f, 0.5f, 0.0f, 1.0f };
 
+		//Init framebuffer
+		Graphics::FramebufferSpec framebufferSpec;
+		framebufferSpec.width = WINDOW_WIDTH<int>;
+		framebufferSpec.height = WINDOW_HEIGHT<int>;
+		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
+
 		//Init RenderPasses
 		PipelineSpec geomPipelineSpec;
 		geomPipelineSpec.shader = mData.texShader;
-		geomPipelineSpec.targetFramebuffer = nullptr;
+		geomPipelineSpec.targetFramebuffer = Framebuffer::Create(framebufferSpec);
 
 		RenderPassSpec geomPassSpec;
 		geomPassSpec.pipeline = Pipeline::Create(geomPipelineSpec);
@@ -117,7 +124,9 @@ namespace Graphics {
 
 		mGeomPass = RenderPass::Create(geomPassSpec);
 
-	}
+		mFinalFramebuffer = mGeomPass->GetTargetFramebuffer();
+		//mFinalFramebuffer = Framebuffer::Create(framebufferSpec);
+;	}
 
 
 	void Renderer::Shutdown() {
@@ -357,6 +366,14 @@ namespace Graphics {
 		int maxTexUnits;
 		glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTexUnits);
 		return static_cast<unsigned int>(maxTexUnits);
+	}
+
+	std::shared_ptr<Graphics::Framebuffer> Renderer::GetFinalFramebuffer() {
+		return mFinalFramebuffer; // Assuming `mFinalFramebuffer` holds the final rendered result
+	}
+
+	void Renderer::SetFinalFramebuffer(std::shared_ptr<Graphics::Framebuffer> const& framebuffer) {
+		mFinalFramebuffer = framebuffer;
 	}
 
 }

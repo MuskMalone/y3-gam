@@ -17,6 +17,7 @@
 #endif
 
 #include <Physics/PhysicsSystem.h>
+#include "Graphics/Renderer.h"
 
 
 namespace
@@ -97,7 +98,6 @@ void Application::Init() {
     std::cout << elem.first << " : " << elem.second << "\n";
   }
   */
-
 }
 
 void Application::Run() {
@@ -137,7 +137,11 @@ void Application::Run() {
           UpdateFramebuffers();
 
           // Update ImGui
+
+         auto fb = Graphics::Renderer::GetFinalFramebuffer();
+          mFramebuffers.front().first = fb;
           mGUIManager.UpdateGUI(mFramebuffers.front().first);
+
 
           ImGui::Render();
           ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

@@ -103,6 +103,8 @@ namespace Graphics {
 		static void RenderSceneEnd();
 
 		static unsigned int GetMaxTextureUnits();
+		static std::shared_ptr<Graphics::Framebuffer> GetFinalFramebuffer();
+		static void SetFinalFramebuffer(std::shared_ptr<Graphics::Framebuffer> const& framebuffer);
 	private:
 		static void SetQuadBufferData(glm::vec3 const& pos, glm::vec2 const& scale,
 			glm::vec3 const& norm, glm::vec2 const& texCoord,
@@ -127,6 +129,7 @@ namespace Graphics {
 
 	private:
 		static RendererData mData;
+		static std::shared_ptr<Framebuffer> mFinalFramebuffer;
 	public: // temp
 		static std::shared_ptr<RenderPass> mGeomPass;
 	};
