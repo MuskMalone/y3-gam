@@ -138,24 +138,19 @@ namespace Prefabs
   public:
     /*---------------------------- EDITOR - ONLY FUNCTIONS ----------------------------*/
 #ifndef IMGUI_DISABLE
-      /*!*********************************************************************
-      \brief
-        Assigns a prefab to an entity
-      \param entity
-        The entity to assign the prefab
-      \param prefab
-        std::pair containing the prefab name and version
-      ************************************************************************/
-    void AttachPrefab(ECS::Entity entity, EntityPrefabMap::mapped_type const& prefab);
-    void AttachPrefab(ECS::Entity entity, EntityPrefabMap::mapped_type&& prefab);
-
     /*!*********************************************************************
     \brief
-      Unsubscribes an entity from prefab updates
-    \param entity
-      The entity id
+      Creates an instance of a prefab and returns how each entity is mapped
+      to the subdata
+    \param key
+      Name of the prefab
+    \param pos
+      The position to spawn the prefab at
+    \return
+      Entity id of the instance and the mappings in the form of a pair
     ************************************************************************/
-    void DetachPrefab(ECS::Entity entity);
+    std::pair<ECS::Entity, Prefabs::Prefab::EntityMappings> SpawnPrefabAndMap(const std::string& key,
+      glm::dvec3 const& pos = {}, bool mapEntity = true);
 
     /*!*********************************************************************
     \brief
@@ -191,33 +186,15 @@ namespace Prefabs
        updated with any removed objects passed from the prefab editor.
      \param prefabInstance
        The entity ID of the prefab instance
-     \param removedChildren
-       The vector of SubDataIds of removed children
-     \param removedComponents
-       The vector of removed components along with the respective SubDataId
+     \param mappings
+       The mappings of entity to subdataid when the prefab was created
+     \param key
+       The key of the prefab
      \param filepath
        The path to save the prefab to
     ************************************************************************/
-    void UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::string const& filepath);
-
-    /*!*********************************************************************
-    \brief
-      This function updates all entities associated with the given prefab
-    \param prefab
-      The prefab to update all entities with
-    \return
-      True if any instance was updated and false otherwise
-    ************************************************************************/
-    bool UpdateEntitiesFromPrefab(std::string const& prefab);
-
-    /*!*********************************************************************
-    \brief
-      This function updates all entities in the map based on their
-      respective prefabs
-    \return
-      True if any instance was updated and false otherwise
-    ************************************************************************/
-    bool UpdateAllEntitiesFromPrefab();
+    void UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::string const& key,
+      Prefabs::Prefab::EntityMappings& mappings, std::string const& filePath);
 
 #endif
 

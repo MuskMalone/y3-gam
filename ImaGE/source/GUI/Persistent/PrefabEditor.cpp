@@ -61,14 +61,14 @@ namespace GUI
       mIsEditing = true;
       // if new prefab, create an entity with the prefab's name
       if (editPrefabEvent->mPath.empty()) {
-        mPrefabInstance = ECS::EntityManager::GetInstance().CreateEntity();
-        mPrefabInstance.GetComponent<Component::Tag>().tag = mPrefabName;
+        mPrefabInstance.first = ECS::EntityManager::GetInstance().CreateEntity();
+        mPrefabInstance.first.GetComponent<Component::Tag>().tag = mPrefabName;
         return;
       }
 
       auto& prefabMan{ Prefabs::PrefabManager().GetInstance() };
       prefabMan.LoadPrefab(mPrefabName); // force load the prefab first
-      mPrefabInstance = prefabMan.SpawnPrefab(mPrefabName);
+      mPrefabInstance = prefabMan.SpawnPrefabAndMap(mPrefabName);
       mPrefabPath = editPrefabEvent->mPath;
       break;
     }
@@ -105,12 +105,12 @@ namespace GUI
       if (ImGui::Button("Save"))
       {
         ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
-        if (!mPrefabInstance) { // should also check if its valid
+        if (!mPrefabInstance.first) { // should also check if its valid
           // if the current prefabInstance isnt valid,
           // search for the first entity without a parent
           for (auto const& e : entityMan.GetAllEntities()) {
             if (!entityMan.HasParent(e)) {
-              mPrefabInstance = e;
+              mPrefabInstance.first = e;
               break;
             }
           }
@@ -118,13 +118,13 @@ namespace GUI
         
         Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
 
-        if (mPrefabPath.empty()) {
-          pm.CreatePrefabFromEntity(mPrefabInstance, mPrefabName);
+        if (mPrefabPath.empty() || mPrefabInstance.second.Empty()) {
+          pm.CreatePrefabFromEntity(mPrefabInstance.first, mPrefabName);
         }
         else
         {
           Debug::DebugLogger::GetInstance().LogInfo("[PrefabEditor] Saved " + mPrefabName);
-          pm.UpdatePrefabFromEditor(mPrefabInstance, mPrefabPath);
+          pm.UpdatePrefabFromEditor(mPrefabInstance.first, mPrefabName, mPrefabInstance.second, mPrefabPath);
         }
         Scenes::SceneManager::GetInstance().StopScene();
 
@@ -139,7 +139,7 @@ namespace GUI
 
   void PrefabEditor::ResetPrefabEditor()
   {
-    mPrefabInstance = ECS::Entity();
+    mPrefabInstance = {};
     mPrefabName.clear();
     mPrefabPath.clear();
     mIsEditing = mEscTriggered = false;

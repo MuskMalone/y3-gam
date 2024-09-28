@@ -82,6 +82,27 @@ namespace Serialization
           inst.mPosition = pos;
         }
 
+        if (!entity.HasMember(JsonIdKey) || !entity.HasMember(JsonParentKey) || !entity.HasMember(JsonChildEntitiesKey)) {
+          std::string const msg{ "Reflection::PrefabInst missing members!" };
+          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
+#ifdef _DEBUG
+          std::cout << msg << "\n";
+#endif
+        }
+        // deserialize IDs
+        inst.mId = static_cast<EntityID>(entity[JsonIdKey].GetUint());
+        {
+          rapidjson::Value const& parentJson{ entity[JsonParentKey] };
+          inst.mParent = parentJson.IsNull() ? entt::null : static_cast<EntityID>(parentJson.GetUint());
+        }
+
+        {
+          rttr::variant childrenVar{ std::vector<ECS::EntityManager::EntityID>() };
+          auto seqView{ childrenVar.create_sequential_view() };
+          DeserializeSequentialContainer(seqView, entity[JsonChildEntitiesKey]);
+          inst.mChildren = std::move(childrenVar.get_value<std::vector<ECS::EntityManager::EntityID>>());
+        }
+
         DeserializePrefabOverrides(inst.mOverrides, entity[JsonPrefabKey]);
         std::vector<Reflection::PrefabInst>& vec{ prefabInstances[inst.mOverrides.prefabName] };
         vec.emplace_back(std::move(inst));
@@ -241,7 +262,7 @@ namespace Serialization
       rttr::variant var{ std::unordered_set<rttr::type>() };
       auto associativeView{ var.create_associative_view() };
       DeserializeAssociativeContainer(associativeView, json["removedComponents"]);
-      prefabOverride.removedComponents = var.get_value<std::unordered_set<rttr::type>>();
+      prefabOverride.removedComponents = std::move(var.get_value<std::unordered_set<rttr::type>>());
     }
 
     // deserialize modified components

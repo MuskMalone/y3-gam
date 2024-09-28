@@ -24,10 +24,11 @@ namespace Component {
     inline bool IsComponentRemoved() const { return removedComponents.contains(rttr::type::get<T>()); }
     inline bool IsComponentRemoved(rttr::type const& type) const { return removedComponents.contains(type); }
 
-    void AddComponentModification(rttr::variant const& comp) {
-      rttr::type const compType{ comp.get_type() };
+    template <typename T>
+    void AddComponentModification(T const& comp) {
+      rttr::type const compType{ rttr::type::get<T>() };
       removedComponents.erase(compType);
-      modifiedComponents[compType] = comp;
+      modifiedComponents[compType] = std::make_shared<T>(comp);
     }
     void AddComponentRemoval(rttr::type const& type) { modifiedComponents.erase(type); removedComponents.emplace(type); }
 

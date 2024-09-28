@@ -35,7 +35,7 @@ namespace GUI
     std::string mPrefabName, mPrefabPath;
     std::vector<Prefabs::SubDataId> mRemovedChildren;
     std::vector<std::pair<Prefabs::SubDataId, rttr::type>> mRemovedComponents;
-    ECS::Entity mPrefabInstance;
+    std::pair<ECS::Entity, Prefabs::Prefab::EntityMappings> mPrefabInstance;
     bool mIsEditing, mEscTriggered;
 
     /*!*********************************************************************

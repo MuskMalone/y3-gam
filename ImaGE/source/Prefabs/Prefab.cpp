@@ -39,13 +39,13 @@ ECS::Entity PrefabSubData::Construct(std::string const& name) const
 
 Prefab::Prefab(std::string name) : mName{ std::move(name) }, mObjects{}, mComponents{}, mIsActive{ true } {}
 
-std::pair<ECS::Entity, Prefab::EntityMappings> Prefab::Construct(glm::vec3 const& pos) const
+std::pair<ECS::Entity, Prefab::EntityMappings> Prefab::ConstructAndMap(glm::vec3 const& pos) const
 {
   std::unordered_map<SubDataId, ECS::Entity> idsToEntities;
   EntityMappings mappedData{};
   size_t const numObjs{ mObjects.size() + 1 };
   idsToEntities.reserve(numObjs);
-  mappedData.reserve(numObjs);
+  mappedData.Reserve(numObjs);
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
 
   // first, create the base entity
@@ -58,14 +58,14 @@ std::pair<ECS::Entity, Prefab::EntityMappings> Prefab::Construct(glm::vec3 const
 
   // map base ID to this entity ID
   idsToEntities.emplace(PrefabSubData::BasePrefabId, entity);  
-  mappedData.emplace(PrefabSubData::BasePrefabId, entity);
+  mappedData.Insert(entity.GetRawEnttEntityID(), PrefabSubData::BasePrefabId);
 
   // then, create child entities and map IDs
   for (PrefabSubData const& obj : mObjects)
   {
     ECS::Entity const subEntity{ obj.Construct(mName) };
     idsToEntities.emplace(obj.mId, subEntity);
-    mappedData.emplace(obj.mId, subEntity);
+    mappedData.Insert(subEntity.GetRawEnttEntityID(), obj.mId);
   }
 
   // establish the hierarchy
@@ -77,6 +77,47 @@ std::pair<ECS::Entity, Prefab::EntityMappings> Prefab::Construct(glm::vec3 const
   }
 
   return { entity, mappedData };
+}
+
+ECS::Entity Prefab::Construct(glm::vec3 const& pos) const
+{
+  std::unordered_map<SubDataId, ECS::Entity> idsToEntities;
+  size_t const numObjs{ mObjects.size() + 1 };
+  idsToEntities.reserve(numObjs);
+  ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
+
+  // first, create the base entity
+  ECS::Entity entity{ entityMan.CreateEntityWithTag(mName) };
+  //entityMan.SetIsActiveEntity(entity, mIsActive);
+  Reflection::ObjectFactory::GetInstance().AddComponentsToEntity(entity, mComponents);
+  Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
+  trans.worldPos = trans.localPos = pos;
+  entity.EmplaceComponent<Component::PrefabOverrides>(mName);
+
+  // map base ID to this entity ID
+  idsToEntities.emplace(PrefabSubData::BasePrefabId, entity);
+
+  // then, create child entities and map IDs
+  for (PrefabSubData const& obj : mObjects)
+  {
+    ECS::Entity const subEntity{ obj.Construct(mName) };
+    idsToEntities.emplace(obj.mId, subEntity);
+  }
+
+  // establish the hierarchy
+  for (PrefabSubData const& obj : mObjects)
+  {
+    ECS::Entity const& child{ idsToEntities[obj.mId] }, parent{ idsToEntities[obj.mParent] };
+    entityMan.SetParentEntity(parent, child);
+    //entityMan.SetIsActiveEntity(child, obj.mIsActive);
+  }
+
+  return entity;
+}
+
+void Prefab::ConstructWithId(std::unordered_map<SubDataId, Reflection::PrefabInst*> const& mappings)
+{
+
 }
 
 void Prefab::CreateSubData(std::vector<ECS::Entity> const& children, SubDataId parent)
@@ -100,16 +141,35 @@ void Prefab::CreateSubData(std::vector<ECS::Entity> const& children, SubDataId p
   }
 }
 
-Prefab::SubObjectComponentMap Prefab::GetSubObjectComponentMappings() const
+void Prefab::CreateFixedSubData(std::vector<ECS::Entity> const& children, EntityMappings& mappings, SubDataId parent)
 {
-  SubObjectComponentMap ret;
-  ret.emplace(PrefabSubData::BasePrefabId, mComponents);
+  if (children.empty()) { return; }
 
-  for (PrefabSubData const& subObj : mObjects) {
-    ret.emplace(subObj.mId, subObj.mComponents);
+  ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
+
+  for (ECS::Entity const& child : children)
+  {
+    SubDataId currId;
+    // if mapping exists, use previous Id
+    if (mappings.Contains(child.GetRawEnttEntityID())) {
+      currId = mappings.Get(child.GetRawEnttEntityID());
+    }
+    // else, we use the next available number
+    else {
+      currId = static_cast<SubDataId>(mappings.Size());
+      while (mappings.Contains(currId)) { ++currId; }
+      mappings.Insert(child.GetRawEnttEntityID(), currId);
+    }
+    PrefabSubData obj{ currId, parent };
+    obj.mIsActive = true; // entityMan.GetIsActiveEntity(child);
+
+    obj.mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(child);
+
+    mObjects.emplace_back(std::move(obj));
+    if (entityMan.HasChild(child)) {
+      CreateFixedSubData(entityMan.GetChildEntity(child), mappings, mappings.Get(child.GetRawEnttEntityID()));
+    }
   }
-
-  return ret;
 }
 
 void Prefab::Clear() noexcept

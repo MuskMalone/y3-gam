@@ -39,10 +39,16 @@ namespace Reflection
   // add ID and ParentID
   struct PrefabInst
   {
-    PrefabInst() : mPosition{}, mOverrides{} {}
+    using EntityID = ECS::EntityManager::EntityID;
 
-    std::optional<glm::vec3> mPosition; // only for root entity
+    PrefabInst() : mOverrides{}, mChildren{}, mPosition{}, mId{ entt::null }, mParent{ entt::null } {}
+    PrefabInst(EntityID id, EntityID parent = entt::null)
+      : mOverrides{}, mChildren{}, mPosition {}, mId{ id }, mParent{ parent } {}
+
     Component::PrefabOverrides mOverrides;
+    std::vector<EntityID> mChildren;
+    std::optional<glm::vec3> mPosition; // only for root entity
+    EntityID mId, mParent;
   };
 
 } // namespace Reflection

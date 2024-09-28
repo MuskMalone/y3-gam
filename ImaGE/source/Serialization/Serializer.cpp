@@ -129,29 +129,6 @@ namespace Serialization
     writer.Key(JsonIdKey);
     writer.Uint(entity.GetEntityID());
 
-    // if its a prefab instance, only serialize the overrides
-    if (entity.HasComponent<Component::PrefabOverrides>()) {
-      Component::PrefabOverrides const& overrides{ entity.GetComponent<Component::PrefabOverrides>() };
-
-      // if position exists, serialize it
-      if (overrides.subDataId == Prefabs::PrefabSubData::BasePrefabId && !overrides.IsComponentModified(rttr::type::get<Component::Transform>())) {
-        writer.Key(JsonPfbPosKey);
-        SerializeRecursive(entity.GetComponent<Component::Transform>().worldPos, writer);
-      }
-
-      // serialize the components
-      writer.Key(JsonPrefabKey);
-      SerializeRecursive(overrides, writer);
-      writer.EndObject();
-      return;
-    }
-
-    // if not, serialize the entity as per normal
-    // 
-    // serialize state
-    writer.Key(JsonEntityStateKey);
-    writer.Bool(true);// entityMan.GetIsActiveEntity(entity));
-
     // serialize parent id
     writer.Key(JsonParentKey);
     if (entityMan.HasParent(entity)) {
@@ -170,6 +147,33 @@ namespace Serialization
       }
     }
     writer.EndArray();
+
+    // if its a prefab instance, only serialize the overrides
+    if (entity.HasComponent<Component::PrefabOverrides>()) {
+      Component::PrefabOverrides const& overrides{ entity.GetComponent<Component::PrefabOverrides>() };
+
+      // if position exists, serialize it
+      if (overrides.subDataId == Prefabs::PrefabSubData::BasePrefabId && !overrides.IsComponentModified(rttr::type::get<Component::Transform>())) {
+        writer.Key(JsonPfbPosKey);
+        SerializeRecursive(entity.GetComponent<Component::Transform>().worldPos, writer);
+      }
+
+      // serialize the components
+      writer.Key(JsonPrefabKey);
+      SerializeRecursive(overrides, writer);
+      if (overrides.modifiedComponents.contains(rttr::type::get<Component::Tag>())) {
+        std::cout << "Serialized entity " << entity.GetEntityID() << " with tag "
+          << overrides.modifiedComponents.at(rttr::type::get<Component::Tag>()).get_value<std::shared_ptr<Component::Tag>>()->tag << "\n";
+      }
+      writer.EndObject();
+      return;
+    }
+
+    // if not, serialize the entity as per normal
+    // 
+    // serialize state
+    writer.Key(JsonEntityStateKey);
+    writer.Bool(true);// entityMan.GetIsActiveEntity(entity));
 
     writer.Key(JsonComponentsKey);
     std::vector<rttr::variant> const components{ Reflection::ObjectFactory::GetInstance().GetEntityComponents(entity) };

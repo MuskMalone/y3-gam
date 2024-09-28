@@ -30,6 +30,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Events/EventManager.h>
 #endif
 
+#ifdef _DEBUG
+#define OF_DEBUG
+#endif
+
 namespace Reflection
 {
 
@@ -72,44 +76,75 @@ namespace Reflection
     }
   }
 
+  void TraverseDownInstance(ECS::Entity base, std::unordered_map<Prefabs::SubDataId, ECS::EntityManager::EntityID>& idToEntity) {
+    
+  }
+
   void ObjectFactory::LoadPrefabInstances() {
     Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
-    for (auto const&[pfb, data] : mPrefabInstances) {
+    ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
+
+#ifdef OF_DEBUG
+    std::cout << "\n\n=======================================================================\n\n";
+#endif
+
+    for (auto const& [pfb, data] : mPrefabInstances) {
       pm.LoadPrefab(pfb);
-      // create an instance of the original
-      auto mappings{ pm.GetVariantPrefab(pfb).GetSubObjectComponentMappings() };
 
-      // for every instance, create an entity with its ID,
-      // use the mappings to get the referenced subdata and
-      // add its components to it, overidding as necessary
-      // afterwards, iterate once more to establish hierarchy
-      
-      // override components of each entity if necessary
-      //for (Reflection::PrefabInst const& inst : data) {
-      //  if (inst.mPosition) {
-      //    Component::Transform& trans{ mappings.first.GetComponent<Component::Transform>() };
-      //    trans.worldPos = trans.localPos = *inst.mPosition;
-      //  }
-
-      //  // each entity's PrefabOverrides component should 
-      //  // contain an id that corresponds to a sub-object
-      //  Component::PrefabOverrides const& overrides{ inst.mOverrides };
-      //  ECS::Entity& currEntity{ mappings.second[overrides.subDataId] };
-      //  currEntity.EmplaceOrReplaceComponent<Component::PrefabOverrides>(overrides);  // restore its PrefabOverrides
-
-      //  // replace any modified components
-      //  if (!overrides.modifiedComponents.empty()) {
-      //    for (auto const&[compType, compVar] : overrides.modifiedComponents) {
-      //      AddComponentToEntity(currEntity, compType, compVar);
-      //    }
-      //  }
-      //  // remove components if necessary
-      //  if (!overrides.removedComponents.empty()) {
-      //    for (rttr::variant const& comp : overrides.modifiedComponents) {
-      //      RemoveComponentFromEntity(currEntity, comp.get_type());
-      //    }
-      //  }
-      //}
+      // <child, parent>
+      std::vector<ECS::Entity> baseEntities;
+      std::unordered_map<ECS::EntityManager::EntityID, std::vector<ECS::EntityManager::EntityID>> parentToChildren;
+      // first create a map of parent to children
+      // we will use this to traverse down the root entity of each prefab instance,
+      // storing a mapping of SubDataId to PrefabInst at the same time
+      // we then pass this into the prefab struct method to construct the entities
+      // and override whatever is necessary
+      for (Reflection::PrefabInst const& instData : data) {
+        if (instData.mParent == entt::null) {
+          baseEntities.emplace_back(instData.mId);
+        }
+        if (!instData.mChildren.empty()) {
+          //parentToChildren.emplace(instData.mId, instData.mChildren);
+        }
+      }
+//        // each entity's PrefabOverrides component should 
+//        // contain an id that corresponds to a sub-object
+//        Component::PrefabOverrides const& overrides{ instData.mOverrides };
+//#ifdef OF_DEBUG
+//        if (!mappings.contains(overrides.subDataId)) {
+//          throw Debug::Exception<ObjectFactory>(Debug::LVL_ERROR,
+//            Msg("Prefab instance " + overrides.prefabName
+//              + " contains invalid SubDataId of " + std::to_string(overrides.subDataId)));
+//        }
+//#endif
+//        inst.EmplaceComponent<Component::PrefabOverrides>(overrides);  // restore its PrefabOverrides
+//
+//        // replace any modified components
+//        if (!overrides.modifiedComponents.empty()) {
+//          for (auto const& [compType, compVar] : overrides.modifiedComponents) {
+//            AddComponentToEntity(inst, compType, compVar);
+//          }
+//        }
+//        // remove components if necessary
+//        if (!overrides.removedComponents.empty()) {
+//          for (rttr::type const& type : overrides.removedComponents) {
+//            RemoveComponentFromEntity(inst, type);
+//          }
+//        }
+//
+//      }
+//
+//      // establish the hierarchy
+//      for (auto const& [child, parent] : entityRelations) { 
+//        if (parent == entt::null) { continue; }
+//
+//#ifdef OF_DEBUG
+//        std::cout << "Set " << static_cast<uint32_t>(parent) << " to parent of " << child.GetEntityID() << "\n";
+//#endif
+//        entityMan.SetParentEntity(parent, child);
+//      }
+//
+//      entityRelations.clear();
     }
   }
 
@@ -131,9 +166,6 @@ namespace Reflection
       if (data.mParent == entt::null) { continue; }
 
       entityMan.SetParentEntity(data.mParent, data.mID);
-      /*for (ECS::Entity const& child : data.mChildEntities) {
-        entityMan.SetChildEntity(data.mID, child);
-      }*/
     }
 
     LoadPrefabInstances();

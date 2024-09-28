@@ -15,8 +15,12 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <rttr/type.h>
 #include <Core/EntityManager.h>
+
+// forward declaration
+namespace Reflection { class ObjectFactory; struct PrefabInst; }
 
 namespace Prefabs
 {
@@ -69,7 +73,7 @@ namespace Prefabs
   // components are stored in an std::vector of rttr::variants
   struct Prefab
   {
-    using EntityMappings = std::unordered_map<SubDataId, ECS::Entity>;
+    struct EntityMappings;
     using SubObjectComponentMap = std::unordered_map<SubDataId, std::vector<rttr::variant>>;
 
     Prefab() = default;
@@ -91,7 +95,8 @@ namespace Prefabs
     \return
       The ID of the created entity
     ************************************************************************/
-    std::pair<ECS::Entity, EntityMappings> Construct(glm::vec3 const& pos = {}) const;
+    ECS::Entity Construct(glm::vec3 const& pos) const;
+    std::pair<ECS::Entity, EntityMappings> ConstructAndMap(glm::vec3 const& pos = {}) const;
 
     /*!*********************************************************************
     \brief
@@ -108,12 +113,7 @@ namespace Prefabs
       externally.
     ************************************************************************/
     void CreateSubData(std::vector<ECS::Entity> const& children, SubDataId parent = PrefabSubData::BasePrefabId);
-
-    /*!*********************************************************************
-    \brief
-      Returns a map of SubDataId to components
-    ************************************************************************/
-    SubObjectComponentMap GetSubObjectComponentMappings() const;
+    void CreateFixedSubData(std::vector<ECS::Entity> const& children, EntityMappings& mappings, SubDataId parent = PrefabSubData::BasePrefabId);
 
     /*!*********************************************************************
     \brief
@@ -125,5 +125,30 @@ namespace Prefabs
     std::vector<PrefabSubData> mObjects;
     std::vector<rttr::variant> mComponents;
     bool mIsActive;
+
+  private:
+    friend class Reflection::ObjectFactory;
+
+    void ConstructWithId(std::unordered_map<SubDataId, Reflection::PrefabInst*> const& mappings);
+  };
+
+  struct Prefab::EntityMappings {
+
+    void Reserve(size_t size) { mappings.reserve(size); idDict.reserve(size); }
+
+    void Insert(ECS::EntityManager::EntityID entityId, SubDataId subDataId) {
+      mappings.emplace(entityId, subDataId);
+      idDict.emplace(subDataId);
+    }
+
+    inline SubDataId Get(ECS::EntityManager::EntityID const& id) { return mappings[id]; }
+    inline SubDataId Get(ECS::EntityManager::EntityID const& id) const { return mappings.at(id); }
+    inline bool Contains(ECS::EntityManager::EntityID const& id) const { return mappings.contains(id); }
+    inline bool Contains(SubDataId id) const { return idDict.contains(id); }
+    inline size_t Size() const { return idDict.size(); }
+    inline bool Empty() const noexcept { return idDict.empty(); }
+
+    std::unordered_map<ECS::EntityManager::EntityID, SubDataId> mappings;
+    std::unordered_set<SubDataId> idDict;
   };
 }
