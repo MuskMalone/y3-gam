@@ -14,11 +14,11 @@ namespace GUI
 
   Viewport::Viewport(std::string const& name) : GUIWindow(name) {}
 
-  void Viewport::Update(std::shared_ptr<Graphics::Temp::Framebuffer> const& framebuffer)
+  void Viewport::Update(std::shared_ptr<Graphics::Framebuffer> const& framebuffer)
   {
     ImGui::Begin(mWindowName.c_str());
     ImGui::Image(
-        (ImTextureID)(uintptr_t)framebuffer->GetTextureID(),
+        reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(framebuffer->GetColorAttachmentID())),
         ImGui::GetContentRegionAvail(),
         ImVec2(0, 1),
         ImVec2(1, 0)
