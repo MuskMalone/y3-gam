@@ -34,6 +34,7 @@ namespace Graphics {
             bool IsDepthFormat(FramebufferTextureFormat fmt) {
                 switch (fmt) {
                 case FramebufferTextureFormat::DEPTH24STENCIL8: return true;
+                default:
                     return false;
                 }
             }

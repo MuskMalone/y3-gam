@@ -240,15 +240,9 @@ Application::Application(const char* name, int width, int height) :
   Graphics::FramebufferSpec framebufferSpec;
   framebufferSpec.width = width;
   framebufferSpec.height = height;
-  framebufferSpec.attachments = Graphics::FramebufferAttachmentSpec{
-      {
-        Graphics::FramebufferTextureSpec(Graphics::FramebufferTextureFormat::RGBA8),   // Color attachment
-        Graphics::FramebufferTextureSpec(Graphics::FramebufferTextureFormat::DEPTH)    // Depth attachment
-      }
-  };
-  auto frameBuffer = Graphics::Framebuffer::Create(framebufferSpec);
+  framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
 
-  mFramebuffers.emplace_back(frameBuffer, std::bind(&Scene::Draw, mScene.get()));
+  mFramebuffers.emplace_back(Graphics::Framebuffer::Create(framebufferSpec), std::bind(&Scene::Draw, mScene.get()));
 
   //mFramebuffers.emplace_back(std::make_shared<Graphics::Temp::Framebuffer>(width, height), std::bind(&Scene::Draw, mScene.get()));
 }
