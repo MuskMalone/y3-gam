@@ -24,9 +24,9 @@ uniform mat4 u_ViewProjMtx;
 void main(){
 	//gl_Position = u_ViewProjMtx * u_MdlViewMtx * vec4(a_Position, 1.0);
 
-	v_Normal = normalize(a_Normal);
-    v_Tangent = normalize(a_Tangent);
-    v_Bitangent = normalize(a_Bitangent);
+	v_Normal = a_Normal;
+    v_Tangent = a_Tangent;
+    v_Bitangent = a_Bitangent;
 
 	v_FragPos = a_Position;
 	v_Color = a_Color;

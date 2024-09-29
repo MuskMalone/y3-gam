@@ -19,13 +19,13 @@ in vec3 v_Bitangent;            // Bitangent in world space
 uniform vec3 u_Albedo;
 uniform float u_Metallic;
 uniform float u_Roughness;
-uniform float u_AO = 1.0;
+uniform float u_AO;
 
 //lighting parameters
 uniform vec3 u_CamPos;       // Camera position in world space
 // Single light source (hardcoded for now)
-const vec3 u_LightPos = vec3(10.0, 10.0, 10.0); // Example light position
-const vec3 u_LightColor = vec3(1.0, 1.0, 1.0);       // Example white light
+const vec3 u_LightPos = vec3(0, 2.0, 5.0); // Example light position
+const vec3 u_LightColor = vec3(10.0, 10.0, 10.0);       // Example white light
 //uniform vec3 u_LightPos;     // Light position in world space
 //uniform vec3 u_LightColor;   // Light color
 

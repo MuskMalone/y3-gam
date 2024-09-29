@@ -66,6 +66,33 @@ void Scene::Init()
   mesh1 = std::make_shared<Graphics::Mesh>(pyrMeshSource);
   //=====================================================================================================================
 
+  //// Create a new entity for the plane
+  //ECS::Entity planeEntity = ECS::EntityManager::GetInstance().CreateEntity();
+
+  //// Set up the TransformComponent to create a flat plane
+  //auto& planeTransformComponent = planeEntity.GetComponent<Component::Transform>();
+  //planeTransformComponent.worldPos = glm::vec3(0.0f, -1.0f, 0.0f); // Place it slightly below the cubes (as ground)
+  //planeTransformComponent.worldScale = glm::vec3(100.0f, 0.1f, 100.0f); // Scale it to make a large plane
+  //planeTransformComponent.worldRot = {}; // No rotation
+
+  //// Set up the MeshComponent for the plane
+  //auto& planeMeshComponent = planeEntity.EmplaceComponent<Component::Mesh>();
+  //planeMeshComponent.mesh = mesh0; // Use the cube mesh to create the plane
+
+  ECS::Entity entity = ECS::EntityManager::GetInstance().CreateEntity();
+
+  // Set up the TransformComponent with different offsets
+  ECS::Entity light = ECS::EntityManager::GetInstance().CreateEntity();
+  auto& transformC = light.GetComponent<Component::Transform>();
+  transformC.worldPos = glm::vec3(0.f, 2.0f, 5.f); // Offset for position
+  transformC.worldScale = glm::vec3(1.0f);  // Default scale
+  transformC.worldRot = {};  // No rotation
+  auto& meshC = light.EmplaceComponent<Component::Mesh>();
+  meshC.mesh = mesh0;
+
+  // Set up the MeshComponent
+  auto& meshComponent = entity.EmplaceComponent<Component::Mesh>();
+
   for (int i = 0; i < 5; ++i)
   {
       for (int j = 0; j < 5; ++j)

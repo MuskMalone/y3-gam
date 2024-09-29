@@ -38,9 +38,12 @@ namespace Graphics {
         shader->SetUniform("u_ViewProjMtx", cam.GetViewProjMatrix());
         shader->SetUniform("u_CamPos", cam.GetPosition());
         shader->SetUniform("u_Albedo", glm::vec3(1.0, 0.5, 0.31));
+        shader->SetUniform("u_Metallic", 0.0f);
+        shader->SetUniform("u_Roughness", 0.3f);
+        shader->SetUniform("u_AO", 1.f);
 
         //@TODO add light + materials
-
+        
         Renderer::BeginBatch();
         for (auto const& entity : entities) {
             // Extract Transform and Mesh components
@@ -55,7 +58,7 @@ namespace Graphics {
                 continue;
 
             // Submit the mesh to the renderer with transform information
-            Graphics::Renderer::SubmitMesh(mesh.mesh, xform.worldPos, xform.worldScale, { 1.f, 1.f, 1.f, 1.f }, {}); //@TODO: adjust color and rotation as needed
+            Graphics::Renderer::SubmitMesh(mesh.mesh, xform.worldPos, xform.worldScale, { 1.f, 1.f, 1.f, 1.f }, {45}); //@TODO: adjust color and rotation as needed
         }
         Renderer::FlushBatch(shared_from_this());
 

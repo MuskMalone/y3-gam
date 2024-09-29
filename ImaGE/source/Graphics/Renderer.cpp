@@ -212,6 +212,9 @@ namespace Graphics {
 		glm::mat4 scaleMtx{ glm::scale(glm::mat4{ 1.f }, scale) };
 		glm::mat4 transformMtx{ translateMtx * rotateMtx * scaleMtx };
 
+		// Normal matrix (3x3 portion of the model matrix)
+		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(transformMtx)));
+
 		// Iterate over the submeshes
 		for (const auto& submesh : submeshes) {
 			if (mData.meshIdxCount >= RendererData::cMaxIndices) {
@@ -234,8 +237,16 @@ namespace Graphics {
 			for (size_t i = 0; i < submesh.vtxCount; ++i) {
 				const Vertex& vtx = meshSrc->GetVertices()[submesh.baseVtx + i];
 
+				// Transform position to world space
+				glm::vec3 worldPos = glm::vec3(finalxformMtx * glm::vec4(vtx.position, 1.0f));
+
+				// Transform normal, tangent, and bitangent to world space using the normal matrix
+				glm::vec3 worldNormal = glm::normalize(normalMatrix * vtx.normal);
+				glm::vec3 worldTangent = glm::normalize(normalMatrix * vtx.tangent);
+				glm::vec3 worldBitangent = glm::normalize(normalMatrix * vtx.bitangent);
+
 				// Map vertex data into the batch buffer
-				SetMeshBufferData(finalxformMtx * glm::vec4(vtx.position, 1.0f), vtx.normal, vtx.texcoord, 0.f, vtx.tangent, vtx.bitangent, clr);
+				SetMeshBufferData(worldPos, worldNormal, vtx.texcoord, 0.f, worldTangent, worldBitangent, clr);
 			}
 
 			//mData.meshVtxCount += submesh.vtxCount;
