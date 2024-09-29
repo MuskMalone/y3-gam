@@ -19,8 +19,8 @@
 
 #include <Physics/PhysicsSystem.h>
 //std::vector<std::shared_ptr<Object>> Scene::mObjects;
-std::vector<Camera> Scene::m_cameras;
-
+Graphics::EditorCamera Scene::mEcam;
+std::shared_ptr<Graphics::Mesh> Scene::mesh0, Scene::mesh1;
 Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 const& clearClr)
   : m_shaders{}, m_defaultShaders{}, 
   m_light{ { 0.f, 25.f, 0.f }, { 0.4f, 0.4f, 0.4f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 1.0f } },
@@ -66,9 +66,9 @@ void Scene::Init()
   mesh1 = std::make_shared<Graphics::Mesh>(pyrMeshSource);
   //=====================================================================================================================
 
-  for (int i = 0; i < 5; ++i)
+  for (int i = 0; i < 0; ++i)
   {
-      for (int j = 0; j < 5; ++j)
+      for (int j = 0; j < 0; ++j)
       {
           // Create a new entity
           ECS::Entity entity = ECS::EntityManager::GetInstance().CreateEntity();
@@ -188,11 +188,7 @@ void Scene::ResetCamera()
 //tch: i just added this to visually test physics
 void Scene::AddMesh(ECS::Entity entity)
 {
-  /*  auto xfm{ entity.GetComponent<Component::Transform>() };
-    mObjects.emplace_back(std::make_shared<Object>(
-        "./assets/models/cube_low_poly.obj",
-        xfm.worldPos, 
-        xfm.worldScale));
-    mObjects.back()->entity = entity;
-    entity.EmplaceComponent<Component::Mesh>(Component::Mesh{});*/
+    auto xfm{ entity.GetComponent<Component::Transform>() };
+    auto& meshComponent = entity.EmplaceComponent<Component::Mesh>();
+    meshComponent.mesh = mesh0;
 }

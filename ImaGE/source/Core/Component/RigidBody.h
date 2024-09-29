@@ -2,33 +2,42 @@
 
 namespace Component {
 	enum class RigidBodyVars {
-		FRICTION, 
+		MASS,
+		STATIC_FRICTION, 
+		DYNAMIC_FRICTION,
 		RESTITUTION,
 		GRAVITY_FACTOR,
 		VELOCITY,
 		ANGULAR_VELOCITY,
 		MOTION
 	};
-
+	
 	struct RigidBody {
-
+		enum class MotionType {
+			STATIC,
+			KINEMATIC,
+			DYNAMIC
+		};
 		inline void Clear() noexcept { 
 			// Idk what are good default values
-			velocity = JPH::Vec3();
-			angularVelocity = JPH::Vec3();
-			friction = 1.f;
+			velocity = physx::PxVec3();
+			angularVelocity = physx::PxVec3();
+			staticFriction = 1.f;
 			restitution = 1.f;
 			gravityFactor = 1.f;
-			motionType = JPH::EMotionType::Static;
+			motionType = MotionType::STATIC;
 		}
 
-		//float mass // mass cannot be set on the fly like how other variables can 
-		JPH::Vec3 velocity;
-		JPH::Vec3 angularVelocity;
-		float friction;
+		float mass{1.f};
+		physx::PxVec3 velocity{0,0,0};
+		physx::PxVec3 angularVelocity{0,0,0};
+		float staticFriction;
+		float dynamicFriction;
 		float restitution;
-		float gravityFactor{1.f};
-		JPH::BodyID bodyID;
-		JPH::EMotionType motionType{ JPH::EMotionType::Static }; //static, dynamic, kinematic
+		float gravityFactor{0.f};
+		float linearDamping{ 0.5f };
+		MotionType motionType{ MotionType::STATIC }; //static, dynamic, kinematic
+		void* bodyID;
+
 	};
 } // namespace Component

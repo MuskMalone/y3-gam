@@ -40,7 +40,7 @@ RTTR_REGISTRATION
     .constructor<>()
     .property("velocity", &RigidBody::velocity)
     .property("angularVelocity", &RigidBody::angularVelocity)
-    .property("friction", &RigidBody::friction)
+    .property("friction", &RigidBody::staticFriction)
     .property("restitution", &RigidBody::restitution)
     .property("gravityFactor", &RigidBody::gravityFactor)
     .property("motionType", &RigidBody::motionType);

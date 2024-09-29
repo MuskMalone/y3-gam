@@ -209,7 +209,7 @@ namespace Graphics {
 		// Transformation matrices
 		glm::mat4 translateMtx{ glm::translate(glm::mat4{ 1.f }, pos) };
 		glm::mat4 rotateMtx{ glm::rotate(glm::mat4{ 1.f }, glm::radians(rot), {0.f, 1.f, 0.f}) };
-		glm::mat4 scaleMtx{ glm::scale(glm::mat4{ 1.f }, scale) };
+		glm::mat4 scaleMtx{ glm::scale(glm::mat4{ 1.f }, scale * 2.f) };
 		glm::mat4 transformMtx{ translateMtx * rotateMtx * scaleMtx };
 
 		// Iterate over the submeshes

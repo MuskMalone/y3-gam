@@ -5,7 +5,7 @@
 #include "Core/Entity.h"
 #include "Renderer.h"
 #include "Utils.h"
-
+#include "Physics/PhysicsSystem.h"
 namespace Graphics {
 
 	void RenderSystem::Init() {
@@ -38,7 +38,7 @@ namespace Graphics {
 				
 				Graphics::Renderer::SubmitMesh(mesh.mesh, xfm.worldPos, xfm.worldScale, { 1.f,1.f,1.f,1.f }, {}); //@TODO change clr and rot 
 				// Assuming xfm.worldPos is a glm::vec3 that contains the position in world space
-
+				IGE::Physics::PhysicsSystem::GetInstance()->Debug(1.f);//the value is arbitrary
 				//Graphics::Renderer::SubmitMesh(mesh.mesh, {5.f,5.f,2.f}, xfm.worldScale, { 1.f,1.f,1.f,1.f }, {});
 			}
 

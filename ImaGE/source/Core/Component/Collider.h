@@ -1,23 +1,25 @@
 #pragma once
-#include <Jolt/Physics/Body/Body.h>
 
 namespace Component {
     enum class ColliderVars {   
         SCALE, POS, ROT
     };
+    
     struct Collider {
+      enum class ColliderShape {
 
+      };
       inline void Clear() noexcept { 
-        scale = JPH::Vec3();
-        positionOffset = JPH::Vec3();
-        rotationOffset = JPH::Vec3();
+        scale = physx::PxVec3();
+        positionOffset = physx::PxVec3();
+        rotationOffset = physx::PxVec3();
       }
 
-      JPH::Vec3 scale;
-      JPH::Vec3 positionOffset;
-      JPH::Vec3 rotationOffset;
+      physx::PxVec3 scale{0,0,0};
+      physx::PxVec3 positionOffset{0,0,0};
+      physx::PxVec3 rotationOffset{0,0,0};
 
-      JPH::BodyID bodyID;
-      JPH::EShapeSubType type;
+      void* bodyID;
+      ColliderShape type;
     };
 }

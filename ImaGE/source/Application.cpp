@@ -43,8 +43,8 @@ namespace
 }
 
 void Application::Init() {
-  IGE::Physics::PhysicsSystem::InitAllocator();
-  IGE::Physics::PhysicsSystem::GetInstance()->Init();
+  //IGE::Physics::PhysicsSystem::InitAllocator();
+  //IGE::Physics::PhysicsSystem::GetInstance()->Init();
   mScene->Init();
   Scenes::SceneManager::GetInstance().Init();
   Prefabs::PrefabManager::GetInstance().Init();

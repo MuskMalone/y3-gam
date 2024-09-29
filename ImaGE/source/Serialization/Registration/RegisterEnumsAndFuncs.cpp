@@ -29,28 +29,28 @@ RTTR_REGISTRATION
   rttr::type::register_converter_func(StringFromRttrType);
   rttr::type::register_converter_func(RttrTypeFromString);
 
-  using namespace JPH;
-  /* ------------------- ENUMERATIONS ------------------- */
-  rttr::registration::enumeration<JPH::EShapeSubType>("JPH_EShapeSubType")(
-    rttr::value("Sphere", EShapeSubType::Sphere),
-    rttr::value("Box", EShapeSubType::Box),
-    rttr::value("Triangle", EShapeSubType::Triangle),
-    rttr::value("Capsule", EShapeSubType::Capsule),
-    rttr::value("TaperedCapsule", EShapeSubType::TaperedCapsule),
-    rttr::value("Cylinder", EShapeSubType::Cylinder),
-    rttr::value("ConvexHull", EShapeSubType::ConvexHull),
-    rttr::value("StaticCompound", EShapeSubType::StaticCompound),
-    rttr::value("MutableCompound", EShapeSubType::MutableCompound),
-    rttr::value("Mesh", EShapeSubType::Mesh),
-    rttr::value("HeightField", EShapeSubType::HeightField),
-    rttr::value("SoftBody", EShapeSubType::SoftBody),
-    rttr::value("SoftBody", EShapeSubType::Plane),
-    rttr::value("TaperedCylinder", EShapeSubType::TaperedCylinder)
-    );
+  //using namespace JPH;
+  ///* ------------------- ENUMERATIONS ------------------- */
+  //rttr::registration::enumeration<JPH::EShapeSubType>("JPH_EShapeSubType")(
+  //  rttr::value("Sphere", EShapeSubType::Sphere),
+  //  rttr::value("Box", EShapeSubType::Box),
+  //  rttr::value("Triangle", EShapeSubType::Triangle),
+  //  rttr::value("Capsule", EShapeSubType::Capsule),
+  //  rttr::value("TaperedCapsule", EShapeSubType::TaperedCapsule),
+  //  rttr::value("Cylinder", EShapeSubType::Cylinder),
+  //  rttr::value("ConvexHull", EShapeSubType::ConvexHull),
+  //  rttr::value("StaticCompound", EShapeSubType::StaticCompound),
+  //  rttr::value("MutableCompound", EShapeSubType::MutableCompound),
+  //  rttr::value("Mesh", EShapeSubType::Mesh),
+  //  rttr::value("HeightField", EShapeSubType::HeightField),
+  //  rttr::value("SoftBody", EShapeSubType::SoftBody),
+  //  rttr::value("SoftBody", EShapeSubType::Plane),
+  //  rttr::value("TaperedCylinder", EShapeSubType::TaperedCylinder)
+  //  );
 
-  rttr::registration::enumeration<JPH::EMotionType>("JPH_EMotionType")(
-    rttr::value("Static", EMotionType::Static),
-    rttr::value("Dynamic", EMotionType::Dynamic),
-    rttr::value("Kinematic", EMotionType::Kinematic)
-    );
+  //rttr::registration::enumeration<JPH::EMotionType>("JPH_EMotionType")(
+  //  rttr::value("Static", EMotionType::Static),
+  //  rttr::value("Dynamic", EMotionType::Dynamic),
+  //  rttr::value("Kinematic", EMotionType::Kinematic)
+  //  );
 }
