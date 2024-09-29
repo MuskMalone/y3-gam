@@ -311,6 +311,42 @@ namespace Graphics {
 
 	}
 
+	void Renderer::FlushBatch(std::shared_ptr<RenderPass> const& renderPass) {
+
+		if (mData.triVtxCount) {
+
+			unsigned int dataSize = static_cast<unsigned int>(mData.triBufferIndex * sizeof(TriVtx));
+
+			mData.triVertexBuffer->SetData(mData.triBuffer.data(), dataSize);
+
+			RenderAPI::DrawLines(mData.triVertexArray, mData.triVtxCount);
+
+			++mData.stats.drawCalls;
+		}
+		if (renderPass->GetSpecification().debugName == "Geometry Pass", mData.meshIdxCount) {
+
+			// Calculate data size for mesh vertices
+			unsigned int dataSize = static_cast<unsigned int>(mData.meshVtxCount * sizeof(Vertex));
+
+			// Update the mesh vertex buffer with the batched data
+			mData.meshVertexBuffer->SetData(mData.meshBuffer.data(), dataSize);
+
+			unsigned int idxDataSize = static_cast<unsigned int>(mData.meshIdxCount * sizeof(uint32_t));
+			mData.meshVertexArray->Bind();
+			mData.meshVertexArray->GetElementBuffer()->SetData(mData.meshIdxBuffer.data(), idxDataSize);
+			mData.meshVertexArray->Unbind();
+			// Bind the textures for the meshes
+			for (unsigned int i{}; i < mData.texUnitIdx; ++i) {
+				mData.texUnits[i]->Bind(i);
+			}
+
+			RenderAPI::DrawIndices(mData.meshVertexArray, mData.meshIdxCount);
+
+			// Increment draw call stats
+			++mData.stats.drawCalls;
+		}
+	}
+
 	void Renderer::BeginBatch() {
 		mData.quadIdxCount = 0;
 		mData.triVtxCount = 0;
@@ -333,10 +369,10 @@ namespace Graphics {
 
 	void Renderer::RenderSceneBegin(glm::mat4 const& viewProjMtx) {
 
-		mData.lineShader->Use();
-		mData.lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
-		mData.texShader->Use();
-		mData.texShader->SetUniform("u_ViewProjMtx", viewProjMtx);
+		//mData.lineShader->Use();
+		//mData.lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
+		//mData.texShader->Use();
+		//mData.texShader->SetUniform("u_ViewProjMtx", viewProjMtx);
 
 		BeginBatch();
 	}

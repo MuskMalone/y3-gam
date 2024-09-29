@@ -97,7 +97,9 @@ namespace Graphics {
 		static void SubmitTriangle(glm::vec3 const& v1, glm::vec3 const& v2, glm::vec3 const& v3, glm::vec4 const& clr = { 1.f,1.f,1.f,1.f });
 
 		// Batching
+		static void BeginBatch();
 		static void FlushBatch();
+		static void FlushBatch(std::shared_ptr<RenderPass> const& renderPass);
 
 		static void RenderSceneBegin(glm::mat4 const& viewProjMtx);
 		static void RenderSceneEnd();
@@ -120,7 +122,6 @@ namespace Graphics {
 
 		//static void SetQuadBufferData(const glm::vec3& pos, const glm::vec2& scale,
 		//	const glm::vec4& clr, const glm::vec2& texCoord, float texIdx, int entity);
-		static void BeginBatch();
 		static void NextBatch();
 
 		// Stats

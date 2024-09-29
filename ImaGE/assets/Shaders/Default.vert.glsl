@@ -11,12 +11,24 @@ layout(location = 6) in vec4 a_Color;
 out vec4 v_Color;
 out vec2 v_TexCoord;
 out flat float v_TexIdx;
+
+out vec3 v_FragPos;
+
+out vec3 v_Normal;           // Normal in world space
+out vec3 v_Tangent;          // Tangent in world space
+out vec3 v_Bitangent;        // Bitangent in world space
 		
 uniform mat4 u_ViewProjMtx;
 //uniform mat4 u_MdlViewMtx;
 
 void main(){
 	//gl_Position = u_ViewProjMtx * u_MdlViewMtx * vec4(a_Position, 1.0);
+
+	v_Normal = normalize(a_Normal);
+    v_Tangent = normalize(a_Tangent);
+    v_Bitangent = normalize(a_Bitangent);
+
+	v_FragPos = a_Position;
 	v_Color = a_Color;
 	v_TexCoord = a_TexCoord;
 	v_TexIdx = a_TexIdx;
