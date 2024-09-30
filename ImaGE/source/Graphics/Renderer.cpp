@@ -67,7 +67,6 @@ namespace Graphics {
 		mData.meshVertexArray->AddVertexBuffer(mData.meshVertexBuffer);
 		mData.meshBuffer = std::vector<Vertex>(mData.cMaxVertices);
 
-
 		std::shared_ptr<ElementBuffer> meshEbo = ElementBuffer::Create(mData.cMaxIndices);
 		mData.meshVertexArray->SetElementBuffer(meshEbo);
 
@@ -212,10 +211,16 @@ namespace Graphics {
 		glm::mat4 scaleMtx{ glm::scale(glm::mat4{ 1.f }, scale) };
 		glm::mat4 transformMtx{ translateMtx * rotateMtx * scaleMtx };
 
+		// Normal matrix (3x3 portion of the model matrix)
+		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(transformMtx)));
+
 		// Iterate over the submeshes
 		for (const auto& submesh : submeshes) {
-			if (mData.meshIdxCount >= RendererData::cMaxIndices) {
-				NextBatch();  // Flush if the batch is full
+			// Check if adding this submesh would exceed the batch capacity
+			if (mData.meshIdxCount + submesh.idxCount >= RendererData::cMaxIndices ||
+				mData.meshVtxCount + submesh.vtxCount >= RendererData::cMaxVertices) {
+				// Flush the current batch before adding the new submesh
+				NextBatch();
 			}
 
 			// Apply the instance's transformation to the submesh's transform
@@ -234,8 +239,16 @@ namespace Graphics {
 			for (size_t i = 0; i < submesh.vtxCount; ++i) {
 				const Vertex& vtx = meshSrc->GetVertices()[submesh.baseVtx + i];
 
+				// Transform position to world space
+				glm::vec3 worldPos = glm::vec3(finalxformMtx * glm::vec4(vtx.position, 1.0f));
+
+				// Transform normal, tangent, and bitangent to world space using the normal matrix
+				glm::vec3 worldNormal = glm::normalize(normalMatrix * vtx.normal);
+				glm::vec3 worldTangent = glm::normalize(normalMatrix * vtx.tangent);
+				glm::vec3 worldBitangent = glm::normalize(normalMatrix * vtx.bitangent);
+
 				// Map vertex data into the batch buffer
-				SetMeshBufferData(finalxformMtx * glm::vec4(vtx.position, 1.0f), vtx.normal, vtx.texcoord, 0.f, vtx.tangent, vtx.bitangent, clr);
+				SetMeshBufferData(worldPos, worldNormal, vtx.texcoord, 0.f, worldTangent, worldBitangent, clr);
 			}
 
 			//mData.meshVtxCount += submesh.vtxCount;
@@ -311,6 +324,42 @@ namespace Graphics {
 
 	}
 
+	void Renderer::FlushBatch(std::shared_ptr<RenderPass> const& renderPass) {
+
+		if (mData.triVtxCount) {
+
+			unsigned int dataSize = static_cast<unsigned int>(mData.triBufferIndex * sizeof(TriVtx));
+
+			mData.triVertexBuffer->SetData(mData.triBuffer.data(), dataSize);
+
+			RenderAPI::DrawLines(mData.triVertexArray, mData.triVtxCount);
+
+			++mData.stats.drawCalls;
+		}
+		if ((renderPass->GetSpecification().debugName ) == "Geometry Pass", mData.meshIdxCount) {
+
+			// Calculate data size for mesh vertices
+			unsigned int dataSize = static_cast<unsigned int>(mData.meshVtxCount * sizeof(Vertex));
+			mData.meshVertexArray->Bind();
+			// Update the mesh vertex buffer with the batched data
+			mData.meshVertexBuffer->SetData(reinterpret_cast<void*>(mData.meshBuffer.data()), dataSize);
+
+			unsigned int idxDataSize = static_cast<unsigned int>(mData.meshIdxCount * sizeof(uint32_t));
+
+			mData.meshVertexArray->GetElementBuffer()->SetData(reinterpret_cast<void*>(mData.meshIdxBuffer.data()), idxDataSize);
+			//mData.meshVertexArray->Unbind();
+			// Bind the textures for the meshes
+			for (unsigned int i{}; i < mData.texUnitIdx; ++i) {
+				mData.texUnits[i]->Bind(i);
+			}
+
+			RenderAPI::DrawIndices(mData.meshVertexArray, mData.meshIdxCount);
+
+			// Increment draw call stats
+			++mData.stats.drawCalls;
+		}
+	}
+
 	void Renderer::BeginBatch() {
 		mData.quadIdxCount = 0;
 		mData.triVtxCount = 0;
@@ -333,10 +382,10 @@ namespace Graphics {
 
 	void Renderer::RenderSceneBegin(glm::mat4 const& viewProjMtx) {
 
-		mData.lineShader->Use();
-		mData.lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
-		mData.texShader->Use();
-		mData.texShader->SetUniform("u_ViewProjMtx", viewProjMtx);
+		//mData.lineShader->Use();
+		//mData.lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
+		//mData.texShader->Use();
+		//mData.texShader->SetUniform("u_ViewProjMtx", viewProjMtx);
 
 		BeginBatch();
 	}

@@ -72,5 +72,35 @@ namespace Graphics {
             }
 
         }//namespace Framebuffer
+
+        namespace GL {
+            bool GlLogCall(const char* function, const char* file, int line)
+            {
+                //bool success = true;
+                //while (GLenum error = glGetError())
+                //{
+                //    success = false;
+                //    if (ExistingErrors.find(error) != ExistingErrors.end())
+                //        continue;
+                //    ExistingErrors.insert(error);
+                //    setlocale(LC_ALL, "");
+                //    LOG_ERROR("OpenGL::ErrorHandler", MxFormat("error #{0} {1} in file: {2}, line: {3}", error, function, file, line));
+                //}
+                //return success;
+                bool success = true;
+                while (GLenum error = glGetError())
+                {
+                    success = false;
+                    std::cerr << "[OpenGL Error] (" << error << "): " << function
+                        << " in file " << file << " at line " << line << std::endl;
+                }
+                return success;
+            }
+
+            void GlClearErrors() {
+                while (glGetError() != GL_NO_ERROR);
+            }
+
+        }//namespace GL
     };
 }

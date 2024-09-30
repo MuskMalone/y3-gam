@@ -25,26 +25,32 @@ namespace Graphics {
 		auto& entManager = ECS::EntityManager::GetInstance();
 		auto entityList = entManager.GetAllEntitiesWithComponents<Component::Transform, Component::Mesh>();
 
+		//Frustum Culling should be here
+		
+		// Convert to a vector
+		std::vector<ECS::Entity> entityVector;
+		for (auto entity : entityList) {
+			entityVector.push_back(entity);
+		}
 
-		Renderer::mGeomPass->Begin();
-		{//Render Start
-			Utils::RenderContext renderContext(eCam.GetViewProjMatrix());
+		Renderer::mGeomPass->Render(eCam, entityVector);
+		//Renderer::mGeomPass->Begin();
+		//{//Render Start
+		//	Utils::RenderContext renderContext(eCam.GetViewProjMatrix());
 
-			for (ECS::Entity entity : entityList) {
-				auto const& xfm = entity.GetComponent<Component::Transform>();
-				auto const& mesh = entity.GetComponent<Component::Mesh>();
-				if (mesh.mesh == nullptr) continue;
+		//	for (ECS::Entity entity : entityList) {
+		//		auto const& xfm = entity.GetComponent<Component::Transform>();
+		//		auto const& mesh = entity.GetComponent<Component::Mesh>();
+		//		if (mesh.mesh == nullptr) continue;
 
-				
-				Graphics::Renderer::SubmitMesh(mesh.mesh, xfm.worldPos, xfm.worldScale, { 1.f,1.f,1.f,1.f }, {}); //@TODO change clr and rot 
-				// Assuming xfm.worldPos is a glm::vec3 that contains the position in world space
-				IGE::Physics::PhysicsSystem::GetInstance()->Debug(1.f);//the value is arbitrary
-				//Graphics::Renderer::SubmitMesh(mesh.mesh, {5.f,5.f,2.f}, xfm.worldScale, { 1.f,1.f,1.f,1.f }, {});
-			}
+		//		
+		//		Graphics::Renderer::SubmitMesh(mesh.mesh, xfm.worldPos, xfm.worldScale, { 1.f,1.f,1.f,1.f }, {}); //@TODO change clr and rot 
+		//		// Assuming xfm.worldPos is a glm::vec3 that contains the position in world space
+		//	}
 
-		} // Render End
+		//} // Render End
 
-		Renderer::mGeomPass->End();
+		//Renderer::mGeomPass->End();
 
 	}
 }

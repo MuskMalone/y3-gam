@@ -27,6 +27,7 @@ namespace Graphics {
 		glm::mat4 GetViewMatrix() const;
 		glm::mat4 GetProjMatrix() const;
 		glm::mat4 GetViewProjMatrix() const;
+		glm::vec3 GetPosition() const;
 
 		void UpdateCamera(float dt);
 

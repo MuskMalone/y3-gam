@@ -1,8 +1,12 @@
 #pragma once
+#include <memory>
 #include "Pipeline.h"
 #include "Texture.h"
+#include "Core/Entity.h"
 
 namespace Graphics {
+    class EditorCamera;
+
     struct RenderPassSpec
     {
         std::shared_ptr<Pipeline> pipeline;
@@ -10,7 +14,7 @@ namespace Graphics {
         glm::vec4 markerColor;
     };
 
-    class RenderPass {
+    class RenderPass : public std::enable_shared_from_this<RenderPass>{
     public:
         RenderPass(const RenderPassSpec& spec);
         RenderPassSpec& GetSpecification();
@@ -25,6 +29,7 @@ namespace Graphics {
         //void Prepare();
         void Begin();
         void End();
+        void Render(EditorCamera const& camera, std::vector<ECS::Entity> const& entities); //Change this to take something like scene data instead of entities
 
         //std::shared_ptr<Texture> GetOutput(uint32_t index);
 

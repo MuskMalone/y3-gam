@@ -34,9 +34,12 @@ namespace Graphics {
 	struct RendererData {
 		uint32_t maxTexUnits{};
 
-		static const uint32_t cMaxMeshes = 10000;
-		static const uint32_t cMaxVertices = cMaxMeshes * 100; // estimate based on average mesh complexity
-		static const uint32_t cMaxIndices = cMaxMeshes * 360;
+		//static const uint32_t cMaxMeshes = 1;
+		//static const uint32_t cMaxVertices = cMaxMeshes * 100; // estimate based on average mesh complexity
+		//static const uint32_t cMaxIndices = cMaxMeshes * 360;
+
+		static const uint32_t cMaxVertices = 500000;
+		static const uint32_t cMaxIndices = cMaxVertices * 3;
 
 		std::shared_ptr<VertexArray> meshVertexArray;
 		std::shared_ptr<VertexBuffer> meshVertexBuffer;
@@ -97,7 +100,9 @@ namespace Graphics {
 		static void SubmitTriangle(glm::vec3 const& v1, glm::vec3 const& v2, glm::vec3 const& v3, glm::vec4 const& clr = { 1.f,1.f,1.f,1.f });
 
 		// Batching
+		static void BeginBatch();
 		static void FlushBatch();
+		static void FlushBatch(std::shared_ptr<RenderPass> const& renderPass);
 
 		static void RenderSceneBegin(glm::mat4 const& viewProjMtx);
 		static void RenderSceneEnd();
@@ -120,7 +125,6 @@ namespace Graphics {
 
 		//static void SetQuadBufferData(const glm::vec3& pos, const glm::vec2& scale,
 		//	const glm::vec4& clr, const glm::vec2& texCoord, float texIdx, int entity);
-		static void BeginBatch();
 		static void NextBatch();
 
 		// Stats

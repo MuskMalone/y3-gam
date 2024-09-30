@@ -27,6 +27,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Material.cpp" />
+    <ClCompile Include="MaterialAsset.cpp" />
     <ClCompile Include="Source\GUI\Dockable\Console.cpp" />
     <ClCompile Include="Source\Graphics\AssetIO\IMSH.cpp" />
     <ClCompile Include="source\Graphics\CameraManager.cpp" />
@@ -153,6 +155,8 @@
     <ClInclude Include="source\External\ImTerm\terminal.hpp" />
     <ClInclude Include="source\External\ImTerm\terminal_helpers.hpp" />
     <ClInclude Include="source\External\ImTerm\utils.hpp" />
+    <ClInclude Include="Material.h" />
+    <ClInclude Include="MaterialAsset.h" />
     <ClInclude Include="Source\GUI\Dockable\Console.h" />
     <ClInclude Include="Source\Graphics\AssetIO\IMSH.h" />
     <ClInclude Include="source\Core\Component\Camera.h" />
