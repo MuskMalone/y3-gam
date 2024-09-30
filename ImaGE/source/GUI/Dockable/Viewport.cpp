@@ -12,26 +12,60 @@
 namespace GUI
 {
 
-    //namespace {
-    //    auto MoveAlongPlane(float xDisplacement, float yDisplacement) {
-    //        // Calculate the normal of the plane (eye to target direction)
-    //        glm::vec3 normal = glm::normalize(m_target - m_eye);
+    namespace {
+        auto MoveAlongPlane(float xDisplacement, float yDisplacement) {
+            // Calculate the normal of the plane (eye to target direction)
+            auto& cam = Scene::GetMainCamera();
+            glm::vec3 normal = glm::normalize(cam.GetForwardVector());
 
-    //        // Define the world up vector
-    //        glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+            // Define the world up vector
+            glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
 
-    //        // Calculate the right and up vectors on the plane
-    //        glm::vec3 right = glm::normalize(glm::cross(up, normal));  // Right vector
-    //        glm::vec3 planeUp = glm::normalize(glm::cross(normal, right)); // True up vector on the plane
+            // Calculate the right and up vectors on the plane
+            glm::vec3 right = glm::normalize(glm::cross(up, normal));  // Right vector
+            glm::vec3 planeUp = glm::normalize(glm::cross(normal, right)); // True up vector on the plane
 
-    //        // Calculate the movement vector along the plane
-    //        m_sideMovementDelta = right * xDisplacement + planeUp * yDisplacement;
+            // Calculate the movement vector along the plane
+            auto delta = right * xDisplacement + planeUp * yDisplacement;
+            return delta;
+            //// Move the eye and target along the plane
+            //m_eye += movement;
+            //m_target += movement;
+        }
 
-    //        //// Move the eye and target along the plane
-    //        //m_eye += movement;
-    //        //m_target += movement;
-    //    }
-    //}
+        void CameraControls() {
+            //calculate the camera for moving
+            //replace the current camera data members with the new impl of camera 
+            //to xavier or whoever is doing this - tch
+            constexpr float dt{ 1.f / 60.f };
+            auto& cam = Scene::GetMainCamera();
+            // Check if the viewport is hovered
+            if (ImGui::IsItemFocused() || ImGui::IsItemHovered()) {
+                // Check for left mouse button press
+                if (ImGui::GetIO().MouseDown[ImGuiMouseButton_Left]) {
+                    // Get the mouse drag delta for the left button
+                    ImVec2 dragDelta = ImGui::GetIO().MouseDelta;
+                    cam.ProcessMouseInput(dragDelta.x, dragDelta.y);
+                }
+                // Check for middle mouse button press
+                if (ImGui::IsMouseDown(ImGuiMouseButton_Middle)) {
+                    ImVec2 dragDelta = ImGui::GetIO().MouseDelta;
+                    auto delta = MoveAlongPlane(dragDelta.x, dragDelta.y);
+                    cam.SetPosition(cam.GetPosition() + delta * dt);
+                }
+
+                if (glm::abs(ImGui::GetIO().MouseWheel) > glm::epsilon<float>()) {
+                    cam.ProcessMouseScroll(ImGui::GetIO().MouseWheel * dt);
+                }
+            }
+
+            // Reset the drag delta when the mouse button is released
+            if (!ImGui::IsMouseDown(ImGuiMouseButton_Left) && !ImGui::IsMouseDown(ImGuiMouseButton_Middle)) {
+                ImGui::ResetMouseDragDelta(ImGuiMouseButton_Left);
+                ImGui::ResetMouseDragDelta(ImGuiMouseButton_Middle);
+            }
+        }
+    }
   Viewport::Viewport(std::string const& name) : GUIWindow(name) {}
 
   void Viewport::Update(std::shared_ptr<Graphics::Framebuffer> const& framebuffer)
@@ -43,36 +77,7 @@ namespace GUI
         ImVec2(0, 1),
         ImVec2(1, 0)
     );
-    ////calculate the camera for moving
-    ////replace the current camera data members with the new impl of camera 
-    ////to xavier or whoever is doing this - tch
-    //auto& cam = Scene::GetMainCamera();
-    //// Check if the viewport is hovered
-    //if (ImGui::IsItemFocused() || ImGui::IsItemHovered()) {
-    //    // Check for left mouse button press
-    //    if (ImGui::GetIO().MouseDown[ImGuiMouseButton_Left]) {
-    //        // Get the mouse drag delta for the left button
-    //        ImVec2 dragDelta = ImGui::GetIO().MouseDelta;
-    //        cam.m_rotationDelta.x += dragDelta.y;
-    //        cam.m_rotationDelta.y -= dragDelta.x;
-    //    }
-    //    // Check for middle mouse button press
-    //    if (ImGui::IsMouseDown(ImGuiMouseButton_Middle)) {
-    //        ImVec2 dragDelta = ImGui::GetIO().MouseDelta;
-    //        cam.MoveAlongPlane(dragDelta.x, dragDelta.y);
-    //    }
-
-    //    if (glm::abs(ImGui::GetIO().MouseWheel) > glm::epsilon<float>()) {
-    //        cam.m_movementDelta = glm::normalize(cam.m_target - cam.m_eye) * ImGui::GetIO().MouseWheel;
-    //    }
-    //}
-
-    // Reset the drag delta when the mouse button is released
-    if (!ImGui::IsMouseDown(ImGuiMouseButton_Left) && !ImGui::IsMouseDown(ImGuiMouseButton_Middle)) {
-        ImGui::ResetMouseDragDelta(ImGuiMouseButton_Left);
-        ImGui::ResetMouseDragDelta(ImGuiMouseButton_Middle);
-    }
-
+    CameraControls();
     
     ReceivePayload();
 

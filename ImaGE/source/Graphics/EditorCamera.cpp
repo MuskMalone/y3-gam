@@ -115,10 +115,10 @@ namespace Graphics {
         //}
     }
     void EditorCamera::ProcessMouseInput(float offsetX, float offsetY) {
-        offsetX *= mMouseSense;
-        offsetY *= mMouseSense;
+        //offsetX *= mMouseSense;
+        //offsetY *= mMouseSense;
 
-        mYaw += offsetX;
+        mYaw -= offsetX;
         mPitch += offsetY;
 
         // Constrain pitch to avoid flipping the camera
@@ -129,5 +129,9 @@ namespace Graphics {
         mFov -= scrollOffset * mZoomSpeed;
         if (mFov < 1.0f) mFov = 1.0f;
         if (mFov > 45.0f) mFov = 45.0f;
+    }
+    void EditorCamera::SetPosition(glm::vec3 const& p)
+    {
+        mPosition = p;
     }
 }

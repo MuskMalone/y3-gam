@@ -38,6 +38,9 @@ namespace Graphics {
 		void ProcessKeyboardInput(CameraMovement dir, float dt);
 		void ProcessMouseInput(float offsetX, float offsetY);
 		void ProcessMouseScroll(float scrollOffset);
+
+		//tch : getter setters for visual testing
+		void SetPosition(glm::vec3 const& p);
 	private:
 		glm::vec3 mPosition;
 		float mYaw;

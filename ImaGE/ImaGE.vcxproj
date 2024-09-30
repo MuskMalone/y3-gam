@@ -29,6 +29,26 @@
   <ItemGroup>
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MaterialAsset.cpp" />
+    <ClCompile Include="source\External\ImGuizmo\GraphEditor.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGuizmo\ImCurveEdit.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGuizmo\ImGradient.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGuizmo\ImGuizmo.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGuizmo\ImSequencer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Source\GUI\Dockable\Console.cpp" />
     <ClCompile Include="Source\Graphics\AssetIO\IMSH.cpp" />
     <ClCompile Include="source\Graphics\CameraManager.cpp" />
@@ -151,6 +171,12 @@
     <ClCompile Include="source\Serialization\Serializer.cpp" />
     <ClCompile Include="source\Graphics\Texture.cpp" />
     <ClCompile Include="Source\GUI\Styles\Styler.cpp" />
+    <ClInclude Include="source\External\ImGuizmo\GraphEditor.h" />
+    <ClInclude Include="source\External\ImGuizmo\ImCurveEdit.h" />
+    <ClInclude Include="source\External\ImGuizmo\ImGradient.h" />
+    <ClInclude Include="source\External\ImGuizmo\ImGuizmo.h" />
+    <ClInclude Include="source\External\ImGuizmo\ImSequencer.h" />
+    <ClInclude Include="source\External\ImGuizmo\ImZoomSlider.h" />
     <ClInclude Include="source\External\ImTerm\misc.hpp" />
     <ClInclude Include="source\External\ImTerm\terminal.hpp" />
     <ClInclude Include="source\External\ImTerm\terminal_helpers.hpp" />
