@@ -47,8 +47,10 @@ public:
 	FMOD::Sound* AddMusic(const char* path, const char* name);
 	//Add ambience to FMOD and audio manager
 	FMOD::Sound* AddAmbience(const char* path, const char* name);
-	//Plays loaded sound
+	//Plays loaded sound, FMOD_VECTOR* -> FMOD uses this vector to position the sound in 3D space
+	//Each sound's position will be set relative to the listener's position
 	FMOD::Channel* PlaySound(const char* sound, const char* channelGroup = nullptr, int loops = 0, FMOD_VECTOR* position = nullptr);
+	FMOD::Channel* PlaySound(const char* sound, const char* channelGroup = nullptr, int loops = 0, FMOD_VECTOR* position = nullptr, float minDistance, float maxDistance)
 	//Free a speciifc sound from FMOD and audio manager, free up memory when a sound is no longer needed
 	void FreeSound(const char* sound);
 
@@ -71,12 +73,15 @@ public:
 	//Scans the sound, music, and ambience folders for available files
 	//Updates the list of audio files available for loading
 	void UpdateAudioDirectory();
-	//Use in game loop, tells FMOD where the player is in 3D space
+	//Use in game loop, function sets the player’s position, velocity, and orientation in 3D space and updates the FMOD system’s listener attributes 
 	void SetPlayerAttributes(const FMOD_3D_ATTRIBUTES& attributes);
 
 private:
+	//for managing FMOD system
 	FMOD::System* system{};
+	//stores the sounds by name. FMOD provides a handle to each sound through FMOD::Sound
 	std::unordered_map<std::string, FMOD::Sound*> data{};
+	//for managing groups of audio channels by grouping different sound effects, ambient sounds, etc., 
 	std::unordered_map<std::string, FMOD::ChannelGroup*> group{};
 	std::unordered_map<std::string, std::list<FMOD::Channel*>> channels{};
 	std::string currentBGM{};
