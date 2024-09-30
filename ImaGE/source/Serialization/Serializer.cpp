@@ -161,10 +161,6 @@ namespace Serialization
       // serialize the components
       writer.Key(JsonPrefabKey);
       SerializeRecursive(overrides, writer);
-      if (overrides.modifiedComponents.contains(rttr::type::get<Component::Tag>())) {
-        std::cout << "Serialized entity " << entity.GetEntityID() << " with tag "
-          << overrides.modifiedComponents.at(rttr::type::get<Component::Tag>()).get_value<std::shared_ptr<Component::Tag>>()->tag << "\n";
-      }
       writer.EndObject();
       return;
     }

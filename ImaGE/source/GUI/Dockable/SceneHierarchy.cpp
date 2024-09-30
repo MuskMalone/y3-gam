@@ -17,7 +17,7 @@ namespace GUI
     mEntityManager{ ECS::EntityManager::GetInstance() },
     mSceneName{}, 
     mRightClickedEntity{}, mRightClickMenu{ false }, mEntityOptionsMenu{ false },
-    mPrefabPopup{ false }, mFirstTimePfbPopup{ true }, mEditingPrefab{ false }
+    mPrefabPopup{ false }, mFirstTimePfbPopup{ true }, mEditingPrefab{ false }, lockControls{ false }
   {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &SceneHierarchy::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &SceneHierarchy::HandleEvent, this);
@@ -72,7 +72,7 @@ namespace GUI
       }
     }
 
-    if (ImGui::IsKeyPressed(ImGuiKey_Delete) && GUIManager::GetSelectedEntity()) {
+    if (ImGui::IsKeyPressed(ImGuiKey_Delete) && GUIManager::GetSelectedEntity() && !lockControls) {
       ECS::EntityManager::GetInstance().RemoveEntity(GUIManager::GetSelectedEntity());
       GUIManager::SetSelectedEntity(ECS::Entity());
     }
@@ -143,7 +143,7 @@ namespace GUI
 
   void SceneHierarchy::RecurseDownHierarchy(ECS::Entity entity)
   {
-    static bool editNameMode{ false };
+    static bool editNameMode{ false }, firstEnterEditMode{ true };
     // set the flag accordingly
     ImGuiTreeNodeFlags treeFlag{ ImGuiTreeNodeFlags_SpanFullWidth };
     bool const hasChildren{ mEntityManager.HasChild(entity) };
@@ -163,50 +163,62 @@ namespace GUI
         ImGui::SameLine();
         ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
         ImGui::SetCursorPosX(ImGui::GetCursorPosX()  - 12.f);
-        ImGui::SetKeyboardFocusHere();
-        if (ImGui::InputText("##EntityRename", &entityName, ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue)) {
+        if (firstEnterEditMode) {
+          ImGui::SetKeyboardFocusHere();
+          firstEnterEditMode = false;
+        }
+        if (ImGui::InputText("##EntityRename", &entityName, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll)) {
           entity.GetComponent<Component::Tag>().tag = entityName;
-          editNameMode = false;
+          editNameMode = lockControls = false;
+          firstEnterEditMode = true;
           QUEUE_EVENT(Events::SceneModifiedEvent);
         }
         ImGui::PopStyleVar();
+
+        if (ImGui::IsKeyPressed(ImGuiKey_Escape)) {
+          ImGui::SetWindowFocus(NULL);
+          editNameMode = lockControls = false;
+          firstEnterEditMode = true;
+        }
       }
 
-      if (ImGui::BeginDragDropSource())
-      {
-        ECS::EntityManager::EntityID id{ entity.GetRawEnttEntityID() };
-        ImGui::SetDragDropPayload(sDragDropPayload, &id, sizeof(ECS::EntityManager::EntityID), ImGuiCond_Once);
-        // Anything between begin and end will be parented to the dragged object
-        ImGui::Text(entityName.c_str());
-        ImGui::EndDragDropSource();
-      }
-      if (ImGui::BeginDragDropTarget())
-      {
-        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(sDragDropPayload);
-        if (drop)
+      if (!lockControls) {
+        if (ImGui::BeginDragDropSource())
         {
-          ECS::Entity const droppedEntity{ *reinterpret_cast<ECS::EntityManager::EntityID*>(drop->Data) };
-          if (mEntityManager.HasParent(droppedEntity)) {
-            mEntityManager.RemoveParent(droppedEntity);
-          }
-          mEntityManager.SetParentEntity(entity, droppedEntity);
+          ECS::EntityManager::EntityID id{ entity.GetRawEnttEntityID() };
+          ImGui::SetDragDropPayload(sDragDropPayload, &id, sizeof(ECS::EntityManager::EntityID), ImGuiCond_Once);
+          // Anything between begin and end will be parented to the dragged object
+          ImGui::Text(entityName.c_str());
+          ImGui::EndDragDropSource();
         }
-        ImGui::EndDragDropTarget();
+        if (ImGui::BeginDragDropTarget())
+        {
+          ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(sDragDropPayload);
+          if (drop)
+          {
+            ECS::Entity const droppedEntity{ *reinterpret_cast<ECS::EntityManager::EntityID*>(drop->Data) };
+            if (mEntityManager.HasParent(droppedEntity)) {
+              mEntityManager.RemoveParent(droppedEntity);
+            }
+            mEntityManager.SetParentEntity(entity, droppedEntity);
+          }
+          ImGui::EndDragDropTarget();
+        }
+
+        if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+          mRightClickedEntity = entity;
+          mEntityOptionsMenu = true;
+        }
       }
 
       if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
         if (isCurrentEntity) {
-          editNameMode = true;
+          editNameMode = lockControls = true;
         }
         else {
           GUIManager::SetSelectedEntity(entity);
-          editNameMode = false;
+          editNameMode = lockControls = false;
         }
-      }
-
-      if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
-        mRightClickedEntity = entity;
-        mEntityOptionsMenu = true;
       }
 
       if (hasChildren)

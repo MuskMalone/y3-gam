@@ -55,7 +55,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Entity 1048579"
+                        "tag": "Child 3"
                     }
                 },
                 {
@@ -90,6 +90,11 @@
                             "y": 0.0,
                             "z": 0.0
                         }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Test2"
                     }
                 }
             ]
@@ -101,7 +106,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Entity 1048581"
+                        "tag": "Child 2 renamed"
                     }
                 },
                 {
@@ -132,10 +137,15 @@
                             "z": 0.0
                         },
                         "worldRot": {
-                            "x": 0.0,
+                            "x": 5.699999809265137,
                             "y": 0.0,
                             "z": 0.0
                         }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Test2"
                     }
                 }
             ]
@@ -147,7 +157,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Child 1 Renaeee"
+                        "tag": "Child 1"
                     }
                 },
                 {
@@ -186,7 +196,7 @@
                 },
                 {
                     "Layer": {
-                        "layerName": "Default"
+                        "layerName": "Test2"
                     }
                 }
             ]
@@ -249,7 +259,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Entity 1048577"
+                        "tag": "Nested 3"
                     }
                 },
                 {
@@ -284,6 +294,11 @@
                             "y": 0.0,
                             "z": 0.0
                         }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Test2"
                     }
                 }
             ]
@@ -381,11 +396,6 @@
                             "y": 0.0,
                             "z": 0.0
                         }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
                     }
                 }
             ]

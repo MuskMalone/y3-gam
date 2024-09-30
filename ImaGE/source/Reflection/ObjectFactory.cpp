@@ -76,76 +76,93 @@ namespace Reflection
     }
   }
 
-  void TraverseDownInstance(ECS::Entity base, std::unordered_map<Prefabs::SubDataId, ECS::EntityManager::EntityID>& idToEntity) {
-    
+  void TraverseDownInstance(ECS::Entity base, std::unordered_map<Prefabs::SubDataId, ECS::Entity>& idToEntity,
+    ObjectFactory::PrefabInstMap const& prefabInstMap)
+  {
+    PrefabInst const& pfbInst{ prefabInstMap.at(base.GetRawEnttEntityID()) };
+    // each entity's PrefabOverrides component should 
+    // contain an id that corresponds to a sub-object
+    idToEntity.emplace(pfbInst.mOverrides.subDataId, base);
+
+    // if no children, return
+    if (pfbInst.mChildren.empty()) { return; }
+
+    ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
+    // else recursively call this function for each child
+    for (ECS::Entity e : pfbInst.mChildren) {
+      TraverseDownInstance(e, idToEntity, prefabInstMap);
+      entityMan.SetParentEntity(base, e);
+    }
+  }
+
+  void ObjectFactory::OverrideInstanceComponents() const {
+    for (ECS::Entity entity : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::PrefabOverrides>()) {
+      Component::PrefabOverrides const& overrides{ entity.GetComponent<Component::PrefabOverrides>() };
+
+      // replace any components if needed
+      if (!overrides.modifiedComponents.empty()) {
+        for (auto const& [type, comp] : overrides.modifiedComponents) {
+          AddComponentToEntity(entity, type, comp);
+        }
+      }
+
+      // then remove those in the vector
+      if (!overrides.removedComponents.empty()) {
+        for (rttr::type const& type : overrides.removedComponents) {
+          RemoveComponentFromEntity(entity, type);
+        }
+      }
+    }
   }
 
   void ObjectFactory::LoadPrefabInstances() {
     Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
 
-#ifdef OF_DEBUG
-    std::cout << "\n\n=======================================================================\n\n";
-#endif
-
     for (auto const& [pfb, data] : mPrefabInstances) {
       pm.LoadPrefab(pfb);
 
-      // <child, parent>
       std::vector<ECS::Entity> baseEntities;
-      std::unordered_map<ECS::EntityManager::EntityID, std::vector<ECS::EntityManager::EntityID>> parentToChildren;
-      // first create a map of parent to children
-      // we will use this to traverse down the root entity of each prefab instance,
-      // storing a mapping of SubDataId to PrefabInst at the same time
-      // we then pass this into the prefab struct method to construct the entities
-      // and override whatever is necessary
-      for (Reflection::PrefabInst const& instData : data) {
-        if (instData.mParent == entt::null) {
-          baseEntities.emplace_back(instData.mId);
+
+      {
+        // first, construct each entity while creating a map of parent to children
+        // we will use this to traverse down the root entity of each prefab instance,
+        for (auto const&[id, instData] : data) {
+          ECS::Entity ent{ entityMan.CreateEntityWithID({}, id) };
+
+          if (instData.mParent == entt::null) {
+            baseEntities.emplace_back(ent); // collect the root entities
+          }
+
+          // restore its prefab overrides
+          ent.EmplaceComponent<Component::PrefabOverrides>(instData.mOverrides);
         }
-        if (!instData.mChildren.empty()) {
-          //parentToChildren.emplace(instData.mId, instData.mChildren);
+
+        auto const& originalPfb{ pm.GetVariantPrefab(pfb) };
+
+        for (ECS::Entity& e : baseEntities) {
+          std::unordered_map<Prefabs::SubDataId, ECS::Entity> idToEntity{};
+          // traverse down each root entity and
+          // create it along with its children
+          TraverseDownInstance(e, idToEntity, data);
+
+          std::optional<glm::vec3> const& pos{ data.at(e.GetRawEnttEntityID()).mPosition };
+          // position for base entity should be set
+          if (!pos) {
+            Debug::DebugLogger::GetInstance().LogError("Position of prefab instance not set!"); 
+          }
+          else {
+            e.GetComponent<Component::Transform>().worldPos = *pos;
+          }
+
+          // fill the instance with its components and missing sub-objects
+          originalPfb.FillPrefabInstance(idToEntity);
         }
       }
-//        // each entity's PrefabOverrides component should 
-//        // contain an id that corresponds to a sub-object
-//        Component::PrefabOverrides const& overrides{ instData.mOverrides };
-//#ifdef OF_DEBUG
-//        if (!mappings.contains(overrides.subDataId)) {
-//          throw Debug::Exception<ObjectFactory>(Debug::LVL_ERROR,
-//            Msg("Prefab instance " + overrides.prefabName
-//              + " contains invalid SubDataId of " + std::to_string(overrides.subDataId)));
-//        }
-//#endif
-//        inst.EmplaceComponent<Component::PrefabOverrides>(overrides);  // restore its PrefabOverrides
-//
-//        // replace any modified components
-//        if (!overrides.modifiedComponents.empty()) {
-//          for (auto const& [compType, compVar] : overrides.modifiedComponents) {
-//            AddComponentToEntity(inst, compType, compVar);
-//          }
-//        }
-//        // remove components if necessary
-//        if (!overrides.removedComponents.empty()) {
-//          for (rttr::type const& type : overrides.removedComponents) {
-//            RemoveComponentFromEntity(inst, type);
-//          }
-//        }
-//
-//      }
-//
-//      // establish the hierarchy
-//      for (auto const& [child, parent] : entityRelations) { 
-//        if (parent == entt::null) { continue; }
-//
-//#ifdef OF_DEBUG
-//        std::cout << "Set " << static_cast<uint32_t>(parent) << " to parent of " << child.GetEntityID() << "\n";
-//#endif
-//        entityMan.SetParentEntity(parent, child);
-//      }
-//
-//      entityRelations.clear();
     }
+
+    // override each entity's components
+    OverrideInstanceComponents();
   }
 
   void ObjectFactory::InitScene()

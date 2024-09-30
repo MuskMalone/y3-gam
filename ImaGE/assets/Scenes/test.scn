@@ -1,96 +1,281 @@
 [
     {
-        "ID": 1048595,
-        "isActive": true,
-        "Parent": null,
+        "ID": 1048591,
+        "Parent": 1048584,
         "Child Entities": [],
-        "Components": [
-            {
-                "Tag": {
-                    "tag": "Entity 1"
-                }
-            },
-            {
-                "Transform": {
-                    "localPos": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "localScale": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "localRot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "worldPos": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "worldScale": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "worldRot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    }
-                }
-            }
-        ]
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 5
+        }
     },
     {
-        "ID": 1048594,
-        "isActive": true,
-        "Parent": null,
+        "ID": 1048590,
+        "Parent": 1048584,
         "Child Entities": [],
-        "Components": [
-            {
-                "Tag": {
-                    "tag": "Entity 2"
-                }
-            },
-            {
-                "Transform": {
-                    "localPos": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "localScale": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "localRot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "worldPos": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "worldScale": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "worldRot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 6
+        }
+    },
+    {
+        "ID": 1048589,
+        "Parent": 1048584,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 1
+        }
+    },
+    {
+        "ID": 1048588,
+        "Parent": 1048585,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 7
+        }
+    },
+    {
+        "ID": 1048587,
+        "Parent": 1048585,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 4
+        }
+    },
+    {
+        "ID": 1048586,
+        "Parent": 1048585,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 3
+        }
+    },
+    {
+        "ID": 1048585,
+        "Parent": 1048584,
+        "Child Entities": [
+            1048586,
+            1048587,
+            1048588
+        ],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 2
+        }
+    },
+    {
+        "ID": 1048584,
+        "Parent": null,
+        "Child Entities": [
+            1048585,
+            1048589,
+            1048590,
+            1048591
+        ],
+        "Position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [
+                {
+                    "key": "Tag",
+                    "value": {
+                        "tag": "TestPrefab1"
                     }
                 }
-            }
-        ]
+            ],
+            "removedComponents": [],
+            "subDataId": 0
+        }
+    },
+    {
+        "ID": 1048576,
+        "Parent": null,
+        "Child Entities": [
+            1048577,
+            1048578,
+            1048579,
+            1048580
+        ],
+        "Position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [
+                {
+                    "key": "Tag",
+                    "value": {
+                        "tag": "TestPrefab2"
+                    }
+                },
+                {
+                    "key": "Layer",
+                    "value": {
+                        "layerName": "Test2"
+                    }
+                }
+            ],
+            "removedComponents": [],
+            "subDataId": 0
+        }
+    },
+    {
+        "ID": 1048577,
+        "Parent": 1048576,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [
+                {
+                    "key": "Tag",
+                    "value": {
+                        "tag": "Child 3 of 2"
+                    }
+                },
+                {
+                    "key": "Layer",
+                    "value": {
+                        "layerName": "Default"
+                    }
+                }
+            ],
+            "removedComponents": [],
+            "subDataId": 5
+        }
+    },
+    {
+        "ID": 1048578,
+        "Parent": 1048576,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [
+                {
+                    "key": "Tag",
+                    "value": {
+                        "tag": "Child 2 of 2"
+                    }
+                },
+                {
+                    "key": "Transform",
+                    "value": {
+                        "localPos": {
+                            "x": 36.099998474121094,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "localScale": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "localRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ],
+            "removedComponents": [],
+            "subDataId": 6
+        }
+    },
+    {
+        "ID": 1048579,
+        "Parent": 1048576,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 1
+        }
+    },
+    {
+        "ID": 1048580,
+        "Parent": 1048576,
+        "Child Entities": [
+            1048581,
+            1048582,
+            1048583
+        ],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 2
+        }
+    },
+    {
+        "ID": 1048581,
+        "Parent": 1048580,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 7
+        }
+    },
+    {
+        "ID": 1048582,
+        "Parent": 1048580,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 4
+        }
+    },
+    {
+        "ID": 1048583,
+        "Parent": 1048580,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 3
+        }
     }
 ]

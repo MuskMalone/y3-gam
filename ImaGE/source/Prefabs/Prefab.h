@@ -96,7 +96,20 @@ namespace Prefabs
       The ID of the created entity
     ************************************************************************/
     ECS::Entity Construct(glm::vec3 const& pos) const;
+
+    /*!*********************************************************************
+    \brief
+      Constructs an entity with the data in the current Prefab.
+      The entity will be created along with it's relevant hierarchy and
+      is automatically added to the ECS. This overload stores the mappings
+      of each entity to its subdata and returns it as an EntityMappings
+      object.
+    \return
+      The ID of the created entity and the entity mappings as a pair
+    ************************************************************************/
     std::pair<ECS::Entity, EntityMappings> ConstructAndMap(glm::vec3 const& pos = {}) const;
+
+    void FillPrefabInstance(std::unordered_map<Prefabs::SubDataId, ECS::Entity>& idToEntity) const;
 
     /*!*********************************************************************
     \brief
@@ -125,11 +138,6 @@ namespace Prefabs
     std::vector<PrefabSubData> mObjects;
     std::vector<rttr::variant> mComponents;
     bool mIsActive;
-
-  private:
-    friend class Reflection::ObjectFactory;
-
-    void ConstructWithId(std::unordered_map<SubDataId, Reflection::PrefabInst*> const& mappings);
   };
 
   struct Prefab::EntityMappings {

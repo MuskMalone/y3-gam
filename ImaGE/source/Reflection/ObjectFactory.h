@@ -29,7 +29,8 @@ namespace Reflection
   class ObjectFactory : public Singleton<ObjectFactory>
   {
   public:
-    using PrefabInstanceContainer = std::unordered_map<std::string, std::vector<PrefabInst>>;
+    using PrefabInstMap = std::unordered_map<ECS::EntityManager::EntityID, PrefabInst>;
+    using PrefabInstanceContainer = std::unordered_map<std::string, PrefabInstMap>;
 
     /*!*********************************************************************
     \brief
@@ -124,6 +125,8 @@ namespace Reflection
     PrefabInstanceContainer mPrefabInstances;   // stores deserialized prefab instances
 
     void LoadPrefabInstances();
+
+    void OverrideInstanceComponents() const;
   };
 
 } // namespace Reflection

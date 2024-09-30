@@ -115,9 +115,43 @@ ECS::Entity Prefab::Construct(glm::vec3 const& pos) const
   return entity;
 }
 
-void Prefab::ConstructWithId(std::unordered_map<SubDataId, Reflection::PrefabInst*> const& mappings)
+void Prefab::FillPrefabInstance(std::unordered_map<Prefabs::SubDataId, ECS::Entity>& idToEntity) const
 {
+  Reflection::ObjectFactory& of{ Reflection::ObjectFactory::GetInstance() };
+  ECS::Entity entity{ idToEntity.at(PrefabSubData::BasePrefabId) };
+  std::vector<PrefabSubData const*> newSubData;
+  
+  of.AddComponentsToEntity(entity, mComponents);
 
+  // iterate through sub-objects and fill in their corresponding entity's components
+  // also construct any missing entities
+  for (PrefabSubData const& obj : mObjects)
+  {
+    // if the prefab instance already had this sub-obj
+    if (idToEntity.contains(obj.mId)) {
+      of.AddComponentsToEntity(idToEntity[obj.mId], obj.mComponents);
+    }
+    // else construct the entity
+    else {
+      ECS::Entity subEntity{ obj.Construct(mName) };
+      idToEntity.emplace(obj.mId, subEntity);
+      newSubData.emplace_back(&obj);
+
+      // remember to add PrefabOverrides component
+      subEntity.EmplaceComponent<Component::PrefabOverrides>(mName, obj.mId);
+    }
+  }
+
+  if (newSubData.empty()) { return; }
+
+  ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
+
+  // establish the hierarchy for new entities
+  for (PrefabSubData const* obj : newSubData) {
+    // dont have to check here because every sub-entity should have a parent
+    ECS::Entity const& child{ idToEntity[obj->mId] }, parent{ idToEntity[obj->mParent] };
+    entityMan.SetParentEntity(parent, child);
+  }
 }
 
 void Prefab::CreateSubData(std::vector<ECS::Entity> const& children, SubDataId parent)

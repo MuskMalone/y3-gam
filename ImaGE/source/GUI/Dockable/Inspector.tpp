@@ -70,12 +70,12 @@ void Inspector::DrawAddComponentButton(std::string const& name, std::string cons
 
   if (isRowClicked) {
     ECS::Entity ent{ GUIManager::GetSelectedEntity().GetRawEnttEntityID() };
-    ent.EmplaceComponent<ComponentType>();
+    ComponentType& newComp{ ent.EmplaceComponent<ComponentType>() };
     SetIsComponentEdited(true);
 
     // if entity is a prefab instance, update its modified components
     if (ent.HasComponent<Component::PrefabOverrides>()) {
-      ent.GetComponent<Component::PrefabOverrides>().AddComponentModification(rttr::type::get<ComponentType>());
+      ent.GetComponent<Component::PrefabOverrides>().AddComponentModification(newComp);
     }
     ImGui::CloseCurrentPopup();
   }
@@ -120,7 +120,8 @@ bool Inspector::DrawOptionButton(std::string const& name) {
     if (name == "Remove Component") {
       ent.RemoveComponent<ComponentType>();
       SetIsComponentEdited(true);
-
+      
+      // if its a prefab instance, add to overrides
       if (ent.HasComponent<Component::PrefabOverrides>()) {
         ent.GetComponent<Component::PrefabOverrides>().AddComponentRemoval(rttr::type::get<ComponentType>());
       }
@@ -128,13 +129,15 @@ bool Inspector::DrawOptionButton(std::string const& name) {
     }
 
     else if (name == "Clear") {
-      auto& component = ent.GetComponent<ComponentType>();
+      ComponentType& component = ent.GetComponent<ComponentType>();
       SetIsComponentEdited(true);
 
-      if (ent.HasComponent<Component::PrefabOverrides>()) {
-        ent.GetComponent<Component::PrefabOverrides>().AddComponentModification(rttr::type::get<ComponentType>());
-      }
       component.Clear();
+
+      // if its a prefab instance, add to overrides
+      if (ent.HasComponent<Component::PrefabOverrides>()) {
+        ent.GetComponent<Component::PrefabOverrides>().AddComponentModification(component);
+      }
     }
 
     ImGui::CloseCurrentPopup();

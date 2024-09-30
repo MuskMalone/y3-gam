@@ -104,8 +104,9 @@ namespace Serialization
         }
 
         DeserializePrefabOverrides(inst.mOverrides, entity[JsonPrefabKey]);
-        std::vector<Reflection::PrefabInst>& vec{ prefabInstances[inst.mOverrides.prefabName] };
-        vec.emplace_back(std::move(inst));
+        Reflection::ObjectFactory::PrefabInstMap& pfbInstances{ prefabInstances[inst.mOverrides.prefabName] };
+        ECS::EntityManager::EntityID const instId{ inst.mId };
+        pfbInstances.emplace(instId, std::move(inst));
         continue;
       }
 
@@ -507,6 +508,14 @@ namespace Serialization
       {
         rttr::variant result{ ExtractBasicTypes(idxVal) };
         if (!seqView.set_value(i, result)) {
+          // temp fix for entt::entity idk man conversion function didnt work
+          if (seqView.get_value_type() == rttr::type::get<entt::entity>()) {
+            result = static_cast<entt::entity>(result.get_value<uint32_t>());
+            if (seqView.set_value(i, result)) {
+              continue;
+            }
+          }
+
           std::string const msg{ "Unable to set sequential view of type " + seqView.get_type().get_name().to_string() };
           Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
