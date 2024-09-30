@@ -42,7 +42,7 @@ namespace Graphics {
         shader->SetUniform("u_Roughness", 0.3f);
         shader->SetUniform("u_AO", 1.f);
 
-        //@TODO add light + materials
+        //@TODO in future add light + materials
         
         Renderer::BeginBatch();
         for (auto const& entity : entities) {
@@ -52,13 +52,18 @@ namespace Graphics {
 
             auto const& xform = entity.GetComponent<Component::Transform>();
             auto const& mesh = entity.GetComponent<Component::Mesh>();
+            
+            xform.localPos; //example xform.localPos
 
+            
             // Skip if mesh is null
             if (mesh.mesh == nullptr)
                 continue;
 
             // Submit the mesh to the renderer with transform information
-            Graphics::Renderer::SubmitMesh(mesh.mesh, xform.worldPos, xform.worldScale, { 1.f, 1.f, 1.f, 1.f }, {45}); //@TODO: adjust color and rotation as needed
+            //Graphics::Renderer::SubmitMesh(mesh.mesh, xform.worldPos, xform.worldScale, { 1.f, 1.f, 1.f, 1.f }, {45}); //@TODO: adjust color and rotation as needed
+            Graphics::Renderer::SubmitMesh(mesh.mesh, {0,0,0}, {1,1,1}, {1.f, 0.f, 0.f, 1.f}, {0});
+            Graphics::Renderer::SubmitMesh(mesh.mesh, {1,0,0 }, { 1,1,1 }, { 0.f, 0.f, 1.f, 1.f }, { 0 });
         }
         Renderer::FlushBatch(shared_from_this());
 
