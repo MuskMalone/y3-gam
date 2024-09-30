@@ -34,9 +34,12 @@ namespace Graphics {
 	struct RendererData {
 		uint32_t maxTexUnits{};
 
-		static const uint32_t cMaxMeshes = 10000;
-		static const uint32_t cMaxVertices = cMaxMeshes * 100; // estimate based on average mesh complexity
-		static const uint32_t cMaxIndices = cMaxMeshes * 360;
+		//static const uint32_t cMaxMeshes = 1;
+		//static const uint32_t cMaxVertices = cMaxMeshes * 100; // estimate based on average mesh complexity
+		//static const uint32_t cMaxIndices = cMaxMeshes * 360;
+
+		static const uint32_t cMaxVertices = 500000;
+		static const uint32_t cMaxIndices = cMaxVertices * 3;
 
 		std::shared_ptr<VertexArray> meshVertexArray;
 		std::shared_ptr<VertexBuffer> meshVertexBuffer;

@@ -67,7 +67,6 @@ namespace Graphics {
 		mData.meshVertexArray->AddVertexBuffer(mData.meshVertexBuffer);
 		mData.meshBuffer = std::vector<Vertex>(mData.cMaxVertices);
 
-
 		std::shared_ptr<ElementBuffer> meshEbo = ElementBuffer::Create(mData.cMaxIndices);
 		mData.meshVertexArray->SetElementBuffer(meshEbo);
 
@@ -217,8 +216,11 @@ namespace Graphics {
 
 		// Iterate over the submeshes
 		for (const auto& submesh : submeshes) {
-			if (mData.meshIdxCount >= RendererData::cMaxIndices) {
-				NextBatch();  // Flush if the batch is full
+			// Check if adding this submesh would exceed the batch capacity
+			if (mData.meshIdxCount + submesh.idxCount >= RendererData::cMaxIndices ||
+				mData.meshVtxCount + submesh.vtxCount >= RendererData::cMaxVertices) {
+				// Flush the current batch before adding the new submesh
+				NextBatch();
 			}
 
 			// Apply the instance's transformation to the submesh's transform
@@ -334,18 +336,18 @@ namespace Graphics {
 
 			++mData.stats.drawCalls;
 		}
-		if (renderPass->GetSpecification().debugName == "Geometry Pass", mData.meshIdxCount) {
+		if ((renderPass->GetSpecification().debugName ) == "Geometry Pass", mData.meshIdxCount) {
 
 			// Calculate data size for mesh vertices
 			unsigned int dataSize = static_cast<unsigned int>(mData.meshVtxCount * sizeof(Vertex));
-
+			mData.meshVertexArray->Bind();
 			// Update the mesh vertex buffer with the batched data
-			mData.meshVertexBuffer->SetData(mData.meshBuffer.data(), dataSize);
+			mData.meshVertexBuffer->SetData(reinterpret_cast<void*>(mData.meshBuffer.data()), dataSize);
 
 			unsigned int idxDataSize = static_cast<unsigned int>(mData.meshIdxCount * sizeof(uint32_t));
-			mData.meshVertexArray->Bind();
-			mData.meshVertexArray->GetElementBuffer()->SetData(mData.meshIdxBuffer.data(), idxDataSize);
-			mData.meshVertexArray->Unbind();
+
+			mData.meshVertexArray->GetElementBuffer()->SetData(reinterpret_cast<void*>(mData.meshIdxBuffer.data()), idxDataSize);
+			//mData.meshVertexArray->Unbind();
 			// Bind the textures for the meshes
 			for (unsigned int i{}; i < mData.texUnitIdx; ++i) {
 				mData.texUnits[i]->Bind(i);

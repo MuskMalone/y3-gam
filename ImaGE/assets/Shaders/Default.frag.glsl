@@ -24,7 +24,7 @@ uniform float u_AO;
 //lighting parameters
 uniform vec3 u_CamPos;       // Camera position in world space
 // Single light source (hardcoded for now)
-const vec3 u_LightPos = vec3(0, 2.0, 5.0); // Example light position
+const vec3 u_LightPos = vec3(5.0, 2.0, 5.0); // Example light position
 const vec3 u_LightColor = vec3(10.0, 10.0, 10.0);       // Example white light
 //uniform vec3 u_LightPos;     // Light position in world space
 //uniform vec3 u_LightColor;   // Light color

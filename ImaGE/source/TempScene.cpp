@@ -59,10 +59,11 @@ void Scene::Init()
 
  
   mEcam = editorCam;
-  std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateModelFromImport("./Assets/Models/cube_low_poly.imsh");
+  std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateModelFromImport("./Assets/Models/bunny_high_poly.imsh");
+  //std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateCube();
   mesh0 = std::make_shared<Graphics::Mesh>(cubeMeshSource);
 
-  std::shared_ptr<Graphics::MeshSource> pyrMeshSource = Graphics::MeshFactory::CreatePyramid();
+  std::shared_ptr<Graphics::MeshSource> pyrMeshSource = Graphics::MeshFactory::CreateCube();
   mesh1 = std::make_shared<Graphics::Mesh>(pyrMeshSource);
   //=====================================================================================================================
 
@@ -79,19 +80,17 @@ void Scene::Init()
   //auto& planeMeshComponent = planeEntity.EmplaceComponent<Component::Mesh>();
   //planeMeshComponent.mesh = mesh0; // Use the cube mesh to create the plane
 
-  ECS::Entity entity = ECS::EntityManager::GetInstance().CreateEntity();
+  //ECS::Entity entity = ECS::EntityManager::GetInstance().CreateEntity();
 
   // Set up the TransformComponent with different offsets
   ECS::Entity light = ECS::EntityManager::GetInstance().CreateEntity();
   auto& transformC = light.GetComponent<Component::Transform>();
-  transformC.worldPos = glm::vec3(0.f, 2.0f, 5.f); // Offset for position
-  transformC.worldScale = glm::vec3(1.0f);  // Default scale
+  transformC.worldPos = glm::vec3(2.f, 2.0f, 2.f); // Offset for position
+  transformC.worldScale = glm::vec3(1.f);  // Default scale
   transformC.worldRot = {};  // No rotation
   auto& meshC = light.EmplaceComponent<Component::Mesh>();
-  meshC.mesh = mesh0;
+  meshC.mesh = nullptr;
 
-  // Set up the MeshComponent
-  auto& meshComponent = entity.EmplaceComponent<Component::Mesh>();
 
   for (int i = 0; i < 5; ++i)
   {
@@ -114,7 +113,7 @@ void Scene::Init()
               meshComponent.mesh = mesh0; // Assign cube mesh
           }
           else {
-              meshComponent.mesh = mesh0; // Assign pyramid mesh
+              meshComponent.mesh = mesh1; // Assign pyramid mesh
           }
       }
   }

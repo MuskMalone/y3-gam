@@ -2,6 +2,10 @@
 #include "Renderer.h"
 #include "Framebuffer.h"
 
+#define GLCALL(x) Graphics::Utils::GL::GlClearErrors(); x; Graphics::Utils::GL::GlLogCall(#x, __FILE__, __LINE__)
+
+//#define GLCALL(x) x;
+
 namespace Graphics {
 	namespace Utils{
 
@@ -29,6 +33,12 @@ namespace Graphics {
             void AttachColorTexture(uint32_t id, GLenum intFmt, GLenum fmt, uint32_t width, uint32_t height, int index);
             void AttachDepthTexture(uint32_t id, GLenum intFmt, GLenum attachType, uint32_t width, uint32_t height);
         } //namespace Framebuffer
+
+        namespace GL {
+            bool GlLogCall(const char* function, const char* file, int line);
+            void GlClearErrors();
+
+        }//GL
 	};
 
 } //namespace Graphics
