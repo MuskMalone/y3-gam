@@ -160,7 +160,7 @@ namespace IGE {
 				if (entity.HasComponent<Component::Transform>()) {
 					Component::Transform const& transform = entity.GetComponent<Component::Transform>();
 					//box shape, this will be a box collider
-					boxgeom = physx::PxBoxGeometry{ ToPxVec3(transform.worldScale)};
+					boxgeom = physx::PxBoxGeometry{ ToPxVec3(ToPhysicsUnits(transform.worldScale))};
 					xfm = physx::PxTransform(ToPxVec3(transform.worldPos) + collider.positionOffset);
 				}
 				else {
@@ -178,7 +178,7 @@ namespace IGE {
 				rb = physx::PxCreateDynamic(
 						*mPhysics, 
 						physx::PxTransform(ToPxVec3(transform.worldPos) + collider.positionOffset),
-						physx::PxBoxGeometry(collider.scale = ToPxVec3(transform.worldScale)),
+						physx::PxBoxGeometry(collider.scale = ToPxVec3(ToPhysicsUnits(transform.worldScale))),
 						*mMaterial, 10.f); //default mass will be 10 lmao material is default also
 				mScene->addActor(*rb);
 				rb->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
