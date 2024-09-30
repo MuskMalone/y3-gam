@@ -46,9 +46,9 @@ RTTR_REGISTRATION
     .property("motionType", &RigidBody::motionType);
 
   rttr::registration::class_<Collider>("Collider")
-    .constructor<>()
-    .property("scale", &Collider::scale)
-    .property("positionOffset", &Collider::positionOffset)
-    .property("rotationOffset", &Collider::rotationOffset)
-    .property("type", &Collider::type);
+      .constructor<>()
+      .property("scale", &Collider::scale)
+      .property("positionOffset", &Collider::positionOffset);
+    //.property("rotationOffset", &Collider::rotationOffset)
+    //.property("type", &Collider::type);
 }

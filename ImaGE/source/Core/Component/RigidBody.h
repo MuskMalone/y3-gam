@@ -14,9 +14,8 @@ namespace Component {
 	
 	struct RigidBody {
 		enum class MotionType {
-			STATIC,
-			KINEMATIC,
-			DYNAMIC
+			DYNAMIC = 0,
+			KINEMATIC
 		};
 		inline void Clear() noexcept { 
 			// Idk what are good default values
@@ -25,7 +24,7 @@ namespace Component {
 			staticFriction = 1.f;
 			restitution = 1.f;
 			gravityFactor = 1.f;
-			motionType = MotionType::STATIC;
+			motionType = MotionType::KINEMATIC;
 		}
 
 		float mass{1.f};
@@ -35,8 +34,8 @@ namespace Component {
 		float dynamicFriction;
 		float restitution;
 		float gravityFactor{0.f};
-		float linearDamping{ 0.5f };
-		MotionType motionType{ MotionType::STATIC }; //static, dynamic, kinematic
+		float linearDamping{ 0.98f };
+		MotionType motionType{ MotionType::KINEMATIC }; //static, dynamic, kinematic
 		void* bodyID;
 
 	};

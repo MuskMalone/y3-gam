@@ -106,3 +106,54 @@ inline void GUI::Inspector::DrawAddComponentButton<Component::RigidBody>(std::st
 		ImGui::CloseCurrentPopup();
 	}
 }
+
+//for testing tch
+template <>
+inline void GUI::Inspector::DrawAddComponentButton<Component::Collider>(std::string const& name, std::string const& icon) {
+	if (GUIManager::GetSelectedEntity().HasComponent<Component::Collider>()) {
+		return;
+	}
+
+	auto fillRowWithColour = [](const ImColor& colour) {
+		for (int column = 0; column < ImGui::TableGetColumnCount(); column++) {
+			ImGui::TableSetBgColor(ImGuiTableBgTarget_CellBg, colour, column);
+		}
+	};
+
+	const float rowHeight = 25.0f;
+	auto* window = ImGui::GetCurrentWindow();
+	window->DC.CurrLineSize.y = rowHeight;
+	ImGui::TableNextRow(0, rowHeight);
+	ImGui::TableSetColumnIndex(0);
+
+	window->DC.CurrLineTextBaseOffset = 3.0f;
+
+	const ImVec2 rowAreaMin = ImGui::TableGetCellBgRect(ImGui::GetCurrentTable(), 0).Min;
+	const ImVec2 rowAreaMax = { ImGui::TableGetCellBgRect(ImGui::GetCurrentTable(),
+	  ImGui::TableGetColumnCount() - 1).Max.x, rowAreaMin.y + rowHeight };
+
+	//ImGui::GetWindowDrawList()->AddRect(rowAreaMin, rowAreaMax, Color::IMGUI_COLOR_RED); // Debug
+
+	ImGui::PushClipRect(rowAreaMin, rowAreaMax, false);
+	bool isRowHovered, isRowClicked;
+	ImGui::ButtonBehavior(ImRect(rowAreaMin, rowAreaMax), ImGui::GetID(name.c_str()),
+		&isRowHovered, &isRowClicked, ImGuiButtonFlags_MouseButtonLeft);
+	ImGui::SetItemAllowOverlap();
+	ImGui::PopClipRect();
+
+	std::string display{ icon + "   " + name};
+
+	ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
+	ImGui::TextUnformatted(display.c_str());
+	ImGui::PopFont();
+
+	if (isRowHovered)
+		fillRowWithColour(Color::IMGUI_COLOR_ORANGE);
+
+	if (isRowClicked) {
+		ECS::Entity ent{ GUIManager::GetSelectedEntity().GetRawEnttEntityID() };
+		IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(ent);
+		SetIsComponentEdited(true);
+		ImGui::CloseCurrentPopup();
+	}
+}

@@ -460,20 +460,20 @@ namespace GUI {
           SetIsComponentEdited(true);
       }
 
-      //// Motion Type Selection
-      //const char* motionTypes[] = { "Static", "Kinematic", "Dynamic" };
-      //int currentMotionType = static_cast<int>(rigidBody.motionType);
+      // Motion Type Selection
+      const char* motionTypes[] = { "Dynamic", "Kinematic" };
+      int currentMotionType = static_cast<int>(rigidBody.motionType);
 
-      //ImGui::TableNextRow();
-      //ImGui::TableSetColumnIndex(0);
-      //ImGui::Text("Motion Type");
-      //ImGui::TableSetColumnIndex(1);
-      //ImGui::SetNextItemWidth(INPUT_SIZE);
-      //if (ImGui::Combo("##Motion Type", &currentMotionType, motionTypes, IM_ARRAYSIZE(motionTypes))) {
-      //  rigidBody.motionType = static_cast<Component::RigidBody::MotionType>(currentMotionType);
-      //  IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::MOTION);
-      //  SetIsComponentEdited(true);
-      //}
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Motion Type");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::Combo("##Motion Type", &currentMotionType, motionTypes, IM_ARRAYSIZE(motionTypes))) {
+        rigidBody.motionType = static_cast<Component::RigidBody::MotionType>(currentMotionType);
+        IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::MOTION);
+        SetIsComponentEdited(true);
+      }
 
       ImGui::EndTable();
     }
@@ -505,9 +505,9 @@ namespace GUI {
       if (ImGuiHelpers::TableInputFloat3("Position Offset", &collider.positionOffset.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
         SetIsComponentEdited(true);
       }
-      if (ImGuiHelpers::TableInputFloat3("Rotation Offset", &collider.rotationOffset.x, inputWidth, false, 0.f, 360.f, 0.1f)) {
-        SetIsComponentEdited(true);
-      }
+      //if (ImGuiHelpers::TableInputFloat3("Rotation Offset", &collider.rotationOffset.x, inputWidth, false, 0.f, 360.f, 0.1f)) {
+      //  SetIsComponentEdited(true);
+      //}
 
       ImGui::EndTable();
 
@@ -530,7 +530,7 @@ namespace GUI {
       //  SetIsComponentEdited(true);
       //}
 
-      ImGui::EndTable();
+      //ImGui::EndTable();
     }
 
     WindowEnd(isOpen);
