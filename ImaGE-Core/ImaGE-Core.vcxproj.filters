@@ -343,6 +343,7 @@
     <ClInclude Include="source\Singleton.h" />
     <ClInclude Include="source\TempScene.h" />
     <ClInclude Include="source\pch.h" />
+    <ClInclude Include="source\Audio\AudioManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -492,5 +493,6 @@
     </ClCompile>
     <ClCompile Include="source\TempScene.cpp" />
     <ClCompile Include="source\pch.cpp" />
+    <ClCompile Include="source\Audio\AudioManager.cpp" />
   </ItemGroup>
 </Project>
