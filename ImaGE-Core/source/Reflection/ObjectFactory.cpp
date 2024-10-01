@@ -76,6 +76,9 @@ namespace Reflection
   void TraverseDownInstance(ECS::Entity base, std::unordered_map<Prefabs::SubDataId, ECS::Entity>& idToEntity,
     ObjectFactory::PrefabInstMap const& prefabInstMap)
   {
+    // if its not in the map, it means this entity was added externally
+    if (!prefabInstMap.contains(base.GetRawEnttEntityID())) { return; }
+
     PrefabInst const& pfbInst{ prefabInstMap.at(base.GetRawEnttEntityID()) };
     // each entity's PrefabOverrides component should 
     // contain an id that corresponds to a sub-object

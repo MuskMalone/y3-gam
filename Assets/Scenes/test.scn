@@ -1,121 +1,12 @@
 [
     {
-        "ID": 1048591,
-        "Parent": 1048584,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 5
-        }
-    },
-    {
-        "ID": 1048590,
-        "Parent": 1048584,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 6
-        }
-    },
-    {
-        "ID": 1048589,
-        "Parent": 1048584,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 1
-        }
-    },
-    {
-        "ID": 1048588,
-        "Parent": 1048585,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 7
-        }
-    },
-    {
-        "ID": 1048587,
-        "Parent": 1048585,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 4
-        }
-    },
-    {
-        "ID": 1048586,
-        "Parent": 1048585,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 3
-        }
-    },
-    {
-        "ID": 1048585,
-        "Parent": 1048584,
-        "Child Entities": [
-            1048586,
-            1048587,
-            1048588
-        ],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 2
-        }
-    },
-    {
-        "ID": 1048584,
+        "ID": 2097160,
         "Parent": null,
         "Child Entities": [
-            1048585,
-            1048589,
-            1048590,
-            1048591
-        ],
-        "Position": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-        },
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [
-                {
-                    "key": "Tag",
-                    "value": {
-                        "tag": "TestPrefab1"
-                    }
-                }
-            ],
-            "removedComponents": [],
-            "subDataId": 0
-        }
-    },
-    {
-        "ID": 1048576,
-        "Parent": null,
-        "Child Entities": [
-            1048577,
-            1048578,
-            1048579,
-            1048580
+            2097161,
+            2097165,
+            2097166,
+            2097167
         ],
         "Position": {
             "x": 0.0,
@@ -130,12 +21,6 @@
                     "value": {
                         "tag": "TestPrefab2"
                     }
-                },
-                {
-                    "key": "Layer",
-                    "value": {
-                        "layerName": "Test2"
-                    }
                 }
             ],
             "removedComponents": [],
@@ -143,32 +28,91 @@
         }
     },
     {
-        "ID": 1048577,
-        "Parent": 1048576,
+        "ID": 2097167,
+        "Parent": 2097160,
         "Child Entities": [],
         "Prefab": {
             "prefabName": "TestPrefab",
-            "modifiedComponents": [
-                {
-                    "key": "Tag",
-                    "value": {
-                        "tag": "Child 3 of 2"
-                    }
-                },
-                {
-                    "key": "Layer",
-                    "value": {
-                        "layerName": "Default"
-                    }
-                }
-            ],
+            "modifiedComponents": [],
             "removedComponents": [],
             "subDataId": 5
         }
     },
     {
-        "ID": 1048578,
-        "Parent": 1048576,
+        "ID": 2097166,
+        "Parent": 2097160,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 6
+        }
+    },
+    {
+        "ID": 2097165,
+        "Parent": 2097160,
+        "Child Entities": [
+            4194321
+        ],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 1
+        }
+    },
+    {
+        "ID": 4194321,
+        "Parent": 2097165,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 8
+        }
+    },
+    {
+        "ID": 2097161,
+        "Parent": 2097160,
+        "Child Entities": [
+            2097162,
+            2097163,
+            2097164
+        ],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 2
+        }
+    },
+    {
+        "ID": 2097164,
+        "Parent": 2097161,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 7
+        }
+    },
+    {
+        "ID": 2097163,
+        "Parent": 2097161,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 4
+        }
+    },
+    {
+        "ID": 2097162,
+        "Parent": 2097161,
         "Child Entities": [],
         "Prefab": {
             "prefabName": "TestPrefab",
@@ -176,16 +120,16 @@
                 {
                     "key": "Tag",
                     "value": {
-                        "tag": "Child 2 of 2"
+                        "tag": "Nested 23 of prefab2 scale 100"
                     }
                 },
                 {
                     "key": "Transform",
                     "value": {
                         "localPos": {
-                            "x": 36.099998474121094,
+                            "x": -30.399999618530273,
                             "y": 0.0,
-                            "z": 0.0
+                            "z": 100.0
                         },
                         "localScale": {
                             "x": 0.0,
@@ -203,7 +147,7 @@
                             "z": 0.0
                         },
                         "worldScale": {
-                            "x": 0.0,
+                            "x": 100.0,
                             "y": 0.0,
                             "z": 0.0
                         },
@@ -216,13 +160,84 @@
                 }
             ],
             "removedComponents": [],
+            "subDataId": 3
+        }
+    },
+    {
+        "ID": 2097152,
+        "Parent": null,
+        "Child Entities": [
+            2097155,
+            2097156,
+            2097158,
+            2097159
+        ],
+        "Position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [
+                {
+                    "key": "Tag",
+                    "value": {
+                        "tag": "TestPrefab1"
+                    }
+                },
+                {
+                    "key": "Layer",
+                    "value": {
+                        "layerName": "Test1"
+                    }
+                }
+            ],
+            "removedComponents": [],
+            "subDataId": 0
+        }
+    },
+    {
+        "ID": 2097156,
+        "Parent": 2097152,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [
+                {
+                    "key": "Tag",
+                    "value": {
+                        "tag": "Child 3 of prefab1 modified layer"
+                    }
+                },
+                {
+                    "key": "Layer",
+                    "value": {
+                        "layerName": "Default"
+                    }
+                }
+            ],
+            "removedComponents": [],
+            "subDataId": 5
+        }
+    },
+    {
+        "ID": 2097159,
+        "Parent": 2097152,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
             "subDataId": 6
         }
     },
     {
-        "ID": 1048579,
-        "Parent": 1048576,
-        "Child Entities": [],
+        "ID": 2097158,
+        "Parent": 2097152,
+        "Child Entities": [
+            2097157
+        ],
         "Prefab": {
             "prefabName": "TestPrefab",
             "modifiedComponents": [],
@@ -231,12 +246,23 @@
         }
     },
     {
-        "ID": 1048580,
-        "Parent": 1048576,
+        "ID": 2097157,
+        "Parent": 2097158,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "TestPrefab",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 8
+        }
+    },
+    {
+        "ID": 2097155,
+        "Parent": 2097152,
         "Child Entities": [
-            1048581,
-            1048582,
-            1048583
+            2097153,
+            2097154,
+            4194320
         ],
         "Prefab": {
             "prefabName": "TestPrefab",
@@ -246,8 +272,8 @@
         }
     },
     {
-        "ID": 1048581,
-        "Parent": 1048580,
+        "ID": 4194320,
+        "Parent": 2097155,
         "Child Entities": [],
         "Prefab": {
             "prefabName": "TestPrefab",
@@ -257,8 +283,8 @@
         }
     },
     {
-        "ID": 1048582,
-        "Parent": 1048580,
+        "ID": 2097154,
+        "Parent": 2097155,
         "Child Entities": [],
         "Prefab": {
             "prefabName": "TestPrefab",
@@ -268,8 +294,8 @@
         }
     },
     {
-        "ID": 1048583,
-        "Parent": 1048580,
+        "ID": 2097153,
+        "Parent": 2097155,
         "Child Entities": [],
         "Prefab": {
             "prefabName": "TestPrefab",

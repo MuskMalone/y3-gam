@@ -49,21 +49,21 @@
     ],
     "SubData": [
         {
-            "ID": 5,
+            "ID": 2,
             "isActive": true,
             "Parent": 0,
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Child 3"
+                        "tag": "Child 24"
                     }
                 },
                 {
                     "Transform": {
                         "localPos": {
-                            "x": 0.0,
+                            "x": -87.5,
                             "y": 0.0,
-                            "z": 0.0
+                            "z": 21.0
                         },
                         "localScale": {
                             "x": 0.0,
@@ -83,6 +83,103 @@
                         "worldScale": {
                             "x": 0.0,
                             "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldRot": {
+                            "x": 13.600000381469727,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Test2"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3,
+            "isActive": true,
+            "Parent": 2,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Nested 23 renamed"
+                    }
+                },
+                {
+                    "Transform": {
+                        "localPos": {
+                            "x": -30.399999618530273,
+                            "y": 0.0,
+                            "z": 100.0
+                        },
+                        "localScale": {
+                            "x": 42.0,
+                            "y": 0.0,
+                            "z": 100.0
+                        },
+                        "localRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 31.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 4,
+            "isActive": true,
+            "Parent": 2,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Nested 1"
+                    }
+                },
+                {
+                    "Transform": {
+                        "localPos": {
+                            "x": -5.300000190734863,
+                            "y": 0.0,
+                            "z": -50.70000076293945
+                        },
+                        "localScale": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "localRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.0,
+                            "y": 100.0,
                             "z": 0.0
                         },
                         "worldRot": {
@@ -100,13 +197,13 @@
             ]
         },
         {
-            "ID": 6,
+            "ID": 7,
             "isActive": true,
-            "Parent": 0,
+            "Parent": 2,
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Child 2 renamed"
+                        "tag": "Nested 3"
                     }
                 },
                 {
@@ -137,7 +234,7 @@
                             "z": 0.0
                         },
                         "worldRot": {
-                            "x": 5.699999809265137,
+                            "x": 0.0,
                             "y": 0.0,
                             "z": 0.0
                         }
@@ -253,21 +350,21 @@
             ]
         },
         {
-            "ID": 2,
+            "ID": 6,
             "isActive": true,
             "Parent": 0,
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Child 24"
+                        "tag": "Child 2 renamed"
                     }
                 },
                 {
                     "Transform": {
                         "localPos": {
-                            "x": -87.5,
+                            "x": 0.0,
                             "y": 0.0,
-                            "z": 21.0
+                            "z": 0.0
                         },
                         "localScale": {
                             "x": 0.0,
@@ -290,7 +387,7 @@
                             "z": 0.0
                         },
                         "worldRot": {
-                            "x": 13.600000381469727,
+                            "x": 5.699999809265137,
                             "y": 0.0,
                             "z": 0.0
                         }
@@ -304,19 +401,19 @@
             ]
         },
         {
-            "ID": 7,
+            "ID": 5,
             "isActive": true,
-            "Parent": 2,
+            "Parent": 0,
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Nested 3"
+                        "tag": "Child 3 renamed"
                     }
                 },
                 {
                     "Transform": {
                         "localPos": {
-                            "x": 0.0,
+                            "x": 38.400001525878906,
                             "y": 0.0,
                             "z": 0.0
                         },
@@ -349,104 +446,7 @@
                 },
                 {
                     "Layer": {
-                        "layerName": "Test2"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 4,
-            "isActive": true,
-            "Parent": 2,
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Nested 1"
-                    }
-                },
-                {
-                    "Transform": {
-                        "localPos": {
-                            "x": -5.300000190734863,
-                            "y": 0.0,
-                            "z": -50.70000076293945
-                        },
-                        "localScale": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "localRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 0.0,
-                            "y": 100.0,
-                            "z": 0.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Test2"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 3,
-            "isActive": true,
-            "Parent": 2,
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Nested 23"
-                    }
-                },
-                {
-                    "Transform": {
-                        "localPos": {
-                            "x": -30.399999618530273,
-                            "y": 0.0,
-                            "z": 100.0
-                        },
-                        "localScale": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "localRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        }
+                        "layerName": "Test1"
                     }
                 }
             ]
