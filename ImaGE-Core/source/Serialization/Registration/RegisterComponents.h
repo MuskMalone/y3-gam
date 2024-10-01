@@ -41,6 +41,17 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .constructor<>()
     .property("meshRef", &Mesh::meshRef);
 
+  rttr::registration::class_<Material>("Material")
+    .constructor<>()
+    .property("color", &Material::color);
+
+  rttr::registration::class_<Text>("Text")
+    .constructor<>()
+    .property("textContent", &Text::textContent)
+    .property("fontName", &Text::fontName)
+    .property("color", &Text::color)
+    .property("scale", &Text::scale);
+
   rttr::registration::class_<RigidBody>("RigidBody")
     .constructor<>()
     .property("velocity", &RigidBody::velocity)

@@ -9,6 +9,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <rttr/registration>
 #include <Prefabs/Prefab.h>
+#include <Jolt/Math/Vec3.h>
 
 static void rttr_auto_register_reflection_function_(); namespace {
   struct rttr__auto__register__ {
@@ -54,6 +55,12 @@ static void rttr_auto_register_reflection_function_(); namespace {
   
   /* ------------------- Other ------------------- */
   rttr::registration::class_<rttr::type>("RttrType");
+
+  rttr::registration::class_<JPH::Vec3>("JPHVec3")
+    .constructor<>()
+    .property("x", &JPH::Vec3::GetX, &JPH::Vec3::SetX)
+    .property("y", &JPH::Vec3::GetY, &JPH::Vec3::SetY)
+    .property("z", &JPH::Vec3::GetZ, &JPH::Vec3::SetZ);
 
   if (Application::GetImGuiEnabled()) {
     rttr::registration::class_<std::pair<std::string, unsigned>>("StringUnsignedPair")

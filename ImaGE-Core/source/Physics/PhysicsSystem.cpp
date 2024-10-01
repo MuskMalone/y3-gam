@@ -106,7 +106,7 @@ namespace IGE {
 		void PhysicsSystem::AddCollider(ECS::Entity entity)
 		{
 			//empty. rigidbody is the collider 
-
+			entity.EmplaceOrReplaceComponent<Component::Collider>();
 		}
 
 		void PhysicsSystem::ChangeColliderShape(ECS::Entity entity)

@@ -19,7 +19,7 @@ namespace Component {
 
     std::string textContent;
     std::string fontName;
-    float scale;
     glm::vec4 color;
+    float scale;
   };
 } // namespace Component

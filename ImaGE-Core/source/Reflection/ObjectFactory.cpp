@@ -212,14 +212,20 @@ namespace Reflection
     else if (compType == rttr::type::get<Component::Layer>()) {
       entity.EmplaceOrReplaceComponent<Component::Layer>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Layer>>());
     }
-    else if (compType == rttr::type::get<Component::Mesh>()) {
-      Scene::AddMesh(entity);
+    else if (compType == rttr::type::get<Component::Material>()) {
+      entity.EmplaceOrReplaceComponent<Component::Material>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Material>>());
     }
+    /*else if (compType == rttr::type::get<Component::Mesh>()) {
+      Scene::AddMesh(entity);
+    }*/
     else if (compType == rttr::type::get<Component::RigidBody>()) {
       IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(entity);
     }
     else if (compType == rttr::type::get<Component::Collider>()) {
       IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(entity);
+    }
+    else if (compType == rttr::type::get<Component::Text>()) {
+      entity.EmplaceOrReplaceComponent<Component::Text>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Text>>());
     }
     else
     {
@@ -237,9 +243,11 @@ namespace Reflection
     IF_GET_ENTITY_COMP(Component::Transform)
     else IF_GET_ENTITY_COMP(Component::Tag)
     else IF_GET_ENTITY_COMP(Component::Layer)
+    else IF_GET_ENTITY_COMP(Component::Material)
+    else IF_GET_ENTITY_COMP(Component::RigidBody)
+    else IF_GET_ENTITY_COMP(Component::Collider)
+    else IF_GET_ENTITY_COMP(Component::Text)
     //else IF_GET_ENTITY_COMP(Component::Mesh)
-    //else IF_GET_ENTITY_COMP(Component::RigidBody)
-    //else IF_GET_ENTITY_COMP(Component::Collider)
     else
     {
       std::ostringstream oss{};
@@ -259,9 +267,11 @@ namespace Reflection
     IF_REMOVE_COMP(Component::Transform)
     else IF_REMOVE_COMP(Component::Tag)
     else IF_REMOVE_COMP(Component::Layer)
-    else IF_REMOVE_COMP(Component::Mesh)
+    else IF_REMOVE_COMP(Component::Material)
+    //else IF_REMOVE_COMP(Component::Mesh)
     else IF_REMOVE_COMP(Component::RigidBody)
     else IF_REMOVE_COMP(Component::Collider)
+    else IF_REMOVE_COMP(Component::Text)
     else
     {
       std::ostringstream oss{};
