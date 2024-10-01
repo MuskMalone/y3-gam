@@ -110,6 +110,9 @@
     <ClInclude Include="source\Core\Component\Mesh.h">
       <Filter>Core\Component</Filter>
     </ClInclude>
+    <ClInclude Include="source\Core\Component\PrefabOverrides.h">
+      <Filter>Core\Component</Filter>
+    </ClInclude>
     <ClInclude Include="source\Core\Component\RigidBody.h">
       <Filter>Core\Component</Filter>
     </ClInclude>
@@ -298,19 +301,19 @@
     <ClInclude Include="source\Physics\PhysicsSystem.h">
       <Filter>Physics</Filter>
     </ClInclude>
-    <ClInclude Include="source\Prefabs\PrefabManager.h">
+    <ClInclude Include="source\Prefabs\Prefab.h">
       <Filter>Prefabs</Filter>
     </ClInclude>
-    <ClInclude Include="source\Prefabs\VariantPrefab.h">
+    <ClInclude Include="source\Prefabs\PrefabManager.h">
       <Filter>Prefabs</Filter>
     </ClInclude>
     <ClInclude Include="source\Reflection\ComponentTypes.h">
       <Filter>Reflection</Filter>
     </ClInclude>
-    <ClInclude Include="source\Reflection\ObjectFactory.h">
+    <ClInclude Include="source\Reflection\EntityData.h">
       <Filter>Reflection</Filter>
     </ClInclude>
-    <ClInclude Include="source\Reflection\VariantEntity.h">
+    <ClInclude Include="source\Reflection\ObjectFactory.h">
       <Filter>Reflection</Filter>
     </ClInclude>
     <ClInclude Include="source\Scenes\SceneManager.h">
@@ -343,8 +346,6 @@
     <ClInclude Include="source\Singleton.h" />
     <ClInclude Include="source\TempScene.h" />
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Prefabs\Prefab.h" />
-    <ClInclude Include="source\Reflection\EntityData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -474,10 +475,10 @@
     <ClCompile Include="source\Physics\PhysicsSystem.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Prefabs\PrefabManager.cpp">
+    <ClCompile Include="source\Prefabs\Prefab.cpp">
       <Filter>Prefabs</Filter>
     </ClCompile>
-    <ClCompile Include="source\Prefabs\VariantPrefab.cpp">
+    <ClCompile Include="source\Prefabs\PrefabManager.cpp">
       <Filter>Prefabs</Filter>
     </ClCompile>
     <ClCompile Include="source\Reflection\ObjectFactory.cpp">
@@ -494,6 +495,5 @@
     </ClCompile>
     <ClCompile Include="source\TempScene.cpp" />
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\Prefabs\Prefab.cpp" />
   </ItemGroup>
 </Project>
