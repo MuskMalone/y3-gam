@@ -66,6 +66,8 @@ namespace GUI {
     ************************************************************************/
     EVENT_CALLBACK_DECL(HandleEvent);
 
+    void DisplayRemovedComponent(rttr::type const& type); // for prefab instances
+
     template<typename Component>
     void DrawAddComponentButton(std::string const& name, std::string const& icon);
 

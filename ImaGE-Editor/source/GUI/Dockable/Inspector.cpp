@@ -173,6 +173,12 @@ namespace GUI {
           }
         }
       }
+
+      if (prefabOverride) {
+        for (rttr::type const& type : prefabOverride->removedComponents) {
+          DisplayRemovedComponent(type);
+        }
+      }
     }
     ImGui::PopFont();
     ImGui::End();
@@ -207,6 +213,12 @@ namespace GUI {
       break;
     default: break;
     }
+  }
+
+  void Inspector::DisplayRemovedComponent(rttr::type const& type) {
+    ImGui::BeginDisabled();
+    ImGui::TreeNode((type.get_name().to_string() + " (removed)").c_str());
+    ImGui::EndDisabled();
   }
 
   bool Inspector::LayerComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
