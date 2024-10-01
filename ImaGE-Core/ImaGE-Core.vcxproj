@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Distribution|x64">
+      <Configuration>Distribution</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9EC84E78-8A80-90C5-F387-6921DF5E2BB6}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>ImaGE-Core</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>..\Binaries\windows-x86_64\Debug\ImaGE-Core\</OutDir>
+    <IntDir>..\Binaries\Intermediates\windows-x86_64\Debug\ImaGE-Core\</IntDir>
+    <TargetName>ImaGE-Core</TargetName>
+    <TargetExt>.lib</TargetExt>
+    <ExternalIncludePath>source\External;source\External\ImGui;source\External\ImTerm;..\Libraries\assimp;..\Libraries\entt;..\Libraries\freetype;..\Libraries\glad-gl-4.6;..\Libraries\glfw-3.3.8.bin.WIN64;..\Libraries\glm;..\Libraries\jolt;..\Libraries\premake;..\Libraries\rapidjson-1.1.0;..\Libraries\rttr-0.9.6;..\Libraries\spdlog;..\Libraries\assimp\include;..\Libraries\assimp\include\assimp;..\Libraries\assimp\include\assimp\Compiler;..\Libraries\assimp\include\assimp\port;..\Libraries\assimp\include\assimp\port\AndroidJNI;..\Libraries\entt\include;..\Libraries\freetype\dll;..\Libraries\freetype\include;..\Libraries\freetype\lib;..\Libraries\freetype\include\dlg;..\Libraries\freetype\include\freetype;..\Libraries\freetype\include\freetype\config;..\Libraries\freetype\include\freetype\internal;..\Libraries\freetype\include\freetype\internal\services;..\Libraries\freetype\lib\Debug;..\Libraries\freetype\lib\Release;..\Libraries\glad-gl-4.6\include;..\Libraries\glad-gl-4.6\include\glad;..\Libraries\glad-gl-4.6\include\KHR;..\Libraries\glfw-3.3.8.bin.WIN64\docs;..\Libraries\glfw-3.3.8.bin.WIN64\include;..\Libraries\glfw-3.3.8.bin.WIN64\lib-mingw-w64;..\Libraries\glfw-3.3.8.bin.WIN64\lib-static-ucrt;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2012;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2013;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2015;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2017;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2019;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2022;..\Libraries\glfw-3.3.8.bin.WIN64\docs\html;..\Libraries\glfw-3.3.8.bin.WIN64\docs\html\search;..\Libraries\glfw-3.3.8.bin.WIN64\include\GLFW;..\Libraries\glm\include;..\Libraries\glm\include\glm;..\Libraries\glm\include\glm\detail;..\Libraries\glm\include\glm\ext;..\Libraries\glm\include\glm\gtc;..\Libraries\glm\include\glm\gtx;..\Libraries\glm\include\glm\simd;..\Libraries\jolt\dbg;..\Libraries\jolt\include;..\Libraries\jolt\rls;..\Libraries\jolt\include\Jolt;..\Libraries\jolt\include\Jolt\AABBTree;..\Libraries\jolt\include\Jolt\Core;..\Libraries\jolt\include\Jolt\Geometry;..\Libraries\jolt\include\Jolt\Math;..\Libraries\jolt\include\Jolt\ObjectStream;..\Libraries\jolt\include\Jolt\Physics;..\Libraries\jolt\include\Jolt\Renderer;..\Libraries\jolt\include\Jolt\Skeleton;..\Libraries\jolt\include\Jolt\TriangleGrouper;..\Libraries\jolt\include\Jolt\TriangleSplitter;..\Libraries\jolt\include\Jolt\AABBTree\NodeCodec;..\Libraries\jolt\include\Jolt\AABBTree\TriangleCodec;..\Libraries\jolt\include\Jolt\Physics\Body;..\Libraries\jolt\include\Jolt\Physics\Character;..\Libraries\jolt\include\Jolt\Physics\Collision;..\Libraries\jolt\include\Jolt\Physics\Constraints;..\Libraries\jolt\include\Jolt\Physics\Ragdoll;..\Libraries\jolt\include\Jolt\Physics\SoftBody;..\Libraries\jolt\include\Jolt\Physics\Vehicle;..\Libraries\jolt\include\Jolt\Physics\Collision\BroadPhase;..\Libraries\jolt\include\Jolt\Physics\Collision\Shape;..\Libraries\jolt\include\Jolt\Physics\Constraints\ConstraintPart;..\Libraries\premake\Linux;..\Libraries\premake\macOS;..\Libraries\premake\Windows;..\Libraries\rapidjson-1.1.0\include;..\Libraries\rapidjson-1.1.0\include\rapidjson;..\Libraries\rapidjson-1.1.0\include\rapidjson\error;..\Libraries\rapidjson-1.1.0\include\rapidjson\internal;..\Libraries\rapidjson-1.1.0\include\rapidjson\msinttypes;..\Libraries\rttr-0.9.6\include;..\Libraries\rttr-0.9.6\lib;..\Libraries\rttr-0.9.6\include\rttr;..\Libraries\rttr-0.9.6\include\rttr\detail;..\Libraries\rttr-0.9.6\include\rttr\detail\base;..\Libraries\rttr-0.9.6\include\rttr\detail\comparison;..\Libraries\rttr-0.9.6\include\rttr\detail\constructor;..\Libraries\rttr-0.9.6\include\rttr\detail\conversion;..\Libraries\rttr-0.9.6\include\rttr\detail\default_arguments;..\Libraries\rttr-0.9.6\include\rttr\detail\destructor;..\Libraries\rttr-0.9.6\include\rttr\detail\enumeration;..\Libraries\rttr-0.9.6\include\rttr\detail\filter;..\Libraries\rttr-0.9.6\include\rttr\detail\impl;..\Libraries\rttr-0.9.6\include\rttr\detail\metadata;..\Libraries\rttr-0.9.6\include\rttr\detail\method;..\Libraries\rttr-0.9.6\include\rttr\detail\misc;..\Libraries\rttr-0.9.6\include\rttr\detail\parameter_info;..\Libraries\rttr-0.9.6\include\rttr\detail\policies;..\Libraries\rttr-0.9.6\include\rttr\detail\property;..\Libraries\rttr-0.9.6\include\rttr\detail\registration;..\Libraries\rttr-0.9.6\include\rttr\detail\type;..\Libraries\rttr-0.9.6\include\rttr\detail\variant;..\Libraries\rttr-0.9.6\include\rttr\detail\variant_associative_view;..\Libraries\rttr-0.9.6\include\rttr\detail\variant_sequential_view;..\Libraries\rttr-0.9.6\lib\Debug;..\Libraries\rttr-0.9.6\lib\Release;..\Libraries\spdlog\spdlog;..\Libraries\spdlog\spdlog\cfg;..\Libraries\spdlog\spdlog\details;..\Libraries\spdlog\spdlog\fmt;..\Libraries\spdlog\spdlog\sinks;..\Libraries\spdlog\spdlog\fmt\bundled;$(ExternalIncludePath)</ExternalIncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>..\Binaries\windows-x86_64\Release\ImaGE-Core\</OutDir>
+    <IntDir>..\Binaries\Intermediates\windows-x86_64\Release\ImaGE-Core\</IntDir>
+    <TargetName>ImaGE-Core</TargetName>
+    <TargetExt>.lib</TargetExt>
+    <ExternalIncludePath>source\External;source\External\ImGui;source\External\ImTerm;..\Libraries\assimp;..\Libraries\entt;..\Libraries\freetype;..\Libraries\glad-gl-4.6;..\Libraries\glfw-3.3.8.bin.WIN64;..\Libraries\glm;..\Libraries\jolt;..\Libraries\premake;..\Libraries\rapidjson-1.1.0;..\Libraries\rttr-0.9.6;..\Libraries\spdlog;..\Libraries\assimp\include;..\Libraries\assimp\include\assimp;..\Libraries\assimp\include\assimp\Compiler;..\Libraries\assimp\include\assimp\port;..\Libraries\assimp\include\assimp\port\AndroidJNI;..\Libraries\entt\include;..\Libraries\freetype\dll;..\Libraries\freetype\include;..\Libraries\freetype\lib;..\Libraries\freetype\include\dlg;..\Libraries\freetype\include\freetype;..\Libraries\freetype\include\freetype\config;..\Libraries\freetype\include\freetype\internal;..\Libraries\freetype\include\freetype\internal\services;..\Libraries\freetype\lib\Debug;..\Libraries\freetype\lib\Release;..\Libraries\glad-gl-4.6\include;..\Libraries\glad-gl-4.6\include\glad;..\Libraries\glad-gl-4.6\include\KHR;..\Libraries\glfw-3.3.8.bin.WIN64\docs;..\Libraries\glfw-3.3.8.bin.WIN64\include;..\Libraries\glfw-3.3.8.bin.WIN64\lib-mingw-w64;..\Libraries\glfw-3.3.8.bin.WIN64\lib-static-ucrt;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2012;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2013;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2015;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2017;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2019;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2022;..\Libraries\glfw-3.3.8.bin.WIN64\docs\html;..\Libraries\glfw-3.3.8.bin.WIN64\docs\html\search;..\Libraries\glfw-3.3.8.bin.WIN64\include\GLFW;..\Libraries\glm\include;..\Libraries\glm\include\glm;..\Libraries\glm\include\glm\detail;..\Libraries\glm\include\glm\ext;..\Libraries\glm\include\glm\gtc;..\Libraries\glm\include\glm\gtx;..\Libraries\glm\include\glm\simd;..\Libraries\jolt\dbg;..\Libraries\jolt\include;..\Libraries\jolt\rls;..\Libraries\jolt\include\Jolt;..\Libraries\jolt\include\Jolt\AABBTree;..\Libraries\jolt\include\Jolt\Core;..\Libraries\jolt\include\Jolt\Geometry;..\Libraries\jolt\include\Jolt\Math;..\Libraries\jolt\include\Jolt\ObjectStream;..\Libraries\jolt\include\Jolt\Physics;..\Libraries\jolt\include\Jolt\Renderer;..\Libraries\jolt\include\Jolt\Skeleton;..\Libraries\jolt\include\Jolt\TriangleGrouper;..\Libraries\jolt\include\Jolt\TriangleSplitter;..\Libraries\jolt\include\Jolt\AABBTree\NodeCodec;..\Libraries\jolt\include\Jolt\AABBTree\TriangleCodec;..\Libraries\jolt\include\Jolt\Physics\Body;..\Libraries\jolt\include\Jolt\Physics\Character;..\Libraries\jolt\include\Jolt\Physics\Collision;..\Libraries\jolt\include\Jolt\Physics\Constraints;..\Libraries\jolt\include\Jolt\Physics\Ragdoll;..\Libraries\jolt\include\Jolt\Physics\SoftBody;..\Libraries\jolt\include\Jolt\Physics\Vehicle;..\Libraries\jolt\include\Jolt\Physics\Collision\BroadPhase;..\Libraries\jolt\include\Jolt\Physics\Collision\Shape;..\Libraries\jolt\include\Jolt\Physics\Constraints\ConstraintPart;..\Libraries\premake\Linux;..\Libraries\premake\macOS;..\Libraries\premake\Windows;..\Libraries\rapidjson-1.1.0\include;..\Libraries\rapidjson-1.1.0\include\rapidjson;..\Libraries\rapidjson-1.1.0\include\rapidjson\error;..\Libraries\rapidjson-1.1.0\include\rapidjson\internal;..\Libraries\rapidjson-1.1.0\include\rapidjson\msinttypes;..\Libraries\rttr-0.9.6\include;..\Libraries\rttr-0.9.6\lib;..\Libraries\rttr-0.9.6\include\rttr;..\Libraries\rttr-0.9.6\include\rttr\detail;..\Libraries\rttr-0.9.6\include\rttr\detail\base;..\Libraries\rttr-0.9.6\include\rttr\detail\comparison;..\Libraries\rttr-0.9.6\include\rttr\detail\constructor;..\Libraries\rttr-0.9.6\include\rttr\detail\conversion;..\Libraries\rttr-0.9.6\include\rttr\detail\default_arguments;..\Libraries\rttr-0.9.6\include\rttr\detail\destructor;..\Libraries\rttr-0.9.6\include\rttr\detail\enumeration;..\Libraries\rttr-0.9.6\include\rttr\detail\filter;..\Libraries\rttr-0.9.6\include\rttr\detail\impl;..\Libraries\rttr-0.9.6\include\rttr\detail\metadata;..\Libraries\rttr-0.9.6\include\rttr\detail\method;..\Libraries\rttr-0.9.6\include\rttr\detail\misc;..\Libraries\rttr-0.9.6\include\rttr\detail\parameter_info;..\Libraries\rttr-0.9.6\include\rttr\detail\policies;..\Libraries\rttr-0.9.6\include\rttr\detail\property;..\Libraries\rttr-0.9.6\include\rttr\detail\registration;..\Libraries\rttr-0.9.6\include\rttr\detail\type;..\Libraries\rttr-0.9.6\include\rttr\detail\variant;..\Libraries\rttr-0.9.6\include\rttr\detail\variant_associative_view;..\Libraries\rttr-0.9.6\include\rttr\detail\variant_sequential_view;..\Libraries\rttr-0.9.6\lib\Debug;..\Libraries\rttr-0.9.6\lib\Release;..\Libraries\spdlog\spdlog;..\Libraries\spdlog\spdlog\cfg;..\Libraries\spdlog\spdlog\details;..\Libraries\spdlog\spdlog\fmt;..\Libraries\spdlog\spdlog\sinks;..\Libraries\spdlog\spdlog\fmt\bundled;$(ExternalIncludePath)</ExternalIncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
+    <OutDir>..\Binaries\windows-x86_64\Distribution\ImaGE-Core\</OutDir>
+    <IntDir>..\Binaries\Intermediates\windows-x86_64\Distribution\ImaGE-Core\</IntDir>
+    <TargetName>ImaGE-Core</TargetName>
+    <TargetExt>.lib</TargetExt>
+    <ExternalIncludePath>source\External;source\External\ImGui;source\External\ImTerm;..\Libraries\assimp;..\Libraries\entt;..\Libraries\freetype;..\Libraries\glad-gl-4.6;..\Libraries\glfw-3.3.8.bin.WIN64;..\Libraries\glm;..\Libraries\jolt;..\Libraries\premake;..\Libraries\rapidjson-1.1.0;..\Libraries\rttr-0.9.6;..\Libraries\spdlog;..\Libraries\assimp\include;..\Libraries\assimp\include\assimp;..\Libraries\assimp\include\assimp\Compiler;..\Libraries\assimp\include\assimp\port;..\Libraries\assimp\include\assimp\port\AndroidJNI;..\Libraries\entt\include;..\Libraries\freetype\dll;..\Libraries\freetype\include;..\Libraries\freetype\lib;..\Libraries\freetype\include\dlg;..\Libraries\freetype\include\freetype;..\Libraries\freetype\include\freetype\config;..\Libraries\freetype\include\freetype\internal;..\Libraries\freetype\include\freetype\internal\services;..\Libraries\freetype\lib\Debug;..\Libraries\freetype\lib\Release;..\Libraries\glad-gl-4.6\include;..\Libraries\glad-gl-4.6\include\glad;..\Libraries\glad-gl-4.6\include\KHR;..\Libraries\glfw-3.3.8.bin.WIN64\docs;..\Libraries\glfw-3.3.8.bin.WIN64\include;..\Libraries\glfw-3.3.8.bin.WIN64\lib-mingw-w64;..\Libraries\glfw-3.3.8.bin.WIN64\lib-static-ucrt;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2012;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2013;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2015;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2017;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2019;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2022;..\Libraries\glfw-3.3.8.bin.WIN64\docs\html;..\Libraries\glfw-3.3.8.bin.WIN64\docs\html\search;..\Libraries\glfw-3.3.8.bin.WIN64\include\GLFW;..\Libraries\glm\include;..\Libraries\glm\include\glm;..\Libraries\glm\include\glm\detail;..\Libraries\glm\include\glm\ext;..\Libraries\glm\include\glm\gtc;..\Libraries\glm\include\glm\gtx;..\Libraries\glm\include\glm\simd;..\Libraries\jolt\dbg;..\Libraries\jolt\include;..\Libraries\jolt\rls;..\Libraries\jolt\include\Jolt;..\Libraries\jolt\include\Jolt\AABBTree;..\Libraries\jolt\include\Jolt\Core;..\Libraries\jolt\include\Jolt\Geometry;..\Libraries\jolt\include\Jolt\Math;..\Libraries\jolt\include\Jolt\ObjectStream;..\Libraries\jolt\include\Jolt\Physics;..\Libraries\jolt\include\Jolt\Renderer;..\Libraries\jolt\include\Jolt\Skeleton;..\Libraries\jolt\include\Jolt\TriangleGrouper;..\Libraries\jolt\include\Jolt\TriangleSplitter;..\Libraries\jolt\include\Jolt\AABBTree\NodeCodec;..\Libraries\jolt\include\Jolt\AABBTree\TriangleCodec;..\Libraries\jolt\include\Jolt\Physics\Body;..\Libraries\jolt\include\Jolt\Physics\Character;..\Libraries\jolt\include\Jolt\Physics\Collision;..\Libraries\jolt\include\Jolt\Physics\Constraints;..\Libraries\jolt\include\Jolt\Physics\Ragdoll;..\Libraries\jolt\include\Jolt\Physics\SoftBody;..\Libraries\jolt\include\Jolt\Physics\Vehicle;..\Libraries\jolt\include\Jolt\Physics\Collision\BroadPhase;..\Libraries\jolt\include\Jolt\Physics\Collision\Shape;..\Libraries\jolt\include\Jolt\Physics\Constraints\ConstraintPart;..\Libraries\premake\Linux;..\Libraries\premake\macOS;..\Libraries\premake\Windows;..\Libraries\rapidjson-1.1.0\include;..\Libraries\rapidjson-1.1.0\include\rapidjson;..\Libraries\rapidjson-1.1.0\include\rapidjson\error;..\Libraries\rapidjson-1.1.0\include\rapidjson\internal;..\Libraries\rapidjson-1.1.0\include\rapidjson\msinttypes;..\Libraries\rttr-0.9.6\include;..\Libraries\rttr-0.9.6\lib;..\Libraries\rttr-0.9.6\include\rttr;..\Libraries\rttr-0.9.6\include\rttr\detail;..\Libraries\rttr-0.9.6\include\rttr\detail\base;..\Libraries\rttr-0.9.6\include\rttr\detail\comparison;..\Libraries\rttr-0.9.6\include\rttr\detail\constructor;..\Libraries\rttr-0.9.6\include\rttr\detail\conversion;..\Libraries\rttr-0.9.6\include\rttr\detail\default_arguments;..\Libraries\rttr-0.9.6\include\rttr\detail\destructor;..\Libraries\rttr-0.9.6\include\rttr\detail\enumeration;..\Libraries\rttr-0.9.6\include\rttr\detail\filter;..\Libraries\rttr-0.9.6\include\rttr\detail\impl;..\Libraries\rttr-0.9.6\include\rttr\detail\metadata;..\Libraries\rttr-0.9.6\include\rttr\detail\method;..\Libraries\rttr-0.9.6\include\rttr\detail\misc;..\Libraries\rttr-0.9.6\include\rttr\detail\parameter_info;..\Libraries\rttr-0.9.6\include\rttr\detail\policies;..\Libraries\rttr-0.9.6\include\rttr\detail\property;..\Libraries\rttr-0.9.6\include\rttr\detail\registration;..\Libraries\rttr-0.9.6\include\rttr\detail\type;..\Libraries\rttr-0.9.6\include\rttr\detail\variant;..\Libraries\rttr-0.9.6\include\rttr\detail\variant_associative_view;..\Libraries\rttr-0.9.6\include\rttr\detail\variant_sequential_view;..\Libraries\rttr-0.9.6\lib\Debug;..\Libraries\rttr-0.9.6\lib\Release;..\Libraries\spdlog\spdlog;..\Libraries\spdlog\spdlog\cfg;..\Libraries\spdlog\spdlog\details;..\Libraries\spdlog\spdlog\fmt;..\Libraries\spdlog\spdlog\sinks;..\Libraries\spdlog\spdlog\fmt\bundled;$(ExternalIncludePath)</ExternalIncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;JPH_DEBUG_RENDERER;JPH_PROFILE_ENABLED;JPH_OBJECT_STREAM;JPH_USE_AVX2;JPH_USE_AVX;JPH_USE_SSE4_1;JPH_USE_SSE4_2;JPH_USE_LZCNT;JPH_USE_TZCNT;JPH_USE_F16C;JPH_USE_FMADD;_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>opengl32.lib;glfw3dll.lib;glfw3.lib;assimp-vc143-mt.lib;Jolt_d.lib;Jolt1_d.lib;rttr_core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\Libraries\assimp;..\Libraries\entt;..\Libraries\freetype;..\Libraries\glad-gl-4.6;..\Libraries\glfw-3.3.8.bin.WIN64;..\Libraries\glm;..\Libraries\jolt;..\Libraries\premake;..\Libraries\rapidjson-1.1.0;..\Libraries\rttr-0.9.6;..\Libraries\spdlog;..\Libraries\assimp\include;..\Libraries\assimp\include\assimp;..\Libraries\assimp\include\assimp\Compiler;..\Libraries\assimp\include\assimp\port;..\Libraries\assimp\include\assimp\port\AndroidJNI;..\Libraries\entt\include;..\Libraries\freetype\dll;..\Libraries\freetype\include;..\Libraries\freetype\lib;..\Libraries\freetype\include\dlg;..\Libraries\freetype\include\freetype;..\Libraries\freetype\include\freetype\config;..\Libraries\freetype\include\freetype\internal;..\Libraries\freetype\include\freetype\internal\services;..\Libraries\freetype\lib\Debug;..\Libraries\freetype\lib\Release;..\Libraries\glad-gl-4.6\include;..\Libraries\glad-gl-4.6\include\glad;..\Libraries\glad-gl-4.6\include\KHR;..\Libraries\glfw-3.3.8.bin.WIN64\docs;..\Libraries\glfw-3.3.8.bin.WIN64\include;..\Libraries\glfw-3.3.8.bin.WIN64\lib-mingw-w64;..\Libraries\glfw-3.3.8.bin.WIN64\lib-static-ucrt;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2012;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2013;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2015;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2017;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2019;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2022;..\Libraries\glfw-3.3.8.bin.WIN64\docs\html;..\Libraries\glfw-3.3.8.bin.WIN64\docs\html\search;..\Libraries\glfw-3.3.8.bin.WIN64\include\GLFW;..\Libraries\glm\include;..\Libraries\glm\include\glm;..\Libraries\glm\include\glm\detail;..\Libraries\glm\include\glm\ext;..\Libraries\glm\include\glm\gtc;..\Libraries\glm\include\glm\gtx;..\Libraries\glm\include\glm\simd;..\Libraries\jolt\dbg;..\Libraries\jolt\include;..\Libraries\jolt\rls;..\Libraries\jolt\include\Jolt;..\Libraries\jolt\include\Jolt\AABBTree;..\Libraries\jolt\include\Jolt\Core;..\Libraries\jolt\include\Jolt\Geometry;..\Libraries\jolt\include\Jolt\Math;..\Libraries\jolt\include\Jolt\ObjectStream;..\Libraries\jolt\include\Jolt\Physics;..\Libraries\jolt\include\Jolt\Renderer;..\Libraries\jolt\include\Jolt\Skeleton;..\Libraries\jolt\include\Jolt\TriangleGrouper;..\Libraries\jolt\include\Jolt\TriangleSplitter;..\Libraries\jolt\include\Jolt\AABBTree\NodeCodec;..\Libraries\jolt\include\Jolt\AABBTree\TriangleCodec;..\Libraries\jolt\include\Jolt\Physics\Body;..\Libraries\jolt\include\Jolt\Physics\Character;..\Libraries\jolt\include\Jolt\Physics\Collision;..\Libraries\jolt\include\Jolt\Physics\Constraints;..\Libraries\jolt\include\Jolt\Physics\Ragdoll;..\Libraries\jolt\include\Jolt\Physics\SoftBody;..\Libraries\jolt\include\Jolt\Physics\Vehicle;..\Libraries\jolt\include\Jolt\Physics\Collision\BroadPhase;..\Libraries\jolt\include\Jolt\Physics\Collision\Shape;..\Libraries\jolt\include\Jolt\Physics\Constraints\ConstraintPart;..\Libraries\premake\Linux;..\Libraries\premake\macOS;..\Libraries\premake\Windows;..\Libraries\rapidjson-1.1.0\include;..\Libraries\rapidjson-1.1.0\include\rapidjson;..\Libraries\rapidjson-1.1.0\include\rapidjson\error;..\Libraries\rapidjson-1.1.0\include\rapidjson\internal;..\Libraries\rapidjson-1.1.0\include\rapidjson\msinttypes;..\Libraries\rttr-0.9.6\include;..\Libraries\rttr-0.9.6\lib;..\Libraries\rttr-0.9.6\include\rttr;..\Libraries\rttr-0.9.6\include\rttr\detail;..\Libraries\rttr-0.9.6\include\rttr\detail\base;..\Libraries\rttr-0.9.6\include\rttr\detail\comparison;..\Libraries\rttr-0.9.6\include\rttr\detail\constructor;..\Libraries\rttr-0.9.6\include\rttr\detail\conversion;..\Libraries\rttr-0.9.6\include\rttr\detail\default_arguments;..\Libraries\rttr-0.9.6\include\rttr\detail\destructor;..\Libraries\rttr-0.9.6\include\rttr\detail\enumeration;..\Libraries\rttr-0.9.6\include\rttr\detail\filter;..\Libraries\rttr-0.9.6\include\rttr\detail\impl;..\Libraries\rttr-0.9.6\include\rttr\detail\metadata;..\Libraries\rttr-0.9.6\include\rttr\detail\method;..\Libraries\rttr-0.9.6\include\rttr\detail\misc;..\Libraries\rttr-0.9.6\include\rttr\detail\parameter_info;..\Libraries\rttr-0.9.6\include\rttr\detail\policies;..\Libraries\rttr-0.9.6\include\rttr\detail\property;..\Libraries\rttr-0.9.6\include\rttr\detail\registration;..\Libraries\rttr-0.9.6\include\rttr\detail\type;..\Libraries\rttr-0.9.6\include\rttr\detail\variant;..\Libraries\rttr-0.9.6\include\rttr\detail\variant_associative_view;..\Libraries\rttr-0.9.6\include\rttr\detail\variant_sequential_view;..\Libraries\rttr-0.9.6\lib\Debug;..\Libraries\rttr-0.9.6\lib\Release;..\Libraries\spdlog\spdlog;..\Libraries\spdlog\spdlog\cfg;..\Libraries\spdlog\spdlog\details;..\Libraries\spdlog\spdlog\fmt;..\Libraries\spdlog\spdlog\sinks;..\Libraries\spdlog\spdlog\fmt\bundled;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>/ignore:4099 /ignore:4006 /ignore:4005 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+    <PostBuildEvent>
+      <Command>IF NOT EXIST "$(SolutionDir)\Binaries\windows-x86_64\Debug\Assets" (mkdir "$(SolutionDir)\Binaries\windows-x86_64\Debug\Assets")
+xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_64\Debug\Assets"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;JPH_OBJECT_STREAM;JPH_USE_AVX2;JPH_USE_AVX;JPH_USE_SSE4_1;JPH_USE_SSE4_2;JPH_USE_LZCNT;JPH_USE_TZCNT;JPH_USE_F16C;JPH_USE_FMADD;_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>opengl32.lib;glfw3dll.lib;glfw3.lib;assimp-vc143-mt.lib;Jolt.lib;Jolt1.lib;rttr_core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\Libraries\assimp;..\Libraries\entt;..\Libraries\freetype;..\Libraries\glad-gl-4.6;..\Libraries\glfw-3.3.8.bin.WIN64;..\Libraries\glm;..\Libraries\jolt;..\Libraries\premake;..\Libraries\rapidjson-1.1.0;..\Libraries\rttr-0.9.6;..\Libraries\spdlog;..\Libraries\assimp\include;..\Libraries\assimp\include\assimp;..\Libraries\assimp\include\assimp\Compiler;..\Libraries\assimp\include\assimp\port;..\Libraries\assimp\include\assimp\port\AndroidJNI;..\Libraries\entt\include;..\Libraries\freetype\dll;..\Libraries\freetype\include;..\Libraries\freetype\lib;..\Libraries\freetype\include\dlg;..\Libraries\freetype\include\freetype;..\Libraries\freetype\include\freetype\config;..\Libraries\freetype\include\freetype\internal;..\Libraries\freetype\include\freetype\internal\services;..\Libraries\freetype\lib\Debug;..\Libraries\freetype\lib\Release;..\Libraries\glad-gl-4.6\include;..\Libraries\glad-gl-4.6\include\glad;..\Libraries\glad-gl-4.6\include\KHR;..\Libraries\glfw-3.3.8.bin.WIN64\docs;..\Libraries\glfw-3.3.8.bin.WIN64\include;..\Libraries\glfw-3.3.8.bin.WIN64\lib-mingw-w64;..\Libraries\glfw-3.3.8.bin.WIN64\lib-static-ucrt;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2012;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2013;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2015;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2017;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2019;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2022;..\Libraries\glfw-3.3.8.bin.WIN64\docs\html;..\Libraries\glfw-3.3.8.bin.WIN64\docs\html\search;..\Libraries\glfw-3.3.8.bin.WIN64\include\GLFW;..\Libraries\glm\include;..\Libraries\glm\include\glm;..\Libraries\glm\include\glm\detail;..\Libraries\glm\include\glm\ext;..\Libraries\glm\include\glm\gtc;..\Libraries\glm\include\glm\gtx;..\Libraries\glm\include\glm\simd;..\Libraries\jolt\dbg;..\Libraries\jolt\include;..\Libraries\jolt\rls;..\Libraries\jolt\include\Jolt;..\Libraries\jolt\include\Jolt\AABBTree;..\Libraries\jolt\include\Jolt\Core;..\Libraries\jolt\include\Jolt\Geometry;..\Libraries\jolt\include\Jolt\Math;..\Libraries\jolt\include\Jolt\ObjectStream;..\Libraries\jolt\include\Jolt\Physics;..\Libraries\jolt\include\Jolt\Renderer;..\Libraries\jolt\include\Jolt\Skeleton;..\Libraries\jolt\include\Jolt\TriangleGrouper;..\Libraries\jolt\include\Jolt\TriangleSplitter;..\Libraries\jolt\include\Jolt\AABBTree\NodeCodec;..\Libraries\jolt\include\Jolt\AABBTree\TriangleCodec;..\Libraries\jolt\include\Jolt\Physics\Body;..\Libraries\jolt\include\Jolt\Physics\Character;..\Libraries\jolt\include\Jolt\Physics\Collision;..\Libraries\jolt\include\Jolt\Physics\Constraints;..\Libraries\jolt\include\Jolt\Physics\Ragdoll;..\Libraries\jolt\include\Jolt\Physics\SoftBody;..\Libraries\jolt\include\Jolt\Physics\Vehicle;..\Libraries\jolt\include\Jolt\Physics\Collision\BroadPhase;..\Libraries\jolt\include\Jolt\Physics\Collision\Shape;..\Libraries\jolt\include\Jolt\Physics\Constraints\ConstraintPart;..\Libraries\premake\Linux;..\Libraries\premake\macOS;..\Libraries\premake\Windows;..\Libraries\rapidjson-1.1.0\include;..\Libraries\rapidjson-1.1.0\include\rapidjson;..\Libraries\rapidjson-1.1.0\include\rapidjson\error;..\Libraries\rapidjson-1.1.0\include\rapidjson\internal;..\Libraries\rapidjson-1.1.0\include\rapidjson\msinttypes;..\Libraries\rttr-0.9.6\include;..\Libraries\rttr-0.9.6\lib;..\Libraries\rttr-0.9.6\include\rttr;..\Libraries\rttr-0.9.6\include\rttr\detail;..\Libraries\rttr-0.9.6\include\rttr\detail\base;..\Libraries\rttr-0.9.6\include\rttr\detail\comparison;..\Libraries\rttr-0.9.6\include\rttr\detail\constructor;..\Libraries\rttr-0.9.6\include\rttr\detail\conversion;..\Libraries\rttr-0.9.6\include\rttr\detail\default_arguments;..\Libraries\rttr-0.9.6\include\rttr\detail\destructor;..\Libraries\rttr-0.9.6\include\rttr\detail\enumeration;..\Libraries\rttr-0.9.6\include\rttr\detail\filter;..\Libraries\rttr-0.9.6\include\rttr\detail\impl;..\Libraries\rttr-0.9.6\include\rttr\detail\metadata;..\Libraries\rttr-0.9.6\include\rttr\detail\method;..\Libraries\rttr-0.9.6\include\rttr\detail\misc;..\Libraries\rttr-0.9.6\include\rttr\detail\parameter_info;..\Libraries\rttr-0.9.6\include\rttr\detail\policies;..\Libraries\rttr-0.9.6\include\rttr\detail\property;..\Libraries\rttr-0.9.6\include\rttr\detail\registration;..\Libraries\rttr-0.9.6\include\rttr\detail\type;..\Libraries\rttr-0.9.6\include\rttr\detail\variant;..\Libraries\rttr-0.9.6\include\rttr\detail\variant_associative_view;..\Libraries\rttr-0.9.6\include\rttr\detail\variant_sequential_view;..\Libraries\rttr-0.9.6\lib\Debug;..\Libraries\rttr-0.9.6\lib\Release;..\Libraries\spdlog\spdlog;..\Libraries\spdlog\spdlog\cfg;..\Libraries\spdlog\spdlog\details;..\Libraries\spdlog\spdlog\fmt;..\Libraries\spdlog\spdlog\sinks;..\Libraries\spdlog\spdlog\fmt\bundled;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>/ignore:4099 /ignore:4006 /ignore:4005 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>DISTRIBUTION;JPH_OBJECT_STREAM;JPH_USE_AVX2;JPH_USE_AVX;JPH_USE_SSE4_1;JPH_USE_SSE4_2;JPH_USE_LZCNT;JPH_USE_TZCNT;JPH_USE_F16C;JPH_USE_FMADD;_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>opengl32.lib;glfw3dll.lib;glfw3.lib;assimp-vc143-mt.lib;Jolt.lib;Jolt1.lib;rttr_core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\Libraries\assimp;..\Libraries\entt;..\Libraries\freetype;..\Libraries\glad-gl-4.6;..\Libraries\glfw-3.3.8.bin.WIN64;..\Libraries\glm;..\Libraries\jolt;..\Libraries\premake;..\Libraries\rapidjson-1.1.0;..\Libraries\rttr-0.9.6;..\Libraries\spdlog;..\Libraries\assimp\include;..\Libraries\assimp\include\assimp;..\Libraries\assimp\include\assimp\Compiler;..\Libraries\assimp\include\assimp\port;..\Libraries\assimp\include\assimp\port\AndroidJNI;..\Libraries\entt\include;..\Libraries\freetype\dll;..\Libraries\freetype\include;..\Libraries\freetype\lib;..\Libraries\freetype\include\dlg;..\Libraries\freetype\include\freetype;..\Libraries\freetype\include\freetype\config;..\Libraries\freetype\include\freetype\internal;..\Libraries\freetype\include\freetype\internal\services;..\Libraries\freetype\lib\Debug;..\Libraries\freetype\lib\Release;..\Libraries\glad-gl-4.6\include;..\Libraries\glad-gl-4.6\include\glad;..\Libraries\glad-gl-4.6\include\KHR;..\Libraries\glfw-3.3.8.bin.WIN64\docs;..\Libraries\glfw-3.3.8.bin.WIN64\include;..\Libraries\glfw-3.3.8.bin.WIN64\lib-mingw-w64;..\Libraries\glfw-3.3.8.bin.WIN64\lib-static-ucrt;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2012;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2013;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2015;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2017;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2019;..\Libraries\glfw-3.3.8.bin.WIN64\lib-vc2022;..\Libraries\glfw-3.3.8.bin.WIN64\docs\html;..\Libraries\glfw-3.3.8.bin.WIN64\docs\html\search;..\Libraries\glfw-3.3.8.bin.WIN64\include\GLFW;..\Libraries\glm\include;..\Libraries\glm\include\glm;..\Libraries\glm\include\glm\detail;..\Libraries\glm\include\glm\ext;..\Libraries\glm\include\glm\gtc;..\Libraries\glm\include\glm\gtx;..\Libraries\glm\include\glm\simd;..\Libraries\jolt\dbg;..\Libraries\jolt\include;..\Libraries\jolt\rls;..\Libraries\jolt\include\Jolt;..\Libraries\jolt\include\Jolt\AABBTree;..\Libraries\jolt\include\Jolt\Core;..\Libraries\jolt\include\Jolt\Geometry;..\Libraries\jolt\include\Jolt\Math;..\Libraries\jolt\include\Jolt\ObjectStream;..\Libraries\jolt\include\Jolt\Physics;..\Libraries\jolt\include\Jolt\Renderer;..\Libraries\jolt\include\Jolt\Skeleton;..\Libraries\jolt\include\Jolt\TriangleGrouper;..\Libraries\jolt\include\Jolt\TriangleSplitter;..\Libraries\jolt\include\Jolt\AABBTree\NodeCodec;..\Libraries\jolt\include\Jolt\AABBTree\TriangleCodec;..\Libraries\jolt\include\Jolt\Physics\Body;..\Libraries\jolt\include\Jolt\Physics\Character;..\Libraries\jolt\include\Jolt\Physics\Collision;..\Libraries\jolt\include\Jolt\Physics\Constraints;..\Libraries\jolt\include\Jolt\Physics\Ragdoll;..\Libraries\jolt\include\Jolt\Physics\SoftBody;..\Libraries\jolt\include\Jolt\Physics\Vehicle;..\Libraries\jolt\include\Jolt\Physics\Collision\BroadPhase;..\Libraries\jolt\include\Jolt\Physics\Collision\Shape;..\Libraries\jolt\include\Jolt\Physics\Constraints\ConstraintPart;..\Libraries\premake\Linux;..\Libraries\premake\macOS;..\Libraries\premake\Windows;..\Libraries\rapidjson-1.1.0\include;..\Libraries\rapidjson-1.1.0\include\rapidjson;..\Libraries\rapidjson-1.1.0\include\rapidjson\error;..\Libraries\rapidjson-1.1.0\include\rapidjson\internal;..\Libraries\rapidjson-1.1.0\include\rapidjson\msinttypes;..\Libraries\rttr-0.9.6\include;..\Libraries\rttr-0.9.6\lib;..\Libraries\rttr-0.9.6\include\rttr;..\Libraries\rttr-0.9.6\include\rttr\detail;..\Libraries\rttr-0.9.6\include\rttr\detail\base;..\Libraries\rttr-0.9.6\include\rttr\detail\comparison;..\Libraries\rttr-0.9.6\include\rttr\detail\constructor;..\Libraries\rttr-0.9.6\include\rttr\detail\conversion;..\Libraries\rttr-0.9.6\include\rttr\detail\default_arguments;..\Libraries\rttr-0.9.6\include\rttr\detail\destructor;..\Libraries\rttr-0.9.6\include\rttr\detail\enumeration;..\Libraries\rttr-0.9.6\include\rttr\detail\filter;..\Libraries\rttr-0.9.6\include\rttr\detail\impl;..\Libraries\rttr-0.9.6\include\rttr\detail\metadata;..\Libraries\rttr-0.9.6\include\rttr\detail\method;..\Libraries\rttr-0.9.6\include\rttr\detail\misc;..\Libraries\rttr-0.9.6\include\rttr\detail\parameter_info;..\Libraries\rttr-0.9.6\include\rttr\detail\policies;..\Libraries\rttr-0.9.6\include\rttr\detail\property;..\Libraries\rttr-0.9.6\include\rttr\detail\registration;..\Libraries\rttr-0.9.6\include\rttr\detail\type;..\Libraries\rttr-0.9.6\include\rttr\detail\variant;..\Libraries\rttr-0.9.6\include\rttr\detail\variant_associative_view;..\Libraries\rttr-0.9.6\include\rttr\detail\variant_sequential_view;..\Libraries\rttr-0.9.6\lib\Debug;..\Libraries\rttr-0.9.6\lib\Release;..\Libraries\spdlog\spdlog;..\Libraries\spdlog\spdlog\cfg;..\Libraries\spdlog\spdlog\details;..\Libraries\spdlog\spdlog\fmt;..\Libraries\spdlog\spdlog\sinks;..\Libraries\spdlog\spdlog\fmt\bundled;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>/ignore:4099 /ignore:4006 /ignore:4005 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="source\Application.h" />
+    <ClInclude Include="source\Asset\AssetManager.h" />
+    <ClInclude Include="source\Asset\IGEAssets.h" />
+    <ClInclude Include="source\Color.h" />
+    <ClInclude Include="source\Core\Camera.h" />
+    <ClInclude Include="source\Core\Component\Camera.h" />
+    <ClInclude Include="source\Core\Component\CameraController.h" />
+    <ClInclude Include="source\Core\Component\Collider.h" />
+    <ClInclude Include="source\Core\Component\Components.h" />
+    <ClInclude Include="source\Core\Component\Layer.h" />
+    <ClInclude Include="source\Core\Component\Material.h" />
+    <ClInclude Include="source\Core\Component\Mesh.h" />
+    <ClInclude Include="source\Core\Component\RigidBody.h" />
+    <ClInclude Include="source\Core\Component\Script.h" />
+    <ClInclude Include="source\Core\Component\Tag.h" />
+    <ClInclude Include="source\Core\Component\Text.h" />
+    <ClInclude Include="source\Core\Component\Transform.h" />
+    <ClInclude Include="source\Core\Entity.h" />
+    <ClInclude Include="source\Core\EntityManager.h" />
+    <ClInclude Include="source\Core\TempObject.h" />
+    <ClInclude Include="source\Debug.h" />
+    <ClInclude Include="source\DebugTools\DebugLogger\DebugLogger.h" />
+    <ClInclude Include="source\DebugTools\Exception\Exception.h" />
+    <ClInclude Include="source\DebugTools\Exception\ExceptionBase.h" />
+    <ClInclude Include="source\Events\Event.h" />
+    <ClInclude Include="source\Events\EventCallback.h" />
+    <ClInclude Include="source\Events\EventManager.h" />
+    <ClInclude Include="source\Events\Events.h" />
+    <ClInclude Include="source\Events\InputEvents.h" />
+    <ClInclude Include="source\Events\SceneEvents.h" />
+    <ClInclude Include="source\External\GLFWwindowDestructor.h" />
+    <ClInclude Include="source\External\ImGui\backends\imgui_impl_glfw.h" />
+    <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl2.h" />
+    <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl3.h" />
+    <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="source\External\ImGui\imconfig.h" />
+    <ClInclude Include="source\External\ImGui\imgui.h" />
+    <ClInclude Include="source\External\ImGui\imgui_internal.h" />
+    <ClInclude Include="source\External\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="source\External\ImGui\imstb_textedit.h" />
+    <ClInclude Include="source\External\ImGui\imstb_truetype.h" />
+    <ClInclude Include="source\External\ImGui\misc\cpp\imgui_stdlib.h" />
+    <ClInclude Include="source\External\ImGui\misc\freetype\imgui_freetype.h" />
+    <ClInclude Include="source\External\ImGui\misc\single_file\imgui_single_file.h" />
+    <ClInclude Include="source\FrameRateController\FrameRateController.h" />
+    <ClInclude Include="source\Globals.h" />
+    <ClInclude Include="source\Graphics\AssetIO\IMSH.h" />
+    <ClInclude Include="source\Graphics\CameraManager.h" />
+    <ClInclude Include="source\Graphics\EditorCamera.h" />
+    <ClInclude Include="source\Graphics\ElementBuffer.h" />
+    <ClInclude Include="source\Graphics\Framebuffer.h" />
+    <ClInclude Include="source\Graphics\Mesh.h" />
+    <ClInclude Include="source\Graphics\MeshFactory.h" />
+    <ClInclude Include="source\Graphics\MeshGen.h" />
+    <ClInclude Include="source\Graphics\MeshSource.h" />
+    <ClInclude Include="source\Graphics\MeshType.h" />
+    <ClInclude Include="source\Graphics\Model.h" />
+    <ClInclude Include="source\Graphics\Pipeline.h" />
+    <ClInclude Include="source\Graphics\RenderAPI.h" />
+    <ClInclude Include="source\Graphics\RenderSystem.h" />
+    <ClInclude Include="source\Graphics\Renderer.h" />
+    <ClInclude Include="source\Graphics\Shader.h" />
+    <ClInclude Include="source\Graphics\ShaderProgram.h" />
+    <ClInclude Include="source\Graphics\ShaderStructs.h" />
+    <ClInclude Include="source\Graphics\Submesh.h" />
+    <ClInclude Include="source\Graphics\Texture.h" />
+    <ClInclude Include="source\Graphics\Utils.h" />
+    <ClInclude Include="source\Graphics\Vertex.h" />
+    <ClInclude Include="source\Graphics\VertexArray.h" />
+    <ClInclude Include="source\Graphics\VertexAttribs.h" />
+    <ClInclude Include="source\Graphics\VertexBuffer.h" />
+    <ClInclude Include="source\Input\InputManager.h" />
+    <ClInclude Include="source\Input\KeyCode.h" />
+    <ClInclude Include="source\Physics\Physics.h" />
+    <ClInclude Include="source\Physics\PhysicsHelpers.h" />
+    <ClInclude Include="source\Physics\PhysicsSystem.h" />
+    <ClInclude Include="source\Prefabs\Prefab.h" />
+    <ClInclude Include="source\Prefabs\PrefabManager.h" />
+    <ClInclude Include="source\Reflection\ComponentTypes.h" />
+    <ClInclude Include="source\Reflection\EntityData.h" />
+    <ClInclude Include="source\Reflection\ObjectFactory.h" />
+    <ClInclude Include="source\Scenes\SceneManager.h" />
+    <ClInclude Include="source\Scenes\SceneStates.h" />
+    <ClInclude Include="source\Serialization\Deserializer.h" />
+    <ClInclude Include="source\Serialization\JsonKeys.h" />
+    <ClInclude Include="source\Serialization\Registration\ConverterFuncs.h" />
+    <ClInclude Include="source\Serialization\Registration\RegisterClasses.h" />
+    <ClInclude Include="source\Serialization\Registration\RegisterComponents.h" />
+    <ClInclude Include="source\Serialization\Registration\RegisterEnumsAndFuncs.h" />
+    <ClInclude Include="source\Serialization\Serializer.h" />
+    <ClInclude Include="source\Singleton.h" />
+    <ClInclude Include="source\TempScene.h" />
+    <ClInclude Include="source\pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\Application.cpp" />
+    <ClCompile Include="source\Core\Camera.cpp" />
+    <ClCompile Include="source\Core\Entity.cpp" />
+    <ClCompile Include="source\Core\EntityManager.cpp" />
+    <ClCompile Include="source\Core\TempObject.cpp" />
+    <ClCompile Include="source\DebugTools\DebugLogger\DebugLogger.cpp" />
+    <ClCompile Include="source\Events\EventManager.cpp" />
+    <ClCompile Include="source\External\ImGui\backends\imgui_impl_glfw.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGui\backends\imgui_impl_opengl2.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGui\backends\imgui_impl_opengl3.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGui\imgui.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGui\imgui_demo.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGui\imgui_draw.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGui\imgui_tables.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGui\imgui_widgets.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGui\misc\cpp\imgui_stdlib.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGui\misc\fonts\binary_to_compressed_c.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGui\misc\freetype\imgui_freetype.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="source\External\glad.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="source\FrameRateController\FrameRateController.cpp" />
+    <ClCompile Include="source\Graphics\AssetIO\IMSH.cpp" />
+    <ClCompile Include="source\Graphics\CameraManager.cpp" />
+    <ClCompile Include="source\Graphics\EditorCamera.cpp" />
+    <ClCompile Include="source\Graphics\ElementBuffer.cpp" />
+    <ClCompile Include="source\Graphics\Framebuffer.cpp" />
+    <ClCompile Include="source\Graphics\Mesh.cpp" />
+    <ClCompile Include="source\Graphics\MeshFactory.cpp" />
+    <ClCompile Include="source\Graphics\MeshGen.cpp" />
+    <ClCompile Include="source\Graphics\MeshSource.cpp" />
+    <ClCompile Include="source\Graphics\Model.cpp" />
+    <ClCompile Include="source\Graphics\Pipeline.cpp" />
+    <ClCompile Include="source\Graphics\RenderAPI.cpp" />
+    <ClCompile Include="source\Graphics\RenderSystem.cpp" />
+    <ClCompile Include="source\Graphics\Renderer.cpp" />
+    <ClCompile Include="source\Graphics\Shader.cpp" />
+    <ClCompile Include="source\Graphics\ShaderProgram.cpp" />
+    <ClCompile Include="source\Graphics\ShaderStructs.cpp" />
+    <ClCompile Include="source\Graphics\Texture.cpp" />
+    <ClCompile Include="source\Graphics\VertexArray.cpp" />
+    <ClCompile Include="source\Graphics\VertexAttribs.cpp" />
+    <ClCompile Include="source\Graphics\VertexBuffer.cpp" />
+    <ClCompile Include="source\Input\InputManager.cpp" />
+    <ClCompile Include="source\Physics\PhysicsSystem.cpp" />
+    <ClCompile Include="source\Prefabs\Prefab.cpp" />
+    <ClCompile Include="source\Prefabs\PrefabManager.cpp" />
+    <ClCompile Include="source\Reflection\ObjectFactory.cpp" />
+    <ClCompile Include="source\Scenes\SceneManager.cpp" />
+    <ClCompile Include="source\Serialization\Deserializer.cpp" />
+    <ClCompile Include="source\Serialization\Serializer.cpp" />
+    <ClCompile Include="source\TempScene.cpp" />
+    <ClCompile Include="source\pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
