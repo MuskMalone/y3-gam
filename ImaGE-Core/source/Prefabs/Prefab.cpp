@@ -151,13 +151,13 @@ void Prefab::FillPrefabInstance(std::unordered_map<Prefabs::SubDataId, ECS::Enti
   }
 }
 
-void Prefab::CreateSubData(std::vector<ECS::Entity> const& children, SubDataId parent)
+void Prefab::CreateSubData(std::vector<ECS::Entity> const& children, bool assignInstance, SubDataId parent)
 {
   if (children.empty()) { return; }
 
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
   
-  for (ECS::Entity const& child : children)
+  for (ECS::Entity child : children)
   {
     SubDataId const currId{ static_cast<SubDataId>(mObjects.size() + 1) };
     PrefabSubData obj{ currId, parent };
@@ -166,6 +166,12 @@ void Prefab::CreateSubData(std::vector<ECS::Entity> const& children, SubDataId p
     obj.mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(child);
 
     mObjects.emplace_back(std::move(obj));
+
+    // add prefabOverrides if we are assigning to an instance
+    if (assignInstance) {
+      child.EmplaceComponent<Component::PrefabOverrides>(mName, currId);
+    }
+
     if (entityMan.HasChild(child)) {
       CreateSubData(entityMan.GetChildEntity(child), currId);
     }
