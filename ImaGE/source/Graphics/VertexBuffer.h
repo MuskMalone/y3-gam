@@ -37,24 +37,6 @@ namespace Graphics{
 		return 0;
 	}
 
-	static std::string AttributeTypeToString(AttributeType type)
-	{
-		switch (type) {
-		case AttributeType::FLOAT:  return "FLOAT";
-		case AttributeType::VEC2:   return "VEC2";
-		case AttributeType::VEC3:   return "VEC3";
-		case AttributeType::VEC4:   return "VEC4";
-		case AttributeType::MAT3:   return "MAT3";
-		case AttributeType::MAT4:   return "MAT4";
-		case AttributeType::INT:    return "INT";
-		case AttributeType::IVEC2:  return "IVEC2";
-		case AttributeType::IVEC3:  return "IVEC3";
-		case AttributeType::IVEC4:  return "IVEC4";
-		case AttributeType::BOOL:   return "BOOL";
-		default: return "UNKNOWN";
-		}
-	}
-
 	struct BufferAttribute {
 		std::string name;
 		AttributeType type;
@@ -124,30 +106,25 @@ namespace Graphics{
 		std::vector<BufferAttribute>::iterator end() { return mElements.end(); };
 		std::vector<BufferAttribute>::const_iterator begin() const { return mElements.begin(); };
 		std::vector<BufferAttribute>::const_iterator end() const { return mElements.end(); };
-
-		void PrintLayout() const {
-			std::cout << "Buffer Layout: \n";
-			for (const auto& elem : mElements) {
-				std::cout << "  Attribute: " << elem.name
-					<< ", Type: " << AttributeTypeToString(elem.type)
-					<< ", Size: " << elem.size
-					<< ", Offset: " << elem.offset
-					<< ", Normalized: " << (elem.isNormalized ? "true" : "false")
-					<< "\n";
-			}
-			std::cout << "Total Stride: " << mStride << " bytes\n";
-		}
 	private:
 		void ComputeOffsetAndStride() {
 			unsigned int newOffset{ 0 };
 			mStride = 0;
 
 			for (auto& elem : mElements) {
-				elem.offset = newOffset;
-				newOffset += elem.size;
-				mStride += elem.size;
+				if (elem.type == AttributeType::MAT4) {
+					for (int i = 0; i < 4; ++i) {  // Add 4 vec4 attributes for each MAT4
+						elem.offset = newOffset;
+						newOffset += 4 * 4; // Each VEC4 is 16 bytes (4 floats)
+						mStride += 4 * 4;
+					}
+				}
+				else {
+					elem.offset = newOffset;
+					newOffset += elem.size;
+					mStride += elem.size;
+				}
 			}
-			
 		}
 	private:
 		std::vector<BufferAttribute> mElements;

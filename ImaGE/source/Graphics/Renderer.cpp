@@ -189,7 +189,7 @@ namespace Graphics {
 		// Set up the buffer layout for instance data
 		BufferLayout instanceLayout = {
 			{ AttributeType::MAT4, "a_ModelMatrix" },
-			//{ AttributeType::VEC4, "a_Color" }
+			{ AttributeType::VEC4, "a_Color" }
 		};
 		instanceBuffer->SetLayout(instanceLayout);
 
@@ -302,15 +302,14 @@ namespace Graphics {
 		if (!mesh) return;
 		
 		glm::mat4 transMtx = glm::translate(glm::mat4(1.0f), pos);
-		//glm::mat4 rotMtx = glm::toMat4(glm::quat(rot)); // Assuming worldRot is a vec3 of Euler angles
-		glm::mat4 rotMtx = glm::mat4(1.f);
+		glm::mat4 rotMtx = glm::toMat4(glm::quat(rot)); // Assuming worldRot is a vec3 of Euler angles
 		glm::mat4 scaleMtx = glm::scale(glm::mat4(1.0f), scale);
 
 		glm::mat4 mdlMtx = transMtx * rotMtx * scaleMtx;
 
 		InstanceData instance{};
 		instance.modelMatrix = mdlMtx;
-		//instance.color = clr;
+		instance.color = clr;
 
 		auto& meshSrc = mesh->GetMeshSource();
 		if (!meshSrc) return;
@@ -326,15 +325,15 @@ namespace Graphics {
 
 			// Set instance data into the buffer
 			unsigned int dataSize = static_cast<unsigned int>(instances.size() * sizeof(InstanceData));
-			
 			instanceBuffer->SetData(instances.data(), dataSize);
 
 			// Bind the VAO and render the instances
 			auto& vao = meshSrc->GetVertexArray();
+			vao->Bind();
 
 			RenderAPI::DrawIndicesInstanced(vao, meshSrc->GetIndices().size(), instances.size());
 
-
+			vao->Unbind();
 		}
 
 		mData.instanceBufferDataMap.clear();
