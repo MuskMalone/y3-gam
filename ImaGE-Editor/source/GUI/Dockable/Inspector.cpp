@@ -71,7 +71,7 @@ namespace GUI {
       if (currentEntity.HasComponent<Component::Transform>()) {
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(rttr::type::get<Component::Transform>());
         Component::Transform const& trans{ currentEntity.GetComponent<Component::Transform>() };
-        glm::vec3 const oldPos{ trans.worldPos };
+        glm::vec3 const oldPos{ trans.localPos };
         if (TransformComponentWindow(currentEntity, std::string(ICON_FA_ROTATE), componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
@@ -79,7 +79,7 @@ namespace GUI {
               // if root entity, ignore position changes
               // here, im assuming only 1 value can be modified per frame.
               // So if position wasn't modified, it means either rot or scale was
-              if (oldPos == trans.worldPos) {
+              if (oldPos == trans.localPos) {
                 prefabOverride->AddComponentModification(trans);
               }
             }
@@ -448,13 +448,13 @@ namespace GUI {
       ImGui::TableHeadersRow();
 
       // @TODO: Replace min and max with the world min and max
-      if (ImGuiHelpers::TableInputFloat3("Local Translation", &transform.localPos[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
+      if (ImGuiHelpers::TableInputFloat3("Translation", &transform.localPos[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
         modified = true;
       }
-      if (ImGuiHelpers::TableInputFloat3("Local Rotation", &transform.localRot[0], inputWidth, false, 0.f, 360.f, 0.1f)) {
+      if (ImGuiHelpers::TableInputFloat3("Rotation", &transform.localRot[0], inputWidth, false, 0.f, 360.f, 0.1f)) {
         modified = true;
       }
-      if (ImGuiHelpers::TableInputFloat3("Local Scale", &transform.localScale[0], inputWidth, false, 0.f, 100.f, 1.f)) {
+      if (ImGuiHelpers::TableInputFloat3("Scale", &transform.localScale[0], inputWidth, false, 0.f, 100.f, 1.f)) {
         modified = true;
       }
       ImGui::EndTable();
@@ -467,16 +467,12 @@ namespace GUI {
       ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       ImGui::TableHeadersRow();
 
-      // @TODO: Replace min and max with the world min and max
-      if (ImGuiHelpers::TableInputFloat3("World Translation", &transform.worldPos[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
-        modified = true;
-      }
-      if (ImGuiHelpers::TableInputFloat3("World Rotation", &transform.worldRot[0], inputWidth, false, 0.f, 360.f, 0.1f)) {
-        modified = true;
-      }
-      if (ImGuiHelpers::TableInputFloat3("World Scale", &transform.worldScale[0], inputWidth, false, 0.f, 100.f, 1.f)) {
-        modified = true;
-      }
+      // only allow local transform to be modified
+      ImGui::BeginDisabled();
+      ImGuiHelpers::TableInputFloat3("World Translation", &transform.worldPos[0], inputWidth, false, -100.f, 100.f, 0.1f);
+      ImGuiHelpers::TableInputFloat3("World Rotation", &transform.worldRot[0], inputWidth, false, 0.f, 360.f, 0.1f);
+      ImGuiHelpers::TableInputFloat3("World Scale", &transform.worldScale[0], inputWidth, false, 0.f, 100.f, 1.f);
+      ImGui::EndDisabled();
 
       ImGui::EndTable();
     }

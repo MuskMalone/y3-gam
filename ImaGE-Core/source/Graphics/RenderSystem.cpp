@@ -1,5 +1,5 @@
 #include <pch.h>
-#include "Core/Component/Components.h"
+#include <Core/Components/Components.h>
 #include "RenderSystem.h"
 #include "Core/EntityManager.h"
 #include "Core/Entity.h"

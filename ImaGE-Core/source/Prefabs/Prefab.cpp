@@ -14,8 +14,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <pch.h>
 #include "Prefab.h"
 #include <Reflection/ObjectFactory.h>
-#include <Core/Component/PrefabOverrides.h>
-#include <Core/Component/Transform.h>
+#include <Core/Components/PrefabOverrides.h>
+#include <Core/Components/Transform.h>
 
 using namespace Prefabs;
 

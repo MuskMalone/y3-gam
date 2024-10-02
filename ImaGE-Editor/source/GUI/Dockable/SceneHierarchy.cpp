@@ -1,7 +1,7 @@
 #include <pch.h>
 #include "SceneHierarchy.h"
 #include <imgui/imgui.h>
-#include <Core/Component/Tag.h>
+#include <Core/Components/Tag.h>
 #include <GUI/GUIManager.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
 #include <Events/EventManager.h>

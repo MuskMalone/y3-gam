@@ -13,7 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <string>
 #include <rttr/type.h>
 #include <Core/EntityManager.h>
-#include <Core/Component/PrefabOverrides.h>
+#include <Core/Components/PrefabOverrides.h>
 #include <optional>
 #include <glm/glm.hpp>
 
