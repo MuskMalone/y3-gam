@@ -28,15 +28,17 @@ namespace GUI {
     mPersistentElements.emplace_back(std::make_unique<SceneControls>("Scene Controls"));
     mPersistentElements.emplace_back(std::make_unique<PrefabEditor>("Prefab Editor"));
 
-    mWindows.reserve(5);
     auto vp{ std::make_shared<Viewport>("Viewport") };
     mEditorViewport = vp; // hold a ptr to the viewport
+
+    mWindows.reserve(5);
     mWindows.emplace_back(std::move(vp)); // viewport should always be first
 
     mWindows.emplace_back(std::make_shared<Inspector>("Inspector"));
     mWindows.emplace_back(std::make_shared<SceneHierarchy>("Scene Hierarchy"));
     mWindows.emplace_back(std::make_shared<AssetBrowser>("Asset Browser"));
     mWindows.emplace_back(std::make_shared<Console>("Console"));
+    //mWindows.emplace_back(std::make_shared<PerformanceWindow>("Performance Window"));
 
     mStyler.LoadFonts();
     mStyler.SetCurrentTheme(static_cast<CustomTheme>(gEditorDefaultTheme)); // Default theme should be read from settings file
@@ -58,6 +60,15 @@ namespace GUI {
     if (mEditorViewport->IsActive()) {
       mEditorViewport->Update(framebuffer);
     }
+  }
+
+  void GUIManager::Shutdown() {
+    mStyler.Shutdown();
+    sSelectedEntity = {};
+
+    mEditorViewport.reset();
+    mPersistentElements.clear();
+    mWindows.clear();
   }
 
 } // namespace GUI

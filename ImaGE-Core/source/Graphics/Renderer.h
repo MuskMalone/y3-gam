@@ -96,7 +96,7 @@ namespace Graphics {
 		static void DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::vec4 const& clr, float rot = 0.f);
 
 		static void SubmitCube(glm::vec3 const& pos, glm::vec3 const& scale, glm::vec4 const& clr, float rot = 0.f);
-		static void SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& scale, glm::vec4 const& clr = {1.f,1.f,1.f,1.f}, float rot = 0.f);
+		static void SubmitMesh(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldTransform, glm::vec4 const& clr = { 1.f,1.f,1.f,1.f });
 
 		// Batching
 		static void FlushBatch();

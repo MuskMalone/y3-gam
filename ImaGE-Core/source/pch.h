@@ -49,6 +49,7 @@
 #include <Jolt/Physics/Collision/CollisionGroup.h>    // Collision layer and group information
 #include <Jolt/Physics/Collision/Shape/ConvexShape.h>
 
+#include <FrameRateController/FrameRateController.h>
 #include <DebugTools/Exception/Exception.h>			      //Exception Class for Logging
 #include <DebugTools/DebugLogger/DebugLogger.h>       //Logging Tool
 

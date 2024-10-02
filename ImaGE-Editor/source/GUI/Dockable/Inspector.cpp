@@ -70,16 +70,18 @@ namespace GUI {
 
       if (currentEntity.HasComponent<Component::Transform>()) {
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(rttr::type::get<Component::Transform>());
-        Component::Transform const& trans{ currentEntity.GetComponent<Component::Transform>() };
-        glm::vec3 const oldPos{ trans.localPos };
+        Component::Transform& trans{ currentEntity.GetComponent<Component::Transform>() };
+        glm::vec3 const oldPos{ trans.position };
         if (TransformComponentWindow(currentEntity, std::string(ICON_FA_ROTATE), componentOverriden)) {
+          trans.modified = true;
           SetIsComponentEdited(true);
+
           if (prefabOverride) {
             if (prefabOverride->subDataId == Prefabs::PrefabSubData::BasePrefabId) {
               // if root entity, ignore position changes
               // here, im assuming only 1 value can be modified per frame.
               // So if position wasn't modified, it means either rot or scale was
-              if (oldPos == trans.localPos) {
+              if (oldPos == trans.position) {
                 prefabOverride->AddComponentModification(trans);
               }
             }
@@ -448,13 +450,13 @@ namespace GUI {
       ImGui::TableHeadersRow();
 
       // @TODO: Replace min and max with the world min and max
-      if (ImGuiHelpers::TableInputFloat3("Translation", &transform.localPos[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
+      if (ImGuiHelpers::TableInputFloat3("Translation", &transform.position[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
         modified = true;
       }
-      if (ImGuiHelpers::TableInputFloat3("Rotation", &transform.localRot[0], inputWidth, false, 0.f, 360.f, 0.1f)) {
+      if (ImGuiHelpers::TableInputFloat3("Rotation", &transform.rotation[0], inputWidth, false, 0.f, 360.f, 0.1f)) {
         modified = true;
       }
-      if (ImGuiHelpers::TableInputFloat3("Scale", &transform.localScale[0], inputWidth, false, 0.f, 100.f, 1.f)) {
+      if (ImGuiHelpers::TableInputFloat3("Scale", &transform.scale[0], inputWidth, false, 0.f, 100.f, 1.f)) {
         modified = true;
       }
       ImGui::EndTable();

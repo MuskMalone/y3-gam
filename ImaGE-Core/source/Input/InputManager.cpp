@@ -82,7 +82,7 @@ void InputManager::UpdateInput()
 	mKeysTriggered.reset();
 	mScrollX = mScrollY = 0;
 	glfwPollEvents();
-	double dt = FrameRateController::GetInstance().GetDeltaTime();
+	double dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
 	for (int i{ 0 }; i < static_cast<int>(IK_KEY_COUNT); ++i)
 	{
 

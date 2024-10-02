@@ -26,9 +26,9 @@ static void rttr_auto_register_reflection_function2_(); namespace {
 
   rttr::registration::class_<Transform>("Transform")
     .constructor<>()
-    .property("localPos", &Transform::localPos)
-    .property("localScale", &Transform::localScale)
-    .property("localRot", &Transform::localRot)
+    .property("position", &Transform::position)
+    .property("scale", &Transform::scale)
+    .property("rotation", &Transform::rotation)
     .property("worldPos", &Transform::worldPos)
     .property("worldScale", &Transform::worldScale)
     .property("worldRot", &Transform::worldRot);

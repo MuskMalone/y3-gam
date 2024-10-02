@@ -11,32 +11,36 @@
 #include <Core/Components/Components.h>
 
 #include <Physics/PhysicsSystem.h>
+#include <Core/Systems/TransformSystem.h>
 
 // Static Initialization
 Application::ApplicationSpecification Application::mSpecification{};
 
 void Application::Init() {
+  mSystemManager.InitSystems();
   IGE::Physics::PhysicsSystem::InitAllocator();
   IGE::Physics::PhysicsSystem::GetInstance()->Init();
   mScene->Init();
   Scenes::SceneManager::GetInstance().Init();
   Prefabs::PrefabManager::GetInstance().Init();
-  FrameRateController::GetInstance().Init(120.f, 1.f, false);
+  Performance::FrameRateController::GetInstance().Init(120.f, 1.f, false);
   Input::InputManager::GetInstance().InitInputManager(mWindow, mSpecification.WindowWidth, mSpecification.WindowHeight, 0.3);
 }
 
 void Application::Run() {
   static auto& eventManager{ Events::EventManager::GetInstance() };
   static auto& inputManager{ Input::InputManager::GetInstance() };
- 
+  static auto& frameRateController{ Performance::FrameRateController::GetInstance() };
+
   while (!glfwWindowShouldClose(mWindow.get())) {
-    FrameRateController::GetInstance().Start();
+    frameRateController.Start();
     inputManager.UpdateInput();
 
     // dispatch all events in the queue at the start of game loop
     eventManager.DispatchAll();
 
-    mScene->Update(FrameRateController::GetInstance().GetDeltaTime());
+    mSystemManager.UpdateSystems();
+    mScene->Update(frameRateController.GetDeltaTime());
 
     glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
     mFramebuffers.front().second();
@@ -45,12 +49,16 @@ void Application::Run() {
     // check and call events, swap buffers
     glfwSwapBuffers(mWindow.get());
 
-    FrameRateController::GetInstance().End();
+    frameRateController.End();
   }
 }
 
+void Application::RegisterSystems() {
+  mSystemManager.RegisterSystem<Systems::TransformSystem>("Transform System");
+}
+
 Application::Application(ApplicationSpecification spec) :
-  mScene{}, mWindow{}
+  mSystemManager{}, mFramebuffers{}, mScene {}, mWindow{}
 {
   mSpecification = spec;
   glfwInit();
@@ -82,6 +90,7 @@ Application::Application(ApplicationSpecification spec) :
   glViewport(0, 0, spec.WindowWidth, spec.WindowHeight); // specify size of viewport
   SetCallbacks();
 
+  RegisterSystems();
   mScene = std::make_unique<Scene>("../Assets/Shaders/BlinnPhong.vert.glsl", "../Assets/Shaders/BlinnPhong.frag.glsl");
   // attach each draw function to its framebuffer
   mFramebuffers.emplace_back(std::make_shared<Graphics::Framebuffer>(spec.WindowWidth, spec.WindowHeight), std::bind(&Scene::Draw, mScene.get()));
@@ -125,11 +134,15 @@ void Application::ErrorCallback(int err, const char* desc) {
 void Application::Shutdown()
 {
   Scenes::SceneManager::GetInstance().Shutdown();
+  Prefabs::PrefabManager::GetInstance().Shutdown();
   Debug::DebugLogger::GetInstance().Shutdown();
+
+  mSystemManager.Shutdown();
 }
 
 Application::~Application()
 {
   mWindow.reset();  // release the GLFWwindow before we terminate
   glfwTerminate();
+  std::cout << "app terminate\n";
 }

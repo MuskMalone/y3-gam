@@ -6,6 +6,7 @@
 #include <memory>
 #include <DebugTools/Exception/Exception.h>
 #include <Graphics/Framebuffer.h>
+#include <Core/Systems/SystemManager/SystemManager.h>
 
 class Application {
 public:
@@ -36,25 +37,29 @@ public:
 
   inline static bool IsImGUIActive() { return mSpecification.EnableImGui; }
   inline static ApplicationSpecification GetApplicationSpecification() { return mSpecification; }
-  inline void SetScene(std::unique_ptr<Scene> scene) { mScene = std::move(scene); }
-  inline void SetWindowPointer(Application::WindowPtr window) { mWindow = std::move(window); }
-  inline std::unique_ptr<Scene>& GetScene() { return mScene; }
-  inline std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& GetWindowPointer() { return mWindow; }
+  //inline void SetScene(std::unique_ptr<Scene> scene) { mScene = std::move(scene); }
+  //inline void SetWindowPointer(Application::WindowPtr window) { mWindow = std::move(window); }
+  //inline std::unique_ptr<Scene>& GetScene() { return mScene; }
+  //inline std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& GetWindowPointer() { return mWindow; }
 
   //inline std::vector<std::pair<Graphics::Framebuffer, SceneDrawCall>>& GetFrameBuffer() { return mFramebuffers; }
-  inline std::vector<std::pair<std::shared_ptr<Graphics::Framebuffer>, SceneDrawCall>> const& GetFrameBuffer() { return mFramebuffers; } const
+  //inline std::vector<std::pair<std::shared_ptr<Graphics::Framebuffer>, SceneDrawCall>> const& GetFrameBuffer() { return mFramebuffers; } const
   inline static bool GetImGuiEnabled() { return mSpecification.EnableImGui; }
 
-private:
-  std::unique_ptr<Scene> mScene;
-  std::vector<std::pair<std::shared_ptr<Graphics::Framebuffer>, SceneDrawCall>> mFramebuffers;
-
-  WindowPtr mWindow;
-  static ApplicationSpecification mSpecification;
-  virtual void SetCallbacks();
-
 protected:
+  void UpdateFramebuffers();
+
   static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
   static void ErrorCallback(int err, const char* desc);
-  void UpdateFramebuffers();
+
+  Systems::SystemManager mSystemManager;
+  std::vector<std::pair<std::shared_ptr<Graphics::Framebuffer>, SceneDrawCall>> mFramebuffers;
+  std::unique_ptr<Scene> mScene;
+  WindowPtr mWindow;
+
+  static ApplicationSpecification mSpecification;
+
+private:
+  void SetCallbacks();
+  void RegisterSystems();
 };

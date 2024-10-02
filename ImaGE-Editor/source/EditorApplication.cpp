@@ -26,36 +26,34 @@ EditorApplication::EditorApplication(Application::ApplicationSpecification const
   }
 
   // Setup Platform/Renderer backends
-  ImGui_ImplGlfw_InitForOpenGL(GetWindowPointer().get(), true);
+  ImGui_ImplGlfw_InitForOpenGL(mWindow.get(), true);
   ImGui_ImplOpenGL3_Init("#version 460 core");
+
+  SetEditorCallbacks();
 }
 
 EditorApplication::~EditorApplication() {
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();
   ImGui::DestroyContext();
-  GetWindowPointer().reset();  // release the GLFWwindow before we terminate
-  glfwTerminate();
+  std::cout << "app terminate\n";
 }
 
+// DO NOT PERFORM ANY ImaGE-Core INITS HERE; DO IT IN Application::Init
 void EditorApplication::Init() {
-  IGE::Physics::PhysicsSystem::InitAllocator();
-  IGE::Physics::PhysicsSystem::GetInstance()->Init();
-  GetScene()->Init();
-  Scenes::SceneManager::GetInstance().Init();
-  Prefabs::PrefabManager::GetInstance().Init();
-  FrameRateController::GetInstance().Init(120.f, 1.f, false);
-  Input::InputManager::GetInstance().InitInputManager(GetWindowPointer(),
-    GetApplicationSpecification().WindowWidth, GetApplicationSpecification().WindowHeight, 0.3);
+  Application::Init();  // perform default Init
+
+  // init editor-specific stuff
   mGUIManager.Init();
 }
 
 void EditorApplication::Run() {
   static auto& eventManager{ Events::EventManager::GetInstance() };
   static auto& inputManager{ Input::InputManager::GetInstance() };
+  static auto& frameRateController{ Performance::FrameRateController::GetInstance() };
 
-  while (!glfwWindowShouldClose(GetWindowPointer().get())) {
-    FrameRateController::GetInstance().Start();
+  while (!glfwWindowShouldClose(mWindow.get())) {
+    frameRateController.Start();
     try {
       if (GetApplicationSpecification().EnableImGui) {
         ImGuiStartFrame();
@@ -67,7 +65,8 @@ void EditorApplication::Run() {
         // dispatch all events in the queue at the start of game loop
         eventManager.DispatchAll();
 
-        GetScene()->Update(FrameRateController::GetInstance().GetDeltaTime());
+        mSystemManager.UpdateSystems();
+        mScene->Update(frameRateController.GetDeltaTime());
       }
       catch (Debug::ExceptionBase& e)
       {
@@ -82,7 +81,7 @@ void EditorApplication::Run() {
         if (GetApplicationSpecification().EnableImGui) {
           UpdateFramebuffers();
 
-          mGUIManager.UpdateGUI(GetFrameBuffer().front().first);
+          mGUIManager.UpdateGUI(mFramebuffers.front().first);
 
           ImGui::Render();
           ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -108,9 +107,9 @@ void EditorApplication::Run() {
       }
 
       // check and call events, swap buffers
-      glfwSwapBuffers(GetWindowPointer().get());
+      glfwSwapBuffers(mWindow.get());
 
-      FrameRateController::GetInstance().End();
+      frameRateController.End();
     }
     catch (Debug::ExceptionBase& e)
     {
@@ -123,10 +122,8 @@ void EditorApplication::Run() {
   }
 }
 
-void EditorApplication::SetCallbacks() {
-  glfwSetFramebufferSizeCallback(GetWindowPointer().get(), FramebufferSizeCallback);
-  glfwSetErrorCallback(ErrorCallback);
-  glfwSetDropCallback(GetWindowPointer().get(), WindowDropCallback);
+void EditorApplication::SetEditorCallbacks() {
+  glfwSetDropCallback(mWindow.get(), WindowDropCallback);
 }
 
 void EditorApplication::ImGuiStartFrame() const {
@@ -134,6 +131,15 @@ void EditorApplication::ImGuiStartFrame() const {
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
   ImGui::DockSpaceOverViewport();
+}
+
+void EditorApplication::Shutdown()
+{
+  // shutdown editor-specific stuff
+  mGUIManager.Shutdown();
+
+  // perform default shutdown
+  Application::Shutdown();
 }
 
 /*!*********************************************************************

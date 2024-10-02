@@ -15,9 +15,9 @@ namespace Systems {
 
       // update local to world with parent xform
       trans.parentWorldMtx = parentTrans.worldMtx;
-      trans.worldPos = trans.parentWorldMtx * glm::vec4(trans.localPos, 1.f);
-      trans.worldScale = parentTrans.worldScale * trans.localScale;
-      trans.worldRot = parentTrans.worldRot + trans.localRot; // @TODO: combine properly in future
+      trans.worldPos = trans.parentWorldMtx * glm::vec4(trans.position, 1.f);
+      trans.worldScale = parentTrans.worldScale * trans.scale;
+      trans.worldRot = parentTrans.worldRot + trans.rotation; // @TODO: combine properly in future
 
       // compute the mtx
       glm::mat4 translate{ glm::translate(glm::mat4{ 1.f }, trans.worldPos) };
@@ -53,9 +53,9 @@ namespace Systems {
       {
         Transform& transform{ entity.GetComponent<Transform>() };
         if (transform.modified) {
-          transform.worldPos = transform.localPos;
-          transform.worldScale = transform.localScale;
-          transform.worldRot = transform.localRot;
+          transform.worldPos = transform.position;
+          transform.worldScale = transform.scale;
+          transform.worldRot = transform.rotation;
 
           glm::mat4 trans{ glm::translate(glm::mat4{ 1.f }, transform.worldPos) };
           glm::mat4 rot{ glm::yawPitchRoll(transform.worldRot.y, transform.worldRot.x, transform.worldRot.z) };
@@ -64,9 +64,12 @@ namespace Systems {
           transform.worldMtx = trans * rot * scale;
           transform.modified = false;
 
-          // force each child to update their transform
-          for (ECS::Entity& child : mEntityManager.GetChildEntity(entity)) {
-            child.GetComponent<Transform>().modified = true;
+          // if no children, we are done
+          if (mEntityManager.HasChild(entity)) {
+            // force each child to update their transform
+            for (ECS::Entity& child : mEntityManager.GetChildEntity(entity)) {
+              child.GetComponent<Transform>().modified = true;
+            }
           }
 
           transform.modified = false;

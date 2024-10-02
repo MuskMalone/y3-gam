@@ -2,9 +2,9 @@
 #include "System.h"
 
 namespace Systems {
-  class TransformSystem : System {
+  class TransformSystem : public System {
   public:
-    TransformSystem() : System() {}
+    TransformSystem(const char* name) : System(name) {}
 
     void Update() override;
 

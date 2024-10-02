@@ -7,17 +7,18 @@ public:
   EditorApplication(EditorApplication::ApplicationSpecification const& spec);
   ~EditorApplication();
 
-  virtual void Init() override;
-  virtual void Run() override;
-  virtual void SetCallbacks() override;
+  void Init() override;
+  void Run() override;
+  void Shutdown() override;
 
 private:
   GUI::GUIManager mGUIManager;
 
 private:
   void ImGuiStartFrame() const;
-  static void WindowDropCallback(GLFWwindow*, int pathCount, const char* paths[]);
-
+  void SetEditorCallbacks();
   void PrintException(Debug::ExceptionBase& e);
   void PrintException(std::exception& e);
+
+  static void WindowDropCallback(GLFWwindow*, int pathCount, const char* paths[]);
 };

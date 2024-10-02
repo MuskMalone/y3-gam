@@ -348,7 +348,7 @@
     <ClInclude Include="source\pch.h" />
     <ClInclude Include="source\Core\Systems\TransformSystem.h" />
     <ClInclude Include="source\Core\Systems\System.h" />
-    <ClInclude Include="source\Core\Systems\SystemManager.h" />
+    <ClInclude Include="source\Core\Systems\SystemManager\SystemManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -499,6 +499,6 @@
     <ClCompile Include="source\TempScene.cpp" />
     <ClCompile Include="source\pch.cpp" />
     <ClCompile Include="source\Core\Systems\TransformSystem.cpp" />
-    <ClCompile Include="source\Core\Systems\SystemManager.cpp" />
+    <ClCompile Include="source\Core\Systems\SystemManager\SystemManager.cpp" />
   </ItemGroup>
 </Project>

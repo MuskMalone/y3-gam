@@ -33,7 +33,7 @@ namespace Graphics {
 				auto const& mesh = entity.GetComponent<Component::Mesh>();
 				if (mesh.mesh == nullptr) continue;
 
-				Graphics::Renderer::SubmitMesh(mesh.mesh, xfm.worldPos, xfm.worldScale, { 1.f,1.f,1.f,1.f }, {}); //@TODO change clr and rot 
+				Graphics::Renderer::SubmitMesh(mesh.mesh, xfm.worldMtx, { 1.f, 1.f, 1.f, 1.f }); //@TODO change clr and rot 
 			}
 
 		} // Render End
