@@ -110,7 +110,7 @@ void Scene::Init()
 
           // Assign alternating meshes between cube and pyramid
           if ((i + j) % 2 == 0) {
-              meshComponent.mesh = mesh0; // Assign cube mesh
+              meshComponent.mesh = mesh1; // Assign cube mesh
           }
           else {
               meshComponent.mesh = mesh1; // Assign pyramid mesh
