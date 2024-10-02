@@ -79,6 +79,7 @@ namespace Graphics{
 			case AttributeType::VEC2:	return 2;
 			case AttributeType::VEC3:	return 3;
 			case AttributeType::VEC4:	return 4;
+			case AttributeType::MAT4:   return 4;
 			case AttributeType::INT:	return 1;
 			case AttributeType::IVEC2:	return 2;
 			case AttributeType::IVEC3:	return 3;
@@ -111,9 +112,18 @@ namespace Graphics{
 			mStride = 0;
 
 			for (auto& elem : mElements) {
-				elem.offset = newOffset;
-				newOffset += elem.size;
-				mStride += elem.size;
+				if (elem.type == AttributeType::MAT4) {
+					for (int i = 0; i < 4; ++i) {  // Add 4 vec4 attributes for each MAT4
+						elem.offset = newOffset;
+						newOffset += 4 * 4; // Each VEC4 is 16 bytes (4 floats)
+						mStride += 4 * 4;
+					}
+				}
+				else {
+					elem.offset = newOffset;
+					newOffset += elem.size;
+					mStride += elem.size;
+				}
 			}
 		}
 	private:

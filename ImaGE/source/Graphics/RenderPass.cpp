@@ -44,7 +44,7 @@ namespace Graphics {
 
         //@TODO in future add light + materials
         
-        Renderer::BeginBatch();
+        //Renderer::BeginBatch();
         for (auto const& entity : entities) {
             // Extract Transform and Mesh components
             if (!entity.HasComponent<Component::Transform>() || !entity.HasComponent<Component::Mesh>())
@@ -61,11 +61,12 @@ namespace Graphics {
                 continue;
 
             // Submit the mesh to the renderer with transform information
-            Graphics::Renderer::SubmitMesh(mesh.mesh, xform.worldPos, xform.worldScale, { 1.f, 1.f, 1.f, 1.f }, {45}); //@TODO: adjust color and rotation as needed
-            //Graphics::Renderer::SubmitMesh(m.mesh, { 0,0,0 }, { 1,1,1 }, { 1.f, 1.f, 1.f, 1.f }, { 45 });
-
+            //Graphics::Renderer::SubmitMesh(mesh.mesh, xform.worldPos, xform.worldScale, { 1.f, 1.f, 1.f, 1.f }, {45}); //@TODO: adjust color and rotation as needed
+            Graphics::Renderer::SubmitInstance(mesh.mesh, xform.worldPos, xform.worldRot, xform.worldScale, { 1.f,1.f,1.f,1.f });
         }
-        Renderer::FlushBatch(shared_from_this());
+        // Flush all collected instances and render them in a single draw call
+        Renderer::RenderInstances();
+        //Renderer::FlushBatch(shared_from_this());
 
         End();
     }

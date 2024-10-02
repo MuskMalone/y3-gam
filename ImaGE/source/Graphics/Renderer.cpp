@@ -2,6 +2,7 @@
 #include "Renderer.h"
 #include "RenderAPI.h"
 #include "RenderPass.h"
+#include <glm/gtx/quaternion.hpp>
 
 namespace Graphics {
 	RendererData Renderer::mData;
@@ -106,6 +107,8 @@ namespace Graphics {
 		mData.quadVtxPos[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
 		mData.quadVtxPos[3] = { -0.5f, 0.5f, 0.0f, 1.0f };
 
+		mData.instancedShader = std::make_shared<Shader>("./assets/Shaders/Instanced.vert.glsl", "./assets/Shaders/Instanced.frag.glsl");
+
 		//Init framebuffer
 		Graphics::FramebufferSpec framebufferSpec;
 		framebufferSpec.width = WINDOW_WIDTH<int>;
@@ -114,7 +117,8 @@ namespace Graphics {
 
 		//Init RenderPasses
 		PipelineSpec geomPipelineSpec;
-		geomPipelineSpec.shader = mData.texShader;
+		//geomPipelineSpec.shader = mData.texShader;
+		geomPipelineSpec.shader = mData.instancedShader;
 		geomPipelineSpec.targetFramebuffer = Framebuffer::Create(framebufferSpec);
 
 		RenderPassSpec geomPassSpec;
@@ -168,6 +172,35 @@ namespace Graphics {
 			vtx.color = clr;
 		}
 		++mData.meshVtxCount;
+	}
+
+	std::shared_ptr<VertexBuffer> Renderer::GetInstanceBuffer(std::shared_ptr<MeshSource> const& meshSrc) {
+		auto it = mData.instanceBuffers.find(meshSrc); // check if instance buff alr exists
+
+		// found
+		if (it != mData.instanceBuffers.end()) {
+			return it->second; //return instance buffer
+		}
+
+		// else creatae new instance buffer
+		uint32_t instanceCap = 100;
+		auto instanceBuffer = VertexBuffer::Create(instanceCap * sizeof(InstanceData));
+
+		// Set up the buffer layout for instance data
+		BufferLayout instanceLayout = {
+			{ AttributeType::MAT4, "a_ModelMatrix" },
+			{ AttributeType::VEC4, "a_Color" }
+		};
+		instanceBuffer->SetLayout(instanceLayout);
+
+		// Attach the instance buffer to the MeshSource's VAO
+		meshSrc->GetVertexArray()->AddVertexBuffer(instanceBuffer);
+
+		// Store the buffer in the map for future use
+		mData.instanceBuffers[meshSrc] = instanceBuffer;
+
+		// Return the new instance buffer
+		return instanceBuffer;
 	}
 
 	void Renderer::DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::vec4 const& clr, float rot) {
@@ -263,6 +296,47 @@ namespace Graphics {
 		SetTriangleBufferData(v1, clr);
 		SetTriangleBufferData(v2, clr);
 		SetTriangleBufferData(v3, clr);
+	}
+
+	void Renderer::SubmitInstance(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr) {
+		if (!mesh) return;
+		
+		glm::mat4 transMtx = glm::translate(glm::mat4(1.0f), pos);
+		glm::mat4 rotMtx = glm::toMat4(glm::quat(rot)); // Assuming worldRot is a vec3 of Euler angles
+		glm::mat4 scaleMtx = glm::scale(glm::mat4(1.0f), scale);
+
+		glm::mat4 mdlMtx = transMtx * rotMtx * scaleMtx;
+
+		InstanceData instance{};
+		instance.modelMatrix = mdlMtx;
+		instance.color = clr;
+
+		auto& meshSrc = mesh->GetMeshSource();
+		if (!meshSrc) return;
+
+		mData.instanceBufferDataMap[meshSrc].push_back(instance);
+	}
+
+	void Renderer::RenderInstances() {
+		for (auto& [meshSrc, instances] : mData.instanceBufferDataMap) {
+			if (instances.empty()) continue;
+
+			auto instanceBuffer = GetInstanceBuffer(meshSrc);
+
+			// Set instance data into the buffer
+			unsigned int dataSize = static_cast<unsigned int>(instances.size() * sizeof(InstanceData));
+			instanceBuffer->SetData(instances.data(), dataSize);
+
+			// Bind the VAO and render the instances
+			auto& vao = meshSrc->GetVertexArray();
+			vao->Bind();
+
+			RenderAPI::DrawIndicesInstanced(vao, meshSrc->GetIndices().size(), instances.size());
+
+			vao->Unbind();
+		}
+
+		mData.instanceBufferDataMap.clear();
 	}
 
 	void Renderer::FlushBatch() {

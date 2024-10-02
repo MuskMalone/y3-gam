@@ -59,7 +59,7 @@ void Scene::Init()
 
  
   mEcam = editorCam;
-  std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateModelFromImport("./Assets/Models/bunny_high_poly.imsh");
+  std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateModelFromImport("./Assets/Models/sphere_mid_poly.imsh");
   //std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateCube();
   mesh0 = std::make_shared<Graphics::Mesh>(cubeMeshSource);
 

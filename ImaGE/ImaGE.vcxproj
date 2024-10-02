@@ -254,6 +254,8 @@
     <ClInclude Include="Source\Core\Camera.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\Shaders\Instanced.frag.glsl" />
+    <None Include="assets\Shaders\Instanced.vert.glsl" />
     <None Include="assets\Shaders\Tri.frag.glsl" />
     <None Include="assets\Shaders\Tri.vert.glsl" />
     <None Include="shaders\Default.frag.glsl" />
