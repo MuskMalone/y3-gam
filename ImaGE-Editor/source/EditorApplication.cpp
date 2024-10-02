@@ -83,7 +83,9 @@ void EditorApplication::Run() {
           UpdateFramebuffers();
 
           auto fb = Graphics::Renderer::GetFinalFramebuffer();
-          mGUIManager.UpdateGUI(fb);
+          std::vector<std::pair<std::shared_ptr<Graphics::Framebuffer>, SceneDrawCall>> &framebuffers = GetFrameBuffer();
+          framebuffers.front().first = fb;
+          mGUIManager.UpdateGUI(GetFrameBuffer().front().first);
 
           ImGui::Render();
           ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
