@@ -1,7 +1,7 @@
-#include <pch.h>
+#include "pch.h"
 #include "IMSH.h"
 
-//#ifndef IMGUI_DISABLE
+#ifndef IMGUI_DISABLE
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
@@ -79,7 +79,7 @@ namespace Graphics::AssetIO
     }
   }
 
-  void IMSH::WriteToBinFile(std::string const& name) const {
+  void IMSH::WriteToBinFile(std::string const& name, std::string const& path) const {
     std::string const outputFile{ gMeshOutputDir + name + gMeshFileExt };
     std::ofstream ofs{ outputFile, std::ios::binary};
     if (!ofs) { throw Debug::Exception<IMSH>(Debug::LVL_ERROR, Msg("Unable to create binary file: " + outputFile)); }
@@ -93,10 +93,10 @@ namespace Graphics::AssetIO
 
     ofs.close();
   }
-//#else
-//namespace Graphics::AssetIO
-//{
-//#endif  // IMGUI_DISABLE
+#else
+namespace Graphics::AssetIO
+{
+#endif  // IMGUI_DISABLE
 
   std::shared_ptr<MeshSource> IMSH::ToMeshSource(std::shared_ptr<VertexArray> vao) {
     mStatus = false;
@@ -129,9 +129,10 @@ namespace Graphics::AssetIO
 
     ifs.close();
   }
+#ifndef IMGUI_DISABLE
+
 } // namespace Graphics::AssetIO
 
-//#ifndef IMGUI_DISABLE
 
 namespace {
   void AddVertices(std::vector<Graphics::Vertex>& vertexBuffer, aiMesh const* mesh)
@@ -170,4 +171,4 @@ namespace {
     }
   }
 }
-//#endif
+#endif

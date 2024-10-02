@@ -37,6 +37,24 @@ namespace Graphics{
 		return 0;
 	}
 
+	static std::string AttributeTypeToString(AttributeType type)
+	{
+		switch (type) {
+		case AttributeType::FLOAT:  return "FLOAT";
+		case AttributeType::VEC2:   return "VEC2";
+		case AttributeType::VEC3:   return "VEC3";
+		case AttributeType::VEC4:   return "VEC4";
+		case AttributeType::MAT3:   return "MAT3";
+		case AttributeType::MAT4:   return "MAT4";
+		case AttributeType::INT:    return "INT";
+		case AttributeType::IVEC2:  return "IVEC2";
+		case AttributeType::IVEC3:  return "IVEC3";
+		case AttributeType::IVEC4:  return "IVEC4";
+		case AttributeType::BOOL:   return "BOOL";
+		default: return "UNKNOWN";
+		}
+	}
+
 	struct BufferAttribute {
 		std::string name;
 		AttributeType type;
@@ -79,6 +97,7 @@ namespace Graphics{
 			case AttributeType::VEC2:	return 2;
 			case AttributeType::VEC3:	return 3;
 			case AttributeType::VEC4:	return 4;
+			case AttributeType::MAT4:   return 4;
 			case AttributeType::INT:	return 1;
 			case AttributeType::IVEC2:	return 2;
 			case AttributeType::IVEC3:	return 3;
@@ -105,6 +124,19 @@ namespace Graphics{
 		std::vector<BufferAttribute>::iterator end() { return mElements.end(); };
 		std::vector<BufferAttribute>::const_iterator begin() const { return mElements.begin(); };
 		std::vector<BufferAttribute>::const_iterator end() const { return mElements.end(); };
+
+		void PrintLayout() const {
+			std::cout << "Buffer Layout: \n";
+			for (const auto& elem : mElements) {
+				std::cout << "  Attribute: " << elem.name
+					<< ", Type: " << AttributeTypeToString(elem.type)
+					<< ", Size: " << elem.size
+					<< ", Offset: " << elem.offset
+					<< ", Normalized: " << (elem.isNormalized ? "true" : "false")
+					<< "\n";
+			}
+			std::cout << "Total Stride: " << mStride << " bytes\n";
+		}
 	private:
 		void ComputeOffsetAndStride() {
 			unsigned int newOffset{ 0 };
@@ -115,6 +147,7 @@ namespace Graphics{
 				newOffset += elem.size;
 				mStride += elem.size;
 			}
+			
 		}
 	private:
 		std::vector<BufferAttribute> mElements;

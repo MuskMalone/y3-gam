@@ -22,7 +22,8 @@ namespace Graphics {
 		std::shared_ptr<ElementBuffer> const& GetElementBuffer() const { return mEbo; }
 
 	private:
-		unsigned int vaoHdl;
+		uint32_t vaoHdl;
+		uint32_t mAttribIdx{};
 		std::vector<std::shared_ptr<VertexBuffer>> mVbos;
 		std::shared_ptr<ElementBuffer> mEbo;
 	};

@@ -1,5 +1,6 @@
 #include <pch.h>
 #include "VertexArray.h"
+#include "Utils.h"
 
 namespace Graphics {
 	static GLenum AttributeToGLType(AttributeType type) {
@@ -31,7 +32,7 @@ namespace Graphics {
 	Default constructor for the VertexArray class. Initializes the VAO handle.
 	*/
 	VertexArray::VertexArray() {
-		glCreateVertexArrays(1, &vaoHdl);
+		GLCALL(glCreateVertexArrays(1, &vaoHdl));
 	}
 
 	/*  _________________________________________________________________________ */
@@ -40,7 +41,7 @@ namespace Graphics {
 	Destructor for the VertexArray class. Deletes the VAO handle.
 	*/
 	VertexArray::~VertexArray() {
-		glDeleteVertexArrays(1, &vaoHdl);
+		GLCALL(glDeleteVertexArrays(1, &vaoHdl));
 	}
 
 	/*  _________________________________________________________________________ */
@@ -61,7 +62,7 @@ namespace Graphics {
 	Binds the VAO for rendering.
 	*/
 	void VertexArray::Bind() const {
-		glBindVertexArray(vaoHdl);
+		GLCALL(glBindVertexArray(vaoHdl));
 	}
 
 	/*  _________________________________________________________________________ */
@@ -70,7 +71,7 @@ namespace Graphics {
 	Unbinds the VAO.
 	*/
 	void VertexArray::Unbind() const {
-		glBindVertexArray(0);
+		GLCALL(glBindVertexArray(0));
 	}
 
 	/*  _________________________________________________________________________ */
@@ -83,9 +84,9 @@ namespace Graphics {
 	according to the layout of the VertexBuffer, and adds the VertexBuffer to the list of VBOs.
 	*/
 	void VertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo) {
-		glBindVertexArray(vaoHdl);
+		GLCALL(glBindVertexArray(vaoHdl));
 		vbo->Bind();
-		unsigned int attribIdx{};
+
 		auto const& layout{ vbo->GetLayout() };
 		for (auto const& elem : layout) {
 			switch (elem.type) {
@@ -93,29 +94,44 @@ namespace Graphics {
 			case AttributeType::VEC2:
 			case AttributeType::VEC3:
 			case AttributeType::VEC4:
-				glEnableVertexAttribArray(attribIdx);
-				glVertexAttribPointer(attribIdx,
+				GLCALL(glEnableVertexAttribArray(mAttribIdx));
+				GLCALL(glVertexAttribPointer(mAttribIdx,
 					elem.GetComponentCount(),
 					AttributeToGLType(elem.type),
 					elem.isNormalized ? GL_TRUE : GL_FALSE,
 					layout.GetStride(),
 					reinterpret_cast<const void*>(
-						static_cast<uintptr_t>(elem.offset)));
-				++attribIdx;
+						static_cast<uintptr_t>(elem.offset))));
+				++mAttribIdx;
 				break;
 			case AttributeType::INT:
 			case AttributeType::IVEC2:
 			case AttributeType::IVEC3:
 			case AttributeType::IVEC4:
 			case AttributeType::BOOL:
-				glEnableVertexAttribArray(attribIdx);
-				glVertexAttribIPointer(attribIdx,
+				GLCALL(glEnableVertexAttribArray(mAttribIdx));
+				GLCALL(glVertexAttribIPointer(mAttribIdx,
 					elem.GetComponentCount(),
 					AttributeToGLType(elem.type),
 					layout.GetStride(),
 					reinterpret_cast<const void*>(
-						static_cast<uintptr_t>(elem.offset)));
-				++attribIdx;
+						static_cast<uintptr_t>(elem.offset))));
+				++mAttribIdx;
+				break;
+			case AttributeType::MAT4:
+				// A MAT4 is 4 VEC4 attributes
+				for (int i = 0; i < 4; ++i) {
+					GLCALL(glEnableVertexAttribArray(mAttribIdx + i)); // Enable attribute for each column of the matrix
+					GLCALL(glVertexAttribPointer(mAttribIdx + i,
+						4,  // Each column is a vec4, so 4 components
+						GL_FLOAT,
+						elem.isNormalized ? GL_TRUE : GL_FALSE,
+						layout.GetStride(),
+						reinterpret_cast<const void*>(static_cast<uintptr_t>(elem.offset + sizeof(glm::vec4) * i))));
+					// Set divisor if using for instancing
+					GLCALL(glVertexAttribDivisor(mAttribIdx + i, 1));  // Optional: use if it's an instance attribute
+				}
+				mAttribIdx += 4; // Increment attribute index by 4 since a MAT4 takes 4 locations
 				break;
 			}
 
@@ -132,7 +148,7 @@ namespace Graphics {
 	This function binds the VAO and the provided ElementBuffer and sets the ElementBuffer for the VAO.
 	*/
 	void VertexArray::SetElementBuffer(const std::shared_ptr<ElementBuffer>& ebo) {
-		glBindVertexArray(vaoHdl);
+		GLCALL(glBindVertexArray(vaoHdl));
 		ebo->Bind();
 		mEbo = ebo;
 	}
