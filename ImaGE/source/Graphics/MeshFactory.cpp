@@ -168,7 +168,7 @@ namespace Graphics {
           auto vbo = VertexBuffer::Create(static_cast<unsigned>(imsh.GetVertexBuffer().size()));
 
           // Set vertex buffer data
-          //vbo->SetData(imsh.GetVertexBuffer().data(), imsh.GetVertexBuffer().size() * sizeof(Vertex));
+          vbo->SetData(imsh.GetVertexBuffer().data(), imsh.GetVertexBuffer().size() * sizeof(Vertex));
 
           BufferLayout modelLayout = {
               {AttributeType::VEC3, "a_Position"},
