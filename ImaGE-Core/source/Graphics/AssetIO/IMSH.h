@@ -43,7 +43,7 @@ namespace Graphics::AssetIO
     // conversions for use in editor only
 #ifndef IMGUI_DISABLE
     IMSH(std::string const& file, MeshImportFlags const& = {});
-    void WriteToBinFile(std::string const& name, std::string const& path) const;
+    void WriteToBinFile(std::string const& name) const;
 #endif
 
     operator bool() const { return mStatus; } // check if object is valid

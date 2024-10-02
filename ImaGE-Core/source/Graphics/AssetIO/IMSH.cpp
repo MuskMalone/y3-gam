@@ -79,19 +79,19 @@ namespace Graphics::AssetIO
     }
   }
 
-  void IMSH::WriteToBinFile(std::string const& name, std::string const& path) const {
-    std::string const outputFile{ gMeshOutputDir + name + gMeshFileExt };
-    std::ofstream ofs{ outputFile, std::ios::binary};
-    if (!ofs) { throw Debug::Exception<IMSH>(Debug::LVL_ERROR, Msg("Unable to create binary file: " + outputFile)); }
+  void IMSH::WriteToBinFile(std::string const& name) const {
+      std::string const outputFile{ gMeshOutputDir + name + gMeshFileExt };
+      std::ofstream ofs{ outputFile, std::ios::binary };
+      if (!ofs) { throw Debug::Exception<IMSH>(Debug::LVL_ERROR, Msg("Unable to create binary file: " + outputFile)); }
 
-    Header const header{ mVertexBuffer.size(), mIndices.size(), mSubmeshData.size()};
+      Header const header{ mVertexBuffer.size(), mIndices.size(), mSubmeshData.size() };
 
-    ofs.write(reinterpret_cast<char const*>(&header), sizeof(Header));
-    ofs.write(reinterpret_cast<char const*>(mVertexBuffer.data()), header.vtxSize * sizeof(Graphics::Vertex));
-    ofs.write(reinterpret_cast<char const*>(mIndices.data()), header.idxSize * sizeof(uint32_t));
-    ofs.write(reinterpret_cast<char const*>(mSubmeshData.data()), header.submeshSize * sizeof(SubmeshData));
+      ofs.write(reinterpret_cast<char const*>(&header), sizeof(Header));
+      ofs.write(reinterpret_cast<char const*>(mVertexBuffer.data()), header.vtxSize * sizeof(Graphics::Vertex));
+      ofs.write(reinterpret_cast<char const*>(mIndices.data()), header.idxSize * sizeof(uint32_t));
+      ofs.write(reinterpret_cast<char const*>(mSubmeshData.data()), header.submeshSize * sizeof(SubmeshData));
 
-    ofs.close();
+      ofs.close();
   }
 #else
 namespace Graphics::AssetIO
