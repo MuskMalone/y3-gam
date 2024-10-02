@@ -13,15 +13,24 @@ namespace IGE {
         class AssetManager
         {
         private: 
-            template <typename, typename = void>
+            template <typename, typename, typename = void>
+            struct HasStaticImport : std::false_type {};
+            template <typename, typename, typename = void>
             struct HasStaticLoad : std::false_type {};
-            template <typename T>
-            struct HasStaticLoad<T, std::void_t<decltype(T::Load())>> : std::true_type {};
-
-            template <typename, typename = void>
+            template <typename, typename, typename = void>
             struct HasStaticUnload : std::false_type {};
-            template <typename T>
-            struct HasStaticUnload<T, std::void_t<decltype(T::Unload())>> : std::true_type {};
+            // Generalized trait to check for a static function with a specific return type
+            template <typename T, typename ReturnType, typename... Args>
+            struct HasStaticImport<T, ReturnType(Args...), std::void_t<decltype(T::Import(std::declval<Args>()...))>>
+                : std::is_same<decltype(T::Import(std::declval<Args>()...)), ReturnType> {};
+
+            template <typename T, typename ReturnType, typename... Args>
+            struct HasStaticLoad<T, ReturnType(Args...), std::void_t<decltype(T::Load(std::declval<Args>()...))>>
+                : std::is_same<decltype(T::Load(std::declval<Args>()...)), ReturnType> {};
+
+            template <typename T, typename ReturnType, typename... Args>
+            struct HasStaticUnload<T, ReturnType(Args...), std::void_t<decltype(T::Unload(std::declval<Args>()...))>>
+                : std::is_same<decltype(T::Unload(std::declval<Args>()...)), ReturnType> {};
         private:
             using RefAny = std::any;
             using TypeKey = std::uint64_t;
@@ -40,9 +49,13 @@ namespace IGE {
                 //
                 // Insert all the types into the hash table
                 //
+
                 ([&]< typename T >(T*)
                 {
-                    auto name = GetTypeName<T>();
+                    // Static assertions to check the existence of functions
+                    static_assert(HasStaticImport<T, GUID(std::string const&)>::value, "Ref<T> must have Import returning IGE::Assets::GUID.");
+                    static_assert(HasStaticLoad<T, void* (GUID)>::value, "Ref<T> must have Load returning void*.");
+                    static_assert(HasStaticUnload<T, void(T*, GUID)>::value, "Ref<T> must have Unload returning void.");                    auto name = GetTypeName<T>();
                     auto typeguid = TypeGUID{ name };
                     mRegisteredTypes.emplace
                     (
@@ -61,9 +74,9 @@ namespace IGE {
             template <typename T>
             GUID ImportAsset(std::string const& filepathstr){//std::filesystem::path const& filepath) { //
                 //get the absolute file path so that there cant be any duplicates
-                GUID guid{ filepathstr };
-                TypeGUID typeguid{ GetTypeName<T>() };
                 std::string absolutepath{filepathstr};
+                GUID guid{ absolutepath };
+                TypeGUID typeguid{ GetTypeName<T>() };
                 try {
                     std::filesystem::path filepath{absolutepath};
                     guid = GUID{ std::filesystem::absolute(filepath).string() };
@@ -74,7 +87,10 @@ namespace IGE {
                     absolutepath = filepathstr;
                 }
                 TypeAssetKey key{ typeguid ^ guid };
-                if (mAssetRefs.find(key) == mAssetRefs.end()) {
+                if (mAssetRefs.find(key) == mAssetRefs.end()) { //if asset not found, generate a new guid
+                    guid = T::Import(absolutepath);
+                    key = TypeAssetKey{ typeguid ^ guid };
+
                     Ref<T> ref{
                         IGE::Assets::UniversalRef{ PartialRef{ guid, nullptr }, typeguid }, 
                         IGE::Assets::Details::UniversalInfo{ mRegisteredTypes.at(typeguid) },
@@ -85,6 +101,8 @@ namespace IGE {
                     return guid;
                 }
                 else {
+                    TypeAssetKey key{ typeguid ^ guid };
+
                     Ref<T> ref { std::any_cast<Ref<T>>(mAssetRefs.at(key)) };
                     return ref.mInstance.partialRef.guid;
                 }

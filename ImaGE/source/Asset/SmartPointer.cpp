@@ -3,7 +3,7 @@
 
 namespace IGE{
 	namespace Assets {
-
+		std::unordered_map<uint64_t, uint64_t> RefCounted::_mRefCounts{};
 		static std::set<GUID> s_LiveReferences;
 #ifdef IGE_MULTITHREAD
 		static std::mutex s_LiveReferenceMutex;

@@ -53,9 +53,11 @@ namespace IGE {
 			TypeGUID typeGUID;
 			operator bool() const { return static_cast<bool>(partialRef); }
 			template <typename T>
-			void DecRefCount() const { if (partialRef) reinterpret_cast<T*>(partialRef.pointer)->DecRefCount(); }
+			void DecRefCount() const { if (partialRef) reinterpret_cast<T*>(partialRef.pointer)->DecRefCount(partialRef.guid); }
 			template <typename T>
-			void IncRefCount() const { if (partialRef) reinterpret_cast<T*>(partialRef.pointer)->IncRefCount(); }
+			void IncRefCount() const { if (partialRef) reinterpret_cast<T*>(partialRef.pointer)->IncRefCount(partialRef.guid); }
+			template <typename T>
+			uint64_t GetRefCount() const { if (partialRef) return reinterpret_cast<T*>(partialRef.pointer)->GetRefCount(partialRef.guid); return 0; }
 			
 		};
 		class RefCounted
@@ -63,27 +65,27 @@ namespace IGE {
 		public:
 			virtual ~RefCounted() = default;
 
-			void IncRefCount() const
+			void IncRefCount(uint64_t guid) const
 			{
-				++mRefCount;
+				++(_mRefCounts[guid]);
 			}
-			void DecRefCount() const
+			void DecRefCount(uint64_t guid) const
 			{
-				--mRefCount;
+				--(_mRefCounts[guid]);
 			}
 
-			uint32_t GetRefCount() const { 
+			uint64_t GetRefCount(uint64_t guid) const { 
 #ifdef IGE_MULTITHREAD
 				return mRefCount.load();
 #else
-				return mRefCount;
+				return _mRefCounts[guid];
 #endif
 			}
 		private:
 #ifdef IGE_MULTITHREAD
 			mutable std::atomic<uint32_t> mRefCount = 0;
 #else
-			mutable uint32_t mRefCount = 0;
+			static std::unordered_map<uint64_t, uint64_t> _mRefCounts;
 #endif
 		};
 
@@ -253,7 +255,7 @@ namespace IGE {
 		private:
 			Details::InstanceInfo GetInfo() {
 				if (mInstance.partialRef) {
-					mInfo.refCount = reinterpret_cast<T*>(mInstance.partialRef.pointer)->GetRefCount();
+					mInfo.refCount = mInstance.GetRefCount<T>();
 					mInfo.isLive = RefUtils::IsLive(mInstance.partialRef.guid);
 				}
 				else {
@@ -294,7 +296,7 @@ namespace IGE {
 				{
 					mInstance.DecRefCount<T>();
 
-					if (reinterpret_cast<T*>(mInstance.partialRef.pointer)->GetRefCount() == 0)
+					if (mInstance.GetRefCount<T>() <= 0)
 					{
 						Unload();
 						RefUtils::RemoveFromLiveReferences(mInstance.partialRef.guid);

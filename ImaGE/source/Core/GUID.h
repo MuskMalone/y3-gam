@@ -12,23 +12,26 @@ namespace IGE {
 		public:
 			
 			//GUID() : mID{ sUniformDistribution(sEng) } {}
-			GUID(std::string const& str) {
+			GUID(std::string const& str) : mSeed{str} {
 				std::seed_seq seed(str.begin(), str.end());
 				std::mt19937_64 rng(seed);
 				mID = rng();
 			}
-			GUID(uint64_t guid) : mID{ guid } {}
-			GUID(const GUID& other) : mID{ other.mID } {}
+			GUID(uint64_t guid) : mSeed{"INVALID"}, mID{guid} {}
+			GUID(const GUID& other) : 
+				mSeed{ other.mSeed}, 
+				mID { other.mID } {}
 
 			operator uint64_t () { return mID; }
 			operator const uint64_t() const { return mID; }
 
 			bool operator==(const GUID& other) const { return mID == other.mID; } 
 			bool operator<(const GUID& other) const { return mID < other.mID; }
-
+			std::string_view const& GetSeed() const noexcept { return mSeed; }
 		private:
 			static std::mt19937_64 sEng;
 			static std::uniform_int_distribution<uint64_t> sUniformDistribution;
+			std::string mSeed;
 			uint64_t mID;
 		};
 		//template <typename _tag>
