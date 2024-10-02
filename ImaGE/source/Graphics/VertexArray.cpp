@@ -86,7 +86,7 @@ namespace Graphics {
 	void VertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo) {
 		GLCALL(glBindVertexArray(vaoHdl));
 		vbo->Bind();
-		unsigned int attribIdx{};
+
 		auto const& layout{ vbo->GetLayout() };
 		for (auto const& elem : layout) {
 			switch (elem.type) {
@@ -94,44 +94,44 @@ namespace Graphics {
 			case AttributeType::VEC2:
 			case AttributeType::VEC3:
 			case AttributeType::VEC4:
-				GLCALL(glEnableVertexAttribArray(attribIdx));
-				GLCALL(glVertexAttribPointer(attribIdx,
+				GLCALL(glEnableVertexAttribArray(mAttribIdx));
+				GLCALL(glVertexAttribPointer(mAttribIdx,
 					elem.GetComponentCount(),
 					AttributeToGLType(elem.type),
 					elem.isNormalized ? GL_TRUE : GL_FALSE,
 					layout.GetStride(),
 					reinterpret_cast<const void*>(
 						static_cast<uintptr_t>(elem.offset))));
-				++attribIdx;
+				++mAttribIdx;
 				break;
 			case AttributeType::INT:
 			case AttributeType::IVEC2:
 			case AttributeType::IVEC3:
 			case AttributeType::IVEC4:
 			case AttributeType::BOOL:
-				GLCALL(glEnableVertexAttribArray(attribIdx));
-				GLCALL(glVertexAttribIPointer(attribIdx,
+				GLCALL(glEnableVertexAttribArray(mAttribIdx));
+				GLCALL(glVertexAttribIPointer(mAttribIdx,
 					elem.GetComponentCount(),
 					AttributeToGLType(elem.type),
 					layout.GetStride(),
 					reinterpret_cast<const void*>(
 						static_cast<uintptr_t>(elem.offset))));
-				++attribIdx;
+				++mAttribIdx;
 				break;
 			case AttributeType::MAT4:
 				// A MAT4 is 4 VEC4 attributes
 				for (int i = 0; i < 4; ++i) {
-					GLCALL(glEnableVertexAttribArray(attribIdx + i)); // Enable attribute for each column of the matrix
-					GLCALL(glVertexAttribPointer(attribIdx + i,
+					GLCALL(glEnableVertexAttribArray(mAttribIdx + i)); // Enable attribute for each column of the matrix
+					GLCALL(glVertexAttribPointer(mAttribIdx + i,
 						4,  // Each column is a vec4, so 4 components
 						GL_FLOAT,
 						elem.isNormalized ? GL_TRUE : GL_FALSE,
 						layout.GetStride(),
 						reinterpret_cast<const void*>(static_cast<uintptr_t>(elem.offset + sizeof(glm::vec4) * i))));
 					// Set divisor if using for instancing
-					GLCALL(glVertexAttribDivisor(attribIdx + i, 1));  // Optional: use if it's an instance attribute
+					GLCALL(glVertexAttribDivisor(mAttribIdx + i, 1));  // Optional: use if it's an instance attribute
 				}
-				attribIdx += 4; // Increment attribute index by 4 since a MAT4 takes 4 locations
+				mAttribIdx += 4; // Increment attribute index by 4 since a MAT4 takes 4 locations
 				break;
 			}
 

@@ -56,6 +56,9 @@ namespace Graphics {
         auto vao = VertexArray::Create();
         auto vbo = VertexBuffer::Create(cubeVertices.size() * sizeof(Vertex));
 
+        // Set vertex buffer data
+        vbo->SetData(cubeVertices.data(), cubeVertices.size() * sizeof(Vertex));
+
         BufferLayout cubeLayout = {
             {AttributeType::VEC3, "a_Position"},
             {AttributeType::VEC3, "a_Normal"},
@@ -163,6 +166,9 @@ namespace Graphics {
           // Create VAO and VBO
           auto vao = VertexArray::Create();
           auto vbo = VertexBuffer::Create(static_cast<unsigned>(imsh.GetVertexBuffer().size()));
+
+          // Set vertex buffer data
+          vbo->SetData(imsh.GetVertexBuffer().data(), imsh.GetVertexBuffer().size() * sizeof(Vertex));
 
           BufferLayout modelLayout = {
               {AttributeType::VEC3, "a_Position"},

@@ -47,7 +47,7 @@ namespace Graphics::AssetIO
 #endif
 
     operator bool() const { return mStatus; } // check if object is valid
-    inline std::vector<Graphics::Vertex> const& GetVertexBuffer() const noexcept { return mVertexBuffer; }
+    inline std::vector<Graphics::Vertex> & GetVertexBuffer() noexcept { return mVertexBuffer; }
     inline std::vector<uint32_t> const& GetIndices() const noexcept { return mIndices; }
 
     void ReadFromBinFile(std::string const& file);

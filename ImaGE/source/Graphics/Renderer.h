@@ -33,7 +33,7 @@ namespace Graphics {
 
 	struct InstanceData {
 		glm::mat4 modelMatrix;
-		glm::vec4 color;
+		//glm::vec4 color;
 	};
 
 	struct RendererData {

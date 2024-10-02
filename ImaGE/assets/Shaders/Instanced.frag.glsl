@@ -74,7 +74,7 @@ void main(){
     color = pow(color, vec3(1.0/2.2)); // Gamma correction
 
     // Apply per-instance color and output final color
-    fragColor = vec4(color, texColor.a) * v_Color;
+    fragColor = v_Color;
 }
 
 vec3 fresnelSchlick(float cosTheta, vec3 F0)

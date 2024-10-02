@@ -10,7 +10,7 @@ layout(location = 6) in vec4 a_Color;
 
 // New per-instance attributes (starting at location 7)
 layout(location = 7) in mat4 a_ModelMatrix; // Model transformation matrix for each instance
-layout(location = 11) in vec4 a_InstanceColor; // Instance-specific color
+//layout(location = 11) in vec4 a_InstanceColor; // Instance-specific color
 
 out vec4 v_Color;
 out vec2 v_TexCoord;
@@ -36,7 +36,7 @@ void main(){
 
     // Output per-instance attributes
     v_FragPos = worldPosition.xyz;
-    v_Color = a_InstanceColor * a_Color; // Combine vertex color and instance color
+    v_Color =  a_Color; // Combine vertex color and instance color
     v_TexCoord = a_TexCoord;
     v_TexIdx = a_TexIdx;
 }
