@@ -97,8 +97,8 @@ namespace Graphics {
 		for (unsigned int i{}; i < mData.maxTexUnits; ++i)
 			samplers[i] = i;
 
-		mData.lineShader = std::make_shared<Shader>("./assets/Shaders/Tri.vert.glsl", "./assets/Shaders/Tri.frag.glsl");
-		mData.texShader = std::make_shared<Shader>("./assets/Shaders/Default.vert.glsl", "./assets/Shaders/Default.frag.glsl");
+		mData.lineShader = std::make_shared<Shader>("../Assets/Shaders/Tri.vert.glsl", "../Assets/Shaders/Tri.frag.glsl");
+		mData.texShader = std::make_shared<Shader>("../Assets/Shaders/Default.vert.glsl", "../Assets/Shaders/Default.frag.glsl");
 		mData.texShader->Use();
 		mData.texShader->SetUniform("u_Tex", samplers.data(), mData.maxTexUnits);
 
@@ -107,7 +107,7 @@ namespace Graphics {
 		mData.quadVtxPos[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
 		mData.quadVtxPos[3] = { -0.5f, 0.5f, 0.0f, 1.0f };
 
-		mData.instancedShader = std::make_shared<Shader>("./assets/Shaders/Instanced.vert.glsl", "./assets/Shaders/Instanced.frag.glsl");
+		mData.instancedShader = std::make_shared<Shader>("../Assets/Shaders/Instanced.vert.glsl", "../Assets/Shaders/Instanced.frag.glsl");
 
 		//Init framebuffer
 		Graphics::FramebufferSpec framebufferSpec;
@@ -333,7 +333,6 @@ namespace Graphics {
 			auto& vao = meshSrc->GetVertexArray();
 
 			RenderAPI::DrawIndicesInstanced(vao, meshSrc->GetIndices().size(), instances.size());
-
 
 		}
 

@@ -82,7 +82,8 @@ void EditorApplication::Run() {
         if (GetApplicationSpecification().EnableImGui) {
           UpdateFramebuffers();
 
-          mGUIManager.UpdateGUI(GetFrameBuffer().front().first);
+          auto fb = Graphics::Renderer::GetFinalFramebuffer();
+          mGUIManager.UpdateGUI(fb);
 
           ImGui::Render();
           ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

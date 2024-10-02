@@ -2,6 +2,7 @@
 #include "RenderPass.h"
 #include "Core/Entity.h"
 #include "EditorCamera.h"
+#include "Core/Component/Mesh.h"
 
 namespace Graphics {
     RenderPass::RenderPass(const RenderPassSpec& spec) : mSpec(spec) {}
