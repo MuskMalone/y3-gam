@@ -5,6 +5,11 @@
 #include "AssetBrowser.h"
 #include <Events/EventManager.h>
 
+#include <Core/Entity.h>
+#include <Core/Components/Mesh.h>
+#include <Graphics/MeshFactory.h>
+#include <Graphics/Mesh.h>
+
 //to remove
 #include "Core/Camera.h"
 #include "TempScene.h"
@@ -62,7 +67,7 @@ namespace GUI
   {
     if (ImGui::BeginDragDropTarget())
     {
-      ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetBrowser::sAssetDragDropPayload);
+      ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
       if (drop)
       {
         AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
@@ -76,13 +81,18 @@ namespace GUI
           glm::vec3 const prefabPos{};
           QUEUE_EVENT(Events::SpawnPrefabEvent, assetPayload.GetFileName(), assetPayload.GetFilePath(), prefabPos);
           break;
+        case AssetPayload::MODEL:
+        {
+          // @TODO: ABSTRACT MORE; MAKE IT EASIER TO ADD A MESH
+          ECS::Entity newEntity{ ECS::EntityManager::GetInstance().CreateEntityWithTag(assetPayload.GetFileName()) };
+          auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
+          newEntity.EmplaceComponent<Component::Mesh>(meshSrc, assetPayload.GetFileName());
+          break;
+        }
         case AssetPayload::SPRITE:
-
-          break;
         case AssetPayload::AUDIO:
-
+        default:
           break;
-        default: break;
         }
       }
       ImGui::EndDragDropTarget();

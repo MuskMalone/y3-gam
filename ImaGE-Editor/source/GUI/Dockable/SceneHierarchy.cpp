@@ -273,9 +273,12 @@ namespace GUI
         mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
       }
 
+      ImGui::BeginDisabled();
       if (ImGui::Selectable("Duplicate")) {
-        mEntityManager.CopyEntity(mRightClickedEntity);
+        //mEntityManager.CopyEntity(mRightClickedEntity);
+        Reflection::ObjectFactory::GetInstance().CloneObject(mRightClickedEntity);
       }
+      ImGui::EndDisabled();
 
       if (ImGui::Selectable("Save as Prefab")) {
         mPrefabPopup = true;

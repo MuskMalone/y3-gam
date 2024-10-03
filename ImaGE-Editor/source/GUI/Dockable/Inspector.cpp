@@ -5,11 +5,14 @@
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include "Color.h"
 #include "GUI/Helpers/ImGuiHelpers.h"
+#include <GUI/Helpers/AssetPayload.h>
 
 #include <Physics/PhysicsSystem.h>
 #include <functional>
 #include <Reflection/ComponentTypes.h>
 #include <Events/EventManager.h>
+#include <Graphics/MeshFactory.h>
+#include <Graphics/Mesh.h>
 
 namespace GUI {
   Inspector::Inspector(std::string const& name) : GUIWindow(name),
@@ -495,6 +498,44 @@ namespace GUI {
     bool modified{ false };
 
     if (isOpen) {
+      static const std::vector<std::pair<std::string, Graphics::MeshFactory::MeshSourcePtr(*)()>> nameToFunc{
+        { "None", nullptr },
+        { "Cube", Graphics::MeshFactory::CreateCube }
+      };
+      Component::Mesh& mesh{ entity.GetComponent<Component::Mesh>() };
+
+      if (ImGui::BeginCombo("##MeshSelection", mesh.meshName.c_str())) {
+        for (auto const& [name, func] : nameToFunc) {
+          if (ImGui::Selectable(name.c_str())) {
+            if (func) {
+              mesh.mesh = std::make_shared<Graphics::Mesh>(func());
+            }
+
+            if (name != mesh.meshName) {
+              modified = true;
+              mesh.meshName = name;
+            }
+            break;
+          }
+        }
+
+        ImGui::EndCombo();
+      }
+      // allow dropping of models
+      // @TODO: ABSTRACT MORE; MAKE IT EASIER TO ADD A MESH
+      else if (ImGui::BeginDragDropTarget())
+      {
+        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+        if (drop) {
+          AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+          if (assetPayload.mAssetType == AssetPayload::MODEL) {
+            auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
+            mesh.mesh = std::move(meshSrc);
+            mesh.meshName = assetPayload.GetFileName();
+          }
+        }
+        ImGui::EndDragDropTarget();
+      }
 
     }
 
@@ -578,7 +619,7 @@ namespace GUI {
       }
 
       // Motion Type Selection
-      const char* motionTypes[] = { "Static", "Kinematic", "Dynamic" };
+      static const char* motionTypes[] = { "Static", "Kinematic", "Dynamic" };
       int currentMotionType = static_cast<int>(rigidBody.motionType);
 
       ImGui::TableNextRow();
@@ -631,7 +672,7 @@ namespace GUI {
       ImGui::EndTable();
 
       // Shape Type Selection
-      const char* shapeTypes[] = { "Unknown", "Sphere", "Capsule", "Box", "Triangle", "ConvexHull", "Mesh", "HeightField", "Compound" };
+      static const char* shapeTypes[] = { "Unknown", "Sphere", "Capsule", "Box", "Triangle", "ConvexHull", "Mesh", "HeightField", "Compound" };
       int currentShapeType = static_cast<int>(collider.type);
 
       ImGui::BeginTable("ShapeSelectionTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);

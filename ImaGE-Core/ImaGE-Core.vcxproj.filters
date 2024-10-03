@@ -91,9 +91,6 @@
     <ClInclude Include="source\Asset\AssetManager.h">
       <Filter>Asset</Filter>
     </ClInclude>
-    <ClInclude Include="source\Asset\IGEAssets.h">
-      <Filter>Asset</Filter>
-    </ClInclude>
     <ClInclude Include="source\Color.h" />
     <ClInclude Include="source\Core\Camera.h">
       <Filter>Core</Filter>
@@ -157,9 +154,6 @@
     </ClInclude>
     <ClInclude Include="source\Core\Systems\TransformSystem\WorldToLocalTransformSystem.h">
       <Filter>Core\Systems\TransformSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Core\TempObject.h">
-      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="source\Debug.h" />
     <ClInclude Include="source\DebugTools\DebugLogger\DebugLogger.h">
@@ -262,16 +256,7 @@
     <ClInclude Include="source\Graphics\MeshFactory.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="source\Graphics\MeshGen.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="source\Graphics\MeshSource.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Graphics\MeshType.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Graphics\Model.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\Pipeline.h">
@@ -295,12 +280,6 @@
     <ClInclude Include="source\Graphics\Shader.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="source\Graphics\ShaderProgram.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Graphics\ShaderStructs.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="source\Graphics\Submesh.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -314,9 +293,6 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\VertexArray.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Graphics\VertexAttribs.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\VertexBuffer.h">
@@ -409,9 +385,6 @@
     <ClCompile Include="source\Core\Systems\TransformSystem\WorldToLocalTransformSystem.cpp">
       <Filter>Core\Systems\TransformSystem</Filter>
     </ClCompile>
-    <ClCompile Include="source\Core\TempObject.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="source\DebugTools\DebugLogger\DebugLogger.cpp">
       <Filter>DebugTools\DebugLogger</Filter>
     </ClCompile>
@@ -484,13 +457,7 @@
     <ClCompile Include="source\Graphics\MeshFactory.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\MeshGen.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="source\Graphics\MeshSource.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Graphics\Model.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\Pipeline.cpp">
@@ -511,12 +478,6 @@
     <ClCompile Include="source\Graphics\Shader.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\ShaderProgram.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Graphics\ShaderStructs.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="source\Graphics\Texture.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
@@ -524,9 +485,6 @@
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\VertexArray.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Graphics\VertexAttribs.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\VertexBuffer.cpp">

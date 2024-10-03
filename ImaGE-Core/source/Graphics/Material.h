@@ -14,7 +14,7 @@ namespace Graphics{
         {}
 
         // Setters and getters for per-instance properties
-        glm::vec3 GetAlbedoColor() const { return mAlbedoColor; }
+       glm::vec3 GetAlbedoColor() const { return mAlbedoColor; }
         void SetAlbedoColor(const glm::vec3& color) { mAlbedoColor = color; }
 
         float GetMetalness() const { return mMetalness; }

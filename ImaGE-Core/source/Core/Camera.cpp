@@ -43,11 +43,6 @@ void Camera::Update(float deltaTime)
   m_modified = false;
 }
 
-void Camera::SetUniforms(Graphics::ShaderProgram& shader) const
-{
-  shader.SetUniform("uViewTransform", m_viewMtx);
-  shader.SetUniform("uProjTransform", m_projMtx);
-}
 
 void Camera::onCursor(double xOffSet, double yOffSet)
 {

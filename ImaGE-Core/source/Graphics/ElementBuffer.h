@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 
 namespace Graphics{
 	class ElementBuffer {
@@ -20,4 +21,3 @@ namespace Graphics{
 		unsigned int mIdxCount;
 	};
 }
-

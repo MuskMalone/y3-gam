@@ -99,7 +99,7 @@ namespace IGE {
     SetCallbacks();
 
     RegisterSystems();
-    mScene = std::make_unique<Scene>("../Assets/Shaders/BlinnPhong.vert.glsl", "../Assets/Shaders/BlinnPhong.frag.glsl");
+    mScene = std::make_unique<Scene>();
 
   //framebuffer init
   Graphics::FramebufferSpec framebufferSpec;

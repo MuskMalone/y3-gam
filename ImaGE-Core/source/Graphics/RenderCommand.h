@@ -1,6 +1,6 @@
 #pragma once
-#include <pch.h>
 #include "Mesh.h"
+#include <glm/glm.hpp>
 
 namespace Graphics {
 	struct RenderCommand {

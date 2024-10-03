@@ -10,6 +10,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rttr/registration>
 #include <Prefabs/Prefab.h>
 #include <Jolt/Math/Vec3.h>
+#include <glm/glm.hpp>
+#include <glm/gtx/quaternion.hpp>
 #include <Application.h>
 
 static void rttr_auto_register_reflection_function_(); namespace {

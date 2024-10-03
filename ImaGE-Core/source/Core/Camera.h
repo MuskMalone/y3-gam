@@ -1,7 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp>
-#include <Graphics/ShaderProgram.h>
 
 class Camera
 {
@@ -17,7 +16,6 @@ public:
   void Update(float deltaTime);
   void Reset(glm::vec3 const& eye, glm::vec3 const& target);
 
-  void SetUniforms(Graphics::ShaderProgram& shader) const;
   void onCursor(double xOffSet, double yOffSet);
 
   // Controls

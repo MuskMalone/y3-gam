@@ -9,11 +9,11 @@ namespace Component
   {
     Transform() :
       worldMtx{}, parentWorldMtx{ glm::identity<glm::mat4>() }, rotation{ 1.f, 0.f, 0.f, 0.f }, worldRot{ 1.f, 0.f, 0.f, 0.f },
-      position{}, scale{}, eulerAngles{}, worldPos{}, worldScale{ 1.f },
+      position{}, scale{ 1.f, 1.f, 1.f }, eulerAngles{}, worldPos{}, worldScale{ 1.f, 1.f, 1.f },
       modified{ true } {}
     Transform(glm::vec3 const& _pos, glm::vec3 const& _scale = { 1.f, 1.f, 1.f }, glm::vec3 const& _rot = {}) :
       worldMtx{}, parentWorldMtx{ glm::identity<glm::mat4>() }, rotation{ 1.f, 0.f, 0.f, 0.f }, worldRot{ 1.f, 0.f, 0.f, 0.f },
-      position{}, scale{}, eulerAngles{}, worldPos{ _pos }, worldScale{ _scale },
+      position{ _pos }, scale{ _scale }, eulerAngles{}, worldPos{ _pos }, worldScale{ _scale },
       modified{ true } {}
 
     void SetLocalRotWithEuler(glm::vec3 const& degrees);
