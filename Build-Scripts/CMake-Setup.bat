@@ -1,7 +1,8 @@
 @echo off
 REM Set variables for paths
-set PROJECT_DIR="..\y3-gam"
-set BUILD_DIR=%PROJECT_DIR%build
+chdir ..
+set PROJECT_DIR=%cd%
+set BUILD_DIR=Libraries\Built-Libraries
 set CONFIGURATION=Release
 
 REM Create build directory if it doesn't exist
@@ -9,17 +10,11 @@ if not exist "%BUILD_DIR%" (
     mkdir "%BUILD_DIR%"
 )
 
-REM Navigate to the build directory
-cd "%BUILD_DIR%"
-
 REM Run CMake to generate build files
-cmake .. -DCMAKE_BUILD_TYPE=%CONFIGURATION%
+cmake -S %PROJECT_DIR% -B %BUILD_DIR% -DCMAKE_BUILD_TYPE=%CONFIGURATION%
 
-REM Build the project
-cmake --build . --config %CONFIGURATION%
-
-REM Go back to the project root
-cd "%PROJECT_DIR%"
+REM Build the project using the specified configuration
+cmake --build %BUILD_DIR% --config %CONFIGURATION%
 
 @echo Project built successfully!
 pause

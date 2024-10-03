@@ -66,7 +66,6 @@ project "ImaGE-Core"
 
        links {
         "opengl32.lib",
-        "glfw3dll.lib",
         "glfw3.lib",
         "assimp-vc143-mt.lib",
         "Jolt_d.lib",
@@ -103,7 +102,6 @@ project "ImaGE-Core"
 
        links {
         "opengl32.lib",
-        "glfw3dll.lib",
         "glfw3.lib",
         "assimp-vc143-mt.lib",
         "Jolt.lib",
@@ -133,7 +131,6 @@ project "ImaGE-Core"
 
        links {
         "opengl32.lib",
-        "glfw3dll.lib",
         "glfw3.lib",
         "assimp-vc143-mt.lib",
         "Jolt.lib",
