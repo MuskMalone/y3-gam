@@ -165,10 +165,11 @@ namespace Graphics {
 
           // Create VAO and VBO
           auto vao = VertexArray::Create();
-          auto vbo = VertexBuffer::Create(static_cast<unsigned>(imsh.GetVertexBuffer().size()));
+          auto vbo = VertexBuffer::Create(static_cast<unsigned>(imsh.GetVertexBuffer().size() * sizeof(Vertex)));
 
           // Set vertex buffer data
           auto vtxBufferCpy{ imsh.GetVertexBuffer() };
+
           vbo->SetData(vtxBufferCpy.data(), static_cast<unsigned>(vtxBufferCpy.size() * sizeof(Vertex)));
 
           BufferLayout modelLayout = {

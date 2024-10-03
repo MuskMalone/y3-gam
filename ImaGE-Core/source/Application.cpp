@@ -28,7 +28,7 @@ namespace IGE {
     Scenes::SceneManager::GetInstance().Init();
     Prefabs::PrefabManager::GetInstance().Init();
     Performance::FrameRateController::GetInstance().Init(120.f, 1.f, false);
-    Input::InputManager::GetInstance().InitInputManager(mWindow, mSpecification.WindowWidth, mSpecification.WindowHeight, 0.3);
+    Input::InputManager::GetInstance().InitInputManager(mWindow, mSpecification.WindowWidth, mSpecification.WindowHeight, 0.1);
   }
 
   void Application::Run() {
