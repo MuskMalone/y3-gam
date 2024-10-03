@@ -347,6 +347,8 @@
     <ClInclude Include="source\TempScene.h" />
     <ClInclude Include="source\pch.h" />
     <ClInclude Include="source\Graphics\RenderPass.h" />
+    <ClInclude Include="source\Graphics\MaterialSource.h" />
+    <ClInclude Include="source\Graphics\Material.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -498,5 +500,7 @@
     <ClCompile Include="source\pch.cpp" />
     <ClCompile Include="source\Graphics\RenderPass.cpp" />
     <ClCompile Include="source\Graphics\Utils.cpp" />
+    <ClCompile Include="source\Graphics\MaterialSource.cpp" />
+    <ClCompile Include="source\Graphics\Material.cpp" />
   </ItemGroup>
 </Project>

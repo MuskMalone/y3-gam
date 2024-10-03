@@ -2,9 +2,13 @@
 #include "Renderer.h"
 #include "Framebuffer.h"
 
+#ifndef NDEBUG
+// Debug or other specific mode: error checking and logging
 #define GLCALL(x) Graphics::Utils::GL::GlClearErrors(); x; Graphics::Utils::GL::GlLogCall(#x, __FILE__, __LINE__)
-
-//#define GLCALL(x) x;
+#else
+// Release or other non-debug mode: no error checking
+#define GLCALL(x) x
+#endif
 
 namespace Graphics {
 	namespace Utils{

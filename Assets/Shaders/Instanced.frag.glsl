@@ -37,9 +37,6 @@ float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness);
 vec3 fresnelSchlick(float cosTheta, vec3 F0);
 
 void main(){
-	//vec4 texColor = texture2D(u_Tex[int(v_TexIdx)], v_TexCoord);
-//	vec4 texColor = texture2D(u_Tex[0], v_TexCoord);
-//	fragColor = texColor * v_Color;
 
 	//sample texture
 	//vec4 texColor = texture2D(u_Tex[0], v_TexCoord);

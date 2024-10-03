@@ -25,7 +25,7 @@ std::vector<Camera> Scene::m_cameras;
 Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 const& clearClr)
   : m_shaders{}, m_defaultShaders{}, 
   m_light{ { 0.f, 25.f, 0.f }, { 0.4f, 0.4f, 0.4f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 1.0f } },
-  m_material{ glm::vec3(1.f), glm::vec3(1.f), glm::vec3(1.f), 100.f },
+
   m_leftClickHeld{ false }, m_leftClickTriggered{ true }
 {
   glClearColor(clearClr.r, clearClr.g, clearClr.b, clearClr.a);
@@ -204,7 +204,7 @@ void Scene::DrawTopView()
 
   m_cameras[1].SetUniforms(m_shaders);
   m_light.SetUniforms(m_shaders);
-  m_material.SetUniforms(m_shaders);
+  //m_material.SetUniforms(m_shaders);
 
   //for (auto& obj : mObjects)
   //{
