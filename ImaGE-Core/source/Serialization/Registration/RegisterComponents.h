@@ -39,11 +39,12 @@ static void rttr_auto_register_reflection_function2_(); namespace {
 
   rttr::registration::class_<Mesh>("Mesh")
     .constructor<>()
-    .property("meshRef", &Mesh::meshRef);
+    .property("mesh", &Mesh::mesh);
 
   rttr::registration::class_<Material>("Material")
     .constructor<>()
-    .property("color", &Material::color);
+    .property("material", &Material::material);
+    //.property("color", &Material::color);
 
   rttr::registration::class_<Text>("Text")
     .constructor<>()

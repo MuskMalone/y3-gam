@@ -13,12 +13,12 @@ namespace Graphics
     shader.SetUniform("light.specularIntensity", specularIntensity);
   }
 
-  void Material::SetUniforms(ShaderProgram& shader) const
-  {
-    shader.SetUniform("material.ambient", ambient);
-    shader.SetUniform("material.diffuse", diffuse);
-    shader.SetUniform("material.specular", specular);
-    shader.SetUniform("material.shininess", shininess);
-  }
+  //void Material::SetUniforms(ShaderProgram& shader) const
+  //{
+  //  shader.SetUniform("material.ambient", ambient);
+  //  shader.SetUniform("material.diffuse", diffuse);
+  //  shader.SetUniform("material.specular", specular);
+  //  shader.SetUniform("material.shininess", shininess);
+  //}
 
   } // namespace Graphics

@@ -33,7 +33,7 @@ private:
 	Graphics::EditorCamera mEcam;
   Graphics::ShaderProgram m_shaders, m_defaultShaders;
   Graphics::Light m_light;
-  Graphics::Material m_material;
+  //Graphics::Material m_material;
   static // tch to remove added for testing 
 	  std::vector<Camera> m_cameras;
 
