@@ -233,14 +233,15 @@ namespace Graphics {
 		++mData.stats.quadCount;
 	}
 
-	void Renderer::SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& scale, glm::vec4 const& clr, float rot) {
+	void Renderer::SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr) {
 		if (mesh == nullptr) return;
 		auto const& meshSrc = mesh->GetMeshSource();
 		auto const& submeshes = meshSrc->GetSubmeshes();
 
 		// Transformation matrices
 		glm::mat4 translateMtx{ glm::translate(glm::mat4{ 1.f }, pos) };
-		glm::mat4 rotateMtx{ glm::rotate(glm::mat4{ 1.f }, glm::radians(rot), {0.f, 1.f, 0.f}) };
+		//glm::mat4 rotateMtx{ glm::rotate(glm::mat4{ 1.f }, glm::radians(rot), {0.f, 1.f, 0.f}) };
+		glm::mat4 rotateMtx = glm::mat4(1.f);
 		glm::mat4 scaleMtx{ glm::scale(glm::mat4{ 1.f }, scale) };
 		glm::mat4 transformMtx{ translateMtx * rotateMtx * scaleMtx };
 
