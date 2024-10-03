@@ -346,9 +346,10 @@
     <ClInclude Include="source\Singleton.h" />
     <ClInclude Include="source\TempScene.h" />
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Core\Systems\TransformSystem.h" />
+    <ClInclude Include="source\Core\Systems\WorldToLocalTransformSystem.h" />
     <ClInclude Include="source\Core\Systems\System.h" />
     <ClInclude Include="source\Core\Systems\SystemManager\SystemManager.h" />
+    <ClInclude Include="source\Core\Systems\LocalToWorldTransformSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -498,7 +499,8 @@
     </ClCompile>
     <ClCompile Include="source\TempScene.cpp" />
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\Core\Systems\TransformSystem.cpp" />
+    <ClCompile Include="source\Core\Systems\WorldToLocalTransformSystem.cpp" />
     <ClCompile Include="source\Core\Systems\SystemManager\SystemManager.cpp" />
+    <ClCompile Include="source\Core\Systems\LocalToWorldTransformSystem.cpp" />
   </ItemGroup>
 </Project>

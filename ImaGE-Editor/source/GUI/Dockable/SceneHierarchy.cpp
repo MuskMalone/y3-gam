@@ -181,6 +181,7 @@ namespace GUI
         }
       }
 
+      bool dragNDropped{ false };
       if (!lockControls) {
         if (ImGui::BeginDragDropSource())
         {
@@ -192,6 +193,7 @@ namespace GUI
         }
         if (ImGui::BeginDragDropTarget())
         {
+          dragNDropped = true;
           ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(sDragDropPayload);
           if (drop)
           {
@@ -209,10 +211,12 @@ namespace GUI
           mEntityOptionsMenu = true;
         }
       }
-
-      if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+      
+      if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) && ImGui::IsItemHovered()) {
         if (isCurrentEntity) {
-          editNameMode = lockControls = true;
+          if (!dragNDropped) {
+            editNameMode = lockControls = true;
+          }
         }
         else {
           GUIManager::SetSelectedEntity(entity);

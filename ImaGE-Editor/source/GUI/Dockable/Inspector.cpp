@@ -435,7 +435,7 @@ namespace GUI {
     bool modified{ false };
 
     if (isOpen) {
-      auto& transform = entity.GetComponent<Component::Transform>();
+      Component::Transform& transform = entity.GetComponent<Component::Transform>();
 
       float contentSize = ImGui::GetContentRegionAvail().x;
       float charSize = ImGui::CalcTextSize("012345678901234").x;
@@ -453,10 +453,12 @@ namespace GUI {
       if (ImGuiHelpers::TableInputFloat3("Translation", &transform.position[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
         modified = true;
       }
-      if (ImGuiHelpers::TableInputFloat3("Rotation", &transform.rotation[0], inputWidth, false, 0.f, 360.f, 0.1f)) {
+      glm::vec3 localRot{ transform.GetLocalEulerAngles() };
+      if (ImGuiHelpers::TableInputFloat3("Rotation", &localRot[0], inputWidth, false, 0.f, 360.f, 0.1f)) {
+        transform.SetLocalRotWithEuler(localRot);
         modified = true;
       }
-      if (ImGuiHelpers::TableInputFloat3("Scale", &transform.scale[0], inputWidth, false, 0.f, 100.f, 1.f)) {
+      if (ImGuiHelpers::TableInputFloat3("Scale", &transform.scale[0], inputWidth, false, 0.001f, 100.f, 1.f)) {
         modified = true;
       }
       ImGui::EndTable();
@@ -471,9 +473,10 @@ namespace GUI {
 
       // only allow local transform to be modified
       ImGui::BeginDisabled();
+      glm::vec3 worldRot{ transform.GetWorldEulerAngles() };
       ImGuiHelpers::TableInputFloat3("World Translation", &transform.worldPos[0], inputWidth, false, -100.f, 100.f, 0.1f);
-      ImGuiHelpers::TableInputFloat3("World Rotation", &transform.worldRot[0], inputWidth, false, 0.f, 360.f, 0.1f);
-      ImGuiHelpers::TableInputFloat3("World Scale", &transform.worldScale[0], inputWidth, false, 0.f, 100.f, 1.f);
+      ImGuiHelpers::TableInputFloat3("World Rotation", &worldRot[0], inputWidth, false, 0.f, 360.f, 0.1f);
+      ImGuiHelpers::TableInputFloat3("World Scale", &transform.worldScale[0], inputWidth, false, 0.001f, 100.f, 1.f);
       ImGui::EndDisabled();
 
       ImGui::EndTable();

@@ -4,14 +4,14 @@
 namespace Systems {
 
   void SystemManager::InitSystems() {
-    for (auto const& [name, system] : mSystems) {
+    for (SystemPtr const& system : mSystems) {
       system->Start();
     }
   }
 
   void SystemManager::UpdateSystems() {
     Performance::FrameRateController& frc{ Performance::FrameRateController::GetInstance() };
-    for (auto const&[name, system] : mSystems) {
+    for (SystemPtr const& system : mSystems) {
       frc.StartSystemTimer();
 
       system->Update();
@@ -26,9 +26,12 @@ namespace Systems {
   }
 
   void SystemManager::Shutdown() {
-    for (auto const& [name, system] : mSystems) {
+    for (SystemPtr const& system : mSystems) {
       system->Destroy();
     }
+
+    mNameToSystem.clear();
+    mSystems.clear();
   }
 
 } // namespace Systems

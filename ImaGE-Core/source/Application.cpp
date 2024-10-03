@@ -11,7 +11,8 @@
 #include <Core/Components/Components.h>
 
 #include <Physics/PhysicsSystem.h>
-#include <Core/Systems/TransformSystem.h>
+#include <Core/Systems/WorldToLocalTransformSystem.h>
+#include <Core/Systems/LocalToWorldTransformSystem.h>
 
 // Static Initialization
 Application::ApplicationSpecification Application::mSpecification{};
@@ -53,8 +54,12 @@ void Application::Run() {
   }
 }
 
+// registration order is the update order
 void Application::RegisterSystems() {
-  mSystemManager.RegisterSystem<Systems::TransformSystem>("Transform System");
+  mSystemManager.RegisterSystem<Systems::LocalToWorldTransformSystem>("Pre-Transform System");
+  // physics should go here since it deals with world coords i assume
+
+  mSystemManager.RegisterSystem<Systems::WorldToLocalTransformSystem>("Post-Transform System");
 }
 
 Application::Application(ApplicationSpecification spec) :

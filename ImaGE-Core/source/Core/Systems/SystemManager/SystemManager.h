@@ -21,7 +21,8 @@ namespace Systems {
   private:
     using SystemPtr = std::shared_ptr<System>;
 
-    std::unordered_map<const char*, SystemPtr> mSystems;
+    std::unordered_map<const char*, SystemPtr> mNameToSystem;
+    std::vector<SystemPtr> mSystems;
   };
 #include "SystemManager.tpp"
 } // namespace Systems
