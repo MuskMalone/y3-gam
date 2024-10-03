@@ -38,17 +38,6 @@ project "ImaGE-Editor"
       defines {
          "_DEBUG",
          "_CONSOLE",
-         "JPH_DEBUG_RENDERER",
-         "JPH_PROFILE_ENABLED",
-         "JPH_OBJECT_STREAM",
-         "JPH_USE_AVX2",
-         "JPH_USE_AVX",
-         "JPH_USE_SSE4_1",
-         "JPH_USE_SSE4_2",
-         "JPH_USE_LZCNT",
-         "JPH_USE_TZCNT",
-         "JPH_USE_F16C",
-         "JPH_USE_FMADD",
          "_CRT_SECURE_NO_WARNINGS",
          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
          "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"
@@ -68,15 +57,6 @@ project "ImaGE-Editor"
       defines {
          "NDEBUG",
          "_CONSOLE",
-         "JPH_OBJECT_STREAM",
-         "JPH_USE_AVX2",
-         "JPH_USE_AVX",
-         "JPH_USE_SSE4_1",
-         "JPH_USE_SSE4_2",
-         "JPH_USE_LZCNT",
-         "JPH_USE_TZCNT",
-         "JPH_USE_F16C",
-         "JPH_USE_FMADD",
          "_CRT_SECURE_NO_WARNINGS",
          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
          "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"
@@ -95,15 +75,6 @@ project "ImaGE-Editor"
    filter "configurations:Distribution"
       defines {
          "DISTRIBUTION",
-         "JPH_OBJECT_STREAM",
-         "JPH_USE_AVX2",
-         "JPH_USE_AVX",
-         "JPH_USE_SSE4_1",
-         "JPH_USE_SSE4_2",
-         "JPH_USE_LZCNT",
-         "JPH_USE_TZCNT",
-         "JPH_USE_F16C",
-         "JPH_USE_FMADD",
          "_CRT_SECURE_NO_WARNINGS",
          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
          "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"

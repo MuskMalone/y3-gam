@@ -347,6 +347,11 @@
     <ClInclude Include="source\TempScene.h" />
     <ClInclude Include="source\pch.h" />
     <ClInclude Include="source\Graphics\RenderPass.h" />
+    <ClInclude Include="source\Asset\Assetables\Audio\AudioAsset.h" />
+    <ClInclude Include="source\Asset\Assetables\Texture\TextureAsset.h" />
+    <ClInclude Include="source\Asset\Assetables\AssetExtensions.h" />
+    <ClInclude Include="source\Asset\AssetUtils.h" />
+    <ClInclude Include="source\Asset\SmartPointer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -498,5 +503,10 @@
     <ClCompile Include="source\pch.cpp" />
     <ClCompile Include="source\Graphics\RenderPass.cpp" />
     <ClCompile Include="source\Graphics\Utils.cpp" />
+    <ClCompile Include="source\Asset\Assetables\Audio\AudioAsset.cpp" />
+    <ClCompile Include="source\Asset\Assetables\Texture\TextureAsset.cpp" />
+    <ClCompile Include="source\Asset\AssetManager.cpp" />
+    <ClCompile Include="source\Asset\AssetUtils.cpp" />
+    <ClCompile Include="source\Asset\SmartPointer.cpp" />
   </ItemGroup>
 </Project>

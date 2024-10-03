@@ -1,13 +1,9 @@
 #pragma once
-#include <Jolt/Jolt.h>
-#include <Jolt/Math/Vector.h>
-#include <Jolt/Physics/Body/Body.h>
-#include <Jolt/Physics/Body/MotionType.h>
 
 namespace Component {
 	enum class RigidBodyVars {
 		MASS,
-		STATIC_FRICTION, 
+		STATIC_FRICTION,
 		DYNAMIC_FRICTION,
 		RESTITUTION,
 		GRAVITY_FACTOR,
@@ -15,13 +11,13 @@ namespace Component {
 		ANGULAR_VELOCITY,
 		MOTION
 	};
-	
+
 	struct RigidBody {
 		enum class MotionType {
 			DYNAMIC = 0,
 			KINEMATIC
 		};
-		inline void Clear() noexcept { 
+		inline void Clear() noexcept {
 			// Idk what are good default values
 			velocity = physx::PxVec3();
 			angularVelocity = physx::PxVec3();
@@ -31,13 +27,13 @@ namespace Component {
 			motionType = MotionType::KINEMATIC;
 		}
 
-		float mass{1.f};
-		physx::PxVec3 velocity{0,0,0};
-		physx::PxVec3 angularVelocity{0,0,0};
+		float mass{ 1.f };
+		physx::PxVec3 velocity{0, 0, 0};
+		physx::PxVec3 angularVelocity{0, 0, 0};
 		float staticFriction;
 		float dynamicFriction;
 		float restitution;
-		float gravityFactor{0.f};
+		float gravityFactor{ 0.f };
 		float linearDamping{ 0.98f };
 		MotionType motionType{ MotionType::KINEMATIC }; //static, dynamic, kinematic
 		void* bodyID;
