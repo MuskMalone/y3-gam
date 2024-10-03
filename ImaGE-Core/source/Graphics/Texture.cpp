@@ -1,6 +1,6 @@
 #include <pch.h>
 #include "Texture.h"
-
+#include "Utils.h"
 //TEMP?? 
 
 namespace Graphics {
@@ -25,36 +25,36 @@ namespace Graphics {
 	Texture::Texture(std::string const& path)
 		: mPath{ path } {
 
-//		// Load image using stb_image
-//		int width, height, channels;
-//		stbi_set_flip_vertically_on_load(true);
-//		unsigned char* data = stbi_load(path.c_str(), &width, &height, &channels, STBI_rgb_alpha);
-//#ifndef _INSTALLER
-//		if (!data) {
-//			LoggingSystem::GetInstance().Log(LogLevel::ERROR_LEVEL, "ERROR: Failed to load texture: " + path + " ! ", __FUNCTION__);
-//		}
-//#endif
-//
-//		mWidth = static_cast<unsigned int>(width);
-//		mHeight = static_cast<unsigned int>(height);
-//
-//		glCreateTextures(GL_TEXTURE_2D, 1, &mTexHdl);
-//		// allocate GPU storage for texture image data loaded from file
-//		glTextureStorage2D(mTexHdl, 1, GL_RGBA8, mWidth, mHeight);
-//
-//
-//		// Set texture parameters
-//		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-//		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-//		glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-//		glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-//
-//		// copy image data from client memory to GPU texture buffer memory
-//		glTextureSubImage2D(mTexHdl, 0, 0, 0, mWidth, mHeight,
-//			GL_RGBA, GL_UNSIGNED_BYTE, data);
-//		// client memory not required since image is buffered in GPU memory
-//		stbi_image_free(data);
-//		stbi_set_flip_vertically_on_load(false);
+		//  // Load image using stb_image
+		//  int width, height, channels;
+		//  stbi_set_flip_vertically_on_load(true);
+		//  unsigned char* data = stbi_load(path.c_str(), &width, &height, &channels, STBI_rgb_alpha);
+		//#ifndef _INSTALLER
+		//  if (!data) {
+		//   LoggingSystem::GetInstance().Log(LogLevel::ERROR_LEVEL, "ERROR: Failed to load texture: " + path + " ! ", __FUNCTION__);
+		//  }
+		//#endif
+		//
+		//  mWidth = static_cast<unsigned int>(width);
+		//  mHeight = static_cast<unsigned int>(height);
+		//
+		//  glCreateTextures(GL_TEXTURE_2D, 1, &mTexHdl);
+		//  // allocate GPU storage for texture image data loaded from file
+		//  glTextureStorage2D(mTexHdl, 1, GL_RGBA8, mWidth, mHeight);
+		//
+		//
+		//  // Set texture parameters
+		//  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		//  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		//  glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		//  glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		//
+		//  // copy image data from client memory to GPU texture buffer memory
+		//  glTextureSubImage2D(mTexHdl, 0, 0, 0, mWidth, mHeight,
+		//   GL_RGBA, GL_UNSIGNED_BYTE, data);
+		//  // client memory not required since image is buffered in GPU memory
+		//  stbi_image_free(data);
+		//  stbi_set_flip_vertically_on_load(false);
 	}
 
 	/*  _________________________________________________________________________ */
@@ -73,15 +73,15 @@ namespace Graphics {
 
 		//TODO might add more parameters
 
-		glCreateTextures(GL_TEXTURE_2D, 1, &mTexHdl);
+		GLCALL(glCreateTextures(GL_TEXTURE_2D, 1, &mTexHdl));
 		// allocate GPU storage for texture image data loaded from file
-		glTextureStorage2D(mTexHdl, 1, GL_RGBA8, mWidth, mHeight);
+		GLCALL(glTextureStorage2D(mTexHdl, 1, GL_RGBA8, mWidth, mHeight));
 
-		// Set texture parameters
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		// Set texture parameters)
+		GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
+		GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
+		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
 	}
 
 	/*  _________________________________________________________________________ */
@@ -102,10 +102,10 @@ namespace Graphics {
 	*/
 	// For Font Glyphs
 	Texture::Texture(unsigned int width, unsigned int height, const void* data) : mWidth{ width }, mHeight{ height }, mTexHdl{} {
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		glGenTextures(1, &mTexHdl);
-		glBindTexture(GL_TEXTURE_2D, mTexHdl);
-		glTexImage2D(
+		GLCALL(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
+		GLCALL(glGenTextures(1, &mTexHdl));
+		GLCALL(glBindTexture(GL_TEXTURE_2D, mTexHdl));
+		GLCALL(glTexImage2D(
 			GL_TEXTURE_2D,
 			0,
 			GL_RED,
@@ -115,11 +115,11 @@ namespace Graphics {
 			GL_RGBA,
 			GL_UNSIGNED_BYTE,
 			data
-		);
+		));
 		// set texture options
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER));
+		GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER));
+		GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 4); // reset byte-alignment
