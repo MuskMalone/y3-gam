@@ -8,9 +8,6 @@
 
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
-#include <Jolt/Jolt.h>
-#include <Jolt/Physics/Collision/Shape/Shape.h>
-#include <Jolt/Physics/Body/MotionType.h>
 #include <rttr/type.h>
 #include <rttr/registration>
 

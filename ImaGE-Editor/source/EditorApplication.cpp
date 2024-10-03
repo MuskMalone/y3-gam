@@ -39,8 +39,6 @@ EditorApplication::~EditorApplication() {
 }
 
 void EditorApplication::Init() {
-  IGE::Physics::PhysicsSystem::InitAllocator();
-  IGE::Physics::PhysicsSystem::GetInstance()->Init();
   GetScene()->Init();
   Scenes::SceneManager::GetInstance().Init();
   Prefabs::PrefabManager::GetInstance().Init();

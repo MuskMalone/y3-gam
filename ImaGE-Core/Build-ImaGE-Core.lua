@@ -57,24 +57,21 @@ project "ImaGE-Core"
         "glfw3dll.lib",
         "glfw3.lib",
         "assimp-vc143-mt.lib",
-        "rttr_core_d.lib"
-
+        "rttr_core_d.lib",
         "LowLevel_static_64.lib", 
         "LowLevelAABB_static_64.lib", 
-        "LowLevelDynamics_static_64.lib", 
+        "LowLevelDynamics_static_64.lib",
         "PhysX_64.lib", 
         "PhysXCharacterKinematic_static_64.lib", 
         "PhysXCommon_64.lib", 
         "PhysXCooking_64.lib", 
         "PhysXExtensions_static_64.lib", 
         "PhysXFoundation_64.lib", 
-        "PhysXGpu_64.lib", 
         "PhysXPvdSDK_static_64.lib", 
         "PhysXTask_static_64.lib", 
         "PhysXVehicle_static_64.lib", 
         "SceneQuery_static_64.lib", 
-        "SimulationController_static_64.lib"
-
+        "SimulationController_static_64.lib",
         "DirectXTex_d.lib"
        }
 
@@ -101,8 +98,7 @@ project "ImaGE-Core"
         "glfw3dll.lib",
         "glfw3.lib",
         "assimp-vc143-mt.lib",
-        "rttr_core.lib"
-
+        "rttr_core.lib",
         "LowLevel_static_64.lib", 
         "LowLevelAABB_static_64.lib", 
         "LowLevelDynamics_static_64.lib",
@@ -116,8 +112,7 @@ project "ImaGE-Core"
         "PhysXTask_static_64.lib", 
         "PhysXVehicle_static_64.lib", 
         "SceneQuery_static_64.lib", 
-        "SimulationController_static_64.lib"
-
+        "SimulationController_static_64.lib",
         "DirectXTex.lib"
        }
 

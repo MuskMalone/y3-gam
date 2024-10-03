@@ -4,6 +4,15 @@
     <Filter Include="Asset">
       <UniqueIdentifier>{253FD80C-9153-00BE-5AD5-A31DC6A8FCEE}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Asset\Assetables">
+      <UniqueIdentifier>{DB2290B9-C71B-AF0B-F04D-9490DCA58E17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\Assetables\Audio">
+      <UniqueIdentifier>{1C29302E-0823-5980-F18F-EF90DD28BFEC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\Assetables\Texture">
+      <UniqueIdentifier>{3BF38E0D-2718-DE8D-5063-C31D3CE7DCAB}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
     </Filter>
@@ -82,7 +91,22 @@
     <ClInclude Include="source\Asset\AssetManager.h">
       <Filter>Asset</Filter>
     </ClInclude>
+    <ClInclude Include="source\Asset\AssetUtils.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Asset\Assetables\AssetExtensions.h">
+      <Filter>Asset\Assetables</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Asset\Assetables\Audio\AudioAsset.h">
+      <Filter>Asset\Assetables\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Asset\Assetables\Texture\TextureAsset.h">
+      <Filter>Asset\Assetables\Texture</Filter>
+    </ClInclude>
     <ClInclude Include="source\Asset\IGEAssets.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Asset\SmartPointer.h">
       <Filter>Asset</Filter>
     </ClInclude>
     <ClInclude Include="source\Color.h" />
@@ -132,6 +156,9 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\EntityManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\GUID.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\TempObject.h">
@@ -250,6 +277,12 @@
     <ClInclude Include="source\Graphics\RenderAPI.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="source\Graphics\RenderCommand.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Graphics\RenderPass.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
     <ClInclude Include="source\Graphics\RenderSystem.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -291,9 +324,6 @@
     </ClInclude>
     <ClInclude Include="source\Input\KeyCode.h">
       <Filter>Input</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Physics\Physics.h">
-      <Filter>Physics</Filter>
     </ClInclude>
     <ClInclude Include="source\Physics\PhysicsHelpers.h">
       <Filter>Physics</Filter>
@@ -346,15 +376,24 @@
     <ClInclude Include="source\Singleton.h" />
     <ClInclude Include="source\TempScene.h" />
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Graphics\RenderPass.h" />
-    <ClInclude Include="source\Asset\Assetables\Audio\AudioAsset.h" />
-    <ClInclude Include="source\Asset\Assetables\Texture\TextureAsset.h" />
-    <ClInclude Include="source\Asset\Assetables\AssetExtensions.h" />
-    <ClInclude Include="source\Asset\AssetUtils.h" />
-    <ClInclude Include="source\Asset\SmartPointer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
+    <ClCompile Include="source\Asset\AssetManager.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Asset\AssetUtils.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Asset\Assetables\Audio\AudioAsset.cpp">
+      <Filter>Asset\Assetables\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Asset\Assetables\Texture\TextureAsset.cpp">
+      <Filter>Asset\Assetables\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Asset\SmartPointer.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
     <ClCompile Include="source\Core\Camera.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -448,6 +487,9 @@
     <ClCompile Include="source\Graphics\RenderAPI.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="source\Graphics\RenderPass.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
     <ClCompile Include="source\Graphics\RenderSystem.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
@@ -464,6 +506,9 @@
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\Texture.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Graphics\Utils.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\VertexArray.cpp">
@@ -501,12 +546,5 @@
     </ClCompile>
     <ClCompile Include="source\TempScene.cpp" />
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\Graphics\RenderPass.cpp" />
-    <ClCompile Include="source\Graphics\Utils.cpp" />
-    <ClCompile Include="source\Asset\Assetables\Audio\AudioAsset.cpp" />
-    <ClCompile Include="source\Asset\Assetables\Texture\TextureAsset.cpp" />
-    <ClCompile Include="source\Asset\AssetManager.cpp" />
-    <ClCompile Include="source\Asset\AssetUtils.cpp" />
-    <ClCompile Include="source\Asset\SmartPointer.cpp" />
   </ItemGroup>
 </Project>
