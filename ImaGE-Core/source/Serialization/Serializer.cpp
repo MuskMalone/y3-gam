@@ -14,7 +14,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <pch.h>
 #include "Serializer.h"
 #include <Serialization/JsonKeys.h>
-#include <Core/Component/Components.h>
+#include <Core/Components/Components.h>
 #include <fstream>
 #include <Reflection/ObjectFactory.h>
 #include <Prefabs/PrefabManager.h>

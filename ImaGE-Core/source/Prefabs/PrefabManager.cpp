@@ -25,7 +25,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Serialization/Deserializer.h>
 #include <Events/EventManager.h>
 #include <filesystem>
-#include <Core/Component/Transform.h>
+#include <Core/Components/Transform.h>
 
 #ifdef _DEBUG
 //#define PREFAB_MANAGER_DEBUG

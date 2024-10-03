@@ -36,6 +36,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "InputManager.h"
 #include <Events/EventManager.h>
 #include <FrameRateController/FrameRateController.h>
+#include <Application.h>
 
 using namespace Input;
 using namespace Events;
@@ -82,7 +83,7 @@ void InputManager::UpdateInput()
 	mKeysTriggered.reset();
 	mScrollX = mScrollY = 0;
 	glfwPollEvents();
-	double dt = FrameRateController::GetInstance().GetDeltaTime();
+	double dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
 	for (int i{ 0 }; i < static_cast<int>(IK_KEY_COUNT); ++i)
 	{
 
@@ -122,12 +123,6 @@ void InputManager::QueueInputEvents()
 	if (IsKeyTriggered(IK_H))
 	{
 		QUEUE_EVENT(Events::KeyTriggeredEvent, IK_H);
-//#ifndef IMGUI_DISABLE
-		if (Application::GetImGuiEnabled()) {
-			Debug::DebugLogger::GetInstance().LogInfo("Testies");
-			throw Debug::Exception<InputManager>(Debug::LVL_CRITICAL, Msg("ThrowTesties"));
-		}
-//#endif
 	}
 
 	if (IsKeyTriggered(IK_K))
@@ -238,7 +233,7 @@ void InputManager::KeyCallback(GLFWwindow* window, int key, int scanCode, int ac
 	UNREFERENCED_PARAMETER(mod);
 
 //#ifndef IMGUI_DISABLE
-	if (Application::GetImGuiEnabled()) {
+	if (IGE::Application::GetImGuiEnabled()) {
 		ImGuiIO& io = ImGui::GetIO();
 		if (io.WantCaptureKeyboard)
 		{
@@ -264,7 +259,7 @@ void InputManager::KeyCallback(GLFWwindow* window, int key, int scanCode, int ac
 void InputManager::MousePosCallback(GLFWwindow* window, double xpos, double ypos)
 {
 //#ifndef IMGUI_DISABLE
-	if (Application::GetImGuiEnabled())
+	if (IGE::Application::GetImGuiEnabled())
 		ImGui_ImplGlfw_CursorPosCallback(window, xpos, ypos);
 	else 
 		UNREFERENCED_PARAMETER(window);
@@ -284,7 +279,7 @@ void InputManager::MouseButtonCallback(GLFWwindow* pwin, int button, int action,
 	UNREFERENCED_PARAMETER(mod);
 
 //#ifndef IMGUI_DISABLE
-	if (Application::GetImGuiEnabled()) {
+	if (IGE::Application::GetImGuiEnabled()) {
 		ImGuiIO& io = ImGui::GetIO();
 
 		if (io.WantCaptureMouse)
@@ -308,7 +303,7 @@ void InputManager::MouseScrollCallback(GLFWwindow* pwin, double xoffset, double 
 	mScrollY = yoffset;
 
 //#ifndef IMGUI_DISABLE
-	if (Application::GetImGuiEnabled())
+	if (IGE::Application::GetImGuiEnabled())
 		ImGui_ImplGlfw_ScrollCallback(pwin, xoffset, yoffset);
 //#endif
 	//y_off = ((y_off + yoffset) > 4) ? 4 : ((y_off + yoffset) < -4) ? -4 : y_off + yoffset;

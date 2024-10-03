@@ -10,7 +10,7 @@ bool Inspector::WindowBegin(std::string const& windowName, std::string const& ic
   std::string display{ icon + "   " + windowName };
 
   if (highlight) { ImGui::PushStyleColor(ImGuiCol_Text, sComponentHighlightCol); }
-  bool const isOpen{ ImGui::TreeNode(display.c_str())};
+  bool const isOpen{ ImGui::TreeNode(display.c_str()) };
   if (highlight) { ImGui::PopStyleColor(); }
 
   if (isOpen) {

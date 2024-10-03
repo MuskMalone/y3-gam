@@ -1,5 +1,7 @@
 #pragma once
 #include "EditorCamera.h"
+#include <Core/Systems/System.h>
+
 namespace Graphics {
 	class RenderSystem {
 

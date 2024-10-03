@@ -2,7 +2,7 @@
 #include "RenderPass.h"
 #include "Core/Entity.h"
 #include "EditorCamera.h"
-#include "Core/Component/Components.h"
+#include <Core/Components/Components.h>
 #include "Color.h"
 
 namespace Graphics {
@@ -50,6 +50,9 @@ namespace Graphics {
             auto const& xform = entity.GetComponent<Component::Transform>();
             auto const& mesh = entity.GetComponent<Component::Mesh>();
             
+            //xform.localPos; //example xform.localPos
+
+            
             // Skip if mesh is null
             if (mesh.mesh == nullptr)
                 continue;
@@ -70,7 +73,7 @@ namespace Graphics {
             }
 
             //Graphics::Renderer::SubmitMesh(mesh.mesh, xform.worldPos, xform.worldRot, xform.worldScale, { 1.f, 1.f, 1.f, 1.f }); //@TODO: adjust color and rotation as needed
-            Graphics::Renderer::SubmitInstance(mesh.mesh, xform.worldPos, xform.worldRot, xform.worldScale, Color::COLOR_WHITE );
+            Graphics::Renderer::SubmitInstance(mesh.mesh, xform.worldMtx, Color::COLOR_WHITE );
         }
         // Flush all collected instances and render them in a single draw call
         Renderer::RenderInstances();

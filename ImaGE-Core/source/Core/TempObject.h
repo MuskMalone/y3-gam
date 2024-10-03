@@ -1,6 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
-#include <Core/Component/Transform.h>
+#include <Core/Components/Transform.h>
 #include <Graphics/Model.h>
 #include <Graphics/MeshType.h>
 #include <memory>

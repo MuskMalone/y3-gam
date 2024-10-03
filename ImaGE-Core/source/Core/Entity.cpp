@@ -1,6 +1,6 @@
 #include <pch.h>
 #include "Entity.h"
-#include "Component/Tag.h"
+#include <Core/Components/Tag.h>
 
 namespace ECS
 {

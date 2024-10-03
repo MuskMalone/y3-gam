@@ -14,7 +14,7 @@
 
 #include "Core/EntityManager.h"
 #include "Core/Entity.h"
-#include "Core/Component/Components.h"
+#include <Core/Components/Components.h>
 #include "Graphics/EditorCamera.h"
 
 
@@ -77,9 +77,10 @@ void Scene::Init()
 
           // Set up the TransformComponent with different offsets
           auto& transformComponent = entity.GetComponent<Component::Transform>();
-          transformComponent.worldPos = glm::vec3(i * 2.0f, 0.0f, j * 2.0f); // Offset for position
-          transformComponent.worldScale = glm::vec3(1.0f);  // Default scale
-          transformComponent.worldRot = {45.f,45.f,45.f};  // No rotation
+          transformComponent.position = glm::vec3(i * 2.0f, 0.0f, j * 2.0f); // Offset for position
+          transformComponent.scale = glm::vec3(1.0f);  // Default scale
+          transformComponent.rotation = { 1.f, 0.f, 0.f, 0.f };  // No rotation
+          transformComponent.modified = true;
 
           // Set up the MeshComponent
           auto& renderComponent = entity.EmplaceComponent<Component::Mesh>();

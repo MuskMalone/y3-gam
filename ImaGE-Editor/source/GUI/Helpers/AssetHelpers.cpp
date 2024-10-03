@@ -3,6 +3,7 @@
 #include <fstream>
 
 // windows api
+//#pragma warning( disable : 5105 )
 #include <Windows.h>
 #include <commdlg.h>	// to open file explorer
 #include <shellapi.h>

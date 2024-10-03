@@ -1,8 +1,9 @@
 #include <pch.h>
 #include "Physics/PhysicsSystem.h"
-#include "Core/Component/Components.h"
+#include <Core/Components/Components.h>
 #include "Core/EntityManager.h"
 #include "Core/Entity.h"
+
 namespace IGE {
 	namespace Physics {
 
@@ -58,14 +59,14 @@ namespace IGE {
 			Component::RigidBody rigidbody{};
 			auto& bodyinterface = mPhysicsSystem.GetBodyInterface();
 			if (!entity.HasComponent<Component::Collider>()) {
-				Component::Transform const& transform = entity.GetComponent<Component::Transform>();
-				auto* shape = new BoxShape(ToJPHVec3(transform.worldScale)); // this is an arbitrary shape, since the collider should be updated in another component
-				JPH::BodyCreationSettings bodySettings(shape, ToJPHVec3(transform.worldPos), Quat::sEulerAngles(ToJPHVec3(transform.worldRot)),
-					rigidbody.motionType, Layers::MOVING);
-				//bodySettings.mMassPropertiesOverride = shape->Set; // Set mass 
-				bodySettings.mAllowDynamicOrKinematic = true;
-				rigidbody.bodyID = bodyinterface.CreateAndAddBody(bodySettings, EActivation::Activate); // Active
-				JPH::Body* body = mPhysicsSystem.GetBodyLockInterface().TryGetBody(rigidbody.bodyID);
+				//Component::Transform const& transform = entity.GetComponent<Component::Transform>();
+				//auto* shape = new BoxShape(ToJPHVec3(transform.worldScale)); // this is an arbitrary shape, since the collider should be updated in another component
+				//JPH::BodyCreationSettings bodySettings(shape, ToJPHVec3(transform.worldPos), Quat::sEulerAngles(ToJPHVec3(transform.worldRot)),
+				//	rigidbody.motionType, Layers::MOVING);
+				////bodySettings.mMassPropertiesOverride = shape->Set; // Set mass 
+				//bodySettings.mAllowDynamicOrKinematic = true;
+				//rigidbody.bodyID = bodyinterface.CreateAndAddBody(bodySettings, EActivation::Activate); // Active
+				//JPH::Body* body = mPhysicsSystem.GetBodyLockInterface().TryGetBody(rigidbody.bodyID);
 			}
 			//set 
 			bodyinterface.SetFriction(rigidbody.bodyID, rigidbody.friction);

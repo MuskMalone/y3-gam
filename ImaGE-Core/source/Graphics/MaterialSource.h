@@ -1,4 +1,7 @@
 #pragma once
+#include <Graphics/Shader.h>
+#include <Graphics/Texture.h>
+#include <cstdint>
 
 namespace Graphics {
 

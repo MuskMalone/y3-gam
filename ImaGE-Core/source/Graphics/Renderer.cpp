@@ -299,17 +299,18 @@ namespace Graphics {
 		SetTriangleBufferData(v3, clr);
 	}
 
-	void Renderer::SubmitInstance(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr) {
+	void Renderer::SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr) {
 		if (!mesh) return;
 		
-		glm::mat4 transMtx = glm::translate(glm::mat4(1.0f), pos);
-		glm::mat4 rotMtx = glm::toMat4(glm::quat(glm::radians(rot))); // Assuming worldRot is a vec3 of Euler angles
-		glm::mat4 scaleMtx = glm::scale(glm::mat4(1.0f), scale);
+		//glm::mat4 transMtx = glm::translate(glm::mat4(1.0f), pos);
+		//glm::mat4 rotMtx = glm::toMat4(glm::quat(rot)); // Assuming worldRot is a vec3 of Euler angles
+		//glm::mat4 rotMtx = glm::mat4(1.f);
+		//glm::mat4 scaleMtx = glm::scale(glm::mat4(1.0f), scale);
 
-		glm::mat4 mdlMtx = transMtx * rotMtx * scaleMtx;
+		//glm::mat4 mdlMtx = transMtx * rotMtx * scaleMtx;
 
 		InstanceData instance{};
-		instance.modelMatrix = mdlMtx;
+		instance.modelMatrix = worldMtx;
 		//instance.color = clr;
 
 		auto& meshSrc = mesh->GetMeshSource();
@@ -332,7 +333,7 @@ namespace Graphics {
 			// Bind the VAO and render the instances
 			auto& vao = meshSrc->GetVertexArray();
 
-			RenderAPI::DrawIndicesInstanced(vao, meshSrc->GetIndices().size(), instances.size());
+			RenderAPI::DrawIndicesInstanced(vao, static_cast<unsigned>(meshSrc->GetIndices().size()), static_cast<unsigned>(instances.size()));
 
 		}
 
@@ -410,7 +411,7 @@ namespace Graphics {
 
 			++mData.stats.drawCalls;
 		}
-		if ((renderPass->GetSpecification().debugName ) == "Geometry Pass", mData.meshIdxCount) {
+		if ((renderPass->GetSpecification().debugName) == "Geometry Pass" && mData.meshIdxCount) {
 
 			// Calculate data size for mesh vertices
 			unsigned int dataSize = static_cast<unsigned int>(mData.meshVtxCount * sizeof(Vertex));

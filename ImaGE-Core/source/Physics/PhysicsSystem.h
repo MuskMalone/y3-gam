@@ -1,6 +1,6 @@
 #pragma once
 #include <pch.h>
-#include <Core/Component/Components.h>
+#include <Core/Components/Components.h>
 #include <Physics/Physics.h>
 #include <Core/Entity.h>
 namespace IGE {
