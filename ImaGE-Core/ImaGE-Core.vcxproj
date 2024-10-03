@@ -176,7 +176,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Core\Component\Components.h" />
     <ClInclude Include="source\Core\Component\Layer.h" />
     <ClInclude Include="source\Core\Component\Material.h" />
-    <ClInclude Include="source\Core\Component\Mesh.h" />
+    <ClInclude Include="source\Core\Component\MeshRenderer.h" />
     <ClInclude Include="source\Core\Component\PrefabOverrides.h" />
     <ClInclude Include="source\Core\Component\RigidBody.h" />
     <ClInclude Include="source\Core\Component\Script.h" />

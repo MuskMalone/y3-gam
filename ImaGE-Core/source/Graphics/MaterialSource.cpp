@@ -6,7 +6,7 @@ namespace Graphics {
 	MaterialSource::MaterialSource(std::shared_ptr<Shader> const& shader, std::string const& name) 
 		: mShader{ shader }, mName{ name }, mFlags{ static_cast<uint32_t>(MaterialFlag::DEPTH_TEST) } {
 		if (!shader) {
-			throw std::invalid_argument("Shader cannot be null!"); //@TODO change this to catch exception?
+			throw std::invalid_argument("Shader cannot be null!"); //@TODO change this to catch exception? or change to error log?
 		}
 	}
 

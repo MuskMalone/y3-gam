@@ -64,7 +64,6 @@ namespace Graphics{
 
         // Get the underlying material source
         std::shared_ptr<MaterialSource> GetMaterialSource() const { return mMaterialSource; }
-
     private:
         // Reference to the shared material source
         std::shared_ptr<MaterialSource> mMaterialSource;

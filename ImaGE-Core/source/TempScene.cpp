@@ -82,14 +82,14 @@ void Scene::Init()
           transformComponent.worldRot = {45.f,45.f,45.f};  // No rotation
 
           // Set up the MeshComponent
-          auto& meshComponent = entity.EmplaceComponent<Component::Mesh>();
+          auto& renderComponent = entity.EmplaceComponent<Component::Mesh>();
 
           // Assign alternating meshes between cube and pyramid
           if ((i + j) % 2 == 0) {
-              meshComponent.mesh = mesh0; // Assign cube mesh
+              renderComponent.mesh = mesh0; // Assign cube mesh
           }
           else {
-              meshComponent.mesh = mesh1; // Assign pyramid mesh
+              renderComponent.mesh = mesh1; // Assign pyramid mesh
           }
       }
   }
