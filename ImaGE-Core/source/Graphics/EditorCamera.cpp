@@ -15,6 +15,10 @@ namespace Graphics {
         return GetProjMatrix() * GetViewMatrix();
     }
 
+    glm::vec3 EditorCamera::GetPosition() const {
+        return mPosition;
+    }
+
     void EditorCamera::UpdateCamera(float dt) {
 
         if (Input::InputManager::IsKeyHeld(IK_W))

@@ -373,7 +373,7 @@ namespace Graphics {
 			glDeleteShader(fragmentShader);
 
 			std::string str(infoLog.data());
-			std::cout << "Shader Link failure!!!" << std::endl;
+			std::cerr << "Shader Linking Error: " << &infoLog[0] << std::endl;
 			return;
 		}
 

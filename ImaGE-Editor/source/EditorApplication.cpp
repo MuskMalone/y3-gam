@@ -81,7 +81,10 @@ namespace IGE {
           if (GetApplicationSpecification().EnableImGui) {
             UpdateFramebuffers();
 
-            mGUIManager.UpdateGUI(mFramebuffers.front().first);
+            
+          auto fb = Graphics::Renderer::GetFinalFramebuffer();
+          mFramebuffers.front().first = fb;
+          mGUIManager.UpdateGUI(mFramebuffers.front().first);
 
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -142,39 +145,14 @@ namespace IGE {
     Application::Shutdown();
   }
 
-  /*!*********************************************************************
-  \brief
-    Callback function for dragging files into the editor. Sends the
-    filepaths received to the asset manager.
-  \param window
-    The window the file was dragged into
-  \param pathCount
-    The number of files
-  \param paths
-    The paths of the files
-  ************************************************************************/
   void EditorApplication::WindowDropCallback(GLFWwindow*, int pathCount, const char* paths[]) {
     QUEUE_EVENT(Events::AddFilesFromExplorerEvent, pathCount, paths);
   }
 
-  /*!*********************************************************************
-  \brief
-    Wrapper function to print out exceptions.
-
-  \param e
-    Exception caught
-  ************************************************************************/
   void EditorApplication::PrintException(Debug::ExceptionBase& e) {
     e.LogSource();
   }
 
-  /*!*********************************************************************
-  \brief
-    Wrapper function to print out exceptions.
-
-  \param e
-    Exception caught
-  ************************************************************************/
   void EditorApplication::PrintException(std::exception& e) {
     if (Application::IsImGUIActive()) {
       Debug::DebugLogger::GetInstance().LogCritical(e.what());

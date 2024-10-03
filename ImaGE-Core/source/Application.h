@@ -43,8 +43,8 @@ namespace IGE {
     //inline std::unique_ptr<Scene>& GetScene() { return mScene; }
     //inline std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& GetWindowPointer() { return mWindow; }
 
-    //inline std::vector<std::pair<Graphics::Framebuffer, SceneDrawCall>>& GetFrameBuffer() { return mFramebuffers; }
-    //inline std::vector<std::pair<std::shared_ptr<Graphics::Framebuffer>, SceneDrawCall>> const& GetFrameBuffer() { return mFramebuffers; } const
+    //inline std::vector<std::pair<std::shared_ptr<Graphics::Framebuffer>, SceneDrawCall>>& GetFrameBuffer() { return mFramebuffers; }
+    //inline std::vector<std::pair<std::shared_ptr<Graphics::Framebuffer>, SceneDrawCall>> const& GetFrameBuffer() const { return mFramebuffers; }
     inline static bool GetImGuiEnabled() { return mSpecification.EnableImGui; }
 
   protected:

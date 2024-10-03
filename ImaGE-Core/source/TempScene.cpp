@@ -61,10 +61,10 @@ void Scene::Init()
 
  
   mEcam = editorCam;
-  std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateModelFromImport("../Assets/Models/cube_low_poly.imsh");
+  std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateModelFromImport("../Assets/Models/sphere_mid_poly.imsh");
   mesh0 = std::make_shared<Graphics::Mesh>(cubeMeshSource);
 
-  std::shared_ptr<Graphics::MeshSource> pyrMeshSource = Graphics::MeshFactory::CreatePyramid();
+  std::shared_ptr<Graphics::MeshSource> pyrMeshSource = Graphics::MeshFactory::CreateCube();
   mesh1 = std::make_shared<Graphics::Mesh>(pyrMeshSource);
   //=====================================================================================================================
 
@@ -90,7 +90,7 @@ void Scene::Init()
               meshComponent.mesh = mesh0; // Assign cube mesh
           }
           else {
-              meshComponent.mesh = mesh0; // Assign pyramid mesh
+              meshComponent.mesh = mesh1; // Assign pyramid mesh
           }
       }
   }

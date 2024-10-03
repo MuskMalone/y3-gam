@@ -15,13 +15,13 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/MeshSource.h>
 
 // forward declarations
-//#ifndef IMGUI_DISABLE
+#ifndef IMGUI_DISABLE
 struct aiScene; struct aiNode;
-//#endif
+#endif
 
 namespace Graphics::AssetIO
 {
-//#ifndef IMGUI_DISABLE
+#ifndef IMGUI_DISABLE
 
   struct MeshImportFlags
   {
@@ -33,7 +33,7 @@ namespace Graphics::AssetIO
 
     bool boneWeights, animations, lights, cameras, materials;
   };
-//#endif
+#endif
 
 
   class IMSH
@@ -41,10 +41,8 @@ namespace Graphics::AssetIO
   public:
     IMSH() : mVertexBuffer{}, mIndices{}, mSubmeshData{}, mStatus{ true } {}
     // conversions for use in editor only
-#ifndef IMGUI_DISABLE
     IMSH(std::string const& file, MeshImportFlags const& = {});
     void WriteToBinFile(std::string const& name) const;
-#endif
 
     operator bool() const { return mStatus; } // check if object is valid
     inline std::vector<Graphics::Vertex> const& GetVertexBuffer() const noexcept { return mVertexBuffer; }
@@ -83,10 +81,8 @@ namespace Graphics::AssetIO
 
     static unsigned sAssimpImportFlags;
 
-//#ifndef IMGUI_DISABLE
     void ProcessSubmeshes(aiNode* node, aiScene const* scene);
     void ProcessMeshes(aiNode* node, aiScene const* scene);
-//#endif
   };
 
 } // namespace Graphics::AssetIO

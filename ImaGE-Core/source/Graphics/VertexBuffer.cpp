@@ -1,5 +1,6 @@
 #include <pch.h>
 #include "VertexBuffer.h"
+#include "Utils.h"
 
 namespace Graphics {
 	/*  _________________________________________________________________________ */
@@ -12,9 +13,9 @@ This constructor initializes the VertexBuffer with the provided size and sets
 the buffer data storage with dynamic draw usage.
 */
 	VertexBuffer::VertexBuffer(unsigned int size) {
-		glCreateBuffers(1, &mVboHdl);
+		GLCALL(glCreateBuffers(1, &mVboHdl));
 		VertexBuffer::Bind();
-		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
+		GLCALL(glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW));
 
 	}
 
@@ -31,9 +32,9 @@ the buffer data storage with dynamic draw usage.
 	and size and sets the buffer data storage with static draw usage.
 	*/
 	VertexBuffer::VertexBuffer(float* vertices, unsigned int size) {
-		glCreateBuffers(1, &mVboHdl);
+		GLCALL(glCreateBuffers(1, &mVboHdl));
 		VertexBuffer::Bind();
-		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_DYNAMIC_DRAW);
+		GLCALL(glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_DYNAMIC_DRAW));
 
 	}
 
@@ -43,7 +44,7 @@ the buffer data storage with dynamic draw usage.
 	Destructor for the VertexBuffer class. Cleans up the VBO resources.
 	*/
 	VertexBuffer::~VertexBuffer() {
-		glDeleteBuffers(1, &mVboHdl);
+		GLCALL(glDeleteBuffers(1, &mVboHdl));
 	}
 
 	/*  _________________________________________________________________________ */
@@ -86,7 +87,7 @@ the buffer data storage with dynamic draw usage.
 	Binds the VertexBuffer to the GL_ARRAY_BUFFER target.
 	*/
 	void VertexBuffer::Bind() const {
-		glBindBuffer(GL_ARRAY_BUFFER, mVboHdl);
+		GLCALL(glBindBuffer(GL_ARRAY_BUFFER, mVboHdl));
 	}
 
 	/*  _________________________________________________________________________ */
@@ -95,7 +96,7 @@ the buffer data storage with dynamic draw usage.
 	Unbinds the VertexBuffer from the GL_ARRAY_BUFFER target.
 	*/
 	void VertexBuffer::Unbind() const {
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		GLCALL(glBindBuffer(GL_ARRAY_BUFFER, 0));
 	}
 
 	/*  _________________________________________________________________________ */
@@ -132,7 +133,8 @@ the buffer data storage with dynamic draw usage.
 	This function sets the data for the VertexBuffer.
 	*/
 	void VertexBuffer::SetData(void* const data, unsigned int size) {
-		glBindBuffer(GL_ARRAY_BUFFER, mVboHdl);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
+
+		GLCALL(glBindBuffer(GL_ARRAY_BUFFER, mVboHdl));
+		GLCALL(glBufferSubData(GL_ARRAY_BUFFER, 0, size, data));
 	}
 }

@@ -9,7 +9,7 @@
 namespace Graphics {
 
 	void RenderSystem::Init() {
-
+		Renderer::Init();
 	}
 
 	void RenderSystem::Release() {
@@ -25,17 +25,40 @@ namespace Graphics {
 		auto& entManager = ECS::EntityManager::GetInstance();
 		auto entityList = entManager.GetAllEntitiesWithComponents<Component::Transform, Component::Mesh>();
 
-		{//Render Start
-			Utils::RenderContext renderContext(eCam.GetViewProjMatrix());
+		//Frustum Culling should be here
+		
+		// Convert to a vector
+		std::vector<ECS::Entity> entityVector;
+		for (auto entity : entityList) {
+			entityVector.push_back(entity);
+		}
 
-			for (ECS::Entity entity : entityList) {
-				auto const& xfm = entity.GetComponent<Component::Transform>();
-				auto const& mesh = entity.GetComponent<Component::Mesh>();
-				if (mesh.mesh == nullptr) continue;
+		Renderer::mGeomPass->Render(eCam, entityVector);
+		//Renderer::mGeomPass->Begin();
+		//{//Render Start
+		//	Utils::RenderContext renderContext(eCam.GetViewProjMatrix());
 
-				Graphics::Renderer::SubmitMesh(mesh.mesh, xfm.worldMtx, { 1.f, 1.f, 1.f, 1.f }); //@TODO change clr and rot 
-			}
+		//	for (ECS::Entity entity : entityList) {
+		//		auto const& xfm = entity.GetComponent<Component::Transform>();
+		//		auto const& mesh = entity.GetComponent<Component::Mesh>();
+		//		if (mesh.mesh == nullptr) continue;
 
-		} // Render End
+		//		
+		//		Graphics::Renderer::SubmitMesh(mesh.mesh, xfm.worldPos, xfm.worldScale, { 1.f,1.f,1.f,1.f }, {}); //@TODO change clr and rot 
+		//		// Assuming xfm.worldPos is a glm::vec3 that contains the position in world space
+		//	}
+
+		//} // Render End
+
+		//Renderer::mGeomPass->End();
+
 	}
 }
+
+
+
+
+
+
+
+

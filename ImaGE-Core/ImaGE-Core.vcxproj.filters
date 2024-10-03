@@ -351,6 +351,7 @@
     <ClInclude Include="source\Core\Systems\SystemManager\SystemManager.h" />
     <ClInclude Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.h" />
     <ClInclude Include="source\Core\Systems\TransformSystem\TransformHelpers.h" />
+    <ClInclude Include="source\Graphics\RenderPass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -500,6 +501,8 @@
     </ClCompile>
     <ClCompile Include="source\TempScene.cpp" />
     <ClCompile Include="source\pch.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass.cpp" />
+    <ClCompile Include="source\Graphics\Utils.cpp" />
     <ClCompile Include="source\Core\Systems\TransformSystem\WorldToLocalTransformSystem.cpp" />
     <ClCompile Include="source\Core\Systems\SystemManager\SystemManager.cpp" />
     <ClCompile Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.cpp" />

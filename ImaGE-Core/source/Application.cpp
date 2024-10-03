@@ -100,9 +100,14 @@ namespace IGE {
 
     RegisterSystems();
     mScene = std::make_unique<Scene>("../Assets/Shaders/BlinnPhong.vert.glsl", "../Assets/Shaders/BlinnPhong.frag.glsl");
-    // attach each draw function to its framebuffer
-    mFramebuffers.emplace_back(std::make_shared<Graphics::Framebuffer>(spec.WindowWidth, spec.WindowHeight), std::bind(&Scene::Draw, mScene.get()));
-  }
+
+  //framebuffer init
+  Graphics::FramebufferSpec framebufferSpec;
+  framebufferSpec.width = spec.WindowWidth;
+  framebufferSpec.height = spec.WindowHeight;
+  framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
+  mFramebuffers.emplace_back(Graphics::Framebuffer::Create(framebufferSpec), std::bind(&Scene::Draw, mScene.get()));
+}
 
   void Application::UpdateFramebuffers()
   {
