@@ -54,10 +54,10 @@ namespace Graphics {
 
         // Create VAO and VBO
         auto vao = VertexArray::Create();
-        auto vbo = VertexBuffer::Create(cubeVertices.size() * sizeof(Vertex));
+        auto vbo = VertexBuffer::Create(static_cast<unsigned>(cubeVertices.size() * sizeof(Vertex)));
 
         // Set vertex buffer data
-        vbo->SetData(cubeVertices.data(), cubeVertices.size() * sizeof(Vertex));
+        vbo->SetData(cubeVertices.data(), static_cast<unsigned>(cubeVertices.size() * sizeof(Vertex)));
 
         BufferLayout cubeLayout = {
             {AttributeType::VEC3, "a_Position"},
@@ -165,10 +165,12 @@ namespace Graphics {
 
           // Create VAO and VBO
           auto vao = VertexArray::Create();
-          auto vbo = VertexBuffer::Create(static_cast<unsigned>(imsh.GetVertexBuffer().size()));
+          auto vbo = VertexBuffer::Create(static_cast<unsigned>(imsh.GetVertexBuffer().size() * sizeof(Vertex)));
 
           // Set vertex buffer data
-          //vbo->SetData(imsh.GetVertexBuffer().data(), imsh.GetVertexBuffer().size() * sizeof(Vertex));
+          auto vtxBufferCpy{ imsh.GetVertexBuffer() };
+
+          vbo->SetData(vtxBufferCpy.data(), static_cast<unsigned>(vtxBufferCpy.size() * sizeof(Vertex)));
 
           BufferLayout modelLayout = {
               {AttributeType::VEC3, "a_Position"},

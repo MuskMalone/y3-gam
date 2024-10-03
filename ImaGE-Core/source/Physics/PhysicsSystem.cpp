@@ -1,9 +1,9 @@
 #include <pch.h>
 #include "Physics/PhysicsSystem.h"
-#include "Core/Component/Components.h"
+#include <Core/Components/Components.h>
 #include "Core/EntityManager.h"
 #include "Core/Entity.h"
-#include "Graphics/Renderer.h"
+
 #include "Physics/PhysicsHelpers.h"
 namespace IGE {
 	namespace Physics {

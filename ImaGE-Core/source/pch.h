@@ -28,6 +28,7 @@
 #include <thread>
 #include <type_traits>
 
+#include <FrameRateController/FrameRateController.h>
 #include <DebugTools/Exception/Exception.h>			      //Exception Class for Logging
 #include <DebugTools/DebugLogger/DebugLogger.h>       //Logging Tool
 
@@ -41,8 +42,6 @@
 // glm
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
-#include <Application.h>
 
 #ifdef _DEBUG
 #include <Debug.h>

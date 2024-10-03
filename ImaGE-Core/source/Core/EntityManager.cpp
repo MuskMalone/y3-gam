@@ -1,7 +1,7 @@
 #include <pch.h>
 #include "EntityManager.h"
 #include "Entity.h"
-#include <Core/Component/Components.h>
+#include <Core/Components/Components.h>
 
 namespace ECS {
   Entity EntityManager::CreateEntity() {
@@ -26,8 +26,7 @@ namespace ECS {
 
   Entity EntityManager::CreateEntityWithTag(std::string const& tag) {
     Entity entity(mRegistry.create());
-    Component::Tag& entTag = entity.EmplaceComponent<Component::Tag>();
-    entTag.tag = tag;
+    entity.EmplaceComponent<Component::Tag>(tag);
     entity.EmplaceComponent<Component::Transform>();
 
     return entity;

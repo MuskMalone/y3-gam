@@ -65,11 +65,18 @@ namespace Reflection
 
     AddComponentsToEntity(newEntity, components);
 
+    if (entity.HasComponent<Component::PrefabOverrides>()) {
+      newEntity.EmplaceComponent<Component::PrefabOverrides>(entity.GetComponent<Component::PrefabOverrides>());
+    }
+
     // set parent/child
-    entityMan.SetParentEntity(parent, newEntity);
-    if (parent) { entityMan.SetChildEntity(parent, newEntity); }
-    for (ECS::Entity const& child : entityMan.GetChildEntity(entity)) {
-      CloneObject(child, newEntity);  // recursively clone all children
+    if (parent) {
+      entityMan.SetParentEntity(parent, newEntity);
+    }
+    if (entityMan.HasChild(entity)) {
+      for (ECS::Entity const& child : entityMan.GetChildEntity(entity)) {
+        CloneObject(child, newEntity);  // recursively clone all children
+      }
     }
   }
 
@@ -215,9 +222,9 @@ namespace Reflection
     else if (compType == rttr::type::get<Component::Material>()) {
       entity.EmplaceOrReplaceComponent<Component::Material>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Material>>());
     }
-    /*else if (compType == rttr::type::get<Component::Mesh>()) {
-      Scene::AddMesh(entity);
-    }*/
+    else if (compType == rttr::type::get<Component::Mesh>()) {
+      entity.EmplaceOrReplaceComponent<Component::Mesh>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Mesh>>());
+    }
     else if (compType == rttr::type::get<Component::RigidBody>()) {
       IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(entity);
     }
@@ -243,11 +250,11 @@ namespace Reflection
     IF_GET_ENTITY_COMP(Component::Transform)
     else IF_GET_ENTITY_COMP(Component::Tag)
     else IF_GET_ENTITY_COMP(Component::Layer)
+    else IF_GET_ENTITY_COMP(Component::Mesh)
     else IF_GET_ENTITY_COMP(Component::Material)
     else IF_GET_ENTITY_COMP(Component::RigidBody)
     else IF_GET_ENTITY_COMP(Component::Collider)
     else IF_GET_ENTITY_COMP(Component::Text)
-    //else IF_GET_ENTITY_COMP(Component::Mesh)
     else
     {
       std::ostringstream oss{};
@@ -267,8 +274,8 @@ namespace Reflection
     IF_REMOVE_COMP(Component::Transform)
     else IF_REMOVE_COMP(Component::Tag)
     else IF_REMOVE_COMP(Component::Layer)
+    else IF_REMOVE_COMP(Component::Mesh)
     else IF_REMOVE_COMP(Component::Material)
-    //else IF_REMOVE_COMP(Component::Mesh)
     else IF_REMOVE_COMP(Component::RigidBody)
     else IF_REMOVE_COMP(Component::Collider)
     else IF_REMOVE_COMP(Component::Text)

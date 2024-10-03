@@ -4,7 +4,7 @@
 
 int Main(int argc, char** argv) {
   // To be read from settings file
-  Application::ApplicationSpecification spec;
+  IGE::Application::ApplicationSpecification spec;
   spec.EnableImGui = false;
   spec.Fullscreen = false;
   spec.Name = "ImaGE Editor";
@@ -15,7 +15,7 @@ int Main(int argc, char** argv) {
   spec.WindowWidth = 1920;
 
   //GameApplication myApp{ spec };
-  Application myApp{ spec };
+  IGE::Application myApp{ spec };
   try
   {
     myApp.Init();

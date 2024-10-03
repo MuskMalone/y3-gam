@@ -1,5 +1,4 @@
 #pragma once
-#include <pch.h>
 
 #include "SmartPointer.h"
 #include "AssetManager.h"

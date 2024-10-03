@@ -5,6 +5,7 @@
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include "Color.h"
 #include "GUI/Helpers/ImGuiHelpers.h"
+#include <GUI/Helpers/AssetPayload.h>
 
 
 //added for testing: tch
@@ -14,6 +15,8 @@
 #include <functional>
 #include <Reflection/ComponentTypes.h>
 #include <Events/EventManager.h>
+#include <Graphics/MeshFactory.h>
+#include <Graphics/Mesh.h>
 
 namespace GUI {
   Inspector::Inspector(std::string const& name) : GUIWindow(name),
@@ -74,16 +77,18 @@ namespace GUI {
 
       if (currentEntity.HasComponent<Component::Transform>()) {
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(rttr::type::get<Component::Transform>());
-        Component::Transform const& trans{ currentEntity.GetComponent<Component::Transform>() };
-        glm::vec3 const oldPos{ trans.worldPos };
+        Component::Transform& trans{ currentEntity.GetComponent<Component::Transform>() };
+        glm::vec3 const oldPos{ trans.position };
         if (TransformComponentWindow(currentEntity, std::string(ICON_FA_ROTATE), componentOverriden)) {
+          trans.modified = true;
           SetIsComponentEdited(true);
+
           if (prefabOverride) {
             if (prefabOverride->subDataId == Prefabs::PrefabSubData::BasePrefabId) {
               // if root entity, ignore position changes
               // here, im assuming only 1 value can be modified per frame.
               // So if position wasn't modified, it means either rot or scale was
-              if (oldPos == trans.worldPos) {
+              if (oldPos == trans.position) {
                 prefabOverride->AddComponentModification(trans);
               }
             }
@@ -177,6 +182,12 @@ namespace GUI {
           }
         }
       }
+
+      if (prefabOverride) {
+        for (rttr::type const& type : prefabOverride->removedComponents) {
+          DisplayRemovedComponent(type);
+        }
+      }
     }
     ImGui::PopFont();
     ImGui::End();
@@ -211,6 +222,12 @@ namespace GUI {
       break;
     default: break;
     }
+  }
+
+  void Inspector::DisplayRemovedComponent(rttr::type const& type) {
+    ImGui::BeginDisabled();
+    ImGui::TreeNode((type.get_name().to_string() + " (removed)").c_str());
+    ImGui::EndDisabled();
   }
 
   bool Inspector::LayerComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
@@ -277,7 +294,11 @@ namespace GUI {
       ImGui::Text("Color");
       ImGui::TableSetColumnIndex(1);
       ImGui::SetNextItemWidth(INPUT_SIZE);
-      if (ImGui::ColorEdit4("##MaterialColor", &material.color[0])) {
+
+      glm::vec3 color = material.material->GetAlbedoColor();
+
+      if (ImGui::ColorEdit3("##AlebdoColor", &color[0])) {
+        material.material->SetAlbedoColor(color);
         modified = true;
       }
 
@@ -425,7 +446,7 @@ namespace GUI {
     bool modified{ false };
 
     if (isOpen) {
-      auto& transform = entity.GetComponent<Component::Transform>();
+      Component::Transform& transform = entity.GetComponent<Component::Transform>();
 
       float contentSize = ImGui::GetContentRegionAvail().x;
       float charSize = ImGui::CalcTextSize("012345678901234").x;
@@ -440,13 +461,15 @@ namespace GUI {
       ImGui::TableHeadersRow();
 
       // @TODO: Replace min and max with the world min and max
-      if (ImGuiHelpers::TableInputFloat3("Local Translation", &transform.localPos[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
+      if (ImGuiHelpers::TableInputFloat3("Translation", &transform.position[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
         modified = true;
       }
-      if (ImGuiHelpers::TableInputFloat3("Local Rotation", &transform.localRot[0], inputWidth, false, 0.f, 360.f, 0.1f)) {
+      glm::vec3 localRot{ transform.eulerAngles };
+      if (ImGuiHelpers::TableInputFloat3("Rotation", &localRot[0], inputWidth, false, -360.f, 360.f, 0.3f)) {
+        transform.SetLocalRotWithEuler(localRot);
         modified = true;
       }
-      if (ImGuiHelpers::TableInputFloat3("Local Scale", &transform.localScale[0], inputWidth, false, 0.f, 100.f, 1.f)) {
+      if (ImGuiHelpers::TableInputFloat3("Scale", &transform.scale[0], inputWidth, false, 0.001f, 100.f, 0.3f)) {
         modified = true;
       }
       ImGui::EndTable();
@@ -459,16 +482,13 @@ namespace GUI {
       ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       ImGui::TableHeadersRow();
 
-      // @TODO: Replace min and max with the world min and max
-      if (ImGuiHelpers::TableInputFloat3("World Translation", &transform.worldPos[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
-        modified = true;
-      }
-      if (ImGuiHelpers::TableInputFloat3("World Rotation", &transform.worldRot[0], inputWidth, false, 0.f, 360.f, 0.1f)) {
-        modified = true;
-      }
-      if (ImGuiHelpers::TableInputFloat3("World Scale", &transform.worldScale[0], inputWidth, false, 0.f, 100.f, 1.f)) {
-        modified = true;
-      }
+      // only allow local transform to be modified
+      glm::vec3 worldRot{ transform.GetWorldEulerAngles() };
+      ImGui::BeginDisabled();
+      ImGuiHelpers::TableInputFloat3("World Translation", &transform.worldPos[0], inputWidth, false, -100.f, 100.f, 0.1f);
+      ImGuiHelpers::TableInputFloat3("World Rotation", &worldRot[0], inputWidth, false, 0.f, 360.f, 0.1f);
+      ImGuiHelpers::TableInputFloat3("World Scale", &transform.worldScale[0], inputWidth, false, 0.001f, 100.f, 1.f);
+      ImGui::EndDisabled();
 
       ImGui::EndTable();
     }
@@ -482,6 +502,44 @@ namespace GUI {
     bool modified{ false };
 
     if (isOpen) {
+      static const std::vector<std::pair<std::string, Graphics::MeshFactory::MeshSourcePtr(*)()>> nameToFunc{
+        { "None", nullptr },
+        { "Cube", Graphics::MeshFactory::CreateCube }
+      };
+      Component::Mesh& mesh{ entity.GetComponent<Component::Mesh>() };
+
+      if (ImGui::BeginCombo("##MeshSelection", mesh.meshName.c_str())) {
+        for (auto const& [name, func] : nameToFunc) {
+          if (ImGui::Selectable(name.c_str())) {
+            if (func) {
+              mesh.mesh = std::make_shared<Graphics::Mesh>(func());
+            }
+
+            if (name != mesh.meshName) {
+              modified = true;
+              mesh.meshName = name;
+            }
+            break;
+          }
+        }
+
+        ImGui::EndCombo();
+      }
+      // allow dropping of models
+      // @TODO: ABSTRACT MORE; MAKE IT EASIER TO ADD A MESH
+      else if (ImGui::BeginDragDropTarget())
+      {
+        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+        if (drop) {
+          AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+          if (assetPayload.mAssetType == AssetPayload::MODEL) {
+            auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
+            mesh.mesh = std::move(meshSrc);
+            mesh.meshName = assetPayload.GetFileName();
+          }
+        }
+        ImGui::EndDragDropTarget();
+      }
 
     }
 

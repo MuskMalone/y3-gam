@@ -27,16 +27,17 @@ uniform mat4 u_ViewProjMtx;
 void main(){
     // Apply per-instance transformation to the vertex position
     vec4 worldPosition = a_ModelMatrix * vec4(a_Position, 1.0);
-    gl_Position = u_ViewProjMtx * worldPosition;
 
-    // Transform other attributes to world space
-    v_Normal = mat3(a_ModelMatrix) * a_Normal;
-    v_Tangent = mat3(a_ModelMatrix) * a_Tangent;
-    v_Bitangent = mat3(a_ModelMatrix) * a_Bitangent;
+    mat3 normalMatrix = transpose(inverse(mat3(a_ModelMatrix)));
+    v_Normal = normalize(normalMatrix * a_Normal);
+    v_Tangent = normalize(normalMatrix * a_Tangent);
+    v_Bitangent = normalize(normalMatrix * a_Bitangent);
 
     // Output per-instance attributes
     v_FragPos = worldPosition.xyz;
-    v_Color =  a_Color; // Combine vertex color and instance color
+    v_Color =  a_Color;
     v_TexCoord = a_TexCoord;
     v_TexIdx = a_TexIdx;
+    gl_Position = u_ViewProjMtx * worldPosition;
+
 }

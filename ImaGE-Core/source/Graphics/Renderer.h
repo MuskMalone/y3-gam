@@ -101,11 +101,11 @@ namespace Graphics {
 		// Quads
 		static void DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::vec4 const& clr, float rot = 0.f);
 
-		static void SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& scale, glm::vec4 const& clr = { 1.f,1.f,1.f,1.f }, float rot = 0.f);
+		static void SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr = { 1.f,1.f,1.f,1.f });
 		static void SubmitTriangle(glm::vec3 const& v1, glm::vec3 const& v2, glm::vec3 const& v3, glm::vec4 const& clr = { 1.f,1.f,1.f,1.f });
 
 		//Instancing
-		static void SubmitInstance(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const&, glm::vec3 const& scale, glm::vec4 const& clr);
+		static void SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr);
 		static void RenderInstances();
 
 		// Batching

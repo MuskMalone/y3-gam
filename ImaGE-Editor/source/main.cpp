@@ -21,7 +21,7 @@ int Main(int argc, char** argv) {
   spec.WindowHeight = 1080;
   spec.WindowWidth = 1920;
 
-  EditorApplication myApp{ spec };
+  IGE::EditorApplication myApp{ spec };
   try
   {
     myApp.Init();

@@ -1,6 +1,6 @@
 #pragma once
 #include <entt.hpp>
-#include <Core/Component/Tag.h>
+#include <Core/Components/Tag.h>
 #include "Singleton.h"
 
 // forward declaration

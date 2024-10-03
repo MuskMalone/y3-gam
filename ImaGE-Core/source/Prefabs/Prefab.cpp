@@ -14,8 +14,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <pch.h>
 #include "Prefab.h"
 #include <Reflection/ObjectFactory.h>
-#include <Core/Component/PrefabOverrides.h>
-#include <Core/Component/Transform.h>
+#include <Core/Components/PrefabOverrides.h>
+#include <Core/Components/Transform.h>
 
 using namespace Prefabs;
 
@@ -53,7 +53,7 @@ std::pair<ECS::Entity, Prefab::EntityMappings> Prefab::ConstructAndMap(glm::vec3
   //entityMan.SetIsActiveEntity(entity, mIsActive);
   Reflection::ObjectFactory::GetInstance().AddComponentsToEntity(entity, mComponents);
   Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
-  trans.worldPos = trans.localPos = pos;
+  trans.worldPos = trans.position = pos;
   entity.EmplaceComponent<Component::PrefabOverrides>(mName);
 
   // map base ID to this entity ID
@@ -91,7 +91,7 @@ ECS::Entity Prefab::Construct(glm::vec3 const& pos) const
   //entityMan.SetIsActiveEntity(entity, mIsActive);
   Reflection::ObjectFactory::GetInstance().AddComponentsToEntity(entity, mComponents);
   Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
-  trans.worldPos = trans.localPos = pos;
+  trans.worldPos = trans.position = pos;
   entity.EmplaceComponent<Component::PrefabOverrides>(mName);
 
   // map base ID to this entity ID

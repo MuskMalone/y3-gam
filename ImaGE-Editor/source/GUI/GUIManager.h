@@ -19,6 +19,7 @@ namespace GUI {
     // taking in framebuffer to pass into viewport class
     void Init();
     void UpdateGUI(std::shared_ptr<Graphics::Framebuffer> const& framebuffer);
+    void Shutdown();
 
     static inline Styler& GetStyler() noexcept { return mStyler; }
     static inline ECS::Entity GetSelectedEntity() noexcept { return sSelectedEntity; }

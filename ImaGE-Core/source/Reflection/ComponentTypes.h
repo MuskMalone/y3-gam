@@ -9,7 +9,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma once
 #include <vector>
 #include <rttr/type.h>
-#include <Core/Component/Components.h>
+#include <Core/Components/Components.h>
 #include <typeindex>
 #include <bitset>
 
