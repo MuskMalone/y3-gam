@@ -453,12 +453,12 @@ namespace GUI {
       if (ImGuiHelpers::TableInputFloat3("Translation", &transform.position[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
         modified = true;
       }
-      glm::vec3 localRot{ transform.GetLocalEulerAngles() };
-      if (ImGuiHelpers::TableInputFloat3("Rotation", &localRot[0], inputWidth, false, 0.f, 360.f, 0.1f)) {
+      glm::vec3 localRot{ transform.eulerAngles };
+      if (ImGuiHelpers::TableInputFloat3("Rotation", &localRot[0], inputWidth, false, -360.f, 360.f, 0.3f)) {
         transform.SetLocalRotWithEuler(localRot);
         modified = true;
       }
-      if (ImGuiHelpers::TableInputFloat3("Scale", &transform.scale[0], inputWidth, false, 0.001f, 100.f, 1.f)) {
+      if (ImGuiHelpers::TableInputFloat3("Scale", &transform.scale[0], inputWidth, false, 0.001f, 100.f, 0.3f)) {
         modified = true;
       }
       ImGui::EndTable();
@@ -472,8 +472,8 @@ namespace GUI {
       ImGui::TableHeadersRow();
 
       // only allow local transform to be modified
-      ImGui::BeginDisabled();
       glm::vec3 worldRot{ transform.GetWorldEulerAngles() };
+      ImGui::BeginDisabled();
       ImGuiHelpers::TableInputFloat3("World Translation", &transform.worldPos[0], inputWidth, false, -100.f, 100.f, 0.1f);
       ImGuiHelpers::TableInputFloat3("World Rotation", &worldRot[0], inputWidth, false, 0.f, 360.f, 0.1f);
       ImGuiHelpers::TableInputFloat3("World Scale", &transform.worldScale[0], inputWidth, false, 0.001f, 100.f, 1.f);

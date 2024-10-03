@@ -1,24 +1,24 @@
 /*!*********************************************************************
-\file   WorldToLocalTransformSystem.h
+\file   LocalToWorldTransformSystem.h
 \author chengen.lau\@digipen.edu
 \date   03-October-2024
-\brief  Computes the local transform of entities based on their world
-        transform. Should only run after world transform is updated.
+\brief  Computes the world transform of entities based on their local
+        transform.
 
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#include "System.h"
+#include <Core/Systems/System.h>
 #include <Core/Entity.h>
 
 namespace Systems {
-  class WorldToLocalTransformSystem : public System {
+  class LocalToWorldTransformSystem : public System {
   public:
-    WorldToLocalTransformSystem(const char* name) : System(name) {}
+    LocalToWorldTransformSystem(const char* name) : System(name) {}
 
     void Update() override;
 
   private:
-    void UpdateWorldToLocal(ECS::Entity entity);
+    void UpdateLocalToWorld(ECS::Entity entity);
   };
 } // namespace Systems

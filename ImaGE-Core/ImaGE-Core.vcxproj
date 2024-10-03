@@ -184,8 +184,9 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Core\Entity.h" />
     <ClInclude Include="source\Core\EntityManager.h" />
     <ClInclude Include="source\Core\Systems\System.h" />
-    <ClInclude Include="source\Core\Systems\LocalToWorldTransformSystem.h" />
-    <ClInclude Include="source\Core\Systems\WorldToLocalTransformSystem.h" />
+    <ClInclude Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.h" />
+    <ClInclude Include="source\Core\Systems\TransformSystem\TransformHelpers.h" />
+    <ClInclude Include="source\Core\Systems\TransformSystem\WorldToLocalTransformSystem.h" />
     <ClInclude Include="source\Core\TempObject.h" />
     <ClInclude Include="source\Debug.h" />
     <ClInclude Include="source\DebugTools\DebugLogger\DebugLogger.h" />
@@ -265,10 +266,12 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
     <ClCompile Include="source\Core\Camera.cpp" />
+    <ClCompile Include="source\Core\Components\Transform.cpp" />
     <ClCompile Include="source\Core\Entity.cpp" />
     <ClCompile Include="source\Core\EntityManager.cpp" />
-    <ClCompile Include="source\Core\Systems\LocalToWorldTransformSystem.cpp" />
-    <ClCompile Include="source\Core\Systems\WorldToLocalTransformSystem.cpp" />
+    <ClCompile Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.cpp" />
+    <ClCompile Include="source\Core\Systems\TransformSystem\TransformHelpers.cpp" />
+    <ClCompile Include="source\Core\Systems\TransformSystem\WorldToLocalTransformSystem.cpp" />
     <ClCompile Include="source\Core\TempObject.cpp" />
     <ClCompile Include="source\DebugTools\DebugLogger\DebugLogger.cpp" />
     <ClCompile Include="source\Events\EventManager.cpp" />

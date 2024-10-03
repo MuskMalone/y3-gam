@@ -28,10 +28,9 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .constructor<>()
     .property("position", &Transform::position)
     .property("scale", &Transform::scale)
-    .property("rotation", &Transform::rotation)
+    .property("eulerAngles", &Transform::eulerAngles)
     .property("worldPos", &Transform::worldPos)
-    .property("worldScale", &Transform::worldScale)
-    .property("worldRot", &Transform::worldRot);
+    .property("worldScale", &Transform::worldScale);
 
   rttr::registration::class_<Layer>("Layer")
     .constructor<>()

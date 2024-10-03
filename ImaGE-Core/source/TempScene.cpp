@@ -79,7 +79,7 @@ void Scene::Init()
           auto& transformComponent = entity.GetComponent<Component::Transform>();
           transformComponent.position = glm::vec3(i * 2.0f, 0.0f, j * 2.0f); // Offset for position
           transformComponent.scale = glm::vec3(1.0f);  // Default scale
-          transformComponent.rotation = {};  // No rotation
+          transformComponent.rotation = { 1.f, 0.f, 0.f, 0.f };  // No rotation
           transformComponent.modified = true;
 
           // Set up the MeshComponent
