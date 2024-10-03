@@ -1,15 +1,16 @@
 #pragma once
 #include "Color.h"
+#include "Graphics/Material.h"
 
 namespace Component {
-	struct Material {
-		Material() : color{ Color::COLOR_BLACK } {}
-		Material(glm::vec4 color) : color{ color } {}
+    struct Material {
+        Material() = default;
+        Material(std::shared_ptr<Graphics::Material> material) : material{ material } {} // Constructor to set material instance
 
-		inline void Clear() noexcept { color = Color::COLOR_BLACK; }
+        inline void Clear() noexcept {
+            material.reset();
+        }
 
-		glm::vec4 color;
-
-		// @TODO: TEXTURES, ETC
-	};
+        std::shared_ptr<Graphics::Material> material;
+    };
 }

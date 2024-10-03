@@ -287,7 +287,11 @@ namespace GUI {
       ImGui::Text("Color");
       ImGui::TableSetColumnIndex(1);
       ImGui::SetNextItemWidth(INPUT_SIZE);
-      if (ImGui::ColorEdit4("##MaterialColor", &material.color[0])) {
+
+      glm::vec3 color = material.material->GetAlbedoColor();
+
+      if (ImGui::ColorEdit3("##AlebdoColor", &color[0])) {
+        material.material->SetAlbedoColor(color);
         modified = true;
       }
 

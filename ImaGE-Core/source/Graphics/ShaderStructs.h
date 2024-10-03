@@ -12,12 +12,12 @@ namespace Graphics
     void SetUniforms(ShaderProgram& shader) const;
   };
 
-  struct Material
-  {
-    glm::vec3 ambient, diffuse, specular;
-    float shininess;
+  //struct Material
+  //{
+  //  glm::vec3 ambient, diffuse, specular;
+  //  float shininess;
 
-    void SetUniforms(ShaderProgram& shader) const;
-  };
+  //  void SetUniforms(ShaderProgram& shader) const;
+  //};
 
 } // namespace Graphics

@@ -184,6 +184,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Core\Entity.h" />
     <ClInclude Include="source\Core\EntityManager.h" />
     <ClInclude Include="source\Core\Systems\System.h" />
+    <ClInclude Include="source\Core\Systems\SystemManager\SystemManager.h" />
     <ClInclude Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.h" />
     <ClInclude Include="source\Core\Systems\TransformSystem\TransformHelpers.h" />
     <ClInclude Include="source\Core\Systems\TransformSystem\WorldToLocalTransformSystem.h" />
@@ -219,6 +220,8 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Graphics\EditorCamera.h" />
     <ClInclude Include="source\Graphics\ElementBuffer.h" />
     <ClInclude Include="source\Graphics\Framebuffer.h" />
+    <ClInclude Include="source\Graphics\Material.h" />
+    <ClInclude Include="source\Graphics\MaterialSource.h" />
     <ClInclude Include="source\Graphics\Mesh.h" />
     <ClInclude Include="source\Graphics\MeshFactory.h" />
     <ClInclude Include="source\Graphics\MeshGen.h" />
@@ -227,6 +230,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Graphics\Model.h" />
     <ClInclude Include="source\Graphics\Pipeline.h" />
     <ClInclude Include="source\Graphics\RenderAPI.h" />
+    <ClInclude Include="source\Graphics\RenderCommand.h" />
     <ClInclude Include="source\Graphics\RenderPass.h" />
     <ClInclude Include="source\Graphics\RenderSystem.h" />
     <ClInclude Include="source\Graphics\Renderer.h" />
@@ -262,7 +266,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Singleton.h" />
     <ClInclude Include="source\TempScene.h" />
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Core\Systems\SystemManager\SystemManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -270,6 +273,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Core\Components\Transform.cpp" />
     <ClCompile Include="source\Core\Entity.cpp" />
     <ClCompile Include="source\Core\EntityManager.cpp" />
+    <ClCompile Include="source\Core\Systems\SystemManager\SystemManager.cpp" />
     <ClCompile Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.cpp" />
     <ClCompile Include="source\Core\Systems\TransformSystem\TransformHelpers.cpp" />
     <ClCompile Include="source\Core\Systems\TransformSystem\WorldToLocalTransformSystem.cpp" />
@@ -318,6 +322,8 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Graphics\EditorCamera.cpp" />
     <ClCompile Include="source\Graphics\ElementBuffer.cpp" />
     <ClCompile Include="source\Graphics\Framebuffer.cpp" />
+    <ClCompile Include="source\Graphics\Material.cpp" />
+    <ClCompile Include="source\Graphics\MaterialSource.cpp" />
     <ClCompile Include="source\Graphics\Mesh.cpp" />
     <ClCompile Include="source\Graphics\MeshFactory.cpp" />
     <ClCompile Include="source\Graphics\MeshGen.cpp" />
@@ -348,7 +354,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="source\Core\Systems\SystemManager\SystemManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
