@@ -6,7 +6,7 @@
 namespace IGE {
 	namespace Assets {
 		namespace {
-            const std::string cTextureDirectory{ cAssetDirectory + "Textures\\" };
+            const std::string cTextureDirectory{ std::string(gAssetsDirectory) + "Textures\\" };
 
             bool ConvertToDDS(const std::wstring& inputPath, const std::wstring& outputPath) {
                 DirectX::ScratchImage image;
@@ -41,21 +41,25 @@ namespace IGE {
             std::string inputImagePath{ GetAbsolutePath(cTextureDirectory + filename + fileext) };
             std::string ddsImagePath{ GetAbsolutePath(cTextureDirectory + filename + ".dds") };
             CreateDirectoryIfNotExists(cTextureDirectory);
+            if (IsDirectoriesEqual(inputImagePath, fp)) return GUID{ GetAbsolutePath(inputImagePath) };
+            
             if (!CopyFileToAssets(fp, inputImagePath)) {
                 return -1;
             }
 
-            // Convert the copied image to DDS format
-            if (!ConvertToDDS(std::wstring(inputImagePath.begin(), inputImagePath.end()), std::wstring(ddsImagePath.begin(), ddsImagePath.end()))) {
-                return -1;
-            }
+            if (fileext != ".dds") {
+                // Convert the copied image to DDS format
+                if (!ConvertToDDS(std::wstring(inputImagePath.begin(), inputImagePath.end()), std::wstring(ddsImagePath.begin(), ddsImagePath.end()))) {
+                    return -1;
+                }
 
-            // Delete the original copied image, keeping only the DDS file
-            if (!DeleteFileAssets(inputImagePath)) {
-                return -1;
+                // Delete the original copied image, keeping only the DDS file
+                if (!DeleteFileAssets(inputImagePath)) {
+                    return -1;
+                }
+                return GUID{ GetAbsolutePath(ddsImagePath) };
             }
-
-            return GUID{ GetAbsolutePath(ddsImagePath) };
+            return GUID{ GetAbsolutePath(inputImagePath) };
         }
 		void* TextureAsset::Load([[maybe_unused]] GUID guid) {
 			return new TextureAsset(std::string(guid.GetSeed()));

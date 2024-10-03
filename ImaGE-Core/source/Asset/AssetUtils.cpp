@@ -50,5 +50,21 @@ namespace IGE {
                 std::cout << "Directory already exists: " << directoryPath << std::endl;
             }
         }
+        bool IsDirectoriesEqual(const std::string fp1, const std::string fp2) {
+            fs::path path1 {fp1};
+            fs::path path2 {fp2};
+
+            try {
+                if (fs::equivalent(path1, path2)) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            catch (const fs::filesystem_error& e) {
+                return false;
+            }
+        }
 	}
 }

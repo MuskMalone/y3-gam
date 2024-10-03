@@ -13,6 +13,9 @@
     <Filter Include="Asset\Assetables\Texture">
       <UniqueIdentifier>{3BF38E0D-2718-DE8D-5063-C31D3CE7DCAB}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{9718D90C-032D-01BE-CCAE-A41D3882FDEE}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
     </Filter>
@@ -108,6 +111,9 @@
     </ClInclude>
     <ClInclude Include="source\Asset\SmartPointer.h">
       <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Audio\AudioManager.h">
+      <Filter>Audio</Filter>
     </ClInclude>
     <ClInclude Include="source\Color.h" />
     <ClInclude Include="source\Core\Camera.h">
@@ -393,6 +399,9 @@
     </ClCompile>
     <ClCompile Include="source\Asset\SmartPointer.cpp">
       <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Audio\AudioManager.cpp">
+      <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Camera.cpp">
       <Filter>Core</Filter>

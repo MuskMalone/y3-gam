@@ -72,7 +72,8 @@ project "ImaGE-Core"
         "PhysXVehicle_static_64.lib", 
         "SceneQuery_static_64.lib", 
         "SimulationController_static_64.lib",
-        "DirectXTex_d.lib"
+        "DirectXTex_d.lib",
+        "fmodL_vc.lib"
        }
 
        postbuildcommands {
@@ -113,7 +114,8 @@ project "ImaGE-Core"
         "PhysXVehicle_static_64.lib", 
         "SceneQuery_static_64.lib", 
         "SimulationController_static_64.lib",
-        "DirectXTex.lib"
+        "DirectXTex.lib",
+        "fmod_vc.lib"
        }
 
     filter "configurations:Distribution"

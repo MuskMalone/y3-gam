@@ -3,9 +3,10 @@
 #include <Serialization/Registration/RegisterClasses.h>
 #include <Serialization/Registration/RegisterComponents.h>
 #include <Serialization/Registration/RegisterEnumsAndFuncs.h>
-
+#include <Asset/IGEAssets.h>
 int Main(int argc, char** argv) {
   // To be read from settings file
+    IGEAssetsRegisterTypes();
   EditorApplication::ApplicationSpecification spec;
   spec.EnableImGui = true;
   spec.Fullscreen = false;
