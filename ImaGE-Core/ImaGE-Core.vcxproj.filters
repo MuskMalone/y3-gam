@@ -46,6 +46,18 @@
     <Filter Include="External\ImGui\misc\single_file">
       <UniqueIdentifier>{BD5E7082-2942-7FC2-3245-ADFE9EA74513}</UniqueIdentifier>
     </Filter>
+    <Filter Include="External\glad">
+      <UniqueIdentifier>{0FD5D857-7B95-548E-44D0-9D0BB04F996A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\glad\include">
+      <UniqueIdentifier>{829BB507-EE07-7102-B7FB-08602327936A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\glad\include\KHR">
+      <UniqueIdentifier>{F69A56D8-625D-8A62-AB0D-19EF170F6340}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\glad\include\glad">
+      <UniqueIdentifier>{C9EF39E3-B5FF-E5B3-1EB9-4AD20AE8D44C}</UniqueIdentifier>
+    </Filter>
     <Filter Include="FrameRateController">
       <UniqueIdentifier>{60BC59B9-CC1D-37C7-558B-7D79C1EB6D86}</UniqueIdentifier>
     </Filter>
@@ -177,6 +189,9 @@
     <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl3_loader.h">
       <Filter>External\ImGui\backends</Filter>
     </ClInclude>
+    <ClInclude Include="source\External\ImGui\backends\imgui_impl_vulkan.h">
+      <Filter>External\ImGui\backends</Filter>
+    </ClInclude>
     <ClInclude Include="source\External\ImGui\imconfig.h">
       <Filter>External\ImGui</Filter>
     </ClInclude>
@@ -203,6 +218,12 @@
     </ClInclude>
     <ClInclude Include="source\External\ImGui\misc\single_file\imgui_single_file.h">
       <Filter>External\ImGui\misc\single_file</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\glad\include\KHR\khrplatform.h">
+      <Filter>External\glad\include\KHR</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\glad\include\glad\glad.h">
+      <Filter>External\glad\include\glad</Filter>
     </ClInclude>
     <ClInclude Include="source\FrameRateController\FrameRateController.h">
       <Filter>FrameRateController</Filter>
@@ -371,6 +392,9 @@
       <Filter>External\ImGui\backends</Filter>
     </ClCompile>
     <ClCompile Include="source\External\ImGui\backends\imgui_impl_opengl3.cpp">
+      <Filter>External\ImGui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGui\backends\imgui_impl_vulkan.cpp">
       <Filter>External\ImGui\backends</Filter>
     </ClCompile>
     <ClCompile Include="source\External\ImGui\imgui.cpp">

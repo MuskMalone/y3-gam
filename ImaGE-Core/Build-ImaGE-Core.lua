@@ -17,16 +17,29 @@ project "ImaGE-Core"
       "source/External",
       "source/External/ImGui",
       "source/External/ImTerm",
-      "../Libraries/**",
-   }
+      "source/External/glad/include/**",
 
-   libdirs 
-   {
-      "../Libraries/**"
+      "../Libraries/assimp/include/**",
+      "../Libraries/entt/single_include/**",
+      "../Libraries/freetype/include/**",
+      "../Libraries/glfw/include/**",
+      "../Libraries/glm/**",
+      "../Libraries/rapidjson/include/**",
+      "../Libraries/rttr/**",
+      "../Libraries/spdlog/include/**",
    }
 
    pchheader "pch.h"
    pchsource "source/pch.cpp"
+
+   filter "files:**.c"
+        flags {"NoPCH"}
+
+   filter "files:source/External/**.cpp"
+        flags {"NoPCH"}
+
+   filter "files:source/External/**.c"
+        flags {"NoPCH"}
 
    targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
    objdir ("../Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
@@ -66,11 +79,14 @@ project "ImaGE-Core"
 
        links {
         "opengl32.lib",
-        "glfw3.lib",
-        "assimp-vc143-mt.lib",
-        "Jolt_d.lib",
-        "Jolt1_d.lib",
+        "glfw3d.lib",
+        "assimp-vc143-mtd.lib",
         "rttr_core_d.lib"
+       }
+
+       libdirs 
+       {
+          "../Libraries/Built-Libraries/Debug/Libraries/**"
        }
 
        postbuildcommands {
@@ -100,12 +116,15 @@ project "ImaGE-Core"
         "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"
         }
 
+        libdirs 
+        {
+           "../Libraries/Built-Libraries/Release/Libraries/**"
+        }
+
        links {
         "opengl32.lib",
         "glfw3.lib",
         "assimp-vc143-mt.lib",
-        "Jolt.lib",
-        "Jolt1.lib",
         "rttr_core.lib"
        }
 
@@ -129,20 +148,14 @@ project "ImaGE-Core"
        optimize "On"
        symbols "Off"
 
+       libdirs 
+       {
+          "../Libraries/Built-Libraries/Release/Libraries/**"
+       }
+
        links {
         "opengl32.lib",
         "glfw3.lib",
         "assimp-vc143-mt.lib",
-        "Jolt.lib",
-        "Jolt1.lib",
         "rttr_core.lib"
        }
-
-   filter "files:**.c"
-       flags {"NoPCH"}
-
-   filter "files:source/External/**.cpp"
-       flags {"NoPCH"}
-    
-   filter "files:source/External/**.c"
-       flags {"NoPCH"}
