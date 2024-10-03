@@ -26,6 +26,7 @@
 #include <iostream>
 #include <cstdarg>
 #include <thread>
+#include <type_traits>
 
 #include <DebugTools/Exception/Exception.h>			      //Exception Class for Logging
 #include <DebugTools/DebugLogger/DebugLogger.h>       //Logging Tool

@@ -15,10 +15,10 @@ namespace IGE {
 			~PhysicsSystem();
 			void Update(float dt);
 
-			void AddRigidBody(ECS::Entity entity); // should const ref this when the functions r consted
+			Component::RigidBody& AddRigidBody(ECS::Entity entity); // should const ref this when the functions r consted
 			void ChangeRigidBodyVar(ECS::Entity entity, Component::RigidBodyVars var);
 
-			void AddCollider(ECS::Entity entity);
+			Component::Collider& AddCollider(ECS::Entity entity);
 			void ChangeColliderShape(ECS::Entity entity);
 			void ChangeColliderVar(ECS::Entity entity, Component::ColliderVars var);
 
@@ -58,6 +58,9 @@ namespace IGE {
 }
 //
 ////for testing tch
+//namespace GUI {
+//	class Inspector;
+//} //forward decl
 //template <>
 //inline void GUI::Inspector::DrawAddComponentButton<Component::RigidBody>(std::string const& name, std::string const& icon) {
 //	if (GUIManager::GetSelectedEntity().HasComponent<Component::RigidBody>()) {

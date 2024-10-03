@@ -87,8 +87,8 @@ namespace IGE {
 
 		}
 
-		void PhysicsSystem::AddRigidBody(ECS::Entity entity) {
-			if (entity.HasComponent<Component::RigidBody>()) return;
+		Component::RigidBody& PhysicsSystem::AddRigidBody(ECS::Entity entity) {
+			//if (entity.HasComponent<Component::RigidBody>()) return;
 			Component::RigidBody rigidbody{};
 			//auto& bodyinterface = mPhysicsSystem.GetBodyInterface();
 
@@ -130,7 +130,7 @@ namespace IGE {
 
 			rigidbody.bodyID = reinterpret_cast<void*>(rb);
 			mRigidBodyIDs.emplace(rigidbody.bodyID, rb);
-			entity.EmplaceComponent<Component::RigidBody>(rigidbody);
+			return entity.EmplaceComponent<Component::RigidBody>(rigidbody);
 
 			//set 
 			//bodyinterface.SetFriction(rigidbody.bodyID, rigidbody.friction);
@@ -142,10 +142,10 @@ namespace IGE {
 
 		}
 
-		void PhysicsSystem::AddCollider(ECS::Entity entity)
+		Component::Collider& PhysicsSystem::AddCollider(ECS::Entity entity)
 		{
 			//check to prevent additional shap adding
-			if (entity.HasComponent<Component::Collider>()) return;
+			//if (entity.HasComponent<Component::Collider>()) return;
 			Component::Collider collider{};
 			physx::PxRigidDynamic* rb{};
 			if (entity.HasComponent<Component::RigidBody>()) {
@@ -174,7 +174,10 @@ namespace IGE {
 				rb->setGlobalPose(xfm);
 			}
 			else if (entity.HasComponent<Component::Transform>()) { // this is a given
-				Component::Transform const& transform = entity.GetComponent<Component::Transform>();
+				Component::Transform transform = entity.GetComponent<Component::Transform>();
+				if ((transform.worldScale.x + transform.worldScale.y + transform.worldScale.z) <= glm::epsilon<float>()) {
+					transform.worldScale = { 1,1,1 }; //temp fix
+				}
 				rb = physx::PxCreateDynamic(
 					*mPhysics,
 					physx::PxTransform(ToPxVec3(transform.worldPos) + collider.positionOffset),
@@ -188,7 +191,7 @@ namespace IGE {
 				throw std::runtime_error{"cannot have no transform or rigidbody components!!"};
 			}
 			collider.bodyID = reinterpret_cast<void*>(rb);
-			entity.EmplaceComponent<Component::Collider>(collider);
+			return entity.EmplaceComponent<Component::Collider>(collider);
 		}
 		void PhysicsSystem::ChangeRigidBodyVar(ECS::Entity entity, Component::RigidBodyVars var)
 		{
