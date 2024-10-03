@@ -62,7 +62,7 @@ namespace Graphics {
                 continue;
 
             // Submit the mesh to the renderer with transform information
-            //Graphics::Renderer::SubmitMesh(mesh.mesh, xform.worldPos, xform.worldScale, { 1.f, 1.f, 1.f, 1.f }, {45}); //@TODO: adjust color and rotation as needed
+            //Graphics::Renderer::SubmitMesh(mesh.mesh, xform.worldPos, xform.worldRot, xform.worldScale, { 1.f, 1.f, 1.f, 1.f }); //@TODO: adjust color and rotation as needed
             Graphics::Renderer::SubmitInstance(mesh.mesh, xform.worldPos, xform.worldRot, xform.worldScale, { 1.f,1.f,1.f,1.f });
         }
         // Flush all collected instances and render them in a single draw call
