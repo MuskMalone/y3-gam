@@ -349,6 +349,7 @@
     <ClInclude Include="source\Graphics\RenderPass.h" />
     <ClInclude Include="source\Graphics\MaterialSource.h" />
     <ClInclude Include="source\Graphics\Material.h" />
+    <ClInclude Include="source\Core\Component\Mesh.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />

@@ -48,25 +48,29 @@ namespace Graphics {
                 continue;
 
             auto const& xform = entity.GetComponent<Component::Transform>();
-            auto const& meshRen = entity.GetComponent<Component::Mesh>();
+            auto const& mesh = entity.GetComponent<Component::Mesh>();
             
             // Skip if mesh is null
-            if (meshRen.mesh == nullptr)
+            if (mesh.mesh == nullptr)
                 continue;
 
-            auto const& mat = meshRen.material;
-            if (mat) {
-                mat->Apply(shader);
+            if (entity.HasComponent<Component::Material>()) {
+                auto const& matComponent = entity.GetComponent<Component::Material>();
+                auto const& mat = matComponent.material;
+
+                if (mat) {
+                    mat->Apply(shader);
+                }
             }
             else {
-                shader->SetUniform("u_Albedo", glm::vec3(1.0, 0.0, 1.0));
+                shader->SetUniform("u_Albedo", glm::vec3(0.5,0.5,0.5));
                 shader->SetUniform("u_Metallic", 0.0f);
                 shader->SetUniform("u_Roughness", 0.0f);
                 shader->SetUniform("u_AO", 1.f);
             }
 
             //Graphics::Renderer::SubmitMesh(mesh.mesh, xform.worldPos, xform.worldRot, xform.worldScale, { 1.f, 1.f, 1.f, 1.f }); //@TODO: adjust color and rotation as needed
-            Graphics::Renderer::SubmitInstance(meshRen.mesh, xform.worldPos, xform.worldRot, xform.worldScale, Color::COLOR_WHITE );
+            Graphics::Renderer::SubmitInstance(mesh.mesh, xform.worldPos, xform.worldRot, xform.worldScale, Color::COLOR_WHITE );
         }
         // Flush all collected instances and render them in a single draw call
         Renderer::RenderInstances();
