@@ -16,20 +16,21 @@ project "ImaGE-Core"
    {
       "source/External",
       "source/External/ImGui",
-      "source/External/glad/include/**",
+      "source/External/glad/include",
 
       "../Libraries/assimp/include/**",
-      "../Libraries/entt/single_include/**",
+      "../Libraries/entt/single_include",
       "../Libraries/freetype/include/**",
-      "../Libraries/glfw/include/**",
-      "../Libraries/glm/**",
+      "../Libraries/glfw/include",
+      "../Libraries/glm",
       "../Libraries/rapidjson/include/**",
       "../Libraries/rttr/**",
-      "../Libraries/spdlog/include/**",
+      "../Libraries/spdlog/include",
       "../Libraries/ImTerm/include/**",
       "../Libraries/PhysX/physx/include/**",
       "../Libraries/PhysX/pxshared/include/**",
       "../Libraries/mono/msvc/include/**",
+      "../Libraries/Built-Libraries/Debug/Libraries/rttr/**"
    }
 
    pchheader "pch.h"
@@ -66,7 +67,8 @@ project "ImaGE-Core"
         "_CONSOLE",
         "_CRT_SECURE_NO_WARNINGS",
         "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
-        "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"
+        "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
+        "GLM_ENABLE_EXPERIMENTAL",
         }
 
        links {
@@ -114,7 +116,8 @@ project "ImaGE-Core"
         "_CONSOLE",
         "_CRT_SECURE_NO_WARNINGS",
         "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
-        "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"
+        "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
+        "GLM_ENABLE_EXPERIMENTAL",
         }
 
         libdirs 
@@ -152,7 +155,8 @@ project "ImaGE-Core"
           "DISTRIBUTION",
           "_CRT_SECURE_NO_WARNINGS",
           "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
-          "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"
+          "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
+          "GLM_ENABLE_EXPERIMENTAL",
        }
        runtime "Release"
        optimize "On"

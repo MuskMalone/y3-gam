@@ -410,7 +410,6 @@
       <Filter>Serialization</Filter>
     </ClInclude>
     <ClInclude Include="source\Singleton.h" />
-    <ClInclude Include="source\TempScene.h" />
     <ClInclude Include="source\pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -589,7 +588,6 @@
     <ClCompile Include="source\Serialization\Serializer.cpp">
       <Filter>Serialization</Filter>
     </ClCompile>
-    <ClCompile Include="source\TempScene.cpp" />
     <ClCompile Include="source\pch.cpp" />
   </ItemGroup>
 </Project>

@@ -2,7 +2,6 @@
 #include <GLFW/glfw3.h>
 #include <External/GLFWwindowDestructor.h>
 #include <FrameRateController/FrameRateController.h>
-#include <TempScene.h>
 #include <memory>
 #include <DebugTools/Exception/Exception.h>
 #include <Graphics/Framebuffer.h>
@@ -55,7 +54,6 @@ namespace IGE {
 
     Systems::SystemManager mSystemManager;
     std::vector<std::pair<std::shared_ptr<Graphics::Framebuffer>, SceneDrawCall>> mFramebuffers;
-    std::unique_ptr<Scene> mScene;
     WindowPtr mWindow;
 
     static ApplicationSpecification mSpecification;
