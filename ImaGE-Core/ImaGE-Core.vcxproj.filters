@@ -91,6 +91,9 @@
     <ClInclude Include="source\Asset\AssetManager.h">
       <Filter>Asset</Filter>
     </ClInclude>
+    <ClInclude Include="source\Asset\IGEAssets.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
     <ClInclude Include="source\Color.h" />
     <ClInclude Include="source\Core\Components\Camera.h">
       <Filter>Core\Components</Filter>
@@ -356,6 +359,7 @@
     <ClInclude Include="source\Scenes\Scene.h" />
     <ClInclude Include="source\pch.h" />
     <ClInclude Include="source\Graphics\RenderTarget.h" />
+    <ClInclude Include="source\Reflection\AddComponentFunctions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -511,5 +515,6 @@
     </ClCompile>
     <ClCompile Include="source\Scenes\Scene.cpp" />
     <ClCompile Include="source\pch.cpp" />
+    <ClCompile Include="source\Reflection\AddComponentFunctions.cpp" />
   </ItemGroup>
 </Project>

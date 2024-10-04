@@ -16,9 +16,20 @@ namespace Systems {
   public:
     LocalToWorldTransformSystem(const char* name) : System(name) {}
 
+    /*!*********************************************************************
+    \brief
+      Update function of the system
+    ************************************************************************/
     void Update() override;
 
   private:
+    /*!*********************************************************************
+    \brief
+      Recursively computes the local transform of an entity based on its
+      world transform
+    \param entity
+     The current entity
+    ************************************************************************/
     void UpdateLocalToWorld(ECS::Entity entity);
   };
 } // namespace Systems

@@ -1,3 +1,12 @@
+/*!*********************************************************************
+\file   LocalToWorldTransformSystem.cpp
+\author chengen.lau\@digipen.edu
+\date   03-October-2024
+\brief  Computes the world transform of entities based on their local
+        transform.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include <pch.h>
 #include "LocalToWorldTransformSystem.h"
 #include <glm/gtx/euler_angles.hpp>

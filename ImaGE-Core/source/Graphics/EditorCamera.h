@@ -48,9 +48,9 @@ namespace Graphics {
 		float mNearClip;
 		float mFarClip;
 
-		float mMoveSpeed{ 5.f };
-		float mMousePanningSpeed{ 0.5f };
-		float mMouseSense{ 0.01f };
-		float mZoomSpeed{ 5.f };
+		float mMoveSpeed{ 10.f };
+		float mMousePanningSpeed{ 5.f };
+		float mMouseSense{ 50.f };
+		float mZoomSpeed{ 2.5f };
 	};
 }

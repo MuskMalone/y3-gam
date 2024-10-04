@@ -25,7 +25,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Physics/PhysicsSystem.h>
 #include <Prefabs/PrefabManager.h>
 #include <Events/EventManager.h>
+#include "AddComponentFunctions.h"
 
+#define GET_RTTR_TYPE(T) rttr::type::get<T>()
 #ifdef _DEBUG
 #define OF_DEBUG
 #endif
@@ -33,10 +35,26 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace Reflection
 {
 
+  void ObjectFactory::Init() {
+    using namespace Component;
+
+    mAddComponentFuncs = {
+      { GET_RTTR_TYPE(Tag), ComponentUtils::AddTag },
+      { GET_RTTR_TYPE(Transform), ComponentUtils::AddTransform },
+      { GET_RTTR_TYPE(Layer), ComponentUtils::AddLayer },
+      { GET_RTTR_TYPE(Mesh), ComponentUtils::AddMesh },
+      { GET_RTTR_TYPE(Material), ComponentUtils::AddMaterial },
+      { GET_RTTR_TYPE(Collider), ComponentUtils::AddCollider },
+      { GET_RTTR_TYPE(RigidBody), ComponentUtils::AddRigidBody },
+      { GET_RTTR_TYPE(Text), ComponentUtils::AddText }
+//      { GET_RTTR_TYPE(Script), ComponentUtils::AddScript }
+    };
+  }
+
   void ObjectFactory::AddComponentsToEntity(ECS::Entity id, std::vector<rttr::variant> const& components) const
   {
     for (rttr::variant const& component : components) {
-      AddComponentToEntity(id, component.get_type(), component);
+      AddComponentToEntity(id, component);
     }
   }
 
@@ -110,7 +128,7 @@ namespace Reflection
       // replace any components if needed
       if (!overrides.modifiedComponents.empty()) {
         for (auto const& [type, comp] : overrides.modifiedComponents) {
-          AddComponentToEntity(entity, type, comp);
+          AddComponentToEntity(entity, comp);
         }
       }
 
@@ -224,42 +242,20 @@ namespace Reflection
     Serialization::Deserializer::DeserializeScene(mRawEntities, mPrefabInstances, filePath);
   }
 
-  void ObjectFactory::AddComponentToEntity(ECS::Entity entity, rttr::type const& type, rttr::variant const& compVar) const
+  void ObjectFactory::AddComponentToEntity(ECS::Entity entity, rttr::variant const& compVar) const
   {
-    rttr::type compType{ type };
+    rttr::type compType{ compVar.get_type() };
     // get underlying type if it's wrapped in a pointer
     compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
 
-    if (compType == rttr::type::get<Component::Tag>()) {
-      entity.EmplaceOrReplaceComponent<Component::Tag>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Tag>>());
-    }
-    else if (compType == rttr::type::get<Component::Transform>()) {
-      entity.EmplaceOrReplaceComponent<Component::Transform>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Transform>>());
-    }
-    else if (compType == rttr::type::get<Component::Layer>()) {
-      entity.EmplaceOrReplaceComponent<Component::Layer>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Layer>>());
-    }
-    else if (compType == rttr::type::get<Component::Material>()) {
-      entity.EmplaceOrReplaceComponent<Component::Material>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Material>>());
-    }
-    else if (compType == rttr::type::get<Component::Mesh>()) {
-      entity.EmplaceOrReplaceComponent<Component::Mesh>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Mesh>>());
-    }
-    else if (compType == rttr::type::get<Component::RigidBody>()) {
-      IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(entity);
-    }
-    else if (compType == rttr::type::get<Component::Collider>()) {
-      IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(entity);
-    }
-    else if (compType == rttr::type::get<Component::Text>()) {
-      entity.EmplaceOrReplaceComponent<Component::Text>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Text>>());
-    }
-    else
-    {
+    if (!mAddComponentFuncs.contains(compType)) {
       std::ostringstream oss{};
       oss << "Trying to add unknown component type: " << compType.get_name().to_string() << " to entity " << entity << " | Update ObjectFactory::AddComponentToEntity";
       Debug::DebugLogger::GetInstance().LogError(oss.str());
+      return;
     }
+
+    mAddComponentFuncs.at(compType)(entity, compVar);
   }
 
   #define IF_GET_ENTITY_COMP(ComponentClass) if (compType == rttr::type::get<ComponentClass>()) {\

@@ -1,3 +1,15 @@
+/*!*********************************************************************
+\file   GUIManager.cpp
+\author chengen.lau\@digipen.edu
+\date   5-October-2024
+\brief  Definition of class GUIManager, which holds the instance to
+        all GUI classes running in the editor. It is responsible for
+        updating them every game loop and is the main class that
+        the application interfaces with. Also holds shared variables
+        for window elements to access.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include <pch.h>
 #include "GUIManager.h"
 #include <ImGui/imgui.h>

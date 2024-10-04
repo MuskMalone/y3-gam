@@ -1,3 +1,13 @@
+/*!*********************************************************************
+\file   Console.cpp
+\author chengen.lau\@digipen.edu
+\date   5-October-2024
+\brief  Class encapsulating functions to run the console / terminal of
+				the editor. Anything sent to the logger will be output to the
+				console.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include "pch.h"
 #ifndef IMGUI_DISABLE
 #include "Console.h"

@@ -1,3 +1,11 @@
+/*!*********************************************************************
+\file   Application.h
+\date   5-October-2024
+\brief  The main class running the engine. Updates all systems in the
+        engine and sets up the GLFW window.
+  
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include <GLFW/glfw3.h>
 #include <External/GLFWwindowDestructor.h>
@@ -32,10 +40,25 @@ namespace IGE {
     Application(Application const&) = delete;
     Application& operator=(Application const&) = delete;
 
+    /*!*********************************************************************
+    \brief
+      Initializes the application
+    ************************************************************************/
     virtual void Init();
+
+    /*!*********************************************************************
+    \brief
+      Update function of the application
+    ************************************************************************/
     virtual void Run();
+    
+    /*!*********************************************************************
+    \brief
+      Shuts down the application and releases its resources
+    ************************************************************************/
     virtual void Shutdown();
 
+    // getters
     inline static bool IsImGUIActive() { return mSpecification.EnableImGui; }
     inline static ApplicationSpecification GetApplicationSpecification() { return mSpecification; }
     //inline void SetScene(std::unique_ptr<Scene> scene) { mScene = std::move(scene); }
@@ -50,6 +73,7 @@ namespace IGE {
   protected:
     inline Graphics::RenderTarget& GetDefaultRenderTarget() noexcept { return mRenderTargets.front(); }
 
+    // callbacks
     static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
     static void ErrorCallback(int err, const char* desc);
 
@@ -60,7 +84,16 @@ namespace IGE {
     static ApplicationSpecification mSpecification;
 
   private:
+    /*!*********************************************************************
+    \brief
+      Sets the callbacks for the application
+    ************************************************************************/
     void SetCallbacks();
+
+    /*!*********************************************************************
+    \brief
+      Registers all systems to the SystemManager
+    ************************************************************************/
     void RegisterSystems();
   };
 } // namespace IGE

@@ -165,6 +165,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
   <ItemGroup>
     <ClInclude Include="source\Application.h" />
     <ClInclude Include="source\Asset\AssetManager.h" />
+    <ClInclude Include="source\Asset\IGEAssets.h" />
     <ClInclude Include="source\Color.h" />
     <ClInclude Include="source\Core\Components\Camera.h" />
     <ClInclude Include="source\Core\Components\CameraController.h" />
@@ -243,6 +244,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Physics\PhysicsSystem.h" />
     <ClInclude Include="source\Prefabs\Prefab.h" />
     <ClInclude Include="source\Prefabs\PrefabManager.h" />
+    <ClInclude Include="source\Reflection\AddComponentFunctions.h" />
     <ClInclude Include="source\Reflection\ComponentTypes.h" />
     <ClInclude Include="source\Reflection\EntityData.h" />
     <ClInclude Include="source\Reflection\ObjectFactory.h" />
@@ -331,6 +333,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Physics\PhysicsSystem.cpp" />
     <ClCompile Include="source\Prefabs\Prefab.cpp" />
     <ClCompile Include="source\Prefabs\PrefabManager.cpp" />
+    <ClCompile Include="source\Reflection\AddComponentFunctions.cpp" />
     <ClCompile Include="source\Reflection\ObjectFactory.cpp" />
     <ClCompile Include="source\Scenes\SceneManager.cpp" />
     <ClCompile Include="source\Serialization\Deserializer.cpp" />
