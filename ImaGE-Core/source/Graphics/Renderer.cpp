@@ -213,7 +213,7 @@ namespace Graphics {
 		instanceBuffer->SetLayout(instanceLayout);
 
 		// Attach the instance buffer to the MeshSource's VAO
-		meshSrc->GetVertexArray()->AddVertexBuffer(instanceBuffer);
+		meshSrc->GetVertexArray()->AddVertexBuffer(instanceBuffer, true);
 
 		// Store the buffer in the map for future use
 		mData.instanceBuffers[meshSrc] = instanceBuffer;
@@ -515,6 +515,10 @@ namespace Graphics {
 
 	void Renderer::SetFinalFramebuffer(std::shared_ptr<Graphics::Framebuffer> const& framebuffer) {
 		mFinalFramebuffer = framebuffer;
+	}
+
+	std::shared_ptr<Texture> Renderer::GetWhiteTexture() {
+		return mData.whiteTex;
 	}
 
 }

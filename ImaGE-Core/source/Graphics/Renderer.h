@@ -121,6 +121,7 @@ namespace Graphics {
 		static unsigned int GetMaxTextureUnits();
 		static std::shared_ptr<Graphics::Framebuffer> GetFinalFramebuffer();
 		static void SetFinalFramebuffer(std::shared_ptr<Graphics::Framebuffer> const& framebuffer);
+		static std::shared_ptr<Texture> GetWhiteTexture();
 	private:
 		static void SetQuadBufferData(glm::vec3 const& pos, glm::vec2 const& scale,
 			glm::vec3 const& norm, glm::vec2 const& texCoord,
