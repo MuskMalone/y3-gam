@@ -20,8 +20,8 @@
 
 #include <Physics/PhysicsSystem.h>
 //std::vector<std::shared_ptr<Object>> Scene::mObjects;
-std::vector<Camera> Scene::m_cameras;
-
+Graphics::EditorCamera Scene::mEcam;
+std::shared_ptr<Graphics::Mesh> Scene::mesh0, Scene::mesh1;
 Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 const& clearClr)
   : m_shaders{}, m_defaultShaders{}, 
   m_light{ { 0.f, 25.f, 0.f }, { 0.4f, 0.4f, 0.4f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 1.0f } },
@@ -47,7 +47,6 @@ Scene::Scene(const char* vtxShaderFile, const char* fragShaderFile, glm::vec4 co
 void Scene::Init()
 {
    Graphics::RenderSystem::Init();
-  Graphics::Renderer::Init();
 
   Graphics::EditorCamera editorCam(
       glm::vec3(0.0f, 5.0f, 10.0f),  // Position
@@ -61,16 +60,41 @@ void Scene::Init()
 
  
   mEcam = editorCam;
-  std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateModelFromImport("../Assets/Models/cube_low_poly.imsh");
+  std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateModelFromImport("../Assets/Models/sphere_mid_poly.imsh");
   mesh0 = std::make_shared<Graphics::Mesh>(cubeMeshSource);
 
-  std::shared_ptr<Graphics::MeshSource> pyrMeshSource = Graphics::MeshFactory::CreatePyramid();
+  std::shared_ptr<Graphics::MeshSource> pyrMeshSource = Graphics::MeshFactory::CreateCube();
   mesh1 = std::make_shared<Graphics::Mesh>(pyrMeshSource);
   //=====================================================================================================================
 
+  //// Create a new entity for the plane
+  //ECS::Entity planeEntity = ECS::EntityManager::GetInstance().CreateEntity();
+
+  //// Set up the TransformComponent to create a flat plane
+  //auto& planeTransformComponent = planeEntity.GetComponent<Component::Transform>();
+  //planeTransformComponent.worldPos = glm::vec3(0.0f, -1.0f, 0.0f); // Place it slightly below the cubes (as ground)
+  //planeTransformComponent.worldScale = glm::vec3(100.0f, 0.1f, 100.0f); // Scale it to make a large plane
+  //planeTransformComponent.worldRot = {}; // No rotation
+
+  //// Set up the MeshComponent for the plane
+  //auto& planeMeshComponent = planeEntity.EmplaceComponent<Component::Mesh>();
+  //planeMeshComponent.mesh = mesh0; // Use the cube mesh to create the plane
+
+  //ECS::Entity entity = ECS::EntityManager::GetInstance().CreateEntity();
+
+  // Set up the TransformComponent with different offsets
+  ECS::Entity light = ECS::EntityManager::GetInstance().CreateEntity();
+  auto& transformC = light.GetComponent<Component::Transform>();
+  transformC.worldPos = glm::vec3(2.f, 2.0f, 2.f); // Offset for position
+  transformC.worldScale = glm::vec3(1.f);  // Default scale
+  transformC.worldRot = {};  // No rotation
+  auto& meshC = light.EmplaceComponent<Component::Mesh>();
+  meshC.mesh = nullptr;
+
+
   for (int i = 0; i < 5; ++i)
   {
-      for (int j = 0; j < 5; ++j)
+      for (int j = 0; j < 0; ++j)
       {
           // Create a new entity
           ECS::Entity entity = ECS::EntityManager::GetInstance().CreateEntity();
@@ -89,7 +113,7 @@ void Scene::Init()
               meshComponent.mesh = mesh0; // Assign cube mesh
           }
           else {
-              meshComponent.mesh = mesh0; // Assign pyramid mesh
+              meshComponent.mesh = mesh1; // Assign pyramid mesh
           }
       }
   }
@@ -97,7 +121,7 @@ void Scene::Init()
 
 void Scene::Update(float deltaTime)
 {
-    mEcam.UpdateCamera(deltaTime);
+    //mEcam.UpdateCamera(deltaTime);
   // update transforms
     IGE::Physics::PhysicsSystem::GetInstance()->Update(deltaTime);
   //for (auto& obj : mObjects)
@@ -121,31 +145,6 @@ void Scene::Draw()
 {
   glClear(GL_COLOR_BUFFER_BIT);
   glClear(GL_DEPTH_BUFFER_BIT);
-  //m_shaders.Use();
-
-  //m_cameras.front().SetUniforms(m_shaders);
-  //m_light.SetUniforms(m_shaders);
-  //m_material.SetUniforms(m_shaders);
-
-  //for (auto& obj : m_objects)
-  //{
-  //  m_shaders.SetUniform("uMdlTransform", obj->mdlTransform);
-  //  m_shaders.SetUniform("uVtxClr", obj->clr);
-  //  auto const& mdl{ *obj->meshRef };
-
-  //  glBindVertexArray(mdl.GetVAO());
-
-  //  // if primitive type is a point, render with GL_POINTS
-  //  if (mdl.isUsingIndices)
-  //  {
-  //    glDrawElements(mdl.primitiveType, static_cast<GLsizei>(mdl.drawCount), GL_UNSIGNED_SHORT, NULL);
-  //  }
-  //  // else draw as per normal
-  //  else {
-  //    glDrawArrays(mdl.primitiveType, 0, static_cast<GLsizei>(mdl.drawCount));
-  //  }
-  //}
-  //m_shaders.Unuse();
   
   m_defaultShaders.Use();
   m_cameras.front().SetUniforms(m_defaultShaders);
@@ -167,31 +166,6 @@ void Scene::DebugDraw() {
 
     Graphics::RenderSystem::RenderEditorScene(mEcam);
 
-    //Graphics::Renderer::RenderSceneBegin(mtx);
-
-    //// Imagine a 5x5 grid of cubes, each placed at different positions, scales, and colors
-    //for (int x = -2; x <= 2; ++x) {
-    //    for (int y = -2; y <= 2; ++y) {
-    //        // Calculate the position offset based on grid coordinates
-    //        glm::vec3 position = glm::vec3(x * 6.0f, y * 6.0f, 0.0f); // Spacing the cubes 6 units apart
-
-    //        // Random or incremental scaling
-    //        glm::vec3 scale = glm::vec3(1.0f + (x + 2) * 0.5f, 1.0f + (y + 2) * 0.5f, 1.0f);
-
-    //        // Assign a unique color for each cube (using normalized RGB values)
-    //        glm::vec4 color = glm::vec4(
-    //            (x + 2) * 0.2f, // Ranges from 0.0 to 1.0 as x goes from -2 to 2
-    //            (y + 2) * 0.2f, // Same for Y axis
-    //            1.0f - (x + 2) * 0.2f, // Creates a variety in color between cubes
-    //            1.0f);  // Alpha is always 1 (fully opaque)
-
-    //        // Submit the cube with the calculated position, scale, and color
-    //        Graphics::Renderer::SubmitMesh(mesh1, position, scale, color, 0.0f);
-    //        Graphics::Renderer::SubmitMesh(mesh0, position, scale, color, 0.0f);
-    //    }
-    //}
-
-    //Graphics::Renderer::RenderSceneEnd();
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
@@ -240,11 +214,7 @@ void Scene::ResetCamera()
 //tch: i just added this to visually test physics
 void Scene::AddMesh(ECS::Entity entity)
 {
-  /*  auto xfm{ entity.GetComponent<Component::Transform>() };
-    mObjects.emplace_back(std::make_shared<Object>(
-        "./assets/models/cube_low_poly.obj",
-        xfm.worldPos, 
-        xfm.worldScale));
-    mObjects.back()->entity = entity;
-    entity.EmplaceComponent<Component::Mesh>(Component::Mesh{});*/
+    auto xfm{ entity.GetComponent<Component::Transform>() };
+    auto& meshComponent = entity.EmplaceComponent<Component::Mesh>();
+    meshComponent.mesh = mesh0;
 }

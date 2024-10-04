@@ -2,100 +2,102 @@
 #include <GLFW/glfw3.h>
 #include "FrameRateController.h"
 
-void FrameRateController::Init(float targetFPS, float fpsCalculationInterval, bool vsyncEnabled) {
-  mVsyncEnabled = vsyncEnabled;
-  SetVsync(mVsyncEnabled);
+namespace Performance {
+  void FrameRateController::Init(float targetFPS, float fpsCalculationInterval, bool vsyncEnabled) {
+    mVsyncEnabled = vsyncEnabled;
+    SetVsync(mVsyncEnabled);
 
-  mCurrFrameTime = 0.f, mNewFrameTime = 0.f, mDeltaTime = 0.f;
-  mFPSTimer = 0.f, mCurrFPS = 0.f;
+    mCurrFrameTime = 0.f, mNewFrameTime = 0.f, mDeltaTime = 0.f;
+    mFPSTimer = 0.f, mCurrFPS = 0.f;
 
-  mTargetFPS = targetFPS;
-  mTargetFrameTime = 1.f / mTargetFPS;
-  mFPSCalculationInterval = fpsCalculationInterval;
+    mTargetFPS = targetFPS;
+    mTargetFrameTime = 1.f / mTargetFPS;
+    mFPSCalculationInterval = fpsCalculationInterval;
 
-  mFrameCounter = 0;
-}
-
-void FrameRateController::Start() {
-  mDeltaTime = mNewFrameTime - mCurrFrameTime;
-  mCurrFrameTime = mNewFrameTime;
-
-  mFPSTimer += mDeltaTime;
-
-  if (mFPSTimer >= mFPSCalculationInterval) {
-    mCurrFPS = static_cast<TimeType>(mFrameCounter) / mFPSCalculationInterval;
-    mFPSTimer = 0.f;
+    mFrameCounter = 0;
   }
-}
 
-void FrameRateController::End() {
-  do {
-    mNewFrameTime = static_cast<TimeType>(glfwGetTime());
+  void FrameRateController::Start() {
     mDeltaTime = mNewFrameTime - mCurrFrameTime;
-  } while (mDeltaTime < mTargetFrameTime);
+    mCurrFrameTime = mNewFrameTime;
 
-  mNewFrameTime = static_cast<TimeType>(glfwGetTime());
-  ++mFrameCounter;
-}
+    mFPSTimer += mDeltaTime;
 
-void FrameRateController::StartSystemTimer() {
-  mSystemTimeStart = std::chrono::high_resolution_clock::now();
-}
+    if (mFPSTimer >= mFPSCalculationInterval) {
+      mCurrFPS = static_cast<TimeType>(mFrameCounter) / mFPSCalculationInterval;
+      mFPSTimer = 0.f;
+    }
+  }
 
-void FrameRateController::EndSystemTimer(std::string systemName) {
-  auto endTime{ std::chrono::high_resolution_clock::now() };
-  std::map<std::string, TimeFormat>::iterator iter = mSystemTimerMap.find(systemName);
+  void FrameRateController::End() {
+    do {
+      mNewFrameTime = static_cast<TimeType>(glfwGetTime());
+      mDeltaTime = mNewFrameTime - mCurrFrameTime;
+    } while (mDeltaTime < mTargetFrameTime);
 
-  if (iter != mSystemTimerMap.end())
-    iter->second = std::chrono::duration_cast<TimeFormat>(endTime - mSystemTimeStart);
-  else
-    mSystemTimerMap[systemName] = std::chrono::duration_cast<TimeFormat>(endTime - mSystemTimeStart);
+    mNewFrameTime = static_cast<TimeType>(glfwGetTime());
+    ++mFrameCounter;
+  }
 
-  mSystemTimeStart = endTime;
-}
+  void FrameRateController::StartSystemTimer() {
+    mSystemTimeStart = std::chrono::high_resolution_clock::now();
+  }
 
-std::map<std::string, FrameRateController::TimeFormat> const& FrameRateController::GetSystemTimerMap() const noexcept {
-  return mSystemTimerMap;
-}
+  void FrameRateController::EndSystemTimer(std::string const& systemName) {
+    auto endTime{ std::chrono::high_resolution_clock::now() };
+    std::map<std::string, TimeFormat>::iterator iter = mSystemTimerMap.find(systemName);
 
-FrameRateController::TimeType FrameRateController::GetFPSCalculationInterval() const noexcept {
-  return mFPSCalculationInterval;
-}
+    if (iter != mSystemTimerMap.end())
+      iter->second = std::chrono::duration_cast<TimeFormat>(endTime - mSystemTimeStart);
+    else
+      mSystemTimerMap[systemName] = std::chrono::duration_cast<TimeFormat>(endTime - mSystemTimeStart);
 
-FrameRateController::TimeType FrameRateController::GetTargetFPS() const noexcept {
-  return mTargetFPS;
-}
+    mSystemTimeStart = endTime;
+  }
 
-FrameRateController::TimeType FrameRateController::GetDeltaTime() const noexcept {
-  return mDeltaTime;
-}
+  std::map<std::string, FrameRateController::TimeFormat> const& FrameRateController::GetSystemTimerMap() const noexcept {
+    return mSystemTimerMap;
+  }
 
-FrameRateController::TimeType FrameRateController::GetFPS() const noexcept {
-  return mCurrFPS;
-}
+  FrameRateController::TimeType FrameRateController::GetFPSCalculationInterval() const noexcept {
+    return mFPSCalculationInterval;
+  }
 
-bool FrameRateController::GetVsyncFlag() const noexcept {
-  return mVsyncEnabled;
-}
+  FrameRateController::TimeType FrameRateController::GetTargetFPS() const noexcept {
+    return mTargetFPS;
+  }
 
-void FrameRateController::SetFPSCalculationInterval(float fpsCalculationInterval) {
-  mFPSCalculationInterval = fpsCalculationInterval;
-}
+  FrameRateController::TimeType FrameRateController::GetDeltaTime() const noexcept {
+    return mDeltaTime;
+  }
 
-void FrameRateController::SetTargetFPS(float target) {
-  mTargetFPS = target;
-  mTargetFrameTime = 1.f / mTargetFPS;
-}
+  FrameRateController::TimeType FrameRateController::GetFPS() const noexcept {
+    return mCurrFPS;
+  }
 
-void FrameRateController::SetVsync(bool vsyncEnabled) {
-  mVsyncEnabled = vsyncEnabled;
-  glfwSwapInterval((mVsyncEnabled) ? 1 : 0);
-}
+  bool FrameRateController::GetVsyncFlag() const noexcept {
+    return mVsyncEnabled;
+  }
 
-void FrameRateController::Reset() {
-  mCurrFrameTime = 0.f;
-  mNewFrameTime = 0.f;
-  mDeltaTime = 0.f;
-  mFPSTimer = 0.f, mCurrFPS = 0.f;
-  mFrameCounter = 0;
-}
+  void FrameRateController::SetFPSCalculationInterval(float fpsCalculationInterval) {
+    mFPSCalculationInterval = fpsCalculationInterval;
+  }
+
+  void FrameRateController::SetTargetFPS(float target) {
+    mTargetFPS = target;
+    mTargetFrameTime = 1.f / mTargetFPS;
+  }
+
+  void FrameRateController::SetVsync(bool vsyncEnabled) {
+    mVsyncEnabled = vsyncEnabled;
+    glfwSwapInterval((mVsyncEnabled) ? 1 : 0);
+  }
+
+  void FrameRateController::Reset() {
+    mCurrFrameTime = 0.f;
+    mNewFrameTime = 0.f;
+    mDeltaTime = 0.f;
+    mFPSTimer = 0.f, mCurrFPS = 0.f;
+    mFrameCounter = 0;
+  }
+} // namespace Performance

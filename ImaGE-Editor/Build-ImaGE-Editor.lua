@@ -48,17 +48,6 @@ project "ImaGE-Editor"
       defines {
          "_DEBUG",
          "_CONSOLE",
-         "JPH_DEBUG_RENDERER",
-         "JPH_PROFILE_ENABLED",
-         "JPH_OBJECT_STREAM",
-         "JPH_USE_AVX2",
-         "JPH_USE_AVX",
-         "JPH_USE_SSE4_1",
-         "JPH_USE_SSE4_2",
-         "JPH_USE_LZCNT",
-         "JPH_USE_TZCNT",
-         "JPH_USE_F16C",
-         "JPH_USE_FMADD",
          "_CRT_SECURE_NO_WARNINGS",
          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
          "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"
@@ -68,24 +57,19 @@ project "ImaGE-Editor"
        symbols "On"
 
        postbuildcommands {
-         --"{COPYFILE} %[%{wks.location}Libraries/assimp/assimp-vc143-mt.dll] %[%{cfg.targetdir}]",
-         --"{COPYFILE} %[%{wks.location}Libraries/rttr-0.9.6/lib/Debug/rttr_core_d.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/physx4/debug/PhysX_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/physx4/debug/PhysXCommon_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/physx4/debug/PhysXCooking_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/physx4/debug/PhysXFoundation_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/physx4/debug/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/fmod/lib/fmodL.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]"
       }
 
    filter "configurations:Release"
       defines {
          "NDEBUG",
          "_CONSOLE",
-         "JPH_OBJECT_STREAM",
-         "JPH_USE_AVX2",
-         "JPH_USE_AVX",
-         "JPH_USE_SSE4_1",
-         "JPH_USE_SSE4_2",
-         "JPH_USE_LZCNT",
-         "JPH_USE_TZCNT",
-         "JPH_USE_F16C",
-         "JPH_USE_FMADD",
          "_CRT_SECURE_NO_WARNINGS",
          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
          "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"
@@ -95,23 +79,18 @@ project "ImaGE-Editor"
        symbols "On"
 
        postbuildcommands {
-         --"{COPYFILE} %[%{wks.location}Libraries/assimp/assimp-vc143-mt.dll] %[%{cfg.targetdir}]",
-         --"{COPYFILE} %[%{wks.location}Libraries/rttr-0.9.6/lib/Release/rttr_core.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysX_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysXCommon_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysXCooking_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysXFoundation_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]"
       }
 
    filter "configurations:Distribution"
       defines {
          "DISTRIBUTION",
-         "JPH_OBJECT_STREAM",
-         "JPH_USE_AVX2",
-         "JPH_USE_AVX",
-         "JPH_USE_SSE4_1",
-         "JPH_USE_SSE4_2",
-         "JPH_USE_LZCNT",
-         "JPH_USE_TZCNT",
-         "JPH_USE_F16C",
-         "JPH_USE_FMADD",
          "_CRT_SECURE_NO_WARNINGS",
          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
          "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"

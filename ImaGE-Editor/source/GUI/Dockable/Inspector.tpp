@@ -1,5 +1,5 @@
 template<typename Component>
-bool Inspector::WindowBegin(std::string windowName, std::string const& icon) {
+bool Inspector::WindowBegin(std::string const& windowName, std::string const& icon, bool highlight) {
   ImGui::Separator();
 
   if (mEntityChanged) {
@@ -8,7 +8,10 @@ bool Inspector::WindowBegin(std::string windowName, std::string const& icon) {
   }
 
   std::string display{ icon + "   " + windowName };
-  bool isOpen{ ImGui::TreeNode(display.c_str())};
+
+  if (highlight) { ImGui::PushStyleColor(ImGuiCol_Text, sComponentHighlightCol); }
+  bool const isOpen{ ImGui::TreeNode(display.c_str()) };
+  if (highlight) { ImGui::PopStyleColor(); }
 
   if (isOpen) {
     ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_LIGHT));
@@ -23,9 +26,9 @@ bool Inspector::WindowBegin(std::string windowName, std::string const& icon) {
   return isOpen;
 }
 
-template<typename Component>
+template<typename ComponentType>
 void Inspector::DrawAddComponentButton(std::string const& name, std::string const& icon) {
-  if (GUIManager::GetSelectedEntity().HasComponent<Component>()) {
+  if (GUIManager::GetSelectedEntity().HasComponent<ComponentType>()) {
     return;
   }
     
@@ -67,13 +70,25 @@ void Inspector::DrawAddComponentButton(std::string const& name, std::string cons
 
   if (isRowClicked) {
     ECS::Entity ent{ GUIManager::GetSelectedEntity().GetRawEnttEntityID() };
-    ent.EmplaceComponent<Component>();
+    if constexpr (std::is_same<ComponentType, Component::RigidBody>::value) {
+        ComponentType& newComp{ IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(ent) };
+    } else if constexpr (std::is_same<ComponentType, Component::Collider>::value) {
+        ComponentType& newComp{ IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(ent) };
+    } else {
+        ComponentType& newComp{ ent.EmplaceComponent<ComponentType>() };
+    }
     SetIsComponentEdited(true);
+
+    // if entity is a prefab instance, update its modified components
+    if (ent.HasComponent<Component::PrefabOverrides>()) {
+        ComponentType& newComp{ ent.GetComponent<ComponentType>() };
+      ent.GetComponent<Component::PrefabOverrides>().AddComponentModification(newComp);
+    }
     ImGui::CloseCurrentPopup();
   }
 }
 
-template<typename Component>
+template<typename ComponentType>
 bool Inspector::DrawOptionButton(std::string const& name) {
   bool openMainWindow{ true };
   auto fillRowWithColour = [](const ImColor& colour) {
@@ -110,15 +125,26 @@ bool Inspector::DrawOptionButton(std::string const& name) {
     ECS::Entity ent{ GUIManager::GetSelectedEntity().GetRawEnttEntityID() };
 
     if (name == "Remove Component") {
-      ent.RemoveComponent<Component>();
+      ent.RemoveComponent<ComponentType>();
       SetIsComponentEdited(true);
+      
+      // if its a prefab instance, add to overrides
+      if (ent.HasComponent<Component::PrefabOverrides>()) {
+        ent.GetComponent<Component::PrefabOverrides>().AddComponentRemoval(rttr::type::get<ComponentType>());
+      }
       openMainWindow = false;
     }
 
     else if (name == "Clear") {
-      auto& component = ent.GetComponent<Component>();
+      ComponentType& component = ent.GetComponent<ComponentType>();
       SetIsComponentEdited(true);
+
       component.Clear();
+
+      // if its a prefab instance, add to overrides
+      if (ent.HasComponent<Component::PrefabOverrides>()) {
+        ent.GetComponent<Component::PrefabOverrides>().AddComponentModification(component);
+      }
     }
 
     ImGui::CloseCurrentPopup();
@@ -128,26 +154,30 @@ bool Inspector::DrawOptionButton(std::string const& name) {
 }
 
 template<typename Component>
-bool Inspector::DrawOptionsListButton(std::string windowName) {
+bool Inspector::DrawOptionsListButton(std::string const& windowName) {
   bool openMainWindow{ true };
-  ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 25.f);
-  ImVec2 addTextSize = ImGui::CalcTextSize("Options");
-  ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
-  float paddingX = 10.0f;
-  float buttonWidth = addTextSize.x + paddingX * 2.0f;
-  ImGui::SameLine(contentRegionAvailable.x - addTextSize.x - paddingX);
+  //ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 5.f);
+  static ImVec2 const addTextSize = ImGui::CalcTextSize(ICON_FA_ELLIPSIS_VERTICAL);
+  float const contentRegionAvailableX = ImGui::GetContentRegionAvail().x;
+  float const paddingX = 5.f;
+  float const buttonWidth = addTextSize.x + paddingX * 2.0f;
+  ImGui::SameLine(contentRegionAvailableX - addTextSize.x - paddingX);
 
-  if (ImGui::Button("Options", ImVec2(buttonWidth, 0))) {
-    ImVec2 buttonPos = ImGui::GetItemRectMin();
-    ImVec2 buttonSize = ImGui::GetItemRectSize();
+  ImGui::PushStyleColor(ImGuiCol_Button, 0);
+  ImGui::PushStyleColor(ImGuiCol_ButtonHovered, 0);
+  if (ImGui::Button(ICON_FA_ELLIPSIS_VERTICAL, ImVec2(buttonWidth, 0))) {
+    ImVec2 const buttonPos = ImGui::GetItemRectMin();
+    ImVec2 const buttonSize = ImGui::GetItemRectSize();
 
-    ImVec2 popupPos(buttonPos.x, buttonPos.y + buttonSize.y);
+    ImVec2 const popupPos(buttonPos.x, buttonPos.y + buttonSize.y);
     ImGui::SetNextWindowPos(popupPos);
 
     ImGui::OpenPopup("OptionsPanel");
   }
-
-  ImGui::PopStyleVar();
+  ImGui::PopStyleColor(2);
+  if (ImGui::IsItemHovered()) {
+    ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
+  }
 
   if (ImGui::BeginPopup("OptionsPanel", ImGuiWindowFlags_NoMove)) {
 

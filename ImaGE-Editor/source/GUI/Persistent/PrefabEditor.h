@@ -18,7 +18,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "pch.h"
 #include <GUI/GUIWindow.h>
 #include <Events/EventCallback.h>
-#include <Prefabs/VariantPrefab.h>
+#include <Prefabs/Prefab.h>
+#include <Core/Entity.h>
 
 namespace GUI
 {
@@ -32,9 +33,9 @@ namespace GUI
 
   private:
     std::string mPrefabName, mPrefabPath;
-    std::vector<Prefabs::PrefabSubData::SubDataId> mRemovedChildren;
-    std::vector<std::pair<Prefabs::PrefabSubData::SubDataId, rttr::type>> mRemovedComponents;
-    ECS::Entity mPrefabInstance;
+    std::vector<Prefabs::SubDataId> mRemovedChildren;
+    std::vector<std::pair<Prefabs::SubDataId, rttr::type>> mRemovedComponents;
+    std::pair<ECS::Entity, Prefabs::Prefab::EntityMappings> mPrefabInstance;
     bool mIsEditing, mEscTriggered;
 
     /*!*********************************************************************

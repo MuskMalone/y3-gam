@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 namespace Graphics {
 	class Shader {
@@ -35,4 +36,4 @@ namespace Graphics {
 	private:
 		unsigned int pgmHdl;
 	};
-}
+}	// namespace Graphics

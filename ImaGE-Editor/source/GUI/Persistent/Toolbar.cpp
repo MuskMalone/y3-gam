@@ -39,12 +39,12 @@ namespace GUI
           mScenePopup = true;
         }
 
-        if (creationMode) {
-          ImGui::BeginDisabled();
-        }
-
         if (ImGui::MenuItem("New Prefab")) {
           mPrefabPopup = true;
+        }
+
+        if (creationMode) {
+          ImGui::BeginDisabled();
         }
 
         if (ImGui::MenuItem("Save Scene (Ctrl+S)")) {
@@ -206,7 +206,7 @@ namespace GUI
   void Toolbar::RunNewPrefabPopup()
   {
     ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
-    if (ImGui::BeginPopupModal("Create Prefab", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+    if (ImGui::BeginPopupModal("Create New Prefab", NULL, ImGuiWindowFlags_AlwaysAutoResize))
     {
       static std::string input{};
       static bool blankWarning{ false }, existingPrefabWarning{ false };

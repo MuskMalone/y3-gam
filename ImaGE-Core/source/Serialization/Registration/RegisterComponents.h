@@ -8,7 +8,7 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <rttr/registration>
-#include <Core/Component/Components.h>
+#include <Core/Components/Components.h>
 
 static void rttr_auto_register_reflection_function2_(); namespace {
   struct rttr__auto__register2__ {
@@ -16,7 +16,7 @@ static void rttr_auto_register_reflection_function2_(); namespace {
       rttr_auto_register_reflection_function2_();
     }
   };
-} static const rttr__auto__register2__ RTTR_CAT(auto_register__, __LINE__); static void rttr_auto_register_reflection_function2_()
+} static const rttr__auto__register2__ auto_register__20; static void rttr_auto_register_reflection_function2_()
 {
   using namespace Component;
 
@@ -26,12 +26,11 @@ static void rttr_auto_register_reflection_function2_(); namespace {
 
   rttr::registration::class_<Transform>("Transform")
     .constructor<>()
-    .property("localPos", &Transform::localPos)
-    .property("localScale", &Transform::localScale)
-    .property("localRot", &Transform::localRot)
+    .property("position", &Transform::position)
+    .property("scale", &Transform::scale)
+    .property("eulerAngles", &Transform::eulerAngles)
     .property("worldPos", &Transform::worldPos)
-    .property("worldScale", &Transform::worldScale)
-    .property("worldRot", &Transform::worldRot);
+    .property("worldScale", &Transform::worldScale);
 
   rttr::registration::class_<Layer>("Layer")
     .constructor<>()
@@ -39,21 +38,41 @@ static void rttr_auto_register_reflection_function2_(); namespace {
 
   rttr::registration::class_<Mesh>("Mesh")
     .constructor<>()
-    .property("meshRef", &Mesh::meshRef);
+    .property("mesh", &Mesh::mesh);
+
+  rttr::registration::class_<Material>("Material")
+    .constructor<>()
+    .property("material", &Material::material);
+    //.property("color", &Material::color);
+
+  rttr::registration::class_<Text>("Text")
+    .constructor<>()
+    .property("textContent", &Text::textContent)
+    .property("fontName", &Text::fontName)
+    .property("color", &Text::color)
+    .property("scale", &Text::scale);
 
   rttr::registration::class_<RigidBody>("RigidBody")
     .constructor<>()
     .property("velocity", &RigidBody::velocity)
     .property("angularVelocity", &RigidBody::angularVelocity)
-    .property("friction", &RigidBody::friction)
+    .property("friction", &RigidBody::staticFriction)
     .property("restitution", &RigidBody::restitution)
     .property("gravityFactor", &RigidBody::gravityFactor)
     .property("motionType", &RigidBody::motionType);
 
   rttr::registration::class_<Collider>("Collider")
+      .constructor<>()
+      .property("scale", &Collider::scale)
+      .property("positionOffset", &Collider::positionOffset);
+    //.property("rotationOffset", &Collider::rotationOffset)
+    //.property("type", &Collider::type);
+
+
+  rttr::registration::class_<PrefabOverrides>("PrefabOverrides")
     .constructor<>()
-    .property("scale", &Collider::scale)
-    .property("positionOffset", &Collider::positionOffset)
-    .property("rotationOffset", &Collider::rotationOffset)
-    .property("type", &Collider::type);
+    .property("prefabName", &PrefabOverrides::prefabName)
+    .property("modifiedComponents", &PrefabOverrides::modifiedComponents)
+    .property("removedComponents", &PrefabOverrides::removedComponents)
+    .property("subDataId", &PrefabOverrides::subDataId);
 }

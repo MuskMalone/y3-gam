@@ -21,6 +21,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <queue>
 #include <memory>
 
+// forward declaration
+namespace IGE { class Application; class EditorApplication; }
+
 namespace Events
 {
 
@@ -54,8 +57,9 @@ namespace Events
     using SubscriberList = std::vector<EventCallback>;
     using SubscriberMap = std::unordered_map<EventType, SubscriberList>;
 
-    friend class Application; // allow only application to invoke DispatchAll function
-    friend class EditorApplication;
+    // allow only application to invoke DispatchAll function
+    friend class IGE::Application; 
+    friend class IGE::EditorApplication;
 
     /*!*********************************************************************
     \brief

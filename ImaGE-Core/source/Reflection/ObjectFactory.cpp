@@ -27,6 +27,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Prefabs/PrefabManager.h>
 #include <Events/EventManager.h>
 
+#ifdef _DEBUG
+#define OF_DEBUG
+#endif
+
 namespace Reflection
 {
 
@@ -61,55 +65,143 @@ namespace Reflection
 
     AddComponentsToEntity(newEntity, components);
 
-//#ifndef IMGUI_DISABLE
-    // update entity's prefab if needed
-    if (Application::GetImGuiEnabled()) {
-      Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
-      auto const entityPrefab{ pm.GetEntityPrefab(entity) };
-      if (entityPrefab) {
-        pm.AttachPrefab(newEntity, *entityPrefab);
-      }
+    if (entity.HasComponent<Component::PrefabOverrides>()) {
+      newEntity.EmplaceComponent<Component::PrefabOverrides>(entity.GetComponent<Component::PrefabOverrides>());
     }
-//#endif
 
     // set parent/child
-    entityMan.SetParentEntity(parent, newEntity);
-    if (parent) { entityMan.SetChildEntity(parent, newEntity); }
-    for (ECS::Entity const& child : entityMan.GetChildEntity(entity)) {
-      CloneObject(child, newEntity);  // recursively clone all children
+    if (parent) {
+      entityMan.SetParentEntity(parent, newEntity);
     }
+    if (entityMan.HasChild(entity)) {
+      for (ECS::Entity const& child : entityMan.GetChildEntity(entity)) {
+        CloneObject(child, newEntity);  // recursively clone all children
+      }
+    }
+  }
+
+  void TraverseDownInstance(ECS::Entity base, std::unordered_map<Prefabs::SubDataId, ECS::Entity>& idToEntity,
+    ObjectFactory::PrefabInstMap const& prefabInstMap)
+  {
+    // if its not in the map, it means this entity was added externally
+    if (!prefabInstMap.contains(base.GetRawEnttEntityID())) { return; }
+
+    PrefabInst const& pfbInst{ prefabInstMap.at(base.GetRawEnttEntityID()) };
+    // each entity's PrefabOverrides component should 
+    // contain an id that corresponds to a sub-object
+    idToEntity.emplace(pfbInst.mOverrides.subDataId, base);
+
+    // if no children, return
+    if (pfbInst.mChildren.empty()) { return; }
+
+    ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
+    // else recursively call this function for each child
+    for (ECS::Entity e : pfbInst.mChildren) {
+      TraverseDownInstance(e, idToEntity, prefabInstMap);
+      entityMan.SetParentEntity(base, e);
+    }
+  }
+
+  void ObjectFactory::OverrideInstanceComponents() const {
+    for (ECS::Entity entity : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::PrefabOverrides>()) {
+      Component::PrefabOverrides const& overrides{ entity.GetComponent<Component::PrefabOverrides>() };
+
+      // replace any components if needed
+      if (!overrides.modifiedComponents.empty()) {
+        for (auto const& [type, comp] : overrides.modifiedComponents) {
+          AddComponentToEntity(entity, type, comp);
+        }
+      }
+
+      // then remove those in the vector
+      if (!overrides.removedComponents.empty()) {
+        for (rttr::type const& type : overrides.removedComponents) {
+          RemoveComponentFromEntity(entity, type);
+        }
+      }
+    }
+  }
+
+  void ObjectFactory::LoadPrefabInstances() {
+    Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
+    ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
+
+    for (auto const& [pfb, data] : mPrefabInstances) {
+      pm.LoadPrefab(pfb);
+
+      std::vector<ECS::Entity> baseEntities;
+
+      {
+        // first, construct each entity while creating a map of parent to children
+        // we will use this to traverse down the root entity of each prefab instance,
+        for (auto const&[id, instData] : data) {
+          ECS::Entity ent{ entityMan.CreateEntityWithID({}, id) };
+
+          if (instData.mParent == entt::null) {
+            baseEntities.emplace_back(ent); // collect the root entities
+          }
+
+          // restore its prefab overrides
+          ent.EmplaceComponent<Component::PrefabOverrides>(instData.mOverrides);
+        }
+
+        auto const& originalPfb{ pm.GetVariantPrefab(pfb) };
+
+        for (ECS::Entity& e : baseEntities) {
+          std::unordered_map<Prefabs::SubDataId, ECS::Entity> idToEntity{};
+          // traverse down each root entity and
+          // create it along with its children
+          TraverseDownInstance(e, idToEntity, data);
+
+          std::optional<glm::vec3> const& pos{ data.at(e.GetRawEnttEntityID()).mPosition };
+          // position for base entity should be set
+          if (!pos) {
+            Debug::DebugLogger::GetInstance().LogError("Position of prefab instance not set!"); 
+          }
+          else {
+            e.GetComponent<Component::Transform>().worldPos = *pos;
+          }
+
+          // fill the instance with its components and missing sub-objects
+          originalPfb.FillPrefabInstance(idToEntity);
+        }
+      }
+    }
+
+    // override each entity's components
+    OverrideInstanceComponents();
   }
 
   void ObjectFactory::InitScene()
   {
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
 
-    for (auto const& [id, data] : mRawEntities)
+    // iterate through data and create entities
+    for (auto const& data : mRawEntities)
     {
-      ECS::Entity newEntity{ entityMan.CreateEntityWithID({}, id) };
-      //entityMan.SetIsActiveEntity(id, data.mIsActive);
+      ECS::Entity newEntity{ entityMan.CreateEntityWithID({}, data.mID) };
+      //entityMan.SetIsActiveEntity(id, arg.mIsActive);
       AddComponentsToEntity(newEntity, data.mComponents);
     }
 
-    for (auto const& [id, data] : mRawEntities) {
-      if (data.mParent != entt::null) {
-        entityMan.SetParentEntity(data.mParent, id);
-      }
+    // restore the hierarchy
+    for (auto const& data : mRawEntities)
+    {
+      if (data.mParent == entt::null) { continue; }
 
-      for (ECS::Entity const& child : data.mChildEntities) {
-        entityMan.SetChildEntity(id, child);
-      }
+      entityMan.SetParentEntity(data.mParent, data.mID);
     }
 
-//#ifndef IMGUI_DISABLE
-    if (Application::GetImGuiEnabled() && Prefabs::PrefabManager::GetInstance().UpdateAllEntitiesFromPrefab()) {
-      QUEUE_EVENT(Events::PrefabInstancesUpdatedEvent);
-    }
-//#endif
+    LoadPrefabInstances();
+  }
+
+  void ObjectFactory::ClearData() {
+    mRawEntities.clear();
+    mPrefabInstances.clear();
   }
 
   void ObjectFactory::LoadEntityData(std::string const& filePath) {
-    mRawEntities = Serialization::Deserializer::DeserializeScene(filePath);
+    Serialization::Deserializer::DeserializeScene(mRawEntities, mPrefabInstances, filePath);
   }
 
   void ObjectFactory::AddComponentToEntity(ECS::Entity entity, rttr::type const& type, rttr::variant const& compVar) const
@@ -127,14 +219,20 @@ namespace Reflection
     else if (compType == rttr::type::get<Component::Layer>()) {
       entity.EmplaceOrReplaceComponent<Component::Layer>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Layer>>());
     }
+    else if (compType == rttr::type::get<Component::Material>()) {
+      entity.EmplaceOrReplaceComponent<Component::Material>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Material>>());
+    }
     else if (compType == rttr::type::get<Component::Mesh>()) {
-      Scene::AddMesh(entity);
+      entity.EmplaceOrReplaceComponent<Component::Mesh>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Mesh>>());
     }
     else if (compType == rttr::type::get<Component::RigidBody>()) {
       IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(entity);
     }
     else if (compType == rttr::type::get<Component::Collider>()) {
       IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(entity);
+    }
+    else if (compType == rttr::type::get<Component::Text>()) {
+      entity.EmplaceOrReplaceComponent<Component::Text>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Text>>());
     }
     else
     {
@@ -152,9 +250,11 @@ namespace Reflection
     IF_GET_ENTITY_COMP(Component::Transform)
     else IF_GET_ENTITY_COMP(Component::Tag)
     else IF_GET_ENTITY_COMP(Component::Layer)
-    //else IF_GET_ENTITY_COMP(Component::Mesh)
-    //else IF_GET_ENTITY_COMP(Component::RigidBody)
-    //else IF_GET_ENTITY_COMP(Component::Collider)
+    else IF_GET_ENTITY_COMP(Component::Mesh)
+    else IF_GET_ENTITY_COMP(Component::Material)
+    else IF_GET_ENTITY_COMP(Component::RigidBody)
+    else IF_GET_ENTITY_COMP(Component::Collider)
+    else IF_GET_ENTITY_COMP(Component::Text)
     else
     {
       std::ostringstream oss{};
@@ -175,8 +275,10 @@ namespace Reflection
     else IF_REMOVE_COMP(Component::Tag)
     else IF_REMOVE_COMP(Component::Layer)
     else IF_REMOVE_COMP(Component::Mesh)
+    else IF_REMOVE_COMP(Component::Material)
     else IF_REMOVE_COMP(Component::RigidBody)
     else IF_REMOVE_COMP(Component::Collider)
+    else IF_REMOVE_COMP(Component::Text)
     else
     {
       std::ostringstream oss{};

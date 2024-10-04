@@ -3,9 +3,14 @@
 #include <Serialization/Registration/RegisterClasses.h>
 #include <Serialization/Registration/RegisterComponents.h>
 #include <Serialization/Registration/RegisterEnumsAndFuncs.h>
-
+#include <Asset/IGEAssets.h>
 int Main(int argc, char** argv) {
   // To be read from settings file
+    IGEAssetsRegisterTypes();
+    IGE::Assets::AssetManager::GetInstance()->ImportAsset<IGE::Assets::TextureAsset>("C:\\Users\\terra\\Downloads\\testcases\\mushroom.png");
+    IGE::Assets::AssetManager::GetInstance()->ImportAsset<IGE::Assets::TextureAsset>("C:\\Users\\terra\\Downloads\\testcases\\man.jpg");
+    IGE::Assets::AssetManager::GetInstance()->ImportAsset<IGE::Assets::TextureAsset>("C:\\Users\\terra\\Downloads\\testcases\\cat.jpg");
+    IGE::Assets::AssetManager::GetInstance()->ImportAsset<IGE::Assets::TextureAsset>("C:\\Users\\terra\\Downloads\\testcases\\foot.png");
   EditorApplication::ApplicationSpecification spec;
   spec.EnableImGui = true;
   spec.Fullscreen = false;
@@ -16,7 +21,7 @@ int Main(int argc, char** argv) {
   spec.WindowHeight = 1080;
   spec.WindowWidth = 1920;
 
-  EditorApplication myApp{ spec };
+  IGE::EditorApplication myApp{ spec };
   try
   {
     myApp.Init();

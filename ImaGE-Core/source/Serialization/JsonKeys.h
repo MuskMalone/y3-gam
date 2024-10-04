@@ -21,12 +21,10 @@ namespace Serialization
   constexpr char JsonChildEntitiesKey[] = "Child Entities";
   constexpr char JsonComponentsKey[] = "Components";
   constexpr char JsonPrefabKey[] = "Prefab";
+  constexpr char JsonPfbPosKey[] = "Position";
   constexpr char JsonPfbNameKey[] = "Name";
-  constexpr char JsonPfbVerKey[] = "Version";
   constexpr char JsonPfbActiveKey[] = "isActive";
   constexpr char JsonPfbDataKey[] = "SubData";
-  constexpr char JsonRemovedChildrenKey[] = "Removed Children";
-  constexpr char JsonRemovedCompKey[] = "Removed Components";
   constexpr char ScriptFieldInstListTypeKey[] = "type";
   constexpr char JsonAssociativeKey[] = "key", JsonAssociativeValue[] = "value";
 }

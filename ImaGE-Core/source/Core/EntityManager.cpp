@@ -1,10 +1,11 @@
 #include <pch.h>
 #include "EntityManager.h"
 #include "Entity.h"
+#include <Core/Components/Components.h>
 
 namespace ECS {
   Entity EntityManager::CreateEntity() {
-    Entity entity(mRegistry.create());
+    Entity entity{ mRegistry.create() };
 
     // Default all created entities to have the following components:
     entity.EmplaceComponent<Component::Tag>();
@@ -13,25 +14,19 @@ namespace ECS {
     return entity;
   }
   
-  /*!*********************************************************************
-  \brief
-    Allows an entity to be created with a given ID and name. This
-    function can only be invoked by classes the "Exclusive" class
-    explicitly friends. Only friend classes can create an instance of
-    Exclusive by specifying "{}" in the arg list.
-  \param entityID
-    The ID of the entity
-  \return
-    The created entity
-  ************************************************************************/
   Entity EntityManager::CreateEntityWithID([[maybe_unused]] ECSKey key, EntityID entityID) {
-      return Entity(mRegistry.create(entityID));
+    Entity entity{ mRegistry.create(entityID) };
+
+    // Default all created entities to have the following components:
+    entity.EmplaceComponent<Component::Tag>();
+    entity.EmplaceComponent<Component::Transform>();
+
+    return entity;
   }
 
   Entity EntityManager::CreateEntityWithTag(std::string const& tag) {
     Entity entity(mRegistry.create());
-    Component::Tag& entTag = entity.EmplaceComponent<Component::Tag>();
-    entTag.tag = tag;
+    entity.EmplaceComponent<Component::Tag>(tag);
     entity.EmplaceComponent<Component::Transform>();
 
     return entity;

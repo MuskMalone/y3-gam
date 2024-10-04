@@ -34,7 +34,6 @@ namespace Scenes
     SUBSCRIBE_CLASS_FUNC(Events::EventType::LOAD_SCENE, &SceneManager::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SAVE_SCENE, &SceneManager::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &SceneManager::HandleEvent, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::PREFAB_INSTANCES_UPDATED, &SceneManager::HandleEvent, this);
   }
 
   void SceneManager::PauseScene() {
@@ -79,18 +78,8 @@ namespace Scenes
 
   void SceneManager::UnloadScene()
   {
-    auto& entityMan { ECS::EntityManager::GetInstance() };
-    std::vector<ECS::Entity> entitiesToDestroy;
-
-    for (auto const& e : entityMan.GetAllEntities()) {
-      if (entityMan.HasParent(e)) { continue; }
-
-      entitiesToDestroy.emplace_back(e);
-    }
-
-    for (auto const& e : entitiesToDestroy) {
-      entityMan.RemoveEntity(e);
-    }
+    mObjFactory->ClearData();
+    ECS::EntityManager::GetInstance().Reset();
   }
 
   EVENT_CALLBACK_DEF(SceneManager, HandleEvent)
@@ -134,15 +123,6 @@ namespace Scenes
       Debug::DebugLogger::GetInstance().LogInfo("Entering prefab editor for: " + prefabEvent->mPrefab + "...");
       break;
     }
-    case Events::EventType::PREFAB_INSTANCES_UPDATED:
-      if (mSaveStates.empty()) {
-        SaveScene();
-      }
-      else {
-        Serialization::Serializer::SerializeScene(mSaveStates.top().mPath);
-      }
-      Debug::DebugLogger::GetInstance().LogInfo("[SceneManager] " + mSceneName + "'s prefab instances have been updated");
-      break;
     default: break;
     }
   }
@@ -154,10 +134,7 @@ namespace Scenes
     filepath << gAssetsDirectory << "Scenes\\" << mSceneName << sSceneFileExtension;
     Serialization::Serializer::SerializeScene(filepath.str());
 
-//#ifndef IMGUI_DISABLE
-    if (Application::GetImGuiEnabled())
-      Debug::DebugLogger::GetInstance().LogInfo("Successfully saved scene to " + filepath.str());
-//#endif
+    Debug::DebugLogger::GetInstance().LogInfo("Successfully saved scene to " + filepath.str());
   }
 
   void SceneManager::TemporarySave()

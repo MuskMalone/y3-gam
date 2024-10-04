@@ -21,7 +21,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
 #include <Singleton.h>
-#include "VariantPrefab.h"
+#include "Prefab.h"
 #include <unordered_map>
 #include <Core/Entity.h>
 #include <optional>
@@ -33,8 +33,8 @@ namespace Prefabs
   class PrefabManager : public Singleton<PrefabManager>
   {
   public:
-    using PrefabDataContainer = std::unordered_map<std::string, VariantPrefab>;
-    using EntityPrefabMap = std::unordered_map<ECS::EntityManager::EntityID, VariantPrefab::EntityMappings>;
+    using PrefabDataContainer = std::unordered_map<std::string, Prefab>;
+    using EntityPrefabMap = std::unordered_map<ECS::EntityManager::EntityID, Prefab::EntityMappings>;
 
     /*!*********************************************************************
     \brief
@@ -76,14 +76,14 @@ namespace Prefabs
 
     /*!*********************************************************************
     \brief
-      Gets the deserialized data of a prefab in the form of a VariantPrefab
+      Gets the deserialized data of a prefab in the form of a Prefab
       object. Throws a GE::Debug::Exception if not found.
     \param name
       The name of the prefab
     \return
-      The VariantPrefab object
+      The Prefab object
     ************************************************************************/
-    VariantPrefab const& GetVariantPrefab(std::string const& name) const;
+    Prefab const& GetVariantPrefab(std::string const& name) const;
 
     /*!*********************************************************************
     \brief
@@ -103,31 +103,19 @@ namespace Prefabs
 
     /*!*********************************************************************
     \brief
-      Clears the mappings for each prefab instance in the scene
-    ************************************************************************/
-    inline void ClearMappings() { mEntitiesToPrefabs.clear(); }
-
-    /*!*********************************************************************
-    \brief
-      Gets the prefab an entity if it was created from one and std::nullopt
-      otherwise
-    \param entity
-      The entity to get the prefab of
-    \return
-      std::optional containing the prefab an entity was created from
-    ************************************************************************/
-    std::optional<std::reference_wrapper<PrefabManager::EntityPrefabMap::mapped_type>> GetEntityPrefab(ECS::Entity entity);
-
-    /*!*********************************************************************
-    \brief
       Loads a prefab given its name and the file path
     \param name
       The name of the prefab
     \param filePath
       The file to deserialize from
     ************************************************************************/
-    void LoadPrefab(std::string const& name, std::string const& filePath);
-
+    void LoadPrefab(std::string const& name);
+    
+    /*!*********************************************************************
+    \brief
+      Clears all data from the PrefabManager
+    ************************************************************************/
+    void Shutdown();
   private:
     /*!*********************************************************************
     \brief
@@ -149,37 +137,32 @@ namespace Prefabs
 
   public:
     /*---------------------------- EDITOR - ONLY FUNCTIONS ----------------------------*/
-      /*!*********************************************************************
-      \brief
-        Assigns a prefab to an entity
-      \param entity
-        The entity to assign the prefab
-      \param prefab
-        std::pair containing the prefab name and version
-      ************************************************************************/
-    void AttachPrefab(ECS::Entity entity, EntityPrefabMap::mapped_type const& prefab);
-    void AttachPrefab(ECS::Entity entity, EntityPrefabMap::mapped_type&& prefab);
-
     /*!*********************************************************************
     \brief
-      Unsubscribes an entity from prefab updates
-    \param entity
-      The entity id
+      Creates an instance of a prefab and returns how each entity is mapped
+      to the subdata
+    \param key
+      Name of the prefab
+    \param pos
+      The position to spawn the prefab at
+    \return
+      Entity id of the instance and the mappings in the form of a pair
     ************************************************************************/
-    void DetachPrefab(ECS::Entity entity);
+    std::pair<ECS::Entity, Prefabs::Prefab::EntityMappings> SpawnPrefabAndMap(const std::string& key,
+      glm::dvec3 const& pos = {}, bool mapEntity = true);
 
     /*!*********************************************************************
     \brief
-      Creates a VariantPrefab with the current entity. The prefab will be
+      Creates a Prefab with the current entity. The prefab will be
       a copy of the entity, together with its children.
     \param entity
       The entity to create the prefab from
     \param name
       The name of the prefab to create
     \return
-      The VariantPrefab object of an entity
+      The Prefab object of an entity
     ************************************************************************/
-    VariantPrefab CreateVariantPrefab(ECS::Entity entity, std::string const& name);
+    Prefab CreateVariantPrefab(ECS::Entity entity, std::string const& name, bool convertToInstance = false);
 
     /*!*********************************************************************
     \brief
@@ -192,47 +175,29 @@ namespace Prefabs
       The name of the new prefab
     \param path
       The path to save the file. Will be automatically generated by default
+    \param convertToInstance
+      Whether to convert the entity to an instance
     ************************************************************************/
-    void CreatePrefabFromEntity(ECS::Entity const& entity, std::string const& name, std::string const& path = {});
+    void CreatePrefabFromEntity(ECS::Entity const& entity, std::string const& name, std::string const& path = {}, bool convertToInstance = false);
 
     /*!*********************************************************************
      \brief
        Updates a prefab and saves it to file after modification. The current
-       VariantPrefab in the prefab manager is replaced with a new copy and
+       Prefab in the prefab manager is replaced with a new copy and
        updated with any removed objects passed from the prefab editor.
      \param prefabInstance
        The entity ID of the prefab instance
-     \param removedChildren
-       The vector of SubDataIds of removed children
-     \param removedComponents
-       The vector of removed components along with the respective SubDataId
+     \param mappings
+       The mappings of entity to subdataid when the prefab was created
+     \param key
+       The key of the prefab
      \param filepath
        The path to save the prefab to
     ************************************************************************/
-    void UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::vector<Prefabs::PrefabSubData::SubDataId> const& removedChildren,
-      std::vector<std::pair<Prefabs::PrefabSubData::SubDataId, rttr::type>> const& removedComponents, std::string const& filepath);
-
-    /*!*********************************************************************
-    \brief
-      This function updates all entities associated with the given prefab
-    \param prefab
-      The prefab to update all entities with
-    \return
-      True if any instance was updated and false otherwise
-    ************************************************************************/
-    bool UpdateEntitiesFromPrefab(std::string const& prefab);
-
-    /*!*********************************************************************
-    \brief
-      This function updates all entities in the map based on their
-      respective prefabs
-    \return
-      True if any instance was updated and false otherwise
-    ************************************************************************/
-    bool UpdateAllEntitiesFromPrefab();
+    void UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::string const& key,
+      Prefabs::Prefab::EntityMappings& mappings, std::string const& filePath);
 
   private:
-    EntityPrefabMap mEntitiesToPrefabs;
     PrefabDataContainer mPrefabs;  // Map of deserialized prefab data in format <name, data>
   };
 }

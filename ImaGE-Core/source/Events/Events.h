@@ -1,6 +1,6 @@
 /*!*********************************************************************
 \file   Events.h
-\author wchinkit.bryan\@digipen.edu
+\author chengen.lau\@digipen.edu
 \date   10-September-2024
 \brief  Definitions of general subclasses of the Event class.
 
@@ -56,7 +56,7 @@ namespace Events
     bool const mMapEntity;
   };
 
-//#ifndef IMGUI_DISABLE
+#ifndef IMGUI_DISABLE
   class DeletePrefabEvent : public Event
   {
   public:
@@ -88,46 +88,5 @@ namespace Events
 
     std::vector<std::string> mPaths;
   };
-
-  class PrefabInstancesUpdatedEvent : public Event
-  {
-  public:
-    PrefabInstancesUpdatedEvent() : Event(EventType::PREFAB_INSTANCES_UPDATED) {}
-    inline std::string GetName() const noexcept override { return "Scene Updated with Prefab Instances"; }
-  };
-//#endif
-
-#ifdef GAM200_EVENTS
-//#ifndef IMGUI_DISABLE
-
-  class PrefabSavedEvent : public Event
-  {
-  public:
-    PrefabSavedEvent(std::string prefab) : Event(EventType::PREFAB_SAVED), mPrefab{ std::move(prefab) } {}
-    inline std::string GetName() const noexcept override { return "Prefab Saved: " + mPrefab; }
-
-    std::string const mPrefab;
-  };
-
-  class DeleteAssetEvent : public Event
-  {
-  public:
-    DeleteAssetEvent(Assets::AssetType type, std::string name) : Event(EventType::DELETE_ASSET), mType{ type }, mName{ std::move(name) } {}
-    inline std::string GetName() const noexcept override { return "Deleted Asset: " + mName + " of type " + std::to_string(static_cast<int>(mType)); }
-
-    Assets::AssetType const mType;
-    std::string const mName;
-  };
-
-  class DeletePrefabChildEvent : public Event
-  {
-  public:
-    DeletePrefabChildEvent(ECS::Entity entity) : Event(EventType::DELETE_PREFAB_CHILD), mEntity{ entity } {}
-    inline std::string GetName() const noexcept override { return "Deleted entity " + std::to_string(mEntity) + " of prefab"; }
-
-    ECS::Entity const mEntity;
-  };
-
-//#endif
 #endif
 }

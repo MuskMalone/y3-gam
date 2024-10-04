@@ -1,6 +1,6 @@
 #pragma once
 #include <entt.hpp>
-#include "Component/Components.h"
+#include <Core/Components/Tag.h>
 #include "Singleton.h"
 
 // forward declaration
@@ -23,6 +23,18 @@ namespace ECS {
     friend class Entity;
 
     Entity CreateEntity();
+
+    /*!*********************************************************************
+    \brief
+      Allows an entity to be created with a given ID and name. This
+      function can only be invoked by classes the "Exclusive" class
+      explicitly friends. Only friend classes can create an instance of
+      Exclusive by specifying "{}" in the arg list.
+    \param entityID
+      The ID of the entity
+    \return
+      The created entity
+    ************************************************************************/
     Entity CreateEntityWithID(ECSKey key, EntityID entityID);
 
     Entity CreateEntityWithTag(std::string const& tag);

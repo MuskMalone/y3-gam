@@ -35,7 +35,7 @@ namespace Serialization
   {
     std::ifstream ifs{ filename };
     if (!ifs) {
-      Debug::DebugLogger::GetInstance().LogError("[Desrializer] Unable to read " + filename);
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to read " + filename);
       return;
     }
 
@@ -44,62 +44,87 @@ namespace Serialization
     if (document.ParseStream(isw).HasParseError())
     {
       ifs.close();
-      Debug::DebugLogger::GetInstance().LogError("[Desrializer] Unable to parse " + filename);
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to parse " + filename);
       return;
     }
 
     DeserializeRecursive(inst, document);
   }
 
-  Reflection::ObjectFactory::EntityDataContainer Deserializer::DeserializeScene(std::string const& filepath)
+  void Deserializer::DeserializeScene(std::vector<Reflection::VariantEntity>& entities,
+    Reflection::ObjectFactory::PrefabInstanceContainer& prefabInstances, std::string const& filepath)
   {
     rapidjson::Document document;
     // some initial sanity checks
     // we don't throw here because this is called when the engine
     // first runs, before the catching is established
     if (!ParseJsonIntoDocument(document, filepath)) {
-      return{};
+      return;
     }
 
     if (!document.IsArray()) {
-      Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + filepath + ": root is not an array!");
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + filepath + ": root is not an array!");
 #ifdef _DEBUG
       std::cout << filepath + ": root is not an array!" << "\n";
 #endif
-      return {};
-    }
-    // check if scn file contains all basic keys
-    if (!ScanJsonFileForMembers(document, filepath, 5,
-      JsonChildEntitiesKey, rapidjson::kArrayType,
-      JsonIdKey, rapidjson::kNumberType, JsonParentKey, rapidjson::kNumberType,
-      JsonComponentsKey, rapidjson::kArrayType, JsonEntityStateKey, rapidjson::kFalseType))
-    {
-      return {};
+      return;
     }
 
     // okay code starts here
-    Reflection::ObjectFactory::EntityDataContainer ret{};
-//#ifndef IMGUI_DISABLE
-    if (Application::GetImGuiEnabled()) {
-      Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
-      pm.ClearMappings();
-    }
-//#endif
     for (auto const& entity : document.GetArray())
     {
+      if (entity.HasMember(JsonPrefabKey)) {
+
+        Reflection::PrefabInst inst{};
+        if (entity.HasMember(JsonPfbPosKey)) {
+          glm::vec3 pos;
+          DeserializeRecursive(pos, entity[JsonPfbPosKey]);
+          inst.mPosition = pos;
+        }
+
+        if (!entity.HasMember(JsonIdKey) || !entity.HasMember(JsonParentKey) || !entity.HasMember(JsonChildEntitiesKey)) {
+          std::string const msg{ "Reflection::PrefabInst missing members!" };
+          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
+#ifdef _DEBUG
+          std::cout << msg << "\n";
+#endif
+        }
+        // deserialize IDs
+        inst.mId = static_cast<EntityID>(entity[JsonIdKey].GetUint());
+        {
+          rapidjson::Value const& parentJson{ entity[JsonParentKey] };
+          inst.mParent = parentJson.IsNull() ? entt::null : static_cast<EntityID>(parentJson.GetUint());
+        }
+
+        {
+          rttr::variant childrenVar{ std::vector<ECS::EntityManager::EntityID>() };
+          auto seqView{ childrenVar.create_sequential_view() };
+          DeserializeSequentialContainer(seqView, entity[JsonChildEntitiesKey]);
+          inst.mChildren = std::move(childrenVar.get_value<std::vector<ECS::EntityManager::EntityID>>());
+        }
+
+        DeserializePrefabOverrides(inst.mOverrides, entity[JsonPrefabKey]);
+        Reflection::ObjectFactory::PrefabInstMap& pfbInstances{ prefabInstances[inst.mOverrides.prefabName] };
+        ECS::EntityManager::EntityID const instId{ inst.mId };
+        pfbInstances.emplace(instId, std::move(inst));
+        continue;
+      }
+
+      // check if entity json contains all basic keys
+      if (!ScanJsonFileForMembers(entity, filepath, 5,
+        JsonChildEntitiesKey, rapidjson::kArrayType,
+        JsonIdKey, rapidjson::kNumberType, JsonParentKey, rapidjson::kNumberType,
+        JsonComponentsKey, rapidjson::kArrayType, JsonEntityStateKey, rapidjson::kFalseType))
+      {
+        continue;
+      }
+
       EntityID entityId{ entity[JsonIdKey].GetUint() };
       EntityID const parentId{ entity[JsonParentKey].IsNull() ? entt::null : entity[JsonParentKey].GetUint() };
-      Reflection::VariantEntity entityVar{ parentId, entity[JsonEntityStateKey].GetBool() };  // set parent
+      Reflection::VariantEntity entityVar{ entityId, parentId, entity[JsonEntityStateKey].GetBool() };  // set parent
       // get child ids
       for (auto const& child : entity[JsonChildEntitiesKey].GetArray()) {
         entityVar.mChildEntities.emplace_back(EntityID(child.GetUint()));
-      }
-
-      if (Application::GetImGuiEnabled() && entity.HasMember(JsonPrefabKey) && !entity[JsonPrefabKey].IsNull())
-      {
-        rttr::variant mappedData{ Prefabs::VariantPrefab::EntityMappings{} };
-        DeserializeRecursive(mappedData, entity[JsonPrefabKey]);
-        Prefabs::PrefabManager::GetInstance().AttachPrefab(entityId, std::move(mappedData.get_value<Prefabs::VariantPrefab::EntityMappings>()));
       }
 
       // restore components
@@ -119,7 +144,7 @@ namespace Serialization
           {
             std::ostringstream oss{};
             oss << "Trying to deserialize an invalid component: " << compName;
-            Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + oss.str());
+            Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
             std::cout << oss.str() << "\n";
 #endif
@@ -133,23 +158,21 @@ namespace Serialization
         }
       }
 
-      ret.emplace_back(entityId, std::move(entityVar));
+      entities.emplace_back(std::move(entityVar));
     }
-
-    return ret;
   }
 
-  Prefabs::VariantPrefab Deserializer::DeserializePrefabToVariant(std::string const& json)
+  Prefabs::Prefab Deserializer::DeserializePrefabToVariant(std::string const& json)
   {
     rapidjson::Document document{};
     if (!ParseJsonIntoDocument(document, json)) { return {}; }
 
-    if (!ScanJsonFileForMembers(document, json, 5, JsonPfbNameKey, rapidjson::kStringType, JsonPfbVerKey, rapidjson::kNumberType,
-      JsonPfbNameKey, rapidjson::kStringType, JsonComponentsKey, rapidjson::kArrayType, JsonPfbDataKey, rapidjson::kArrayType)) {
+    if (!ScanJsonFileForMembers(document, json, 3, JsonPfbNameKey, rapidjson::kStringType,
+      JsonComponentsKey, rapidjson::kArrayType, JsonPfbDataKey, rapidjson::kArrayType)) {
       return {};
     }
 
-    Prefabs::VariantPrefab prefab{ document[JsonPfbNameKey].GetString(), document[JsonPfbVerKey].GetUint() };
+    Prefabs::Prefab prefab{ document[JsonPfbNameKey].GetString() };
     prefab.mIsActive = (document.HasMember(JsonPfbActiveKey) ? document[JsonPfbActiveKey].GetBool() : true);
 
     // iterate through component objects in json array
@@ -168,7 +191,7 @@ namespace Serialization
       if (!compType.is_valid()) {
         std::ostringstream oss{};
         oss << "Trying to deserialize an invalid component: " << compName;
-        Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + oss.str());
+        Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
         std::cout << oss.str() << "\n";
 #endif
@@ -206,7 +229,7 @@ namespace Serialization
         {
           std::ostringstream oss{};
           oss << "Trying to deserialize an invalid component: " << compName;
-          Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + oss.str());
+          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
           std::cout << oss.str() << "\n";
 #endif
@@ -222,42 +245,60 @@ namespace Serialization
       prefab.mObjects.emplace_back(std::move(subObj));
     }
 
-//#ifndef IMGUI_DISABLE
-    if (Application::GetImGuiEnabled() && document.HasMember(JsonRemovedChildrenKey))
-    {
-      rttr::variant removedChildrenVar{ std::vector<std::pair<Prefabs::PrefabSubData::SubDataId, Prefabs::PrefabVersion>>{} };
-      DeserializeRecursive(removedChildrenVar, document[JsonRemovedChildrenKey]);
-      if (removedChildrenVar.is_valid()) {
-        prefab.mRemovedChildren = std::move(removedChildrenVar.get_value<
-          std::vector<std::pair<Prefabs::PrefabSubData::SubDataId, Prefabs::PrefabVersion>>>());
-      }
-      else {
-        std::string const msg{ "Unable to deserialize m_removedChildren of prefab " + prefab.mName };
-        Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + msg);
-#ifdef _DEBUG
-        std::cout << msg << "\n";
-#endif
-      }
-    }
-
-    if (Application::GetImGuiEnabled() && document.HasMember(JsonRemovedCompKey))
-    {
-      rttr::variant removedCompVar{ std::vector<Prefabs::VariantPrefab::RemovedComponent>{} };
-      DeserializeRecursive(removedCompVar, document[JsonRemovedCompKey]);
-      if (removedCompVar.is_valid()) {
-        prefab.mRemovedComponents = std::move(removedCompVar.get_value<std::vector<Prefabs::VariantPrefab::RemovedComponent>>());
-      }
-      else {
-        std::string const msg{ "Unable to deserialize m_removedComponents of prefab " + prefab.mName };
-        Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + msg);
-#ifdef _DEBUG
-        std::cout << msg << "\n";
-#endif
-      }
-    }
-//#endif
-
     return prefab;
+  }
+
+  void Deserializer::DeserializePrefabOverrides(Component::PrefabOverrides& prefabOverride, rapidjson::Value const& json)
+  {
+    if (!json.HasMember("prefabName") || !json.HasMember("modifiedComponents") || !json.HasMember("removedComponents") || !json.HasMember("subDataId")) {
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] PrefabOverride json did not contain correct members!");
+      return;
+    }
+
+    prefabOverride.prefabName = json["prefabName"].GetString();
+    prefabOverride.subDataId = json["subDataId"].GetUint();
+
+    // deserialize removed components
+    {
+      rttr::variant var{ std::unordered_set<rttr::type>() };
+      auto associativeView{ var.create_associative_view() };
+      DeserializeAssociativeContainer(associativeView, json["removedComponents"]);
+      prefabOverride.removedComponents = std::move(var.get_value<std::unordered_set<rttr::type>>());
+    }
+
+    // deserialize modified components
+    rapidjson::Value const& jsonMap{ json["modifiedComponents"] };
+    prefabOverride.modifiedComponents.reserve(jsonMap.Size());
+    for (rapidjson::SizeType i{}; i < jsonMap.Size(); ++i)
+    {
+      auto& idxVal{ jsonMap[i] };
+
+      auto keyIter{ idxVal.FindMember("key") }, valIter{ idxVal.FindMember("value") };
+
+      if (keyIter == idxVal.MemberEnd() || valIter == idxVal.MemberEnd()) {
+        std::string const msg{ "PrefabOverrides::modifiedComponents missing key or value members" };
+        Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
+#ifdef _DEBUG
+        std::cout << msg << "\n";
+#endif
+      }
+
+      rttr::type compType{ rttr::type::get_by_name(keyIter->value.GetString()) };
+      if (!compType.is_valid())
+      {
+        std::ostringstream oss{};
+        oss << "Trying to deserialize an invalid component: " << compType;
+        Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
+#ifdef _DEBUG
+        std::cout << oss.str() << "\n";
+#endif
+        continue;
+      }
+
+      rttr::variant compVar{};
+      DeserializeComponent(compVar, compType, valIter->value);
+      prefabOverride.modifiedComponents.emplace(std::move(compType), std::move(compVar));
+    }
   }
 
   void Deserializer::DeserializeComponent(rttr::variant& compVar, rttr::type const& compType, rapidjson::Value const& compJson)
@@ -349,7 +390,7 @@ namespace Serialization
       if (ret == jsonObj.MemberEnd())
       {
         std::string const msg{ "Unable to find property with name: " + prop.get_name().to_string() };
-        Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + msg);
+        Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
         std::cout << msg << "\n";
 #endif
@@ -395,7 +436,7 @@ namespace Serialization
         rttr::variant extractedVal{ ExtractBasicTypes(jsonVal) };
         if (!extractedVal.convert(propType)) {
           std::string const msg{ "Unable to convert element to type " + propType.get_name().to_string() };
-          Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + msg);
+          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
           std::cout << msg << "\n";
 #endif
@@ -467,8 +508,16 @@ namespace Serialization
       {
         rttr::variant result{ ExtractBasicTypes(idxVal) };
         if (!seqView.set_value(i, result)) {
+          // temp fix for entt::entity idk man conversion function didnt work
+          if (seqView.get_value_type() == rttr::type::get<entt::entity>()) {
+            result = static_cast<entt::entity>(result.get_value<uint32_t>());
+            if (seqView.set_value(i, result)) {
+              continue;
+            }
+          }
+
           std::string const msg{ "Unable to set sequential view of type " + seqView.get_type().get_name().to_string() };
-          Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + msg);
+          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
           std::cout << msg << "\n";
 #endif
@@ -515,7 +564,7 @@ namespace Serialization
           std::ostringstream oss{};
           oss << "Unable to find key-value pair for element of type " << view.get_key_type().get_name().to_string()
             << "-" << view.get_value_type().get_name().to_string() << " in associative view";
-          Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + oss.str());
+          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
           std::cout << oss.str() << "\n";
 #endif
@@ -526,7 +575,7 @@ namespace Serialization
           std::ostringstream oss{};
           oss << "Unable to extract key-value pair for element of type " << view.get_key_type().get_name().to_string()
             << "-" << view.get_value_type().get_name().to_string() << " in associative view ";
-          Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + oss.str());
+          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
           std::cout << oss.str() << "\n";
 #endif
@@ -546,7 +595,7 @@ namespace Serialization
             std::ostringstream oss{};
             oss << "Unable to insert key-value pair for element of type " << view.get_key_type().get_name().to_string()
               << "-" << view.get_value_type().get_name().to_string();
-            Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + oss.str());
+            Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
             std::cout << oss.str() << "\n";
             std::cout << "Types are " << keyVar.get_type().get_name().to_string() << " and " << valVar.get_type().get_name().to_string() << "\n";
@@ -560,7 +609,7 @@ namespace Serialization
         rttr::variant extractedVal{ ExtractBasicTypes(idxVal) };
         if (!extractedVal || !extractedVal.convert(view.get_key_type())) {
           std::string const msg{ "Unable to extract key-only type of " + view.get_key_type().get_name().to_string() };
-          Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + msg);
+          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
           std::cout << msg << "\n";
 #endif
@@ -569,7 +618,7 @@ namespace Serialization
         auto result{ view.insert(extractedVal) };
         if (!result.second) {
           std::string const msg{ "Unable to insert key-only type of " + view.get_key_type().get_name().to_string() };
-          Debug::DebugLogger::GetInstance().LogError("[Desrializer] " + msg);
+          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
           std::cout << msg  << "\n";
 #endif

@@ -14,7 +14,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <pch.h>
 #include "Serializer.h"
 #include <Serialization/JsonKeys.h>
-#include <Core/Component/Components.h>
+#include <Core/Components/Components.h>
 #include <fstream>
 #include <Reflection/ObjectFactory.h>
 #include <Prefabs/PrefabManager.h>
@@ -27,7 +27,8 @@ namespace Helper {
 namespace Serialization
 {
 
-  void Serializer::SerializeVariantPrefab(Prefabs::VariantPrefab const& prefab, std::string const& filePath)
+//#ifndef IMGUI_DISABLE
+  void Serializer::SerializePrefab(Prefabs::Prefab const& prefab, std::string const& filePath)
   {
     std::ofstream ofs{ filePath };
     if (!ofs) {
@@ -44,7 +45,6 @@ namespace Serialization
 
     // serialize the base layer of the prefab
     writer.Key(JsonPfbNameKey); writer.String(prefab.mName.c_str());
-    writer.Key(JsonPfbVerKey); writer.Uint(prefab.mVersion);
     writer.Key(JsonPfbActiveKey); writer.Bool(true);
 
     writer.Key(JsonComponentsKey);
@@ -74,20 +74,10 @@ namespace Serialization
     }
     writer.EndArray();
 
-    // serialize removed objects
-    if (!prefab.mRemovedChildren.empty()) {
-      writer.Key(JsonRemovedChildrenKey);
-      SerializeRecursive(prefab.mRemovedChildren, writer);
-    }
-
-    if (!prefab.mRemovedComponents.empty()) {
-      writer.Key(JsonRemovedCompKey);
-      SerializeRecursive(prefab.mRemovedComponents, writer);
-    }
-
     writer.EndObject();
     ofs.close();
   }
+//#endif
 
   void Serializer::SerializeAny(rttr::instance const& obj, std::string const& filename)
   {
@@ -130,29 +120,12 @@ namespace Serialization
 
   void Serializer::SerializeEntity(ECS::Entity const& entity, WriterType& writer)
   {
-    ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
     writer.StartObject();
+    ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
 
     // serialize entity id
     writer.Key(JsonIdKey);
     writer.Uint(entity.GetEntityID());
-
-
-    // serialize prefab created from
-    Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
-
-    writer.Key(JsonPrefabKey);
-    auto const entityPrefab{ pm.GetEntityPrefab(entity) };
-    if (entityPrefab) {
-      SerializeRecursive(*entityPrefab, writer);
-    }
-    else {
-      writer.Null();
-    }
-
-    // serialize state
-    writer.Key(JsonEntityStateKey);
-    writer.Bool(true);// entityMan.GetIsActiveEntity(entity));
 
     // serialize parent id
     writer.Key(JsonParentKey);
@@ -172,6 +145,29 @@ namespace Serialization
       }
     }
     writer.EndArray();
+
+    // if its a prefab instance, only serialize the overrides
+    if (entity.HasComponent<Component::PrefabOverrides>()) {
+      Component::PrefabOverrides const& overrides{ entity.GetComponent<Component::PrefabOverrides>() };
+
+      // if position exists, serialize it
+      if (overrides.subDataId == Prefabs::PrefabSubData::BasePrefabId && !overrides.IsComponentModified(rttr::type::get<Component::Transform>())) {
+        writer.Key(JsonPfbPosKey);
+        SerializeRecursive(entity.GetComponent<Component::Transform>().worldPos, writer);
+      }
+
+      // serialize the components
+      writer.Key(JsonPrefabKey);
+      SerializeRecursive(overrides, writer);
+      writer.EndObject();
+      return;
+    }
+
+    // if not, serialize the entity as per normal
+    // 
+    // serialize state
+    writer.Key(JsonEntityStateKey);
+    writer.Bool(true);// entityMan.GetIsActiveEntity(entity));
 
     writer.Key(JsonComponentsKey);
     std::vector<rttr::variant> const components{ Reflection::ObjectFactory::GetInstance().GetEntityComponents(entity) };
@@ -333,7 +329,7 @@ namespace Serialization
       {
         SerializeClassTypes(var, writer);
       }
-      else if (var.get_type() == rttr::type::get<rttr::type>()) {
+      else if (type == rttr::type::get<rttr::type>()) {
         bool ok;
         writer.String(var.convert<std::string>(&ok).c_str());
         return true;
@@ -369,7 +365,7 @@ namespace Serialization
         SerializeRecursive(elem.first, writer);
 
         writer.String("value", 5, false);
-        SerializeRecursive(elem.second, writer);
+        SerializeRecursive(elem.second.get_type().is_wrapper() ? elem.second.extract_wrapped_value() : elem.second, writer);
 
         writer.EndObject();
       }

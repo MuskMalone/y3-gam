@@ -23,7 +23,7 @@ namespace GUI
     std::string mSceneName;
     ECS::Entity mRightClickedEntity; // used to hold the entity the menu was opened on
     bool mRightClickMenu, mEntityOptionsMenu, mPrefabPopup, mFirstTimePfbPopup;
-    bool mEditingPrefab;
+    bool mEditingPrefab, mLockControls, mSceneModified;
 
     static constexpr char sDragDropPayload[] = "ENTITY";
 
