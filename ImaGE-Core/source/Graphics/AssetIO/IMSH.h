@@ -12,7 +12,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma once
 #include <memory>
 #include <string>
+#include <vector>
 #include <Graphics/MeshSource.h>
+#include <Graphics/Vertex.h>
 
 // forward declarations
 struct aiScene; struct aiNode;

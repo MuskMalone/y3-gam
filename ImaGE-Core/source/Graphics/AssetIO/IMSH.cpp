@@ -103,10 +103,6 @@ namespace Graphics::AssetIO
 
       ofs.close();
   }
-#else
-namespace Graphics::AssetIO
-{
-#endif  // IMGUI_DISABLE
 
   std::shared_ptr<MeshSource> IMSH::ToMeshSource(std::shared_ptr<VertexArray> vao) {
     mStatus = false;
@@ -139,7 +135,6 @@ namespace Graphics::AssetIO
 
     ifs.close();
   }
-#ifndef IMGUI_DISABLE
 
 } // namespace Graphics::AssetIO
 
