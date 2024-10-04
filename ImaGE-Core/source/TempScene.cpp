@@ -94,6 +94,7 @@ void Scene::Init()
           // Assign alternating meshes between cube and pyramid
           if ((i + j) % 2 == 0) {
               renderComponent.mesh = mesh0; // Assign cube mesh
+              transformComponent.scale = glm::vec3(5.f);
           }
           else {
               renderComponent.mesh = mesh1; // Assign pyramid mesh

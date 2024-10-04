@@ -52,9 +52,10 @@ namespace Graphics{
             shader->SetUniform("u_Albedo", mAlbedoColor);
             shader->SetUniform("u_Metalness", mMetalness);
             shader->SetUniform("u_Roughness", mRoughness);
+            shader->SetUniform("u_Transparency", mTransparency);
             shader->SetUniform("u_AO", 1.f);
             //shader->SetUniform("u_Emission", mEmission);
-            //shader->SetUniform("u_Transparency", mTransparency);
+
 
             // Apply textures (use instance override if available)
             if (auto albedoMap = GetAlbedoMap()) shader->SetUniform("u_AlbedoMap", albedoMap, 0);

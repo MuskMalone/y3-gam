@@ -17,6 +17,7 @@ in vec3 v_Bitangent;            // Bitangent in world space
 uniform vec3 u_Albedo;
 uniform float u_Metalness;
 uniform float u_Roughness;
+uniform float u_Transparency;
 uniform float u_AO;
 
 uniform sampler2D u_AlbedoMap;
@@ -25,7 +26,7 @@ uniform sampler2D u_AlbedoMap;
 uniform vec3 u_CamPos;       // Camera position in world space
 // Single light source (hardcoded for now)
 const vec3 u_LightPos = vec3(5.0, 2.0, 5.0); // Example light position
-const vec3 u_LightColor = vec3(1.0, 1.0, 1.0);       // Example white light
+const vec3 u_LightColor = vec3(10.0, 10.0, 10.0);       // Example white light
 //uniform vec3 u_LightPos;     // Light position in world space
 //uniform vec3 u_LightColor;   // Light color
 
@@ -82,12 +83,9 @@ void main(){
     color = pow(color, vec3(1.0/2.2)); //gamma correction
 
     //change transparency here
-	fragColor = vec4(color, 1.f) * v_Color;
+    float alpha = u_Transparency * albedoTexture.a;
+	fragColor = vec4(color, alpha) * v_Color;
     
-    //fragColor = vec4(vec3(max(dot(H, V), 0.0)), 1.0);
-
-    //fragColor = vec4(albedo, texColor.a) * v_Color;
-
 }
 
 vec3 fresnelSchlick(float cosTheta, vec3 F0)
