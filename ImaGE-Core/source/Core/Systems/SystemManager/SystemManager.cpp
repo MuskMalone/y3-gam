@@ -1,3 +1,13 @@
+/*!*********************************************************************
+\file   SystemManager.cpp
+\author chengen.lau\@digipen.edu
+\date   5-October-2024
+\brief  Definition of cclass SystemManager, which holds the instance
+        to all systems used in the engine. Responsible for updating
+        them every game loop.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include "pch.h"
 #include "SystemManager.h"
 

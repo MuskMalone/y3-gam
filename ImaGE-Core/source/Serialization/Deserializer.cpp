@@ -1,5 +1,5 @@
 /*!*********************************************************************
-\file   Deserializer.h
+\file   Deserializer.cpp
 \author chengen.lau\@digipen.edu
 \date   10-September-2024
 \brief  The class encapsulating functions related to deserialization.

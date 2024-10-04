@@ -1,3 +1,12 @@
+/*!*********************************************************************
+\file   Toolbar.cpp
+\author chengen.lau\@digipen.edu
+\date   5-October-2024
+\brief  Class encapsulating functions to run the main menubar of the
+        editor. Contains options related to files and editor settings.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include <pch.h>
 #include "Toolbar.h"
 #include <imgui/imgui.h>

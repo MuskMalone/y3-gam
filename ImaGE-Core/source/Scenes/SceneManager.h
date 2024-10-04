@@ -1,3 +1,12 @@
+/*!*********************************************************************
+\file   SceneManager.h
+\author chengen.lau\@digipen.edu
+\date   5-October-2024
+\brief  Definition of class SceneManager, which is a singleton that
+        manages the state of the scene in the engine.
+  
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include <Singleton.h>
 #include "SceneStates.h"
@@ -13,18 +22,67 @@ namespace Scenes
   {
   public:
 
+    /*!*********************************************************************
+    \brief
+      Initializes the SceneManager
+    ************************************************************************/
     void Init();
+
+    /*!*********************************************************************
+    \brief
+      Shutsdown the SceneManager and clears its contents
+    ************************************************************************/
     void Shutdown();
 
+    /*!*********************************************************************
+    \brief
+      Stops the scene
+    ************************************************************************/
     void StopScene();
+
+    /*!*********************************************************************
+    \brief
+      Pauses the scene
+    ************************************************************************/
     void PauseScene();
+
+    /*!*********************************************************************
+    \brief
+      Plays the scene
+    ************************************************************************/
     void PlayScene();
 
+    /*!*********************************************************************
+    \brief
+      Gets the name of the current scene
+    \return
+      The name of the current scene
+    ************************************************************************/
     inline std::string const& GetSceneName() const noexcept { return mSceneName; }
-    // SceneState makes use of bitflags for easy checking
+
+    /*!*********************************************************************
+    \brief
+      Gets the current state of the scene
+      *SceneState makes use of bitflags for easy checking
+    \return
+      The state of the scene in the form of a SceneState enum
+    ************************************************************************/
     inline SceneState GetSceneState() const noexcept { return mSceneState; }
+
+    /*!*********************************************************************
+    \brief
+      Checks if the scene is playing or paused
+    \return
+      True if a scene is in play and false otherwise
+    ************************************************************************/
     inline bool IsScenePlaying() const noexcept { return mSceneState & (Scenes::SceneState::PAUSED | Scenes::SceneState::PLAYING); }
-    // check if there is currently a scene selected
+
+    /*!*********************************************************************
+    \brief
+      Check if there is currently a scene selected
+    \return
+      True if a sccene is selected and false otherwise
+    ************************************************************************/
     inline bool NoSceneSelected() const noexcept { return mSceneName.empty(); }
 
   private:
@@ -37,10 +95,36 @@ namespace Scenes
 
     static constexpr char sSceneFileExtension[] = ".scn";
 
+    /*!*********************************************************************
+    \brief
+      Saves the current scene
+    ************************************************************************/
     void SaveScene() const;
+
+    /*!*********************************************************************
+    \brief
+      Loads a scene
+    \param path
+      The filepath of the scene file
+    ************************************************************************/
     void LoadScene(std::string const& path);
+
+    /*!*********************************************************************
+    \brief
+      Initializes a scene
+    ************************************************************************/
     void InitScene();
+
+    /*!*********************************************************************
+    \brief
+      Clears the scene
+    ************************************************************************/
     void ClearScene();
+
+    /*!*********************************************************************
+    \brief
+      Unloads the scene
+    ************************************************************************/
     void UnloadScene();
     
     /*!*********************************************************************

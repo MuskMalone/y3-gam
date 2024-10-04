@@ -1,3 +1,14 @@
+/*!*********************************************************************
+\file   Viewport.cpp
+\author chengen.lau\@digipen.edu
+\date   5-October-2024
+\brief  Class encapsulating functions to run the editor viewport
+        window of the editor. Renders the scene onto the ImGui window
+        by attaching the framebuffer as an image. Also allows input
+        operations such as DragDrop and selection / gizmos (in future).
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include <pch.h>
 #include "Viewport.h"
 #include <imgui/imgui.h>

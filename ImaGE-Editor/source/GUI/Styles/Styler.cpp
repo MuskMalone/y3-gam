@@ -1,3 +1,12 @@
+/*!*********************************************************************
+\file   Styler.cpp
+\author
+\date   5-October-2024
+\brief  Definition of functions of class Styler, which encapsulates
+        functions related to the styling of the editor.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include "pch.h"
 #include "Styler.h"
 #include <ImGui/imgui.h>

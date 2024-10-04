@@ -1,3 +1,12 @@
+/*!*********************************************************************
+\file   EditorApplication.cpp
+\date   5-October-2024
+\brief  The main class running the editor. Inherits from Application
+        and performs additional initializations and updates for ImGui
+        elements.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include <pch.h>
 #include "EditorApplication.h"
 

@@ -82,6 +82,14 @@ namespace Serialization
     ************************************************************************/
     static void DeserializeComponent(rttr::variant& compVar, rttr::type const& compType, rapidjson::Value const& compJson);
 
+    /*!*********************************************************************
+    \brief
+      Deserializes the PrefabOverrides component
+    \param prefabOverride
+      Reference to the component
+    \param json
+      The json value of the component
+    ************************************************************************/
     static void DeserializePrefabOverrides(Component::PrefabOverrides& prefabOverride, rapidjson::Value const& json);
 
     /*!*********************************************************************

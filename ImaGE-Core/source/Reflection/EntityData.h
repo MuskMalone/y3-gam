@@ -3,7 +3,7 @@
 \author     chengen.lau\@digipen.edu
 \date       15-September-2024
 \brief
-    Definition for struct VariantEntity, which stores deserialized
+    Definition for structs used to store deserialized
     data for entities. Used for loading of scenes, creating and
     duplicating of entities, and in editing-related engine tools.
 

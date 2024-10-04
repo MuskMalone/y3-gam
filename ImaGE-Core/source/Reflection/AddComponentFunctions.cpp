@@ -1,3 +1,13 @@
+/*!*********************************************************************
+\file   AddComponentFunctions.cpp
+\author chengen.lau\@digipen.edu
+\date   5-October-2024
+\brief  Contains the definition of functions used by the ObjectFactory
+        to add each component to an entity. This is so that each
+        component can be added their own way.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include <pch.h>
 #include "AddComponentFunctions.h"
 #include <Physics/PhysicsSystem.h>

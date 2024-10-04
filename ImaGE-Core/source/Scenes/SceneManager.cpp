@@ -1,3 +1,12 @@
+/*!*********************************************************************
+\file   SceneManager.cpp
+\author chengen.lau\@digipen.edu
+\date   5-October-2024
+\brief  Definition of class SceneManager, which is a singleton that
+        manages the state of the scene in the engine.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include <pch.h>
 #include "SceneManager.h"
 #include <filesystem>

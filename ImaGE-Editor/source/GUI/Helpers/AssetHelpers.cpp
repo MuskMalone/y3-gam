@@ -1,3 +1,12 @@
+/*!*********************************************************************
+\file   AssetHelpers.cpp
+\date   5-October-2024
+\brief  Contains the definition of functions to help with asset
+        displaying / loading in the engine. Mostly interfaces with
+        windows API to open the file explorer.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include <pch.h>
 #include "AssetHelpers.h"
 #include <fstream>

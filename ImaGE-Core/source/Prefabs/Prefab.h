@@ -109,6 +109,13 @@ namespace Prefabs
     ************************************************************************/
     std::pair<ECS::Entity, EntityMappings> ConstructAndMap(glm::vec3 const& pos = {}) const;
 
+    /*!*********************************************************************
+    \brief
+      Fills up a prefab instance with its components along with any missing
+      sub-objects
+    \param idToEntity
+      The map of ids to entities
+    ************************************************************************/
     void FillPrefabInstance(std::unordered_map<Prefabs::SubDataId, ECS::Entity>& idToEntity) const;
 
     /*!*********************************************************************
