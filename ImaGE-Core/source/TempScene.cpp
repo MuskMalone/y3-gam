@@ -18,6 +18,7 @@
 #include "Graphics/EditorCamera.h"
 
 #include <Physics/PhysicsSystem.h>
+#include <Asset/IGEAssets.h>
 
 std::vector<Camera> Scene::m_cameras;
 
@@ -59,21 +60,23 @@ void Scene::Init()
   std::shared_ptr<Graphics::MeshSource> pyrMeshSource = Graphics::MeshFactory::CreateCube();
   mesh1 = std::make_shared<Graphics::Mesh>(pyrMeshSource);
   
-  // Create a debug albedo texture (bright magenta checkerboard)
-  std::shared_ptr<Graphics::Texture> debugAlbedoTex = std::make_shared<Graphics::Texture>(2, 2);
-  unsigned int debugAlbedoData[4] = {
-      0xffff00ff, // Bright magenta (ABGR)
-      0xffffff00, // Cyan (to create contrast for checkerboard)
-      0xffffff00, // Cyan
-      0xffff00ff  // Bright magenta
-  };
-  debugAlbedoTex->SetData(debugAlbedoData);
+  // Create a debug albedo texture (bright magenta checkerboard
+  IGE::Assets::GUID texguid { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\foot.dds")) };
+  //auto texref{ am->GetAsset<IGE::Assets::TextureAsset>(texguid) };
+  //unsigned int debugAlbedoData[4] = {
+  //    0xffff00ff, // Bright magenta (ABGR)
+  //    0xffffff00, // Cyan (to create contrast for checkerboard)
+  //    0xffffff00, // Cyan
+  //    0xffff00ff  // Bright magenta
+  //};
+
+  //debugAlbedoTex->SetData(debugAlbedoData);
   
   std::shared_ptr<Graphics::Shader> shader = std::make_shared<Graphics::Shader>("../Assets/Shaders/Default.vert.glsl", "../Assets/Shaders/Default.frag.glsl");
   std::shared_ptr<Graphics::MaterialSource> materialSource0 = Graphics::MaterialSource::Create(shader);
-  materialSource0->SetAlbedoMap(debugAlbedoTex);
+  materialSource0->SetAlbedoMap(texguid);
   std::shared_ptr<Graphics::MaterialSource> materialSource1 = Graphics::MaterialSource::Create(shader);
-  materialSource1->SetAlbedoMap(debugAlbedoTex);
+  materialSource1->SetAlbedoMap(texguid);
   //=====================================================================================================================
 
   for (int i = 0; i < 5; ++i) {

@@ -11,6 +11,7 @@
 #include <wrl/wrappers/corewrappers.h>
 #include <DirectXTex.h>
 
+#define GET_ASSET_GUID(type, guid) IGE::Assets::AssetManager::GetInstance()->GetAsset<type>(guid)
 inline void IGEAssetsRegisterTypes() {
     // COM initialization
 //#if (_WIN32_WINNT >= 0x0A00 /*_WIN32_WINNT_WIN10*/)
@@ -65,7 +66,7 @@ inline void IGEAssetsImportAllAssets() {
             }
         }
     }
-    am.LoadRef<IGE::Assets::TextureAsset>("C:\\Users\\terra\\OneDrive\\Documents\\GitHub\\y3-gam\\Assets\\Textures\\foot.dds");
+    //am.LoadRef<IGE::Assets::TextureAsset>("C:\\Users\\terra\\OneDrive\\Documents\\GitHub\\y3-gam\\Assets\\Textures\\foot.dds");
 
 }
 inline void IGEAssetsInitialize() {

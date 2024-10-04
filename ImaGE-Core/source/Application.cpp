@@ -21,13 +21,14 @@ namespace IGE {
   Application::ApplicationSpecification Application::mSpecification{};
 
   void Application::Init() {
+    IGEAssetsInitialize();
     mSystemManager.InitSystems();
     mScene->Init();
     Scenes::SceneManager::GetInstance().Init();
     Prefabs::PrefabManager::GetInstance().Init();
     Performance::FrameRateController::GetInstance().Init(120.f, 1.f, false);
     Input::InputManager::GetInstance().InitInputManager(mWindow, mSpecification.WindowWidth, mSpecification.WindowHeight, 0.1);
-    IGEAssetsInitialize();
+
   }
 
   void Application::Run() {

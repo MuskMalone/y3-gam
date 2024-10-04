@@ -762,12 +762,12 @@ namespace Graphics {
 		}
 	}
 
-	void Shader::SetUniform(std::string const& name, std::shared_ptr<Texture> texture, unsigned int texUnit) {
+	void Shader::SetUniform(std::string const& name, IGE::Assets::GUID const& texture, unsigned int texUnit) {
 		// Activate the appropriate texture unit
 		GLCALL(glActiveTexture(GL_TEXTURE0 + texUnit));
 
 		// Bind the texture to that unit
-		texture->Bind(texUnit);
+		GET_ASSET_GUID(IGE::Assets::TextureAsset, texture)->mTexture.Bind(texUnit);
 
 		// Set the uniform in the shader to the correct texture unit
 		GLint loc = GetUniformLocation(name);

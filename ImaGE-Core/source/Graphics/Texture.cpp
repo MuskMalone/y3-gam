@@ -2,6 +2,7 @@
 #include "Texture.h"
 #include "Utils.h"
 #include <DirectXTex.h>
+#include <Asset/AssetManager.h>
 //TEMP?? 
 
 namespace Graphics {
@@ -229,8 +230,10 @@ namespace Graphics {
 		return mTexHdl == rhs.mTexHdl;
 	}
 
-	std::shared_ptr<Texture> Texture::Create(std::string const& path) {
-		return std::make_shared<Texture>(path);
+	//std::shared_ptr<Texture> 
+	IGE::Assets::GUID Texture::Create(std::string const& path) {
+		//return std::make_shared<Texture>(path);
+		return IGE::Assets::AssetManager::GetInstance()->LoadRef<IGE::Assets::TextureAsset>(path);
 	}
 
 }

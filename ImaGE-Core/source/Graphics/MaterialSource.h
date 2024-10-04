@@ -2,7 +2,7 @@
 #include <Graphics/Shader.h>
 #include <Graphics/Texture.h>
 #include <cstdint>
-
+#include "Asset/IGEAssets.h"
 namespace Graphics {
 
     enum class MaterialFlag {
@@ -42,17 +42,17 @@ namespace Graphics {
         inline void SetDefaultTransparency(float transparency) { mDefaultTransparency = transparency; }
 
         // Default Texture
-        std::shared_ptr<Texture> GetAlbedoMap() const;
-        void SetAlbedoMap(std::shared_ptr<Texture> texture);
+        IGE::Assets::GUID const& GetAlbedoMap() const;
+        IGE::Assets::GUID const& SetAlbedoMap(IGE::Assets::GUID const& texture);
 
-        std::shared_ptr<Texture> GetNormalMap() const;
-        void SetNormalMap(std::shared_ptr<Texture> texture);
+        IGE::Assets::GUID GetNormalMap() const;
+        void SetNormalMap(IGE::Assets::GUID const& texture);
 
-        std::shared_ptr<Texture> GetMetalnessMap() const;
-        void SetMetalnessMap(std::shared_ptr<Texture> texture);
+        IGE::Assets::GUID GetMetalnessMap() const;
+        void SetMetalnessMap(IGE::Assets::GUID const& texture);
 
-        std::shared_ptr<Texture> GetRoughnessMap() const;
-        void SetRoughnessMap(std::shared_ptr<Texture> texture);
+        IGE::Assets::GUID GetRoughnessMap() const;
+        void SetRoughnessMap(IGE::Assets::GUID const& texture);
 
     private:
         std::shared_ptr<Shader> mShader;
@@ -68,10 +68,11 @@ namespace Graphics {
         float mDefaultTransparency{ 1.0f }; // Fully opaque by default
 
         // Default texture maps
-        std::shared_ptr<Texture> mAlbedoMap;
-        std::shared_ptr<Texture> mNormalMap;
-        std::shared_ptr<Texture> mMetalnessMap;
-        std::shared_ptr<Texture> mRoughnessMap;
+       
+        IGE::Assets::GUID mAlbedoMap;
+        IGE::Assets::GUID mNormalMap;
+        IGE::Assets::GUID mMetalnessMap;
+        IGE::Assets::GUID mRoughnessMap;
 	};
 
 }

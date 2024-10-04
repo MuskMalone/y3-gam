@@ -1,12 +1,12 @@
 #pragma once
 #include <string>
-
+#include <Asset/SmartPointer.h>
 namespace Graphics {
 
 	class Texture {
 	public:
 
-		static std::shared_ptr<Texture> Create(std::string const& path);
+		static IGE::Assets::GUID Create(std::string const& path);
 		//Temp default constructor
 		Texture();
 		Texture(std::string const& path);

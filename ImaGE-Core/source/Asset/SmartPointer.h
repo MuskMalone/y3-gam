@@ -99,6 +99,7 @@ namespace IGE {
 		class Ref
 		{
 		public:
+			Ref() = default;
 			Ref(UniversalRef const& instance, Details::UniversalInfo const& uinfo, Details::InstanceInfo const& info)
 				: mInstance{ instance }, mUInfo{ uinfo }, mInfo{ info }
 			{
@@ -162,38 +163,40 @@ namespace IGE {
 
 			Ref& operator=(const Ref<T>& other)
 			{
-				if (this == &other)
-					return *this;
+				//if (this->mInstance. == &other)
+				//	return *this;
 
-				other.IncRef();
-				DecRef();
+				IncRef();
 
 				mInstance = other.mInstance;
+				mUInfo = other.mUInfo;
+				mInfo = other.mInfo;
 				return *this;
 			}
 
 			template<typename T2>
 			Ref& operator=(const Ref<T2>& other)
 			{
-				other.IncRef();
-				DecRef();
+				IncRef();
 
 				mInstance = other.mInstance;
+				mUInfo = other.mUInfo;
+				mInfo = other.mInfo;
 				return *this;
 			}
 
-			template<typename T2>
-			Ref& operator=(Ref<T2>&& other)
-			{
-				DecRef();
+			//template<typename T2>
+			//Ref& operator=(Ref<T2>&& other)
+			//{
+			//	DecRef();
 
-				mInstance = other.mInstance;
-				other.mInstance = nullptr;
-				return *this;
-			}
+			//	mInstance = other.mInstance;
+			//	other.mInstance = nullptr;
+			//	return *this;
+			//}
 
-			operator bool() { return mInstance != nullptr; }
-			operator bool() const { return mInstance != nullptr; }
+			operator bool() { return mInstance; }// != nullptr;}
+			operator bool() const { return mInstance; }// != nullptr;}
 
 			T* operator->() const { 
 				if (RefUtils::IsLive(mInstance.partialRef.guid)) return reinterpret_cast<T*>(mInstance.partialRef.pointer);
@@ -269,19 +272,22 @@ namespace IGE {
 				return mInstance;
 			}
 			void Load() {
-				if (!RefUtils::IsLive(mInstance.partialRef.guid));
-				mInstance.partialRef.pointer = mUInfo.loadFunc(mInstance.partialRef.guid);
-				RefUtils::AddToLiveReferences(mInstance.partialRef.guid);
-				mInfo.isLive = true;
+				if (!RefUtils::IsLive(mInstance.partialRef.guid)) {
+					mInstance.partialRef.pointer = mUInfo.loadFunc(mInstance.partialRef.guid);
+					//RefUtils::AddToLiveReferences(mInstance.partialRef.guid);
+					mInfo.isLive = true;
+					IncRef();
+				}
 			}
 			void Unload() {
-				if (RefUtils::IsLive(mInstance.partialRef.guid));
-				mUInfo.destroyFunc(mInstance.partialRef.pointer, mInstance.partialRef.guid);
-				mInstance.partialRef.pointer = nullptr;
-				RefUtils::RemoveFromLiveReferences(mInstance.partialRef.guid);
-				mInfo.isLive = false;
+				if (RefUtils::IsLive(mInstance.partialRef.guid)) {
+					mUInfo.destroyFunc(mInstance.partialRef.pointer, mInstance.partialRef.guid);
+					mInstance.partialRef.pointer = nullptr;
+					RefUtils::RemoveFromLiveReferences(mInstance.partialRef.guid);
+					mInfo.isLive = false;
+				}
 			}
-			void IncRef() //const
+			void IncRef() 
 			{
 				if (mInstance)
 				{
@@ -290,13 +296,13 @@ namespace IGE {
 				}
 			}
 
-			void DecRef() //const
+			void DecRef() 
 			{
 				if (mInstance)
 				{
 					mInstance.DecRefCount<T>();
 
-					if (mInstance.GetRefCount<T>() <= 0)
+					if (mInstance.GetRefCount<T>() == 0)
 					{
 						Unload();
 						RefUtils::RemoveFromLiveReferences(mInstance.partialRef.guid);
