@@ -248,6 +248,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Reflection\ComponentTypes.h" />
     <ClInclude Include="source\Reflection\EntityData.h" />
     <ClInclude Include="source\Reflection\ObjectFactory.h" />
+    <ClInclude Include="source\Reflection\ProxyScript.h" />
     <ClInclude Include="source\Scenes\SceneManager.h" />
     <ClInclude Include="source\Scenes\SceneStates.h" />
     <ClInclude Include="source\Serialization\Deserializer.h" />

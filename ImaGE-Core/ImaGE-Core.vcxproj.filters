@@ -360,6 +360,7 @@
     <ClInclude Include="source\pch.h" />
     <ClInclude Include="source\Graphics\RenderTarget.h" />
     <ClInclude Include="source\Reflection\AddComponentFunctions.h" />
+    <ClInclude Include="source\Reflection\ProxyScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />

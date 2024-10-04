@@ -1,3 +1,12 @@
+/*!*********************************************************************
+\file   Mesh.h
+\author 
+\date   5-October-2024
+\brief  Definition of the Mesh component, which denotes which model
+				the entity is rendered with
+  
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include "Graphics/Mesh.h"
 #include <string>
