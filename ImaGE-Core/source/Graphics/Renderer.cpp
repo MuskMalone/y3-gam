@@ -301,13 +301,6 @@ namespace Graphics {
 
 	void Renderer::SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr) {
 		if (!mesh) return;
-		
-		//glm::mat4 transMtx = glm::translate(glm::mat4(1.0f), pos);
-		//glm::mat4 rotMtx = glm::toMat4(glm::quat(rot)); // Assuming worldRot is a vec3 of Euler angles
-		//glm::mat4 rotMtx = glm::mat4(1.f);
-		//glm::mat4 scaleMtx = glm::scale(glm::mat4(1.0f), scale);
-
-		//glm::mat4 mdlMtx = transMtx * rotMtx * scaleMtx;
 
 		InstanceData instance{};
 		instance.modelMatrix = worldMtx;

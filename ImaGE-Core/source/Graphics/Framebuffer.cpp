@@ -76,8 +76,10 @@ namespace Graphics
             glDrawBuffer(GL_NONE); // only depth
         }
 //#ifndef _INSTALLER
-        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+        GLenum status;
+        if (status = glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
             //log
+            std::cout << "Framebuffer not complete! " << status << std::endl;
         }
 //            LoggingSystem::GetInstance().Log(LogLevel::ERROR_LEVEL, "ERROR: Framebuffer is INCOMPLETE!", __FUNCTION__);
 //        else LoggingSystem::GetInstance().Log(LogLevel::INFO_LEVEL, "Framebuffer is complete!", __FUNCTION__);

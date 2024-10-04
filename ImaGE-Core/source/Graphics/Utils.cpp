@@ -74,25 +74,28 @@ namespace Graphics {
         }//namespace Framebuffer
 
         namespace GL {
+
+            std::set<GLenum> ExistingErrors;
+
             bool GlLogCall(const char* function, const char* file, int line)
             {
-                //bool success = true;
-                //while (GLenum error = glGetError())
-                //{
-                //    success = false;
-                //    if (ExistingErrors.find(error) != ExistingErrors.end())
-                //        continue;
-                //    ExistingErrors.insert(error);
-                //    setlocale(LC_ALL, "");
-                //    LOG_ERROR("OpenGL::ErrorHandler", MxFormat("error #{0} {1} in file: {2}, line: {3}", error, function, file, line));
-                //}
-                //return success;
                 bool success = true;
                 while (GLenum error = glGetError())
                 {
+                    // If the error has already been logged, skip it
+                    if (ExistingErrors.find(error) != ExistingErrors.end())
+                        continue;
+
+                    // Mark the error as logged
+                    ExistingErrors.insert(error);
+
+                    // Log the error
                     success = false;
-                    std::cerr << "[OpenGL Error] (" << error << "): " << function
+                    std::stringstream ss;
+                    ss << "[OpenGL Error] (" << error << "): " << function
                         << " in file " << file << " at line " << line << std::endl;
+
+                    Debug::DebugLogger::GetInstance().LogError(ss.str());
                 }
                 return success;
             }
