@@ -2,6 +2,7 @@
 
 #define UNREFERENCED_PARAMETER(P) (P)
 #pragma warning(disable : 4005)
+#pragma warning(disable : 5105) // macro expansion producing 'defined' has undefined behavior
 
 // stdlib
 #include <iostream>

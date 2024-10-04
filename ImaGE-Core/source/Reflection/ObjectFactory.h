@@ -121,12 +121,16 @@ namespace Reflection
     std::vector<rttr::variant> GetEntityComponents(ECS::Entity const& id) const;
 
   private:
-    std::vector<VariantEntity> mRawEntities; // stores deserialized entity data
+    std::unordered_map<ECS::Entity::EntityID, ECS::Entity> mNewIDs; // remaps entities if IDs are taken
     PrefabInstanceContainer mPrefabInstances;   // stores deserialized prefab instances
+    std::vector<VariantEntity> mRawEntities; // stores deserialized entity data
 
     void LoadPrefabInstances();
 
     void OverrideInstanceComponents() const;
+
+    void TraverseDownInstance(ECS::Entity base, std::unordered_map<Prefabs::SubDataId, ECS::Entity>& idToEntity,
+      ObjectFactory::PrefabInstMap const& prefabInstMap) const;
   };
 
 } // namespace Reflection

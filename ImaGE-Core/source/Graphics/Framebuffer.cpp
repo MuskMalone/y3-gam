@@ -105,7 +105,10 @@ namespace Graphics
         Recreate();
     }
     uint32_t Framebuffer::GetColorAttachmentID(uint32_t index) const {
-        if (index >= mColorAttachments.size()) { throw std::runtime_error("out of bounds"); } return mColorAttachments[index]; // TODO CHANGE LOG
+        if (index >= static_cast<uint32_t>(mColorAttachments.size())) {
+          throw Debug::Exception<Framebuffer>(Debug::LVL_ERROR, Msg("Out of bounds"));
+        }
+        return mColorAttachments[index];
     }
     FramebufferSpec const& Framebuffer::GetFramebufferSpec() const {
         return mSpec;
