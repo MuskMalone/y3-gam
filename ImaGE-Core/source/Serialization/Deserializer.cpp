@@ -1,5 +1,5 @@
 /*!*********************************************************************
-\file   Deserializer.h
+\file   Deserializer.cpp
 \author chengen.lau\@digipen.edu
 \date   10-September-2024
 \brief  The class encapsulating functions related to deserialization.
@@ -20,13 +20,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Prefabs/PrefabManager.h>
 
 //#define DESERIALIZER_DEBUG
-
-#ifdef _DEBUG
-std::ostream& operator<<(std::ostream& os, rttr::type const& type) {
-  os << type.get_name().to_string();
-  return os;
-}
-#endif
 
 namespace Serialization
 {

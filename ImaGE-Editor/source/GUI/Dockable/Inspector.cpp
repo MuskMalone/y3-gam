@@ -1,3 +1,13 @@
+/*!*********************************************************************
+\file   Inspector.cpp
+\author 
+\date   5-October-2024
+\brief  Class encapsulating functions to run the inspector / property
+        window of the editor. Displays and allows modification of
+        components for the currently selected entity.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include <pch.h>
 #include "Inspector.h"
 
@@ -502,22 +512,22 @@ namespace GUI {
     bool modified{ false };
 
     if (isOpen) {
-      static const std::vector<std::pair<std::string, Graphics::MeshFactory::MeshSourcePtr(*)()>> nameToFunc{
-        { "None", nullptr },
-        { "Cube", Graphics::MeshFactory::CreateCube }
+      static const std::vector<const char*> meshNames{
+        "None", "Cube", "Plane"
       };
       Component::Mesh& mesh{ entity.GetComponent<Component::Mesh>() };
 
       if (ImGui::BeginCombo("##MeshSelection", mesh.meshName.c_str())) {
-        for (auto const& [name, func] : nameToFunc) {
-          if (ImGui::Selectable(name.c_str())) {
-            if (func) {
-              mesh.mesh = std::make_shared<Graphics::Mesh>(func());
+        for (unsigned i{}; i < meshNames.size(); ++i) {
+          const char* selected{ meshNames[i] };
+          if (ImGui::Selectable(selected)) {
+            if (i != 0) {
+              mesh.mesh = std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromString(selected));
             }
 
-            if (name != mesh.meshName) {
+            if (selected != mesh.meshName) {
               modified = true;
-              mesh.meshName = name;
+              mesh.meshName = selected;
             }
             break;
           }

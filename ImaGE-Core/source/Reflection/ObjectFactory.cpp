@@ -23,10 +23,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Serialization/Deserializer.h>
 #include <sstream>
 #include <Physics/PhysicsSystem.h>
-#include <TempScene.h> //tch for testing to remove
 #include <Prefabs/PrefabManager.h>
 #include <Events/EventManager.h>
+#include "AddComponentFunctions.h"
 
+#define GET_RTTR_TYPE(T) rttr::type::get<T>()
 #ifdef _DEBUG
 #define OF_DEBUG
 #endif
@@ -34,10 +35,26 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace Reflection
 {
 
+  void ObjectFactory::Init() {
+    using namespace Component;
+
+    mAddComponentFuncs = {
+      { GET_RTTR_TYPE(Tag), ComponentUtils::AddTag },
+      { GET_RTTR_TYPE(Transform), ComponentUtils::AddTransform },
+      { GET_RTTR_TYPE(Layer), ComponentUtils::AddLayer },
+      { GET_RTTR_TYPE(Mesh), ComponentUtils::AddMesh },
+      { GET_RTTR_TYPE(Material), ComponentUtils::AddMaterial },
+      { GET_RTTR_TYPE(Collider), ComponentUtils::AddCollider },
+      { GET_RTTR_TYPE(RigidBody), ComponentUtils::AddRigidBody },
+      { GET_RTTR_TYPE(Text), ComponentUtils::AddText }
+//      { GET_RTTR_TYPE(Script), ComponentUtils::AddScript }
+    };
+  }
+
   void ObjectFactory::AddComponentsToEntity(ECS::Entity id, std::vector<rttr::variant> const& components) const
   {
     for (rttr::variant const& component : components) {
-      AddComponentToEntity(id, component.get_type(), component);
+      AddComponentToEntity(id, component);
     }
   }
 
@@ -80,16 +97,17 @@ namespace Reflection
     }
   }
 
-  void TraverseDownInstance(ECS::Entity base, std::unordered_map<Prefabs::SubDataId, ECS::Entity>& idToEntity,
-    ObjectFactory::PrefabInstMap const& prefabInstMap)
+  void ObjectFactory::TraverseDownInstance(ECS::Entity base, std::unordered_map<Prefabs::SubDataId, ECS::Entity>& idToEntity,
+    ObjectFactory::PrefabInstMap const& prefabInstMap) const
   {
     // if its not in the map, it means this entity was added externally
     if (!prefabInstMap.contains(base.GetRawEnttEntityID())) { return; }
 
     PrefabInst const& pfbInst{ prefabInstMap.at(base.GetRawEnttEntityID()) };
+    ECS::Entity remappedID{ mNewIDs.contains(base.GetRawEnttEntityID()) ? mNewIDs.at(base.GetRawEnttEntityID()) : base };
     // each entity's PrefabOverrides component should 
     // contain an id that corresponds to a sub-object
-    idToEntity.emplace(pfbInst.mOverrides.subDataId, base);
+    idToEntity.emplace(pfbInst.mOverrides.subDataId, remappedID);
 
     // if no children, return
     if (pfbInst.mChildren.empty()) { return; }
@@ -98,7 +116,8 @@ namespace Reflection
     // else recursively call this function for each child
     for (ECS::Entity e : pfbInst.mChildren) {
       TraverseDownInstance(e, idToEntity, prefabInstMap);
-      entityMan.SetParentEntity(base, e);
+      entityMan.SetParentEntity(remappedID,
+        mNewIDs.contains(e.GetRawEnttEntityID()) ? mNewIDs.at(e.GetRawEnttEntityID()) : e);
     }
   }
 
@@ -109,7 +128,7 @@ namespace Reflection
       // replace any components if needed
       if (!overrides.modifiedComponents.empty()) {
         for (auto const& [type, comp] : overrides.modifiedComponents) {
-          AddComponentToEntity(entity, type, comp);
+          AddComponentToEntity(entity, comp);
         }
       }
 
@@ -136,9 +155,13 @@ namespace Reflection
         // we will use this to traverse down the root entity of each prefab instance,
         for (auto const&[id, instData] : data) {
           ECS::Entity ent{ entityMan.CreateEntityWithID({}, id) };
+          // if the ID is taken, map it to the new ID
+          if (ent.GetRawEnttEntityID() != id) {
+            mNewIDs.emplace(id, ent);
+          }
 
           if (instData.mParent == entt::null) {
-            baseEntities.emplace_back(ent); // collect the root entities
+            baseEntities.emplace_back(id); // collect the root entities
           }
 
           // restore its prefab overrides
@@ -159,7 +182,12 @@ namespace Reflection
             Debug::DebugLogger::GetInstance().LogError("Position of prefab instance not set!"); 
           }
           else {
-            e.GetComponent<Component::Transform>().worldPos = *pos;
+            if (mNewIDs.contains(e.GetRawEnttEntityID())) {
+              mNewIDs.at(e.GetRawEnttEntityID()).GetComponent<Component::Transform>().worldPos = *pos;
+            }
+            else {
+              e.GetComponent<Component::Transform>().worldPos = *pos;
+            }
           }
 
           // fill the instance with its components and missing sub-objects
@@ -180,6 +208,12 @@ namespace Reflection
     for (auto const& data : mRawEntities)
     {
       ECS::Entity newEntity{ entityMan.CreateEntityWithID({}, data.mID) };
+
+      // if the ID is taken, map it to the new ID
+      if (newEntity.GetRawEnttEntityID() != data.mID) {
+        mNewIDs.emplace(data.mID, newEntity);
+      }
+
       //entityMan.SetIsActiveEntity(id, arg.mIsActive);
       AddComponentsToEntity(newEntity, data.mComponents);
     }
@@ -189,13 +223,17 @@ namespace Reflection
     {
       if (data.mParent == entt::null) { continue; }
 
-      entityMan.SetParentEntity(data.mParent, data.mID);
+      // get ID from map if it was re-mapped
+      entityMan.SetParentEntity(
+        mNewIDs.contains(data.mParent) ? mNewIDs[data.mParent] : data.mParent,
+        mNewIDs.contains(data.mID) ? mNewIDs[data.mID] : data.mID);
     }
 
     LoadPrefabInstances();
   }
 
   void ObjectFactory::ClearData() {
+    mNewIDs.clear();
     mRawEntities.clear();
     mPrefabInstances.clear();
   }
@@ -204,42 +242,20 @@ namespace Reflection
     Serialization::Deserializer::DeserializeScene(mRawEntities, mPrefabInstances, filePath);
   }
 
-  void ObjectFactory::AddComponentToEntity(ECS::Entity entity, rttr::type const& type, rttr::variant const& compVar) const
+  void ObjectFactory::AddComponentToEntity(ECS::Entity entity, rttr::variant const& compVar) const
   {
-    rttr::type compType{ type };
+    rttr::type compType{ compVar.get_type() };
     // get underlying type if it's wrapped in a pointer
     compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
 
-    if (compType == rttr::type::get<Component::Tag>()) {
-      entity.EmplaceOrReplaceComponent<Component::Tag>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Tag>>());
-    }
-    else if (compType == rttr::type::get<Component::Transform>()) {
-      entity.EmplaceOrReplaceComponent<Component::Transform>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Transform>>());
-    }
-    else if (compType == rttr::type::get<Component::Layer>()) {
-      entity.EmplaceOrReplaceComponent<Component::Layer>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Layer>>());
-    }
-    else if (compType == rttr::type::get<Component::Material>()) {
-      entity.EmplaceOrReplaceComponent<Component::Material>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Material>>());
-    }
-    else if (compType == rttr::type::get<Component::Mesh>()) {
-      entity.EmplaceOrReplaceComponent<Component::Mesh>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Mesh>>());
-    }
-    else if (compType == rttr::type::get<Component::RigidBody>()) {
-      IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(entity);
-    }
-    else if (compType == rttr::type::get<Component::Collider>()) {
-      IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(entity);
-    }
-    else if (compType == rttr::type::get<Component::Text>()) {
-      entity.EmplaceOrReplaceComponent<Component::Text>(*(compVar ? compVar : type.create()).get_value<std::shared_ptr<Component::Text>>());
-    }
-    else
-    {
+    if (!mAddComponentFuncs.contains(compType)) {
       std::ostringstream oss{};
       oss << "Trying to add unknown component type: " << compType.get_name().to_string() << " to entity " << entity << " | Update ObjectFactory::AddComponentToEntity";
       Debug::DebugLogger::GetInstance().LogError(oss.str());
+      return;
     }
+
+    mAddComponentFuncs.at(compType)(entity, compVar);
   }
 
   #define IF_GET_ENTITY_COMP(ComponentClass) if (compType == rttr::type::get<ComponentClass>()) {\

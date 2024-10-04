@@ -1,6 +1,15 @@
+/*!*********************************************************************
+\file   SceneHierarchy.h
+\author chengen.lau\@digipen.edu
+\date   5-October-2024
+\brief  Class encapsulating functions to run the scene hierarchy
+        window of the editor. Displays the list of entities currently
+        in the scene along with their position in the hierarchy.
+        Features right-click options as well as parenting of entities.
+  
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
-#include "pch.h"
-
 #include <GUI/GUIWindow.h>
 #include <Core/Entity.h>
 #include <Events/EventCallback.h>
@@ -16,6 +25,10 @@ namespace GUI
   public:
     SceneHierarchy(std::string const& name);
 
+    /*!*********************************************************************
+    \brief
+      Runs the scene hierarchy window
+    ************************************************************************/
     void Run() override;
 
   private:
@@ -27,10 +40,40 @@ namespace GUI
 
     static constexpr char sDragDropPayload[] = "ENTITY";
 
+    /*!*********************************************************************
+    \brief
+      Helper function to create a new entity
+    \return
+      The entity created
+    ************************************************************************/
     ECS::Entity CreateNewEntity() const;
+
+    /*!*********************************************************************
+    \brief
+      Recursive function to display the list of entities in a tree node
+      and showing the hierarchy accordingly
+    \param entity
+      The current entity being displayed
+    ************************************************************************/
     void RecurseDownHierarchy(ECS::Entity entity);
+
+    /*!*********************************************************************
+    \brief
+      Runs the right-click menu when it is triggered
+    ************************************************************************/
     void RunRightClickMenu() const;
+
+    /*!*********************************************************************
+    \brief
+      Displays the contents of the right-click menu
+    ************************************************************************/
     void RunEntityOptions();
+
+    /*!*********************************************************************
+    \brief
+      Renders the popup for when a prefab is created from an existing
+      entity
+    ************************************************************************/
     void RunPrefabPopup();
 
     /*!*********************************************************************

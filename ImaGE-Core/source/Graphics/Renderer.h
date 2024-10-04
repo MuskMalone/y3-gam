@@ -6,6 +6,7 @@
 #include "ElementBuffer.h"
 #include "Mesh.h"
 #include "RenderPass.h"
+#include "Color.h"
 
 namespace Graphics {
 	struct Statistics {
@@ -33,6 +34,7 @@ namespace Graphics {
 
 	struct InstanceData {
 		glm::mat4 modelMatrix;
+		//int entityID = -1;
 		//glm::vec4 color;
 	};
 
@@ -101,11 +103,11 @@ namespace Graphics {
 		// Quads
 		static void DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::vec4 const& clr, float rot = 0.f);
 
-		static void SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr = { 1.f,1.f,1.f,1.f });
-		static void SubmitTriangle(glm::vec3 const& v1, glm::vec3 const& v2, glm::vec3 const& v3, glm::vec4 const& clr = { 1.f,1.f,1.f,1.f });
+		static void SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr = Color::COLOR_WHITE);
+		static void SubmitTriangle(glm::vec3 const& v1, glm::vec3 const& v2, glm::vec3 const& v3, glm::vec4 const& clr = Color::COLOR_WHITE);
 
 		//Instancing
-		static void SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr);
+		static void SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr, int entityID = -1);
 		static void RenderInstances();
 
 		// Batching
@@ -144,7 +146,8 @@ namespace Graphics {
 	private:
 		static RendererData mData;
 		static std::shared_ptr<Framebuffer> mFinalFramebuffer;
-	public: // temp
+	public: // TEMP
+		static std::shared_ptr<RenderPass> mPickPass;
 		static std::shared_ptr<RenderPass> mGeomPass;
 	};
 }

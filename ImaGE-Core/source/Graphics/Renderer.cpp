@@ -5,8 +5,11 @@
 #include <glm/gtx/quaternion.hpp>
 
 namespace Graphics {
+	constexpr int INVALID_ENTITY_ID = -1;
+
 	RendererData Renderer::mData;
 	std::shared_ptr<Framebuffer> Renderer::mFinalFramebuffer;
+	std::shared_ptr<RenderPass> Renderer::mPickPass; //TODO put in a map/ vector
 	std::shared_ptr<RenderPass> Renderer::mGeomPass;
 
 	void Renderer::Init() {
@@ -107,7 +110,7 @@ namespace Graphics {
 		mData.quadVtxPos[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
 		mData.quadVtxPos[3] = { -0.5f, 0.5f, 0.0f, 1.0f };
 
-		mData.instancedShader = std::make_shared<Shader>("../Assets/Shaders/Instanced.vert.glsl", "../Assets/Shaders/Instanced.frag.glsl");
+		mData.instancedShader = Shader::Create("../Assets/Shaders/Instanced.vert.glsl", "../Assets/Shaders/Instanced.frag.glsl");
 
 		//Init framebuffer
 		Graphics::FramebufferSpec framebufferSpec;
@@ -117,7 +120,6 @@ namespace Graphics {
 
 		//Init RenderPasses
 		PipelineSpec geomPipelineSpec;
-		//geomPipelineSpec.shader = mData.texShader;
 		geomPipelineSpec.shader = mData.instancedShader;
 		geomPipelineSpec.targetFramebuffer = Framebuffer::Create(framebufferSpec);
 
@@ -125,6 +127,21 @@ namespace Graphics {
 		geomPassSpec.pipeline = Pipeline::Create(geomPipelineSpec);
 		geomPassSpec.debugName = "Geometry Pass";
 
+		//Init PickingPass
+		Graphics::FramebufferSpec pickBufferSpec;
+		pickBufferSpec.width = WINDOW_WIDTH<int>;
+		pickBufferSpec.height = WINDOW_HEIGHT<int>;
+		pickBufferSpec.attachments = { Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
+		
+		PipelineSpec pickPipelineSpec;
+		pickPipelineSpec.shader = Shader::Create("../Assets/Shaders/Instanced/vert.glsl", "../Assets/Shaders/Instanced.frag.glsl");
+		pickPipelineSpec.targetFramebuffer = Framebuffer::Create(pickBufferSpec);
+
+		RenderPassSpec pickPassSpec;
+		pickPassSpec.pipeline = Pipeline::Create(pickPipelineSpec);
+		pickPassSpec.debugName = "Picking Pass";
+
+		mPickPass = RenderPass::Create(pickPassSpec);
 		mGeomPass = RenderPass::Create(geomPassSpec);
 
 		mFinalFramebuffer = mGeomPass->GetTargetFramebuffer();
@@ -191,6 +208,7 @@ namespace Graphics {
 			{ AttributeType::MAT4, "a_ModelMatrix" },
 			//{ AttributeType::VEC4, "a_Color" }
 		};
+
 		instanceBuffer->SetLayout(instanceLayout);
 
 		// Attach the instance buffer to the MeshSource's VAO
@@ -299,12 +317,15 @@ namespace Graphics {
 		SetTriangleBufferData(v3, clr);
 	}
 
-	void Renderer::SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr) {
+	void Renderer::SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id) {
 		if (!mesh) return;
 
 		InstanceData instance{};
 		instance.modelMatrix = worldMtx;
-		//instance.color = clr;
+		
+		if (id != INVALID_ENTITY_ID) {
+			//instance.entityID = id;
+		}
 
 		auto& meshSrc = mesh->GetMeshSource();
 		if (!meshSrc) return;
@@ -312,11 +333,13 @@ namespace Graphics {
 		mData.instanceBufferDataMap[meshSrc].push_back(instance);
 	}
 
+
 	void Renderer::RenderInstances() {
 		for (auto& [meshSrc, instances] : mData.instanceBufferDataMap) {
 			if (instances.empty()) continue;
 
 			auto instanceBuffer = GetInstanceBuffer(meshSrc);
+			//instanceBuffer->SetLayout();
 
 			// Set instance data into the buffer
 			unsigned int dataSize = static_cast<unsigned int>(instances.size() * sizeof(InstanceData));

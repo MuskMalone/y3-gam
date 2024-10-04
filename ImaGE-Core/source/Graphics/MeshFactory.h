@@ -6,10 +6,14 @@ namespace Graphics{
 	public:
 		using MeshSourcePtr = std::shared_ptr<MeshSource>;
 
-		// Static method to create a cube mesh
-		static MeshSourcePtr CreateCube();
-		static MeshSourcePtr CreatePyramid();
-
+		// using this to get model based on string in Mesh component
+		// Options: Cube, Plane
+		static MeshSourcePtr CreateModelFromString(std::string const& meshName);
 		static MeshSourcePtr CreateModelFromImport(std::string const& file);	// load from file (obj, fbx etc.)
+
+	private:
+		static MeshSourcePtr CreateCube();
+		static MeshSourcePtr CreatePlane();
+		static MeshSourcePtr CreatePyramid();
 	};
 }

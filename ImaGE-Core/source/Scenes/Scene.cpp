@@ -1,6 +1,6 @@
 #include <pch.h>
 
-#include "TempScene.h"
+#include "Scene.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/gtc/constants.hpp>
@@ -12,15 +12,12 @@
 
 #include "Graphics/RenderSystem.h"
 
-#include "Core/EntityManager.h"
 #include "Core/Entity.h"
 #include <Core/Components/Components.h>
 #include "Graphics/EditorCamera.h"
 
 #include <Physics/PhysicsSystem.h>
 #include <Asset/IGEAssets.h>
-
-std::vector<Camera> Scene::m_cameras;
 
 Scene::Scene()
 {
@@ -57,7 +54,7 @@ void Scene::Init()
     std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateModelFromImport("../Assets/Models/bunny_high_poly.imsh");
     mesh0 = std::make_shared<Graphics::Mesh>(cubeMeshSource);
 
-  std::shared_ptr<Graphics::MeshSource> pyrMeshSource = Graphics::MeshFactory::CreateCube();
+  std::shared_ptr<Graphics::MeshSource> pyrMeshSource = Graphics::MeshFactory::CreateModelFromString("Cube");
   mesh1 = std::make_shared<Graphics::Mesh>(pyrMeshSource);
   
   // Create a debug albedo texture (bright magenta checkerboard
@@ -100,7 +97,7 @@ void Scene::Init()
               transformComponent.scale = glm::vec3(5.f);
           }
           else {
-              renderComponent.mesh = mesh1; // Assign pyramid mesh
+            renderComponent.mesh = mesh1; // Assign pyramid mesh
           }
 
           // Set up the MaterialComponent
@@ -139,7 +136,7 @@ void Scene::Update(float deltaTime)
     //}
 }
 
-void Scene::Draw()
+void Scene::Draw() const
 {
     glClear(GL_COLOR_BUFFER_BIT);
     glClear(GL_DEPTH_BUFFER_BIT);

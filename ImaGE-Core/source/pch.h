@@ -1,7 +1,15 @@
+/*!*********************************************************************
+\file   pch.h
+\date   5-October-2024
+\brief  Pre-compiled header for the project
+  
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 
 #define UNREFERENCED_PARAMETER(P) (P)
 #pragma warning(disable : 4005)
+#pragma warning(disable : 5105) // macro expansion producing 'defined' has undefined behavior
 
 // stdlib
 #include <iostream>

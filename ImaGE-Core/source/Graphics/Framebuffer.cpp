@@ -16,9 +16,9 @@ namespace Graphics
         Recreate();
     }
     Framebuffer::~Framebuffer() {
-        glDeleteFramebuffers(1, &mFbo);
-        glDeleteTextures(static_cast<GLsizei>(mColorAttachments.size()), mColorAttachments.data());
-        glDeleteTextures(1, &mDepthAttachment);
+        GLCALL(glDeleteFramebuffers(1, &mFbo));
+        GLCALL(glDeleteTextures(static_cast<GLsizei>(mColorAttachments.size()), mColorAttachments.data()));
+        GLCALL(glDeleteTextures(1, &mDepthAttachment));
     }
 
     void Framebuffer::Recreate() {
@@ -31,8 +31,8 @@ namespace Graphics
             mDepthAttachment = 0;
         }
 
-        glCreateFramebuffers(1, &mFbo);
-        glBindFramebuffer(GL_FRAMEBUFFER, mFbo);
+        GLCALL(glCreateFramebuffers(1, &mFbo));
+        GLCALL(glBindFramebuffer(GL_FRAMEBUFFER, mFbo));
 
         if (mColorAttachmentSpecs.size()) {
             mColorAttachments.resize(mColorAttachmentSpecs.size());
@@ -44,9 +44,9 @@ namespace Graphics
                 case FramebufferTextureFormat::RGBA8:
                     Utils::Framebuffer::AttachColorTexture(mColorAttachments[i], GL_RGBA8, GL_RGBA, mSpec.width, mSpec.height, static_cast<int>(i));
                     break;
-                //case FramebufferTextureFormat::RED_INTEGER:
-                //    Utils::Framebuffer::AttachColorTexture(mColorAttachments[i], GL_R32I, GL_RED_INTEGER, mSpec.width, mSpec.height, static_cast<int>(i));
-                //    break;
+                case FramebufferTextureFormat::RED_INTEGER:
+                    Utils::Framebuffer::AttachColorTexture(mColorAttachments[i], GL_R32I, GL_RED_INTEGER, mSpec.width, mSpec.height, static_cast<int>(i));
+                    break;
                 }
             }
         }
@@ -89,15 +89,15 @@ namespace Graphics
     }
 
     void Framebuffer::Bind() {
-        glBindFramebuffer(GL_FRAMEBUFFER, mFbo);
-        glViewport(0, 0, mSpec.width, mSpec.height);
+        GLCALL(glBindFramebuffer(GL_FRAMEBUFFER, mFbo));
+        GLCALL(glViewport(0, 0, mSpec.width, mSpec.height));
     }
     void Framebuffer::Unbind() {
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        GLCALL(glBindFramebuffer(GL_FRAMEBUFFER, 0));
     }
 
     void Framebuffer::BindDefault() {
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        GLCALL(glBindFramebuffer(GL_FRAMEBUFFER, 0));
     }
 
     void Framebuffer::Resize(uint32_t width, uint32_t height) {
@@ -106,8 +106,24 @@ namespace Graphics
 
         Recreate();
     }
+
+    int Framebuffer::ReadPixel(uint32_t attachIdx, int x, int y) {
+        GLCALL(glReadBuffer(GL_COLOR_ATTACHMENT0 + attachIdx));
+        int pixels;
+        GLCALL(glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixels));
+        return pixels;
+    }
+
+    void Framebuffer::ClearAttachmentInt(uint32_t attachIdx, int val) {
+        GLCALL(glClearTexImage(mColorAttachments[attachIdx], 0, GL_RED_INTEGER, GL_INT, &val));
+    }
+
+
     uint32_t Framebuffer::GetColorAttachmentID(uint32_t index) const {
-        if (index >= mColorAttachments.size()) { throw std::runtime_error("out of bounds"); } return mColorAttachments[index]; // TODO CHANGE LOG
+        if (index >= static_cast<uint32_t>(mColorAttachments.size())) {
+          throw Debug::Exception<Framebuffer>(Debug::LVL_ERROR, Msg("Out of bounds"));
+        }
+        return mColorAttachments[index];
     }
     FramebufferSpec const& Framebuffer::GetFramebufferSpec() const {
         return mSpec;

@@ -1,3 +1,11 @@
+/*!*********************************************************************
+\file   ImGuiHelpers.cpp
+\date   5-October-2024
+\brief  Contains the definition of helper functions for ImGui elements.
+        Also contains convenience operator overloads for ImGui vectors.
+  
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include <pch.h>
 #include "ImGuiHelpers.h"
 #include <ImGui/imgui.h>
@@ -205,6 +213,18 @@ ImVec2 operator-(ImVec2 const& lhs, ImVec2 const& rhs) {
 
 ImVec2 operator-(ImVec2 const& lhs, float rhs) {
   return { lhs.x - rhs, lhs.y - rhs };
+}
+
+ImVec2 operator*(ImVec2 const& lhs, float rhs) {
+  return { lhs.x * rhs, lhs.y * rhs };
+}
+
+ImVec2 operator*(float lhs, ImVec2 const& rhs) {
+  return { rhs.x * lhs, rhs.y * lhs };
+}
+
+ImVec2 operator/(ImVec2 const& lhs, float rhs) {
+  return { lhs.x / rhs, lhs.y / rhs };
 }
 
 ImVec4 operator+(ImVec4 const& lhs, ImVec4 const& rhs) {

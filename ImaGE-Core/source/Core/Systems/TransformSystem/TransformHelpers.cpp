@@ -1,3 +1,12 @@
+/*!*********************************************************************
+\file   TransformHelpers.h
+\author chengen.lau\@digipen.edu
+\date   5-October-2024
+\brief  Contains the definitions of helper functions dealing with
+        updating transforms of entities.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include <pch.h>
 #include "TransformHelpers.h"
 #include <Core/Components/Transform.h>

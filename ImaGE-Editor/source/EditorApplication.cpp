@@ -1,3 +1,12 @@
+/*!*********************************************************************
+\file   EditorApplication.cpp
+\date   5-October-2024
+\brief  The main class running the editor. Inherits from Application
+        and performs additional initializations and updates for ImGui
+        elements.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include <pch.h>
 #include "EditorApplication.h"
 
@@ -66,7 +75,6 @@ namespace IGE {
           eventManager.DispatchAll();
 
           mSystemManager.UpdateSystems();
-          mScene->Update(frameRateController.GetDeltaTime());
         }
         catch (Debug::ExceptionBase& e)
         {
@@ -79,12 +87,12 @@ namespace IGE {
 
         try {
           if (GetApplicationSpecification().EnableImGui) {
-            UpdateFramebuffers();
 
+            UpdateFramebuffers();
             
-          auto fb = Graphics::Renderer::GetFinalFramebuffer();
-          mFramebuffers.front().first = fb;
-          mGUIManager.UpdateGUI(mFramebuffers.front().first);
+            // @TODO: is this line still needed? - u can alr directly update the framebuffer in the draw function
+            mRenderTargets.front().framebuffer = Graphics::Renderer::GetFinalFramebuffer();
+            mGUIManager.UpdateGUI(mRenderTargets.front());
 
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -122,6 +130,19 @@ namespace IGE {
       {
         PrintException(e);
       }
+    }
+  }
+
+  void EditorApplication::UpdateFramebuffers() {
+    // iterate through all render targets and
+    // draw each scene to its framebuffer
+    for (Graphics::RenderTarget const& target : mRenderTargets)
+    {
+      target.framebuffer->Bind();
+
+      target.scene.Draw();
+
+      target.framebuffer->Unbind();
     }
   }
 

@@ -12,16 +12,15 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma once
 #include <memory>
 #include <string>
+#include <vector>
 #include <Graphics/MeshSource.h>
+#include <Graphics/Vertex.h>
 
 // forward declarations
-#ifndef IMGUI_DISABLE
 struct aiScene; struct aiNode;
-#endif
 
 namespace Graphics::AssetIO
 {
-#ifndef IMGUI_DISABLE
 
   struct MeshImportFlags
   {
@@ -33,7 +32,6 @@ namespace Graphics::AssetIO
 
     bool boneWeights, animations, lights, cameras, materials;
   };
-#endif
 
 
   class IMSH
@@ -42,12 +40,25 @@ namespace Graphics::AssetIO
     IMSH() : mVertexBuffer{}, mIndices{}, mSubmeshData{}, mStatus{ true } {}
     // conversions for use in editor only
     IMSH(std::string const& file, MeshImportFlags const& = {});
+
+    /*!*********************************************************************
+    \brief
+      Writes the object to a binary file
+    \param name
+      The name of the output file
+    ************************************************************************/
     void WriteToBinFile(std::string const& name) const;
 
     operator bool() const { return mStatus; } // check if object is valid
     inline std::vector<Graphics::Vertex> const& GetVertexBuffer() const noexcept { return mVertexBuffer; }
     inline std::vector<uint32_t> const& GetIndices() const noexcept { return mIndices; }
-
+    
+    /*!*********************************************************************
+    \brief
+      Reads a binary file into the object
+    \param file
+      The binary file to read from
+    ************************************************************************/
     void ReadFromBinFile(std::string const& file);
     
     // NOTE: This converts the object into a mesh source. Data will be MOVED into
