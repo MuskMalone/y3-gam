@@ -57,12 +57,19 @@ project "ImaGE-Editor"
        runtime "Debug"
        symbols "On"
 
+       prebuildcommands {
+         "{COPYFILE} %[%{wks.location}Libraries/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
+
+         }
        postbuildcommands {
          "{COPYFILE} %[%{wks.location}Libraries/glfw-3.3.8.bin.WIN64/lib-vc2022/glfw3.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}Libraries/assimp/assimp-vc143-mt.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}Libraries/rttr-0.9.6/lib/Debug/rttr_core_d.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
-      }
+         "{COPYDIR} %[%{wks.location}Libraries/mono/4.5] %[%{cfg.targetdir}/4.5]"
+      
+         
+          }
 
    filter "configurations:Release"
       defines {
@@ -84,12 +91,16 @@ project "ImaGE-Editor"
        runtime "Release"
        optimize "On"
        symbols "On"
+       prebuildcommands {
+         "{COPYFILE} %[%{wks.location}Libraries/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
 
+         }
        postbuildcommands {
          "{COPYFILE} %[%{wks.location}Libraries/glfw-3.3.8.bin.WIN64/lib-vc2022/glfw3.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}Libraries/assimp/assimp-vc143-mt.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}Libraries/rttr-0.9.6/lib/Release/rttr_core.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
+         "{COPYDIR} %[%{wks.location}Libraries/mono/4.5] %[%{cfg.targetdir}/4.5]"
       }
 
    filter "configurations:Distribution"
@@ -112,10 +123,14 @@ project "ImaGE-Editor"
       runtime "Release"
       optimize "On"
       symbols "Off"
+      prebuildcommands {
+         "{COPYFILE} %[%{wks.location}Libraries/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
 
+         }
       postbuildcommands {
          "{COPYFILE} %[%{wks.location}Libraries/glfw-3.3.8.bin.WIN64/lib-vc2022/glfw3.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}Libraries/assimp/assimp-vc143-mt.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}Libraries/rttr-0.9.6/lib/Release/rttr_core.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
+         "{COPYDIR} %[%{wks.location}Libraries/mono/4.5] %[%{cfg.targetdir}/4.5]"
       }

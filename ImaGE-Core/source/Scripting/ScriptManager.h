@@ -29,9 +29,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Mono
 {
+
+
+
 	class ScriptManager : public Singleton<ScriptManager>
 	{
-		static std::shared_ptr<MonoAssembly> mCoreAssembly;
 		static std::map<std::string, ScriptClassInfo> mMonoClassMap;
 
 	public:
@@ -64,13 +66,6 @@ namespace Mono
 		*								    Functions for initializing Mono											*
 		*																																			  *
 		************************************************************************/
-
-
-		/*!*********************************************************************
-		\brief
-			Function to load mono c# assembly
-		************************************************************************/
-		static void LoadAssembly();
 
 		/*!*********************************************************************
 		\brief
@@ -117,31 +112,8 @@ namespace Mono
 		************************************************************************/
 		static void AssemblyFileSystemEvent(const std::string& path, const filewatch::Event change_type);
 
-		/*!*********************************************************************
-	\brief
-		Load the C# Assembly Data from the DLL file
 
-	\params assemblyPath
-		path to the C# DLL file
-	************************************************************************/
-		MonoAssembly* LoadCSharpAssembly(const std::string& assemblyPath);
-
-		/*!*********************************************************************
-		\brief
-			This function returns the data of c# class.
-			The class data will be used to generate instances in other parts of the script manager
-
-		\params assembly
-			pointer to the C# Assembly data
-
-		\params namespaceName
-		Namespace that the c# belongs in
-
-		\params className
-		Name of the c# class
-		************************************************************************/
-		MonoClass* GetClassInAssembly(MonoAssembly* assembly, const char* namespaceName, const char* className);
-
+		
 
 		/*!**********************************************************************
 		*																																			  *
@@ -164,7 +136,7 @@ namespace Mono
 			\return
 			Instance of the c# class in the form of MonoObject*
 		************************************************************************/
-		std::shared_ptr<MonoObject> InstantiateClass(const char* className, std::vector<void*>& arg);
+		MonoObject* InstantiateClass(const char* className, std::vector<void*>& arg);
 
 		/*!*********************************************************************
 		\brief
@@ -211,18 +183,6 @@ namespace Mono
 		************************************************************************/
 		static ScriptFieldType MonoTypeToScriptFieldType(MonoType* monoType);
 
-		/*!*********************************************************************
-		\brief
-			return a rttr variant of the script field instance.
-			Used to generate an empty script field instance of a specific template type
-
-		\params std::string const& listType
-			the template type of the scriptfield iinstance
-
-		\return
-		an empty script field instance of a specific template type, in the form of rttr::variant
-		************************************************************************/
-		MonoAssembly* GetMonoAssembly();
 
 
 		/*!**********************************************************************
@@ -258,8 +218,7 @@ namespace Mono
 
 		static void RebuildCS();
 
-
-
+	};
 
 		/*!**********************************************************************
 		*																																			  *
@@ -279,7 +238,7 @@ namespace Mono
 		\params transformAdjustment
 			values to be added to the entity's transform
 		************************************************************************/
-		static void SetPosition(ECS::Entity::EntityID entity, glm::dvec3 posAdjustment);
+		static void SetTranslation(ECS::Entity::EntityID entity, glm::vec3 posAdjustment);
 
 		/*!*********************************************************************
 		\brief
@@ -289,7 +248,7 @@ namespace Mono
 		\param GE::Math::dVec3 PosAdjustment
 			Vector 3 of the new scale
 		************************************************************************/
-		static void SetScale(ECS::Entity::EntityID entity, glm::dvec3 scaleAdjustment);
+		static void SetScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment);
 
 		/*!*********************************************************************
 		\brief
@@ -299,7 +258,7 @@ namespace Mono
 		\param GE::Math::dVec3 PosAdjustment
 			Vector 3 of the new rotation
 		************************************************************************/
-		static void SetRotation(ECS::Entity::EntityID entity, glm::dvec3 rotAdjustment);
+		static void SetRotation(ECS::Entity::EntityID entity, glm::vec3 rotAdjustment);
 
 		/*!*********************************************************************
 			\brief
@@ -309,7 +268,7 @@ namespace Mono
 			\return GE::Math::dVec3
 				Returns a vector 3 of the position of the entity
 			************************************************************************/
-		static glm::dvec3 GetPosition(ECS::Entity::EntityID entity);
+		static glm::vec3 GetTranslation(ECS::Entity::EntityID entity);
 
 		/*!*********************************************************************
 		\brief
@@ -319,7 +278,7 @@ namespace Mono
 		\return GE::Math::dVec3
 			Returns a vector 3 of the scale of the entity
 		************************************************************************/
-		static glm::dvec3 GetScale(ECS::Entity::EntityID entity);
+		static glm::vec3 GetScale(ECS::Entity::EntityID entity);
 
 		/*!*********************************************************************
 		\brief
@@ -329,46 +288,59 @@ namespace Mono
 		\return GE::Math::dVec3
 			Returns a vector 3 of the rotation of the entity
 		************************************************************************/
-		static glm::dvec3 GetRotation(ECS::Entity::EntityID entity);
+		static glm::vec3 GetRotation(ECS::Entity::EntityID entity);
+
+	/*!*********************************************************************
+		\brief
+			Function to read data from a file and store it in a char buffer
+
+		\params filepath
+			path of the file
+
+		\params outSize
+			size of the file
+
+		\return
+			char buffer containing the data of the file
+		************************************************************************/
+	char* ReadBytes(const std::string& filepath, uint32_t* outSize);
+
+
+	/*!*********************************************************************
+		\brief
+			This function returns the data of c# class.
+			The class data will be used to generate instances in other parts of the script manager
+
+		\params assembly
+			pointer to the C# Assembly data
+
+		\params namespaceName
+		Namespace that the c# belongs in
+
+		\params className
+		Name of the c# class
+		************************************************************************/
+		MonoClass* GetClassInAssembly(MonoAssembly* assembly, const char* namespaceName, const char* className);
+
 
 		/*!*********************************************************************
 		\brief
-			Get the world position of the entity
-		\param GE::ECS::Entity entity
-			ID of the entity
-		\return GE::Math::dVec3
-			Returns a vector 3 of the world position of the entity
+			Load the C# Assembly Data from the DLL file
+
+		\params assemblyPath
+			path to the C# DLL file
 		************************************************************************/
-		static glm::dvec3 GetWorldPosition(ECS::Entity::EntityID entity);
-	};
+			MonoAssembly* LoadCSharpAssembly(const std::string& assemblyPath);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			/*!*********************************************************************
+			\brief
+				Function to check if a monostring is valid
+			\param MonoError& error
+			MonoError belonging to a MonoString
+			\return
+			bool alue to indicate if the Monostring is valid
+			************************************************************************/
+			bool CheckMonoError(MonoError& error);
 
 		/*!*********************************************************************
 		\brief

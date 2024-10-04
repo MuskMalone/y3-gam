@@ -59,7 +59,7 @@ namespace Mono {
 		std::string mScriptName;
 		uint32_t mGcHandle;
 		std::shared_ptr<MonoClass> mScriptClass{ nullptr };
-		std::shared_ptr<MonoObject> mClassInst{ nullptr };
+		MonoObject* mClassInst{ nullptr };
 		std::shared_ptr<MonoMethod> mOnUpdateMethod{ nullptr };
 		std::shared_ptr<MonoMethod> mOnCreateMethod = { nullptr };
 
@@ -177,7 +177,7 @@ namespace Mono {
 		template<typename T>
 		T GetFieldValue(std::shared_ptr<MonoClassField> field)
 		{
-			mono_field_get_value(mClassInst.get(), field.get(), mFieldValBuffer);
+			mono_field_get_value(mClassInst, field.get(), mFieldValBuffer);
 			return *(T*)mFieldValBuffer;
 		}
 
@@ -199,7 +199,7 @@ namespace Mono {
 		{
 			MonoArray* newArray{};
 
-			mono_field_get_value(mClassInst.get(), field.get(), &newArray);
+			mono_field_get_value(mClassInst, field.get(), &newArray);
 			std::vector<T> test{};
 			for (int i = 0; i < mono_array_length(newArray); ++i) {
 				T element = mono_array_get(newArray, T, i);
@@ -224,7 +224,7 @@ namespace Mono {
 		void SetFieldValue(T value, std::shared_ptr<MonoClassField> field)
 		{
 			std::memcpy(mFieldValBuffer, &value, sizeof(T));
-			mono_field_set_value(mClassInst.get(), field.get(), mFieldValBuffer);
+			mono_field_set_value(mClassInst, field.get(), mFieldValBuffer);
 		}
 
 
@@ -247,7 +247,7 @@ namespace Mono {
 			for (int i = 0; i < mono_array_length(newArray); ++i) {
 				mono_array_set(newArray, T, i, value[i]);
 			}
-			mono_field_set_value(mClassInst.get(), field.get(), newArray);
+			mono_field_set_value(mClassInst, field.get(), newArray);
 		}
 
 

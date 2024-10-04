@@ -96,5 +96,4 @@ namespace Mono {
 	template <>
 	MonoArray* GetMonoArray<double>(std::shared_ptr<MonoDomain> md, size_t sz);
 
-	#include "ScriptUtils.tpp"
 }

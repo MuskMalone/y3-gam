@@ -23,17 +23,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Image
+namespace Image.Mono
 {
   public class Entity
   {
-    public uint entityID;
+    public uint mEntityID;
 
     /*  _________________________________________________________________________ */
     /*! Entity
 
     @param entityHandle
-    The entityID.
+    The mEntityID .
 
     @return *this
 
@@ -41,7 +41,7 @@ namespace Image
     */
     public Entity(uint entityHandle)
     {
-      entityID = entityHandle;
+      mEntityID = entityHandle;
     }
 
     /*  _________________________________________________________________________ */
@@ -53,7 +53,7 @@ namespace Image
     */
     public Entity()
     {
-      entityID = 0;
+      mEntityID  = 0;
     }
 
     /*  _________________________________________________________________________ */
@@ -63,103 +63,88 @@ namespace Image
 
     For turning any generic Entity into its respective child class.
     */
-    public T As<T>() where T : Entity, new()
-    {
-      object instance = InternalCalls.EngineCore_GetScriptInstance(ref entityID);
-      return instance as T;
-    }
+    //public T As<T>() where T : Entity, new()
+    //{
+    //  object instance = InternalCalls.EngineCore_GetScriptInstance(ref mEntityID );
+    //  return instance as T;
+    //}
 
-    #region Graphics
-    public Vector2 CameraPosition
-    {
-      get
-      {
-        Vector2 pos = new Vector2(0, 0);
-        InternalCalls.GraphicsComponent_GetCamPosition(ref pos);
-        return pos;
-      }
+    //#region Graphics
+    //public Vector2 CameraPosition
+    //{
+    //  get
+    //  {
+    //    Vector2 pos = new Vector2(0, 0);
+    //    InternalCalls.GraphicsComponent_GetCamPosition(ref pos);
+    //    return pos;
+    //  }
 
-      set
-      {
-        InternalCalls.GraphicsComponent_SetCamPosition(ref value);
-      }
-    }
+    //  set
+    //  {
+    //    InternalCalls.GraphicsComponent_SetCamPosition(ref value);
+    //  }
+    //}
     /*  _________________________________________________________________________ */
     /*! AnimationState
 
     Getter setter for AnimationState.
     */
-    public int AnimationState
-    {
-      get
-      {
-        int animationState = 0;
-        InternalCalls.AnimationComponent_GetAnimationState(ref entityID, ref animationState);
-        return AnimationState;
-      }
-      set
-      {
-        InternalCalls.AnimationComponent_SetAnimationState(ref entityID, ref value);
-      }
-    }
+    //public int AnimationState
+    //{
+    //  get
+    //  {
+    //    int animationState = 0;
+    //    InternalCalls.AnimationComponent_GetAnimationState(ref mEntityID , ref animationState);
+    //    return AnimationState;
+    //  }
+    //  set
+    //  {
+    //    InternalCalls.AnimationComponent_SetAnimationState(ref mEntityID , ref value);
+    //  }
+    //}
 
     /*  _________________________________________________________________________ */
     /*! SetSprite
 
     Wrapper function for setting the sprite based on the sprite's filename.
     */
-    public void SetSprite(string fileName)
-    {
-      InternalCalls.GraphicsComponent_SetSprite(ref entityID, fileName);
-    }
+    //public void SetSprite(string fileName)
+    //{
+    //  InternalCalls.GraphicsComponent_SetSprite(ref mEntityID , fileName);
+    //}
+
+
+    #region Transform
 
     /*  _________________________________________________________________________ */
     /*! Scale
 
     Getter setter for Scale.
     */
-    public Vector3 Scale
+    public Vec3<float> Scale
     {
       get
       {
-        Vector3 scale = new Vector3();
-        InternalCalls.GraphicsComponent_GetScale(ref entityID, ref scale);
+        Vec3<float> scale = new Vec3<float>();
+        InternalCalls.GetScale(mEntityID);
         return scale;
       }
       set
       {
-        InternalCalls.GraphicsComponent_SetScale(ref entityID, ref value);
+        InternalCalls.SetScale(ref mEntityID , ref value);
       }
     }
 
-    /*  _________________________________________________________________________ */
-    /*! Rotation
-
-    Getter setter for Rotation.
-    */
-    public Vector3 Rotation
-    {
-      get
-      {
-        Vector3 rotation = new Vector3();
-        InternalCalls.GraphicsComponent_GetRotation(ref entityID, ref rotation);
-        return rotation;
-      }
-      set
-      {
-        InternalCalls.GraphicsComponent_SetRotation(ref entityID, ref value);
-      }
-    }
 
     /*  _________________________________________________________________________ */
     /*! GetScaleFromEntity
 
     Get the scale, given the entity id.
     */
-    public Vector3 GetScaleFromEntity(uint id)
+    public Vec3<float> GetScaleFromEntity(uint id)
     {
-      Vector3 scale = new Vector3();
-      InternalCalls.GraphicsComponent_GetScale(ref id, ref scale);
+      Vec3<float> scale = new Vec3<float>();
+      InternalCalls.GetScale(id);
       return scale;
     }
 
@@ -168,44 +153,44 @@ namespace Image
 
     Set the scale, given the entity id.
     */
-    public void SetScaleFromEntity(uint id, Vector3 value)
+    public void SetScaleFromEntity(uint id, Vec3<float> value)
     {
-      InternalCalls.GraphicsComponent_SetScale(ref id, ref value);
+      InternalCalls.SetScale(ref id, ref value);
     }
-    #endregion
 
-    #region Physics
+
+
     /*  _________________________________________________________________________ */
     /*! Translation
 
     Getter setter for Translation.
     */
-    public Vec3<double> Translation
+    public Vec3<float> Translation
     {
       get
       {
-        Vec3<double> translation = new Vec3<double>();
-        InternalCalls.TransformComponent_GetTranslation(ref entityID, ref translation);
+        Vec3<float> translation = new Vec3<float>();
+        InternalCalls.GetTranslation(mEntityID);
         return translation;
       }
       set
       {
-        InternalCalls.TransformComponent_SetTranslation(ref entityID, ref value);
+        InternalCalls.SetTranslation(mEntityID , ref value);
       }
     }
-    public float Transform_Rotation
-    {
-      get
-      {
-        float rot = 0;
-        InternalCalls.TransformComponent_GetRotation(ref entityID, ref rot);
-        return rot;
-      }
-      set
-      {
-        InternalCalls.TransformComponent_SetRotation(ref entityID, ref value);
-      }
-    }
+    //public float Transform_Rotation
+    //{
+    //  get
+    //  {
+    //    float rot = 0;
+    //    InternalCalls.TransformComponent_GetRotation(ref mEntityID , ref rot);
+    //    return rot;
+    //  }
+    //  set
+    //  {
+    //    InternalCalls.TransformComponent_SetRotation(ref mEntityID , ref value);
+    //  }
+    //}
     #endregion
   }
 }

@@ -21,24 +21,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
-namespace Image
+namespace Image.Mono
 {
   public static class InternalCalls
   {
     #region Transform
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void GetTranslation(ref uint entityHandle, ref Vec3<double> translation);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetTranslation(ref uint entityHandle, ref Vec3<double> translation);
+    internal extern static Vec3<float> GetScale(uint ID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void GetRotation(ref uint entityHandle, ref float rotation);
+    internal extern static void SetScale(ref uint entityHandle, ref Vec3<float> scale);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetRotation(ref uint entityHandle, ref float rotation);
+    internal extern static Vec3<float> GetTranslation(uint ID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void SetTranslation(uint entityHandle, ref Vec3<float> translation);
+
+    //[MethodImplAttribute(MethodImplOptions.InternalCall)]
+    //internal extern static void GetRotation(ref uint entityHandle, ref float rotation);
+
+    //[MethodImplAttribute(MethodImplOptions.InternalCall)]
+    //internal extern static void SetRotation(ref uint entityHandle, ref float rotation);
 
     #endregion
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool IsKeyTriggered(KeyCode key);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool IsKeyHeld(KeyCode key);
   }
 }

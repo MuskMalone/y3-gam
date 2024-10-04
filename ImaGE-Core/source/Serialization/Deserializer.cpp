@@ -280,7 +280,7 @@ namespace Serialization
       if (!compType.is_valid())
       {
         std::ostringstream oss{};
-        oss << "Trying to deserialize an invalid component: " << compType;
+        oss << "Trying to deserialize an invalid component: " << compType.get_name().to_string();
         Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
         std::cout << oss.str() << "\n";

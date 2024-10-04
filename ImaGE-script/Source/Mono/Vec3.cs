@@ -15,7 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Image
+namespace Image.Mono
 {
   public struct Vec3<T>
   {

@@ -27,9 +27,9 @@ ScriptInstance::ScriptInstance(const std::string& scriptName, std::vector<void*>
   if (!mScriptClass)
     throw Debug::Exception<ScriptInstance>(Debug::LVL_WARN, Msg(scriptName + ".cs not found"));
   mClassInst = sm->InstantiateClass(scriptName.c_str(), arg);
-  mOnUpdateMethod = std::shared_ptr<MonoMethod>(mono_class_get_method_from_name(mScriptClass.get(), "OnUpdate", 1));
-  mOnCreateMethod = std::shared_ptr<MonoMethod>(mono_class_get_method_from_name(mScriptClass.get(), "OnCreate", 0));
-  mGcHandle = mono_gchandle_new(mClassInst.get(), true);
+  mOnUpdateMethod = std::shared_ptr<MonoMethod>(mono_class_get_method_from_name(mScriptClass.get(), "Update", 1), mono_free_method);
+  mOnCreateMethod = std::shared_ptr<MonoMethod>(mono_class_get_method_from_name(mScriptClass.get(), "Create", 0), mono_free_method);
+  mGcHandle = mono_gchandle_new(mClassInst, true);
   GetAllFieldsInst();
 }
 
@@ -39,9 +39,9 @@ void ScriptInstance::FreeScript()
   //  monoFree_method(mOnCreateMethod.get());
   //if (mOnUpdateMethod)
   //  monoFree_method(mOnUpdateMethod.get());
+  mClassInst = nullptr;
   mOnCreateMethod.reset();
   mOnUpdateMethod.reset();
-  mClassInst.reset();
   mScriptClass.reset();
   mScriptFieldInstList.clear();
   mono_gchandle_free(mGcHandle);
@@ -61,7 +61,7 @@ void ScriptInstance::ReloadScript()
   mClassInst = sm->InstantiateClass(mScriptName.c_str(), arg);
   mOnUpdateMethod = std::shared_ptr<MonoMethod>(mono_class_get_method_from_name(mScriptClass.get(), "OnUpdate", 1));
   mOnCreateMethod = std::shared_ptr<MonoMethod>(mono_class_get_method_from_name(mScriptClass.get(), "OnCreate", 0));
-  mGcHandle = mono_gchandle_new(mClassInst.get(), true);
+  mGcHandle = mono_gchandle_new(mClassInst, true);
   GetAllFieldsInst();
   SetAllFields();
 }
@@ -132,6 +132,14 @@ void ScriptInstance::GetAllFieldsInst()
         mScriptFieldInstList.emplace_back(test);
         break;
       }
+
+       case (ScriptFieldType::VEC3):
+       {
+         glm::vec3 value = GetFieldValue<glm::vec3>(field.mClassField);
+         ScriptFieldInstance<glm::vec3> test{ field,value };
+         mScriptFieldInstList.emplace_back(test);
+         break;
+       }
        case (ScriptFieldType::INT_ARR):
       {
         std::vector<int> value = GetFieldValueArr<int>(field.mClassField);
@@ -188,7 +196,7 @@ void ScriptInstance::SetAllFields()
     else if (f.is_type<Mono::ScriptFieldInstance<std::string>>())
     {
       Mono::ScriptFieldInstance<std::string>& sfi = f.get_value<Mono::ScriptFieldInstance<std::string>>();
-      mono_field_set_value(mClassInst.get(), sfi.mScriptField.mClassField.get(), STDToMonoString(sfi.mData));
+      mono_field_set_value(mClassInst, sfi.mScriptField.mClassField.get(), STDToMonoString(sfi.mData));
     }
 
     else if (f.is_type<Mono::ScriptFieldInstance<glm::dvec3>>())

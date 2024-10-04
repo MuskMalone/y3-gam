@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Image
+namespace Image.Mono
 {
    public struct Vec2<T>
   {
