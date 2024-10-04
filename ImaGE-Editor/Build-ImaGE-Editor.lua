@@ -31,7 +31,9 @@ project "ImaGE-Editor"
       "../Libraries/spdlog/include",
       "../Libraries/ImTerm/include/**",
       "../Libraries/PhysX/physx/include/**",
+      "../Libraries/PhysX/physx/include",
       "../Libraries/PhysX/pxshared/include/**",
+      "../Libraries/PhysX/pxshared/include",
       "../Libraries/mono/msvc/include/**",
       "../Libraries/Built-Libraries/Debug/Libraries/rttr/**"
    }
@@ -62,11 +64,7 @@ project "ImaGE-Editor"
        symbols "On"
 
        postbuildcommands {
-         "{COPYFILE} %[%{wks.location}Libraries/physx4/debug/PhysX_64.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/physx4/debug/PhysXCommon_64.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/physx4/debug/PhysXCooking_64.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/physx4/debug/PhysXFoundation_64.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/physx4/debug/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/debug/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}Libraries/fmod/lib/fmodL.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]"
       }
@@ -85,11 +83,7 @@ project "ImaGE-Editor"
        symbols "On"
 
        postbuildcommands {
-         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysX_64.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysXCommon_64.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysXCooking_64.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysXFoundation_64.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}Libraries/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]"
       }
@@ -108,11 +102,7 @@ project "ImaGE-Editor"
       symbols "Off"
 
       postbuildcommands {
-         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysX_64.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysXCommon_64.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysXCooking_64.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysXFoundation_64.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}Libraries/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
       }

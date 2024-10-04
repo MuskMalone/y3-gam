@@ -31,7 +31,9 @@ project "ImaGE-Game"
       "../Libraries/spdlog/include",
       "../Libraries/ImTerm/include/**",
       "../Libraries/PhysX/physx/include/**",
+      "../Libraries/PhysX/physx/include",
       "../Libraries/PhysX/pxshared/include/**",
+      "../Libraries/PhysX/pxshared/include",
       "../Libraries/mono/msvc/include/**",
       "../Libraries/Built-Libraries/Debug/Libraries/rttr/**"
    }
@@ -62,7 +64,9 @@ project "ImaGE-Game"
        symbols "On"
 
        postbuildcommands {
-         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/debug/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/fmod/lib/fmodL.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]"
       }
 
    filter "configurations:Release"
@@ -79,7 +83,9 @@ project "ImaGE-Game"
        symbols "On"
 
        postbuildcommands {
-         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]"
       }
 
    filter "configurations:Distribution"
@@ -96,5 +102,7 @@ project "ImaGE-Game"
       symbols "Off"
 
       postbuildcommands {
-         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]"
       }

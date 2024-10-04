@@ -28,7 +28,9 @@ project "ImaGE-Core"
       "../Libraries/spdlog/include",
       "../Libraries/ImTerm/include/**",
       "../Libraries/PhysX/physx/include/**",
+      "../Libraries/PhysX/physx/include",
       "../Libraries/PhysX/pxshared/include/**",
+      "../Libraries/PhysX/pxshared/include",
       "../Libraries/mono/msvc/include/**",
       "../Libraries/Built-Libraries/Debug/Libraries/rttr/**"
    }
@@ -79,12 +81,12 @@ project "ImaGE-Core"
         "LowLevel_static_64.lib", 
         "LowLevelAABB_static_64.lib", 
         "LowLevelDynamics_static_64.lib",
-        "PhysX_64.lib", 
+        "PhysX_static_64.lib", 
         "PhysXCharacterKinematic_static_64.lib", 
-        "PhysXCommon_64.lib", 
-        "PhysXCooking_64.lib", 
+        "PhysXCommon_static_64.lib", 
+        "PhysXCooking_static_64.lib", 
         "PhysXExtensions_static_64.lib", 
-        "PhysXFoundation_64.lib", 
+        "PhysXFoundation_static_64.lib", 
         "PhysXPvdSDK_static_64.lib", 
         "PhysXTask_static_64.lib", 
         "PhysXVehicle_static_64.lib", 
@@ -99,6 +101,7 @@ project "ImaGE-Core"
        {
           "../Libraries/Built-Libraries/Debug/Libraries/**",
           "../Libraries/mono/msvc/build/sgen/x64/**",
+          "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/debug"
        }
 
        postbuildcommands {
@@ -124,6 +127,7 @@ project "ImaGE-Core"
         {
            "../Libraries/Built-Libraries/Release/Libraries/**",
            "../Libraries/mono/msvc/build/sgen/x64/**",
+           "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release"
         }
 
        links {
@@ -166,6 +170,7 @@ project "ImaGE-Core"
        {
           "../Libraries/Built-Libraries/Release/Libraries/**",
           "../Libraries/mono/msvc/build/sgen/x64/**",
+          "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release"
        }
 
        links {
