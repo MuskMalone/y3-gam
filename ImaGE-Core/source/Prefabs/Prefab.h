@@ -120,12 +120,17 @@ namespace Prefabs
       children is encountered.
     \param children
       The list of child entities of the current entity
+    \param assignInstance
+      Set to true if you want to turn the entity being traversed into a
+      prefab instance. This adds a PrefabOverrides component to every
+      entity encountered.
     \param parent
       The SubDataId of the parent (current) object.
       This is defaulted to the BasePrefabId and should not be used
       externally.
     ************************************************************************/
-    void CreateSubData(std::vector<ECS::Entity> const& children, SubDataId parent = PrefabSubData::BasePrefabId);
+    void CreateSubData(std::vector<ECS::Entity> const& children, bool assignInstance = false,
+      SubDataId parent = PrefabSubData::BasePrefabId);
     void CreateFixedSubData(std::vector<ECS::Entity> const& children, EntityMappings& mappings, SubDataId parent = PrefabSubData::BasePrefabId);
 
     /*!*********************************************************************

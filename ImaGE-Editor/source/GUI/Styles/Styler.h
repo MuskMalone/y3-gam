@@ -21,6 +21,7 @@ namespace GUI
     using ThemeFunction = void (Styler::*)(); // maybe should use std::function to simplify invocation in SetCurrentTheme
 
     Styler(); // only constructable by GUIManager
+    void Shutdown();
 
     // CustomTheme, <ThemeName, ThemeFunction>
     std::map<CustomTheme, std::pair<std::string, ThemeFunction>> mCustomThemes; // using map so its ordered by enum

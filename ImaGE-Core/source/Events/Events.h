@@ -1,6 +1,6 @@
 /*!*********************************************************************
 \file   Events.h
-\author wchinkit.bryan\@digipen.edu
+\author chengen.lau\@digipen.edu
 \date   10-September-2024
 \brief  Definitions of general subclasses of the Event class.
 

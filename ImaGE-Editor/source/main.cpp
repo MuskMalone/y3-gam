@@ -6,7 +6,7 @@
 
 int Main(int argc, char** argv) {
   // To be read from settings file
-  EditorApplication::ApplicationSpecification spec;
+  IGE::EditorApplication::ApplicationSpecification spec;
   spec.EnableImGui = true;
   spec.Fullscreen = false;
   spec.Name = "ImaGE Editor";
@@ -16,7 +16,7 @@ int Main(int argc, char** argv) {
   spec.WindowHeight = 1080;
   spec.WindowWidth = 1920;
 
-  EditorApplication myApp{ spec };
+  IGE::EditorApplication myApp{ spec };
   try
   {
     myApp.Init();

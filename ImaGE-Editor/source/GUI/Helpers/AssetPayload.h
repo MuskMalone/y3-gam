@@ -26,8 +26,11 @@ namespace GUI
       SPRITE,
       PREFAB,
       SCENE,
+      MODEL,
       AUDIO
     };
+
+    static constexpr char sAssetDragDropPayload[] = "ASSET";
 
     AssetPayload(std::filesystem::path const& path) : mPath{ path }, mAssetType{ AssetType::NONE } {
       std::string const fileExt{ path.extension().string() };
@@ -36,6 +39,9 @@ namespace GUI
       }
       else if (fileExt == gPrefabFileExt) {
         mAssetType = AssetType::PREFAB;
+      }
+      else if (fileExt == gMeshFileExt) {
+        mAssetType = AssetType::MODEL;
       }
     }
 

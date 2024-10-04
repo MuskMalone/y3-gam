@@ -134,10 +134,7 @@ namespace Scenes
     filepath << gAssetsDirectory << "Scenes\\" << mSceneName << sSceneFileExtension;
     Serialization::Serializer::SerializeScene(filepath.str());
 
-//#ifndef IMGUI_DISABLE
-    if (Application::GetImGuiEnabled())
-      Debug::DebugLogger::GetInstance().LogInfo("Successfully saved scene to " + filepath.str());
-//#endif
+    Debug::DebugLogger::GetInstance().LogInfo("Successfully saved scene to " + filepath.str());
   }
 
   void SceneManager::TemporarySave()

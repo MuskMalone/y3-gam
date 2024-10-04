@@ -12,10 +12,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Event.h"
 #include <string>
 #include "Input/KeyCode.h"
-//#include "../InputManager/KeyCode.h"
-
-// REPLACE WHEN INTEGRATED WITH INPUT MANAGER
-//#define KEY_CODE unsigned
 
 namespace Events
 {

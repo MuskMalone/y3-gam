@@ -7,8 +7,17 @@
     <Filter Include="Core">
       <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Component">
-      <UniqueIdentifier>{101E4FE1-FCEB-42E7-E57F-B30DD1EC1E4C}</UniqueIdentifier>
+    <Filter Include="Core\Components">
+      <UniqueIdentifier>{83E0320B-EF6B-A0CF-F87C-23C46487FCCF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Systems">
+      <UniqueIdentifier>{35582E35-21BB-BDD9-CA40-F68FB682895C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Systems\SystemManager">
+      <UniqueIdentifier>{646CE924-507C-95F5-B935-FA13A564848E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Systems\TransformSystem">
+      <UniqueIdentifier>{E531723A-D1EC-61E6-7AA4-DA30663EAC76}</UniqueIdentifier>
     </Filter>
     <Filter Include="DebugTools">
       <UniqueIdentifier>{7D6B98D3-6923-DA20-D22A-B37CBE017511}</UniqueIdentifier>
@@ -82,51 +91,45 @@
     <ClInclude Include="source\Asset\AssetManager.h">
       <Filter>Asset</Filter>
     </ClInclude>
-    <ClInclude Include="source\Asset\IGEAssets.h">
-      <Filter>Asset</Filter>
-    </ClInclude>
     <ClInclude Include="source\Color.h" />
-    <ClInclude Include="source\Core\Camera.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="source\Core\Components\Camera.h">
+      <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="source\Core\Component\Camera.h">
-      <Filter>Core\Component</Filter>
+    <ClInclude Include="source\Core\Components\CameraController.h">
+      <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="source\Core\Component\CameraController.h">
-      <Filter>Core\Component</Filter>
+    <ClInclude Include="source\Core\Components\Collider.h">
+      <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="source\Core\Component\Collider.h">
-      <Filter>Core\Component</Filter>
+    <ClInclude Include="source\Core\Components\Components.h">
+      <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="source\Core\Component\Components.h">
-      <Filter>Core\Component</Filter>
+    <ClInclude Include="source\Core\Components\Layer.h">
+      <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="source\Core\Component\Layer.h">
-      <Filter>Core\Component</Filter>
+    <ClInclude Include="source\Core\Components\Material.h">
+      <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="source\Core\Component\Material.h">
-      <Filter>Core\Component</Filter>
+    <ClInclude Include="source\Core\Components\Mesh.h">
+      <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="source\Core\Component\Mesh.h">
-      <Filter>Core\Component</Filter>
+    <ClInclude Include="source\Core\Components\PrefabOverrides.h">
+      <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="source\Core\Component\PrefabOverrides.h">
-      <Filter>Core\Component</Filter>
+    <ClInclude Include="source\Core\Components\RigidBody.h">
+      <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="source\Core\Component\RigidBody.h">
-      <Filter>Core\Component</Filter>
+    <ClInclude Include="source\Core\Components\Script.h">
+      <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="source\Core\Component\Script.h">
-      <Filter>Core\Component</Filter>
+    <ClInclude Include="source\Core\Components\Tag.h">
+      <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="source\Core\Component\Tag.h">
-      <Filter>Core\Component</Filter>
+    <ClInclude Include="source\Core\Components\Text.h">
+      <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="source\Core\Component\Text.h">
-      <Filter>Core\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Core\Component\Transform.h">
-      <Filter>Core\Component</Filter>
+    <ClInclude Include="source\Core\Components\Transform.h">
+      <Filter>Core\Components</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Entity.h">
       <Filter>Core</Filter>
@@ -134,8 +137,20 @@
     <ClInclude Include="source\Core\EntityManager.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="source\Core\TempObject.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="source\Core\Systems\System.h">
+      <Filter>Core\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\Systems\SystemManager\SystemManager.h">
+      <Filter>Core\Systems\SystemManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.h">
+      <Filter>Core\Systems\TransformSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\Systems\TransformSystem\TransformHelpers.h">
+      <Filter>Core\Systems\TransformSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\Systems\TransformSystem\WorldToLocalTransformSystem.h">
+      <Filter>Core\Systems\TransformSystem</Filter>
     </ClInclude>
     <ClInclude Include="source\Debug.h" />
     <ClInclude Include="source\DebugTools\DebugLogger\DebugLogger.h">
@@ -226,28 +241,31 @@
     <ClInclude Include="source\Graphics\Framebuffer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="source\Graphics\Material.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Graphics\MaterialSource.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
     <ClInclude Include="source\Graphics\Mesh.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\MeshFactory.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="source\Graphics\MeshGen.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="source\Graphics\MeshSource.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Graphics\MeshType.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Graphics\Model.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\Pipeline.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderAPI.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Graphics\RenderCommand.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Graphics\RenderPass.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderSystem.h">
@@ -257,12 +275,6 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\Shader.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Graphics\ShaderProgram.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Graphics\ShaderStructs.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\Submesh.h">
@@ -278,9 +290,6 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\VertexArray.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Graphics\VertexAttribs.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\VertexBuffer.h">
@@ -344,13 +353,14 @@
       <Filter>Serialization</Filter>
     </ClInclude>
     <ClInclude Include="source\Singleton.h" />
-    <ClInclude Include="source\TempScene.h" />
+    <ClInclude Include="source\Scenes\Scene.h" />
     <ClInclude Include="source\pch.h" />
+    <ClInclude Include="source\Graphics\RenderTarget.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
-    <ClCompile Include="source\Core\Camera.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="source\Core\Components\Transform.cpp">
+      <Filter>Core\Components</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Entity.cpp">
       <Filter>Core</Filter>
@@ -358,8 +368,17 @@
     <ClCompile Include="source\Core\EntityManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="source\Core\TempObject.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="source\Core\Systems\SystemManager\SystemManager.cpp">
+      <Filter>Core\Systems\SystemManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.cpp">
+      <Filter>Core\Systems\TransformSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Systems\TransformSystem\TransformHelpers.cpp">
+      <Filter>Core\Systems\TransformSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Systems\TransformSystem\WorldToLocalTransformSystem.cpp">
+      <Filter>Core\Systems\TransformSystem</Filter>
     </ClCompile>
     <ClCompile Include="source\DebugTools\DebugLogger\DebugLogger.cpp">
       <Filter>DebugTools\DebugLogger</Filter>
@@ -421,25 +440,28 @@
     <ClCompile Include="source\Graphics\Framebuffer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="source\Graphics\Material.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Graphics\MaterialSource.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
     <ClCompile Include="source\Graphics\Mesh.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\MeshFactory.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\MeshGen.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="source\Graphics\MeshSource.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Graphics\Model.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\Pipeline.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\RenderAPI.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Graphics\RenderPass.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\RenderSystem.cpp">
@@ -451,19 +473,13 @@
     <ClCompile Include="source\Graphics\Shader.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\ShaderProgram.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Graphics\ShaderStructs.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="source\Graphics\Texture.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\VertexArray.cpp">
+    <ClCompile Include="source\Graphics\Utils.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\VertexAttribs.cpp">
+    <ClCompile Include="source\Graphics\VertexArray.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\VertexBuffer.cpp">
@@ -493,7 +509,7 @@
     <ClCompile Include="source\Serialization\Serializer.cpp">
       <Filter>Serialization</Filter>
     </ClCompile>
-    <ClCompile Include="source\TempScene.cpp" />
+    <ClCompile Include="source\Scenes\Scene.cpp" />
     <ClCompile Include="source\pch.cpp" />
   </ItemGroup>
 </Project>

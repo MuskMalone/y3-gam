@@ -2,6 +2,7 @@
 
 #define UNREFERENCED_PARAMETER(P) (P)
 #pragma warning(disable : 4005)
+#pragma warning(disable : 5105) // macro expansion producing 'defined' has undefined behavior
 
 // stdlib
 #include <iostream>
@@ -49,6 +50,7 @@
 #include <Jolt/Physics/Collision/CollisionGroup.h>    // Collision layer and group information
 #include <Jolt/Physics/Collision/Shape/ConvexShape.h>
 
+#include <FrameRateController/FrameRateController.h>
 #include <DebugTools/Exception/Exception.h>			      //Exception Class for Logging
 #include <DebugTools/DebugLogger/DebugLogger.h>       //Logging Tool
 
@@ -60,8 +62,6 @@
 // glm
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
-#include <Application.h>
 
 #ifdef _DEBUG
 #include <Debug.h>

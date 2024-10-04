@@ -8,7 +8,7 @@
 
 #include <Core/Entity.h>
 #include <Core/EntityManager.h>
-#include <Core/Component/Components.h>
+#include <Core/Components/Components.h>
 
 #ifndef IMGUI_DISABLE
 #include <imgui/imgui.h>

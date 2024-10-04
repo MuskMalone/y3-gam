@@ -14,8 +14,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <pch.h>
 #include "Prefab.h"
 #include <Reflection/ObjectFactory.h>
-#include <Core/Component/PrefabOverrides.h>
-#include <Core/Component/Transform.h>
+#include <Core/Components/PrefabOverrides.h>
+#include <Core/Components/Transform.h>
 
 using namespace Prefabs;
 
@@ -53,7 +53,7 @@ std::pair<ECS::Entity, Prefab::EntityMappings> Prefab::ConstructAndMap(glm::vec3
   //entityMan.SetIsActiveEntity(entity, mIsActive);
   Reflection::ObjectFactory::GetInstance().AddComponentsToEntity(entity, mComponents);
   Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
-  trans.worldPos = trans.localPos = pos;
+  trans.worldPos = trans.position = pos;
   entity.EmplaceComponent<Component::PrefabOverrides>(mName);
 
   // map base ID to this entity ID
@@ -91,7 +91,7 @@ ECS::Entity Prefab::Construct(glm::vec3 const& pos) const
   //entityMan.SetIsActiveEntity(entity, mIsActive);
   Reflection::ObjectFactory::GetInstance().AddComponentsToEntity(entity, mComponents);
   Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
-  trans.worldPos = trans.localPos = pos;
+  trans.worldPos = trans.position = pos;
   entity.EmplaceComponent<Component::PrefabOverrides>(mName);
 
   // map base ID to this entity ID
@@ -151,13 +151,13 @@ void Prefab::FillPrefabInstance(std::unordered_map<Prefabs::SubDataId, ECS::Enti
   }
 }
 
-void Prefab::CreateSubData(std::vector<ECS::Entity> const& children, SubDataId parent)
+void Prefab::CreateSubData(std::vector<ECS::Entity> const& children, bool assignInstance, SubDataId parent)
 {
   if (children.empty()) { return; }
 
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
   
-  for (ECS::Entity const& child : children)
+  for (ECS::Entity child : children)
   {
     SubDataId const currId{ static_cast<SubDataId>(mObjects.size() + 1) };
     PrefabSubData obj{ currId, parent };
@@ -166,6 +166,12 @@ void Prefab::CreateSubData(std::vector<ECS::Entity> const& children, SubDataId p
     obj.mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(child);
 
     mObjects.emplace_back(std::move(obj));
+
+    // add prefabOverrides if we are assigning to an instance
+    if (assignInstance) {
+      child.EmplaceComponent<Component::PrefabOverrides>(mName, currId);
+    }
+
     if (entityMan.HasChild(child)) {
       CreateSubData(entityMan.GetChildEntity(child), currId);
     }

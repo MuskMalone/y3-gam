@@ -9,8 +9,7 @@ namespace Graphics{
 		// Static method to create a cube mesh
 		static MeshSourcePtr CreateCube();
 		static MeshSourcePtr CreatePyramid();
-//#ifndef IMGUI_DISABLE
+
 		static MeshSourcePtr CreateModelFromImport(std::string const& file);	// load from file (obj, fbx etc.)
-//#endif
 	};
 }

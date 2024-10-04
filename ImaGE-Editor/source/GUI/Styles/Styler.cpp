@@ -54,6 +54,10 @@ namespace GUI
     io.Fonts->AddFontFromFileTTF(gIconsFontPath, size, &iconFontConfig, icon_ranges);
   }
 
+  void Styler::Shutdown() {
+    mCustomThemes.clear();
+    mCustomFonts.clear();
+  }
 
   /* ------------------- THEMES ------------------- */
   void Styler::ApplyDarkTheme() {

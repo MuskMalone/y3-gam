@@ -7,6 +7,7 @@
 #include <GUI/Styles/FontAwesome6Icons.h>
 #include "GUI/GUIManager.h"
 #include <Graphics/AssetIO/IMSH.h>
+#include <GUI/Helpers/AssetPayload.h>
 
 namespace Helper
 {
@@ -238,7 +239,7 @@ namespace GUI
       }
       else {
         std::string const pathStr{ draggedAsset.relative_path().string() };
-        ImGui::SetDragDropPayload(sAssetDragDropPayload, pathStr.data(), pathStr.size() + 1, ImGuiCond_Once);
+        ImGui::SetDragDropPayload(AssetPayload::sAssetDragDropPayload, pathStr.data(), pathStr.size() + 1, ImGuiCond_Once);
       }
       
       ImGui::Text(draggedAsset.filename().string().c_str());

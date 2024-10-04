@@ -12,7 +12,7 @@
 #include "Core/EntityManager.h"
 #include <Reflection/ObjectFactory.h>
 #include <Events/EventCallback.h>
-#include <Core/Component/Components.h>
+#include <Core/Components/Components.h>
 
 namespace GUI {
   class Inspector : public GUIWindow {
@@ -65,6 +65,8 @@ namespace GUI {
       The event to be handled
     ************************************************************************/
     EVENT_CALLBACK_DECL(HandleEvent);
+
+    void DisplayRemovedComponent(rttr::type const& type); // for prefab instances
 
     template<typename Component>
     void DrawAddComponentButton(std::string const& name, std::string const& icon);

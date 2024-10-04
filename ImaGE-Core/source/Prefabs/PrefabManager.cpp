@@ -25,7 +25,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Serialization/Deserializer.h>
 #include <Events/EventManager.h>
 #include <filesystem>
-#include <Core/Component/Transform.h>
+#include <Core/Components/Transform.h>
 
 #ifdef _DEBUG
 //#define PREFAB_MANAGER_DEBUG
@@ -150,22 +150,28 @@ void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::stri
   iter->second = std::move(prefab);
 }
 
-Prefab PrefabManager::CreateVariantPrefab(ECS::Entity entity, std::string const& name)
+Prefab PrefabManager::CreateVariantPrefab(ECS::Entity entity, std::string const& name, bool convertToInstance)
 {
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
   Prefab prefab{ name };
   prefab.mIsActive = true; // entityMan.GetIsActiveEntity(entity);
   prefab.mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(entity);
+
+  if (convertToInstance) {
+    entity.EmplaceComponent<Component::PrefabOverrides>(name, Prefabs::PrefabSubData::BasePrefabId);
+  }
+
   if (entityMan.HasChild(entity)) {
-    prefab.CreateSubData(entityMan.GetChildEntity(entity));
+    prefab.CreateSubData(entityMan.GetChildEntity(entity), convertToInstance);
   }
 
   return prefab;
 }
 
-void PrefabManager::CreatePrefabFromEntity(ECS::Entity const& entity, std::string const& name, std::string const& path)
+void PrefabManager::CreatePrefabFromEntity(ECS::Entity const& entity, std::string const& name,
+  std::string const& path, bool convertToInstance)
 {
-  Prefab prefab{ CreateVariantPrefab(entity, name) };
+  Prefab prefab{ CreateVariantPrefab(entity, name, convertToInstance) };
 
   //Assets::AssetManager& am{ Assets::AssetManager::GetInstance() };
   std::string const savePath{ path.empty() ? gPrefabsDirectory + name + gPrefabFileExt : path };

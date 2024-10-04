@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <iomanip>
+#include <rttr/type.h>
 
 // operator overloads for debug mode
 // << operator overload for printing Vectors to ostream
@@ -40,5 +41,11 @@ std::ostream& operator<<(std::ostream& os, std::vector<T> const& vec)
   {
     os << vec[i] << (i + 1 == vec.size() ? " }" : ", ");
   }
+  return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, rttr::type const& type)
+{
+  os << type.get_name().to_string();
   return os;
 }

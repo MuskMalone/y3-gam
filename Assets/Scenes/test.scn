@@ -1,307 +1,1077 @@
 [
     {
-        "ID": 2097160,
+        "ID": 24,
         "Parent": null,
         "Child Entities": [
-            2097161,
-            2097165,
-            2097166,
-            2097167
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
         ],
-        "Position": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-        },
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [
-                {
-                    "key": "Tag",
-                    "value": {
-                        "tag": "TestPrefab2"
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "Group 1"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": 4.800000190734863,
+                        "y": 1.7999999523162842,
+                        "z": 8.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 4.800000190734863,
+                        "y": 1.7999999523162842,
+                        "z": 8.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
                     }
                 }
-            ],
-            "removedComponents": [],
-            "subDataId": 0
-        }
+            }
+        ]
     },
     {
-        "ID": 2097167,
-        "Parent": 2097160,
+        "ID": 23,
+        "Parent": 24,
         "Child Entities": [],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 5
-        }
-    },
-    {
-        "ID": 2097166,
-        "Parent": 2097160,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 6
-        }
-    },
-    {
-        "ID": 2097165,
-        "Parent": 2097160,
-        "Child Entities": [
-            4194321
-        ],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 1
-        }
-    },
-    {
-        "ID": 4194321,
-        "Parent": 2097165,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 8
-        }
-    },
-    {
-        "ID": 2097161,
-        "Parent": 2097160,
-        "Child Entities": [
-            2097162,
-            2097163,
-            2097164
-        ],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 2
-        }
-    },
-    {
-        "ID": 2097164,
-        "Parent": 2097161,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 7
-        }
-    },
-    {
-        "ID": 2097163,
-        "Parent": 2097161,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 4
-        }
-    },
-    {
-        "ID": 2097162,
-        "Parent": 2097161,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [
-                {
-                    "key": "Tag",
-                    "value": {
-                        "tag": "Nested 23 of prefab2 scale 100"
-                    }
-                },
-                {
-                    "key": "Transform",
-                    "value": {
-                        "localPos": {
-                            "x": -30.399999618530273,
-                            "y": 0.0,
-                            "z": 100.0
-                        },
-                        "localScale": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "localRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 100.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        }
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -2.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 4.800000190734863,
+                        "y": 1.7999999523162842,
+                        "z": 6.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
                     }
                 }
-            ],
-            "removedComponents": [],
-            "subDataId": 3
-        }
+            }
+        ]
     },
     {
-        "ID": 2097152,
-        "Parent": null,
-        "Child Entities": [
-            2097155,
-            2097156,
-            2097158,
-            2097159
-        ],
-        "Position": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-        },
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [
-                {
-                    "key": "Tag",
-                    "value": {
-                        "tag": "TestPrefab1"
-                    }
-                },
-                {
-                    "key": "Layer",
-                    "value": {
-                        "layerName": "Test1"
+        "ID": 22,
+        "Parent": 24,
+        "Child Entities": [],
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -4.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 4.800000190734863,
+                        "y": 1.7999999523162842,
+                        "z": 4.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
                     }
                 }
-            ],
-            "removedComponents": [],
-            "subDataId": 0
-        }
+            }
+        ]
     },
     {
-        "ID": 2097156,
-        "Parent": 2097152,
+        "ID": 21,
+        "Parent": 24,
         "Child Entities": [],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [
-                {
-                    "key": "Tag",
-                    "value": {
-                        "tag": "Child 3 of prefab1 modified layer"
-                    }
-                },
-                {
-                    "key": "Layer",
-                    "value": {
-                        "layerName": "Default"
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -6.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 4.800000190734863,
+                        "y": 1.7999999523162842,
+                        "z": 2.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
                     }
                 }
-            ],
-            "removedComponents": [],
-            "subDataId": 5
-        }
+            }
+        ]
     },
     {
-        "ID": 2097159,
-        "Parent": 2097152,
+        "ID": 20,
+        "Parent": 24,
         "Child Entities": [],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 6
-        }
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -8.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 4.800000190734863,
+                        "y": 1.7999999523162842,
+                        "z": 0.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
     },
     {
-        "ID": 2097158,
-        "Parent": 2097152,
-        "Child Entities": [
-            2097157
-        ],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 1
-        }
-    },
-    {
-        "ID": 2097157,
-        "Parent": 2097158,
+        "ID": 19,
+        "Parent": 24,
         "Child Entities": [],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 8
-        }
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -2.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 2.8000001907348633,
+                        "y": 1.7999999523162842,
+                        "z": 8.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
     },
     {
-        "ID": 2097155,
-        "Parent": 2097152,
-        "Child Entities": [
-            2097153,
-            2097154,
-            4194320
-        ],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 2
-        }
-    },
-    {
-        "ID": 4194320,
-        "Parent": 2097155,
+        "ID": 18,
+        "Parent": 24,
         "Child Entities": [],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 7
-        }
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -2.0,
+                        "y": 0.0,
+                        "z": -2.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 2.8000001907348633,
+                        "y": 1.7999999523162842,
+                        "z": 6.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
     },
     {
-        "ID": 2097154,
-        "Parent": 2097155,
+        "ID": 17,
+        "Parent": 24,
         "Child Entities": [],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 4
-        }
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -2.0,
+                        "y": 0.0,
+                        "z": -4.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 2.8000001907348633,
+                        "y": 1.7999999523162842,
+                        "z": 4.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
     },
     {
-        "ID": 2097153,
-        "Parent": 2097155,
+        "ID": 16,
+        "Parent": 24,
         "Child Entities": [],
-        "Prefab": {
-            "prefabName": "TestPrefab",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 3
-        }
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -2.0,
+                        "y": 0.0,
+                        "z": -6.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 2.8000001907348633,
+                        "y": 1.7999999523162842,
+                        "z": 2.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 15,
+        "Parent": 24,
+        "Child Entities": [],
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -2.0,
+                        "y": 0.0,
+                        "z": -8.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 2.8000001907348633,
+                        "y": 1.7999999523162842,
+                        "z": 0.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 14,
+        "Parent": 24,
+        "Child Entities": [],
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -4.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 0.8000001907348633,
+                        "y": 1.7999999523162842,
+                        "z": 8.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 13,
+        "Parent": 24,
+        "Child Entities": [],
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -4.0,
+                        "y": 0.0,
+                        "z": -2.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 0.8000001907348633,
+                        "y": 1.7999999523162842,
+                        "z": 6.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 12,
+        "Parent": 24,
+        "Child Entities": [],
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -4.0,
+                        "y": 0.0,
+                        "z": -4.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 0.8000001907348633,
+                        "y": 1.7999999523162842,
+                        "z": 4.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 11,
+        "Parent": 24,
+        "Child Entities": [],
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -4.0,
+                        "y": 0.0,
+                        "z": -6.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 0.8000001907348633,
+                        "y": 1.7999999523162842,
+                        "z": 2.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 10,
+        "Parent": 24,
+        "Child Entities": [],
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -4.0,
+                        "y": 0.0,
+                        "z": -8.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": 0.8000001907348633,
+                        "y": 1.7999999523162842,
+                        "z": 0.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 9,
+        "Parent": 24,
+        "Child Entities": [],
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -6.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": -1.1999998092651367,
+                        "y": 1.7999999523162842,
+                        "z": 8.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 8,
+        "Parent": 24,
+        "Child Entities": [],
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -6.0,
+                        "y": 0.0,
+                        "z": -2.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": -1.1999998092651367,
+                        "y": 1.7999999523162842,
+                        "z": 6.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 7,
+        "Parent": 24,
+        "Child Entities": [],
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -6.0,
+                        "y": 0.0,
+                        "z": -4.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": -1.1999998092651367,
+                        "y": 1.7999999523162842,
+                        "z": 4.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 6,
+        "Parent": 24,
+        "Child Entities": [],
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -6.0,
+                        "y": 0.0,
+                        "z": -6.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": -1.1999998092651367,
+                        "y": 1.7999999523162842,
+                        "z": 2.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 5,
+        "Parent": 24,
+        "Child Entities": [],
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -6.0,
+                        "y": 0.0,
+                        "z": -8.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": -1.1999998092651367,
+                        "y": 1.7999999523162842,
+                        "z": 0.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 4,
+        "Parent": 24,
+        "Child Entities": [],
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -8.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": -3.1999998092651367,
+                        "y": 1.7999999523162842,
+                        "z": 8.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 3,
+        "Parent": 24,
+        "Child Entities": [],
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -8.0,
+                        "y": 0.0,
+                        "z": -2.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": -3.1999998092651367,
+                        "y": 1.7999999523162842,
+                        "z": 6.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 2,
+        "Parent": 24,
+        "Child Entities": [],
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -8.0,
+                        "y": 0.0,
+                        "z": -4.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": -3.1999998092651367,
+                        "y": 1.7999999523162842,
+                        "z": 4.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 1,
+        "Parent": 24,
+        "Child Entities": [],
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -8.0,
+                        "y": 0.0,
+                        "z": -6.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": -3.1999998092651367,
+                        "y": 1.7999999523162842,
+                        "z": 2.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 0,
+        "Parent": 24,
+        "Child Entities": [],
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "NoName"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -8.0,
+                        "y": 0.0,
+                        "z": -8.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": -0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": -3.1999998092651367,
+                        "y": 1.7999999523162842,
+                        "z": 0.0
+                    },
+                    "worldScale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            }
+        ]
     }
 ]

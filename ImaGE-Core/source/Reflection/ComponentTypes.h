@@ -9,7 +9,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma once
 #include <vector>
 #include <rttr/type.h>
-#include <Core/Component/Components.h>
+#include <Core/Components/Components.h>
 #include <typeindex>
 #include <bitset>
 
@@ -20,14 +20,15 @@ namespace Reflection
 	{
 		rttr::type::get<Component::Tag>(),
 		rttr::type::get<Component::Transform>(),
-		rttr::type::get<Component::Layer>()
-		/*rttr::type::get<Component::Collider>(),
+		rttr::type::get<Component::Layer>(),
 		rttr::type::get<Component::Material>(),
-		rttr::type::get<Component::Mesh>(),
+		rttr::type::get<Component::Collider>(),
 		rttr::type::get<Component::RigidBody>(),
-		rttr::type::get<Component::Script>(),
-		rttr::type::get<Component::Tag>(),
-		rttr::type::get<Component::Text>(),*/
+		rttr::type::get<Component::Text>()
+		/*
+		rttr::type::get<Component::Mesh>(),
+		rttr::type::get<Component::Script>()
+		*/
 	};
 
 } // namespace Reflection
