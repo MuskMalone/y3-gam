@@ -28,7 +28,7 @@ namespace GUI
     ImVec2 const startCursorPos{ ImGui::GetCursorPos() };
 
     // only register input if viewport is focused
-    if (ImGui::IsWindowFocused() || ImGui::IsWindowHovered()) {
+    if (ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) {
       using enum Graphics::EditorCamera::CameraMovement;  // C++20 <3
 
       // process input for movement
