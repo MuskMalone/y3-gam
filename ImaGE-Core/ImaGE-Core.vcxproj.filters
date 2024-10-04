@@ -185,6 +185,9 @@
     <ClInclude Include="source\Core\EntityManager.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="source\Core\GUID.h">
+      <Filter>Core</Filter>
+    </ClInclude>
     <ClInclude Include="source\Core\Systems\System.h">
       <Filter>Core\Systems</Filter>
     </ClInclude>
@@ -196,11 +199,6 @@
     </ClInclude>
     <ClInclude Include="source\Core\Systems\TransformSystem\TransformHelpers.h">
       <Filter>Core\Systems\TransformSystem</Filter>
-    <ClInclude Include="source\Core\GUID.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Core\TempObject.h">
-      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Systems\TransformSystem\WorldToLocalTransformSystem.h">
       <Filter>Core\Systems\TransformSystem</Filter>
@@ -322,12 +320,6 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderAPI.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Graphics\RenderCommand.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Graphics\RenderPass.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderCommand.h">
@@ -565,9 +557,6 @@
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\Utils.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Graphics\VertexArray.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\VertexArray.cpp">

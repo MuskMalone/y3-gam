@@ -16,7 +16,6 @@ project "ImaGE-Core"
    {
       "source/External",
       "source/External/ImGui",
-      "source/External/ImTerm",
       "source/External/glad/include/**",
 
       "../Libraries/assimp/include/**",
@@ -27,6 +26,9 @@ project "ImaGE-Core"
       "../Libraries/rapidjson/include/**",
       "../Libraries/rttr/**",
       "../Libraries/spdlog/include/**",
+      "../Libraries/ImTerm/include/**",
+      "../Libraries/PhysX/physx/include/**",
+      "../Libraries/PhysX/pxshared/include/**",
    }
 
    pchheader "pch.h"

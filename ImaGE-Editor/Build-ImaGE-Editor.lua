@@ -19,7 +19,6 @@ project "ImaGE-Editor"
    {
       "../ImaGE-Core/source/External",
       "../ImaGE-Core/source/External/ImGui",
-      "../ImaGE-Core/source/External/ImTerm",
       "../ImaGE-Core/source/External/glad/include/**",
       
       "../Libraries/assimp/include/**",
@@ -30,6 +29,9 @@ project "ImaGE-Editor"
       "../Libraries/rapidjson/include/**",
       "../Libraries/rttr/**",
       "../Libraries/spdlog/include/**",
+      "../Libraries/ImTerm/include/**",
+      "../Libraries/PhysX/physx/include/**",
+      "../Libraries/PhysX/pxshared/include/**",
    }
 
    links
