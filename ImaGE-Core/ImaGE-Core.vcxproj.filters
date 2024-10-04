@@ -4,18 +4,6 @@
     <Filter Include="Asset">
       <UniqueIdentifier>{253FD80C-9153-00BE-5AD5-A31DC6A8FCEE}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Asset\Assetables">
-      <UniqueIdentifier>{DB2290B9-C71B-AF0B-F04D-9490DCA58E17}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Asset\Assetables\Audio">
-      <UniqueIdentifier>{1C29302E-0823-5980-F18F-EF90DD28BFEC}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Asset\Assetables\Texture">
-      <UniqueIdentifier>{3BF38E0D-2718-DE8D-5063-C31D3CE7DCAB}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Audio">
-      <UniqueIdentifier>{9718D90C-032D-01BE-CCAE-A41D3882FDEE}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
     </Filter>
@@ -67,18 +55,6 @@
     <Filter Include="External\ImGui\misc\single_file">
       <UniqueIdentifier>{BD5E7082-2942-7FC2-3245-ADFE9EA74513}</UniqueIdentifier>
     </Filter>
-    <Filter Include="External\glad">
-      <UniqueIdentifier>{0FD5D857-7B95-548E-44D0-9D0BB04F996A}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External\glad\include">
-      <UniqueIdentifier>{829BB507-EE07-7102-B7FB-08602327936A}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External\glad\include\KHR">
-      <UniqueIdentifier>{F69A56D8-625D-8A62-AB0D-19EF170F6340}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External\glad\include\glad">
-      <UniqueIdentifier>{C9EF39E3-B5FF-E5B3-1EB9-4AD20AE8D44C}</UniqueIdentifier>
-    </Filter>
     <Filter Include="FrameRateController">
       <UniqueIdentifier>{60BC59B9-CC1D-37C7-558B-7D79C1EB6D86}</UniqueIdentifier>
     </Filter>
@@ -115,31 +91,10 @@
     <ClInclude Include="source\Asset\AssetManager.h">
       <Filter>Asset</Filter>
     </ClInclude>
-    <ClInclude Include="source\Asset\AssetUtils.h">
-      <Filter>Asset</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Asset\Assetables\AssetExtensions.h">
-      <Filter>Asset\Assetables</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Asset\Assetables\Audio\AudioAsset.h">
-      <Filter>Asset\Assetables\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Asset\Assetables\Texture\TextureAsset.h">
-      <Filter>Asset\Assetables\Texture</Filter>
-    </ClInclude>
     <ClInclude Include="source\Asset\IGEAssets.h">
       <Filter>Asset</Filter>
     </ClInclude>
-    <ClInclude Include="source\Asset\SmartPointer.h">
-      <Filter>Asset</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Audio\AudioManager.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
     <ClInclude Include="source\Color.h" />
-    <ClInclude Include="source\Core\Camera.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="source\Core\Components\Camera.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
@@ -183,9 +138,6 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\EntityManager.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Core\GUID.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Systems\System.h">
@@ -246,9 +198,6 @@
     <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl3_loader.h">
       <Filter>External\ImGui\backends</Filter>
     </ClInclude>
-    <ClInclude Include="source\External\ImGui\backends\imgui_impl_vulkan.h">
-      <Filter>External\ImGui\backends</Filter>
-    </ClInclude>
     <ClInclude Include="source\External\ImGui\imconfig.h">
       <Filter>External\ImGui</Filter>
     </ClInclude>
@@ -275,12 +224,6 @@
     </ClInclude>
     <ClInclude Include="source\External\ImGui\misc\single_file\imgui_single_file.h">
       <Filter>External\ImGui\misc\single_file</Filter>
-    </ClInclude>
-    <ClInclude Include="source\External\glad\include\KHR\khrplatform.h">
-      <Filter>External\glad\include\KHR</Filter>
-    </ClInclude>
-    <ClInclude Include="source\External\glad\include\glad\glad.h">
-      <Filter>External\glad\include\glad</Filter>
     </ClInclude>
     <ClInclude Include="source\FrameRateController\FrameRateController.h">
       <Filter>FrameRateController</Filter>
@@ -361,6 +304,9 @@
     <ClInclude Include="source\Input\KeyCode.h">
       <Filter>Input</Filter>
     </ClInclude>
+    <ClInclude Include="source\Physics\Physics.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
     <ClInclude Include="source\Physics\PhysicsHelpers.h">
       <Filter>Physics</Filter>
     </ClInclude>
@@ -410,31 +356,12 @@
       <Filter>Serialization</Filter>
     </ClInclude>
     <ClInclude Include="source\Singleton.h" />
+    <ClInclude Include="source\Scenes\Scene.h" />
     <ClInclude Include="source\pch.h" />
+    <ClInclude Include="source\Graphics\RenderTarget.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
-    <ClCompile Include="source\Asset\AssetManager.cpp">
-      <Filter>Asset</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Asset\AssetUtils.cpp">
-      <Filter>Asset</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Asset\Assetables\Audio\AudioAsset.cpp">
-      <Filter>Asset\Assetables\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Asset\Assetables\Texture\TextureAsset.cpp">
-      <Filter>Asset\Assetables\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Asset\SmartPointer.cpp">
-      <Filter>Asset</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Audio\AudioManager.cpp">
-      <Filter>Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Core\Camera.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="source\Core\Components\Transform.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
@@ -469,9 +396,6 @@
       <Filter>External\ImGui\backends</Filter>
     </ClCompile>
     <ClCompile Include="source\External\ImGui\backends\imgui_impl_opengl3.cpp">
-      <Filter>External\ImGui\backends</Filter>
-    </ClCompile>
-    <ClCompile Include="source\External\ImGui\backends\imgui_impl_vulkan.cpp">
       <Filter>External\ImGui\backends</Filter>
     </ClCompile>
     <ClCompile Include="source\External\ImGui\imgui.cpp">
@@ -588,6 +512,7 @@
     <ClCompile Include="source\Serialization\Serializer.cpp">
       <Filter>Serialization</Filter>
     </ClCompile>
+    <ClCompile Include="source\Scenes\Scene.cpp" />
     <ClCompile Include="source\pch.cpp" />
   </ItemGroup>
 </Project>

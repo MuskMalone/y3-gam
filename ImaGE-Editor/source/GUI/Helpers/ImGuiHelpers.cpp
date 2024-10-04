@@ -207,6 +207,18 @@ ImVec2 operator-(ImVec2 const& lhs, float rhs) {
   return { lhs.x - rhs, lhs.y - rhs };
 }
 
+ImVec2 operator*(ImVec2 const& lhs, float rhs) {
+  return { lhs.x * rhs, lhs.y * rhs };
+}
+
+ImVec2 operator*(float lhs, ImVec2 const& rhs) {
+  return { rhs.x * lhs, rhs.y * lhs };
+}
+
+ImVec2 operator/(ImVec2 const& lhs, float rhs) {
+  return { lhs.x / rhs, lhs.y / rhs };
+}
+
 ImVec4 operator+(ImVec4 const& lhs, ImVec4 const& rhs) {
   return { lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z, lhs.w + rhs.w };
 }

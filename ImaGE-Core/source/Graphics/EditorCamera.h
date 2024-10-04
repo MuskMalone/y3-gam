@@ -3,7 +3,7 @@
 
 namespace Graphics {
 	class EditorCamera {
-
+	public:
 		enum class CameraMovement {
 			FORWARD,
 			BACKWARD,
@@ -12,7 +12,7 @@ namespace Graphics {
 			DOWN,
 			UP
 		};
-	public:
+
 		EditorCamera(
 			glm::vec3 position = glm::vec3(0.0f, 0.0f, 3.0f),  // Default position
 			float yaw = -90.0f,                               // Default yaw
@@ -38,9 +38,7 @@ namespace Graphics {
 		void ProcessKeyboardInput(CameraMovement dir, float dt);
 		void ProcessMouseInput(float offsetX, float offsetY);
 		void ProcessMouseScroll(float scrollOffset);
-
-		//tch : getter setters for visual testing
-		void SetPosition(glm::vec3 const& p);
+		void MoveAlongPlane(float xDisp, float yDisp);
 	private:
 		glm::vec3 mPosition;
 		float mYaw;
@@ -50,8 +48,9 @@ namespace Graphics {
 		float mNearClip;
 		float mFarClip;
 
-		float mMoveSpeed{10.f};
-		float mMouseSense{ 0.f };
-		float mZoomSpeed{5.f};
+		float mMoveSpeed{ 5.f };
+		float mMousePanningSpeed{ 0.5f };
+		float mMouseSense{ 0.01f };
+		float mZoomSpeed{ 5.f };
 	};
 }

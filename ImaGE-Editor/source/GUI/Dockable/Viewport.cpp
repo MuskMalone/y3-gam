@@ -4,86 +4,92 @@
 #include <GUI/Helpers/AssetPayload.h>
 #include "AssetBrowser.h"
 #include <Events/EventManager.h>
-
+#include <FrameRateController/FrameRateController.h>
 #include <Core/Entity.h>
 #include <Core/Components/Mesh.h>
 #include <Graphics/MeshFactory.h>
 #include <Graphics/Mesh.h>
+#include <GUI/Helpers/ImGuiHelpers.h>
 
-//to remove
-#include "Core/Camera.h"
-#include "TempScene.h"
 namespace GUI
 {
 
-    namespace {
-        //auto MoveAlongPlane(float xDisplacement, float yDisplacement) {
-        //    // Calculate the normal of the plane (eye to target direction)
-        //    auto& cam = Scene::GetMainCamera();
-        //    glm::vec3 normal = glm::normalize(cam.GetForwardVector());
-
-        //    // Define the world up vector
-        //    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-
-        //    // Calculate the right and up vectors on the plane
-        //    glm::vec3 right = glm::normalize(glm::cross(up, normal));  // Right vector
-        //    glm::vec3 planeUp = glm::normalize(glm::cross(normal, right)); // True up vector on the plane
-
-        //    // Calculate the movement vector along the plane
-        //    auto delta = right * xDisplacement + planeUp * yDisplacement;
-        //    return delta;
-        //    //// Move the eye and target along the plane
-        //    //m_eye += movement;
-        //    //m_target += movement;
-        //}
-
-        //void CameraControls() {
-        //    //calculate the camera for moving
-        //    //replace the current camera data members with the new impl of camera 
-        //    //to xavier or whoever is doing this - tch
-        //    constexpr float dt{ 1.f / 60.f };
-        //    auto& cam = Scene::GetMainCamera();
-        //    // Check if the viewport is hovered
-        //    if (ImGui::IsItemFocused() || ImGui::IsItemHovered()) {
-        //        // Check for left mouse button press
-        //        if (ImGui::GetIO().MouseDown[ImGuiMouseButton_Left]) {
-        //            // Get the mouse drag delta for the left button
-        //            ImVec2 dragDelta = ImGui::GetIO().MouseDelta;
-        //            cam.ProcessMouseInput(dragDelta.x, dragDelta.y);
-        //        }
-        //        // Check for middle mouse button press
-        //        if (ImGui::IsMouseDown(ImGuiMouseButton_Middle)) {
-        //            ImVec2 dragDelta = ImGui::GetIO().MouseDelta;
-        //            auto delta = MoveAlongPlane(dragDelta.x, dragDelta.y);
-        //            cam.SetPosition(cam.GetPosition() + delta * dt);
-        //        }
-
-        //        if (glm::abs(ImGui::GetIO().MouseWheel) > glm::epsilon<float>()) {
-        //            cam.ProcessMouseScroll(ImGui::GetIO().MouseWheel * dt);
-        //        }
-        //    }
-
-        //    // Reset the drag delta when the mouse button is released
-        //    if (!ImGui::IsMouseDown(ImGuiMouseButton_Left) && !ImGui::IsMouseDown(ImGuiMouseButton_Middle)) {
-        //        ImGui::ResetMouseDragDelta(ImGuiMouseButton_Left);
-        //        ImGui::ResetMouseDragDelta(ImGuiMouseButton_Middle);
-        //    }
-        //}
-    }
   Viewport::Viewport(std::string const& name) : GUIWindow(name) {}
 
-  void Viewport::Update(std::shared_ptr<Graphics::Framebuffer> const& framebuffer)
+  void Viewport::Render(Graphics::RenderTarget& renderTarget)
   {
+    static Performance::FrameRateController& frc{ Performance::FrameRateController::GetInstance() };
+
     ImGui::Begin(mWindowName.c_str());
-    ImGui::Image(
-        reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(framebuffer->GetColorAttachmentID())),
-        ImGui::GetContentRegionAvail(),
-        ImVec2(0, 1),
-        ImVec2(1, 0)
-    );
-    //CameraControls();
-    
+
+    // handle camera input
+    Graphics::EditorCamera& cam{ renderTarget.scene.GetEditorCamera() };
+    float const dt{ frc.GetDeltaTime() };
+    ImVec2 const startCursorPos{ ImGui::GetCursorPos() };
+
+    // only register input if viewport is focused
+    if (ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) {
+      using enum Graphics::EditorCamera::CameraMovement;  // C++20 <3
+
+      // process input for movement
+      if (ImGui::IsKeyDown(ImGuiKey_W)) {
+        cam.ProcessKeyboardInput(FORWARD, dt);
+      }
+      if (ImGui::IsKeyDown(ImGuiKey_S)) {
+        cam.ProcessKeyboardInput(BACKWARD, dt);
+      }
+      if (ImGui::IsKeyDown(ImGuiKey_A)) {
+        cam.ProcessKeyboardInput(LEFT, dt);
+      }
+      if (ImGui::IsKeyDown(ImGuiKey_D)) {
+        cam.ProcessKeyboardInput(RIGHT, dt);
+      }
+      if (ImGui::IsKeyDown(ImGuiKey_Q)) {
+        cam.ProcessKeyboardInput(DOWN, dt);
+      }
+      if (ImGui::IsKeyDown(ImGuiKey_E)) {
+        cam.ProcessKeyboardInput(UP, dt);
+      }
+
+      ImVec2 const windowSize{ ImGui::GetContentRegionAvail() };
+
+      // process input for panning
+      if (ImGui::IsMouseDown(ImGuiMouseButton_Left)) {
+        ImVec2 const mouseDelta{ ImGui::GetMouseDragDelta(ImGuiMouseButton_Left) };
+        cam.ProcessMouseInput(mouseDelta.x / windowSize.x, mouseDelta.y / windowSize.y);
+      }
+      else if (ImGui::IsMouseDown(ImGuiMouseButton_Middle)) {
+        ImVec2 const mouseDelta{ ImGui::GetMouseDragDelta(ImGuiMouseButton_Middle) };
+        cam.MoveAlongPlane(mouseDelta.x / windowSize.x, mouseDelta.y / windowSize.y);
+      }
+
+      float const scrollDelta{ ImGui::GetIO().MouseWheel };
+      if (glm::abs(scrollDelta) > glm::epsilon<float>()) {
+        cam.ProcessMouseScroll(scrollDelta);
+      }
+
+      // Reset the drag delta when the mouse button is released
+      if (!ImGui::IsMouseDown(ImGuiMouseButton_Left) && !ImGui::IsMouseDown(ImGuiMouseButton_Middle)) {
+        ImGui::ResetMouseDragDelta(ImGuiMouseButton_Left);
+        ImGui::ResetMouseDragDelta(ImGuiMouseButton_Middle);
+      }
+    }
+
     ReceivePayload();
+
+    // update framebuffer
+    ImGui::Image(
+      reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(renderTarget.framebuffer->GetColorAttachmentID())),
+      ImGui::GetContentRegionAvail(),
+      ImVec2(0, 1),
+      ImVec2(1, 0)
+    );
+
+    ImGui::SetCursorPos(startCursorPos);
+    ImGui::Text("WASDQE - Move");
+    ImGui::Text("Left Click - Look");
+    ImGui::Text("Middle Click - Pan");
+    ImGui::Text("Scroll - Zoom");
 
     ImGui::End();
   }

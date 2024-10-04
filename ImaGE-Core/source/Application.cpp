@@ -22,7 +22,9 @@ namespace IGE {
 
   void Application::Init() {
     mSystemManager.InitSystems();
-    mScene->Init();
+    IGE::Physics::PhysicsSystem::InitAllocator();
+    IGE::Physics::PhysicsSystem::GetInstance()->Init();
+    GetDefaultRenderTarget().scene.Init();
     Scenes::SceneManager::GetInstance().Init();
     Prefabs::PrefabManager::GetInstance().Init();
     Performance::FrameRateController::GetInstance().Init(120.f, 1.f, false);
@@ -42,10 +44,10 @@ namespace IGE {
       eventManager.DispatchAll();
 
       mSystemManager.UpdateSystems();
-      mScene->Update(frameRateController.GetDeltaTime());
+      GetDefaultRenderTarget().scene.Update(frameRateController.GetDeltaTime());
 
       glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
-      mFramebuffers.front().second();
+      GetDefaultRenderTarget().scene.Draw();
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
       // check and call events, swap buffers
@@ -64,7 +66,7 @@ namespace IGE {
   }
 
   Application::Application(ApplicationSpecification spec) :
-    mSystemManager{}, mFramebuffers{}, mScene{}, mWindow{}
+    mSystemManager{}, mRenderTargets{}, mWindow{}
   {
     mSpecification = spec;
     glfwInit();
@@ -97,29 +99,14 @@ namespace IGE {
     SetCallbacks();
 
     RegisterSystems();
-    mScene = std::make_unique<Scene>();
 
-  //framebuffer init
+  // render target init
   Graphics::FramebufferSpec framebufferSpec;
   framebufferSpec.width = spec.WindowWidth;
   framebufferSpec.height = spec.WindowHeight;
   framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
-  mFramebuffers.emplace_back(Graphics::Framebuffer::Create(framebufferSpec), std::bind(&Scene::Draw, mScene.get()));
+  mRenderTargets.emplace_back(framebufferSpec);
 }
-
-  void Application::UpdateFramebuffers()
-  {
-    // iterate through all framebuffers and invoke the
-    // draw function associated with it
-    for (auto const& [fb, drawFn] : mFramebuffers)
-    {
-      fb->Bind();
-
-      drawFn();
-
-      fb->Unbind();
-    }
-  }
 
   void Application::SetCallbacks() {
     glfwSetFramebufferSizeCallback(mWindow.get(), FramebufferSizeCallback);
@@ -130,7 +117,7 @@ namespace IGE {
     glViewport(0, 0, width, height);
 
     Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
-    for (auto& [fb, fn] : app->mFramebuffers) {
+    for (auto& [fb, fn] : app->mRenderTargets) {
       fb->Resize(width, height);
     }
   }

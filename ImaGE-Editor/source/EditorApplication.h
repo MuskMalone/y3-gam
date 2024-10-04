@@ -17,6 +17,7 @@ namespace IGE {
 
   private:
     void ImGuiStartFrame() const;
+    void UpdateFramebuffers();
     void SetEditorCallbacks();
 
     /*!*********************************************************************

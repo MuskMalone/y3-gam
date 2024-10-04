@@ -44,7 +44,7 @@ namespace GUI {
     mStyler.SetCurrentTheme(static_cast<CustomTheme>(gEditorDefaultTheme)); // Default theme should be read from settings file
   }
 
-  void GUIManager::UpdateGUI(std::shared_ptr<Graphics::Framebuffer> const& framebuffer) {
+  void GUIManager::UpdateGUI(Graphics::RenderTarget& renderTarget) {
     // Always run persistent windows
     for (auto const& elem : mPersistentElements) {
       elem->Run();
@@ -58,7 +58,7 @@ namespace GUI {
 
     // Update viewport if active
     if (mEditorViewport->IsActive()) {
-      mEditorViewport->Update(framebuffer);
+      mEditorViewport->Render(renderTarget);
     }
   }
 

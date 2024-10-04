@@ -21,13 +21,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 //#define DESERIALIZER_DEBUG
 
-#ifdef _DEBUG
-std::ostream& operator<<(std::ostream& os, rttr::type const& type) {
-  os << type.get_name().to_string();
-  return os;
-}
-#endif
-
 namespace Serialization
 {
 

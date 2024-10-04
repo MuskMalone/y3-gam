@@ -2,10 +2,12 @@
 #include <GLFW/glfw3.h>
 #include <External/GLFWwindowDestructor.h>
 #include <FrameRateController/FrameRateController.h>
+#include <Scenes/Scene.h>
 #include <memory>
 #include <DebugTools/Exception/Exception.h>
 #include <Graphics/Framebuffer.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
+#include <Graphics/RenderTarget.h>
 
 namespace IGE {
   class Application {
@@ -21,7 +23,6 @@ namespace IGE {
     };
 
   public:
-    using SceneDrawCall = std::function<void()>;
     using WindowPtr = std::unique_ptr<GLFWwindow, GLFWwindowDestructor>;
 
     Application() = default;
@@ -47,13 +48,13 @@ namespace IGE {
     inline static bool GetImGuiEnabled() { return mSpecification.EnableImGui; }
 
   protected:
-    void UpdateFramebuffers();
+    inline Graphics::RenderTarget& GetDefaultRenderTarget() noexcept { return mRenderTargets.front(); }
 
     static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
     static void ErrorCallback(int err, const char* desc);
 
     Systems::SystemManager mSystemManager;
-    std::vector<std::pair<std::shared_ptr<Graphics::Framebuffer>, SceneDrawCall>> mFramebuffers;
+    std::vector<Graphics::RenderTarget> mRenderTargets;
     WindowPtr mWindow;
 
     static ApplicationSpecification mSpecification;

@@ -8,6 +8,7 @@ namespace Graphics
     enum class FramebufferTextureFormat {
         NONE = 0,
         RGBA8,
+        RED_INTEGER,
         DEPTH24STENCIL8,
 
         DEPTH = DEPTH24STENCIL8 //default
@@ -42,8 +43,14 @@ namespace Graphics
 
         void Bind();
         void Unbind();
+
         static void BindDefault();
+
         void Resize(uint32_t width, uint32_t height);
+
+        int ReadPixel(uint32_t attachIdx, int x, int y);
+        void ClearAttachmentInt(uint32_t attachIdx, int val);
+
         uint32_t GetColorAttachmentID(uint32_t index = 0) const;
         FramebufferSpec const& GetFramebufferSpec() const;
 
