@@ -16,6 +16,7 @@ namespace GUI
     void Render(Graphics::RenderTarget& renderTarget);
 
   private:
+    void ProcessCameraInputs(Graphics::EditorCamera& cam);
     void ReceivePayload();
 
   };

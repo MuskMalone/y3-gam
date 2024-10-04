@@ -18,18 +18,55 @@ namespace GUI
 
   void Viewport::Render(Graphics::RenderTarget& renderTarget)
   {
-    static Performance::FrameRateController& frc{ Performance::FrameRateController::GetInstance() };
-
     ImGui::Begin(mWindowName.c_str());
 
-    // handle camera input
-    Graphics::EditorCamera& cam{ renderTarget.scene.GetEditorCamera() };
-    float const dt{ frc.GetDeltaTime() };
     ImVec2 const startCursorPos{ ImGui::GetCursorPos() };
 
     // only register input if viewport is focused
     if (ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) {
-      using enum Graphics::EditorCamera::CameraMovement;  // C++20 <3
+      ProcessCameraInputs(renderTarget.scene.GetEditorCamera());
+    }
+    // auto focus window when middle or right-clicked upon
+    else if (ImGui::IsWindowHovered() && (ImGui::IsMouseClicked(ImGuiMouseButton_Right) || ImGui::IsMouseClicked(ImGuiMouseButton_Middle))) {
+      ImGui::FocusWindow(ImGui::GetCurrentWindow());
+    }
+
+
+    // update framebuffer
+    ImGui::Image(
+      reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(renderTarget.framebuffer->GetColorAttachmentID())),
+      ImGui::GetContentRegionAvail(),
+      ImVec2(0, 1),
+      ImVec2(1, 0)
+    );
+
+    ReceivePayload();
+
+    ImGui::SetCursorPos(startCursorPos);
+    ImGui::Text("Middle Click - Pan");
+    ImGui::Text("Scroll - Zoom");
+    ImGui::Text("While Right-click Held:");
+    ImGui::Text("       Left Click - Look");
+    ImGui::Text("       WASDQE - Move");
+
+    ImGui::End();
+  }
+
+  void Viewport::ProcessCameraInputs(Graphics::EditorCamera& cam) {
+    static bool isDragging{ false }, isPanning{ false };
+    static ImVec2 previousMousePos;
+    using enum Graphics::EditorCamera::CameraMovement;  // C++20 <3
+    float const dt{ Performance::FrameRateController::GetInstance().GetDeltaTime() };
+
+    ImVec2 const windowSize{ ImGui::GetContentRegionAvail() };
+
+    // only allow movement and panning if right-click held
+    if (ImGui::IsMouseDown(ImGuiMouseButton_Right)) {
+      if (!isPanning && !isDragging) {
+        previousMousePos = ImGui::GetMousePos();
+        isDragging = true;
+      }
+      ImGui::SetMouseCursor(ImGuiMouseCursor_None); // hide cursor when looking
 
       // process input for movement
       if (ImGui::IsKeyDown(ImGuiKey_W)) {
@@ -51,47 +88,36 @@ namespace GUI
         cam.ProcessKeyboardInput(UP, dt);
       }
 
-      ImVec2 const windowSize{ ImGui::GetContentRegionAvail() };
-
       // process input for panning
-      if (ImGui::IsMouseDown(ImGuiMouseButton_Left)) {
-        ImVec2 const mouseDelta{ ImGui::GetMouseDragDelta(ImGuiMouseButton_Left) };
-        cam.ProcessMouseInput(mouseDelta.x / windowSize.x, mouseDelta.y / windowSize.y);
-      }
-      else if (ImGui::IsMouseDown(ImGuiMouseButton_Middle)) {
-        ImVec2 const mouseDelta{ ImGui::GetMouseDragDelta(ImGuiMouseButton_Middle) };
+      ImVec2 const currMousePos{ ImGui::GetMousePos() };
+      ImVec2 const mouseDelta{ currMousePos - previousMousePos };
+      cam.ProcessMouseInput(mouseDelta.x / windowSize.x, mouseDelta.y / windowSize.y);
+      previousMousePos = currMousePos;
+    }
+    else {
+      isDragging = false;
+
+      if (ImGui::IsMouseDown(ImGuiMouseButton_Middle)) {
+        if (!isPanning) {
+          previousMousePos = ImGui::GetMousePos();
+          isPanning = true;
+        }
+        ImGui::SetMouseCursor(ImGuiMouseCursor_None); // hide cursor when panning
+
+        ImVec2 const currMousePos{ ImGui::GetMousePos() };
+        ImVec2 const mouseDelta{ currMousePos - previousMousePos };
         cam.MoveAlongPlane(mouseDelta.x / windowSize.x, mouseDelta.y / windowSize.y);
+        previousMousePos = currMousePos;
       }
-
-      float const scrollDelta{ ImGui::GetIO().MouseWheel };
-      if (glm::abs(scrollDelta) > glm::epsilon<float>()) {
-        cam.ProcessMouseScroll(scrollDelta);
-      }
-
-      // Reset the drag delta when the mouse button is released
-      if (!ImGui::IsMouseDown(ImGuiMouseButton_Left) && !ImGui::IsMouseDown(ImGuiMouseButton_Middle)) {
-        ImGui::ResetMouseDragDelta(ImGuiMouseButton_Left);
-        ImGui::ResetMouseDragDelta(ImGuiMouseButton_Middle);
+      else {
+        isPanning = false;
       }
     }
 
-    ReceivePayload();
-
-    // update framebuffer
-    ImGui::Image(
-      reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(renderTarget.framebuffer->GetColorAttachmentID())),
-      ImGui::GetContentRegionAvail(),
-      ImVec2(0, 1),
-      ImVec2(1, 0)
-    );
-
-    ImGui::SetCursorPos(startCursorPos);
-    ImGui::Text("WASDQE - Move");
-    ImGui::Text("Left Click - Look");
-    ImGui::Text("Middle Click - Pan");
-    ImGui::Text("Scroll - Zoom");
-
-    ImGui::End();
+    float const scrollDelta{ ImGui::GetIO().MouseWheel };
+    if (glm::abs(scrollDelta) > glm::epsilon<float>()) {
+      cam.ProcessMouseScroll(scrollDelta);
+    }
   }
 
   void Viewport::ReceivePayload()

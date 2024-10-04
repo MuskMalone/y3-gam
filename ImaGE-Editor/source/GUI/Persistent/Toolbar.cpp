@@ -26,7 +26,7 @@ namespace GUI
     {
       if (ImGui::BeginMenu("File"))
       {
-        const char* const sceneFilter{ "Scenes (*.scn)\0*.scn" }, * const initialDir{ ".\\Assets\\Scenes" };
+        const char* const sceneFilter{ "Scenes (*.scn)\0*.scn" }, * const initialDir{ "..\\Assets\\Scenes" };
         bool const creationMode{ !mDisableAll && mAllowCreationOnly };
 
         // im sorry this is messy
