@@ -1,6 +1,7 @@
 #include <pch.h>
 #include "Shader.h"
 #include <glm/gtc/type_ptr.hpp> 
+#include "Utils.h"
 
 //TEMP??
 
@@ -29,6 +30,10 @@ namespace Graphics {
 
 	Shader::Shader(std::string const& geomFile, std::string const& vertFile, std::string const& fragFile) :pgmHdl{} {
 		CreateShaderFromFile(geomFile, vertFile, fragFile);
+	}
+
+	std::shared_ptr<Shader> Shader::Create(std::string const& vertFile, std::string const& fragFile) {
+		return std::make_shared<Shader>(vertFile, fragFile);
 	}
 
 	/*  _________________________________________________________________________ */
@@ -782,6 +787,24 @@ namespace Graphics {
 		}
 		else {
 			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
+		}
+	}
+
+	void Shader::SetUniform(std::string const& name, std::shared_ptr<Texture> texture, unsigned int texUnit) {
+		// Activate the appropriate texture unit
+		GLCALL(glActiveTexture(GL_TEXTURE0 + texUnit));
+
+		// Bind the texture to that unit
+		texture->Bind(texUnit);
+
+		// Set the uniform in the shader to the correct texture unit
+		GLint location = glGetUniformLocation(pgmHdl, name.c_str());
+		if (location != -1) {
+			GLCALL(glUniform1i(location, texUnit));
+		}
+		else {
+			// Log or handle the error if the uniform isn't found
+			std::cerr << "Warning: Uniform '" << name << "' not found in shader!" << std::endl;
 		}
 	}
 }

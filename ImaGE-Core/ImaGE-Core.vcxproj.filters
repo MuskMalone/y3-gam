@@ -91,6 +91,9 @@
     <ClInclude Include="source\Asset\AssetManager.h">
       <Filter>Asset</Filter>
     </ClInclude>
+    <ClInclude Include="source\Asset\IGEAssets.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
     <ClInclude Include="source\Color.h" />
     <ClInclude Include="source\Core\Camera.h">
       <Filter>Core</Filter>

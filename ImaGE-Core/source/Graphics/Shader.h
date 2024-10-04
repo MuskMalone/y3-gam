@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "Texture.h"
 
 namespace Graphics {
 	class Shader {
@@ -9,6 +10,7 @@ namespace Graphics {
 		Shader(std::string const& geomFile, std::string const& vertFile, std::string const& fragFile);
 		~Shader();
 
+		static std::shared_ptr<Shader> Create(std::string const& vertFile, std::string const& fragFile);
 		void CreateComputeShader(std::string const& shdrFile);
 		void CreateShaderFromString(std::string const& vertSrc, std::string const& fragSrc);
 		void CreateShaderFromFile(std::string const& vertFile, std::string const& fragFile);
@@ -32,6 +34,7 @@ namespace Graphics {
 		void SetUniform(std::string const& name, glm::mat4 const& val);
 		void SetUniform(std::string const& name, int* val, unsigned int count);
 
+		void SetUniform(std::string const& name, std::shared_ptr<Texture> texture, unsigned int texUnit); //TEXTURES
 		unsigned int PgmHdl() { return pgmHdl; };
 	private:
 		unsigned int pgmHdl;

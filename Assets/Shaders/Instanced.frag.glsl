@@ -6,20 +6,20 @@ in vec4 v_Color;
 in vec2 v_TexCoord;
 in flat float v_TexIdx;
 
-uniform sampler2D u_Tex[32]; //TODO CHANGE THIS IN FUTURE
+//uniform sampler2D u_Tex[32]; //TODO CHANGE THIS IN FUTURE
            
 in vec3 v_FragPos;              // Fragment position in world space
 in vec3 v_Normal;               // Normal in world space
 in vec3 v_Tangent;              // Tangent in world space
 in vec3 v_Bitangent;            // Bitangent in world space
 
-//uniform sampler2D u_AlbedoMap;  // Albedo texture
-
 // PBR parameters (hardcoded for now)
 uniform vec3 u_Albedo;
-uniform float u_Metallic;
+uniform float u_Metalness;
 uniform float u_Roughness;
 uniform float u_AO;
+
+uniform sampler2D u_AlbedoMap;
 
 //lighting parameters
 uniform vec3 u_CamPos;       // Camera position in world space
@@ -40,8 +40,8 @@ void main(){
 
 	//sample texture
 	//vec4 texColor = texture2D(u_Tex[0], v_TexCoord);
-    vec4 texColor = vec4(1.f);
-	vec3 albedo = texColor.rgb * u_Albedo;
+    vec4 albedoTexture = texture(u_AlbedoMap, v_TexCoord);
+    vec3 albedo = albedoTexture.rgb; // Mixing texture and uniform
 
 	// Normalize inputs
     vec3 N = normalize(v_Normal);
@@ -56,7 +56,7 @@ void main(){
     vec3 radiance = lightColor * attenuation;
 
     vec3 F0 = vec3(0.04); 
-         F0 = mix(F0, u_Albedo, u_Metallic);
+         F0 = mix(F0, u_Albedo, u_Metalness);
 
     // cook-torrance brdf
     float NDF = DistributionGGX(N, H, u_Roughness);        
@@ -65,7 +65,7 @@ void main(){
 
     vec3 kS = F;
     vec3 kD = vec3(1.0) - kS;
-    kD *= 1.0 - u_Metallic;	
+    kD *= 1.0 - u_Metalness;	
 
     vec3 numerator    = NDF * G * F;
     float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
@@ -81,7 +81,10 @@ void main(){
     color = color / (color + vec3(1.0));
     color = pow(color, vec3(1.0/2.2)); //gamma correction
 
-	fragColor = vec4(color, texColor.a) * v_Color;
+    //change transparency here
+	//fragColor = vec4(color, 1.f) * v_Color;
+   // fragColor = vec4(N * 0.5 + 0.5, 1.0);
+   fragColor = albedoTexture;
     //fragColor = vec4(albedo, texColor.a) * v_Color;
 
 }

@@ -49,14 +49,15 @@ namespace Graphics{
         // Apply Material Properties to Shader
         void Apply(std::shared_ptr<Shader> shader) const {
             // Apply instance-specific overrides
-            shader->SetUniform("u_AlbedoColor", mAlbedoColor);
+            shader->SetUniform("u_Albedo", mAlbedoColor);
             shader->SetUniform("u_Metalness", mMetalness);
             shader->SetUniform("u_Roughness", mRoughness);
-            shader->SetUniform("u_Emission", mEmission);
-            shader->SetUniform("u_Transparency", mTransparency);
+            shader->SetUniform("u_AO", 1.f);
+            //shader->SetUniform("u_Emission", mEmission);
+            //shader->SetUniform("u_Transparency", mTransparency);
 
-            //// Apply textures (use instance override if available)
-            //if (auto albedoMap = GetAlbedoMap()) shader->SetUniform("u_AlbedoMap", albedoMap);
+            // Apply textures (use instance override if available)
+            if (auto albedoMap = GetAlbedoMap()) shader->SetUniform("u_AlbedoMap", albedoMap, 0);
             //if (auto normalMap = GetNormalMap()) shader->SetUniform("u_NormalMap", normalMap);
             //if (auto metalnessMap = GetMetalnessMap()) shader->SetUniform("u_MetalnessMap", metalnessMap);
             //if (auto roughnessMap = GetRoughnessMap()) shader->SetUniform("u_RoughnessMap", roughnessMap);
