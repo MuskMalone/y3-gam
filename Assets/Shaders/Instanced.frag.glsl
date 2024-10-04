@@ -25,7 +25,7 @@ uniform sampler2D u_AlbedoMap;
 uniform vec3 u_CamPos;       // Camera position in world space
 // Single light source (hardcoded for now)
 const vec3 u_LightPos = vec3(5.0, 2.0, 5.0); // Example light position
-const vec3 u_LightColor = vec3(10.0, 10.0, 10.0);       // Example white light
+const vec3 u_LightColor = vec3(1.0, 1.0, 1.0);       // Example white light
 //uniform vec3 u_LightPos;     // Light position in world space
 //uniform vec3 u_LightColor;   // Light color
 
@@ -41,7 +41,7 @@ void main(){
 	//sample texture
 	//vec4 texColor = texture2D(u_Tex[0], v_TexCoord);
     vec4 albedoTexture = texture(u_AlbedoMap, v_TexCoord);
-    vec3 albedo = albedoTexture.rgb; // Mixing texture and uniform
+    vec3 albedo = albedoTexture.rgb * u_Albedo; // Mixing texture and uniform
 
 	// Normalize inputs
     vec3 N = normalize(v_Normal);
@@ -56,7 +56,7 @@ void main(){
     vec3 radiance = lightColor * attenuation;
 
     vec3 F0 = vec3(0.04); 
-         F0 = mix(F0, u_Albedo, u_Metalness);
+         F0 = mix(F0, albedo, u_Metalness);
 
     // cook-torrance brdf
     float NDF = DistributionGGX(N, H, u_Roughness);        
@@ -76,15 +76,16 @@ void main(){
     float NdotL = max(dot(N, L), 0.0);                
     Lo += (kD * albedo / PI + specular) * radiance * NdotL; 
 
-    vec3 ambient = vec3(0.03) * u_Albedo * u_AO;
+    vec3 ambient = vec3(0.01) * albedo * u_AO;
     vec3 color = ambient + Lo;
     color = color / (color + vec3(1.0));
     color = pow(color, vec3(1.0/2.2)); //gamma correction
 
     //change transparency here
-	//fragColor = vec4(color, 1.f) * v_Color;
-   // fragColor = vec4(N * 0.5 + 0.5, 1.0);
-   fragColor = albedoTexture;
+	fragColor = vec4(color, 1.f) * v_Color;
+    
+    //fragColor = vec4(vec3(max(dot(H, V), 0.0)), 1.0);
+
     //fragColor = vec4(albedo, texColor.a) * v_Color;
 
 }
