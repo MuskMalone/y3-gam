@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include <Core/Camera.h>
 #include <variant>
 #include <Graphics/Mesh.h>
 #include <Graphics/EditorCamera.h>
