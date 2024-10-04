@@ -13,6 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GUI/GUIWindow.h>
 #include <Core/Entity.h>
 #include <Events/EventCallback.h>
+#include <ImGui/imgui.h>
 
 // forward declaration
 namespace Scenes { class SceneManager; }
@@ -39,6 +40,7 @@ namespace GUI
     bool mEditingPrefab, mLockControls, mSceneModified;
 
     static constexpr char sDragDropPayload[] = "ENTITY";
+    static inline constexpr ImU32 sEntityHighlightCol{ IM_COL32(253, 208, 23, 255) };
 
     /*!*********************************************************************
     \brief
@@ -56,6 +58,16 @@ namespace GUI
       The current entity being displayed
     ************************************************************************/
     void RecurseDownHierarchy(ECS::Entity entity);
+
+    /*!*********************************************************************
+    \brief
+      Checks for input and handles them accordingly
+    \param entity
+      The current entity
+    \param editNameMode
+      Whether an entity is being renamed in the hierarchy window
+    ************************************************************************/
+    void ProcessInput(ECS::Entity entity, bool& editNameMode);
 
     /*!*********************************************************************
     \brief

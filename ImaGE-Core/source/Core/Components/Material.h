@@ -1,16 +1,29 @@
+/*!*********************************************************************
+\file   Material.h
+\author 
+\date   5-October-2024
+\brief  Definition of Material component, which determines the texture
+        for the object when it is rendered.
+  
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include "Color.h"
 #include "Graphics/Material.h"
 
 namespace Component {
-    struct Material {
-        Material() = default;
-        Material(std::shared_ptr<Graphics::Material> material) : material{ material } {} // Constructor to set material instance
+  struct Material {
+    Material() = default;
+    Material(std::shared_ptr<Graphics::Material> material) : material{ material } {} // Constructor to set material instance
 
-        inline void Clear() noexcept {
-            material.reset();
-        }
+    /*!*********************************************************************
+    \brief
+      Resets the component to default values
+    ************************************************************************/
+    inline void Clear() {
+      material.reset();
+    }
 
-        std::shared_ptr<Graphics::Material> material;
-    };
+    std::shared_ptr<Graphics::Material> material;
+  };
 }

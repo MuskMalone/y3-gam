@@ -284,7 +284,7 @@ namespace GUI {
     bool modified{ false };
 
     if (isOpen) {
-      auto& material = entity.GetComponent<Component::Material>();
+      Component::Material& material = entity.GetComponent<Component::Material>();
 
       float contentSize = ImGui::GetContentRegionAvail().x;
       float charSize = ImGui::CalcTextSize("012345678901234").x;
@@ -301,10 +301,11 @@ namespace GUI {
       ImGui::TableSetColumnIndex(1);
       ImGui::SetNextItemWidth(INPUT_SIZE);
 
-      glm::vec3 color = material.material->GetAlbedoColor();
+      glm::vec4 color{ material.material->GetAlbedoColor(), material.material->GetTransparency() };
 
-      if (ImGui::ColorEdit3("##AlebdoColor", &color[0])) {
+      if (ImGui::ColorEdit4("##AlebdoColor", &color[0])) {
         material.material->SetAlbedoColor(color);
+        material.material->SetTransparency(color.a);
         modified = true;
       }
 
@@ -312,7 +313,7 @@ namespace GUI {
     }
 
     WindowEnd(isOpen);
-    return false;
+    return modified;
   }
 
   bool Inspector::ScriptComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
@@ -467,7 +468,7 @@ namespace GUI {
       ImGui::TableHeadersRow();
 
       // @TODO: Replace min and max with the world min and max
-      if (ImGuiHelpers::TableInputFloat3("Translation", &transform.position[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
+      if (ImGuiHelpers::TableInputFloat3("Position", &transform.position[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
         modified = true;
       }
       glm::vec3 localRot{ transform.eulerAngles };
@@ -491,7 +492,7 @@ namespace GUI {
       // only allow local transform to be modified
       glm::vec3 worldRot{ transform.GetWorldEulerAngles() };
       ImGui::BeginDisabled();
-      ImGuiHelpers::TableInputFloat3("World Translation", &transform.worldPos[0], inputWidth, false, -100.f, 100.f, 0.1f);
+      ImGuiHelpers::TableInputFloat3("World Position", &transform.worldPos[0], inputWidth, false, -100.f, 100.f, 0.1f);
       ImGuiHelpers::TableInputFloat3("World Rotation", &worldRot[0], inputWidth, false, 0.f, 360.f, 0.1f);
       ImGuiHelpers::TableInputFloat3("World Scale", &transform.worldScale[0], inputWidth, false, 0.001f, 100.f, 1.f);
       ImGui::EndDisabled();
@@ -551,15 +552,6 @@ namespace GUI {
 
     WindowEnd(isOpen);
     return modified;
-  }
-
-  void Inspector::WindowEnd(bool const isOpen) {
-    if (isOpen) {
-      ImGui::TreePop();
-      ImGui::PopFont();
-    }
-
-    ImGui::Separator();
   }
 
   bool Inspector::RigidBodyComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
@@ -753,5 +745,14 @@ namespace GUI {
 
       ImGui::EndPopup();
     }
+  }
+
+  void Inspector::WindowEnd(bool const isOpen) {
+    if (isOpen) {
+      ImGui::TreePop();
+      ImGui::PopFont();
+    }
+
+    ImGui::Separator();
   }
 } // namespace GUI

@@ -60,7 +60,7 @@ namespace GUI
     }
     else {
       ImGui::Text(("Editing Prefab: " + sceneNameSave).c_str());
-      ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(253, 208, 23, 255));
+      ImGui::PushStyleColor(ImGuiCol_Text, sEntityHighlightCol);
       ImGui::Text("Press ESC to return to scene");
       ImGui::PopStyleColor();
     }
@@ -87,9 +87,9 @@ namespace GUI
 
     for (auto const& e : mEntityManager.GetAllEntities())
     {
-      if (!mEntityManager.HasParent(e)) {
-        RecurseDownHierarchy(e);
-      }
+      if (mEntityManager.HasParent(e)) { continue; }
+       
+      RecurseDownHierarchy(e);
     }
 
     if (ImGui::IsKeyPressed(ImGuiKey_Delete) && GUIManager::GetSelectedEntity() && !mLockControls) {
@@ -167,20 +167,32 @@ namespace GUI
   void SceneHierarchy::RecurseDownHierarchy(ECS::Entity entity)
   {
     static bool editNameMode{ false }, firstEnterEditMode{ true };
+    bool const isCurrentEntity{ GUIManager::GetSelectedEntity() == entity }, isEditMode{ isCurrentEntity && editNameMode };
     // set the flag accordingly
     ImGuiTreeNodeFlags treeFlag{ ImGuiTreeNodeFlags_SpanFullWidth };
     bool const hasChildren{ mEntityManager.HasChild(entity) };
     treeFlag |= hasChildren  ? ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen
       : ImGuiTreeNodeFlags_Leaf;
 
-    bool const isCurrentEntity{ GUIManager::GetSelectedEntity() == entity }, isEditMode{ isCurrentEntity && editNameMode };
     if (isCurrentEntity) { treeFlag |= ImGuiTreeNodeFlags_Selected; }
 
     // create the tree nodes
     std::string entityName{ entity.GetComponent<Component::Tag>().tag };
     std::string const displayName{ isEditMode ? "##" : "" + entityName };
+
+    // highlight if its a prefab instance
+    bool const isPrefabInstance{ entity.HasComponent<Component::PrefabOverrides>() };
+    if (isPrefabInstance) {
+      ImGui::PushStyleColor(ImGuiCol_Text, sEntityHighlightCol);
+    }
+
     if (ImGui::TreeNodeEx((displayName + "##" + std::to_string(entity.GetEntityID())).c_str(), treeFlag))
     {
+      if (isPrefabInstance) {
+        ImGui::PopStyleColor();
+      }
+
+      // if renaming entity
       if (isEditMode) {
         ImGui::SetItemAllowOverlap();
         ImGui::SameLine();
@@ -205,52 +217,7 @@ namespace GUI
         }
       }
 
-      bool dragNDropped{ false };
-      if (!mLockControls) {
-        if (ImGui::BeginDragDropSource())
-        {
-          ECS::EntityManager::EntityID id{ entity.GetRawEnttEntityID() };
-          ImGui::SetDragDropPayload(sDragDropPayload, &id, sizeof(ECS::EntityManager::EntityID), ImGuiCond_Once);
-          // Anything between begin and end will be parented to the dragged object
-          ImGui::Text(entityName.c_str());
-          ImGui::EndDragDropSource();
-        }
-        if (ImGui::BeginDragDropTarget())
-        {
-          dragNDropped = true;
-          ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(sDragDropPayload);
-          if (drop)
-          {
-            ECS::Entity droppedEntity{ *reinterpret_cast<ECS::EntityManager::EntityID*>(drop->Data) };
-            if (mEntityManager.HasParent(droppedEntity)) {
-              mEntityManager.RemoveParent(droppedEntity);
-            }
-            mEntityManager.SetParentEntity(entity, droppedEntity);
-            droppedEntity.GetComponent<Component::Transform>().modified = true;
-            // entity has new parent, traverse down hierarchy and update transforms
-            TransformHelpers::UpdateTransformToNewParent(droppedEntity);
-            QUEUE_EVENT(Events::SceneModifiedEvent);
-          }
-          ImGui::EndDragDropTarget();
-        }
-
-        if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
-          mRightClickedEntity = entity;
-          mEntityOptionsMenu = true;
-        }
-      }
-      
-      if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) && ImGui::IsItemHovered()) {
-        if (isCurrentEntity) {
-          if (!dragNDropped) {
-            editNameMode = mLockControls = true;
-          }
-        }
-        else {
-          GUIManager::SetSelectedEntity(entity);
-          editNameMode = mLockControls = false;
-        }
-      }
+      ProcessInput(entity, editNameMode);
 
       if (hasChildren) {
         for (auto const& child : mEntityManager.GetChildEntity(entity)) {
@@ -259,6 +226,55 @@ namespace GUI
       }
 
       ImGui::TreePop();
+    }
+  }
+
+  void SceneHierarchy::ProcessInput(ECS::Entity entity, bool& editNameMode) {
+    
+    bool dragNDropped{ false };
+    if (!mLockControls) {
+      if (ImGui::BeginDragDropSource())
+      {
+        ECS::EntityManager::EntityID id{ entity.GetRawEnttEntityID() };
+        ImGui::SetDragDropPayload(sDragDropPayload, &id, sizeof(ECS::EntityManager::EntityID), ImGuiCond_Once);
+        ImGui::Text(entity.GetTag().c_str());
+        ImGui::EndDragDropSource();
+      }
+      if (ImGui::BeginDragDropTarget())
+      {
+        dragNDropped = true;
+        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(sDragDropPayload);
+        if (drop)
+        {
+          ECS::Entity droppedEntity{ *reinterpret_cast<ECS::EntityManager::EntityID*>(drop->Data) };
+          if (mEntityManager.HasParent(droppedEntity)) {
+            mEntityManager.RemoveParent(droppedEntity);
+          }
+          mEntityManager.SetParentEntity(entity, droppedEntity);
+          droppedEntity.GetComponent<Component::Transform>().modified = true;
+          // entity has new parent, traverse down hierarchy and update transforms
+          TransformHelpers::UpdateTransformToNewParent(droppedEntity);
+          QUEUE_EVENT(Events::SceneModifiedEvent);
+        }
+        ImGui::EndDragDropTarget();
+      }
+
+      if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+        mRightClickedEntity = entity;
+        mEntityOptionsMenu = true;
+      }
+    }
+
+    if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) && ImGui::IsItemHovered()) {
+      if (GUIManager::GetSelectedEntity() == entity) {
+        if (!dragNDropped) {
+          editNameMode = mLockControls = true;
+        }
+      }
+      else {
+        GUIManager::SetSelectedEntity(entity);
+        editNameMode = mLockControls = false;
+      }
     }
   }
 
