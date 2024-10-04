@@ -2,10 +2,11 @@
 #include "Shader.h"
 #include <glm/gtc/type_ptr.hpp> 
 #include "Utils.h"
-
-//TEMP??
+#include "DebugTools/DebugLogger/DebugLogger.h"
 
 namespace Graphics {
+
+	static std::unordered_set<std::string> missingUniforms;
 	//creates a compute shader
 	Shader::Shader(std::string const& shdrFile) : pgmHdl{} {
 		CreateComputeShader(shdrFile);
@@ -24,7 +25,7 @@ namespace Graphics {
 
 	*/
 	Shader::Shader(std::string const& vertFile, std::string const& fragFile)
-		:pgmHdl{} {
+		:pgmHdl{}{
 		CreateShaderFromFile(vertFile, fragFile);
 	}
 
@@ -43,7 +44,7 @@ namespace Graphics {
 
 	*/
 	Shader::~Shader() {
-		glDeleteProgram(pgmHdl);
+		GLCALL(glDeleteProgram(pgmHdl));
 	}
 
 	void Shader::CreateComputeShader(std::string const& compute_file_path)
@@ -83,35 +84,35 @@ namespace Graphics {
 
 		// Check Compute Shader
 		// These functions get the requested shader information
-		glGetShaderiv(ComputeShaderID, GL_COMPILE_STATUS, &Result);
-		glGetShaderiv(ComputeShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+		GLCALL(glGetShaderiv(ComputeShaderID, GL_COMPILE_STATUS, &Result));
+		GLCALL(glGetShaderiv(ComputeShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength));
 		if (InfoLogLength > 0)
 		{
 			std::vector<char> ComputeShaderErrorMessage(InfoLogLength + 1);
-			glGetShaderInfoLog(ComputeShaderID, InfoLogLength, NULL, &ComputeShaderErrorMessage[0]);
+			GLCALL(glGetShaderInfoLog(ComputeShaderID, InfoLogLength, NULL, &ComputeShaderErrorMessage[0]));
 			printf("Compiling shader : %s\n", compute_file_path.c_str());
 			printf("%s\n", &ComputeShaderErrorMessage[0]);
 		}
 
 		// Link the program
 		GLuint ProgramID = glCreateProgram();
-		glAttachShader(ProgramID, ComputeShaderID);
-		glLinkProgram(ProgramID);
+		GLCALL(glAttachShader(ProgramID, ComputeShaderID));
+		GLCALL(glLinkProgram(ProgramID));
 
 		// Check the program
-		glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
-		glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+		GLCALL(glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result));
+		GLCALL(glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength));
 		if (InfoLogLength > 0)
 		{
 			std::vector<char> ProgramErrorMessage(InfoLogLength + 1);
-			glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
+			GLCALL(glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]));
 			printf("Linking program\n");
 			printf("%s\n", &ProgramErrorMessage[0]);
 		}
 
 		// Cleanup
-		glDetachShader(ProgramID, ComputeShaderID);
-		glDeleteShader(ComputeShaderID);
+		GLCALL(glDetachShader(ProgramID, ComputeShaderID));
+		GLCALL(glDeleteShader(ComputeShaderID));
 
 		pgmHdl = ProgramID;
 	}
@@ -129,36 +130,31 @@ namespace Graphics {
 	shader source strings.
 
 	*/
-	void Shader::CreateShaderFromString(std::string const& geomSrc, std::string const& vertSrc, std::string const& fragSrc) {
+	void Shader::CreateGeomShaderFromString(std::string const& geomSrc, std::string const& vertSrc, std::string const& fragSrc, std::string const& geomName, std::string const& vertName, std::string const& fragName) {
 		// Create an empty vertex shader handle
 		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
 		// Send the vertex shader source code to GL
 		// Note that std::string's .c_str is NULL character terminated.
 		const GLchar* source = vertSrc.c_str();
-		glShaderSource(vertexShader, 1, &source, 0);
+		GLCALL(glShaderSource(vertexShader, 1, &source, 0));
 
 		// Compile the vertex shader
-		glCompileShader(vertexShader);
+		GLCALL(glCompileShader(vertexShader));
 
 
 		//Checks to see if compliation succeeded or failed
 		GLint isCompiled = 0;
-		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &isCompiled);
-		if (isCompiled == GL_FALSE)
-		{
+		GLCALL(glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &isCompiled));
+		if (isCompiled == GL_FALSE) {
 			GLint maxLength = 0;
-			glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &maxLength);
-
-			// The maxLength includes the NULL character
+			GLCALL(glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &maxLength));
 			std::vector<GLchar> infoLog(maxLength);
-			glGetShaderInfoLog(vertexShader, maxLength, &maxLength, &infoLog[0]);
+			GLCALL(glGetShaderInfoLog(vertexShader, maxLength, &maxLength, &infoLog[0]));
+			GLCALL(glDeleteShader(vertexShader));
 
-			// Failed to compile, delete shader
-			glDeleteShader(vertexShader);
-
-			std::string str(infoLog.data());
-			std::cout << "Vertex Shader Compliation Error!!!" << std::endl;
+			Debug::DebugLogger::GetInstance().LogError("Vertex Shader: (" + vertSrc + ") Compilation Error:\n" + std::string(infoLog.data()));
+			throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Vertex Shader: (" + vertSrc + ") Compilation Error:\n" + std::string(infoLog.data())));
 			return;
 		}
 
@@ -168,27 +164,26 @@ namespace Graphics {
 		// Send the fragment shader source code to GL
 		// Note that std::string's .c_str is NULL character terminated.
 		source = (const GLchar*)fragSrc.c_str();
-		glShaderSource(fragmentShader, 1, &source, 0);
+		GLCALL(glShaderSource(fragmentShader, 1, &source, 0));
 
 		// Compile the fragment shader
-		glCompileShader(fragmentShader);
+		GLCALL(glCompileShader(fragmentShader));
 
-		glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &isCompiled);
+		GLCALL(glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &isCompiled));
 		if (isCompiled == GL_FALSE)
 		{
 			GLint maxLength = 0;
-			glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &maxLength);
+			GLCALL(glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &maxLength));
 
 			// The maxLength includes the NULL character
 			std::vector<GLchar> infoLog(maxLength);
-			glGetShaderInfoLog(fragmentShader, maxLength, &maxLength, &infoLog[0]);
+			GLCALL(glGetShaderInfoLog(fragmentShader, maxLength, &maxLength, &infoLog[0]));
 
 			// Failed to compile, delete both shaders to prevent leak
-			glDeleteShader(fragmentShader);
-			glDeleteShader(vertexShader);
+			GLCALL(glDeleteShader(fragmentShader));
+			GLCALL(glDeleteShader(vertexShader));
 
-			std::string str(infoLog.data());
-			std::cout << "Fragment Shader Compliation Error!!!" << std::endl;
+			throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Fragment Shader: (" + fragSrc + ") Compilation Error:\n" + std::string(infoLog.data())));
 			return;
 		}
 
@@ -198,28 +193,27 @@ namespace Graphics {
 		// Send the geometry shader source code to GL
 		// Note that std::string's .c_str is NULL character terminated.
 		source = (const GLchar*)geomSrc.c_str();
-		glShaderSource(geometryShader, 1, &source, 0);
+		GLCALL(glShaderSource(geometryShader, 1, &source, 0));
 
 		// Compile the geometry shader
-		glCompileShader(geometryShader);
+		GLCALL(glCompileShader(geometryShader));
 
-		glGetShaderiv(geometryShader, GL_COMPILE_STATUS, &isCompiled);
+		GLCALL(glGetShaderiv(geometryShader, GL_COMPILE_STATUS, &isCompiled));
 		if (isCompiled == GL_FALSE)
 		{
 			GLint maxLength = 0;
-			glGetShaderiv(geometryShader, GL_INFO_LOG_LENGTH, &maxLength);
+			GLCALL(glGetShaderiv(geometryShader, GL_INFO_LOG_LENGTH, &maxLength));
 
 			// The maxLength includes the NULL character
 			std::vector<GLchar> infoLog(maxLength);
-			glGetShaderInfoLog(geometryShader, maxLength, &maxLength, &infoLog[0]);
+			GLCALL(glGetShaderInfoLog(geometryShader, maxLength, &maxLength, &infoLog[0]));
 
 			// Failed to compile, delete shaders to prevent leak
-			glDeleteShader(geometryShader);
-			glDeleteShader(fragmentShader);
-			glDeleteShader(vertexShader);
+			GLCALL(glDeleteShader(geometryShader));
+			GLCALL(glDeleteShader(fragmentShader));
+			GLCALL(glDeleteShader(vertexShader));
 
-			std::string str(infoLog.data());
-			std::cout << "Geometry Shader Compliation Error!!!" << std::endl;
+			throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Geometry Shader: (" + geomSrc + ") Compilation Error : \n" + std::string(infoLog.data())));
 			return;
 		}
 
@@ -228,12 +222,12 @@ namespace Graphics {
 		// Get a program object.
 		pgmHdl = glCreateProgram();
 
-		std::cout << "Unable to create program handle!!!" << std::endl;
+		throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to create program handle"));
 
 		// Attach our shaders to our program
-		glAttachShader(pgmHdl, vertexShader);
-		glAttachShader(pgmHdl, fragmentShader);
-		glAttachShader(pgmHdl, geometryShader);
+		GLCALL(glAttachShader(pgmHdl, vertexShader));
+		GLCALL(glAttachShader(pgmHdl, fragmentShader));
+		GLCALL(glAttachShader(pgmHdl, geometryShader));
 
 		// Link our program
 		glLinkProgram(pgmHdl);
@@ -244,28 +238,27 @@ namespace Graphics {
 		if (isLinked == GL_FALSE)
 		{
 			GLint maxLength = 0;
-			glGetProgramiv(pgmHdl, GL_INFO_LOG_LENGTH, &maxLength);
+			GLCALL(glGetProgramiv(pgmHdl, GL_INFO_LOG_LENGTH, &maxLength));
 
 			// The maxLength includes the NULL character
 			std::vector<GLchar> infoLog(maxLength);
-			glGetProgramInfoLog(pgmHdl, maxLength, &maxLength, &infoLog[0]);
+			GLCALL(glGetProgramInfoLog(pgmHdl, maxLength, &maxLength, &infoLog[0]));
 
 			// Link failed, delete program and both shaders
-			glDeleteProgram(pgmHdl);
-			glDeleteShader(geometryShader);
-			glDeleteShader(fragmentShader);
-			glDeleteShader(vertexShader);
+			GLCALL(glDeleteProgram(pgmHdl));
+			GLCALL(glDeleteShader(geometryShader));
+			GLCALL(glDeleteShader(fragmentShader));
+			GLCALL(glDeleteShader(vertexShader));
 
-			std::string str(infoLog.data());
-			std::cout << "Shader link failure!!!" << std::endl;
+			throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Shader Link Failure: " + std::string(infoLog.data()) + "Files: "));
 			return;
 		}
 
 		// Always detach shaders after a successful link.
-		glDetachShader(pgmHdl, vertexShader);
-		glDetachShader(pgmHdl, fragmentShader);
-		glDetachShader(pgmHdl, geometryShader);
-		std::cout << "Successfully Compiled and Linked!!!" << std::endl;
+		GLCALL(glDetachShader(pgmHdl, vertexShader));
+		GLCALL(glDetachShader(pgmHdl, fragmentShader));
+		GLCALL(glDetachShader(pgmHdl, geometryShader));
+		Debug::DebugLogger::GetInstance().LogInfo("Shader with files () () sucessfully compiled and linked.");
 	}
 	/*  _________________________________________________________________________ */
 	/*! CreateShaderFromString
@@ -280,7 +273,7 @@ namespace Graphics {
 	shader source strings.
 
 	*/
-	void Shader::CreateShaderFromString(std::string const& vertSrc, std::string const& fragSrc) {
+	void Shader::CreateShaderFromString(std::string const& vertSrc, std::string const& fragSrc, std::string const& vertName, std::string const& fragName) {
 		// Create an empty vertex shader handle
 		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
@@ -309,7 +302,9 @@ namespace Graphics {
 			glDeleteShader(vertexShader);
 
 			std::string str(infoLog.data());
-			std::cout << "Vertex Compliation error!!!" << std::endl;
+
+			Debug::DebugLogger::GetInstance().LogError("Vertex Shader: " + vertName + " Compilation Error : \n" + std::string(infoLog.data()));
+			//throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Vertex Shader: " + vertName + " Compilation Error : \n" + std::string(infoLog.data())));
 			return;
 		}
 
@@ -340,7 +335,8 @@ namespace Graphics {
 
 			std::string str(infoLog.data());
 
-			std::cout << "Fragment shader compliation error!!!" << std::endl;
+			Debug::DebugLogger::GetInstance().LogError("Fragment Shader: " + fragName + " Compilation Error:\n" + std::string(infoLog.data()));
+			//throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Fragment Shader: " + fragName + " Compilation Error:\n" + std::string(infoLog.data())));
 			return;
 		}
 
@@ -350,7 +346,7 @@ namespace Graphics {
 		pgmHdl = glCreateProgram();
 
 		if (pgmHdl == 0) {
-			std::cout << "Unable to create program handle!!!!" << std::endl;
+			throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to create program handle"));
 		}
 
 		// Attach our shaders to our program
@@ -378,14 +374,15 @@ namespace Graphics {
 			glDeleteShader(fragmentShader);
 
 			std::string str(infoLog.data());
-			std::cerr << "Shader Linking Error: " << &infoLog[0] << std::endl;
+			Debug::DebugLogger::GetInstance().LogError("Shader Link Failure: " + std::string(infoLog.data()) + "Files: " + vertName + ", " + fragName);
+			//throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Shader Link Failure: " + std::string(infoLog.data()) + "Files: " + vertName + ", " + fragName));
 			return;
 		}
 
 		// Always detach shaders after a successful link.
 		glDetachShader(pgmHdl, vertexShader);
 		glDetachShader(pgmHdl, fragmentShader);
-		std::cout << "Successfully compiled and linked!!!" << std::endl;
+		Debug::DebugLogger::GetInstance().LogInfo("Shader with files " + vertName + ", " + fragName + " sucessfully compiled and linked.");
 	}
 
 	/*  _________________________________________________________________________ */
@@ -405,7 +402,8 @@ namespace Graphics {
 		std::ifstream inVertFile{ vertFile };
 
 		if (!inVertFile) {
-			std::cout << "Cannot open vertex file " << vertFile << std::endl;
+			Debug::DebugLogger::GetInstance().LogError("Unable to open Vertex File: (" + vertFile + "). Check the directory");
+			//throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to open Vertex File: (" + vertFile + "). Check the directory"));
 		}
 		std::stringstream vertSrc;
 		vertSrc << inVertFile.rdbuf();
@@ -414,14 +412,15 @@ namespace Graphics {
 		std::ifstream inFragFile{ fragFile };
 
 		if (!inFragFile) {
-			std::cout << "Cannot open frag file " << fragFile << std::endl;
+			Debug::DebugLogger::GetInstance().LogError("Unable to open Fragment File: (" + fragFile + "). Check the directory");
+			//throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to open Fragment File: (" + fragFile + "). Check the directory"));
 		}
 
 		std::stringstream fragSrc;
 		fragSrc << inFragFile.rdbuf();
 		inFragFile.close();
 
-		CreateShaderFromString(vertSrc.str(), fragSrc.str());
+		CreateShaderFromString(vertSrc.str(), fragSrc.str(), vertFile, fragFile);
 	}
 	/*  _________________________________________________________________________ */
 	/*! CreateShaderFromFile
@@ -439,7 +438,7 @@ namespace Graphics {
 	void Shader::CreateShaderFromFile(std::string const& geomFile, std::string const& vertFile, std::string const& fragFile) {
 		std::ifstream inVertFile{ vertFile };
 		if (!inVertFile) {
-			std::cout << "Cannot open vertex file: " << vertFile << std::endl;
+			throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to open Vertex File: (" + vertFile + "). Check the directory"));
 		}
 		std::stringstream vertSrc;
 		vertSrc << inVertFile.rdbuf();
@@ -447,7 +446,7 @@ namespace Graphics {
 
 		std::ifstream inFragFile{ fragFile };
 		if (!inFragFile) {
-			std::cout << "Cannot open frag file " << fragFile << std::endl;
+			throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to open Fragment File: (" + fragFile + "). Check the directory"));
 		}
 
 		std::stringstream fragSrc;
@@ -456,14 +455,14 @@ namespace Graphics {
 
 		std::ifstream inGeomFile{ geomFile };
 		if (!inGeomFile) {
-			std::cout << "Cannot open geom file " << geomFile << std::endl;
+			throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to open Geom File: (" + geomFile + "). Check the directory"));
 		}
 
 		std::stringstream geomSrc;
 		geomSrc << inGeomFile.rdbuf();
 		inGeomFile.close();
 
-		CreateShaderFromString(geomSrc.str(), vertSrc.str(), fragSrc.str());
+		CreateGeomShaderFromString(geomSrc.str(), vertSrc.str(), fragSrc.str(), geomFile, vertFile, fragFile);
 	}
 	/*  _________________________________________________________________________ */
 	/*! Use
@@ -473,7 +472,7 @@ namespace Graphics {
 
 	*/
 	void Shader::Use() const {
-		glUseProgram(pgmHdl);
+		GLCALL(glUseProgram(pgmHdl));
 	}
 
 	/*  _________________________________________________________________________ */
@@ -483,7 +482,19 @@ namespace Graphics {
 
 	*/
 	void Shader::Unuse() const {
-		glUseProgram(0);
+		GLCALL(glUseProgram(0));
+	}
+
+	GLint Shader::GetUniformLocation(std::string const& name) {
+		GLint loc = glGetUniformLocation(pgmHdl, name.c_str());
+		if (loc < 0) {
+			// If the uniform is not found, log only if it hasn't been logged before
+			if (missingUniforms.find(name) == missingUniforms.end()) {
+				Debug::DebugLogger::GetInstance().LogWarning("Uniform variable '" + name + "' does not exist.");
+				missingUniforms.insert(name); // Mark as logged
+			}
+		}
+		return loc;
 	}
 
 	/*  _________________________________________________________________________ */
@@ -500,12 +511,9 @@ namespace Graphics {
 
 	*/
 	void Shader::SetUniform(std::string const& name, GLboolean val) {
-		GLint loc{ glGetUniformLocation(pgmHdl, name.c_str()) };
+		GLint loc = GetUniformLocation(name);
 		if (loc >= 0) {
 			glUniform1i(loc, val);
-		}
-		else {
-			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
 		}
 	}
 
@@ -523,12 +531,9 @@ namespace Graphics {
 
 	*/
 	void Shader::SetUniform(std::string const& name, GLint val) {
-		GLint loc{ glGetUniformLocation(pgmHdl, name.c_str()) };
+		GLint loc = GetUniformLocation(name);
 		if (loc >= 0) {
 			glUniform1i(loc, val);
-		}
-		else {
-			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
 		}
 	}
 
@@ -547,12 +552,9 @@ namespace Graphics {
 
 	*/
 	void Shader::SetUniform(std::string const& name, GLfloat val) {
-		GLint loc{ glGetUniformLocation(pgmHdl, name.c_str()) };
+		GLint loc = GetUniformLocation(name);
 		if (loc >= 0) {
 			glUniform1f(loc, val);
-		}
-		else {
-			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
 		}
 	}
 
@@ -570,12 +572,9 @@ namespace Graphics {
 
 	*/
 	void Shader::SetUniform(std::string const& name, GLdouble val) {
-		GLint loc{ glGetUniformLocation(pgmHdl, name.c_str()) };
+		GLint loc = GetUniformLocation(name);
 		if (loc >= 0) {
 			glUniform1f(loc, static_cast<GLfloat>(val));
-		}
-		else {
-			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
 		}
 	}
 
@@ -594,12 +593,9 @@ namespace Graphics {
 
 	*/
 	void Shader::SetUniform(std::string const& name, GLfloat x, GLfloat y) {
-		GLint loc{ glGetUniformLocation(pgmHdl, name.c_str()) };
+		GLint loc = GetUniformLocation(name);
 		if (loc >= 0) {
 			glUniform2f(loc, x, y);
-		}
-		else {
-			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
 		}
 	}
 
@@ -617,12 +613,9 @@ namespace Graphics {
 
 	*/
 	void Shader::SetUniform(std::string const& name, GLfloat x, GLfloat y, GLfloat z) {
-		GLint loc{ glGetUniformLocation(pgmHdl, name.c_str()) };
+		GLint loc = GetUniformLocation(name);
 		if (loc >= 0) {
 			glUniform3f(loc, x, y, z);
-		}
-		else {
-			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
 		}
 	}
 
@@ -640,12 +633,9 @@ namespace Graphics {
 
 	*/
 	void Shader::SetUniform(std::string const& name, GLfloat x, GLfloat y, GLfloat z, GLfloat w) {
-		GLint loc{ glGetUniformLocation(pgmHdl, name.c_str()) };
+		GLint loc = GetUniformLocation(name);
 		if (loc >= 0) {
 			glUniform4f(loc, x, y, z, w);
-		}
-		else {
-			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
 		}
 	}
 
@@ -663,12 +653,9 @@ namespace Graphics {
 
 	*/
 	void Shader::SetUniform(std::string const& name, glm::vec2 const& val) {
-		GLint loc{ glGetUniformLocation(pgmHdl, name.c_str()) };
+		GLint loc = GetUniformLocation(name);
 		if (loc >= 0) {
 			glUniform2f(loc, val.x, val.y);
-		}
-		else {
-			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
 		}
 	}
 
@@ -686,12 +673,9 @@ namespace Graphics {
 
 	*/
 	void Shader::SetUniform(std::string const& name, glm::vec3 const& val) {
-		GLint loc{ glGetUniformLocation(pgmHdl, name.c_str()) };
+		GLint loc = GetUniformLocation(name);
 		if (loc >= 0) {
 			glUniform3f(loc, val.x, val.y, val.z);
-		}
-		else {
-			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
 		}
 	}
 
@@ -709,12 +693,9 @@ namespace Graphics {
 
 	*/
 	void Shader::SetUniform(std::string const& name, glm::vec4 const& val) {
-		GLint loc{ glGetUniformLocation(pgmHdl, name.c_str()) };
+		GLint loc = GetUniformLocation(name);
 		if (loc >= 0) {
 			glUniform4f(loc, val.x, val.y, val.z, val.w);
-		}
-		else {
-			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
 		}
 	}
 
@@ -732,12 +713,9 @@ namespace Graphics {
 
 	*/
 	void Shader::SetUniform(std::string const& name, glm::mat3 const& val) {
-		GLint loc{ glGetUniformLocation(pgmHdl, name.c_str()) };
+		GLint loc = GetUniformLocation(name);
 		if (loc >= 0) {
 			glUniformMatrix3fv(loc, 1, GL_FALSE, &val[0][0]);
-		}
-		else {
-			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
 		}
 	}
 
@@ -755,12 +733,9 @@ namespace Graphics {
 
 	*/
 	void Shader::SetUniform(std::string const& name, glm::mat4 const& val) {
-		GLint loc{ glGetUniformLocation(pgmHdl , name.c_str()) };
+		GLint loc = GetUniformLocation(name);
 		if (loc >= 0) {
 			glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(val));
-		}
-		else {
-			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
 		}
 	}
 
@@ -781,12 +756,9 @@ namespace Graphics {
 
 	*/
 	void Shader::SetUniform(std::string const& name, int* val, unsigned int count) {
-		GLint loc{ glGetUniformLocation(pgmHdl , name.c_str()) };
+		GLint loc = GetUniformLocation(name);
 		if (loc >= 0) {
 			glUniform1iv(loc, count, val);
-		}
-		else {
-			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
 		}
 	}
 
@@ -798,13 +770,9 @@ namespace Graphics {
 		texture->Bind(texUnit);
 
 		// Set the uniform in the shader to the correct texture unit
-		GLint location = glGetUniformLocation(pgmHdl, name.c_str());
-		if (location != -1) {
-			GLCALL(glUniform1i(location, texUnit));
-		}
-		else {
-			// Log or handle the error if the uniform isn't found
-			std::cerr << "Warning: Uniform '" << name << "' not found in shader!" << std::endl;
+		GLint loc = GetUniformLocation(name);
+		if (loc != -1) {
+			GLCALL(glUniform1i(loc, texUnit));
 		}
 	}
 }

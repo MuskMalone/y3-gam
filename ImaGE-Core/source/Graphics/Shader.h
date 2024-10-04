@@ -12,13 +12,15 @@ namespace Graphics {
 
 		static std::shared_ptr<Shader> Create(std::string const& vertFile, std::string const& fragFile);
 		void CreateComputeShader(std::string const& shdrFile);
-		void CreateShaderFromString(std::string const& vertSrc, std::string const& fragSrc);
+		void CreateShaderFromString(std::string const& vertSrc, std::string const& fragSrc, std::string const& vertName = "", std::string const& fragName = "");
 		void CreateShaderFromFile(std::string const& vertFile, std::string const& fragFile);
-		void CreateShaderFromString(std::string const& geomSrc, std::string const& vertSrc, std::string const& fragSrc);
+		void CreateGeomShaderFromString(std::string const& geomSrc, std::string const& vertSrc, std::string const& fragSrc, std::string const& geomName ="", std::string const& vertName ="", std::string const& fragName = "");
 		void CreateShaderFromFile(std::string const& geomFile, std::string const& vertFile, std::string const& fragFile);
 
 		void Use() const;
 		void Unuse() const;
+
+		GLint GetUniformLocation(std::string const& name);
 
 		void SetUniform(std::string const& name, GLboolean val);
 		void SetUniform(std::string const& name, GLint val);
