@@ -130,4 +130,16 @@ namespace Graphics {
         if (mFov < 1.0f) mFov = 1.0f;
         if (mFov > 45.0f) mFov = 45.0f;
     }
+
+    void EditorCamera::MoveAlongPlane(float xDisp, float yDisp) {
+      glm::vec3 forward = GetForwardVector();
+      forward.y = 0.0f; // zero out Y-component
+      forward = glm::normalize(forward);
+
+      glm::vec3 rightMovement = GetRightVector() * xDisp * mMousePanningSpeed;
+      glm::vec3 forwardMovement = forward * yDisp * mMousePanningSpeed;
+
+      // move based on inverted xDisp
+      mPosition += forwardMovement - rightMovement;
+    }
 }

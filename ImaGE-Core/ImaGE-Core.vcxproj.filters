@@ -92,9 +92,6 @@
       <Filter>Asset</Filter>
     </ClInclude>
     <ClInclude Include="source\Color.h" />
-    <ClInclude Include="source\Core\Camera.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="source\Core\Components\Camera.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
@@ -356,14 +353,12 @@
       <Filter>Serialization</Filter>
     </ClInclude>
     <ClInclude Include="source\Singleton.h" />
-    <ClInclude Include="source\TempScene.h" />
+    <ClInclude Include="source\Scenes\Scene.h" />
     <ClInclude Include="source\pch.h" />
+    <ClInclude Include="source\Graphics\RenderTarget.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
-    <ClCompile Include="source\Core\Camera.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="source\Core\Components\Transform.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
@@ -514,7 +509,7 @@
     <ClCompile Include="source\Serialization\Serializer.cpp">
       <Filter>Serialization</Filter>
     </ClCompile>
-    <ClCompile Include="source\TempScene.cpp" />
+    <ClCompile Include="source\Scenes\Scene.cpp" />
     <ClCompile Include="source\pch.cpp" />
   </ItemGroup>
 </Project>

@@ -1,11 +1,10 @@
 #pragma once
 #ifndef IMGUI_DISABLE
-#include "pch.h"
 #include <vector>
 #include <memory>
 #include <GUI/GUIWindow.h>
 #include "Styles/Styler.h"
-#include <Graphics/Framebuffer.h>
+#include <Graphics/RenderTarget.h>
 #include <Core/Entity.h>
 
 namespace GUI {
@@ -16,9 +15,8 @@ namespace GUI {
 
     GUIManager();
 
-    // taking in framebuffer to pass into viewport class
     void Init();
-    void UpdateGUI(std::shared_ptr<Graphics::Framebuffer> const& framebuffer);
+    void UpdateGUI(Graphics::RenderTarget& renderTarget);
     void Shutdown();
 
     static inline Styler& GetStyler() noexcept { return mStyler; }

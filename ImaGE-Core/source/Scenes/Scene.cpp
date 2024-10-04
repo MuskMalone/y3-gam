@@ -1,6 +1,6 @@
 #include <pch.h>
 
-#include "TempScene.h"
+#include "Scene.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/gtc/constants.hpp>
@@ -12,14 +12,11 @@
 
 #include "Graphics/RenderSystem.h"
 
-#include "Core/EntityManager.h"
 #include "Core/Entity.h"
 #include <Core/Components/Components.h>
 #include "Graphics/EditorCamera.h"
 
 #include <Physics/PhysicsSystem.h>
-
-std::vector<Camera> Scene::m_cameras;
 
 Scene::Scene()
 {
@@ -32,8 +29,6 @@ Scene::Scene()
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_BLEND);
-
-  m_cameras.emplace_back(WINDOW_WIDTH<int>, WINDOW_HEIGHT<int>, glm::vec3(3.f, 3.f, 15.f));
 }
 
 void Scene::Init()
@@ -90,9 +85,9 @@ void Scene::Init()
 
 void Scene::Update(float deltaTime)
 {
-    mEcam.UpdateCamera(deltaTime);
+    //mEcam.UpdateCamera(deltaTime);
   // update transforms
-    IGE::Physics::PhysicsSystem::GetInstance()->Update(deltaTime);
+    //IGE::Physics::PhysicsSystem::GetInstance()->Update(deltaTime);
   //for (auto& obj : mObjects)
   //{
   //    obj->transform = obj->entity.GetComponent<Component::Transform>();
@@ -102,7 +97,7 @@ void Scene::Update(float deltaTime)
   //}
 }
 
-void Scene::Draw()
+void Scene::Draw() const
 {
   glClear(GL_COLOR_BUFFER_BIT);
   glClear(GL_DEPTH_BUFFER_BIT);

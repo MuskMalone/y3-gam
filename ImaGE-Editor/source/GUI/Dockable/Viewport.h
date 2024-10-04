@@ -1,7 +1,7 @@
 #pragma once
 #include "pch.h"
 #include <GUI/GUIWindow.h>
-#include <Graphics/Framebuffer.h>
+#include <Graphics/RenderTarget.h>
 #include <memory>
 
 namespace GUI
@@ -13,7 +13,7 @@ namespace GUI
     Viewport(std::string const& name);
     
     void Run() override {}  // not in use
-    void Update(std::shared_ptr<Graphics::Framebuffer> const& framebuffer);
+    void Render(Graphics::RenderTarget& renderTarget);
 
   private:
     void ReceivePayload();

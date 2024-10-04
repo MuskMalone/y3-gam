@@ -166,7 +166,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Application.h" />
     <ClInclude Include="source\Asset\AssetManager.h" />
     <ClInclude Include="source\Color.h" />
-    <ClInclude Include="source\Core\Camera.h" />
     <ClInclude Include="source\Core\Components\Camera.h" />
     <ClInclude Include="source\Core\Components\CameraController.h" />
     <ClInclude Include="source\Core\Components\Collider.h" />
@@ -229,6 +228,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Graphics\RenderPass.h" />
     <ClInclude Include="source\Graphics\RenderSystem.h" />
     <ClInclude Include="source\Graphics\Renderer.h" />
+    <ClInclude Include="source\Graphics\RenderTarget.h" />
     <ClInclude Include="source\Graphics\Shader.h" />
     <ClInclude Include="source\Graphics\Submesh.h" />
     <ClInclude Include="source\Graphics\Texture.h" />
@@ -256,12 +256,11 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Serialization\Registration\RegisterEnumsAndFuncs.h" />
     <ClInclude Include="source\Serialization\Serializer.h" />
     <ClInclude Include="source\Singleton.h" />
-    <ClInclude Include="source\TempScene.h" />
+    <ClInclude Include="source\Scenes\Scene.h" />
     <ClInclude Include="source\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
-    <ClCompile Include="source\Core\Camera.cpp" />
     <ClCompile Include="source\Core\Components\Transform.cpp" />
     <ClCompile Include="source\Core\Entity.cpp" />
     <ClCompile Include="source\Core\EntityManager.cpp" />
@@ -336,7 +335,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Scenes\SceneManager.cpp" />
     <ClCompile Include="source\Serialization\Deserializer.cpp" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
-    <ClCompile Include="source\TempScene.cpp" />
+    <ClCompile Include="source\Scenes\Scene.cpp" />
     <ClCompile Include="source\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
