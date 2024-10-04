@@ -67,7 +67,7 @@ namespace Graphics {
             }
             else {
                 shader->SetUniform("u_Albedo", glm::vec3(0.5,0.5,0.5));
-                shader->SetUniform("u_Metallic", 0.0f);
+                shader->SetUniform("u_Metalness", 0.0f);
                 shader->SetUniform("u_Roughness", 0.0f);
                 shader->SetUniform("u_AO", 1.f);
             }
