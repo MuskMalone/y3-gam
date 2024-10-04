@@ -22,6 +22,7 @@ namespace IGE {
 
   void Application::Init() {
     mSystemManager.InitSystems();
+    Reflection::ObjectFactory::GetInstance().Init();
     IGE::Physics::PhysicsSystem::InitAllocator();
     IGE::Physics::PhysicsSystem::GetInstance()->Init();
     GetDefaultRenderTarget().scene.Init();

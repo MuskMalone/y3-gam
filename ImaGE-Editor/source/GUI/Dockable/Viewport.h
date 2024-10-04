@@ -19,6 +19,7 @@ namespace GUI
     void ProcessCameraInputs(Graphics::EditorCamera& cam);
     void ReceivePayload();
 
+    bool mIsPanning, mIsDragging;
   };
   
 } // namespace GUI

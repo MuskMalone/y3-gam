@@ -9,12 +9,13 @@
 #include <Core/Components/Mesh.h>
 #include <Graphics/MeshFactory.h>
 #include <Graphics/Mesh.h>
-#include <GUI/Helpers/ImGuiHelpers.h>
+#include <GUI/Helpers/ImGuiHelpers.h> 
 
 namespace GUI
 {
 
-  Viewport::Viewport(std::string const& name) : GUIWindow(name) {}
+  Viewport::Viewport(std::string const& name) : GUIWindow(name),
+    mIsPanning{ false }, mIsDragging{ false } {}
 
   void Viewport::Render(Graphics::RenderTarget& renderTarget)
   {
@@ -23,7 +24,8 @@ namespace GUI
     ImVec2 const startCursorPos{ ImGui::GetCursorPos() };
 
     // only register input if viewport is focused
-    if (ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) {
+    bool const checkInput{ mIsDragging || mIsPanning };
+    if ((ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) || checkInput) {
       ProcessCameraInputs(renderTarget.scene.GetEditorCamera());
     }
     // auto focus window when middle or right-clicked upon
@@ -53,7 +55,6 @@ namespace GUI
   }
 
   void Viewport::ProcessCameraInputs(Graphics::EditorCamera& cam) {
-    static bool isDragging{ false }, isPanning{ false };
     static ImVec2 previousMousePos;
     using enum Graphics::EditorCamera::CameraMovement;  // C++20 <3
     float const dt{ Performance::FrameRateController::GetInstance().GetDeltaTime() };
@@ -62,9 +63,9 @@ namespace GUI
 
     // only allow movement and panning if right-click held
     if (ImGui::IsMouseDown(ImGuiMouseButton_Right)) {
-      if (!isPanning && !isDragging) {
+      if (!mIsPanning && !mIsDragging) {
         previousMousePos = ImGui::GetMousePos();
-        isDragging = true;
+        mIsDragging = true;
       }
       ImGui::SetMouseCursor(ImGuiMouseCursor_None); // hide cursor when looking
 
@@ -95,12 +96,12 @@ namespace GUI
       previousMousePos = currMousePos;
     }
     else {
-      isDragging = false;
+      mIsDragging = false;
 
       if (ImGui::IsMouseDown(ImGuiMouseButton_Middle)) {
-        if (!isPanning) {
+        if (!mIsPanning) {
           previousMousePos = ImGui::GetMousePos();
-          isPanning = true;
+          mIsPanning = true;
         }
         ImGui::SetMouseCursor(ImGuiMouseCursor_None); // hide cursor when panning
 
@@ -110,7 +111,7 @@ namespace GUI
         previousMousePos = currMousePos;
       }
       else {
-        isPanning = false;
+        mIsPanning = false;
       }
     }
 

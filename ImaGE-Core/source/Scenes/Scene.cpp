@@ -77,7 +77,7 @@ void Scene::Init()
               renderComponent.mesh = mesh0; // Assign cube mesh
           }
           else {
-              renderComponent.mesh = mesh1; // Assign pyramid mesh
+            renderComponent.mesh = mesh1; // Assign pyramid mesh
           }
       }
   }
