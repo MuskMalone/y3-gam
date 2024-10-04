@@ -8,6 +8,7 @@
 #include <type_traits>
 #include <memory>
 #include <mutex>
+#include "AssetUtils.h"
 namespace IGE {
 	namespace Assets {
         class AssetManager
@@ -72,6 +73,7 @@ namespace IGE {
                     );
             }
             template <typename T>
+            //returns the guid seeded by the absolute path to the folder in assets
             GUID ImportAsset(std::string const& filepathstr){//std::filesystem::path const& filepath) { //
                 //get the absolute file path so that there cant be any duplicates
                 std::string absolutepath{filepathstr};
@@ -148,7 +150,17 @@ namespace IGE {
                 ref.Load();
             }
             template <typename T>
-            void LoadRef(GUID guid) {
+            void LoadRef(GUID const& guid) {
+                TypeGUID typeguid{ GetTypeName<T>() };
+                TypeAssetKey key{ typeguid ^ guid };
+                if (mAssetRefs.find(key) != mAssetRefs.end())
+                    return LoadRef<T>(std::any_cast<Ref<T>&>(mAssetRefs.at(key)));
+            }
+            template <typename T>
+            void LoadRef(std::string const& fp) {
+                std::string filepath {fp};
+                if (!IsPathWithinDirectory(fp, gAssetsDirectory)) throw std::runtime_error("file is not within assets dir");
+                GUID guid{ GetAbsolutePath(fp) };
                 TypeGUID typeguid{ GetTypeName<T>() };
                 TypeAssetKey key{ typeguid ^ guid };
                 if (mAssetRefs.find(key) != mAssetRefs.end())
@@ -160,7 +172,7 @@ namespace IGE {
             }
 
             template< typename T >
-            void UnloadRef(GUID guid) {
+            void UnloadRef(GUID const& guid) {
                 TypeGUID typeguid{ GetTypeName<T>() };
                 TypeAssetKey key{ typeguid ^ guid };
                 if (mAssetRefs.find(key) != mAssetRefs.end())

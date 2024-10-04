@@ -5,7 +5,7 @@
 #include <Scenes/SceneManager.h>
 #include <Prefabs/PrefabManager.h>
 #include <Input/InputManager.h>
-
+#include <Asset/IGEAssets.h>
 #include <Core/Entity.h>
 #include <Core/EntityManager.h>
 #include <Core/Components/Components.h>
@@ -27,6 +27,7 @@ namespace IGE {
     Prefabs::PrefabManager::GetInstance().Init();
     Performance::FrameRateController::GetInstance().Init(120.f, 1.f, false);
     Input::InputManager::GetInstance().InitInputManager(mWindow, mSpecification.WindowWidth, mSpecification.WindowHeight, 0.1);
+    IGEAssetsInitialize();
   }
 
   void Application::Run() {

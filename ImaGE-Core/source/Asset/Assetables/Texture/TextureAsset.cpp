@@ -6,7 +6,7 @@
 namespace IGE {
 	namespace Assets {
 		namespace {
-            const std::string cTextureDirectory{ std::string(gAssetsDirectory) + "Textures\\" };
+
 
             bool ConvertToDDS(const std::wstring& inputPath, const std::wstring& outputPath) {
                 DirectX::ScratchImage image;

@@ -1,6 +1,7 @@
 #include <pch.h>
 #include "Texture.h"
 #include "Utils.h"
+#include <DirectXTex.h>
 //TEMP?? 
 
 namespace Graphics {
@@ -25,36 +26,41 @@ namespace Graphics {
 	Texture::Texture(std::string const& path)
 		: mPath{ path } {
 
-		//  // Load image using stb_image
-		//  int width, height, channels;
-		//  stbi_set_flip_vertically_on_load(true);
-		//  unsigned char* data = stbi_load(path.c_str(), &width, &height, &channels, STBI_rgb_alpha);
-		//#ifndef _INSTALLER
-		//  if (!data) {
-		//   LoggingSystem::GetInstance().Log(LogLevel::ERROR_LEVEL, "ERROR: Failed to load texture: " + path + " ! ", __FUNCTION__);
-		//  }
-		//#endif
-		//
-		//  mWidth = static_cast<unsigned int>(width);
-		//  mHeight = static_cast<unsigned int>(height);
-		//
-		//  glCreateTextures(GL_TEXTURE_2D, 1, &mTexHdl);
-		//  // allocate GPU storage for texture image data loaded from file
-		//  glTextureStorage2D(mTexHdl, 1, GL_RGBA8, mWidth, mHeight);
-		//
-		//
-		//  // Set texture parameters
-		//  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		//  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		//  glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		//  glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		//
-		//  // copy image data from client memory to GPU texture buffer memory
-		//  glTextureSubImage2D(mTexHdl, 0, 0, 0, mWidth, mHeight,
-		//   GL_RGBA, GL_UNSIGNED_BYTE, data);
-		//  // client memory not required since image is buffered in GPU memory
-		//  stbi_image_free(data);
-		//  stbi_set_flip_vertically_on_load(false);
+		  // Load image using stb_image
+			std::wstring wPath = std::wstring(path.begin(), path.end());
+
+			// Load the DDS file using DirectXTex
+			DirectX::ScratchImage image;
+			HRESULT hr = DirectX::LoadFromDDSFile(wPath.c_str(), DirectX::DDS_FLAGS_NONE, nullptr, image);
+			if (FAILED(hr)) {
+				std::cerr << "Failed to load DDS texture: " << path << std::endl;
+				throw std::runtime_error{ "failed to load dds tex"};
+			}
+
+			// Retrieve the image data
+			const DirectX::Image* img = image.GetImage(0, 0, 0);
+			if (!img) {
+				std::cerr << "Failed to retrieve image data." << std::endl;
+				throw std::runtime_error{ "failed to retrieve image data"};
+			}
+			mWidth = img->width;
+			mHeight = img->height;
+
+		  glCreateTextures(GL_TEXTURE_2D, 1, &mTexHdl);
+		  // allocate GPU storage for texture image data loaded from file
+		  glTextureStorage2D(mTexHdl, 1, GL_RGBA8, mWidth, mHeight);
+		
+		
+		  // Set texture parameters
+		  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		  glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		  glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		
+		  // copy image data from client memory to GPU texture buffer memory
+		  glTextureSubImage2D(mTexHdl, 0, 0, 0, mWidth, mHeight,
+		   GL_RGBA, GL_UNSIGNED_BYTE, img->pixels);
+		  // client memory not required since image is buffered in GPU memory
 	}
 
 	/*  _________________________________________________________________________ */

@@ -12,7 +12,7 @@
 #include "Core/EntityManager.h"
 #include <Reflection/ObjectFactory.h>
 #include <Events/EventCallback.h>
-#include <Core/Component/Components.h>
+#include <Core/Components/Components.h>
 #include <Physics/PhysicsSystem.h>
 
 namespace GUI {

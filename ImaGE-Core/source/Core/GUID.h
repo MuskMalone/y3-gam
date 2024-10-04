@@ -4,6 +4,10 @@
 #include <random>
 namespace IGE {
 	namespace Core {
+		inline std::uint32_t Fnv1a32(char const* s, size_t count)
+		{
+			return ((count ? Fnv1a32(s, count - 1) : 2166136261u) ^ s[count]) * 16777619u; // NOLINT (hicpp-signed-bitwise)
+		}
 		template <typename _tag>
 		class GUID
 		{
@@ -27,7 +31,7 @@ namespace IGE {
 
 			bool operator==(const GUID& other) const { return mID == other.mID; } 
 			bool operator<(const GUID& other) const { return mID < other.mID; }
-			std::string_view const& GetSeed() const noexcept { return mSeed; }
+			std::string const& GetSeed() const noexcept { return mSeed; }
 		private:
 			static std::mt19937_64 sEng;
 			static std::uniform_int_distribution<uint64_t> sUniformDistribution;

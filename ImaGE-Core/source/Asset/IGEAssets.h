@@ -2,28 +2,15 @@
 
 #include "SmartPointer.h"
 #include "AssetManager.h"
-
+#include <filesystem>
 //assetables
 #include "Assetables/Texture/TextureAsset.h"
 #include "Assetables/Audio/AudioAsset.h"
+#include <Asset/AssetUtils.h>
 #include <windows.h>
 #include <wrl/wrappers/corewrappers.h>
 #include <DirectXTex.h>
-//for testing purposes
-struct Integer : public IGE::Assets::RefCounted {
-    int i;
-    static IGE::Assets::GUID Import(std::string const& fp) {
-        //do the processing of the filepath here (eg copy to assets folder, convert to another file type etc)
-        std::cout << "Integer importing " + fp << std::endl;
-        return IGE::Assets::GUID{fp};
-    }
-    static void* Load(IGE::Assets::GUID) {
-        return reinterpret_cast<void*>(new Integer());
-    }
-    static void Unload(Integer* ptr, IGE::Assets::GUID) {
-        if (ptr) delete ptr;
-    }
-};
+
 inline void IGEAssetsRegisterTypes() {
     // COM initialization
 //#if (_WIN32_WINNT >= 0x0A00 /*_WIN32_WINNT_WIN10*/)
@@ -40,10 +27,70 @@ inline void IGEAssetsRegisterTypes() {
 
     auto am{ IGE::Assets::AssetManager::GetInstance() };
     am->RegisterTypes<
-        IGE::Assets::TextureAsset
+        IGE::Assets::TextureAsset, 
+        IGE::Assets::AudioAsset
     >();
 }
+inline void IGEAssetsImportAllAssets() {
+    namespace fs = std::filesystem;
+    fs::path rootDir(gAssetsDirectory);
+    auto& am{ *IGE::Assets::AssetManager::GetInstance() };
+    // Check if the root path exists and is a directory
+    if (!fs::exists(rootDir) || !fs::is_directory(rootDir)) {
+        std::cerr << "Invalid root directory path." << std::endl;
+        return;
+    }
+    fs::path textures { IGE::Assets::cTextureDirectory };
+    fs::path audio { IGE::Assets::cAudioDirectory };
+    // Iterate through the directories in the root path
+    for (const auto& entry : fs::directory_iterator(rootDir)) {
+        if (entry.is_directory()) {
+            fs::path subDir = entry.path();
+            //TODO tch: add reflection 
+            // Check if we're in the "Textures" or "Audio" subdirectory
+            if (IGE::Assets::IsDirectoriesEqual(subDir, textures)) {
+                for (const auto& entry : fs::directory_iterator(subDir)) {
+                    if (entry.is_regular_file()) {
+                        am.ImportAsset<IGE::Assets::TextureAsset>(entry.path().string());
+                    }
+                }
+                
+            }
+            else if (IGE::Assets::IsDirectoriesEqual(subDir, audio)) {
+                for (const auto& entry : fs::directory_iterator(subDir)) {
+                    if (entry.is_regular_file()) {
+                        am.ImportAsset<IGE::Assets::AudioAsset>(entry.path().string());
+                    }
+                }
+            }
+        }
+    }
+    am.LoadRef<IGE::Assets::TextureAsset>("C:\\Users\\terra\\OneDrive\\Documents\\GitHub\\y3-gam\\Assets\\Textures\\foot.dds");
+
+}
+inline void IGEAssetsInitialize() {
+    IGEAssetsRegisterTypes();
+    IGEAssetsImportAllAssets();
+}
+
+
+
 #ifdef IGE_ASSETMGR_SAMPLE
+//for testing purposes
+struct Integer : public IGE::Assets::RefCounted {
+    int i;
+    static IGE::Assets::GUID Import(std::string const& fp) {
+        //do the processing of the filepath here (eg copy to assets folder, convert to another file type etc)
+        std::cout << "Integer importing " + fp << std::endl;
+        return IGE::Assets::GUID{fp};
+    }
+    static void* Load(IGE::Assets::GUID) {
+        return reinterpret_cast<void*>(new Integer());
+    }
+    static void Unload(Integer* ptr, IGE::Assets::GUID) {
+        if (ptr) delete ptr;
+    }
+};
 struct Float : public IGE::Assets::RefCounted {
     float f;
     static IGE::Assets::GUID Import(std::string const& fp) {

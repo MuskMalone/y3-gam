@@ -50,7 +50,7 @@ namespace IGE {
                 std::cout << "Directory already exists: " << directoryPath << std::endl;
             }
         }
-        bool IsDirectoriesEqual(const std::string fp1, const std::string fp2) {
+        bool IsDirectoriesEqual(const std::string &fp1, const std::string &fp2) {
             fs::path path1 {fp1};
             fs::path path2 {fp2};
 
@@ -63,6 +63,37 @@ namespace IGE {
                 }
             }
             catch (const fs::filesystem_error& e) {
+                return false;
+            }
+        }
+        bool IsDirectoriesEqual(const fs::path& path1, const fs::path& path2) {
+
+            try {
+                if (fs::equivalent(path1, path2)) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            catch (const fs::filesystem_error& e) {
+                return false;
+            }
+        }
+        bool IsPathWithinDirectory(const std::string& fp, const std::string& dirPath)
+        {
+            fs::path filePath{fp};
+            fs::path directoryPath { dirPath};
+            try {
+                // Get the canonical (absolute, normalized) paths
+                fs::path fileCanonical = fs::canonical(filePath);
+                fs::path dirCanonical = fs::canonical(directoryPath);
+
+                // Check if the file's canonical path starts with the directory's canonical path
+                return std::mismatch(dirCanonical.begin(), dirCanonical.end(), fileCanonical.begin()).first == dirCanonical.end();
+            }
+            catch (const fs::filesystem_error& e) {
+                std::cerr << "Error: " << e.what() << std::endl;
                 return false;
             }
         }

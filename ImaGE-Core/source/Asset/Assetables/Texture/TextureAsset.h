@@ -4,7 +4,7 @@
 #include "DirectXTex.h"
 namespace IGE {
 	namespace Assets {
-
+		const std::string cTextureDirectory{ std::string(gAssetsDirectory) + "Textures\\" };
 		struct TextureAsset : public RefCounted {
 			Graphics::Texture mTexture;
 			TextureAsset(std::string const& fp) : mTexture{ fp } {};
@@ -12,5 +12,6 @@ namespace IGE {
 			static void* Load([[maybe_unused]] GUID guid);
 			static void Unload([[maybe_unused]] TextureAsset* ptr, GUID guid);
 		};
+
 	}
 }
