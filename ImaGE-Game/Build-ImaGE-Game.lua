@@ -32,6 +32,7 @@ project "ImaGE-Game"
       "../Libraries/ImTerm/include/**",
       "../Libraries/PhysX/physx/include/**",
       "../Libraries/PhysX/pxshared/include/**",
+      "../Libraries/mono/msvc/include/**",
    }
 
    links
@@ -59,8 +60,6 @@ project "ImaGE-Game"
        symbols "On"
 
        postbuildcommands {
-         --"{COPYFILE} %[%{wks.location}Libraries/assimp/assimp-vc143-mt.dll] %[%{cfg.targetdir}]",
-         --"{COPYFILE} %[%{wks.location}Libraries/rttr-0.9.6/lib/Debug/rttr_core_d.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
       }
 
@@ -77,8 +76,6 @@ project "ImaGE-Game"
        symbols "On"
 
        postbuildcommands {
-         --"{COPYFILE} %[%{wks.location}Libraries/assimp/assimp-vc143-mt.dll] %[%{cfg.targetdir}]",
-         --"{COPYFILE} %[%{wks.location}Libraries/rttr-0.9.6/lib/Release/rttr_core.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
       }
 
@@ -95,7 +92,5 @@ project "ImaGE-Game"
       symbols "Off"
 
       postbuildcommands {
-         --"{COPYFILE} %[%{wks.location}Libraries/assimp/assimp-vc143-mt.dll] %[%{cfg.targetdir}]",
-         --"{COPYFILE} %[%{wks.location}Libraries/rttr-0.9.6/lib/Release/rttr_core.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
       }

@@ -32,6 +32,7 @@ project "ImaGE-Editor"
       "../Libraries/ImTerm/include/**",
       "../Libraries/PhysX/physx/include/**",
       "../Libraries/PhysX/pxshared/include/**",
+      "../Libraries/mono/msvc/include/**",
    }
 
    links
@@ -103,7 +104,11 @@ project "ImaGE-Editor"
       symbols "Off"
 
       postbuildcommands {
-         --"{COPYFILE} %[%{wks.location}Libraries/assimp/assimp-vc143-mt.dll] %[%{cfg.targetdir}]",
-         --"{COPYFILE} %[%{wks.location}Libraries/rttr-0.9.6/lib/Release/rttr_core.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysX_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysXCommon_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysXCooking_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysXFoundation_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/physx4/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
       }

@@ -29,6 +29,7 @@ project "ImaGE-Core"
       "../Libraries/ImTerm/include/**",
       "../Libraries/PhysX/physx/include/**",
       "../Libraries/PhysX/pxshared/include/**",
+      "../Libraries/mono/msvc/include/**",
    }
 
    pchheader "pch.h"
@@ -88,12 +89,14 @@ project "ImaGE-Core"
         "SceneQuery_static_64.lib", 
         "SimulationController_static_64.lib",
         "DirectXTex_d.lib",
-        "fmodL_vc.lib"
+        "fmodL_vc.lib",
+        "mono-2.0-sgen.lib",
        }
 
        libdirs 
        {
-          "../Libraries/Built-Libraries/Debug/Libraries/**"
+          "../Libraries/Built-Libraries/Debug/Libraries/**",
+          "../Libraries/mono/msvc/build/sgen/x64/**",
        }
 
        postbuildcommands {
@@ -116,7 +119,8 @@ project "ImaGE-Core"
 
         libdirs 
         {
-           "../Libraries/Built-Libraries/Release/Libraries/**"
+           "../Libraries/Built-Libraries/Release/Libraries/**",
+           "../Libraries/mono/msvc/build/sgen/x64/**",
         }
 
        links {
@@ -139,7 +143,8 @@ project "ImaGE-Core"
         "SceneQuery_static_64.lib", 
         "SimulationController_static_64.lib",
         "DirectXTex.lib",
-        "fmod_vc.lib"
+        "fmod_vc.lib",
+        "mono-2.0-sgen.lib",
        }
 
     filter "configurations:Distribution"
@@ -155,12 +160,30 @@ project "ImaGE-Core"
 
        libdirs 
        {
-          "../Libraries/Built-Libraries/Release/Libraries/**"
+          "../Libraries/Built-Libraries/Release/Libraries/**",
+          "../Libraries/mono/msvc/build/sgen/x64/**",
        }
 
        links {
         "opengl32.lib",
         "glfw3.lib",
         "assimp-vc143-mt.lib",
-        "rttr_core.lib"
+        "rttr_core.lib",
+        "LowLevel_static_64.lib", 
+        "LowLevelAABB_static_64.lib", 
+        "LowLevelDynamics_static_64.lib",
+        "PhysX_64.lib", 
+        "PhysXCharacterKinematic_static_64.lib", 
+        "PhysXCommon_64.lib", 
+        "PhysXCooking_64.lib", 
+        "PhysXExtensions_static_64.lib", 
+        "PhysXFoundation_64.lib", 
+        "PhysXPvdSDK_static_64.lib", 
+        "PhysXTask_static_64.lib", 
+        "PhysXVehicle_static_64.lib", 
+        "SceneQuery_static_64.lib", 
+        "SimulationController_static_64.lib",
+        "DirectXTex.lib",
+        "fmod_vc.lib",
+        "mono-2.0-sgen.lib",
        }
