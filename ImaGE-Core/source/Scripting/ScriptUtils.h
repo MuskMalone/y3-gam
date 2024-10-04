@@ -68,6 +68,20 @@ namespace Mono {
 
 
 
+	template<typename T>
+	struct ScriptFieldInfoProxy {
+			std::string fieldName
+			std::string type
+			T data;
+	};
+
+
+	struct ProxyScript {
+		std::string mScriptName;
+		std::vector<rttr::variant> ScriptFieldProxyList;
+
+	};
+
 
 	/*!*********************************************************************
 	\brief
