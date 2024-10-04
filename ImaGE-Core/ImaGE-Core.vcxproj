@@ -166,6 +166,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Application.h" />
     <ClInclude Include="source\Asset\AssetManager.h" />
     <ClInclude Include="source\Asset\IGEAssets.h" />
+    <ClInclude Include="source\Asset\PseudoAssetManager.h" />
     <ClInclude Include="source\Color.h" />
     <ClInclude Include="source\Core\Components\Camera.h" />
     <ClInclude Include="source\Core\Components\CameraController.h" />
@@ -228,8 +229,8 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Graphics\RenderCommand.h" />
     <ClInclude Include="source\Graphics\RenderPass.h" />
     <ClInclude Include="source\Graphics\RenderSystem.h" />
-    <ClInclude Include="source\Graphics\Renderer.h" />
     <ClInclude Include="source\Graphics\RenderTarget.h" />
+    <ClInclude Include="source\Graphics\Renderer.h" />
     <ClInclude Include="source\Graphics\Shader.h" />
     <ClInclude Include="source\Graphics\Submesh.h" />
     <ClInclude Include="source\Graphics\Texture.h" />
@@ -248,6 +249,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Reflection\ComponentTypes.h" />
     <ClInclude Include="source\Reflection\EntityData.h" />
     <ClInclude Include="source\Reflection\ObjectFactory.h" />
+    <ClInclude Include="source\Scenes\Scene.h" />
     <ClInclude Include="source\Scenes\SceneManager.h" />
     <ClInclude Include="source\Scenes\SceneStates.h" />
     <ClInclude Include="source\Serialization\Deserializer.h" />
@@ -258,7 +260,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Serialization\Registration\RegisterEnumsAndFuncs.h" />
     <ClInclude Include="source\Serialization\Serializer.h" />
     <ClInclude Include="source\Singleton.h" />
-    <ClInclude Include="source\Scenes\Scene.h" />
     <ClInclude Include="source\pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -335,10 +336,10 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Prefabs\PrefabManager.cpp" />
     <ClCompile Include="source\Reflection\AddComponentFunctions.cpp" />
     <ClCompile Include="source\Reflection\ObjectFactory.cpp" />
+    <ClCompile Include="source\Scenes\Scene.cpp" />
     <ClCompile Include="source\Scenes\SceneManager.cpp" />
     <ClCompile Include="source\Serialization\Deserializer.cpp" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
-    <ClCompile Include="source\Scenes\Scene.cpp" />
     <ClCompile Include="source\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

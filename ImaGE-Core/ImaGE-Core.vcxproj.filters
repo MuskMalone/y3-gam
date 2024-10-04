@@ -94,6 +94,9 @@
     <ClInclude Include="source\Asset\IGEAssets.h">
       <Filter>Asset</Filter>
     </ClInclude>
+    <ClInclude Include="source\Asset\PseudoAssetManager.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
     <ClInclude Include="source\Color.h" />
     <ClInclude Include="source\Core\Components\Camera.h">
       <Filter>Core\Components</Filter>
@@ -274,6 +277,9 @@
     <ClInclude Include="source\Graphics\RenderSystem.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="source\Graphics\RenderTarget.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
     <ClInclude Include="source\Graphics\Renderer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -319,6 +325,9 @@
     <ClInclude Include="source\Prefabs\PrefabManager.h">
       <Filter>Prefabs</Filter>
     </ClInclude>
+    <ClInclude Include="source\Reflection\AddComponentFunctions.h">
+      <Filter>Reflection</Filter>
+    </ClInclude>
     <ClInclude Include="source\Reflection\ComponentTypes.h">
       <Filter>Reflection</Filter>
     </ClInclude>
@@ -327,6 +336,9 @@
     </ClInclude>
     <ClInclude Include="source\Reflection\ObjectFactory.h">
       <Filter>Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scenes\Scene.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="source\Scenes\SceneManager.h">
       <Filter>Scenes</Filter>
@@ -356,10 +368,7 @@
       <Filter>Serialization</Filter>
     </ClInclude>
     <ClInclude Include="source\Singleton.h" />
-    <ClInclude Include="source\Scenes\Scene.h" />
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Graphics\RenderTarget.h" />
-    <ClInclude Include="source\Reflection\AddComponentFunctions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -501,8 +510,14 @@
     <ClCompile Include="source\Prefabs\PrefabManager.cpp">
       <Filter>Prefabs</Filter>
     </ClCompile>
+    <ClCompile Include="source\Reflection\AddComponentFunctions.cpp">
+      <Filter>Reflection</Filter>
+    </ClCompile>
     <ClCompile Include="source\Reflection\ObjectFactory.cpp">
       <Filter>Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scenes\Scene.cpp">
+      <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="source\Scenes\SceneManager.cpp">
       <Filter>Scenes</Filter>
@@ -513,8 +528,6 @@
     <ClCompile Include="source\Serialization\Serializer.cpp">
       <Filter>Serialization</Filter>
     </ClCompile>
-    <ClCompile Include="source\Scenes\Scene.cpp" />
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\Reflection\AddComponentFunctions.cpp" />
   </ItemGroup>
 </Project>

@@ -34,7 +34,7 @@ namespace Graphics {
 
 	struct InstanceData {
 		glm::mat4 modelMatrix;
-		//int entityID = -1;
+		int entityID = -1;
 		//glm::vec4 color;
 	};
 

@@ -68,9 +68,8 @@ namespace Graphics {
                 shader->SetUniform("u_Roughness", 0.0f);
                 shader->SetUniform("u_AO", 1.f);
             }
-
             //Graphics::Renderer::SubmitMesh(mesh.mesh, xform.worldPos, xform.worldRot, xform.worldScale, { 1.f, 1.f, 1.f, 1.f }); //@TODO: adjust color and rotation as needed
-            Graphics::Renderer::SubmitInstance(mesh.mesh, xform.worldMtx, Color::COLOR_WHITE );
+            Graphics::Renderer::SubmitInstance(mesh.mesh, xform.worldMtx, Color::COLOR_WHITE, entity.GetEntityID());
         }
         
         mSpec.pipeline->GetSpec().instanceLayout;
