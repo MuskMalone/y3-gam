@@ -1,3 +1,13 @@
+/*!*********************************************************************
+\file   SceneControls.cpp
+\author chengen.lau\@digipen.edu
+\date   5-October-2024
+\brief  Class encapsulating functions to run the secondary menu bar
+        of the editor. Calls upon the SceneManager to start/pause/stop
+        the current scene using the controls displayed.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include <pch.h>
 #include "SceneControls.h"
 #include <imgui/imgui.h>

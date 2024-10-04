@@ -119,7 +119,7 @@ namespace Graphics {
         offsetY *= mMouseSense;
 
         mYaw += offsetX;
-        mPitch += offsetY;
+        mPitch -= offsetY;
 
         // Constrain pitch to avoid flipping the camera
         if (mPitch > 89.0f) mPitch = 89.0f;

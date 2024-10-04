@@ -17,7 +17,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Events.h"
 #include <functional>
 #include <vector>
-//#include <typeindex>  // for std::type_index
 #include <queue>
 #include <memory>
 

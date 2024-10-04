@@ -1,3 +1,10 @@
+/*!*********************************************************************
+\file   StyleEnums.h
+\date   5-October-2024
+\brief  Contains the definition of enums used for engine styling.
+  
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #ifndef IMGUI_DISABLE
 

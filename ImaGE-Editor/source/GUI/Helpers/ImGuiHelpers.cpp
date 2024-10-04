@@ -1,3 +1,11 @@
+/*!*********************************************************************
+\file   ImGuiHelpers.cpp
+\date   5-October-2024
+\brief  Contains the definition of helper functions for ImGui elements.
+        Also contains convenience operator overloads for ImGui vectors.
+  
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include <pch.h>
 #include "ImGuiHelpers.h"
 #include <ImGui/imgui.h>

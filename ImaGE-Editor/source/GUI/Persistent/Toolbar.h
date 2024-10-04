@@ -1,6 +1,14 @@
+/*!*********************************************************************
+\file   Toolbar.h
+\author chengen.lau\@digipen.edu
+\date   5-October-2024
+\brief  Class encapsulating functions to run the main menubar of the
+        editor. Contains options related to files and editor settings.
+  
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #ifndef IMGUI_DISABLE
-#include "pch.h"
 #include <GUI/GUIWindow.h>
 #include <vector>
 #include <memory>
@@ -14,6 +22,10 @@ namespace GUI
   public:
     Toolbar(std::string const& name, std::vector<std::shared_ptr<GUIWindow>> const& windowsRef);
 
+    /*!*********************************************************************
+    \brief
+      Runs the toolbar
+    ************************************************************************/
     void Run() override;
 
   private:
@@ -21,7 +33,16 @@ namespace GUI
     bool mScenePopup, mPrefabPopup;
     bool mDisableAll, mAllowCreationOnly;
 
+    /*!*********************************************************************
+    \brief
+      Runs the popup menu for a new scene
+    ************************************************************************/
     void RunNewScenePopup();
+
+    /*!*********************************************************************
+    \brief
+      Runs the popup menu for a new prefab
+    ************************************************************************/
     void RunNewPrefabPopup();
 
     /*!*********************************************************************

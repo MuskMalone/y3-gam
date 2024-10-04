@@ -1,6 +1,16 @@
+/*!*********************************************************************
+\file   AssetBrowser.h
+\author chengen.lau\@digipen.edu
+\date   5-October-2024
+\brief  Class encapsulating functions to run the asset browser of the
+        editor. Displays files in the assets directory and allows
+        various input operations such as drag-and-drop and right-click
+        options.
+  
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #ifndef IMGUI_DISABLE
-#include "pch.h"
 #include <GUI/GUIWindow.h>
 #include <string>
 #include <filesystem>
@@ -38,11 +48,52 @@ namespace GUI
     ************************************************************************/
     EVENT_CALLBACK_DECL(HandleEvent);
 
+    /*!*********************************************************************
+    \brief
+      Runs the menu bar of the asset browser
+    ************************************************************************/
     void MenuBar();
+
+    /*!*********************************************************************
+    \brief
+      Runs the directory tree of the asset browser to show the list of
+      directories in the assets folder
+    ************************************************************************/
     void DirectoryTree();
+
+    /*!*********************************************************************
+    \brief
+      Runs the content viewer of the asset browser to diplay the files
+      in the current directory
+    ************************************************************************/
     void ContentViewer();
+
+    /*!*********************************************************************
+    \brief
+      Displays the files in the current selected directory
+    \param imgSize
+      The size of each item in the browser
+    \param maxChars
+      The max characters each file name can display
+    ************************************************************************/
     void DisplayDirectory(float imgSize, unsigned maxChars);
+
+    /*!*********************************************************************
+    \brief
+      Displays the results if the search bar is being used
+    \param imgSize
+      The size of each item in the browser
+    \param maxChars
+      The max characters each file name can display
+    ************************************************************************/
     void DisplaySearchResults(float imgSize, unsigned maxChars);
+
+    /*!*********************************************************************
+    \brief
+      Checks for any input for a file selected. Menu options, DragDrop etc.
+    \param path
+      The path of the file selected
+    ************************************************************************/
     void CheckInput(std::filesystem::path const& path);
 
     /*!*********************************************************************

@@ -1,3 +1,11 @@
+/*!*********************************************************************
+\file   Application.cpp
+\date   5-October-2024
+\brief  The main class running the engine. Updates all systems in the
+        engine and sets up the GLFW window.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include <pch.h>
 #include "Application.h"
 
@@ -22,6 +30,7 @@ namespace IGE {
 
   void Application::Init() {
     mSystemManager.InitSystems();
+    Reflection::ObjectFactory::GetInstance().Init();
     IGE::Physics::PhysicsSystem::InitAllocator();
     IGE::Physics::PhysicsSystem::GetInstance()->Init();
     GetDefaultRenderTarget().scene.Init();

@@ -34,6 +34,13 @@ namespace Reflection
 
     /*!*********************************************************************
     \brief
+      Initializes the ObjectFactory by mapping each component type to its
+      respective function for use during component modification
+    ************************************************************************/
+    void Init();
+
+    /*!*********************************************************************
+    \brief
       Creates a copy of an entity along with its components. This also
       duplicates all child entities, which is done through recursive calls
       to this function
@@ -75,7 +82,7 @@ namespace Reflection
     \param compVar
       The component to add
    ************************************************************************/
-    void AddComponentToEntity(ECS::Entity entity, rttr::type const& type, rttr::variant const& compVar = {}) const;
+    void AddComponentToEntity(ECS::Entity entity, rttr::variant const& compVar = {}) const;
 
     /*!*********************************************************************
     \brief
@@ -121,6 +128,10 @@ namespace Reflection
     std::vector<rttr::variant> GetEntityComponents(ECS::Entity const& id) const;
 
   private:
+    using AddComponentFunc = std::function<void(ECS::Entity, rttr::variant const&)>;
+
+    std::unordered_map<rttr::type, AddComponentFunc> mAddComponentFuncs;
+
     std::unordered_map<ECS::Entity::EntityID, ECS::Entity> mNewIDs; // remaps entities if IDs are taken
     PrefabInstanceContainer mPrefabInstances;   // stores deserialized prefab instances
     std::vector<VariantEntity> mRawEntities; // stores deserialized entity data

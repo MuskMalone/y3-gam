@@ -1,7 +1,17 @@
+/*!*********************************************************************
+\file   IMSH.cpp
+\author chengen.lau\@digipen.edu
+\date   20-September-2024
+\brief  Class acting as the intermediary step between a n external
+        model file and the engine's custom format. It reads the
+        contents with Assimp and then converts it in to an .imsh
+        object, which can then be used as a MeshSource.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include "pch.h"
 #include "IMSH.h"
 
-#ifndef IMGUI_DISABLE
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
@@ -171,4 +181,3 @@ namespace {
     }
   }
 }
-#endif

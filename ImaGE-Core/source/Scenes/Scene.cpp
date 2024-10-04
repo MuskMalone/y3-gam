@@ -51,7 +51,7 @@ void Scene::Init()
   std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateModelFromImport("../Assets/Models/bunny_high_poly.imsh");
   mesh0 = std::make_shared<Graphics::Mesh>(cubeMeshSource);
 
-  std::shared_ptr<Graphics::MeshSource> pyrMeshSource = Graphics::MeshFactory::CreateCube();
+  std::shared_ptr<Graphics::MeshSource> pyrMeshSource = Graphics::MeshFactory::CreateModelFromString("Cube");
   mesh1 = std::make_shared<Graphics::Mesh>(pyrMeshSource);
   
   // Create a debug albedo texture (bright magenta checkerboard)
@@ -92,7 +92,7 @@ void Scene::Init()
               transformComponent.scale = glm::vec3(5.f);
           }
           else {
-              renderComponent.mesh = mesh1; // Assign pyramid mesh
+            renderComponent.mesh = mesh1; // Assign pyramid mesh
           }
 
           // Set up the MaterialComponent

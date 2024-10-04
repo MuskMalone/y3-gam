@@ -15,7 +15,6 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#include "pch.h"
 #include <GUI/GUIWindow.h>
 #include <Events/EventCallback.h>
 #include <Prefabs/Prefab.h>
@@ -29,6 +28,10 @@ namespace GUI
   public:
     PrefabEditor(std::string const& name);
 
+    /*!*********************************************************************
+    \brief
+      Updates the prefab editor
+    ************************************************************************/
     void Run() override;
 
   private:

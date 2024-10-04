@@ -1,3 +1,14 @@
+/*!*********************************************************************
+\file   AssetBrowser.cpp
+\author chengen.lau\@digipen.edu
+\date   5-October-2024
+\brief  Class encapsulating functions to run the asset browser of the
+        editor. Displays files in the assets directory and allows
+        various input operations such as drag-and-drop and right-click
+        options.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include <pch.h>
 #include "AssetBrowser.h"
 #include <imgui/imgui.h>
