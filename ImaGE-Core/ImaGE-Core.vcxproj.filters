@@ -70,6 +70,12 @@
     <Filter Include="External\ImGui\misc\single_file">
       <UniqueIdentifier>{BD5E7082-2942-7FC2-3245-ADFE9EA74513}</UniqueIdentifier>
     </Filter>
+    <Filter Include="External\fmod">
+      <UniqueIdentifier>{BD4ED857-290F-548E-F249-9D0B5EC9986A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\fmod\include">
+      <UniqueIdentifier>{30E3B294-9C4F-6E8F-6543-06EDD16E90F7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="External\glad">
       <UniqueIdentifier>{0FD5D857-7B95-548E-44D0-9D0BB04F996A}</UniqueIdentifier>
     </Filter>
@@ -252,9 +258,6 @@
     <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl3_loader.h">
       <Filter>External\ImGui\backends</Filter>
     </ClInclude>
-    <ClInclude Include="source\External\ImGui\backends\imgui_impl_vulkan.h">
-      <Filter>External\ImGui\backends</Filter>
-    </ClInclude>
     <ClInclude Include="source\External\ImGui\imconfig.h">
       <Filter>External\ImGui</Filter>
     </ClInclude>
@@ -281,6 +284,27 @@
     </ClInclude>
     <ClInclude Include="source\External\ImGui\misc\single_file\imgui_single_file.h">
       <Filter>External\ImGui\misc\single_file</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod_codec.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod_common.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod_dsp.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod_dsp_effects.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod_errors.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod_output.h">
+      <Filter>External\fmod\include</Filter>
     </ClInclude>
     <ClInclude Include="source\External\glad\include\KHR\khrplatform.h">
       <Filter>External\glad\include\KHR</Filter>
@@ -484,9 +508,6 @@
       <Filter>External\ImGui\backends</Filter>
     </ClCompile>
     <ClCompile Include="source\External\ImGui\backends\imgui_impl_opengl3.cpp">
-      <Filter>External\ImGui\backends</Filter>
-    </ClCompile>
-    <ClCompile Include="source\External\ImGui\backends\imgui_impl_vulkan.cpp">
       <Filter>External\ImGui\backends</Filter>
     </ClCompile>
     <ClCompile Include="source\External\ImGui\imgui.cpp">

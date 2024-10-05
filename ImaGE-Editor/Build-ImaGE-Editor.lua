@@ -20,6 +20,8 @@ project "ImaGE-Editor"
       "../ImaGE-Core/source/External",
       "../ImaGE-Core/source/External/ImGui",
       "../ImaGE-Core/source/External/glad/include",
+      "../ImaGE-Core/source/External/fmod/include",
+      "../ImaGE-Core/source/External/ImTerm/",
       
       "../Libraries/assimp/include/**",
       "../Libraries/entt/single_include",
@@ -66,7 +68,7 @@ project "ImaGE-Editor"
 
        postbuildcommands {
          "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/debug/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/fmod/lib/fmodL.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}ImaGE-Core/source/Externals/fmod/lib/fmodL.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]"
       }
 
@@ -85,7 +87,7 @@ project "ImaGE-Editor"
 
        postbuildcommands {
          "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}ImaGE-Core/source/Externals/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]"
       }
 
@@ -104,6 +106,6 @@ project "ImaGE-Editor"
 
       postbuildcommands {
          "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}ImaGE-Core/source/Externals/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
       }
