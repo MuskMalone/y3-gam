@@ -1,4 +1,5 @@
 #version 460 core
+#extension GL_ARB_bindless_texture : require
 
 layout(location = 0) out vec4 fragColor;
 layout(location = 1) out int entityID;
@@ -7,6 +8,7 @@ in vec4 v_Color;
 in vec2 v_TexCoord;
 in flat float v_TexIdx;
 
+in flat int v_MaterialIdx;
 in flat int v_EntityID;
 
 //uniform sampler2D u_Tex[32]; //TODO CHANGE THIS IN FUTURE
@@ -23,7 +25,8 @@ uniform float u_Roughness;
 uniform float u_Transparency;
 uniform float u_AO;
 
-uniform sampler2D u_AlbedoMap;
+uniform sampler2D u_AlbedoMap[2]; //temp
+
 
 //lighting parameters
 uniform vec3 u_CamPos;       // Camera position in world space
@@ -41,11 +44,13 @@ float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness);
 vec3 fresnelSchlick(float cosTheta, vec3 F0);
 
 void main(){
-    
     entityID = v_EntityID;
 	//sample texture
 	//vec4 texColor = texture2D(u_Tex[0], v_TexCoord);
-    vec4 albedoTexture = texture(u_AlbedoMap, v_TexCoord);
+
+    sampler2D albedoSampler = sampler2D(u_AlbedoMap[v_MaterialIdx]);
+    vec4 albedoTexture = texture(albedoSampler, v_TexCoord);
+    //vec4 albedoTexture = texture(u_AlbedoMap, v_TexCoord);
     vec3 albedo = albedoTexture.rgb * u_Albedo; // Mixing texture and uniform
 
 	// Normalize inputs
