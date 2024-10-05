@@ -1,3 +1,13 @@
+/*!*********************************************************************
+\file   RenderPass.h
+\author k.choa\@digipen.edu
+\date   22/09/2024
+\brief  The RenderPass class handles the configuration and execution of a single rendering pass, 
+        which includes binding the pipeline, setting up camera and shader uniforms, and submitting 
+        entities to the renderer for rendering. It supports instanced rendering and material application for entities with materials.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include <memory>
 #include "Pipeline.h"

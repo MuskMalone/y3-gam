@@ -1,3 +1,14 @@
+/*!*********************************************************************
+\file   EditorCamera.h
+\author k.choa\@digipen.edu
+\date   22/09/2024
+\brief  The EditorCamera class supports camera movement through keyboard and mouse input, 
+		allowing for translation, rotation, and zoom functionality. It provides methods 
+		for calculating view, projection, and view-projection matrices.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
+
 #pragma once
 #include "Utils.h"
 

@@ -54,13 +54,28 @@ namespace Graphics {
             if (mesh.mesh == nullptr)
                 continue;
 
+            std::vector<GLuint64> hdls;
+            for (auto const& map : Renderer::GetAlbedoMaps()) {
+                hdls.push_back(map->GetBindlessHandle()); //should not be here TODO move somewhere else
+            }
+            if (hdls.size() > 0)
+                shader->SetUniform("u_AlbedoMap", hdls.data(), hdls.size());
+
+            uint32_t matID = 0;
             if (entity.HasComponent<Component::Material>()) {
                 auto const& matComponent = entity.GetComponent<Component::Material>();
-                auto const& mat = matComponent.material;
+                //auto const& mat = matComponent.material;
+                matID = matComponent.matIdx;
+                shader->SetUniform("u_Albedo", glm::vec3(0.5, 0.5, 0.5));
+                shader->SetUniform("u_Metalness", 0.0f);
+                shader->SetUniform("u_Roughness", 0.0f);
+                shader->SetUniform("u_Transparency", 1.0f);
+                shader->SetUniform("u_AO", 1.f);
+                //TEMP CODE
 
-                if (mat) {
-                    mat->Apply(shader);
-                }
+                //if (mat) {
+                //    mat->Apply(shader);
+                //}
             }
             else {
                 
@@ -69,11 +84,11 @@ namespace Graphics {
                 shader->SetUniform("u_Roughness", 0.0f);
                 shader->SetUniform("u_Transparency", 1.0f);
                 shader->SetUniform("u_AO", 1.f);
-                shader->SetUniform("u_AlbedoMap", Renderer::GetWhiteTexture(), 0);
+                //shader->SetUniform("u_AlbedoMap", Renderer::GetWhiteTexture(), 0);
             }
 
             //Graphics::Renderer::SubmitMesh(mesh.mesh, xform.worldPos, xform.worldRot, xform.worldScale, { 1.f, 1.f, 1.f, 1.f }); //@TODO: adjust color and rotation as needed
-            Graphics::Renderer::SubmitInstance(mesh.mesh, xform.worldMtx, Color::COLOR_WHITE, entity.GetEntityID());
+            Graphics::Renderer::SubmitInstance(mesh.mesh, xform.worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
         }
         
         mSpec.pipeline->GetSpec().instanceLayout;

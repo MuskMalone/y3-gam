@@ -1,3 +1,13 @@
+/*!*********************************************************************
+\file   Shader.h
+\author k.choa\@digipen.edu
+\date   22/09/2024
+\brief  The Shader class encapsulates the process of creating, compiling, and linking OpenGL shaders. 
+		It supports vertex, fragment, geometry, and compute shaders, and provides methods for setting 
+		uniform variables of various types (e.g., integers, floats, vectors, matrices, textures).
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include <string>
 #include "Texture.h"
@@ -35,6 +45,10 @@ namespace Graphics {
 		void SetUniform(std::string const& name, glm::mat3 const& val);
 		void SetUniform(std::string const& name, glm::mat4 const& val);
 		void SetUniform(std::string const& name, int* val, unsigned int count);
+
+		void SetUniform(std::string const& name, GLuint64 bindlessHandle);
+
+		void SetUniform(std::string const& name, const GLuint64* bindlessHandles, unsigned int count);
 
 		void SetUniform(std::string const& name, std::shared_ptr<Texture> texture, unsigned int texUnit); //TEXTURES
 		unsigned int PgmHdl() { return pgmHdl; };
