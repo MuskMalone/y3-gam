@@ -79,12 +79,10 @@ project "ImaGE-Core"
 
        links {
         "opengl32.lib",
-        "glfw3.lib",
-        "assimp-vc143-mt.lib",
+        "glfw3d.lib",
+        "assimp-vc143-mtd.lib",
         "rttr_core_d.lib",
-        "LowLevel_static_64.lib", 
-        "LowLevelAABB_static_64.lib", 
-        "LowLevelDynamics_static_64.lib",
+
         "PhysX_static_64.lib", 
         "PhysXCharacterKinematic_static_64.lib", 
         "PhysXCommon_static_64.lib", 
@@ -92,11 +90,9 @@ project "ImaGE-Core"
         "PhysXExtensions_static_64.lib", 
         "PhysXFoundation_static_64.lib", 
         "PhysXPvdSDK_static_64.lib", 
-        "PhysXTask_static_64.lib", 
         "PhysXVehicle_static_64.lib", 
-        "SceneQuery_static_64.lib", 
-        "SimulationController_static_64.lib",
-        "DirectXTex_d.lib",
+
+        "DirectXTex.lib",
         "fmodL_vc.lib",
         "mono-2.0-sgen.lib",
        }
@@ -107,8 +103,8 @@ project "ImaGE-Core"
           "../Libraries/Built-Libraries/Debug/Libraries/**",
           "../Libraries/mono/msvc/build/sgen/x64/**",
           "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/debug",
-          "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Debug/**",
-          "source/External/fmod/lib/**"
+          "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Debug/",
+          "source/External/fmod/lib"
        }
 
        postbuildcommands {
@@ -132,13 +128,12 @@ project "ImaGE-Core"
 
         libdirs 
         {
-                       "../Libraries/glfw/build/src/Release",
+           "../Libraries/glfw/build/src/Release",
            "../Libraries/Built-Libraries/Release/Libraries/**",
            "../Libraries/mono/msvc/build/sgen/x64/**",
            "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release",
-           "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Release/**",
-           "source/External/fmod/lib/**"
-
+           "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Release/",
+           "source/External/fmod/lib"
         }
 
        links {
@@ -146,20 +141,16 @@ project "ImaGE-Core"
         "glfw3.lib",
         "assimp-vc143-mt.lib",
         "rttr_core.lib",
-        "LowLevel_static_64.lib", 
-        "LowLevelAABB_static_64.lib", 
-        "LowLevelDynamics_static_64.lib",
-        "PhysX_64.lib", 
+
+        "PhysX_static_64.lib", 
         "PhysXCharacterKinematic_static_64.lib", 
-        "PhysXCommon_64.lib", 
-        "PhysXCooking_64.lib", 
+        "PhysXCommon_static_64.lib", 
+        "PhysXCooking_static_64.lib", 
         "PhysXExtensions_static_64.lib", 
-        "PhysXFoundation_64.lib", 
+        "PhysXFoundation_static_64.lib", 
         "PhysXPvdSDK_static_64.lib", 
-        "PhysXTask_static_64.lib", 
         "PhysXVehicle_static_64.lib", 
-        "SceneQuery_static_64.lib", 
-        "SimulationController_static_64.lib",
+
         "DirectXTex.lib",
         "fmod_vc.lib",
         "mono-2.0-sgen.lib",
@@ -179,12 +170,12 @@ project "ImaGE-Core"
 
        libdirs 
        {
-                      "../Libraries/glfw/build/src/Release",
+          "../Libraries/glfw/build/src/Release",
           "../Libraries/Built-Libraries/Release/Libraries/**",
           "../Libraries/mono/msvc/build/sgen/x64/**",
           "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release",
-          "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Release/**",
-          "source/External/fmod/lib/**"
+          "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Release/",
+          "source/External/fmod/lib"
 
        }
 
@@ -193,20 +184,16 @@ project "ImaGE-Core"
         "glfw3.lib",
         "assimp-vc143-mt.lib",
         "rttr_core.lib",
-        "LowLevel_static_64.lib", 
-        "LowLevelAABB_static_64.lib", 
-        "LowLevelDynamics_static_64.lib",
-        "PhysX_64.lib", 
+
+        "PhysX_static_64.lib", 
         "PhysXCharacterKinematic_static_64.lib", 
-        "PhysXCommon_64.lib", 
-        "PhysXCooking_64.lib", 
+        "PhysXCommon_static_64.lib", 
+        "PhysXCooking_static_64.lib", 
         "PhysXExtensions_static_64.lib", 
-        "PhysXFoundation_64.lib", 
+        "PhysXFoundation_static_64.lib", 
         "PhysXPvdSDK_static_64.lib", 
-        "PhysXTask_static_64.lib", 
         "PhysXVehicle_static_64.lib", 
-        "SceneQuery_static_64.lib", 
-        "SimulationController_static_64.lib",
+
         "DirectXTex.lib",
         "fmod_vc.lib",
         "mono-2.0-sgen.lib",
