@@ -70,6 +70,9 @@
     <Filter Include="External\ImGui\misc\single_file">
       <UniqueIdentifier>{BD5E7082-2942-7FC2-3245-ADFE9EA74513}</UniqueIdentifier>
     </Filter>
+    <Filter Include="External\filewatch">
+      <UniqueIdentifier>{0EBB171D-FA9E-D872-63FF-D2C54F02C3F4}</UniqueIdentifier>
+    </Filter>
     <Filter Include="External\fmod">
       <UniqueIdentifier>{BD4ED857-290F-548E-F249-9D0B5EC9986A}</UniqueIdentifier>
     </Filter>
@@ -87,6 +90,24 @@
     </Filter>
     <Filter Include="External\glad\include\glad">
       <UniqueIdentifier>{C9EF39E3-B5FF-E5B3-1EB9-4AD20AE8D44C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\mono">
+      <UniqueIdentifier>{D02DDC57-3CEE-578E-0529-A10B71A89C6A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\mono\include">
+      <UniqueIdentifier>{432562F3-AF91-1DEE-7885-B54BE4B03F56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\mono\include\mono">
+      <UniqueIdentifier>{EB125B4F-D722-0720-40DC-6B3E2C0BF6B8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\mono\include\mono\jit">
+      <UniqueIdentifier>{21274CDB-0D4D-1642-F692-9B0DE2573B0E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\mono\include\mono\metadata">
+      <UniqueIdentifier>{1B1AE7A8-87D3-5153-1033-6C2D7CEB07C3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\mono\include\mono\utils">
+      <UniqueIdentifier>{AB68BFDF-97B9-AA21-C01D-99E3ACCD3D8B}</UniqueIdentifier>
     </Filter>
     <Filter Include="FrameRateController">
       <UniqueIdentifier>{60BC59B9-CC1D-37C7-558B-7D79C1EB6D86}</UniqueIdentifier>
@@ -285,6 +306,9 @@
     <ClInclude Include="source\External\ImGui\misc\single_file\imgui_single_file.h">
       <Filter>External\ImGui\misc\single_file</Filter>
     </ClInclude>
+    <ClInclude Include="source\External\filewatch\FileWatch.h">
+      <Filter>External\filewatch</Filter>
+    </ClInclude>
     <ClInclude Include="source\External\fmod\include\fmod.h">
       <Filter>External\fmod\include</Filter>
     </ClInclude>
@@ -311,6 +335,120 @@
     </ClInclude>
     <ClInclude Include="source\External\glad\include\glad\glad.h">
       <Filter>External\glad\include\glad</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\jit\jit.h">
+      <Filter>External\mono\include\mono\jit</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\jit\mono-private-unstable.h">
+      <Filter>External\mono\include\mono\jit</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\appdomain.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\assembly.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\attrdefs.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\blob.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\class.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\debug-helpers.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\debug-mono-symfile.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\environment.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\exception.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\image.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\loader.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\metadata.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\mono-config.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\mono-debug.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\mono-gc.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\mono-private-unstable.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\object-forward.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\object.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\opcodes.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\profiler-events.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\profiler.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\reflection.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\row-indexes.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\sgen-bridge.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\tabledefs.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\threads.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\tokentype.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\verify.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-counters.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-dl-fallback.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-error.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-forward.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-jemalloc.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-logger.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-private-unstable.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-publib.h">
+      <Filter>External\mono\include\mono\utils</Filter>
     </ClInclude>
     <ClInclude Include="source\FrameRateController\FrameRateController.h">
       <Filter>FrameRateController</Filter>
