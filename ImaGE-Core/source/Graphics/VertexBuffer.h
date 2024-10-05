@@ -1,3 +1,13 @@
+/*!*********************************************************************
+\file   VertexBuffer.h
+\author k.choa\@digipen.edu
+\date   22/09/2024
+\brief  The VertexBuffer class simplifies the process of creating, binding, and managing
+		vertex buffers for use in rendering pipelines. It supports both dynamic and static
+		vertex buffer initialization and allows data to be set or updated after creation.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include <memory>
 #include <string>

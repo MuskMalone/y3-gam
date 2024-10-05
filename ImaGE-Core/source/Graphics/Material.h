@@ -1,3 +1,13 @@
+/*!*********************************************************************
+\file   Material.h
+\author k.choa\@digipen.edu
+\date   22/09/2024
+\brief  The Material class allows for managing and applying material properties such as albedo color, metalness,
+        roughness, transparency, and emission. It also supports custom textures (albedo, normal, metalness, 
+        and roughness) per instance, allowing for overrides of the default material source properties.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include "MaterialSource.h"
 #include "Renderer.h"

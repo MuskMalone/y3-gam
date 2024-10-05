@@ -1,3 +1,13 @@
+/*!*********************************************************************
+\file   VertexArray.h
+\author k.choa\@digipen.edu
+\date   22/09/2024
+\brief  The VertexArray class manages the setup of vertex attribute pointers and the binding of VertexBuffers
+		and ElementBuffers to the VAO. It simplifies the process of configuring vertex input attributes 
+		for rendering.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 
 #include "VertexBuffer.h"

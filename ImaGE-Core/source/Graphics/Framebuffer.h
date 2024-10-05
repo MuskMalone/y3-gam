@@ -1,3 +1,14 @@
+/*!*********************************************************************
+\file   FrameBuffer.h
+\author k.choa\@digipen.edu
+\date   22/09/2024
+\brief  The Framebuffer class handles the creation, binding, and management of framebuffer objects.
+        It supports multiple color attachments and a depth attachment for rendering operations.
+        The class also provides functionality for resizing the framebuffer, reading pixel data,
+        and clearing attachment values.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include <glad/glad.h>
 #include <string>
