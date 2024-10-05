@@ -22,6 +22,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/Mesh.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
 #include <Core/EntityManager.h>
+#include <GUI/GUIManager.h>
 
 namespace GUI
 {
@@ -33,7 +34,8 @@ namespace GUI
   {
     ImGui::Begin(mWindowName.c_str());
 
-    ImVec2 const startCursorPos{ ImGui::GetCursorPos() };
+    ImVec2 const vpSize = ImGui::GetContentRegionAvail();
+    ImVec2 const vpStartPos{ ImGui::GetCursorScreenPos() };
 
     // only register input if viewport is focused
     bool const checkInput{ mIsDragging || mIsPanning };
@@ -49,50 +51,31 @@ namespace GUI
     // update framebuffer
     ImGui::Image(
       reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(renderTarget.framebuffer->GetColorAttachmentID())),
-      ImGui::GetContentRegionAvail(),
+      vpSize,
       ImVec2(0, 1),
       ImVec2(1, 0)
     );
 
     ReceivePayload();
 
-    ImGui::SetCursorPos(startCursorPos);
-    ImGui::Text("Middle Click - Pan");
-    ImGui::Text("Scroll - Zoom");
-    ImGui::Text("While Right-click Held:");
-    ImGui::Text("       Left Click - Look");
-    ImGui::Text("       WASDQE - Move");
-
-    ImGui::End();
-
-    ImVec2 contentSize = ImGui::GetContentRegionAvail();
-
-    ImVec2 viewportOffset = ImGui::GetCursorPos(); //tab bar included
-    ImVec2 min = ImGui::GetWindowPos();
-    min.x += viewportOffset.x;
-    min.y += viewportOffset.y;
-    ImVec2 max{ min.x + contentSize.x, min.y + contentSize.y };
-    ImVec2 mousePos = ImGui::GetMousePos();
-
-
-    mousePos.x -= min.x;
-    mousePos.y -= min.y;
-    ImVec2 viewportSize = { max.x - min.x, max.y - min.y };
-    mousePos.y = viewportSize.y - mousePos.y;
-
-    int mouseX = static_cast<int>(mousePos.x);
-    int mouseY = static_cast<int>(mousePos.y);
-    
+    // object picking
     if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
-        if (mouseX >= 0 && mouseX < static_cast<int>(viewportSize.x) && mouseY >= 0 && mouseY < static_cast<int>(viewportSize.y)) {
-            renderTarget.framebuffer->Bind();
-            int pixelData = renderTarget.framebuffer->ReadPixel(1, mouseX, mouseY);
-            renderTarget.framebuffer->Unbind();
-            int entity = pixelData;
-            if (entity > 0) {
-                std::cout << entity << std::endl;
-            }
+      ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
+
+      // check if clicking outside viewport
+      if (!(offset.x < 0 || offset.x > vpSize.x || offset.y < 0 || offset.y > vpSize.y)) {
+        auto& fb{ renderTarget.framebuffer };
+        Graphics::FramebufferSpec const& fbSpec{ fb->GetFramebufferSpec() };
+
+        fb->Bind();
+        int const entityId{ fb->ReadPixel(1,
+          offset.x / vpSize.x * fbSpec.width, (vpSize.y - offset.y) / vpSize.y * fbSpec.height) };
+        fb->Unbind();
+
+        if (entityId > 0) {
+          GUIManager::SetSelectedEntity(static_cast<ECS::Entity::EntityID>(entityId));
         }
+      }
     }
   }
 
