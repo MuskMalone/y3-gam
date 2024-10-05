@@ -20,7 +20,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Components/Mesh.h>
 #include <Graphics/MeshFactory.h>
 #include <Graphics/Mesh.h>
-#include <GUI/Helpers/ImGuiHelpers.h> 
+#include <GUI/Helpers/ImGuiHelpers.h>
+#include <Core/EntityManager.h>
+#include <GUI/GUIManager.h>
 
 namespace GUI
 {
@@ -32,7 +34,8 @@ namespace GUI
   {
     ImGui::Begin(mWindowName.c_str());
 
-    ImVec2 const startCursorPos{ ImGui::GetCursorPos() };
+    ImVec2 const vpSize = ImGui::GetContentRegionAvail();
+    ImVec2 const vpStartPos{ ImGui::GetCursorScreenPos() };
 
     // only register input if viewport is focused
     bool const checkInput{ mIsDragging || mIsPanning };
@@ -48,19 +51,32 @@ namespace GUI
     // update framebuffer
     ImGui::Image(
       reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(renderTarget.framebuffer->GetColorAttachmentID())),
-      ImGui::GetContentRegionAvail(),
+      vpSize,
       ImVec2(0, 1),
       ImVec2(1, 0)
     );
 
     ReceivePayload();
 
-    ImGui::SetCursorPos(startCursorPos);
-    ImGui::Text("Middle Click - Pan");
-    ImGui::Text("Scroll - Zoom");
-    ImGui::Text("While Right-click Held:");
-    ImGui::Text("       Left Click - Look");
-    ImGui::Text("       WASDQE - Move");
+    // object picking
+    if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
+      ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
+
+      // check if clicking outside viewport
+      if (!(offset.x < 0 || offset.x > vpSize.x || offset.y < 0 || offset.y > vpSize.y)) {
+        auto& fb{ renderTarget.framebuffer };
+        Graphics::FramebufferSpec const& fbSpec{ fb->GetFramebufferSpec() };
+
+        fb->Bind();
+        int const entityId{ fb->ReadPixel(1,
+          offset.x / vpSize.x * fbSpec.width, (vpSize.y - offset.y) / vpSize.y * fbSpec.height) };
+        fb->Unbind();
+
+        if (entityId > 0) {
+          GUIManager::SetSelectedEntity(static_cast<ECS::Entity::EntityID>(entityId));
+        }
+      }
+    }
 
     ImGui::End();
   }

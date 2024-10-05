@@ -1,5 +1,4 @@
 #pragma once
-#include <pch.h>
 #include <Core/Components/Components.h>
 #include <Core/Entity.h>
 #include <Core/Systems/SystemManager/SystemManager.h>

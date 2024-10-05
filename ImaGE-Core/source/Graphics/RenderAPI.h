@@ -1,3 +1,13 @@
+/*!*********************************************************************
+\file   RenderAPI.h
+\author k.choa\@digipen.edu
+\date   22/09/2024
+\brief  The RenderAPI class manages common OpenGL rendering functions such as setting up the viewport,
+		clearing buffers, and drawing indexed and instanced geometry. It also handles state management
+		for blending, depth testing, and line smoothing.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include "VertexArray.h"
 

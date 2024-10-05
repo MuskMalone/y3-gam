@@ -3,7 +3,7 @@
 #include "RenderAPI.h"
 #include "RenderPass.h"
 #include <glm/gtx/quaternion.hpp>
-#include "Asset/IGEAssets.h"
+
 namespace Graphics {
 	constexpr int INVALID_ENTITY_ID = -1;
 
@@ -116,7 +116,7 @@ namespace Graphics {
 		Graphics::FramebufferSpec framebufferSpec;
 		framebufferSpec.width = WINDOW_WIDTH<int>;
 		framebufferSpec.height = WINDOW_HEIGHT<int>;
-		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
+		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
 
 		//Init RenderPasses
 		PipelineSpec geomPipelineSpec;
@@ -191,7 +191,7 @@ namespace Graphics {
 		++mData.meshVtxCount;
 	}
 
-	std::shared_ptr<VertexBuffer> Renderer::GetInstanceBuffer(IGE::Assets::GUID const& meshSrc) {
+	std::shared_ptr<VertexBuffer> Renderer::GetInstanceBuffer(std::shared_ptr<MeshSource> const& meshSrc) {
 		auto it = mData.instanceBuffers.find(meshSrc); // check if instance buff alr exists
 
 		// found
@@ -206,13 +206,14 @@ namespace Graphics {
 		// Set up the buffer layout for instance data
 		BufferLayout instanceLayout = {
 			{ AttributeType::MAT4, "a_ModelMatrix" },
+			{AttributeType::INT, "a_EntityID"}
 			//{ AttributeType::VEC4, "a_Color" }
 		};
 
 		instanceBuffer->SetLayout(instanceLayout);
 
 		// Attach the instance buffer to the MeshSource's VAO
-		GET_ASSET_GUID(IGE::Assets::MeshAsset, meshSrc)->mMeshSource.GetVertexArray()->AddVertexBuffer(instanceBuffer);
+		meshSrc->GetVertexArray()->AddVertexBuffer(instanceBuffer, true);
 
 		// Store the buffer in the map for future use
 		mData.instanceBuffers[meshSrc] = instanceBuffer;
@@ -253,8 +254,8 @@ namespace Graphics {
 
 	void Renderer::SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr) {
 		if (mesh == nullptr) return;
-		auto const& meshSrc{ GET_ASSET_GUID(IGE::Assets::MeshAsset, mesh->GetMeshSource())->mMeshSource };
-		auto const& submeshes = meshSrc.GetSubmeshes();//meshSrc->GetSubmeshes();
+		auto const& meshSrc = mesh->GetMeshSource();
+		auto const& submeshes = meshSrc->GetSubmeshes();
 
 		// Transformation matrices
 		glm::mat4 translateMtx{ glm::translate(glm::mat4{ 1.f }, pos) };
@@ -289,7 +290,7 @@ namespace Graphics {
 
 			// Collect vertex data from the submesh
 			for (size_t i = 0; i < submesh.vtxCount; ++i) {
-				const Vertex& vtx = meshSrc.GetVertices()[submesh.baseVtx + i];
+				const Vertex& vtx = meshSrc->GetVertices()[submesh.baseVtx + i];
 
 				// Transform position to world space
 				glm::vec3 worldPos = glm::vec3(finalxformMtx * glm::vec4(vtx.position, 1.0f));
@@ -324,7 +325,7 @@ namespace Graphics {
 		instance.modelMatrix = worldMtx;
 		
 		if (id != INVALID_ENTITY_ID) {
-			//instance.entityID = id;
+			instance.entityID = id;
 		}
 
 		auto& meshSrc = mesh->GetMeshSource();
@@ -347,10 +348,9 @@ namespace Graphics {
 			instanceBuffer->SetData(instances.data(), dataSize);
 
 			// Bind the VAO and render the instances
-			auto const& mesh{ GET_ASSET_GUID(IGE::Assets::MeshAsset, meshSrc)->mMeshSource };
-			auto& vao = mesh.GetVertexArray();
+			auto& vao = meshSrc->GetVertexArray();
 
-			RenderAPI::DrawIndicesInstanced(vao, static_cast<unsigned>(mesh.GetIndices().size()), static_cast<unsigned>(instances.size()));
+			RenderAPI::DrawIndicesInstanced(vao, static_cast<unsigned>(meshSrc->GetIndices().size()), static_cast<unsigned>(instances.size()));
 
 		}
 
@@ -515,6 +515,10 @@ namespace Graphics {
 
 	void Renderer::SetFinalFramebuffer(std::shared_ptr<Graphics::Framebuffer> const& framebuffer) {
 		mFinalFramebuffer = framebuffer;
+	}
+
+	std::shared_ptr<Texture> Renderer::GetWhiteTexture() {
+		return mData.whiteTex;
 	}
 
 }

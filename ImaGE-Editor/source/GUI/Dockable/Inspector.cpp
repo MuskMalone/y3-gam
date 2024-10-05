@@ -25,6 +25,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/Mesh.h>
 
 namespace GUI {
+
+
+  bool InputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled = false);
+
   Inspector::Inspector(std::string const& name) : GUIWindow(name),
     mComponentOpenStatusMap{}, mStyler{ GUIManager::GetStyler() }, mObjFactory{Reflection::ObjectFactory::GetInstance()},
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
@@ -166,7 +170,11 @@ namespace GUI {
       }
 
       if (currentEntity.HasComponent<Component::Script>()) {
+        Mono::ScriptManager* sm = &Mono::ScriptManager::GetInstance();
+        ImGuiStyle& style = ImGui::GetStyle();
         rttr::type const scriptType{ rttr::type::get<Component::Script>() };
+        std::vector <std::string> toDeleteList{};
+
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(scriptType);
 
         if (ScriptComponentWindow(currentEntity, std::string(ICON_FA_FILE_CODE), componentOverriden)) {
@@ -174,6 +182,149 @@ namespace GUI {
           if (prefabOverride) {
             prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Script>());
           }
+        }
+        float charSize = ImGui::CalcTextSize("012345678901234").x;
+        float inputWidth = (ImGui::GetWindowSize().x - charSize - 30) / 3;
+        Component::Script* allScripts = &currentEntity.GetComponent<Component::Script>();
+        for (Mono::ScriptInstance& s : allScripts->mScriptList)
+        {
+          s.GetAllUpdatedFields();
+          ImGui::Separator();
+          ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV);
+          ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, charSize);
+
+          ImGui::TableNextRow();
+          ImGui::BeginDisabled(false);
+          ImGui::TableNextColumn();
+          ImGui::Text("Script");
+          ImGui::TableNextColumn();
+          ImGuiStyle& style = ImGui::GetStyle();
+          ImVec4 originalColor = style.Colors[ImGuiCol_FrameBg];
+          ImVec4 originalHColor = style.Colors[ImGuiCol_FrameBgHovered];
+          style.Colors[ImGuiCol_FrameBg] = ImVec4(0.18f, 0.28f, 0.66f, 1.0f);
+          style.Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.28f, 0.48f, 0.86f, 1.0f);
+          if (ImGui::BeginCombo("", s.mScriptName.c_str()))
+          {
+            for (const std::string& sn : sm->mAllScriptNames)
+            {
+              auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [sn](const Mono::ScriptInstance pair) { return pair.mScriptName == sn; });
+              if (it == allScripts->mScriptList.end())
+              {
+                bool is_selected = (s.mScriptName.c_str() == sn);
+                if (ImGui::Selectable(sn.c_str(), is_selected))
+                {
+                  if (sn != s.mScriptName) {
+                    uint32_t id{ currentEntity.GetEntityID() };
+                    std::vector<void*> arg{ &(id) };
+                    s = Mono::ScriptInstance(sn, arg);
+                  }
+                }
+                if (is_selected)
+                {
+                  ImGui::SetItemDefaultFocus();
+                }
+              }
+            }
+            ImGui::EndCombo();
+          }
+          ImGui::SameLine();
+          ImVec4 boriginalColor = style.Colors[ImGuiCol_Button];
+          ImVec4 boriginalHColor = style.Colors[ImGuiCol_ButtonHovered];
+          ImVec4 boriginalAColor = style.Colors[ImGuiCol_ButtonActive];
+          style.Colors[ImGuiCol_Button] = ImVec4(0.6f, 0.f, 0.29f, 1.0f);
+          style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.8f, 0.1f, 0.49f, 1.0f);
+          style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.7f, 0.3f, 0.39f, 1.0f);
+          if (ImGui::Button("Delete"))
+          {
+            toDeleteList.push_back(s.mScriptName);
+          }
+          style.Colors[ImGuiCol_Button] = boriginalColor;
+          style.Colors[ImGuiCol_ButtonHovered] = boriginalHColor;
+          style.Colors[ImGuiCol_ButtonActive] = boriginalAColor;
+          ImGui::EndDisabled();
+          style.Colors[ImGuiCol_FrameBg] = originalColor;
+          style.Colors[ImGuiCol_FrameBgHovered] = originalHColor;
+
+          for (rttr::variant& f : s.mScriptFieldInstList)
+          {
+            rttr::type dataType{ f.get_type() };
+            // get underlying type if it's wrapped in a pointer
+            if (dataType == rttr::type::get<Mono::ScriptFieldInstance<int>>())
+            {
+              ImGui::TableNextRow();
+              Mono::ScriptFieldInstance<int>& sfi = f.get_value<Mono::ScriptFieldInstance<int>>();
+              ImGui::TableNextColumn();
+              ImGui::Text(sfi.mScriptField.mFieldName.c_str());
+              ImGui::TableNextColumn();
+              ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
+              if (ImGui::InputInt(("##" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0, 0, 0)) { s.SetFieldValue<int>(sfi.mData, sfi.mScriptField.mClassField); }
+            }
+            else if (dataType == rttr::type::get<Mono::ScriptFieldInstance<float>>())
+            {
+              ImGui::TableNextRow();
+              Mono::ScriptFieldInstance<float>& sfi = f.get_value<Mono::ScriptFieldInstance<float>>();
+              ImGui::TableNextColumn();
+              ImGui::Text(sfi.mScriptField.mFieldName.c_str());
+              ImGui::TableNextColumn();
+              ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
+              if (ImGui::InputFloat(("##" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0, 0, 0)) { s.SetFieldValue<float>(sfi.mData, sfi.mScriptField.mClassField); }
+            }
+            else if (dataType == rttr::type::get<Mono::ScriptFieldInstance<double>>())
+            {
+              ImGui::TableNextRow();
+              Mono::ScriptFieldInstance<double>& sfi = f.get_value<Mono::ScriptFieldInstance<double>>();
+              ImGui::TableNextColumn();
+              ImGui::Text(sfi.mScriptField.mFieldName.c_str());
+              ImGui::TableNextColumn();
+              ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
+              if (ImGui::InputDouble(("##" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0, 0, 0)) { s.SetFieldValue<double>(sfi.mData, sfi.mScriptField.mClassField); }
+            }
+            else if (dataType == rttr::type::get<Mono::ScriptFieldInstance<glm::dvec3>>())
+            {
+              ImGui::TableNextRow();
+              Mono::ScriptFieldInstance<glm::dvec3>& sfi = f.get_value<Mono::ScriptFieldInstance<glm::dvec3>>();
+              if (InputDouble3(("## " + sfi.mScriptField.mFieldName).c_str(), sfi.mData, inputWidth)) { s.SetFieldValue<glm::dvec3>(sfi.mData, sfi.mScriptField.mClassField); };
+            }
+
+
+
+
+          }
+
+
+          // Check if the mouse is over the second table and the right mouse button is clicked
+          ImGui::EndTable();
+          ImGui::Separator();
+
+        }
+
+
+
+
+        ImVec4 originalColor = style.Colors[ImGuiCol_Button];
+        ImVec4 originalHColor = style.Colors[ImGuiCol_ButtonHovered];
+        style.Colors[ImGuiCol_Button] = ImVec4(0.18f, 0.28f, 0.66f, 1.0f);
+        style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.28f, 0.48f, 0.86f, 1.0f);
+        if (ImGui::Button("Add Script", ImVec2(ImGui::GetWindowSize().x, 0.0f))) {
+          for (const std::string& sn : sm->mAllScriptNames)
+          {
+            auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [sn](const Mono::ScriptInstance pair) { return pair.mScriptName == sn; });;
+            if (it == allScripts->mScriptList.end())
+            {
+              uint32_t id{ currentEntity.GetEntityID() };
+              std::vector<void*> arg{ &(id) };
+              allScripts->mScriptList.emplace_back(sn, arg );
+              break;
+            }
+          }
+        }
+        style.Colors[ImGuiCol_Button] = originalColor;
+        style.Colors[ImGuiCol_ButtonHovered] = originalHColor;
+
+        for (const std::string& tds : toDeleteList)
+        {
+          auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [tds](const Mono::ScriptInstance pair) { return pair.mScriptName == tds; });
+          allScripts->mScriptList.erase(it);
         }
       }
 
@@ -284,16 +435,16 @@ namespace GUI {
     bool modified{ false };
 
     if (isOpen) {
-      auto& material = entity.GetComponent<Component::Material>();
+      Component::Material& material = entity.GetComponent<Component::Material>();
 
       float contentSize = ImGui::GetContentRegionAvail().x;
       float charSize = ImGui::CalcTextSize("012345678901234").x;
       float inputWidth = (contentSize - charSize - 60);
 
-      ImGui::BeginTable("MaterialTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+      ImGui::BeginTable("MaterialTable", 1, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      /*ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
       ImGui::TableNextRow();
       ImGui::TableSetColumnIndex(0);
@@ -306,13 +457,13 @@ namespace GUI {
       if (ImGui::ColorEdit3("##AlebdoColor", &color[0])) {
         material.material->SetAlbedoColor(color);
         modified = true;
-      }
+      }*/
 
       ImGui::EndTable();
     }
 
     WindowEnd(isOpen);
-    return false;
+    return modified;
   }
 
   bool Inspector::ScriptComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
@@ -341,7 +492,7 @@ namespace GUI {
       ImGui::TableSetColumnIndex(1);
       ImGui::SetNextItemWidth(INPUT_SIZE);
 
-      if (ImGui::BeginCombo("##ScriptName", script.name.c_str())) {
+      /*if (ImGui::BeginCombo("##ScriptName", script.name.c_str())) {
         for (const char* scriptName : availableScripts) {
           if (ImGui::Selectable(scriptName)) {
             script.name = scriptName;
@@ -349,7 +500,7 @@ namespace GUI {
           }
         }
         ImGui::EndCombo();
-      }
+      }*/
 
       ImGui::EndTable();
     }
@@ -467,13 +618,12 @@ namespace GUI {
       ImGui::TableHeadersRow();
 
       // @TODO: Replace min and max with the world min and max
-      if (ImGuiHelpers::TableInputFloat3("Translation", &transform.position[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
+      if (ImGuiHelpers::TableInputFloat3("Position", &transform.position[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
         modified = true;
       }
       glm::vec3 localRot{ transform.eulerAngles };
       if (ImGuiHelpers::TableInputFloat3("Rotation", &localRot[0], inputWidth, false, -360.f, 360.f, 0.3f)) {
         transform.SetLocalRotWithEuler(localRot);
-        modified = true;
       }
       if (ImGuiHelpers::TableInputFloat3("Scale", &transform.scale[0], inputWidth, false, 0.001f, 100.f, 0.3f)) {
         modified = true;
@@ -491,7 +641,7 @@ namespace GUI {
       // only allow local transform to be modified
       glm::vec3 worldRot{ transform.GetWorldEulerAngles() };
       ImGui::BeginDisabled();
-      ImGuiHelpers::TableInputFloat3("World Translation", &transform.worldPos[0], inputWidth, false, -100.f, 100.f, 0.1f);
+      ImGuiHelpers::TableInputFloat3("World Position", &transform.worldPos[0], inputWidth, false, -100.f, 100.f, 0.1f);
       ImGuiHelpers::TableInputFloat3("World Rotation", &worldRot[0], inputWidth, false, 0.f, 360.f, 0.1f);
       ImGuiHelpers::TableInputFloat3("World Scale", &transform.worldScale[0], inputWidth, false, 0.001f, 100.f, 1.f);
       ImGui::EndDisabled();
@@ -546,6 +696,7 @@ namespace GUI {
 
             mesh.mesh = std::move(meshSrc);
             mesh.meshName = assetPayload.GetFileName();
+            modified = true;
           }
         }
         ImGui::EndDragDropTarget();
@@ -555,15 +706,6 @@ namespace GUI {
 
     WindowEnd(isOpen);
     return modified;
-  }
-
-  void Inspector::WindowEnd(bool const isOpen) {
-    if (isOpen) {
-      ImGui::TreePop();
-      ImGui::PopFont();
-    }
-
-    ImGui::Separator();
   }
 
   bool Inspector::RigidBodyComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
@@ -778,4 +920,32 @@ namespace GUI {
       ImGui::EndPopup();
     }
   }
+
+  bool InputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled)
+  {
+    bool valChanged{ false };
+
+    ImGui::BeginDisabled(disabled);
+    ImGui::TableNextColumn();
+    ImGui::Text(propertyName.c_str());
+    propertyName = "##" + propertyName;
+    ImGui::TableNextColumn();
+    ImGui::SetNextItemWidth(fieldWidth);
+    if (ImGui::InputDouble((propertyName + "X").c_str(), &property.x, 0, 0, "%.5f")) { valChanged = true; };
+    ImGui::SameLine(0, 3); ImGui::SetNextItemWidth(fieldWidth); if (ImGui::InputDouble((propertyName + "Y").c_str(), &property.y, 0, 0, "%.5f")) { valChanged = true; };
+    ImGui::SameLine(0, 3); ImGui::SetNextItemWidth(fieldWidth); if (ImGui::InputDouble((propertyName + "Z").c_str(), &property.z, 0, 0, "%.5f")) { valChanged = true; };
+    ImGui::EndDisabled();
+
+    return valChanged;
+  }
+
+  void Inspector::WindowEnd(bool const isOpen) {
+    if (isOpen) {
+      ImGui::TreePop();
+      ImGui::PopFont();
+    }
+
+    ImGui::Separator();
+  }
+ 
 } // namespace GUI

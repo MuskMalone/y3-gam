@@ -54,7 +54,7 @@ namespace Reflection::ComponentUtils {
   void AddMaterial(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Material, comp);
 
-
+    entity.EmplaceOrReplaceComponent<Material>();
   }
 
   void AddMesh(ECS::Entity entity, rttr::variant const& var) {

@@ -6,13 +6,13 @@ namespace Graphics {
 	MaterialSource::MaterialSource(std::shared_ptr<Shader> const& shader, std::string const& name) 
 		: mShader{ shader }, mName{ name }, mFlags{ static_cast<uint32_t>(MaterialFlag::DEPTH_TEST) } {
 		if (!shader) {
-			throw std::invalid_argument("Shader cannot be null!"); //@TODO change this to catch exception? or change to error log?
+			throw Debug::Exception<MaterialSource>(Debug::LVL_CRITICAL, Msg("Shader cannot be null!"));
 		}
 	}
 
 	std::shared_ptr<MaterialSource> MaterialSource::Create(std::shared_ptr<Shader>const &shader) {
 		if (!shader) {
-			throw std::invalid_argument("Shader cannot be null!");
+			throw Debug::Exception<MaterialSource>(Debug::LVL_CRITICAL, Msg("Shader cannot be null!"));
 		}
 		return std::make_shared<MaterialSource>(shader);
 	}

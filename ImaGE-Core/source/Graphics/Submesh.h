@@ -1,3 +1,13 @@
+/*!*********************************************************************
+\file   Submesh.h
+\author k.choa\@digipen.edu
+\date   22/09/2024
+\brief  The Submesh struct holds the data necessary to render a specific part of a mesh. It includes
+        the starting vertex and index positions, the number of vertices and indices, and a transform
+        matrix. It also supports storing the indices directly within the submesh for flexibility.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include <glm/glm.hpp>
 #include <cstdint>

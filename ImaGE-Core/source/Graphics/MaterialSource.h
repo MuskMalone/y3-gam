@@ -1,3 +1,14 @@
+/*!*********************************************************************
+\file   MaterialSource.h
+\author k.choa\@digipen.edu
+\date   22/09/2024
+\brief  The MaterialSource class manages the default material properties and textures that can be shared
+        across multiple instances of a material. It allows setting and retrieving default textures for
+        albedo, normal, metalness, and roughness maps. Additionally, it handles material flags that can
+        toggle certain rendering features such as depth testing.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include <Graphics/Shader.h>
 #include <Graphics/Texture.h>

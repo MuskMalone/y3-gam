@@ -95,10 +95,14 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalOptions>/ignore:4099 /ignore:4006 /ignore:4005 %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PreBuildEvent>
+      <Command>copy /B /Y "$(SolutionDir)Libraries\mono\lib\mono-2.0-sgen.dll" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor"</Command>
+    </PreBuildEvent>
     <PostBuildEvent>
       <Command>copy /B /Y "$(SolutionDir)Libraries\PhysX\physx\bin\win.x86_64.vc142.md\debug\PhysXGpu_64.dll" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor"
 copy /B /Y "$(SolutionDir)ImaGE-Core\source\Externals\fmod\lib\fmodL.dll" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor"
-copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor"</Command>
+copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor"
+xcopy /Q /E /Y /I "$(SolutionDir)Libraries\mono\4.5" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor\4.5"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -125,10 +129,14 @@ copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Debug\ImaGE-Edit
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalOptions>/ignore:4099 /ignore:4006 /ignore:4005 %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PreBuildEvent>
+      <Command>copy /B /Y "$(SolutionDir)Libraries\mono\lib\mono-2.0-sgen.dll" "..\Binaries\windows-x86_64\Release\ImaGE-Editor"</Command>
+    </PreBuildEvent>
     <PostBuildEvent>
       <Command>copy /B /Y "$(SolutionDir)Libraries\PhysX\physx\bin\win.x86_64.vc142.md\release\PhysXGpu_64.dll" "..\Binaries\windows-x86_64\Release\ImaGE-Editor"
 copy /B /Y "$(SolutionDir)ImaGE-Core\source\Externals\fmod\lib\fmod.dll" "..\Binaries\windows-x86_64\Release\ImaGE-Editor"
-copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Release\ImaGE-Editor"</Command>
+copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Release\ImaGE-Editor"
+xcopy /Q /E /Y /I "$(SolutionDir)Libraries\mono\4.5" "..\Binaries\windows-x86_64\Release\ImaGE-Editor\4.5"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
@@ -155,10 +163,14 @@ copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Release\ImaGE-Ed
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalOptions>/ignore:4099 /ignore:4006 /ignore:4005 %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PreBuildEvent>
+      <Command>copy /B /Y "$(SolutionDir)Libraries\mono\lib\mono-2.0-sgen.dll" "..\Binaries\windows-x86_64\Distribution\ImaGE-Editor"</Command>
+    </PreBuildEvent>
     <PostBuildEvent>
       <Command>copy /B /Y "$(SolutionDir)Libraries\PhysX\physx\bin\win.x86_64.vc142.md\release\PhysXGpu_64.dll" "..\Binaries\windows-x86_64\Distribution\ImaGE-Editor"
 copy /B /Y "$(SolutionDir)ImaGE-Core\source\Externals\fmod\lib\fmod.dll" "..\Binaries\windows-x86_64\Distribution\ImaGE-Editor"
-copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Distribution\ImaGE-Editor"</Command>
+copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Distribution\ImaGE-Editor"
+xcopy /Q /E /Y /I "$(SolutionDir)Libraries\mono\4.5" "..\Binaries\windows-x86_64\Distribution\ImaGE-Editor\4.5"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -6,13 +6,14 @@
         window of the editor. Displays the list of entities currently
         in the scene along with their position in the hierarchy.
         Features right-click options as well as parenting of entities.
-  
+
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
 #include <GUI/GUIWindow.h>
 #include <Core/Entity.h>
 #include <Events/EventCallback.h>
+#include <ImGui/imgui.h>
 
 // forward declaration
 namespace Scenes { class SceneManager; }
@@ -39,6 +40,7 @@ namespace GUI
     bool mEditingPrefab, mLockControls, mSceneModified;
 
     static constexpr char sDragDropPayload[] = "ENTITY";
+    static inline constexpr ImU32 sEntityHighlightCol{ IM_COL32(253, 208, 23, 255) };
 
     /*!*********************************************************************
     \brief
@@ -56,6 +58,16 @@ namespace GUI
       The current entity being displayed
     ************************************************************************/
     void RecurseDownHierarchy(ECS::Entity entity);
+
+    /*!*********************************************************************
+    \brief
+      Checks for input and handles them accordingly
+    \param entity
+      The current entity
+    \param editNameMode
+      Whether an entity is being renamed in the hierarchy window
+    ************************************************************************/
+    void ProcessInput(ECS::Entity entity, bool& editNameMode);
 
     /*!*********************************************************************
     \brief
@@ -80,7 +92,7 @@ namespace GUI
     \brief
       This function handles the corresponding events the PrefabEditor
       subscribed to.
-      
+
       SCENE_STATE_CHANGE
         - Disables certain menu options based on the current scene state
       SCENE_MODIFIED

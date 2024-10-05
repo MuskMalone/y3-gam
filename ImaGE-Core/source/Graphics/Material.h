@@ -1,6 +1,16 @@
+/*!*********************************************************************
+\file   Material.h
+\author k.choa\@digipen.edu
+\date   22/09/2024
+\brief  The Material class allows for managing and applying material properties such as albedo color, metalness,
+        roughness, transparency, and emission. It also supports custom textures (albedo, normal, metalness, 
+        and roughness) per instance, allowing for overrides of the default material source properties.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include "MaterialSource.h"
-
+#include "Renderer.h"
 namespace Graphics{
     class Material {
 
@@ -58,7 +68,8 @@ namespace Graphics{
 
 
             // Apply textures (use instance override if available)
-            if (auto albedoMap = GetAlbedoMap()) shader->SetUniform("u_AlbedoMap", albedoMap, 0);
+            shader->SetUniform("u_AlbedoMap", GetAlbedoMap() ? GetAlbedoMap() : Renderer::GetWhiteTexture(), 0);
+
             //if (auto normalMap = GetNormalMap()) shader->SetUniform("u_NormalMap", normalMap);
             //if (auto metalnessMap = GetMetalnessMap()) shader->SetUniform("u_MetalnessMap", metalnessMap);
             //if (auto roughnessMap = GetRoughnessMap()) shader->SetUniform("u_RoughnessMap", roughnessMap);

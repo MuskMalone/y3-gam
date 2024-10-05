@@ -1,3 +1,13 @@
+/*!*********************************************************************
+\file   Mesh.h
+\author k.choa\@digipen.edu
+\date   22/09/2024
+\brief  The Mesh class encapsulates a 3D mesh, storing a reference to the underlying geometry
+        and submeshes via a MeshSource. It provides functionality to get and set the associated
+        MeshSource, which acts as the blueprint for the mesh.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include "MeshSource.h"
 #include "Asset/SmartPointer.h"

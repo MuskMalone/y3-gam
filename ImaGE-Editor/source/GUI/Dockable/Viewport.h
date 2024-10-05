@@ -33,6 +33,7 @@ namespace GUI
     void Render(Graphics::RenderTarget& renderTarget);
 
   private:
+
     /*!*********************************************************************
     \brief
       Updates the camera based on inputs to the viewport

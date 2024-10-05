@@ -13,7 +13,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Scenes/SceneManager.h>
 #include <Prefabs/PrefabManager.h>
 #include <Input/InputManager.h>
-#include <Asset/IGEAssets.h>
+#include <Scripting/ScriptManager.h>
+
 #include <Core/Entity.h>
 #include <Core/EntityManager.h>
 #include <Core/Components/Components.h>
@@ -22,6 +23,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Physics/PhysicsSystem.h>
 #include <Core/Systems/TransformSystem/WorldToLocalTransformSystem.h>
 #include <Core/Systems/TransformSystem/LocalToWorldTransformSystem.h>
+#include <Scripting/ScriptingSystem.h>
 #pragma endregion
 
 namespace IGE {
@@ -29,15 +31,15 @@ namespace IGE {
   Application::ApplicationSpecification Application::mSpecification{};
 
   void Application::Init() {
-    IGEAssetsInitialize();
     mSystemManager.InitSystems();
     Reflection::ObjectFactory::GetInstance().Init();
+    //IGE::Physics::PhysicsSystem::InitAllocator();
+    //IGE::Physics::PhysicsSystem::GetInstance()->Init();
     GetDefaultRenderTarget().scene.Init();
     Scenes::SceneManager::GetInstance().Init();
     Prefabs::PrefabManager::GetInstance().Init();
     Performance::FrameRateController::GetInstance().Init(120.f, 1.f, false);
     Input::InputManager::GetInstance().InitInputManager(mWindow, mSpecification.WindowWidth, mSpecification.WindowHeight, 0.1);
-
   }
 
   void Application::Run() {
@@ -68,9 +70,10 @@ namespace IGE {
 
   // registration order is the update order
   void Application::RegisterSystems() {
+    mSystemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
     mSystemManager.RegisterSystem<Systems::LocalToWorldTransformSystem>("Pre-Transform System");
     // physics should go here since it deals with world coords i assume
-    mSystemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("PhysicsSystem");
+
     mSystemManager.RegisterSystem<Systems::WorldToLocalTransformSystem>("Post-Transform System");
   }
 
@@ -115,6 +118,8 @@ namespace IGE {
   framebufferSpec.height = spec.WindowHeight;
   framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
   mRenderTargets.emplace_back(framebufferSpec);
+
+  Mono::ScriptManager::GetInstance().InitMono();
 }
 
   void Application::SetCallbacks() {

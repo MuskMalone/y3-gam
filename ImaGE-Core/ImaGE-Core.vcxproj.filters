@@ -112,6 +112,9 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{86EEB3D0-7290-DEA6-5B4B-F2FA478C65F7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripting">
+      <UniqueIdentifier>{985A7358-04C5-27CF-4D03-D974B9AC0524}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Serialization">
       <UniqueIdentifier>{2319AF09-8FD9-2A40-5814-74BDC4936F1C}</UniqueIdentifier>
     </Filter>
@@ -394,6 +397,9 @@
     <ClInclude Include="source\Input\KeyCode.h">
       <Filter>Input</Filter>
     </ClInclude>
+    <ClInclude Include="source\Physics\Physics.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
     <ClInclude Include="source\Physics\PhysicsHelpers.h">
       <Filter>Physics</Filter>
     </ClInclude>
@@ -418,6 +424,9 @@
     <ClInclude Include="source\Reflection\ObjectFactory.h">
       <Filter>Reflection</Filter>
     </ClInclude>
+    <ClInclude Include="source\Reflection\ProxyScript.h">
+      <Filter>Reflection</Filter>
+    </ClInclude>
     <ClInclude Include="source\Scenes\Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
@@ -426,6 +435,18 @@
     </ClInclude>
     <ClInclude Include="source\Scenes\SceneStates.h">
       <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scripting\ScriptInstance.h">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scripting\ScriptManager.h">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scripting\ScriptUtils.h">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scripting\ScriptingSystem.h">
+      <Filter>Scripting</Filter>
     </ClInclude>
     <ClInclude Include="source\Serialization\Deserializer.h">
       <Filter>Serialization</Filter>
@@ -623,6 +644,18 @@
     </ClCompile>
     <ClCompile Include="source\Scenes\SceneManager.cpp">
       <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scripting\ScriptInstance.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scripting\ScriptManager.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scripting\ScriptUtils.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scripting\ScriptingSystem.cpp">
+      <Filter>Scripting</Filter>
     </ClCompile>
     <ClCompile Include="source\Serialization\Deserializer.cpp">
       <Filter>Serialization</Filter>

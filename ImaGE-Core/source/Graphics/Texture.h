@@ -1,3 +1,13 @@
+/*!*********************************************************************
+\file   Texture.h
+\author k.choa\@digipen.edu
+\date   22/09/2024
+\brief  The Texture class is responsible for creating and managing 2D textures in OpenGL. It supports
+		loading textures from files, creating textures with specific dimensions, and setting texture data.
+		The class also manages texture binding, unbinding, and provides utilities for texture comparison.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include <string>
 #include <Asset/SmartPointer.h>

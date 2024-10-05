@@ -26,6 +26,10 @@ namespace Component
       position{ _pos }, scale{ _scale }, eulerAngles{}, worldPos{ _pos }, worldScale{ _scale },
       modified{ true } {}
 
+    // local setters
+    inline void SetPosition(glm::vec3 const& newPos) noexcept { position = newPos; modified = true; }
+    inline void SetScale(glm::vec3 const& newScale) noexcept { scale = newScale; modified = true; }
+
     /*!*********************************************************************
     \brief
       Sets the local quaternion based on euler angles

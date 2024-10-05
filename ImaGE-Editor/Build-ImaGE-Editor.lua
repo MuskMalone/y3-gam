@@ -66,10 +66,15 @@ project "ImaGE-Editor"
        runtime "Debug"
        symbols "On"
 
+       prebuildcommands {
+         "{COPYFILE} %[%{wks.location}Libraries/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
+
+         }
        postbuildcommands {
          "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/debug/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}ImaGE-Core/source/Externals/fmod/lib/fmodL.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]"
+         "{COPYDIR} %[%{wks.location}Libraries/mono/4.5] %[%{cfg.targetdir}/4.5]"
       }
 
    filter "configurations:Release"
@@ -84,11 +89,15 @@ project "ImaGE-Editor"
        runtime "Release"
        optimize "On"
        symbols "On"
+       prebuildcommands {
+         "{COPYFILE} %[%{wks.location}Libraries/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
 
+         }
        postbuildcommands {
          "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}ImaGE-Core/source/Externals/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]"
+         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
+         "{COPYDIR} %[%{wks.location}Libraries/mono/4.5] %[%{cfg.targetdir}/4.5]"
       }
 
    filter "configurations:Distribution"
@@ -103,9 +112,13 @@ project "ImaGE-Editor"
       runtime "Release"
       optimize "On"
       symbols "Off"
+      prebuildcommands {
+         "{COPYFILE} %[%{wks.location}Libraries/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
 
+         }
       postbuildcommands {
          "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}ImaGE-Core/source/Externals/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
+         "{COPYDIR} %[%{wks.location}Libraries/mono/4.5] %[%{cfg.targetdir}/4.5]"
       }

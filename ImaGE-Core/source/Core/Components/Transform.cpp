@@ -10,12 +10,14 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
 #include "Transform.h"
+#include <Core/Systems/TransformSystem/TransformHelpers.h>
 
 namespace Component {
 
   void Transform::SetLocalRotWithEuler(glm::vec3 const& degrees) {
     eulerAngles = degrees;
     rotation = glm::quat(glm::radians(degrees));
+    modified = true;
   }
 
   glm::vec3 Transform::GetWorldEulerAngles() const {

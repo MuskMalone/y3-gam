@@ -1,0 +1,83 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>net48</TargetFramework>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Binaries\windows-x86_64\Debug\ImaGE-Script\</OutputPath>
+    <IntermediateOutputPath>..\Binaries\Intermediates\windows-x86_64\Debug\ImaGE-Script\</IntermediateOutputPath>
+    <DefineConstants>WINDOWS;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Binaries\windows-x86_64\Release\ImaGE-Script\</OutputPath>
+    <IntermediateOutputPath>..\Binaries\Intermediates\windows-x86_64\Release\ImaGE-Script\</IntermediateOutputPath>
+    <DefineConstants>WINDOWS;NDEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Distribution|x64' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Binaries\windows-x86_64\Distribution\ImaGE-Script\</OutputPath>
+    <IntermediateOutputPath>..\Binaries\Intermediates\windows-x86_64\Distribution\ImaGE-Script\</IntermediateOutputPath>
+    <DefineConstants>WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Collections" />
+    <Reference Include="System.IO" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Threading" />
+    <Reference Include="System.Windows" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Collections" />
+    <Reference Include="System.IO" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Threading" />
+    <Reference Include="System.Windows" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Distribution|x64' ">
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Collections" />
+    <Reference Include="System.IO" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Threading" />
+    <Reference Include="System.Windows" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="source\Mono\Entity.cs" />
+    <Compile Include="source\Mono\InternalCalls.cs" />
+    <Compile Include="source\Mono\Keycode.cs" />
+    <Compile Include="source\Mono\Vec2.cs" />
+    <Compile Include="source\Mono\Vec3.cs" />
+    <Compile Include="source\Mono\Vec4.cs" />
+    <Compile Include="source\Test.cs" />
+  </ItemGroup>
+</Project>
