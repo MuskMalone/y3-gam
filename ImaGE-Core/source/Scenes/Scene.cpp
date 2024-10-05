@@ -193,4 +193,4 @@ void Scene::AddMesh(ECS::Entity entity)
           xfm.worldScale));
       mObjects.back()->entity = entity;
       entity.EmplaceComponent<Component::Mesh>(Component::Mesh{});*/
-}
+//}

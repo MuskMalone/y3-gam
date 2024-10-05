@@ -17,10 +17,13 @@ project "ImaGE-Core"
       "source/External",
       "source/External/ImGui",
       "source/External/glad/include",
+      "source/External/fmod/include",
+      "source/External/ImTerm/",
 
-      "../Libraries/assimp/include/**",
+      "../Libraries/assimp/include/",
+      "../Libraries/Built-Libraries/Release/Libraries/assimp/include",
       "../Libraries/entt/single_include",
-      "../Libraries/freetype/include/**",
+      "../Libraries/freetype/include/",
       "../Libraries/glfw/include",
       "../Libraries/glm",
       "../Libraries/rapidjson/include/**",
@@ -76,7 +79,7 @@ project "ImaGE-Core"
 
        links {
         "opengl32.lib",
-        "glfw3d.lib",
+        "glfw3.lib",
         "assimp-vc143-mt.lib",
         "rttr_core_d.lib",
         "LowLevel_static_64.lib", 
@@ -100,10 +103,12 @@ project "ImaGE-Core"
 
        libdirs 
        {
+           "../Libraries/glfw/build/src/Debug",
           "../Libraries/Built-Libraries/Debug/Libraries/**",
           "../Libraries/mono/msvc/build/sgen/x64/**",
           "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/debug",
           "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Debug/**",
+          "source/External/fmod/lib/**"
        }
 
        postbuildcommands {
@@ -127,10 +132,13 @@ project "ImaGE-Core"
 
         libdirs 
         {
+                       "../Libraries/glfw/build/src/Release",
            "../Libraries/Built-Libraries/Release/Libraries/**",
            "../Libraries/mono/msvc/build/sgen/x64/**",
            "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release",
            "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Release/**",
+           "source/External/fmod/lib/**"
+
         }
 
        links {
@@ -171,10 +179,13 @@ project "ImaGE-Core"
 
        libdirs 
        {
+                      "../Libraries/glfw/build/src/Release",
           "../Libraries/Built-Libraries/Release/Libraries/**",
           "../Libraries/mono/msvc/build/sgen/x64/**",
           "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release",
-           "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Release/**",
+          "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Release/**",
+          "source/External/fmod/lib/**"
+
        }
 
        links {
