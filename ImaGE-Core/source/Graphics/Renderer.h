@@ -20,6 +20,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Color.h"
 
 namespace Graphics {
+
+	class Material;
 	struct Statistics {
 		uint32_t drawCalls{};
 		uint32_t quadCount{};
@@ -45,6 +47,7 @@ namespace Graphics {
 
 	struct InstanceData {
 		glm::mat4 modelMatrix;
+		int materialIdx;
 		int entityID = -1;
 		//glm::vec4 color;
 	};
@@ -105,6 +108,10 @@ namespace Graphics {
 		std::unordered_map<IGE::Assets::GUID, std::shared_ptr<VertexBuffer>> instanceBuffers;
 
 		Statistics stats;
+
+		//TEMP FOR NOW
+		std::vector<std::shared_ptr<Material>> materialVector;
+		std::vector<std::shared_ptr<Texture>> albedoMaps;
 	};
 
 	class Renderer {
@@ -120,7 +127,7 @@ namespace Graphics {
 		static void SubmitTriangle(glm::vec3 const& v1, glm::vec3 const& v2, glm::vec3 const& v3, glm::vec4 const& clr = Color::COLOR_WHITE);
 
 		//Instancing
-		static void SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr, int entityID = -1);
+		static void SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr, int entityID = -1, uint32_t matID = 0);
 		static void RenderInstances();
 
 		// Batching
@@ -130,6 +137,9 @@ namespace Graphics {
 
 		static void RenderSceneBegin(glm::mat4 const& viewProjMtx);
 		static void RenderSceneEnd();
+
+		static std::shared_ptr<Material> GetMaterial(uint32_t idx); //temp
+		static std::vector<std::shared_ptr<Texture>> const& GetAlbedoMaps();//temp
 
 		static unsigned int GetMaxTextureUnits();
 		static std::shared_ptr<Graphics::Framebuffer> GetFinalFramebuffer();

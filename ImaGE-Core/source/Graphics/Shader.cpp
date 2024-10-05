@@ -762,12 +762,34 @@ namespace Graphics {
 		}
 	}
 
-	void Shader::SetUniform(std::string const& name, IGE::Assets::GUID const& texture, unsigned int texUnit) {
+	void Shader::SetUniform(std::string const& name, GLuint64 bindlessHandle) {
+		// Get the location of the uniform in the shader
+		GLint loc = GetUniformLocation(name);
+		if (loc != -1) {
+			// Set the bindless texture handle as a uniform
+			GLCALL(glUniformHandleui64ARB(loc, bindlessHandle));
+		}
+	}
+
+	void Shader::SetUniform(std::string const& name, const GLuint64* bindlessHandles, unsigned int count) {
+		// Get the location of the first element of the uniform array in the shader
+		GLint loc = GetUniformLocation(name);
+		if (loc != -1) {
+			// Set the bindless texture handles as a uniform array
+			GLCALL(glUniformHandleui64vARB(loc, count, bindlessHandles));
+		}
+	}
+
+	void Shader::SetUniform(std::string const& name, std::shared_ptr<Texture> texture, unsigned int texUnit) {
+		if (texture->IsBindless()) {
+			SetUniform(name, texture->GetBindlessHandle());
+			return;
+		}
 		// Activate the appropriate texture unit
 		GLCALL(glActiveTexture(GL_TEXTURE0 + texUnit));
 
 		// Bind the texture to that unit
-		GET_ASSET_GUID(IGE::Assets::TextureAsset, texture)->mTexture.Bind(texUnit);
+		texture->Bind(texUnit);
 
 		// Set the uniform in the shader to the correct texture unit
 		GLint loc = GetUniformLocation(name);

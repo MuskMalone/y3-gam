@@ -11,7 +11,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma once
 #include <string>
 #include "Texture.h"
-#include "Asset/IGEAssets.h"
+
 namespace Graphics {
 	class Shader {
 	public:
@@ -46,7 +46,11 @@ namespace Graphics {
 		void SetUniform(std::string const& name, glm::mat4 const& val);
 		void SetUniform(std::string const& name, int* val, unsigned int count);
 
-		void SetUniform(std::string const& name, IGE::Assets::GUID const& texture, unsigned int texUnit); //TEXTURES
+		void SetUniform(std::string const& name, GLuint64 bindlessHandle);
+
+		void SetUniform(std::string const& name, const GLuint64* bindlessHandles, unsigned int count);
+
+		void SetUniform(std::string const& name, std::shared_ptr<Texture> texture, unsigned int texUnit); //TEXTURES
 		unsigned int PgmHdl() { return pgmHdl; };
 	private:
 		unsigned int pgmHdl;

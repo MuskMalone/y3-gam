@@ -36,5 +36,6 @@ namespace Component {
       }
 
       std::shared_ptr<Graphics::Material> material;
+      uint32_t matIdx = 0;
     };
 }
