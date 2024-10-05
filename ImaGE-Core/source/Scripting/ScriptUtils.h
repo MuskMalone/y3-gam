@@ -70,9 +70,9 @@ namespace Mono {
 
 	template<typename T>
 	struct ScriptFieldInfoProxy {
-			std::string fieldName
-			std::string type
-			T data;
+		std::string fieldName;
+		std::string type;
+		T data;
 	};
 
 
