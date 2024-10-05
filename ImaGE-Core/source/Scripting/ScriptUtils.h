@@ -14,6 +14,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/object.h>
 #include <memory>
+#include <rttr/variant.h>
+#include <vector>
 
 namespace Mono {
 

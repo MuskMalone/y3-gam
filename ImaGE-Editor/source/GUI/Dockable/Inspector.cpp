@@ -441,10 +441,10 @@ namespace GUI {
       float charSize = ImGui::CalcTextSize("012345678901234").x;
       float inputWidth = (contentSize - charSize - 60);
 
-      ImGui::BeginTable("MaterialTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+      ImGui::BeginTable("MaterialTable", 1, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      /*ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
       ImGui::TableNextRow();
       ImGui::TableSetColumnIndex(0);
@@ -457,7 +457,7 @@ namespace GUI {
       if (ImGui::ColorEdit3("##AlebdoColor", &color[0])) {
         material.material->SetAlbedoColor(color);
         modified = true;
-      }
+      }*/
 
       ImGui::EndTable();
     }
