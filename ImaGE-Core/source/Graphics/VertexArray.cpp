@@ -83,7 +83,7 @@ namespace Graphics {
 	This function binds the VAO and the provided VertexBuffer, sets up the vertex attributes
 	according to the layout of the VertexBuffer, and adds the VertexBuffer to the list of VBOs.
 	*/
-	void VertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo) {
+	void VertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo, bool isInstanced) {
 		GLCALL(glBindVertexArray(vaoHdl));
 		vbo->Bind();
 
@@ -102,6 +102,9 @@ namespace Graphics {
 					layout.GetStride(),
 					reinterpret_cast<const void*>(
 						static_cast<uintptr_t>(elem.offset))));
+				if (isInstanced) {
+					GLCALL(glVertexAttribDivisor(mAttribIdx, 1));
+				}
 				++mAttribIdx;
 				break;
 			case AttributeType::INT:
@@ -116,6 +119,9 @@ namespace Graphics {
 					layout.GetStride(),
 					reinterpret_cast<const void*>(
 						static_cast<uintptr_t>(elem.offset))));
+				if (isInstanced) {
+					GLCALL(glVertexAttribDivisor(mAttribIdx, 1));
+				}
 				++mAttribIdx;
 				break;
 			case AttributeType::MAT4:
@@ -129,7 +135,9 @@ namespace Graphics {
 						layout.GetStride(),
 						reinterpret_cast<const void*>(static_cast<uintptr_t>(elem.offset + sizeof(glm::vec4) * i))));
 					// Set divisor if using for instancing
-					GLCALL(glVertexAttribDivisor(mAttribIdx + i, 1));  // Optional: use if it's an instance attribute
+					if (isInstanced) {
+						GLCALL(glVertexAttribDivisor(mAttribIdx + i, 1));  // Set divisor if it's an instance attribute
+					}
 				}
 				mAttribIdx += 4; // Increment attribute index by 4 since a MAT4 takes 4 locations
 				break;

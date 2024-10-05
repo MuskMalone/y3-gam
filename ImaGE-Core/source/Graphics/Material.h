@@ -1,6 +1,6 @@
 #pragma once
 #include "MaterialSource.h"
-
+#include "Renderer.h"
 namespace Graphics{
     class Material {
 
@@ -58,7 +58,8 @@ namespace Graphics{
 
 
             // Apply textures (use instance override if available)
-            if (auto albedoMap = GetAlbedoMap()) shader->SetUniform("u_AlbedoMap", albedoMap, 0);
+            shader->SetUniform("u_AlbedoMap", GetAlbedoMap() ? GetAlbedoMap() : Renderer::GetWhiteTexture(), 0);
+
             //if (auto normalMap = GetNormalMap()) shader->SetUniform("u_NormalMap", normalMap);
             //if (auto metalnessMap = GetMetalnessMap()) shader->SetUniform("u_MetalnessMap", metalnessMap);
             //if (auto roughnessMap = GetRoughnessMap()) shader->SetUniform("u_RoughnessMap", roughnessMap);

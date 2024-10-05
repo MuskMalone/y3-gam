@@ -1378,7 +1378,7 @@ ImGui::Button(ICON_FA_SEARCH " Search");
 #define ICON_FA_VOLUME_OFF "\xef\x80\xa6"	// U+f026
 #define ICON_FA_VOLUME_XMARK "\xef\x9a\xa9"	// U+f6a9
 #define ICON_FA_VR_CARDBOARD "\xef\x9c\xa9"	// U+f729
-#define ICON_FA_W "W"	// U+0057
+#define ICON_FA_W ""	// U+0057
 #define ICON_FA_WALKIE_TALKIE "\xef\xa3\xaf"	// U+f8ef
 #define ICON_FA_WALLET "\xef\x95\x95"	// U+f555
 #define ICON_FA_WAND_MAGIC "\xef\x83\x90"	// U+f0d0

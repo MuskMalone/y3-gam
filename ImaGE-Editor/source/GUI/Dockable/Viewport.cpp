@@ -20,7 +20,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Components/Mesh.h>
 #include <Graphics/MeshFactory.h>
 #include <Graphics/Mesh.h>
-#include <GUI/Helpers/ImGuiHelpers.h> 
+#include <GUI/Helpers/ImGuiHelpers.h>
+#include <Core/EntityManager.h>
 
 namespace GUI
 {
@@ -63,6 +64,36 @@ namespace GUI
     ImGui::Text("       WASDQE - Move");
 
     ImGui::End();
+
+    ImVec2 contentSize = ImGui::GetContentRegionAvail();
+
+    ImVec2 viewportOffset = ImGui::GetCursorPos(); //tab bar included
+    ImVec2 min = ImGui::GetWindowPos();
+    min.x += viewportOffset.x;
+    min.y += viewportOffset.y;
+    ImVec2 max{ min.x + contentSize.x, min.y + contentSize.y };
+    ImVec2 mousePos = ImGui::GetMousePos();
+
+
+    mousePos.x -= min.x;
+    mousePos.y -= min.y;
+    ImVec2 viewportSize = { max.x - min.x, max.y - min.y };
+    mousePos.y = viewportSize.y - mousePos.y;
+
+    int mouseX = static_cast<int>(mousePos.x);
+    int mouseY = static_cast<int>(mousePos.y);
+    
+    if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
+        if (mouseX >= 0 && mouseX < static_cast<int>(viewportSize.x) && mouseY >= 0 && mouseY < static_cast<int>(viewportSize.y)) {
+            renderTarget.framebuffer->Bind();
+            int pixelData = renderTarget.framebuffer->ReadPixel(1, mouseX, mouseY);
+            renderTarget.framebuffer->Unbind();
+            int entity = pixelData;
+            if (entity > 0) {
+                std::cout << entity << std::endl;
+            }
+        }
+    }
   }
 
   void Viewport::ProcessCameraInputs(Graphics::EditorCamera& cam) {
