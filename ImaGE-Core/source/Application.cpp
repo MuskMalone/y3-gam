@@ -70,7 +70,7 @@ namespace IGE {
   void Application::RegisterSystems() {
     mSystemManager.RegisterSystem<Systems::LocalToWorldTransformSystem>("Pre-Transform System");
     // physics should go here since it deals with world coords i assume
-
+    mSystemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("PhysicsSystem");
     mSystemManager.RegisterSystem<Systems::WorldToLocalTransformSystem>("Post-Transform System");
   }
 

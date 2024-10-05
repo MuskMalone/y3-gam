@@ -18,7 +18,7 @@ namespace IGE {
 			}
 			return _mSelf;
 		}
-		PhysicsSystem::PhysicsSystem() :
+		PhysicsSystem::PhysicsSystem() : Systems::System{"PhysicsSystem"},
 			mAllocator{}, mErrorCallback{},
 			mFoundation{ PxCreateFoundation(PX_PHYSICS_VERSION, mAllocator, mErrorCallback) },
 			mPvd{ PxCreatePvd(*mFoundation) },
@@ -57,7 +57,7 @@ namespace IGE {
 		//	mPhysicsSystem.SetGravity(JPH::Vec3(0.f, -9.81f, 0.f));
 		//}
 
-		void PhysicsSystem::Update(float dt) {
+		void PhysicsSystem::Update() {
 
 			//mPhysicsSystem.Update(gDeltaTime, 1, &mTempAllocator, &mJobSystem);
 				// Simulate one time step (1/60 second)
@@ -75,10 +75,12 @@ namespace IGE {
 					//apply gravity
 					if (rb.motionType == Component::RigidBody::MotionType::DYNAMIC) {
 						float grav{ gGravity * rb.gravityFactor * rb.mass };
-						pxrigidbody->addForce(physx::PxVec3(0.f, grav, 0.f));
+						pxrigidbody->addForce(ToPxVec3(glm::vec3(0.f, grav, 0.f)));
 					}
-					//update pos
+					//update pos todo tch: update the position via the local pose, aggregate parent and child entities
 					xfm.worldPos = ToGLMVec3(pxrigidbody->getGlobalPose().p);
+					xfm.worldRot = ToGLMQuat(pxrigidbody->getGlobalPose().q);
+					xfm.modified = true; // include this 
 				}
 				//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
 				//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));

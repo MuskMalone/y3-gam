@@ -2,18 +2,18 @@
 #include <pch.h>
 #include <Core/Components/Components.h>
 #include <Core/Entity.h>
-
+#include <Core/Systems/SystemManager/SystemManager.h>
 //#include <GUI/Dockable/Inspector.h>
 namespace IGE {
 	namespace Physics {
 		const float gDeltaTime = 1.f / 60.f;
 
-		class PhysicsSystem {
+		class PhysicsSystem : public Systems::System{
 		public:
 			static std::shared_ptr<IGE::Physics::PhysicsSystem> GetInstance();
 			PhysicsSystem();
 			~PhysicsSystem();
-			void Update(float dt);
+			void Update() override;
 
 			Component::RigidBody& AddRigidBody(ECS::Entity entity); // should const ref this when the functions r consted
 			void ChangeRigidBodyVar(ECS::Entity entity, Component::RigidBodyVars var);
@@ -56,6 +56,13 @@ namespace IGE {
 		};
 	}
 }
+template <>
+inline void Systems::SystemManager::RegisterSystem<IGE::Physics::PhysicsSystem>(const char* name) {
+	SystemPtr sys{ IGE::Physics::PhysicsSystem::GetInstance() };
+	mNameToSystem.emplace(typeid(IGE::Physics::PhysicsSystem).name(), sys);
+	mSystems.emplace_back(std::move(sys));
+}
+
 //
 ////for testing tch
 //namespace GUI {
