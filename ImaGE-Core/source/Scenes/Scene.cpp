@@ -59,7 +59,7 @@ void Scene::Init()
   mesh1 = std::make_shared<Graphics::Mesh>(pyrMeshSource);
   
   // Create a debug albedo texture (bright magenta checkerboard
-  IGE::Assets::GUID texguid { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\foot.dds")) };
+  IGE::Assets::GUID texguid { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
   //auto texref{ am->GetAsset<IGE::Assets::TextureAsset>(texguid) };
   //unsigned int debugAlbedoData[4] = {
   //    0xffff00ff, // Bright magenta (ABGR)

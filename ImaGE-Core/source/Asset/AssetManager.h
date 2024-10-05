@@ -9,11 +9,14 @@
 #include <memory>
 #include <mutex>
 #include "AssetUtils.h"
+#include <Events/EventCallback.h>
 namespace IGE {
 	namespace Assets {
         class AssetManager
         {
         private: 
+            EVENT_CALLBACK_DECL(HandleAddFiles);
+
             template <typename, typename, typename = void>
             struct HasStaticImport : std::false_type {};
             template <typename, typename, typename = void>

@@ -3,6 +3,9 @@
 #include <string>
 namespace IGE {
 	namespace Assets {
+		const std::set<std::string> cMeshExtensions{
+			".obj", ".fbx",    // JPEG format
+		};
 		const std::set<std::string> cImageExtensions{
 			".jpg", ".jpeg",    // JPEG format
 			".png",             // PNG format
