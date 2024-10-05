@@ -63,7 +63,7 @@ namespace Graphics::AssetIO
     
     // NOTE: This converts the object into a mesh source. Data will be MOVED into
     // the MeshSource and accessing contents afterwards is undefined
-    MeshSource ToMeshSource(std::shared_ptr<VertexArray> vao);
+    std::shared_ptr<MeshSource> ToMeshSource(std::shared_ptr<VertexArray> vao);
 
   private:
     // serialized as first 24 bytes

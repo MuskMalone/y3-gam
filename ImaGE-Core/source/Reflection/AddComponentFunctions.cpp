@@ -13,6 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Physics/PhysicsSystem.h>
 #include <Graphics/MeshFactory.h>
 #include <Graphics/Mesh.h>
+#include <Asset/IGEAssets.h>
 
 namespace Reflection::ComponentUtils {
   using namespace Component;

@@ -102,10 +102,8 @@ namespace Graphics {
 		std::vector<std::shared_ptr<Texture>> texUnits; // Array of Texture pointers
 		uint32_t texUnitIdx{ 1 }; // 0 = white tex
 
-		//std::unordered_map<std::shared_ptr<MeshSource>, std::vector<InstanceData>> instanceBufferDataMap;
-		//std::unordered_map<std::shared_ptr<MeshSource>, std::shared_ptr<VertexBuffer>> instanceBuffers;
-		std::unordered_map<IGE::Assets::GUID, std::vector<InstanceData>> instanceBufferDataMap;
-		std::unordered_map<IGE::Assets::GUID, std::shared_ptr<VertexBuffer>> instanceBuffers;
+		std::unordered_map<std::shared_ptr<MeshSource>, std::vector<InstanceData>> instanceBufferDataMap;
+		std::unordered_map<std::shared_ptr<MeshSource>, std::shared_ptr<VertexBuffer>> instanceBuffers;
 
 		Statistics stats;
 
@@ -158,7 +156,7 @@ namespace Graphics {
 			glm::vec3 const& tangent, glm::vec3 const& bitangent,
 			glm::vec4 const& clr);
 
-		static std::shared_ptr<VertexBuffer> GetInstanceBuffer(IGE::Assets::GUID const& meshSrc);
+		static std::shared_ptr<VertexBuffer> GetInstanceBuffer(std::shared_ptr<MeshSource> const& meshSrc);
 		//static void SetQuadBufferData(const glm::vec3& pos, const glm::vec2& scale,
 		//	const glm::vec4& clr, const glm::vec2& texCoord, float texIdx, int entity);
 		static void NextBatch();
