@@ -79,12 +79,12 @@ namespace IGE {
                 std::string absolutepath{filepathstr};
                 GUID guid{ absolutepath };
                 TypeGUID typeguid{ GetTypeName<T>() };
-                try {
+                if (IsValidFilePath(absolutepath)) {
                     std::filesystem::path filepath{absolutepath};
                     guid = GUID{ std::filesystem::absolute(filepath).string() };
                     absolutepath = std::filesystem::absolute(filepath).string();
                 }
-                catch ([[maybe_unused]] std::exception const& e) {
+                else {
                     guid = GUID{ filepathstr  };
                     absolutepath = filepathstr;
                 }
@@ -159,8 +159,8 @@ namespace IGE {
             template <typename T>
             GUID LoadRef(std::string const& fp) {
                 std::string filepath {fp};
-                if (!IsPathWithinDirectory(fp, gAssetsDirectory)) throw std::runtime_error("file is not within assets dir");
-                GUID guid{ GetAbsolutePath(fp) };
+                if (IsValidFilePath(fp) && !IsPathWithinDirectory(fp, gAssetsDirectory)) throw std::runtime_error("file is not within assets dir");
+                GUID guid{ IsValidFilePath(fp) ? GetAbsolutePath(fp) : fp }; //to account for keys that are not file paths etc "Cube"
                 TypeGUID typeguid{ GetTypeName<T>() };
                 TypeAssetKey key{ typeguid ^ guid };
                 if (mAssetRefs.find(key) != mAssetRefs.end()) {
@@ -168,7 +168,9 @@ namespace IGE {
                     return guid;
                 }
                 else {
-                    throw std::runtime_error("no such asset imported");
+                    ImportAsset<T>(fp);
+                    LoadRef<T>(std::any_cast<Ref<T>&>(mAssetRefs.at(key)));
+                    return guid;
                 }
             }
             template< typename T >

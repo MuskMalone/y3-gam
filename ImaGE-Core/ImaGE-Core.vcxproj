@@ -164,6 +164,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="source\Application.h" />
+    <ClInclude Include="source\Asset\Assetables\Mesh\MeshAsset.h" />
     <ClInclude Include="source\Asset\AssetManager.h" />
     <ClInclude Include="source\Asset\AssetUtils.h" />
     <ClInclude Include="source\Asset\Assetables\AssetExtensions.h" />
@@ -269,13 +270,13 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
+    <ClCompile Include="source\Asset\Assetables\Mesh\MeshAsset.cpp" />
     <ClCompile Include="source\Asset\AssetManager.cpp" />
     <ClCompile Include="source\Asset\AssetUtils.cpp" />
     <ClCompile Include="source\Asset\Assetables\Audio\AudioAsset.cpp" />
     <ClCompile Include="source\Asset\Assetables\Texture\TextureAsset.cpp" />
     <ClCompile Include="source\Asset\SmartPointer.cpp" />
     <ClCompile Include="source\Audio\AudioManager.cpp" />
-    <ClCompile Include="source\Core\Camera.cpp" />
     <ClCompile Include="source\Core\Components\Transform.cpp" />
     <ClCompile Include="source\Core\Entity.cpp" />
     <ClCompile Include="source\Core\EntityManager.cpp" />

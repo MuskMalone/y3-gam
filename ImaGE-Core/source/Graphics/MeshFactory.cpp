@@ -3,7 +3,7 @@
 #include "AssetIO/IMSH.h"
 
 namespace Graphics {
-  MeshFactory::MeshSourcePtr MeshFactory::CreateModelFromString(std::string const& meshName) {
+  MeshSource MeshFactory::CreateModelFromString(std::string const& meshName) {
     if (meshName == "Cube") {
       return CreateCube();
     }
@@ -12,10 +12,10 @@ namespace Graphics {
     }
 
     Debug::DebugLogger::GetInstance().LogError("[MeshFactory] No such model exists: " + meshName);
-    return {};
+    return MeshSource({}, {}, {}, {});
   }
 
-  MeshFactory::MeshSourcePtr MeshFactory::CreateCube() {
+  MeshSource MeshFactory::CreateCube() {
     std::vector<Vertex> cubeVertices{
       // Front face
       {{-0.5f, -0.5f,  0.5f}, {0.0f, 0.0f,  1.0f}, {0.0f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}},  // Bottom-left
@@ -103,10 +103,11 @@ namespace Graphics {
     submeshes.push_back(cubeSubmesh);
 
     // Create MeshSource with the generated data
-    return std::make_shared<MeshSource>(vao, submeshes, cubeVertices, cubeIndices);
+    //return std::make_shared<MeshSource>(vao, submeshes, cubeVertices, cubeIndices);
+    return MeshSource(vao, submeshes, cubeVertices, cubeIndices);
   }
 
-  MeshFactory::MeshSourcePtr MeshFactory::CreatePlane() {
+  MeshSource MeshFactory::CreatePlane() {
     std::vector<Vertex> planeVertices{
       // front
       {{-0.5f,  0.f,  0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}},
@@ -170,10 +171,11 @@ namespace Graphics {
     submeshes.push_back(planeSubmesh);
 
     // Create MeshSource with the generated data
-    return std::make_shared<MeshSource>(vao, submeshes, planeVertices, planeIndices);
+    //return std::make_shared<MeshSource>(vao, submeshes, planeVertices, planeIndices);
+    return MeshSource(vao, submeshes, planeVertices, planeIndices);
   }
 
-  MeshFactory::MeshSourcePtr MeshFactory::CreatePyramid() {
+  MeshSource MeshFactory::CreatePyramid() {
     std::vector<Vertex> pyramidVertices{
       // Base (square)
       {{-0.5f, 0.0f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 0.0f}, {}, {}},  // Bottom-left
@@ -233,10 +235,11 @@ namespace Graphics {
     submeshes.push_back(pyramidSubmesh);
 
     // Create MeshSource with the generated data
-    return std::make_shared<MeshSource>(vao, submeshes, pyramidVertices, pyramidIndices);
+    //return std::make_shared<MeshSource>(vao, submeshes, pyramidVertices, pyramidIndices);
+    return MeshSource(vao, submeshes, pyramidVertices, pyramidIndices);
   }
 
-  MeshFactory::MeshSourcePtr MeshFactory::CreateModelFromImport(std::string const& imshFile) {
+  MeshSource MeshFactory::CreateModelFromImport(std::string const& imshFile) {
     AssetIO::IMSH imsh{};
     imsh.ReadFromBinFile(imshFile);
     if (!imsh) { Debug::DebugLogger::GetInstance().LogError("Unable to read binary file: " + imshFile); }

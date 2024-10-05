@@ -43,3 +43,11 @@ namespace IGE {
 		//std::uniform_int_distribution<uint64_t> GUID<_tag>::sUniformDistribution;
 	}
 }
+namespace std {
+	template <typename _tag>
+	struct hash<IGE::Core::GUID<_tag>> {
+		std::size_t operator()(const IGE::Core::GUID<_tag>& guid) const noexcept {
+			return static_cast<uint64_t>(guid);  // Hash based on the mID
+		}
+	};
+}

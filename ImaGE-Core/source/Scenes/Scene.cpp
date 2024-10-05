@@ -31,7 +31,6 @@ Scene::Scene()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
 
-    m_cameras.emplace_back(WINDOW_WIDTH<int>, WINDOW_HEIGHT<int>, glm::vec3(3.f, 3.f, 15.f));
 }
 
 void Scene::Init()
@@ -51,10 +50,12 @@ void Scene::Init()
 
 
     mEcam = editorCam;
-    std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateModelFromImport("../Assets/Models/bunny_high_poly.imsh");
+    //std::shared_ptr<Graphics::MeshSource> 
+    IGE::Assets::GUID cubeMeshSource = IGE_ASSETMGR->LoadRef<IGE::Assets::MeshAsset>("../Assets/Models/bunny_high_poly.imsh");//Graphics::MeshFactory::CreateModelFromImport("../Assets/Models/bunny_high_poly.imsh");
     mesh0 = std::make_shared<Graphics::Mesh>(cubeMeshSource);
 
-  std::shared_ptr<Graphics::MeshSource> pyrMeshSource = Graphics::MeshFactory::CreateModelFromString("Cube");
+    //std::shared_ptr<Graphics::MeshSource> 
+    IGE::Assets::GUID pyrMeshSource = IGE_ASSETMGR->LoadRef<IGE::Assets::MeshAsset>("Cube");//Graphics::MeshFactory::CreateModelFromString("Cube");
   mesh1 = std::make_shared<Graphics::Mesh>(pyrMeshSource);
   
   // Create a debug albedo texture (bright magenta checkerboard

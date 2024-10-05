@@ -6,11 +6,12 @@
 //assetables
 #include "Assetables/Texture/TextureAsset.h"
 #include "Assetables/Audio/AudioAsset.h"
+#include "Assetables/Mesh/MeshAsset.h"
 #include <Asset/AssetUtils.h>
 #include <windows.h>
 #include <wrl/wrappers/corewrappers.h>
 #include <DirectXTex.h>
-
+#define IGE_ASSETMGR IGE::Assets::AssetManager::GetInstance()
 #define GET_ASSET_GUID(type, guid) IGE::Assets::AssetManager::GetInstance()->GetAsset<type>(guid)
 inline void IGEAssetsRegisterTypes() {
     // COM initialization
@@ -29,7 +30,8 @@ inline void IGEAssetsRegisterTypes() {
     auto am{ IGE::Assets::AssetManager::GetInstance() };
     am->RegisterTypes<
         IGE::Assets::TextureAsset, 
-        IGE::Assets::AudioAsset
+        IGE::Assets::AudioAsset,
+        IGE::Assets::MeshAsset
     >();
 }
 inline void IGEAssetsImportAllAssets() {
@@ -43,6 +45,7 @@ inline void IGEAssetsImportAllAssets() {
     }
     fs::path textures { IGE::Assets::cTextureDirectory };
     fs::path audio { IGE::Assets::cAudioDirectory };
+    fs::path model { IGE::Assets::cModelDirectory };
     // Iterate through the directories in the root path
     for (const auto& entry : fs::directory_iterator(rootDir)) {
         if (entry.is_directory()) {
@@ -61,6 +64,13 @@ inline void IGEAssetsImportAllAssets() {
                 for (const auto& entry : fs::directory_iterator(subDir)) {
                     if (entry.is_regular_file()) {
                         am.ImportAsset<IGE::Assets::AudioAsset>(entry.path().string());
+                    }
+                }
+            }
+            else if (IGE::Assets::IsDirectoriesEqual(subDir, model)) {
+                for (const auto& entry : fs::directory_iterator(subDir)) {
+                    if (entry.is_regular_file()) {
+                        am.ImportAsset<IGE::Assets::MeshAsset>(entry.path().string());
                     }
                 }
             }

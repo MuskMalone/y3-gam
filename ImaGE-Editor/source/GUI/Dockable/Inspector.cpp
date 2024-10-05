@@ -17,10 +17,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "GUI/Helpers/ImGuiHelpers.h"
 #include <GUI/Helpers/AssetPayload.h>
 
-
-//added for testing: tch
-#include "TempScene.h"
-
 #include "Physics/PhysicsSystem.h"
 #include <functional>
 #include <Reflection/ComponentTypes.h>
@@ -522,7 +518,9 @@ namespace GUI {
           const char* selected{ meshNames[i] };
           if (ImGui::Selectable(selected)) {
             if (i != 0) {
-              mesh.mesh = std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromString(selected));
+
+              //mesh.mesh = std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromString(selected));
+                mesh.mesh = std::make_shared<Graphics::Mesh>(IGE_ASSETMGR->LoadRef<IGE::Assets::MeshAsset>(selected));
             }
 
             if (selected != mesh.meshName) {
@@ -543,7 +541,9 @@ namespace GUI {
         if (drop) {
           AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
           if (assetPayload.mAssetType == AssetPayload::MODEL) {
-            auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
+            //auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
+            auto meshSrc{ std::make_shared<Graphics::Mesh>(IGE_ASSETMGR->LoadRef<IGE::Assets::MeshAsset>(assetPayload.GetFilePath())) };
+
             mesh.mesh = std::move(meshSrc);
             mesh.meshName = assetPayload.GetFileName();
           }

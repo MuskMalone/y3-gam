@@ -12,5 +12,6 @@ namespace IGE {
 		bool IsDirectoriesEqual(const std::string& fp1, const std::string& fp2);
 		bool IsDirectoriesEqual(const std::filesystem::path& fp1, const std::filesystem::path& fp2);
 		bool IsPathWithinDirectory(const std::string &fp, const std::string& dirPath);
+		bool IsValidFilePath(const std::string& path);
 	}
 }

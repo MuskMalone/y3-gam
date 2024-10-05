@@ -97,5 +97,15 @@ namespace IGE {
                 return false;
             }
         }
+        bool IsValidFilePath(const std::string& path) {
+            fs::path filePath(path);
+
+            // Check if the path exists and is a regular file
+            if (fs::exists(filePath) && fs::is_regular_file(filePath)) {
+                return true; // The path exists and is a file
+            }
+
+            return false; // The path does not exist or is not a regular file
+        }
 	}
 }
