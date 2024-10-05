@@ -14,6 +14,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace TransformHelpers {
 
+  void UpdateWorldTransformRecursive(ECS::Entity entity);
+
   /*!*********************************************************************
   \brief
     Sets the world position of an entity

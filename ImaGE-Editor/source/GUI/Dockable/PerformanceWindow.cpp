@@ -8,6 +8,7 @@
   
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
+#include <pch.h>
 #include "PerformanceWindow.h"
 #include <ImGui/imgui.h>
 #include <numeric>
