@@ -26,7 +26,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace GUI
 {
 
-  PrefabEditor::PrefabEditor(std::string const& name) :
+  PrefabEditor::PrefabEditor(const char* name) :
     mPrefabName{}, mPrefabPath{}, mPrefabInstance{},
     mIsEditing{ false }, mEscTriggered{ false }, GUIWindow(name)
   {

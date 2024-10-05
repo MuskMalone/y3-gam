@@ -67,6 +67,7 @@
     <ClInclude Include="source\GUI\Styles\Styler.h">
       <Filter>GUI\Styles</Filter>
     </ClInclude>
+    <ClInclude Include="source\GUI\Dockable\PerformanceWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\EditorApplication.cpp" />
@@ -107,5 +108,6 @@
       <Filter>GUI\Styles</Filter>
     </ClCompile>
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\GUI\Dockable\PerformanceWindow.cpp" />
   </ItemGroup>
 </Project>

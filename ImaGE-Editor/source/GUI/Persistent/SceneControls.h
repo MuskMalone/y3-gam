@@ -20,7 +20,7 @@ namespace GUI
   class SceneControls : public GUIWindow
   {
   public:
-    SceneControls(std::string const& name);
+    SceneControls(const char* name);
 
     /*!*********************************************************************
     \brief

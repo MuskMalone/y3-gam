@@ -29,7 +29,7 @@ namespace GUI {
 
   bool InputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled = false);
 
-  Inspector::Inspector(std::string const& name) : GUIWindow(name),
+  Inspector::Inspector(const char* name) : GUIWindow(name),
     mComponentOpenStatusMap{}, mStyler{ GUIManager::GetStyler() }, mObjFactory{Reflection::ObjectFactory::GetInstance()},
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
     for (auto const& component : Reflection::gComponentTypes) {

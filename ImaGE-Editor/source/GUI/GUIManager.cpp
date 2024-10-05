@@ -15,14 +15,15 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <ImGui/imgui.h>
 #include <Core/Entity.h>
 #pragma region IndivWindowIncludes
-#include "Persistent/Toolbar.h"
-#include "Persistent/SceneControls.h"
-#include "Persistent/PrefabEditor.h"
-#include "Dockable/Viewport.h"
-#include "Dockable/Inspector.h"
-#include "Dockable/SceneHierarchy.h"
 #include "Dockable/AssetBrowser.h"
 #include "Dockable/Console.h"
+#include "Dockable/Inspector.h"
+#include "Dockable/PerformanceWindow.h"
+#include "Persistent/PrefabEditor.h"
+#include "Persistent/SceneControls.h"
+#include "Dockable/SceneHierarchy.h"
+#include "Persistent/Toolbar.h"
+#include "Dockable/Viewport.h"
 #pragma endregion
 
 namespace GUI {
@@ -50,7 +51,7 @@ namespace GUI {
     mWindows.emplace_back(std::make_shared<SceneHierarchy>("Scene Hierarchy"));
     mWindows.emplace_back(std::make_shared<AssetBrowser>("Asset Browser"));
     mWindows.emplace_back(std::make_shared<Console>("Console"));
-    //mWindows.emplace_back(std::make_shared<PerformanceWindow>("Performance Window"));
+    mWindows.emplace_back(std::make_shared<PerformanceWindow>("Performance Window"));
 
     mStyler.LoadFonts();
     mStyler.SetCurrentTheme(static_cast<CustomTheme>(gEditorDefaultTheme)); // Default theme should be read from settings file
