@@ -17,7 +17,7 @@
 #include "Graphics/EditorCamera.h"
 
 #include <Physics/PhysicsSystem.h>
-
+#include <Asset/IGEAssets.h>
 Scene::Scene()
 {
   glClearColor(0.f, 0.f, 0.f, 1.f);
@@ -48,10 +48,10 @@ void Scene::Init()
 
  
   mEcam = editorCam;
-  std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateModelFromImport("../Assets/Models/bunny_high_poly.imsh");
+  IGE::Assets::GUID cubeMeshSource = IGE_ASSETMGR->LoadRef<IGE::Assets::MeshAsset>("../Assets/Models/bunny_high_poly.imsh");//Graphics::MeshFactory::CreateModelFromImport("../Assets/Models/bunny_high_poly.imsh");
   mesh0 = std::make_shared<Graphics::Mesh>(cubeMeshSource);
 
-  std::shared_ptr<Graphics::MeshSource> pyrMeshSource = Graphics::MeshFactory::CreateModelFromString("Cube");
+  IGE::Assets::GUID pyrMeshSource = IGE_ASSETMGR->LoadRef<IGE::Assets::MeshAsset>("Cube");
   mesh1 = std::make_shared<Graphics::Mesh>(pyrMeshSource);
   
   // Create a debug albedo texture (bright magenta checkerboard)

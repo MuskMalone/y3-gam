@@ -83,7 +83,7 @@ project "ImaGE-Core"
 
        links {
         "opengl32.lib",
-        "glfw3d.lib",
+        "glfw3.lib",
         "assimp-vc143-mtd.lib",
         "rttr_core_d.lib",
 
@@ -108,7 +108,9 @@ project "ImaGE-Core"
           "../Libraries/mono/msvc/build/sgen/x64/**",
           "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/debug",
           "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Debug/",
-          "source/External/fmod/lib"
+          "source/External/fmod/lib",
+          "/source/External/mono/lib"
+
        }
 
        postbuildcommands {
@@ -137,7 +139,9 @@ project "ImaGE-Core"
            "../Libraries/mono/msvc/build/sgen/x64/**",
            "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release",
            "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Release/",
-           "source/External/fmod/lib"
+           "source/External/fmod/lib",
+           "/source/External/mono/lib"
+
         }
 
        links {
@@ -179,7 +183,9 @@ project "ImaGE-Core"
           "../Libraries/mono/msvc/build/sgen/x64/**",
           "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release",
           "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Release/",
-          "source/External/fmod/lib"
+          "source/External/fmod/lib",
+          "/source/External/mono/lib"
+
 
        }
 
