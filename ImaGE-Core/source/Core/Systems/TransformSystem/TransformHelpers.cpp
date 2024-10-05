@@ -86,9 +86,9 @@ namespace TransformHelpers {
 
     // due to floating point precision, explicitly check
     // if quat has been rounded < 1.f to prevent NaN euler values
-    if (glm::length2(trans.worldRot) < 1.f) {
-      trans.rotation = { 1.f, 0.f, 0.f, 0.f };
-      trans.eulerAngles = {};
+    if (glm::abs(glm::length2(trans.worldRot) - 1.f) > glm::epsilon<float>()) {
+      trans.rotation = glm::normalize(glm::inverse(parentTrans.worldRot) * trans.worldRot);
+      trans.eulerAngles = glm::degrees(glm::eulerAngles(trans.rotation));
     }
     else {
       trans.rotation = /*glm::normalize*/(glm::inverse(parentTrans.worldRot) * trans.worldRot);

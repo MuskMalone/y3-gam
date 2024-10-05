@@ -65,7 +65,7 @@ namespace Mono
     { "Image.Mono.Vec2<System.Double>", ScriptFieldType::DVEC2 },
     { "Image.Mono.Vec3<System.Double>", ScriptFieldType::DVEC3 },
     { "System.Int32[]", ScriptFieldType::INT_ARR },
-    {"System.String[]",ScriptFieldType::STRING_ARR}
+    { "System.String[]",ScriptFieldType::STRING_ARR}
   };
 }
 
@@ -155,25 +155,26 @@ void ScriptManager::LoadAppDomain()
   mono_domain_set(mAppDomain.get(), true);
 }
 
+#define ADD_INTERNAL_CALL(func) mono_add_internal_call("Image.Mono.InternalCalls::"#func, Mono::func);
+#define ADD_CLASS_INTERNAL_CALL(func, instance) mono_add_internal_call("Image.Mono.InternalCalls::"#func, instance.func);
+
 void ScriptManager::AddInternalCalls()
 {
   // Input Functions
-  mono_add_internal_call("Image.Mono.InternalCalls::IsKeyTriggered", Input::InputManager::GetInstance().IsKeyTriggered);
-  //mono_add_internal_call("Image.InternalCalls::IsKeyReleased", Input::InputManager::GetInstance().IsKeyReleased);
-  //mono_add_internal_call("Image.InternalCalls::IsKeyPressed", Input::InputManager::GetInstance().IsKeyPressed);
-  mono_add_internal_call("Image.Mono.InternalCalls::IsKeyHeld", Input::InputManager::GetInstance().IsKeyHeld);
-
+  ADD_CLASS_INTERNAL_CALL(IsKeyTriggered, Input::InputManager::GetInstance());
+  //ADD_CLASS_INTERNAL_CALL(IsKeyReleased, Input::InputManager::GetInstance());
+  //ADD_CLASS_INTERNAL_CALL(IsKeyPressed, Input::InputManager::GetInstance());
+  ADD_CLASS_INTERNAL_CALL(IsKeyHeld, Input::InputManager::GetInstance());
 
   //// Get Functions
-  mono_add_internal_call("Image.Mono.InternalCalls::GetTranslation", Mono::GetWorldPosition);
-  //mono_add_internal_call("Image.InternalCalls::GetWorldPosition", GetWorldPosition);
-  //mono_add_internal_call("Image.InternalCalls::GetRotation", GetRotation);
-  mono_add_internal_call("Image.Mono.InternalCalls::GetWorldScale", Mono::GetWorldScale);
+  ADD_INTERNAL_CALL(GetWorldPosition);
+  ADD_INTERNAL_CALL(GetPosition);
+  ADD_INTERNAL_CALL(GetScale);
 
   //// Set Functions
-  mono_add_internal_call("Image.Mono.InternalCalls::SetTranslation", Mono::SetWorldPosition);
-  //mono_add_internal_call("Image.InternalCalls::SetRotation", SetRotation);
-  mono_add_internal_call("Image.Mono.InternalCalls::SetWorldScale", Mono::SetWorldScale);
+  ADD_INTERNAL_CALL(SetWorldPosition);
+  ADD_INTERNAL_CALL(SetPosition);
+  ADD_INTERNAL_CALL(SetScale);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -598,13 +599,20 @@ ScriptFieldInfo Mono::ScriptManager::GetScriptField(std::string className, std::
 *																																			  *
 ************************************************************************/
 
-
 void Mono::SetWorldPosition(ECS::Entity::EntityID entity, glm::vec3 posAdjustment) {
   TransformHelpers::SetEntityWorldPos(entity, posAdjustment);
 }
 
-void Mono::SetWorldScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment) {
-  TransformHelpers::SetEntityWorldScale(entity, scaleAdjustment);
+void Mono::SetPosition(ECS::Entity::EntityID entity, glm::vec3 newPosition) {
+  Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+  trans.position = newPosition;
+  trans.modified = true;
+}
+
+void Mono::SetScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment) {
+  Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+  trans.scale = scaleAdjustment;
+  trans.modified = true;
 }
 
 void Mono::SetRotation(ECS::Entity::EntityID entity, glm::vec3 rotAdjustment)
@@ -617,9 +625,14 @@ glm::vec3 Mono::GetWorldPosition(ECS::Entity::EntityID entity)
   return ECS::Entity(entity).GetComponent<Component::Transform>().worldPos;
 }
 
-glm::vec3 Mono::GetWorldScale(ECS::Entity::EntityID entity)
+glm::vec3 Mono::GetPosition(ECS::Entity::EntityID entity)
 {
-  return ECS::Entity(entity).GetComponent<Component::Transform>().worldScale;
+  return ECS::Entity(entity).GetComponent<Component::Transform>().position;
+}
+
+glm::vec3 Mono::GetScale(ECS::Entity::EntityID entity)
+{
+  return ECS::Entity(entity).GetComponent<Component::Transform>().scale;
 }
 
 glm::vec3 Mono::GetRotation(ECS::Entity::EntityID entity)

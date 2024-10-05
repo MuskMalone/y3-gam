@@ -229,7 +229,7 @@ namespace Mono
 
 		/*!*********************************************************************
 		\brief
-			Function to set the world position of an entity's transform component.
+			Function to set the world/local position of an entity's transform component.
 			This function will be added as internal call to allow c# script to set
 			entities' transform.
 		\params entity
@@ -239,6 +239,7 @@ namespace Mono
 			values to be added to the entity's transform
 		************************************************************************/
 		static void SetWorldPosition(ECS::Entity::EntityID entity, glm::vec3 posAdjustment);
+		static void SetPosition(ECS::Entity::EntityID entity, glm::vec3 posAdjustment);
 
 		/*!*********************************************************************
 		\brief
@@ -248,7 +249,7 @@ namespace Mono
 		\param GE::Math::dVec3 PosAdjustment
 			Vector 3 of the new scale
 		************************************************************************/
-		static void SetWorldScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment);
+		static void SetScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment);
 
 		/*!*********************************************************************
 		\brief
@@ -262,13 +263,14 @@ namespace Mono
 
 		/*!*********************************************************************
 			\brief
-				Get the world position of the entity
+				Get the world/local position of the entity
 			\param GE::ECS::Entity entity
 				ID of the entity
 			\return GE::Math::dVec3
 				Returns a vector 3 of the position of the entity
 			************************************************************************/
 		static glm::vec3 GetWorldPosition(ECS::Entity::EntityID entity);
+		static glm::vec3 GetPosition(ECS::Entity::EntityID entity);
 
 		/*!*********************************************************************
 		\brief
@@ -278,7 +280,7 @@ namespace Mono
 		\return GE::Math::dVec3
 			Returns a vector 3 of the scale of the entity
 		************************************************************************/
-		static glm::vec3 GetWorldScale(ECS::Entity::EntityID entity);
+		static glm::vec3 GetScale(ECS::Entity::EntityID entity);
 
 		/*!*********************************************************************
 		\brief

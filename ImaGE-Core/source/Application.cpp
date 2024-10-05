@@ -70,8 +70,8 @@ namespace IGE {
 
   // registration order is the update order
   void Application::RegisterSystems() {
-    mSystemManager.RegisterSystem<Systems::LocalToWorldTransformSystem>("Pre-Transform System");
     mSystemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
+    mSystemManager.RegisterSystem<Systems::LocalToWorldTransformSystem>("Pre-Transform System");
     // physics should go here since it deals with world coords i assume
 
     mSystemManager.RegisterSystem<Systems::WorldToLocalTransformSystem>("Post-Transform System");

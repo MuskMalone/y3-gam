@@ -165,17 +165,17 @@ namespace Image.Mono
 
     Getter setter for Translation.
     */
-    public Vec3<float> Translation
+    public Vec3<float> Position
     {
       get
       {
         Vec3<float> translation = new Vec3<float>();
-        InternalCalls.GetTranslation(mEntityID);
+        InternalCalls.GetPosition(mEntityID);
         return translation;
       }
       set
       {
-        InternalCalls.SetTranslation(mEntityID , ref value);
+        InternalCalls.SetPosition(mEntityID , ref value);
       }
     }
     //public float Transform_Rotation

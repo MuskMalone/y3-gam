@@ -74,7 +74,7 @@ public class Test : Entity
     public void Update(double dt)
     {
      // Console.WriteLine("Hit\n");
-      Vec3<float> currTrans = InternalCalls.GetTranslation(mEntityID);
+      Vec3<float> currTrans = InternalCalls.GetPosition(mEntityID);
       bool isChanged = false;
 
       currTrans.Y += (InternalCalls.IsKeyTriggered(KeyCode.W) || InternalCalls.IsKeyHeld(KeyCode.W)) ? (speed * (float)dt) : 0;
@@ -90,7 +90,7 @@ public class Test : Entity
 
     if(isChanged)
       {
-        InternalCalls.SetTranslation(mEntityID, ref currTrans);
+        InternalCalls.SetPosition(mEntityID, ref currTrans);
       }
     
 

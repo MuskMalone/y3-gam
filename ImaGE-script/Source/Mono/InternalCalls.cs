@@ -30,16 +30,23 @@ namespace Image.Mono
     #region Transform
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vec3<float> GetWorldScale(uint ID);
+    internal extern static Vec3<float> GetScale(uint ID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetWorldScale(ref uint entityHandle, ref Vec3<float> scale);
+    internal extern static void SetScale(ref uint entityHandle, ref Vec3<float> scale);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vec3<float> GetWorldPosition(uint ID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetWorldPosition(uint entityHandle, ref Vec3<float> translation);
+    internal extern static Vec3<float> GetPosition(uint ID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void SetPosition(uint entityHandle, ref Vec3<float> position);
+
+    // avoid using this, prefer SetPosition (local)
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void SetWorldPosition(uint entityHandle, ref Vec3<float> position);
 
     //[MethodImplAttribute(MethodImplOptions.InternalCall)]
     //internal extern static void GetRotation(ref uint entityHandle, ref float rotation);
