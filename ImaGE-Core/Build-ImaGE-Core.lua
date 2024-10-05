@@ -34,9 +34,10 @@ project "ImaGE-Core"
       "../Libraries/PhysX/physx/include",
       "../Libraries/PhysX/pxshared/include/**",
       "../Libraries/PhysX/pxshared/include",
-      "../Libraries/mono/msvc/include/**",
+      "../Libraries/mono/**",
+      "../Libraries/filewatch",
       "../Libraries/Built-Libraries/Debug/Libraries/rttr/**",
-      "../Libraries/DirectXTex/**"
+      "../Libraries/DirectXTex/**",
    }
 
    pchheader "pch.h"

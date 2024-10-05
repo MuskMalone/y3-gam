@@ -5,8 +5,6 @@ project "ImaGE-Script"
 
    files { "source/**.cs" }
 
-   framework "net48"
-
    links {
       "System",
       "System.Core",
@@ -21,6 +19,8 @@ project "ImaGE-Script"
 
    targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
    objdir ("../Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
+
+   buildoptions { "/p:RuntimeIdentifiers=win-x64" }  
 
    filter "system:windows"
        systemversion "latest"

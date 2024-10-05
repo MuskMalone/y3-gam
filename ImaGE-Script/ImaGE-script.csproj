@@ -1,9 +1,17 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
+    <ProjectGuid>{0AEC9CEB-F64E-2C90-9FD4-64468B16F812}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <TargetFramework>net48</TargetFramework>
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RootNamespace>ImaGE-Script</RootNamespace>
+    <AssemblyName>ImaGE-Script</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -11,7 +19,8 @@
     <DebugSymbols>true</DebugSymbols>
     <Optimize>false</Optimize>
     <OutputPath>..\Binaries\windows-x86_64\Debug\ImaGE-Script\</OutputPath>
-    <IntermediateOutputPath>..\Binaries\Intermediates\windows-x86_64\Debug\ImaGE-Script\</IntermediateOutputPath>
+    <BaseIntermediateOutputPath>..\Binaries\Intermediates\windows-x86_64\Debug\ImaGE-Script\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <DefineConstants>WINDOWS;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -22,7 +31,8 @@
     <DebugSymbols>true</DebugSymbols>
     <Optimize>true</Optimize>
     <OutputPath>..\Binaries\windows-x86_64\Release\ImaGE-Script\</OutputPath>
-    <IntermediateOutputPath>..\Binaries\Intermediates\windows-x86_64\Release\ImaGE-Script\</IntermediateOutputPath>
+    <BaseIntermediateOutputPath>..\Binaries\Intermediates\windows-x86_64\Release\ImaGE-Script\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <DefineConstants>WINDOWS;NDEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -33,7 +43,8 @@
     <DebugSymbols>true</DebugSymbols>
     <Optimize>false</Optimize>
     <OutputPath>..\Binaries\windows-x86_64\Distribution\ImaGE-Script\</OutputPath>
-    <IntermediateOutputPath>..\Binaries\Intermediates\windows-x86_64\Distribution\ImaGE-Script\</IntermediateOutputPath>
+    <BaseIntermediateOutputPath>..\Binaries\Intermediates\windows-x86_64\Distribution\ImaGE-Script\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <DefineConstants>WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -80,4 +91,14 @@
     <Compile Include="source\Mono\Vec4.cs" />
     <Compile Include="source\Test.cs" />
   </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

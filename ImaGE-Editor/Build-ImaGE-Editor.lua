@@ -36,7 +36,8 @@ project "ImaGE-Editor"
       "../Libraries/PhysX/physx/include",
       "../Libraries/PhysX/pxshared/include/**",
       "../Libraries/PhysX/pxshared/include",
-      "../Libraries/mono/msvc/include/**",
+      "../Libraries/filewatch",
+      "../Libraries/mono/**",
       "../Libraries/Built-Libraries/Debug/Libraries/rttr/**",
       "../Libraries/DirectXTex/**"
    }
@@ -73,7 +74,7 @@ project "ImaGE-Editor"
        postbuildcommands {
          "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/debug/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}ImaGE-Core/source/Externals/fmod/lib/fmodL.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]"
+         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
          "{COPYDIR} %[%{wks.location}Libraries/mono/4.5] %[%{cfg.targetdir}/4.5]"
       }
 
