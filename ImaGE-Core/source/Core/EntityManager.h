@@ -1,5 +1,5 @@
 #pragma once
-#include <entt.hpp>
+#include <entt/entt.hpp>
 #include <Core/Components/Tag.h>
 #include "Singleton.h"
 

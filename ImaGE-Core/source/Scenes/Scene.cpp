@@ -178,6 +178,14 @@ void Scene::Draw() const
 //tch: i just added this to visually test physics
 void Scene::AddMesh(ECS::Entity entity)
 {
+  /*  auto xfm{ entity.GetComponent<Component::Transform>() };
+    mObjects.emplace_back(std::make_shared<Object>(
+        "./assets/models/cube_low_poly.obj",
+        xfm.worldPos, 
+        xfm.worldScale));
+    mObjects.back()->entity = entity;
+    entity.EmplaceComponent<Component::Mesh>(Component::Mesh{});*/
+}
     /*  auto xfm{ entity.GetComponent<Component::Transform>() };
       mObjects.emplace_back(std::make_shared<Object>(
           "./assets/models/cube_low_poly.obj",

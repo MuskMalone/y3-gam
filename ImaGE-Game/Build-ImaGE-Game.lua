@@ -19,8 +19,23 @@ project "ImaGE-Game"
    {
       "../ImaGE-Core/source/External",
       "../ImaGE-Core/source/External/ImGui",
-      "../ImaGE-Core/source/External/ImTerm",
-      "../Libraries/**",
+      "../ImaGE-Core/source/External/glad/include",
+      
+      "../Libraries/assimp/include/**",
+      "../Libraries/entt/single_include",
+      "../Libraries/freetype/include/**",
+      "../Libraries/glfw/include",
+      "../Libraries/glm",
+      "../Libraries/rapidjson/include/**",
+      "../Libraries/rttr/**",
+      "../Libraries/spdlog/include",
+      "../Libraries/ImTerm/include/**",
+      "../Libraries/PhysX/physx/include/**",
+      "../Libraries/PhysX/physx/include",
+      "../Libraries/PhysX/pxshared/include/**",
+      "../Libraries/PhysX/pxshared/include",
+      "../Libraries/mono/msvc/include/**",
+      "../Libraries/Built-Libraries/Debug/Libraries/rttr/**"
    }
 
    links
@@ -41,17 +56,17 @@ project "ImaGE-Game"
          "_CONSOLE",
          "_CRT_SECURE_NO_WARNINGS",
          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
-         "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"
+         "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
+         "GLM_ENABLE_EXPERIMENTAL",
       }
 
        runtime "Debug"
        symbols "On"
 
        postbuildcommands {
-         "{COPYFILE} %[%{wks.location}Libraries/glfw-3.3.8.bin.WIN64/lib-vc2022/glfw3.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/assimp/assimp-vc143-mt.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/rttr-0.9.6/lib/Debug/rttr_core_d.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/debug/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/fmod/lib/fmodL.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]"
       }
 
    filter "configurations:Release"
@@ -60,17 +75,17 @@ project "ImaGE-Game"
          "_CONSOLE",
          "_CRT_SECURE_NO_WARNINGS",
          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
-         "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"
+         "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
+         "GLM_ENABLE_EXPERIMENTAL",
       }
        runtime "Release"
        optimize "On"
        symbols "On"
 
        postbuildcommands {
-         "{COPYFILE} %[%{wks.location}Libraries/glfw-3.3.8.bin.WIN64/lib-vc2022/glfw3.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/assimp/assimp-vc143-mt.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/rttr-0.9.6/lib/Release/rttr_core.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]"
       }
 
    filter "configurations:Distribution"
@@ -78,7 +93,8 @@ project "ImaGE-Game"
          "DISTRIBUTION",
          "_CRT_SECURE_NO_WARNINGS",
          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
-         "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"
+         "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
+         "GLM_ENABLE_EXPERIMENTAL",
       }
       kind "WindowedApp"
       runtime "Release"
@@ -86,8 +102,7 @@ project "ImaGE-Game"
       symbols "Off"
 
       postbuildcommands {
-         "{COPYFILE} %[%{wks.location}Libraries/glfw-3.3.8.bin.WIN64/lib-vc2022/glfw3.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/assimp/assimp-vc143-mt.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}Libraries/rttr-0.9.6/lib/Release/rttr_core.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]"
       }

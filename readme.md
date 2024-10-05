@@ -1,3 +1,17 @@
+BUILD INFO
+---------------------
+To build the solution, there are some pre-requisites that you need to have:
+1) Git
+2) Python
+3) CMake
+4) VS Studio 2022 or Higher
+
+After getting the pre-requisites, navigate to the "Build-Scripts" folder,
+then run "Setup-Windows.bat"
+
+After running the batch file, open the main solution generated in y3-gam root.
+You can now build either project in the chosen configuration.
+
 NAMING CONVENTIONS
 ---------------------
 

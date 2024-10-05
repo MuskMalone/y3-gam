@@ -4,18 +4,6 @@
     <Filter Include="Asset">
       <UniqueIdentifier>{253FD80C-9153-00BE-5AD5-A31DC6A8FCEE}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Asset\Assetables">
-      <UniqueIdentifier>{DB2290B9-C71B-AF0B-F04D-9490DCA58E17}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Asset\Assetables\Audio">
-      <UniqueIdentifier>{1C29302E-0823-5980-F18F-EF90DD28BFEC}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Asset\Assetables\Texture">
-      <UniqueIdentifier>{3BF38E0D-2718-DE8D-5063-C31D3CE7DCAB}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Audio">
-      <UniqueIdentifier>{9718D90C-032D-01BE-CCAE-A41D3882FDEE}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
     </Filter>
@@ -117,12 +105,6 @@
     </ClInclude>
     <ClInclude Include="source\Asset\IGEAssets.h">
       <Filter>Asset</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Asset\SmartPointer.h">
-      <Filter>Asset</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Audio\AudioManager.h">
-      <Filter>Audio</Filter>
     </ClInclude>
     <ClInclude Include="source\Color.h" />
     <ClInclude Include="source\Core\Components\Camera.h">
@@ -336,6 +318,9 @@
     </ClInclude>
     <ClInclude Include="source\Input\KeyCode.h">
       <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Physics\Physics.h">
+      <Filter>Physics</Filter>
     </ClInclude>
     <ClInclude Include="source\Physics\PhysicsHelpers.h">
       <Filter>Physics</Filter>

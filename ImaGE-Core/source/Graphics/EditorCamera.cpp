@@ -115,11 +115,11 @@ namespace Graphics {
         //}
     }
     void EditorCamera::ProcessMouseInput(float offsetX, float offsetY) {
-        //offsetX *= mMouseSense;
-        //offsetY *= mMouseSense;
+        offsetX *= mMouseSense;
+        offsetY *= mMouseSense;
 
         mYaw += offsetX;
-        mPitch -= offsetY;
+        mPitch += offsetY;
 
         // Constrain pitch to avoid flipping the camera
         if (mPitch > 89.0f) mPitch = 89.0f;
