@@ -441,23 +441,34 @@ namespace GUI {
       float charSize = ImGui::CalcTextSize("012345678901234").x;
       float inputWidth = (contentSize - charSize - 60);
 
-      ImGui::BeginTable("MaterialTable", 1, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+      ImGui::BeginTable("MaterialTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-      /*ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
       ImGui::TableNextRow();
       ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Color");
+      ImGui::Text("Material Type");
       ImGui::TableSetColumnIndex(1);
       ImGui::SetNextItemWidth(INPUT_SIZE);
 
-      glm::vec3 color = material.material->GetAlbedoColor();
+      static const std::vector<const char*> materialNames{
+        "Default"
+      };
 
-      if (ImGui::ColorEdit3("##AlebdoColor", &color[0])) {
-        material.material->SetAlbedoColor(color);
-        modified = true;
-      }*/
+      if (ImGui::BeginCombo("##MaterialSelection", materialNames[0])) {
+        for (unsigned i{}; i < materialNames.size(); ++i) {
+          if (ImGui::Selectable(materialNames[i])) {
+            if (i != material.matIdx) {
+              modified = true;
+              material.matIdx = i;
+            }
+            break;
+          }
+        }
+
+        ImGui::EndCombo();
+      }
 
       ImGui::EndTable();
     }
@@ -658,18 +669,31 @@ namespace GUI {
     bool modified{ false };
 
     if (isOpen) {
+      Component::Mesh& mesh{ entity.GetComponent<Component::Mesh>() };
       static const std::vector<const char*> meshNames{
         "None", "Cube", "Plane"
       };
-      Component::Mesh& mesh{ entity.GetComponent<Component::Mesh>() };
+
+      float contentSize = ImGui::GetContentRegionAvail().x;
+      float charSize = ImGui::CalcTextSize("012345678901234").x;
+      float inputWidth = (contentSize - charSize - 60);
+
+      ImGui::BeginTable("MeshTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Mesh Type");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
 
       if (ImGui::BeginCombo("##MeshSelection", mesh.meshName.c_str())) {
         for (unsigned i{}; i < meshNames.size(); ++i) {
           const char* selected{ meshNames[i] };
           if (ImGui::Selectable(selected)) {
-            if (i != 0) {
-              mesh.mesh = std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromString(selected));
-            }
+            mesh.mesh = std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromString(selected));
 
             if (selected != mesh.meshName) {
               modified = true;
@@ -698,6 +722,7 @@ namespace GUI {
         ImGui::EndDragDropTarget();
       }
 
+      ImGui::EndTable();
     }
 
     WindowEnd(isOpen);
@@ -883,7 +908,12 @@ namespace GUI {
         DrawAddComponentButton<Component::Collider>("Collider", ICON_FA_BOMB);
         DrawAddComponentButton<Component::Layer>("Layer", ICON_FA_LAYER_GROUP);
         DrawAddComponentButton<Component::Material>("Material", ICON_FA_GEM);
-        DrawAddComponentButton<Component::Mesh>("Mesh", ICON_FA_CUBE);
+        // @TODO: Temporarily forcing material to be added with mesh
+        if (DrawAddComponentButton<Component::Mesh>("Mesh", ICON_FA_CUBE)) {
+          if (!GUIManager::GetSelectedEntity().HasComponent<Component::Material>()) {
+            GUIManager::GetSelectedEntity().EmplaceComponent<Component::Material>();
+          }
+        }
         DrawAddComponentButton<Component::RigidBody>("RigidBody", ICON_FA_CAR);
         DrawAddComponentButton<Component::Script>("Script", ICON_FA_FILE_CODE);
         DrawAddComponentButton<Component::Tag>("Tag", ICON_FA_TAG);

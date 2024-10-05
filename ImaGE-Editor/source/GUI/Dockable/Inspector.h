@@ -129,7 +129,7 @@ namespace GUI {
       The icon to display for the component
     ************************************************************************/
     template<typename Component>
-    void DrawAddComponentButton(std::string const& name, std::string const& icon);
+    bool DrawAddComponentButton(std::string const& name, std::string const& icon);
 
     /*!*********************************************************************
     \brief
