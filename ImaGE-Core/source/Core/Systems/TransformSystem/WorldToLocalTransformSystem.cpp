@@ -89,14 +89,17 @@ namespace Systems {
         UpdateWorldToLocal(child);
       }
 
-      trans.modified = false;
+      trans.parentModified = false;
     }
     else if (trans.modified) {
+      trans.ComputeWorldMtx();
       for (ECS::Entity& child : mEntityManager.GetChildEntity(entity)) {
         TransformHelpers::UpdateWorldTransformRecursive(child);
         child.GetComponent<Transform>().modified = true;
         UpdateWorldToLocal(child);
       }
+
+      trans.modified = false;
     }
     else {
       for (ECS::Entity& child : mEntityManager.GetChildEntity(entity)) {
