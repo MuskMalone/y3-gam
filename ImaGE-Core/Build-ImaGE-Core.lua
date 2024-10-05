@@ -70,7 +70,9 @@ project "ImaGE-Core"
         "assimp-vc143-mt.lib",
         "Jolt_d.lib",
         "Jolt1_d.lib",
-        "rttr_core_d.lib"
+        "rttr_core_d.lib",
+        "mono-2.0-sgen.lib"
+
        }
 
        postbuildcommands {
@@ -107,8 +109,14 @@ project "ImaGE-Core"
         "assimp-vc143-mt.lib",
         "Jolt.lib",
         "Jolt1.lib",
-        "rttr_core.lib"
+        "rttr_core.lib",
+        "mono-2.0-sgen.lib"
        }
+
+       postbuildcommands {
+        "{MKDIR} %[%{wks.location}/Binaries/" .. OutputDir .. "/Assets]",
+        "{COPYDIR} %[%{wks.location}/Assets] %[%{wks.location}/Binaries/" .. OutputDir .. "/Assets]"
+    }
 
     filter "configurations:Distribution"
        defines {
@@ -137,8 +145,13 @@ project "ImaGE-Core"
         "assimp-vc143-mt.lib",
         "Jolt.lib",
         "Jolt1.lib",
-        "rttr_core.lib"
+        "rttr_core.lib",
+        "mono-2.0-sgen.lib"
        }
+       postbuildcommands {
+        "{MKDIR} %[%{wks.location}/Binaries/" .. OutputDir .. "/Assets]",
+        "{COPYDIR} %[%{wks.location}/Assets] %[%{wks.location}/Binaries/" .. OutputDir .. "/Assets]"
+    }
 
    filter "files:**.c"
        flags {"NoPCH"}

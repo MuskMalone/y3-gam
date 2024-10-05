@@ -6,7 +6,7 @@
         window of the editor. Displays the list of entities currently
         in the scene along with their position in the hierarchy.
         Features right-click options as well as parenting of entities.
-  
+
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
@@ -92,7 +92,7 @@ namespace GUI
     \brief
       This function handles the corresponding events the PrefabEditor
       subscribed to.
-      
+
       SCENE_STATE_CHANGE
         - Disables certain menu options based on the current scene state
       SCENE_MODIFIED

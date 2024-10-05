@@ -10,8 +10,25 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma once
 #include <Core/Components/Transform.h>
 #include <Core/Entity.h>
+#include <glm/glm.hpp>
 
 namespace TransformHelpers {
+
+  /*!*********************************************************************
+  \brief
+    Sets the world position of an entity
+  \param newPos
+    The new world position
+  ************************************************************************/
+  void SetEntityWorldPos(ECS::Entity entity, glm::vec3 const& newPos);
+
+  /*!*********************************************************************
+  \brief
+    Sets the world scale of an entity
+  \param newScale
+    The new world scale
+  ************************************************************************/
+  void SetEntityWorldScale(ECS::Entity entity, glm::vec3 const& newScale);
 
   /*!*********************************************************************
   \brief

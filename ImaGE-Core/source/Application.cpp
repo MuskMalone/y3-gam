@@ -13,6 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Scenes/SceneManager.h>
 #include <Prefabs/PrefabManager.h>
 #include <Input/InputManager.h>
+#include <Scripting/ScriptManager.h>
 
 #include <Core/Entity.h>
 #include <Core/EntityManager.h>
@@ -22,6 +23,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Physics/PhysicsSystem.h>
 #include <Core/Systems/TransformSystem/WorldToLocalTransformSystem.h>
 #include <Core/Systems/TransformSystem/LocalToWorldTransformSystem.h>
+#include <Scripting/ScriptingSystem.h>
 #pragma endregion
 
 namespace IGE {
@@ -31,8 +33,8 @@ namespace IGE {
   void Application::Init() {
     mSystemManager.InitSystems();
     Reflection::ObjectFactory::GetInstance().Init();
-    IGE::Physics::PhysicsSystem::InitAllocator();
-    IGE::Physics::PhysicsSystem::GetInstance()->Init();
+    //IGE::Physics::PhysicsSystem::InitAllocator();
+    //IGE::Physics::PhysicsSystem::GetInstance()->Init();
     GetDefaultRenderTarget().scene.Init();
     Scenes::SceneManager::GetInstance().Init();
     Prefabs::PrefabManager::GetInstance().Init();
@@ -69,6 +71,7 @@ namespace IGE {
   // registration order is the update order
   void Application::RegisterSystems() {
     mSystemManager.RegisterSystem<Systems::LocalToWorldTransformSystem>("Pre-Transform System");
+    mSystemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
     // physics should go here since it deals with world coords i assume
 
     mSystemManager.RegisterSystem<Systems::WorldToLocalTransformSystem>("Post-Transform System");
@@ -115,6 +118,8 @@ namespace IGE {
   framebufferSpec.height = spec.WindowHeight;
   framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
   mRenderTargets.emplace_back(framebufferSpec);
+
+  Mono::ScriptManager::GetInstance().InitMono();
 }
 
   void Application::SetCallbacks() {

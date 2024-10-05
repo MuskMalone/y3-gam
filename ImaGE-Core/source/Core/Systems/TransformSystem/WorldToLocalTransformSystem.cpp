@@ -37,8 +37,6 @@ namespace Systems {
               child.GetComponent<Transform>().modified = true;
             }
           }
-
-          transform.modified = false;
         }
       }
 

@@ -1,14 +1,14 @@
-/*!*********************************************************************
-\file   SceneHierarchy.cpp
-\author chengen.lau\@digipen.edu
-\date   5-October-2024
-\brief  Class encapsulating functions to run the scene hierarchy
-        window of the editor. Displays the list of entities currently
-        in the scene along with their position in the hierarchy.
-        Features right-click options as well as parenting of entities.
+  /*!*********************************************************************
+  \file   SceneHierarchy.cpp
+  \author chengen.lau\@digipen.edu
+  \date   5-October-2024
+  \brief  Class encapsulating functions to run the scene hierarchy
+          window of the editor. Displays the list of entities currently
+          in the scene along with their position in the hierarchy.
+          Features right-click options as well as parenting of entities.
 
-Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
-************************************************************************/
+  Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+  ************************************************************************/
 #include <pch.h>
 #include "SceneHierarchy.h"
 #include <imgui/imgui.h>
@@ -26,7 +26,7 @@ namespace GUI
 
   SceneHierarchy::SceneHierarchy(std::string const& name) : GUIWindow(name),
     mEntityManager{ ECS::EntityManager::GetInstance() },
-    mSceneName{}, 
+    mSceneName{},
     mRightClickedEntity{}, mRightClickMenu{ false }, mEntityOptionsMenu{ false },
     mPrefabPopup{ false }, mFirstTimePfbPopup{ true }, mEditingPrefab{ false }, mLockControls{ false }, mSceneModified{ false }
   {
@@ -88,7 +88,7 @@ namespace GUI
     for (auto const& e : mEntityManager.GetAllEntities())
     {
       if (mEntityManager.HasParent(e)) { continue; }
-       
+
       RecurseDownHierarchy(e);
     }
 
@@ -171,7 +171,7 @@ namespace GUI
     // set the flag accordingly
     ImGuiTreeNodeFlags treeFlag{ ImGuiTreeNodeFlags_SpanFullWidth };
     bool const hasChildren{ mEntityManager.HasChild(entity) };
-    treeFlag |= hasChildren  ? ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen
+    treeFlag |= hasChildren ? ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen
       : ImGuiTreeNodeFlags_Leaf;
 
     if (isCurrentEntity) { treeFlag |= ImGuiTreeNodeFlags_Selected; }
@@ -188,16 +188,12 @@ namespace GUI
 
     if (ImGui::TreeNodeEx((displayName + "##" + std::to_string(entity.GetEntityID())).c_str(), treeFlag))
     {
-      if (isPrefabInstance) {
-        ImGui::PopStyleColor();
-      }
-
       // if renaming entity
       if (isEditMode) {
         ImGui::SetItemAllowOverlap();
         ImGui::SameLine();
         ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
-        ImGui::SetCursorPosX(ImGui::GetCursorPosX()  - 12.f);
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 12.f);
         if (firstEnterEditMode) {
           ImGui::SetKeyboardFocusHere();
           firstEnterEditMode = false;
@@ -227,10 +223,14 @@ namespace GUI
 
       ImGui::TreePop();
     }
+
+    if (isPrefabInstance) {
+      ImGui::PopStyleColor();
+    }
   }
 
   void SceneHierarchy::ProcessInput(ECS::Entity entity, bool& editNameMode) {
-    
+
     bool dragNDropped{ false };
     if (!mLockControls) {
       if (ImGui::BeginDragDropSource())

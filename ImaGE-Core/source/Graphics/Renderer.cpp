@@ -116,7 +116,7 @@ namespace Graphics {
 		Graphics::FramebufferSpec framebufferSpec;
 		framebufferSpec.width = WINDOW_WIDTH<int>;
 		framebufferSpec.height = WINDOW_HEIGHT<int>;
-		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
+		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
 
 		//Init RenderPasses
 		PipelineSpec geomPipelineSpec;
@@ -206,13 +206,14 @@ namespace Graphics {
 		// Set up the buffer layout for instance data
 		BufferLayout instanceLayout = {
 			{ AttributeType::MAT4, "a_ModelMatrix" },
+			{AttributeType::INT, "a_EntityID"}
 			//{ AttributeType::VEC4, "a_Color" }
 		};
 
 		instanceBuffer->SetLayout(instanceLayout);
 
 		// Attach the instance buffer to the MeshSource's VAO
-		meshSrc->GetVertexArray()->AddVertexBuffer(instanceBuffer);
+		meshSrc->GetVertexArray()->AddVertexBuffer(instanceBuffer, true);
 
 		// Store the buffer in the map for future use
 		mData.instanceBuffers[meshSrc] = instanceBuffer;
@@ -324,7 +325,7 @@ namespace Graphics {
 		instance.modelMatrix = worldMtx;
 		
 		if (id != INVALID_ENTITY_ID) {
-			//instance.entityID = id;
+			instance.entityID = id;
 		}
 
 		auto& meshSrc = mesh->GetMeshSource();
@@ -514,6 +515,10 @@ namespace Graphics {
 
 	void Renderer::SetFinalFramebuffer(std::shared_ptr<Graphics::Framebuffer> const& framebuffer) {
 		mFinalFramebuffer = framebuffer;
+	}
+
+	std::shared_ptr<Texture> Renderer::GetWhiteTexture() {
+		return mData.whiteTex;
 	}
 
 }

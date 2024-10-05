@@ -12,7 +12,63 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Components/Transform.h>
 #include <Core/Components/Tag.h>
 
+namespace {
+
+  /*!*********************************************************************
+   \brief
+     Helper function to recursively update all world transforms of a
+     hierarchy
+   \param entity
+     The child entity to update
+   ************************************************************************/
+  void UpdateWorldTransformRecursive(ECS::Entity entity);
+}
+
 namespace TransformHelpers {
+
+  void SetEntityWorldPos(ECS::Entity entity, glm::vec3 const& newPos) {
+    ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
+    Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
+
+    trans.worldPos = newPos;
+    trans.ComputeWorldMtx();
+    trans.modified = true;
+
+    if (em.HasChild(entity)) {
+      for (ECS::Entity child : em.GetChildEntity(entity)) {
+        UpdateWorldTransformRecursive(child);
+      }
+    }
+
+    if (em.HasParent(entity)) {
+      UpdateTransformToNewParent(entity);
+    }
+    else {
+      trans.position = newPos;
+    }
+  }
+
+  void SetEntityWorldScale(ECS::Entity entity, glm::vec3 const& newScale) {
+    ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
+    Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
+
+    trans.worldScale = newScale;
+    trans.ComputeWorldMtx();
+    trans.modified = true;
+
+    if (em.HasChild(entity)) {
+      for (ECS::Entity child : em.GetChildEntity(entity)) {
+        UpdateWorldTransformRecursive(child);
+      }
+    }
+
+    if (em.HasParent(entity)) {
+      UpdateTransformToNewParent(entity);
+    }
+    else {
+      trans.scale = newScale;
+    }
+  }
 
   void UpdateTransformToNewParent(ECS::Entity entity) {
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
@@ -51,3 +107,25 @@ namespace TransformHelpers {
   }
 
 } // namespace TransformHelpers
+
+namespace {
+
+  void UpdateWorldTransformRecursive(ECS::Entity entity) {
+    ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
+    Component::Transform& trans{ entity.GetComponent<Component::Transform>() },
+      & parentTrans{ em.GetParentEntity(entity).GetComponent<Component::Transform>() };
+
+    // recalculate the world position, then updates its own matrix
+    trans.parentWorldMtx = parentTrans.worldMtx;
+    trans.worldPos = parentTrans.worldMtx * glm::vec4(trans.position, 1.f);
+    trans.worldScale = parentTrans.worldScale * trans.scale;
+    trans.worldRot = parentTrans.worldRot * trans.rotation;
+    trans.ComputeWorldMtx();
+
+    if (!em.HasChild(entity)) { return; }
+
+    for (ECS::Entity child : em.GetChildEntity(entity)) {
+      UpdateWorldTransformRecursive(child);
+    }
+  }
+}

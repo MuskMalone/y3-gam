@@ -15,7 +15,7 @@ namespace Graphics {
 		void Bind() const;
 		void Unbind() const;
 
-		void AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo);
+		void AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo, bool isInstanced = false);
 		void SetElementBuffer(const std::shared_ptr<ElementBuffer>& ebo);
 
 		std::vector<std::shared_ptr<VertexBuffer>> const& GetVertexBuffers() const { return mVbos; }
