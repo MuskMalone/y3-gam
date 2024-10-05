@@ -34,8 +34,11 @@ project "ImaGE-Core"
       "../Libraries/PhysX/physx/include",
       "../Libraries/PhysX/pxshared/include/**",
       "../Libraries/PhysX/pxshared/include",
-      "../Libraries/mono/**",
-      "../Libraries/filewatch",
+      --"../Libraries/mono/**",
+      --"../Libraries/filewatch",
+      "../ImaGE-Core/source/External/filewatch",
+      "../ImaGE-Core/source/External/mono/**",
+      
       "../Libraries/Built-Libraries/Debug/Libraries/rttr/**",
       "../Libraries/DirectXTex/**",
    }
