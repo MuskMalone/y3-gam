@@ -351,14 +351,14 @@ namespace GUI
       }
 
       ImGui::SetCursorPosX(0.5f * (ImGui::GetWindowContentRegionMax().x - ImGui::CalcTextSize("Cancel Create ").x));
-      if (ImGui::Button("Cancel")) {
+      if (ImGui::Button("Cancel") || ImGui::IsKeyPressed(ImGuiKey_Escape)) {
         input.clear();
         blankWarning = existingPrefabWarning = false;
         ImGui::CloseCurrentPopup();
       }
 
       ImGui::SameLine();
-      if (ImGui::Button("Create")) {
+      if (ImGui::Button("Create") || ImGui::IsKeyPressed(ImGuiKey_Enter)) {
         // if name is blank / whitespace, reject it
         if (input.find_first_not_of(" ") == std::string::npos) {
           blankWarning = true;

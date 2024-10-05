@@ -77,6 +77,8 @@ namespace GUI
         }
       }
     }
+
+    ImGui::End();
   }
 
   void Viewport::ProcessCameraInputs(Graphics::EditorCamera& cam) {
