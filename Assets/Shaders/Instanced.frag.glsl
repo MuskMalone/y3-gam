@@ -1,10 +1,13 @@
 #version 460 core
 
 layout(location = 0) out vec4 fragColor;
+layout(location = 1) out int entityID;
 
 in vec4 v_Color;
 in vec2 v_TexCoord;
 in flat float v_TexIdx;
+
+in flat int v_EntityID;
 
 //uniform sampler2D u_Tex[32]; //TODO CHANGE THIS IN FUTURE
            
@@ -38,7 +41,8 @@ float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness);
 vec3 fresnelSchlick(float cosTheta, vec3 F0);
 
 void main(){
-
+    
+    entityID = v_EntityID;
 	//sample texture
 	//vec4 texColor = texture2D(u_Tex[0], v_TexCoord);
     vec4 albedoTexture = texture(u_AlbedoMap, v_TexCoord);
