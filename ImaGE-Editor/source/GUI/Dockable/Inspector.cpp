@@ -693,6 +693,7 @@ namespace GUI {
             auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
             mesh.mesh = std::move(meshSrc);
             mesh.meshName = assetPayload.GetFileName();
+            modified = true;
           }
         }
         ImGui::EndDragDropTarget();

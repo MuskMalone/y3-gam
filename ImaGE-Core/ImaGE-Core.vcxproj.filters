@@ -313,15 +313,6 @@
     <ClInclude Include="source\Input\KeyCode.h">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="source\Physics\Physics.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Physics\PhysicsHelpers.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Physics\PhysicsSystem.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
     <ClInclude Include="source\Prefabs\Prefab.h">
       <Filter>Prefabs</Filter>
     </ClInclude>
@@ -384,6 +375,9 @@
     </ClInclude>
     <ClInclude Include="source\Singleton.h" />
     <ClInclude Include="source\pch.h" />
+    <ClInclude Include="source\Physics\Physics.h" />
+    <ClInclude Include="source\Physics\PhysicsHelpers.h" />
+    <ClInclude Include="source\Physics\PhysicsSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -516,9 +510,6 @@
     <ClCompile Include="source\Input\InputManager.cpp">
       <Filter>Input</Filter>
     </ClCompile>
-    <ClCompile Include="source\Physics\PhysicsSystem.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
     <ClCompile Include="source\Prefabs\Prefab.cpp">
       <Filter>Prefabs</Filter>
     </ClCompile>
@@ -556,5 +547,6 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
+    <ClCompile Include="source\Physics\PhysicsSystem.cpp" />
   </ItemGroup>
 </Project>
