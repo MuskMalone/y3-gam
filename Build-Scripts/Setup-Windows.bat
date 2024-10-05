@@ -36,6 +36,13 @@ rem Build Mono
 echo Building Mono
 set MONO_PATH=Libraries\mono\msvc\mono.sln
 msbuild.exe %MONO_PATH% /p:Platform=x64 /p:Configuration=Release /p:MONO_TARGET_GC=sgen
+
+rem Build DirectXTex
+echo Building DirectXTex
+set DIRECTX_TEX_PATH=Libraries\DirectXTex\DirectXTex_Desktop_2022_Win10.sln
+msbuild.exe %DIRECTX_TEX_PATH% /p:Platform=x64 /p:Configuration=Release
+msbuild.exe %DIRECTX_TEX_PATH% /p:Platform=x64 /p:Configuration=Debug
+
 echo -----------------------------------------------------------------------
 
 set PROJECT_DIR=%cd%

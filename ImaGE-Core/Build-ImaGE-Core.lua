@@ -32,7 +32,8 @@ project "ImaGE-Core"
       "../Libraries/PhysX/pxshared/include/**",
       "../Libraries/PhysX/pxshared/include",
       "../Libraries/mono/msvc/include/**",
-      "../Libraries/Built-Libraries/Debug/Libraries/rttr/**"
+      "../Libraries/Built-Libraries/Debug/Libraries/rttr/**",
+      "../Libraries/DirectXTex/**"
    }
 
    pchheader "pch.h"
@@ -101,7 +102,8 @@ project "ImaGE-Core"
        {
           "../Libraries/Built-Libraries/Debug/Libraries/**",
           "../Libraries/mono/msvc/build/sgen/x64/**",
-          "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/debug"
+          "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/debug",
+          "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Debug/**",
        }
 
        postbuildcommands {
@@ -127,7 +129,8 @@ project "ImaGE-Core"
         {
            "../Libraries/Built-Libraries/Release/Libraries/**",
            "../Libraries/mono/msvc/build/sgen/x64/**",
-           "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release"
+           "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release",
+           "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Release/**",
         }
 
        links {
@@ -170,7 +173,8 @@ project "ImaGE-Core"
        {
           "../Libraries/Built-Libraries/Release/Libraries/**",
           "../Libraries/mono/msvc/build/sgen/x64/**",
-          "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release"
+          "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release",
+           "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Release/**",
        }
 
        links {

@@ -2,6 +2,7 @@
 #include "../../SmartPointer.h"
 #include "Graphics/Texture.h"
 #include "DirectXTex.h"
+
 namespace IGE {
 	namespace Assets {
 		const std::string cTextureDirectory{ std::string(gAssetsDirectory) + "Textures\\" };

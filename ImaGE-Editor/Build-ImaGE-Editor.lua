@@ -35,7 +35,8 @@ project "ImaGE-Editor"
       "../Libraries/PhysX/pxshared/include/**",
       "../Libraries/PhysX/pxshared/include",
       "../Libraries/mono/msvc/include/**",
-      "../Libraries/Built-Libraries/Debug/Libraries/rttr/**"
+      "../Libraries/Built-Libraries/Debug/Libraries/rttr/**",
+      "../Libraries/DirectXTex/**"
    }
 
    links
