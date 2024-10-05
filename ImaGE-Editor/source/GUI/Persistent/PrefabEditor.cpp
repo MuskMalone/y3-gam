@@ -83,8 +83,7 @@ namespace GUI
       ImGui::Text("Save changes made to prefab?");
       ImGui::SetCursorPosX(0.5f * (ImGui::GetWindowContentRegionMax().x - ImGui::CalcTextSize("Cancel Discard Changes Save ").x));
 
-      if (ImGui::Button("Cancel"))
-      {
+      if (ImGui::Button("Cancel") || ImGui::IsKeyPressed(ImGuiKey_Escape)) {
         ImGui::CloseCurrentPopup();
       }
 
@@ -101,7 +100,7 @@ namespace GUI
 
       ImGui::SameLine();
       ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.65f, 0.f, 1.f));
-      if (ImGui::Button("Save"))
+      if (ImGui::Button("Save") || ImGui::IsKeyPressed(ImGuiKey_Enter))
       {
         ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
         if (!mPrefabInstance.first) { // should also check if its valid

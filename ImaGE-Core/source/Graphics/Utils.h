@@ -1,3 +1,13 @@
+/*!*********************************************************************
+\file   Utils.h
+\author k.choa\@digipen.edu
+\date   22/09/2024
+\brief  The Utils namespace contains several utility functions and helper classes used throughout
+        the graphics engine. These utilities handle tasks such as setting up the view and projection
+        matrices for cameras, managing framebuffer textures, and logging OpenGL errors.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include "Renderer.h"
 #include "Framebuffer.h"

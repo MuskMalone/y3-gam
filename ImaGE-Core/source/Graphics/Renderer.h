@@ -1,3 +1,14 @@
+/*!*********************************************************************
+\file   Renderer.h
+\author k.choa\@digipen.edu
+\date   22/09/2024
+\brief  The Renderer class is responsible for setting up and managing the rendering pipeline, including textures,
+		shaders, vertex buffers, and framebuffers. It supports batch rendering for quads, triangles, and meshes,
+		optimizing performance by minimizing draw calls. The class also supports instanced rendering and handles
+		multiple render passes (e.g., geometry pass, picking pass).
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include "Shader.h"
 #include "Texture.h"

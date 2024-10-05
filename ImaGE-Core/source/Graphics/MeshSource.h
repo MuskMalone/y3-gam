@@ -1,3 +1,14 @@
+/*!*********************************************************************
+\file   MeshSource.h
+\author k.choa\@digipen.edu
+\date   22/09/2024
+\brief  The MeshSource class contains the necessary vertex data, indices, and submesh information
+        for a 3D model. It holds references to Vertex Array Objects (VAO) for rendering and can
+        manage multiple submeshes. This class is designed to act as a source or blueprint for
+        rendering 3D models.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include "Vertex.h"
 #include "VertexArray.h"

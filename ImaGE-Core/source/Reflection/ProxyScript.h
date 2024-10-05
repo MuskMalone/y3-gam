@@ -5,8 +5,9 @@
 
 namespace Reflection {
 
+  // proxy script field info
   template<typename T>
-  struct ScriptFieldInfoProxy {
+  struct ProxySFInfo {
     std::string fieldName;
     std::string type;
     T data;

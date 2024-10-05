@@ -88,23 +88,54 @@ namespace GUI
             window->Toggle();
           }
         }
+
         ImGui::EndMenu();
       }
 
       if (ImGui::BeginMenu("Options"))
       {
+        if (ImGui::BeginMenu("Theme")) {
+          GUI::Styler& styler{ GUIManager::GetStyler() };
+          for (GUI::CustomTheme i{}; i < GUI::CustomTheme::NUM_ITEMS; ++i) {
+            bool const currentlyActive{ (i == styler.GetCurrentTheme()) ? true : false };
+
+            if (ImGui::MenuItem(styler.GetCustomThemeString(i).c_str(), nullptr, currentlyActive)) {
+              styler.SetCurrentTheme(i);
+            }
+          }
+
+          ImGui::EndMenu();
+        }
 
         ImGui::EndMenu();
       }
 
-      if (ImGui::BeginMenu("Theme")) {
-        GUI::Styler& styler{ GUIManager::GetStyler() };
-        for (GUI::CustomTheme i{}; i < GUI::CustomTheme::NUM_ITEMS; ++i) {
-          bool const currentlyActive{ (i == styler.GetCurrentTheme()) ? true : false };
+      if (ImGui::BeginMenu("Help")) {
+        if (ImGui::BeginMenu("Controls")) {
+          if (ImGui::BeginTable("ControlsTable", 2, ImGuiTableFlags_None)) {
+            ImGui::TableNextColumn(); ImGui::Text("Left Click:");
+            ImGui::TableNextColumn(); ImGui::Text("Select Entity");
 
-          if (ImGui::MenuItem(styler.GetCustomThemeString(i).c_str(), nullptr, currentlyActive)) {
-            styler.SetCurrentTheme(i);
+            ImGui::TableNextColumn(); ImGui::Text("Middle Click:");
+            ImGui::TableNextColumn(); ImGui::Text("Pan");
+
+            ImGui::TableNextColumn(); ImGui::Text("Scroll:");
+            ImGui::TableNextColumn(); ImGui::Text("Zoom");
+
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn(); ImGui::Text("While Right-click Held:");
+            ImGui::TableNextColumn(); ImGui::Text("");
+
+            ImGui::TableNextColumn(); ImGui::Text("Left Click:");
+            ImGui::TableNextColumn(); ImGui::Text("Look");
+
+            ImGui::TableNextColumn(); ImGui::Text("WASD QE:");
+            ImGui::TableNextColumn(); ImGui::Text("Move");
+
+            ImGui::EndTable();
           }
+
+          ImGui::EndMenu();
         }
 
         ImGui::EndMenu();
@@ -181,14 +212,14 @@ namespace GUI
       }
 
       ImGui::SetCursorPosX(0.5f * (ImGui::GetWindowContentRegionMax().x - ImGui::CalcTextSize("Cancel Create ").x));
-      if (ImGui::Button("Cancel")) {
+      if (ImGui::Button("Cancel") || ImGui::IsKeyPressed(ImGuiKey_Escape)) {
         sceneName.clear();
         blankWarning = existingSceneWarning = false;
         ImGui::CloseCurrentPopup();
       }
 
       ImGui::SameLine();
-      if (ImGui::Button("Create")) {
+      if (ImGui::Button("Create") || ImGui::IsKeyPressed(ImGuiKey_Enter)) {
         // if name is blank / whitespace, reject it
         if (sceneName.find_first_not_of(" ") == std::string::npos) {
           blankWarning = true;
@@ -238,14 +269,14 @@ namespace GUI
       }
 
       ImGui::SetCursorPosX(0.5f * (ImGui::GetWindowContentRegionMax().x - ImGui::CalcTextSize("Cancel Create ").x));
-      if (ImGui::Button("Cancel")) {
+      if (ImGui::Button("Cancel") || ImGui::IsKeyPressed(ImGuiKey_Escape)) {
         input.clear();
         blankWarning = existingPrefabWarning = false;
         ImGui::CloseCurrentPopup();
       }
 
       ImGui::SameLine();
-      if (ImGui::Button("Create")) {
+      if (ImGui::Button("Create") || ImGui::IsKeyPressed(ImGuiKey_Enter)) {
         // if name is blank / whitespace, reject it
         if (input.find_first_not_of(" ") == std::string::npos) {
           blankWarning = true;

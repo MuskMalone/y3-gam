@@ -331,9 +331,6 @@
     <ClInclude Include="source\Reflection\ObjectFactory.h">
       <Filter>Reflection</Filter>
     </ClInclude>
-    <ClInclude Include="source\Scenes\Scene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="source\Scenes\SceneManager.h">
       <Filter>Scenes</Filter>
     </ClInclude>
@@ -380,6 +377,8 @@
     <ClInclude Include="source\Physics\Physics.h" />
     <ClInclude Include="source\Physics\PhysicsHelpers.h" />
     <ClInclude Include="source\Physics\PhysicsSystem.h" />
+    <ClInclude Include="source\Reflection\ProxyScript.h" />
+    <ClInclude Include="source\Scenes\Scene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />

@@ -1,3 +1,13 @@
+/*!*********************************************************************
+\file   Pipeline.h
+\author k.choa\@digipen.edu
+\date   22/09/2024
+\brief  The Pipeline class encapsulates the setup and configuration of the rendering pipeline. It manages
+		the OpenGL state, such as backface culling, depth testing, wireframe mode, and framebuffer bindings.
+		The class also provides access to the shader and pipeline specifications.
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include <pch.h>
 #include "RenderCommand.h"
