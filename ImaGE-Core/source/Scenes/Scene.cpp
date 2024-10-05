@@ -96,7 +96,7 @@ void Scene::Init()
           }
 
           // Set up the MaterialComponent
-          auto& materialComponent = entity.EmplaceComponent<Component::Material>();
+          //auto& materialComponent = entity.EmplaceComponent<Component::Material>();
 
           // Assign different materials based on the mesh type
           std::shared_ptr<Graphics::MaterialSource> materialSource;
@@ -108,10 +108,10 @@ void Scene::Init()
           }
 
           // Create a material instance from the MaterialSource and assign it to the material component
-          materialComponent.material = std::make_shared<Graphics::Material>(materialSource);
+          //materialComponent.material = std::make_shared<Graphics::Material>(materialSource);
 
           // Optionally, set per-instance material properties if needed
-          materialComponent.material->SetAlbedoColor(glm::vec3(1.0f, 0.5f, 0.31f)); // Example customization
+          //materialComponent.material->SetAlbedoColor(glm::vec3(1.0f, 0.5f, 0.31f)); // Example customization
       }
   }
 
