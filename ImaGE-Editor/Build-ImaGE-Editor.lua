@@ -81,7 +81,7 @@ project "ImaGE-Editor"
          "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/fmod/lib/fmodL.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
          --"{COPYDIR} %[%{wks.location}Libraries/mono/4.5] %[%{cfg.targetdir}/4.5]"
-         "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/mono/4.5] %[%{cfg.targetdir}/4.5]",
+         "{COPYDIR} %[%{wks.location}ImaGE-Core/source/External/mono/4.5] %[%{cfg.targetdir}/4.5]",
          "{COPYFILE} %[%{wks.location}Libraries/Built-Libraries/Debug/Libraries/rttr/bin/Debug/rttr_core_d.dll] %[%{cfg.targetdir}]",
       }
 
@@ -108,7 +108,7 @@ project "ImaGE-Editor"
          "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
          --"{COPYDIR} %[%{wks.location}Libraries/mono/4.5] %[%{cfg.targetdir}/4.5]"
-         "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/mono/4.5] %[%{cfg.targetdir}/4.5]",
+         "{COPYDIR} %[%{wks.location}ImaGE-Core/source/External/mono/4.5] %[%{cfg.targetdir}/4.5]",
          "{COPYFILE} %[%{wks.location}Libraries/Built-Libraries/Release/Libraries/rttr/bin/Release/rttr_core.dll] %[%{cfg.targetdir}]",
       }
 
@@ -135,6 +135,6 @@ project "ImaGE-Editor"
          "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
          --"{COPYDIR} %[%{wks.location}Libraries/mono/4.5] %[%{cfg.targetdir}/4.5]"
-         "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/mono/4.5] %[%{cfg.targetdir}/4.5]",
+         "{COPYDIR} %[%{wks.location}ImaGE-Core/source/External/mono/4.5] %[%{cfg.targetdir}/4.5]",
          "{COPYFILE} %[%{wks.location}Libraries/Built-Libraries/Release/Libraries/rttr/bin/Release/rttr_core.dll] %[%{cfg.targetdir}]",
       }

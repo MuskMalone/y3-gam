@@ -82,11 +82,11 @@ void ScriptManager::InitMono()
   std::cout << "INit start\n";
   //Assets::AssetManager& assetManager{ Assets::AssetManager::GetInstance() };
   //std::ifstream file(assetManager.GetConfigData<std::string>("MonoAssemblyExeTest").c_str());
-  std::ifstream file("../Libraries/mono/4.5/mscorlib.dll");
+  std::ifstream file("../ImaGE-Core/source/External/mono/4.5/mscorlib.dll");
   if (file.good())
   {
     //mono_set_assemblies_path(assetManager.GetConfigData<std::string>("MonoAssemblyExe").c_str());
-    mono_set_assemblies_path("../Libraries/mono/4.5/");
+    mono_set_assemblies_path("../ImaGE-Core/source/External/mono/4.5/");
     file.close();
   }
   else
