@@ -25,7 +25,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace GUI {
   class Inspector : public GUIWindow {
   public:
-    Inspector(std::string const& name);
+    Inspector(const char* name);
     void Run() override;
 
     inline void SetIsComponentEdited(bool isComponentEdited) noexcept { mIsComponentEdited = isComponentEdited; }
@@ -129,7 +129,7 @@ namespace GUI {
       The icon to display for the component
     ************************************************************************/
     template<typename Component>
-    void DrawAddComponentButton(std::string const& name, std::string const& icon);
+    bool DrawAddComponentButton(std::string const& name, std::string const& icon);
 
     /*!*********************************************************************
     \brief

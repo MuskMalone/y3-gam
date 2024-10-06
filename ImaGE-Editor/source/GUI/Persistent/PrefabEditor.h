@@ -26,7 +26,7 @@ namespace GUI
   class PrefabEditor : public GUIWindow
   {
   public:
-    PrefabEditor(std::string const& name);
+    PrefabEditor(const char* name);
 
     /*!*********************************************************************
     \brief

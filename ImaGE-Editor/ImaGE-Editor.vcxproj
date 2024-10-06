@@ -177,6 +177,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)Libraries\mono\4.5" "..\Binaries\windows-x86_64
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="source\GUI\Dockable\PerformanceWindow.h" />
     <ClInclude Include="source\EditorApplication.h" />
     <ClInclude Include="source\GUI\Dockable\AssetBrowser.h" />
     <ClInclude Include="source\GUI\Dockable\Console.h" />
@@ -196,6 +197,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)Libraries\mono\4.5" "..\Binaries\windows-x86_64
     <ClInclude Include="source\GUI\Styles\Styler.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\GUI\Dockable\PerformanceWindow.cpp" />
     <ClCompile Include="source\EditorApplication.cpp" />
     <ClCompile Include="source\GUI\Dockable\AssetBrowser.cpp" />
     <ClCompile Include="source\GUI\Dockable\Console.cpp" />

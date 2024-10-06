@@ -36,7 +36,7 @@ namespace Helper
 namespace GUI
 {
 
-  AssetBrowser::AssetBrowser(std::string const& name) : GUIWindow(name),
+  AssetBrowser::AssetBrowser(const char* name) : GUIWindow(name),
     mCurrentDir{ gAssetsDirectory }, mRightClickedDir{},
     mSelectedAsset{}, mDirMenuPopup{ false }, mAssetMenuPopup{ false }, mDisableSceneChange{ false }
   {

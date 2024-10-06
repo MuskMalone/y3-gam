@@ -146,6 +146,27 @@ namespace Graphics {
 
 		mFinalFramebuffer = mGeomPass->GetTargetFramebuffer();
 		//mFinalFramebuffer = Framebuffer::Create(framebufferSpec);
+
+		std::shared_ptr<Graphics::Texture> tempTex1 = std::make_shared<Graphics::Texture>(2, 2, true);
+		unsigned int debugAlbedoData[4] = {
+			0xff00ffff, 
+			0xfff0ff00, 
+			0xfff0ff00, 
+			0xff00ffff  
+		};
+		tempTex1->SetData(debugAlbedoData);
+
+		std::shared_ptr<Graphics::Texture> debugAlbedoTex = std::make_shared<Graphics::Texture>(2, 2, true);
+		unsigned int data[4] = {
+			0xffff00ff, // Bright magenta (ABGR)
+			0xffffff00, // Cyan (to create contrast for checkerboard)
+			0xffffff00, // Cyan
+			0xffff00ff  // Bright magenta
+		};
+		debugAlbedoTex->SetData(data);
+
+		mData.albedoMaps.push_back(debugAlbedoTex);
+		mData.albedoMaps.push_back(tempTex1);
 ;	}
 
 
@@ -206,6 +227,7 @@ namespace Graphics {
 		// Set up the buffer layout for instance data
 		BufferLayout instanceLayout = {
 			{ AttributeType::MAT4, "a_ModelMatrix" },
+			{AttributeType::INT, "a_MaterialIdx"},
 			{AttributeType::INT, "a_EntityID"}
 			//{ AttributeType::VEC4, "a_Color" }
 		};
@@ -318,7 +340,7 @@ namespace Graphics {
 		SetTriangleBufferData(v3, clr);
 	}
 
-	void Renderer::SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id) {
+	void Renderer::SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, uint32_t matID) {
 		if (!mesh) return;
 
 		InstanceData instance{};
@@ -327,6 +349,7 @@ namespace Graphics {
 		if (id != INVALID_ENTITY_ID) {
 			instance.entityID = id;
 		}
+		instance.materialIdx = matID;
 
 		auto& meshSrc = mesh->GetMeshSource();
 		if (!meshSrc) return;
@@ -493,6 +516,14 @@ namespace Graphics {
 	void Renderer::RenderSceneEnd() {
 
 		FlushBatch();
+	}
+
+	std::shared_ptr<Material> Renderer::GetMaterial(uint32_t idx){
+		return mData.materialVector[idx];
+	}
+
+	std::vector<std::shared_ptr<Texture>> const& Renderer::GetAlbedoMaps(){
+		return mData.albedoMaps;
 	}
 
 	Statistics Renderer::GetStats() {

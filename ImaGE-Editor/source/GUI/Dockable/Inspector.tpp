@@ -27,9 +27,9 @@ bool Inspector::WindowBegin(std::string const& windowName, std::string const& ic
 }
 
 template<typename ComponentType>
-void Inspector::DrawAddComponentButton(std::string const& name, std::string const& icon) {
+bool Inspector::DrawAddComponentButton(std::string const& name, std::string const& icon) {
   if (GUIManager::GetSelectedEntity().HasComponent<ComponentType>()) {
-    return;
+    return false;
   }
     
   auto fillRowWithColour = [](const ImColor& colour) {
@@ -78,7 +78,11 @@ void Inspector::DrawAddComponentButton(std::string const& name, std::string cons
       ent.GetComponent<Component::PrefabOverrides>().AddComponentModification(newComp);
     }
     ImGui::CloseCurrentPopup();
+
+    return true;
   }
+
+  return false;
 }
 
 template<typename ComponentType>
@@ -119,6 +123,15 @@ bool Inspector::DrawOptionButton(std::string const& name) {
 
     if (name == "Remove Component") {
       ent.RemoveComponent<ComponentType>();
+      // @TODO: Temporarily forcing mesh to be removed with material
+      if (std::is_same<ComponentType, Component::Material>() && ent.HasComponent<Component::Mesh>()) {
+        ent.RemoveComponent<Component::Mesh>();
+
+        if (ent.HasComponent<Component::PrefabOverrides>()) {
+          ent.GetComponent<Component::PrefabOverrides>().AddComponentRemoval(rttr::type::get<Component::Mesh>());
+        }
+      }
+
       SetIsComponentEdited(true);
       
       // if its a prefab instance, add to overrides

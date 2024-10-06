@@ -20,7 +20,7 @@ namespace GUI
   class Toolbar : public GUIWindow
   {
   public:
-    Toolbar(std::string const& name, std::vector<std::shared_ptr<GUIWindow>> const& windowsRef);
+    Toolbar(const char* name, std::vector<std::shared_ptr<GUIWindow>> const& windowsRef);
 
     /*!*********************************************************************
     \brief

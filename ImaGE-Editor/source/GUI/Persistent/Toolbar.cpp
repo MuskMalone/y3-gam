@@ -21,7 +21,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace GUI
 {
 
-  Toolbar::Toolbar(std::string const& name, std::vector<std::shared_ptr<GUIWindow>> const& windowsRef) : GUIWindow(name),
+  Toolbar::Toolbar(const char* name, std::vector<std::shared_ptr<GUIWindow>> const& windowsRef) : GUIWindow(name),
     mWindowsRef{ windowsRef }, mScenePopup{ false }, mPrefabPopup{ false },
     mDisableAll{ false }, mAllowCreationOnly{ true }
   {

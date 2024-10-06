@@ -104,7 +104,7 @@ namespace IGE {
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
       throw std::runtime_error("Failed to initialize GLAD");
     }
-
+    
     glfwSetWindowUserPointer(mWindow.get(), this); // set the window to reference this class
 
     glViewport(0, 0, spec.WindowWidth, spec.WindowHeight); // specify size of viewport

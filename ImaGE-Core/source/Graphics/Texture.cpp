@@ -1,5 +1,6 @@
 #include <pch.h>
 #include "Texture.h"
+#include "Utils.h"
 
 //TEMP?? 
 
@@ -22,7 +23,7 @@ namespace Graphics {
 	This constructor initializes the Texture using the provided file path. It loads
 	the image using stb_image and sets up the OpenGL texture.
 	*/
-	Texture::Texture(std::string const& path)
+	Texture::Texture(std::string const& path, bool isBindless)
 		: mPath{ path } {
 
 //		// Load image using stb_image
@@ -55,6 +56,9 @@ namespace Graphics {
 //		// client memory not required since image is buffered in GPU memory
 //		stbi_image_free(data);
 //		stbi_set_flip_vertically_on_load(false);
+		if (mIsBindless) {
+			InitBindlessTexture();
+		}
 	}
 
 	/*  _________________________________________________________________________ */
@@ -69,19 +73,24 @@ namespace Graphics {
 	This constructor initializes the Texture with the provided width and height.
 	It sets up the OpenGL texture with the specified dimensions.
 	*/
-	Texture::Texture(unsigned int width, unsigned int height) :mWidth{ width }, mHeight{ height } {
+	Texture::Texture(uint32_t width, uint32_t height, bool isBindless) :mWidth{ width }, mHeight{ height }, mIsBindless{isBindless} {
 
 		//TODO might add more parameters
 
-		glCreateTextures(GL_TEXTURE_2D, 1, &mTexHdl);
+		GLCALL(glCreateTextures(GL_TEXTURE_2D, 1, &mTexHdl));
 		// allocate GPU storage for texture image data loaded from file
-		glTextureStorage2D(mTexHdl, 1, GL_RGBA8, mWidth, mHeight);
+		GLCALL(glTextureStorage2D(mTexHdl, 1, GL_RGBA8, mWidth, mHeight));
 
 		// Set texture parameters
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		if (mIsBindless) {
+			InitBindlessTexture();
+		}
+
 	}
 
 	/*  _________________________________________________________________________ */
@@ -131,6 +140,9 @@ namespace Graphics {
 	Destructor for the Texture class. Cleans up the texture resources.
 	*/
 	Texture::~Texture() {
+		if (mIsBindless && mBindlessHdl != 0) {
+			//glMakeTextureHandleNonResidentARB(mBindlessHdl);
+		}
 		glDeleteTextures(1, &mTexHdl);
 	}
 
@@ -142,7 +154,7 @@ namespace Graphics {
 
 	This function returns the width of the texture.
 	*/
-	unsigned int Texture::GetWidth() const {
+	uint32_t Texture::GetWidth() const {
 		return mWidth;
 	}
 
@@ -155,7 +167,7 @@ namespace Graphics {
 
 	This function returns the height of the texture.
 	*/
-	unsigned int Texture::GetHeight() const {
+	uint32_t Texture::GetHeight() const {
 		return mHeight;
 	}
 
@@ -167,8 +179,17 @@ namespace Graphics {
 
 	This function returns the handle to the OpenGL texture.
 	*/
-	unsigned int Texture::GetTexHdl() const {
+	uint32_t Texture::GetTexHdl() const {
 		return mTexHdl;
+	}
+
+	GLuint64 Texture::GetBindlessHandle() const{
+		return mIsBindless ? mBindlessHdl : 0;
+	}
+
+	bool Texture::IsBindless() const
+	{
+		return mIsBindless;
 	}
 
 	/*  _________________________________________________________________________ */
@@ -193,6 +214,10 @@ namespace Graphics {
 	This function binds the texture to the specified texture unit.
 	*/
 	void Texture::Bind(unsigned int texUnit) const {
+		if (mIsBindless) {
+			Debug::DebugLogger::GetInstance().LogWarning("Bind() called on a bindless texture. This operation is not applicable.");
+			return;
+		}
 		glBindTextureUnit(texUnit, mTexHdl);
 	}
 
@@ -205,6 +230,7 @@ namespace Graphics {
 	This function unbinds the texture from the specified texture unit.
 	*/
 	void Texture::Unbind(unsigned int texUnit) const {
+		if (mIsBindless) return;
 		glBindTextureUnit(texUnit, 0);
 	}
 
@@ -220,11 +246,22 @@ namespace Graphics {
 	This function checks if two textures are equal.
 	*/
 	bool Texture::operator==(Texture const& rhs) const {
+		if (mIsBindless) return false;
 		return mTexHdl == rhs.mTexHdl;
 	}
 
-	std::shared_ptr<Texture> Texture::Create(std::string const& path) {
-		return std::make_shared<Texture>(path);
+	void Texture::InitBindlessTexture(){
+		if (GLAD_GL_ARB_bindless_texture) {
+			mBindlessHdl = glGetTextureHandleARB(mTexHdl);
+			GLCALL(glMakeTextureHandleResidentARB(mBindlessHdl));
+		}
+		else {
+			Debug::DebugLogger::GetInstance().LogError("Bindless textures are not supported on this system.");
+		}
+	}
+
+	std::shared_ptr<Texture> Texture::Create(std::string const& path, bool isBindless) {
+		return std::make_shared<Texture>(path, isBindless);
 	}
 
 }
