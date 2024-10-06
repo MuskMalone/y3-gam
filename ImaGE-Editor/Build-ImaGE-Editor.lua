@@ -41,7 +41,7 @@ project "ImaGE-Editor"
       "../ImaGE-Core/source/External/filewatch",
       "../ImaGE-Core/source/External/mono/**",
       
-      "../Libraries/Built-Libraries/Debug/Libraries/rttr/**",
+      "../Libraries/rttr/Built-Libraries/Debug/Libraries/rttr/**",
       "../Libraries/DirectXTex/**"
    }
 
@@ -82,7 +82,7 @@ project "ImaGE-Editor"
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
          --"{COPYDIR} %[%{wks.location}Libraries/mono/4.5] %[%{cfg.targetdir}/4.5]"
          "{COPYDIR} %[%{wks.location}ImaGE-Core/source/External/mono/4.5] %[%{cfg.targetdir}/4.5]",
-         "{COPYFILE} %[%{wks.location}Libraries/Built-Libraries/Debug/Libraries/rttr/bin/Debug/rttr_core_d.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/rttr/Built-Libraries/Debug/bin/Debug/rttr_core_d.dll] %[%{cfg.targetdir}]",
       }
 
    filter "configurations:Release"
@@ -109,7 +109,7 @@ project "ImaGE-Editor"
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
          --"{COPYDIR} %[%{wks.location}Libraries/mono/4.5] %[%{cfg.targetdir}/4.5]"
          "{COPYDIR} %[%{wks.location}ImaGE-Core/source/External/mono/4.5] %[%{cfg.targetdir}/4.5]",
-         "{COPYFILE} %[%{wks.location}Libraries/Built-Libraries/Release/Libraries/rttr/bin/Release/rttr_core.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/rttr/Built-Libraries/Release/bin/Release/rttr_core.dll] %[%{cfg.targetdir}]",
       }
 
    filter "configurations:Distribution"
@@ -136,5 +136,5 @@ project "ImaGE-Editor"
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
          --"{COPYDIR} %[%{wks.location}Libraries/mono/4.5] %[%{cfg.targetdir}/4.5]"
          "{COPYDIR} %[%{wks.location}ImaGE-Core/source/External/mono/4.5] %[%{cfg.targetdir}/4.5]",
-         "{COPYFILE} %[%{wks.location}Libraries/Built-Libraries/Release/Libraries/rttr/bin/Release/rttr_core.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}Libraries/rttr/Built-Libraries/Release/bin/Release/rttr_core.dll] %[%{cfg.targetdir}]",
       }

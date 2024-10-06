@@ -44,7 +44,7 @@ project "ImaGE-Core"
       "../ImaGE-Core/source/External/filewatch",
       "../ImaGE-Core/source/External/mono/**",
       
-      "../Libraries/Built-Libraries/Debug/Libraries/rttr/**",
+      "../Libraries/rttr/Built-Libraries/Debug/Libraries/rttr/**",
       "../Libraries/DirectXTex/**",
    }
 
@@ -119,7 +119,8 @@ project "ImaGE-Core"
           "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/debug",
           "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Debug/",
           "source/External/fmod/lib",
-          "source/External/mono/lib"
+          "source/External/mono/lib",
+          "../Libraries/rttr/Built-Libraries/Debug/**"
 
        }
 
@@ -152,7 +153,8 @@ project "ImaGE-Core"
            "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release",
            "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Release/",
            "source/External/fmod/lib",
-           "source/External/mono/lib"
+           "source/External/mono/lib",
+          "../Libraries/rttr/Built-Libraries/Release/**"
 
         }
 
@@ -201,7 +203,8 @@ project "ImaGE-Core"
           "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release",
           "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Release/",
           "source/External/fmod/lib",
-          "source/External/mono/lib"
+          "source/External/mono/lib",
+          "../Libraries/rttr/Built-Libraries/Release/**"
        }
 
        links {
