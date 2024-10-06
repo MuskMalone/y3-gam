@@ -90,7 +90,10 @@ project "ImaGE-Core"
        links {
         "opengl32.lib",
         "glfw3d.lib",
+
         "assimp-vc143-mtd.lib",
+        "zlibstaticd.lib",
+
         "rttr_core_d.lib",
 
         "PhysX_static_64.lib", 
@@ -116,7 +119,7 @@ project "ImaGE-Core"
           "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Debug/",
           "source/External/fmod/lib",
           "source/External/mono/lib"
-
+         
        }
 
        postbuildcommands {
@@ -154,7 +157,10 @@ project "ImaGE-Core"
        links {
         "opengl32.lib",
         "glfw3.lib",
+
         "assimp-vc143-mt.lib",
+        "zlibstatic.lib",
+
         "rttr_core.lib",
 
         "PhysX_static_64.lib", 
@@ -198,7 +204,10 @@ project "ImaGE-Core"
        links {
         "opengl32.lib",
         "glfw3.lib",
+
         "assimp-vc143-mt.lib",
+        "zlibstatic.lib",
+
         "rttr_core.lib",
 
         "PhysX_static_64.lib", 
