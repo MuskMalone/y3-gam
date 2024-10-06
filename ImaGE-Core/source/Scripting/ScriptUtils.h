@@ -72,7 +72,6 @@ namespace Mono {
 
 
 
-
 	/*!*********************************************************************
 	\brief
 		Template along with its various specializations to get the mono

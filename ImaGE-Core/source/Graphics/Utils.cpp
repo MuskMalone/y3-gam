@@ -95,7 +95,7 @@ namespace Graphics {
                     ss << "[OpenGL Error] (" << error << "): " << function
                         << " in file " << file << " at line " << line << std::endl;
 
-                    Debug::DebugLogger::GetInstance().LogError(ss.str());
+                    //Debug::DebugLogger::GetInstance().LogError(ss.str());
                 }
                 return success;
             }

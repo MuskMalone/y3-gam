@@ -27,8 +27,8 @@ ScriptInstance::ScriptInstance(const std::string& scriptName, std::vector<void*>
   if (!mScriptClass)
     throw Debug::Exception<ScriptInstance>(Debug::LVL_WARN, Msg(scriptName + ".cs not found"));
   mClassInst = sm->InstantiateClass(scriptName.c_str(), arg);
-  mOnUpdateMethod = std::shared_ptr<MonoMethod>(mono_class_get_method_from_name(mScriptClass, "Update", 1), mono_free_method);
-  mOnCreateMethod = std::shared_ptr<MonoMethod>(mono_class_get_method_from_name(mScriptClass, "Create", 0), mono_free_method);
+  mOnUpdateMethod = mono_class_get_method_from_name(mScriptClass, "Update", 1);
+  mOnCreateMethod = mono_class_get_method_from_name(mScriptClass, "Create", 0);
   mGcHandle = mono_gchandle_new(mClassInst, true);
   GetAllFieldsInst();
 }
@@ -41,8 +41,8 @@ void ScriptInstance::FreeScript()
   //  monoFree_method(mOnUpdateMethod.get());
   mClassInst = nullptr;
   mScriptClass = nullptr;
-  mOnCreateMethod.reset();
-  mOnUpdateMethod.reset();
+  mOnCreateMethod = nullptr;
+  mOnUpdateMethod = nullptr;
 
   mScriptFieldInstList.clear();
   mono_gchandle_free(mGcHandle);
@@ -60,8 +60,8 @@ void ScriptInstance::ReloadScript()
   if (mCtorType == ENTITY_CTOR)
     arg.push_back(&mEntityID);
   mClassInst = sm->InstantiateClass(mScriptName.c_str(), arg);
-  mOnUpdateMethod = std::shared_ptr<MonoMethod>(mono_class_get_method_from_name(mScriptClass, "OnUpdate", 1), mono_free_method);
-  mOnCreateMethod = std::shared_ptr<MonoMethod>(mono_class_get_method_from_name(mScriptClass, "OnCreate", 0), mono_free_method);
+  mOnUpdateMethod = mono_class_get_method_from_name(mScriptClass, "OnUpdate", 1);
+  mOnCreateMethod = mono_class_get_method_from_name(mScriptClass, "OnCreate", 0);
   mGcHandle = mono_gchandle_new(mClassInst, true);
   GetAllFieldsInst();
   SetAllFields();
@@ -72,7 +72,7 @@ void ScriptInstance::InvokeOnUpdate(double dt)
   if (mOnUpdateMethod)
   {
     std::vector<void*> params = { &dt };
-    mono_runtime_invoke(mOnUpdateMethod.get(), mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+    mono_runtime_invoke(mOnUpdateMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
   }
 }
 
@@ -81,7 +81,7 @@ void ScriptInstance::InvokeOnCreate()
 {
   if (mOnCreateMethod)
   {
-    mono_runtime_invoke(mOnCreateMethod.get(), mono_gchandle_get_target(mGcHandle), nullptr, nullptr);
+    mono_runtime_invoke(mOnCreateMethod, mono_gchandle_get_target(mGcHandle), nullptr, nullptr);
   }
 }
 
