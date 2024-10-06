@@ -90,7 +90,7 @@ namespace Graphics {
 		mData.triBuffer = std::vector<TriVtx>(mData.cMaxVertices);
 
 		//========================================================
-
+		mData.defaultTex = IGE_ASSETMGR->LoadRef<IGE::Assets::TextureAsset>(gAssetsDirectory + std::string("Textures/default.dds"));
 		mData.whiteTex = IGE_ASSETMGR->LoadRef<IGE::Assets::TextureAsset>(gAssetsDirectory + std::string("Textures/white.dds"));
 		//unsigned int whiteTexData{ 0xffffffff };
 		//mData.whiteTex->SetData(&whiteTexData);
@@ -162,10 +162,13 @@ namespace Graphics {
 
 
 		//TESTING
+		//albedo
+		mData.albedoMaps.push_back(GetDefaultTexture());
 		mData.albedoMaps.push_back(GetWhiteTexture());
-		mData.albedoMaps.push_back(texguid);
 		mData.albedoMaps.push_back(texguid1);
 
+		//normal
+		mData.normalMaps.push_back(GetWhiteTexture());
 		mData.normalMaps.push_back(GetWhiteTexture());
 		mData.normalMaps.push_back(texguid1);
 		
@@ -553,6 +556,11 @@ namespace Graphics {
 
 	void Renderer::SetFinalFramebuffer(std::shared_ptr<Graphics::Framebuffer> const& framebuffer) {
 		mFinalFramebuffer = framebuffer;
+	}
+
+	IGE::Assets::GUID Renderer::GetDefaultTexture()
+	{
+		return mData.defaultTex;
 	}
 
 	IGE::Assets::GUID Renderer::GetWhiteTexture() {
