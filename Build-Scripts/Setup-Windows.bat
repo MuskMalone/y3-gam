@@ -55,10 +55,14 @@ if not exist "%BUILD_DIR%" (
 )
 
 REM Run CMake to generate build files
-cmake -S %PROJECT_DIR% -B %BUILD_DIR% -DCMAKE_BUILD_TYPE=%CONFIGURATION%
+cmake -S %PROJECT_DIR% -B %BUILD_DIR% -DCMAKE_BUILD_TYPE=%CONFIGURATION% -DBUILD_RTTR=OFF
 
 REM Build the project using the specified configuration
 cmake --build %BUILD_DIR% --config %CONFIGURATION%
+
+REM Build RTTR
+cmake -S Libraries\rttr -B Libraries\rttr\Built-Libraries\Debug -DCMAKE_BUILD_TYPE=Debug
+cmake --build Libraries\rttr\Built-Libraries\Debug --config Debug
 
 @echo Project Debug Libraries built successfully!
 echo -----------------------------------------------------------------------
@@ -73,13 +77,18 @@ if not exist "%BUILD_DIR%" (
 )
 
 REM Run CMake to generate build files
-cmake -S %PROJECT_DIR% -B %BUILD_DIR% -DCMAKE_BUILD_TYPE=%CONFIGURATION%
+cmake -S %PROJECT_DIR% -B %BUILD_DIR% -DCMAKE_BUILD_TYPE=%CONFIGURATION% -DBUILD_RTTR=OFF
 
 REM Build the project using the specified configuration
 cmake --build %BUILD_DIR% --config %CONFIGURATION%
+
+REM Build RTTR
+cmake -S Libraries\rttr -B Libraries\rttr\Built-Libraries\Release -DCMAKE_BUILD_TYPE=Release
+cmake --build Libraries\rttr\Built-Libraries\Release --config Release
 
 @echo Project Release Libraries built successfully!
 echo -----------------------------------------------------------------------
 
 Build-Scripts\premake\Windows\premake5.exe --file=Build.lua vs2022
+
 pause
