@@ -18,14 +18,15 @@ in vec3 v_Normal;               // Normal in world space
 in vec3 v_Tangent;              // Tangent in world space
 in vec3 v_Bitangent;            // Bitangent in world space
 
-// PBR parameters (hardcoded for now)
+//PBR parameters
 uniform vec3 u_Albedo;
 uniform float u_Metalness;
 uniform float u_Roughness;
 uniform float u_Transparency;
 uniform float u_AO;
 
-uniform sampler2D u_AlbedoMap[2]; //temp
+uniform sampler2D u_AlbedoMap[3]; //temp
+uniform sampler2D u_NormalMap[3];
 
 
 //lighting parameters
@@ -53,8 +54,23 @@ void main(){
     //vec4 albedoTexture = texture(u_AlbedoMap, v_TexCoord);
     vec3 albedo = albedoTexture.rgb * u_Albedo; // Mixing texture and uniform
 
+    vec3 N;
+    if(v_MaterialIdx != 0){
+        // Sample the normal map and reconstruct the normal
+        sampler2D normalSampler = sampler2D(u_NormalMap[v_MaterialIdx]);
+        vec3 normalMap = texture(normalSampler, v_TexCoord).rgb;
+        // Transform normal from [0, 1] to [-1, 1]
+        normalMap = normalize(normalMap * 2.0 - 1.0);
+
+        mat3 TBN = mat3(normalize(v_Tangent), normalize(v_Bitangent), normalize(v_Normal));
+        N = normalize(TBN * normalMap);
+    }
+    else{
+        N = normalize(v_Normal);
+    }
+
 	// Normalize inputs
-    vec3 N = normalize(v_Normal);
+    //vec3 N = normalize(v_Normal);
     vec3 V = normalize(u_CamPos - v_FragPos);    // View direction
     vec3 L = normalize(u_LightPos - v_FragPos);  // Light direction
     vec3 H = normalize(V + L);                   // Halfway vector

@@ -16,7 +16,7 @@ namespace Graphics
         Recreate();
     }
     Framebuffer::~Framebuffer() {
-        GLCALL(glDeleteFramebuffers(1, &mFbo));
+        glDeleteFramebuffers(1, &mFbo);
         GLCALL(glDeleteTextures(static_cast<GLsizei>(mColorAttachments.size()), mColorAttachments.data()));
         GLCALL(glDeleteTextures(1, &mDepthAttachment));
     }

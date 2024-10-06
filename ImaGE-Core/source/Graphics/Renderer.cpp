@@ -91,7 +91,7 @@ namespace Graphics {
 
 		//========================================================
 
-		mData.whiteTex = std::make_shared<Texture>(1, 1);
+		mData.whiteTex = std::make_shared<Texture>(1, 1, true);
 		unsigned int whiteTexData{ 0xffffffff };
 		mData.whiteTex->SetData(&whiteTexData);
 		mData.texUnits[0] = mData.whiteTex;
@@ -158,6 +158,14 @@ namespace Graphics {
 		//};
 		//debugAlbedoTex->SetData(data);
 
+		mData.albedoMaps.push_back(GetWhiteTexture());
+		mData.albedoMaps.push_back(debugAlbedoTex);
+		mData.albedoMaps.push_back(tempTex1);
+
+		//TESTING
+		mData.normalMaps.push_back(GetWhiteTexture());
+		mData.normalMaps.push_back(GetWhiteTexture());
+		mData.normalMaps.push_back(GetWhiteTexture());
 		mData.albedoMaps.push_back(texguid);
 		mData.albedoMaps.push_back(texguid1);
 ;	}
@@ -517,6 +525,10 @@ namespace Graphics {
 
 	std::vector< IGE::Assets::GUID> const& Renderer::GetAlbedoMaps(){
 		return mData.albedoMaps;
+	}
+
+	std::vector<std::shared_ptr<Texture>> const& Renderer::GetNormalMaps() {
+		return mData.normalMaps;
 	}
 
 	Statistics Renderer::GetStats() {

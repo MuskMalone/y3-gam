@@ -61,6 +61,13 @@ namespace Graphics {
             if (hdls.size() > 0)
                 shader->SetUniform("u_AlbedoMap", hdls.data(), hdls.size());
 
+            hdls.clear();
+            for (auto const& map : Renderer::GetNormalMaps()) {
+                hdls.push_back(map->GetBindlessHandle()); //should not be here TODO move somewhere else
+            }
+            if (hdls.size() > 0)
+                shader->SetUniform("u_NormalMap", hdls.data(), hdls.size());
+
             uint32_t matID = 0;
             if (entity.HasComponent<Component::Material>()) {
                 auto const& matComponent = entity.GetComponent<Component::Material>();
@@ -78,7 +85,6 @@ namespace Graphics {
                 //}
             }
             else {
-                
                 shader->SetUniform("u_Albedo", glm::vec3(0.5,0.5,0.5));
                 shader->SetUniform("u_Metalness", 0.0f);
                 shader->SetUniform("u_Roughness", 0.0f);
