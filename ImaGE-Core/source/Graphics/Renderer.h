@@ -83,6 +83,7 @@ namespace Graphics {
 		std::shared_ptr<VertexArray> quadVertexArray;
 		std::shared_ptr<VertexBuffer> quadVertexBuffer;
 		std::shared_ptr<Shader> texShader;
+		IGE::Assets::GUID defaultTex;
 		IGE::Assets::GUID whiteTex;
 
 		std::shared_ptr<Shader> lineShader;
@@ -144,6 +145,7 @@ namespace Graphics {
 		static unsigned int GetMaxTextureUnits();
 		static std::shared_ptr<Graphics::Framebuffer> GetFinalFramebuffer();
 		static void SetFinalFramebuffer(std::shared_ptr<Graphics::Framebuffer> const& framebuffer);
+		static IGE::Assets::GUID GetDefaultTexture();
 		static IGE::Assets::GUID GetWhiteTexture();
 	private:
 		static void SetQuadBufferData(glm::vec3 const& pos, glm::vec2 const& scale,
