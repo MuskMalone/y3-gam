@@ -126,12 +126,12 @@ namespace Image.Mono
       get
       {
         Vec3<float> scale = new Vec3<float>();
-        InternalCalls.GetScale(mEntityID);
+        InternalCalls.GetWorldScale(mEntityID);
         return scale;
       }
       set
       {
-        InternalCalls.SetScale(ref mEntityID , ref value);
+        InternalCalls.SetWorldScale(ref mEntityID , ref value);
       }
     }
 
@@ -144,7 +144,7 @@ namespace Image.Mono
     public Vec3<float> GetScaleFromEntity(uint id)
     {
       Vec3<float> scale = new Vec3<float>();
-      InternalCalls.GetScale(id);
+      InternalCalls.GetWorldScale(id);
       return scale;
     }
 
@@ -155,7 +155,7 @@ namespace Image.Mono
     */
     public void SetScaleFromEntity(uint id, Vec3<float> value)
     {
-      InternalCalls.SetScale(ref id, ref value);
+      InternalCalls.SetWorldScale(ref id, ref value);
     }
 
 
