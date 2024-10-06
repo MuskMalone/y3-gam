@@ -43,8 +43,8 @@ namespace Graphics {
 			std::cerr << "Failed to retrieve image data." << std::endl;
 			throw std::runtime_error{ "failed to retrieve image data"};
 		}
-		mWidth = img->width;
-		mHeight = img->height;
+		mWidth = static_cast<uint32_t>(img->width);
+		mHeight = static_cast<uint32_t>(img->height);
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &mTexHdl);
 		// allocate GPU storage for texture image data loaded from file

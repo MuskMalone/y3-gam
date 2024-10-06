@@ -59,14 +59,14 @@ namespace Graphics {
                 hdls.push_back(IGE_REF(IGE::Assets::TextureAsset, map)->mTexture.GetBindlessHandle()); //should not be here TODO move somewhere else
             }
             if (hdls.size() > 0)
-                shader->SetUniform("u_AlbedoMap", hdls.data(), hdls.size());
+                shader->SetUniform("u_AlbedoMap", hdls.data(), static_cast<unsigned int>(hdls.size()));
 
             hdls.clear();
             for (auto const& map : Renderer::GetNormalMaps()) {
                 hdls.push_back(IGE_REF(IGE::Assets::TextureAsset, map)->mTexture.GetBindlessHandle()); //should not be here TODO move somewhere else
             }
             if (hdls.size() > 0)
-                shader->SetUniform("u_NormalMap", hdls.data(), hdls.size());
+                shader->SetUniform("u_NormalMap", hdls.data(), static_cast<unsigned int>(hdls.size()));
 
             uint32_t matID = 0;
             if (entity.HasComponent<Component::Material>()) {

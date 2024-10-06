@@ -62,7 +62,7 @@ namespace IGE {
                     return false;
                 }
             }
-            catch (const fs::filesystem_error& e) {
+            catch ([[maybe_unused]] const fs::filesystem_error& e) {
                 return false;
             }
         }
@@ -76,7 +76,7 @@ namespace IGE {
                     return false;
                 }
             }
-            catch (const fs::filesystem_error& e) {
+            catch ([[maybe_unused]] const fs::filesystem_error& e) {
                 return false;
             }
         }

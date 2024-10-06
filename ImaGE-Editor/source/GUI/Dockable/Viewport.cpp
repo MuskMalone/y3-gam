@@ -69,7 +69,7 @@ namespace GUI
 
         fb->Bind();
         int const entityId{ fb->ReadPixel(1,
-          offset.x / vpSize.x * fbSpec.width, (vpSize.y - offset.y) / vpSize.y * fbSpec.height) };
+          offset.x / vpSize.x * static_cast<float>(fbSpec.width), (vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height)) };
         fb->Unbind();
 
         if (entityId > 0) {
