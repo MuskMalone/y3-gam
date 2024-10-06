@@ -27,8 +27,8 @@ ScriptInstance::ScriptInstance(const std::string& scriptName, std::vector<void*>
   if (!mScriptClass)
     throw Debug::Exception<ScriptInstance>(Debug::LVL_WARN, Msg(scriptName + ".cs not found"));
   mClassInst = sm->InstantiateClass(scriptName.c_str(), arg);
-  mOnUpdateMethod = std::shared_ptr<MonoMethod>(mono_class_get_method_from_name(mScriptClass.get(), "Update", 1), mono_free_method);
-  mOnCreateMethod = std::shared_ptr<MonoMethod>(mono_class_get_method_from_name(mScriptClass.get(), "Create", 0), mono_free_method);
+  mOnUpdateMethod = std::shared_ptr<MonoMethod>(mono_class_get_method_from_name(mScriptClass, "Update", 1), mono_free_method);
+  mOnCreateMethod = std::shared_ptr<MonoMethod>(mono_class_get_method_from_name(mScriptClass, "Create", 0), mono_free_method);
   mGcHandle = mono_gchandle_new(mClassInst, true);
   GetAllFieldsInst();
 }
@@ -40,9 +40,10 @@ void ScriptInstance::FreeScript()
   //if (mOnUpdateMethod)
   //  monoFree_method(mOnUpdateMethod.get());
   mClassInst = nullptr;
+  mScriptClass = nullptr;
   mOnCreateMethod.reset();
   mOnUpdateMethod.reset();
-  mScriptClass.reset();
+
   mScriptFieldInstList.clear();
   mono_gchandle_free(mGcHandle);
 }
@@ -59,8 +60,8 @@ void ScriptInstance::ReloadScript()
   if (mCtorType == ENTITY_CTOR)
     arg.push_back(&mEntityID);
   mClassInst = sm->InstantiateClass(mScriptName.c_str(), arg);
-  mOnUpdateMethod = std::shared_ptr<MonoMethod>(mono_class_get_method_from_name(mScriptClass.get(), "OnUpdate", 1));
-  mOnCreateMethod = std::shared_ptr<MonoMethod>(mono_class_get_method_from_name(mScriptClass.get(), "OnCreate", 0));
+  mOnUpdateMethod = std::shared_ptr<MonoMethod>(mono_class_get_method_from_name(mScriptClass, "OnUpdate", 1), mono_free_method);
+  mOnCreateMethod = std::shared_ptr<MonoMethod>(mono_class_get_method_from_name(mScriptClass, "OnCreate", 0), mono_free_method);
   mGcHandle = mono_gchandle_new(mClassInst, true);
   GetAllFieldsInst();
   SetAllFields();
@@ -196,7 +197,7 @@ void ScriptInstance::SetAllFields()
     else if (f.is_type<Mono::ScriptFieldInstance<std::string>>())
     {
       Mono::ScriptFieldInstance<std::string>& sfi = f.get_value<Mono::ScriptFieldInstance<std::string>>();
-      mono_field_set_value(mClassInst, sfi.mScriptField.mClassField.get(), STDToMonoString(sfi.mData));
+      mono_field_set_value(mClassInst, sfi.mScriptField.mClassField, STDToMonoString(sfi.mData));
     }
 
     else if (f.is_type<Mono::ScriptFieldInstance<glm::dvec3>>())
@@ -346,7 +347,7 @@ void ScriptInstance::SetEntityID(ECS::Entity::EntityID entityId)
   if (!mScriptClass)
     throw Debug::Exception<ScriptInstance>(Debug::LVL_WARN, Msg(mScriptName + ".cs not found"));
   mEntityID = entityId;
-  MonoClass* parent = mono_class_get_parent(mScriptClass.get());
+  MonoClass* parent = mono_class_get_parent(mScriptClass);
   if (!parent || std::string(mono_class_get_name(parent)) != "Entity") return;
   MonoMethod* setEntityIDMethod = mono_class_get_method_from_name(parent, "SetEntityID", 1);
   std::vector<void*> params = { &entityId };

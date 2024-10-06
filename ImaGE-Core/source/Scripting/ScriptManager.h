@@ -148,7 +148,7 @@ namespace Mono
 		\return
 			MonoClass* obejct that will be used to generate and instance of a c# class
 		************************************************************************/
-		std::shared_ptr<MonoClass> GetScriptClass(std::string className);
+		MonoClass* GetScriptClass(std::string className);
 
 		/*!*********************************************************************
 		\brief

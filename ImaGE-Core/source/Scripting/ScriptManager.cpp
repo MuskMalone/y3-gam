@@ -200,7 +200,7 @@ void ScriptManager::LoadAllMonoClass()
       if (newClass)
       {
         ScriptClassInfo newScriptClassInfo{};
-        newScriptClassInfo.mScriptClass = std::shared_ptr<MonoClass>(newClass);
+        newScriptClassInfo.mScriptClass = newClass;
         void* iterator = nullptr;
         while (MonoClassField* field = mono_class_get_fields(newClass, &iterator))
         {
@@ -212,7 +212,7 @@ void ScriptManager::LoadAllMonoClass()
             ScriptFieldType fieldType = MonoTypeToScriptFieldType(type);
             std::string typeName = mono_type_get_name(type);
             //std::cout << fieldName << "\n";
-            newScriptClassInfo.mScriptFieldMap[fieldName] = { fieldType, fieldName, std::shared_ptr<MonoClassField>(field) };
+            newScriptClassInfo.mScriptFieldMap[fieldName] = { fieldType, fieldName, field };
           }
         }
         mMonoClassMap[className] = newScriptClassInfo;
@@ -534,7 +534,7 @@ MonoObject* Mono::ScriptManager::InstantiateClass(const char* className, std::ve
 {
   if (mMonoClassMap.find(className) != mMonoClassMap.end())
   {
-    MonoClass* currClass = mMonoClassMap[className].mScriptClass.get();
+    MonoClass* currClass = mMonoClassMap[className].mScriptClass;
     if (!currClass)
     {
       throw Debug::Exception<ScriptManager>(Debug::LVL_CRITICAL, Msg("Unable to fetch script: " + std::string(className)));
@@ -552,7 +552,7 @@ MonoObject* Mono::ScriptManager::InstantiateClass(const char* className, std::ve
     MonoMethod* classCtor = mono_class_get_method_from_name(currClass, ".ctor", static_cast<int>(arg.size()));
     if (!classCtor)
     {
-      classCtor = mono_class_get_method_from_name(currClass, ".ctor", arg.size());
+      classCtor = mono_class_get_method_from_name(currClass, ".ctor", static_cast<int>(arg.size()));
     }
     mono_runtime_invoke(classCtor, classInstance, arg.data(), nullptr);
 
@@ -566,7 +566,7 @@ MonoObject* Mono::ScriptManager::InstantiateClass(const char* className, std::ve
   throw Debug::Exception<ScriptManager>(Debug::LVL_ERROR, "Failed to locate class in map" + std::string(className), __FUNCTION__, __LINE__);
 }
 
-std::shared_ptr<MonoClass> Mono::ScriptManager::GetScriptClass(std::string className)
+MonoClass* Mono::ScriptManager::GetScriptClass(std::string className)
 {
   return mMonoClassMap[className].mScriptClass;
 }
