@@ -18,6 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Entity.h>
 #include <Core/EntityManager.h>
 #include <Core/Components/Components.h>
+#include "Asset/IGEAssets.h"
 
 #pragma region SYSTEM_INCLUDES
 #include <Physics/PhysicsSystem.h>
@@ -31,6 +32,7 @@ namespace IGE {
   Application::ApplicationSpecification Application::mSpecification{};
 
   void Application::Init() {
+      IGEAssetsInitialize();
     mSystemManager.InitSystems();
     Reflection::ObjectFactory::GetInstance().Init();
     //IGE::Physics::PhysicsSystem::InitAllocator();
@@ -71,6 +73,7 @@ namespace IGE {
   // registration order is the update order
   void Application::RegisterSystems() {
     mSystemManager.RegisterSystem<Systems::TransformSystem>("Pre-Transform System"); // must be called first   
+    mSystemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
     mSystemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
 
     // dont think i need this anymore

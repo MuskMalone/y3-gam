@@ -50,7 +50,7 @@ namespace Graphics {
 
 		void SetUniform(std::string const& name, const GLuint64* bindlessHandles, unsigned int count);
 
-		void SetUniform(std::string const& name, std::shared_ptr<Texture> texture, unsigned int texUnit); //TEXTURES
+		void SetUniform(std::string const& name, Texture* texture, unsigned int texUnit); //TEXTURES
 		unsigned int PgmHdl() { return pgmHdl; };
 	private:
 		unsigned int pgmHdl;

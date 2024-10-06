@@ -18,13 +18,13 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GUI/Helpers/AssetPayload.h>
 #include <Core/Systems/TransformSystem/TransformHelpers.h>
 
-#include <Physics/PhysicsSystem.h>
+#include "Physics/PhysicsSystem.h"
 #include <functional>
 #include <Reflection/ComponentTypes.h>
 #include <Events/EventManager.h>
 #include <Graphics/MeshFactory.h>
 #include <Graphics/Mesh.h>
-
+#include "Asset/IGEAssets.h"
 namespace GUI {
 
 
@@ -666,7 +666,11 @@ namespace GUI {
         for (unsigned i{}; i < meshNames.size(); ++i) {
           const char* selected{ meshNames[i] };
           if (ImGui::Selectable(selected)) {
-            mesh.mesh = std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromString(selected));
+            if (i != 0) {
+
+              //mesh.mesh = std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromString(selected));
+                mesh.mesh = std::make_shared<Graphics::Mesh>(IGE_ASSETMGR->LoadRef<IGE::Assets::MeshAsset>(selected));
+            }
 
             if (selected != mesh.meshName) {
               modified = true;
@@ -686,7 +690,9 @@ namespace GUI {
         if (drop) {
           AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
           if (assetPayload.mAssetType == AssetPayload::MODEL) {
-            auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
+            //auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
+            auto meshSrc{ std::make_shared<Graphics::Mesh>(IGE_ASSETMGR->LoadRef<IGE::Assets::MeshAsset>(assetPayload.GetFilePath())) };
+
             mesh.mesh = std::move(meshSrc);
             mesh.meshName = assetPayload.GetFileName();
             modified = true;
@@ -722,11 +728,11 @@ namespace GUI {
       ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       ImGui::TableHeadersRow();
 
-      if (ImGuiHelpers::TableInputFloat3("Velocity", rigidBody.velocity.mF32, inputWidth, false, -100.f, 100.f, 0.1f)) {
+      if (ImGuiHelpers::TableInputFloat3("Velocity", &rigidBody.velocity.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
         modified = true;
       }
-      if (ImGuiHelpers::TableInputFloat3("Angular Velocity", rigidBody.angularVelocity.mF32, inputWidth, false, -100.f, 100.f, 0.1f)) {
+      if (ImGuiHelpers::TableInputFloat3("Angular Velocity", &rigidBody.angularVelocity.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::ANGULAR_VELOCITY);
         modified = true;
       }
@@ -740,12 +746,22 @@ namespace GUI {
 
       ImGui::TableNextRow();
       ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Friction");
+      ImGui::Text("Static Friction");
       ImGui::TableSetColumnIndex(1);
       ImGui::SetNextItemWidth(INPUT_SIZE);
-      if (ImGui::DragFloat("##RigidBodyFriction", &rigidBody.friction, 0.01f, 0.0f, 1.0f)) {
-        IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::FRICTION);
-        modified = true;
+      if (ImGui::DragFloat("##RigidBodyStaticFriction", &rigidBody.staticFriction, 0.01f, 0.0f, 1.0f)) {
+        IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::STATIC_FRICTION);
+        SetIsComponentEdited(true);
+      }
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Dynamic Friction");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::DragFloat("##RigidBodyDynamicFriction", &rigidBody.dynamicFriction, 0.01f, 0.0f, 1.0f)) {
+          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::STATIC_FRICTION);
+          SetIsComponentEdited(true);
       }
 
       ImGui::TableNextRow();
@@ -763,13 +779,23 @@ namespace GUI {
       ImGui::Text("Gravity Factor");
       ImGui::TableSetColumnIndex(1);
       ImGui::SetNextItemWidth(INPUT_SIZE);
-      if (ImGui::DragFloat("##RigidBodyGravityFactor", &rigidBody.gravityFactor, 0.01f, 0.0f, 10.0f)) {
+      if (ImGui::DragFloat("##RigidBodyGravityFactor", &rigidBody.gravityFactor, 0.01f, -10.0f, 10.0f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::GRAVITY_FACTOR);
         modified = true;
       }
 
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Mass");
+      ImGui::TableSetColumnIndex(1);
+      ImGui::SetNextItemWidth(INPUT_SIZE);
+      if (ImGui::DragFloat("##RigidBodyMass", &rigidBody.mass, 0.01f, 0.0f, 1000'000.0f)) {
+          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::MASS);
+          SetIsComponentEdited(true);
+      }
+
       // Motion Type Selection
-      static const char* motionTypes[] = { "Static", "Kinematic", "Dynamic" };
+      const char* motionTypes[] = { "Dynamic", "Kinematic" };
       int currentMotionType = static_cast<int>(rigidBody.motionType);
 
       ImGui::TableNextRow();
@@ -778,7 +804,7 @@ namespace GUI {
       ImGui::TableSetColumnIndex(1);
       ImGui::SetNextItemWidth(INPUT_SIZE);
       if (ImGui::Combo("##Motion Type", &currentMotionType, motionTypes, IM_ARRAYSIZE(motionTypes))) {
-        rigidBody.motionType = static_cast<JPH::EMotionType>(currentMotionType);
+        rigidBody.motionType = static_cast<Component::RigidBody::MotionType>(currentMotionType);
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::MOTION);
         modified = true;
       }
@@ -809,38 +835,38 @@ namespace GUI {
       ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       ImGui::TableHeadersRow();
 
-      if (ImGuiHelpers::TableInputFloat3("Scale", collider.scale.mF32, inputWidth, false, 0.f, 100.f, 1.f)) {
-        modified = true;
+      if (ImGuiHelpers::TableInputFloat3("Scale", &collider.scale.x, inputWidth, false, 0.f, 100.f, 1.f)) {
+        SetIsComponentEdited(true);
       }
-      if (ImGuiHelpers::TableInputFloat3("Position Offset", collider.positionOffset.mF32, inputWidth, false, -100.f, 100.f, 0.1f)) {
-        modified = true;
+      if (ImGuiHelpers::TableInputFloat3("Position Offset", &collider.positionOffset.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
+        SetIsComponentEdited(true);
       }
-      if (ImGuiHelpers::TableInputFloat3("Rotation Offset", collider.rotationOffset.mF32, inputWidth, false, 0.f, 360.f, 0.1f)) {
-        modified = true;
-      }
+      //if (ImGuiHelpers::TableInputFloat3("Rotation Offset", &collider.rotationOffset.x, inputWidth, false, 0.f, 360.f, 0.1f)) {
+      //  SetIsComponentEdited(true);
+      //}
 
       ImGui::EndTable();
 
       // Shape Type Selection
-      static const char* shapeTypes[] = { "Unknown", "Sphere", "Capsule", "Box", "Triangle", "ConvexHull", "Mesh", "HeightField", "Compound" };
-      int currentShapeType = static_cast<int>(collider.type);
+      //const char* shapeTypes[] = { "Unknown", "Sphere", "Capsule", "Box", "Triangle", "ConvexHull", "Mesh", "HeightField", "Compound" };
+      //int currentShapeType = static_cast<int>(collider.type);
 
-      ImGui::BeginTable("ShapeSelectionTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+      //ImGui::BeginTable("ShapeSelectionTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
-      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
+      //ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      //ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
 
-      ImGui::TableNextRow();
-      ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Shape Type");
-      ImGui::TableSetColumnIndex(1);
-      ImGui::SetNextItemWidth(INPUT_SIZE);
-      if (ImGui::Combo("##ShapeType", &currentShapeType, shapeTypes, IM_ARRAYSIZE(shapeTypes))) {
-        collider.type = static_cast<JPH::EShapeSubType>(currentShapeType);
-        modified = true;
-      }
+      //ImGui::TableNextRow();
+      //ImGui::TableSetColumnIndex(0);
+      //ImGui::Text("Shape Type");
+      //ImGui::TableSetColumnIndex(1);
+      //ImGui::SetNextItemWidth(INPUT_SIZE);
+      //if (ImGui::Combo("##ShapeType", &currentShapeType, shapeTypes, IM_ARRAYSIZE(shapeTypes))) {
+      //  collider.type = static_cast<JPH::EShapeSubType>(currentShapeType);
+      //  SetIsComponentEdited(true);
+      //}
 
-      ImGui::EndTable();
+      //ImGui::EndTable();
     }
 
     WindowEnd(isOpen);

@@ -17,7 +17,7 @@
 #include "Graphics/EditorCamera.h"
 
 #include <Physics/PhysicsSystem.h>
-
+#include <Asset/IGEAssets.h>
 Scene::Scene()
 {
   glClearColor(0.f, 0.f, 0.f, 1.f);
@@ -48,28 +48,21 @@ void Scene::Init()
 
  
   mEcam = editorCam;
-  std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateModelFromImport("../Assets/Models/bunny_high_poly.imsh");
-  mesh0 = std::make_shared<Graphics::Mesh>(cubeMeshSource);
+  //IGE::Assets::GUID cubeMeshSource = IGE_ASSETMGR->LoadRef<IGE::Assets::MeshAsset>("../Assets/Models/bunny_high_poly.imsh");//Graphics::MeshFactory::CreateModelFromImport("../Assets/Models/bunny_high_poly.imsh");
+  //mesh0 = std::make_shared<Graphics::Mesh>(cubeMeshSource);
 
-  std::shared_ptr<Graphics::MeshSource> pyrMeshSource = Graphics::MeshFactory::CreateModelFromString("Cube");
-  mesh1 = std::make_shared<Graphics::Mesh>(pyrMeshSource);
-  
-  // Create a debug albedo texture (bright magenta checkerboard)
-  std::shared_ptr<Graphics::Texture> debugAlbedoTex = std::make_shared<Graphics::Texture>(2, 2, true);
-  unsigned int debugAlbedoData[4] = {
-      0xffff00ff, // Bright magenta (ABGR)
-      0xffffff00, // Cyan (to create contrast for checkerboard)
-      0xffffff00, // Cyan
-      0xffff00ff  // Bright magenta
-  };
-  debugAlbedoTex->SetData(debugAlbedoData);
-  
-  std::shared_ptr<Graphics::Shader> shader = std::make_shared<Graphics::Shader>("../Assets/Shaders/Default.vert.glsl", "../Assets/Shaders/Default.frag.glsl");
-  std::shared_ptr<Graphics::MaterialSource> materialSource0 = Graphics::MaterialSource::Create(shader);
-  materialSource0->SetAlbedoMap(debugAlbedoTex);
-  std::shared_ptr<Graphics::MaterialSource> materialSource1 = Graphics::MaterialSource::Create(shader);
-  materialSource1->SetAlbedoMap(debugAlbedoTex);
-  //=====================================================================================================================
+  //IGE::Assets::GUID pyrMeshSource = IGE_ASSETMGR->LoadRef<IGE::Assets::MeshAsset>("Cube");
+  //mesh1 = std::make_shared<Graphics::Mesh>(pyrMeshSource);
+  //
+  //// Create a debug albedo texture (bright magenta checkerboard)
+  //IGE::Assets::GUID texguid { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\white.dds")) };
+  //
+  //std::shared_ptr<Graphics::Shader> shader = std::make_shared<Graphics::Shader>("../Assets/Shaders/Default.vert.glsl", "../Assets/Shaders/Default.frag.glsl");
+  //std::shared_ptr<Graphics::MaterialSource> materialSource0 = Graphics::MaterialSource::Create(shader);
+  //materialSource0->SetAlbedoMap(texguid);
+  //std::shared_ptr<Graphics::MaterialSource> materialSource1 = Graphics::MaterialSource::Create(shader);
+  //materialSource1->SetAlbedoMap(texguid);
+  ////=====================================================================================================================
 
   //for (int i = 0; i < 5; ++i) {
   //    for (int j = 0; j < 5; ++j) {
@@ -89,7 +82,7 @@ void Scene::Init()
   //        // Assign alternating meshes between cube and pyramid
   //        if ((i + j) % 2 == 0) {
   //            renderComponent.mesh = mesh0; // Assign cube mesh
-  //            transformComponent.scale = glm::vec3(5.f);
+  //            transformComponent.worldScale = glm::vec3(5.f);
   //        }
   //        else {
   //          renderComponent.mesh = mesh1; // Assign pyramid mesh

@@ -31,15 +31,15 @@ namespace Graphics {
 	}
 
 	// Default Texture
-	std::shared_ptr<Texture> MaterialSource::GetAlbedoMap() const { return mAlbedoMap; }
-	void MaterialSource::SetAlbedoMap(std::shared_ptr<Texture> texture) { mAlbedoMap = texture; }
+	IGE::Assets::GUID MaterialSource::GetAlbedoMap() const { return mAlbedoMap; }
+	void MaterialSource::SetAlbedoMap(IGE::Assets::GUID const& texture) { mAlbedoMap = texture; }
 
-	std::shared_ptr<Texture> MaterialSource::GetNormalMap() const { return mNormalMap; }
-	void MaterialSource::SetNormalMap(std::shared_ptr<Texture> texture) { mNormalMap = texture; }
+	IGE::Assets::GUID MaterialSource::GetNormalMap() const { return mNormalMap; }
+	void MaterialSource::SetNormalMap(IGE::Assets::GUID const& texture) { mNormalMap = texture; }
 
-	std::shared_ptr<Texture> MaterialSource::GetMetalnessMap() const { return mMetalnessMap; }
-	void MaterialSource::SetMetalnessMap(std::shared_ptr<Texture> texture) { mMetalnessMap = texture; }
+	IGE::Assets::GUID MaterialSource::GetMetalnessMap() const { return mMetalnessMap; }
+	void MaterialSource::SetMetalnessMap(IGE::Assets::GUID const& texture) { mMetalnessMap = texture; }
 
-	std::shared_ptr<Texture> MaterialSource::GetRoughnessMap() const { return mRoughnessMap; }
-	void MaterialSource::SetRoughnessMap(std::shared_ptr<Texture> texture) { mRoughnessMap = texture; }
+	IGE::Assets::GUID MaterialSource::GetRoughnessMap() const { return mRoughnessMap; }
+	void MaterialSource::SetRoughnessMap(IGE::Assets::GUID const& texture) { mRoughnessMap = texture; }
 }

@@ -21,6 +21,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Reflection/ObjectFactory.h>
 #include <Events/EventCallback.h>
 #include <Core/Components/Components.h>
+#include <Physics/PhysicsSystem.h>
 
 namespace GUI {
   class Inspector : public GUIWindow {

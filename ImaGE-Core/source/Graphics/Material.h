@@ -11,6 +11,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma once
 #include "MaterialSource.h"
 #include "Renderer.h"
+#include "Asset/IGEAssets.h"
 namespace Graphics{
     class Material {
 
@@ -40,20 +41,20 @@ namespace Graphics{
         void SetTransparency(float value) { mTransparency = value; }
 
         // Texture Management
-        std::shared_ptr<Texture> GetAlbedoMap() const { return mUseCustomAlbedoMap ? mCustomAlbedoMap : mMaterialSource->GetAlbedoMap(); }
-        void SetAlbedoMap(std::shared_ptr<Texture> texture) { mCustomAlbedoMap = texture; mUseCustomAlbedoMap = true; }
+        IGE::Assets::GUID GetAlbedoMap() const { return mUseCustomAlbedoMap ? mCustomAlbedoMap : mMaterialSource->GetAlbedoMap(); }
+        void SetAlbedoMap(IGE::Assets::GUID const& texture) { mCustomAlbedoMap = texture; mUseCustomAlbedoMap = true; }
         void ClearAlbedoMap() { mUseCustomAlbedoMap = false; }
 
-        std::shared_ptr<Texture> GetNormalMap() const { return mUseCustomNormalMap ? mCustomNormalMap : mMaterialSource->GetNormalMap(); }
-        void SetNormalMap(std::shared_ptr<Texture> texture) { mCustomNormalMap = texture; mUseCustomNormalMap = true; }
+        IGE::Assets::GUID GetNormalMap() const { return mUseCustomNormalMap ? mCustomNormalMap : mMaterialSource->GetNormalMap(); }
+        void SetNormalMap(IGE::Assets::GUID const& texture) { mCustomNormalMap = texture; mUseCustomNormalMap = true; }
         void ClearNormalMap() { mUseCustomNormalMap = false; }
 
-        std::shared_ptr<Texture> GetMetalnessMap() const { return mUseCustomMetalnessMap ? mCustomMetalnessMap : mMaterialSource->GetMetalnessMap(); }
-        void SetMetalnessMap(std::shared_ptr<Texture> texture) { mCustomMetalnessMap = texture; mUseCustomMetalnessMap = true; }
+        IGE::Assets::GUID GetMetalnessMap() const { return mUseCustomMetalnessMap ? mCustomMetalnessMap : mMaterialSource->GetMetalnessMap(); }
+        void SetMetalnessMap(IGE::Assets::GUID const& texture) { mCustomMetalnessMap = texture; mUseCustomMetalnessMap = true; }
         void ClearMetalnessMap() { mUseCustomMetalnessMap = false; }
 
-        std::shared_ptr<Texture> GetRoughnessMap() const { return mUseCustomRoughnessMap ? mCustomRoughnessMap : mMaterialSource->GetRoughnessMap(); }
-        void SetRoughnessMap(std::shared_ptr<Texture> texture) { mCustomRoughnessMap = texture; mUseCustomRoughnessMap = true; }
+        IGE::Assets::GUID GetRoughnessMap() const { return mUseCustomRoughnessMap ? mCustomRoughnessMap : mMaterialSource->GetRoughnessMap(); }
+        void SetRoughnessMap(IGE::Assets::GUID const& texture) { mCustomRoughnessMap = texture; mUseCustomRoughnessMap = true; }
         void ClearRoughnessMap() { mUseCustomRoughnessMap = false; }
 
         // Apply Material Properties to Shader
@@ -68,7 +69,7 @@ namespace Graphics{
 
 
             // Apply textures (use instance override if available)
-            shader->SetUniform("u_AlbedoMap", GetAlbedoMap() ? GetAlbedoMap() : Renderer::GetWhiteTexture(), 0);
+            shader->SetUniform("u_AlbedoMap", GetAlbedoMap() ? &(IGE_REF(IGE::Assets::TextureAsset, GetAlbedoMap())->mTexture) : &(IGE_REF(IGE::Assets::TextureAsset, Renderer::GetWhiteTexture())->mTexture), 0);
 
             //if (auto normalMap = GetNormalMap()) shader->SetUniform("u_NormalMap", normalMap);
             //if (auto metalnessMap = GetMetalnessMap()) shader->SetUniform("u_MetalnessMap", metalnessMap);
@@ -90,10 +91,10 @@ namespace Graphics{
         float mTransparency;
 
         // Texture overrides
-        std::shared_ptr<Texture> mCustomAlbedoMap;
-        std::shared_ptr<Texture> mCustomNormalMap;
-        std::shared_ptr<Texture> mCustomMetalnessMap;
-        std::shared_ptr<Texture> mCustomRoughnessMap;
+        IGE::Assets::GUID mCustomAlbedoMap;
+        IGE::Assets::GUID mCustomNormalMap;
+        IGE::Assets::GUID mCustomMetalnessMap;
+        IGE::Assets::GUID mCustomRoughnessMap;
 
         // Flags for texture use
         bool mUseCustomAlbedoMap;

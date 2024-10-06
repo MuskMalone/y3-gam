@@ -2,7 +2,7 @@
 \file   IMSH.cpp
 \author chengen.lau\@digipen.edu
 \date   20-September-2024
-\brief  Class acting as the intermediary step between a n external
+\brief  Class acting as the intermediary step between an external
         model file and the engine's custom format. It reads the
         contents with Assimp and then converts it in to an .imsh
         object, which can then be used as a MeshSource.
@@ -104,7 +104,7 @@ namespace Graphics::AssetIO
       ofs.close();
   }
 
-  std::shared_ptr<MeshSource> IMSH::ToMeshSource(std::shared_ptr<VertexArray> vao) {
+  MeshSource IMSH::ToMeshSource(std::shared_ptr<VertexArray> vao) {
     mStatus = false;
 
     std::vector<Submesh> submeshes;
@@ -114,7 +114,7 @@ namespace Graphics::AssetIO
         glm::mat4(1.f), std::vector<uint32_t>(mIndices.begin() + data.baseIdx, mIndices.begin() + data.idxCount));
     }
 
-    return std::make_shared<MeshSource>(std::move(vao), std::move(submeshes), std::move(mVertexBuffer), std::move(mIndices));
+    return MeshSource{ vao, submeshes, mVertexBuffer, mIndices };
   }
 
   void IMSH::ReadFromBinFile(std::string const& file) {

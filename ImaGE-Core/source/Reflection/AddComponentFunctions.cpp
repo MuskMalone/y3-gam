@@ -13,6 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Physics/PhysicsSystem.h>
 #include <Graphics/MeshFactory.h>
 #include <Graphics/Mesh.h>
+#include <Asset/IGEAssets.h>
 
 namespace Reflection::ComponentUtils {
   using namespace Component;
@@ -40,15 +41,15 @@ namespace Reflection::ComponentUtils {
   void AddCollider(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Collider, comp);
 
-    //entity.EmplaceOrReplaceComponent<Collider>(comp);
-    IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(entity);
+    entity.EmplaceOrReplaceComponent<Collider>(comp);
+    //IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(entity);
   }
 
   void AddRigidBody(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(RigidBody, comp);
 
-    //entity.EmplaceOrReplaceComponent<RigidBody>(comp);
-    IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(entity);
+    entity.EmplaceOrReplaceComponent<RigidBody>(comp);
+    //IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(entity);
   }
 
   void AddMaterial(ECS::Entity entity, rttr::variant const& var) {
@@ -60,7 +61,7 @@ namespace Reflection::ComponentUtils {
   void AddMesh(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Mesh, comp);
 
-    auto meshSrc{ Graphics::MeshFactory::CreateModelFromString(comp.meshName) };
+    auto const& meshSrc{ IGE_ASSETMGR->LoadRef<IGE::Assets::MeshAsset>(comp.meshName) };//Graphics::MeshFactory::CreateModelFromString(comp.meshName) };
     entity.EmplaceOrReplaceComponent<Mesh>(std::make_shared<Graphics::Mesh>(meshSrc), comp.meshName);
   }
 

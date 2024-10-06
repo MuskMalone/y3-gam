@@ -10,13 +10,13 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
 #include <string>
-
+#include <Asset/SmartPointer.h>
 namespace Graphics {
 
 	class Texture {
 	public:
 
-		static std::shared_ptr<Texture> Create(std::string const& path, bool isBindless = false);
+		static IGE::Assets::GUID Create(std::string const& path, bool isBindless = true);
 		//Temp default constructor
 		Texture();
 		Texture(std::string const& path, bool isBindless = false);

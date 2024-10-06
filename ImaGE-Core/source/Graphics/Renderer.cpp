@@ -3,7 +3,7 @@
 #include "RenderAPI.h"
 #include "RenderPass.h"
 #include <glm/gtx/quaternion.hpp>
-
+#include "Asset/IGEAssets.h"
 namespace Graphics {
 	constexpr int INVALID_ENTITY_ID = -1;
 
@@ -90,11 +90,11 @@ namespace Graphics {
 		mData.triBuffer = std::vector<TriVtx>(mData.cMaxVertices);
 
 		//========================================================
-
-		mData.whiteTex = std::make_shared<Texture>(1, 1, true);
-		unsigned int whiteTexData{ 0xffffffff };
-		mData.whiteTex->SetData(&whiteTexData);
-		mData.texUnits[0] = mData.whiteTex;
+		mData.defaultTex = IGE_ASSETMGR->LoadRef<IGE::Assets::TextureAsset>(gAssetsDirectory + std::string("Textures/default.dds"));
+		mData.whiteTex = IGE_ASSETMGR->LoadRef<IGE::Assets::TextureAsset>(gAssetsDirectory + std::string("Textures/white.dds"));
+		//unsigned int whiteTexData{ 0xffffffff };
+		//mData.whiteTex->SetData(&whiteTexData);
+		//mData.texUnits[0] = mData.whiteTex;
 
 		std::vector<int> samplers(mData.maxTexUnits);
 		for (unsigned int i{}; i < mData.maxTexUnits; ++i)
@@ -147,33 +147,32 @@ namespace Graphics {
 		mFinalFramebuffer = mGeomPass->GetTargetFramebuffer();
 		//mFinalFramebuffer = Framebuffer::Create(framebufferSpec);
 
-		//TEMP CODE
-		std::shared_ptr<Graphics::Texture> tempTex1 = std::make_shared<Graphics::Texture>(2, 2, true);
-		unsigned int debugAlbedoData[4] = {
-			0xff00ffff, 
-			0xfff0ff00, 
-			0xfff0ff00, 
-			0xff00ffff  
-		};
-		tempTex1->SetData(debugAlbedoData);
 
-		std::shared_ptr<Graphics::Texture> debugAlbedoTex = std::make_shared<Graphics::Texture>(2, 2, true);
-		unsigned int data[4] = {
-			0xffff00ff, // Bright magenta (ABGR)
-			0xffffff00, // Cyan (to create contrast for checkerboard)
-			0xffffff00, // Cyan
-			0xffff00ff  // Bright magenta
-		};
-		debugAlbedoTex->SetData(data);
+		IGE::Assets::GUID texguid1 { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\ogre_normalmap.dds")) };
 
-		mData.albedoMaps.push_back(GetWhiteTexture());
-		mData.albedoMaps.push_back(debugAlbedoTex);
-		mData.albedoMaps.push_back(tempTex1);
+		IGE::Assets::GUID texguid { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
+		//unsigned int data[4] = {
+		//	0xffff00ff, // Bright magenta (ABGR)
+		//	0xffffff00, // Cyan (to create contrast for checkerboard)
+		//	0xffffff00, // Cyan
+		//	0xffff00ff  // Bright magenta
+		//};
+		//debugAlbedoTex->SetData(data);
+
+
 
 		//TESTING
+		//albedo
+		mData.albedoMaps.push_back(GetDefaultTexture());
+		mData.albedoMaps.push_back(GetWhiteTexture());
+		mData.albedoMaps.push_back(texguid1);
+
+		//normal
 		mData.normalMaps.push_back(GetWhiteTexture());
 		mData.normalMaps.push_back(GetWhiteTexture());
-		mData.normalMaps.push_back(GetWhiteTexture());
+		mData.normalMaps.push_back(texguid1);
+		
+		//mData.albedoMaps.push_back(texguid1);
 ;	}
 
 
@@ -219,7 +218,7 @@ namespace Graphics {
 		++mData.meshVtxCount;
 	}
 
-	std::shared_ptr<VertexBuffer> Renderer::GetInstanceBuffer(std::shared_ptr<MeshSource> const& meshSrc) {
+	std::shared_ptr<VertexBuffer> Renderer::GetInstanceBuffer(IGE::Assets::GUID const& meshSrc) {
 		auto it = mData.instanceBuffers.find(meshSrc); // check if instance buff alr exists
 
 		// found
@@ -242,7 +241,7 @@ namespace Graphics {
 		instanceBuffer->SetLayout(instanceLayout);
 
 		// Attach the instance buffer to the MeshSource's VAO
-		meshSrc->GetVertexArray()->AddVertexBuffer(instanceBuffer, true);
+		IGE_REF(IGE::Assets::MeshAsset, meshSrc)->mMeshSource.GetVertexArray()->AddVertexBuffer(instanceBuffer, true);
 
 		// Store the buffer in the map for future use
 		mData.instanceBuffers[meshSrc] = instanceBuffer;
@@ -284,7 +283,7 @@ namespace Graphics {
 	void Renderer::SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr) {
 		if (mesh == nullptr) return;
 		auto const& meshSrc = mesh->GetMeshSource();
-		auto const& submeshes = meshSrc->GetSubmeshes();
+		auto const& submeshes = IGE_REF(IGE::Assets::MeshAsset, meshSrc)->mMeshSource.GetSubmeshes();
 
 		// Transformation matrices
 		glm::mat4 translateMtx{ glm::translate(glm::mat4{ 1.f }, pos) };
@@ -319,7 +318,7 @@ namespace Graphics {
 
 			// Collect vertex data from the submesh
 			for (size_t i = 0; i < submesh.vtxCount; ++i) {
-				const Vertex& vtx = meshSrc->GetVertices()[submesh.baseVtx + i];
+				const Vertex& vtx = IGE_REF(IGE::Assets::MeshAsset, meshSrc)->mMeshSource.GetVertices()[submesh.baseVtx + i];
 
 				// Transform position to world space
 				glm::vec3 worldPos = glm::vec3(finalxformMtx * glm::vec4(vtx.position, 1.0f));
@@ -378,9 +377,9 @@ namespace Graphics {
 			instanceBuffer->SetData(instances.data(), dataSize);
 
 			// Bind the VAO and render the instances
-			auto& vao = meshSrc->GetVertexArray();
+			auto& vao = IGE_REF(IGE::Assets::MeshAsset, meshSrc)->mMeshSource.GetVertexArray();
 
-			RenderAPI::DrawIndicesInstanced(vao, static_cast<unsigned>(meshSrc->GetIndices().size()), static_cast<unsigned>(instances.size()));
+			RenderAPI::DrawIndicesInstanced(vao, static_cast<unsigned>(IGE_REF(IGE::Assets::MeshAsset, meshSrc)->mMeshSource.GetIndices().size()), static_cast<unsigned>(instances.size()));
 
 		}
 
@@ -529,11 +528,11 @@ namespace Graphics {
 		return mData.materialVector[idx];
 	}
 
-	std::vector<std::shared_ptr<Texture>> const& Renderer::GetAlbedoMaps(){
+	std::vector< IGE::Assets::GUID> const& Renderer::GetAlbedoMaps(){
 		return mData.albedoMaps;
 	}
 
-	std::vector<std::shared_ptr<Texture>> const& Renderer::GetNormalMaps() {
+	std::vector<IGE::Assets::GUID> const& Renderer::GetNormalMaps() {
 		return mData.normalMaps;
 	}
 
@@ -559,7 +558,12 @@ namespace Graphics {
 		mFinalFramebuffer = framebuffer;
 	}
 
-	std::shared_ptr<Texture> Renderer::GetWhiteTexture() {
+	IGE::Assets::GUID Renderer::GetDefaultTexture()
+	{
+		return mData.defaultTex;
+	}
+
+	IGE::Assets::GUID Renderer::GetWhiteTexture() {
 		return mData.whiteTex;
 	}
 

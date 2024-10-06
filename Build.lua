@@ -26,3 +26,7 @@ group ""
 group "Game"
    include "ImaGE-Game/Build-ImaGE-Game.lua"
 group ""
+
+group "Script"
+   include "ImaGE-Script/Build-ImaGE-Script.lua"
+group ""
