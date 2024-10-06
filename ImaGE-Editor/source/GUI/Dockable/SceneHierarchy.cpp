@@ -308,9 +308,11 @@ namespace GUI
       //}
       //ImGui::EndDisabled();
 
+      if (mEditingPrefab) { ImGui::BeginDisabled(); }
       if (ImGui::Selectable("Save as Prefab")) {
         mPrefabPopup = true;
       }
+      if (mEditingPrefab) { ImGui::EndDisabled(); }
 
       if (ImGui::Selectable("Delete")) {
         mEntityManager.RemoveEntity(mRightClickedEntity);

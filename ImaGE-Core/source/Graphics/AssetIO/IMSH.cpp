@@ -2,7 +2,7 @@
 \file   IMSH.cpp
 \author chengen.lau\@digipen.edu
 \date   20-September-2024
-\brief  Class acting as the intermediary step between a n external
+\brief  Class acting as the intermediary step between an external
         model file and the engine's custom format. It reads the
         contents with Assimp and then converts it in to an .imsh
         object, which can then be used as a MeshSource.
