@@ -81,7 +81,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>WINDOWS;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;GLM_ENABLE_EXPERIMENTAL;PX_PHYSX_STATIC_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WINDOWS;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;GLM_ENABLE_EXPERIMENTAL;PX_PHYSX_STATIC_LIB;RTTR_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>source;..\ImaGE-Core\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -102,14 +102,15 @@
       <Command>copy /B /Y "$(SolutionDir)Libraries\PhysX\physx\bin\win.x86_64.vc142.md\debug\PhysXGpu_64.dll" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor"
 copy /B /Y "$(SolutionDir)ImaGE-Core\source\External\fmod\lib\fmodL.dll" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor"
 copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor"
-copy /B /Y "$(SolutionDir)ImaGE-Core\source\External\mono\4.5" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor\4.5"</Command>
+copy /B /Y "$(SolutionDir)ImaGE-Core\source\External\mono\4.5" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor\4.5"
+copy /B /Y "$(SolutionDir)Libraries\Built-Libraries\Debug\Libraries\rttr\bin\Debug\rttr_core_d.dll" "..\Binaries\windows-x86_64\Debug\ImaGE-Editor"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>WINDOWS;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;GLM_ENABLE_EXPERIMENTAL;PX_PHYSX_STATIC_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WINDOWS;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;GLM_ENABLE_EXPERIMENTAL;PX_PHYSX_STATIC_LIB;RTTR_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>source;..\ImaGE-Core\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
@@ -136,14 +137,15 @@ copy /B /Y "$(SolutionDir)ImaGE-Core\source\External\mono\4.5" "..\Binaries\wind
       <Command>copy /B /Y "$(SolutionDir)Libraries\PhysX\physx\bin\win.x86_64.vc142.md\release\PhysXGpu_64.dll" "..\Binaries\windows-x86_64\Release\ImaGE-Editor"
 copy /B /Y "$(SolutionDir)ImaGE-Core\source\External\fmod\lib\fmod.dll" "..\Binaries\windows-x86_64\Release\ImaGE-Editor"
 copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Release\ImaGE-Editor"
-copy /B /Y "$(SolutionDir)ImaGE-Core\source\External\mono\4.5" "..\Binaries\windows-x86_64\Release\ImaGE-Editor\4.5"</Command>
+copy /B /Y "$(SolutionDir)ImaGE-Core\source\External\mono\4.5" "..\Binaries\windows-x86_64\Release\ImaGE-Editor\4.5"
+copy /B /Y "$(SolutionDir)Libraries\Built-Libraries\Release\Libraries\rttr\bin\Release\rttr_core.dll" "..\Binaries\windows-x86_64\Release\ImaGE-Editor"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>WINDOWS;DISTRIBUTION;_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;GLM_ENABLE_EXPERIMENTAL;PX_PHYSX_STATIC_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WINDOWS;DISTRIBUTION;_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;GLM_ENABLE_EXPERIMENTAL;PX_PHYSX_STATIC_LIB;RTTR_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>source;..\ImaGE-Core\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
@@ -170,7 +172,8 @@ copy /B /Y "$(SolutionDir)ImaGE-Core\source\External\mono\4.5" "..\Binaries\wind
       <Command>copy /B /Y "$(SolutionDir)Libraries\PhysX\physx\bin\win.x86_64.vc142.md\release\PhysXGpu_64.dll" "..\Binaries\windows-x86_64\Distribution\ImaGE-Editor"
 copy /B /Y "$(SolutionDir)ImaGE-Core\source\External\fmod\lib\fmod.dll" "..\Binaries\windows-x86_64\Distribution\ImaGE-Editor"
 copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Distribution\ImaGE-Editor"
-copy /B /Y "$(SolutionDir)ImaGE-Core\source\External\mono\4.5" "..\Binaries\windows-x86_64\Distribution\ImaGE-Editor\4.5"</Command>
+copy /B /Y "$(SolutionDir)ImaGE-Core\source\External\mono\4.5" "..\Binaries\windows-x86_64\Distribution\ImaGE-Editor\4.5"
+copy /B /Y "$(SolutionDir)Libraries\Built-Libraries\Release\Libraries\rttr\bin\Release\rttr_core.dll" "..\Binaries\windows-x86_64\Distribution\ImaGE-Editor"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

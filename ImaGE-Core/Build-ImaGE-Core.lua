@@ -84,7 +84,8 @@ project "ImaGE-Core"
         "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
         "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
         "GLM_ENABLE_EXPERIMENTAL",
-        "PX_PHYSX_STATIC_LIB"
+        "PX_PHYSX_STATIC_LIB",
+        "RTTR_DLL"
         }
 
        links {
@@ -119,7 +120,7 @@ project "ImaGE-Core"
           "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Debug/",
           "source/External/fmod/lib",
           "source/External/mono/lib"
-         
+
        }
 
        postbuildcommands {
@@ -139,7 +140,8 @@ project "ImaGE-Core"
         "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
         "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
         "GLM_ENABLE_EXPERIMENTAL",
-        "PX_PHYSX_STATIC_LIB"
+        "PX_PHYSX_STATIC_LIB",
+        "RTTR_DLL"
         }
 
         libdirs 
@@ -184,7 +186,8 @@ project "ImaGE-Core"
           "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
           "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
           "GLM_ENABLE_EXPERIMENTAL",
-          "PX_PHYSX_STATIC_LIB"
+          "PX_PHYSX_STATIC_LIB",
+          "RTTR_DLL"
        }
        runtime "Release"
        optimize "On"

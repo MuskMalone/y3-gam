@@ -65,7 +65,8 @@ project "ImaGE-Editor"
          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
          "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
          "GLM_ENABLE_EXPERIMENTAL",
-         "PX_PHYSX_STATIC_LIB"
+         "PX_PHYSX_STATIC_LIB",
+         "RTTR_DLL"
       }
 
        runtime "Debug"
@@ -81,6 +82,7 @@ project "ImaGE-Editor"
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
          --"{COPYDIR} %[%{wks.location}Libraries/mono/4.5] %[%{cfg.targetdir}/4.5]"
          "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/mono/4.5] %[%{cfg.targetdir}/4.5]",
+         "{COPYFILE} %[%{wks.location}Libraries/Built-Libraries/Debug/Libraries/rttr/bin/Debug/rttr_core_d.dll] %[%{cfg.targetdir}]",
       }
 
    filter "configurations:Release"
@@ -91,7 +93,8 @@ project "ImaGE-Editor"
          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
          "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
          "GLM_ENABLE_EXPERIMENTAL",
-         "PX_PHYSX_STATIC_LIB"
+         "PX_PHYSX_STATIC_LIB",
+         "RTTR_DLL"
       }
        runtime "Release"
        optimize "On"
@@ -106,6 +109,7 @@ project "ImaGE-Editor"
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
          --"{COPYDIR} %[%{wks.location}Libraries/mono/4.5] %[%{cfg.targetdir}/4.5]"
          "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/mono/4.5] %[%{cfg.targetdir}/4.5]",
+         "{COPYFILE} %[%{wks.location}Libraries/Built-Libraries/Release/Libraries/rttr/bin/Release/rttr_core.dll] %[%{cfg.targetdir}]",
       }
 
    filter "configurations:Distribution"
@@ -115,7 +119,8 @@ project "ImaGE-Editor"
          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
          "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
          "GLM_ENABLE_EXPERIMENTAL",
-         "PX_PHYSX_STATIC_LIB"
+         "PX_PHYSX_STATIC_LIB",
+         "RTTR_DLL"
       }
       kind "WindowedApp"
       runtime "Release"
@@ -131,4 +136,5 @@ project "ImaGE-Editor"
          "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
          --"{COPYDIR} %[%{wks.location}Libraries/mono/4.5] %[%{cfg.targetdir}/4.5]"
          "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/mono/4.5] %[%{cfg.targetdir}/4.5]",
+         "{COPYFILE} %[%{wks.location}Libraries/Built-Libraries/Release/Libraries/rttr/bin/Release/rttr_core.dll] %[%{cfg.targetdir}]",
       }
