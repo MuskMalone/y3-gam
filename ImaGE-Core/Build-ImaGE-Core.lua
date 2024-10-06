@@ -90,7 +90,7 @@ project "ImaGE-Core"
 
        links {
         "opengl32.lib",
-        "glfw3d.lib",
+        "glfw3.lib",
 
         "assimp-vc143-mtd.lib",
         "zlibstaticd.lib",
