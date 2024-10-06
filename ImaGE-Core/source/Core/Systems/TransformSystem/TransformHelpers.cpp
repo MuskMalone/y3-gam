@@ -14,17 +14,36 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace {
 
-  /*!*********************************************************************
-   \brief
-     Helper function to recursively update all world transforms of a
-     hierarchy
-   \param entity
-     The child entity to update
-   ************************************************************************/
-  //void UpdateWorldTransformRecursive(ECS::Entity entity);
 }
 
 namespace TransformHelpers {
+
+  void UpdateWorldTransform(ECS::Entity entity) {
+    ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
+    Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
+
+    if (em.HasParent(entity)) {
+      // update local with inverse of parent xform
+      Component::Transform& parentTrans{ em.GetParentEntity(entity).GetComponent<Component::Transform>() };
+      trans.parentWorldMtx = parentTrans.worldMtx;
+      trans.worldPos = parentTrans.worldMtx * glm::vec4(trans.position, 1.f);
+      trans.worldScale = parentTrans.worldScale * trans.scale;
+      trans.worldRot = parentTrans.worldRot * trans.rotation;
+      trans.ComputeWorldMtx();
+    }
+    else {
+      trans.worldPos = trans.position;
+      trans.worldScale = trans.scale;
+      trans.worldRot = trans.rotation;
+      trans.ComputeWorldMtx();
+    }
+
+    if (em.HasChild(entity)) {
+      for (ECS::Entity child : em.GetChildEntity(entity)) {
+        UpdateWorldTransformRecursive(child);
+      }
+    }
+  }
 
   void SetEntityWorldPos(ECS::Entity entity, glm::vec3 const& newPos) {
     ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
@@ -36,13 +55,11 @@ namespace TransformHelpers {
 
     if (em.HasChild(entity)) {
       for (ECS::Entity child : em.GetChildEntity(entity)) {
-        //UpdateWorldTransformRecursive(child);
         child.GetComponent<Component::Transform>().modified = true;
       }
     }
 
     if (em.HasParent(entity)) {
-      //UpdateTransformToNewParent(entity);
       // update local with inverse of parent xform
       Component::Transform& parentTrans{ em.GetParentEntity(entity).GetComponent<Component::Transform>() };
       trans.position = glm::inverse(parentTrans.worldMtx) * glm::vec4(trans.worldPos, 1.f);

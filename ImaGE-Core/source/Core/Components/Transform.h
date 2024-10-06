@@ -28,7 +28,7 @@ namespace Component
 
     // local setters
     inline void SetPosition(glm::vec3 const& newPos) noexcept { position = newPos; modified = true; }
-    inline void SetScale(glm::vec3 const& newScale) noexcept { scale = newScale; modified = true; }
+    inline void SetWorldScale(glm::vec3 const& newScale) noexcept { scale = newScale; modified = true; }
 
     /*!*********************************************************************
     \brief

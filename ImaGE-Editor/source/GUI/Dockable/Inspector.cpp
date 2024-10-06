@@ -16,6 +16,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Color.h"
 #include "GUI/Helpers/ImGuiHelpers.h"
 #include <GUI/Helpers/AssetPayload.h>
+#include <Core/Systems/TransformSystem/TransformHelpers.h>
 
 #include <Physics/PhysicsSystem.h>
 #include <functional>
@@ -90,7 +91,7 @@ namespace GUI {
         Component::Transform& trans{ currentEntity.GetComponent<Component::Transform>() };
         glm::vec3 const oldPos{ trans.position };
         if (TransformComponentWindow(currentEntity, std::string(ICON_FA_ROTATE), componentOverriden)) {
-          trans.modified = true;
+          TransformHelpers::UpdateWorldTransform(currentEntity);  // must call this to update world transform according to changes to local
           SetIsComponentEdited(true);
 
           if (prefabOverride) {

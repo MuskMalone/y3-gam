@@ -23,6 +23,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GUI/Helpers/ImGuiHelpers.h>
 #include <Core/EntityManager.h>
 #include <GUI/GUIManager.h>
+#include <Core/Components/Transform.h>
 
 namespace GUI
 {
@@ -76,6 +77,10 @@ namespace GUI
           GUIManager::SetSelectedEntity(static_cast<ECS::Entity::EntityID>(entityId));
         }
       }
+    }
+
+    if (GUIManager::GetSelectedEntity()) {
+      Debug::DebugLogger::GetInstance().LogInfo(std::to_string(GUIManager::GetSelectedEntity().GetComponent<Component::Transform>().worldPos.x));
     }
 
     ImGui::End();

@@ -21,8 +21,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 #pragma region SYSTEM_INCLUDES
 #include <Physics/PhysicsSystem.h>
-#include <Core/Systems/TransformSystem/WorldToLocalTransformSystem.h>
-#include <Core/Systems/TransformSystem/LocalToWorldTransformSystem.h>
+//#include <Core/Systems/TransformSystem/WorldToLocalTransformSystem.h>
+#include <Core/Systems/TransformSystem/TransformSystem.h>
 #include <Scripting/ScriptingSystem.h>
 #pragma endregion
 
@@ -70,11 +70,11 @@ namespace IGE {
 
   // registration order is the update order
   void Application::RegisterSystems() {
+    mSystemManager.RegisterSystem<Systems::TransformSystem>("Pre-Transform System"); // must be called first   
     mSystemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
-    mSystemManager.RegisterSystem<Systems::LocalToWorldTransformSystem>("Pre-Transform System");
-    // physics should go here since it deals with world coords i assume
 
-    mSystemManager.RegisterSystem<Systems::WorldToLocalTransformSystem>("Post-Transform System");
+    // dont think i need this anymore
+    //mSystemManager.RegisterSystem<Systems::LocalToWorldTransformSystem>("Post-Transform System");
   }
 
   Application::Application(ApplicationSpecification spec) :

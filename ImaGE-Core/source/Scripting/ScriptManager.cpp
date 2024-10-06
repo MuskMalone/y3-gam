@@ -169,12 +169,12 @@ void ScriptManager::AddInternalCalls()
   //// Get Functions
   ADD_INTERNAL_CALL(GetWorldPosition);
   ADD_INTERNAL_CALL(GetPosition);
-  ADD_INTERNAL_CALL(GetScale);
+  ADD_INTERNAL_CALL(GetWorldScale);
 
   //// Set Functions
   ADD_INTERNAL_CALL(SetWorldPosition);
   ADD_INTERNAL_CALL(SetPosition);
-  ADD_INTERNAL_CALL(SetScale);
+  ADD_INTERNAL_CALL(SetWorldScale);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -600,19 +600,22 @@ ScriptFieldInfo Mono::ScriptManager::GetScriptField(std::string className, std::
 ************************************************************************/
 
 void Mono::SetWorldPosition(ECS::Entity::EntityID entity, glm::vec3 posAdjustment) {
-  TransformHelpers::SetEntityWorldPos(entity, posAdjustment);
+  Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+  trans.worldPos = posAdjustment;
+  trans.modified = true;
 }
 
+// @TODO: needs testing
 void Mono::SetPosition(ECS::Entity::EntityID entity, glm::vec3 newPosition) {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
   trans.position = newPosition;
-  trans.modified = true;
+  TransformHelpers::UpdateWorldTransform(entity);
 }
 
-void Mono::SetScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment) {
+void Mono::SetWorldScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment) {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
   trans.scale = scaleAdjustment;
-  trans.modified = true;
+  TransformHelpers::UpdateWorldTransform(entity);
 }
 
 void Mono::SetRotation(ECS::Entity::EntityID entity, glm::vec3 rotAdjustment)
@@ -630,7 +633,7 @@ glm::vec3 Mono::GetPosition(ECS::Entity::EntityID entity)
   return ECS::Entity(entity).GetComponent<Component::Transform>().position;
 }
 
-glm::vec3 Mono::GetScale(ECS::Entity::EntityID entity)
+glm::vec3 Mono::GetWorldScale(ECS::Entity::EntityID entity)
 {
   return ECS::Entity(entity).GetComponent<Component::Transform>().scale;
 }

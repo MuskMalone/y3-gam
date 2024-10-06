@@ -1,5 +1,5 @@
 /*!*********************************************************************
-\file   WorldToLocalTransformSystem.cpp
+\file   TransformSystem.cpp
 \author chengen.lau\@digipen.edu
 \date   03-October-2024
 \brief  Computes the local transform of entities based on their world
@@ -8,7 +8,7 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
-#include "WorldToLocalTransformSystem.h"
+#include "TransformSystem.h"
 #include <Core/Components/Transform.h>
 #include <Core/Systems/TransformSystem/TransformHelpers.h>
 
@@ -16,7 +16,7 @@ namespace Systems {
 
   using Component::Transform;
 
-  void WorldToLocalTransformSystem::Update() {
+  void TransformSystem::Update() {
     for (ECS::Entity entity : mEntityManager.GetAllEntitiesWithComponents<Transform>()) {
 
       if (mEntityManager.HasParent(entity)) { continue; }
@@ -47,15 +47,15 @@ namespace Systems {
     }
   }
 
-  void WorldToLocalTransformSystem::UpdateWorldToLocal(ECS::Entity entity) {
+  void TransformSystem::UpdateWorldToLocal(ECS::Entity entity) {
     Transform& trans{ entity.GetComponent<Transform>() };
     
     // dont bother computing if nothing changed
-    if (trans.parentModified || trans.modified) {
+    if (trans.modified || trans.parentModified) {
       Transform& parentTrans{ mEntityManager.GetParentEntity(entity).GetComponent<Transform>() };
 
       if (parentTrans.scale.x == 0.f || parentTrans.scale.y == 0.f || parentTrans.scale.z == 0.f) {
-        throw Debug::Exception<WorldToLocalTransformSystem>(Debug::LVL_CRITICAL,
+        throw Debug::Exception<TransformSystem>(Debug::LVL_CRITICAL,
           Msg("Entity " + mEntityManager.GetParentEntity(entity).GetComponent<Component::Tag>().tag + "'s scale is 0!"));
       }
 
@@ -82,7 +82,7 @@ namespace Systems {
       return;
     }
 
-    // else if transform was modified, update all children transforms
+    // if root was modified, recursively call this function to re-update world transform
     if (trans.parentModified) {
       for (ECS::Entity& child : mEntityManager.GetChildEntity(entity)) {
         child.GetComponent<Transform>().modified = true;
@@ -91,12 +91,11 @@ namespace Systems {
 
       trans.parentModified = false;
     }
+    // else if transform was modified, update all children transforms
     else if (trans.modified) {
       trans.ComputeWorldMtx();
       for (ECS::Entity& child : mEntityManager.GetChildEntity(entity)) {
         TransformHelpers::UpdateWorldTransformRecursive(child);
-        child.GetComponent<Transform>().modified = true;
-        UpdateWorldToLocal(child);
       }
 
       trans.modified = false;

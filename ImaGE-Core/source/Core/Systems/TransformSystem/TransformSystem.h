@@ -1,9 +1,9 @@
 /*!*********************************************************************
-\file   WorldToLocalTransformSystem.h
+\file   TransformSystem.h
 \author chengen.lau\@digipen.edu
 \date   03-October-2024
-\brief  Computes the local transform of entities based on their world
-        transform. Should only run after world transform is updated.
+\brief  Updates the local / world transform of all entities based on
+        what was modified in the engine.
 
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
@@ -12,9 +12,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Entity.h>
 
 namespace Systems {
-  class WorldToLocalTransformSystem : public System {
+  class TransformSystem : public System {
   public:
-    WorldToLocalTransformSystem(const char* name) : System(name) {}
+    TransformSystem(const char* name) : System(name) {}
 
     /*!*********************************************************************
     \brief

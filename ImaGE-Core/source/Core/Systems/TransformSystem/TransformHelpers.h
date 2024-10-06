@@ -14,6 +14,15 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace TransformHelpers {
 
+  void UpdateWorldTransform(ECS::Entity entity);
+
+  /*!*********************************************************************
+  \brief
+    Helper function to recursively update all world transforms of a
+    hierarchy
+  \param entity
+    The child entity to update
+  ************************************************************************/
   void UpdateWorldTransformRecursive(ECS::Entity entity);
 
   /*!*********************************************************************

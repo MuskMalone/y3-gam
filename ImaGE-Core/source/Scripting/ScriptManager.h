@@ -249,7 +249,7 @@ namespace Mono
 		\param GE::Math::dVec3 PosAdjustment
 			Vector 3 of the new scale
 		************************************************************************/
-		static void SetScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment);
+		static void SetWorldScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment);
 
 		/*!*********************************************************************
 		\brief
@@ -280,7 +280,7 @@ namespace Mono
 		\return GE::Math::dVec3
 			Returns a vector 3 of the scale of the entity
 		************************************************************************/
-		static glm::vec3 GetScale(ECS::Entity::EntityID entity);
+		static glm::vec3 GetWorldScale(ECS::Entity::EntityID entity);
 
 		/*!*********************************************************************
 		\brief
