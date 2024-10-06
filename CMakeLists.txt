@@ -7,4 +7,4 @@ add_subdirectory(Libraries/assimp)
 add_subdirectory(Libraries/freetype)
 
 set(BUILD_STATIC ON CACHE BOOL "" FORCE)
-add_subdirectory(Libraries/rttr)
+# add_subdirectory(Libraries/rttr)

@@ -18,7 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace GUI
 {
 
-  SceneControls::SceneControls(std::string const& name)
+  SceneControls::SceneControls(const char* name)
     : mSceneManager{ Scenes::SceneManager::GetInstance() }, GUIWindow(name) {}
 
   void SceneControls::Run()

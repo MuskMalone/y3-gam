@@ -58,11 +58,10 @@ namespace Mono {
 		ECS::Entity::EntityID mEntityID;
 		std::string mScriptName;
 		uint32_t mGcHandle;
-		std::shared_ptr<MonoClass> mScriptClass{ nullptr };
-		MonoObject* mClassInst{ nullptr };
-		std::shared_ptr<MonoMethod> mOnUpdateMethod{ nullptr };
+		MonoClass* mScriptClass{ nullptr };   //I didn't use shared ptr for these 2 ptrs because Mono frees this memory by itself behind the scene, using its own function (Which we do not have access to). 
+		MonoObject* mClassInst{ nullptr };	  //If i were to put this in a shared ptr, it will cause an error as shared ptr will try to delete the mono ptr, which is not allowed. we need to use mono's own function to delete it,but we do not have access to it
 		std::shared_ptr<MonoMethod> mOnCreateMethod = { nullptr };
-
+		std::shared_ptr<MonoMethod> mOnUpdateMethod = { nullptr };
 		std::vector<rttr::variant> mScriptFieldInstList;
 		inline static char mFieldValBuffer[maxBufferSize];
 
@@ -168,16 +167,16 @@ namespace Mono {
 		\brief
 			Template Function to get a public field from the c# script class
 
-		\param std::shared_ptr<MonoClassField> field
+		\param MonoClassField* field
 		shared pointer to the field we are trying to get
 
 		\return
 		the value of the c# script class's public field
 		************************************************************************/
 		template<typename T>
-		T GetFieldValue(std::shared_ptr<MonoClassField> field)
+		T GetFieldValue(MonoClassField* field)
 		{
-			mono_field_get_value(mClassInst, field.get(), mFieldValBuffer);
+			mono_field_get_value(mClassInst, field, mFieldValBuffer);
 			return *(T*)mFieldValBuffer;
 		}
 
@@ -188,18 +187,18 @@ namespace Mono {
 			this function will be called when we want get the value of a script class
 			public field thats an array
 
-		\param std::shared_ptr<MonoClassField> field
+		\param MonoClassField* field
 		shared pointer to the field we are trying to get
 
 		\return
 		the value of the c# script class's public field
 		************************************************************************/
 		template<typename T>
-		std::vector<T> GetFieldValueArr(std::shared_ptr<MonoClassField> field)
+		std::vector<T> GetFieldValueArr(MonoClassField* field)
 		{
 			MonoArray* newArray{};
 
-			mono_field_get_value(mClassInst, field.get(), &newArray);
+			mono_field_get_value(mClassInst, field, &newArray);
 			std::vector<T> test{};
 			for (int i = 0; i < mono_array_length(newArray); ++i) {
 				T element = mono_array_get(newArray, T, i);
@@ -217,14 +216,14 @@ namespace Mono {
 		\param T value
 		Value we are trying to set with
 
-		\param std::shared_ptr<MonoClassField> field
+		\param MonoClassField* field
 		shared pointer to the field we are trying to get
 		************************************************************************/
 		template<typename T>
-		void SetFieldValue(T value, std::shared_ptr<MonoClassField> field)
+		void SetFieldValue(T value, MonoClassField* field)
 		{
 			std::memcpy(mFieldValBuffer, &value, sizeof(T));
-			mono_field_set_value(mClassInst, field.get(), mFieldValBuffer);
+			mono_field_set_value(mClassInst, field, mFieldValBuffer);
 		}
 
 
@@ -237,17 +236,17 @@ namespace Mono {
 		\param std::vector<T> value
 		Value we want to set
 
-		\param std::shared_ptr<MonoClassField> field
+		\param MonoClassField* field
 		shared pointer to the field we are trying to get
 		************************************************************************/
 		template<typename T>
-		void SetFieldValueArr(std::vector<T> value,std::shared_ptr<MonoClassField> field, std::shared_ptr<MonoDomain> md)
+		void SetFieldValueArr(std::vector<T> value,MonoClassField* field, std::shared_ptr<MonoDomain> md)
 		{
 			MonoArray* newArray = GetMonoArray<T>(md, value.size());
 			for (int i = 0; i < mono_array_length(newArray); ++i) {
 				mono_array_set(newArray, T, i, value[i]);
 			}
-			mono_field_set_value(mClassInst, field.get(), newArray);
+			mono_field_set_value(mClassInst, field, newArray);
 		}
 
 
@@ -260,14 +259,14 @@ namespace Mono {
 		\param std::shared_ptr<MonoObject>  obj
 		shared pointer to the mono oject we are accessing
 
-		\param std::shared_ptr<MonoClassField> field
+		\param MonoClassField* field
 		shared pointer to the field we are trying to get
 
 		\return
 		the value of the c# script class's public field
 		************************************************************************/
 		template<typename T>
-		std::vector<T> GetChildFieldValueArr(std::shared_ptr<MonoObject> obj, std::shared_ptr<MonoClassField> field)
+		std::vector<T> GetChildFieldValueArr(std::shared_ptr<MonoObject> obj, MonoClassField* field)
 		{
 			MonoArray* newArray{};
 			mono_field_get_value(obj.get(), field.get(), &newArray);
@@ -290,14 +289,14 @@ namespace Mono {
 		\param std::shared_ptr<MonoObject>  obj
 		shared pointer to the mono oject we are accessing
 
-		\param std::shared_ptr<MonoClassField> field
+		\param MonoClassField* field
 		shared pointer to the field we are trying to get
 
 		\param std::vector<T> value
 		Value we want to set
 		************************************************************************/
 		template<typename T>
-		void SetChildFieldValueArr(std::shared_ptr<MonoObject> obj, std::shared_ptr<MonoClassField> field, std::vector<T> value, std::shared_ptr<MonoDomain> md)
+		void SetChildFieldValueArr(std::shared_ptr<MonoObject> obj, MonoClassField* field, std::vector<T> value, std::shared_ptr<MonoDomain> md)
 		{
 			MonoArray* newArray = GetMonoArray<T>(md, value.size());
 			for (int i = 0; i < mono_array_length(newArray); ++i) {

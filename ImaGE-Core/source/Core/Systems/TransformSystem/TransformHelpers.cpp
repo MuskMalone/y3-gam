@@ -21,7 +21,7 @@ namespace {
    \param entity
      The child entity to update
    ************************************************************************/
-  void UpdateWorldTransformRecursive(ECS::Entity entity);
+  //void UpdateWorldTransformRecursive(ECS::Entity entity);
 }
 
 namespace TransformHelpers {
@@ -36,12 +36,28 @@ namespace TransformHelpers {
 
     if (em.HasChild(entity)) {
       for (ECS::Entity child : em.GetChildEntity(entity)) {
-        UpdateWorldTransformRecursive(child);
+        //UpdateWorldTransformRecursive(child);
+        child.GetComponent<Component::Transform>().modified = true;
       }
     }
 
     if (em.HasParent(entity)) {
-      UpdateTransformToNewParent(entity);
+      //UpdateTransformToNewParent(entity);
+      // update local with inverse of parent xform
+      Component::Transform& parentTrans{ em.GetParentEntity(entity).GetComponent<Component::Transform>() };
+      trans.position = glm::inverse(parentTrans.worldMtx) * glm::vec4(trans.worldPos, 1.f);
+
+      // due to floating point precision, explicitly check
+      // if quat has been rounded < 1.f to prevent NaN euler values
+      if (glm::abs(glm::length2(trans.worldRot) - 1.f) > glm::epsilon<float>()) {
+        trans.rotation = glm::normalize(glm::inverse(parentTrans.worldRot) * trans.worldRot);
+        trans.eulerAngles = glm::degrees(glm::eulerAngles(trans.rotation));
+      }
+      else {
+        trans.rotation = /*glm::normalize*/(glm::inverse(parentTrans.worldRot) * trans.worldRot);
+        trans.eulerAngles = glm::degrees(glm::eulerAngles(trans.rotation));
+      }
+      trans.scale = trans.worldScale / parentTrans.worldScale;
     }
     else {
       trans.position = newPos;
@@ -106,10 +122,6 @@ namespace TransformHelpers {
     }
   }
 
-} // namespace TransformHelpers
-
-namespace {
-
   void UpdateWorldTransformRecursive(ECS::Entity entity) {
     ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
     Component::Transform& trans{ entity.GetComponent<Component::Transform>() },
@@ -128,4 +140,10 @@ namespace {
       UpdateWorldTransformRecursive(child);
     }
   }
+
+} // namespace TransformHelpers
+
+namespace {
+
+  
 }

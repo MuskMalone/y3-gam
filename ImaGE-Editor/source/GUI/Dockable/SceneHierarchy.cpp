@@ -24,7 +24,7 @@
 namespace GUI
 {
 
-  SceneHierarchy::SceneHierarchy(std::string const& name) : GUIWindow(name),
+  SceneHierarchy::SceneHierarchy(const char* name) : GUIWindow(name),
     mEntityManager{ ECS::EntityManager::GetInstance() },
     mSceneName{},
     mRightClickedEntity{}, mRightClickMenu{ false }, mEntityOptionsMenu{ false },

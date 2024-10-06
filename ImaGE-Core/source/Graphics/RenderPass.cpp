@@ -56,7 +56,7 @@ namespace Graphics {
 
             std::vector<GLuint64> hdls;
             for (auto const& map : Renderer::GetAlbedoMaps()) {
-                hdls.push_back(map->GetBindlessHandle()); //should not be here TODO move somewhere else
+                hdls.push_back(IGE_REF(IGE::Assets::TextureAsset, map)->mTexture.GetBindlessHandle()); //should not be here TODO move somewhere else
             }
             if (hdls.size() > 0)
                 shader->SetUniform("u_AlbedoMap", hdls.data(), hdls.size());

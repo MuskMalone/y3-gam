@@ -10,6 +10,9 @@ namespace Graphics {
     else if (meshName == "Plane") {
       return CreatePlane();
     }
+    else if (meshName == "None") {
+        return MeshSource{ {},{},{},{} };
+    }
 
     Debug::DebugLogger::GetInstance().LogError("[MeshFactory] No such model exists: " + meshName);
     return MeshSource{ {},{},{},{} };

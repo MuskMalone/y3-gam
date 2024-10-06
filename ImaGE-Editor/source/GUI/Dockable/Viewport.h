@@ -20,7 +20,7 @@ namespace GUI
   class Viewport : public GUIWindow
   {
   public:
-    Viewport(std::string const& name);
+    Viewport(const char* name);
     
     void Run() override {}  // not in use
 

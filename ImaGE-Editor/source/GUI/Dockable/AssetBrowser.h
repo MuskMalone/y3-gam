@@ -22,7 +22,7 @@ namespace GUI
   class AssetBrowser : public GUIWindow
   {
   public:
-    AssetBrowser(std::string const& name);
+    AssetBrowser(const char* name);
 
     void Run() override;
 

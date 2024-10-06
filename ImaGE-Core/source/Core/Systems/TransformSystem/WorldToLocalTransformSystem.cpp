@@ -10,6 +10,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <pch.h>
 #include "WorldToLocalTransformSystem.h"
 #include <Core/Components/Transform.h>
+#include <Core/Systems/TransformSystem/TransformHelpers.h>
 
 namespace Systems {
 
@@ -34,7 +35,8 @@ namespace Systems {
           if (mEntityManager.HasChild(entity)) {
             // force each child to update their transform
             for (ECS::Entity& child : mEntityManager.GetChildEntity(entity)) {
-              child.GetComponent<Transform>().modified = true;
+              TransformHelpers::UpdateWorldTransformRecursive(child);
+              child.GetComponent<Transform>().parentModified = true;
             }
           }
         }
@@ -49,7 +51,7 @@ namespace Systems {
     Transform& trans{ entity.GetComponent<Transform>() };
     
     // dont bother computing if nothing changed
-    if (trans.modified) {
+    if (trans.parentModified || trans.modified) {
       Transform& parentTrans{ mEntityManager.GetParentEntity(entity).GetComponent<Transform>() };
 
       if (parentTrans.scale.x == 0.f || parentTrans.scale.y == 0.f || parentTrans.scale.z == 0.f) {
@@ -76,13 +78,23 @@ namespace Systems {
 
     // if no children, we are done
     if (!mEntityManager.HasChild(entity)) {
-      trans.modified = false; 
+      trans.modified = trans.parentModified = false;
       return;
     }
 
     // else if transform was modified, update all children transforms
-    if (trans.modified) {
+    if (trans.parentModified) {
       for (ECS::Entity& child : mEntityManager.GetChildEntity(entity)) {
+        child.GetComponent<Transform>().modified = true;
+        UpdateWorldToLocal(child);
+      }
+
+      trans.parentModified = false;
+    }
+    else if (trans.modified) {
+      trans.ComputeWorldMtx();
+      for (ECS::Entity& child : mEntityManager.GetChildEntity(entity)) {
+        TransformHelpers::UpdateWorldTransformRecursive(child);
         child.GetComponent<Transform>().modified = true;
         UpdateWorldToLocal(child);
       }

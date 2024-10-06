@@ -54,7 +54,7 @@ namespace Mono {
 	{
 		ScriptFieldType mFieldType;
 		std::string mFieldName;
-		std::shared_ptr<MonoClassField> mClassField;
+		MonoClassField* mClassField; //I didn't use shared ptr for this because Mono frees this memory by itself behind the scene, using its own function (Which we do not have access to). If i were to put this in a shared ptr, it will cause an error
 	};
 
 
@@ -64,9 +64,13 @@ namespace Mono {
 	************************************************************************/
 	struct ScriptClassInfo
 	{
-		std::shared_ptr<MonoClass> mScriptClass{ nullptr };
+		MonoClass* mScriptClass{ nullptr };
 		std::map<std::string, ScriptFieldInfo> mScriptFieldMap;
 	};
+
+
+
+
 
 
 	/*!*********************************************************************

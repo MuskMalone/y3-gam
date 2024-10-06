@@ -12,7 +12,7 @@
 #include <wrl/wrappers/corewrappers.h>
 #include <DirectXTex.h>
 #define IGE_ASSETMGR IGE::Assets::AssetManager::GetInstance()
-#define GET_ASSET_GUID(type, guid) IGE::Assets::AssetManager::GetInstance()->GetAsset<type>(guid)
+#define IGE_REF(type, guid) IGE::Assets::AssetManager::GetInstance()->GetAsset<type>(guid)
 inline void IGEAssetsRegisterTypes() {
     // COM initialization
 //#if (_WIN32_WINNT >= 0x0A00 /*_WIN32_WINNT_WIN10*/)

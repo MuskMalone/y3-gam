@@ -24,7 +24,7 @@ namespace GUI
   class SceneHierarchy : public GUIWindow
   {
   public:
-    SceneHierarchy(std::string const& name);
+    SceneHierarchy(const char* name);
 
     /*!*********************************************************************
     \brief

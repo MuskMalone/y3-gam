@@ -27,7 +27,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace GUI
 {
 
-  Viewport::Viewport(std::string const& name) : GUIWindow(name),
+  Viewport::Viewport(const char* name) : GUIWindow(name),
     mIsPanning{ false }, mIsDragging{ false } {}
 
   void Viewport::Render(Graphics::RenderTarget& renderTarget)
