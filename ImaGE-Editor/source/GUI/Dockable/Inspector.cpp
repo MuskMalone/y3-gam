@@ -95,7 +95,7 @@ namespace GUI {
           SetIsComponentEdited(true);
 
           if (prefabOverride) {
-            if (prefabOverride->subDataId == Prefabs::PrefabSubData::BasePrefabId) {
+            if (!componentOverriden && prefabOverride->subDataId == Prefabs::PrefabSubData::BasePrefabId) {
               // if root entity, ignore position changes
               // here, im assuming only 1 value can be modified per frame.
               // So if position wasn't modified, it means either rot or scale was

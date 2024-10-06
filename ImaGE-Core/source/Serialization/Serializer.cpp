@@ -153,6 +153,7 @@ namespace Serialization
       // if position exists, serialize it
       if (overrides.subDataId == Prefabs::PrefabSubData::BasePrefabId && !overrides.IsComponentModified(rttr::type::get<Component::Transform>())) {
         writer.Key(JsonPfbPosKey);
+        Debug::DebugLogger::GetInstance().LogInfo(std::to_string(entity.GetComponent<Component::Transform>().worldPos.x));
         SerializeRecursive(entity.GetComponent<Component::Transform>().worldPos, writer);
       }
 
