@@ -317,9 +317,9 @@ namespace GUI {
       if (ImGui::BeginCombo("##MaterialSelection", materialNames[0])) {
         for (unsigned i{}; i < materialNames.size(); ++i) {
           if (ImGui::Selectable(materialNames[i])) {
-            if (i != material.matIdx) {
+            if (i + 1 != material.matIdx) {
               modified = true;
-              material.matIdx = i;
+              material.matIdx = i + 1;
             }
             break;
           }
@@ -882,11 +882,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Layer>("Layer", ICON_FA_LAYER_GROUP);
         DrawAddComponentButton<Component::Material>("Material", ICON_FA_GEM);
         // @TODO: Temporarily forcing material to be added with mesh
-        if (DrawAddComponentButton<Component::Mesh>("Mesh", ICON_FA_CUBE)) {
-          if (!GUIManager::GetSelectedEntity().HasComponent<Component::Material>()) {
-            GUIManager::GetSelectedEntity().EmplaceComponent<Component::Material>();
-          }
-        }
+        DrawAddComponentButton<Component::Mesh>("Mesh", ICON_FA_CUBE);
         DrawAddComponentButton<Component::RigidBody>("RigidBody", ICON_FA_CAR);
         DrawAddComponentButton<Component::Script>("Script", ICON_FA_FILE_CODE);
         DrawAddComponentButton<Component::Tag>("Tag", ICON_FA_TAG);

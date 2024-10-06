@@ -38,7 +38,7 @@ namespace GUI
 
   AssetBrowser::AssetBrowser(const char* name) : GUIWindow(name),
     mCurrentDir{ gAssetsDirectory }, mRightClickedDir{},
-    mSelectedAsset{}, mDirMenuPopup{ false }, mAssetMenuPopup{ false }, mDisableSceneChange{ false }
+    mSelectedAsset{}, mDirMenuPopup{ false }, mAssetMenuPopup{ false }, mDisableSceneChange{ false }, mDisablePrefabSpawn{ true }
   {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &AssetBrowser::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::ADD_FILES, &AssetBrowser::HandleEvent, this);
@@ -245,7 +245,8 @@ namespace GUI
     }
     
     if (ImGui::BeginDragDropSource()) {
-      if (mDisableSceneChange) {
+      bool const canSpawnPfb{ mDisablePrefabSpawn && draggedAsset.extension() == gPrefabFileExt };
+      if (mDisableSceneChange || canSpawnPfb) {
         ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
       }
       else {
@@ -255,7 +256,7 @@ namespace GUI
       
       ImGui::Text(draggedAsset.filename().string().c_str());
 
-      if (mDisableSceneChange) {
+      if (mDisableSceneChange || canSpawnPfb) {
         ImGui::PopStyleColor();
       }
 
@@ -277,7 +278,7 @@ namespace GUI
       case Events::SceneStateChange::NEW:
       case Events::SceneStateChange::CHANGED:
       case Events::SceneStateChange::STOPPED:
-        mDisableSceneChange = false;
+        mDisableSceneChange = mDisablePrefabSpawn = false;
         break;
       case Events::SceneStateChange::STARTED:
       case Events::SceneStateChange::PAUSED:
