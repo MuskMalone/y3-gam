@@ -107,9 +107,8 @@ namespace IGE {
 
 		}
 
-		Component::RigidBody& PhysicsSystem::AddRigidBody(ECS::Entity entity) {
+		Component::RigidBody& PhysicsSystem::AddRigidBody(ECS::Entity entity, Component::RigidBody rigidbody) {
 			//if (entity.HasComponent<Component::RigidBody>()) return;
-			Component::RigidBody rigidbody{};
 			//auto& bodyinterface = mPhysicsSystem.GetBodyInterface();
 
 				// Half extents (1 unit per side)
@@ -150,7 +149,7 @@ namespace IGE {
 
 			rigidbody.bodyID = reinterpret_cast<void*>(rb);
 			mRigidBodyIDs.emplace(rigidbody.bodyID, rb);
-			return entity.EmplaceComponent<Component::RigidBody>(rigidbody);
+			return entity.EmplaceOrReplaceComponent<Component::RigidBody>(rigidbody);
 
 			//set 
 			//bodyinterface.SetFriction(rigidbody.bodyID, rigidbody.friction);
@@ -162,11 +161,10 @@ namespace IGE {
 
 		}
 
-		Component::Collider& PhysicsSystem::AddCollider(ECS::Entity entity)
+		Component::Collider& PhysicsSystem::AddCollider(ECS::Entity entity, Component::Collider collider)
 		{
 			//check to prevent additional shap adding
 			//if (entity.HasComponent<Component::Collider>()) return;
-			Component::Collider collider{};
 			physx::PxRigidDynamic* rb{};
 			if (entity.HasComponent<Component::RigidBody>()) {
 				auto const& rigidbody{ entity.GetComponent<Component::RigidBody>() };

@@ -15,10 +15,12 @@ namespace IGE {
 			~PhysicsSystem();
 			void Update() override;
 
-			Component::RigidBody& AddRigidBody(ECS::Entity entity); // should const ref this when the functions r consted
+			// temporarily using this to deserialize a copy of the rb from file
+			Component::RigidBody& AddRigidBody(ECS::Entity entity, Component::RigidBody rb = {}); // should const ref this when the functions r consted
 			void ChangeRigidBodyVar(ECS::Entity entity, Component::RigidBodyVars var);
 
-			Component::Collider& AddCollider(ECS::Entity entity);
+			// temporarily using this to deserialize a copy of the collider from file
+			Component::Collider& AddCollider(ECS::Entity entity, Component::Collider collider = {});
 			void ChangeColliderShape(ECS::Entity entity);
 			void ChangeColliderVar(ECS::Entity entity, Component::ColliderVars var);
 
