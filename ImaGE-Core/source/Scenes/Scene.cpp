@@ -71,9 +71,9 @@ void Scene::Init()
 
           // Set up the TransformComponent with different offsets
           auto& transformComponent = entity.GetComponent<Component::Transform>();
-          transformComponent.position = glm::vec3(i * 2.0f, 0.0f, j * 2.0f); // Offset for position
-          transformComponent.scale = glm::vec3(1.0f);  // Default scale
-          transformComponent.rotation = { 1.f, 0.f, 0.f, 0.f };  // No rotation
+          transformComponent.worldPos = glm::vec3(i * 2.0f, 0.0f, j * 2.0f); // Offset for position
+          transformComponent.worldScale = glm::vec3(1.0f);  // Default scale
+          transformComponent.worldRot = { 1.f, 0.f, 0.f, 0.f };  // No rotation
           transformComponent.modified = true;
 
           // Set up the MeshComponent
@@ -82,7 +82,7 @@ void Scene::Init()
           // Assign alternating meshes between cube and pyramid
           if ((i + j) % 2 == 0) {
               renderComponent.mesh = mesh0; // Assign cube mesh
-              transformComponent.scale = glm::vec3(5.f);
+              transformComponent.worldScale = glm::vec3(5.f);
           }
           else {
             renderComponent.mesh = mesh1; // Assign pyramid mesh

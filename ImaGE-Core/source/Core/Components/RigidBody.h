@@ -1,4 +1,13 @@
+/*!*********************************************************************
+\file   RigidBody.h
+\author 
+\date   6-October-2024
+\brief  Definition of RigidBody component used by the physics system
+  
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
+#include <PxPhysicsAPI.h>
 
 namespace Component {
 	enum class RigidBodyVars {
@@ -17,6 +26,7 @@ namespace Component {
 			DYNAMIC = 0,
 			KINEMATIC
 		};
+
 		inline void Clear() noexcept {
 			// Idk what are good default values
 			velocity = physx::PxVec3();

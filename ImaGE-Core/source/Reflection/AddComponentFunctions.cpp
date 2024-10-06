@@ -41,15 +41,15 @@ namespace Reflection::ComponentUtils {
   void AddCollider(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Collider, comp);
 
-    //entity.EmplaceOrReplaceComponent<Collider>(comp);
-    IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(entity);
+    entity.EmplaceOrReplaceComponent<Collider>(comp);
+    //IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(entity);
   }
 
   void AddRigidBody(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(RigidBody, comp);
 
-    //entity.EmplaceOrReplaceComponent<RigidBody>(comp);
-    IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(entity);
+    entity.EmplaceOrReplaceComponent<RigidBody>(comp);
+    //IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(entity);
   }
 
   void AddMaterial(ECS::Entity entity, rttr::variant const& var) {

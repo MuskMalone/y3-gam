@@ -58,17 +58,17 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .constructor<>()
     .property("velocity", &RigidBody::velocity)
     .property("angularVelocity", &RigidBody::angularVelocity)
-    .property("friction", &RigidBody::staticFriction)
+    .property("staticFriction", &RigidBody::staticFriction)
+    .property("dynamicFriction", &RigidBody::dynamicFriction)
     .property("restitution", &RigidBody::restitution)
     .property("gravityFactor", &RigidBody::gravityFactor)
+    .property("linearDamping", &RigidBody::linearDamping)
     .property("motionType", &RigidBody::motionType);
 
   rttr::registration::class_<Collider>("Collider")
       .constructor<>()
       .property("scale", &Collider::scale)
       .property("positionOffset", &Collider::positionOffset);
-    //.property("rotationOffset", &Collider::rotationOffset)
-    //.property("type", &Collider::type);
 
 
   rttr::registration::class_<PrefabOverrides>("PrefabOverrides")

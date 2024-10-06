@@ -3,11 +3,12 @@
 #include <Core/Entity.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
 //#include <GUI/Dockable/Inspector.h>
+
 namespace IGE {
 	namespace Physics {
 		const float gDeltaTime = 1.f / 60.f;
 
-		class PhysicsSystem : public Systems::System{
+		class PhysicsSystem : public Systems::System {
 		public:
 			static std::shared_ptr<IGE::Physics::PhysicsSystem> GetInstance();
 			PhysicsSystem();
