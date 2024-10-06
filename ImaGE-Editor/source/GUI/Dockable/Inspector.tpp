@@ -130,15 +130,6 @@ bool Inspector::DrawOptionButton(std::string const& name) {
 
     if (name == "Remove Component") {
       ent.RemoveComponent<ComponentType>();
-      // @TODO: Temporarily forcing mesh to be removed with material
-      if (std::is_same<ComponentType, Component::Material>() && ent.HasComponent<Component::Mesh>()) {
-        ent.RemoveComponent<Component::Mesh>();
-
-        if (ent.HasComponent<Component::PrefabOverrides>()) {
-          ent.GetComponent<Component::PrefabOverrides>().AddComponentRemoval(rttr::type::get<Component::Mesh>());
-        }
-      }
-
       SetIsComponentEdited(true);
       
       // if its a prefab instance, add to overrides

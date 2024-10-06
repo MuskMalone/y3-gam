@@ -31,7 +31,7 @@ namespace GUI
     std::filesystem::path mSelectedAsset;
     std::string mSearchQuery;
     bool mDirMenuPopup, mAssetMenuPopup;
-    bool mDisableSceneChange;
+    bool mDisableSceneChange, mDisablePrefabSpawn;
 
     static constexpr float sMaxAssetSize = 100.f;
 

@@ -1,313 +1,359 @@
 [
     {
-        "ID": 1048576,
-        "Parent": null,
+        "ID": 19,
+        "Parent": 17,
         "Child Entities": [],
-        "isActive": true,
-        "Components": [
-            {
-                "Tag": {
-                    "tag": "Entity 1048576"
-                }
-            },
-            {
-                "Transform": {
-                    "position": {
-                        "x": 2.9000000953674316,
-                        "y": 0.0,
-                        "z": -0.699999988079071
-                    },
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0,
-                        "z": 1.0
-                    },
-                    "rotation": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    },
-                    "eulerAngles": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "worldPos": {
-                        "x": 2.9000000953674316,
-                        "y": 0.0,
-                        "z": -0.699999988079071
-                    },
-                    "worldScale": {
-                        "x": 1.0,
-                        "y": 1.0,
-                        "z": 1.0
-                    },
-                    "worldRot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    }
-                }
-            },
-            {
-                "Material": {}
-            },
-            {
-                "Mesh": {
-                    "meshName": "Cube"
-                }
-            }
-        ]
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 4
+        }
     },
     {
-        "ID": 1048577,
-        "Parent": null,
+        "ID": 18,
+        "Parent": 17,
         "Child Entities": [],
-        "isActive": true,
-        "Components": [
-            {
-                "Tag": {
-                    "tag": "Entity 1048577"
-                }
-            },
-            {
-                "Transform": {
-                    "position": {
-                        "x": -3.0,
-                        "y": 0.10000000149011612,
-                        "z": -0.4000000059604645
-                    },
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0,
-                        "z": 1.0
-                    },
-                    "rotation": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    },
-                    "eulerAngles": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "worldPos": {
-                        "x": -3.0,
-                        "y": 0.10000000149011612,
-                        "z": -0.4000000059604645
-                    },
-                    "worldScale": {
-                        "x": 1.0,
-                        "y": 1.0,
-                        "z": 1.0
-                    },
-                    "worldRot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    }
-                }
-            },
-            {
-                "Material": {}
-            },
-            {
-                "Mesh": {
-                    "meshName": "Cube"
-                }
-            }
-        ]
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 3
+        }
     },
     {
-        "ID": 1048578,
+        "ID": 17,
+        "Parent": 10,
+        "Child Entities": [
+            18,
+            19
+        ],
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 2
+        }
+    },
+    {
+        "ID": 16,
+        "Parent": 10,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [
+                {
+                    "key": "Mesh",
+                    "value": {
+                        "meshName": "Cube"
+                    }
+                }
+            ],
+            "removedComponents": [],
+            "subDataId": 1
+        }
+    },
+    {
+        "ID": 15,
+        "Parent": 10,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 5
+        }
+    },
+    {
+        "ID": 14,
+        "Parent": 11,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 7
+        }
+    },
+    {
+        "ID": 13,
+        "Parent": 11,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 8
+        }
+    },
+    {
+        "ID": 12,
+        "Parent": 11,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 9
+        }
+    },
+    {
+        "ID": 11,
+        "Parent": 10,
+        "Child Entities": [
+            12,
+            13,
+            14
+        ],
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 6
+        }
+    },
+    {
+        "ID": 10,
         "Parent": null,
         "Child Entities": [
-            1048579,
-            1048580
+            11,
+            15,
+            16,
+            17
         ],
-        "isActive": true,
-        "Components": [
-            {
-                "Tag": {
-                    "tag": "Entity 1048578"
-                }
-            },
-            {
-                "Transform": {
-                    "position": {
-                        "x": -0.20000000298023224,
-                        "y": -2.4000000953674316,
-                        "z": 3.5
-                    },
-                    "scale": {
-                        "x": 2.7009999752044678,
-                        "y": 1.0,
-                        "z": 0.3009999990463257
-                    },
-                    "rotation": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    },
-                    "eulerAngles": {
-                        "x": 0.0,
-                        "y": -0.0,
-                        "z": 0.0
-                    },
-                    "worldPos": {
-                        "x": -0.20000000298023224,
-                        "y": -2.4000000953674316,
-                        "z": 3.5
-                    },
-                    "worldScale": {
-                        "x": 2.7009999752044678,
-                        "y": 1.0,
-                        "z": 0.3009999990463257
-                    },
-                    "worldRot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [
+                {
+                    "key": "Transform",
+                    "value": {
+                        "position": {
+                            "x": -12.600000381469727,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": -0.0122390640899539,
+                            "y": -0.9680320620536804,
+                            "z": -0.24584881961345673,
+                            "w": 0.048191431909799576
+                        },
+                        "eulerAngles": {
+                            "x": -28.5,
+                            "y": -174.3000030517578,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -12.600000381469727,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": -0.0122390640899539,
+                            "y": -0.9680320620536804,
+                            "z": -0.24584881961345673,
+                            "w": 0.048191431909799576
+                        }
+                    }
+                },
+                {
+                    "key": "Tag",
+                    "value": {
+                        "tag": "Plane 2"
                     }
                 }
-            },
-            {
-                "Material": {}
-            },
-            {
-                "Mesh": {
-                    "meshName": "Plane"
-                }
-            }
-        ]
+            ],
+            "removedComponents": [],
+            "subDataId": 0
+        }
     },
     {
-        "ID": 1048579,
-        "Parent": 1048578,
+        "ID": 9,
+        "Parent": 7,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 4
+        }
+    },
+    {
+        "ID": 8,
+        "Parent": 7,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 3
+        }
+    },
+    {
+        "ID": 7,
+        "Parent": 0,
+        "Child Entities": [
+            8,
+            9
+        ],
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 2
+        }
+    },
+    {
+        "ID": 6,
+        "Parent": 0,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 1
+        }
+    },
+    {
+        "ID": 5,
+        "Parent": 0,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 5
+        }
+    },
+    {
+        "ID": 4,
+        "Parent": 1,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 7
+        }
+    },
+    {
+        "ID": 3,
+        "Parent": 1,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 8
+        }
+    },
+    {
+        "ID": 2,
+        "Parent": 1,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 9
+        }
+    },
+    {
+        "ID": 1,
+        "Parent": 0,
+        "Child Entities": [
+            2,
+            3,
+            4
+        ],
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 6
+        }
+    },
+    {
+        "ID": 0,
+        "Parent": null,
+        "Child Entities": [
+            1,
+            5,
+            6,
+            7
+        ],
+        "Position": {
+            "x": 2.5999999046325684,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 0
+        }
+    },
+    {
+        "ID": 20,
+        "Parent": null,
         "Child Entities": [],
         "isActive": true,
         "Components": [
             {
                 "Tag": {
-                    "tag": "Entity 1048579"
+                    "tag": "Entity 20"
                 }
             },
             {
                 "Transform": {
                     "position": {
-                        "x": -0.6000000238418579,
+                        "x": 0.0,
                         "y": 0.0,
-                        "z": -1.0
+                        "z": 0.0
                     },
                     "scale": {
-                        "x": 0.3009999990463257,
+                        "x": 1.0,
                         "y": 1.0,
                         "z": 1.0
                     },
                     "rotation": {
-                        "x": 0.10779888927936554,
-                        "y": -0.2637340724468231,
-                        "z": -0.17732159793376923,
-                        "w": 0.9420088529586792
-                    },
-                    "eulerAngles": {
-                        "x": 19.5,
-                        "y": -27.299999237060547,
-                        "z": -26.100000381469727
-                    },
-                    "worldPos": {
-                        "x": -1.820600152015686,
-                        "y": -2.4000000953674316,
-                        "z": 3.1989998817443848
-                    },
-                    "worldScale": {
-                        "x": 0.8130009770393372,
-                        "y": 1.0,
-                        "z": 0.3009999990463257
-                    },
-                    "worldRot": {
-                        "x": 0.10779888927936554,
-                        "y": -0.2637340724468231,
-                        "z": -0.17732159793376923,
-                        "w": 0.9420088529586792
-                    }
-                }
-            },
-            {
-                "Material": {}
-            },
-            {
-                "Mesh": {
-                    "meshName": "Plane"
-                }
-            }
-        ]
-    },
-    {
-        "ID": 1048580,
-        "Parent": 1048578,
-        "Child Entities": [],
-        "isActive": true,
-        "Components": [
-            {
-                "Tag": {
-                    "tag": "Entity 1048580"
-                }
-            },
-            {
-                "Transform": {
-                    "position": {
-                        "x": 0.6000000238418579,
+                        "x": 0.0,
                         "y": 0.0,
-                        "z": -1.0
-                    },
-                    "scale": {
-                        "x": 0.3009999990463257,
-                        "y": 1.0,
-                        "z": 0.9010000228881836
-                    },
-                    "rotation": {
-                        "x": 0.2821595370769501,
-                        "y": 0.30834126472473145,
-                        "z": 0.0934506356716156,
-                        "w": 0.9036474227905273
+                        "z": 0.0,
+                        "w": 1.0
                     },
                     "eulerAngles": {
-                        "x": 41.099998474121094,
-                        "y": 30.299999237060547,
-                        "z": 23.399999618530273
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
                     },
                     "worldPos": {
-                        "x": 1.4206000566482544,
-                        "y": -2.4000000953674316,
-                        "z": 3.1989998817443848
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
                     },
                     "worldScale": {
-                        "x": 0.8130009770393372,
+                        "x": 1.0,
                         "y": 1.0,
-                        "z": 0.2712010145187378
+                        "z": 1.0
                     },
                     "worldRot": {
-                        "x": 0.2821595370769501,
-                        "y": 0.30834126472473145,
-                        "z": 0.0934506356716156,
-                        "w": 0.9036474227905273
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
                     }
-                }
-            },
-            {
-                "Material": {}
-            },
-            {
-                "Mesh": {
-                    "meshName": "Plane"
                 }
             }
         ]

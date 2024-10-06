@@ -176,22 +176,24 @@ namespace Reflection
           // create it along with its children
           TraverseDownInstance(e, idToEntity, data);
 
-          std::optional<glm::vec3> const& pos{ data.at(e.GetRawEnttEntityID()).mPosition };
-          // position for base entity should be set
-          if (!pos) {
-            Debug::DebugLogger::GetInstance().LogError("Position of prefab instance not set!"); 
-          }
-          else {
-            if (mNewIDs.contains(e.GetRawEnttEntityID())) {
-              mNewIDs.at(e.GetRawEnttEntityID()).GetComponent<Component::Transform>().worldPos = *pos;
-            }
-            else {
-              e.GetComponent<Component::Transform>().worldPos = *pos;
-            }
-          }
-
           // fill the instance with its components and missing sub-objects
           originalPfb.FillPrefabInstance(idToEntity);
+
+        }
+
+        // set the root positions
+        for (ECS::Entity& e : baseEntities) {
+          std::optional<glm::vec3> const& pos{ data.at(e.GetRawEnttEntityID()).mPosition };
+          if (!pos) { continue; }
+
+          // set position if needed
+          if (mNewIDs.contains(e.GetRawEnttEntityID())) {
+            mNewIDs.at(e.GetRawEnttEntityID()).GetComponent<Component::Transform>().worldPos = *pos;
+          }
+          else {
+            Component::Transform& trans{ e.GetComponent<Component::Transform>() };
+            trans.worldPos = trans.position = *pos;
+          }
         }
       }
     }

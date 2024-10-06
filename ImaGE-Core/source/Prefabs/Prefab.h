@@ -57,6 +57,8 @@ namespace Prefabs
       will be created with its components and is automatically added to
       the ECS.
       This function does not handle the mapping of parent-child relations.
+    \param name
+      The name of the prefab. Leave empty if its not an instance
     \return
       The ID of the created entity
     ************************************************************************/
