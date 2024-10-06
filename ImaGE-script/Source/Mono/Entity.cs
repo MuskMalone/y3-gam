@@ -6,13 +6,14 @@
 \author     Han Qin Ding(han.q@digipen.edu), Ernest Cheo (e.cheo@digipen.edu)
 \date       28 September, 2024
 
-\brief      The main entity class is located here and has the getter setters 
-            for all the required rigid body variables. Helper functions also
-            located here.
+\brief      
+  The main entity class is located here and has the getter setters 
+  for all the required rigid body variables. Helper functions also
+  located here.
 
-\copyright  Copyright (C) 2023 DigiPen Institute of Technology. Reproduction
-            or disclosure of this file or its contents without the prior
-            written consent of DigiPen Institute of Technology is prohibited.
+Copyright (C) 2023 DigiPen Institute of Technology. Reproduction
+or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************************/
 
@@ -126,12 +127,12 @@ namespace Image.Mono
       get
       {
         Vec3<float> scale = new Vec3<float>();
-        InternalCalls.GetWorldScale(mEntityID);
+        InternalCalls.GetScale(mEntityID);
         return scale;
       }
       set
       {
-        InternalCalls.SetWorldScale(ref mEntityID , ref value);
+        InternalCalls.SetScale(ref mEntityID , ref value);
       }
     }
 
@@ -144,7 +145,7 @@ namespace Image.Mono
     public Vec3<float> GetScaleFromEntity(uint id)
     {
       Vec3<float> scale = new Vec3<float>();
-      InternalCalls.GetWorldScale(id);
+      InternalCalls.GetScale(id);
       return scale;
     }
 
@@ -155,7 +156,7 @@ namespace Image.Mono
     */
     public void SetScaleFromEntity(uint id, Vec3<float> value)
     {
-      InternalCalls.SetWorldScale(ref id, ref value);
+      InternalCalls.SetScale(ref id, ref value);
     }
 
 

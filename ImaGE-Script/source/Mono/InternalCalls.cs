@@ -1,17 +1,17 @@
 ﻿/******************************************************************************/
 /*!
-\par        Image Engine
-\file       InternalCalls.cs
+\file     InternalCalls.cs
 
-\author     Han Qin Ding(han.q@digipen.edu), Ernest Cheo (e.cheo@digipen.edu)
-\date       Sep 28, 2024
+\author   Han Qin Ding(han.q@digipen.edu), Ernest Cheo (e.cheo@digipen.edu)
+\date     28 Septmeber 2024
 
-\brief      All C# internal calls go here, where information from CPP code 
-            can be accessed in C#, and vice versa
+\brief      
+  All C# internal calls go here, where information from CPP code 
+  can be accessed in C#, and vice versa
 
-\copyright  Copyright (C) 2023 DigiPen Institute of Technology. Reproduction
-            or disclosure of this file or its contents withthe prior
-            written consent of DigiPen Institute of Technology is prohibited.
+Copyright (C) 2023 DigiPen Institute of Technology. Reproduction
+or disclosure of this file or its contents with the prior written 
+consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************************/
 

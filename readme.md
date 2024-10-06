@@ -1,10 +1,10 @@
 BUILD INFO
 ---------------------
 To build the solution, there are some pre-requisites that you need to have:
-1) Git
-2) Python
-3) CMake
-4) VS Studio 2022 or Higher
+1) [Git](https://git-scm.com/downloads)
+2) [Python 3](https://www.python.org/downloads/)
+3) [CMake](https://cmake.org/download/)
+4) [VS Studio 2022 or Higher](https://visualstudio.microsoft.com/vs/)
 
 After getting the pre-requisites, navigate to the "Build-Scripts" folder,
 then run "Setup-Windows.bat"

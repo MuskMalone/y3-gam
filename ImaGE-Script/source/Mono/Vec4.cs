@@ -1,7 +1,7 @@
 ﻿/*!*********************************************************************
 \file   Vec4.cs
-\author w.chinkitbryan\@digipen.edu
-\date   6-March-2024
+\author Han Qin Ding
+\date   4-October-2024
 \brief
 	This file contains a simple vec4 template struct.
 

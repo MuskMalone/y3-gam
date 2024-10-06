@@ -1,17 +1,17 @@
 ﻿/******************************************************************************/
 /*!
-\par        Image Engine
-\file       InternalCalls.cs
+\file     InternalCalls.cs
 
-\author     Han Qin Ding(han.q@digipen.edu), Ernest Cheo (e.cheo@digipen.edu)
-\date       Sep 28, 2024
+\author   Han Qin Ding(han.q@digipen.edu), Ernest Cheo (e.cheo@digipen.edu)
+\date     28 Septmeber 2024
 
-\brief      All C# internal calls go here, where information from CPP code 
-            can be accessed in C#, and vice versa
+\brief      
+  All C# internal calls go here, where information from CPP code 
+  can be accessed in C#, and vice versa
 
-\copyright  Copyright (C) 2023 DigiPen Institute of Technology. Reproduction
-            or disclosure of this file or its contents withthe prior
-            written consent of DigiPen Institute of Technology is prohibited.
+Copyright (C) 2023 DigiPen Institute of Technology. Reproduction
+or disclosure of this file or its contents with the prior written 
+consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************************/
 
@@ -30,10 +30,10 @@ namespace Image.Mono
     #region Transform
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vec3<float> GetWorldScale(uint ID);
+    internal extern static Vec3<float> GetScale(uint ID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetWorldScale(ref uint entityHandle, ref Vec3<float> scale);
+    internal extern static void SetScale(ref uint entityHandle, ref Vec3<float> scale);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vec3<float> GetWorldPosition(uint ID);
@@ -44,6 +44,7 @@ namespace Image.Mono
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void SetPosition(uint entityHandle, ref Vec3<float> position);
 
+    // avoid using this, prefer SetPosition (local)
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void SetWorldPosition(uint entityHandle, ref Vec3<float> position);
 
