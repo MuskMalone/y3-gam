@@ -23,7 +23,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GUI/Helpers/ImGuiHelpers.h>
 #include <Core/EntityManager.h>
 #include <GUI/GUIManager.h>
-
+#include <Asset/IGEAssets.h>
 namespace GUI
 {
 
@@ -173,7 +173,7 @@ namespace GUI
         {
           // @TODO: ABSTRACT MORE; MAKE IT EASIER TO ADD A MESH
           ECS::Entity newEntity{ ECS::EntityManager::GetInstance().CreateEntityWithTag(assetPayload.GetFileName()) };
-          auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
+          auto meshSrc{ std::make_shared<Graphics::Mesh>(IGE_ASSETMGR->LoadRef<IGE::Assets::MeshAsset>(assetPayload.GetFilePath())) };
           newEntity.EmplaceComponent<Component::Mesh>(meshSrc, assetPayload.GetFileName());
           break;
         }

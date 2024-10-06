@@ -23,7 +23,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Events/EventManager.h>
 #include <Graphics/MeshFactory.h>
 #include <Graphics/Mesh.h>
-
+#include "Asset/IGEAssets.h"
 namespace GUI {
 
 

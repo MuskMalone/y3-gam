@@ -119,6 +119,7 @@ project "ImaGE-Editor"
       optimize "On"
       symbols "Off"
       prebuildcommands {
+         "{COPYFILE} %[%{wks.location}Libraries/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
 
       }
       postbuildcommands {
