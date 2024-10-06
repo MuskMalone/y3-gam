@@ -65,14 +65,15 @@ project "ImaGE-Editor"
          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
          "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
          "GLM_ENABLE_EXPERIMENTAL",
+         "PX_PHYSX_STATIC_LIB"
       }
 
        runtime "Debug"
        symbols "On"
 
        prebuildcommands {
-         "{COPYFILE} %[%{wks.location}Libraries/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
-
+         --"{COPYFILE} %[%{wks.location}Libraries/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
+            "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
          }
        postbuildcommands {
          "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/debug/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
@@ -90,13 +91,14 @@ project "ImaGE-Editor"
          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
          "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
          "GLM_ENABLE_EXPERIMENTAL",
+         "PX_PHYSX_STATIC_LIB"
       }
        runtime "Release"
        optimize "On"
        symbols "On"
        prebuildcommands {
-         "{COPYFILE} %[%{wks.location}Libraries/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
-
+         --"{COPYFILE} %[%{wks.location}Libraries/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
          }
        postbuildcommands {
          "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
@@ -113,14 +115,15 @@ project "ImaGE-Editor"
          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
          "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
          "GLM_ENABLE_EXPERIMENTAL",
+         "PX_PHYSX_STATIC_LIB"
       }
       kind "WindowedApp"
       runtime "Release"
       optimize "On"
       symbols "Off"
       prebuildcommands {
-         "{COPYFILE} %[%{wks.location}Libraries/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
-
+         --"{COPYFILE} %[%{wks.location}Libraries/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
       }
       postbuildcommands {
          "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",

@@ -12,6 +12,11 @@ project "ImaGE-Core"
       "source"
    }
 
+   links
+   {
+      "ImaGE-Script",
+   }
+
    externalincludedirs
    {
       "source/External",
@@ -79,11 +84,12 @@ project "ImaGE-Core"
         "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
         "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
         "GLM_ENABLE_EXPERIMENTAL",
+        "PX_PHYSX_STATIC_LIB"
         }
 
        links {
         "opengl32.lib",
-        "glfw3.lib",
+        "glfw3d.lib",
         "assimp-vc143-mtd.lib",
         "rttr_core_d.lib",
 
@@ -105,11 +111,11 @@ project "ImaGE-Core"
        {
            "../Libraries/glfw/build/src/Debug",
           "../Libraries/Built-Libraries/Debug/Libraries/**",
-          "../Libraries/mono/msvc/build/sgen/x64/**",
+          --"../Libraries/mono/msvc/build/sgen/x64/**",
           "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/debug",
           "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Debug/",
           "source/External/fmod/lib",
-          "/source/External/mono/lib"
+          "source/External/mono/lib"
 
        }
 
@@ -130,17 +136,18 @@ project "ImaGE-Core"
         "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
         "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
         "GLM_ENABLE_EXPERIMENTAL",
+        "PX_PHYSX_STATIC_LIB"
         }
 
         libdirs 
         {
            "../Libraries/glfw/build/src/Release",
            "../Libraries/Built-Libraries/Release/Libraries/**",
-           "../Libraries/mono/msvc/build/sgen/x64/**",
+           --"../Libraries/mono/msvc/build/sgen/x64/**",
            "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release",
            "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Release/",
            "source/External/fmod/lib",
-           "/source/External/mono/lib"
+           "source/External/mono/lib"
 
         }
 
@@ -171,6 +178,7 @@ project "ImaGE-Core"
           "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
           "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
           "GLM_ENABLE_EXPERIMENTAL",
+          "PX_PHYSX_STATIC_LIB"
        }
        runtime "Release"
        optimize "On"
@@ -180,13 +188,11 @@ project "ImaGE-Core"
        {
           "../Libraries/glfw/build/src/Release",
           "../Libraries/Built-Libraries/Release/Libraries/**",
-          "../Libraries/mono/msvc/build/sgen/x64/**",
+          --"../Libraries/mono/msvc/build/sgen/x64/**",
           "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release",
           "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Release/",
           "source/External/fmod/lib",
-          "/source/External/mono/lib"
-
-
+          "source/External/mono/lib"
        }
 
        links {

@@ -33,9 +33,9 @@ echo MSBUILD Path is at: %MSBUILD_PATH%
 set PATH=%PATH%;%MSBUILD_PATH%
 
 rem Build Mono
-echo Building Mono
-set MONO_PATH=Libraries\mono\msvc\mono.sln
-msbuild.exe %MONO_PATH% /p:Platform=x64 /p:Configuration=Release /p:MONO_TARGET_GC=sgen
+rem echo Building Mono
+rem set MONO_PATH=Libraries\mono\msvc\mono.sln
+rem msbuild.exe %MONO_PATH% /p:Platform=x64 /p:Configuration=Release /p:MONO_TARGET_GC=sgen
 
 rem Build DirectXTex
 echo Building DirectXTex
