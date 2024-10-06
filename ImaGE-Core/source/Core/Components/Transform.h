@@ -18,11 +18,11 @@ namespace Component
   struct Transform
   {
     Transform() :
-      worldMtx{}, parentWorldMtx{ glm::identity<glm::mat4>() }, rotation{ 1.f, 0.f, 0.f, 0.f }, worldRot{ 1.f, 0.f, 0.f, 0.f },
+      worldMtx{ glm::identity<glm::mat4>() }, parentWorldMtx{ glm::identity<glm::mat4>() }, rotation{ 1.f, 0.f, 0.f, 0.f }, worldRot{ 1.f, 0.f, 0.f, 0.f },
       position{}, scale{ 1.f, 1.f, 1.f }, eulerAngles{}, worldPos{}, worldScale{ 1.f, 1.f, 1.f },
       modified{ true }, parentModified{ false } {}
     Transform(glm::vec3 const& _pos, glm::vec3 const& _scale = { 1.f, 1.f, 1.f }, glm::vec3 const& _rot = {}) :
-      worldMtx{}, parentWorldMtx{ glm::identity<glm::mat4>() }, rotation{ 1.f, 0.f, 0.f, 0.f }, worldRot{ 1.f, 0.f, 0.f, 0.f },
+      worldMtx{ glm::identity<glm::mat4>() }, parentWorldMtx{ glm::identity<glm::mat4>() }, rotation{ 1.f, 0.f, 0.f, 0.f }, worldRot{ 1.f, 0.f, 0.f, 0.f },
       position{ _pos }, scale{ _scale }, eulerAngles{}, worldPos{ _pos }, worldScale{ _scale },
       modified{ true }, parentModified{ false } {}
 
