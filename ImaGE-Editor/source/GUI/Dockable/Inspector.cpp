@@ -171,162 +171,19 @@ namespace GUI {
       }
 
       if (currentEntity.HasComponent<Component::Script>()) {
-        Mono::ScriptManager* sm = &Mono::ScriptManager::GetInstance();
-        ImGuiStyle& style = ImGui::GetStyle();
+
         rttr::type const scriptType{ rttr::type::get<Component::Script>() };
-        std::vector <std::string> toDeleteList{};
-
+     
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(scriptType);
-
         if (ScriptComponentWindow(currentEntity, std::string(ICON_FA_FILE_CODE), componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
             prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Script>());
           }
         }
-        float charSize = ImGui::CalcTextSize("012345678901234").x;
-        float inputWidth = (ImGui::GetWindowSize().x - charSize - 30) / 3;
-        Component::Script* allScripts = &currentEntity.GetComponent<Component::Script>();
-        for (Mono::ScriptInstance& s : allScripts->mScriptList)
-        {
-          s.GetAllUpdatedFields();
-          ImGui::Separator();
-          ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV);
-          ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, charSize);
-
-          ImGui::TableNextRow();
-          ImGui::BeginDisabled(false);
-          ImGui::TableNextColumn();
-          ImGui::Text("Script");
-          ImGui::TableNextColumn();
-          ImGuiStyle& style = ImGui::GetStyle();
-          ImVec4 originalColor = style.Colors[ImGuiCol_FrameBg];
-          ImVec4 originalHColor = style.Colors[ImGuiCol_FrameBgHovered];
-          style.Colors[ImGuiCol_FrameBg] = ImVec4(0.18f, 0.28f, 0.66f, 1.0f);
-          style.Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.28f, 0.48f, 0.86f, 1.0f);
-          if (ImGui::BeginCombo("", s.mScriptName.c_str()))
-          {
-            for (const std::string& sn : sm->mAllScriptNames)
-            {
-              auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [sn](const Mono::ScriptInstance pair) { return pair.mScriptName == sn; });
-              if (it == allScripts->mScriptList.end())
-              {
-                bool is_selected = (s.mScriptName.c_str() == sn);
-                if (ImGui::Selectable(sn.c_str(), is_selected))
-                {
-                  if (sn != s.mScriptName) {
-                    uint32_t id{ currentEntity.GetEntityID() };
-                    std::vector<void*> arg{ &(id) };
-                    s = Mono::ScriptInstance(sn, arg);
-                  }
-                }
-                if (is_selected)
-                {
-                  ImGui::SetItemDefaultFocus();
-                }
-              }
-            }
-            ImGui::EndCombo();
-          }
-          ImGui::SameLine();
-          ImVec4 boriginalColor = style.Colors[ImGuiCol_Button];
-          ImVec4 boriginalHColor = style.Colors[ImGuiCol_ButtonHovered];
-          ImVec4 boriginalAColor = style.Colors[ImGuiCol_ButtonActive];
-          style.Colors[ImGuiCol_Button] = ImVec4(0.6f, 0.f, 0.29f, 1.0f);
-          style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.8f, 0.1f, 0.49f, 1.0f);
-          style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.7f, 0.3f, 0.39f, 1.0f);
-          if (ImGui::Button("Delete"))
-          {
-            toDeleteList.push_back(s.mScriptName);
-          }
-          style.Colors[ImGuiCol_Button] = boriginalColor;
-          style.Colors[ImGuiCol_ButtonHovered] = boriginalHColor;
-          style.Colors[ImGuiCol_ButtonActive] = boriginalAColor;
-          ImGui::EndDisabled();
-          style.Colors[ImGuiCol_FrameBg] = originalColor;
-          style.Colors[ImGuiCol_FrameBgHovered] = originalHColor;
-
-          for (rttr::variant& f : s.mScriptFieldInstList)
-          {
-            rttr::type dataType{ f.get_type() };
-            // get underlying type if it's wrapped in a pointer
-            if (dataType == rttr::type::get<Mono::ScriptFieldInstance<int>>())
-            {
-              ImGui::TableNextRow();
-              Mono::ScriptFieldInstance<int>& sfi = f.get_value<Mono::ScriptFieldInstance<int>>();
-              ImGui::TableNextColumn();
-              ImGui::Text(sfi.mScriptField.mFieldName.c_str());
-              ImGui::TableNextColumn();
-              ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
-              if (ImGui::InputInt(("##" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0, 0, 0)) { s.SetFieldValue<int>(sfi.mData, sfi.mScriptField.mClassField); }
-            }
-            else if (dataType == rttr::type::get<Mono::ScriptFieldInstance<float>>())
-            {
-              ImGui::TableNextRow();
-              Mono::ScriptFieldInstance<float>& sfi = f.get_value<Mono::ScriptFieldInstance<float>>();
-              ImGui::TableNextColumn();
-              ImGui::Text(sfi.mScriptField.mFieldName.c_str());
-              ImGui::TableNextColumn();
-              ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
-              if (ImGui::InputFloat(("##" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0, 0, 0)) { s.SetFieldValue<float>(sfi.mData, sfi.mScriptField.mClassField); }
-            }
-            else if (dataType == rttr::type::get<Mono::ScriptFieldInstance<double>>())
-            {
-              ImGui::TableNextRow();
-              Mono::ScriptFieldInstance<double>& sfi = f.get_value<Mono::ScriptFieldInstance<double>>();
-              ImGui::TableNextColumn();
-              ImGui::Text(sfi.mScriptField.mFieldName.c_str());
-              ImGui::TableNextColumn();
-              ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
-              if (ImGui::InputDouble(("##" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0, 0, 0)) { s.SetFieldValue<double>(sfi.mData, sfi.mScriptField.mClassField); }
-            }
-            else if (dataType == rttr::type::get<Mono::ScriptFieldInstance<glm::dvec3>>())
-            {
-              ImGui::TableNextRow();
-              Mono::ScriptFieldInstance<glm::dvec3>& sfi = f.get_value<Mono::ScriptFieldInstance<glm::dvec3>>();
-              if (InputDouble3(("## " + sfi.mScriptField.mFieldName).c_str(), sfi.mData, inputWidth)) { s.SetFieldValue<glm::dvec3>(sfi.mData, sfi.mScriptField.mClassField); };
-            }
 
 
-
-
-          }
-
-
-          // Check if the mouse is over the second table and the right mouse button is clicked
-          ImGui::EndTable();
-          ImGui::Separator();
-
-        }
-
-
-
-
-        ImVec4 originalColor = style.Colors[ImGuiCol_Button];
-        ImVec4 originalHColor = style.Colors[ImGuiCol_ButtonHovered];
-        style.Colors[ImGuiCol_Button] = ImVec4(0.18f, 0.28f, 0.66f, 1.0f);
-        style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.28f, 0.48f, 0.86f, 1.0f);
-        if (ImGui::Button("Add Script", ImVec2(ImGui::GetWindowSize().x, 0.0f))) {
-          for (const std::string& sn : sm->mAllScriptNames)
-          {
-            auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [sn](const Mono::ScriptInstance pair) { return pair.mScriptName == sn; });;
-            if (it == allScripts->mScriptList.end())
-            {
-              uint32_t id{ currentEntity.GetEntityID() };
-              std::vector<void*> arg{ &(id) };
-              allScripts->mScriptList.emplace_back(sn, arg );
-              break;
-            }
-          }
-        }
-        style.Colors[ImGuiCol_Button] = originalColor;
-        style.Colors[ImGuiCol_ButtonHovered] = originalHColor;
-
-        for (const std::string& tds : toDeleteList)
-        {
-          auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [tds](const Mono::ScriptInstance pair) { return pair.mScriptName == tds; });
-          allScripts->mScriptList.erase(it);
-        }
+       
       }
 
       if (currentEntity.HasComponent<Component::Text>()) {
@@ -483,38 +340,152 @@ namespace GUI {
     bool modified{ false };
 
     if (isOpen) {
-      auto& script = entity.GetComponent<Component::Script>();
-
-      // @TODO: TEMP, TO BE REPLACED WITH ACTUAL SCRIPTS
-      std::vector<const char*> availableScripts{ "None", "Test1", "Test2" };
-
-      float contentSize = ImGui::GetContentRegionAvail().x;
+      Mono::ScriptManager* sm = &Mono::ScriptManager::GetInstance();
+      ImGuiStyle& style = ImGui::GetStyle();
+      std::vector <std::string> toDeleteList{};
       float charSize = ImGui::CalcTextSize("012345678901234").x;
-      float inputWidth = (contentSize - charSize - 60);
+      float inputWidth = (ImGui::GetWindowSize().x - charSize - 30) / 3;
+      Component::Script* allScripts = &entity.GetComponent<Component::Script>();
+      for (Mono::ScriptInstance& s : allScripts->mScriptList)
+      {
+        s.GetAllUpdatedFields();
+        ImGui::Separator();
+        ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV);
+        ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, charSize);
 
-      ImGui::BeginTable("ScriptTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+        ImGui::TableNextRow();
+        ImGui::BeginDisabled(false);
+        ImGui::TableNextColumn();
+        ImGui::Text("Script");
+        ImGui::TableNextColumn();
+        ImGuiStyle& style = ImGui::GetStyle();
+        ImVec4 originalColor = style.Colors[ImGuiCol_FrameBg];
+        ImVec4 originalHColor = style.Colors[ImGuiCol_FrameBgHovered];
+        style.Colors[ImGuiCol_FrameBg] = ImVec4(0.18f, 0.28f, 0.66f, 1.0f);
+        style.Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.28f, 0.48f, 0.86f, 1.0f);
+        if (ImGui::BeginCombo("", s.mScriptName.c_str()))
+        {
+          for (const std::string& sn : sm->mAllScriptNames)
+          {
+            auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [sn](const Mono::ScriptInstance pair) { return pair.mScriptName == sn; });
+            if (it == allScripts->mScriptList.end())
+            {
+              bool is_selected = (s.mScriptName.c_str() == sn);
+              if (ImGui::Selectable(sn.c_str(), is_selected))
+              {
+                if (sn != s.mScriptName) {
+                  uint32_t id{ entity.GetEntityID() };
+                  std::vector<void*> arg{ &(id) };
+                  s = Mono::ScriptInstance(sn, arg);
+                }
+              }
+              if (is_selected)
+              {
+                ImGui::SetItemDefaultFocus();
+              }
+            }
+          }
+          ImGui::EndCombo();
+        }
+        ImGui::SameLine();
+        ImVec4 boriginalColor = style.Colors[ImGuiCol_Button];
+        ImVec4 boriginalHColor = style.Colors[ImGuiCol_ButtonHovered];
+        ImVec4 boriginalAColor = style.Colors[ImGuiCol_ButtonActive];
+        style.Colors[ImGuiCol_Button] = ImVec4(0.6f, 0.f, 0.29f, 1.0f);
+        style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.8f, 0.1f, 0.49f, 1.0f);
+        style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.7f, 0.3f, 0.39f, 1.0f);
+        if (ImGui::Button("Delete"))
+        {
+          toDeleteList.push_back(s.mScriptName);
+        }
+        style.Colors[ImGuiCol_Button] = boriginalColor;
+        style.Colors[ImGuiCol_ButtonHovered] = boriginalHColor;
+        style.Colors[ImGuiCol_ButtonActive] = boriginalAColor;
+        ImGui::EndDisabled();
+        style.Colors[ImGuiCol_FrameBg] = originalColor;
+        style.Colors[ImGuiCol_FrameBgHovered] = originalHColor;
 
-      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+        for (rttr::variant& f : s.mScriptFieldInstList)
+        {
+          rttr::type dataType{ f.get_type() };
+          // get underlying type if it's wrapped in a pointer
+          if (dataType == rttr::type::get<Mono::ScriptFieldInstance<int>>())
+          {
+            ImGui::TableNextRow();
+            Mono::ScriptFieldInstance<int>& sfi = f.get_value<Mono::ScriptFieldInstance<int>>();
+            ImGui::TableNextColumn();
+            ImGui::Text(sfi.mScriptField.mFieldName.c_str());
+            ImGui::TableNextColumn();
+            ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
+            if (ImGui::InputInt(("##" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0, 0, 0)) { s.SetFieldValue<int>(sfi.mData, sfi.mScriptField.mClassField); }
+          }
+          else if (dataType == rttr::type::get<Mono::ScriptFieldInstance<float>>())
+          {
+            ImGui::TableNextRow();
+            Mono::ScriptFieldInstance<float>& sfi = f.get_value<Mono::ScriptFieldInstance<float>>();
+            ImGui::TableNextColumn();
+            ImGui::Text(sfi.mScriptField.mFieldName.c_str());
+            ImGui::TableNextColumn();
+            ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
+            if (ImGui::InputFloat(("##" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0, 0, 0)) { s.SetFieldValue<float>(sfi.mData, sfi.mScriptField.mClassField); }
+          }
+          else if (dataType == rttr::type::get<Mono::ScriptFieldInstance<double>>())
+          {
+            ImGui::TableNextRow();
+            Mono::ScriptFieldInstance<double>& sfi = f.get_value<Mono::ScriptFieldInstance<double>>();
+            ImGui::TableNextColumn();
+            ImGui::Text(sfi.mScriptField.mFieldName.c_str());
+            ImGui::TableNextColumn();
+            ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
+            if (ImGui::InputDouble(("##" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0, 0, 0)) { s.SetFieldValue<double>(sfi.mData, sfi.mScriptField.mClassField); }
+          }
+          else if (dataType == rttr::type::get<Mono::ScriptFieldInstance<glm::dvec3>>())
+          {
+            ImGui::TableNextRow();
+            Mono::ScriptFieldInstance<glm::dvec3>& sfi = f.get_value<Mono::ScriptFieldInstance<glm::dvec3>>();
+            if (InputDouble3(("## " + sfi.mScriptField.mFieldName).c_str(), sfi.mData, inputWidth)) { s.SetFieldValue<glm::dvec3>(sfi.mData, sfi.mScriptField.mClassField); };
+          }
 
-      ImGui::TableNextRow();
-      ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Assigned Script");
 
-      ImGui::TableSetColumnIndex(1);
-      ImGui::SetNextItemWidth(INPUT_SIZE);
 
-      /*if (ImGui::BeginCombo("##ScriptName", script.name.c_str())) {
-        for (const char* scriptName : availableScripts) {
-          if (ImGui::Selectable(scriptName)) {
-            script.name = scriptName;
-            modified = true;
+
+        }
+
+
+        // Check if the mouse is over the second table and the right mouse button is clicked
+        ImGui::EndTable();
+        ImGui::Separator();
+
+      }
+
+
+
+
+      ImVec4 originalColor = style.Colors[ImGuiCol_Button];
+      ImVec4 originalHColor = style.Colors[ImGuiCol_ButtonHovered];
+      style.Colors[ImGuiCol_Button] = ImVec4(0.18f, 0.28f, 0.66f, 1.0f);
+      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.28f, 0.48f, 0.86f, 1.0f);
+      if (ImGui::Button("Add Script", ImVec2(ImGui::GetWindowSize().x, 0.0f))) {
+        for (const std::string& sn : sm->mAllScriptNames)
+        {
+          auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [sn](const Mono::ScriptInstance pair) { return pair.mScriptName == sn; });;
+          if (it == allScripts->mScriptList.end())
+          {
+            uint32_t id{ entity.GetEntityID() };
+            std::vector<void*> arg{ &(id) };
+            allScripts->mScriptList.emplace_back(sn, arg);
+            break;
           }
         }
-        ImGui::EndCombo();
-      }*/
+      }
+      style.Colors[ImGuiCol_Button] = originalColor;
+      style.Colors[ImGuiCol_ButtonHovered] = originalHColor;
 
-      ImGui::EndTable();
+      for (const std::string& tds : toDeleteList)
+      {
+        auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [tds](const Mono::ScriptInstance pair) { return pair.mScriptName == tds; });
+        allScripts->mScriptList.erase(it);
+      }
     }
 
     WindowEnd(isOpen);

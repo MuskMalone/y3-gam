@@ -123,6 +123,11 @@ void InputManager::QueueInputEvents()
 	if (IsKeyTriggered(IK_H))
 	{
 		QUEUE_EVENT(Events::KeyTriggeredEvent, IK_H);
+		//Debug::DebugLogger::GetInstance().LogWarning("Warning Message");
+		//Debug::DebugLogger::GetInstance().LogError("Error Message");
+		//throw Debug::Exception<InputManager>(Debug::LVL_ERROR, Msg("Error Message Here"));
+		//Debug::DebugLogger::GetInstance().LogWarning("If throw doesn't work, this wont run");
+
 	}
 
 	if (IsKeyTriggered(IK_K))
