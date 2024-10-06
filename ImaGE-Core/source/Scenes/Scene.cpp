@@ -55,7 +55,7 @@ void Scene::Init()
   mesh1 = std::make_shared<Graphics::Mesh>(pyrMeshSource);
   
   // Create a debug albedo texture (bright magenta checkerboard)
-  IGE::Assets::GUID texguid { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
+  IGE::Assets::GUID texguid { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\white.dds")) };
   
   std::shared_ptr<Graphics::Shader> shader = std::make_shared<Graphics::Shader>("../Assets/Shaders/Default.vert.glsl", "../Assets/Shaders/Default.frag.glsl");
   std::shared_ptr<Graphics::MaterialSource> materialSource0 = Graphics::MaterialSource::Create(shader);

@@ -68,7 +68,7 @@ namespace IGE {
 			auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::RigidBody, Component::Transform>() };
 			for (auto entity : rbsystem) {
 				auto& xfm{ rbsystem.get<Component::Transform>(entity) };
-				auto const& rb{ rbsystem.get<Component::RigidBody>(entity) };
+				auto & rb{ rbsystem.get<Component::RigidBody>(entity) };
 				auto rbiter{ mRigidBodyIDs.find(rb.bodyID) };
 				if (rbiter != mRigidBodyIDs.end()) {
 					physx::PxRigidDynamic* pxrigidbody{ mRigidBodyIDs.at(rb.bodyID) };
@@ -81,6 +81,7 @@ namespace IGE {
 					xfm.worldPos = ToGLMVec3(pxrigidbody->getGlobalPose().p);
 					xfm.worldRot = ToGLMQuat(pxrigidbody->getGlobalPose().q);
 					xfm.modified = true; // include this 
+					rb.velocity = pxrigidbody->getLinearVelocity();
 				}
 				//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
 				//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));

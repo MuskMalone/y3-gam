@@ -91,10 +91,10 @@ namespace Graphics {
 
 		//========================================================
 
-		mData.whiteTex = std::make_shared<Texture>(1, 1, true);
-		unsigned int whiteTexData{ 0xffffffff };
-		mData.whiteTex->SetData(&whiteTexData);
-		mData.texUnits[0] = mData.whiteTex;
+		mData.whiteTex = IGE_ASSETMGR->LoadRef<IGE::Assets::TextureAsset>(gAssetsDirectory + std::string("Textures/white.dds"));
+		//unsigned int whiteTexData{ 0xffffffff };
+		//mData.whiteTex->SetData(&whiteTexData);
+		//mData.texUnits[0] = mData.whiteTex;
 
 		std::vector<int> samplers(mData.maxTexUnits);
 		for (unsigned int i{}; i < mData.maxTexUnits; ++i)
@@ -147,6 +147,7 @@ namespace Graphics {
 		mFinalFramebuffer = mGeomPass->GetTargetFramebuffer();
 		//mFinalFramebuffer = Framebuffer::Create(framebufferSpec);
 
+
 		IGE::Assets::GUID texguid1 { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\ogre_normalmap.dds")) };
 
 		IGE::Assets::GUID texguid { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
@@ -158,15 +159,16 @@ namespace Graphics {
 		//};
 		//debugAlbedoTex->SetData(data);
 
-		//mData.albedoMaps.push_back(GetWhiteTexture());
-		//mData.albedoMaps.push_back(texguid1);
-		mData.albedoMaps.push_back(texguid);
+
 
 		//TESTING
-		mData.normalMaps.push_back(texguid1);
-		//mData.normalMaps.push_back(GetWhiteTexture());
-		//mData.normalMaps.push_back(GetWhiteTexture());
+		mData.albedoMaps.push_back(GetWhiteTexture());
 		mData.albedoMaps.push_back(texguid);
+		mData.albedoMaps.push_back(texguid1);
+
+		mData.normalMaps.push_back(GetWhiteTexture());
+		mData.normalMaps.push_back(texguid1);
+		
 		//mData.albedoMaps.push_back(texguid1);
 ;	}
 
@@ -553,7 +555,7 @@ namespace Graphics {
 		mFinalFramebuffer = framebuffer;
 	}
 
-	std::shared_ptr<Texture> Renderer::GetWhiteTexture() {
+	IGE::Assets::GUID Renderer::GetWhiteTexture() {
 		return mData.whiteTex;
 	}
 

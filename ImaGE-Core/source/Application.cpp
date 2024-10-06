@@ -73,6 +73,7 @@ namespace IGE {
   // registration order is the update order
   void Application::RegisterSystems() {
     mSystemManager.RegisterSystem<Systems::TransformSystem>("Pre-Transform System"); // must be called first   
+    mSystemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
     mSystemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
 
     // dont think i need this anymore

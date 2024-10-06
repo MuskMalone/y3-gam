@@ -69,7 +69,7 @@ namespace Graphics{
 
 
             // Apply textures (use instance override if available)
-            shader->SetUniform("u_AlbedoMap", GetAlbedoMap() ? &(IGE_REF(IGE::Assets::TextureAsset, GetAlbedoMap())->mTexture) : Renderer::GetWhiteTexture().get(), 0);
+            shader->SetUniform("u_AlbedoMap", GetAlbedoMap() ? &(IGE_REF(IGE::Assets::TextureAsset, GetAlbedoMap())->mTexture) : &(IGE_REF(IGE::Assets::TextureAsset, Renderer::GetWhiteTexture())->mTexture), 0);
 
             //if (auto normalMap = GetNormalMap()) shader->SetUniform("u_NormalMap", normalMap);
             //if (auto metalnessMap = GetMetalnessMap()) shader->SetUniform("u_MetalnessMap", metalnessMap);
