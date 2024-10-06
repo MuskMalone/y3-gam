@@ -17,7 +17,7 @@
 #include "Graphics/EditorCamera.h"
 
 #include <Physics/PhysicsSystem.h>
-
+#include <Asset/IGEAssets.h>
 Scene::Scene()
 {
   glClearColor(0.f, 0.f, 0.f, 1.f);
@@ -48,76 +48,69 @@ void Scene::Init()
 
  
   mEcam = editorCam;
-  std::shared_ptr<Graphics::MeshSource> cubeMeshSource = Graphics::MeshFactory::CreateModelFromImport("../Assets/Models/bunny_high_poly.imsh");
+  IGE::Assets::GUID cubeMeshSource = IGE_ASSETMGR->LoadRef<IGE::Assets::MeshAsset>("../Assets/Models/bunny_high_poly.imsh");//Graphics::MeshFactory::CreateModelFromImport("../Assets/Models/bunny_high_poly.imsh");
   mesh0 = std::make_shared<Graphics::Mesh>(cubeMeshSource);
 
-  std::shared_ptr<Graphics::MeshSource> pyrMeshSource = Graphics::MeshFactory::CreateModelFromString("Cube");
+  IGE::Assets::GUID pyrMeshSource = IGE_ASSETMGR->LoadRef<IGE::Assets::MeshAsset>("Cube");
   mesh1 = std::make_shared<Graphics::Mesh>(pyrMeshSource);
   
   // Create a debug albedo texture (bright magenta checkerboard)
-  std::shared_ptr<Graphics::Texture> debugAlbedoTex = std::make_shared<Graphics::Texture>(2, 2, true);
-  unsigned int debugAlbedoData[4] = {
-      0xffff00ff, // Bright magenta (ABGR)
-      0xffffff00, // Cyan (to create contrast for checkerboard)
-      0xffffff00, // Cyan
-      0xffff00ff  // Bright magenta
-  };
-  debugAlbedoTex->SetData(debugAlbedoData);
+  IGE::Assets::GUID texguid { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
   
   std::shared_ptr<Graphics::Shader> shader = std::make_shared<Graphics::Shader>("../Assets/Shaders/Default.vert.glsl", "../Assets/Shaders/Default.frag.glsl");
   std::shared_ptr<Graphics::MaterialSource> materialSource0 = Graphics::MaterialSource::Create(shader);
-  materialSource0->SetAlbedoMap(debugAlbedoTex);
+  materialSource0->SetAlbedoMap(texguid);
   std::shared_ptr<Graphics::MaterialSource> materialSource1 = Graphics::MaterialSource::Create(shader);
-  materialSource1->SetAlbedoMap(debugAlbedoTex);
+  materialSource1->SetAlbedoMap(texguid);
   //=====================================================================================================================
 
-  //for (int i = 0; i < 5; ++i) {
-  //    for (int j = 0; j < 5; ++j) {
-  //        // Create a new entity
-  //        ECS::Entity entity = ECS::EntityManager::GetInstance().CreateEntity();
+  for (int i = 0; i < 5; ++i) {
+      for (int j = 0; j < 5; ++j) {
+          // Create a new entity
+          ECS::Entity entity = ECS::EntityManager::GetInstance().CreateEntity();
 
-  //        // Set up the TransformComponent with different offsets
-  //        auto& transformComponent = entity.GetComponent<Component::Transform>();
-  //        transformComponent.worldPos = glm::vec3(i * 2.0f, 0.0f, j * 2.0f); // Offset for position
-  //        transformComponent.worldScale = glm::vec3(1.0f);  // Default scale
-  //        transformComponent.worldRot = { 1.f, 0.f, 0.f, 0.f };  // No rotation
-  //        transformComponent.modified = true;
+          // Set up the TransformComponent with different offsets
+          auto& transformComponent = entity.GetComponent<Component::Transform>();
+          transformComponent.position = glm::vec3(i * 2.0f, 0.0f, j * 2.0f); // Offset for position
+          transformComponent.scale = glm::vec3(1.0f);  // Default scale
+          transformComponent.rotation = { 1.f, 0.f, 0.f, 0.f };  // No rotation
+          transformComponent.modified = true;
 
-  //        // Set up the MeshComponent
-  //        auto& renderComponent = entity.EmplaceComponent<Component::Mesh>();
+          // Set up the MeshComponent
+          auto& renderComponent = entity.EmplaceComponent<Component::Mesh>();
 
-  //        // Assign alternating meshes between cube and pyramid
-  //        if ((i + j) % 2 == 0) {
-  //            renderComponent.mesh = mesh0; // Assign cube mesh
-  //            transformComponent.scale = glm::vec3(5.f);
-  //        }
-  //        else {
-  //          renderComponent.mesh = mesh1; // Assign pyramid mesh
-  //        }
+          // Assign alternating meshes between cube and pyramid
+          if ((i + j) % 2 == 0) {
+              renderComponent.mesh = mesh0; // Assign cube mesh
+              transformComponent.scale = glm::vec3(5.f);
+          }
+          else {
+            renderComponent.mesh = mesh1; // Assign pyramid mesh
+          }
 
-  //        // Set up the MaterialComponent
-
-
-  //        // Assign different materials based on the mesh type
-  //        auto& materialComponent = entity.EmplaceComponent<Component::Material>();
-  //        if ((i + j) % 2 == 0) {
-  //            materialComponent.matIdx = 0;
-  //            //std::shared_ptr<Graphics::MaterialSource> materialSource;
-  //            //materialSource = materialSource0; // Assume this is a pre-defined MaterialSource for the cube
-  //            //materialComponent.material = std::make_shared<Graphics::Material>(materialSource);
-  //        }
-  //        else {
-  //            materialComponent.matIdx = 1;
-  //          // Assume this is a pre-defined MaterialSource for the pyramid
-  //        }
-
-  //        // Create a material instance from the MaterialSource and assign it to the material component
+          // Set up the MaterialComponent
 
 
-  //        // Optionally, set per-instance material properties if needed
-  //       // materialComponent.material->SetAlbedoColor(glm::vec3(1.0f, 0.5f, 0.31f)); // Example customization
-  //    }
-  //}
+          // Assign different materials based on the mesh type
+          auto& materialComponent = entity.EmplaceComponent<Component::Material>();
+          if ((i + j) % 2 == 0) {
+              materialComponent.matIdx = 0;
+              //std::shared_ptr<Graphics::MaterialSource> materialSource;
+              //materialSource = materialSource0; // Assume this is a pre-defined MaterialSource for the cube
+              //materialComponent.material = std::make_shared<Graphics::Material>(materialSource);
+          }
+          else {
+              materialComponent.matIdx = 1;
+            // Assume this is a pre-defined MaterialSource for the pyramid
+          }
+
+          // Create a material instance from the MaterialSource and assign it to the material component
+
+
+          // Optionally, set per-instance material properties if needed
+         // materialComponent.material->SetAlbedoColor(glm::vec3(1.0f, 0.5f, 0.31f)); // Example customization
+      }
+  }
 
 }
 

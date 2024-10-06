@@ -4,6 +4,21 @@
     <Filter Include="Asset">
       <UniqueIdentifier>{253FD80C-9153-00BE-5AD5-A31DC6A8FCEE}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Asset\Assetables">
+      <UniqueIdentifier>{DB2290B9-C71B-AF0B-F04D-9490DCA58E17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\Assetables\Audio">
+      <UniqueIdentifier>{1C29302E-0823-5980-F18F-EF90DD28BFEC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\Assetables\Mesh">
+      <UniqueIdentifier>{77994D85-E305-0980-ACF9-A0DD18252BE8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\Assetables\Texture">
+      <UniqueIdentifier>{3BF38E0D-2718-DE8D-5063-C31D3CE7DCAB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{9718D90C-032D-01BE-CCAE-A41D3882FDEE}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
     </Filter>
@@ -55,6 +70,45 @@
     <Filter Include="External\ImGui\misc\single_file">
       <UniqueIdentifier>{BD5E7082-2942-7FC2-3245-ADFE9EA74513}</UniqueIdentifier>
     </Filter>
+    <Filter Include="External\filewatch">
+      <UniqueIdentifier>{0EBB171D-FA9E-D872-63FF-D2C54F02C3F4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\fmod">
+      <UniqueIdentifier>{BD4ED857-290F-548E-F249-9D0B5EC9986A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\fmod\include">
+      <UniqueIdentifier>{30E3B294-9C4F-6E8F-6543-06EDD16E90F7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\glad">
+      <UniqueIdentifier>{0FD5D857-7B95-548E-44D0-9D0BB04F996A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\glad\include">
+      <UniqueIdentifier>{829BB507-EE07-7102-B7FB-08602327936A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\glad\include\KHR">
+      <UniqueIdentifier>{F69A56D8-625D-8A62-AB0D-19EF170F6340}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\glad\include\glad">
+      <UniqueIdentifier>{C9EF39E3-B5FF-E5B3-1EB9-4AD20AE8D44C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\mono">
+      <UniqueIdentifier>{D02DDC57-3CEE-578E-0529-A10B71A89C6A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\mono\include">
+      <UniqueIdentifier>{432562F3-AF91-1DEE-7885-B54BE4B03F56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\mono\include\mono">
+      <UniqueIdentifier>{EB125B4F-D722-0720-40DC-6B3E2C0BF6B8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\mono\include\mono\jit">
+      <UniqueIdentifier>{21274CDB-0D4D-1642-F692-9B0DE2573B0E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\mono\include\mono\metadata">
+      <UniqueIdentifier>{1B1AE7A8-87D3-5153-1033-6C2D7CEB07C3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\mono\include\mono\utils">
+      <UniqueIdentifier>{AB68BFDF-97B9-AA21-C01D-99E3ACCD3D8B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="FrameRateController">
       <UniqueIdentifier>{60BC59B9-CC1D-37C7-558B-7D79C1EB6D86}</UniqueIdentifier>
     </Filter>
@@ -94,11 +148,29 @@
     <ClInclude Include="source\Asset\AssetManager.h">
       <Filter>Asset</Filter>
     </ClInclude>
+    <ClInclude Include="source\Asset\AssetUtils.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Asset\Assetables\AssetExtensions.h">
+      <Filter>Asset\Assetables</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Asset\Assetables\Audio\AudioAsset.h">
+      <Filter>Asset\Assetables\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Asset\Assetables\Mesh\MeshAsset.h">
+      <Filter>Asset\Assetables\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Asset\Assetables\Texture\TextureAsset.h">
+      <Filter>Asset\Assetables\Texture</Filter>
+    </ClInclude>
     <ClInclude Include="source\Asset\IGEAssets.h">
       <Filter>Asset</Filter>
     </ClInclude>
-    <ClInclude Include="source\Asset\PseudoAssetManager.h">
+    <ClInclude Include="source\Asset\SmartPointer.h">
       <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Audio\AudioManager.h">
+      <Filter>Audio</Filter>
     </ClInclude>
     <ClInclude Include="source\Color.h" />
     <ClInclude Include="source\Core\Components\Camera.h">
@@ -144,6 +216,9 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\EntityManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\GUID.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Systems\System.h">
@@ -228,6 +303,150 @@
     <ClInclude Include="source\External\ImGui\misc\single_file\imgui_single_file.h">
       <Filter>External\ImGui\misc\single_file</Filter>
     </ClInclude>
+    <ClInclude Include="source\External\filewatch\FileWatch.h">
+      <Filter>External\filewatch</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod_codec.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod_common.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod_dsp.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod_dsp_effects.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod_errors.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod_output.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\glad\include\KHR\khrplatform.h">
+      <Filter>External\glad\include\KHR</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\glad\include\glad\glad.h">
+      <Filter>External\glad\include\glad</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\jit\jit.h">
+      <Filter>External\mono\include\mono\jit</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\jit\mono-private-unstable.h">
+      <Filter>External\mono\include\mono\jit</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\appdomain.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\assembly.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\attrdefs.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\blob.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\class.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\debug-helpers.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\debug-mono-symfile.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\environment.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\exception.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\image.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\loader.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\metadata.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\mono-config.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\mono-debug.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\mono-gc.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\mono-private-unstable.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\object-forward.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\object.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\opcodes.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\profiler-events.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\profiler.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\reflection.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\row-indexes.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\sgen-bridge.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\tabledefs.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\threads.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\tokentype.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\verify.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-counters.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-dl-fallback.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-error.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-forward.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-jemalloc.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-logger.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-private-unstable.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-publib.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
     <ClInclude Include="source\FrameRateController\FrameRateController.h">
       <Filter>FrameRateController</Filter>
     </ClInclude>
@@ -310,6 +529,12 @@
     <ClInclude Include="source\Input\KeyCode.h">
       <Filter>Input</Filter>
     </ClInclude>
+    <ClInclude Include="source\Physics\PhysicsHelpers.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Physics\PhysicsSystem.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
     <ClInclude Include="source\Prefabs\Prefab.h">
       <Filter>Prefabs</Filter>
     </ClInclude>
@@ -327,6 +552,12 @@
     </ClInclude>
     <ClInclude Include="source\Reflection\ObjectFactory.h">
       <Filter>Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Reflection\ProxyScript.h">
+      <Filter>Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scenes\Scene.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="source\Scenes\SceneManager.h">
       <Filter>Scenes</Filter>
@@ -369,16 +600,30 @@
     </ClInclude>
     <ClInclude Include="source\Singleton.h" />
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Graphics\RenderTarget.h" />
-    <ClInclude Include="source\Reflection\AddComponentFunctions.h" />
-    <ClInclude Include="source\Physics\Physics.h" />
-    <ClInclude Include="source\Physics\PhysicsHelpers.h" />
-    <ClInclude Include="source\Physics\PhysicsSystem.h" />
-    <ClInclude Include="source\Reflection\ProxyScript.h" />
-    <ClInclude Include="source\Scenes\Scene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
+    <ClCompile Include="source\Asset\AssetManager.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Asset\AssetUtils.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Asset\Assetables\Audio\AudioAsset.cpp">
+      <Filter>Asset\Assetables\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Asset\Assetables\Mesh\MeshAsset.cpp">
+      <Filter>Asset\Assetables\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Asset\Assetables\Texture\TextureAsset.cpp">
+      <Filter>Asset\Assetables\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Asset\SmartPointer.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Audio\AudioManager.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
     <ClCompile Include="source\Core\Components\Transform.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
@@ -505,6 +750,9 @@
     <ClCompile Include="source\Input\InputManager.cpp">
       <Filter>Input</Filter>
     </ClCompile>
+    <ClCompile Include="source\Physics\PhysicsSystem.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
     <ClCompile Include="source\Prefabs\Prefab.cpp">
       <Filter>Prefabs</Filter>
     </ClCompile>
@@ -542,6 +790,5 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\Physics\PhysicsSystem.cpp" />
   </ItemGroup>
 </Project>

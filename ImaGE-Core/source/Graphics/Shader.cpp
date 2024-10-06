@@ -780,7 +780,7 @@ namespace Graphics {
 		}
 	}
 
-	void Shader::SetUniform(std::string const& name, std::shared_ptr<Texture> texture, unsigned int texUnit) {
+	void Shader::SetUniform(std::string const& name, Texture* texture, unsigned int texUnit) {
 		if (texture->IsBindless()) {
 			SetUniform(name, texture->GetBindlessHandle());
 			return;

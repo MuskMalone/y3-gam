@@ -70,11 +70,18 @@ bool Inspector::DrawAddComponentButton(std::string const& name, std::string cons
 
   if (isRowClicked) {
     ECS::Entity ent{ GUIManager::GetSelectedEntity().GetRawEnttEntityID() };
-    ComponentType& newComp{ ent.EmplaceComponent<ComponentType>() };
+    if constexpr (std::is_same<ComponentType, Component::RigidBody>::value) {
+        ComponentType& newComp{ IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(ent) };
+    } else if constexpr (std::is_same<ComponentType, Component::Collider>::value) {
+        ComponentType& newComp{ IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(ent) };
+    } else {
+        ComponentType& newComp{ ent.EmplaceComponent<ComponentType>() };
+    }
     SetIsComponentEdited(true);
 
     // if entity is a prefab instance, update its modified components
     if (ent.HasComponent<Component::PrefabOverrides>()) {
+        ComponentType& newComp{ ent.GetComponent<ComponentType>() };
       ent.GetComponent<Component::PrefabOverrides>().AddComponentModification(newComp);
     }
     ImGui::CloseCurrentPopup();

@@ -102,14 +102,14 @@ namespace Graphics {
 		std::vector<std::shared_ptr<Texture>> texUnits; // Array of Texture pointers
 		uint32_t texUnitIdx{ 1 }; // 0 = white tex
 
-		std::unordered_map<std::shared_ptr<MeshSource>, std::vector<InstanceData>> instanceBufferDataMap;
-		std::unordered_map<std::shared_ptr<MeshSource>, std::shared_ptr<VertexBuffer>> instanceBuffers;
+		std::unordered_map<IGE::Assets::GUID, std::vector<InstanceData>> instanceBufferDataMap;
+		std::unordered_map<IGE::Assets::GUID, std::shared_ptr<VertexBuffer>> instanceBuffers;
 
 		Statistics stats;
 
 		//TEMP FOR NOW
 		std::vector<std::shared_ptr<Material>> materialVector;
-		std::vector<std::shared_ptr<Texture>> albedoMaps;
+		std::vector<IGE::Assets::GUID> albedoMaps;
 	};
 
 	class Renderer {
@@ -137,7 +137,7 @@ namespace Graphics {
 		static void RenderSceneEnd();
 
 		static std::shared_ptr<Material> GetMaterial(uint32_t idx); //temp
-		static std::vector<std::shared_ptr<Texture>> const& GetAlbedoMaps();//temp
+		static std::vector<IGE::Assets::GUID> const& GetAlbedoMaps();//temp
 
 		static unsigned int GetMaxTextureUnits();
 		static std::shared_ptr<Graphics::Framebuffer> GetFinalFramebuffer();
@@ -156,7 +156,7 @@ namespace Graphics {
 			glm::vec3 const& tangent, glm::vec3 const& bitangent,
 			glm::vec4 const& clr);
 
-		static std::shared_ptr<VertexBuffer> GetInstanceBuffer(std::shared_ptr<MeshSource> const& meshSrc);
+		static std::shared_ptr<VertexBuffer> GetInstanceBuffer(IGE::Assets::GUID const& meshSrc);
 		//static void SetQuadBufferData(const glm::vec3& pos, const glm::vec2& scale,
 		//	const glm::vec4& clr, const glm::vec2& texCoord, float texIdx, int entity);
 		static void NextBatch();

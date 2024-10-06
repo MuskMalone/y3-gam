@@ -104,7 +104,7 @@ namespace Graphics::AssetIO
       ofs.close();
   }
 
-  std::shared_ptr<MeshSource> IMSH::ToMeshSource(std::shared_ptr<VertexArray> vao) {
+  MeshSource IMSH::ToMeshSource(std::shared_ptr<VertexArray> vao) {
     mStatus = false;
 
     std::vector<Submesh> submeshes;
@@ -114,7 +114,7 @@ namespace Graphics::AssetIO
         glm::mat4(1.f), std::vector<uint32_t>(mIndices.begin() + data.baseIdx, mIndices.begin() + data.idxCount));
     }
 
-    return std::make_shared<MeshSource>(std::move(vao), std::move(submeshes), std::move(mVertexBuffer), std::move(mIndices));
+    return MeshSource{ vao, submeshes, mVertexBuffer, mIndices };
   }
 
   void IMSH::ReadFromBinFile(std::string const& file) {
