@@ -83,7 +83,7 @@ namespace GUI
       ImGui::Text("Save changes made to prefab?");
       ImGui::SetCursorPosX(0.5f * (ImGui::GetWindowContentRegionMax().x - ImGui::CalcTextSize("Cancel Discard Changes Save ").x));
 
-      if (ImGui::Button("Cancel") || ImGui::IsKeyPressed(ImGuiKey_Escape)) {
+      if (ImGui::Button("Cancel")) {
         ImGui::CloseCurrentPopup();
       }
 
