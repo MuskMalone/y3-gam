@@ -110,6 +110,7 @@ namespace Graphics {
 		//TEMP FOR NOW
 		std::vector<std::shared_ptr<Material>> materialVector;
 		std::vector<std::shared_ptr<Texture>> albedoMaps;
+		std::vector<std::shared_ptr<Texture>> normalMaps;
 	};
 
 	class Renderer {
@@ -137,7 +138,9 @@ namespace Graphics {
 		static void RenderSceneEnd();
 
 		static std::shared_ptr<Material> GetMaterial(uint32_t idx); //temp
-		static std::vector<std::shared_ptr<Texture>> const& GetAlbedoMaps();//temp
+		static std::vector<std::shared_ptr<Texture>> const& GetAlbedoMaps();
+		static std::vector<std::shared_ptr<Texture>> const& GetNormalMaps();
+		//temp
 
 		static unsigned int GetMaxTextureUnits();
 		static std::shared_ptr<Graphics::Framebuffer> GetFinalFramebuffer();
