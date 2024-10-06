@@ -4,7 +4,7 @@
 #include "EditorCamera.h"
 #include <Core/Components/Components.h>
 #include "Color.h"
-
+#include "Asset/IGEAssets.h"
 namespace Graphics {
     RenderPass::RenderPass(const RenderPassSpec& spec) : mSpec(spec) {}
 
@@ -63,7 +63,7 @@ namespace Graphics {
 
             hdls.clear();
             for (auto const& map : Renderer::GetNormalMaps()) {
-                hdls.push_back(map->GetBindlessHandle()); //should not be here TODO move somewhere else
+                hdls.push_back(IGE_REF(IGE::Assets::TextureAsset, map)->mTexture.GetBindlessHandle()); //should not be here TODO move somewhere else
             }
             if (hdls.size() > 0)
                 shader->SetUniform("u_NormalMap", hdls.data(), hdls.size());
