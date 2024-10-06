@@ -1,3 +1,13 @@
+/*!*********************************************************************
+\file   Script.h
+\author han.q\@digipen.edu
+\date   5 October 2024
+\brief
+	This file contains the declaration of Script Component struct. This component
+	has a vector that stores all the c# script attached to the entity
+
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include <string>
 #include <algorithm>

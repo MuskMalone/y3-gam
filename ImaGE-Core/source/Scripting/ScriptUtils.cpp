@@ -1,7 +1,7 @@
 /*!*********************************************************************
 \file   ScriptUtils.cpp
 \author han.q\@digipen.edu
-\date   26 November 2023
+\date   5 October 2024
 \brief
 	This file contains the definition for utils function required to
 	transfer data between C# and C++

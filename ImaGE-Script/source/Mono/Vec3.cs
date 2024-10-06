@@ -1,9 +1,9 @@
 ﻿/*!*********************************************************************
-\file   Vec2.cs
-\author han.q\@digipen.edu
-\date   28-September-2023
+\file   Vec3.cs
+\author Han Qin Ding
+\date   4-October-2024
 \brief
-	This file contains a simple vec2 template struct.
+	This file contains a simple vec4 template struct.
 
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/

@@ -2,7 +2,7 @@
 /*!*********************************************************************
 \file   ScriptInstance.h
 \author han.q\@digipen.edu
-\date   28-September-2023
+\date   28-September-2024
 \brief
 	Script Class to contain the data of a c# class.
 	It will store the pointer to the MonoObject and its 4 main methods
