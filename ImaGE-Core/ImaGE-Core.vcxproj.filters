@@ -601,8 +601,9 @@
     <ClInclude Include="source\Serialization\Serializer.h">
       <Filter>Serialization</Filter>
     </ClInclude>
-    <ClInclude Include="source\Singleton.h" />
+    <ClInclude Include="source\Singleton\Singleton.h" />
     <ClInclude Include="source\pch.h" />
+    <ClInclude Include="source\Singleton\ThreadSafeSingleton.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />

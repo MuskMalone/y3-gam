@@ -1,7 +1,7 @@
 #pragma once
 #include <chrono>
 #include <map>
-#include "Singleton.h"
+#include <Singleton/Singleton.h>
 
 namespace Performance {
   class FrameRateController : public Singleton <FrameRateController> {

@@ -38,7 +38,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <bitset>
 #include "KeyCode.h"
 #include <FrameRateController/FrameRateController.h>
-#include <Singleton.h>
+#include <Singleton/Singleton.h>
 #include <array>
 #include <map>
 #include <vector>

@@ -6,6 +6,7 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
+#include <memory>
 
 template <typename T>
 class Singleton
@@ -18,15 +19,27 @@ public:
   \return
     The instance of the class
   ************************************************************************/
-  static T& GetInstance()
-  {
-    static T inst;
-    return inst;
+  static T& GetInstance() {
+    if (!mInstance) { mInstance = std::make_unique<T>(); }
+
+    return *mInstance;
+  }
+
+  /*!*********************************************************************
+  \brief
+    Destroys the instance of the class
+  \return
+    The instance of the class
+  ************************************************************************/
+  static void Destroy() {
+    mInstance.reset();
   }
 
 protected:
   Singleton() = default;
-  Singleton(Singleton const&) = delete;
   virtual ~Singleton() = default;
+  Singleton(Singleton const&) = delete;
   Singleton& operator=(Singleton const&) = delete;
+
+  inline static std::unique_ptr<T> mInstance;
 };

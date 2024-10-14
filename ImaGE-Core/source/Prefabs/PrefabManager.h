@@ -20,7 +20,7 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#include <Singleton.h>
+#include <Singleton/Singleton.h>
 #include "Prefab.h"
 #include <unordered_map>
 #include <Core/Entity.h>

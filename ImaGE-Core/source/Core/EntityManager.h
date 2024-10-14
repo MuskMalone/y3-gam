@@ -1,7 +1,7 @@
 #pragma once
 #include <entt/entt.hpp>
 #include <Core/Components/Tag.h>
-#include "Singleton.h"
+#include <Singleton/Singleton.h>
 
 // forward declaration
 namespace Reflection{ class ObjectFactory; }

@@ -318,8 +318,9 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Serialization\Registration\RegisterComponents.h" />
     <ClInclude Include="source\Serialization\Registration\RegisterEnumsAndFuncs.h" />
     <ClInclude Include="source\Serialization\Serializer.h" />
-    <ClInclude Include="source\Singleton.h" />
+    <ClInclude Include="source\Singleton\Singleton.h" />
     <ClInclude Include="source\pch.h" />
+    <ClInclude Include="source\Singleton\ThreadSafeSingleton.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
