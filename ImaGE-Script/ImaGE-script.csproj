@@ -101,4 +101,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>copy /B /Y "ImaGE-Script.dll" "$(SolutionDir)Assets\Scripts"
+copy /B /Y "ImaGE-Script.pdb" "$(SolutionDir)Assets\Scripts"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
