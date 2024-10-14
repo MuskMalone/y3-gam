@@ -48,7 +48,7 @@ DebugLogger::DebugLogger()
 	mFileLogger = std::make_unique<spdlog::logger>("", filesink);
 }
 
-void DebugLogger::Shutdown()
+DebugLogger::~DebugLogger()
 {
 	// Flush logs
 	mLogger->flush();

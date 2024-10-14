@@ -8,7 +8,7 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#include <Singleton/Singleton.h>
+#include <Singleton/ThreadSafeSingleton.h>
 #include "SceneStates.h"
 #include <string>
 #include <stack>
@@ -18,7 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace Scenes
 {
 
-  class SceneManager : public Singleton<SceneManager>
+  class SceneManager : public ThreadSafeSingleton<SceneManager>
   {
   public:
 
@@ -26,13 +26,13 @@ namespace Scenes
     \brief
       Initializes the SceneManager
     ************************************************************************/
-    void Init();
+    SceneManager();
 
     /*!*********************************************************************
     \brief
       Shutsdown the SceneManager and clears its contents
     ************************************************************************/
-    void Shutdown();
+    ~SceneManager();
 
     /*!*********************************************************************
     \brief

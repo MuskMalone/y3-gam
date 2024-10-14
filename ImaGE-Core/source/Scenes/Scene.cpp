@@ -48,10 +48,10 @@ void Scene::Init()
 
  
   mEcam = editorCam;
-  //IGE::Assets::GUID cubeMeshSource = IGE_ASSETMGR->LoadRef<IGE::Assets::MeshAsset>("../Assets/Models/bunny_high_poly.imsh");//Graphics::MeshFactory::CreateModelFromImport("../Assets/Models/bunny_high_poly.imsh");
+  //IGE::Assets::GUID cubeMeshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>("../Assets/Models/bunny_high_poly.imsh");//Graphics::MeshFactory::CreateModelFromImport("../Assets/Models/bunny_high_poly.imsh");
   //mesh0 = std::make_shared<Graphics::Mesh>(cubeMeshSource);
 
-  //IGE::Assets::GUID pyrMeshSource = IGE_ASSETMGR->LoadRef<IGE::Assets::MeshAsset>("Cube");
+  //IGE::Assets::GUID pyrMeshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>("Cube");
   //mesh1 = std::make_shared<Graphics::Mesh>(pyrMeshSource);
   //
   //// Create a debug albedo texture (bright magenta checkerboard)

@@ -1,18 +1,17 @@
 #pragma once
-#include <pch.h>
+#include <Singleton/ThreadSafeSingleton.h>
 #include "Core/GUID.h"
 #include "SmartPointer.h"
 #include <rttr/type.h>
 #include <any>
 #include <filesystem>
 #include <type_traits>
-#include <memory>
-#include <mutex>
 #include "AssetUtils.h"
 #include <Events/EventCallback.h>
+
 namespace IGE {
 	namespace Assets {
-      class AssetManager
+      class AssetManager : public ThreadSafeSingleton<AssetManager>
       {
       private: 
           EVENT_CALLBACK_DECL(HandleAddFiles);
@@ -44,7 +43,7 @@ namespace IGE {
           auto GetTypeName() { return rttr::type::get<T>().get_name().to_string(); }
       public:
           //-------------------------------------------------------------------------
-          AssetManager() = default;
+          AssetManager();
 
           //-------------------------------------------------------------------------
           template< typename...T_ARGS >
@@ -195,8 +194,6 @@ namespace IGE {
               return ref.GetInfo();
           }
 
-          static std::shared_ptr<AssetManager> GetInstance();
-
       protected:
 
           //Details::InstanceInfo& AllocRscInfo(void)
@@ -208,12 +205,6 @@ namespace IGE {
 
           //keep in mind that any instance of Ref<T> always has a minimum of 1 reference
           std::unordered_map<TypeAssetKey, RefAny> mAssetRefs; //bitwise xor the typeguid and guid for the key;
-      private:
-          static std::shared_ptr<AssetManager> _mSelf;
-          static std::mutex _mMutex;
-
-          AssetManager(AssetManager& other) = delete;
-          void operator=(const AssetManager&) = delete;
       };
 	}
 }

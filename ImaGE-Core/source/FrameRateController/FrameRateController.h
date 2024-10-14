@@ -1,15 +1,16 @@
 #pragma once
 #include <chrono>
 #include <map>
-#include <Singleton/Singleton.h>
+#include <Singleton/ThreadSafeSingleton.h>
 
 namespace Performance {
-  class FrameRateController : public Singleton <FrameRateController> {
+  class FrameRateController : public ThreadSafeSingleton<FrameRateController> {
   public:
     using TimeType = float;
     using TimeFormat = std::chrono::microseconds;
 
-    void Init(float targetFPS = 60.f, float fpsCalculationInterval = 1.f, bool vsyncEnabled = false);
+    FrameRateController(float targetFPS = 60.f, float fpsCalculationInterval = 1.f, bool vsyncEnabled = false);
+
     void Start();
     void End();
 

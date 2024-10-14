@@ -13,12 +13,12 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Mono
 {
-	class ScriptingSystem : public Systems::System{
+	class ScriptingSystem : public Systems::System {
 		
 	public:
 
 		ScriptingSystem(const char* name) : System(name)  {}
-		void Update();
+		void Update() override;
 
 	};
 }

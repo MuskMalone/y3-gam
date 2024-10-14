@@ -8,18 +8,11 @@
 #include <Asset/Assetables/Texture/TextureAsset.h>
 namespace IGE {
 	namespace Assets {
-		std::shared_ptr<AssetManager> AssetManager::_mSelf;
-		std::mutex AssetManager::_mMutex;
-		std::shared_ptr<AssetManager> AssetManager::GetInstance()
-		{
-			std::lock_guard<std::mutex> lock(_mMutex);
-			if (_mSelf == nullptr) {
 
-				_mSelf = std::make_shared<AssetManager>();
-				SUBSCRIBE_CLASS_FUNC(Events::EventType::ADD_FILES, &AssetManager::HandleAddFiles, _mSelf);
-			}
-			return _mSelf;
+		AssetManager::AssetManager() {
+			SUBSCRIBE_CLASS_FUNC(Events::EventType::ADD_FILES, &AssetManager::HandleAddFiles, this);
 		}
+		
 		EVENT_CALLBACK_DEF(AssetManager, HandleAddFiles) {
 			auto const& paths{ CAST_TO_EVENT(Events::AddFilesFromExplorerEvent)->mPaths };
 			for (std::string const& file : paths) {

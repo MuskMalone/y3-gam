@@ -3,7 +3,7 @@
 #include "FrameRateController.h"
 
 namespace Performance {
-  void FrameRateController::Init(float targetFPS, float fpsCalculationInterval, bool vsyncEnabled) {
+  FrameRateController::FrameRateController(float targetFPS, float fpsCalculationInterval, bool vsyncEnabled) {
     mVsyncEnabled = vsyncEnabled;
     SetVsync(mVsyncEnabled);
 

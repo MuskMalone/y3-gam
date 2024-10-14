@@ -20,7 +20,7 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#include <Singleton/Singleton.h>
+#include <Singleton/ThreadSafeSingleton.h>
 #include "Prefab.h"
 #include <unordered_map>
 #include <Core/Entity.h>
@@ -30,11 +30,23 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Prefabs
 {
-  class PrefabManager : public Singleton<PrefabManager>
+  class PrefabManager : public ThreadSafeSingleton<PrefabManager>
   {
   public:
     using PrefabDataContainer = std::unordered_map<std::string, Prefab>;
     using EntityPrefabMap = std::unordered_map<ECS::EntityManager::EntityID, Prefab::EntityMappings>;
+
+    /*!*********************************************************************
+    \brief
+      Subscribes to prefab-related events through the EventManager
+    ************************************************************************/
+    PrefabManager();
+
+    /*!*********************************************************************
+    \brief
+      Clears all data from the PrefabManager
+    ************************************************************************/
+    ~PrefabManager();
 
     /*!*********************************************************************
     \brief
@@ -47,12 +59,6 @@ namespace Prefabs
       Entity id of the instance.
     ************************************************************************/
     ECS::Entity SpawnPrefab(const std::string& key, glm::dvec3 const& pos = {}, bool mapEntity = true);
-
-    /*!*********************************************************************
-    \brief
-      Subscribes to prefab-related events through the EventManager
-    ************************************************************************/
-    void Init();
 
     /*!*********************************************************************
     \brief
@@ -110,12 +116,7 @@ namespace Prefabs
       The file to deserialize from
     ************************************************************************/
     void LoadPrefab(std::string const& name);
-    
-    /*!*********************************************************************
-    \brief
-      Clears all data from the PrefabManager
-    ************************************************************************/
-    void Shutdown();
+
   private:
     /*!*********************************************************************
     \brief

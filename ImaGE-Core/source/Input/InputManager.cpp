@@ -54,7 +54,7 @@ KEY_MAP InputManager::mKeysTriggered;
 KEY_PRESS_ARRAY InputManager::mKeyFramesHeld;
 size_t InputManager::mCurrFramebuffer;
 
-void InputManager::InitInputManager(std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& window, int width, int height, double holdTime)
+InputManager::InputManager(std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& window, int width, int height, double holdTime)
 {
 	mHeight = height;
 	mWidth = width;

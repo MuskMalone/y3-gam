@@ -25,7 +25,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Scripting/ScriptInstance.h>
 #include "Input/InputManager.h"
 #include "Asset/AssetManager.h"
-#include <iostream>
 
 namespace Mono
 {
@@ -77,9 +76,8 @@ using namespace Mono;
 *																																			  *
 ************************************************************************/
 
-void ScriptManager::InitMono()
+ScriptManager::ScriptManager()
 {
-  std::cout << "INit start\n";
   //Assets::AssetManager& assetManager{ Assets::AssetManager::GetInstance() };
   //std::ifstream file(assetManager.GetConfigData<std::string>("MonoAssemblyExeTest").c_str());
   std::ifstream file("../ImaGE-Core/source/External/mono/4.5/mscorlib.dll");

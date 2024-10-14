@@ -11,8 +11,10 @@
 #include <windows.h>
 #include <wrl/wrappers/corewrappers.h>
 #include <DirectXTex.h>
+
 #define IGE_ASSETMGR IGE::Assets::AssetManager::GetInstance()
-#define IGE_REF(type, guid) IGE::Assets::AssetManager::GetInstance()->GetAsset<type>(guid)
+#define IGE_REF(type, guid) IGE::Assets::AssetManager::GetInstance().GetAsset<type>(guid)
+
 inline void IGEAssetsRegisterTypes() {
     // COM initialization
 //#if (_WIN32_WINNT >= 0x0A00 /*_WIN32_WINNT_WIN10*/)
@@ -27,8 +29,8 @@ inline void IGEAssetsRegisterTypes() {
     }
 //#endif
 
-    auto am{ IGE::Assets::AssetManager::GetInstance() };
-    am->RegisterTypes<
+    IGE::Assets::AssetManager& am{ IGE::Assets::AssetManager::GetInstance() };
+    am.RegisterTypes<
         IGE::Assets::TextureAsset, 
         IGE::Assets::AudioAsset,
         IGE::Assets::MeshAsset
@@ -37,7 +39,7 @@ inline void IGEAssetsRegisterTypes() {
 inline void IGEAssetsImportAllAssets() {
     namespace fs = std::filesystem;
     fs::path rootDir(gAssetsDirectory);
-    auto& am{ *IGE::Assets::AssetManager::GetInstance() };
+    IGE::Assets::AssetManager& am{ IGE::Assets::AssetManager::GetInstance() };
     // Check if the root path exists and is a directory
     if (!fs::exists(rootDir) || !fs::is_directory(rootDir)) {
         std::cerr << "Invalid root directory path." << std::endl;

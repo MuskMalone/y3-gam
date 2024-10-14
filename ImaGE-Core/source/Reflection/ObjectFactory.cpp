@@ -35,7 +35,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace Reflection
 {
 
-  void ObjectFactory::Init() {
+  ObjectFactory::ObjectFactory() {
     using namespace Component;
 
     mAddComponentFuncs = {

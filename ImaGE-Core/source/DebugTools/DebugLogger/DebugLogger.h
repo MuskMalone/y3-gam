@@ -11,7 +11,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
 #include <spdlog/spdlog.h>
-#include <Singleton/Singleton.h>
+#include <Singleton/ThreadSafeSingleton.h>
 #include <DebugTools/Exception/ExceptionBase.h>
 #include <memory>
 #include <map>
@@ -28,7 +28,7 @@ using namespace spdlog;
 //#define PRINTTOCOUT
 namespace Debug
 {
-  class DebugLogger : public Singleton<DebugLogger>
+  class DebugLogger : public ThreadSafeSingleton<DebugLogger>
   {
 //#ifndef IMGUI_DISABLE
   private:
@@ -52,7 +52,7 @@ namespace Debug
       Flushes all loggers into their streams and renames output file
       to match the current time of exit.
     ********************************************************************/
-    void Shutdown();
+    ~DebugLogger();
 
     /*!******************************************************************
     \brief

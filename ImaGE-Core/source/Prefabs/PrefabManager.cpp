@@ -33,7 +33,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 using namespace Prefabs;
 
-void PrefabManager::Init()
+PrefabManager::PrefabManager()
 {
   SUBSCRIBE_CLASS_FUNC(Events::EventType::SPAWN_PREFAB, &PrefabManager::HandleEvent, this);
   SUBSCRIBE_CLASS_FUNC(Events::EventType::DELETE_PREFAB, &PrefabManager::HandleEvent, this);
@@ -113,7 +113,7 @@ void PrefabManager::LoadPrefab(std::string const& name) {
   mPrefabs.emplace(name, Serialization::Deserializer::DeserializePrefabToVariant(gPrefabsDirectory + name + gPrefabFileExt));
 }
 
-void PrefabManager::Shutdown() {
+PrefabManager::~PrefabManager() {
   mPrefabs.clear();
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 #include <entt/entt.hpp>
 #include <Core/Components/Tag.h>
-#include <Singleton/Singleton.h>
+#include <Singleton/ThreadSafeSingleton.h>
 
 // forward declaration
 namespace Reflection{ class ObjectFactory; }
@@ -17,7 +17,7 @@ namespace ECS {
 
   class Entity; // Forward Declaration
 
-  class EntityManager : public Singleton <EntityManager> {
+  class EntityManager : public ThreadSafeSingleton <EntityManager> {
   public:
     using EntityID = entt::entity;
     friend class Entity;

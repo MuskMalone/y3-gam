@@ -32,16 +32,26 @@ namespace IGE {
   Application::ApplicationSpecification Application::mSpecification{};
 
   void Application::Init() {
-      IGEAssetsInitialize();
-    mSystemManager.InitSystems();
-    Reflection::ObjectFactory::GetInstance().Init();
+    // initialize singletons
+    Debug::DebugLogger::CreateInstance();
+    Events::EventManager::CreateInstance();
+    Assets::AssetManager::CreateInstance();
+    Reflection::ObjectFactory::CreateInstance();
+    Scenes::SceneManager::CreateInstance();
+    Prefabs::PrefabManager::CreateInstance();
+    Performance::FrameRateController::CreateInstance(120.f, 1.f, false);
+    Input::InputManager::CreateInstance(mWindow, mSpecification.WindowWidth, mSpecification.WindowHeight, 0.1);
+    Mono::ScriptManager::CreateInstance();
+    ECS::EntityManager::CreateInstance();
+
+    // @TODO: Init physics and audio singletons
     //IGE::Physics::PhysicsSystem::InitAllocator();
     //IGE::Physics::PhysicsSystem::GetInstance()->Init();
+
+    RegisterSystems();
+    IGEAssetsInitialize();
+    mSystemManager.InitSystems();
     GetDefaultRenderTarget().scene.Init();
-    Scenes::SceneManager::GetInstance().Init();
-    Prefabs::PrefabManager::GetInstance().Init();
-    Performance::FrameRateController::GetInstance().Init(120.f, 1.f, false);
-    Input::InputManager::GetInstance().InitInputManager(mWindow, mSpecification.WindowWidth, mSpecification.WindowHeight, 0.1);
   }
 
   void Application::Run() {
@@ -113,16 +123,12 @@ namespace IGE {
     glViewport(0, 0, spec.WindowWidth, spec.WindowHeight); // specify size of viewport
     SetCallbacks();
 
-    RegisterSystems();
-
   // render target init
   Graphics::FramebufferSpec framebufferSpec;
   framebufferSpec.width = spec.WindowWidth;
   framebufferSpec.height = spec.WindowHeight;
   framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
   mRenderTargets.emplace_back(framebufferSpec);
-
-  Mono::ScriptManager::GetInstance().InitMono();
 }
 
   void Application::SetCallbacks() {
@@ -148,11 +154,21 @@ namespace IGE {
 
   void Application::Shutdown()
   {
-    Scenes::SceneManager::GetInstance().Shutdown();
-    Prefabs::PrefabManager::GetInstance().Shutdown();
-    Debug::DebugLogger::GetInstance().Shutdown();
-
     mSystemManager.Shutdown();
+
+    // shutdown singletons
+    Scenes::SceneManager::DestroyInstance();
+    Prefabs::PrefabManager::DestroyInstance();
+    Mono::ScriptManager::DestroyInstance();
+    Reflection::ObjectFactory::DestroyInstance();
+    Performance::FrameRateController::DestroyInstance();
+    Events::EventManager::DestroyInstance();
+    ECS::EntityManager::DestroyInstance();
+    Input::InputManager::DestroyInstance();
+    Assets::AssetManager::DestroyInstance();
+    Debug::DebugLogger::DestroyInstance();
+
+    // @TODO: Shutdown physics and audio singletons
   }
 
   Application::~Application()

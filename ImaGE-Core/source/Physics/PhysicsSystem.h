@@ -2,7 +2,6 @@
 #include <Core/Components/Components.h>
 #include <Core/Entity.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
-//#include <GUI/Dockable/Inspector.h>
 
 namespace IGE {
 	namespace Physics {

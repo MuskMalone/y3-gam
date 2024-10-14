@@ -21,7 +21,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Scenes
 {
-  void SceneManager::Init()
+  SceneManager::SceneManager()
   {
     mSceneState = SceneState::STOPPED;
     mObjFactory = &Reflection::ObjectFactory::GetInstance();
@@ -171,7 +171,7 @@ namespace Scenes
   }
 
   // cleanup any extra tmp files
-  void SceneManager::Shutdown()
+  SceneManager::~SceneManager()
   {
     std::vector<std::filesystem::path> filesToRemove;
     for (auto const& file : std::filesystem::directory_iterator(mTempDir)) {

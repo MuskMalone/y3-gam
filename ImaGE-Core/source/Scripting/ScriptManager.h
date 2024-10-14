@@ -10,7 +10,7 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/#pragma once
 #pragma once
-#include <Singleton/Singleton.h>
+#include <Singleton/ThreadSafeSingleton.h>
 #include <mono/jit/jit.h>
 #include "mono/metadata/assembly.h"
 #include "mono/metadata/object.h"
@@ -32,7 +32,7 @@ namespace Mono
 
 
 
-	class ScriptManager : public Singleton<ScriptManager>
+	class ScriptManager : public ThreadSafeSingleton<ScriptManager>
 	{
 		static std::map<std::string, ScriptClassInfo> mMonoClassMap;
 
@@ -52,6 +52,12 @@ namespace Mono
 		static std::string mCsprojPath;
 		static std::string mBatfilePath;
 
+		/*!*********************************************************************
+		\brief
+			Init function for Mono. Sets the assembly path, initializes the
+			domains and Load the C# Assembly. Internal calls are added into mono
+		************************************************************************/
+		ScriptManager();
 
 		/*!*********************************************************************
 		\brief
@@ -73,12 +79,6 @@ namespace Mono
 		************************************************************************/
 		static void LoadAppDomain();
 
-		/*!*********************************************************************
-		\brief
-			Init function for Mono. Sets the assembly path, initializes the
-			domains and Load the C# Assembly. Internal calls are added into mono
-		************************************************************************/
-		void InitMono();
 
 		/*!*********************************************************************
 		\brief

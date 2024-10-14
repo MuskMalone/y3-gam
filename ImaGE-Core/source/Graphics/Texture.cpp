@@ -296,7 +296,7 @@ namespace Graphics {
 
 	IGE::Assets::GUID Texture::Create(std::string const& path, bool isBindless) {
 		//return std::make_shared<Texture>(path, isBindless);
-		return IGE_ASSETMGR->LoadRef<IGE::Assets::TextureAsset>(path);
+		return IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(path);
 	}
 
 }

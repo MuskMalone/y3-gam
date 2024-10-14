@@ -13,7 +13,7 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#include <Singleton/Singleton.h>
+#include <Singleton/ThreadSafeSingleton.h>
 #include "Events.h"
 #include <functional>
 #include <vector>
@@ -26,7 +26,7 @@ namespace IGE { class Application; class EditorApplication; }
 namespace Events
 {
 
-  class EventManager : public Singleton<EventManager>
+  class EventManager : public ThreadSafeSingleton<EventManager>
   {
   public:
     using EventPtr = std::shared_ptr<Event>;

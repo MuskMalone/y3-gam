@@ -1,6 +1,5 @@
 #pragma once
 //#define IGE_MULTITHREAD
-#include <pch.h>
 #include <Core/GUID.h>
 
 

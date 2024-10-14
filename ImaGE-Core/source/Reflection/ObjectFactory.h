@@ -18,7 +18,7 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#include <Singleton/Singleton.h>
+#include <Singleton/ThreadSafeSingleton.h>
 #include "EntityData.h"
 #include <Core/Entity.h>
 #include <variant.h>
@@ -26,7 +26,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace Reflection
 {
 
-  class ObjectFactory : public Singleton<ObjectFactory>
+  class ObjectFactory : public ThreadSafeSingleton<ObjectFactory>
   {
   public:
     using PrefabInstMap = std::unordered_map<ECS::EntityManager::EntityID, PrefabInst>;
@@ -37,7 +37,7 @@ namespace Reflection
       Initializes the ObjectFactory by mapping each component type to its
       respective function for use during component modification
     ************************************************************************/
-    void Init();
+    ObjectFactory();
 
     /*!*********************************************************************
     \brief

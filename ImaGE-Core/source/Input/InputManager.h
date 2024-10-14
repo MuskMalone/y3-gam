@@ -38,7 +38,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <bitset>
 #include "KeyCode.h"
 #include <FrameRateController/FrameRateController.h>
-#include <Singleton/Singleton.h>
+#include <Singleton/ThreadSafeSingleton.h>
 #include <array>
 #include <map>
 #include <vector>
@@ -53,7 +53,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 		using KEY_PRESS_ARRAY = std::array<double, static_cast<size_t>(IK_KEY_COUNT)>;
 		using vec2 = glm::vec2;
 
-		class InputManager : public Singleton<InputManager>
+		class InputManager : public ThreadSafeSingleton<InputManager>
 		{
 
 		private:
@@ -69,6 +69,24 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 			static size_t mCurrFramebuffer; //!< id of curr buffer (for mouse to WorldSpace)
 
 		public:
+			/*!*********************************************************************
+			\brief
+				.Function to initialize the Input Manager (Call this function right after successfully initializing window)
+			\params
+				GLFWwindow* window
+				pointer to current window
+			\params
+				int width
+				width of the window
+			\params
+				int height
+				height of the window
+			\params
+				double holdTime
+				duration a key needs to be pressed to be recognized as a held
+			************************************************************************/
+			InputManager(std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& window, int width, int height, double holdTime = 0.5);
+
 			/*!*********************************************************************
 			\brief
 				.Function to check if a key is held
@@ -141,24 +159,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 				xoffset of  mouse scroll
 			************************************************************************/
 			static vec2 GetMouseDelta();
-
-			/*!*********************************************************************
-			\brief
-				.Function to initialize the Input Manager (Call this function right after successfully initializing window)
-			\params
-				GLFWwindow* window
-				pointer to current window
-			\params
-				int width
-				width of the window
-			\params
-				int height
-				height of the window
-			\params
-				double holdTime
-				duration a key needs to be pressed to be recognized as a held
-			************************************************************************/
-			void InitInputManager(std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& window, int width, int height, double holdTime = 0.5);
 
 			/*!*********************************************************************
 			\brief
