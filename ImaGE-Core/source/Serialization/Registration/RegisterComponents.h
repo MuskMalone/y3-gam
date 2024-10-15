@@ -9,6 +9,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <rttr/registration>
 #include <Core/Components/Components.h>
+#include <Reflection/ProxyScript.h>
 
 static void rttr_auto_register_reflection_function2_(); namespace {
   struct rttr__auto__register2__ {
@@ -77,4 +78,16 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("modifiedComponents", &PrefabOverrides::modifiedComponents)
     .property("removedComponents", &PrefabOverrides::removedComponents)
     .property("subDataId", &PrefabOverrides::subDataId);
+
+  rttr::registration::class_<Script>("ScriptComponent")
+    .constructor<std::vector<std::string> const&>()
+    .property("scriptList", &Script::mScriptList);
+
+  {
+    using T = Reflection::ProxyScript;
+    rttr::registration::class_<T>("Script")
+      .constructor<>()
+      .property("scriptData", &T::scriptName)
+      .property("scriptFieldProxyList", &T::scriptFieldProxyList);
+  }
 }

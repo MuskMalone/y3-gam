@@ -189,10 +189,40 @@ namespace Serialization
       compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
 
       writer.Key(compType.get_name().to_string().c_str());
-      SerializeClassTypes(comp, writer);
+      if (!SerializeSpecialCases(comp, compType, writer)) {
+        SerializeClassTypes(comp, writer);
+      }
       writer.EndObject();
     }
     writer.EndArray();
+  }
+
+  bool Serializer::SerializeSpecialCases(rttr::instance const& obj, rttr::type const& type, WriterType& writer)
+  {
+    return false;
+    /*if (type == rttr::type::get<Component::Script>()) {
+      rttr::instance const wrappedObj{ obj.get_type().get_raw_type().is_wrapper() ? obj.get_wrapped_instance() : obj };
+      auto const properties{ wrappedObj.get_derived_type().get_properties() };
+
+      for (auto const& property : properties) {
+        rttr::variant propVal{ property.get_value(wrappedObj) };
+        if (!propVal) {
+          std::ostringstream oss{};
+          oss << "Unable to serialize property " << property.get_name().to_string() << " of type " << property.get_type().get_name().to_string();
+          Debug::DebugLogger::GetInstance().LogError("[Serializer] " + oss.str());
+#ifdef _DEBUG
+          std::cout << oss.str() << "\n";
+#endif
+          continue;
+        }
+
+        std::string const name{ property.get_name().to_string() };
+        writer.String(name.c_str(), static_cast<rapidjson::SizeType>(name.length()), false);
+      }
+
+      return true;
+    }*/
+
   }
 
   void Serializer::SerializeClassTypes(rttr::instance const& obj, WriterType& writer)

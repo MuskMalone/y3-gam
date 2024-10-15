@@ -10,6 +10,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rttr/registration>
 #include <Prefabs/Prefab.h>
 #include <PxPhysicsAPI.h>
+#include <Scripting/ScriptInstance.h>
 
 static void rttr_auto_register_reflection_function_(); namespace {
   struct rttr__auto__register__ {
@@ -74,5 +75,86 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("first", &std::pair<std::string, unsigned>::first)
       .property("second", &std::pair<std::string, unsigned>::second)
       ;
+  }
+
+  /* ------------------- Script ------------------- */
+  {
+    using T = Mono::ScriptInstance;
+    rttr::registration::class_<T>("ScriptInstance")
+      .property("scriptName", &T::mScriptName)
+      .property("scriptFieldInstList", &T::mScriptFieldInstList);
+  }
+
+  rttr::registration::class_<Mono::ScriptFieldInfo>("ScriptFieldInfo")
+    .property("fieldName", &Mono::ScriptFieldInfo::mFieldName);
+  {
+    using T = Mono::ScriptFieldInstance<int>;
+    rttr::registration::class_<T>("System.Int32")
+      .property("data", &T::mData)
+      .property("type", &T::mType)
+      .property("scriptField", &T::mScriptField);
+  }
+  {
+    using T = Mono::ScriptFieldInstance<float>;
+    rttr::registration::class_<T>("System.Single")
+      .property("data", &T::mData)
+      .property("type", &T::mType)
+      .property("scriptField", &T::mScriptField);
+  }
+  {
+    using T = Mono::ScriptFieldInstance<double>;
+    rttr::registration::class_<T>("System.Double")
+      .property("data", &T::mData)
+      .property("type", &T::mType)
+      .property("scriptField", &T::mScriptField);
+  }
+  {
+    using T = Mono::ScriptFieldInstance<unsigned>;
+    rttr::registration::class_<T>("System.UInt32")
+      .property("data", &T::mData)
+      .property("type", &T::mType)
+      .property("scriptField", &T::mScriptField);
+  }
+  {
+    using T = Mono::ScriptFieldInstance<std::vector<int>>;
+    rttr::registration::class_<T>("System.Int32[]")
+      .property("data", &T::mData)
+      .property("type", &T::mType)
+      .property("scriptField", &T::mScriptField);
+  }
+  {
+    using T = Mono::ScriptFieldInstance<std::vector<unsigned>>;
+    rttr::registration::class_<T>("System.UInt32[]")
+      .property("data", &T::mData)
+      .property("type", &T::mType)
+      .property("scriptField", &T::mScriptField);
+  }
+  {
+    using T = Mono::ScriptFieldInstance<std::string>;
+    rttr::registration::class_<T>("System.String")
+      .property("data", &T::mData)
+      .property("type", &T::mType)
+      .property("scriptField", &T::mScriptField);
+  }
+  {
+    using T = Mono::ScriptFieldInstance<std::vector<std::string>>;
+    rttr::registration::class_<T>("System.String[]")
+      .property("data", &T::mData)
+      .property("type", &T::mType)
+      .property("scriptField", &T::mScriptField);
+  }
+  {
+    using T = Mono::ScriptFieldInstance<glm::vec3>;
+    rttr::registration::class_<T>("ImaGE-Script.Mono.Vec3<System.float>")
+      .property("data", &T::mData)
+      .property("type", &T::mType)
+      .property("scriptField", &T::mScriptField);
+  }
+  {
+    using T = Mono::ScriptFieldInstance<glm::dvec3>;
+    rttr::registration::class_<T>("ImaGE-Script.Mono.Vec3<System.double>")
+      .property("data", &T::mData)
+      .property("type", &T::mType)
+      .property("scriptField", &T::mScriptField);
   }
 }

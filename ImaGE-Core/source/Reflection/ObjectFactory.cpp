@@ -272,6 +272,7 @@ namespace Reflection
     else IF_GET_ENTITY_COMP(Component::Material)
     else IF_GET_ENTITY_COMP(Component::RigidBody)
     else IF_GET_ENTITY_COMP(Component::Collider)
+    else IF_GET_ENTITY_COMP(Component::Script)
     else IF_GET_ENTITY_COMP(Component::Text)
     else
     {
@@ -296,6 +297,7 @@ namespace Reflection
     else IF_REMOVE_COMP(Component::Material)
     else IF_REMOVE_COMP(Component::RigidBody)
     else IF_REMOVE_COMP(Component::Collider)
+    else IF_REMOVE_COMP(Component::Script)
     else IF_REMOVE_COMP(Component::Text)
     else
     {

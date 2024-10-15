@@ -95,10 +95,23 @@ namespace Serialization
       The object to serialize
     \param writer
       The writer to write to
-    \return
-      The resulting rapidjson::Value object
     ************************************************************************/
     static void SerializeClassTypes(rttr::instance const& obj, WriterType& writer);
+
+    /*!*********************************************************************
+    \brief
+      Handles classes that require custom serialization. This should be
+      called before the standard SerializeClassTypes.
+    \param object
+      The object to serialize
+    \param type
+      The type of the object
+    \param writer
+      The writer to write to
+    \return
+      True if the object was serialized and false otherwise
+    ************************************************************************/
+    static bool SerializeSpecialCases(rttr::instance const& obj, rttr::type const& type, WriterType& writer);
 
     /*!*********************************************************************
     \brief
