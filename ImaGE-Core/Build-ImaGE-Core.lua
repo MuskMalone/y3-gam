@@ -181,6 +181,11 @@ project "ImaGE-Core"
         "mono-2.0-sgen.lib",
        }
 
+       postbuildcommands {
+         "{MKDIR} %[%{wks.location}/Binaries/" .. OutputDir .. "/Assets]",
+         "{COPYDIR} %[%{wks.location}/Assets] %[%{wks.location}/Binaries/" .. OutputDir .. "/Assets]"
+      }
+
     filter "configurations:Distribution"
        defines {
           "DISTRIBUTION",
@@ -229,3 +234,8 @@ project "ImaGE-Core"
         "fmod_vc.lib",
         "mono-2.0-sgen.lib",
        }
+
+       postbuildcommands {
+         "{MKDIR} %[%{wks.location}/Binaries/" .. OutputDir .. "/Assets]",
+         "{COPYDIR} %[%{wks.location}/Assets] %[%{wks.location}/Binaries/" .. OutputDir .. "/Assets]"
+      }   
