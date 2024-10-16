@@ -14,6 +14,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "GUIManager.h"
 #include <ImGui/imgui.h>
 #include <Core/Entity.h>
+
 #pragma region IndivWindowIncludes
 #include "Dockable/AssetBrowser.h"
 #include "Dockable/Console.h"
@@ -24,6 +25,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Dockable/SceneHierarchy.h"
 #include "Persistent/Toolbar.h"
 #include "Dockable/Viewport.h"
+#include "Dockable/Layers.h"
 #pragma endregion
 
 namespace GUI {
@@ -52,6 +54,7 @@ namespace GUI {
     mWindows.emplace_back(std::make_shared<AssetBrowser>("Asset Browser"));
     mWindows.emplace_back(std::make_shared<Console>("Console"));
     mWindows.emplace_back(std::make_shared<PerformanceWindow>("Performance Window"));
+    mWindows.emplace_back(std::make_shared<Layers>("Layers"));
 
     mStyler.LoadFonts();
     mStyler.SetCurrentTheme(static_cast<CustomTheme>(gEditorDefaultTheme)); // Default theme should be read from settings file

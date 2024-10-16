@@ -15,6 +15,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Serialization/Serializer.h>
 #include <Core/Entity.h>
 
+#include <Core/Systems/LayerSystem/LayerSystem.h> // TEMP
+
 #ifdef _DEBUG
 //#define EVENTS_DEBUG
 #endif
@@ -113,6 +115,7 @@ namespace Scenes
       }
       Debug::DebugLogger::GetInstance().LogInfo("Loading scene: " + mSceneName + "...");
 
+      Systems::LayerSystem::OnSceneChange(); // TEMP
       break;
     }
     case Events::EventType::SAVE_SCENE:
