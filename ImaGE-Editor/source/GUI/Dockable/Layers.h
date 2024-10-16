@@ -1,5 +1,7 @@
 #pragma once
+#include <utility>
 #include <GUI/GUIWindow.h>
+#include <Core/Systems/LayerSystem/LayerSystem.h>
 
 namespace GUI {
   class Layers : public GUIWindow {
@@ -14,6 +16,8 @@ namespace GUI {
     void LayerNameNode();
     void VisibilityToggleNode();
     void CollisionMatrixNode();
+
+    std::weak_ptr<Systems::LayerSystem> mLayerSystem; // using weak_ptr so SystemManager still retains full ownership
   };
 
 } // namespace GUI

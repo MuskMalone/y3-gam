@@ -21,10 +21,12 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Asset/IGEAssets.h"
 
 #pragma region SYSTEM_INCLUDES
+#include <Core/Systems/SystemManager/SystemManager.h>
 #include <Physics/PhysicsSystem.h>
 //#include <Core/Systems/TransformSystem/WorldToLocalTransformSystem.h>
 #include <Core/Systems/TransformSystem/TransformSystem.h>
 #include <Scripting/ScriptingSystem.h>
+#include <Core/Systems/LayerSystem/LayerSystem.h>
 #pragma endregion
 
 namespace IGE {
@@ -43,6 +45,7 @@ namespace IGE {
     Input::InputManager::CreateInstance(mWindow, mSpecification.WindowWidth, mSpecification.WindowHeight, 0.1);
     Mono::ScriptManager::CreateInstance();
     ECS::EntityManager::CreateInstance();
+    Systems::SystemManager::CreateInstance();
 
     // @TODO: Init physics and audio singletons
     //IGE::Physics::PhysicsSystem::InitAllocator();
@@ -50,7 +53,7 @@ namespace IGE {
 
     RegisterSystems();
     IGEAssetsInitialize();
-    mSystemManager.InitSystems();
+    Systems::SystemManager::GetInstance().InitSystems();
     GetDefaultRenderTarget().scene.Init();
   }
 
@@ -58,6 +61,7 @@ namespace IGE {
     static auto& eventManager{ Events::EventManager::GetInstance() };
     static auto& inputManager{ Input::InputManager::GetInstance() };
     static auto& frameRateController{ Performance::FrameRateController::GetInstance() };
+    static auto& systemManager{ Systems::SystemManager::GetInstance() };
 
     while (!glfwWindowShouldClose(mWindow.get())) {
       frameRateController.Start();
@@ -66,7 +70,7 @@ namespace IGE {
       // dispatch all events in the queue at the start of game loop
       eventManager.DispatchAll();
 
-      mSystemManager.UpdateSystems();
+      systemManager.UpdateSystems();
       GetDefaultRenderTarget().scene.Update(frameRateController.GetDeltaTime());
 
       glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
@@ -82,16 +86,17 @@ namespace IGE {
 
   // registration order is the update order
   void Application::RegisterSystems() {
-    mSystemManager.RegisterSystem<Systems::TransformSystem>("Pre-Transform System"); // must be called first   
-    mSystemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
-    mSystemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
+    Systems::SystemManager& systemManager{ Systems::SystemManager::GetInstance() };
+    systemManager.RegisterSystem<Systems::TransformSystem>("Pre-Transform System"); // must be called first   
+    systemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
+    systemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
+    systemManager.RegisterSystem<Systems::LayerSystem>("Layer System");
 
     // dont think i need this anymore
     //mSystemManager.RegisterSystem<Systems::LocalToWorldTransformSystem>("Post-Transform System");
   }
 
-  Application::Application(ApplicationSpecification spec) :
-    mSystemManager{}, mRenderTargets{}, mWindow{}
+  Application::Application(ApplicationSpecification spec) : mRenderTargets{}, mWindow{}
   {
     mSpecification = spec;
     glfwInit();
@@ -154,9 +159,9 @@ namespace IGE {
 
   void Application::Shutdown()
   {
-    mSystemManager.Shutdown();
-
     // shutdown singletons
+    Systems::SystemManager::DestroyInstance();
+
     Scenes::SceneManager::DestroyInstance();
     Prefabs::PrefabManager::DestroyInstance();
     Mono::ScriptManager::DestroyInstance();

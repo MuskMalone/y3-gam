@@ -16,17 +16,17 @@ namespace Systems {
     void Update() override;
     void Destroy() override;
 
-    static void OnSceneChange();
+    void OnSceneChange();
 
-    static std::array<std::string, MAX_LAYERS>const& GetLayerNames() { return mLayerNames; }
-    static std::array<int, MAX_LAYERS>& GetLayerVisibility() { return mLayerVisibility; }
+    std::array<std::string, MAX_LAYERS>const& GetLayerNames() { return mLayerNames; }
+    std::array<int, MAX_LAYERS>& GetLayerVisibility() { return mLayerVisibility; }
 
   private:
-    static std::array<std::string, MAX_LAYERS> mLayerNames;
-    static std::array<int, MAX_LAYERS> mLayerVisibility;
-    static std::array<std::array<int, MAX_LAYERS>, MAX_LAYERS> mCollisionMatrix;
+    std::array<std::string, MAX_LAYERS> mLayerNames;
+    std::array<int, MAX_LAYERS> mLayerVisibility;
+    std::array<std::array<int, MAX_LAYERS>, MAX_LAYERS> mCollisionMatrix;
 
-    static std::unordered_map<std::string, std::vector<ECS::Entity>> mLayerEntities;
+    std::unordered_map<std::string, std::vector<ECS::Entity>> mLayerEntities;
   };
 
 } // namespace Systems

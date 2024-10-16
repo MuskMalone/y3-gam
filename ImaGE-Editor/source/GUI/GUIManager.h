@@ -30,6 +30,9 @@ namespace GUI {
     /*!*********************************************************************
     \brief
       Initializes the GUIManager along with all other GUI elements
+    \param sysManager
+      Reference to the system manager to pass any system dependencies
+      a GUIWindow may have
     ************************************************************************/
     void Init();
 

@@ -35,13 +35,10 @@ namespace Systems {
     //}
   }
 
-  void SystemManager::Shutdown() {
+  SystemManager::~SystemManager() {
     for (SystemPtr const& system : mSystems) {
       system->Destroy();
     }
-
-    mNameToSystem.clear();
-    mSystems.clear();
   }
 
 } // namespace Systems

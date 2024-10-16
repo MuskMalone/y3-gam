@@ -16,6 +16,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Prefabs/PrefabManager.h>
 #include <Input/InputManager.h>
 
+#include <Core/Systems/SystemManager/SystemManager.h>
+
 #include <imgui/imgui.h>
 #include <imgui/backends/imgui_impl_glfw.h>
 #include <imgui/backends/imgui_impl_opengl3.h>
@@ -53,6 +55,9 @@ namespace IGE {
     Application::Init();  // perform default Init
 
     // init editor-specific stuff
+    // im not sure if this is scalable;
+    // may just make SystemManager globally accesible in future
+    // if more stuff requires it
     mGUIManager.Init();
   }
 
@@ -60,6 +65,7 @@ namespace IGE {
     static auto& eventManager{ Events::EventManager::GetInstance() };
     static auto& inputManager{ Input::InputManager::GetInstance() };
     static auto& frameRateController{ Performance::FrameRateController::GetInstance() };
+    static auto& sysManager{ Systems::SystemManager::GetInstance() };
 
     while (!glfwWindowShouldClose(mWindow.get())) {
       frameRateController.Start();
@@ -74,7 +80,7 @@ namespace IGE {
           // dispatch all events in the queue at the start of game loop
           eventManager.DispatchAll();
 
-          mSystemManager.UpdateSystems();
+          sysManager.UpdateSystems();
         }
         catch (Debug::ExceptionBase& e)
         {

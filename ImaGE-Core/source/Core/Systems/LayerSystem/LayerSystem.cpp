@@ -3,12 +3,6 @@
 
 namespace Systems {
 
-  // Static Initialization
-  std::array<std::string, MAX_LAYERS> LayerSystem::mLayerNames;
-  std::array<int, MAX_LAYERS> LayerSystem::mLayerVisibility;
-  std::array<std::array<int, MAX_LAYERS>, MAX_LAYERS> LayerSystem::mCollisionMatrix;
-  std::unordered_map<std::string, std::vector<ECS::Entity>> LayerSystem::mLayerEntities;
-
   void LayerSystem::Start() {
 
   }

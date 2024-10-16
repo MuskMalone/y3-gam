@@ -115,7 +115,6 @@ namespace Scenes
       }
       Debug::DebugLogger::GetInstance().LogInfo("Loading scene: " + mSceneName + "...");
 
-      Systems::LayerSystem::OnSceneChange(); // TEMP
       break;
     }
     case Events::EventType::SAVE_SCENE:
