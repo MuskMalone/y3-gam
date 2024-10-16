@@ -1,60 +1,277 @@
-[
-    {
-        "ID": 9,
-        "Parent": 7,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "Plane",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 4
-        }
-    },
-    {
-        "ID": 1,
-        "Parent": 0,
-        "Child Entities": [
-            2,
-            3,
-            4
-        ],
-        "Prefab": {
-            "prefabName": "Plane",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 6
-        }
-    },
-    {
-        "ID": 3,
-        "Parent": 1,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "Plane",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 8
-        }
-    },
-    {
-        "ID": 0,
-        "Parent": null,
-        "Child Entities": [
-            1,
-            5,
-            6,
-            7
-        ],
-        "Prefab": {
-            "prefabName": "Plane",
-            "modifiedComponents": [
+{
+    "Scene": [
+        {
+            "ID": 1,
+            "Parent": 0,
+            "Child Entities": [
+                2,
+                3,
+                4
+            ],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 6
+            }
+        },
+        {
+            "ID": 9,
+            "Parent": 7,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 4
+            }
+        },
+        {
+            "ID": 3,
+            "Parent": 1,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 8
+            }
+        },
+        {
+            "ID": 0,
+            "Parent": null,
+            "Child Entities": [
+                1,
+                5,
+                6,
+                7
+            ],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [
+                    {
+                        "key": "Collider",
+                        "value": {
+                            "scale": {
+                                "x": 0.5,
+                                "y": 0.5,
+                                "z": 0.5
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            }
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 6.900000095367432,
+                                "y": 1.600000023841858,
+                                "z": 3.799999952316284
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "rotation": {
+                                "x": -0.05118248984217644,
+                                "y": -0.3202461004257202,
+                                "z": 0.14662986993789674,
+                                "w": 0.9345172643661499
+                            },
+                            "eulerAngles": {
+                                "x": -13.5,
+                                "y": -35.70000076293945,
+                                "z": 22.200000762939454
+                            },
+                            "worldPos": {
+                                "x": 6.900000095367432,
+                                "y": 1.600000023841858,
+                                "z": 3.799999952316284
+                            },
+                            "worldScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "worldRot": {
+                                "x": -0.05118248984217644,
+                                "y": -0.3202461004257202,
+                                "z": 0.14662986993789674,
+                                "w": 0.9345172643661499
+                            }
+                        }
+                    },
+                    {
+                        "key": "RigidBody",
+                        "value": {
+                            "velocity": {
+                                "x": -25.100000381469728,
+                                "y": -2.5999999046325685,
+                                "z": -12.300000190734864
+                            },
+                            "angularVelocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "staticFriction": 0.0,
+                            "dynamicFriction": 0.0,
+                            "restitution": 0.0,
+                            "gravityFactor": 0.0,
+                            "linearDamping": 0.9800000190734863,
+                            "motionType": "DYNAMIC"
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 0
+            }
+        },
+        {
+            "ID": 8,
+            "Parent": 7,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 3
+            }
+        },
+        {
+            "ID": 2,
+            "Parent": 1,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 9
+            }
+        },
+        {
+            "ID": 4,
+            "Parent": 1,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 7
+            }
+        },
+        {
+            "ID": 5,
+            "Parent": 0,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 5
+            }
+        },
+        {
+            "ID": 6,
+            "Parent": 0,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 1
+            }
+        },
+        {
+            "ID": 7,
+            "Parent": 0,
+            "Child Entities": [
+                8,
+                9
+            ],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 2
+            }
+        },
+        {
+            "ID": 1048586,
+            "Parent": null,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
                 {
-                    "key": "Collider",
-                    "value": {
+                    "Tag": {
+                        "tag": "Tower 2"
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -8.899999618530274,
+                            "y": -2.4000000953674318,
+                            "z": 0.0
+                        },
                         "scale": {
-                            "x": 0.5,
-                            "y": 0.5,
-                            "z": 0.5
+                            "x": 2.0,
+                            "y": 10.0,
+                            "z": 2.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -8.899999618530274,
+                            "y": -2.4000000953674318,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 2.0,
+                            "y": 10.0,
+                            "z": 2.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {}
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube"
+                    }
+                },
+                {
+                    "Collider": {
+                        "scale": {
+                            "x": 1.0,
+                            "y": 5.0,
+                            "z": 1.0
                         },
                         "positionOffset": {
                             "x": 0.0,
@@ -62,294 +279,417 @@
                             "z": 0.0
                         }
                     }
+                }
+            ]
+        },
+        {
+            "ID": 20,
+            "Parent": null,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Tower 1"
+                    }
                 },
                 {
-                    "key": "RigidBody",
-                    "value": {
-                        "velocity": {
-                            "x": -25.100000381469728,
-                            "y": -2.5999999046325685,
-                            "z": -12.300000190734864
+                    "Transform": {
+                        "position": {
+                            "x": -8.0,
+                            "y": -1.7000000476837159,
+                            "z": -3.200000047683716
                         },
-                        "angularVelocity": {
+                        "scale": {
+                            "x": 2.0,
+                            "y": 9.699999809265137,
+                            "z": 2.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
                             "x": 0.0,
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "staticFriction": 0.0,
-                        "dynamicFriction": 0.0,
-                        "restitution": 0.0,
-                        "gravityFactor": 0.0,
-                        "linearDamping": 0.9800000190734863,
-                        "motionType": "DYNAMIC"
+                        "worldPos": {
+                            "x": -8.0,
+                            "y": -1.7000000476837159,
+                            "z": -3.200000047683716
+                        },
+                        "worldScale": {
+                            "x": 2.0,
+                            "y": 9.699999809265137,
+                            "z": 2.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
                     }
                 },
                 {
-                    "key": "Transform",
-                    "value": {
-                        "position": {
-                            "x": 6.900000095367432,
-                            "y": 1.600000023841858,
-                            "z": 3.799999952316284
-                        },
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {}
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube"
+                    }
+                },
+                {
+                    "Collider": {
                         "scale": {
                             "x": 1.0,
-                            "y": 1.0,
+                            "y": 4.849999904632568,
                             "z": 1.0
                         },
-                        "rotation": {
-                            "x": -0.05118248984217644,
-                            "y": -0.3202461004257202,
-                            "z": 0.14662986993789674,
-                            "w": 0.9345172643661499
-                        },
-                        "eulerAngles": {
-                            "x": -13.5,
-                            "y": -35.70000076293945,
-                            "z": 22.200000762939454
-                        },
-                        "worldPos": {
-                            "x": 6.900000095367432,
-                            "y": 1.600000023841858,
-                            "z": 3.799999952316284
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": -0.05118248984217644,
-                            "y": -0.3202461004257202,
-                            "z": 0.14662986993789674,
-                            "w": 0.9345172643661499
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
                         }
                     }
                 }
-            ],
-            "removedComponents": [],
-            "subDataId": 0
+            ]
         }
-    },
-    {
-        "ID": 8,
-        "Parent": 7,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "Plane",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 3
-        }
-    },
-    {
-        "ID": 2,
-        "Parent": 1,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "Plane",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 9
-        }
-    },
-    {
-        "ID": 4,
-        "Parent": 1,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "Plane",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 7
-        }
-    },
-    {
-        "ID": 5,
-        "Parent": 0,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "Plane",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 5
-        }
-    },
-    {
-        "ID": 6,
-        "Parent": 0,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "Plane",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 1
-        }
-    },
-    {
-        "ID": 7,
-        "Parent": 0,
-        "Child Entities": [
-            8,
-            9
+    ],
+    "Layers": {
+        "layerNames": [
+            "Test",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
         ],
-        "Prefab": {
-            "prefabName": "Plane",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 2
-        }
-    },
-    {
-        "ID": 1048586,
-        "Parent": null,
-        "Child Entities": [],
-        "isActive": true,
-        "Components": [
-            {
-                "Tag": {
-                    "tag": "Tower 2"
-                }
-            },
-            {
-                "Transform": {
-                    "position": {
-                        "x": -8.899999618530274,
-                        "y": -2.4000000953674318,
-                        "z": 0.0
-                    },
-                    "scale": {
-                        "x": 2.0,
-                        "y": 10.0,
-                        "z": 2.0
-                    },
-                    "rotation": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    },
-                    "eulerAngles": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "worldPos": {
-                        "x": -8.899999618530274,
-                        "y": -2.4000000953674318,
-                        "z": 0.0
-                    },
-                    "worldScale": {
-                        "x": 2.0,
-                        "y": 10.0,
-                        "z": 2.0
-                    },
-                    "worldRot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    }
-                }
-            },
-            {
-                "Material": {}
-            },
-            {
-                "Mesh": {
-                    "meshName": "Cube"
-                }
-            },
-            {
-                "Collider": {
-                    "scale": {
-                        "x": 1.0,
-                        "y": 5.0,
-                        "z": 1.0
-                    },
-                    "positionOffset": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    }
-                }
-            }
-        ]
-    },
-    {
-        "ID": 20,
-        "Parent": null,
-        "Child Entities": [],
-        "isActive": true,
-        "Components": [
-            {
-                "Tag": {
-                    "tag": "Tower 1"
-                }
-            },
-            {
-                "Transform": {
-                    "position": {
-                        "x": -8.0,
-                        "y": -1.7000000476837159,
-                        "z": -3.200000047683716
-                    },
-                    "scale": {
-                        "x": 2.0,
-                        "y": 9.699999809265137,
-                        "z": 2.0
-                    },
-                    "rotation": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    },
-                    "eulerAngles": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "worldPos": {
-                        "x": -8.0,
-                        "y": -1.7000000476837159,
-                        "z": -3.200000047683716
-                    },
-                    "worldScale": {
-                        "x": 2.0,
-                        "y": 9.699999809265137,
-                        "z": 2.0
-                    },
-                    "worldRot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    }
-                }
-            },
-            {
-                "Material": {}
-            },
-            {
-                "Mesh": {
-                    "meshName": "Cube"
-                }
-            },
-            {
-                "Collider": {
-                    "scale": {
-                        "x": 1.0,
-                        "y": 4.849999904632568,
-                        "z": 1.0
-                    },
-                    "positionOffset": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    }
-                }
-            }
+        "layerVisibility": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "collisionMatrix": [
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
         ]
     }
-]
+}

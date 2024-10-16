@@ -1,4 +1,5 @@
 #pragma once
+#include <utility>
 #include <Core/Systems/System.h>
 #include <Core/Entity.h>
 
@@ -10,7 +11,16 @@ namespace Systems {
 
   class LayerSystem : public System {
   public:
-    LayerSystem(const char* name) : System(name) {}
+    // doing this so i can just pass the
+    // whole struct to serialize
+    struct LayerData {
+      std::array<std::string, MAX_LAYERS> layerNames;
+      std::array<int, MAX_LAYERS> layerVisibility;
+      std::array<std::array<int, MAX_LAYERS>, MAX_LAYERS> collisionMatrix;
+    };
+
+  public:
+    LayerSystem(const char* name) : System(name), mLayerData{} {}
 
     void Start() override;
     void Update() override;
@@ -18,13 +28,14 @@ namespace Systems {
 
     void OnSceneChange();
 
-    std::array<std::string, MAX_LAYERS>const& GetLayerNames() { return mLayerNames; }
-    std::array<int, MAX_LAYERS>& GetLayerVisibility() { return mLayerVisibility; }
+    std::array<std::string, MAX_LAYERS>const& GetLayerNames() const { return mLayerData.layerNames; }
+    std::array<int, MAX_LAYERS>& GetLayerVisibility() { return mLayerData.layerVisibility; }
+
+    inline LayerData const& GetLayerData() const noexcept { return mLayerData; }
+    inline void LoadLayerData(LayerData&& layerData) { mLayerData = std::move(layerData); }
 
   private:
-    std::array<std::string, MAX_LAYERS> mLayerNames;
-    std::array<int, MAX_LAYERS> mLayerVisibility;
-    std::array<std::array<int, MAX_LAYERS>, MAX_LAYERS> mCollisionMatrix;
+    LayerData mLayerData;
 
     std::unordered_map<std::string, std::vector<ECS::Entity>> mLayerEntities;
   };

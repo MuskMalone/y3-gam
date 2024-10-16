@@ -18,6 +18,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <fstream>
 #include <Reflection/ObjectFactory.h>
 #include <Prefabs/PrefabManager.h>
+#include <Core/Systems/SystemManager/SystemManager.h>
+#include <Core/Systems/LayerSystem/LayerSystem.h>
 
 namespace Helper {
   template <typename T>
@@ -108,12 +110,26 @@ namespace Serialization
 
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
 
+    // serialize entities
+    writer.StartObject();
+
+    writer.Key(JSON_SCENE_KEY);
     writer.StartArray();
     for (auto const& entity : entityMan.GetAllEntities()) {
       SerializeEntity(entity, writer);
     }
     writer.EndArray();
 
+    // serialize layer data
+    writer.Key(JSON_LAYERS_KEY);
+    if (auto layerSys = Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
+      SerializeClassTypes(layerSys->GetLayerData(), writer);
+    }
+    else {
+      Debug::DebugLogger::GetInstance().LogError("[Serializer] Unable to get Layer System!");
+    }
+
+    writer.EndObject();
     // clean up
     ofs.close();
   }

@@ -22,7 +22,7 @@ namespace Systems {
 
     // TEMP
     for (int i{}; i < MAX_LAYERS; ++i) {
-      mLayerNames[i] = std::to_string(i);
+      mLayerData.layerNames[i] = std::to_string(i);
     }
   }
 

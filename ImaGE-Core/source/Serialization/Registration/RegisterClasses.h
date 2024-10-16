@@ -10,6 +10,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rttr/registration>
 #include <Prefabs/Prefab.h>
 #include <PxPhysicsAPI.h>
+#include <Core/Systems/LayerSystem/LayerSystem.h>
 
 static void rttr_auto_register_reflection_function_(); namespace {
   struct rttr__auto__register__ {
@@ -68,6 +69,15 @@ static void rttr_auto_register_reflection_function_(); namespace {
     .property("x", &physx::PxVec3::x)
     .property("y", &physx::PxVec3::y)
     .property("z", &physx::PxVec3::z);
+
+  {
+    using T = Systems::LayerSystem::LayerData;
+    rttr::registration::class_<T>("LayerData")
+      .constructor<>()
+      .property("layerNames", &T::layerNames)
+      .property("layerVisibility", &T::layerVisibility)
+      .property("collisionMatrix", &T::collisionMatrix);
+  }
 
   if (IGE::Application::GetImGuiEnabled()) {
     rttr::registration::class_<std::pair<std::string, unsigned>>("StringUnsignedPair")

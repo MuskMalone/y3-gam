@@ -28,3 +28,5 @@ namespace Serialization
   constexpr char ScriptFieldInstListTypeKey[] = "type";
   constexpr char JsonAssociativeKey[] = "key", JsonAssociativeValue[] = "value";
 }
+#define JSON_SCENE_KEY "Scene"
+#define JSON_LAYERS_KEY "Layers"
