@@ -26,6 +26,9 @@ namespace Reflection {
   };
 
   struct ProxyScript {
+    ProxyScript() = default;
+    ProxyScript(const char* name) : scriptName{ name }, scriptFieldProxyList{} {}
+
     std::string scriptName;
     std::vector<rttr::variant> scriptFieldProxyList;
   };

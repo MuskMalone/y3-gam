@@ -10,6 +10,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rttr/registration>
 #include <Core/Components/Components.h>
 #include <Reflection/ProxyScript.h>
+#include <Serialization/JsonKeys.h>
 
 static void rttr_auto_register_reflection_function2_(); namespace {
   struct rttr__auto__register2__ {
@@ -87,7 +88,7 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     using T = Reflection::ProxyScript;
     rttr::registration::class_<T>("Script")
       .constructor<>()
-      .property("scriptData", &T::scriptName)
-      .property("scriptFieldProxyList", &T::scriptFieldProxyList);
+      .property(JSON_SCRIPT_NAME_KEY, &T::scriptName)
+      .property(JSON_SCRIPT_FIELD_LIST_KEY, &T::scriptFieldProxyList);
   }
 }

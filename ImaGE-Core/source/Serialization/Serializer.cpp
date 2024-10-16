@@ -44,22 +44,22 @@ namespace Serialization
     writer.StartObject();
 
     // serialize the base layer of the prefab
-    writer.Key(JsonPfbNameKey); writer.String(prefab.mName.c_str());
-    writer.Key(JsonPfbActiveKey); writer.Bool(true);
+    writer.Key(JSON_PFB_NAME_KEY); writer.String(prefab.mName.c_str());
+    writer.Key(JSON_PFB_ACTIVE_KEY); writer.Bool(true);
 
-    writer.Key(JsonComponentsKey);
+    writer.Key(JSON_COMPONENTS_KEY);
     SerializeVariantComponents(prefab.mComponents, writer);
 
     // serialize nested components if prefab has multiple layers
-    writer.Key(JsonPfbDataKey);
+    writer.Key(JSON_PFB_DATA_KEY);
     writer.StartArray();
     for (Prefabs::PrefabSubData const& obj : prefab.mObjects)
     {
       writer.StartObject();
       
-      writer.Key(JsonIdKey); writer.Uint(obj.mId);
-      writer.Key(JsonPfbActiveKey); writer.Bool(true);
-      writer.Key(JsonParentKey);
+      writer.Key(JSON_ID_KEY); writer.Uint(obj.mId);
+      writer.Key(JSON_PFB_ACTIVE_KEY); writer.Bool(true);
+      writer.Key(JSON_PARENT_KEY);
       if (obj.mParent == entt::null) {
         writer.Null();
       }
@@ -67,7 +67,7 @@ namespace Serialization
         writer.Uint(obj.mParent);
       }
       
-      writer.Key(JsonComponentsKey);
+      writer.Key(JSON_COMPONENTS_KEY);
       SerializeVariantComponents(obj.mComponents, writer);
 
       writer.EndObject();
@@ -124,11 +124,11 @@ namespace Serialization
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
 
     // serialize entity id
-    writer.Key(JsonIdKey);
+    writer.Key(JSON_ID_KEY);
     writer.Uint(entity.GetEntityID());
 
     // serialize parent id
-    writer.Key(JsonParentKey);
+    writer.Key(JSON_PARENT_KEY);
     if (entityMan.HasParent(entity)) {
       writer.Uint(entityMan.GetParentEntity(entity).GetEntityID());
     }
@@ -137,7 +137,7 @@ namespace Serialization
     }
 
     // serialize child entities
-    writer.Key(JsonChildEntitiesKey);
+    writer.Key(JSON_CHILD_ENTITIES_KEY);
     writer.StartArray();
     if (entityMan.HasChild(entity)) {
       for (auto const& child : entityMan.GetChildEntity(entity)) {
@@ -152,13 +152,13 @@ namespace Serialization
 
       // if position exists, serialize it
       if (overrides.subDataId == Prefabs::PrefabSubData::BasePrefabId && !overrides.IsComponentModified(rttr::type::get<Component::Transform>())) {
-        writer.Key(JsonPfbPosKey);
+        writer.Key(JSON_PFB_POS_KEY);
         Debug::DebugLogger::GetInstance().LogInfo(std::to_string(entity.GetComponent<Component::Transform>().worldPos.x));
         SerializeRecursive(entity.GetComponent<Component::Transform>().worldPos, writer);
       }
 
       // serialize the components
-      writer.Key(JsonPrefabKey);
+      writer.Key(JSON_PREFAB_KEY);
       SerializeRecursive(overrides, writer);
       writer.EndObject();
       return;
@@ -167,10 +167,10 @@ namespace Serialization
     // if not, serialize the entity as per normal
     // 
     // serialize state
-    writer.Key(JsonEntityStateKey);
+    writer.Key(JSON_ENTITY_STATE_KEY);
     writer.Bool(true);// entityMan.GetIsActiveEntity(entity));
 
-    writer.Key(JsonComponentsKey);
+    writer.Key(JSON_COMPONENTS_KEY);
     std::vector<rttr::variant> const components{ Reflection::ObjectFactory::GetInstance().GetEntityComponents(entity) };
     SerializeVariantComponents(components, writer);
     writer.EndObject();
@@ -189,9 +189,9 @@ namespace Serialization
       compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
 
       writer.Key(compType.get_name().to_string().c_str());
-      if (!SerializeSpecialCases(comp, compType, writer)) {
+      //if (!SerializeSpecialCases(comp, compType, writer)) {
         SerializeClassTypes(comp, writer);
-      }
+      //}
       writer.EndObject();
     }
     writer.EndArray();
@@ -200,29 +200,6 @@ namespace Serialization
   bool Serializer::SerializeSpecialCases(rttr::instance const& obj, rttr::type const& type, WriterType& writer)
   {
     return false;
-    /*if (type == rttr::type::get<Component::Script>()) {
-      rttr::instance const wrappedObj{ obj.get_type().get_raw_type().is_wrapper() ? obj.get_wrapped_instance() : obj };
-      auto const properties{ wrappedObj.get_derived_type().get_properties() };
-
-      for (auto const& property : properties) {
-        rttr::variant propVal{ property.get_value(wrappedObj) };
-        if (!propVal) {
-          std::ostringstream oss{};
-          oss << "Unable to serialize property " << property.get_name().to_string() << " of type " << property.get_type().get_name().to_string();
-          Debug::DebugLogger::GetInstance().LogError("[Serializer] " + oss.str());
-#ifdef _DEBUG
-          std::cout << oss.str() << "\n";
-#endif
-          continue;
-        }
-
-        std::string const name{ property.get_name().to_string() };
-        writer.String(name.c_str(), static_cast<rapidjson::SizeType>(name.length()), false);
-      }
-
-      return true;
-    }*/
-
   }
 
   void Serializer::SerializeClassTypes(rttr::instance const& obj, WriterType& writer)
