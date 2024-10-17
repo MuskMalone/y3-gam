@@ -27,7 +27,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #define JSON_ASSOCIATIVE_KEY        "key"
 #define JSON_ASSOCIATIVE_VALUE      "value"
 
+#define JSON_SCRIPT_LIST_KEY        "scriptList"
 #define JSON_SCRIPT_NAME_KEY        "scriptName"
-#define JSON_SCRIPT_FIELD_LIST_KEY  "scriptFieldProxyList"
+#define JSON_SCRIPT_FIELD_LIST_KEY  "scriptFieldInstList"
 #define JSON_SCRIPT_FILIST_TYPE_KEY "type"
 

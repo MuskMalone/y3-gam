@@ -12,6 +12,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <PxPhysicsAPI.h>
 #include <Scripting/ScriptInstance.h>
 #include <Serialization/JsonKeys.h>
+#include <Reflection/ProxyScript.h>
 
 static void rttr_auto_register_reflection_function_(); namespace {
   struct rttr__auto__register__ {
@@ -74,16 +75,22 @@ static void rttr_auto_register_reflection_function_(); namespace {
   if (IGE::Application::GetImGuiEnabled()) {
     rttr::registration::class_<std::pair<std::string, unsigned>>("StringUnsignedPair")
       .property("first", &std::pair<std::string, unsigned>::first)
-      .property("second", &std::pair<std::string, unsigned>::second)
-      ;
+      .property("second", &std::pair<std::string, unsigned>::second);
   }
 
   /* ------------------- Script ------------------- */
   {
+    using T = Reflection::ProxyScript;
+    rttr::registration::class_<T>("Script")
+      .constructor<>()
+      .property("scriptName", &T::scriptName)
+      .property("scriptFieldProxyList", &T::scriptFieldProxyList);
+  }
+  {
     using T = Mono::ScriptInstance;
     rttr::registration::class_<T>("ScriptInstance")
-      .property("scriptName", &T::mScriptName)
-      .property("scriptFieldInstList", &T::mScriptFieldInstList);
+      .property(JSON_SCRIPT_NAME_KEY, &T::mScriptName)
+      .property(JSON_SCRIPT_FIELD_LIST_KEY, &T::mScriptFieldInstList);
   }
 
   rttr::registration::class_<Mono::ScriptFieldInfo>("ScriptFieldInfo")
@@ -91,6 +98,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   {
     using T = Mono::ScriptFieldInstance<int>;
     rttr::registration::class_<T>("System.Int32")
+      .constructor<>()
       .property("data", &T::mData)
       .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
       .property("scriptField", &T::mScriptField);
@@ -98,6 +106,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   {
     using T = Mono::ScriptFieldInstance<float>;
     rttr::registration::class_<T>("System.Single")
+      .constructor<>()
       .property("data", &T::mData)
       .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
       .property("scriptField", &T::mScriptField);
@@ -105,6 +114,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   {
     using T = Mono::ScriptFieldInstance<double>;
     rttr::registration::class_<T>("System.Double")
+      .constructor<>()
       .property("data", &T::mData)
       .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
       .property("scriptField", &T::mScriptField);
@@ -112,6 +122,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   {
     using T = Mono::ScriptFieldInstance<unsigned>;
     rttr::registration::class_<T>("System.UInt32")
+      .constructor<>()
       .property("data", &T::mData)
       .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
       .property("scriptField", &T::mScriptField);
@@ -119,6 +130,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   {
     using T = Mono::ScriptFieldInstance<std::vector<int>>;
     rttr::registration::class_<T>("System.Int32[]")
+      .constructor<>()
       .property("data", &T::mData)
       .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
       .property("scriptField", &T::mScriptField);
@@ -126,6 +138,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   {
     using T = Mono::ScriptFieldInstance<std::vector<unsigned>>;
     rttr::registration::class_<T>("System.UInt32[]")
+      .constructor<>()
       .property("data", &T::mData)
       .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
       .property("scriptField", &T::mScriptField);
@@ -133,6 +146,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   {
     using T = Mono::ScriptFieldInstance<std::string>;
     rttr::registration::class_<T>("System.String")
+      .constructor<>()
       .property("data", &T::mData)
       .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
       .property("scriptField", &T::mScriptField);
@@ -140,6 +154,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   {
     using T = Mono::ScriptFieldInstance<std::vector<std::string>>;
     rttr::registration::class_<T>("System.String[]")
+      .constructor<>()
       .property("data", &T::mData)
       .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
       .property("scriptField", &T::mScriptField);
@@ -147,6 +162,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   {
     using T = Mono::ScriptFieldInstance<glm::vec3>;
     rttr::registration::class_<T>("ImaGE-Script.Mono.Vec3<System.float>")
+      .constructor<>()
       .property("data", &T::mData)
       .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
       .property("scriptField", &T::mScriptField);
@@ -154,6 +170,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   {
     using T = Mono::ScriptFieldInstance<glm::dvec3>;
     rttr::registration::class_<T>("ImaGE-Script.Mono.Vec3<System.double>")
+      .constructor<>()
       .property("data", &T::mData)
       .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
       .property("scriptField", &T::mScriptField);

@@ -33,4 +33,8 @@ namespace Reflection {
     std::vector<rttr::variant> scriptFieldProxyList;
   };
 
+  struct ProxyScriptComponent {
+    std::vector<ProxyScript> proxyScriptList;
+  };
+
 } // namespace Reflection

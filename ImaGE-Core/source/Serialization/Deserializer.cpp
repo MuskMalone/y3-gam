@@ -637,26 +637,56 @@ namespace Serialization
   }
 
   void Deserializer::DeserializeProxyScript(rttr::variant& var, rapidjson::Value const& jsonVal) {
-    // check if fields exist in json file
-    if (ScanJsonFileForMembers(jsonVal, "Script Component", 2, JSON_SCRIPT_NAME_KEY, rapidjson::kStringType,
-      JSON_SCRIPT_FIELD_LIST_KEY, rapidjson::kArrayType)) {
+
+    if (!jsonVal.HasMember(JSON_SCRIPT_LIST_KEY) || !jsonVal[JSON_SCRIPT_LIST_KEY].IsArray()) {
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Script component missing " + std::string(JSON_SCRIPT_LIST_KEY) + " field");
       var = {}; return;
     }
 
-    Reflection::ProxyScript scriptInst{ jsonVal[JSON_SCRIPT_NAME_KEY].GetString() };
-    auto const& fieldListJson{ jsonVal[JSON_SCRIPT_FIELD_LIST_KEY].GetArray() };
-    scriptInst.scriptFieldProxyList.reserve(fieldListJson.Size());
+    Reflection::ProxyScriptComponent proxyScriptComp{};
+    auto const& jsonScriptArr{ jsonVal[JSON_SCRIPT_LIST_KEY].GetArray() };
+    proxyScriptComp.proxyScriptList.reserve(jsonScriptArr.Size());
+    for (rapidjson::Value const& elem : jsonScriptArr) {
 
-    for (rapidjson::Value const& elem : fieldListJson) {
-      if (!elem.HasMember(JSON_SCRIPT_FILIST_TYPE_KEY)) {
-        Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to find type of script field inst list");
-        continue;
+      // check if fields exist in json file
+      if (!ScanJsonFileForMembers(elem, "Script Component", 2, JSON_SCRIPT_NAME_KEY, rapidjson::kStringType,
+        JSON_SCRIPT_FIELD_LIST_KEY, rapidjson::kArrayType)) {
+        var = {}; return;
       }
 
-      rttr::variant scriptFIList{ rttr::type::get_by_name(elem[JSON_SCRIPT_FILIST_TYPE_KEY].GetString()).create() };
-      DeserializeRecursive(scriptFIList, elem);
-      scriptInst.scriptFieldProxyList.emplace_back(std::move(scriptFIList));
+      Reflection::ProxyScript scriptInst{ elem[JSON_SCRIPT_NAME_KEY].GetString() };
+      auto const& fieldListJson{ elem[JSON_SCRIPT_FIELD_LIST_KEY].GetArray() };
+      scriptInst.scriptFieldProxyList.reserve(fieldListJson.Size());
+
+      for (rapidjson::Value const& fieldInst : fieldListJson) {
+        if (!fieldInst.HasMember(JSON_SCRIPT_FILIST_TYPE_KEY)) {
+          Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to find type of script field inst list");
+          continue;
+        }
+
+        rttr::variant scriptFIList{ rttr::type::get_by_name(fieldInst[JSON_SCRIPT_FILIST_TYPE_KEY].GetString()).create() };
+#ifdef DESERIALIZER_DEBUG
+        std::cout << "  Processing FieldInstList of type " << fieldInst[JSON_SCRIPT_FILIST_TYPE_KEY].GetString() << "\n";
+        if (!scriptFIList.is_valid()) {
+          std::cout << "    Unable to create variant!\n";
+        }
+#endif
+
+        DeserializeRecursive(scriptFIList, fieldInst);
+
+#ifdef DESERIALIZER_DEBUG
+        if (scriptFIList.is_type<std::shared_ptr<Mono::ScriptFieldInstance<double>>>()) {
+          Mono::ScriptFieldInstance<double> const& test = *scriptFIList.get_value<std::shared_ptr<Mono::ScriptFieldInstance<double>>>();
+          std::cout << "Contains " << test.mData << "\n";
+        }
+#endif
+        scriptInst.scriptFieldProxyList.emplace_back(std::move(scriptFIList));
+      }
+
+      proxyScriptComp.proxyScriptList.emplace_back(std::move(scriptInst));
     }
+
+    var = std::move(proxyScriptComp);
   }
 
   bool Deserializer::ParseJsonIntoDocument(rapidjson::Document& document, std::string const& filepath)

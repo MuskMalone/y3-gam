@@ -13,6 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <algorithm>
 #include <Scripting/ScriptManager.h>
 #include <Scripting/ScriptInstance.h>
+#include <Reflection/ProxyScript.h>
 
 namespace Component {
 
@@ -40,6 +41,10 @@ namespace Component {
 					}
 
 				}*/
+			}
+
+			Script(Reflection::ProxyScriptComponent const& proxyScriptComp) {
+				// @TODO: QD to define
 			}
 
 			void UpdateAllScripts()

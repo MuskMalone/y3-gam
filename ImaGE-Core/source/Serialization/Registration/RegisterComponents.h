@@ -82,13 +82,9 @@ static void rttr_auto_register_reflection_function2_(); namespace {
 
   rttr::registration::class_<Script>("ScriptComponent")
     .constructor<std::vector<std::string> const&>()
-    .property("scriptList", &Script::mScriptList);
+    .property(JSON_SCRIPT_LIST_KEY, &Script::mScriptList);
 
-  {
-    using T = Reflection::ProxyScript;
-    rttr::registration::class_<T>("Script")
-      .constructor<>()
-      .property(JSON_SCRIPT_NAME_KEY, &T::scriptName)
-      .property(JSON_SCRIPT_FIELD_LIST_KEY, &T::scriptFieldProxyList);
-  }
+  rttr::registration::class_<Reflection::ProxyScriptComponent>("ProxyScriptComponent")
+    .constructor<>()
+    .property(JSON_SCRIPT_LIST_KEY, &Reflection::ProxyScriptComponent::proxyScriptList);
 }
