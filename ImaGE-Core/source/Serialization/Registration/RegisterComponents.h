@@ -65,10 +65,27 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("linearDamping", &RigidBody::linearDamping)
     .property("motionType", &RigidBody::motionType);
 
-  rttr::registration::class_<Collider>("Collider")
+  rttr::registration::class_<BoxCollider>("BoxCollider")
       .constructor<>()
-      .property("scale", &Collider::scale)
-      .property("positionOffset", &Collider::positionOffset);
+      .property("scale", &BoxCollider::scale)
+      .property("positionOffset", &BoxCollider::positionOffset)
+      .property("rotationOffset", &BoxCollider::rotationOffset)
+      .property("sensor", &BoxCollider::sensor);
+
+  rttr::registration::class_<SphereCollider>("SphereCollider")
+      .constructor<>()
+      .property("radius", &SphereCollider::radius)
+      .property("positionOffset", &SphereCollider::positionOffset)
+      .property("rotationOffset", &SphereCollider::rotationOffset)
+      .property("sensor", &SphereCollider::sensor);
+
+  rttr::registration::class_<CapsuleCollider>("CapsuleCollider")
+      .constructor<>()
+      .property("radius", &CapsuleCollider::radius)
+      .property("halfheight", &CapsuleCollider::halfheight)
+      .property("positionOffset", &CapsuleCollider::positionOffset)
+      .property("rotationOffset", &CapsuleCollider::rotationOffset)
+      .property("sensor", &CapsuleCollider::sensor);
 
 
   rttr::registration::class_<PrefabOverrides>("PrefabOverrides")

@@ -20,7 +20,7 @@ namespace Reflection::ComponentUtils {
   void AddLayer(ECS::Entity entity, rttr::variant const& var);
   void AddMesh(ECS::Entity entity, rttr::variant const& var);
   void AddMaterial(ECS::Entity entity, rttr::variant const& var);
-  void AddCollider(ECS::Entity entity, rttr::variant const& var);
+  void AddBoxCollider(ECS::Entity entity, rttr::variant const& var);
   void AddRigidBody(ECS::Entity entity, rttr::variant const& var);
   void AddText(ECS::Entity entity, rttr::variant const& var);
   void AddScript(ECS::Entity entity, rttr::variant const& var);
