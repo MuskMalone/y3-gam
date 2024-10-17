@@ -1,40 +1,61 @@
 {
     "Scene": [
         {
-            "ID": 1,
+            "ID": 7,
             "Parent": 0,
             "Child Entities": [
-                2,
-                3,
-                4
+                8,
+                9
             ],
             "Prefab": {
                 "prefabName": "Plane",
                 "modifiedComponents": [],
                 "removedComponents": [],
-                "subDataId": 6
+                "subDataId": 2
             }
         },
         {
-            "ID": 9,
-            "Parent": 7,
+            "ID": 6,
+            "Parent": 0,
             "Child Entities": [],
             "Prefab": {
                 "prefabName": "Plane",
                 "modifiedComponents": [],
                 "removedComponents": [],
-                "subDataId": 4
+                "subDataId": 1
             }
         },
         {
-            "ID": 3,
+            "ID": 5,
+            "Parent": 0,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 5
+            }
+        },
+        {
+            "ID": 4,
             "Parent": 1,
             "Child Entities": [],
             "Prefab": {
                 "prefabName": "Plane",
                 "modifiedComponents": [],
                 "removedComponents": [],
-                "subDataId": 8
+                "subDataId": 7
+            }
+        },
+        {
+            "ID": 2,
+            "Parent": 1,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 9
             }
         },
         {
@@ -144,143 +165,48 @@
             }
         },
         {
-            "ID": 2,
+            "ID": 3,
             "Parent": 1,
             "Child Entities": [],
             "Prefab": {
                 "prefabName": "Plane",
                 "modifiedComponents": [],
                 "removedComponents": [],
-                "subDataId": 9
+                "subDataId": 8
             }
         },
         {
-            "ID": 4,
-            "Parent": 1,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 7
-            }
-        },
-        {
-            "ID": 5,
-            "Parent": 0,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 5
-            }
-        },
-        {
-            "ID": 6,
-            "Parent": 0,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 1
-            }
-        },
-        {
-            "ID": 7,
+            "ID": 1,
             "Parent": 0,
             "Child Entities": [
-                8,
-                9
+                2,
+                3,
+                4
             ],
             "Prefab": {
                 "prefabName": "Plane",
-                "modifiedComponents": [],
+                "modifiedComponents": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Default"
+                        }
+                    }
+                ],
                 "removedComponents": [],
-                "subDataId": 2
+                "subDataId": 6
             }
         },
         {
-            "ID": 1048586,
-            "Parent": null,
+            "ID": 9,
+            "Parent": 7,
             "Child Entities": [],
-            "isActive": true,
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Tower 2"
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -8.899999618530274,
-                            "y": -2.4000000953674318,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 2.0,
-                            "y": 10.0,
-                            "z": 2.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -8.899999618530274,
-                            "y": -2.4000000953674318,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 2.0,
-                            "y": 10.0,
-                            "z": 2.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {}
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube"
-                    }
-                },
-                {
-                    "Collider": {
-                        "scale": {
-                            "x": 1.0,
-                            "y": 5.0,
-                            "z": 1.0
-                        },
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        }
-                    }
-                }
-            ]
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 4
+            }
         },
         {
             "ID": 20,
@@ -362,12 +288,93 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 1048586,
+            "Parent": null,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Tower 2"
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -8.899999618530274,
+                            "y": -2.4000000953674318,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 2.0,
+                            "y": 10.0,
+                            "z": 2.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -8.899999618530274,
+                            "y": -2.4000000953674318,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 2.0,
+                            "y": 10.0,
+                            "z": 2.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {}
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube"
+                    }
+                },
+                {
+                    "Collider": {
+                        "scale": {
+                            "x": 1.0,
+                            "y": 5.0,
+                            "z": 1.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
         }
     ],
     "Layers": {
         "layerNames": [
-            "Test",
-            "",
+            "Default",
+            "Player",
             "",
             "",
             "",
@@ -385,7 +392,7 @@
         ],
         "layerVisibility": [
             1,
-            0,
+            1,
             0,
             0,
             0,
