@@ -188,6 +188,7 @@ project "ImaGE-Core"
 
     filter "configurations:Distribution"
        defines {
+          "NDEBUG",
           "DISTRIBUTION",
           "_CRT_SECURE_NO_WARNINGS",
           "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",

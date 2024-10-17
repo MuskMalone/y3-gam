@@ -28,6 +28,9 @@
     <Filter Include="Core\Systems">
       <UniqueIdentifier>{35582E35-21BB-BDD9-CA40-F68FB682895C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Systems\LayerSystem">
+      <UniqueIdentifier>{2681F8F6-12A6-4777-3BF1-2C0727754695}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Core\Systems\SystemManager">
       <UniqueIdentifier>{646CE924-507C-95F5-B935-FA13A564848E}</UniqueIdentifier>
     </Filter>
@@ -223,6 +226,9 @@
     </ClInclude>
     <ClInclude Include="source\Core\GUID.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\Systems\LayerSystem\LayerSystem.h">
+      <Filter>Core\Systems\LayerSystem</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Systems\System.h">
       <Filter>Core\Systems</Filter>
@@ -611,7 +617,6 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Core\Systems\LayerSystem\LayerSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -644,6 +649,9 @@
     </ClCompile>
     <ClCompile Include="source\Core\EntityManager.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Systems\LayerSystem\LayerSystem.cpp">
+      <Filter>Core\Systems\LayerSystem</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Systems\SystemManager\SystemManager.cpp">
       <Filter>Core\Systems\SystemManager</Filter>
@@ -805,6 +813,5 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\Core\Systems\LayerSystem\LayerSystem.cpp" />
   </ItemGroup>
 </Project>
