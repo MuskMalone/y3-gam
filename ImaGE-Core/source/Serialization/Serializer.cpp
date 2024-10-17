@@ -106,11 +106,12 @@ namespace Serialization
     rapidjson::OStreamWrapper osw{ ofs };
     WriterType writer{ osw };
 
-    ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
+    EntityList entityList{ GetSortedEntities() };
 
     writer.StartArray();
-    for (auto const& entity : entityMan.GetAllEntities()) {
-      SerializeEntity(entity, writer);
+    while (!entityList.empty()) {
+      SerializeEntity(entityList.top(), writer);
+      entityList.pop();
     }
     writer.EndArray();
 
@@ -380,6 +381,15 @@ namespace Serialization
     }
 
     writer.EndArray();
+  }
+
+  Serializer::EntityList Serializer::GetSortedEntities() {
+    auto const& entityList{ ECS::EntityManager::GetInstance().GetAllEntities() };
+    EntityList entityPQ{};
+
+    for (ECS::Entity e : entityList) { entityPQ.emplace(e); }
+
+    return entityPQ;
   }
 
 } // namespace Serialization

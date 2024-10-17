@@ -1,42 +1,5 @@
 [
     {
-        "ID": 9,
-        "Parent": 7,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "Plane",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 4
-        }
-    },
-    {
-        "ID": 1,
-        "Parent": 0,
-        "Child Entities": [
-            2,
-            3,
-            4
-        ],
-        "Prefab": {
-            "prefabName": "Plane",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 6
-        }
-    },
-    {
-        "ID": 3,
-        "Parent": 1,
-        "Child Entities": [],
-        "Prefab": {
-            "prefabName": "Plane",
-            "modifiedComponents": [],
-            "removedComponents": [],
-            "subDataId": 8
-        }
-    },
-    {
         "ID": 0,
         "Parent": null,
         "Child Entities": [
@@ -132,14 +95,18 @@
         }
     },
     {
-        "ID": 8,
-        "Parent": 7,
-        "Child Entities": [],
+        "ID": 1,
+        "Parent": 0,
+        "Child Entities": [
+            2,
+            3,
+            4
+        ],
         "Prefab": {
             "prefabName": "Plane",
             "modifiedComponents": [],
             "removedComponents": [],
-            "subDataId": 3
+            "subDataId": 6
         }
     },
     {
@@ -151,6 +118,17 @@
             "modifiedComponents": [],
             "removedComponents": [],
             "subDataId": 9
+        }
+    },
+    {
+        "ID": 3,
+        "Parent": 1,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 8
         }
     },
     {
@@ -201,80 +179,26 @@
         }
     },
     {
-        "ID": 1048586,
-        "Parent": null,
+        "ID": 8,
+        "Parent": 7,
         "Child Entities": [],
-        "isActive": true,
-        "Components": [
-            {
-                "Tag": {
-                    "tag": "Tower 2"
-                }
-            },
-            {
-                "Transform": {
-                    "position": {
-                        "x": -8.899999618530274,
-                        "y": -2.4000000953674318,
-                        "z": 0.0
-                    },
-                    "scale": {
-                        "x": 2.0,
-                        "y": 10.0,
-                        "z": 2.0
-                    },
-                    "rotation": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    },
-                    "eulerAngles": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "worldPos": {
-                        "x": -8.899999618530274,
-                        "y": -2.4000000953674318,
-                        "z": 0.0
-                    },
-                    "worldScale": {
-                        "x": 2.0,
-                        "y": 10.0,
-                        "z": 2.0
-                    },
-                    "worldRot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    }
-                }
-            },
-            {
-                "Material": {}
-            },
-            {
-                "Mesh": {
-                    "meshName": "Cube"
-                }
-            },
-            {
-                "Collider": {
-                    "scale": {
-                        "x": 1.0,
-                        "y": 5.0,
-                        "z": 1.0
-                    },
-                    "positionOffset": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    }
-                }
-            }
-        ]
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 3
+        }
+    },
+    {
+        "ID": 9,
+        "Parent": 7,
+        "Child Entities": [],
+        "Prefab": {
+            "prefabName": "Plane",
+            "modifiedComponents": [],
+            "removedComponents": [],
+            "subDataId": 4
+        }
     },
     {
         "ID": 20,
@@ -341,6 +265,82 @@
                     "scale": {
                         "x": 1.0,
                         "y": 4.849999904632568,
+                        "z": 1.0
+                    },
+                    "positionOffset": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "ID": 1048586,
+        "Parent": null,
+        "Child Entities": [],
+        "isActive": true,
+        "Components": [
+            {
+                "Tag": {
+                    "tag": "Tower 2"
+                }
+            },
+            {
+                "Transform": {
+                    "position": {
+                        "x": -8.899999618530274,
+                        "y": -2.4000000953674318,
+                        "z": 0.0
+                    },
+                    "scale": {
+                        "x": 2.0,
+                        "y": 10.0,
+                        "z": 2.0
+                    },
+                    "rotation": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
+                    },
+                    "eulerAngles": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "worldPos": {
+                        "x": -8.899999618530274,
+                        "y": -2.4000000953674318,
+                        "z": 0.0
+                    },
+                    "worldScale": {
+                        "x": 2.0,
+                        "y": 10.0,
+                        "z": 2.0
+                    },
+                    "worldRot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
+                    }
+                }
+            },
+            {
+                "Material": {}
+            },
+            {
+                "Mesh": {
+                    "meshName": "Cube"
+                }
+            },
+            {
+                "Collider": {
+                    "scale": {
+                        "x": 1.0,
+                        "y": 5.0,
                         "z": 1.0
                     },
                     "positionOffset": {
