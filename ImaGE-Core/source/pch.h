@@ -42,6 +42,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <DebugTools/DebugLogger/DebugLogger.h>       //Logging Tool
 
 #include "PxPhysicsAPI.h"
+#include <External/ImGuizmo/ImGuizmo.h>
 
 #include <Globals.h>
 
@@ -53,6 +54,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #ifdef _DEBUG
 #include <Debug.h>

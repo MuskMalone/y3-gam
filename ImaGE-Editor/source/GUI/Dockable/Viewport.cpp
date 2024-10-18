@@ -18,6 +18,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <FrameRateController/FrameRateController.h>
 #include <Core/Entity.h>
 #include <Core/Components/Mesh.h>
+#include <Core/Components/Transform.h>
+#include <Core/Systems/TransformSystem/TransformHelpers.h>
 #include <Graphics/MeshFactory.h>
 #include <Graphics/Mesh.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
@@ -78,7 +80,61 @@ namespace GUI
         }
       }
     }
+    if (GUIManager::GetSelectedEntity() > 0 && 
+        GUIManager::GetSelectedEntity().HasComponent<Component::Transform>()) {
+        ImGuizmo::SetDrawlist();
+        ImVec2 windowPos{ ImGui::GetWindowPos() };
 
+        float windowWidth { ImGui::GetWindowWidth() };
+        float windowHeight{ ImGui::GetWindowHeight() };
+        ImGuizmo::SetRect(windowPos.x, windowPos.y, windowWidth, windowHeight);
+        auto& transform{ GUIManager::GetSelectedEntity().GetComponent<Component::Transform>() };
+        auto modelMatrix{ transform.worldMtx };
+        auto modelMatrixPrev{ transform.worldMtx };
+        auto viewMatrix{ renderTarget.scene.GetEditorCamera().GetViewMatrix() };
+        auto projMatrix{ renderTarget.scene.GetEditorCamera().GetProjMatrix() };
+
+        static auto currentOperation = ImGuizmo::TRANSLATE ;
+        if (ImGui::IsWindowFocused() || ImGui::IsWindowHovered()) {
+            if (ImGui::IsKeyPressed(ImGuiKey_T))
+                currentOperation = ImGuizmo::TRANSLATE;
+            if (ImGui::IsKeyPressed(ImGuiKey_R)) 
+                currentOperation = ImGuizmo::ROTATE;
+            else if (ImGui::IsKeyPressed(ImGuiKey_S)) 
+                currentOperation = ImGuizmo::SCALE;
+        }
+        ImGuizmo::Manipulate(
+            glm::value_ptr(viewMatrix),           
+            glm::value_ptr(projMatrix),     
+            currentOperation,                           
+            ImGuizmo::LOCAL,                 
+            glm::value_ptr(modelMatrix)          
+        );
+        if (ImGuizmo::IsUsing()) {
+            glm::vec3 s{}, r{}, t{};
+            ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(modelMatrix),
+                glm::value_ptr(t), glm::value_ptr(r), glm::value_ptr(s));
+            glm::vec3 s2{}, r2{}, t2{};
+            ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(modelMatrixPrev),
+                glm::value_ptr(t2), glm::value_ptr(r2), glm::value_ptr(s2));
+            if (currentOperation == ImGuizmo::TRANSLATE) {
+                std::cout << "t" << t.x << " " << t.y << " " << t.z;
+                transform.position += std::move(t - t2);
+
+            }
+            if (currentOperation == ImGuizmo::ROTATE) {
+                auto localRot{ transform.eulerAngles + std::move(r - r2) };
+                transform.SetLocalRotWithEuler(localRot);
+                std::cout << "r";
+            }
+            if (currentOperation == ImGuizmo::SCALE) {
+                transform.scale += std::move(s - s2);
+                std::cout << "s";
+            }
+            transform.modified = true;
+            TransformHelpers::UpdateWorldTransform(GUIManager::GetSelectedEntity());  // must call this to update world transform according to changes to local
+        }
+    }
     ImGui::End();
   }
 
