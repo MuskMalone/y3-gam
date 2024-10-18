@@ -72,8 +72,8 @@ bool Inspector::DrawAddComponentButton(std::string const& name, std::string cons
     ECS::Entity ent{ GUIManager::GetSelectedEntity().GetRawEnttEntityID() };
     if constexpr (std::is_same<ComponentType, Component::RigidBody>::value) {
         ComponentType& newComp{ IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(ent) };
-    } else if constexpr (std::is_same<ComponentType, Component::Collider>::value) {
-        ComponentType& newComp{ IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(ent) };
+    } else if constexpr (std::is_same<ComponentType, Component::BoxCollider>::value) {
+        ComponentType& newComp{ IGE::Physics::PhysicsSystem::GetInstance()->AddBoxCollider(ent) };
     } else {
         ComponentType& newComp{ ent.EmplaceComponent<ComponentType>() };
     }

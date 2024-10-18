@@ -142,6 +142,9 @@
     <Filter Include="Serialization\Registration">
       <UniqueIdentifier>{8D74BBC6-7984-6797-E23D-CCB5CE6C5630}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Singleton">
+      <UniqueIdentifier>{D8A61AA9-4411-CF1F-8D4F-80C5F9F8AC74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Application.h" />
@@ -226,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="source\Core\Systems\SystemManager\SystemManager.h">
       <Filter>Core\Systems\SystemManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.h">
+      <Filter>Core\Systems\TransformSystem</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Systems\TransformSystem\TransformHelpers.h">
       <Filter>Core\Systems\TransformSystem</Filter>
@@ -598,9 +604,13 @@
     <ClInclude Include="source\Serialization\Serializer.h">
       <Filter>Serialization</Filter>
     </ClInclude>
-    <ClInclude Include="source\Singleton\Singleton.h" />
+    <ClInclude Include="source\Singleton\Singleton.h">
+      <Filter>Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Singleton\ThreadSafeSingleton.h">
+      <Filter>Singleton</Filter>
+    </ClInclude>
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Singleton\ThreadSafeSingleton.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -636,6 +646,9 @@
     </ClCompile>
     <ClCompile Include="source\Core\Systems\SystemManager\SystemManager.cpp">
       <Filter>Core\Systems\SystemManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.cpp">
+      <Filter>Core\Systems\TransformSystem</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Systems\TransformSystem\TransformHelpers.cpp">
       <Filter>Core\Systems\TransformSystem</Filter>
