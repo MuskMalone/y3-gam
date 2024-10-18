@@ -118,18 +118,15 @@ namespace GUI
             ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(modelMatrixPrev),
                 glm::value_ptr(t2), glm::value_ptr(r2), glm::value_ptr(s2));
             if (currentOperation == ImGuizmo::TRANSLATE) {
-                std::cout << "t" << t.x << " " << t.y << " " << t.z;
                 transform.position += std::move(t - t2);
 
             }
             if (currentOperation == ImGuizmo::ROTATE) {
                 auto localRot{ transform.eulerAngles + std::move(r - r2) };
                 transform.SetLocalRotWithEuler(localRot);
-                std::cout << "r";
             }
             if (currentOperation == ImGuizmo::SCALE) {
                 transform.scale += std::move(s - s2);
-                std::cout << "s";
             }
             transform.modified = true;
             TransformHelpers::UpdateWorldTransform(GUIManager::GetSelectedEntity());  // must call this to update world transform according to changes to local
