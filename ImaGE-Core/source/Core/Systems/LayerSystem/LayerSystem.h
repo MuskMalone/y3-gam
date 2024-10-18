@@ -32,6 +32,7 @@ namespace Systems {
 
     std::array<std::string, MAX_LAYERS>const& GetLayerNames() const { return mLayerData.layerNames; }
     std::array<int, MAX_LAYERS>& GetLayerVisibility() { return mLayerData.layerVisibility; }
+    void SetLayerName(int layerNumber, std::string layerName);
 
     inline LayerData const& GetLayerData() const noexcept { return mLayerData; }
     inline void LoadLayerData(LayerData&& layerData) { mLayerData = std::move(layerData); }

@@ -14,6 +14,15 @@ namespace Systems {
 
   }
 
+  void LayerSystem::SetLayerName(int layerNumber, std::string layerName) {
+    if (layerNumber >= MAX_LAYERS || layerNumber < 0) {
+      Debug::DebugLogger::GetInstance().LogWarning("[Layers] Invalid Layer Number Passed");
+      return;
+    }
+
+    mLayerData.layerNames[layerNumber] = layerName;
+  }
+
   bool LayerSystem::IsLayerVisible(std::string layerName) {
     auto itr = std::find(mLayerData.layerNames.begin(), mLayerData.layerNames.end(), layerName);
 
