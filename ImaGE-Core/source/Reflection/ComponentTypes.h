@@ -23,7 +23,7 @@ namespace Reflection
 		rttr::type::get<Component::Layer>(),
 		rttr::type::get<Component::Material>(),
 		rttr::type::get<Component::Mesh>(),
-		rttr::type::get<Component::Collider>(),
+		rttr::type::get<Component::BoxCollider>(),
 		rttr::type::get<Component::RigidBody>(),
 		rttr::type::get<Component::Script>(),
 		rttr::type::get<Component::Text>()

@@ -6,6 +6,7 @@
 #include <Asset/Assetables/Mesh/MeshAsset.h>
 #include <Asset/Assetables/Audio/AudioAsset.h>
 #include <Asset/Assetables/Texture/TextureAsset.h>
+
 namespace IGE {
 	namespace Assets {
 

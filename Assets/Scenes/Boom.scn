@@ -12,7 +12,7 @@
             "prefabName": "Plane",
             "modifiedComponents": [
                 {
-                    "key": "Collider",
+                    "key": "BoxCollider",
                     "value": {
                         "scale": {
                             "x": 0.5,
@@ -23,16 +23,23 @@
                             "x": 0.0,
                             "y": 0.0,
                             "z": 0.0
-                        }
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.0
+                        },
+                        "sensor": false
                     }
                 },
                 {
                     "key": "RigidBody",
                     "value": {
                         "velocity": {
-                            "x": -32.20000076293945,
-                            "y": -4.800000190734863,
-                            "z": -9.199999809265137
+                            "x": -20.5,
+                            "y": -2.5999999046325685,
+                            "z": -4.300000190734863
                         },
                         "angularVelocity": {
                             "x": 0.0,
@@ -261,7 +268,7 @@
                 }
             },
             {
-                "Collider": {
+                "BoxCollider": {
                     "scale": {
                         "x": 1.0,
                         "y": 4.849999904632568,
@@ -271,7 +278,14 @@
                         "x": 0.0,
                         "y": 0.0,
                         "z": 0.0
-                    }
+                    },
+                    "rotationOffset": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 0.0
+                    },
+                    "sensor": false
                 }
             }
         ]
@@ -337,7 +351,7 @@
                 }
             },
             {
-                "Collider": {
+                "BoxCollider": {
                     "scale": {
                         "x": 1.0,
                         "y": 5.0,
@@ -347,7 +361,14 @@
                         "x": 0.0,
                         "y": 0.0,
                         "z": 0.0
-                    }
+                    },
+                    "rotationOffset": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 0.0
+                    },
+                    "sensor": false
                 }
             }
         ]

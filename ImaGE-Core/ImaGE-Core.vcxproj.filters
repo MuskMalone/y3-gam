@@ -70,6 +70,9 @@
     <Filter Include="External\ImGui\misc\single_file">
       <UniqueIdentifier>{BD5E7082-2942-7FC2-3245-ADFE9EA74513}</UniqueIdentifier>
     </Filter>
+    <Filter Include="External\ImGuizmo">
+      <UniqueIdentifier>{683857F5-D44E-558B-1DC6-E0AC891B2613}</UniqueIdentifier>
+    </Filter>
     <Filter Include="External\filewatch">
       <UniqueIdentifier>{0EBB171D-FA9E-D872-63FF-D2C54F02C3F4}</UniqueIdentifier>
     </Filter>
@@ -308,6 +311,24 @@
     </ClInclude>
     <ClInclude Include="source\External\ImGui\misc\single_file\imgui_single_file.h">
       <Filter>External\ImGui\misc\single_file</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGuizmo\GraphEditor.h">
+      <Filter>External\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGuizmo\ImCurveEdit.h">
+      <Filter>External\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGuizmo\ImGradient.h">
+      <Filter>External\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGuizmo\ImGuizmo.h">
+      <Filter>External\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGuizmo\ImSequencer.h">
+      <Filter>External\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGuizmo\ImZoomSlider.h">
+      <Filter>External\ImGuizmo</Filter>
     </ClInclude>
     <ClInclude Include="source\External\filewatch\FileWatch.h">
       <Filter>External\filewatch</Filter>
@@ -611,7 +632,10 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
+<<<<<<< HEAD
     <ClInclude Include="source\Core\Systems\Systems.h" />
+=======
+>>>>>>> main
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -695,6 +719,21 @@
     </ClCompile>
     <ClCompile Include="source\External\ImGui\misc\freetype\imgui_freetype.cpp">
       <Filter>External\ImGui\misc\freetype</Filter>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGuizmo\GraphEditor.cpp">
+      <Filter>External\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGuizmo\ImCurveEdit.cpp">
+      <Filter>External\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGuizmo\ImGradient.cpp">
+      <Filter>External\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGuizmo\ImGuizmo.cpp">
+      <Filter>External\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="source\External\ImGuizmo\ImSequencer.cpp">
+      <Filter>External\ImGuizmo</Filter>
     </ClCompile>
     <ClCompile Include="source\External\glad.c">
       <Filter>External</Filter>

@@ -110,14 +110,14 @@ namespace GUI {
         }
       }
 
-      if (currentEntity.HasComponent<Component::Collider>()) {
-        rttr::type const colliderType{ rttr::type::get<Component::Collider>() };
+      if (currentEntity.HasComponent<Component::BoxCollider>()) {
+        rttr::type const colliderType{ rttr::type::get<Component::BoxCollider>() };
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(colliderType);
 
         if (ColliderComponentWindow(currentEntity, std::string(ICON_FA_BOMB), componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Collider>());
+            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::BoxCollider>());
           }
         }
       }
@@ -817,12 +817,12 @@ namespace GUI {
   }
 
   bool Inspector::ColliderComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
-    bool const isOpen{ WindowBegin<Component::Collider>("Collider", icon, highlight) };
+    bool const isOpen{ WindowBegin<Component::BoxCollider>("Collider", icon, highlight) };
     bool modified{ false };
 
     if (isOpen) {
       // Assuming 'collider' is an instance of Collider
-      Component::Collider& collider{ entity.GetComponent<Component::Collider>() };
+      Component::BoxCollider& collider{ entity.GetComponent<Component::BoxCollider>() };
       float contentSize = ImGui::GetContentRegionAvail().x;
       float charSize = ImGui::CalcTextSize("012345678901234").x;
       float inputWidth = (contentSize - charSize - 50) / 3;
@@ -904,7 +904,7 @@ namespace GUI {
         ImGui::TableSetupColumn("ComponentNames", ImGuiTableColumnFlags_WidthFixed, 200.f);
         
         // @TODO: EDIT WHEN NEW COMPONENTS
-        DrawAddComponentButton<Component::Collider>("Collider", ICON_FA_BOMB);
+        DrawAddComponentButton<Component::BoxCollider>("Collider", ICON_FA_BOMB);
         DrawAddComponentButton<Component::Layer>("Layer", ICON_FA_LAYER_GROUP);
         DrawAddComponentButton<Component::Material>("Material", ICON_FA_GEM);
         // @TODO: Temporarily forcing material to be added with mesh

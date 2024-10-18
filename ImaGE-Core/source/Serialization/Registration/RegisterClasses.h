@@ -71,7 +71,12 @@ static void rttr_auto_register_reflection_function_(); namespace {
     .property("x", &physx::PxVec3::x)
     .property("y", &physx::PxVec3::y)
     .property("z", &physx::PxVec3::z);
-
+  rttr::registration::class_<physx::PxQuat>("PxQuat")
+      .constructor<>()
+      .property("x", &physx::PxQuat::x)
+      .property("y", &physx::PxQuat::y)
+      .property("z", &physx::PxQuat::z)
+      .property("w", &physx::PxQuat::w);
   if (IGE::Application::GetImGuiEnabled()) {
     rttr::registration::class_<std::pair<std::string, unsigned>>("StringUnsignedPair")
       .property("first", &std::pair<std::string, unsigned>::first)
