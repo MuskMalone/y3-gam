@@ -46,8 +46,8 @@ namespace Reflection
       { GET_RTTR_TYPE(Material), ComponentUtils::AddMaterial },
       { GET_RTTR_TYPE(Collider), ComponentUtils::AddCollider },
       { GET_RTTR_TYPE(RigidBody), ComponentUtils::AddRigidBody },
+      { GET_RTTR_TYPE(ProxyScriptComponent), ComponentUtils::AddScript },
       { GET_RTTR_TYPE(Text), ComponentUtils::AddText }
-//      { GET_RTTR_TYPE(Script), ComponentUtils::AddScript }
     };
   }
 
