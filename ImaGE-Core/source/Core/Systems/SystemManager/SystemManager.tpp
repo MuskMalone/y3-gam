@@ -9,8 +9,15 @@ template <typename T>
 std::shared_ptr<T> SystemManager::GetSystem() const {
   const char* sysName{ typeid(T).name() };
   if (!mNameToSystem.contains(sysName)) {
-    throw Debug::Exception<SystemManager>(Debug::LVL_ERROR, std::string("Trying to get unregistered system of type ") + typeid(T).name());
+    throw Debug::Exception<SystemManager>(Debug::LVL_ERROR, Msg(std::string("Trying to get unregistered system of type ") + typeid(T).name()));
   }
 
   return std::static_pointer_cast<T>(mNameToSystem.at(sysName));
+}
+
+template <typename... Systems>
+void SystemManager::UpdateSelectedSystems() {
+  UpdateSystems({ typeid(Systems).name()... });
+
+  //LateUpdateSystems({ typeid(Systems).name()... });
 }

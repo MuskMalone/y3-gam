@@ -58,51 +58,50 @@ namespace IGE {
 		//}
 
 		void PhysicsSystem::Update() {
-			if (Scenes::SceneManager::GetInstance().GetSceneState() != Scenes::SceneState::PLAYING) {
-				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::RigidBody, Component::Transform>() };
-				for (auto entity : rbsystem) {
-					auto& xfm{ rbsystem.get<Component::Transform>(entity) };
-					auto& rb{ rbsystem.get<Component::RigidBody>(entity) };
-					auto rbiter{ mRigidBodyIDs.find(rb.bodyID) };
-					if (rbiter != mRigidBodyIDs.end()) {
-						physx::PxRigidDynamic* pxrigidbody{ mRigidBodyIDs.at(rb.bodyID) };
-						//update positions
-						pxrigidbody->setGlobalPose(physx::PxTransform{ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot)});
-					}
-					//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
-					//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));
-					//xfm.worldPos = ToGLMVec3(bodyInterface.(rb.bodyID));
-				}
-			}
-			else {
+			//if (Scenes::SceneManager::GetInstance().GetSceneState() != Scenes::SceneState::PLAYING) {
+			//	auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::RigidBody, Component::Transform>() };
+			//	for (auto entity : rbsystem) {
+			//		auto& xfm{ rbsystem.get<Component::Transform>(entity) };
+			//		auto& rb{ rbsystem.get<Component::RigidBody>(entity) };
+			//		auto rbiter{ mRigidBodyIDs.find(rb.bodyID) };
+			//		if (rbiter != mRigidBodyIDs.end()) {
+			//			physx::PxRigidDynamic* pxrigidbody{ mRigidBodyIDs.at(rb.bodyID) };
+			//			//update positions
+			//			pxrigidbody->setGlobalPose(physx::PxTransform{ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot)});
+			//		}
+			//		//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
+			//		//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));
+			//		//xfm.worldPos = ToGLMVec3(bodyInterface.(rb.bodyID));
+			//	}
+			//}
+			//else {
 				//mPhysicsSystem.Update(gDeltaTime, 1, &mTempAllocator, &mJobSystem);
-					// Simulate one time step (1/60 second)
-				mScene->simulate(1.0f / 60.0f);
+			// Simulate one time step (1/60 second)
+			mScene->simulate(1.0f / 60.0f);
 
-				// Wait for the simulation to complete
-				mScene->fetchResults(true);
-				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::RigidBody, Component::Transform>() };
-				for (auto entity : rbsystem) {
-					auto& xfm{ rbsystem.get<Component::Transform>(entity) };
-					auto& rb{ rbsystem.get<Component::RigidBody>(entity) };
-					auto rbiter{ mRigidBodyIDs.find(rb.bodyID) };
-					if (rbiter != mRigidBodyIDs.end()) {
-						physx::PxRigidDynamic* pxrigidbody{ mRigidBodyIDs.at(rb.bodyID) };
-						//apply gravity
-						if (rb.motionType == Component::RigidBody::MotionType::DYNAMIC) {
-							float grav{ gGravity * rb.gravityFactor * rb.mass };
-							pxrigidbody->addForce(ToPxVec3(glm::vec3(0.f, grav, 0.f)));
-						}
-						//update pos todo tch: update the position via the local pose, aggregate parent and child entities
-						xfm.worldPos = ToGLMVec3(pxrigidbody->getGlobalPose().p);
-						xfm.worldRot = ToGLMQuat(pxrigidbody->getGlobalPose().q);
-						xfm.modified = true; // include this 
-						rb.velocity = pxrigidbody->getLinearVelocity();
+			// Wait for the simulation to complete
+			mScene->fetchResults(true);
+			auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::RigidBody, Component::Transform>() };
+			for (auto entity : rbsystem) {
+				auto& xfm{ rbsystem.get<Component::Transform>(entity) };
+				auto& rb{ rbsystem.get<Component::RigidBody>(entity) };
+				auto rbiter{ mRigidBodyIDs.find(rb.bodyID) };
+				if (rbiter != mRigidBodyIDs.end()) {
+					physx::PxRigidDynamic* pxrigidbody{ mRigidBodyIDs.at(rb.bodyID) };
+					//apply gravity
+					if (rb.motionType == Component::RigidBody::MotionType::DYNAMIC) {
+						float grav{ gGravity * rb.gravityFactor * rb.mass };
+						pxrigidbody->addForce(ToPxVec3(glm::vec3(0.f, grav, 0.f)));
 					}
-					//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
-					//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));
-					//xfm.worldPos = ToGLMVec3(bodyInterface.(rb.bodyID));
+					//update pos todo tch: update the position via the local pose, aggregate parent and child entities
+					xfm.worldPos = ToGLMVec3(pxrigidbody->getGlobalPose().p);
+					xfm.worldRot = ToGLMQuat(pxrigidbody->getGlobalPose().q);
+					xfm.modified = true; // include this 
+					rb.velocity = pxrigidbody->getLinearVelocity();
 				}
+				//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
+				//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));
+				//xfm.worldPos = ToGLMVec3(bodyInterface.(rb.bodyID));
 			}
 
 		}

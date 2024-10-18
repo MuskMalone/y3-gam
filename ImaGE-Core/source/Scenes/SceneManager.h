@@ -75,7 +75,7 @@ namespace Scenes
     \return
       True if a scene is in play and false otherwise
     ************************************************************************/
-    inline bool IsScenePlaying() const noexcept { return mSceneState & (Scenes::SceneState::PAUSED | Scenes::SceneState::PLAYING); }
+    inline bool IsSceneInProgress() const noexcept { return mSceneState & (Scenes::SceneState::PAUSED | Scenes::SceneState::PLAYING); }
 
     /*!*********************************************************************
     \brief
