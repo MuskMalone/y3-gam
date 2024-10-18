@@ -1,6 +1,7 @@
 #include <pch.h>
 #include "Entity.h"
 #include <Core/Components/Tag.h>
+#include <Events/EventManager.h>
 
 namespace ECS
 {
@@ -35,6 +36,13 @@ namespace ECS
 
   bool Entity::operator!=(const Entity& entity) const {
     return (*this).mId != entity.mId;
+  }
+
+  void Entity::DispatchRemoveComponentEvent(std::initializer_list<rttr::type> types) {
+    for (rttr::type const& type : types) {
+      std::cout << "Removed " << type.get_name().to_string() << "\n";
+      QUEUE_EVENT(Events::RemoveComponentEvent, *this, type);
+    }
   }
 
 } // namespace ECS
