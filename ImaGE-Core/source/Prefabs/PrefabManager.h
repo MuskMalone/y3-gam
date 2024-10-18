@@ -44,34 +44,6 @@ namespace Prefabs
 
     /*!*********************************************************************
     \brief
-      Clears all data from the PrefabManager
-    ************************************************************************/
-    ~PrefabManager();
-
-    /*!*********************************************************************
-    \brief
-      Creates an instance of a prefab
-    \param key
-      Name of the prefab
-    \param pos
-      The position to spawn the prefab at
-    \return
-      Entity id of the instance.
-    ************************************************************************/
-    ECS::Entity SpawnPrefab(const std::string& key, glm::dvec3 const& pos = {}, bool mapEntity = true);
-
-    /*!*********************************************************************
-    \brief
-      Checks if a particular prefab has been loaded
-    \param name
-      The name of the prefab
-    \return
-      True if it has been loaded and false otherwise
-    ************************************************************************/
-    inline bool IsPrefabLoaded(std::string const& name) const noexcept { return mPrefabs.contains(name); }
-
-    /*!*********************************************************************
-    \brief
       Checks if a particular prefab exists
     \param name
       The name of the prefab
@@ -80,56 +52,14 @@ namespace Prefabs
     ************************************************************************/
     bool DoesPrefabExist(std::string const& name) const;
 
-    /*!*********************************************************************
-    \brief
-      Gets the deserialized data of a prefab in the form of a Prefab
-      object. Throws a GE::Debug::Exception if not found.
-    \param name
-      The name of the prefab
-    \return
-      The Prefab object
-    ************************************************************************/
-    Prefab const& GetVariantPrefab(std::string const& name) const;
-
-    /*!*********************************************************************
-    \brief
-      Reloads a particular prefab given its name and the file path
-    \param name
-      The name of the prefab
-    \param filePath
-      The file to deserialize from
-    ************************************************************************/
-    void ReloadPrefab(std::string const& name, std::string const& filePath);
-
-    /*!*********************************************************************
-    \brief
-      Clears the prefab container and loads prefabs from files again
-    ************************************************************************/
-    void ReloadPrefabs();
-
-    /*!*********************************************************************
-    \brief
-      Loads a prefab given its name and the file path
-    \param name
-      The name of the prefab
-    \param filePath
-      The file to deserialize from
-    ************************************************************************/
-    void LoadPrefab(std::string const& name);
-
   private:
     /*!*********************************************************************
     \brief
       This function handles the corresponding events the PrefabManager
       subscribed to.
 
-      UNLOAD_SCENE
-        - Clears mEntitiesToPrefabs, which contains the mappings for
-          each entity or prefab instance to their prefabs for the scene
-      REMOVE_ENTITY
-        - Removes the entity entry from the map if the entity is destroyed
-      DELETE_PREFAB
-        - Deletes the respective entry from mPrefabs map
+      SPAWN_PREFAB
+        - Creates a prefab instance
 
     \param event
       The event to be handled
@@ -149,21 +79,8 @@ namespace Prefabs
     \return
       Entity id of the instance and the mappings in the form of a pair
     ************************************************************************/
-    std::pair<ECS::Entity, Prefabs::Prefab::EntityMappings> SpawnPrefabAndMap(const std::string& key,
+    std::pair<ECS::Entity, Prefabs::Prefab::EntityMappings> SpawnPrefabAndMap(IGE::Assets::GUID guid,
       glm::dvec3 const& pos = {}, bool mapEntity = true);
-
-    /*!*********************************************************************
-    \brief
-      Creates a Prefab with the current entity. The prefab will be
-      a copy of the entity, together with its children.
-    \param entity
-      The entity to create the prefab from
-    \param name
-      The name of the prefab to create
-    \return
-      The Prefab object of an entity
-    ************************************************************************/
-    Prefab CreateVariantPrefab(ECS::Entity entity, std::string const& name, bool convertToInstance = false);
 
     /*!*********************************************************************
     \brief
@@ -173,13 +90,11 @@ namespace Prefabs
     \param entity
       The entity to create the prefab from
     \param name
-      The name of the new prefab
+      The name of the prefab
     \param path
       The path to save the file. Will be automatically generated by default
-    \param convertToInstance
-      Whether to convert the entity to an instance
     ************************************************************************/
-    void CreatePrefabFromEntity(ECS::Entity const& entity, std::string const& name, std::string const& path = {}, bool convertToInstance = false);
+    void CreatePrefabFromEntity(ECS::Entity const& entity, std::string const& name, std::string const& path = {});
 
     /*!*********************************************************************
      \brief
@@ -199,6 +114,5 @@ namespace Prefabs
       Prefabs::Prefab::EntityMappings& mappings, std::string const& filePath);
 
   private:
-    PrefabDataContainer mPrefabs;  // Map of deserialized prefab data in format <name, data>
   };
 }

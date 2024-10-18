@@ -15,13 +15,14 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <unordered_set>
 #include <rttr/variant.h>
 #include <Prefabs/Prefab.h>
+#include <Asset/IGEAssets.h>
 
 namespace Component {
   struct PrefabOverrides
   {
     PrefabOverrides() = default;
-    PrefabOverrides(std::string const& prefab, Prefabs::SubDataId id = Prefabs::PrefabSubData::BasePrefabId) :
-      prefabName{ prefab }, modifiedComponents{}, removedComponents{}, subDataId{ id } {}
+    PrefabOverrides(IGE::Assets::GUID _guid, Prefabs::SubDataId id = Prefabs::PrefabSubData::BasePrefabId) :
+      guid{ _guid }, modifiedComponents{}, removedComponents{}, subDataId{ id } {}
 
     inline bool IsDefault() const noexcept { return /*propOverrides.empty() &&*/ modifiedComponents.empty() && removedComponents.empty(); }
     
@@ -86,7 +87,7 @@ namespace Component {
     ************************************************************************/
     void AddComponentRemoval(rttr::type const& type) { modifiedComponents.erase(type); removedComponents.emplace(type); }
 
-    std::string prefabName; // @TODO: SHOULD USE GUID WHEN ASSET MANAGER DONE
+    IGE::Assets::GUID guid;
     std::unordered_map<rttr::type, rttr::variant> modifiedComponents;
     std::unordered_set<rttr::type> removedComponents;
     Prefabs::SubDataId subDataId;

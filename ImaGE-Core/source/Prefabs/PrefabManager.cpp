@@ -26,44 +26,23 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Events/EventManager.h>
 #include <filesystem>
 #include <Core/Components/Transform.h>
+#include <Asset/IGEAssets.h>
 
 #ifdef _DEBUG
 //#define PREFAB_MANAGER_DEBUG
 #endif
 
+using namespace IGE;
 using namespace Prefabs;
+
+namespace {
+  void UpdateInstanceGUID(ECS::Entity entity, Assets::GUID guid);
+}
 
 PrefabManager::PrefabManager()
 {
   SUBSCRIBE_CLASS_FUNC(Events::EventType::SPAWN_PREFAB, &PrefabManager::HandleEvent, this);
   SUBSCRIBE_CLASS_FUNC(Events::EventType::DELETE_PREFAB, &PrefabManager::HandleEvent, this);
-}
-
-ECS::Entity PrefabManager::SpawnPrefab(const std::string& key, glm::dvec3 const& pos, bool mapEntity)
-{
-  PrefabDataContainer::const_iterator iter{ mPrefabs.find(key) };
-  if (iter == mPrefabs.end()) {
-    throw Debug::Exception<PrefabManager>(Debug::LVL_ERROR, Msg("Unable to load prefab " + key));
-  }
-
-  auto entityData{ iter->second.Construct(pos) };
-  return entityData;
-}
-
-Prefab const& PrefabManager::GetVariantPrefab(std::string const& name) const
-{
-  PrefabDataContainer::const_iterator ret{ mPrefabs.find(name) };
-  if (ret == mPrefabs.cend()) {
-    throw Debug::Exception<PrefabManager>(Debug::LVL_ERROR, Msg("Unable to find prefab with name: " + name));
-  }
-
-  return ret->second;
-}
-
-void PrefabManager::ReloadPrefabs()
-{
-  mPrefabs.clear();
-  //LoadPrefabsFromFile();
 }
 
 EVENT_CALLBACK_DEF(PrefabManager, HandleEvent)
@@ -73,18 +52,10 @@ EVENT_CALLBACK_DEF(PrefabManager, HandleEvent)
   case Events::EventType::SPAWN_PREFAB:
   {
     auto pfbEvent{ CAST_TO_EVENT(Events::SpawnPrefabEvent) };
-    // if its already loaded, simply create an instance
-    if (!IsPrefabLoaded(pfbEvent->mName)) {
-      LoadPrefab(pfbEvent->mName);
-    }
+    Assets::AssetManager& assetMan{ IGE_ASSETMGR };
+    Assets::GUID guid{ assetMan.LoadRef<IGE::Assets::PrefabAsset>(pfbEvent->mPath) };
+    assetMan.GetAsset<IGE::Assets::PrefabAsset>(guid)->mPrefabData.Construct(guid, pfbEvent->mPos);
 
-    SpawnPrefab(pfbEvent->mName, pfbEvent->mPos, pfbEvent->mMapEntity);
-    break;
-  }
-  case Events::EventType::DELETE_PREFAB:
-  {
-    PrefabDataContainer::const_iterator iter{ mPrefabs.find(std::static_pointer_cast<Events::DeletePrefabEvent>(event)->mName) };
-    if (iter != mPrefabs.cend()) { mPrefabs.erase(iter); }
     break;
   }
   }
@@ -92,9 +63,6 @@ EVENT_CALLBACK_DEF(PrefabManager, HandleEvent)
 
 bool PrefabManager::DoesPrefabExist(std::string const& name) const
 {
-  // if a loaded version exists, return
-  if (IsPrefabLoaded(name)) { return true; }
-
   // else check the Prefabs dir
   for (auto const& file : std::filesystem::recursive_directory_iterator(gPrefabsDirectory)) {
     if (file.path().stem() == name) { return true; }
@@ -103,43 +71,20 @@ bool PrefabManager::DoesPrefabExist(std::string const& name) const
   return false;
 }
 
-void PrefabManager::ReloadPrefab(std::string const& name, std::string const& filePath) {
-  mPrefabs[name] = Serialization::Deserializer::DeserializePrefabToVariant(filePath);
-}
-
-void PrefabManager::LoadPrefab(std::string const& name) {
-  if (IsPrefabLoaded(name)) { return; }
-
-  mPrefabs.emplace(name, Serialization::Deserializer::DeserializePrefabToVariant(gPrefabsDirectory + name + gPrefabFileExt));
-}
-
-PrefabManager::~PrefabManager() {
-  mPrefabs.clear();
-}
-
 /*---------------------------- EDITOR - ONLY FUNCTIONS ----------------------------*/
-std::pair<ECS::Entity, Prefabs::Prefab::EntityMappings> PrefabManager::SpawnPrefabAndMap(const std::string& key, glm::dvec3 const& pos, bool mapEntity)
+std::pair<ECS::Entity, Prefabs::Prefab::EntityMappings> PrefabManager::SpawnPrefabAndMap(IGE::Assets::GUID guid, glm::dvec3 const& pos, bool mapEntity)
 {
-  PrefabDataContainer::const_iterator iter{ mPrefabs.find(key) };
-  if (iter == mPrefabs.end()) {
-    throw Debug::Exception<PrefabManager>(Debug::LVL_ERROR, Msg("Unable to load prefab " + key));
-  }
+  Prefabs::Prefab const& prefab{ IGE_ASSETMGR.GetAsset<IGE::Assets::PrefabAsset>(guid)->mPrefabData };
 
-  auto entityData{ iter->second.ConstructAndMap(pos) };
+  auto entityData{ prefab.ConstructAndMap(pos) };
   return entityData;
 }
 
 void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::string const& key,
   Prefabs::Prefab::EntityMappings& mappings, std::string const& filePath)
 {
-  PrefabDataContainer::iterator iter{ mPrefabs.find(key) };
-  if (iter == mPrefabs.end()) {
-    Debug::DebugLogger::GetInstance().LogError("[PrefabManager] Trying to update non-existent prefab: " + key);
-    return;
-  }
-
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
-  Prefab prefab{ key };
+  Prefab prefab{};
   prefab.mIsActive = true; // entityMan.GetIsActiveEntity(entity);
   prefab.mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(prefabInstance);
   if (entityMan.HasChild(prefabInstance)) {
@@ -147,36 +92,39 @@ void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::stri
   }
 
   Serialization::Serializer::SerializePrefab(prefab, filePath);
-  iter->second = std::move(prefab);
+  // @TODO: RELOAD PREFAB IN ASSET MGR
 }
 
-Prefab PrefabManager::CreateVariantPrefab(ECS::Entity entity, std::string const& name, bool convertToInstance)
+void PrefabManager::CreatePrefabFromEntity(ECS::Entity const& entity, std::string const& name, std::string const& path)
 {
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
-  Prefab prefab{ name };
+  Prefab prefab{};
   prefab.mIsActive = true; // entityMan.GetIsActiveEntity(entity);
   prefab.mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(entity);
 
-  if (convertToInstance) {
-    entity.EmplaceComponent<Component::PrefabOverrides>(name, Prefabs::PrefabSubData::BasePrefabId);
-  }
-
   if (entityMan.HasChild(entity)) {
-    prefab.CreateSubData(entityMan.GetChildEntity(entity), convertToInstance);
+    prefab.CreateSubData({}, entityMan.GetChildEntity(entity));
   }
 
-  return prefab;
+  std::string const savePath{ path.empty() ? gPrefabsDirectory + name + gPrefabFileExt : path };
+  Serialization::Serializer::SerializePrefab(prefab, path);
+
+  // add the new guid to the PrefabOverrides component
+  IGE::Assets::GUID const guid{ IGE_ASSETMGR.LoadRef<IGE::Assets::PrefabAsset>(path) };
+  UpdateInstanceGUID(entity, guid);
+
+  Debug::DebugLogger::GetInstance().LogInfo("Prefab " + name + " saved to " + savePath);
 }
 
-void PrefabManager::CreatePrefabFromEntity(ECS::Entity const& entity, std::string const& name,
-  std::string const& path, bool convertToInstance)
-{
-  Prefab prefab{ CreateVariantPrefab(entity, name, convertToInstance) };
+namespace {
+  void UpdateInstanceGUID(ECS::Entity entity, Assets::GUID guid) {
+    entity.GetComponent<Component::PrefabOverrides>().guid = guid;
 
-  //Assets::AssetManager& am{ Assets::AssetManager::GetInstance() };
-  std::string const savePath{ path.empty() ? gPrefabsDirectory + name + gPrefabFileExt : path };
-  Serialization::Serializer::SerializePrefab(prefab, savePath);
+    ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
+    if (!entityMan.HasChild(entity)) { return; }
 
-  //am.ReloadFiles(Assets::AssetType::PREFAB);
-  Debug::DebugLogger::GetInstance().LogInfo("Prefab " + name + " saved to " + savePath);
+    for (ECS::Entity child : entityMan.GetChildEntity(entity)) {
+      UpdateInstanceGUID(child, guid);
+    }
+  }
 }

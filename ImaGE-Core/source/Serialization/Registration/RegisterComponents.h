@@ -75,7 +75,6 @@ static void rttr_auto_register_reflection_function2_(); namespace {
 
   rttr::registration::class_<PrefabOverrides>("PrefabOverrides")
     .constructor<>()
-    .property("prefabName", &PrefabOverrides::prefabName)
     .property("modifiedComponents", &PrefabOverrides::modifiedComponents)
     .property("removedComponents", &PrefabOverrides::removedComponents)
     .property("subDataId", &PrefabOverrides::subDataId);

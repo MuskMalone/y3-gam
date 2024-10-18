@@ -7,6 +7,7 @@
 #include "Assetables/Texture/TextureAsset.h"
 #include "Assetables/Audio/AudioAsset.h"
 #include "Assetables/Mesh/MeshAsset.h"
+#include "Assetables/Prefab/PrefabAsset.h"
 #include <Asset/AssetUtils.h>
 #include <windows.h>
 #include <wrl/wrappers/corewrappers.h>
@@ -33,7 +34,8 @@ inline void IGEAssetsRegisterTypes() {
     am.RegisterTypes<
         IGE::Assets::TextureAsset, 
         IGE::Assets::AudioAsset,
-        IGE::Assets::MeshAsset
+        IGE::Assets::MeshAsset,
+        IGE::Assets::PrefabAsset
     >();
 }
 inline void IGEAssetsImportAllAssets() {

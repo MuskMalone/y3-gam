@@ -31,6 +31,7 @@ namespace IGE {
 			bool operator==(const GUID& other) const { return mID == other.mID; } 
 			bool operator<(const GUID& other) const { return mID < other.mID; }
 			std::string const& GetSeed() const noexcept { return mSeed; }
+			bool IsValid() const noexcept { return mSeed != "INVALID"; }
 		private:
 			//static std::mt19937_64 sEng;
 			//static std::uniform_int_distribution<uint64_t> sUniformDistribution;

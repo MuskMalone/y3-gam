@@ -24,22 +24,22 @@ PrefabSubData::PrefabSubData() : mParent{ BasePrefabId } {}
 PrefabSubData::PrefabSubData(SubDataId id, SubDataId parent) :
   mComponents{}, mId{ id }, mParent{ parent }, mIsActive{ true } {}
 
-ECS::Entity PrefabSubData::Construct(std::string const& name) const
+ECS::Entity PrefabSubData::Construct(IGE::Assets::GUID guid, bool createInst) const
 {
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
   ECS::Entity entity{ entityMan.CreateEntity() };
 
   //entityMan.SetIsActiveEntity(entity, mIsActive);
   Reflection::ObjectFactory::GetInstance().AddComponentsToEntity(entity, mComponents);
-  if (!name.empty()) {
-    entity.EmplaceComponent<Component::PrefabOverrides>(name, mId);
+  if (createInst) {
+    entity.EmplaceComponent<Component::PrefabOverrides>(guid, mId);
   }
 
   return entity;
 }
 
 
-Prefab::Prefab(std::string name) : mName{ std::move(name) }, mObjects{}, mComponents{}, mIsActive{ true } {}
+Prefab::Prefab() : mObjects{}, mComponents{}, mIsActive{ true } {}
 
 std::pair<ECS::Entity, Prefab::EntityMappings> Prefab::ConstructAndMap(glm::vec3 const& pos) const
 {
@@ -51,7 +51,7 @@ std::pair<ECS::Entity, Prefab::EntityMappings> Prefab::ConstructAndMap(glm::vec3
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
 
   // first, create the base entity
-  ECS::Entity entity{ entityMan.CreateEntityWithTag(mName) };
+  ECS::Entity entity{ entityMan.CreateEntity() };
   //entityMan.SetIsActiveEntity(entity, mIsActive);
   Reflection::ObjectFactory::GetInstance().AddComponentsToEntity(entity, mComponents);
   Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
@@ -65,7 +65,7 @@ std::pair<ECS::Entity, Prefab::EntityMappings> Prefab::ConstructAndMap(glm::vec3
   // then, create child entities and map IDs
   for (PrefabSubData const& obj : mObjects)
   {
-    ECS::Entity const subEntity{ obj.Construct({}) };
+    ECS::Entity const subEntity{ obj.Construct({}, false) };
     idsToEntities.emplace(obj.mId, subEntity);
     mappedData.Insert(subEntity.GetRawEnttEntityID(), obj.mId);
   }
@@ -81,7 +81,7 @@ std::pair<ECS::Entity, Prefab::EntityMappings> Prefab::ConstructAndMap(glm::vec3
   return { entity, mappedData };
 }
 
-ECS::Entity Prefab::Construct(glm::vec3 const& pos) const
+ECS::Entity Prefab::Construct(IGE::Assets::GUID guid, glm::vec3 const& pos) const
 {
   std::unordered_map<SubDataId, ECS::Entity> idsToEntities;
   size_t const numObjs{ mObjects.size() + 1 };
@@ -89,12 +89,12 @@ ECS::Entity Prefab::Construct(glm::vec3 const& pos) const
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
 
   // first, create the base entity
-  ECS::Entity entity{ entityMan.CreateEntityWithTag(mName) };
+  ECS::Entity entity{ entityMan.CreateEntity() };
   //entityMan.SetIsActiveEntity(entity, mIsActive);
   Reflection::ObjectFactory::GetInstance().AddComponentsToEntity(entity, mComponents);
   Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
   trans.worldPos = trans.position = pos;
-  entity.EmplaceComponent<Component::PrefabOverrides>(mName);
+  entity.EmplaceComponent<Component::PrefabOverrides>(guid);
 
   // map base ID to this entity ID
   idsToEntities.emplace(PrefabSubData::BasePrefabId, entity);
@@ -102,7 +102,7 @@ ECS::Entity Prefab::Construct(glm::vec3 const& pos) const
   // then, create child entities and map IDs
   for (PrefabSubData const& obj : mObjects)
   {
-    ECS::Entity const subEntity{ obj.Construct(mName) };
+    ECS::Entity const subEntity{ obj.Construct(guid) };
     idsToEntities.emplace(obj.mId, subEntity);
   }
 
@@ -117,7 +117,7 @@ ECS::Entity Prefab::Construct(glm::vec3 const& pos) const
   return entity;
 }
 
-void Prefab::FillPrefabInstance(std::unordered_map<Prefabs::SubDataId, ECS::Entity>& idToEntity) const
+void Prefab::FillPrefabInstance(IGE::Assets::GUID guid, std::unordered_map<Prefabs::SubDataId, ECS::Entity>& idToEntity) const
 {
   Reflection::ObjectFactory& of{ Reflection::ObjectFactory::GetInstance() };
   ECS::Entity entity{ idToEntity.at(PrefabSubData::BasePrefabId) };
@@ -135,7 +135,7 @@ void Prefab::FillPrefabInstance(std::unordered_map<Prefabs::SubDataId, ECS::Enti
     }
     // else construct the entity
     else {
-      ECS::Entity subEntity{ obj.Construct(mName) };
+      ECS::Entity subEntity{ obj.Construct(guid) };
       idToEntity.emplace(obj.mId, subEntity);
       newSubData.emplace_back(&obj);
     }
@@ -153,7 +153,7 @@ void Prefab::FillPrefabInstance(std::unordered_map<Prefabs::SubDataId, ECS::Enti
   }
 }
 
-void Prefab::CreateSubData(std::vector<ECS::Entity> const& children, bool assignInstance, SubDataId parent)
+void Prefab::CreateSubData(IGE::Assets::GUID guid, std::vector<ECS::Entity> const& children, SubDataId parent)
 {
   if (children.empty()) { return; }
 
@@ -170,12 +170,10 @@ void Prefab::CreateSubData(std::vector<ECS::Entity> const& children, bool assign
     mObjects.emplace_back(std::move(obj));
 
     // add prefabOverrides if we are assigning to an instance
-    if (assignInstance) {
-      child.EmplaceComponent<Component::PrefabOverrides>(mName, currId);
-    }
+    child.EmplaceComponent<Component::PrefabOverrides>(guid, currId);
 
     if (entityMan.HasChild(child)) {
-      CreateSubData(entityMan.GetChildEntity(child), assignInstance, currId);
+      CreateSubData(guid, entityMan.GetChildEntity(child), currId);
     }
   }
 }
@@ -213,7 +211,6 @@ void Prefab::CreateFixedSubData(std::vector<ECS::Entity> const& children, Entity
 
 void Prefab::Clear() noexcept
 {
-  mName.clear();
   mComponents.clear();
   mObjects.clear();
 }

@@ -32,6 +32,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #define OF_DEBUG
 #endif
 
+using namespace IGE;
+
 namespace Reflection
 {
 
@@ -145,9 +147,7 @@ namespace Reflection
     Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
 
-    for (auto const& [pfb, data] : mPrefabInstances) {
-      pm.LoadPrefab(pfb);
-
+    for (auto const& [guid, data] : mPrefabInstances) {
       std::vector<ECS::Entity> baseEntities;
 
       {
@@ -168,7 +168,8 @@ namespace Reflection
           ent.EmplaceComponent<Component::PrefabOverrides>(instData.mOverrides);
         }
 
-        auto const& originalPfb{ pm.GetVariantPrefab(pfb) };
+        // @TODO: USE GUID FROM FILE TO GET ASSET FROM ASSET MANAGER
+        auto const& originalPfb{ IGE_ASSETMGR.GetAsset<Assets::PrefabAsset>(guid)->mPrefabData };
 
         for (ECS::Entity& e : baseEntities) {
           std::unordered_map<Prefabs::SubDataId, ECS::Entity> idToEntity{};
@@ -177,7 +178,7 @@ namespace Reflection
           TraverseDownInstance(e, idToEntity, data);
 
           // fill the instance with its components and missing sub-objects
-          originalPfb.FillPrefabInstance(idToEntity);
+          originalPfb.FillPrefabInstance(guid, idToEntity);
 
         }
 

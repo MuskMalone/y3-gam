@@ -14,15 +14,16 @@ namespace IGE {
 		}
 		{
 		}
+
 		IGE::Assets::GUID MeshAsset::Import(std::string const& fp)
 		{
 			if (!IsValidFilePath(fp)) {
 				return GUID{ fp };
 			}
 			std::filesystem::path const path{ fp };
-			std::string filename { GetFileName(fp) };
-			std::string fileext { GetFileExtension(fp) };
-			std::string inputModelPath{ cModelDirectory + filename + fileext };
+			std::string const filename{ GetFileName(fp) };
+			std::string const fileext{ GetFileExtension(fp) };
+			std::string const inputModelPath{ cModelDirectory + filename + fileext };
 			CreateDirectoryIfNotExists(cModelDirectory);
 			//assuming that this is an imsh file that is added via the assets folder
 			if (IsDirectoriesEqual(inputModelPath, fp) && fileext == ".imsh")
@@ -37,12 +38,12 @@ namespace IGE {
 			}
 			return GUID{};
 		}
-		void* MeshAsset::Load(GUID guid)
-		{
+
+		void* MeshAsset::Load(GUID guid) {
 			return new MeshAsset(guid.GetSeed());
 		}
-		void MeshAsset::Unload(MeshAsset* ptr, GUID guid)
-		{
+
+		void MeshAsset::Unload(MeshAsset* ptr, GUID guid) {
 			delete ptr;
 		}
 	}

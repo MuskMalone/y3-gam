@@ -62,7 +62,7 @@ namespace IGE {
             return GUID{ GetAbsolutePath(inputImagePath) };
         }
 		void* TextureAsset::Load([[maybe_unused]] GUID guid) {
-			return new TextureAsset(std::string(guid.GetSeed()));
+			return new TextureAsset(guid.GetSeed());
 		}
 		void TextureAsset::Unload([[maybe_unused]] TextureAsset* ptr, GUID guid) {
 			delete ptr;

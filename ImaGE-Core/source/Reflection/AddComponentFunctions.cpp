@@ -41,14 +41,12 @@ namespace Reflection::ComponentUtils {
   void AddCollider(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Collider, comp);
 
-    //entity.EmplaceOrReplaceComponent<Collider>(comp);
     IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(entity, comp);
   }
 
   void AddRigidBody(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(RigidBody, comp);
 
-    //entity.EmplaceOrReplaceComponent<RigidBody>(comp);
     IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(entity, comp);
   }
 
@@ -61,7 +59,7 @@ namespace Reflection::ComponentUtils {
   void AddMesh(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Mesh, comp);
 
-    auto const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>(comp.meshName) };//Graphics::MeshFactory::CreateModelFromString(comp.meshName) };
+    IGE::Assets::GUID const meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>(comp.meshName) };
     entity.EmplaceOrReplaceComponent<Mesh>(std::make_shared<Graphics::Mesh>(meshSrc), comp.meshName);
   }
 
