@@ -16,6 +16,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "mono/metadata/tabledefs.h"
 #include "mono/metadata/mono-debug.h"
 #include "mono/metadata/threads.h"
+#include "Reflection/ProxyScript.h"
 
 
 using namespace Mono;
@@ -229,6 +230,106 @@ void ScriptInstance::SetAllFields()
 
 }
 
+void ScriptInstance::SetAllFields(std::vector<rttr::variant> scriptFieldProxyList)
+{
+  Mono::ScriptManager* sm = &Mono::ScriptManager::GetInstance();
+  //ScriptClassInfo sci = sm->GetScriptClassInfo(mScriptName);
+  for (const rttr::variant& i : scriptFieldProxyList)
+  {
+    for (rttr::variant& f : mScriptFieldInstList)
+    {
+      if (f.is_type<Mono::ScriptFieldInstance<float>>() && i.is_type<Reflection::ProxySFInfo<float>>())
+      {
+        Mono::ScriptFieldInstance<float>& sfi = f.get_value<Mono::ScriptFieldInstance<float>>();
+        const Reflection::ProxySFInfo<float>& psi = i.get_value<Reflection::ProxySFInfo<float>>();
+        if (sfi.mScriptField.mFieldName == psi.fieldName)
+        {
+          sfi.mData = psi.data;
+          SetFieldValue<float>(sfi.mData, sfi.mScriptField.mClassField);
+        }
+      }
+      else if (f.is_type<Mono::ScriptFieldInstance<int>>() && i.is_type<Reflection::ProxySFInfo<int>>())
+      {
+        Mono::ScriptFieldInstance<int>& sfi = f.get_value<Mono::ScriptFieldInstance<int>>();
+        const Reflection::ProxySFInfo<int>& psi = i.get_value<Reflection::ProxySFInfo<int>>();
+        if (sfi.mScriptField.mFieldName == psi.fieldName)
+        {
+          sfi.mData = psi.data;
+          SetFieldValue<int>(sfi.mData, sfi.mScriptField.mClassField);
+        }
+      }
+      else if (f.is_type<Mono::ScriptFieldInstance<double>>() && i.is_type<Reflection::ProxySFInfo<double>>())
+      {
+        Mono::ScriptFieldInstance<double>& sfi = f.get_value<Mono::ScriptFieldInstance<double>>();
+        const Reflection::ProxySFInfo<double>& psi = i.get_value<Reflection::ProxySFInfo<double>>();
+        if (sfi.mScriptField.mFieldName == psi.fieldName)
+        {
+          sfi.mData = psi.data;
+          SetFieldValue<double>(sfi.mData, sfi.mScriptField.mClassField);
+        }
+      }
+      else if (f.is_type<Mono::ScriptFieldInstance<std::string>>() && i.is_type<Reflection::ProxySFInfo<std::string>>())
+      {
+        Mono::ScriptFieldInstance<std::string>& sfi = f.get_value<Mono::ScriptFieldInstance<std::string>>();
+        const Reflection::ProxySFInfo<std::string>& psi = i.get_value<Reflection::ProxySFInfo<std::string>>();
+        if (sfi.mScriptField.mFieldName == psi.fieldName)
+        {
+          sfi.mData = psi.data;
+          mono_field_set_value(mClassInst, sfi.mScriptField.mClassField, STDToMonoString(sfi.mData));
+        }
+      }
+      else if (f.is_type<Mono::ScriptFieldInstance<glm::dvec3>>() && i.is_type<Reflection::ProxySFInfo<glm::dvec3>>())
+      {
+        Mono::ScriptFieldInstance<glm::dvec3>& sfi = f.get_value<Mono::ScriptFieldInstance<glm::dvec3>>();
+        const Reflection::ProxySFInfo<glm::dvec3>& psi = i.get_value<Reflection::ProxySFInfo<glm::dvec3>>();
+        if (sfi.mScriptField.mFieldName == psi.fieldName)
+        {
+          sfi.mData = psi.data;
+          SetFieldValue<glm::dvec3>(sfi.mData, sfi.mScriptField.mClassField);
+        }
+      }
+      else if (f.is_type<Mono::ScriptFieldInstance<std::vector<int>>>() && i.is_type<Reflection::ProxySFInfo<std::vector<int>>>())
+      {
+        Mono::ScriptFieldInstance<std::vector<int>>& sfi = f.get_value<Mono::ScriptFieldInstance<std::vector<int>>>();
+        const Reflection::ProxySFInfo<std::vector<int>>& psi = i.get_value<Reflection::ProxySFInfo<std::vector<int>>>();
+        if (sfi.mScriptField.mFieldName == psi.fieldName)
+        {
+          sfi.mData = psi.data;
+          SetFieldValueArr<int>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain);
+        }
+      }
+      else if (f.is_type<Mono::ScriptFieldInstance<std::vector<unsigned>>>() && i.is_type<Reflection::ProxySFInfo<std::vector<unsigned>>>())
+      {
+        Mono::ScriptFieldInstance<std::vector<unsigned>>& sfi = f.get_value<Mono::ScriptFieldInstance<std::vector<unsigned>>>();
+        const Reflection::ProxySFInfo<std::vector<unsigned>>& psi = i.get_value<Reflection::ProxySFInfo<std::vector<unsigned>>>();
+        if (sfi.mScriptField.mFieldName == psi.fieldName)
+        {
+          sfi.mData = psi.data;
+          SetFieldValueArr<unsigned>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain);
+        }
+      }
+      else if (f.is_type<Mono::ScriptFieldInstance<std::vector<std::string>>>() && i.is_type<Reflection::ProxySFInfo<std::vector<std::string>>>())
+      {
+        Mono::ScriptFieldInstance<std::vector<std::string>>& sfi = f.get_value<Mono::ScriptFieldInstance<std::vector<std::string>>>();
+        const Reflection::ProxySFInfo<std::vector<std::string>>& psi = i.get_value<Reflection::ProxySFInfo<std::vector<std::string>>>();
+        if (sfi.mScriptField.mFieldName == psi.fieldName)
+        {
+          sfi.mData = psi.data;
+          std::vector<MonoString*> proxy{};
+          for (const std::string& s : sfi.mData)
+          {
+            proxy.push_back(STDToMonoString(s));
+          }
+          SetFieldValueArr<MonoString*>(proxy, sfi.mScriptField.mClassField, sm->mAppDomain);
+        }
+      }
+
+    }
+  }
+
+  
+
+}
 
 
 void ScriptInstance::GetAllUpdatedFields()
