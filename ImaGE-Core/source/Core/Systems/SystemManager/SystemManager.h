@@ -13,6 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <memory>
 #include <typeindex>
 #include <Core/Systems/System.h>
+#include <string>
 
 namespace Systems {
   class SystemManager

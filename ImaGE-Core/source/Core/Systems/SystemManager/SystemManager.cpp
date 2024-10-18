@@ -31,7 +31,7 @@ namespace Systems {
 
     // idk if we need this
     //for (auto const& [name, system] : mSystems) {
-    //  system->LateUpdate();
+    //  system->RenderUpdate();
     //}
   }
 
@@ -62,7 +62,7 @@ namespace Systems {
 #endif
 
       frc.StartSystemTimer();
-      mNameToSystem[name]->LateUpdate();
+      mNameToSystem[name]->RenderUpdate();
       frc.EndSystemTimer(name);
     }
   }

@@ -40,7 +40,6 @@ namespace ECS
 
   void Entity::DispatchRemoveComponentEvent(std::initializer_list<rttr::type> types) {
     for (rttr::type const& type : types) {
-      std::cout << "Removed " << type.get_name().to_string() << "\n";
       QUEUE_EVENT(Events::RemoveComponentEvent, *this, type);
     }
   }

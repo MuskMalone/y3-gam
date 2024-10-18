@@ -29,7 +29,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 #define GET_RTTR_TYPE(T) rttr::type::get<T>()
 #ifdef _DEBUG
-#define OF_DEBUG
+//#define OF_DEBUG
 #endif
 
 namespace Reflection
@@ -46,8 +46,8 @@ namespace Reflection
       { GET_RTTR_TYPE(Material), ComponentUtils::AddMaterial },
       { GET_RTTR_TYPE(BoxCollider), ComponentUtils::AddBoxCollider },
       { GET_RTTR_TYPE(RigidBody), ComponentUtils::AddRigidBody },
+      { GET_RTTR_TYPE(ProxyScriptComponent), ComponentUtils::AddScript },
       { GET_RTTR_TYPE(Text), ComponentUtils::AddText }
-//      { GET_RTTR_TYPE(Script), ComponentUtils::AddScript }
     };
   }
 

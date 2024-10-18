@@ -51,15 +51,15 @@ namespace IGE {
 			//		if (rbiter != mRigidBodyIDs.end()) {
 			//			physx::PxRigidDynamic* pxrigidbody{ mRigidBodyIDs.at(rb.bodyID) };
 			//			//update positions
-			//			pxrigidbody->setGlobalPose(physx::PxTransform{ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot)});
+			//			pxrigidbody->setGlobalPose(physx::PxTransform{ ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot) });
 			//		}
 			//		//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
 			//		//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));
 			//		//xfm.worldPos = ToGLMVec3(bodyInterface.(rb.bodyID));
 			//	}
 			//}
-			//else {
-				//mPhysicsSystem.Update(gDeltaTime, 1, &mTempAllocator, &mJobSystem);
+
+			//mPhysicsSystem.Update(gDeltaTime, 1, &mTempAllocator, &mJobSystem);
 					// Simulate one time step (1/60 second)
 			mScene->simulate(gTimeStep);
 
@@ -83,19 +83,18 @@ namespace IGE {
 						float angle = angularVelocity.magnitude() * gTimeStep;
 						if (glm::abs(angle) > glm::epsilon<float>()) {
 							auto axis = angularVelocity.getNormalized();
-							physx::PxQuat deltaRotation(angle, axis);  
+							physx::PxQuat deltaRotation(angle, axis);
 							// to add rotations, multiply 2 quats tgt
 							xfm.worldRot *= ToGLMQuat(deltaRotation);
-						}						
+						}
 					}
 					xfm.modified = true; // include this 
 					pxrigidbody->setLinearVelocity(rb.velocity);
-					//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
-					//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));
-					//xfm.worldPos = ToGLMVec3(bodyInterface.(rb.bodyID));
 				}
+				//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
+				//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));
+				//xfm.worldPos = ToGLMVec3(bodyInterface.(rb.bodyID));
 			}
-
 		}
 
 		Component::RigidBody& PhysicsSystem::AddRigidBody(ECS::Entity entity, Component::RigidBody rigidbody) {

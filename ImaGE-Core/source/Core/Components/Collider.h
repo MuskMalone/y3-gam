@@ -9,12 +9,12 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma once
 #include <PxPhysicsAPI.h>
 #include <rttr/rttr_enable.h>
+
 namespace Component {
   enum class ColliderVars {
      SCALE, POS, ROT
   };
   struct ColliderAbstract {
-      RTTR_ENABLE()
   public:
       inline void Clear() noexcept {
           positionOffset = {};
@@ -25,9 +25,11 @@ namespace Component {
       physx::PxQuat rotationOffset{};
       void* bodyID;
       bool sensor{ false };
+
+      RTTR_ENABLE()
   };
+
   struct BoxCollider : public ColliderAbstract{
-      RTTR_ENABLE(ColliderAbstract)
   public:
     inline void Clear() noexcept {
         ColliderAbstract::Clear();
@@ -35,18 +37,21 @@ namespace Component {
     }
     physx::PxVec3 scale{0, 0, 0};
 
+    RTTR_ENABLE(ColliderAbstract)
   };
+
   struct SphereCollider : public ColliderAbstract {
-      RTTR_ENABLE(ColliderAbstract)
   public:
       inline void Clear() noexcept {
           ColliderAbstract::Clear();
           radius = 0.f;
       }
       float radius;
-  };
-  struct CapsuleCollider : public ColliderAbstract {
+
       RTTR_ENABLE(ColliderAbstract)
+  };
+
+  struct CapsuleCollider : public ColliderAbstract {
   public:
       inline void Clear() noexcept {
           ColliderAbstract::Clear();
@@ -55,6 +60,8 @@ namespace Component {
       }
       float radius;
       float halfheight;
+
+      RTTR_ENABLE(ColliderAbstract)
   };
 
 }
