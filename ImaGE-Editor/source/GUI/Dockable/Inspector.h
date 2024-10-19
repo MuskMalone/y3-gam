@@ -46,7 +46,9 @@ namespace GUI {
       True if any part of the component was modified and false otherwise
     ************************************************************************/
     // Kindly put in alphabetical order, thank you!
-    bool ColliderComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
+    bool BoxColliderComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
+    bool SphereColliderComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
+    bool CapsuleColliderComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
     bool LayerComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
     bool MaterialComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
     bool MeshComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);

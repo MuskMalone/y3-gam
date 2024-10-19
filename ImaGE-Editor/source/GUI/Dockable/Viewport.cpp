@@ -98,7 +98,7 @@ namespace GUI
         if (ImGui::IsWindowFocused() || ImGui::IsWindowHovered()) {
             if (ImGui::IsKeyPressed(ImGuiKey_T))
                 currentOperation = ImGuizmo::TRANSLATE;
-            if (ImGui::IsKeyPressed(ImGuiKey_R)) 
+            else if (ImGui::IsKeyPressed(ImGuiKey_R)) 
                 currentOperation = ImGuizmo::ROTATE;
             else if (ImGui::IsKeyPressed(ImGuiKey_S)) 
                 currentOperation = ImGuizmo::SCALE;
@@ -119,7 +119,6 @@ namespace GUI
                 glm::value_ptr(t2), glm::value_ptr(r2), glm::value_ptr(s2));
             if (currentOperation == ImGuizmo::TRANSLATE) {
                 transform.position += std::move(t - t2);
-
             }
             if (currentOperation == ImGuizmo::ROTATE) {
                 auto localRot{ transform.eulerAngles + std::move(r - r2) };

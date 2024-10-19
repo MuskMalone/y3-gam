@@ -2,7 +2,7 @@
 #include <Core/Components/Components.h>
 #include <Core/Entity.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
-
+#include <Events/EventCallback.h>
 namespace IGE {
 	namespace Physics {
 		const float gDeltaTime = 1.f / 60.f;
@@ -22,9 +22,9 @@ namespace IGE {
 			Component::BoxCollider& AddBoxCollider(ECS::Entity entity, Component::BoxCollider collider = {});
 			Component::SphereCollider& AddSphereCollider(ECS::Entity entity, Component::SphereCollider collider = {});
 			Component::CapsuleCollider& AddCapsuleCollider(ECS::Entity entity, Component::CapsuleCollider collider = {});
-			void ChangeBoxColliderVar(ECS::Entity entity, Component::ColliderVars var);
-			void ChangeSphereColliderVar(ECS::Entity entity, Component::ColliderVars var);
-			void ChangeCapsuleColliderVar(ECS::Entity entity, Component::ColliderVars var);
+			void ChangeBoxColliderVar(ECS::Entity entity);
+			void ChangeSphereColliderVar(ECS::Entity entity);
+			void ChangeCapsuleColliderVar(ECS::Entity entity);
 			void Debug(float dt); // to be called within rendersystems geom pass
 		//private:
 		//	const uint32_t cMaxBodies = 65536;
@@ -58,6 +58,13 @@ namespace IGE {
 			void operator=(const PhysicsSystem&) = delete;
 
 		private:
+			template <typename _component_type>
+			physx::PxShape* GetShapePtr(_component_type const& collider);
+			template <typename _physx_type, typename _collider_component>
+			void RemoveCollider(ECS::Entity entity, physx::PxGeometryType::Enum typeenum);
+			void RemoveRigidBody(ECS::Entity entity);
+			EVENT_CALLBACK_DECL(HandleRemoveComponent);
+			EVENT_CALLBACK_DECL(HandleRemoveEntity);
 			template <typename _physx_type, typename _collider_component>
 			void AddShape(physx::PxRigidDynamic* rb, ECS::Entity const& entity, _collider_component& collider);
 			template <typename _physx_type, typename _collider_component>

@@ -74,7 +74,11 @@ bool Inspector::DrawAddComponentButton(std::string const& name, std::string cons
         ComponentType& newComp{ IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(ent) };
     } else if constexpr (std::is_same<ComponentType, Component::BoxCollider>::value) {
         ComponentType& newComp{ IGE::Physics::PhysicsSystem::GetInstance()->AddBoxCollider(ent) };
-    } else {
+    } else if constexpr (std::is_same<ComponentType, Component::SphereCollider>::value) {
+        ComponentType& newComp{ IGE::Physics::PhysicsSystem::GetInstance()->AddSphereCollider(ent) };
+    }else if constexpr (std::is_same<ComponentType, Component::CapsuleCollider>::value) {
+        ComponentType& newComp{ IGE::Physics::PhysicsSystem::GetInstance()->AddCapsuleCollider(ent) };
+    }else {
         ComponentType& newComp{ ent.EmplaceComponent<ComponentType>() };
     }
     SetIsComponentEdited(true);

@@ -193,6 +193,12 @@ namespace IGE {
           {
               return ref.GetInfo();
           }
+          template <typename T>
+          bool IsGUIDValid(GUID const& guid) {
+              TypeGUID typeguid{ GetTypeName<T>() };
+              TypeAssetKey key{ typeguid ^ guid };
+              return (mAssetRefs.find(key) != mAssetRefs.end());
+          }
 
       protected:
 

@@ -114,7 +114,7 @@ namespace GUI {
         rttr::type const colliderType{ rttr::type::get<Component::BoxCollider>() };
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(colliderType);
 
-        if (ColliderComponentWindow(currentEntity, std::string(ICON_FA_BOMB), componentOverriden)) {
+        if (BoxColliderComponentWindow(currentEntity, std::string(ICON_FA_BOMB), componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
             prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::BoxCollider>());
@@ -122,6 +122,29 @@ namespace GUI {
         }
       }
 
+      if (currentEntity.HasComponent<Component::SphereCollider>()) {
+          rttr::type const colliderType{ rttr::type::get<Component::SphereCollider>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(colliderType);
+
+          if (SphereColliderComponentWindow(currentEntity, std::string(ICON_FA_BOMB), componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::SphereCollider>());
+              }
+          }
+      }
+
+      if (currentEntity.HasComponent<Component::CapsuleCollider>()) {
+          rttr::type const colliderType{ rttr::type::get<Component::CapsuleCollider>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(colliderType);
+
+          if (CapsuleColliderComponentWindow(currentEntity, std::string(ICON_FA_BOMB), componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::CapsuleCollider>());
+              }
+          }
+      }
       if (currentEntity.HasComponent<Component::Layer>()) {
         rttr::type const layerType{ rttr::type::get<Component::Layer>() };
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(layerType);
@@ -816,8 +839,8 @@ namespace GUI {
     return modified;
   }
 
-  bool Inspector::ColliderComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
-    bool const isOpen{ WindowBegin<Component::BoxCollider>("Collider", icon, highlight) };
+  bool Inspector::BoxColliderComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::BoxCollider>("Box Collider", icon, highlight) };
     bool modified{ false };
 
     if (isOpen) {
@@ -827,50 +850,178 @@ namespace GUI {
       float charSize = ImGui::CalcTextSize("012345678901234").x;
       float inputWidth = (contentSize - charSize - 50) / 3;
 
-      ImGui::BeginTable("ColliderTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+      ImGui::BeginTable("BoxColliderTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
-      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-      ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
-      ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
-      ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
-      ImGui::TableHeadersRow();
+      // Set up columns for labels and inputs
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);  // Labels
+      ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);            // X column
+      ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);            // Y column
+      ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);            // Z column
+      ImGui::TableHeadersRow();  // Create header row for the table
 
-      if (ImGuiHelpers::TableInputFloat3("Scale", &collider.scale.x, inputWidth, false, 0.f, 100.f, 1.f)) {
-        SetIsComponentEdited(true);
+      // Modify the scale (vec3 input)
+      if (ImGuiHelpers::TableInputFloat3("Box Scale", &collider.scale.x, inputWidth, false, 0.1f, 10.0f, 0.1f)) {
+          IGE::Physics::PhysicsSystem::GetInstance()->ChangeBoxColliderVar(entity);
+          SetIsComponentEdited(true);
       }
-      if (ImGuiHelpers::TableInputFloat3("Position Offset", &collider.positionOffset.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
-        SetIsComponentEdited(true);
-      }
-      //if (ImGuiHelpers::TableInputFloat3("Rotation Offset", &collider.rotationOffset.x, inputWidth, false, 0.f, 360.f, 0.1f)) {
-      //  SetIsComponentEdited(true);
-      //}
 
+      // Modify positionOffset (vec3 input)
+      if (ImGuiHelpers::TableInputFloat3("Box Position Offset", &collider.positionOffset.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
+          IGE::Physics::PhysicsSystem::GetInstance()->ChangeBoxColliderVar(entity);
+          SetIsComponentEdited(true);
+      }
+
+      // Modify rotationOffset (vec3 input)
+      if (ImGuiHelpers::TableInputFloat3("Box Rotation Offset", &collider.rotationOffset.x, inputWidth, false, -360.f, 360.f, 1.f)) {
+          IGE::Physics::PhysicsSystem::GetInstance()->ChangeBoxColliderVar(entity);
+          SetIsComponentEdited(true);
+      }
+
+      // Modify sensor (bool input)
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0); ImGui::Text("Sensor");
+      ImGui::TableSetColumnIndex(1);  // Align in the X column
+      if (ImGui::Checkbox("##Sensor", &collider.sensor)) {
+          IGE::Physics::PhysicsSystem::GetInstance()->ChangeBoxColliderVar(entity);
+          SetIsComponentEdited(true);
+      }
+
+      // End the table
       ImGui::EndTable();
-
-      // Shape Type Selection
-      //const char* shapeTypes[] = { "Unknown", "Sphere", "Capsule", "Box", "Triangle", "ConvexHull", "Mesh", "HeightField", "Compound" };
-      //int currentShapeType = static_cast<int>(collider.type);
-
-      //ImGui::BeginTable("ShapeSelectionTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
-
-      //ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-      //ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
-
-      //ImGui::TableNextRow();
-      //ImGui::TableSetColumnIndex(0);
-      //ImGui::Text("Shape Type");
-      //ImGui::TableSetColumnIndex(1);
-      //ImGui::SetNextItemWidth(INPUT_SIZE);
-      //if (ImGui::Combo("##ShapeType", &currentShapeType, shapeTypes, IM_ARRAYSIZE(shapeTypes))) {
-      //  collider.type = static_cast<JPH::EShapeSubType>(currentShapeType);
-      //  SetIsComponentEdited(true);
-      //}
-
-      //ImGui::EndTable();
     }
 
     WindowEnd(isOpen);
     return modified;
+  }
+
+  bool Inspector::SphereColliderComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight)
+  {
+      bool const isOpen{ WindowBegin<Component::SphereCollider>("Sphere Collider", icon, highlight) };
+      bool modified{ false };
+
+      if (isOpen) {
+          // Assuming 'collider' is an instance of Collider
+          Component::SphereCollider& collider{ entity.GetComponent<Component::SphereCollider>() };
+          float contentSize = ImGui::GetContentRegionAvail().x;
+          float charSize = ImGui::CalcTextSize("012345678901234").x;
+          float inputWidth = (contentSize - charSize - 50) / 3;
+
+          // Start a table for the Collider component
+          ImGui::BeginTable("SphereColliderTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+          // Set up columns for labels and inputs
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);  // Labels
+          ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);            // X column
+          ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);            // Y column
+          ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);            // Z column
+          ImGui::TableHeadersRow();  // Create header row for the table
+
+          // Modify the radius (single float input)
+          ImGui::TableNextRow();
+          ImGui::TableSetColumnIndex(0); ImGui::Text("Radius");
+          ImGui::TableSetColumnIndex(1);  // Span across X column
+          if (ImGui::DragFloat("##Radius", &collider.radius, 0.1f, 0.f, 100.f)) {
+              IGE::Physics::PhysicsSystem::GetInstance()->ChangeSphereColliderVar(entity);
+              SetIsComponentEdited(true);
+          }
+
+          // Modify positionOffset (vec3 input)
+          if (ImGuiHelpers::TableInputFloat3("Sphere Position Offset", &collider.positionOffset.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
+              IGE::Physics::PhysicsSystem::GetInstance()->ChangeSphereColliderVar(entity);
+              SetIsComponentEdited(true);
+          }
+
+          // Modify rotationOffset (vec3 input)
+          if (ImGuiHelpers::TableInputFloat3("Sphere Rotation Offset", &collider.rotationOffset.x, inputWidth, false, -360.f, 360.f, 1.f)) {
+              IGE::Physics::PhysicsSystem::GetInstance()->ChangeSphereColliderVar(entity);
+              SetIsComponentEdited(true);
+          }
+
+          // Modify sensor (bool input)
+          ImGui::TableNextRow();
+          ImGui::TableSetColumnIndex(0); ImGui::Text("Sensor");
+          ImGui::TableSetColumnIndex(1);  // Align in the X column
+          if (ImGui::Checkbox("##Sensor", &collider.sensor)) {
+              IGE::Physics::PhysicsSystem::GetInstance()->ChangeSphereColliderVar(entity);
+              SetIsComponentEdited(true);
+          }
+
+          // End the table
+          ImGui::EndTable();
+
+      }
+
+      WindowEnd(isOpen);
+      return modified;
+  }
+
+  bool Inspector::CapsuleColliderComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight)
+  {
+      bool const isOpen{ WindowBegin<Component::CapsuleCollider>("Capsule Collider", icon, highlight) };
+      bool modified{ false };
+
+      if (isOpen) {
+          // Assuming 'collider' is an instance of Collider
+          Component::CapsuleCollider& collider{ entity.GetComponent<Component::CapsuleCollider>() };
+          float contentSize = ImGui::GetContentRegionAvail().x;
+          float charSize = ImGui::CalcTextSize("012345678901234").x;
+          float inputWidth = (contentSize - charSize - 50) / 3;
+
+          // Start a table for the Collider component
+          ImGui::BeginTable("CapsuleColliderTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+          // Set up columns for labels and inputs
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);  // Labels
+          ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);            // X column
+          ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);            // Y column
+          ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);            // Z column
+          ImGui::TableHeadersRow();  // Create header row for the table
+
+          // Modify the radius (single float input)
+          ImGui::TableNextRow();
+          ImGui::TableSetColumnIndex(0); ImGui::Text("Capsule Radius");
+          ImGui::TableSetColumnIndex(1);  // Span across X column
+          if (ImGui::DragFloat("##Radius", &collider.radius, 0.1f, 0.1f, 100.f)) {
+              IGE::Physics::PhysicsSystem::GetInstance()->ChangeCapsuleColliderVar(entity);
+              SetIsComponentEdited(true);
+          }
+
+          // Modify the halfHeight (single float input)
+          ImGui::TableNextRow();
+          ImGui::TableSetColumnIndex(0); ImGui::Text("Capsule Half Height");
+          ImGui::TableSetColumnIndex(1);  // Span across X column
+          if (ImGui::DragFloat("##HalfHeight", &collider.halfheight, 0.1f, 0.1f, 100.f)) {
+              IGE::Physics::PhysicsSystem::GetInstance()->ChangeCapsuleColliderVar(entity);
+              SetIsComponentEdited(true);
+          }
+
+          // Modify positionOffset (vec3 input)
+          if (ImGuiHelpers::TableInputFloat3("Capsule Position Offset", &collider.positionOffset.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
+              IGE::Physics::PhysicsSystem::GetInstance()->ChangeCapsuleColliderVar(entity);
+              SetIsComponentEdited(true);
+          }
+
+          // Modify rotationOffset (vec3 input)
+          if (ImGuiHelpers::TableInputFloat3("Capsule Rotation Offset", &collider.rotationOffset.x, inputWidth, false, -360.f, 360.f, 1.f)) {
+              IGE::Physics::PhysicsSystem::GetInstance()->ChangeCapsuleColliderVar(entity);
+              SetIsComponentEdited(true);
+          }
+
+          // Modify sensor (bool input)
+          ImGui::TableNextRow();
+          ImGui::TableSetColumnIndex(0); ImGui::Text("Sensor");
+          ImGui::TableSetColumnIndex(1);  // Align in the X column
+          if (ImGui::Checkbox("##Sensor", &collider.sensor)) {
+              IGE::Physics::PhysicsSystem::GetInstance()->ChangeCapsuleColliderVar(entity);
+              SetIsComponentEdited(true);
+          }
+
+          // End the table
+          ImGui::EndTable();
+      }
+
+      WindowEnd(isOpen);
+      return modified;
   }
 
   void Inspector::DrawAddButton() {
@@ -904,7 +1055,10 @@ namespace GUI {
         ImGui::TableSetupColumn("ComponentNames", ImGuiTableColumnFlags_WidthFixed, 200.f);
         
         // @TODO: EDIT WHEN NEW COMPONENTS
-        DrawAddComponentButton<Component::BoxCollider>("Collider", ICON_FA_BOMB);
+        DrawAddComponentButton<Component::BoxCollider>("Box Collider", ICON_FA_CUBE);
+        DrawAddComponentButton<Component::SphereCollider>("Sphere Collider", ICON_FA_CIRCLE);
+        DrawAddComponentButton<Component::CapsuleCollider>("Capsule Collider", ICON_FA_CAPSULES);
+
         DrawAddComponentButton<Component::Layer>("Layer", ICON_FA_LAYER_GROUP);
         DrawAddComponentButton<Component::Material>("Material", ICON_FA_GEM);
         // @TODO: Temporarily forcing material to be added with mesh
