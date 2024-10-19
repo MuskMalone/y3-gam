@@ -42,59 +42,61 @@ namespace IGE {
 		}
 
 		void PhysicsSystem::Update() {
-			//if (Scenes::SceneManager::GetInstance().GetSceneState() != Scenes::SceneState::PLAYING) {
-			//	auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::RigidBody, Component::Transform>() };
-			//	for (auto entity : rbsystem) {
-			//		auto& xfm{ rbsystem.get<Component::Transform>(entity) };
-			//		auto& rb{ rbsystem.get<Component::RigidBody>(entity) };
-			//		auto rbiter{ mRigidBodyIDs.find(rb.bodyID) };
-			//		if (rbiter != mRigidBodyIDs.end()) {
-			//			physx::PxRigidDynamic* pxrigidbody{ mRigidBodyIDs.at(rb.bodyID) };
-			//			//update positions
-			//			pxrigidbody->setGlobalPose(physx::PxTransform{ ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot) });
-			//		}
-			//		//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
-			//		//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));
-			//		//xfm.worldPos = ToGLMVec3(bodyInterface.(rb.bodyID));
-			//	}
-			//}
-
-			//mPhysicsSystem.Update(gDeltaTime, 1, &mTempAllocator, &mJobSystem);
-					// Simulate one time step (1/60 second)
-			mScene->simulate(gTimeStep);
-
-			// Wait for the simulation to complete
-			mScene->fetchResults(true);
-			auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::RigidBody, Component::Transform>() };
-			for (auto entity : rbsystem) {
-				auto& xfm{ rbsystem.get<Component::Transform>(entity) };
-				auto& rb{ rbsystem.get<Component::RigidBody>(entity) };
-				auto rbiter{ mRigidBodyIDs.find(rb.bodyID) };
-				if (rbiter != mRigidBodyIDs.end()) {
-					physx::PxRigidDynamic* pxrigidbody{ mRigidBodyIDs.at(rb.bodyID) };
-					//apply gravity
-					if (rb.motionType == Component::RigidBody::MotionType::DYNAMIC) {
-						float grav{ gGravity * rb.gravityFactor * rb.mass };
-						pxrigidbody->addForce(ToPxVec3(glm::vec3(0.f, grav, 0.f)));
+			if (Scenes::SceneManager::GetInstance().GetSceneState() != Scenes::SceneState::PLAYING) {
+				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::RigidBody, Component::Transform>() };
+				for (auto entity : rbsystem) {
+					auto& xfm{ rbsystem.get<Component::Transform>(entity) };
+					auto& rb{ rbsystem.get<Component::RigidBody>(entity) };
+					auto rbiter{ mRigidBodyIDs.find(rb.bodyID) };
+					if (rbiter != mRigidBodyIDs.end()) {
+						physx::PxRigidDynamic* pxrigidbody{ mRigidBodyIDs.at(rb.bodyID) };
+						//update positions
+						pxrigidbody->setGlobalPose(physx::PxTransform{ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot)});
 					}
-					xfm.worldPos += ToGLMVec3(pxrigidbody->getLinearVelocity() * gTimeStep);
-					{
-						auto angularVelocity = pxrigidbody->getAngularVelocity();
-						float angle = angularVelocity.magnitude() * gTimeStep;
-						if (glm::abs(angle) > glm::epsilon<float>()) {
-							auto axis = angularVelocity.getNormalized();
-							physx::PxQuat deltaRotation(angle, axis);
-							// to add rotations, multiply 2 quats tgt
-							xfm.worldRot *= ToGLMQuat(deltaRotation);
-						}
-					}
-					xfm.modified = true; // include this 
-					pxrigidbody->setLinearVelocity(rb.velocity);
+					//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
+					//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));
+					//xfm.worldPos = ToGLMVec3(bodyInterface.(rb.bodyID));
 				}
-				//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
-				//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));
-				//xfm.worldPos = ToGLMVec3(bodyInterface.(rb.bodyID));
 			}
+			else {
+				//mPhysicsSystem.Update(gDeltaTime, 1, &mTempAllocator, &mJobSystem);
+					// Simulate one time step (1/60 second)
+				mScene->simulate(gTimeStep);
+
+				// Wait for the simulation to complete
+				mScene->fetchResults(true);
+				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::RigidBody, Component::Transform>() };
+				for (auto entity : rbsystem) {
+					auto& xfm{ rbsystem.get<Component::Transform>(entity) };
+					auto& rb{ rbsystem.get<Component::RigidBody>(entity) };
+					auto rbiter{ mRigidBodyIDs.find(rb.bodyID) };
+					if (rbiter != mRigidBodyIDs.end()) {
+						physx::PxRigidDynamic* pxrigidbody{ mRigidBodyIDs.at(rb.bodyID) };
+						//apply gravity
+						if (rb.motionType == Component::RigidBody::MotionType::DYNAMIC) {
+							float grav{ gGravity * rb.gravityFactor * rb.mass };
+							pxrigidbody->addForce(ToPxVec3(glm::vec3(0.f, grav, 0.f)));
+						}
+						xfm.worldPos += ToGLMVec3(pxrigidbody->getLinearVelocity() * gTimeStep);
+						{
+							auto angularVelocity = pxrigidbody->getAngularVelocity();
+							float angle = angularVelocity.magnitude() * gTimeStep;
+							if (glm::abs(angle) > glm::epsilon<float>()) {
+								auto axis = angularVelocity.getNormalized();
+								physx::PxQuat deltaRotation(angle, axis);
+								// to add rotations, multiply 2 quats tgt
+								xfm.worldRot *= ToGLMQuat(deltaRotation);
+							}
+						}
+						xfm.modified = true; // include this 
+						pxrigidbody->setLinearVelocity(rb.velocity);
+					}
+					//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
+					//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));
+					//xfm.worldPos = ToGLMVec3(bodyInterface.(rb.bodyID));
+				}
+			}
+
 		}
 
 		Component::RigidBody& PhysicsSystem::AddRigidBody(ECS::Entity entity, Component::RigidBody rigidbody) {
@@ -169,7 +171,7 @@ namespace IGE {
 			}
 		}
 		template <typename _physx_type, typename _collider_component>
-		void PhysicsSystem::AddShape(physx::PxRigidDynamic* rb, ECS::Entity const& entity, _collider_component & collider) {
+		void PhysicsSystem::AddShape(physx::PxRigidDynamic* rb, ECS::Entity const& entity, _collider_component& collider) {
 			_physx_type geom{};
 			physx::PxTransform xfm{};
 			if (entity.HasComponent<Component::Transform>()) {
@@ -177,7 +179,7 @@ namespace IGE {
 				//box shape, this will be a box collider
 				SetGeom(geom, collider, transform);
 				xfm = physx::PxTransform(ToPxVec3(transform.worldPos), ToPxQuat(transform.rotation));
-					
+
 			}
 			else {
 				//geom = physx::PxBoxGeometry(physx::PxVec3{1});

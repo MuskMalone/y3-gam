@@ -81,7 +81,7 @@ namespace IGE {
             mSystemManager.UpdateSystems();
           }
           else {
-            mSystemManager.UpdateSelectedSystems<Systems::TransformSystem>();
+            mSystemManager.UpdateSelectedSystems<Systems::TransformSystem, IGE::Physics::PhysicsSystem>();
           }
         }
         catch (Debug::ExceptionBase& e)
