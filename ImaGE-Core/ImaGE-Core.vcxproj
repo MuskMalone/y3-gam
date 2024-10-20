@@ -301,6 +301,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Graphics\VertexBuffer.h" />
     <ClInclude Include="source\Input\InputManager.h" />
     <ClInclude Include="source\Input\KeyCode.h" />
+    <ClInclude Include="source\Physics\PhysicsEvents.h" />
     <ClInclude Include="source\Physics\PhysicsHelpers.h" />
     <ClInclude Include="source\Physics\PhysicsSystem.h" />
     <ClInclude Include="source\Prefabs\Prefab.h" />
@@ -419,6 +420,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Graphics\VertexArray.cpp" />
     <ClCompile Include="source\Graphics\VertexBuffer.cpp" />
     <ClCompile Include="source\Input\InputManager.cpp" />
+    <ClCompile Include="source\Physics\PhysicsEvents.cpp" />
     <ClCompile Include="source\Physics\PhysicsSystem.cpp" />
     <ClCompile Include="source\Prefabs\Prefab.cpp" />
     <ClCompile Include="source\Prefabs\PrefabManager.cpp" />
