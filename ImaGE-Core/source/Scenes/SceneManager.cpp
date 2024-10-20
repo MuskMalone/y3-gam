@@ -153,7 +153,7 @@ namespace Scenes
     mSaveStates.emplace(mSceneName, path);
     Serialization::Serializer::SerializeScene(path);
 
-    Debug::DebugLogger::GetInstance().LogInfo("Temporarily saved scene to " + path);
+    //Debug::DebugLogger::GetInstance().LogInfo("Temporarily saved scene to " + path);
   }
 
   void SceneManager::LoadTemporarySave()
