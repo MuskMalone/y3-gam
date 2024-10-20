@@ -20,12 +20,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Components/Components.h>
 #include "Asset/IGEAssets.h"
 
-#pragma region SYSTEM_INCLUDES
-#include <Physics/PhysicsSystem.h>
-//#include <Core/Systems/TransformSystem/WorldToLocalTransformSystem.h>
-#include <Core/Systems/TransformSystem/TransformSystem.h>
-#include <Scripting/ScriptingSystem.h>
-#pragma endregion
+#include <Core/Systems/Systems.h>
 
 namespace IGE {
   // Static Initialization
@@ -85,6 +80,7 @@ namespace IGE {
     mSystemManager.RegisterSystem<Systems::TransformSystem>("Pre-Transform System"); // must be called first   
     mSystemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
     mSystemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
+    //mSystemManager.RegisterSystem<Graphics::RenderSystem>("Render System");
 
     // dont think i need this anymore
     //mSystemManager.RegisterSystem<Systems::LocalToWorldTransformSystem>("Post-Transform System");

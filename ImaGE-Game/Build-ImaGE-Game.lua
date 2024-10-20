@@ -5,6 +5,8 @@ project "ImaGE-Game"
    targetdir "Binaries/%{cfg.buildcfg}"
    staticruntime "off"
 
+   buildoptions { "/bigobj" }
+   
    files { "source/**.h", "source/**.cpp", "source/**.c" }
 
    includedirs

@@ -29,7 +29,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 #define GET_RTTR_TYPE(T) rttr::type::get<T>()
 #ifdef _DEBUG
-#define OF_DEBUG
+//#define OF_DEBUG
 #endif
 
 namespace Reflection
@@ -48,8 +48,8 @@ namespace Reflection
       { GET_RTTR_TYPE(SphereCollider), ComponentUtils::AddSphereCollider },
       { GET_RTTR_TYPE(CapsuleCollider), ComponentUtils::AddCapsuleCollider },
       { GET_RTTR_TYPE(RigidBody), ComponentUtils::AddRigidBody },
+      { GET_RTTR_TYPE(ProxyScriptComponent), ComponentUtils::AddScript },
       { GET_RTTR_TYPE(Text), ComponentUtils::AddText }
-//      { GET_RTTR_TYPE(Script), ComponentUtils::AddScript }
     };
   }
 
@@ -276,6 +276,7 @@ namespace Reflection
     else IF_GET_ENTITY_COMP(Component::BoxCollider)
     else IF_GET_ENTITY_COMP(Component::SphereCollider)
     else IF_GET_ENTITY_COMP(Component::CapsuleCollider)
+    else IF_GET_ENTITY_COMP(Component::Script)
     else IF_GET_ENTITY_COMP(Component::Text)
     else
     {
@@ -300,6 +301,7 @@ namespace Reflection
     else IF_REMOVE_COMP(Component::Material)
     else IF_REMOVE_COMP(Component::RigidBody)
     else IF_REMOVE_COMP(Component::BoxCollider)
+    else IF_REMOVE_COMP(Component::Script)
     else IF_REMOVE_COMP(Component::Text)
     else
     {

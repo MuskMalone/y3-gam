@@ -26,6 +26,13 @@ public:
   ************************************************************************/
   template <typename... Args>
   static void CreateInstance(Args&&... args) {
+    if (mInstance) {
+#ifdef _DEBUG
+      std::cout << "Singleton instance of " << typeid(T).name() << " already exists!\n";
+#endif
+      return;
+    }
+
     std::call_once(onceFlag, [&] {
       mInstance = std::make_unique<T>(std::forward<Args>(args)...);
     });

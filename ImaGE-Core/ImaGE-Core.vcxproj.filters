@@ -633,6 +633,7 @@
     </ClInclude>
     <ClInclude Include="source\pch.h" />
     <ClInclude Include="source\Physics\PhysicsEvents.h" />
+    <ClInclude Include="source\Core\Systems\Systems.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
