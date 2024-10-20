@@ -33,6 +33,11 @@ namespace IGE {
         std::string GetFileExtension(const std::string& filePath) {
             return std::filesystem::path(filePath).extension().string();
         }
+        std::string GetFileNameWithExtension(const std::string& filePath)
+        {
+            //return std::filesystem::path(filePath).filename().string();
+            return GetFileName(filePath) + GetFileExtension(filePath);
+        }
         std::string GetAbsolutePath(const std::string& filePath) {
             return std::filesystem::absolute(filePath).string();
         }

@@ -153,14 +153,16 @@ namespace IGE {
 				if (rbiter != mRigidBodyIDs.end())
 				{
 					rb = rbiter->second;
-					physx::PxShape* shape;
-					physx::PxMaterial* material;
-					rb->getShapes(&shape, 1);// assuming that all the rigidbodies only have one shape
-					shape->getMaterials(&material, 1);
-					material->setDynamicFriction(rigidbody.dynamicFriction);
-					material->setStaticFriction(rigidbody.staticFriction);
-					material->setRestitution(rigidbody.restitution);
-
+					physx::PxShape* shape[3];
+					auto numShapes{ rb->getNbShapes() };
+					rb->getShapes(shape, numShapes);// assuming that all the rigidbodies only have one shape
+					for (unsigned i{}; i < numShapes; ++i) {
+						physx::PxMaterial* material;
+						shape[i]->getMaterials(&material, 1);
+						material->setDynamicFriction(rigidbody.dynamicFriction);
+						material->setStaticFriction(rigidbody.staticFriction);
+						material->setRestitution(rigidbody.restitution);
+					}
 				}
 			}
 			else if (entity.HasComponent<Component::Transform>()) {
@@ -235,19 +237,20 @@ namespace IGE {
 				transform.worldScale = { 1,1,1 }; //temp fix
 			}
 			_physx_type geom{};
-			physx::PxTransform xfm{ ToPxVec3(transform.worldPos)};
+			physx::PxTransform xfm(ToPxVec3(transform.worldPos), ToPxQuat(transform.rotation));
 			SetGeom(geom, collider, transform);
-			rb = physx::PxCreateDynamic(
-				*mPhysics,
-				xfm,
-				geom,
-				*mMaterial, 10.f); //default mass will be 10 lmao material is default also
+			//rb = physx::PxCreateDynamic(
+			//	*mPhysics,
+			//	xfm,
+			//	geom,
+			//	*mMaterial, 10.f); //default mass will be 10 lmao material is default also
+			rb = mPhysics->createRigidDynamic(xfm);
 			//ugly syntax to get the shape 
 			//assumes that there is only one shape (there should only ever be one starting out)
-			physx::PxShape* shape;
-			rb->getShapes(&shape, 1);
+			physx::PxShape* shape { mPhysics->createShape(geom, *mMaterial, true) };
 			shape->setLocalPose({ collider.positionOffset, collider.rotationOffset });
-			shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
+			collider.idx = rb->getNbShapes();
+			rb->attachShape(*shape);
 			mScene->addActor(*rb);
 			collider.idx = 0;
 			rb->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
@@ -375,6 +378,7 @@ namespace IGE {
 		{
 			auto const& collider{ entity.GetComponent<Component::SphereCollider>() };
 			auto shapeptr{ GetShapePtr<Component::SphereCollider>(collider) };
+			auto shapeid{ shapeptr->getGeometryType()};
 			shapeptr->setLocalPose(physx::PxTransform(collider.positionOffset, collider.rotationOffset));
 			shapeptr->setGeometry(physx::PxSphereGeometry{ collider.radius });
 
@@ -404,27 +408,34 @@ namespace IGE {
 			physx::PxU32 numShapes = rb->getNbShapes();
 			physx::PxShape* shapes[3]; // max only 3 
 			rb->getShapes(shapes, numShapes);
-			bool found{ false }; int foundidx{ -1 }; // can only afford to not check
-													 // because the shape will definitely be there
 			for (physx::PxU32 i = 0; i < numShapes; ++i) {
 				physx::PxShape* shape = shapes[i];
-				physx::PxGeometryHolder geometryHolder = shape->getGeometry();
-				if (found) { //after the shape has already been found
-					//reduce all the shape idx by 1 
-					if (geometryHolder.getType() == physx::PxGeometryType::Enum::eBOX)
-						entity.GetComponent<Component::BoxCollider>().idx--;
-					else if (geometryHolder.getType() == physx::PxGeometryType::Enum::eSPHERE)
-						entity.GetComponent<Component::SphereCollider>().idx--;
-					else if (geometryHolder.getType() == physx::PxGeometryType::Enum::eCAPSULE)
-						entity.GetComponent<Component::CapsuleCollider>().idx--;
-				}
-				if (geometryHolder.getType() == typeenum) {
-					found = true, foundidx = i;
+				if (shape->getGeometry().getType() == typeenum) {
+					rb->detachShape(*shapes[i]);
+					shapes[i]->release();
+					break;
 				}
 			}
-			if (foundidx < 0) throw std::runtime_error("no shape found"); //sike im still gonna check
-			rb->detachShape(*shapes[foundidx]);
-			shapes[foundidx]->release();
+
+			if (numShapes == 1) {
+				mScene->removeActor(*rb);
+				rb->release();
+				mRigidBodyIDs.erase(collider.bodyID);
+			}
+			else { // reissue the idx since physx shuffles the shapes after removal
+				numShapes = rb->getNbShapes();
+				rb->getShapes(shapes, numShapes);
+				for (physx::PxU32 i = 0; i < numShapes; ++i) {
+					physx::PxShape* shape = shapes[i];
+					physx::PxGeometryHolder geometryHolder = shape->getGeometry();
+					if (geometryHolder.getType() == physx::PxGeometryType::Enum::eBOX)
+						entity.GetComponent<Component::BoxCollider>().idx = i;
+					else if (geometryHolder.getType() == physx::PxGeometryType::Enum::eSPHERE)
+						entity.GetComponent<Component::SphereCollider>().idx = i;
+					else if (geometryHolder.getType() == physx::PxGeometryType::Enum::eCAPSULE)
+						entity.GetComponent<Component::CapsuleCollider>().idx = i;
+				}
+			}
 
 		}
 		void PhysicsSystem::RemoveRigidBody(ECS::Entity entity)

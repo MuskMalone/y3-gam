@@ -169,6 +169,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Asset\Assetables\AssetExtensions.h" />
     <ClInclude Include="source\Asset\Assetables\Audio\AudioAsset.h" />
     <ClInclude Include="source\Asset\Assetables\Mesh\MeshAsset.h" />
+    <ClInclude Include="source\Asset\Assetables\Prefab\PrefabAsset.h" />
     <ClInclude Include="source\Asset\Assetables\Texture\TextureAsset.h" />
     <ClInclude Include="source\Asset\IGEAssets.h" />
     <ClInclude Include="source\Asset\SmartPointer.h" />
@@ -336,6 +337,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Asset\AssetUtils.cpp" />
     <ClCompile Include="source\Asset\Assetables\Audio\AudioAsset.cpp" />
     <ClCompile Include="source\Asset\Assetables\Mesh\MeshAsset.cpp" />
+    <ClCompile Include="source\Asset\Assetables\Prefab\PrefabAsset.cpp" />
     <ClCompile Include="source\Asset\Assetables\Texture\TextureAsset.cpp" />
     <ClCompile Include="source\Asset\SmartPointer.cpp" />
     <ClCompile Include="source\Audio\AudioManager.cpp" />
