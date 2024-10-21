@@ -7,6 +7,8 @@
 
 namespace GUI {
 
+  int Layers::sSelectedLayer{};
+
   Layers::Layers(const char* name) : GUIWindow(name) {
     mLayerSystem = Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>();
   }
@@ -23,7 +25,7 @@ namespace GUI {
 
   void Layers::LayerNameNode() {
     ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
-    if (ImGui::TreeNodeEx("Layer Names##", ImGuiTreeNodeFlags_DefaultOpen)) {
+    if (ImGui::TreeNodeEx("Layer Names##")) {
       if (std::shared_ptr<Systems::LayerSystem> layerSys = mLayerSystem.lock()) {
 
         float contentSize = ImGui::GetContentRegionAvail().x;
@@ -76,7 +78,7 @@ namespace GUI {
   void Layers::VisibilityToggleNode() {
     ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
 
-    if (ImGui::TreeNodeEx("Visibility##", ImGuiTreeNodeFlags_DefaultOpen)) {
+    if (ImGui::TreeNodeEx("Visibility##")) {
       if (std::shared_ptr<Systems::LayerSystem> layerSys = mLayerSystem.lock()) {
         auto const& layerNames{ layerSys->GetLayerNames() };
 
@@ -133,9 +135,89 @@ namespace GUI {
 
   void Layers::CollisionMatrixNode() {
     ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
-    if (ImGui::TreeNodeEx("Collision Matrix##", ImGuiTreeNodeFlags_DefaultOpen)) {
+    if (ImGui::TreeNodeEx("Collision Matrix##")) {
       if (std::shared_ptr<Systems::LayerSystem> layerSys = mLayerSystem.lock()) {
 
+        float contentSize = ImGui::GetContentRegionAvail().x;
+        float charSize = ImGui::CalcTextSize("012345678901234").x;
+        float inputWidth = (contentSize - charSize - 60);
+
+        ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_LIGHT));
+        ImGui::BeginTable("CollisionMatrixTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+        for (int i{}; i < Systems::MAX_LAYERS; i += 4) {
+          ImGui::TableNextRow();
+
+          ImGui::TableSetColumnIndex(0);
+          std::string buttonText1 = "Layer " + std::to_string(i) + "##FirstButton";
+          bool colorPushed = false;
+          if (sSelectedLayer == i) {
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.7f, 0.3f, 1.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.3f, 0.8f, 0.4f, 1.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f, 0.6f, 0.2f, 1.0f));
+            colorPushed = true;
+          }
+          if (ImGui::Button(buttonText1.c_str())) {
+            sSelectedLayer = i;
+          }
+          if (colorPushed) {
+            ImGui::PopStyleColor(3);
+          }
+          ImGui::SameLine();
+
+          ImGui::TableSetColumnIndex(1);
+          std::string buttonText2 = "Layer " + std::to_string(i + 1) + "##SecondButton";
+          colorPushed = false;
+          if (sSelectedLayer == i + 1) {
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.7f, 0.3f, 1.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.3f, 0.8f, 0.4f, 1.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f, 0.6f, 0.2f, 1.0f));
+            colorPushed = true;
+          }
+          if (ImGui::Button(buttonText2.c_str())) {
+            sSelectedLayer = i + 1;
+          }
+          if (colorPushed) {
+            ImGui::PopStyleColor(3);
+          }
+          ImGui::SameLine();
+
+          ImGui::TableSetColumnIndex(2);
+          std::string buttonText3 = "Layer " + std::to_string(i + 2) + "##ThirdButton";
+          colorPushed = false;
+          if (sSelectedLayer == i + 2) {
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.7f, 0.3f, 1.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.3f, 0.8f, 0.4f, 1.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f, 0.6f, 0.2f, 1.0f));
+            colorPushed = true;
+          }
+          if (ImGui::Button(buttonText3.c_str())) {
+            sSelectedLayer = i + 2;
+          }
+          if (colorPushed) {
+            ImGui::PopStyleColor(3);
+          }
+          ImGui::SameLine();
+
+          ImGui::TableSetColumnIndex(3);
+          std::string buttonText4 = "Layer " + std::to_string(i + 3) + "##FourthButton";
+          colorPushed = false;
+          if (sSelectedLayer == i + 3) {
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.7f, 0.3f, 1.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.3f, 0.8f, 0.4f, 1.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f, 0.6f, 0.2f, 1.0f));
+            colorPushed = true;
+          }
+          if (ImGui::Button(buttonText4.c_str())) {
+            sSelectedLayer = i + 3;
+          }
+          if (colorPushed) {
+            ImGui::PopStyleColor(3);
+          }
+        }
+
+        ImGui::EndTable();
+        ImGui::PopFont();
       }
 
       else {
@@ -144,6 +226,7 @@ namespace GUI {
 
       ImGui::TreePop();
     }
+
     ImGui::PopFont();
   }
 
