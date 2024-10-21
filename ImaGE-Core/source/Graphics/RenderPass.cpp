@@ -59,7 +59,7 @@ namespace Graphics {
                 hdls.push_back(IGE_REF(IGE::Assets::TextureAsset, map)->mTexture.GetBindlessHandle()); //should not be here TODO move somewhere else
             }
             if (hdls.size() > 0)
-                shader->SetUniform("u_AlbedoMap", hdls.data(), static_cast<unsigned int>(hdls.size()));
+                shader->SetUniform("u_AlbedoMap", hdls[1]);
 
             hdls.clear();
             for (auto const& map : Renderer::GetNormalMaps()) {
@@ -94,7 +94,7 @@ namespace Graphics {
             }
 
             //Graphics::Renderer::SubmitMesh(mesh.mesh, xform.worldPos, xform.worldRot, xform.worldScale, { 1.f, 1.f, 1.f, 1.f }); //@TODO: adjust color and rotation as needed
-            Graphics::Renderer::SubmitInstance(mesh.mesh, xform.worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
+            Graphics::Renderer::SubmitInstance(mesh.mesh, xform.worldMtx, Color::COLOR_WHITE, hdls[1], entity.GetEntityID());
         }
         
         mSpec.pipeline->GetSpec().instanceLayout;

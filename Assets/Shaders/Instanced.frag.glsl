@@ -8,7 +8,6 @@ in vec4 v_Color;
 in vec2 v_TexCoord;
 in flat float v_TexIdx;
 
-in flat int v_MaterialIdx;
 in flat int v_EntityID;
 
 //uniform sampler2D u_Tex[32]; //TODO CHANGE THIS IN FUTURE
@@ -25,8 +24,13 @@ uniform float u_Roughness;
 uniform float u_Transparency;
 uniform float u_AO;
 
-uniform sampler2D u_AlbedoMap[3]; //temp
-uniform sampler2D u_NormalMap[3];
+//instance-specific tex handles
+//in flat uint v_AlbedoHandle;  // Handle for albedo texture
+in flat int v_MaterialIdx;
+in flat uvec2 v_AlbedoHandle;
+
+uniform sampler2D u_AlbedoMap; //temp
+//uniform sampler2D u_NormalMap[3];
 
 
 //lighting parameters
@@ -46,28 +50,32 @@ vec3 fresnelSchlick(float cosTheta, vec3 F0);
 
 void main(){
     entityID = v_EntityID;
+    
+    u_Albedo;
 	//sample texture
 	//vec4 texColor = texture2D(u_Tex[0], v_TexCoord);
-
-    sampler2D albedoSampler = sampler2D(u_AlbedoMap[v_MaterialIdx]);
+    
+    sampler2D albedoSampler = u_AlbedoMap;
     vec4 albedoTexture = texture(albedoSampler, v_TexCoord);
-    //vec4 albedoTexture = texture(u_AlbedoMap, v_TexCoord);
-    vec3 albedo = albedoTexture.rgb * u_Albedo; // Mixing texture and uniform
 
-    vec3 N;
-    if(v_MaterialIdx != 0){
-        // Sample the normal map and reconstruct the normal
-        sampler2D normalSampler = sampler2D(u_NormalMap[v_MaterialIdx]);
-        vec3 normalMap = texture(normalSampler, v_TexCoord).rgb;
-        // Transform normal from [0, 1] to [-1, 1]
-        normalMap = normalize(normalMap * 2.0 - 1.0);
+    //vec4 albedoTexture = texture(v_AlbedoHandle.x, v_TexCoord);
+    vec3 albedo = albedoTexture.rgb; // Mixing texture and uniform
 
-        mat3 TBN = mat3(normalize(v_Tangent), normalize(v_Bitangent), normalize(v_Normal));
-        N = normalize(TBN * normalMap);
-    }
-    else{
-        N = normalize(v_Normal);
-    }
+    //vec3 albedo =  u_Albedo; // Mixing texture and uniform
+
+//    if(v_MaterialIdx != 0){
+//        // Sample the normal map and reconstruct the normal
+//        sampler2D normalSampler = u_NormalMap[v_MaterialIdx];
+//        vec3 normalMap = texture(normalSampler, v_TexCoord).rgb;
+//        // Transform normal from [0, 1] to [-1, 1]
+//        normalMap = normalize(normalMap * 2.0 - 1.0);
+//
+//        mat3 TBN = mat3(normalize(v_Tangent), normalize(v_Bitangent), normalize(v_Normal));
+//        N = normalize(TBN * normalMap);
+//    }
+
+    vec3 N = normalize(v_Normal);
+    
 
 	// Normalize inputs
     //vec3 N = normalize(v_Normal);
@@ -108,8 +116,11 @@ void main(){
     color = pow(color, vec3(1.0/2.2)); //gamma correction
 
     //change transparency here
-    float alpha = u_Transparency * albedoTexture.a;
+    float alpha = u_Transparency;
 	fragColor = vec4(color, alpha) * v_Color;
+//    if(v_AlbedoHandle.x == 64 && v_AlbedoHandle.y == 0)
+//        fragColor = vec4(1.f,0.f,0.f,1.f);
+    //fragColor = v_Color;
     
 }
 

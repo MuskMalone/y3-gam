@@ -233,8 +233,9 @@ namespace Graphics {
 		// Set up the buffer layout for instance data
 		BufferLayout instanceLayout = {
 			{ AttributeType::MAT4, "a_ModelMatrix" },
-			{AttributeType::INT, "a_MaterialIdx"},
-			{AttributeType::INT, "a_EntityID"}
+			{ AttributeType::INT, "a_MaterialIdx"},
+			{ AttributeType::UVEC2, "a_AlbedoHandle"},
+			{ AttributeType::INT, "a_EntityID"}
 			//{ AttributeType::VEC4, "a_Color" }
 		};
 
@@ -346,16 +347,20 @@ namespace Graphics {
 		SetTriangleBufferData(v3, clr);
 	}
 
-	void Renderer::SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, uint32_t matID) {
+	void Renderer::SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr, uint64_t albedoHdl, int id) {
 		if (!mesh) return;
 
 		InstanceData instance{};
 		instance.modelMatrix = worldMtx;
+
+		instance.albedo[0] = static_cast<uint32_t>(albedoHdl & 0xFFFFFFFF); // Lower 32 bits
+		instance.albedo[1] = static_cast<uint32_t>(albedoHdl >> 32); // Upper 32 bits
+
 		
 		if (id != INVALID_ENTITY_ID) {
 			instance.entityID = id;
 		}
-		instance.materialIdx = matID;
+		instance.materialIdx = 0;
 
 		auto& meshSrc = mesh->GetMeshSource();
 		if (!meshSrc) return;

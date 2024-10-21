@@ -48,6 +48,7 @@ namespace Graphics {
 	struct InstanceData {
 		glm::mat4 modelMatrix;
 		int materialIdx;
+		uint32_t albedo[2];
 		int entityID = -1;
 		//glm::vec4 color;
 	};
@@ -127,7 +128,7 @@ namespace Graphics {
 		static void SubmitTriangle(glm::vec3 const& v1, glm::vec3 const& v2, glm::vec3 const& v3, glm::vec4 const& clr = Color::COLOR_WHITE);
 
 		//Instancing
-		static void SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr, int entityID = -1, uint32_t matID = 0);
+		static void SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr, uint64_t albedoHdl, int entityID = -1);
 		static void RenderInstances();
 
 		// Batching

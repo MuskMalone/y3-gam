@@ -12,6 +12,11 @@ namespace Graphics {
 		case AttributeType::VEC4:
 		case AttributeType::MAT4:
 			return GL_FLOAT;
+		case AttributeType::UINT:
+		case AttributeType::UVEC2:
+		case AttributeType::UVEC3:
+		case AttributeType::UVEC4:
+			return GL_UNSIGNED_INT;
 		case AttributeType::INT:
 		case AttributeType::IVEC2:
 		case AttributeType::IVEC3:
@@ -107,6 +112,10 @@ namespace Graphics {
 				}
 				++mAttribIdx;
 				break;
+			case AttributeType::UINT:
+			case AttributeType::UVEC2:
+			case AttributeType::UVEC3:
+			case AttributeType::UVEC4:
 			case AttributeType::INT:
 			case AttributeType::IVEC2:
 			case AttributeType::IVEC3:
