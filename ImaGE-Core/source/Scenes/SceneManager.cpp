@@ -183,4 +183,22 @@ namespace Scenes
     }
   }
 
+
+  void SceneManager::SubmitToMainThread(const std::function<void()>& function)
+  {
+    std::scoped_lock<std::mutex> lock(mMainThreadQueueMutex);
+    mMainThreadQueue.emplace_back(function);
+  }
+
+  void SceneManager::ExecuteMainThreadQueue()
+  {
+    std::scoped_lock<std::mutex> lock(mMainThreadQueueMutex);
+
+    for (auto& func : mMainThreadQueue)
+      func();
+
+    mMainThreadQueue.clear();
+
+  }
+
 } // namespace Scenes

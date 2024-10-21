@@ -85,6 +85,11 @@ namespace Scenes
     ************************************************************************/
     inline bool NoSceneSelected() const noexcept { return mSceneName.empty(); }
 
+
+    void SubmitToMainThread(const std::function<void()>& function);
+    void ExecuteMainThreadQueue();
+
+
   private:
     struct SaveState
     {
@@ -141,6 +146,8 @@ namespace Scenes
     ************************************************************************/
     void LoadTemporarySave();
 
+
+  
     /*!*********************************************************************
     \brief
       Handles the events the SceneManager subscribed to
@@ -166,6 +173,8 @@ namespace Scenes
     std::string mSceneName, mTempDir;
     Reflection::ObjectFactory* mObjFactory;
     SceneState mSceneState{};
+    std::vector<std::function<void()>> mMainThreadQueue;
+    std::mutex mMainThreadQueueMutex;
   };
 
 };  // namespace Scenes

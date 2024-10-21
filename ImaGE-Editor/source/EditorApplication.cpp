@@ -81,6 +81,7 @@ namespace IGE {
             mSystemManager.UpdateSystems();
           }
           else {
+            sceneManager.ExecuteMainThreadQueue();
             mSystemManager.UpdateSelectedSystems<Systems::TransformSystem, IGE::Physics::PhysicsSystem>();
           }
         }

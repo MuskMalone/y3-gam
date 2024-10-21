@@ -18,6 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "mono/metadata/threads.h"
 #include <Prefabs/PrefabManager.h>
 #include <Core/Systems/TransformSystem/TransformHelpers.h>
+#include <Scenes/SceneManager.h>
 
 #include <filesystem>
 #include <Core/Components/Components.h>
@@ -329,8 +330,8 @@ void ScriptManager::ReloadAllScripts()
   //Assets::AssetManager& assetManager{ Assets::AssetManager::GetInstance() };
   //static auto& ecs = GE::ECS::EntityComponentSystem::GetInstance();
   //std::string scnName = gsm->GetCurrentScene();
-  //mScnfilePath = assetManager.GetConfigData<std::string>("Assets Dir") + "Scenes/" + scnName + ".scn";
-  ////std::cout << "SCENE FILE PATH: " << mScnfilePath << "\n";
+  //m_scnfilePath = assetManager.GetConfigData<std::string>("Assets Dir") + "Scenes/" + scnName + ".scn";
+  ////std::cout << "SCENE FILE PATH: " << m_scnfilePath << "\n";
   ////std::cout << "Reload All Scripts\n";
 
 
@@ -340,21 +341,21 @@ void ScriptManager::ReloadAllScripts()
   //  if (ecs.HasComponent<GE::Component::Scripts>(entity))
   //  {
   //    GE::Component::Scripts* scripts = ecs.GetComponent<GE::Component::Scripts>(entity);
-  //    //for (auto& script : scripts->mScriptList)
+  //    //for (auto& script : scripts->m_scriptList)
   //    //{
   //    //  //script.ReloadScript();
   //    //}
-  //    //for (auto sp : scripts->mScriptList)
+  //    //for (auto sp : scripts->m_scriptList)
   //    //{
-  //    //  std::cout << entity << ": " << sp.mScriptName << " deleted\n";
+  //    //  std::cout << entity << ": " << sp.m_scriptName << " deleted\n";
   //    //}
-  //    scripts->mScriptList.clear();
+  //    scripts->m_scriptList.clear();
 
   //  }
   //}
 
   //GE::Prefabs::PrefabManager::GetInstance().ReloadPrefabs();
-  //auto newScriptMap{ GE::Serialization::Deserializer::DeserializeSceneScripts(mScnfilePath) };
+  //auto newScriptMap{ GE::Serialization::Deserializer::DeserializeSceneScripts(m_scnfilePath) };
   //for (auto& s : newScriptMap)
   //{
   //  if (ecs.HasComponent<GE::Component::Scripts>(s.first))
@@ -365,51 +366,49 @@ void ScriptManager::ReloadAllScripts()
   //    //#endif
   //    for (auto& si : s.second)
   //    {
-  //      scripts->mScriptList.push_back(si);
+  //      scripts->m_scriptList.push_back(si);
   //    }
   //  }
   //}
-
-
 }
 
 void ScriptManager::AssemblyFileSystemEvent(const std::string& path, const filewatch::Event change_type)
 {
 
-  //if (!mAssemblyReloadPending && change_type == filewatch::Event::modified)
-  //{
-  //  mAssemblyReloadPending = true;
-  //  auto gsm = &GE::GSM::GameStateManager::GetInstance();
-  //  //#ifdef _DEBUG
-  //  //    std::cout << "AddCmd to main thread\n";
-  //  //#endif
-  //  gsm->SubmitToMainThread([]()
-  //    {
-  //      mFileWatcher.reset();
-  //      ReloadAssembly();
-  //    });
-  //}
+  if (!mAssemblyReloadPending && change_type == filewatch::Event::modified)
+  {
+    mAssemblyReloadPending = true;
+    auto sm = &Scenes::SceneManager::GetInstance();
+    //#ifdef _DEBUG
+    //    std::cout << "AddCmd to main thread\n";
+    //#endif
+    sm->SubmitToMainThread([]()
+      {
+        mFileWatcher.reset();
+        ReloadAssembly();
+      });
+  }
 }
 
 void ScriptManager::CSReloadEvent(const std::string& path, const filewatch::Event change_type)
 {
-//  if (!mCSReloadPending && change_type == filewatch::Event::modified && !mRebuildCS)
-//  {
-//#ifdef _DEBUG
-//    std::cout << "RELOAD CS\n";
-//#endif
-//    mCSReloadPending = true;
-//    auto gsm = &GE::GSM::GameStateManager::GetInstance();
-//    //#ifdef _DEBUG
-//    //    std::cout << "Lets rebuild\n";
-//    //#endif
-//    mRebuildCS = true;
-//    gsm->SubmitToMainThread([]()
-//      {
-//        mCsProjWatcher.reset();
-//        RebuildCS();
-//      });
-//  }
+  if (!mCSReloadPending && change_type == filewatch::Event::modified && !mRebuildCS)
+  {
+#ifdef _DEBUG
+    std::cout << "RELOAD CS\n";
+#endif
+    mCSReloadPending = true;
+    auto sm = &Scenes::SceneManager::GetInstance();
+    //#ifdef _DEBUG
+    //    std::cout << "Lets rebuild\n";
+    //#endif
+    mRebuildCS = true;
+    sm->SubmitToMainThread([]()
+      {
+        mCsProjWatcher.reset();
+        RebuildCS();
+      });
+  }
 }
 
 // Function to get Visual Studio version
@@ -473,15 +472,15 @@ void ScriptManager::ReloadAssembly()
 #ifdef _DEBUG
   std::cout << "ASSReload\n";
 #endif
-  //mono_domain_set(mono_get_root_domain(), false);
-  //mono_domain_unload(mAppDomain.get());
-  //mMonoClassMap.clear();
-  //mAllScriptNames.clear();
+  mono_domain_set(mono_get_root_domain(), false);
+  mono_domain_unload(mAppDomain.get());
+  mMonoClassMap.clear();
+  mAllScriptNames.clear();
 
-  //LoadAppDomain();
+  LoadAppDomain();
   //Assets::AssetManager& assetManager{ Assets::AssetManager::GetInstance() };
-  //mFileWatcher = std::make_unique < filewatch::FileWatch < std::string>>(assetManager.GetConfigData<std::string>("CAssembly"), AssemblyFileSystemEvent);
-  //mAssemblyReloadPending = false;
+  mFileWatcher = std::make_unique < filewatch::FileWatch < std::string>>("../Assets/Scripts/ImaGE-script.dll", AssemblyFileSystemEvent);
+  mAssemblyReloadPending = false;
 
   ReloadScripts();
 
