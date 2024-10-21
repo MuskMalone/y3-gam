@@ -91,6 +91,15 @@ namespace Scenes
     ECS::EntityManager::GetInstance().Reset();
   }
 
+  void SceneManager::ReloadScene()
+  {
+    // trigger a temp save 
+    TemporarySave();
+
+    // load it back
+    LoadTemporarySave();
+  }
+
   EVENT_CALLBACK_DEF(SceneManager, HandleEvent)
   {
     switch (event->GetCategory())
@@ -198,7 +207,6 @@ namespace Scenes
       func();
 
     mMainThreadQueue.clear();
-
   }
 
 } // namespace Scenes

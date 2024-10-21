@@ -333,7 +333,7 @@ void ScriptManager::ReloadAllScripts()
   //m_scnfilePath = assetManager.GetConfigData<std::string>("Assets Dir") + "Scenes/" + scnName + ".scn";
   ////std::cout << "SCENE FILE PATH: " << m_scnfilePath << "\n";
   ////std::cout << "Reload All Scripts\n";
-
+  Scenes::SceneManager::GetInstance().ReloadScene();
 
   //for (GE::ECS::Entity const& entity : ecs.GetEntities())
   //{

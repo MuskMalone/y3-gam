@@ -54,6 +54,12 @@ namespace Scenes
 
     /*!*********************************************************************
     \brief
+      Reloads the scene
+    ************************************************************************/
+    void ReloadScene();
+
+    /*!*********************************************************************
+    \brief
       Gets the name of the current scene
     \return
       The name of the current scene
