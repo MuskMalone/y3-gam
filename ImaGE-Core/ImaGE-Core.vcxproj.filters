@@ -13,6 +13,9 @@
     <Filter Include="Asset\Assetables\Mesh">
       <UniqueIdentifier>{77994D85-E305-0980-ACF9-A0DD18252BE8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Asset\Assetables\Prefab">
+      <UniqueIdentifier>{BAE2FC16-261A-45AE-2F24-A9D19BDA6BA7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Asset\Assetables\Texture">
       <UniqueIdentifier>{3BF38E0D-2718-DE8D-5063-C31D3CE7DCAB}</UniqueIdentifier>
     </Filter>
@@ -166,6 +169,9 @@
     <ClInclude Include="source\Asset\Assetables\Mesh\MeshAsset.h">
       <Filter>Asset\Assetables\Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="source\Asset\Assetables\Prefab\PrefabAsset.h">
+      <Filter>Asset\Assetables\Prefab</Filter>
+    </ClInclude>
     <ClInclude Include="source\Asset\Assetables\Texture\TextureAsset.h">
       <Filter>Asset\Assetables\Texture</Filter>
     </ClInclude>
@@ -232,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="source\Core\Systems\SystemManager\SystemManager.h">
       <Filter>Core\Systems\SystemManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\Systems\Systems.h">
+      <Filter>Core\Systems</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.h">
       <Filter>Core\Systems\TransformSystem</Filter>
@@ -632,10 +641,6 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
-<<<<<<< HEAD
-    <ClInclude Include="source\Core\Systems\Systems.h" />
-=======
->>>>>>> main
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -650,6 +655,9 @@
     </ClCompile>
     <ClCompile Include="source\Asset\Assetables\Mesh\MeshAsset.cpp">
       <Filter>Asset\Assetables\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Asset\Assetables\Prefab\PrefabAsset.cpp">
+      <Filter>Asset\Assetables\Prefab</Filter>
     </ClCompile>
     <ClCompile Include="source\Asset\Assetables\Texture\TextureAsset.cpp">
       <Filter>Asset\Assetables\Texture</Filter>
