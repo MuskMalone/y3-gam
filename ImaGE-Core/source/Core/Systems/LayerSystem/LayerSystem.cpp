@@ -14,6 +14,24 @@ namespace Systems {
 
   }
 
+  std::array<int, MAX_LAYERS> const& LayerSystem::GetLayerCollisionList(int layerNumber) const {
+    if (layerNumber >= MAX_LAYERS || layerNumber < 0) {
+      Debug::DebugLogger::GetInstance().LogWarning("[Layers] Invalid Layer Number Passed");
+      return std::array<int, MAX_LAYERS>();
+    }
+
+    return mLayerData.collisionMatrix[layerNumber];
+  }
+
+  void LayerSystem::SetLayerCollisionList(int layerNumber, int layerIndex, bool collisionStatus) {
+    if (layerNumber >= MAX_LAYERS || layerNumber < 0) {
+      Debug::DebugLogger::GetInstance().LogWarning("[Layers] Invalid Layer Number Passed");
+      return;
+    }
+
+    mLayerData.collisionMatrix[layerNumber][layerIndex] = static_cast<int>(collisionStatus);
+  }
+
   void LayerSystem::SetLayerName(int layerNumber, std::string layerName) {
     if (layerNumber >= MAX_LAYERS || layerNumber < 0) {
       Debug::DebugLogger::GetInstance().LogWarning("[Layers] Invalid Layer Number Passed");

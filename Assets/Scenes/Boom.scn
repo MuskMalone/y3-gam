@@ -176,6 +176,17 @@
             }
         },
         {
+            "ID": 9,
+            "Parent": 7,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 4
+            }
+        },
+        {
             "ID": 1,
             "Parent": 0,
             "Child Entities": [
@@ -195,17 +206,6 @@
                 ],
                 "removedComponents": [],
                 "subDataId": 6
-            }
-        },
-        {
-            "ID": 9,
-            "Parent": 7,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 4
             }
         },
         {
@@ -410,40 +410,40 @@
         ],
         "collisionMatrix": [
             [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
             ],
             [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
             ],
             [
                 0,

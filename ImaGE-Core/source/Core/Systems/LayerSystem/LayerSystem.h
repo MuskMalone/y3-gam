@@ -30,8 +30,11 @@ namespace Systems {
     void Start() override;
     void Update() override;
 
+    std::array<int, MAX_LAYERS>const& GetLayerCollisionList(int layerNumber) const;
     std::array<std::string, MAX_LAYERS>const& GetLayerNames() const { return mLayerData.layerNames; }
     std::array<int, MAX_LAYERS>& GetLayerVisibility() { return mLayerData.layerVisibility; }
+
+    void SetLayerCollisionList(int layerNumber, int layerIndex, bool collisionStatus);
     void SetLayerName(int layerNumber, std::string layerName);
 
     inline LayerData const& GetLayerData() const noexcept { return mLayerData; }
