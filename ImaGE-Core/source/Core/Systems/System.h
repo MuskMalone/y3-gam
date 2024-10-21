@@ -34,7 +34,7 @@ namespace Systems {
     \brief
       Performs a later update after all systems' Update
     ************************************************************************/
-    virtual void LateUpdate() {}
+    virtual void RenderUpdate() {}
 
     /*!*********************************************************************
     \brief

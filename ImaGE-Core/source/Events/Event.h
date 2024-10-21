@@ -30,15 +30,13 @@ namespace Events
     SPAWN_PREFAB,
     LOAD_SCENE,
     UNLOAD_SCENE,
+    REMOVE_COMPONENT,
     REMOVE_ENTITY,
-#ifndef IMGUI_DISABLE
     ADD_FILES,
     EDIT_PREFAB,
-    DELETE_PREFAB,
     SAVE_SCENE,
     SCENE_MODIFIED,
     SCENE_STATE_CHANGE,
-#endif
   };
 
   class Event

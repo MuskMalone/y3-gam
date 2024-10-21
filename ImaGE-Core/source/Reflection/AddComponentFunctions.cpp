@@ -38,11 +38,11 @@ namespace Reflection::ComponentUtils {
     entity.EmplaceOrReplaceComponent<Layer>(comp);
   }
 
-  void AddCollider(ECS::Entity entity, rttr::variant const& var) {
-    EXTRACT_RAW_COMP(Collider, comp);
+  void AddBoxCollider(ECS::Entity entity, rttr::variant const& var) {
+    EXTRACT_RAW_COMP(BoxCollider, comp);
 
     //entity.EmplaceOrReplaceComponent<Collider>(comp);
-    IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(entity, comp);
+    IGE::Physics::PhysicsSystem::GetInstance()->AddBoxCollider(entity, comp);
   }
 
   void AddRigidBody(ECS::Entity entity, rttr::variant const& var) {

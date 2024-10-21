@@ -33,10 +33,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 using namespace Prefabs;
 
-PrefabManager::PrefabManager()
-{
+PrefabManager::PrefabManager() {
   SUBSCRIBE_CLASS_FUNC(Events::EventType::SPAWN_PREFAB, &PrefabManager::HandleEvent, this);
-  SUBSCRIBE_CLASS_FUNC(Events::EventType::DELETE_PREFAB, &PrefabManager::HandleEvent, this);
 }
 
 ECS::Entity PrefabManager::SpawnPrefab(const std::string& key, glm::dvec3 const& pos, bool mapEntity)
@@ -79,12 +77,6 @@ EVENT_CALLBACK_DEF(PrefabManager, HandleEvent)
     }
 
     SpawnPrefab(pfbEvent->mName, pfbEvent->mPos, pfbEvent->mMapEntity);
-    break;
-  }
-  case Events::EventType::DELETE_PREFAB:
-  {
-    PrefabDataContainer::const_iterator iter{ mPrefabs.find(std::static_pointer_cast<Events::DeletePrefabEvent>(event)->mName) };
-    if (iter != mPrefabs.cend()) { mPrefabs.erase(iter); }
     break;
   }
   }
