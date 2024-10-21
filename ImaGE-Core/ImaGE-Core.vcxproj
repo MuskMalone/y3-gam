@@ -309,6 +309,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Reflection\AddComponentFunctions.h" />
     <ClInclude Include="source\Reflection\ComponentTypes.h" />
     <ClInclude Include="source\Reflection\EntityData.h" />
+    <ClInclude Include="source\Reflection\Metadata.h" />
     <ClInclude Include="source\Reflection\ObjectFactory.h" />
     <ClInclude Include="source\Reflection\ProxyScript.h" />
     <ClInclude Include="source\Scenes\Scene.h" />
@@ -325,7 +326,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Serialization\Registration\RegisterComponents.h" />
     <ClInclude Include="source\Serialization\Registration\RegisterEnumsAndFuncs.h" />
     <ClInclude Include="source\Serialization\Serializer.h" />
-    <ClInclude Include="source\Singleton\Singleton.h" />
     <ClInclude Include="source\Singleton\ThreadSafeSingleton.h" />
     <ClInclude Include="source\pch.h" />
   </ItemGroup>

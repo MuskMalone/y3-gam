@@ -209,7 +209,7 @@ namespace Serialization
 
     rttr::instance wrappedObj{ obj.get_type().get_raw_type().is_wrapper() ? obj.get_wrapped_instance() : obj };
 
-    auto const properties{ wrappedObj.get_derived_type().get_properties() };
+    auto const properties{ wrappedObj.get_type().get_properties() };
     for (auto const& property : properties)
     {
       //if (property.get_metadata("NO_SERIALIZE")) { continue; }

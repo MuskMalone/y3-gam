@@ -9,14 +9,17 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <pch.h>
 #include "Application.h"
 
+#pragma region SingletonIncludes
 #include <Events/EventManager.h>
 #include <Scenes/SceneManager.h>
 #include <Prefabs/PrefabManager.h>
 #include <Input/InputManager.h>
 #include <Scripting/ScriptManager.h>
+#include <Reflection/ObjectFactory.h>
+#include <Core/EntityManager.h>
+#pragma endregion
 
 #include <Core/Entity.h>
-#include <Core/EntityManager.h>
 #include <Core/Components/Components.h>
 #include "Asset/IGEAssets.h"
 

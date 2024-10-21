@@ -49,6 +49,11 @@ namespace Reflection
       { GET_RTTR_TYPE(ProxyScriptComponent), ComponentUtils::AddScript },
       { GET_RTTR_TYPE(Text), ComponentUtils::AddText }
     };
+
+    if (mAddComponentFuncs.size() != gComponentTypes.size()) {
+      throw Debug::Exception<ObjectFactory>(Debug::LVL_CRITICAL,
+        Msg("ObjectFactory::mAddComponentFuncs and Reflection::gComponentTypes size mismatch! Did you forget to update one?"));
+    }
   }
 
   void ObjectFactory::AddComponentsToEntity(ECS::Entity id, std::vector<rttr::variant> const& components) const
@@ -278,6 +283,7 @@ namespace Reflection
     {
       std::ostringstream oss{};
       oss << "Trying to get unsupported component type (" << compType.get_name().to_string() << ") from Entity " << entity.GetEntityID();
+      oss << " | Update ObjectFactory::GetEntityComponent";
       Debug::DebugLogger::GetInstance().LogError(oss.str());
       return rttr::variant();
     }
@@ -303,6 +309,7 @@ namespace Reflection
     {
       std::ostringstream oss{};
       oss << "Trying to remove unknown component type: " << compType.get_name().to_string() << " to entity " << entity << " | Update ObjectFactory::RemoveComponentFromEntity";
+      oss << " | Update ObjectFactory::RemoveComponentFromEntity";
       Debug::DebugLogger::GetInstance().LogError(oss.str());
     }
   }
