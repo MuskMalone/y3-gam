@@ -20,7 +20,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Core/EntityManager.h"
 #include <Reflection/ObjectFactory.h>
 #include <Events/EventCallback.h>
-#include <Core/Components/Components.h>
 #include <Physics/PhysicsSystem.h>
 
 namespace GUI {
@@ -29,57 +28,9 @@ namespace GUI {
     Inspector(const char* name);
     void Run() override;
 
-    inline void SetIsComponentEdited(bool isComponentEdited) noexcept { mIsComponentEdited = isComponentEdited; }
-
   private:
-    /*!*********************************************************************
-    \brief
-      Wrapper functions to display each component's window depending on
-      its properties
-    \param entity
-      The entity being inspected
-    \param icon
-      The icon to display for the component
-    \param highlight
-      Whether to highlight the component
-    \return
-      True if any part of the component was modified and false otherwise
-    ************************************************************************/
-    // Kindly put in alphabetical order, thank you!
-    bool ColliderComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
-    bool LayerComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
-    bool MaterialComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
-    bool MeshComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
-    bool RigidBodyComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
-    bool ScriptComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
-    bool TagComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
-    bool TextComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
-    bool TransformComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
-    
-    /*!*********************************************************************
-    \brief
-      Helper function to start the property window of a component. Should
-      be called with WindowEnd.
-    \param windowName
-      The name of the property window
-    \param icon
-      The icon to display for the component
-    \param highlight
-      Whether to highlight the component
-    \return
-      True if any part of the component was modified and false otherwise
-    ************************************************************************/
-    template<typename Component>
-    bool WindowBegin(std::string const& windowName, std::string const& icon, bool highlight = false);
 
-    /*!*********************************************************************
-    \brief
-      Helper function to end the property window of a component. Should
-      be called with WindowBegin.
-    \param isOpen
-      Whether the window is open
-    ************************************************************************/
-    void WindowEnd(bool isOpen);
+    void DrawAddComponentButton(rttr::type const& compType);
 
     /*!*********************************************************************
     \brief
@@ -92,7 +43,7 @@ namespace GUI {
     GUI::Styler& mStyler;
     Reflection::ObjectFactory& mObjFactory;
     ECS::Entity mPreviousEntity;
-    bool mIsComponentEdited, mFirstEdit, mEditingPrefab;
+    bool mEditingPrefab;
     bool mEntityChanged;
 
     static inline constexpr int INPUT_SIZE{ 200 };
@@ -125,34 +76,25 @@ namespace GUI {
     \brief
       Draws the add component option for a particular component
     \param name
-      The name of the component
+      The component in the form of an rttr::variant
+    \param compType
+      The type of the component
     \param icon
       The icon to display for the component
     ************************************************************************/
-    template<typename Component>
-    bool DrawAddComponentButton(std::string const& name, std::string const& icon);
+    bool WindowBegin(rttr::variant& component, rttr::type const& compType, bool highlight);
 
     /*!*********************************************************************
     \brief
-      Draws the options for a particular component
-    \param name
-      The name of the component
-    \return
-      True if the main window should be opened and false otherwise
+      Helper function to end the property window of a component. Should
+      be called with WindowBegin.
+    \param isOpen
+      Whether the window is open
     ************************************************************************/
-    template<typename Component>
-    bool DrawOptionButton(std::string const& name);
+    void WindowEnd(bool const isOpen);
 
-    /*!*********************************************************************
-    \brief
-      Draws the options button for a particular component
-    \param name
-      The name of the property window
-    \return
-      True if the main window should be opened and false otherwise
-    ************************************************************************/
-    template<typename Component>
-    bool DrawOptionsListButton(std::string const& windowName);
+    void DisplayProperties(rttr::instance compInst);
+
+    bool Vec3Input(rttr::property const& prop, glm::vec3& data);
   };
-#include "Inspector.tpp"
 } // namespace GUI

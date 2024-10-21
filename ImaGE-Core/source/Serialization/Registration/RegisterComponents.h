@@ -116,7 +116,7 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("removedComponents", &PrefabOverrides::removedComponents)
     .property("subDataId", &PrefabOverrides::subDataId);
 
-  rttr::registration::class_<Reflection::ProxyScriptComponent>("ProxyScriptComponent")
+  rttr::registration::class_<Reflection::ProxyScriptComponent>("Script")
     .constructor<>()
     .property(JSON_SCRIPT_LIST_KEY, &Reflection::ProxyScriptComponent::proxyScriptList);
 }
