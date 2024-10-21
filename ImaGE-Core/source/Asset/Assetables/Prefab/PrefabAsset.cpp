@@ -9,7 +9,7 @@ namespace IGE {
 			mPrefabData{ Serialization::Deserializer::DeserializePrefabToVariant(fp) } {}
 
 		GUID PrefabAsset::Import(std::string const& fp) {
-			return GUID{ GetAbsolutePath(cPrefabsDirectory + GetFileNameWithExtension(fp)) };
+			return GUID{};
 		}
 
 		void* PrefabAsset::Load(GUID guid) {
