@@ -2,6 +2,7 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include <Core/Components/Components.h>
+#include <Events/EventManager.h>
 
 namespace ECS {
   Entity EntityManager::CreateEntity() {
@@ -200,10 +201,14 @@ namespace ECS {
   void EntityManager::RecursivelyRemoveParentAndChild(EntityID entity) {
     std::set<EntityID> setOfChildren = mChildren[entity];
     for (EntityID child : setOfChildren) {
+      IGE_EVENT_MGR.DispatchImmediateEvent<Events::RemoveEntityEvent>(child);
+
       mParent.erase(child);
       RecursivelyRemoveParentAndChild(child);
     }
     mChildren.erase(entity);
+
+    IGE_EVENT_MGR.DispatchImmediateEvent<Events::RemoveEntityEvent>(entity);
     DeleteEntity(entity);
   }
 

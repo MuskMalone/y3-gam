@@ -5,6 +5,8 @@ project "ImaGE-Core"
    targetdir "Binaries/%{cfg.buildcfg}"
    staticruntime "off"
 
+   buildoptions { "/bigobj" }
+
    files { "source/**.h", "source/**.cpp", "source/**.c" }
 
    includedirs 
@@ -24,6 +26,7 @@ project "ImaGE-Core"
       "source/External/glad/include",
       "source/External/fmod/include",
       "source/External/ImTerm/",
+      "source/External/ImGuizmo/",
 
       "../Libraries/assimp/include/",
       "../Libraries/Built-Libraries/Release/Libraries/assimp/include",

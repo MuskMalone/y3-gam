@@ -46,22 +46,22 @@ namespace Serialization
     writer.StartObject();
 
     // serialize the base layer of the prefab
-    writer.Key(JsonPfbNameKey); writer.String(prefab.mName.c_str());
-    writer.Key(JsonPfbActiveKey); writer.Bool(true);
+    writer.Key(JSON_PFB_NAME_KEY); writer.String(prefab.mName.c_str());
+    writer.Key(JSON_PFB_ACTIVE_KEY); writer.Bool(true);
 
-    writer.Key(JsonComponentsKey);
+    writer.Key(JSON_COMPONENTS_KEY);
     SerializeVariantComponents(prefab.mComponents, writer);
 
     // serialize nested components if prefab has multiple layers
-    writer.Key(JsonPfbDataKey);
+    writer.Key(JSON_PFB_DATA_KEY);
     writer.StartArray();
     for (Prefabs::PrefabSubData const& obj : prefab.mObjects)
     {
       writer.StartObject();
       
-      writer.Key(JsonIdKey); writer.Uint(obj.mId);
-      writer.Key(JsonPfbActiveKey); writer.Bool(true);
-      writer.Key(JsonParentKey);
+      writer.Key(JSON_ID_KEY); writer.Uint(obj.mId);
+      writer.Key(JSON_PFB_ACTIVE_KEY); writer.Bool(true);
+      writer.Key(JSON_PARENT_KEY);
       if (obj.mParent == entt::null) {
         writer.Null();
       }
@@ -69,7 +69,7 @@ namespace Serialization
         writer.Uint(obj.mParent);
       }
       
-      writer.Key(JsonComponentsKey);
+      writer.Key(JSON_COMPONENTS_KEY);
       SerializeVariantComponents(obj.mComponents, writer);
 
       writer.EndObject();
@@ -108,15 +108,16 @@ namespace Serialization
     rapidjson::OStreamWrapper osw{ ofs };
     WriterType writer{ osw };
 
-    ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
+    EntityList entityList{ GetSortedEntities() };
 
     // serialize entities
     writer.StartObject();
 
     writer.Key(JSON_SCENE_KEY);
     writer.StartArray();
-    for (auto const& entity : entityMan.GetAllEntities()) {
-      SerializeEntity(entity, writer);
+    while (!entityList.empty()) {
+      SerializeEntity(entityList.top(), writer);
+      entityList.pop();
     }
     writer.EndArray();
 
@@ -140,11 +141,11 @@ namespace Serialization
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
 
     // serialize entity id
-    writer.Key(JsonIdKey);
+    writer.Key(JSON_ID_KEY);
     writer.Uint(entity.GetEntityID());
 
     // serialize parent id
-    writer.Key(JsonParentKey);
+    writer.Key(JSON_PARENT_KEY);
     if (entityMan.HasParent(entity)) {
       writer.Uint(entityMan.GetParentEntity(entity).GetEntityID());
     }
@@ -153,7 +154,7 @@ namespace Serialization
     }
 
     // serialize child entities
-    writer.Key(JsonChildEntitiesKey);
+    writer.Key(JSON_CHILD_ENTITIES_KEY);
     writer.StartArray();
     if (entityMan.HasChild(entity)) {
       for (auto const& child : entityMan.GetChildEntity(entity)) {
@@ -168,13 +169,13 @@ namespace Serialization
 
       // if position exists, serialize it
       if (overrides.subDataId == Prefabs::PrefabSubData::BasePrefabId && !overrides.IsComponentModified(rttr::type::get<Component::Transform>())) {
-        writer.Key(JsonPfbPosKey);
+        writer.Key(JSON_PFB_POS_KEY);
         Debug::DebugLogger::GetInstance().LogInfo(std::to_string(entity.GetComponent<Component::Transform>().worldPos.x));
         SerializeRecursive(entity.GetComponent<Component::Transform>().worldPos, writer);
       }
 
       // serialize the components
-      writer.Key(JsonPrefabKey);
+      writer.Key(JSON_PREFAB_KEY);
       SerializeRecursive(overrides, writer);
       writer.EndObject();
       return;
@@ -183,10 +184,10 @@ namespace Serialization
     // if not, serialize the entity as per normal
     // 
     // serialize state
-    writer.Key(JsonEntityStateKey);
+    writer.Key(JSON_ENTITY_STATE_KEY);
     writer.Bool(true);// entityMan.GetIsActiveEntity(entity));
 
-    writer.Key(JsonComponentsKey);
+    writer.Key(JSON_COMPONENTS_KEY);
     std::vector<rttr::variant> const components{ Reflection::ObjectFactory::GetInstance().GetEntityComponents(entity) };
     SerializeVariantComponents(components, writer);
     writer.EndObject();
@@ -205,10 +206,17 @@ namespace Serialization
       compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
 
       writer.Key(compType.get_name().to_string().c_str());
-      SerializeClassTypes(comp, writer);
+      //if (!SerializeSpecialCases(comp, compType, writer)) {
+        SerializeClassTypes(comp, writer);
+      //}
       writer.EndObject();
     }
     writer.EndArray();
+  }
+
+  bool Serializer::SerializeSpecialCases(rttr::instance const& obj, rttr::type const& type, WriterType& writer)
+  {
+    return false;
   }
 
   void Serializer::SerializeClassTypes(rttr::instance const& obj, WriterType& writer)
@@ -217,7 +225,7 @@ namespace Serialization
 
     rttr::instance wrappedObj{ obj.get_type().get_raw_type().is_wrapper() ? obj.get_wrapped_instance() : obj };
 
-    auto const properties{ wrappedObj.get_derived_type().get_properties() };
+    auto const properties{ wrappedObj.get_type().get_properties() };
     for (auto const& property : properties)
     {
       //if (property.get_metadata("NO_SERIALIZE")) { continue; }
@@ -389,6 +397,15 @@ namespace Serialization
     }
 
     writer.EndArray();
+  }
+
+  Serializer::EntityList Serializer::GetSortedEntities() {
+    auto const& entityList{ ECS::EntityManager::GetInstance().GetAllEntities() };
+    EntityList entityPQ{};
+
+    for (ECS::Entity e : entityList) { entityPQ.emplace(e); }
+
+    return entityPQ;
   }
 
 } // namespace Serialization

@@ -84,6 +84,20 @@ namespace Serialization
 
     /*!*********************************************************************
     \brief
+      Handles classes that require custom deserialization.
+    \param var
+      The object to deserialize
+    \param type
+      The type of the object
+    \param jsonVal
+      The rapidjson value
+    \return
+      True if the object was deserialized and false otherwise
+    ************************************************************************/
+    static bool DeserializeSpecialCases(rttr::variant& var, rttr::type const& type, rapidjson::Value const& jsonVal);
+
+    /*!*********************************************************************
+    \brief
       Deserializes the PrefabOverrides component
     \param prefabOverride
       Reference to the component
@@ -155,6 +169,16 @@ namespace Serialization
       The json data of the container
     ************************************************************************/
     static void DeserializeAssociativeContainer(rttr::variant_associative_view& view, rapidjson::Value const& jsonVal);
+
+    /*!*********************************************************************
+    \brief
+      This function handles the deserialization of the scripts component
+    \param var
+      The rttr::variant to deserialize into
+    \param jsonVal
+      The json data
+    ************************************************************************/
+    static void DeserializeProxyScript(rttr::variant& var, rapidjson::Value const& jsonVal);
 
     /*!*********************************************************************
       \brief

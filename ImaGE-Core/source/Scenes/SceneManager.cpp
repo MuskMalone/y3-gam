@@ -14,6 +14,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Globals.h>
 #include <Serialization/Serializer.h>
 #include <Core/Entity.h>
+#include <Reflection/ObjectFactory.h>
 
 #ifdef _DEBUG
 //#define EVENTS_DEBUG
@@ -24,7 +25,6 @@ namespace Scenes
   SceneManager::SceneManager()
   {
     mSceneState = SceneState::STOPPED;
-    mObjFactory = &Reflection::ObjectFactory::GetInstance();
     // @TODO: SHOULD RETREIVE FROM CONFIG FILE IN FUTURE
     mTempDir = gTempDirectory;
 
@@ -74,11 +74,11 @@ namespace Scenes
   }
 
   void SceneManager::LoadScene(std::string const& path) {
-    mObjFactory->LoadEntityData(path);
+    Reflection::ObjectFactory::GetInstance().LoadEntityData(path);
   }
 
   void SceneManager::InitScene() {
-    mObjFactory->InitScene();
+    Reflection::ObjectFactory::GetInstance().InitScene();
   }
 
   void SceneManager::ClearScene() {
@@ -87,7 +87,7 @@ namespace Scenes
 
   void SceneManager::UnloadScene()
   {
-    mObjFactory->ClearData();
+    Reflection::ObjectFactory::GetInstance().ClearData();
     ECS::EntityManager::GetInstance().Reset();
   }
 
@@ -153,7 +153,7 @@ namespace Scenes
     mSaveStates.emplace(mSceneName, path);
     Serialization::Serializer::SerializeScene(path);
 
-    Debug::DebugLogger::GetInstance().LogInfo("Temporarily saved scene to " + path);
+    //Debug::DebugLogger::GetInstance().LogInfo("Temporarily saved scene to " + path);
   }
 
   void SceneManager::LoadTemporarySave()

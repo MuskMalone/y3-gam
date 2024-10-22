@@ -22,6 +22,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <imgui/backends/imgui_impl_glfw.h>
 #include <imgui/backends/imgui_impl_opengl3.h>
 
+#include <Core/Systems/Systems.h>
+
 namespace IGE {
   EditorApplication::EditorApplication(Application::ApplicationSpecification const& spec) :
     mGUIManager{}, Application(spec) {
@@ -65,6 +67,7 @@ namespace IGE {
     static auto& eventManager{ Events::EventManager::GetInstance() };
     static auto& inputManager{ Input::InputManager::GetInstance() };
     static auto& frameRateController{ Performance::FrameRateController::GetInstance() };
+    static auto& sceneManager{ Scenes::SceneManager::GetInstance() };
     static auto& sysManager{ Systems::SystemManager::GetInstance() };
 
     while (!glfwWindowShouldClose(mWindow.get())) {
@@ -80,7 +83,12 @@ namespace IGE {
           // dispatch all events in the queue at the start of game loop
           eventManager.DispatchAll();
 
-          sysManager.UpdateSystems();
+          if (sceneManager.GetSceneState() == Scenes::PLAYING) {
+            sysManager.UpdateSystems();
+          }
+          else {
+            sysManager.UpdateSelectedSystems<Systems::TransformSystem, IGE::Physics::PhysicsSystem>();
+          }
         }
         catch (Debug::ExceptionBase& e)
         {
@@ -160,6 +168,7 @@ namespace IGE {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
+    ImGuizmo::BeginFrame();
     ImGui::DockSpaceOverViewport();
   }
 

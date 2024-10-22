@@ -52,6 +52,17 @@ namespace Events
     void QueueEvent(EventPtr const& event);
     void QueueEvent(EventPtr&& event);
 
+    /*!*********************************************************************
+    \brief
+      >>> For use only if event has to be handled immediately <<<
+      Dispatches an immediately. All respective listeners will be notified
+      when the event is dispatched at the start of the game loop.
+    \param event
+      The event to queue
+    ************************************************************************/
+    template <typename EventClass, typename... Args>
+    void DispatchImmediateEvent(Args&& ...args);
+
   private:
     using SubscriberList = std::vector<EventCallback>;
     using SubscriberMap = std::unordered_map<EventType, SubscriberList>;
@@ -73,6 +84,17 @@ namespace Events
     std::queue<EventPtr> mEventQueue; // events to be dispatched
   };
 
+  template <typename EventClass, typename... Args>
+  void EventManager::DispatchImmediateEvent(Args&& ...args) {
+    std::shared_ptr<EventClass> eventToDispatch{ std::make_shared<EventClass>(std::forward<Args>(args)...) };
+
+    SubscriberList& subscribers{ mSubscribers[eventToDispatch->GetCategory()] };
+    for (auto& fn : subscribers) {
+      fn(eventToDispatch);
+    }
+  }
+
+#define IGE_EVENT_MGR Events::EventManager::GetInstance()
 
   /*!*********************************************************************
     \brief

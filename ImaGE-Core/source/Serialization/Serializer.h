@@ -18,6 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rapidjson/ostreamwrapper.h>
 #include <string>
 #include <Prefabs/Prefab.h>
+#include <Core/Entity.h>
 
 // forward declaration
 namespace ECS { class Entity; }
@@ -67,6 +68,9 @@ namespace Serialization
 
   private:
     using WriterType = rapidjson::PrettyWriter<rapidjson::OStreamWrapper>;
+    // had to decltype a lambda LOL
+    using EntityList = std::priority_queue < ECS::Entity, std::vector<ECS::Entity>,
+      decltype([](ECS::Entity const& lhs, ECS::Entity const& rhs) {return lhs.GetRawEnttEntityID() > rhs.GetRawEnttEntityID(); }) > ;
 
     /*!*********************************************************************
     \brief
@@ -95,10 +99,23 @@ namespace Serialization
       The object to serialize
     \param writer
       The writer to write to
-    \return
-      The resulting rapidjson::Value object
     ************************************************************************/
     static void SerializeClassTypes(rttr::instance const& obj, WriterType& writer);
+
+    /*!*********************************************************************
+    \brief
+      Handles classes that require custom serialization. This should be
+      called before the standard SerializeClassTypes.
+    \param object
+      The object to serialize
+    \param type
+      The type of the object
+    \param writer
+      The writer to write to
+    \return
+      True if the object was serialized and false otherwise
+    ************************************************************************/
+    static bool SerializeSpecialCases(rttr::instance const& obj, rttr::type const& type, WriterType& writer);
 
     /*!*********************************************************************
     \brief
@@ -125,6 +142,16 @@ namespace Serialization
       The writer to write to
     ************************************************************************/
     static void WriteSequentialContainer(rttr::variant_sequential_view const& seqView, WriterType& writer);
+
+    /*!*********************************************************************
+    \brief
+      Retrieves the entities from the ECS and sorts them based on the pq
+      defined in EntityList
+    \return
+      The list of sorted entities
+    ************************************************************************/
+    static EntityList GetSortedEntities();    // @TODO: May need to get entities from particular scene next time
+                                              //        instead of ECS
 
     /*!*********************************************************************
     \brief

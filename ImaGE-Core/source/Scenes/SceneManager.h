@@ -13,7 +13,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <string>
 #include <stack>
 #include <Events/EventCallback.h>
-#include <Reflection/ObjectFactory.h>
 
 namespace Scenes
 {
@@ -75,7 +74,7 @@ namespace Scenes
     \return
       True if a scene is in play and false otherwise
     ************************************************************************/
-    inline bool IsScenePlaying() const noexcept { return mSceneState & (Scenes::SceneState::PAUSED | Scenes::SceneState::PLAYING); }
+    inline bool IsSceneInProgress() const noexcept { return mSceneState & (Scenes::SceneState::PAUSED | Scenes::SceneState::PLAYING); }
 
     /*!*********************************************************************
     \brief
@@ -164,7 +163,6 @@ namespace Scenes
 
     std::stack<SaveState> mSaveStates;  // used to temporarily store scene saves when playing/stopping/transitioning to PrefabEditor
     std::string mSceneName, mTempDir;
-    Reflection::ObjectFactory* mObjFactory;
     SceneState mSceneState{};
   };
 

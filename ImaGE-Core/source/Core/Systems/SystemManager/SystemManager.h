@@ -14,6 +14,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <memory>
 #include <typeindex>
 #include <Core/Systems/System.h>
+#include <string>
 
 // forward declaration
 namespace IGE { class Application; class EditorApplication; }
@@ -51,9 +52,14 @@ namespace Systems {
 
     /*!*********************************************************************
     \brief
-      Registers a system into the SystemManager
-    \param name
-      The name of the system
+      Updates all systems specified as template arguments
+    ************************************************************************/
+    template <typename... Systems>
+    void UpdateSelectedSystems();
+
+    /*!*********************************************************************
+    \brief
+      Updates all systems held by the class
     ************************************************************************/
     template <typename T>
     void RegisterSystem(const char* name);
@@ -69,6 +75,22 @@ namespace Systems {
 
     std::unordered_map<const char*, SystemPtr> mNameToSystem;
     std::vector<SystemPtr> mSystems;
+
+    /*!*********************************************************************
+    \brief
+      Updates a system and times it with the frame rate controller
+    \param names
+      The typeid names of the systems
+    ************************************************************************/
+    void UpdateSystems(std::initializer_list<const char*> const& names);
+
+    /*!*********************************************************************
+    \brief
+      Late-updates a system and times it with the frame rate controller
+    \param names
+      The typeid names of the systems
+    ************************************************************************/
+    void LateUpdateSystems(std::initializer_list<const char*> const& names);
   };
 #include "SystemManager.tpp"
 } // namespace Systems

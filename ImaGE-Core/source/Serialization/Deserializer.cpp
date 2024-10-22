@@ -20,6 +20,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Prefabs/PrefabManager.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
 #include <Core/Systems/LayerSystem/LayerSystem.h>
+#include <Core/Components/Script.h>
+#include <Reflection/ProxyScript.h>
 
 //#define DESERIALIZER_DEBUG
 
@@ -69,16 +71,16 @@ namespace Serialization
     // deserialize all entities
     for (auto const& entity : document[JSON_SCENE_KEY].GetArray())
     {
-      if (entity.HasMember(JsonPrefabKey)) {
+      if (entity.HasMember(JSON_PREFAB_KEY)) {
 
         Reflection::PrefabInst inst{};
-        if (entity.HasMember(JsonPfbPosKey)) {
+        if (entity.HasMember(JSON_PFB_POS_KEY)) {
           glm::vec3 pos;
-          DeserializeRecursive(pos, entity[JsonPfbPosKey]);
+          DeserializeRecursive(pos, entity[JSON_PFB_POS_KEY]);
           inst.mPosition = pos;
         }
 
-        if (!entity.HasMember(JsonIdKey) || !entity.HasMember(JsonParentKey) || !entity.HasMember(JsonChildEntitiesKey)) {
+        if (!entity.HasMember(JSON_ID_KEY) || !entity.HasMember(JSON_PARENT_KEY) || !entity.HasMember(JSON_CHILD_ENTITIES_KEY)) {
           std::string const msg{ "Reflection::PrefabInst missing members!" };
           Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
@@ -86,20 +88,20 @@ namespace Serialization
 #endif
         }
         // deserialize IDs
-        inst.mId = static_cast<EntityID>(entity[JsonIdKey].GetUint());
+        inst.mId = static_cast<EntityID>(entity[JSON_ID_KEY].GetUint());
         {
-          rapidjson::Value const& parentJson{ entity[JsonParentKey] };
+          rapidjson::Value const& parentJson{ entity[JSON_PARENT_KEY] };
           inst.mParent = parentJson.IsNull() ? entt::null : static_cast<EntityID>(parentJson.GetUint());
         }
 
         {
           rttr::variant childrenVar{ std::vector<ECS::EntityManager::EntityID>() };
           auto seqView{ childrenVar.create_sequential_view() };
-          DeserializeSequentialContainer(seqView, entity[JsonChildEntitiesKey]);
+          DeserializeSequentialContainer(seqView, entity[JSON_CHILD_ENTITIES_KEY]);
           inst.mChildren = std::move(childrenVar.get_value<std::vector<ECS::EntityManager::EntityID>>());
         }
 
-        DeserializePrefabOverrides(inst.mOverrides, entity[JsonPrefabKey]);
+        DeserializePrefabOverrides(inst.mOverrides, entity[JSON_PREFAB_KEY]);
         Reflection::ObjectFactory::PrefabInstMap& pfbInstances{ prefabInstances[inst.mOverrides.prefabName] };
         ECS::EntityManager::EntityID const instId{ inst.mId };
         pfbInstances.emplace(instId, std::move(inst));
@@ -108,24 +110,24 @@ namespace Serialization
 
       // check if entity json contains all basic keys
       if (!ScanJsonFileForMembers(entity, filepath, 5,
-        JsonChildEntitiesKey, rapidjson::kArrayType,
-        JsonIdKey, rapidjson::kNumberType, JsonParentKey, rapidjson::kNumberType,
-        JsonComponentsKey, rapidjson::kArrayType, JsonEntityStateKey, rapidjson::kFalseType))
+        JSON_CHILD_ENTITIES_KEY, rapidjson::kArrayType,
+        JSON_ID_KEY, rapidjson::kNumberType, JSON_PARENT_KEY, rapidjson::kNumberType,
+        JSON_COMPONENTS_KEY, rapidjson::kArrayType, JSON_ENTITY_STATE_KEY, rapidjson::kFalseType))
       {
         continue;
       }
 
-      EntityID entityId{ entity[JsonIdKey].GetUint() };
-      EntityID const parentId{ entity[JsonParentKey].IsNull() ? entt::null : entity[JsonParentKey].GetUint() };
-      Reflection::VariantEntity entityVar{ entityId, parentId, entity[JsonEntityStateKey].GetBool() };  // set parent
+      EntityID entityId{ entity[JSON_ID_KEY].GetUint() };
+      EntityID const parentId{ entity[JSON_PARENT_KEY].IsNull() ? entt::null : entity[JSON_PARENT_KEY].GetUint() };
+      Reflection::VariantEntity entityVar{ entityId, parentId, entity[JSON_ENTITY_STATE_KEY].GetBool() };  // set parent
       // get child ids
-      for (auto const& child : entity[JsonChildEntitiesKey].GetArray()) {
+      for (auto const& child : entity[JSON_CHILD_ENTITIES_KEY].GetArray()) {
         entityVar.mChildEntities.emplace_back(EntityID(child.GetUint()));
       }
 
       // restore components
       std::vector<rttr::variant>& compVector{ entityVar.mComponents };
-      for (auto const& elem : entity[JsonComponentsKey].GetArray())
+      for (auto const& elem : entity[JSON_COMPONENTS_KEY].GetArray())
       {
         for (rapidjson::Value::ConstMemberIterator comp{ elem.MemberBegin() }; comp != elem.MemberEnd(); ++comp)
         {
@@ -148,7 +150,9 @@ namespace Serialization
           }
 
           rttr::variant compVar{};
-          DeserializeComponent(compVar, compType, compJson);
+          if (!DeserializeSpecialCases(compVar, compType, compJson)) {
+            DeserializeComponent(compVar, compType, compJson);
+          }
 
           compVector.emplace_back(std::move(compVar));
         }
@@ -181,17 +185,17 @@ namespace Serialization
     rapidjson::Document document{};
     if (!ParseJsonIntoDocument(document, json)) { return {}; }
 
-    if (!ScanJsonFileForMembers(document, json, 3, JsonPfbNameKey, rapidjson::kStringType,
-      JsonComponentsKey, rapidjson::kArrayType, JsonPfbDataKey, rapidjson::kArrayType)) {
+    if (!ScanJsonFileForMembers(document, json, 3, JSON_PFB_NAME_KEY, rapidjson::kStringType,
+      JSON_COMPONENTS_KEY, rapidjson::kArrayType, JSON_PFB_DATA_KEY, rapidjson::kArrayType)) {
       return {};
     }
 
-    Prefabs::Prefab prefab{ document[JsonPfbNameKey].GetString() };
-    prefab.mIsActive = (document.HasMember(JsonPfbActiveKey) ? document[JsonPfbActiveKey].GetBool() : true);
+    Prefabs::Prefab prefab{ document[JSON_PFB_NAME_KEY].GetString() };
+    prefab.mIsActive = (document.HasMember(JSON_PFB_ACTIVE_KEY) ? document[JSON_PFB_ACTIVE_KEY].GetBool() : true);
 
     // iterate through component objects in json array
     std::vector<rttr::variant>& compVector{ prefab.mComponents };
-    for (auto const& elem : document[JsonComponentsKey].GetArray())
+    for (auto const& elem : document[JSON_COMPONENTS_KEY].GetArray())
     {
       rapidjson::Value::ConstMemberIterator comp{ elem.MemberBegin() };
       std::string const compName{ comp->name.GetString() };
@@ -213,22 +217,24 @@ namespace Serialization
       }
 
       rttr::variant compVar{};
-      DeserializeComponent(compVar, compType, compJson);
+      if (!DeserializeSpecialCases(compVar, compType, compJson)) {
+        DeserializeComponent(compVar, compType, compJson);
+      }
 
       compVector.emplace_back(compVar);
     }
 
-    for (auto const& elem : document[JsonPfbDataKey].GetArray())
+    for (auto const& elem : document[JSON_PFB_DATA_KEY].GetArray())
     {
-      if (!ScanJsonFileForMembers(elem, json, 3, JsonIdKey, rapidjson::kNumberType,
-        JsonComponentsKey, rapidjson::kArrayType, JsonParentKey, rapidjson::kNumberType)) {
+      if (!ScanJsonFileForMembers(elem, json, 3, JSON_ID_KEY, rapidjson::kNumberType,
+        JSON_COMPONENTS_KEY, rapidjson::kArrayType, JSON_PARENT_KEY, rapidjson::kNumberType)) {
         continue;
       }
 
-      Prefabs::PrefabSubData subObj{ elem[JsonIdKey].GetUint(), elem[JsonParentKey].GetUint() };
-      subObj.mIsActive = (elem.HasMember(JsonPfbActiveKey) ? elem[JsonPfbActiveKey].GetBool() : true);
+      Prefabs::PrefabSubData subObj{ elem[JSON_ID_KEY].GetUint(), elem[JSON_PARENT_KEY].GetUint() };
+      subObj.mIsActive = (elem.HasMember(JSON_PFB_ACTIVE_KEY) ? elem[JSON_PFB_ACTIVE_KEY].GetBool() : true);
 
-      for (auto const& component : elem[JsonComponentsKey].GetArray())
+      for (auto const& component : elem[JSON_COMPONENTS_KEY].GetArray())
       {
         rapidjson::Value::ConstMemberIterator comp{ component.MemberBegin() };
         std::string const compName{ comp->name.GetString() };
@@ -287,7 +293,7 @@ namespace Serialization
     {
       auto& idxVal{ jsonMap[i] };
 
-      auto keyIter{ idxVal.FindMember("key") }, valIter{ idxVal.FindMember("value") };
+      auto keyIter{ idxVal.FindMember(JSON_ASSOCIATIVE_KEY) }, valIter{ idxVal.FindMember(JSON_ASSOCIATIVE_VALUE) };
 
       if (keyIter == idxVal.MemberEnd() || valIter == idxVal.MemberEnd()) {
         std::string const msg{ "PrefabOverrides::modifiedComponents missing key or value members" };
@@ -388,6 +394,16 @@ namespace Serialization
       std::cout << "    Invoked ctor, returning " << compVar.get_type() << "\n";
 #endif
     }
+  }
+
+  bool Deserializer::DeserializeSpecialCases(rttr::variant& var, rttr::type const& type, rapidjson::Value const& jsonVal)
+  {
+    if (type == rttr::type::get<Component::Script>()) {
+      DeserializeProxyScript(var, jsonVal);
+      return true;
+    }
+
+    return false;
   }
 
   void Deserializer::DeserializeRecursive(rttr::instance inst, rapidjson::Value const& jsonObj)
@@ -644,6 +660,59 @@ namespace Serialization
         }
       }
     }
+  }
+
+  void Deserializer::DeserializeProxyScript(rttr::variant& var, rapidjson::Value const& jsonVal) {
+
+    if (!jsonVal.HasMember(JSON_SCRIPT_LIST_KEY) || !jsonVal[JSON_SCRIPT_LIST_KEY].IsArray()) {
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Script component missing " + std::string(JSON_SCRIPT_LIST_KEY) + " field");
+      var = {}; return;
+    }
+
+    Reflection::ProxyScriptComponent proxyScriptComp{};
+    auto const& jsonScriptArr{ jsonVal[JSON_SCRIPT_LIST_KEY].GetArray() };
+    proxyScriptComp.proxyScriptList.reserve(jsonScriptArr.Size());
+    for (rapidjson::Value const& elem : jsonScriptArr) {
+
+      // check if fields exist in json file
+      if (!ScanJsonFileForMembers(elem, "Script Component", 2, JSON_SCRIPT_NAME_KEY, rapidjson::kStringType,
+        JSON_SCRIPT_FIELD_LIST_KEY, rapidjson::kArrayType)) {
+        var = {}; return;
+      }
+
+      Reflection::ProxyScript scriptInst{ elem[JSON_SCRIPT_NAME_KEY].GetString() };
+      auto const& fieldListJson{ elem[JSON_SCRIPT_FIELD_LIST_KEY].GetArray() };
+      scriptInst.scriptFieldProxyList.reserve(fieldListJson.Size());
+
+      for (rapidjson::Value const& fieldInst : fieldListJson) {
+        if (!fieldInst.HasMember(JSON_SCRIPT_FILIST_TYPE_KEY)) {
+          Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to find type of script field inst list");
+          continue;
+        }
+
+        rttr::variant scriptFIList{ rttr::type::get_by_name(fieldInst[JSON_SCRIPT_FILIST_TYPE_KEY].GetString()).create() };
+#ifdef DESERIALIZER_DEBUG
+        std::cout << "  Processing FieldInstList of type " << fieldInst[JSON_SCRIPT_FILIST_TYPE_KEY].GetString() << "\n";
+        if (!scriptFIList.is_valid()) {
+          std::cout << "    Unable to create variant!\n";
+        }
+#endif
+
+        DeserializeRecursive(scriptFIList, fieldInst);
+
+#ifdef DESERIALIZER_DEBUG
+        if (scriptFIList.is_type<std::shared_ptr<Mono::ScriptFieldInstance<double>>>()) {
+          Mono::ScriptFieldInstance<double> const& test = *scriptFIList.get_value<std::shared_ptr<Mono::ScriptFieldInstance<double>>>();
+          std::cout << "Contains " << test.mData << "\n";
+        }
+#endif
+        scriptInst.scriptFieldProxyList.emplace_back(std::move(scriptFIList));
+      }
+
+      proxyScriptComp.proxyScriptList.emplace_back(std::move(scriptInst));
+    }
+
+    var = std::move(proxyScriptComp);
   }
 
   bool Deserializer::ParseJsonIntoDocument(rapidjson::Document& document, std::string const& filepath)

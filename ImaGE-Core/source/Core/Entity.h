@@ -1,6 +1,7 @@
 #pragma once
 #include <entt/entt.hpp>
 #include "EntityManager.h"
+#include <rttr/type.h>
 
 namespace ECS {
   class Entity {
@@ -39,6 +40,8 @@ namespace ECS {
     bool HasComponent() const;
 
   private:
+    void DispatchRemoveComponentEvent(std::initializer_list<rttr::type> types);
+
     EntityID mId{ entt::null };
   };
 
@@ -67,6 +70,8 @@ namespace ECS {
 
   template<typename... Components>
   inline void Entity::RemoveComponent() {
+    DispatchRemoveComponentEvent({ rttr::type::get<Components>()... });
+
     EntityManager::GetInstance().GetRegistry().remove<Components...>(mId);
   }
 
