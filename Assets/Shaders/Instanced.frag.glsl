@@ -1,5 +1,5 @@
 #version 460 core
-#extension GL_ARB_bindless_texture : require
+//#extension GL_ARB_bindless_texture : require
 
 layout(location = 0) out vec4 fragColor;
 layout(location = 1) out int entityID;
@@ -55,8 +55,7 @@ void main(){
 	//sample texture
 	//vec4 texColor = texture2D(u_Tex[0], v_TexCoord);
     
-    sampler2D albedoSampler = u_AlbedoMap;
-    vec4 albedoTexture = texture(albedoSampler, v_TexCoord);
+    vec4 albedoTexture = texture(u_AlbedoMap, v_TexCoord);
 
     //vec4 albedoTexture = texture(v_AlbedoHandle.x, v_TexCoord);
     vec3 albedo = albedoTexture.rgb; // Mixing texture and uniform
@@ -118,6 +117,7 @@ void main(){
     //change transparency here
     float alpha = u_Transparency;
 	fragColor = vec4(color, alpha) * v_Color;
+    fragColor = vec4(albedo, 1.f);
 //    if(v_AlbedoHandle.x == 64 && v_AlbedoHandle.y == 0)
 //        fragColor = vec4(1.f,0.f,0.f,1.f);
     //fragColor = v_Color;

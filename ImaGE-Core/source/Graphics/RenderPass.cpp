@@ -41,7 +41,7 @@ namespace Graphics {
         shader->SetUniform("u_CamPos", cam.GetPosition());
 
         //@TODO in future add light + materials
-        
+       
         //Renderer::BeginBatch();
         for (auto const& entity : entities) {
             if (!entity.HasComponent<Component::Transform>() || !entity.HasComponent<Component::Mesh>())
@@ -58,15 +58,17 @@ namespace Graphics {
             for (auto const& map : Renderer::GetAlbedoMaps()) {
                 hdls.push_back(IGE_REF(IGE::Assets::TextureAsset, map)->mTexture.GetBindlessHandle()); //should not be here TODO move somewhere else
             }
-            if (hdls.size() > 0)
-                shader->SetUniform("u_AlbedoMap", hdls[1]);
+            //if (hdls.size() > 0)
+
+            shader->SetUniform("u_AlbedoMap", IGE_REF(IGE::Assets::TextureAsset, Renderer::GetDefaultTexture())->mTexture, 0 );
+            
 
             hdls.clear();
             for (auto const& map : Renderer::GetNormalMaps()) {
                 hdls.push_back(IGE_REF(IGE::Assets::TextureAsset, map)->mTexture.GetBindlessHandle()); //should not be here TODO move somewhere else
             }
-            if (hdls.size() > 0)
-                shader->SetUniform("u_NormalMap", hdls.data(), static_cast<unsigned int>(hdls.size()));
+            //if (hdls.size() > 0)
+            //    shader->SetUniform("u_NormalMap", hdls.data(), static_cast<unsigned int>(hdls.size()));
 
             uint32_t matID = 0;
             if (entity.HasComponent<Component::Material>()) {

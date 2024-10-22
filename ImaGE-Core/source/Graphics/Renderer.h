@@ -113,6 +113,8 @@ namespace Graphics {
 		std::vector<std::shared_ptr<Material>> materialVector;
 		std::vector<IGE::Assets::GUID> albedoMaps;
 		std::vector<IGE::Assets::GUID> normalMaps;
+
+		std::shared_ptr<Texture> test;
 	};
 
 	class Renderer {
@@ -148,6 +150,7 @@ namespace Graphics {
 		static void SetFinalFramebuffer(std::shared_ptr<Graphics::Framebuffer> const& framebuffer);
 		static IGE::Assets::GUID GetDefaultTexture();
 		static IGE::Assets::GUID GetWhiteTexture();
+		static std::shared_ptr<Texture> TestGet();
 	private:
 		static void SetQuadBufferData(glm::vec3 const& pos, glm::vec2 const& scale,
 			glm::vec3 const& norm, glm::vec2 const& texCoord,

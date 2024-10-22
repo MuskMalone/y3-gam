@@ -134,7 +134,7 @@ namespace Graphics {
 		pickBufferSpec.attachments = { Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
 		
 		PipelineSpec pickPipelineSpec;
-		pickPipelineSpec.shader = Shader::Create("../Assets/Shaders/Instanced/vert.glsl", "../Assets/Shaders/Instanced.frag.glsl");
+		pickPipelineSpec.shader = Shader::Create("../Assets/Shaders/Instanced.vert.glsl", "../Assets/Shaders/Instanced.frag.glsl");
 		pickPipelineSpec.targetFramebuffer = Framebuffer::Create(pickBufferSpec);
 
 		RenderPassSpec pickPassSpec;
@@ -173,6 +173,16 @@ namespace Graphics {
 		mData.normalMaps.push_back(texguid1);
 		
 		//mData.albedoMaps.push_back(texguid1);
+
+		mData.test = std::make_shared<Texture>(2, 2, true);
+		// Define a 2x2 checkerboard pattern with magenta and cyan in ABGR format
+		unsigned int data[4] = {
+			0xffff00ff,  // Magenta (top-left)
+			0xffffff00,  // Cyan (top-right)
+			0xffffff00,  // Cyan (bottom-left)
+			0xffff00ff   // Magenta (bottom-right)
+		};
+		mData.test->SetData(data);
 ;	}
 
 
@@ -570,6 +580,11 @@ namespace Graphics {
 
 	IGE::Assets::GUID Renderer::GetWhiteTexture() {
 		return mData.whiteTex;
+	}
+
+	std::shared_ptr<Texture> Renderer::TestGet()
+	{
+		return mData.test;
 	}
 
 }

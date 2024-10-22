@@ -10,6 +10,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
 #include <string>
+#include <memory>
 #include <Asset/SmartPointer.h>
 namespace Graphics {
 
@@ -40,6 +41,7 @@ namespace Graphics {
 		void Unbind(unsigned int texUnit = 0) const;
 
 		bool operator==(Texture const& rhs) const;
+
 	private:
 		void InitBindlessTexture();
 

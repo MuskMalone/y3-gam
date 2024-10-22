@@ -248,10 +248,10 @@ namespace Graphics {
 	This function binds the texture to the specified texture unit.
 	*/
 	void Texture::Bind(unsigned int texUnit) const {
-		if (mIsBindless) {
-			Debug::DebugLogger::GetInstance().LogWarning("Bind() called on a bindless texture. This operation is not applicable.");
-			return;
-		}
+		//if (mIsBindless) {
+		//	Debug::DebugLogger::GetInstance().LogWarning("Bind() called on a bindless texture. This operation is not applicable.");
+		//	return;
+		//}
 		glBindTextureUnit(texUnit, mTexHdl);
 	}
 
@@ -291,6 +291,7 @@ namespace Graphics {
 		}
 		else {
 			Debug::DebugLogger::GetInstance().LogError("Bindless textures are not supported on this system.");
+			std::cout << "NOT SUPPORSED" << std::endl;
 		}
 	}
 
