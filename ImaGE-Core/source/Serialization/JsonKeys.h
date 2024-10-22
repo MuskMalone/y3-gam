@@ -11,25 +11,6 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-namespace Serialization
-{
-  // Names of Keys used when serializing to file
-  // Both Serializer and Deserializer uses these to determine the name of the keys
-  constexpr char JsonIdKey[] = "ID";
-  constexpr char JsonEntityStateKey[] = "isActive";
-  constexpr char JsonParentKey[] = "Parent";
-  constexpr char JsonChildEntitiesKey[] = "Child Entities";
-  constexpr char JsonComponentsKey[] = "Components";
-  constexpr char JsonPrefabKey[] = "Prefab";
-  constexpr char JsonPfbPosKey[] = "Position";
-  constexpr char JsonPfbNameKey[] = "Name";
-  constexpr char JsonPfbActiveKey[] = "isActive";
-  constexpr char JsonPfbDataKey[] = "SubData";
-  constexpr char ScriptFieldInstListTypeKey[] = "type";
-  constexpr char JsonAssociativeKey[] = "key", JsonAssociativeValue[] = "value";
-}
-#define JSON_SCENE_KEY "Scene"
-#define JSON_LAYERS_KEY "Layers"
 
 // Names of Keys used when serializing to file
 // Both Serializer and Deserializer use these to determine the name of the keys
@@ -46,8 +27,10 @@ namespace Serialization
 #define JSON_ASSOCIATIVE_KEY        "key"
 #define JSON_ASSOCIATIVE_VALUE      "value"
 
+#define JSON_SCENE_KEY              "Scene"
+#define JSON_LAYERS_KEY             "Layers"
+
 #define JSON_SCRIPT_LIST_KEY        "scriptList"
 #define JSON_SCRIPT_NAME_KEY        "scriptName"
 #define JSON_SCRIPT_FIELD_LIST_KEY  "scriptFieldInstList"
 #define JSON_SCRIPT_FILIST_TYPE_KEY "type"
-

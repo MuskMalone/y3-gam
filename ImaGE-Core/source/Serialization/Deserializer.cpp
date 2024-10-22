@@ -163,9 +163,9 @@ namespace Serialization
 
     // deserialize layer data
     if (!document.HasMember(JSON_LAYERS_KEY) || !document[JSON_LAYERS_KEY].IsObject()) {
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + filepath + ": Layer object corrupted!");
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + filepath + ": Unable to find Layer data");
 #ifdef _DEBUG
-      std::cout << filepath + ": Layer object corrupted!" << "\n";
+      std::cout << filepath + ": Unable to find Layer data" << "\n";
 #endif
       return;
     }
