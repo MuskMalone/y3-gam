@@ -98,6 +98,9 @@ namespace Scenes
 
     // load it back
     LoadTemporarySave();
+    InitScene();
+
+    QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mSceneName);
   }
 
   EVENT_CALLBACK_DEF(SceneManager, HandleEvent)
