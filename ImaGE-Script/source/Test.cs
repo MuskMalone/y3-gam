@@ -34,9 +34,10 @@ namespace Image
 public class Test : Entity
 {
 
-    private float speed = 20f; 
+    private float speed = 20f;
 
     // VARIABLES HERE SHOULD ONLY BE MODFIED THROUGH EDITOR
+
     public int TestInt = 10;
     public float TestFloat = 20f;
     public double TestDouble = 30.0;

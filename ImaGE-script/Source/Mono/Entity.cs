@@ -29,6 +29,7 @@ namespace Image.Mono
   public class Entity
   {
     public uint mEntityID;
+    private readonly Dictionary<Type, Component> components = new Dictionary<Type, Component>();
 
     /*  _________________________________________________________________________ */
     /*! Entity
@@ -56,142 +57,28 @@ namespace Image.Mono
     {
       mEntityID  = 0;
     }
-
-    /*  _________________________________________________________________________ */
-    /*! As
-
-    @return T
-
-    For turning any generic Entity into its respective child class.
-    */
-    //public T As<T>() where T : Entity, new()
-    //{
-    //  object instance = InternalCalls.EngineCore_GetScriptInstance(ref mEntityID );
-    //  return instance as T;
-    //}
-
-    //#region Graphics
-    //public Vector2 CameraPosition
-    //{
-    //  get
-    //  {
-    //    Vector2 pos = new Vector2(0, 0);
-    //    InternalCalls.GraphicsComponent_GetCamPosition(ref pos);
-    //    return pos;
-    //  }
-
-    //  set
-    //  {
-    //    InternalCalls.GraphicsComponent_SetCamPosition(ref value);
-    //  }
-    //}
-    /*  _________________________________________________________________________ */
-    /*! AnimationState
-
-    Getter setter for AnimationState.
-    */
-    //public int AnimationState
-    //{
-    //  get
-    //  {
-    //    int animationState = 0;
-    //    InternalCalls.AnimationComponent_GetAnimationState(ref mEntityID , ref animationState);
-    //    return AnimationState;
-    //  }
-    //  set
-    //  {
-    //    InternalCalls.AnimationComponent_SetAnimationState(ref mEntityID , ref value);
-    //  }
-    //}
-
-    /*  _________________________________________________________________________ */
-    /*! SetSprite
-
-    Wrapper function for setting the sprite based on the sprite's filename.
-    */
-    //public void SetSprite(string fileName)
-    //{
-    //  InternalCalls.GraphicsComponent_SetSprite(ref mEntityID , fileName);
-    //}
+      
 
 
-    #region Transform
-
-    /*  _________________________________________________________________________ */
-    /*! Scale
-
-    Getter setter for Scale.
-    */
-    public Vec3<float> Scale
+    // Method to add a component
+    public void AddComponent<T>(T component) where T : Component
     {
-      get
-      {
-        Vec3<float> scale = new Vec3<float>();
-        InternalCalls.GetScale(mEntityID);
-        return scale;
-      }
-      set
-      {
-        InternalCalls.SetScale(ref mEntityID , ref value);
-      }
+        components[typeof(T)] = component;
+    }
+
+    // Generic GetComponent method
+    public T GetComponent<T>() where T : Component
+    {
+        // Try to retrieve the component of type T
+        if (components.TryGetValue(typeof(T), out var component))
+        {
+            return component as T; // Cast to type T
+        }
+
+        return null; // Return null if component not found
     }
 
 
-    /*  _________________________________________________________________________ */
-    /*! GetScaleFromEntity
-
-    Get the scale, given the entity id.
-    */
-    public Vec3<float> GetScaleFromEntity(uint id)
-    {
-      Vec3<float> scale = new Vec3<float>();
-      InternalCalls.GetScale(id);
-      return scale;
-    }
-
-    /*  _________________________________________________________________________ */
-    /*! SetScaleFromEntity
-
-    Set the scale, given the entity id.
-    */
-    public void SetScaleFromEntity(uint id, Vec3<float> value)
-    {
-      InternalCalls.SetScale(ref id, ref value);
-    }
-
-
-
-    /*  _________________________________________________________________________ */
-    /*! Translation
-
-    Getter setter for Translation.
-    */
-    public Vec3<float> Position
-    {
-      get
-      {
-        Vec3<float> translation = new Vec3<float>();
-        InternalCalls.GetPosition(mEntityID);
-        return translation;
-      }
-      set
-      {
-        InternalCalls.SetPosition(mEntityID , ref value);
-      }
-    }
-    //public float Transform_Rotation
-    //{
-    //  get
-    //  {
-    //    float rot = 0;
-    //    InternalCalls.TransformComponent_GetRotation(ref mEntityID , ref rot);
-    //    return rot;
-    //  }
-    //  set
-    //  {
-    //    InternalCalls.TransformComponent_SetRotation(ref mEntityID , ref value);
-    //  }
-    //}
-    #endregion
+    
   }
 }

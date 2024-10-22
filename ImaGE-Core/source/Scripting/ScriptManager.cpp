@@ -114,29 +114,29 @@ ScriptManager::ScriptManager()
   AddInternalCalls();
 
   //Set the path for the core aseembly
-  mCoreAssFilePath = "../Assets/Scripts/ImaGE-script.dll";
+  mCoreAssFilePath = "../Assets/Scripts/ImaGE-Script.dll";
 
   //Load All the MonoClasses
   LoadAllMonoClass();
 
   try
   {
-    mFileWatcher = std::make_unique<filewatch::FileWatch<std::string>>("../Assets/Scripts/ImaGE-script.dll", AssemblyFileSystemEvent);
+    mFileWatcher = std::make_unique<filewatch::FileWatch<std::string>>("../Assets/Scripts/ImaGE-Script.dll", AssemblyFileSystemEvent);
     mAssemblyReloadPending = false;
 
-    std::ifstream csfile("../ImaGE-script/ImaGE-script.csproj");
+    std::ifstream csfile("../ImaGE-Script/ImaGE-Script.csproj");
     if (csfile.good())
     {
-      mCsprojPath = "../ImaGE-script/Source";
-      mBatfilePath = "../ImaGE-script/reb.bat";
-      mCsProjWatcher = std::make_unique < filewatch::FileWatch < std::string>>("../ImaGE-script/Source", CSReloadEvent);
+      mCsprojPath = "../ImaGE-Script/Source";
+      mBatfilePath = "../ImaGE-Script/reb.bat";
+      mCsProjWatcher = std::make_unique < filewatch::FileWatch < std::string>>("../ImaGE-Script/Source", CSReloadEvent);
       csfile.close();
     }
     else
     {
-      mCsprojPath = "../../ImaGE-script/Source";
-      mBatfilePath = "../../ImaGE-script/reb.bat";
-      mCsProjWatcher = std::make_unique < filewatch::FileWatch < std::string>>("../../ImaGE-script/Source", CSReloadEvent);
+      mCsprojPath = "../../ImaGE-Script/Source";
+      mBatfilePath = "../../ImaGE-Script/reb.bat";
+      mCsProjWatcher = std::make_unique < filewatch::FileWatch < std::string>>("../../ImaGE-Script/Source", CSReloadEvent);
     }
     mCSReloadPending = false;
   }
@@ -479,7 +479,7 @@ void ScriptManager::ReloadAssembly()
 
   LoadAppDomain();
   //Assets::AssetManager& assetManager{ Assets::AssetManager::GetInstance() };
-  mFileWatcher = std::make_unique < filewatch::FileWatch < std::string>>("../Assets/Scripts/ImaGE-script.dll", AssemblyFileSystemEvent);
+  mFileWatcher = std::make_unique < filewatch::FileWatch < std::string>>("../Assets/Scripts/ImaGE-Script.dll", AssemblyFileSystemEvent);
   mAssemblyReloadPending = false;
 
   ReloadScripts();

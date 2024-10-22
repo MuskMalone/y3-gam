@@ -54,14 +54,14 @@ namespace Mono {
 
 	struct ScriptInstance
 	{
+		bool mHasStarted{ false };
 		CtorType mCtorType;
 		ECS::Entity::EntityID mEntityID;
 		std::string mScriptName;
 		uint32_t mGcHandle;
 		MonoClass* mScriptClass{ nullptr };   //I didn't use shared ptr for these 2 ptrs because Mono frees this memory by itself behind the scene, using its own function (Which we do not have access to). 
 		MonoObject* mClassInst{ nullptr };	  //If i were to put this in a shared ptr, it will cause an error as shared ptr will try to delete the mono ptr, which is not allowed. we need to use mono's own function to delete it,but we do not have access to it
-		MonoMethod* mOnCreateMethod = { nullptr };
-		MonoMethod* mOnUpdateMethod = { nullptr };
+		MonoMethod* mUpdateMethod = { nullptr };
 		std::vector<rttr::variant> mScriptFieldInstList;
 		inline static char mFieldValBuffer[maxBufferSize];
 
