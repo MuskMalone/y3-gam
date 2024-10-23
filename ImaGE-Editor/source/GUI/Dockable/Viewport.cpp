@@ -26,11 +26,17 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/EntityManager.h>
 #include <GUI/GUIManager.h>
 #include <Asset/IGEAssets.h>
+
 namespace GUI
 {
+  // for panning camera to entity when double-clicked upon
+  static bool sMovingToEntity{ false };
+  static glm::vec3 sTargetPosition{};
 
   Viewport::Viewport(const char* name) : GUIWindow(name),
-    mIsPanning{ false }, mIsDragging{ false } {}
+    mIsPanning{ false }, mIsDragging{ false } {
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_ZOOM, &Viewport::HandleEvent, this);
+  }
 
   void Viewport::Render(Graphics::RenderTarget& renderTarget)
   {
@@ -40,15 +46,14 @@ namespace GUI
     ImVec2 const vpStartPos{ ImGui::GetCursorScreenPos() };
 
     // only register input if viewport is focused
-    bool const checkInput{ mIsDragging || mIsPanning };
+    bool const checkInput{ mIsDragging || mIsPanning || sMovingToEntity };
     if ((ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) || checkInput) {
-      ProcessCameraInputs(renderTarget.scene.GetEditorCamera());
+      ProcessCameraInputs(renderTarget.camera);
     }
     // auto focus window when middle or right-clicked upon
     else if (ImGui::IsWindowHovered() && (ImGui::IsMouseClicked(ImGuiMouseButton_Right) || ImGui::IsMouseClicked(ImGuiMouseButton_Middle))) {
       ImGui::FocusWindow(ImGui::GetCurrentWindow());
     }
-
 
     // update framebuffer
     ImGui::Image(
@@ -80,7 +85,8 @@ namespace GUI
         }
       }
     }
-    if (GUIManager::GetSelectedEntity() > 0 && 
+
+    if (GUIManager::GetSelectedEntity() && 
         GUIManager::GetSelectedEntity().HasComponent<Component::Transform>()) {
         ImGuizmo::SetDrawlist();
         ImVec2 windowPos{ ImGui::GetWindowPos() };
@@ -91,8 +97,8 @@ namespace GUI
         auto& transform{ GUIManager::GetSelectedEntity().GetComponent<Component::Transform>() };
         auto modelMatrix{ transform.worldMtx };
         auto modelMatrixPrev{ transform.worldMtx };
-        auto viewMatrix{ renderTarget.scene.GetEditorCamera().GetViewMatrix() };
-        auto projMatrix{ renderTarget.scene.GetEditorCamera().GetProjMatrix() };
+        auto viewMatrix{ renderTarget.camera.GetViewMatrix() };
+        auto projMatrix{ renderTarget.camera.GetProjMatrix() };
 
         static auto currentOperation = ImGuizmo::TRANSLATE ;
         if (ImGui::IsWindowFocused() || ImGui::IsWindowHovered()) {
@@ -144,6 +150,7 @@ namespace GUI
 
     // only allow movement and panning if right-click held
     if (ImGui::IsMouseDown(ImGuiMouseButton_Right)) {
+      sMovingToEntity = false;
       if (!mIsPanning && !mIsDragging) {
         previousMousePos = ImGui::GetMousePos();
         mIsDragging = true;
@@ -195,14 +202,29 @@ namespace GUI
         mIsPanning = false;
       }
     }
-    //CameraControls();
     
     ReceivePayload();
+
+    if (sMovingToEntity) {
+      glm::vec3 const endPos{ sTargetPosition - cam.GetForwardVector() * 10.f };
+      if (glm::distance2(endPos, cam.GetPosition()) > 0.5f) {
+        cam.MoveTowardsPoint(endPos, 2.f * dt);
+      }
+      else {
+        cam.SetPosition(endPos);
+        sMovingToEntity = false;
+      }
+    }
 
     float const scrollDelta{ ImGui::GetIO().MouseWheel };
     if (glm::abs(scrollDelta) > glm::epsilon<float>()) {
       cam.ProcessMouseScroll(scrollDelta);
     }
+  }
+
+  EVENT_CALLBACK_DEF(Viewport, HandleEvent) {
+    sTargetPosition = CAST_TO_EVENT(Events::ZoomInOnEntity)->mEntity.GetComponent<Component::Transform>().worldPos;
+    sMovingToEntity = true;
   }
 
   void Viewport::ReceivePayload()

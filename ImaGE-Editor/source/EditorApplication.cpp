@@ -104,7 +104,6 @@ namespace IGE {
 
             UpdateFramebuffers();
             
-            // @TODO: is this line still needed? - u can alr directly update the framebuffer in the draw function
             mRenderTargets.front().framebuffer = Graphics::Renderer::GetFinalFramebuffer();
             mGUIManager.UpdateGUI(mRenderTargets.front());
 
@@ -154,7 +153,7 @@ namespace IGE {
     {
       target.framebuffer->Bind();
 
-      target.scene.Draw();
+      Graphics::RenderSystem::RenderEditorScene(target.camera);
 
       target.framebuffer->Unbind();
     }

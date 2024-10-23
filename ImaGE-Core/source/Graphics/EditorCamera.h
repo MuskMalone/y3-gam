@@ -39,6 +39,7 @@ namespace Graphics {
 		glm::mat4 GetProjMatrix() const;
 		glm::mat4 GetViewProjMatrix() const;
 		glm::vec3 GetPosition() const;
+		void SetPosition(glm::vec3 const& pos);
 
 		void UpdateCamera(float dt);
 
@@ -49,7 +50,10 @@ namespace Graphics {
 		void ProcessKeyboardInput(CameraMovement dir, float dt);
 		void ProcessMouseInput(float offsetX, float offsetY);
 		void ProcessMouseScroll(float scrollOffset);
+		void MoveTowardsPoint(glm::vec3 const& target, float dt);
 		void MoveAlongPlane(float xDisp, float yDisp);
+
+
 	private:
 		glm::vec3 mPosition;
 		float mYaw;

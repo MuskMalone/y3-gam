@@ -26,10 +26,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma region SYSTEM_INCLUDES
 #include <Core/Systems/SystemManager/SystemManager.h>
 #include <Physics/PhysicsSystem.h>
-//#include <Core/Systems/TransformSystem/WorldToLocalTransformSystem.h>
 #include <Core/Systems/TransformSystem/TransformSystem.h>
 #include <Scripting/ScriptingSystem.h>
 #include <Core/Systems/LayerSystem/LayerSystem.h>
+#include <Graphics/RenderSystem.h>
 #pragma endregion
 
 namespace IGE {
@@ -57,7 +57,7 @@ namespace IGE {
     RegisterSystems();
     IGEAssetsInitialize();
     Systems::SystemManager::GetInstance().InitSystems();
-    GetDefaultRenderTarget().scene.Init();
+    Graphics::RenderSystem::Init();
   }
 
   void Application::Run() {
@@ -74,10 +74,11 @@ namespace IGE {
       eventManager.DispatchAll();
 
       systemManager.UpdateSystems();
-      GetDefaultRenderTarget().scene.Update(frameRateController.GetDeltaTime());
 
       glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
-      GetDefaultRenderTarget().scene.Draw();
+
+      Graphics::RenderSystem::RenderEditorScene(GetDefaultRenderTarget().camera);
+
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
       // check and call events, swap buffers
@@ -94,9 +95,6 @@ namespace IGE {
     systemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
     systemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
     systemManager.RegisterSystem<Systems::LayerSystem>("Layer System");
-
-    // dont think i need this anymore
-    //mSystemManager.RegisterSystem<Systems::LocalToWorldTransformSystem>("Post-Transform System");
   }
 
   Application::Application(ApplicationSpecification spec) : mRenderTargets{}, mWindow{}
@@ -126,8 +124,17 @@ namespace IGE {
       throw std::runtime_error("Failed to initialize GLAD");
     }
     
-    glfwSetWindowUserPointer(mWindow.get(), this); // set the window to reference this class
+    glClearColor(0.f, 0.f, 0.f, 1.f);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glEnable(GL_DEPTH_TEST);
 
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glfwSetWindowUserPointer(mWindow.get(), this); // set the window to reference this class
     glViewport(0, 0, spec.WindowWidth, spec.WindowHeight); // specify size of viewport
     SetCallbacks();
 
@@ -136,7 +143,17 @@ namespace IGE {
   framebufferSpec.width = spec.WindowWidth;
   framebufferSpec.height = spec.WindowHeight;
   framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
+
   mRenderTargets.emplace_back(framebufferSpec);
+  mRenderTargets.front().camera = Graphics::EditorCamera(
+      glm::vec3(0.0f, 5.0f, 10.0f),  // Position
+      -90.0f,                        // Yaw
+      -30.0f,                        // Pitch (look downwards slightly)
+      60.0f,                         // FOV
+      16.0f / 9.0f,                  // Aspect Ratio
+      0.1f,                          // Near Clip
+      100.0f                         // Far Clip
+    );
 }
 
   void Application::SetCallbacks() {
@@ -148,7 +165,7 @@ namespace IGE {
     glViewport(0, 0, width, height);
 
     Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
-    for (auto& [fb, fn] : app->mRenderTargets) {
+    for (auto& [cam, fb] : app->mRenderTargets) {
       fb->Resize(width, height);
     }
   }

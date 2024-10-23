@@ -10,7 +10,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GLFW/glfw3.h>
 #include <External/GLFWwindowDestructor.h>
 #include <FrameRateController/FrameRateController.h>
-#include <Scenes/Scene.h>
 #include <memory>
 #include <DebugTools/Exception/Exception.h>
 #include <Graphics/Framebuffer.h>

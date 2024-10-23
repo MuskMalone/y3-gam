@@ -2,10 +2,8 @@
 
 template <typename T>
 void SystemManager::RegisterSystem(const char* name) {
-  static_assert(!std::is_same<decltype(&System::Update), decltype(&T::Update)>::value
-  || !std::is_same<decltype(&System::RenderUpdate), decltype(&T::RenderUpdate)>::value,
-  "System must override at least 1 of { System::Update, System::RenderUpdate }!"
-  );
+  static_assert(!std::is_same<decltype(&System::Update), decltype(&T::Update)>::value,
+    "System must override System::Update!");
 
   SystemPtr sys{ std::make_shared<T>(name) };
   mNameToSystem.emplace(typeid(T).name(), sys);

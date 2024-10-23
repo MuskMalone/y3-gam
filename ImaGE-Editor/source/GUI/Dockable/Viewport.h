@@ -13,6 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GUI/GUIWindow.h>
 #include <Graphics/RenderTarget.h>
 #include <memory>
+#include <Events/EventCallback.h>
 
 namespace GUI
 {
@@ -48,6 +49,8 @@ namespace GUI
       accordingly
     ************************************************************************/
     void ReceivePayload();
+
+    EVENT_CALLBACK_DECL(HandleEvent);
 
     bool mIsPanning, mIsDragging;
   };
