@@ -1,64 +1,6 @@
 {
     "Scene": [
         {
-            "ID": 7,
-            "Parent": 0,
-            "Child Entities": [
-                8,
-                9
-            ],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 2
-            }
-        },
-        {
-            "ID": 6,
-            "Parent": 0,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 1
-            }
-        },
-        {
-            "ID": 5,
-            "Parent": 0,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 5
-            }
-        },
-        {
-            "ID": 4,
-            "Parent": 1,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 7
-            }
-        },
-        {
-            "ID": 2,
-            "Parent": 1,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 9
-            }
-        },
-        {
             "ID": 0,
             "Parent": null,
             "Child Entities": [
@@ -70,21 +12,6 @@
             "Prefab": {
                 "prefabName": "Plane",
                 "modifiedComponents": [
-                    {
-                        "key": "Collider",
-                        "value": {
-                            "scale": {
-                                "x": 0.5,
-                                "y": 0.5,
-                                "z": 0.5
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            }
-                        }
-                    },
                     {
                         "key": "Transform",
                         "value": {
@@ -147,43 +74,38 @@
                             "linearDamping": 0.9800000190734863,
                             "motionType": "DYNAMIC"
                         }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Player"
+                        }
+                    },
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 0.5,
+                                "y": 0.5,
+                                "z": 0.5
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 0.0
+                            },
+                            "sensor": false
+                        }
                     }
                 ],
                 "removedComponents": [],
                 "subDataId": 0
-            }
-        },
-        {
-            "ID": 8,
-            "Parent": 7,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 3
-            }
-        },
-        {
-            "ID": 3,
-            "Parent": 1,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 8
-            }
-        },
-        {
-            "ID": 9,
-            "Parent": 7,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 4
             }
         },
         {
@@ -206,6 +128,97 @@
                 ],
                 "removedComponents": [],
                 "subDataId": 6
+            }
+        },
+        {
+            "ID": 2,
+            "Parent": 1,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 9
+            }
+        },
+        {
+            "ID": 3,
+            "Parent": 1,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 8
+            }
+        },
+        {
+            "ID": 4,
+            "Parent": 1,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 7
+            }
+        },
+        {
+            "ID": 5,
+            "Parent": 0,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 5
+            }
+        },
+        {
+            "ID": 6,
+            "Parent": 0,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 1
+            }
+        },
+        {
+            "ID": 7,
+            "Parent": 0,
+            "Child Entities": [
+                8,
+                9
+            ],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 2
+            }
+        },
+        {
+            "ID": 8,
+            "Parent": 7,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 3
+            }
+        },
+        {
+            "ID": 9,
+            "Parent": 7,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 4
             }
         },
         {
@@ -262,11 +275,13 @@
                 },
                 {
                     "Layer": {
-                        "layerName": "Default"
+                        "layerName": "Buildings"
                     }
                 },
                 {
-                    "Material": {}
+                    "Material": {
+                        "matIdx": 1
+                    }
                 },
                 {
                     "Mesh": {
@@ -274,7 +289,7 @@
                     }
                 },
                 {
-                    "Collider": {
+                    "BoxCollider": {
                         "scale": {
                             "x": 1.0,
                             "y": 4.849999904632568,
@@ -284,7 +299,34 @@
                             "x": 0.0,
                             "y": 0.0,
                             "z": 0.0
-                        }
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "DYNAMIC"
                     }
                 }
             ]
@@ -347,7 +389,9 @@
                     }
                 },
                 {
-                    "Material": {}
+                    "Material": {
+                        "matIdx": 1
+                    }
                 },
                 {
                     "Mesh": {
@@ -355,7 +399,7 @@
                     }
                 },
                 {
-                    "Collider": {
+                    "BoxCollider": {
                         "scale": {
                             "x": 1.0,
                             "y": 5.0,
@@ -365,7 +409,34 @@
                             "x": 0.0,
                             "y": 0.0,
                             "z": 0.0
-                        }
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC"
                     }
                 }
             ]
@@ -375,7 +446,7 @@
         "layerNames": [
             "Default",
             "Player",
-            "",
+            "Buildings",
             "",
             "",
             "",
@@ -393,7 +464,7 @@
         "layerVisibility": [
             1,
             1,
-            0,
+            1,
             0,
             0,
             0,
@@ -446,22 +517,22 @@
                 1
             ],
             [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
             ],
             [
                 0,

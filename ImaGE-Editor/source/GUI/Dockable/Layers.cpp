@@ -53,7 +53,8 @@ namespace GUI {
 
           ImGui::SetNextItemWidth(INPUT_SIZE);
           ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_LIGHT));
-          if (ImGui::InputText("##readonly", &layerName, ImGuiInputTextFlags_EnterReturnsTrue)) {
+          std::string inputTextString = "##inputTextReadOnly" + i;
+          if (ImGui::InputText(inputTextString.c_str(), &layerName, ImGuiInputTextFlags_EnterReturnsTrue)) {
             layerSys->SetLayerName(i, layerName);
           }
           ImGui::PopFont();
