@@ -11,8 +11,7 @@ layout(location = 6) in vec4 a_Color;
 // New per-instance attributes (starting at location 7)
 layout(location = 7) in mat4 a_ModelMatrix; // Model transformation matrix for each instance
 layout(location = 11) in int a_MaterialIdx; 
-layout(location = 12) in uvec2 a_AlbedoHandle;
-layout(location = 13) in int a_Entity;
+layout(location = 12) in int a_Entity;
 
 out vec4 v_Color;
 out vec2 v_TexCoord;
@@ -32,7 +31,6 @@ uniform mat4 u_ViewProjMtx;
 
 void main(){
     v_MaterialIdx = a_MaterialIdx;
-    v_AlbedoHandle = a_AlbedoHandle;
     v_EntityID = a_Entity;
     // Apply per-instance transformation to the vertex position
     vec4 worldPosition = a_ModelMatrix * vec4(a_Position, 1.0);

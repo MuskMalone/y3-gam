@@ -27,8 +27,9 @@ uniform float u_AO;
 //instance-specific tex handles
 //in flat uint v_AlbedoHandle;  // Handle for albedo texture
 in flat int v_MaterialIdx;
-in flat uvec2 v_AlbedoHandle;
 
+uniform sampler2D[16] u_AlebdoMaps;
+uniform sampler2D[16] u_NormalMaps;
 uniform sampler2D u_AlbedoMap; //temp
 //uniform sampler2D u_NormalMap[3];
 
@@ -117,10 +118,8 @@ void main(){
     //change transparency here
     float alpha = u_Transparency;
 	fragColor = vec4(color, alpha) * v_Color;
-    fragColor = vec4(albedo, 1.f);
-//    if(v_AlbedoHandle.x == 64 && v_AlbedoHandle.y == 0)
-//        fragColor = vec4(1.f,0.f,0.f,1.f);
-    //fragColor = v_Color;
+    fragColor = vec4(albedo,1);
+
     
 }
 

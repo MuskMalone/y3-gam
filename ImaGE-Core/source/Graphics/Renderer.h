@@ -18,6 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Mesh.h"
 #include "RenderPass.h"
 #include "Color.h"
+#include "MaterialTable.h"
 
 namespace Graphics {
 
@@ -48,7 +49,6 @@ namespace Graphics {
 	struct InstanceData {
 		glm::mat4 modelMatrix;
 		int materialIdx;
-		uint32_t albedo[2];
 		int entityID = -1;
 		//glm::vec4 color;
 	};
@@ -110,7 +110,6 @@ namespace Graphics {
 		Statistics stats;
 
 		//TEMP FOR NOW
-		std::vector<std::shared_ptr<Material>> materialVector;
 		std::vector<IGE::Assets::GUID> albedoMaps;
 		std::vector<IGE::Assets::GUID> normalMaps;
 
@@ -130,7 +129,7 @@ namespace Graphics {
 		static void SubmitTriangle(glm::vec3 const& v1, glm::vec3 const& v2, glm::vec3 const& v3, glm::vec4 const& clr = Color::COLOR_WHITE);
 
 		//Instancing
-		static void SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr, uint64_t albedoHdl, int entityID = -1);
+		static void SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr, int entityID = -1, int matID = 0);
 		static void RenderInstances();
 
 		// Batching
@@ -141,7 +140,7 @@ namespace Graphics {
 		static void RenderSceneBegin(glm::mat4 const& viewProjMtx);
 		static void RenderSceneEnd();
 
-		static std::shared_ptr<Material> GetMaterial(uint32_t idx); //temp
+		//static std::shared_ptr<Material> GetMaterial(uint32_t idx); //temp
 		static std::vector<IGE::Assets::GUID> const& GetAlbedoMaps();//temp
 		static std::vector<IGE::Assets::GUID> const& GetNormalMaps();
 
@@ -175,6 +174,7 @@ namespace Graphics {
 
 	private:
 		static RendererData mData;
+		static MaterialTable mMaterialTable;
 		static std::shared_ptr<Framebuffer> mFinalFramebuffer;
 	public: // TEMP
 		static std::shared_ptr<RenderPass> mPickPass;

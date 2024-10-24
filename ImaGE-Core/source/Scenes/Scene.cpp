@@ -64,53 +64,53 @@ void Scene::Init()
   materialSource1->SetAlbedoMap(texguid);
   //=====================================================================================================================
 
-  //for (int i = 0; i < 5; ++i) {
-  //    for (int j = 0; j < 5; ++j) {
-  //        // Create a new entity
-  //        ECS::Entity entity = ECS::EntityManager::GetInstance().CreateEntity();
+  for (int i = 0; i < 5; ++i) {
+      for (int j = 0; j < 5; ++j) {
+          // Create a new entity
+          ECS::Entity entity = ECS::EntityManager::GetInstance().CreateEntity();
 
-  //        // Set up the TransformComponent with different offsets
-  //        auto& transformComponent = entity.GetComponent<Component::Transform>();
-  //        transformComponent.worldPos = glm::vec3(i * 2.0f, 0.0f, j * 2.0f); // Offset for position
-  //        transformComponent.worldScale = glm::vec3(1.0f);  // Default scale
-  //        transformComponent.worldRot = { 1.f, 0.f, 0.f, 0.f };  // No rotation
-  //        transformComponent.modified = true;
+          // Set up the TransformComponent with different offsets
+          auto& transformComponent = entity.GetComponent<Component::Transform>();
+          transformComponent.worldPos = glm::vec3(i * 2.0f, 0.0f, j * 2.0f); // Offset for position
+          transformComponent.worldScale = glm::vec3(1.0f);  // Default scale
+          transformComponent.worldRot = { 1.f, 0.f, 0.f, 0.f };  // No rotation
+          transformComponent.modified = true;
 
-  //        // Set up the MeshComponent
-  //        auto& renderComponent = entity.EmplaceComponent<Component::Mesh>();
+          // Set up the MeshComponent
+          auto& renderComponent = entity.EmplaceComponent<Component::Mesh>();
 
-  //        // Assign alternating meshes between cube and pyramid
-  //        if ((i + j) % 2 == 0) {
-  //            renderComponent.mesh = mesh0; // Assign cube mesh
-  //            transformComponent.worldScale = glm::vec3(5.f);
-  //        }
-  //        else {
-  //          renderComponent.mesh = mesh1; // Assign pyramid mesh
-  //        }
+          // Assign alternating meshes between cube and pyramid
+          if ((i + j) % 2 == 0) {
+              renderComponent.mesh = mesh0; // Assign cube mesh
+              transformComponent.worldScale = glm::vec3(5.f);
+          }
+          else {
+            renderComponent.mesh = mesh1; // Assign pyramid mesh
+          }
 
-  //        // Set up the MaterialComponent
-
-
-  //        // Assign different materials based on the mesh type
-  //        auto& materialComponent = entity.EmplaceComponent<Component::Material>();
-  //        if ((i + j) % 2 == 0) {
-  //            materialComponent.matIdx = 0;
-  //            //std::shared_ptr<Graphics::MaterialSource> materialSource;
-  //            //materialSource = materialSource0; // Assume this is a pre-defined MaterialSource for the cube
-  //            //materialComponent.material = std::make_shared<Graphics::Material>(materialSource);
-  //        }
-  //        else {
-  //            materialComponent.matIdx = 1;
-  //          // Assume this is a pre-defined MaterialSource for the pyramid
-  //        }
-
-  //        // Create a material instance from the MaterialSource and assign it to the material component
+          // Set up the MaterialComponent
 
 
-  //        // Optionally, set per-instance material properties if needed
-  //       // materialComponent.material->SetAlbedoColor(glm::vec3(1.0f, 0.5f, 0.31f)); // Example customization
-  //    }
-  //}
+          // Assign different materials based on the mesh type
+          auto& materialComponent = entity.EmplaceComponent<Component::Material>();
+          if ((i + j) % 2 == 0) {
+              materialComponent.matIdx = 0;
+              //std::shared_ptr<Graphics::MaterialSource> materialSource;
+              //materialSource = materialSource0; // Assume this is a pre-defined MaterialSource for the cube
+              //materialComponent.material = std::make_shared<Graphics::Material>(materialSource);
+          }
+          else {
+              materialComponent.matIdx = 1;
+            // Assume this is a pre-defined MaterialSource for the pyramid
+          }
+
+          // Create a material instance from the MaterialSource and assign it to the material component
+
+
+          // Optionally, set per-instance material properties if needed
+         // materialComponent.material->SetAlbedoColor(glm::vec3(1.0f, 0.5f, 0.31f)); // Example customization
+      }
+  }
 
 }
 

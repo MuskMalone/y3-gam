@@ -8,6 +8,7 @@ namespace Graphics {
 	constexpr int INVALID_ENTITY_ID = -1;
 
 	RendererData Renderer::mData;
+	MaterialTable Renderer::mMaterialTable;
 	std::shared_ptr<Framebuffer> Renderer::mFinalFramebuffer;
 	std::shared_ptr<RenderPass> Renderer::mPickPass; //TODO put in a map/ vector
 	std::shared_ptr<RenderPass> Renderer::mGeomPass;
@@ -151,13 +152,26 @@ namespace Graphics {
 		IGE::Assets::GUID texguid1 { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\ogre_normalmap.dds")) };
 
 		IGE::Assets::GUID texguid { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
-		//unsigned int data[4] = {
-		//	0xffff00ff, // Bright magenta (ABGR)
-		//	0xffffff00, // Cyan (to create contrast for checkerboard)
-		//	0xffffff00, // Cyan
-		//	0xffff00ff  // Bright magenta
-		//};
-		//debugAlbedoTex->SetData(data);
+
+
+		//Initialize Materials:
+		auto materialSource = std::make_shared<Graphics::MaterialSource>();
+
+		// Create a new Material using the MaterialSource
+		auto newMaterial = std::make_shared<Graphics::Material>(materialSource);
+
+		// Customize the material if necessary
+		newMaterial->SetAlbedoColor(glm::vec3(1.0f, 0.5f, 0.2f));  // Example color
+		newMaterial->SetMetalness(0.8f);
+		newMaterial->SetRoughness(0.3f);
+		newMaterial->SetTransparency(1.0f);
+
+		// Optionally set custom textures
+		// newMaterial->SetAlbedoMap(customAlbedoTextureGUID);
+		// newMaterial->SetNormalMap(customNormalTextureGUID);
+
+		// Add the material to the MaterialTable
+		uint32_t materialID = Graphics::MaterialTable::AddMaterial(newMaterial);
 
 
 
@@ -244,7 +258,6 @@ namespace Graphics {
 		BufferLayout instanceLayout = {
 			{ AttributeType::MAT4, "a_ModelMatrix" },
 			{ AttributeType::INT, "a_MaterialIdx"},
-			{ AttributeType::UVEC2, "a_AlbedoHandle"},
 			{ AttributeType::INT, "a_EntityID"}
 			//{ AttributeType::VEC4, "a_Color" }
 		};
@@ -357,20 +370,16 @@ namespace Graphics {
 		SetTriangleBufferData(v3, clr);
 	}
 
-	void Renderer::SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr, uint64_t albedoHdl, int id) {
+	void Renderer::SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, int matID) {
 		if (!mesh) return;
 
 		InstanceData instance{};
 		instance.modelMatrix = worldMtx;
-
-		instance.albedo[0] = static_cast<uint32_t>(albedoHdl & 0xFFFFFFFF); // Lower 32 bits
-		instance.albedo[1] = static_cast<uint32_t>(albedoHdl >> 32); // Upper 32 bits
-
 		
 		if (id != INVALID_ENTITY_ID) {
 			instance.entityID = id;
 		}
-		instance.materialIdx = 0;
+		instance.materialIdx = matID;
 
 		auto& meshSrc = mesh->GetMeshSource();
 		if (!meshSrc) return;
@@ -537,10 +546,6 @@ namespace Graphics {
 	void Renderer::RenderSceneEnd() {
 
 		FlushBatch();
-	}
-
-	std::shared_ptr<Material> Renderer::GetMaterial(uint32_t idx){
-		return mData.materialVector[idx];
 	}
 
 	std::vector< IGE::Assets::GUID> const& Renderer::GetAlbedoMaps(){
