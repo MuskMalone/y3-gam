@@ -8,6 +8,13 @@
 #include "Physics/PhysicsHelpers.h"
 namespace IGE {
 	namespace Physics {
+		physx::PxFilterFlags FilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
+			physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
+			physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize) {
+			// Enable default collision and notify on touch
+			pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT | physx::PxPairFlag::eNOTIFY_TOUCH_FOUND | physx::PxPairFlag::eNOTIFY_TOUCH_LOST;
+			return physx::PxFilterFlag::eDEFAULT;
+		}
 		template <typename... _component>
 		bool HasAnyComponent(ECS::Entity entity) {
 			return (... || entity.HasComponent<_component>());
@@ -29,7 +36,8 @@ namespace IGE {
 			mFoundation{ PxCreateFoundation(PX_PHYSICS_VERSION, mAllocator, mErrorCallback) },
 			mPvd{ PxCreatePvd(*mFoundation) },
 			mPhysics{ PxCreatePhysics(PX_PHYSICS_VERSION, *mFoundation, physx::PxTolerancesScale(), true, mPvd) },
-			mMaterial{ mPhysics->createMaterial(0.5f, 0.5f, 0.6f) }
+			mMaterial{ mPhysics->createMaterial(0.5f, 0.5f, 0.6f) },
+			mRigidBodyIDs{}, mRigidBodyToEntity{}, mEventManager{ new PhysicsEventManager{mRigidBodyIDs, mRigidBodyToEntity} }, mFilter{ new PhysicsFilter{} }
 			//mTempAllocator{ 10 * 1024 * 1024 },
 			//mJobSystem{ cMaxPhysicsJobs, cMaxPhysicsBarriers, static_cast<int>(thread::hardware_concurrency() - 1) }
 		{
@@ -45,8 +53,12 @@ namespace IGE {
 			// Use default CPU dispatcher
 			physx::PxDefaultCpuDispatcher* dispatcher = physx::PxDefaultCpuDispatcherCreate(2);
 			sceneDesc.cpuDispatcher = dispatcher;
-			sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
+			sceneDesc.filterShader = FilterShader;//physx::PxDefaultSimulationFilterShader;
+			//sceneDesc.filterCallback = mFilter;
 			mScene = mPhysics->createScene(sceneDesc);
+
+			// register callbacks for events
+			mScene->setSimulationEventCallback(mEventManager);
 		}
 
 		void PhysicsSystem::Update() {
@@ -72,6 +84,7 @@ namespace IGE {
 
 						}
 						else throw std::runtime_error{ std::string("there is no rigidbody ") };
+
 						if (pxrb->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC))
 							pxrb->setKinematicTarget(physx::PxTransform{ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot)});
 						else
@@ -176,7 +189,8 @@ namespace IGE {
 			rb->setLinearDamping(rigidbody.linearDamping);
 
 			rigidbody.bodyID = reinterpret_cast<void*>(rb);
-			mRigidBodyIDs.emplace(rigidbody.bodyID, rb);
+			//mRigidBodyIDs.emplace(rigidbody.bodyID, rb);
+			RegisterRB(rigidbody.bodyID, rb, entity);
 			return entity.EmplaceOrReplaceComponent<Component::RigidBody>(rigidbody);
 
 			//set 
@@ -223,7 +237,7 @@ namespace IGE {
 				xfm = physx::PxTransform(collider.positionOffset);
 			}
 
-			physx::PxShape* shape { mPhysics->createShape(geom, *mMaterial, true) };
+			physx::PxShape* shape { CreateShape(geom) };//mPhysics->createShape(geom, *mMaterial, true) };
 			rb->setGlobalPose(xfm);
 			shape->setLocalPose({ collider.positionOffset, collider.rotationOffset });
 			collider.idx = rb->getNbShapes();
@@ -247,7 +261,7 @@ namespace IGE {
 			rb = mPhysics->createRigidDynamic(xfm);
 			//ugly syntax to get the shape 
 			//assumes that there is only one shape (there should only ever be one starting out)
-			physx::PxShape* shape { mPhysics->createShape(geom, *mMaterial, true) };
+			physx::PxShape* shape { CreateShape(geom) };//mPhysics->createShape(geom, *mMaterial, true) };
 			shape->setLocalPose({ collider.positionOffset, collider.rotationOffset });
 			collider.idx = rb->getNbShapes();
 			rb->attachShape(*shape);
@@ -281,7 +295,8 @@ namespace IGE {
 			}
 			else if (entity.HasComponent<Component::Transform>()) { // this is a given
 				AddNewCollider<_physx_type>(rb, entity, collider);
-				mRigidBodyIDs.emplace(rb, rb);
+				//mRigidBodyIDs.emplace(rb, rb);
+				RegisterRB(reinterpret_cast<void*>(rb), rb, entity);
 			}
 			else {
 				throw std::runtime_error{"cannot have no transform or rigidbody components!!"};
@@ -289,6 +304,17 @@ namespace IGE {
 			collider.bodyID = reinterpret_cast<void*>(rb);
 			return entity.EmplaceComponent<_collider_component>(collider);
 		}
+
+		template<typename _physx_type>
+		physx::PxShape* PhysicsSystem::CreateShape(_physx_type const& geom)
+		{
+			physx::PxShape* shapeptr{ mPhysics->createShape(geom, *mMaterial, true) };
+			physx::PxFilterData filterData{};
+			filterData.word0 = 1;  // arbitrary group 1, should replace with layers later
+			shapeptr->setSimulationFilterData(filterData);
+			return shapeptr;
+		}
+
 		Component::BoxCollider& PhysicsSystem::AddBoxCollider(ECS::Entity entity, Component::BoxCollider collider)
 		{
 			return AddCollider<physx::PxBoxGeometry>(entity, collider);
@@ -366,12 +392,18 @@ namespace IGE {
 			rb->getShapes(shapes, numShapes);
 			return shapes[collider.idx];
 		}
+		void SetColliderAsSensor(physx::PxShape* shapeptr, bool sensor) {
+			//if it is a sensor, the shape can be passed thru
+			shapeptr->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, sensor);
+			shapeptr->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, !sensor);
+		}
 		void PhysicsSystem::ChangeBoxColliderVar(ECS::Entity entity)
 		{
 			auto const& collider{ entity.GetComponent<Component::BoxCollider>() };
 			auto shapeptr { GetShapePtr<Component::BoxCollider>(collider) };
 			shapeptr->setLocalPose(physx::PxTransform(collider.positionOffset, collider.rotationOffset));
 			shapeptr->setGeometry(physx::PxBoxGeometry{ collider.scale });
+			SetColliderAsSensor(shapeptr, collider.sensor);
 		}
 
 		void PhysicsSystem::ChangeSphereColliderVar(ECS::Entity entity)
@@ -381,7 +413,7 @@ namespace IGE {
 			auto shapeid{ shapeptr->getGeometryType()};
 			shapeptr->setLocalPose(physx::PxTransform(collider.positionOffset, collider.rotationOffset));
 			shapeptr->setGeometry(physx::PxSphereGeometry{ collider.radius });
-
+			SetColliderAsSensor(shapeptr, collider.sensor);
 		}
 
 		void PhysicsSystem::ChangeCapsuleColliderVar(ECS::Entity entity)
@@ -390,6 +422,7 @@ namespace IGE {
 			auto shapeptr{ GetShapePtr<Component::CapsuleCollider>(collider) };
 			shapeptr->setLocalPose(physx::PxTransform(collider.positionOffset, collider.rotationOffset));
 			shapeptr->setGeometry(physx::PxCapsuleGeometry{ collider.radius, collider.halfheight });
+			SetColliderAsSensor(shapeptr, collider.sensor);
 		}
 
 		void PhysicsSystem::Debug(float dt) {
@@ -420,7 +453,8 @@ namespace IGE {
 			if (numShapes == 1) {
 				mScene->removeActor(*rb);
 				rb->release();
-				mRigidBodyIDs.erase(collider.bodyID);
+				//mRigidBodyIDs.erase(collider.bodyID);
+				RemoveRB(collider.bodyID);
 			}
 			else { // reissue the idx since physx shuffles the shapes after removal
 				numShapes = rb->getNbShapes();
@@ -451,8 +485,21 @@ namespace IGE {
 				if (rbiter == mRigidBodyIDs.end()) throw std::runtime_error{ std::string(std::string("no such body id "))};
 				mScene->removeActor(*rbiter->second);
 				rbiter->second->release();
-				mRigidBodyIDs.erase(rb.bodyID);
+				//mRigidBodyIDs.erase(rb.bodyID);
+				RemoveRB(rb.bodyID);
 			}//else let the collider just exist on its own
+		}
+
+		void PhysicsSystem::RegisterRB(void* bodyID, physx::PxRigidDynamic* rbptr, ECS::Entity const& entity) noexcept
+		{
+			mRigidBodyIDs.emplace(bodyID, rbptr);
+			mRigidBodyToEntity.emplace(bodyID, entity);
+		}
+
+		void PhysicsSystem::RemoveRB(void* bodyID) noexcept
+		{
+			mRigidBodyIDs.erase(bodyID);
+			mRigidBodyToEntity.erase(bodyID);
 		}
 
 		EVENT_CALLBACK_DEF(PhysicsSystem, HandleRemoveComponent) {
@@ -496,6 +543,9 @@ namespace IGE {
 			mPhysics->release();
 			mPvd->release();
 			mFoundation->release();
+
+			delete mEventManager;
+			delete mFilter;
 		}
 
 	}

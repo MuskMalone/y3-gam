@@ -3,6 +3,8 @@
 #include <Core/Entity.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
 #include <Events/EventCallback.h>
+#include <Physics/PhysicsEventManager.h>
+#include <Physics/PhysicsFilter.h>
 namespace IGE {
 	namespace Physics {
 		const float gDeltaTime = 1.f / 60.f;
@@ -52,8 +54,11 @@ namespace IGE {
 			// just the pointers returned from createdynamic but in void* form
 			// map is a way to get around the pesky casting
 			std::unordered_map<void*, physx::PxRigidDynamic*> mRigidBodyIDs; 
+			std::unordered_map<void*, ECS::Entity> mRigidBodyToEntity;
 			static std::shared_ptr<IGE::Physics::PhysicsSystem> _mSelf;
 			static std::mutex _mMutex;
+			PhysicsEventManager* mEventManager;
+			PhysicsFilter* mFilter;
 			PhysicsSystem(PhysicsSystem& other) = delete;
 			void operator=(const PhysicsSystem&) = delete;
 
@@ -71,6 +76,11 @@ namespace IGE {
 			void AddNewCollider(physx::PxRigidDynamic*& rb, ECS::Entity const& entity, _collider_component& collider);
 			template<typename _physx_type, typename _collider_component>
 			_collider_component& AddCollider(ECS::Entity entity, _collider_component collider);
+			template<typename _physx_type>
+			physx::PxShape* CreateShape(_physx_type const& geom);
+			void RegisterRB(void* bodyID, physx::PxRigidDynamic* rbptr, ECS::Entity const& entity) noexcept;
+			void RemoveRB(void* bodyID) noexcept;
+
 		};
 	}
 }

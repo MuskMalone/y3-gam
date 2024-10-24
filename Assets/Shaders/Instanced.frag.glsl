@@ -109,7 +109,7 @@ void main(){
 
     //change transparency here
     float alpha = u_Transparency * albedoTexture.a;
-	fragColor = vec4(color, alpha) * v_Color;
+	fragColor = vec4(1);//vec4(color, alpha) * v_Color;
     
 }
 
