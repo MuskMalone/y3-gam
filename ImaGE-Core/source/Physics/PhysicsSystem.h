@@ -28,6 +28,7 @@ namespace IGE {
 			void ChangeSphereColliderVar(ECS::Entity entity);
 			void ChangeCapsuleColliderVar(ECS::Entity entity);
 			void Debug(float dt); // to be called within rendersystems geom pass
+			void ClearSystem(); //clears all the rigidbodies. 
 		//private:
 		//	const uint32_t cMaxBodies = 65536;
 		//	const uint32_t cNumBodyMutexes = 0;
@@ -57,11 +58,10 @@ namespace IGE {
 			std::unordered_map<void*, ECS::Entity> mRigidBodyToEntity;
 			static std::shared_ptr<IGE::Physics::PhysicsSystem> _mSelf;
 			static std::mutex _mMutex;
-			PhysicsEventManager* mEventManager;
-			PhysicsFilter* mFilter;
 			PhysicsSystem(PhysicsSystem& other) = delete;
 			void operator=(const PhysicsSystem&) = delete;
-
+		public:
+			PhysicsEventManager* mEventManager;
 		private:
 			template <typename _component_type>
 			physx::PxShape* GetShapePtr(_component_type const& collider);
@@ -81,6 +81,10 @@ namespace IGE {
 			void RegisterRB(void* bodyID, physx::PxRigidDynamic* rbptr, ECS::Entity const& entity) noexcept;
 			void RemoveRB(void* bodyID) noexcept;
 
+		private:
+			//for testing purposes only
+			PHYSICS_EVENT_LISTENER_DECL(OnContactSampleListener)
+			PHYSICS_EVENT_LISTENER_DECL(OnTriggerSampleListener)
 		};
 	}
 }

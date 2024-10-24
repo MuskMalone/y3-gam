@@ -6,15 +6,9 @@
 #include "Core/Entity.h"
 #include "Scenes/SceneManager.h"
 #include "Physics/PhysicsHelpers.h"
+#include "Physics/PhysicsEventData.h"
 namespace IGE {
 	namespace Physics {
-		physx::PxFilterFlags FilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
-			physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
-			physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize) {
-			// Enable default collision and notify on touch
-			pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT | physx::PxPairFlag::eNOTIFY_TOUCH_FOUND | physx::PxPairFlag::eNOTIFY_TOUCH_LOST;
-			return physx::PxFilterFlag::eDEFAULT;
-		}
 		template <typename... _component>
 		bool HasAnyComponent(ECS::Entity entity) {
 			return (... || entity.HasComponent<_component>());
@@ -37,7 +31,7 @@ namespace IGE {
 			mPvd{ PxCreatePvd(*mFoundation) },
 			mPhysics{ PxCreatePhysics(PX_PHYSICS_VERSION, *mFoundation, physx::PxTolerancesScale(), true, mPvd) },
 			mMaterial{ mPhysics->createMaterial(0.5f, 0.5f, 0.6f) },
-			mRigidBodyIDs{}, mRigidBodyToEntity{}, mEventManager{ new PhysicsEventManager{mRigidBodyIDs, mRigidBodyToEntity} }, mFilter{ new PhysicsFilter{} }
+			mRigidBodyIDs{}, mRigidBodyToEntity{}, mEventManager{ new PhysicsEventManager{mRigidBodyIDs, mRigidBodyToEntity} }
 			//mTempAllocator{ 10 * 1024 * 1024 },
 			//mJobSystem{ cMaxPhysicsJobs, cMaxPhysicsBarriers, static_cast<int>(thread::hardware_concurrency() - 1) }
 		{
@@ -59,6 +53,9 @@ namespace IGE {
 
 			// register callbacks for events
 			mScene->setSimulationEventCallback(mEventManager);
+
+			mEventManager->AddListener(PHYSICS_METHOD_LISTENER(PhysicsEventID::CONTACT, PhysicsSystem::OnContactSampleListener));
+			mEventManager->AddListener(PHYSICS_METHOD_LISTENER(PhysicsEventID::TRIGGER, PhysicsSystem::OnTriggerSampleListener));
 		}
 
 		void PhysicsSystem::Update() {
@@ -394,8 +391,9 @@ namespace IGE {
 		}
 		void SetColliderAsSensor(physx::PxShape* shapeptr, bool sensor) {
 			//if it is a sensor, the shape can be passed thru
-			shapeptr->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, sensor);
 			shapeptr->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, !sensor);
+			shapeptr->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, sensor);
+
 		}
 		void PhysicsSystem::ChangeBoxColliderVar(ECS::Entity entity)
 		{
@@ -428,6 +426,17 @@ namespace IGE {
 		void PhysicsSystem::Debug(float dt) {
 
 
+		}
+
+		void PhysicsSystem::ClearSystem()
+		{
+			for (auto rbpair : mRigidBodyIDs) {
+				auto rb{ rbpair.second };
+				mScene->removeActor(*rb);
+				rb->release();
+			}
+			mRigidBodyIDs.clear();
+			mRigidBodyToEntity.clear();
 		}
 
 
@@ -502,6 +511,17 @@ namespace IGE {
 			mRigidBodyToEntity.erase(bodyID);
 		}
 
+		PHYSICS_EVENT_LISTENER_IMPL(PhysicsSystem::OnContactSampleListener)
+		{
+			auto const& pair{ e.GetParam<std::pair<ECS::Entity, ECS::Entity>>(IGE::Physics::EventKey::EventContact::ENTITY_PAIR) };
+			auto const& cp{ e.GetParam<std::pair<ECS::Entity, ECS::Entity>>(IGE::Physics::EventKey::EventContact::CONTACT_POINTS) };
+		}
+
+		PHYSICS_EVENT_LISTENER_IMPL(PhysicsSystem::OnTriggerSampleListener)
+		{
+			auto const& pair{ e.GetParam<ECS::Entity>(IGE::Physics::EventKey::EventTrigger::OTHER_ENTITY) };
+		}
+
 		EVENT_CALLBACK_DEF(PhysicsSystem, HandleRemoveComponent) {
 			auto e{ CAST_TO_EVENT(Events::RemoveComponentEvent) };
 			if (e->mType == rttr::type::get<Component::RigidBody>()) {
@@ -545,7 +565,6 @@ namespace IGE {
 			mFoundation->release();
 
 			delete mEventManager;
-			delete mFilter;
 		}
 
 	}

@@ -5,12 +5,13 @@
 #include <Physics/PhysicsEvent.h>
 #include <Core/Entity.h>
 ///for member functions
-#define METHOD_LISTENER(EventType, Listener) EventType, std::bind(&Listener, this, std::placeholders::_1)
+#define PHYSICS_METHOD_LISTENER(EventType, Listener) EventType, std::bind(&Listener, this, std::placeholders::_1)
 
 ///for regular functions
-#define FUNCTION_LISTENER(EventType, Listener) EventType, std::bind(&Listener, std::placeholders::_1)
+#define PHYSICS_FUNCTION_LISTENER(EventType, Listener) EventType, std::bind(&Listener, std::placeholders::_1)
 
-
+#define PHYSICS_EVENT_LISTENER_DECL(name) void name(IGE::Physics::PhysicsEvent const& e);
+#define PHYSICS_EVENT_LISTENER_IMPL(name) void name(IGE::Physics::PhysicsEvent const& e)
 namespace IGE {
 	namespace Physics {
 		

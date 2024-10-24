@@ -1,29 +1,30 @@
 #pragma once
 namespace IGE {
 	namespace Physics {
-		enum EventConstraintBreak {
-			CONSTRAINTS,
-			COUNT
-		};
-		enum EventWake {
-			ACTORS,
-			COUNT
-		};
-		enum EventSleep {
-			ACTORS,
-			COUNT
-		};
-		enum EventContact{
-			ENTITY_PAIR,
-			CONTACT_POINTS,
-			SEPERATION
+		namespace EventKey {
+			enum class EventConstraintBreak {
+				CONSTRAINTS,
+				COUNT
+			};
+			enum class EventWake {
+				ACTORS,
+				COUNT
+			};
+			enum class EventSleep {
+				ACTORS,
+				COUNT
+			};
+			enum class EventContact {
+				ENTITY_PAIR,
+				CONTACT_POINTS
+			};
+			enum class EventTrigger {
+				TRIGGER_ENTITY,
+				OTHER_ENTITY
+			};
+			enum class EventAdvance {
 
-		};
-		enum EventTrigger {
-
-		};
-		enum EventAdvance {
-
-		};
+			};
+		}
 	}
 }

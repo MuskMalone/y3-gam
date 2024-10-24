@@ -14,6 +14,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Globals.h>
 #include <Serialization/Serializer.h>
 #include <Core/Entity.h>
+#include <Physics/PhysicsSystem.h> //tch: this is to clear the physics rbs for now 
 
 #ifdef _DEBUG
 //#define EVENTS_DEBUG
@@ -83,6 +84,7 @@ namespace Scenes
 
   void SceneManager::ClearScene() {
     mSceneName.clear();
+    IGE::Physics::PhysicsSystem::GetInstance()->ClearSystem();
   }
 
   void SceneManager::UnloadScene()

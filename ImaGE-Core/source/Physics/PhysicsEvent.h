@@ -15,6 +15,9 @@ namespace IGE {
 			TRIGGER,
 			ADVANCE
 		};
+		template <typename _event_enum>
+		int IntCast(_event_enum e) { return static_cast<int>(e); }
+
 		class PhysicsEvent
 		{
 		public:
@@ -33,10 +36,10 @@ namespace IGE {
 
 		Sets a parameter with the specified ID and value for the event.
 		*/
-			template<typename T>
-			void SetParam(int id, T value)
+			template<typename _event_enum, typename T>
+			void SetParam(_event_enum e, T value)
 			{
-				mData[id] = value;
+				mData[IntCast(e)] = value;
 			}
 			/*  _________________________________________________________________________ */
 		/*! GetParam
@@ -50,16 +53,17 @@ namespace IGE {
 		failure flag.
 		*/
 
-			template<typename T>
-			T GetParam(int id)
+			template<typename T, typename _event_enum>
+			T GetParam(_event_enum enumid) const
 			{
+				int id{ IntCast(enumid) };
 				static_assert(std::is_default_constructible<T>::value);
 				if (mData.find(id) == mData.end()) {
 					mGetFail = true;
-					if (mGetFail) throw Debug::Exception<PhysicsEventID>("no such data was sent in Physics Event");
+					if (mGetFail) Debug::DebugLogger::GetInstance().LogError("no such data was sent in Physics Event");
 				}
 				mGetFail = false;
-				return std::any_cast<T>(mData[id]);
+				return std::any_cast<T>(mData.at(id));
 			}
 			/*  _________________________________________________________________________ */
 		/*! GetType
@@ -85,7 +89,7 @@ namespace IGE {
 			}
 
 		private:
-			bool mGetFail{false}; //failbit
+			mutable bool mGetFail{false}; //failbit
 			PhysicsEventID mType{};
 			std::unordered_map<int, std::any> mData{};
 		};

@@ -1,31 +1,26 @@
 #include <pch.h>
 #include "PhysicsEventManager.h"
-
+#include "Physics/PhysicsEventData.h"
 namespace IGE {
 	namespace Physics {
 		
 		void PhysicsEventManager::onConstraintBreak(physx::PxConstraintInfo* constraints, physx::PxU32 count) 
 		{
 			PhysicsEvent e{ PhysicsEventID::CONSTRAINT_BREAK };
-
 			SendEvent(e);
-			std::cout << "constraint break\n";
 		}
 		void PhysicsEventManager::onWake(physx::PxActor** actors, physx::PxU32 count)
 		{
 			PhysicsEvent e{ PhysicsEventID::WAKE };
 			SendEvent(e);
-			std::cout << "wake\n";
 		}
 		void PhysicsEventManager::onSleep(physx::PxActor** actors, physx::PxU32 count)
 		{
 			PhysicsEvent e{ PhysicsEventID::SLEEP };
 			SendEvent(e);
-			std::cout << "sleep\n";
 		}
 		void PhysicsEventManager::onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)
 		{
-			std::cout << "contact\n";
 			if (pairHeader.actors[0]->getType() == physx::PxActorType::eRIGID_DYNAMIC && pairHeader.actors[1]->getType() == physx::PxActorType::eRIGID_DYNAMIC) {
 				auto firstactor{ reinterpret_cast<physx::PxRigidDynamic*>(pairHeader.actors[0]) };
 				auto secondactor{ reinterpret_cast<physx::PxRigidDynamic*>(pairHeader.actors[1]) };
@@ -38,25 +33,39 @@ namespace IGE {
 				std::vector<physx::PxContactPairPoint> cp;
 				for (unsigned i{}; i < nbPairs; ++i) {
 					physx::PxContactPair const& contactPair{ pairs[i] };
-					if (contactPair.events & physx::PxPairFlag::eCONTACT_DEFAULT) {
-						physx::PxContactPairPoint contactPoints[16]; // i dont think there are so many contact points available anyways
-						auto numContacts{ contactPair.extractContacts(contactPoints, sizeof(contactPoints) / sizeof(physx::PxContactPairPoint)) };
-						for (unsigned cpidx{}; cpidx < numContacts; ++cpidx) {
-							cp.emplace_back(contactPoints[cpidx]);
-						}
+					physx::PxContactPairPoint contactPoints[64]; // i dont think there are so many contact points available anyways
+					auto numContacts{ contactPair.extractContacts(contactPoints, 64) };
+					for (unsigned cpidx{}; cpidx < numContacts; ++cpidx) {
+						cp.emplace_back(contactPoints[cpidx]);
 					}
 				}
 				std::cout << "contact\n";
+
+				PhysicsEvent e{ PhysicsEventID::CONTACT };
+				e.SetParam(EventKey::EventContact::ENTITY_PAIR, entitypair);
+				e.SetParam(EventKey::EventContact::CONTACT_POINTS, cp);
+				SendEvent(e);
 			}
 		}
 		void PhysicsEventManager::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 		{
-			std::cout << "trigger\n";
-
+			for (unsigned i{}; i < count; ++i)
+			{
+				const physx::PxTriggerPair& triggerPair = pairs[i];
+				physx::PxActor* actor1 = triggerPair.triggerActor;
+				physx::PxActor* actor2 = triggerPair.otherActor;
+				if (actor1->getType() == physx::PxActorType::eRIGID_DYNAMIC && actor2->getType() == physx::PxActorType::eRIGID_DYNAMIC) {
+					auto triggeractor{ reinterpret_cast<physx::PxRigidDynamic*>(actor1) };
+					auto otheractor{ reinterpret_cast<physx::PxRigidDynamic*>(actor2) };
+					PhysicsEvent e{ PhysicsEventID::TRIGGER };
+					e.SetParam(EventKey::EventTrigger::TRIGGER_ENTITY, mRigidBodyToEntity.at(reinterpret_cast<void*>(triggeractor)));
+					e.SetParam(EventKey::EventTrigger::OTHER_ENTITY, mRigidBodyToEntity.at(reinterpret_cast<void*>(otheractor)));
+					SendEvent(e);
+				}
+			}
 		}
 		void PhysicsEventManager::onAdvance(const physx::PxRigidBody* const* bodyBuffer, const physx::PxTransform* poseBuffer, const physx::PxU32 count)
 		{
-			std::cout << "advance\n";
 		}
 
 		/*! AddListener
@@ -70,11 +79,11 @@ namespace IGE {
 		specified ID is sent, the listener function will be called.
 		*/
 
-		inline void PhysicsEventManager::AddListener(PhysicsEventID eventId, std::function<void(PhysicsEvent const&)> const& listener)
+		void PhysicsEventManager::AddListener(PhysicsEventID eventId, std::function<void(PhysicsEvent const&)> const& listener)
 		{
 			listeners[eventId].push_back(listener);
 		}
-		inline void PhysicsEventManager::SendEvent(PhysicsEvent const& event)
+		void PhysicsEventManager::SendEvent(PhysicsEvent const& event)
 		{
 			auto type{ event.GetType() };
 
@@ -95,7 +104,7 @@ namespace IGE {
 		for that event type. Each listener function is called with the event as an argument.
 		*/
 
-		inline void PhysicsEventManager::SendEvent(PhysicsEventID eventId)
+		void PhysicsEventManager::SendEvent(PhysicsEventID eventId)
 		{
 			PhysicsEvent event(eventId);
 
