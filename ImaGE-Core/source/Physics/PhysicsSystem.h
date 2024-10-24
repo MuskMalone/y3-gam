@@ -2,6 +2,7 @@
 #include <Core/Components/Components.h>
 #include <Core/Entity.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
+#include <Core/Systems/LayerSystem/LayerSystem.h>
 
 namespace IGE {
 	namespace Physics {

@@ -40,7 +40,8 @@ namespace GUI {
           ImGui::TableSetColumnIndex(0);
 
           std::string layerName{ layerSys->GetLayerNames()[i] };
-          std::string layerNameText = "Layer " + std::to_string(i);
+          std::string layerNameText = (i < Systems::MAX_BUILTIN_LAYERS) ? "BI Layer " + std::to_string(i)
+            : "Layer " + std::to_string(i);
           
           ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_REGULAR));
           ImGui::Text(layerNameText.c_str());

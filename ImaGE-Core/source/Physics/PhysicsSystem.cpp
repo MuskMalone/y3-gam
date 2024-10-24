@@ -5,6 +5,7 @@
 #include "Core/Entity.h"
 #include "Scenes/SceneManager.h"
 #include "Physics/PhysicsHelpers.h"
+
 namespace IGE {
 	namespace Physics {
 		const float gGravity{ -9.81f };
@@ -123,6 +124,12 @@ namespace IGE {
 					physx::PxMaterial* material;
 					rb->getShapes(&shape, 1);// assuming that all the rigidbodies only have one shape
 					shape->getMaterials(&material, 1);
+
+					if (std::shared_ptr<Systems::LayerSystem> layerSys = 
+						Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
+						layerSys->SetupShapeFilterData(&shape, entity);
+					}
+
 					material->setDynamicFriction(rigidbody.dynamicFriction);
 					material->setStaticFriction(rigidbody.staticFriction);
 					material->setRestitution(rigidbody.restitution);

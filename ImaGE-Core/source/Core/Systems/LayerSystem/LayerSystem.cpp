@@ -45,7 +45,7 @@ namespace Systems {
     auto itr = std::find(mLayerData.layerNames.begin(), mLayerData.layerNames.end(), layerName);
 
     if (itr != mLayerData.layerNames.end()) {
-      int index = std::distance(mLayerData.layerNames.begin(), itr);
+      size_t index = static_cast<int>(std::distance(mLayerData.layerNames.begin(), itr));
       return mLayerData.layerVisibility[index];
     }
 
@@ -70,6 +70,40 @@ namespace Systems {
     }
 
     mLayerEntities[newLayer].push_back(entity);
+  }
+
+  physx::PxFilterFlags LayerSystem::LayerFilterShader(physx::PxFilterObjectAttributes attributes0, 
+    physx::PxFilterData filterData0, physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1, 
+    physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize) {
+    // Extract layer info from the filter data
+    physx::PxU32 layer0 = filterData0.word0;
+    physx::PxU32 layer1 = filterData1.word0;
+
+    // Check if layers are allowed to collide
+    if ((layer0 & layer1) == 0) {
+      // Layers should not collide
+      return physx::PxFilterFlag::eSUPPRESS;
+    }
+
+    // Allow collision and specify that the objects should perform a full simulation
+    pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
+    return physx::PxFilterFlag::eDEFAULT;
+  }
+
+  void LayerSystem::SetupShapeFilterData(physx::PxShape** shape, ECS::Entity entity) {
+    auto itr = std::find(mLayerData.layerNames.begin(), mLayerData.layerNames.end(), 
+      entity.GetComponent<Component::Layer>().name);
+
+    if (itr != mLayerData.layerNames.end()) {
+      size_t index = std::distance(mLayerData.layerNames.begin(), itr);
+
+      physx::PxFilterData filterData;
+      filterData.word0 = index;
+      (*shape)->setSimulationFilterData(filterData);
+    }
+    else {
+      Debug::DebugLogger::GetInstance().LogWarning("[Layers] Entiy does not have Valid Layer");
+    }
   }
 
   EVENT_CALLBACK_DEF(LayerSystem, OnSceneLoad) {
