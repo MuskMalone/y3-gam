@@ -59,8 +59,12 @@ namespace Graphics {
 
 	class ShaderLibrary {
 	public:
-		inline static void Add(const std::string& name, std::shared_ptr<Shader> shader) {
-			mShaders[name] = shader;
+		inline static bool Add(const std::string& name, std::shared_ptr<Shader> shader) {
+			if (mShaders.find(name) != mShaders.end()) {
+				return false;  // Shader already exists
+			}
+			mShaders[name] = shader;  // Add shader if it doesn't exist
+			return true;
 		}
 
 		inline static std::shared_ptr<Shader> Get(const std::string& name) {
