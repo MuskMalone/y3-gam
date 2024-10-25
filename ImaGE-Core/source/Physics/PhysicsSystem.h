@@ -76,8 +76,8 @@ namespace IGE {
 			void AddNewCollider(physx::PxRigidDynamic*& rb, ECS::Entity const& entity, _collider_component& collider);
 			template<typename _physx_type, typename _collider_component>
 			_collider_component& AddCollider(ECS::Entity entity, _collider_component collider);
-			template<typename _physx_type>
-			physx::PxShape* CreateShape(_physx_type const& geom);
+			template<typename _physx_type, typename _collider_component>
+			physx::PxShape* CreateShape(_physx_type const& geom, _collider_component const& collider);
 			void RegisterRB(void* bodyID, physx::PxRigidDynamic* rbptr, ECS::Entity const& entity) noexcept;
 			void RemoveRB(void* bodyID) noexcept;
 

@@ -232,7 +232,7 @@ namespace IGE {
 				xfm = physx::PxTransform(collider.positionOffset);
 			}
 
-			physx::PxShape* shape { CreateShape(geom) };//mPhysics->createShape(geom, *mMaterial, true) };
+			physx::PxShape* shape { CreateShape(geom, collider) };//mPhysics->createShape(geom, *mMaterial, true) };
 			rb->setGlobalPose(xfm);
 			shape->setLocalPose({ collider.positionOffset, collider.rotationOffset });
 			collider.idx = rb->getNbShapes();
@@ -256,7 +256,7 @@ namespace IGE {
 			rb = mPhysics->createRigidDynamic(xfm);
 			//ugly syntax to get the shape 
 			//assumes that there is only one shape (there should only ever be one starting out)
-			physx::PxShape* shape { CreateShape(geom) };//mPhysics->createShape(geom, *mMaterial, true) };
+			physx::PxShape* shape { CreateShape(geom, collider) };//mPhysics->createShape(geom, *mMaterial, true) };
 			shape->setLocalPose({ collider.positionOffset, collider.rotationOffset });
 			collider.idx = rb->getNbShapes();
 			rb->attachShape(*shape);
@@ -300,13 +300,14 @@ namespace IGE {
 			return entity.EmplaceComponent<_collider_component>(collider);
 		}
 
-		template<typename _physx_type>
-		physx::PxShape* PhysicsSystem::CreateShape(_physx_type const& geom)
+		template<typename _physx_type, typename _collider_component>
+		physx::PxShape* PhysicsSystem::CreateShape(_physx_type const& geom, _collider_component const& collider)
 		{
 			physx::PxShape* shapeptr{ mPhysics->createShape(geom, *mMaterial, true) };
 			physx::PxFilterData filterData{};
 			filterData.word0 = 1;  // arbitrary group 1, should replace with layers later
 			shapeptr->setSimulationFilterData(filterData);
+			SetColliderAsSensor(shapeptr, collider.sensor);
 			return shapeptr;
 		}
 
@@ -512,12 +513,13 @@ namespace IGE {
 		PHYSICS_EVENT_LISTENER_IMPL(PhysicsSystem::OnContactSampleListener)
 		{
 			auto const& pair{ e.GetParam<std::pair<ECS::Entity, ECS::Entity>>(IGE::Physics::EventKey::EventContact::ENTITY_PAIR) };
-			auto const& cp{ e.GetParam<std::pair<ECS::Entity, ECS::Entity>>(IGE::Physics::EventKey::EventContact::CONTACT_POINTS) };
+			auto const& cp{ e.GetParam<std::vector<physx::PxContactPairPoint>>(IGE::Physics::EventKey::EventContact::CONTACT_POINTS) };
 		}
 
 		PHYSICS_EVENT_LISTENER_IMPL(PhysicsSystem::OnTriggerSampleListener)
 		{
-			auto const& pair{ e.GetParam<ECS::Entity>(IGE::Physics::EventKey::EventTrigger::OTHER_ENTITY) };
+			auto const& trigger{ e.GetParam<ECS::Entity>(IGE::Physics::EventKey::EventTrigger::TRIGGER_ENTITY) };
+			auto const& other{ e.GetParam<ECS::Entity>(IGE::Physics::EventKey::EventTrigger::OTHER_ENTITY) };
 		}
 
 		EVENT_CALLBACK_DEF(PhysicsSystem, HandleRemoveComponent) {

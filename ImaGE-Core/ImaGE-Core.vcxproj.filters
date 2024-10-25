@@ -653,7 +653,6 @@
     <ClInclude Include="source\Physics\PhysicsFilter.h">
       <Filter>Physics</Filter>
     </ClInclude>
-    <ClInclude Include="source\Physics\PhysxProxyTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -874,6 +873,5 @@
     <ClCompile Include="source\Physics\PhysicsFilter.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Physics\PhysxProxyTypes.cpp" />
   </ItemGroup>
 </Project>

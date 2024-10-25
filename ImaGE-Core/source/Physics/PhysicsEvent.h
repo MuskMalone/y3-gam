@@ -54,7 +54,7 @@ namespace IGE {
 		*/
 
 			template<typename T, typename _event_enum>
-			T GetParam(_event_enum enumid) const
+			T const& GetParam(_event_enum enumid) const
 			{
 				int id{ IntCast(enumid) };
 				static_assert(std::is_default_constructible<T>::value);
@@ -63,7 +63,7 @@ namespace IGE {
 					if (mGetFail) Debug::DebugLogger::GetInstance().LogError("no such data was sent in Physics Event");
 				}
 				mGetFail = false;
-				return std::any_cast<T>(mData.at(id));
+				return std::any_cast<T const&>(mData.at(id));
 			}
 			/*  _________________________________________________________________________ */
 		/*! GetType
