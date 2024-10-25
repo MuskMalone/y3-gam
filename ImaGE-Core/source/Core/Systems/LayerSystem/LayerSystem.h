@@ -35,6 +35,7 @@ namespace Systems {
     inline std::array<std::string, MAX_LAYERS>const& GetLayerNames() const { return mLayerData.layerNames; }
     inline std::array<int, MAX_LAYERS>& GetLayerVisibility() { return mLayerData.layerVisibility; }
     inline LayerData const& GetLayerData() const noexcept { return mLayerData; }
+    inline std::unordered_map<std::string, std::vector<ECS::Entity>> const& GetLayerEntities() const { return mLayerEntities; }
     inline bool GetCollidable(int lhsLayerNumber, int rhsLayerNumber) const noexcept {
       return mLayerData.collisionMatrix[lhsLayerNumber][rhsLayerNumber];
     }
@@ -49,7 +50,7 @@ namespace Systems {
     physx::PxFilterFlags LayerFilterShader(
       physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
       physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
-      physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize);
+      physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize) const;
 
     void SetupShapeFilterData(physx::PxShape** shape, ECS::Entity entity);
 

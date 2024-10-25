@@ -81,7 +81,7 @@ namespace Systems {
 
   physx::PxFilterFlags LayerSystem::LayerFilterShader(physx::PxFilterObjectAttributes attributes0, 
     physx::PxFilterData filterData0, physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1, 
-    physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize) {
+    physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize) const {
 
     physx::PxU32 layer0 = filterData0.word0;
     physx::PxU32 layer1 = filterData1.word0;
@@ -123,7 +123,7 @@ namespace Systems {
     auto const& allEntities{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Layer>() };
 
     for (auto const& entity : allEntities) {
-      std::string layerName = ECS::Entity{ entity }.GetComponent<Component::Layer>().name;
+      std::string const layerName = ECS::Entity{ entity }.GetComponent<Component::Layer>().name;
       
       auto itr = std::find(mLayerData.layerNames.begin(), mLayerData.layerNames.end(), layerName);
       if (itr != mLayerData.layerNames.end()) {
@@ -131,11 +131,12 @@ namespace Systems {
       }
 
       else {
-        std::string tag = ECS::Entity{ entity }.GetComponent<Component::Tag>().tag;
+        std::string const tag = ECS::Entity{ entity }.GetComponent<Component::Tag>().tag;
         Debug::DebugLogger::GetInstance().LogWarning("[Layers] The Entity with Tag: \"" + tag + "\" has a Non-Existent Layer");
 
         // Add entity with non-existent layer into default layer
         mLayerEntities[std::string(BUILTIN_LAYER_0)].push_back(ECS::Entity{ entity });
+        ECS::Entity{ entity }.GetComponent<Component::Layer>().name = std::string(BUILTIN_LAYER_0);
       }
     }
   }
