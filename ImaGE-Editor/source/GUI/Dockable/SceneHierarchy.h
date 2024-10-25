@@ -39,8 +39,9 @@ namespace GUI
     bool mRightClickMenu, mEntityOptionsMenu, mPrefabPopup, mFirstTimePfbPopup;
     bool mEditingPrefab, mLockControls, mSceneModified;
 
-    static constexpr char sDragDropPayload[] = "ENTITY";
+    static inline constexpr char sDragDropPayload[] = "ENTITY";
     static inline constexpr ImU32 sEntityHighlightCol{ IM_COL32(253, 208, 23, 255) };
+    static inline constexpr float sTimeBeforeRename = 0.5f; // time after a click before triggerring an entity rename
 
     /*!*********************************************************************
     \brief
@@ -64,10 +65,8 @@ namespace GUI
       Checks for input and handles them accordingly
     \param entity
       The current entity
-    \param editNameMode
-      Whether an entity is being renamed in the hierarchy window
     ************************************************************************/
-    void ProcessInput(ECS::Entity entity, bool& editNameMode);
+    void ProcessInput(ECS::Entity entity);
 
     /*!*********************************************************************
     \brief
