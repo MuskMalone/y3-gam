@@ -9,6 +9,7 @@
 #include "Physics/PhysicsEventData.h"
 namespace IGE {
 	namespace Physics {
+		void SetColliderAsSensor(physx::PxShape* shapeptr, bool sensor);
 		template <typename... _component>
 		bool HasAnyComponent(ECS::Entity entity) {
 			return (... || entity.HasComponent<_component>());
@@ -156,9 +157,6 @@ namespace IGE {
 					rbiter = mRigidBodyIDs.find(entity.GetComponent<Component::SphereCollider>().bodyID);
 				else if (entity.HasComponent<Component::CapsuleCollider>())
 					rbiter = mRigidBodyIDs.find(entity.GetComponent<Component::CapsuleCollider>().bodyID);
-
-
-
 
 				if (rbiter != mRigidBodyIDs.end())
 				{

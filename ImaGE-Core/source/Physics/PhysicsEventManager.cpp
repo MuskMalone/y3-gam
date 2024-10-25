@@ -1,6 +1,7 @@
 #include <pch.h>
 #include "PhysicsEventManager.h"
 #include "Physics/PhysicsEventData.h"
+#include "Physics/PhysxProxyTypes.h"
 namespace IGE {
 	namespace Physics {
 		
@@ -30,7 +31,7 @@ namespace IGE {
 					mRigidBodyToEntity.at(reinterpret_cast<void*>(secondactor))
 				};
 
-				std::vector<physx::PxContactPairPoint> cp;
+				std::vector<ContactPairPoint> cp;
 				for (unsigned i{}; i < nbPairs; ++i) {
 					physx::PxContactPair const& contactPair{ pairs[i] };
 					physx::PxContactPairPoint contactPoints[64]; // i dont think there are so many contact points available anyways
