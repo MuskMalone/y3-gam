@@ -51,6 +51,7 @@ namespace ECS {
 
     void SetParentEntity(Entity const& parent, Entity const& child);
     void SetChildEntity(Entity const& parent, Entity const& child);
+    void SetChildLayersToFollowParent(Entity const& parent);
 
     bool RemoveParent(Entity const& child);
     void RemoveEntity(Entity const& entity);

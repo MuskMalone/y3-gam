@@ -300,6 +300,10 @@ namespace GUI
         mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
       }
 
+      if (ImGui::Selectable("Set Child Layers to follow Entity")) {
+        mEntityManager.SetChildLayersToFollowParent(mRightClickedEntity);
+      }
+
       // @TODO: need a way to deep copy components
       //ImGui::BeginDisabled();
       //if (ImGui::Selectable("Duplicate")) {

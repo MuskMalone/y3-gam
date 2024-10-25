@@ -159,6 +159,32 @@ namespace ECS {
     mParent[child.GetRawEnttEntityID()] = parent.GetRawEnttEntityID();
   }
 
+  void EntityManager::SetChildLayersToFollowParent(Entity const& parent) {
+    if (!mRegistry.valid(parent.GetRawEnttEntityID())) {
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent is not valid!");
+      return;
+    }
+
+    if (!parent.HasComponent<Component::Layer>()) {
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent does not have a layer!");
+      return;
+    }
+
+    if (mChildren.find(parent.GetRawEnttEntityID()) != mChildren.end()) {
+      for (EntityID id : mChildren[parent.GetRawEnttEntityID()]) {
+        if (Entity{ id }.HasComponent<Component::Layer>()) {
+          Entity{ id }.GetComponent<Component::Layer>().name =
+            parent.GetComponent<Component::Layer>().name;
+        }
+
+        // Recursively set the children of children
+        if (mChildren.find(id) != mChildren.end()) {
+          SetChildLayersToFollowParent(id);
+        }
+      }
+    }
+  }
+
   bool EntityManager::RemoveParent(Entity const& child) {
     if (!mRegistry.valid(child.GetRawEnttEntityID())) {
       Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity is not valid!");
