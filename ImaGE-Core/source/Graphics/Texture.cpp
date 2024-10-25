@@ -236,7 +236,7 @@ namespace Graphics {
 	*/
 	void Texture::SetData(void* data) {
 		//TODO may add format to texture member variables
-		glTextureSubImage2D(mTexHdl, 0, 0, 0, mWidth, mHeight, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		GLCALL(glTextureSubImage2D(mTexHdl, 0, 0, 0, mWidth, mHeight, GL_RGBA, GL_UNSIGNED_BYTE, data));
 	}
 
 	/*  _________________________________________________________________________ */
@@ -252,7 +252,7 @@ namespace Graphics {
 		//	Debug::DebugLogger::GetInstance().LogWarning("Bind() called on a bindless texture. This operation is not applicable.");
 		//	return;
 		//}
-		glBindTextureUnit(texUnit, mTexHdl);
+		GLCALL(glBindTextureUnit(texUnit, mTexHdl));
 	}
 
 	/*  _________________________________________________________________________ */
@@ -264,8 +264,8 @@ namespace Graphics {
 	This function unbinds the texture from the specified texture unit.
 	*/
 	void Texture::Unbind(unsigned int texUnit) const {
-		if (mIsBindless) return;
-		glBindTextureUnit(texUnit, 0);
+		//if (mIsBindless) return;
+		GLCALL(glBindTextureUnit(texUnit, 0));
 	}
 
 	/*  _________________________________________________________________________ */

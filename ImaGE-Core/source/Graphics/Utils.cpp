@@ -97,13 +97,13 @@ namespace Graphics {
 
                     std::cout << ss.str() << std::endl;
 
-                    //Debug::DebugLogger::GetInstance().LogError(ss.str());
+                    Debug::DebugLogger::GetInstance().LogError(ss.str());
                 }
                 return success;
             }
 
             void GlClearErrors() {
-                //while (glGetError() != GL_NO_ERROR);
+               // while (glGetError() != GL_NO_ERROR);
             }
 
         }//namespace GL

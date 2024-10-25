@@ -505,9 +505,6 @@
     <ClInclude Include="source\Graphics\Material.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="source\Graphics\MaterialSource.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="source\Graphics\Mesh.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -768,9 +765,6 @@
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\Material.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Graphics\MaterialSource.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\Mesh.cpp">

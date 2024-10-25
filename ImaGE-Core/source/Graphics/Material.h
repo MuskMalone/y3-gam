@@ -9,23 +9,45 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#include "MaterialSource.h"
 #include "Renderer.h"
 #include "Asset/IGEAssets.h"
-namespace Graphics{
-    class Material {
+#include <Graphics/Shader.h>
+#include <Graphics/Texture.h>
 
+namespace Graphics {
+
+    enum class MaterialFlag {
+        NONE = 0,
+        DEPTH_TEST = 1 << 0,
+        BLEND = 1 << 1,
+        TWO_SIDED = 1 << 2,
+        DISABLE_SHADOW_CASTING = 1 << 3
+    };
+
+    class Material {
     public:
-        // Constructor that takes a reference to a MaterialSource
-        explicit Material(std::shared_ptr<MaterialSource> materialSource)
-            : mMaterialSource{ materialSource }, mAlbedoColor{ materialSource->GetDefaultAlbedoColor() },
-            mMetalness{ materialSource->GetDefaultMetalness() }, mRoughness{ materialSource->GetDefaultRoughness() }, mAO{ materialSource->GetDefaultAO() },
-            mEmission{ materialSource->GetDefaultEmission() }, mTransparency{ materialSource->GetDefaultTransparency() },
-            mUseCustomAlbedoMap{ false }, mUseCustomNormalMap{ false }, mUseCustomMetalnessMap{ false }, mUseCustomRoughnessMap{ false }
+        Material(std::shared_ptr<Shader> shader)
+            : mShader(std::move(shader)),       // Initialize the shader with the passed-in shared_ptr
+            mAlbedoColor(1.0f, 1.0f, 1.0f),   // Default white albedo color
+            mMetalness(0.0f),                 // Default non-metallic
+            mRoughness(0.5f),                 // Default roughness value
+            mAO(1.0f),                        // Default ambient occlusion
+            mEmission(0.0f),                  // Default no emission
+            mTransparency(1.0f),              // Default fully opaque
+            mFlags(0),                        // No flags set
+            mTiling(1.0f, 1.0f),              // Default tiling factor
+            mOffset(0.0f, 0.0f)               // Default offset
         {}
 
-        // Setters and getters for per-instance properties
-       glm::vec3 GetAlbedoColor() const { return mAlbedoColor; }
+        static std::shared_ptr<Material> Create(std::shared_ptr<Shader> shader) {
+            return std::make_shared<Material>(shader);
+        }
+
+        // Shader access
+        inline std::shared_ptr<Shader> GetShader() const { return mShader; }
+
+        // Property Getters and Setters
+        glm::vec3 GetAlbedoColor() const { return mAlbedoColor; }
         void SetAlbedoColor(const glm::vec3& color) { mAlbedoColor = color; }
 
         float GetMetalness() const { return mMetalness; }
@@ -34,55 +56,47 @@ namespace Graphics{
         float GetRoughness() const { return mRoughness; }
         void SetRoughness(float value) { mRoughness = value; }
 
+        float GetAO() const { return mAO; }
+        void SetAO(float ao) { mAO = ao; }
+
         float GetEmission() const { return mEmission; }
         void SetEmission(float value) { mEmission = value; }
 
         float GetTransparency() const { return mTransparency; }
         void SetTransparency(float value) { mTransparency = value; }
 
-        // Texture Management
-        IGE::Assets::GUID GetAlbedoMap() const { return mUseCustomAlbedoMap ? mCustomAlbedoMap : mMaterialSource->GetAlbedoMap(); }
-        void SetAlbedoMap(IGE::Assets::GUID const& texture) { mCustomAlbedoMap = texture; mUseCustomAlbedoMap = true; }
-        void ClearAlbedoMap() { mUseCustomAlbedoMap = false; }
+        glm::vec2 GetTiling() const { return mTiling; }
+        void SetTiling(const glm::vec2& tiling) { mTiling = tiling; }
 
-        IGE::Assets::GUID GetNormalMap() const { return mUseCustomNormalMap ? mCustomNormalMap : mMaterialSource->GetNormalMap(); }
-        void SetNormalMap(IGE::Assets::GUID const& texture) { mCustomNormalMap = texture; mUseCustomNormalMap = true; }
-        void ClearNormalMap() { mUseCustomNormalMap = false; }
+        glm::vec2 GetOffset() const { return mOffset; }
+        void SetOffset(const glm::vec2& offset) { mOffset = offset; }
 
-        IGE::Assets::GUID GetMetalnessMap() const { return mUseCustomMetalnessMap ? mCustomMetalnessMap : mMaterialSource->GetMetalnessMap(); }
-        void SetMetalnessMap(IGE::Assets::GUID const& texture) { mCustomMetalnessMap = texture; mUseCustomMetalnessMap = true; }
-        void ClearMetalnessMap() { mUseCustomMetalnessMap = false; }
+        // Texture Getters and Setters
+        IGE::Assets::GUID GetAlbedoMap() const;
+        void SetAlbedoMap(IGE::Assets::GUID const& texture);
 
-        IGE::Assets::GUID GetRoughnessMap() const { return mUseCustomRoughnessMap ? mCustomRoughnessMap : mMaterialSource->GetRoughnessMap(); }
-        void SetRoughnessMap(IGE::Assets::GUID const& texture) { mCustomRoughnessMap = texture; mUseCustomRoughnessMap = true; }
-        void ClearRoughnessMap() { mUseCustomRoughnessMap = false; }
+        IGE::Assets::GUID GetNormalMap() const;
+        void SetNormalMap(IGE::Assets::GUID const& texture);
 
-        // Apply Material Properties to Shader
-        void Apply(std::shared_ptr<Shader> shader) const {
-            // Apply instance-specific overrides
-            shader->SetUniform("u_Albedo", mAlbedoColor);
-            shader->SetUniform("u_Metalness", mMetalness);
-            shader->SetUniform("u_Roughness", mRoughness);
-            shader->SetUniform("u_Transparency", mTransparency);
-            shader->SetUniform("u_AO", 1.f);
-            //shader->SetUniform("u_Emission", mEmission);
+        IGE::Assets::GUID GetMetalnessMap() const;
+        void SetMetalnessMap(IGE::Assets::GUID const& texture);
 
+        IGE::Assets::GUID GetRoughnessMap() const;
+        void SetRoughnessMap(IGE::Assets::GUID const& texture);
 
-            // Apply textures (use instance override if available)
-            //shader->SetUniform("u_AlbedoMap", GetAlbedoMap() ? &(IGE_REF(IGE::Assets::TextureAsset, GetAlbedoMap())->mTexture) : &(IGE_REF(IGE::Assets::TextureAsset, Renderer::GetWhiteTexture())->mTexture), 0);
+        // Apply material to shader
+        void Apply(std::shared_ptr<Shader> shader) const;
 
-            //if (auto normalMap = GetNormalMap()) shader->SetUniform("u_NormalMap", normalMap);
-            //if (auto metalnessMap = GetMetalnessMap()) shader->SetUniform("u_MetalnessMap", metalnessMap);
-            //if (auto roughnessMap = GetRoughnessMap()) shader->SetUniform("u_RoughnessMap", roughnessMap);
+        // Flags handling
+        bool GetFlag(MaterialFlag flag) const { return mFlags & static_cast<uint32_t>(flag); }
+        void SetFlag(MaterialFlag flag, bool value) {
+            if (value) mFlags |= static_cast<uint32_t>(flag);
+            else mFlags &= ~static_cast<uint32_t>(flag);
         }
 
-        // Get the underlying material source
-        std::shared_ptr<MaterialSource> GetMaterialSource() const { return mMaterialSource; }
     private:
-        // Reference to the shared material source
-        std::shared_ptr<MaterialSource> mMaterialSource;
+        std::shared_ptr<Shader> mShader;
 
-        // Per-instance overrides
         glm::vec3 mAlbedoColor;
         float mMetalness;
         float mRoughness;
@@ -90,17 +104,16 @@ namespace Graphics{
         float mEmission;
         float mTransparency;
 
-        // Texture overrides
-        IGE::Assets::GUID mCustomAlbedoMap;
-        IGE::Assets::GUID mCustomNormalMap;
-        IGE::Assets::GUID mCustomMetalnessMap;
-        IGE::Assets::GUID mCustomRoughnessMap;
+        uint32_t mFlags;
 
-        // Flags for texture use
-        bool mUseCustomAlbedoMap;
-        bool mUseCustomNormalMap;
-        bool mUseCustomMetalnessMap;
-        bool mUseCustomRoughnessMap;
+        glm::vec2 mTiling{ 1.0f, 1.0f }; // Default tiling (1,1) - no repetition
+        glm::vec2 mOffset{ 0.0f, 0.0f }; // Default offset (0,0) - no shift
+
+        // Texture GUIDs
+        IGE::Assets::GUID mAlbedoMap{};
+        IGE::Assets::GUID mNormalMap{};
+        IGE::Assets::GUID mMetalnessMap{};
+        IGE::Assets::GUID mRoughnessMap{};
     };
 
 }

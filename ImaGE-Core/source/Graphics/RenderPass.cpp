@@ -7,6 +7,11 @@
 #include "Asset/IGEAssets.h"
 #include "MaterialTable.h"
 namespace Graphics {
+
+    using EntityXform = std::pair<ECS::Entity, glm::mat4>;
+    using MatGroup = std::vector<EntityXform>;
+    using MatGroupsMap = std::unordered_map<uint32_t, MatGroup>;
+    
     RenderPass::RenderPass(const RenderPassSpec& spec) : mSpec(spec) {}
 
     RenderPassSpec& RenderPass::GetSpecification() {
@@ -36,76 +41,53 @@ namespace Graphics {
     void RenderPass::Render(EditorCamera const& cam, std::vector<ECS::Entity> const& entities) {
 
         Begin();
+        //auto shader = mSpec.pipeline->GetShader();
 
-        auto shader = mSpec.pipeline->GetShader();
-        shader->SetUniform("u_ViewProjMtx", cam.GetViewProjMatrix());
-        shader->SetUniform("u_CamPos", cam.GetPosition());
+        // Use a map to group entities by material ID
+        MatGroupsMap matGroups;
 
-        MaterialTable::ApplyMaterialTextures(shader);
-
-        shader->SetUniform("u_AlbedoMap", IGE_REF(IGE::Assets::TextureAsset, Renderer::GetNormalMaps()[2])->mTexture, 0);
-
-        //@TODO in future add light + materials
-       
-        //Renderer::BeginBatch();
         for (auto const& entity : entities) {
             if (!entity.HasComponent<Component::Transform>() || !entity.HasComponent<Component::Mesh>())
                 continue;
 
-            auto const& xform = entity.GetComponent<Component::Transform>();
+            //auto const& xform = entity.GetComponent<Component::Transform>();
             auto const& mesh = entity.GetComponent<Component::Mesh>();
-            
+
             // Skip if mesh is null
             if (mesh.mesh == nullptr)
                 continue;
 
-            //std::vector<GLuint64> hdls;
-            //for (auto const& map : Renderer::GetAlbedoMaps()) {
-            //    hdls.push_back(IGE_REF(IGE::Assets::TextureAsset, map)->mTexture.GetBindlessHandle()); //should not be here TODO move somewhere else
-            //}
-            ////if (hdls.size() > 0)
-
-
-            //hdls.clear();
-            //for (auto const& map : Renderer::GetNormalMaps()) {
-            //    hdls.push_back(IGE_REF(IGE::Assets::TextureAsset, map)->mTexture.GetBindlessHandle()); //should not be here TODO move somewhere else
-            //}
-           //if (hdls.size() > 0)
-               // shader->SetUniform("u_NormalMap", hdls.data(), static_cast<unsigned int>(hdls.size()));
-
             uint32_t matID = 0;
             if (entity.HasComponent<Component::Material>()) {
                 auto const& matComponent = entity.GetComponent<Component::Material>();
-                //auto const& mat = matComponent.material;
                 matID = matComponent.matIdx;
-                shader->SetUniform("u_Albedo", glm::vec3(0.5, 0.5, 0.5));
-                shader->SetUniform("u_Metalness", 0.0f);
-                shader->SetUniform("u_Roughness", 0.0f);
-                shader->SetUniform("u_Transparency", 1.0f);
-                shader->SetUniform("u_AO", 1.f);
-                //TEMP CODE
-
-                //if (mat) {
-                //    mat->Apply(shader);
-                //}
             }
-            else {
-                shader->SetUniform("u_Albedo", glm::vec3(0.5,0.5,0.5));
-                shader->SetUniform("u_Metalness", 0.0f);
-                shader->SetUniform("u_Roughness", 0.0f);
-                shader->SetUniform("u_Transparency", 1.0f);
-                shader->SetUniform("u_AO", 1.f);
-                //shader->SetUniform("u_AlbedoMap", Renderer::GetWhiteTexture(), 0);
-            }
-
-            //Graphics::Renderer::SubmitMesh(mesh.mesh, xform.worldPos, xform.worldRot, xform.worldScale, { 1.f, 1.f, 1.f, 1.f }); //@TODO: adjust color and rotation as needed
-            Graphics::Renderer::SubmitInstance(mesh.mesh, xform.worldMtx, Color::COLOR_WHITE, 0, entity.GetEntityID());
+            auto const& xform = entity.GetComponent<Component::Transform>();
+            matGroups[matID].emplace_back(entity, xform.worldMtx);
+        //@TODO in future add light + materials
+     
         }
-        
-        mSpec.pipeline->GetSpec().instanceLayout;
-        // Flush all collected instances and render them in a single draw call
-        Renderer::RenderInstances();
-        //Renderer::FlushBatch(shared_from_this());
+
+        // Now render each material group
+        for (const auto& [matID, entityPairs] : matGroups) {
+            // Get the shader associated with the material
+            auto material = MaterialTable::GetMaterial(matID);
+            auto shader = material->GetShader(); // Assuming Material has a method to retrieve its shader
+
+            shader->Use();  // Bind the shader
+            shader->SetUniform("u_ViewProjMtx", cam.GetViewProjMatrix());
+            shader->SetUniform("u_CamPos", cam.GetPosition());
+            material->Apply(shader);    // Apply material properties
+            MaterialTable::ApplyMaterialTextures(shader);   // Apply material textures
+
+            for (const auto& [entity, worldMtx] : entityPairs) {
+                auto const& mesh = entity.GetComponent<Component::Mesh>();
+                Graphics::Renderer::SubmitInstance(mesh.mesh, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
+            }
+            mSpec.pipeline->GetSpec().instanceLayout;
+            // Flush all collected instances and render them in a single draw call
+            Renderer::RenderInstances();
+        }
 
         End();
     }

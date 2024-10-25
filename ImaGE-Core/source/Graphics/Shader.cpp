@@ -275,7 +275,8 @@ namespace Graphics {
 	*/
 	void Shader::CreateShaderFromString(std::string const& vertSrc, std::string const& fragSrc, std::string const& vertName, std::string const& fragName) {
 		// Create an empty vertex shader handle
-		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+		GLuint vertexShader;
+		GLCALL(vertexShader = glCreateShader(GL_VERTEX_SHADER));
 
 		// Send the vertex shader source code to GL
 		// Note that std::string's .c_str is NULL character terminated.
@@ -758,7 +759,7 @@ namespace Graphics {
 	void Shader::SetUniform(std::string const& name, int* val, unsigned int count) {
 		GLint loc = GetUniformLocation(name);
 		if (loc >= 0) {
-			glUniform1iv(loc, count, val);
+			GLCALL(glUniform1iv(loc, count, val));
 		}
 	}
 

@@ -28,9 +28,8 @@ uniform float u_AO;
 //in flat uint v_AlbedoHandle;  // Handle for albedo texture
 in flat int v_MaterialIdx;
 
-uniform sampler2D[16] u_AlebdoMaps;
+uniform sampler2D[16] u_AlbedoMaps;
 uniform sampler2D[16] u_NormalMaps;
-uniform sampler2D u_AlbedoMap; //temp
 //uniform sampler2D u_NormalMap[3];
 
 
@@ -52,33 +51,18 @@ vec3 fresnelSchlick(float cosTheta, vec3 F0);
 void main(){
     entityID = v_EntityID;
     
+	vec4 texColor = texture2D(u_NormalMaps[int(v_MaterialIdx)], v_TexCoord); //currently unused
     u_Albedo;
 	//sample texture
 	//vec4 texColor = texture2D(u_Tex[0], v_TexCoord);
     
-    vec4 albedoTexture = texture(u_AlbedoMap, v_TexCoord);
-
-    //vec4 albedoTexture = texture(v_AlbedoHandle.x, v_TexCoord);
+    vec4 albedoTexture = texture2D(u_AlbedoMaps[int(v_MaterialIdx)], v_TexCoord);
     vec3 albedo = albedoTexture.rgb; // Mixing texture and uniform
 
     //vec3 albedo =  u_Albedo; // Mixing texture and uniform
 
-//    if(v_MaterialIdx != 0){
-//        // Sample the normal map and reconstruct the normal
-//        sampler2D normalSampler = u_NormalMap[v_MaterialIdx];
-//        vec3 normalMap = texture(normalSampler, v_TexCoord).rgb;
-//        // Transform normal from [0, 1] to [-1, 1]
-//        normalMap = normalize(normalMap * 2.0 - 1.0);
-//
-//        mat3 TBN = mat3(normalize(v_Tangent), normalize(v_Bitangent), normalize(v_Normal));
-//        N = normalize(TBN * normalMap);
-//    }
-
-    vec3 N = normalize(v_Normal);
-    
-
 	// Normalize inputs
-    //vec3 N = normalize(v_Normal);
+    vec3 N = normalize(v_Normal);
     vec3 V = normalize(u_CamPos - v_FragPos);    // View direction
     vec3 L = normalize(u_LightPos - v_FragPos);  // Light direction
     vec3 H = normalize(V + L);                   // Halfway vector
@@ -118,9 +102,7 @@ void main(){
     //change transparency here
     float alpha = u_Transparency;
 	fragColor = vec4(color, alpha) * v_Color;
-    fragColor = vec4(albedo,1);
 
-    
 }
 
 vec3 fresnelSchlick(float cosTheta, vec3 F0)

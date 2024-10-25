@@ -58,10 +58,6 @@ void Scene::Init()
   IGE::Assets::GUID texguid { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\white.dds")) };
   
   std::shared_ptr<Graphics::Shader> shader = std::make_shared<Graphics::Shader>("../Assets/Shaders/Default.vert.glsl", "../Assets/Shaders/Default.frag.glsl");
-  std::shared_ptr<Graphics::MaterialSource> materialSource0 = Graphics::MaterialSource::Create(shader);
-  materialSource0->SetAlbedoMap(texguid);
-  std::shared_ptr<Graphics::MaterialSource> materialSource1 = Graphics::MaterialSource::Create(shader);
-  materialSource1->SetAlbedoMap(texguid);
   //=====================================================================================================================
 
   for (int i = 0; i < 5; ++i) {

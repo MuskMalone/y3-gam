@@ -4,6 +4,8 @@
 #include "RenderPass.h"
 #include <glm/gtx/quaternion.hpp>
 #include "Asset/IGEAssets.h"
+#include "MaterialTable.h"
+#include "Material.h"
 namespace Graphics {
 	constexpr int INVALID_ENTITY_ID = -1;
 
@@ -149,31 +151,9 @@ namespace Graphics {
 		//mFinalFramebuffer = Framebuffer::Create(framebufferSpec);
 
 
-		IGE::Assets::GUID texguid1 { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\ogre_normalmap.dds")) };
+		IGE::Assets::GUID texguid1 { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\default.dds")) };
 
 		IGE::Assets::GUID texguid { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
-
-
-		//Initialize Materials:
-		auto materialSource = std::make_shared<Graphics::MaterialSource>();
-
-		// Create a new Material using the MaterialSource
-		auto newMaterial = std::make_shared<Graphics::Material>(materialSource);
-
-		// Customize the material if necessary
-		newMaterial->SetAlbedoColor(glm::vec3(1.0f, 0.5f, 0.2f));  // Example color
-		newMaterial->SetMetalness(0.8f);
-		newMaterial->SetRoughness(0.3f);
-		newMaterial->SetTransparency(1.0f);
-
-		// Optionally set custom textures
-		// newMaterial->SetAlbedoMap(customAlbedoTextureGUID);
-		// newMaterial->SetNormalMap(customNormalTextureGUID);
-
-		// Add the material to the MaterialTable
-		uint32_t materialID = Graphics::MaterialTable::AddMaterial(newMaterial);
-
-
 
 		//TESTING
 		//albedo
@@ -186,17 +166,33 @@ namespace Graphics {
 		mData.normalMaps.push_back(GetWhiteTexture());
 		mData.normalMaps.push_back(texguid1);
 		
-		//mData.albedoMaps.push_back(texguid1);
+		////mData.albedoMaps.push_back(texguid1);
 
-		mData.test = std::make_shared<Texture>(2, 2, true);
-		// Define a 2x2 checkerboard pattern with magenta and cyan in ABGR format
-		unsigned int data[4] = {
-			0xffff00ff,  // Magenta (top-left)
-			0xffffff00,  // Cyan (top-right)
-			0xffffff00,  // Cyan (bottom-left)
-			0xffff00ff   // Magenta (bottom-right)
-		};
-		mData.test->SetData(data);
+		//mData.test = std::make_shared<Texture>(2, 2, true);
+		//// Define a 2x2 checkerboard pattern with magenta and cyan in ABGR format
+		//unsigned int data[4] = {
+		//	0xffff00ff,  // Magenta (top-left)
+		//	0xffffff00,  // Cyan (top-right)
+		//	0xffffff00,  // Cyan (bottom-left)
+		//	0xffff00ff   // Magenta (bottom-right)
+		//};
+		//mData.test->SetData(data);
+
+		//Init Materials
+
+// Create a default material with a default shader and properties
+		std::shared_ptr<Material> defaultMaterial = Material::Create(mData.instancedShader); //TODO STORE IN SHADER LIB
+		defaultMaterial->SetAlbedoColor(glm::vec3(1.0f));  // Set default white albedo
+		defaultMaterial->SetMetalness(0.0f);
+		defaultMaterial->SetRoughness(1.0f);
+
+		// Add default material to the table (e.g., at index 0)
+		MaterialTable::AddMaterial(defaultMaterial);
+
+		std::shared_ptr<Material> mat1 = Material::Create(mData.instancedShader);
+		mat1->SetAlbedoMap(texguid1);
+		MaterialTable::AddMaterial(mat1);
+		//--Material Init End--//
 ;	}
 
 
@@ -586,10 +582,4 @@ namespace Graphics {
 	IGE::Assets::GUID Renderer::GetWhiteTexture() {
 		return mData.whiteTex;
 	}
-
-	std::shared_ptr<Texture> Renderer::TestGet()
-	{
-		return mData.test;
-	}
-
 }
