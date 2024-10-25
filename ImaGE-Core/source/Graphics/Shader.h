@@ -56,4 +56,20 @@ namespace Graphics {
 	private:
 		unsigned int pgmHdl;
 	};
+
+	class ShaderLibrary {
+	public:
+		inline static void Add(const std::string& name, std::shared_ptr<Shader> shader) {
+			mShaders[name] = shader;
+		}
+
+		inline static std::shared_ptr<Shader> Get(const std::string& name) {
+			return mShaders.at(name);  // Handle exceptions as needed
+		}
+		static const std::string cShaderDirectory;  // Shader directory
+	private:
+		static std::unordered_map<std::string, std::shared_ptr<Shader>> mShaders;
+
+	};
 }	// namespace Graphics
+

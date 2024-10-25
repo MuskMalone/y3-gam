@@ -83,12 +83,8 @@ namespace Graphics {
 
 		std::shared_ptr<VertexArray> quadVertexArray;
 		std::shared_ptr<VertexBuffer> quadVertexBuffer;
-		std::shared_ptr<Shader> texShader;
 		IGE::Assets::GUID defaultTex;
 		IGE::Assets::GUID whiteTex;
-
-		std::shared_ptr<Shader> lineShader;
-		std::shared_ptr<Shader> instancedShader;
 
 		uint32_t quadIdxCount{};
 		uint32_t triVtxCount{};
@@ -108,10 +104,6 @@ namespace Graphics {
 		std::unordered_map<IGE::Assets::GUID, std::shared_ptr<VertexBuffer>> instanceBuffers;
 
 		Statistics stats;
-
-		//TEMP FOR NOW
-		std::vector<IGE::Assets::GUID> albedoMaps;
-		std::vector<IGE::Assets::GUID> normalMaps;
 	};
 
 	class Renderer {
@@ -137,10 +129,6 @@ namespace Graphics {
 
 		static void RenderSceneBegin(glm::mat4 const& viewProjMtx);
 		static void RenderSceneEnd();
-
-		//static std::shared_ptr<Material> GetMaterial(uint32_t idx); //temp
-		static std::vector<IGE::Assets::GUID> const& GetAlbedoMaps();//temp
-		static std::vector<IGE::Assets::GUID> const& GetNormalMaps();
 
 		static unsigned int GetMaxTextureUnits();
 		static std::shared_ptr<Graphics::Framebuffer> GetFinalFramebuffer();
@@ -172,6 +160,7 @@ namespace Graphics {
 	private:
 		static RendererData mData;
 		static MaterialTable mMaterialTable;
+		static ShaderLibrary mShaderLibrary;
 		static std::shared_ptr<Framebuffer> mFinalFramebuffer;
 	public: // TEMP
 		static std::shared_ptr<RenderPass> mPickPass;

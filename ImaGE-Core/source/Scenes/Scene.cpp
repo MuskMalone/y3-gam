@@ -57,7 +57,6 @@ void Scene::Init()
   // Create a debug albedo texture (bright magenta checkerboard)
   IGE::Assets::GUID texguid { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\white.dds")) };
   
-  std::shared_ptr<Graphics::Shader> shader = std::make_shared<Graphics::Shader>("../Assets/Shaders/Default.vert.glsl", "../Assets/Shaders/Default.frag.glsl");
   //=====================================================================================================================
 
   for (int i = 0; i < 5; ++i) {

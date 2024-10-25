@@ -6,6 +6,8 @@
 
 namespace Graphics {
 
+	std::unordered_map<std::string, std::shared_ptr<Shader>> ShaderLibrary::mShaders;
+	const std::string ShaderLibrary::cShaderDirectory = "../Assets/Shaders/";
 	static std::unordered_set<std::string> missingUniforms;
 	//creates a compute shader
 	Shader::Shader(std::string const& shdrFile) : pgmHdl{} {
@@ -34,7 +36,7 @@ namespace Graphics {
 	}
 
 	std::shared_ptr<Shader> Shader::Create(std::string const& vertFile, std::string const& fragFile) {
-		return std::make_shared<Shader>(vertFile, fragFile);
+		return std::make_shared<Shader>(ShaderLibrary::cShaderDirectory + vertFile, ShaderLibrary::cShaderDirectory + fragFile);
 	}
 
 	/*  _________________________________________________________________________ */

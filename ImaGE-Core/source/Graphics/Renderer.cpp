@@ -11,6 +11,7 @@ namespace Graphics {
 
 	RendererData Renderer::mData;
 	MaterialTable Renderer::mMaterialTable;
+	ShaderLibrary Renderer::mShaderLibrary;
 	std::shared_ptr<Framebuffer> Renderer::mFinalFramebuffer;
 	std::shared_ptr<RenderPass> Renderer::mPickPass; //TODO put in a map/ vector
 	std::shared_ptr<RenderPass> Renderer::mGeomPass;
@@ -103,17 +104,20 @@ namespace Graphics {
 		for (unsigned int i{}; i < mData.maxTexUnits; ++i)
 			samplers[i] = i;
 
-		mData.lineShader = std::make_shared<Shader>("../Assets/Shaders/Tri.vert.glsl", "../Assets/Shaders/Tri.frag.glsl");
-		mData.texShader = std::make_shared<Shader>("../Assets/Shaders/Default.vert.glsl", "../Assets/Shaders/Default.frag.glsl");
-		mData.texShader->Use();
-		mData.texShader->SetUniform("u_Tex", samplers.data(), mData.maxTexUnits);
+		ShaderLibrary::Add("Tri", Shader::Create("Tri.vert.glsl", "Tri.frag.glsl"));
+		ShaderLibrary::Add("Tex", Shader::Create("Default.vert.glsl", "Default.frag.glsl"));
+
+		std::shared_ptr<Shader> const& texShader = ShaderLibrary::Get("Tex");
+
+		texShader->Use();
+		texShader->SetUniform("u_Tex", samplers.data(), mData.maxTexUnits);
 
 		mData.quadVtxPos[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
 		mData.quadVtxPos[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
 		mData.quadVtxPos[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
 		mData.quadVtxPos[3] = { -0.5f, 0.5f, 0.0f, 1.0f };
-
-		mData.instancedShader = Shader::Create("../Assets/Shaders/Instanced.vert.glsl", "../Assets/Shaders/Instanced.frag.glsl");
+;
+		ShaderLibrary::Add("PBR", Shader::Create("PBR.vert.glsl", "PBR.frag.glsl"));
 
 		//Init framebuffer
 		Graphics::FramebufferSpec framebufferSpec;
@@ -123,7 +127,7 @@ namespace Graphics {
 
 		//Init RenderPasses
 		PipelineSpec geomPipelineSpec;
-		geomPipelineSpec.shader = mData.instancedShader;
+		geomPipelineSpec.shader = ShaderLibrary::Get("PBR");
 		geomPipelineSpec.targetFramebuffer = Framebuffer::Create(framebufferSpec);
 
 		RenderPassSpec geomPassSpec;
@@ -137,7 +141,7 @@ namespace Graphics {
 		pickBufferSpec.attachments = { Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
 		
 		PipelineSpec pickPipelineSpec;
-		pickPipelineSpec.shader = Shader::Create("../Assets/Shaders/Instanced.vert.glsl", "../Assets/Shaders/Instanced.frag.glsl");
+		pickPipelineSpec.shader = ShaderLibrary::Get("PBR");
 		pickPipelineSpec.targetFramebuffer = Framebuffer::Create(pickBufferSpec);
 
 		RenderPassSpec pickPassSpec;
@@ -157,14 +161,14 @@ namespace Graphics {
 
 		//TESTING
 		//albedo
-		mData.albedoMaps.push_back(GetDefaultTexture());
-		mData.albedoMaps.push_back(GetWhiteTexture());
-		mData.albedoMaps.push_back(texguid1);
+		//mData.albedoMaps.push_back(GetDefaultTexture());
+		//mData.albedoMaps.push_back(GetWhiteTexture());
+		//mData.albedoMaps.push_back(texguid1);
 
-		//normal
-		mData.normalMaps.push_back(GetWhiteTexture());
-		mData.normalMaps.push_back(GetWhiteTexture());
-		mData.normalMaps.push_back(texguid1);
+		////normal
+		//mData.normalMaps.push_back(GetWhiteTexture());
+		//mData.normalMaps.push_back(GetWhiteTexture());
+		//mData.normalMaps.push_back(texguid1);
 		
 		////mData.albedoMaps.push_back(texguid1);
 
@@ -181,7 +185,7 @@ namespace Graphics {
 		//Init Materials
 
 // Create a default material with a default shader and properties
-		std::shared_ptr<Material> defaultMaterial = Material::Create(mData.instancedShader); //TODO STORE IN SHADER LIB
+		std::shared_ptr<Material> defaultMaterial = Material::Create(ShaderLibrary::Get("PBR")); //TODO STORE IN SHADER LIB
 		defaultMaterial->SetAlbedoColor(glm::vec3(1.0f));  // Set default white albedo
 		defaultMaterial->SetMetalness(0.0f);
 		defaultMaterial->SetRoughness(1.0f);
@@ -189,7 +193,7 @@ namespace Graphics {
 		// Add default material to the table (e.g., at index 0)
 		MaterialTable::AddMaterial(defaultMaterial);
 
-		std::shared_ptr<Material> mat1 = Material::Create(mData.instancedShader);
+		std::shared_ptr<Material> mat1 = Material::Create(ShaderLibrary::Get("PBR"));
 		mat1->SetAlbedoMap(texguid1);
 		MaterialTable::AddMaterial(mat1);
 		//--Material Init End--//
@@ -422,7 +426,7 @@ namespace Graphics {
 			for (unsigned int i{}; i < mData.texUnitIdx; ++i) {
 				mData.texUnits[i]->Bind(i);
 			}
-			mData.texShader->Use();
+			ShaderLibrary::Get("Tex")->Use();
 			RenderAPI::DrawIndices(mData.quadVertexArray, mData.quadIdxCount);
 
 			++mData.stats.drawCalls;
@@ -433,7 +437,7 @@ namespace Graphics {
 
 			mData.triVertexBuffer->SetData(mData.triBuffer.data(), dataSize);
 
-			mData.lineShader->Use();
+			ShaderLibrary::Get("Tri")->Use();
 			RenderAPI::DrawLines(mData.triVertexArray, mData.triVtxCount);
 
 			++mData.stats.drawCalls;
@@ -456,7 +460,7 @@ namespace Graphics {
 			}
 
 			// Use the appropriate shader and draw the indexed meshes
-			mData.texShader->Use();
+			ShaderLibrary::Get("Tex")->Use();
 			RenderAPI::DrawIndices(mData.meshVertexArray, mData.meshIdxCount);
 
 			// Increment draw call stats
@@ -542,14 +546,6 @@ namespace Graphics {
 	void Renderer::RenderSceneEnd() {
 
 		FlushBatch();
-	}
-
-	std::vector< IGE::Assets::GUID> const& Renderer::GetAlbedoMaps(){
-		return mData.albedoMaps;
-	}
-
-	std::vector<IGE::Assets::GUID> const& Renderer::GetNormalMaps() {
-		return mData.normalMaps;
 	}
 
 	Statistics Renderer::GetStats() {
