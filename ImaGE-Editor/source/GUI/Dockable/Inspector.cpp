@@ -498,10 +498,18 @@ namespace GUI {
     bool modified{ false };
 
     if (isOpen) {
-      std::string tag{ entity.GetTag() };
+      Component::Tag& tagRef = entity.GetComponent<Component::Tag>();
+      std::string tag{ tagRef.tag };
       ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
+
+      bool isEntityActive = tagRef.isActive;
+      if (ImGui::Checkbox("##IsActiveCheckbox", &isEntityActive)) {
+        tagRef.isActive = isEntityActive;
+      }
+      ImGui::SameLine();
+
       ImGui::SetNextItemWidth(INPUT_SIZE);
-      if (ImGui::InputText("##Tag", &tag, ImGuiInputTextFlags_EnterReturnsTrue)) {
+      if (ImGui::InputText("##TagComponentTag", &tag, ImGuiInputTextFlags_EnterReturnsTrue)) {
         entity.SetTag(tag);
         modified = true;
       }

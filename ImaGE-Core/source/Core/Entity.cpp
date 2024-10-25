@@ -23,7 +23,7 @@ namespace ECS
 
   void Entity::SetTag(std::string const& tag) {
     Component::Tag& tagRef{ this->GetComponent<Component::Tag>() };
-    tagRef = tag;
+    tagRef.tag = tag;
   }
 
   Entity::operator bool() const {

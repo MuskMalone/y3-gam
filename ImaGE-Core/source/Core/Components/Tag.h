@@ -14,16 +14,17 @@ namespace Component
 {
   struct Tag
   {
-    Tag() : tag{ "NoName" } {}
-    Tag(std::string const& tagString) : tag{ tagString } {}
+    Tag() : tag{ "NoName" }, isActive{ true } {}
+    Tag(std::string const& tagString) : tag{ tagString }, isActive{ true } {}
 
     /*!*********************************************************************
     \brief
       Resets the component to default values
     ************************************************************************/
-    inline void Clear() noexcept { tag = "NoName"; }
+    inline void Clear() noexcept { tag = "NoName"; isActive = true; }
 
     std::string tag;
+    bool isActive;
   };
 
 } // namespace Component

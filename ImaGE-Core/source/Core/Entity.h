@@ -39,9 +39,6 @@ namespace ECS {
     template<typename... Components>
     bool HasComponent() const;
 
-    // For Qin Ding
-    bool HasComponent(std::string componentName) const;
-
   private:
     void DispatchRemoveComponentEvent(std::initializer_list<rttr::type> types);
 
