@@ -33,12 +33,12 @@ namespace GUI
   static bool sMovingToEntity{ false };
   static glm::vec3 sTargetPosition{};
 
-  Viewport::Viewport(const char* name) : GUIWindow(name),
-    mIsPanning{ false }, mIsDragging{ false } {
+  Viewport::Viewport(const char* name, Graphics::EditorCamera& camera) : GUIWindow(name),
+    mEditorCam{ camera }, mIsPanning{ false }, mIsDragging{ false } {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_ZOOM, &Viewport::HandleEvent, this);
   }
 
-  void Viewport::Render(Graphics::RenderTarget& renderTarget)
+  void Viewport::Render(std::shared_ptr<Graphics::Framebuffer> const& framebuffer)
   {
     ImGui::Begin(mWindowName.c_str());
 
@@ -48,7 +48,7 @@ namespace GUI
     // only register input if viewport is focused
     bool const checkInput{ mIsDragging || mIsPanning || sMovingToEntity };
     if ((ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) || checkInput) {
-      ProcessCameraInputs(renderTarget.camera);
+      ProcessCameraInputs();
     }
     // auto focus window when middle or right-clicked upon
     else if (ImGui::IsWindowHovered() && (ImGui::IsMouseClicked(ImGuiMouseButton_Right) || ImGui::IsMouseClicked(ImGuiMouseButton_Middle))) {
@@ -57,7 +57,7 @@ namespace GUI
 
     // update framebuffer
     ImGui::Image(
-      reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(renderTarget.framebuffer->GetColorAttachmentID())),
+      reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(framebuffer->GetColorAttachmentID())),
       vpSize,
       ImVec2(0, 1),
       ImVec2(1, 0)
@@ -71,14 +71,13 @@ namespace GUI
 
       // check if clicking outside viewport
       if (!(offset.x < 0 || offset.x > vpSize.x || offset.y < 0 || offset.y > vpSize.y)) {
-        auto& fb{ renderTarget.framebuffer };
-        Graphics::FramebufferSpec const& fbSpec{ fb->GetFramebufferSpec() };
+        Graphics::FramebufferSpec const& fbSpec{ framebuffer->GetFramebufferSpec() };
 
-        fb->Bind();
-        int const entityId{ fb->ReadPixel(1,
+        framebuffer->Bind();
+        int const entityId{ framebuffer->ReadPixel(1,
           static_cast<int>(offset.x / vpSize.x * static_cast<float>(fbSpec.width)),
           static_cast<int>((vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height))) };
-        fb->Unbind();
+        framebuffer->Unbind();
 
         if (entityId > 0) {
           GUIManager::SetSelectedEntity(static_cast<ECS::Entity::EntityID>(entityId));
@@ -97,8 +96,8 @@ namespace GUI
         auto& transform{ GUIManager::GetSelectedEntity().GetComponent<Component::Transform>() };
         auto modelMatrix{ transform.worldMtx };
         auto modelMatrixPrev{ transform.worldMtx };
-        auto viewMatrix{ renderTarget.camera.GetViewMatrix() };
-        auto projMatrix{ renderTarget.camera.GetProjMatrix() };
+        auto viewMatrix{ mEditorCam.GetViewMatrix() };
+        auto projMatrix{ mEditorCam.GetProjMatrix() };
 
         static auto currentOperation = ImGuizmo::TRANSLATE ;
         if (ImGui::IsWindowFocused() || ImGui::IsWindowHovered()) {
@@ -141,7 +140,7 @@ namespace GUI
     ImGui::End();
   }
 
-  void Viewport::ProcessCameraInputs(Graphics::EditorCamera& cam) {
+  void Viewport::ProcessCameraInputs() {
     static ImVec2 previousMousePos;
     using enum Graphics::EditorCamera::CameraMovement;  // C++20 <3
     float const dt{ Performance::FrameRateController::GetInstance().GetDeltaTime() };
@@ -159,28 +158,28 @@ namespace GUI
 
       // process input for movement
       if (ImGui::IsKeyDown(ImGuiKey_W)) {
-        cam.ProcessKeyboardInput(FORWARD, dt);
+        mEditorCam.ProcessKeyboardInput(FORWARD, dt);
       }
       if (ImGui::IsKeyDown(ImGuiKey_S)) {
-        cam.ProcessKeyboardInput(BACKWARD, dt);
+        mEditorCam.ProcessKeyboardInput(BACKWARD, dt);
       }
       if (ImGui::IsKeyDown(ImGuiKey_A)) {
-        cam.ProcessKeyboardInput(LEFT, dt);
+        mEditorCam.ProcessKeyboardInput(LEFT, dt);
       }
       if (ImGui::IsKeyDown(ImGuiKey_D)) {
-        cam.ProcessKeyboardInput(RIGHT, dt);
+        mEditorCam.ProcessKeyboardInput(RIGHT, dt);
       }
       if (ImGui::IsKeyDown(ImGuiKey_Q)) {
-        cam.ProcessKeyboardInput(DOWN, dt);
+        mEditorCam.ProcessKeyboardInput(DOWN, dt);
       }
       if (ImGui::IsKeyDown(ImGuiKey_E)) {
-        cam.ProcessKeyboardInput(UP, dt);
+        mEditorCam.ProcessKeyboardInput(UP, dt);
       }
 
       // process input for panning
       ImVec2 const currMousePos{ ImGui::GetMousePos() };
       ImVec2 const mouseDelta{ currMousePos - previousMousePos };
-      cam.ProcessMouseInput(mouseDelta.x / windowSize.x, mouseDelta.y / windowSize.y);
+      mEditorCam.ProcessMouseInput(mouseDelta.x / windowSize.x, mouseDelta.y / windowSize.y);
       previousMousePos = currMousePos;
     }
     else {
@@ -195,7 +194,7 @@ namespace GUI
 
         ImVec2 const currMousePos{ ImGui::GetMousePos() };
         ImVec2 const mouseDelta{ currMousePos - previousMousePos };
-        cam.MoveAlongPlane(mouseDelta.x / windowSize.x, mouseDelta.y / windowSize.y);
+        mEditorCam.MoveAlongPlane(mouseDelta.x / windowSize.x, mouseDelta.y / windowSize.y);
         previousMousePos = currMousePos;
       }
       else {
@@ -206,19 +205,19 @@ namespace GUI
     ReceivePayload();
 
     if (sMovingToEntity) {
-      glm::vec3 const endPos{ sTargetPosition - cam.GetForwardVector() * 10.f };
-      if (glm::distance2(endPos, cam.GetPosition()) > 0.5f) {
-        cam.MoveTowardsPoint(endPos, 2.f * dt);
+      glm::vec3 const endPos{ sTargetPosition - mEditorCam.GetForwardVector() * 10.f };
+      if (glm::distance2(endPos, mEditorCam.GetPosition()) > 0.5f) {
+        mEditorCam.MoveTowardsPoint(endPos, 2.f * dt);
       }
       else {
-        cam.SetPosition(endPos);
+        mEditorCam.SetPosition(endPos);
         sMovingToEntity = false;
       }
     }
 
     float const scrollDelta{ ImGui::GetIO().MouseWheel };
     if (glm::abs(scrollDelta) > glm::epsilon<float>()) {
-      cam.ProcessMouseScroll(scrollDelta);
+      mEditorCam.ProcessMouseScroll(scrollDelta);
     }
   }
 

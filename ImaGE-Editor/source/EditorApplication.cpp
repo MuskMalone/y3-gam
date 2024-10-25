@@ -60,7 +60,7 @@ namespace IGE {
     // im not sure if this is scalable;
     // may just make SystemManager globally accesible in future
     // if more stuff requires it
-    mGUIManager.Init();
+    mGUIManager.Init(GetDefaultRenderTarget());
   }
 
   void EditorApplication::Run() {
@@ -104,8 +104,9 @@ namespace IGE {
 
             UpdateFramebuffers();
             
-            mRenderTargets.front().framebuffer = Graphics::Renderer::GetFinalFramebuffer();
-            mGUIManager.UpdateGUI(mRenderTargets.front());
+            auto& fb{ GetDefaultRenderTarget().framebuffer };
+            fb = Graphics::Renderer::GetFinalFramebuffer();
+            mGUIManager.UpdateGUI(fb);
 
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
