@@ -46,10 +46,9 @@ void main(){
     entityID = v_EntityID;
     
 	vec4 texColor = texture2D(u_NormalMaps[int(v_MaterialIdx)], v_TexCoord); //currently unused
-    u_Albedo; //currently unused
     
     vec4 albedoTexture = texture2D(u_AlbedoMaps[int(v_MaterialIdx)], v_TexCoord);
-    vec3 albedo = albedoTexture.rgb; // Mixing texture and uniform
+    vec3 albedo = albedoTexture.rgb * u_Albedo; // Mixing texture and uniform
 
 	// Normalize inputs
     vec3 N = normalize(v_Normal);
