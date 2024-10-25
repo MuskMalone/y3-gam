@@ -49,6 +49,12 @@ namespace GUI
 
     /*!*********************************************************************
     \brief
+      Updates ImGuizmos controls based on the selected entity
+    ************************************************************************/
+    void UpdateGuizmos() const;
+
+    /*!*********************************************************************
+    \brief
       Checks the viewport for any DragDrop operations and handles them
       accordingly
     ************************************************************************/

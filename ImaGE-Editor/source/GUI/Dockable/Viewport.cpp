@@ -28,7 +28,32 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Asset/IGEAssets.h>
 
 namespace {
+  /*!*********************************************************************
+    \brief
+      Projects a 3d vector onto the camera's view plane
+    \param vector
+      The vector
+    \param cam
+      The camera
+    \return
+      The projected 2d vector on the plane
+    ************************************************************************/
   glm::vec2 ProjVectorOnCamPlane(glm::vec3 const& vector , Graphics::EditorCamera const& cam);
+
+  /*!*********************************************************************
+  \brief
+    Returns the root parent entity of the given entity
+  \param entity
+    The entity
+  \return
+    The root entity
+  ************************************************************************/
+  ECS::Entity GetRootEntity(ECS::Entity entity) {
+    ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
+    if (!em.HasParent(entity)) { return entity; }
+
+    return GetRootEntity(em.GetParentEntity(entity));
+  }
 }
 
 namespace GUI
@@ -37,6 +62,7 @@ namespace GUI
   static bool sMovingToEntity{ false };
   static glm::vec3 sTargetPosition, sMoveDir;
   static float sDistToCover;
+  static ECS::Entity sPrevSelectedEntity;
 
   Viewport::Viewport(const char* name, Graphics::EditorCamera& camera) : GUIWindow(name),
     mEditorCam{ camera }, mIsPanning{ false }, mIsDragging{ false } {
@@ -85,63 +111,20 @@ namespace GUI
         framebuffer->Unbind();
 
         if (entityId > 0) {
-          GUIManager::SetSelectedEntity(static_cast<ECS::Entity::EntityID>(entityId));
+          ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
+            root{ GetRootEntity(selected) };
+          sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
+          GUIManager::SetSelectedEntity(sPrevSelectedEntity);
+        }
+        else {
+          sPrevSelectedEntity = {};
+          GUIManager::SetSelectedEntity({});
         }
       }
     }
 
-    if (GUIManager::GetSelectedEntity() && 
-        GUIManager::GetSelectedEntity().HasComponent<Component::Transform>()) {
-        ImGuizmo::SetDrawlist();
-        ImVec2 windowPos{ ImGui::GetWindowPos() };
+    UpdateGuizmos();
 
-        float windowWidth { ImGui::GetWindowWidth() };
-        float windowHeight{ ImGui::GetWindowHeight() };
-        ImGuizmo::SetRect(windowPos.x, windowPos.y, windowWidth, windowHeight);
-        auto& transform{ GUIManager::GetSelectedEntity().GetComponent<Component::Transform>() };
-        auto modelMatrix{ transform.worldMtx };
-        auto modelMatrixPrev{ transform.worldMtx };
-        auto viewMatrix{ mEditorCam.GetViewMatrix() };
-        auto projMatrix{ mEditorCam.GetProjMatrix() };
-
-        static auto currentOperation = ImGuizmo::TRANSLATE ;
-        if (ImGui::IsWindowFocused() || ImGui::IsWindowHovered()) {
-            if (ImGui::IsKeyPressed(ImGuiKey_T))
-                currentOperation = ImGuizmo::TRANSLATE;
-            if (ImGui::IsKeyPressed(ImGuiKey_R)) 
-                currentOperation = ImGuizmo::ROTATE;
-            else if (ImGui::IsKeyPressed(ImGuiKey_S)) 
-                currentOperation = ImGuizmo::SCALE;
-        }
-        ImGuizmo::Manipulate(
-            glm::value_ptr(viewMatrix),           
-            glm::value_ptr(projMatrix),     
-            currentOperation,                           
-            ImGuizmo::LOCAL,                 
-            glm::value_ptr(modelMatrix)          
-        );
-        if (ImGuizmo::IsUsing()) {
-            glm::vec3 s{}, r{}, t{};
-            ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(modelMatrix),
-                glm::value_ptr(t), glm::value_ptr(r), glm::value_ptr(s));
-            glm::vec3 s2{}, r2{}, t2{};
-            ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(modelMatrixPrev),
-                glm::value_ptr(t2), glm::value_ptr(r2), glm::value_ptr(s2));
-            if (currentOperation == ImGuizmo::TRANSLATE) {
-                transform.position += std::move(t - t2);
-
-            }
-            if (currentOperation == ImGuizmo::ROTATE) {
-                auto localRot{ transform.eulerAngles + std::move(r - r2) };
-                transform.SetLocalRotWithEuler(localRot);
-            }
-            if (currentOperation == ImGuizmo::SCALE) {
-                transform.scale += std::move(s - s2);
-            }
-            transform.modified = true;
-            TransformHelpers::UpdateWorldTransform(GUIManager::GetSelectedEntity());  // must call this to update world transform according to changes to local
-        }
-    }
     ImGui::End();
   }
 
@@ -248,6 +231,61 @@ namespace GUI
     sMoveDir = glm::normalize(totalDist);
     sDistToCover = glm::length(totalDist);
     sMovingToEntity = true;
+  }
+
+  void Viewport::UpdateGuizmos() const {
+    ECS::Entity selectedEntity{ GUIManager::GetSelectedEntity() };
+    if (!selectedEntity || !selectedEntity.HasComponent<Component::Transform>()) { return; }
+
+    ImGuizmo::SetDrawlist();
+    ImVec2 windowPos{ ImGui::GetWindowPos() };
+
+    float windowWidth{ ImGui::GetWindowWidth() };
+    float windowHeight{ ImGui::GetWindowHeight() };
+    ImGuizmo::SetRect(windowPos.x, windowPos.y, windowWidth, windowHeight);
+    auto& transform{ selectedEntity.GetComponent<Component::Transform>() };
+    auto modelMatrix{ transform.worldMtx };
+    auto modelMatrixPrev{ transform.worldMtx };
+    auto viewMatrix{ mEditorCam.GetViewMatrix() };
+    auto projMatrix{ mEditorCam.GetProjMatrix() };
+
+    static auto currentOperation = ImGuizmo::TRANSLATE;
+    if (ImGui::IsWindowFocused() || ImGui::IsWindowHovered()) {
+      if (ImGui::IsKeyPressed(ImGuiKey_T))
+        currentOperation = ImGuizmo::TRANSLATE;
+      if (ImGui::IsKeyPressed(ImGuiKey_R))
+        currentOperation = ImGuizmo::ROTATE;
+      else if (ImGui::IsKeyPressed(ImGuiKey_S))
+        currentOperation = ImGuizmo::SCALE;
+    }
+    ImGuizmo::Manipulate(
+      glm::value_ptr(viewMatrix),
+      glm::value_ptr(projMatrix),
+      currentOperation,
+      ImGuizmo::LOCAL,
+      glm::value_ptr(modelMatrix)
+    );
+    if (ImGuizmo::IsUsing()) {
+      glm::vec3 s{}, r{}, t{};
+      ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(modelMatrix),
+        glm::value_ptr(t), glm::value_ptr(r), glm::value_ptr(s));
+      glm::vec3 s2{}, r2{}, t2{};
+      ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(modelMatrixPrev),
+        glm::value_ptr(t2), glm::value_ptr(r2), glm::value_ptr(s2));
+      if (currentOperation == ImGuizmo::TRANSLATE) {
+        transform.position += std::move(t - t2);
+
+      }
+      if (currentOperation == ImGuizmo::ROTATE) {
+        auto localRot{ transform.eulerAngles + std::move(r - r2) };
+        transform.SetLocalRotWithEuler(localRot);
+      }
+      if (currentOperation == ImGuizmo::SCALE) {
+        transform.scale += std::move(s - s2);
+      }
+      transform.modified = true;
+      TransformHelpers::UpdateWorldTransform(selectedEntity);  // must call this to update world transform according to changes to local
+    }
   }
 
   void Viewport::ReceivePayload()
