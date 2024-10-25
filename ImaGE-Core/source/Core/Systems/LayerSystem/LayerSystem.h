@@ -2,6 +2,7 @@
 #include <utility>
 #include <Core/Systems/System.h>
 #include <Core/Entity.h>
+#include <Core/Systems/SystemManager/SystemManager.h>
 
 #include "Events/EventManager.h"
 #include "Events/EventCallback.h"
@@ -34,6 +35,9 @@ namespace Systems {
     inline std::array<std::string, MAX_LAYERS>const& GetLayerNames() const { return mLayerData.layerNames; }
     inline std::array<int, MAX_LAYERS>& GetLayerVisibility() { return mLayerData.layerVisibility; }
     inline LayerData const& GetLayerData() const noexcept { return mLayerData; }
+    inline bool GetCollidable(int lhsLayerNumber, int rhsLayerNumber) const noexcept {
+      return mLayerData.collisionMatrix[lhsLayerNumber][rhsLayerNumber];
+    }
 
     void SetLayerCollisionList(int layerNumber, int layerIndex, bool collisionStatus);
     void SetLayerName(int layerNumber, std::string layerName);

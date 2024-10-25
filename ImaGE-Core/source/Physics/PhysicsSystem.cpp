@@ -1,6 +1,7 @@
 #include <pch.h>
 #include "Physics/PhysicsSystem.h"
 #include <Core/Components/Components.h>
+#include <Core/Systems/LayerSystem/LayerSystem.h>
 #include "Core/EntityManager.h"
 #include "Core/Entity.h"
 #include "Scenes/SceneManager.h"
@@ -38,7 +39,15 @@ namespace IGE {
 			// Use default CPU dispatcher
 			physx::PxDefaultCpuDispatcher* dispatcher = physx::PxDefaultCpuDispatcherCreate(2);
 			sceneDesc.cpuDispatcher = dispatcher;
-			sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
+
+			if (std::shared_ptr<Systems::LayerSystem> layerSys =
+				Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
+				sceneDesc.filterShader = LayerFilterShaderWrapper;
+			}
+
+			else
+				sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
+
 			mScene = mPhysics->createScene(sceneDesc);
 		}
 
@@ -125,10 +134,12 @@ namespace IGE {
 					rb->getShapes(&shape, 1);// assuming that all the rigidbodies only have one shape
 					shape->getMaterials(&material, 1);
 
+					//////////////////////////////////////////////////////////////////////////////////////
 					if (std::shared_ptr<Systems::LayerSystem> layerSys = 
 						Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
 						layerSys->SetupShapeFilterData(&shape, entity);
 					}
+					//////////////////////////////////////////////////////////////////////////////////////
 
 					material->setDynamicFriction(rigidbody.dynamicFriction);
 					material->setStaticFriction(rigidbody.staticFriction);
@@ -194,6 +205,14 @@ namespace IGE {
 			}
 
 			physx::PxShape* shape { mPhysics->createShape(geom, *mMaterial) };
+
+			//////////////////////////////////////////////////////////////////////////////////////
+			if (std::shared_ptr<Systems::LayerSystem> layerSys =
+				Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
+				layerSys->SetupShapeFilterData(&shape, entity);
+			}
+			//////////////////////////////////////////////////////////////////////////////////////
+
 			rb->setGlobalPose(xfm);
 			shape->setLocalPose({ collider.positionOffset, collider.rotationOffset });
 			rb->attachShape(*shape);
@@ -218,6 +237,13 @@ namespace IGE {
 			physx::PxShape* shape;
 			rb->getShapes(&shape, 1);
 			shape->setLocalPose({ collider.positionOffset, collider.rotationOffset });
+
+			//////////////////////////////////////////////////////////////////////////////////////
+			if (std::shared_ptr<Systems::LayerSystem> layerSys =
+				Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
+				layerSys->SetupShapeFilterData(&shape, entity);
+			}
+			//////////////////////////////////////////////////////////////////////////////////////
 
 			mScene->addActor(*rb);
 			rb->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
@@ -267,6 +293,14 @@ namespace IGE {
 				physx::PxRigidDynamic* rbptr{ rbiter->second };
 				if (entity.HasComponent<Component::BoxCollider>()) {
 					physx::PxShape* shape;
+
+					//////////////////////////////////////////////////////////////////////////////////////
+					if (std::shared_ptr<Systems::LayerSystem> layerSys =
+						Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
+						layerSys->SetupShapeFilterData(&shape, entity);
+					}
+					//////////////////////////////////////////////////////////////////////////////////////
+
 					physx::PxMaterial* material;
 					rbptr->getShapes(&shape, 1);// assuming that all the rigidbodies only have one shape
 					shape->getMaterials(&material, 1);
@@ -342,6 +376,18 @@ namespace IGE {
 			mPvd->release();
 			mFoundation->release();
 		}
+	}
 
+	physx::PxFilterFlags LayerFilterShaderWrapper(
+		physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
+		physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
+		physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize) {
+		if (auto layerSys = Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
+			return layerSys->LayerFilterShader(
+				attributes0, filterData0, attributes1, filterData1, pairFlags, constantBlock, constantBlockSize);
+		}
+
+		pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
+		return physx::PxFilterFlag::eDEFAULT;
 	}
 }

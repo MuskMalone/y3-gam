@@ -2,7 +2,6 @@
 #include <Core/Components/Components.h>
 #include <Core/Entity.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
-#include <Core/Systems/LayerSystem/LayerSystem.h>
 
 namespace IGE {
 	namespace Physics {
@@ -67,6 +66,11 @@ namespace IGE {
 			_collider_component& AddCollider(ECS::Entity entity, _collider_component collider);
 		};
 	}
+
+	physx::PxFilterFlags LayerFilterShaderWrapper(
+		physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
+		physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
+		physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize);
 }
 template <>
 inline void Systems::SystemManager::RegisterSystem<IGE::Physics::PhysicsSystem>(const char* name) {

@@ -29,7 +29,14 @@ namespace Systems {
       return;
     }
 
+    if (layerIndex >= MAX_LAYERS || layerIndex < 0) {
+      Debug::DebugLogger::GetInstance().LogWarning("[Layers] Invalid Layer Index Passed");
+      return;
+    }
+
     mLayerData.collisionMatrix[layerNumber][layerIndex] = static_cast<int>(collisionStatus);
+    // Set the collision matrix of the corresponding layer for symmetric collision
+    mLayerData.collisionMatrix[layerIndex][layerNumber] = static_cast<int>(collisionStatus);
   }
 
   void LayerSystem::SetLayerName(int layerNumber, std::string layerName) {
@@ -75,17 +82,16 @@ namespace Systems {
   physx::PxFilterFlags LayerSystem::LayerFilterShader(physx::PxFilterObjectAttributes attributes0, 
     physx::PxFilterData filterData0, physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1, 
     physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize) {
-    // Extract layer info from the filter data
+
     physx::PxU32 layer0 = filterData0.word0;
     physx::PxU32 layer1 = filterData1.word0;
 
-    // Check if layers are allowed to collide
-    if ((layer0 & layer1) == 0) {
-      // Layers should not collide
+    // Collision not allowed
+    if (!GetCollidable(layer0, layer1)) {
       return physx::PxFilterFlag::eSUPPRESS;
     }
 
-    // Allow collision and specify that the objects should perform a full simulation
+    // Collision allowed
     pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
     return physx::PxFilterFlag::eDEFAULT;
   }
@@ -98,7 +104,7 @@ namespace Systems {
       size_t index = std::distance(mLayerData.layerNames.begin(), itr);
 
       physx::PxFilterData filterData;
-      filterData.word0 = index;
+      filterData.word0 = static_cast<physx::PxU32>(index);
       (*shape)->setSimulationFilterData(filterData);
     }
     else {

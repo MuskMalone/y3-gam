@@ -16,6 +16,9 @@
     <Filter Include="Asset\Assetables\Prefab">
       <UniqueIdentifier>{BAE2FC16-261A-45AE-2F24-A9D19BDA6BA7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Asset\Assetables\Prefabs">
+      <UniqueIdentifier>{6D3A99F6-595F-E876-82AA-CD066E2EE794}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Asset\Assetables\Texture">
       <UniqueIdentifier>{3BF38E0D-2718-DE8D-5063-C31D3CE7DCAB}</UniqueIdentifier>
     </Filter>
@@ -174,6 +177,9 @@
     </ClInclude>
     <ClInclude Include="source\Asset\Assetables\Prefab\PrefabAsset.h">
       <Filter>Asset\Assetables\Prefab</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Asset\Assetables\Prefabs\PrefabAsset.h">
+      <Filter>Asset\Assetables\Prefabs</Filter>
     </ClInclude>
     <ClInclude Include="source\Asset\Assetables\Texture\TextureAsset.h">
       <Filter>Asset\Assetables\Texture</Filter>
@@ -667,6 +673,9 @@
     </ClCompile>
     <ClCompile Include="source\Asset\Assetables\Prefab\PrefabAsset.cpp">
       <Filter>Asset\Assetables\Prefab</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Asset\Assetables\Prefabs\PrefabAsset.cpp">
+      <Filter>Asset\Assetables\Prefabs</Filter>
     </ClCompile>
     <ClCompile Include="source\Asset\Assetables\Texture\TextureAsset.cpp">
       <Filter>Asset\Assetables\Texture</Filter>

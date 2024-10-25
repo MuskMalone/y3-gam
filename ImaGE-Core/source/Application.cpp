@@ -91,10 +91,10 @@ namespace IGE {
   void Application::RegisterSystems() {
     Systems::SystemManager& systemManager{ Systems::SystemManager::GetInstance() };
     systemManager.RegisterSystem<Systems::TransformSystem>("Pre-Transform System"); // must be called first   
+    systemManager.RegisterSystem<Systems::LayerSystem>("Layer System");
     systemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
     systemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
-    systemManager.RegisterSystem<Systems::LayerSystem>("Layer System");
-
+    
     // dont think i need this anymore
     //mSystemManager.RegisterSystem<Systems::LocalToWorldTransformSystem>("Post-Transform System");
   }
