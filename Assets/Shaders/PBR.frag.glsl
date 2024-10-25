@@ -6,11 +6,9 @@ layout(location = 1) out int entityID;
 
 in vec4 v_Color;
 in vec2 v_TexCoord;
-in flat float v_TexIdx;
+in flat float v_TexIdx; //not being used might delete
 
 in flat int v_EntityID;
-
-//uniform sampler2D u_Tex[32]; //TODO CHANGE THIS IN FUTURE
            
 in vec3 v_FragPos;              // Fragment position in world space
 in vec3 v_Normal;               // Normal in world space
@@ -24,14 +22,10 @@ uniform float u_Roughness;
 uniform float u_Transparency;
 uniform float u_AO;
 
-//instance-specific tex handles
-//in flat uint v_AlbedoHandle;  // Handle for albedo texture
 in flat int v_MaterialIdx;
 
 uniform sampler2D[16] u_AlbedoMaps;
 uniform sampler2D[16] u_NormalMaps;
-//uniform sampler2D u_NormalMap[3];
-
 
 //lighting parameters
 uniform vec3 u_CamPos;       // Camera position in world space
@@ -52,14 +46,10 @@ void main(){
     entityID = v_EntityID;
     
 	vec4 texColor = texture2D(u_NormalMaps[int(v_MaterialIdx)], v_TexCoord); //currently unused
-    u_Albedo;
-	//sample texture
-	//vec4 texColor = texture2D(u_Tex[0], v_TexCoord);
+    u_Albedo; //currently unused
     
     vec4 albedoTexture = texture2D(u_AlbedoMaps[int(v_MaterialIdx)], v_TexCoord);
     vec3 albedo = albedoTexture.rgb; // Mixing texture and uniform
-
-    //vec3 albedo =  u_Albedo; // Mixing texture and uniform
 
 	// Normalize inputs
     vec3 N = normalize(v_Normal);

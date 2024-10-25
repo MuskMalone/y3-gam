@@ -87,15 +87,13 @@ void Scene::Init()
 
 
           // Assign different materials based on the mesh type
-          auto& materialComponent = entity.EmplaceComponent<Component::Material>();
+          
           if ((i + j) % 2 == 0) {
-              materialComponent.matIdx = 0;
-              //std::shared_ptr<Graphics::MaterialSource> materialSource;
-              //materialSource = materialSource0; // Assume this is a pre-defined MaterialSource for the cube
-              //materialComponent.material = std::make_shared<Graphics::Material>(materialSource);
+              auto& materialComponent = entity.EmplaceComponent<Component::Material>();
+              materialComponent.matIdx = 1;
           }
           else {
-              materialComponent.matIdx = 1;
+             // materialComponent.matIdx = 1;
             // Assume this is a pre-defined MaterialSource for the pyramid
           }
 

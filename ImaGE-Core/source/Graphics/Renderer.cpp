@@ -118,6 +118,7 @@ namespace Graphics {
 		mData.quadVtxPos[3] = { -0.5f, 0.5f, 0.0f, 1.0f };
 ;
 		ShaderLibrary::Add("PBR", Shader::Create("PBR.vert.glsl", "PBR.frag.glsl"));
+		ShaderLibrary::Add("Unlit", Shader::Create("Unlit.vert.glsl", "Unlit.frag.glsl"));
 
 		//Init framebuffer
 		Graphics::FramebufferSpec framebufferSpec;
@@ -155,33 +156,8 @@ namespace Graphics {
 		//mFinalFramebuffer = Framebuffer::Create(framebufferSpec);
 
 
-		IGE::Assets::GUID texguid1 { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\default.dds")) };
-
-		IGE::Assets::GUID texguid { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
-
-		//TESTING
-		//albedo
-		//mData.albedoMaps.push_back(GetDefaultTexture());
-		//mData.albedoMaps.push_back(GetWhiteTexture());
-		//mData.albedoMaps.push_back(texguid1);
-
-		////normal
-		//mData.normalMaps.push_back(GetWhiteTexture());
-		//mData.normalMaps.push_back(GetWhiteTexture());
-		//mData.normalMaps.push_back(texguid1);
-		
-		////mData.albedoMaps.push_back(texguid1);
-
-		//mData.test = std::make_shared<Texture>(2, 2, true);
-		//// Define a 2x2 checkerboard pattern with magenta and cyan in ABGR format
-		//unsigned int data[4] = {
-		//	0xffff00ff,  // Magenta (top-left)
-		//	0xffffff00,  // Cyan (top-right)
-		//	0xffffff00,  // Cyan (bottom-left)
-		//	0xffff00ff   // Magenta (bottom-right)
-		//};
-		//mData.test->SetData(data);
-
+		IGE::Assets::GUID texguid1 { Texture::Create(gAssetsDirectory + std::string("Textures\\default.dds")) };
+		IGE::Assets::GUID texguid { Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
 		//Init Materials
 
 // Create a default material with a default shader and properties
@@ -196,6 +172,10 @@ namespace Graphics {
 		std::shared_ptr<Material> mat1 = Material::Create(ShaderLibrary::Get("PBR"));
 		mat1->SetAlbedoMap(texguid1);
 		MaterialTable::AddMaterial(mat1);
+
+		std::shared_ptr<Material> mat2 = Material::Create(ShaderLibrary::Get("Unlit"));
+		mat2->SetAlbedoMap(texguid);
+		MaterialTable::AddMaterial(mat2);
 		//--Material Init End--//
 ;	}
 
