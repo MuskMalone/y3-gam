@@ -27,11 +27,16 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GUI/GUIManager.h>
 #include <Asset/IGEAssets.h>
 
+namespace {
+  glm::vec2 ProjVectorOnCamPlane(glm::vec3 const& vector , Graphics::EditorCamera const& cam);
+}
+
 namespace GUI
 {
   // for panning camera to entity when double-clicked upon
   static bool sMovingToEntity{ false };
-  static glm::vec3 sTargetPosition{};
+  static glm::vec3 sTargetPosition, sMoveDir;
+  static float sDistToCover;
 
   Viewport::Viewport(const char* name, Graphics::EditorCamera& camera) : GUIWindow(name),
     mEditorCam{ camera }, mIsPanning{ false }, mIsDragging{ false } {
@@ -204,13 +209,23 @@ namespace GUI
     
     ReceivePayload();
 
+    // move camera towards entity if the event has been triggered
     if (sMovingToEntity) {
-      glm::vec3 const endPos{ sTargetPosition - mEditorCam.GetForwardVector() * 10.f };
-      if (glm::distance2(endPos, mEditorCam.GetPosition()) > 0.5f) {
-        mEditorCam.MoveTowardsPoint(endPos, 2.f * dt);
+      if (glm::distance2(sTargetPosition, mEditorCam.GetPosition()) > 0.5f) {
+        float const movePercentageThisFrame{ Performance::FrameRateController::GetInstance().GetDeltaTime() / 0.5f * sDistToCover };
+        glm::vec3 const remainingDist{ sTargetPosition - mEditorCam.GetPosition() };
+        glm::vec3 offsetThisFrame{ sMoveDir * movePercentageThisFrame };
+
+        // clamp the distance so we don't overshoot
+        float const squaredDist{ glm::length2(offsetThisFrame) };
+        if (squaredDist > glm::length2(remainingDist)) {
+          offsetThisFrame = remainingDist;
+        }
+
+        mEditorCam.MoveCamera(offsetThisFrame);
       }
       else {
-        mEditorCam.SetPosition(endPos);
+        mEditorCam.SetPosition(sTargetPosition);
         sMovingToEntity = false;
       }
     }
@@ -222,7 +237,16 @@ namespace GUI
   }
 
   EVENT_CALLBACK_DEF(Viewport, HandleEvent) {
-    sTargetPosition = CAST_TO_EVENT(Events::ZoomInOnEntity)->mEntity.GetComponent<Component::Transform>().worldPos;
+    Component::Transform const& trans{ CAST_TO_EVENT(Events::ZoomInOnEntity)->mEntity.GetComponent<Component::Transform>() };
+    // project the entity's scale onto the camera's view plane
+    glm::vec2 const projectedEntityScale{ ProjVectorOnCamPlane(trans.worldScale, mEditorCam) };
+    
+    // then offset backwards from the entity's position based on the larger scale component and scale factor
+    sTargetPosition = trans.worldPos - mEditorCam.GetForwardVector()
+      * glm::max(projectedEntityScale.x, projectedEntityScale.y) * sEntityScaleFactor;
+    glm::vec3 const totalDist{ sTargetPosition - mEditorCam.GetPosition() };
+    sMoveDir = glm::normalize(totalDist);
+    sDistToCover = glm::length(totalDist);
     sMovingToEntity = true;
   }
 
@@ -263,3 +287,13 @@ namespace GUI
   }
 
 } // namespace GUI
+
+namespace {
+  glm::vec2 ProjVectorOnCamPlane(glm::vec3 const& vector, Graphics::EditorCamera const& cam) {
+    // projection = vector - dot(vector, normal) * normal
+    glm::vec3 const camFwdVec{ cam.GetForwardVector() };
+    glm::vec3 const projectedVec{ vector - glm::dot(vector, camFwdVec) * camFwdVec };
+
+    return { glm::dot(cam.GetRightVector(), projectedVec), glm::dot(cam.GetUpVector(), projectedVec) };
+  }
+}

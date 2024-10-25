@@ -34,6 +34,10 @@ namespace GUI
     void Render(std::shared_ptr<Graphics::Framebuffer> const& framebuffer);
 
   private:
+    static inline constexpr float sEntityScaleFactor = 1.f; // for camera zooming
+
+    Graphics::EditorCamera& mEditorCam;
+    bool mIsPanning, mIsDragging;
 
     /*!*********************************************************************
     \brief
@@ -51,9 +55,6 @@ namespace GUI
     void ReceivePayload();
 
     EVENT_CALLBACK_DECL(HandleEvent);
-
-    Graphics::EditorCamera& mEditorCam;
-    bool mIsPanning, mIsDragging;
   };
   
 } // namespace GUI

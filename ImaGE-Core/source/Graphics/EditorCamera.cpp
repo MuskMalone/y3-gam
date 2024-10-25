@@ -19,6 +19,10 @@ namespace Graphics {
         return mPosition;
     }
 
+    float EditorCamera::GetFOV() const noexcept {
+      return mFov;
+    }
+
     void EditorCamera::UpdateCamera(float dt) {
 
         if (Input::InputManager::IsKeyHeld(IK_W))
@@ -135,8 +139,8 @@ namespace Graphics {
       mPosition = pos;
     }
 
-    void EditorCamera::MoveTowardsPoint(glm::vec3 const& target, float dt) {
-      mPosition += glm::normalize((target - mPosition)) * mMoveSpeed * dt;
+    void EditorCamera::MoveCamera(glm::vec3 const& offset) {
+      mPosition += offset;
     }
 
     void EditorCamera::MoveAlongPlane(float xDisp, float yDisp) {

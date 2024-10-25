@@ -35,6 +35,7 @@ namespace Graphics {
 			: mPosition(position), mYaw(yaw), mPitch(pitch), mFov(fov),
 			mAspectRatio(aspectRatio), mNearClip(nearClip), mFarClip(farClip) {}
 
+		float GetFOV() const noexcept;
 		glm::mat4 GetViewMatrix() const;
 		glm::mat4 GetProjMatrix() const;
 		glm::mat4 GetViewProjMatrix() const;
@@ -50,7 +51,16 @@ namespace Graphics {
 		void ProcessKeyboardInput(CameraMovement dir, float dt);
 		void ProcessMouseInput(float offsetX, float offsetY);
 		void ProcessMouseScroll(float scrollOffset);
-		void MoveTowardsPoint(glm::vec3 const& target, float dt);
+
+		/*!*********************************************************************
+		\brief
+		  Moves the camera based on an offset. This function is called by the
+			viewport and already takes the delta time into account.
+		\param target
+			The amount to move
+		************************************************************************/
+		void MoveCamera(glm::vec3 const& offset);
+
 		void MoveAlongPlane(float xDisp, float yDisp);
 
 
