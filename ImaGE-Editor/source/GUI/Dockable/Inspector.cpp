@@ -670,7 +670,7 @@ namespace GUI {
             if (i != 0) {
 
               //mesh.mesh = std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromString(selected));
-                mesh.mesh = std::make_shared<Graphics::Mesh>(IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>(selected));
+                mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>(selected);
             }
 
             if (selected != mesh.meshName) {
@@ -692,9 +692,7 @@ namespace GUI {
           AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
           if (assetPayload.mAssetType == AssetPayload::MODEL) {
             //auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
-            auto meshSrc{ std::make_shared<Graphics::Mesh>(IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>(assetPayload.GetFilePath())) };
-
-            mesh.mesh = std::move(meshSrc);
+            mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>(assetPayload.GetFilePath());
             mesh.meshName = assetPayload.GetFileName();
             modified = true;
           }

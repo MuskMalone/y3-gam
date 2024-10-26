@@ -310,7 +310,7 @@ namespace GUI
         {
           // @TODO: ABSTRACT MORE; MAKE IT EASIER TO ADD A MESH
           ECS::Entity newEntity{ ECS::EntityManager::GetInstance().CreateEntityWithTag(assetPayload.GetFileName()) };
-          auto meshSrc{ std::make_shared<Graphics::Mesh>(IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>(assetPayload.GetFilePath())) };
+          IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>(assetPayload.GetFilePath()) };
           newEntity.EmplaceComponent<Component::Mesh>(meshSrc, assetPayload.GetFileName());
           break;
         }

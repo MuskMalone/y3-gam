@@ -346,9 +346,7 @@ namespace Graphics {
 		SetTriangleBufferData(v3, clr);
 	}
 
-	void Renderer::SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, uint32_t matID) {
-		if (!mesh) return;
-
+	void Renderer::SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, uint32_t matID) {
 		InstanceData instance{};
 		instance.modelMatrix = worldMtx;
 		
@@ -357,10 +355,7 @@ namespace Graphics {
 		}
 		instance.materialIdx = matID;
 
-		auto& meshSrc = mesh->GetMeshSource();
-		if (!meshSrc) return;
-
-		mData.instanceBufferDataMap[meshSrc].push_back(instance);
+		mData.instanceBufferDataMap[meshSource].push_back(instance);
 	}
 
 

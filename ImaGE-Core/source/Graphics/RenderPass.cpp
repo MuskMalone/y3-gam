@@ -51,7 +51,7 @@ namespace Graphics {
             auto const& mesh = entity.GetComponent<Component::Mesh>();
             
             // Skip if mesh is null
-            if (mesh.mesh == nullptr)
+            if (!mesh.meshSource.IsValid())
                 continue;
 
             std::vector<GLuint64> hdls;
@@ -94,7 +94,7 @@ namespace Graphics {
             }
 
             //Graphics::Renderer::SubmitMesh(mesh.mesh, xform.worldPos, xform.worldRot, xform.worldScale, { 1.f, 1.f, 1.f, 1.f }); //@TODO: adjust color and rotation as needed
-            Graphics::Renderer::SubmitInstance(mesh.mesh, xform.worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
+            Graphics::Renderer::SubmitInstance(mesh.meshSource, xform.worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
         }
         
         mSpec.pipeline->GetSpec().instanceLayout;

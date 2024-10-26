@@ -2,6 +2,8 @@
 #include <pch.h>
 #include <functional>
 #include <random>
+#include <rttr/registration_friend>
+
 namespace IGE {
 	namespace Core {
 		inline uint32_t Fnv1a32(char const* s, size_t count)
@@ -25,6 +27,7 @@ namespace IGE {
 				mSeed{ other.mSeed}, 
 				mID { other.mID } {}
 
+			bool IsValid() const noexcept { return mSeed != "INVALID"; }
 			operator uint64_t () { return mID; }
 			operator const uint64_t() const { return mID; }
 
@@ -36,6 +39,8 @@ namespace IGE {
 			//static std::uniform_int_distribution<uint64_t> sUniformDistribution;
 			std::string mSeed;
 			uint64_t mID;
+
+			RTTR_REGISTRATION_FRIEND
 		};
 		//template <typename _tag>
 		//std::mt19937_64 GUID<_tag>::sEng{ };
