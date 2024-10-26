@@ -10,6 +10,7 @@ namespace Graphics {
 	RendererData Renderer::mData;
 	std::shared_ptr<Framebuffer> Renderer::mFinalFramebuffer;
 	std::shared_ptr<RenderPass> Renderer::mPickPass; //TODO put in a map/ vector
+	std::shared_ptr<RenderPass> Renderer::mShadowMapPass;
 	std::shared_ptr<RenderPass> Renderer::mGeomPass;
 
 	void Renderer::Init() {
@@ -112,45 +113,18 @@ namespace Graphics {
 
 		mData.instancedShader = Shader::Create("../Assets/Shaders/Instanced.vert.glsl", "../Assets/Shaders/Instanced.frag.glsl");
 
-		//Init framebuffer
-		Graphics::FramebufferSpec framebufferSpec;
-		framebufferSpec.width = WINDOW_WIDTH<int>;
-		framebufferSpec.height = WINDOW_HEIGHT<int>;
-		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
-
-		//Init RenderPasses
-		PipelineSpec geomPipelineSpec;
-		geomPipelineSpec.shader = mData.instancedShader;
-		geomPipelineSpec.targetFramebuffer = Framebuffer::Create(framebufferSpec);
-
-		RenderPassSpec geomPassSpec;
-		geomPassSpec.pipeline = Pipeline::Create(geomPipelineSpec);
-		geomPassSpec.debugName = "Geometry Pass";
-
-		//Init PickingPass
-		Graphics::FramebufferSpec pickBufferSpec;
-		pickBufferSpec.width = WINDOW_WIDTH<int>;
-		pickBufferSpec.height = WINDOW_HEIGHT<int>;
-		pickBufferSpec.attachments = { Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
-		
-		PipelineSpec pickPipelineSpec;
-		pickPipelineSpec.shader = Shader::Create("../Assets/Shaders/Instanced/vert.glsl", "../Assets/Shaders/Instanced.frag.glsl");
-		pickPipelineSpec.targetFramebuffer = Framebuffer::Create(pickBufferSpec);
-
-		RenderPassSpec pickPassSpec;
-		pickPassSpec.pipeline = Pipeline::Create(pickPipelineSpec);
-		pickPassSpec.debugName = "Picking Pass";
-
-		mPickPass = RenderPass::Create(pickPassSpec);
-		mGeomPass = RenderPass::Create(geomPassSpec);
+		// Init RenderPasses
+		InitGeomPass();
+		InitPickPass();
+		InitShadowMapPass();
 
 		mFinalFramebuffer = mGeomPass->GetTargetFramebuffer();
 		//mFinalFramebuffer = Framebuffer::Create(framebufferSpec);
 
 
-		IGE::Assets::GUID texguid1 { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\ogre_normalmap.dds")) };
+		IGE::Assets::GUID texguid1{ Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\ogre_normalmap.dds")) };
 
-		IGE::Assets::GUID texguid { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
+		IGE::Assets::GUID texguid{ Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
 		//unsigned int data[4] = {
 		//	0xffff00ff, // Bright magenta (ABGR)
 		//	0xffffff00, // Cyan (to create contrast for checkerboard)
@@ -171,10 +145,63 @@ namespace Graphics {
 		mData.normalMaps.push_back(GetWhiteTexture());
 		mData.normalMaps.push_back(GetWhiteTexture());
 		mData.normalMaps.push_back(texguid1);
-		
-		//mData.albedoMaps.push_back(texguid1);
-;	}
 
+		//mData.albedoMaps.push_back(texguid1);
+	}	
+
+	void Renderer::InitGeomPass() {
+		//Init framebuffer
+		Graphics::FramebufferSpec framebufferSpec;
+		framebufferSpec.width = WINDOW_WIDTH<int>;
+		framebufferSpec.height = WINDOW_HEIGHT<int>;
+		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
+
+		PipelineSpec geomPipelineSpec;
+		geomPipelineSpec.shader = mData.instancedShader;
+		geomPipelineSpec.targetFramebuffer = Framebuffer::Create(framebufferSpec);
+
+		RenderPassSpec geomPassSpec;
+		geomPassSpec.pipeline = Pipeline::Create(geomPipelineSpec);
+		geomPassSpec.debugName = "Geometry Pass";
+
+		mGeomPass = RenderPass::Create(geomPassSpec);
+	}
+
+	void Renderer::InitPickPass() {
+		Graphics::FramebufferSpec pickBufferSpec;
+		pickBufferSpec.width = WINDOW_WIDTH<int>;
+		pickBufferSpec.height = WINDOW_HEIGHT<int>;
+		pickBufferSpec.attachments = { Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
+
+		PipelineSpec pickPipelineSpec;
+		pickPipelineSpec.shader = Shader::Create("../Assets/Shaders/Instanced.vert.glsl", "../Assets/Shaders/Instanced.frag.glsl");
+		pickPipelineSpec.targetFramebuffer = Framebuffer::Create(pickBufferSpec);
+
+		RenderPassSpec pickPassSpec;
+		pickPassSpec.pipeline = Pipeline::Create(pickPipelineSpec);
+		pickPassSpec.debugName = "Picking Pass";
+
+		mPickPass = RenderPass::Create(pickPassSpec);
+	}
+
+	void Renderer::InitShadowMapPass() {
+		Graphics::FramebufferSpec shadowSpec;
+		shadowSpec.width = WINDOW_WIDTH<int>;
+		shadowSpec.height = WINDOW_HEIGHT<int>;
+		// @TODO: Allow for multiple shadow maps (need to ask xavier how to extend his code)
+		//				to use glTexImage3D and GL_TEXTURE_2D_ARRAY
+		shadowSpec.attachments = { Graphics::FramebufferTextureFormat::DEPTH };	// temporarily max. 1 shadow-caster
+
+		PipelineSpec shadowPSpec;
+		shadowPSpec.shader = Shader::Create("../Assets/Shaders/ShadowMap.vert.glsl", "../Assets/Shaders/ShadowMap.frag.glsl");
+		shadowPSpec.targetFramebuffer = Framebuffer::Create(shadowSpec);
+
+		RenderPassSpec shadowPassSpec;
+		shadowPassSpec.pipeline = Pipeline::Create(shadowPSpec);
+		shadowPassSpec.debugName = "Shadow Map Pass";
+
+		mShadowMapPass = RenderPass::Create(shadowPassSpec);
+	}
 
 	void Renderer::Shutdown() {
 		// Add shutdown logic if necessary
@@ -274,7 +301,7 @@ namespace Graphics {
 		glm::vec3 bitangent = { 0.f, 1.f, 0.f };
 
 		for (size_t i{}; i < 4; ++i)
-			SetQuadBufferData(transformMtx * mData.quadVtxPos[i],scale, normal, texCoords[i], texIdx, tangent, bitangent, clr);
+			SetQuadBufferData(transformMtx * mData.quadVtxPos[i], scale, normal, texCoords[i], texIdx, tangent, bitangent, clr);
 
 		mData.quadIdxCount += 6;
 		++mData.stats.quadCount;
@@ -349,7 +376,7 @@ namespace Graphics {
 	void Renderer::SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, uint32_t matID) {
 		InstanceData instance{};
 		instance.modelMatrix = worldMtx;
-		
+
 		if (id != INVALID_ENTITY_ID) {
 			instance.entityID = id;
 		}
@@ -368,7 +395,7 @@ namespace Graphics {
 
 			// Set instance data into the buffer
 			unsigned int dataSize = static_cast<unsigned int>(instances.size() * sizeof(InstanceData));
-			
+
 			instanceBuffer->SetData(instances.data(), dataSize);
 
 			// Bind the VAO and render the instances
@@ -421,7 +448,7 @@ namespace Graphics {
 			// Update the mesh vertex buffer with the batched data
 			mData.meshVertexBuffer->SetData(mData.meshBuffer.data(), dataSize);
 
- 			unsigned int idxDataSize = static_cast<unsigned int>(mData.meshIdxCount * sizeof(uint32_t));
+			unsigned int idxDataSize = static_cast<unsigned int>(mData.meshIdxCount * sizeof(uint32_t));
 			mData.meshVertexArray->Bind();
 			mData.meshVertexArray->GetElementBuffer()->SetData(mData.meshIdxBuffer.data(), idxDataSize);
 			mData.meshVertexArray->Unbind();
@@ -519,11 +546,11 @@ namespace Graphics {
 		FlushBatch();
 	}
 
-	std::shared_ptr<Material> Renderer::GetMaterial(uint32_t idx){
+	std::shared_ptr<Material> Renderer::GetMaterial(uint32_t idx) {
 		return mData.materialVector[idx];
 	}
 
-	std::vector< IGE::Assets::GUID> const& Renderer::GetAlbedoMaps(){
+	std::vector< IGE::Assets::GUID> const& Renderer::GetAlbedoMaps() {
 		return mData.albedoMaps;
 	}
 

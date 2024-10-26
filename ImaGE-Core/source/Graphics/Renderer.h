@@ -165,6 +165,10 @@ namespace Graphics {
 		//	const glm::vec4& clr, const glm::vec2& texCoord, float texIdx, int entity);
 		static void NextBatch();
 
+		static void InitPickPass();
+		static void InitGeomPass();
+		static void InitShadowMapPass();
+
 		// Stats
 		static Statistics GetStats();
 		static void ResetStats();
@@ -174,6 +178,7 @@ namespace Graphics {
 		static std::shared_ptr<Framebuffer> mFinalFramebuffer;
 	public: // TEMP
 		static std::shared_ptr<RenderPass> mPickPass;
+		static std::shared_ptr<RenderPass> mShadowMapPass;
 		static std::shared_ptr<RenderPass> mGeomPass;
 	};
 }
