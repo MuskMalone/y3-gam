@@ -58,6 +58,18 @@ static void rttr_auto_register_reflection_function2_(); namespace {
       rttr::metadata(Reflection::InspectorMetadata::DISABLED, true)
       );
 
+  REGISTER_COMPONENT(Light, "Light")
+    .property("lighttype", &Light::mType)
+    .property("position", &Light::mPosition)
+    .property("direction", &Light::mDirection)
+    .property("color", &Light::mColor)
+    .property("linear", &Light::mLinear)
+    .property("quadratic", &Light::mQuadratic)
+    .property("radius",&Light::mRadius)
+    .property("cutoff", &Light::mCutOff)
+    .property("outercutoff", &Light::mOuterCutOff);
+
+
   REGISTER_COMPONENT(Layer, "Layer")
     .property("layerName", &Layer::name);
 
@@ -72,6 +84,8 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("fontName", &Text::fontName)
     .property("color", &Text::color)
     .property("scale", &Text::scale);
+
+
 
   REGISTER_COMPONENT(RigidBody, "RigidBody")
     .property("velocity", &RigidBody::velocity)

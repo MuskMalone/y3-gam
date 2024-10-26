@@ -55,6 +55,7 @@ namespace GUI {
     bool TagComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
     bool TextComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
     bool TransformComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
+    bool LightComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
     
     /*!*********************************************************************
     \brief

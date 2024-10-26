@@ -30,6 +30,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace GUI {
 
 
+
   bool InputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled = false);
 
   Inspector::Inspector(const char* name) : GUIWindow(name),
@@ -181,6 +182,18 @@ namespace GUI {
           SetIsComponentEdited(true);
           if (prefabOverride) {
             prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Script>());
+          }
+        }
+      }
+      if (currentEntity.HasComponent<Component::Light>()) {
+
+        rttr::type const lightType{ rttr::type::get<Component::Light>() };
+
+        componentOverriden = prefabOverride && prefabOverride->IsComponentModified(lightType);
+        if (LightComponentWindow(currentEntity, std::string(ICON_FA_FILE_CODE), componentOverriden)) {
+          SetIsComponentEdited(true);
+          if (prefabOverride) {
+            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Light>());
           }
         }
       }
@@ -492,6 +505,8 @@ namespace GUI {
     WindowEnd(isOpen);
     return modified;
   }
+
+
 
   bool Inspector::TagComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
     bool const isOpen{ WindowBegin<Component::Tag>("Tag", icon, highlight) };
@@ -874,6 +889,78 @@ namespace GUI {
     return modified;
   }
 
+  bool Inspector::LightComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Light>("Light", icon, highlight) };
+    bool modified{ false };
+
+    if (isOpen) {
+      const std::vector<std::string> Lights{ "Directional","Spotlight" };
+    //  // Assuming 'collider' is an instance of Collider
+      Component::Light& light{ entity.GetComponent<Component::Light>() };
+      float contentSize = ImGui::GetContentRegionAvail().x;
+      float charSize = ImGui::CalcTextSize("012345678901234").x;
+      float inputWidth = (contentSize - charSize - 50) / 3;
+
+      ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV);
+      ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, charSize);
+
+      ImGui::TableNextRow();
+      ImGui::TableNextColumn();
+      ImGui::Text("Type");
+      ImGui::TableNextColumn();
+
+      if (ImGui::BeginCombo("", Lights[light.mType].c_str()))
+      {
+        for (int s{ 0 }; s < static_cast<int>(Component::LIGHT_COUNT); ++s)
+        {
+          if (Lights[s] != Lights[light.mType])
+          {
+            bool is_selected = (Lights[light.mType] == Lights[s]);
+            if (ImGui::Selectable(Lights[s].c_str(), is_selected))
+            {
+              if (Lights[s] != Lights[light.mType]) {
+                light.mType = static_cast<Component::Light_Type>(s);
+              }
+            }
+            if (is_selected)
+            {
+              ImGui::SetItemDefaultFocus();
+            }
+          }
+        }
+        ImGui::EndCombo();
+      }
+      ImGui::EndTable();
+
+
+      ImGui::BeginTable("ColliderTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      ImGui::TableHeadersRow();
+
+      if (ImGuiHelpers::TableInputFloat3("Position", &light.mPosition[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
+        modified = true;
+      }
+   
+      if (ImGuiHelpers::TableInputFloat3("Direction", &light.mDirection[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
+        modified = true;
+      }
+      if (ImGuiHelpers::TableInputFloat3("Color", &light.mColor[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
+        modified = true;
+      }
+    
+    ImGui::EndTable();
+
+    }
+
+    WindowEnd(isOpen);
+    return modified;
+  }
+
+
+
   void Inspector::DrawAddButton() {
     ImVec2 addTextSize = ImGui::CalcTextSize("Add");
     ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
@@ -915,6 +1002,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Tag>("Tag", ICON_FA_TAG);
         DrawAddComponentButton<Component::Text>("Text", ICON_FA_FONT);
         DrawAddComponentButton<Component::Transform>("Transform", std::string(ICON_FA_ROTATE));
+        DrawAddComponentButton<Component::Light>("Light", std::string(ICON_FA_ROTATE));
 
         ImGui::EndTable();
       }

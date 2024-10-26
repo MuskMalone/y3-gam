@@ -47,7 +47,8 @@ namespace Reflection
       { GET_RTTR_TYPE(BoxCollider), ComponentUtils::AddBoxCollider },
       { GET_RTTR_TYPE(RigidBody), ComponentUtils::AddRigidBody },
       { GET_RTTR_TYPE(ProxyScriptComponent), ComponentUtils::AddScript },
-      { GET_RTTR_TYPE(Text), ComponentUtils::AddText }
+      { GET_RTTR_TYPE(Text), ComponentUtils::AddText },
+      { GET_RTTR_TYPE(Light), ComponentUtils::AddLight }
     };
 
     if (mAddComponentFuncs.size() != gComponentTypes.size()) {
@@ -279,6 +280,7 @@ namespace Reflection
     else IF_GET_ENTITY_COMP(Component::BoxCollider)
     else IF_GET_ENTITY_COMP(Component::Script)
     else IF_GET_ENTITY_COMP(Component::Text)
+    else IF_GET_ENTITY_COMP(Component::Light)
     else
     {
       std::ostringstream oss{};
@@ -305,6 +307,7 @@ namespace Reflection
     else IF_REMOVE_COMP(Component::BoxCollider)
     else IF_REMOVE_COMP(Component::Script)
     else IF_REMOVE_COMP(Component::Text)
+    else IF_REMOVE_COMP(Component::Light)
     else
     {
       std::ostringstream oss{};

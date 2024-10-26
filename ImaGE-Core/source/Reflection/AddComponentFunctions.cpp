@@ -77,4 +77,10 @@ namespace Reflection::ComponentUtils {
     entity.EmplaceOrReplaceComponent<Script>(comp);
   }
 
+  void AddLight(ECS::Entity entity, rttr::variant const& var) {
+    EXTRACT_RAW_COMP(Light, comp);
+
+    entity.EmplaceOrReplaceComponent<Light>(comp);
+  }
+
 } // namespace Reflection
