@@ -1,64 +1,6 @@
 {
     "Scene": [
         {
-            "ID": 7,
-            "Parent": 0,
-            "Child Entities": [
-                8,
-                9
-            ],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 2
-            }
-        },
-        {
-            "ID": 6,
-            "Parent": 0,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 1
-            }
-        },
-        {
-            "ID": 5,
-            "Parent": 0,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 5
-            }
-        },
-        {
-            "ID": 4,
-            "Parent": 1,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 7
-            }
-        },
-        {
-            "ID": 2,
-            "Parent": 1,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 9
-            }
-        },
-        {
             "ID": 0,
             "Parent": null,
             "Child Entities": [
@@ -70,21 +12,6 @@
             "Prefab": {
                 "prefabName": "Plane",
                 "modifiedComponents": [
-                    {
-                        "key": "Collider",
-                        "value": {
-                            "scale": {
-                                "x": 0.5,
-                                "y": 0.5,
-                                "z": 0.5
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            }
-                        }
-                    },
                     {
                         "key": "Transform",
                         "value": {
@@ -128,12 +55,34 @@
                         }
                     },
                     {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 0.5,
+                                "y": 0.5,
+                                "z": 0.5
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 0.0
+                            },
+                            "sensor": false
+                        }
+                    },
+                    {
                         "key": "RigidBody",
                         "value": {
                             "velocity": {
-                                "x": -25.100000381469728,
-                                "y": -2.5999999046325685,
-                                "z": -12.300000190734864
+                                "x": -6.699999809265137,
+                                "y": -0.30000001192092898,
+                                "z": -2.700000047683716
                             },
                             "angularVelocity": {
                                 "x": 0.0,
@@ -151,39 +100,6 @@
                 ],
                 "removedComponents": [],
                 "subDataId": 0
-            }
-        },
-        {
-            "ID": 8,
-            "Parent": 7,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 3
-            }
-        },
-        {
-            "ID": 3,
-            "Parent": 1,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 8
-            }
-        },
-        {
-            "ID": 9,
-            "Parent": 7,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 4
             }
         },
         {
@@ -206,6 +122,97 @@
                 ],
                 "removedComponents": [],
                 "subDataId": 6
+            }
+        },
+        {
+            "ID": 2,
+            "Parent": 1,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 9
+            }
+        },
+        {
+            "ID": 3,
+            "Parent": 1,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 8
+            }
+        },
+        {
+            "ID": 4,
+            "Parent": 1,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 7
+            }
+        },
+        {
+            "ID": 5,
+            "Parent": 0,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 5
+            }
+        },
+        {
+            "ID": 6,
+            "Parent": 0,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 1
+            }
+        },
+        {
+            "ID": 7,
+            "Parent": 0,
+            "Child Entities": [
+                8,
+                9
+            ],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 2
+            }
+        },
+        {
+            "ID": 8,
+            "Parent": 7,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 3
+            }
+        },
+        {
+            "ID": 9,
+            "Parent": 7,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 4
             }
         },
         {
@@ -266,15 +273,21 @@
                     }
                 },
                 {
-                    "Material": {}
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube"
+                    "Material": {
+                        "matIdx": 1
                     }
                 },
                 {
-                    "Collider": {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "Seed": "Cube",
+                            "ID": 9115105366793692982
+                        }
+                    }
+                },
+                {
+                    "BoxCollider": {
                         "scale": {
                             "x": 1.0,
                             "y": 4.849999904632568,
@@ -284,7 +297,14 @@
                             "x": 0.0,
                             "y": 0.0,
                             "z": 0.0
-                        }
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.0
+                        },
+                        "sensor": false
                     }
                 }
             ]
@@ -347,15 +367,21 @@
                     }
                 },
                 {
-                    "Material": {}
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube"
+                    "Material": {
+                        "matIdx": 1
                     }
                 },
                 {
-                    "Collider": {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "Seed": "Cube",
+                            "ID": 9115105366793692982
+                        }
+                    }
+                },
+                {
+                    "BoxCollider": {
                         "scale": {
                             "x": 1.0,
                             "y": 5.0,
@@ -365,7 +391,14 @@
                             "x": 0.0,
                             "y": 0.0,
                             "z": 0.0
-                        }
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.0
+                        },
+                        "sensor": false
                     }
                 }
             ]

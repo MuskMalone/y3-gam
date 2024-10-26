@@ -74,7 +74,10 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("layerName", &Layer::name);
 
   REGISTER_COMPONENT(Mesh, "Mesh")
-    .property("meshName", &Mesh::meshName);
+    .property("meshName", &Mesh::meshName)
+    .property("GUID", &Mesh::meshSource)
+    .property("castShadows", &Mesh::castShadows)
+    .property("receiveShadows", &Mesh::receiveShadows);
 
   REGISTER_COMPONENT(Material, "Material")
     .property("matIdx", &Material::matIdx);

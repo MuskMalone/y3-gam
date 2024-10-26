@@ -89,8 +89,8 @@ namespace GUI {
     void DrawAddButton();
 
   private:
-    std::map<std::string, bool> mComponentOpenStatusMap;
     GUI::Styler& mStyler;
+    std::map<std::string, bool> mComponentOpenStatusMap;
     Reflection::ObjectFactory& mObjFactory;
     ECS::Entity mPreviousEntity;
     bool mIsComponentEdited, mFirstEdit, mEditingPrefab;
@@ -154,6 +154,14 @@ namespace GUI {
     ************************************************************************/
     template<typename Component>
     bool DrawOptionsListButton(std::string const& windowName);
+
+    /*!*********************************************************************
+    \brief
+      Helper function to set up the column for the next row
+    \param labelName
+      The name of the property
+    ************************************************************************/
+    void NextRowTable(const char* labelName) const;
   };
 #include "Inspector.tpp"
 } // namespace GUI

@@ -14,6 +14,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Serialization/JsonKeys.h>
 #include <Reflection/ProxyScript.h>
 #include <Core/Systems/LayerSystem/LayerSystem.h>
+#include <Core/GUID.h>
 
 static void rttr_auto_register_reflection_function_(); namespace {
   struct rttr__auto__register__ {
@@ -88,6 +89,14 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("y", &physx::PxQuat::y)
       .property("z", &physx::PxQuat::z)
       .property("w", &physx::PxQuat::w);
+
+  {
+    using T = IGE::Core::GUID<IGE::Assets::AssetGUIDTag>;
+    rttr::registration::class_<T>("AssetGUID")
+      .property("Seed", &T::mSeed)
+      .property("ID", &T::mID);
+  }
+
   if (IGE::Application::GetImGuiEnabled()) {
     rttr::registration::class_<std::pair<std::string, unsigned>>("StringUnsignedPair")
       .property("first", &std::pair<std::string, unsigned>::first)

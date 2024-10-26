@@ -5,6 +5,12 @@
 #include <Serialization/Registration/RegisterEnumsAndFuncs.h>
 
 int Main(int argc, char** argv) {
+  // Enable run-time memory check for debug builds.
+#if defined(DEBUG) | defined(_DEBUG)
+#define _CRTDBG_MAP_ALLOC
+  _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
+
   // To be read from settings file
   IGE::EditorApplication::ApplicationSpecification spec;
   spec.EnableImGui = true;
