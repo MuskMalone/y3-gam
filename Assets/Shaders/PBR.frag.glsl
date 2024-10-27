@@ -15,6 +15,10 @@ in vec3 v_Normal;               // Normal in world space
 in vec3 v_Tangent;              // Tangent in world space
 in vec3 v_Bitangent;            // Bitangent in world space
 
+// Tiling and offset uniforms
+uniform vec2 u_Tiling; // Tiling factor (x, y)
+uniform vec2 u_Offset; // Offset (x, y)
+
 //PBR parameters
 uniform vec3 u_Albedo;
 uniform float u_Metalness;
@@ -44,10 +48,12 @@ vec3 fresnelSchlick(float cosTheta, vec3 F0);
 
 void main(){
     entityID = v_EntityID;
+
+    vec2 texCoord = v_TexCoord * u_Tiling + u_Offset;
     
-	vec4 texColor = texture2D(u_NormalMaps[int(v_MaterialIdx)], v_TexCoord); //currently unused
+	vec4 texColor = texture2D(u_NormalMaps[int(v_MaterialIdx)], texCoord); //currently unused
     
-    vec4 albedoTexture = texture2D(u_AlbedoMaps[int(v_MaterialIdx)], v_TexCoord);
+    vec4 albedoTexture = texture2D(u_AlbedoMaps[int(v_MaterialIdx)], texCoord);
     vec3 albedo = albedoTexture.rgb * u_Albedo; // Mixing texture and uniform
 
 	// Normalize inputs

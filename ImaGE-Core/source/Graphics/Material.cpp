@@ -25,6 +25,8 @@ namespace Graphics {
     void Material::SetRoughnessMap(IGE::Assets::GUID const& texture) { mRoughnessMap = texture; }
  
     void Material::Apply(std::shared_ptr<Shader> shader) const {
+        shader->SetUniform("u_Tiling", mTiling);
+        shader->SetUniform("u_Offset", mOffset);
         shader->SetUniform("u_Albedo", mAlbedoColor);
         shader->SetUniform("u_Metalness", mMetalness);
         shader->SetUniform("u_Roughness", mRoughness);

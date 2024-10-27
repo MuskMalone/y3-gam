@@ -6,6 +6,7 @@
 #include "Asset/IGEAssets.h"
 #include "MaterialTable.h"
 #include "Material.h"
+
 namespace Graphics {
 	constexpr int INVALID_ENTITY_ID = -1;
 
@@ -177,6 +178,32 @@ namespace Graphics {
 		mat2->SetAlbedoMap(texguid);
 		MaterialTable::AddMaterial(mat2);
 		//--Material Init End--//
+
+		//// Generate multiple materials for testing
+		//const int numMaterials = 50; // Total number of materials to create
+
+		//// Random number generator setup
+		//std::random_device rd;  // Obtain a random number from hardware
+		//std::mt19937 eng(rd()); // Seed the generator
+		//std::uniform_real_distribution<> distr(0.0, 1.0); // Define the range for the random numbers
+
+		//for (int i = 0; i < numMaterials; ++i) {
+		//	// Create a new material based on the PBR shader
+		//	std::shared_ptr<Material> material = Material::Create(ShaderLibrary::Get("PBR"));
+
+		//	// Generate a random albedo color for each material
+		//	glm::vec3 albedoColor = glm::vec3(distr(eng), distr(eng), distr(eng)); // Random RGB values
+
+		//	material->SetAlbedoColor(albedoColor);
+
+		//	// Optionally set other properties if needed
+		//	material->SetMetalness(0.0f); // Keep metalness constant for this example
+		//	material->SetRoughness(distr(eng)); // Vary roughness randomly between 0 and 1
+
+		//	// Add the new material to the material table
+		//	MaterialTable::AddMaterial(material);
+		//}
+
 ;	}
 
 
