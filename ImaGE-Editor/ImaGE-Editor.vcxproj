@@ -145,7 +145,7 @@ copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Release\bin\Release\rtt
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>WINDOWS;DISTRIBUTION;_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;GLM_ENABLE_EXPERIMENTAL;PX_PHYSX_STATIC_LIB;RTTR_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WINDOWS;NDEBUG;DISTRIBUTION;_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;GLM_ENABLE_EXPERIMENTAL;PX_PHYSX_STATIC_LIB;RTTR_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>source;..\ImaGE-Core\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
@@ -181,6 +181,7 @@ copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Release\bin\Release\rtt
     <ClInclude Include="source\GUI\Dockable\AssetBrowser.h" />
     <ClInclude Include="source\GUI\Dockable\Console.h" />
     <ClInclude Include="source\GUI\Dockable\Inspector.h" />
+    <ClInclude Include="source\GUI\Dockable\Layers.h" />
     <ClInclude Include="source\GUI\Dockable\PerformanceWindow.h" />
     <ClInclude Include="source\GUI\Dockable\SceneHierarchy.h" />
     <ClInclude Include="source\GUI\Dockable\Viewport.h" />
@@ -201,6 +202,7 @@ copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Release\bin\Release\rtt
     <ClCompile Include="source\GUI\Dockable\AssetBrowser.cpp" />
     <ClCompile Include="source\GUI\Dockable\Console.cpp" />
     <ClCompile Include="source\GUI\Dockable\Inspector.cpp" />
+    <ClCompile Include="source\GUI\Dockable\Layers.cpp" />
     <ClCompile Include="source\GUI\Dockable\PerformanceWindow.cpp" />
     <ClCompile Include="source\GUI\Dockable\SceneHierarchy.cpp" />
     <ClCompile Include="source\GUI\Dockable\Viewport.cpp" />
