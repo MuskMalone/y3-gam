@@ -29,7 +29,6 @@ namespace GUI
   private:
     std::filesystem::path mCurrentDir, mRightClickedDir; 
     std::filesystem::path mSelectedAsset;
-    std::string mSearchQuery;
     bool mDirMenuPopup, mAssetMenuPopup;
     bool mDisableSceneChange, mDisablePrefabSpawn;
 

@@ -224,6 +224,18 @@ namespace Serialization
         True if there were no missing fields and false otherwise
       ************************************************************************/
     static bool ScanJsonFileForMembers(rapidjson::Value const& value, std::string const& filename, unsigned keyCount, ...);
+
+    /*!*********************************************************************
+    \brief
+      This function attempts to deserialize a rapidjson::Value into an
+      int object. This is used to help distinguish between signed and
+      unsigned ints.
+    \param var
+      The object to deserialize into
+    \param value
+      The json data of the object
+    ************************************************************************/
+    static bool TryDeserializeIntoInt(rttr::variant& var, rapidjson::Value const& value);
   };
 
 } // namespace Serialization

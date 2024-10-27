@@ -25,6 +25,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/MeshFactory.h>
 #include <Graphics/Mesh.h>
 #include "Asset/IGEAssets.h"
+#include <Core/Systems/LayerSystem/LayerSystem.h>
+
 namespace GUI {
 
 
@@ -181,9 +183,6 @@ namespace GUI {
             prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Script>());
           }
         }
-
-
-       
       }
 
       if (currentEntity.HasComponent<Component::Text>()) {
@@ -252,9 +251,6 @@ namespace GUI {
     if (isOpen) {
       auto& layer = entity.GetComponent<Component::Layer>();
 
-      // @TODO: TEMP, TO BE REPLACED WITH ACTUAL LAYERS
-      std::vector<const char*> availableLayers{ "Default", "Test1", "Test2" };
-
       float contentSize = ImGui::GetContentRegionAvail().x;
       float charSize = ImGui::CalcTextSize("012345678901234").x;
       float inputWidth = (contentSize - charSize - 60);
@@ -272,9 +268,14 @@ namespace GUI {
       ImGui::SetNextItemWidth(INPUT_SIZE);
 
       if (ImGui::BeginCombo("##LayerName", layer.name.c_str())) {
-        for (const char* layerName : availableLayers) {
-          if (ImGui::Selectable(layerName)) {
-            layer.name = layerName;
+        std::shared_ptr<Systems::LayerSystem> layerSystemPtr = 
+          Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock();
+
+        for (std::string const& layerName : layerSystemPtr->GetLayerNames()) {
+          if (layerName == "") continue;
+          if (ImGui::Selectable(layerName.c_str())) {
+            layerSystemPtr->UpdateEntityLayer(entity, layer.name, layerName);
+            layer.name = layerName;     
             modified = true;
           }
         }

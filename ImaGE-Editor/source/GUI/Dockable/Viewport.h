@@ -11,8 +11,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
 #include <GUI/GUIWindow.h>
-#include <Graphics/RenderTarget.h>
+#include <Graphics/RenderTarget.h>  // for framebuffer and camera
 #include <memory>
+#include <Events/EventCallback.h>
 
 namespace GUI
 {
@@ -20,7 +21,7 @@ namespace GUI
   class Viewport : public GUIWindow
   {
   public:
-    Viewport(const char* name);
+    Viewport(const char* name, Graphics::EditorCamera& camera);
     
     void Run() override {}  // not in use
 
@@ -30,9 +31,13 @@ namespace GUI
     \param renderTarget
       The render target holding the framebuffer and camera
     ************************************************************************/
-    void Render(Graphics::RenderTarget& renderTarget);
+    void Render(std::shared_ptr<Graphics::Framebuffer> const& framebuffer);
 
   private:
+    static inline constexpr float sEntityScaleFactor = 1.f; // for camera zooming
+
+    Graphics::EditorCamera& mEditorCam;
+    bool mIsPanning, mIsDragging;
 
     /*!*********************************************************************
     \brief
@@ -40,7 +45,13 @@ namespace GUI
     \param cam
       The camera to update
     ************************************************************************/
-    void ProcessCameraInputs(Graphics::EditorCamera& cam);
+    void ProcessCameraInputs();
+
+    /*!*********************************************************************
+    \brief
+      Updates ImGuizmos controls based on the selected entity
+    ************************************************************************/
+    void UpdateGuizmos() const;
 
     /*!*********************************************************************
     \brief
@@ -49,7 +60,7 @@ namespace GUI
     ************************************************************************/
     void ReceivePayload();
 
-    bool mIsPanning, mIsDragging;
+    EVENT_CALLBACK_DECL(HandleEvent);
   };
   
 } // namespace GUI

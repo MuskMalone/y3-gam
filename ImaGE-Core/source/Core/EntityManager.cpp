@@ -11,6 +11,7 @@ namespace ECS {
     // Default all created entities to have the following components:
     entity.EmplaceComponent<Component::Tag>();
     entity.EmplaceComponent<Component::Transform>();
+    entity.EmplaceComponent<Component::Layer>();
 
     return entity;
   }
@@ -21,14 +22,18 @@ namespace ECS {
     // Default all created entities to have the following components:
     entity.EmplaceComponent<Component::Tag>();
     entity.EmplaceComponent<Component::Transform>();
+    entity.EmplaceComponent<Component::Layer>();
 
     return entity;
   }
 
   Entity EntityManager::CreateEntityWithTag(std::string const& tag) {
     Entity entity(mRegistry.create());
+
+    // Default all created entities to have the following components:
     entity.EmplaceComponent<Component::Tag>(tag);
     entity.EmplaceComponent<Component::Transform>();
+    entity.EmplaceComponent<Component::Layer>();
 
     return entity;
   }

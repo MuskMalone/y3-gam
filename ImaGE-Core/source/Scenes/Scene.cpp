@@ -134,7 +134,7 @@ void Scene::Draw() const
   //}
 
   //Graphics::Renderer::RenderSceneEnd();
-  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+  
  
   glBindVertexArray(0);
 }

@@ -184,8 +184,14 @@ project "ImaGE-Core"
         "mono-2.0-sgen.lib",
        }
 
+       postbuildcommands {
+         "{MKDIR} %[%{wks.location}/Binaries/" .. OutputDir .. "/Assets]",
+         "{COPYDIR} %[%{wks.location}/Assets] %[%{wks.location}/Binaries/" .. OutputDir .. "/Assets]"
+      }
+
     filter "configurations:Distribution"
        defines {
+          "NDEBUG",
           "DISTRIBUTION",
           "_CRT_SECURE_NO_WARNINGS",
           "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
@@ -232,3 +238,8 @@ project "ImaGE-Core"
         "fmod_vc.lib",
         "mono-2.0-sgen.lib",
        }
+
+       postbuildcommands {
+         "{MKDIR} %[%{wks.location}/Binaries/" .. OutputDir .. "/Assets]",
+         "{COPYDIR} %[%{wks.location}/Assets] %[%{wks.location}/Binaries/" .. OutputDir .. "/Assets]"
+      }   

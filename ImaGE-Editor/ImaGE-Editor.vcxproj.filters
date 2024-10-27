@@ -28,6 +28,9 @@
     <ClInclude Include="source\GUI\Dockable\Inspector.h">
       <Filter>GUI\Dockable</Filter>
     </ClInclude>
+    <ClInclude Include="source\GUI\Dockable\Layers.h">
+      <Filter>GUI\Dockable</Filter>
+    </ClInclude>
     <ClInclude Include="source\GUI\Dockable\PerformanceWindow.h">
       <Filter>GUI\Dockable</Filter>
     </ClInclude>
@@ -80,6 +83,9 @@
       <Filter>GUI\Dockable</Filter>
     </ClCompile>
     <ClCompile Include="source\GUI\Dockable\Inspector.cpp">
+      <Filter>GUI\Dockable</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\Dockable\Layers.cpp">
       <Filter>GUI\Dockable</Filter>
     </ClCompile>
     <ClCompile Include="source\GUI\Dockable\PerformanceWindow.cpp">
