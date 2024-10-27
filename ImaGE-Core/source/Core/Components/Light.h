@@ -21,25 +21,38 @@ namespace Component {
 			LIGHT_COUNT
 		};
 
+	// @TODO: for use when shadows are improved on
+	struct ShadowConfig {
+		float bias;
+		// softness / shadow type
+	};
+
 	struct Light {
-		
 		Light() = default;
 
+		inline void Clear() noexcept { 
+			type = DIRECTIONAL;
+			position = direction = color = {};
+			// idk what the default values are
 
+			castShadows = false;
+			bias = 0.05f;
+		}
 
-		inline void Clear() noexcept { }
+		glm::vec3 position;        // Position of the light (used for Point and Spotlight)
+		glm::vec3 direction;       // Direction of the light (used for Directional and Spotlight)
+		glm::vec3 color;           // Color of the light
+		//ShadowConfig shadowConfig;
+		Light_Type type;
+		float linear;
+		float quadratic;
+		float radius;
 
-		Light_Type mType;
-		glm::vec3 mPosition;        // Position of the light (used for Point and Spotlight)
-		glm::vec3 mDirection;       // Direction of the light (used for Directional and Spotlight)
-		glm::vec3 mColor;           // Color of the light
-		float mLinear;
-		float mQuadratic;
-		float mRadius;
-		float mCutOff;       //Spotlight
-		float mOuterCutOff;  //Spotlight
-	
-
+		float cutOff;				// Spotlight
+		float outerCutOff;  // Spotlight
+		
+		float bias = 0.05f;				// Shadows
+		bool castShadows = false;	// Shadows
 	};
 
 } // namespace Component

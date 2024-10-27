@@ -59,15 +59,17 @@ static void rttr_auto_register_reflection_function2_(); namespace {
       );
 
   REGISTER_COMPONENT(Light, "Light")
-    .property("lighttype", &Light::mType)
-    .property("position", &Light::mPosition)
-    .property("direction", &Light::mDirection)
-    .property("color", &Light::mColor)
-    .property("linear", &Light::mLinear)
-    .property("quadratic", &Light::mQuadratic)
-    .property("radius",&Light::mRadius)
-    .property("cutoff", &Light::mCutOff)
-    .property("outercutoff", &Light::mOuterCutOff);
+    .property("lighttype", &Light::type)
+    .property("position", &Light::position)
+    .property("direction", &Light::direction)
+    .property("color", &Light::color)
+    .property("linear", &Light::linear)
+    .property("quadratic", &Light::quadratic)
+    .property("radius",&Light::radius)
+    .property("cutoff", &Light::cutOff)
+    .property("outercutoff", &Light::outerCutOff)
+    .property("castShadows", &Light::castShadows)
+    .property("bias", &Light::bias);
 
 
   REGISTER_COMPONENT(Layer, "Layer")

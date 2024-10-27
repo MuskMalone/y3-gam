@@ -72,13 +72,13 @@ namespace GUI
     \brief
       Runs the right-click menu when it is triggered
     ************************************************************************/
-    void RunRightClickMenu() const;
+    bool RunRightClickMenu() const;
 
     /*!*********************************************************************
     \brief
       Displays the contents of the right-click menu
     ************************************************************************/
-    void RunEntityOptions();
+    bool RunEntityOptions();
 
     /*!*********************************************************************
     \brief

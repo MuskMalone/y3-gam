@@ -1,5 +1,5 @@
 template<typename Component>
-bool Inspector::WindowBegin(std::string const& windowName, std::string const& icon, bool highlight) {
+bool Inspector::WindowBegin(std::string const& windowName, bool highlight) {
   ImGui::Separator();
 
   if (mEntityChanged) {
@@ -7,10 +7,10 @@ bool Inspector::WindowBegin(std::string const& windowName, std::string const& ic
     ImGui::SetNextItemOpen(openMapStatus, ImGuiCond_Always);
   }
 
-  std::string display{ icon + "   " + windowName };
+  std::string const display{ mComponentIcons.at(typeid(Component)) + windowName };
 
   if (highlight) { ImGui::PushStyleColor(ImGuiCol_Text, sComponentHighlightCol); }
-  bool const isOpen{ ImGui::TreeNode(display.c_str()) };
+  bool const isOpen{ ImGui::TreeNodeEx(display.c_str()) };
   if (highlight) { ImGui::PopStyleColor(); }
 
   if (isOpen) {
@@ -27,7 +27,7 @@ bool Inspector::WindowBegin(std::string const& windowName, std::string const& ic
 }
 
 template<typename ComponentType>
-bool Inspector::DrawAddComponentButton(std::string const& name, std::string const& icon) {
+bool Inspector::DrawAddComponentButton(std::string const& name) {
   if (GUIManager::GetSelectedEntity().HasComponent<ComponentType>()) {
     return false;
   }
@@ -59,7 +59,7 @@ bool Inspector::DrawAddComponentButton(std::string const& name, std::string cons
   ImGui::SetItemAllowOverlap();
   ImGui::PopClipRect();
 
-  std::string display{ icon + "   " + name};
+  std::string const display{ mComponentIcons.at(typeid(ComponentType)) + name};
     
   ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
   ImGui::TextUnformatted(display.c_str());
@@ -78,12 +78,14 @@ bool Inspector::DrawAddComponentButton(std::string const& name, std::string cons
         ComponentType& newComp{ ent.EmplaceComponent<ComponentType>() };
     }
     SetIsComponentEdited(true);
+    mEntityChanged = true;  // allow added component to be open on first instance
 
     // if entity is a prefab instance, update its modified components
     if (ent.HasComponent<Component::PrefabOverrides>()) {
         ComponentType& newComp{ ent.GetComponent<ComponentType>() };
       ent.GetComponent<Component::PrefabOverrides>().AddComponentModification(newComp);
     }
+
     ImGui::CloseCurrentPopup();
 
     return true;
