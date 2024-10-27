@@ -56,6 +56,7 @@ namespace IGE {
 			static std::mutex _mMutex;
 			PhysicsSystem(PhysicsSystem& other) = delete;
 			void operator=(const PhysicsSystem&) = delete;
+			static std::unordered_set<physx::PxRigidDynamic*> mInactiveActors;
 
 		private:
 			template <typename _physx_type, typename _collider_component>

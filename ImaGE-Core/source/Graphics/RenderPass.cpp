@@ -44,8 +44,12 @@ namespace Graphics {
         
         //Renderer::BeginBatch();
         for (auto const& entity : entities) {
-            if (!entity.HasComponent<Component::Transform>() || !entity.HasComponent<Component::Mesh>())
+          /*
+            if (!entity.HasComponent<Component::Transform, Component::Mesh>() || !entity.IsActive())
                 continue;
+          */
+          if (!entity.HasComponent<Component::Transform, Component::Mesh>())
+            continue;
 
             auto const& xform = entity.GetComponent<Component::Transform>();
             auto const& mesh = entity.GetComponent<Component::Mesh>();

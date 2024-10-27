@@ -105,6 +105,10 @@ namespace Systems {
 
       physx::PxFilterData filterData;
       filterData.word0 = static_cast<physx::PxU32>(index);
+      /*
+      bool isActive = entity.IsActive();
+      filterData.word1 = isActive;
+      */
       (*shape)->setSimulationFilterData(filterData);
     }
     else {

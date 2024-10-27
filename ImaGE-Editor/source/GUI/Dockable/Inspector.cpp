@@ -498,13 +498,12 @@ namespace GUI {
     bool modified{ false };
 
     if (isOpen) {
-      Component::Tag& tagRef = entity.GetComponent<Component::Tag>();
-      std::string tag{ tagRef.tag };
+      std::string tag{ entity.GetTag() };
       ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
 
-      bool isEntityActive = tagRef.isActive;
+      bool isEntityActive = entity.IsActive();
       if (ImGui::Checkbox("##IsActiveCheckbox", &isEntityActive)) {
-        tagRef.isActive = isEntityActive;
+        entity.SetIsActive(isEntityActive);
       }
       ImGui::SameLine();
 

@@ -16,6 +16,8 @@ namespace ECS {
     EntityID GetRawEnttEntityID() const;
     std::string const& GetTag() const;
     void SetTag(std::string const& tag);
+    bool IsActive() const;
+    void SetIsActive(bool isActiveFlag);
 
     operator bool() const;
     bool operator==(const Entity& entity) const;

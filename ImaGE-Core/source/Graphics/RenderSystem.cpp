@@ -26,11 +26,10 @@ namespace Graphics {
 		glClear(GL_COLOR_BUFFER_BIT);
 		glClear(GL_DEPTH_BUFFER_BIT);
 
-		auto& entManager = ECS::EntityManager::GetInstance();
-		auto entityList = entManager.GetAllEntitiesWithComponents<Component::Transform, Component::Mesh>();
-
 		//Frustum Culling should be here
 		/*
+	  auto& entManager = ECS::EntityManager::GetInstance();
+		auto entityList = entManager.GetAllEntitiesWithComponents<Component::Transform, Component::Mesh>();
 		// Convert to a vector
 		std::vector<ECS::Entity> entityVector;
 		for (auto entity : entityList) {
@@ -71,12 +70,5 @@ namespace Graphics {
 		//Renderer::mGeomPass->End();
 
 	}
+
 }
-
-
-
-
-
-
-
-
