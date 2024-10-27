@@ -37,13 +37,13 @@ namespace GUI {
   
   }
 
-  void GUIManager::Init() {
+  void GUIManager::Init(Graphics::RenderTarget& renderTarget) {
     mPersistentElements.reserve(3);
     mPersistentElements.emplace_back(std::make_unique<Toolbar>("Toolbar", mWindows));
     mPersistentElements.emplace_back(std::make_unique<SceneControls>("Scene Controls"));
     mPersistentElements.emplace_back(std::make_unique<PrefabEditor>("Prefab Editor"));
 
-    auto vp{ std::make_shared<Viewport>("Viewport") };
+    auto vp{ std::make_shared<Viewport>("Viewport", renderTarget.camera) };
     mEditorViewport = vp; // hold a ptr to the viewport
 
     mWindows.reserve(5);
@@ -60,7 +60,7 @@ namespace GUI {
     mStyler.SetCurrentTheme(static_cast<CustomTheme>(gEditorDefaultTheme)); // Default theme should be read from settings file
   }
 
-  void GUIManager::UpdateGUI(Graphics::RenderTarget& renderTarget) {
+  void GUIManager::UpdateGUI(std::shared_ptr<Graphics::Framebuffer> const& framebuffer) {
     // Always run persistent windows
     for (auto const& elem : mPersistentElements) {
       elem->Run();
@@ -74,7 +74,7 @@ namespace GUI {
 
     // Update viewport if active
     if (mEditorViewport->IsActive()) {
-      mEditorViewport->Render(renderTarget);
+      mEditorViewport->Render(framebuffer);
     }
   }
 

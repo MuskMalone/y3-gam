@@ -204,7 +204,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Core\Systems\System.h" />
     <ClInclude Include="source\Core\Systems\SystemManager\SystemManager.h" />
     <ClInclude Include="source\Core\Systems\Systems.h" />
-    <ClInclude Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.h" />
     <ClInclude Include="source\Core\Systems\TransformSystem\TransformHelpers.h" />
     <ClInclude Include="source\Core\Systems\TransformSystem\TransformSystem.h" />
     <ClInclude Include="source\Debug.h" />
@@ -323,7 +322,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Reflection\Metadata.h" />
     <ClInclude Include="source\Reflection\ObjectFactory.h" />
     <ClInclude Include="source\Reflection\ProxyScript.h" />
-    <ClInclude Include="source\Scenes\Scene.h" />
     <ClInclude Include="source\Scenes\SceneManager.h" />
     <ClInclude Include="source\Scenes\SceneStates.h" />
     <ClInclude Include="source\Scripting\ScriptInstance.h" />
@@ -359,7 +357,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Core\EntityManager.cpp" />
     <ClCompile Include="source\Core\Systems\LayerSystem\LayerSystem.cpp" />
     <ClCompile Include="source\Core\Systems\SystemManager\SystemManager.cpp" />
-    <ClCompile Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.cpp" />
     <ClCompile Include="source\Core\Systems\TransformSystem\TransformHelpers.cpp" />
     <ClCompile Include="source\Core\Systems\TransformSystem\TransformSystem.cpp" />
     <ClCompile Include="source\DebugTools\DebugLogger\DebugLogger.cpp" />
@@ -442,7 +439,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Prefabs\PrefabManager.cpp" />
     <ClCompile Include="source\Reflection\AddComponentFunctions.cpp" />
     <ClCompile Include="source\Reflection\ObjectFactory.cpp" />
-    <ClCompile Include="source\Scenes\Scene.cpp" />
     <ClCompile Include="source\Scenes\SceneManager.cpp" />
     <ClCompile Include="source\Scripting\ScriptInstance.cpp" />
     <ClCompile Include="source\Scripting\ScriptManager.cpp" />

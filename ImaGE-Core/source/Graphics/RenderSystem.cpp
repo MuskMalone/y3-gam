@@ -6,6 +6,7 @@
 #include "Core/Entity.h"
 #include "Renderer.h"
 #include "Utils.h"
+#include "EditorCamera.h"
 
 namespace Graphics {
 
@@ -22,13 +23,14 @@ namespace Graphics {
 	}
 
 	void RenderSystem::RenderEditorScene(const EditorCamera& eCam) {
-		/**/
-		/*
+		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_DEPTH_BUFFER_BIT);
+
 		auto& entManager = ECS::EntityManager::GetInstance();
 		auto entityList = entManager.GetAllEntitiesWithComponents<Component::Transform, Component::Mesh>();
 
 		//Frustum Culling should be here
-		
+		/*
 		// Convert to a vector
 		std::vector<ECS::Entity> entityVector;
 		for (auto entity : entityList) {

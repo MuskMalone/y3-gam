@@ -59,7 +59,8 @@ namespace Systems {
 
     /*!*********************************************************************
     \brief
-      Updates all systems held by the class
+      Registers a system to the manager. This system will update during
+      the normal update call.
     ************************************************************************/
     template <typename T>
     void RegisterSystem(const char* name);
@@ -74,7 +75,7 @@ namespace Systems {
     using SystemPtr = std::shared_ptr<System>;
 
     std::unordered_map<const char*, SystemPtr> mNameToSystem;
-    std::vector<SystemPtr> mSystems;
+    std::vector<SystemPtr> mSystems, mRenderSystems;
 
     /*!*********************************************************************
     \brief
@@ -83,14 +84,6 @@ namespace Systems {
       The typeid names of the systems
     ************************************************************************/
     void UpdateSystems(std::initializer_list<const char*> const& names);
-
-    /*!*********************************************************************
-    \brief
-      Late-updates a system and times it with the frame rate controller
-    \param names
-      The typeid names of the systems
-    ************************************************************************/
-    void LateUpdateSystems(std::initializer_list<const char*> const& names);
   };
 #include "SystemManager.tpp"
 } // namespace Systems

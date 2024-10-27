@@ -60,7 +60,7 @@ namespace IGE {
     // im not sure if this is scalable;
     // may just make SystemManager globally accesible in future
     // if more stuff requires it
-    mGUIManager.Init();
+    mGUIManager.Init(GetDefaultRenderTarget());
   }
 
   void EditorApplication::Run() {
@@ -104,9 +104,9 @@ namespace IGE {
 
             UpdateFramebuffers();
             
-            // @TODO: is this line still needed? - u can alr directly update the framebuffer in the draw function
-            mRenderTargets.front().framebuffer = Graphics::Renderer::GetFinalFramebuffer();
-            mGUIManager.UpdateGUI(mRenderTargets.front());
+            auto& fb{ GetDefaultRenderTarget().framebuffer };
+            fb = Graphics::Renderer::GetFinalFramebuffer();
+            mGUIManager.UpdateGUI(fb);
 
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -154,7 +154,7 @@ namespace IGE {
     {
       target.framebuffer->Bind();
 
-      target.scene.Draw();
+      Graphics::RenderSystem::RenderEditorScene(target.camera);
 
       target.framebuffer->Unbind();
     }

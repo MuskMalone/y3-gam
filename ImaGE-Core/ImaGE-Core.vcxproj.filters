@@ -254,9 +254,6 @@
     <ClInclude Include="source\Core\Systems\Systems.h">
       <Filter>Core\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.h">
-      <Filter>Core\Systems\TransformSystem</Filter>
-    </ClInclude>
     <ClInclude Include="source\Core\Systems\TransformSystem\TransformHelpers.h">
       <Filter>Core\Systems\TransformSystem</Filter>
     </ClInclude>
@@ -607,9 +604,6 @@
     <ClInclude Include="source\Reflection\ProxyScript.h">
       <Filter>Reflection</Filter>
     </ClInclude>
-    <ClInclude Include="source\Scenes\Scene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="source\Scenes\SceneManager.h">
       <Filter>Scenes</Filter>
     </ClInclude>
@@ -700,9 +694,6 @@
     </ClCompile>
     <ClCompile Include="source\Core\Systems\SystemManager\SystemManager.cpp">
       <Filter>Core\Systems\SystemManager</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.cpp">
-      <Filter>Core\Systems\TransformSystem</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Systems\TransformSystem\TransformHelpers.cpp">
       <Filter>Core\Systems\TransformSystem</Filter>
@@ -847,9 +838,6 @@
     </ClCompile>
     <ClCompile Include="source\Reflection\ObjectFactory.cpp">
       <Filter>Reflection</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Scenes\Scene.cpp">
-      <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="source\Scenes\SceneManager.cpp">
       <Filter>Scenes</Filter>
