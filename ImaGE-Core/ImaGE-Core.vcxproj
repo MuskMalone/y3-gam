@@ -299,7 +299,9 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Graphics\Pipeline.h" />
     <ClInclude Include="source\Graphics\RenderAPI.h" />
     <ClInclude Include="source\Graphics\RenderCommand.h" />
-    <ClInclude Include="source\Graphics\RenderPass.h" />
+    <ClInclude Include="source\Graphics\RenderPass\GeomPass.h" />
+    <ClInclude Include="source\Graphics\RenderPass\RenderPass.h" />
+    <ClInclude Include="source\Graphics\RenderPass\ShadowPass.h" />
     <ClInclude Include="source\Graphics\RenderSystem.h" />
     <ClInclude Include="source\Graphics\RenderTarget.h" />
     <ClInclude Include="source\Graphics\Renderer.h" />
@@ -422,7 +424,9 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Graphics\MeshSource.cpp" />
     <ClCompile Include="source\Graphics\Pipeline.cpp" />
     <ClCompile Include="source\Graphics\RenderAPI.cpp" />
-    <ClCompile Include="source\Graphics\RenderPass.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\GeomPass.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\RenderPass.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\ShadowPass.cpp" />
     <ClCompile Include="source\Graphics\RenderSystem.cpp" />
     <ClCompile Include="source\Graphics\Renderer.cpp" />
     <ClCompile Include="source\Graphics\Shader.cpp" />

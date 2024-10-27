@@ -529,7 +529,7 @@
     <ClInclude Include="source\Graphics\RenderCommand.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="source\Graphics\RenderPass.h">
+    <ClInclude Include="source\Graphics\RenderPass\RenderPass.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderSystem.h">
@@ -645,6 +645,8 @@
     </ClInclude>
     <ClInclude Include="source\pch.h" />
     <ClInclude Include="source\Core\Components\Light.h" />
+    <ClInclude Include="source\Graphics\RenderPass\GeomPass.h" />
+    <ClInclude Include="source\Graphics\RenderPass\ShadowPass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -789,7 +791,7 @@
     <ClCompile Include="source\Graphics\RenderAPI.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\RenderPass.cpp">
+    <ClCompile Include="source\Graphics\RenderPass\RenderPass.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\RenderSystem.cpp">
@@ -853,5 +855,7 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\GeomPass.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\ShadowPass.cpp" />
   </ItemGroup>
 </Project>

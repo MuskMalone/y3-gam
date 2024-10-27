@@ -10,18 +10,21 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
+#include <vector>
+#include <glm/glm.hpp>
+#pragma region RenderPasses
+#include <Graphics/RenderPass/GeomPass.h>
+#include <Graphics/RenderPass/ShadowPass.h>
+#pragma endregion
 #include "Shader.h"
 #include "Texture.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
-#include "ElementBuffer.h"
-#include "Mesh.h"
-#include "RenderPass.h"
 #include "Color.h"
 
 namespace Graphics {
+	class Material; class Mesh;
 
-	class Material;
 	struct Statistics {
 		uint32_t drawCalls{};
 		uint32_t quadCount{};
@@ -176,9 +179,8 @@ namespace Graphics {
 	private:
 		static RendererData mData;
 		static std::shared_ptr<Framebuffer> mFinalFramebuffer;
+
 	public: // TEMP
-		static std::shared_ptr<RenderPass> mPickPass;
-		static std::shared_ptr<RenderPass> mShadowMapPass;
-		static std::shared_ptr<RenderPass> mGeomPass;
+		static std::vector<std::shared_ptr<RenderPass>> mRenderPasses;
 	};
 }

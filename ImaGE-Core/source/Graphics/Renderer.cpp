@@ -1,17 +1,17 @@
 #include <pch.h>
 #include "Renderer.h"
 #include "RenderAPI.h"
-#include "RenderPass.h"
 #include <glm/gtx/quaternion.hpp>
 #include "Asset/IGEAssets.h"
+#include "ElementBuffer.h"
+#include "Mesh.h"
+
 namespace Graphics {
 	constexpr int INVALID_ENTITY_ID = -1;
 
 	RendererData Renderer::mData;
 	std::shared_ptr<Framebuffer> Renderer::mFinalFramebuffer;
-	std::shared_ptr<RenderPass> Renderer::mPickPass; //TODO put in a map/ vector
-	std::shared_ptr<RenderPass> Renderer::mShadowMapPass;
-	std::shared_ptr<RenderPass> Renderer::mGeomPass;
+	std::vector<std::shared_ptr<RenderPass>> Renderer::mRenderPasses;
 
 	void Renderer::Init() {
 
@@ -114,11 +114,12 @@ namespace Graphics {
 		mData.instancedShader = Shader::Create("../Assets/Shaders/Instanced.vert.glsl", "../Assets/Shaders/Instanced.frag.glsl");
 
 		// Init RenderPasses
-		InitGeomPass();
-		InitPickPass();
+		//InitPickPass();
 		InitShadowMapPass();
+		InitGeomPass();
 
-		mFinalFramebuffer = mGeomPass->GetTargetFramebuffer();
+		mFinalFramebuffer = mRenderPasses.back()->GetTargetFramebuffer();
+		//mFinalFramebuffer = mGeomPass->GetTargetFramebuffer();
 		//mFinalFramebuffer = Framebuffer::Create(framebufferSpec);
 
 
@@ -164,11 +165,11 @@ namespace Graphics {
 		geomPassSpec.pipeline = Pipeline::Create(geomPipelineSpec);
 		geomPassSpec.debugName = "Geometry Pass";
 
-		mGeomPass = RenderPass::Create(geomPassSpec);
+		mRenderPasses.emplace_back(RenderPass::Create<GeomPass>(geomPassSpec));
 	}
 
 	void Renderer::InitPickPass() {
-		Graphics::FramebufferSpec pickBufferSpec;
+		/*Graphics::FramebufferSpec pickBufferSpec;
 		pickBufferSpec.width = WINDOW_WIDTH<int>;
 		pickBufferSpec.height = WINDOW_HEIGHT<int>;
 		pickBufferSpec.attachments = { Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
@@ -181,7 +182,7 @@ namespace Graphics {
 		pickPassSpec.pipeline = Pipeline::Create(pickPipelineSpec);
 		pickPassSpec.debugName = "Picking Pass";
 
-		mPickPass = RenderPass::Create(pickPassSpec);
+		mRenderPasses.emplace_back(RenderPass::Create(pickPassSpec));*/
 	}
 
 	void Renderer::InitShadowMapPass() {
@@ -200,7 +201,7 @@ namespace Graphics {
 		shadowPassSpec.pipeline = Pipeline::Create(shadowPSpec);
 		shadowPassSpec.debugName = "Shadow Map Pass";
 
-		mShadowMapPass = RenderPass::Create(shadowPassSpec);
+		mRenderPasses.emplace_back(RenderPass::Create<ShadowPass>(shadowPassSpec));
 	}
 
 	void Renderer::Shutdown() {

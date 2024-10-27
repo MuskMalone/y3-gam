@@ -36,7 +36,10 @@ namespace Graphics {
 			entityVector.push_back(entity);
 		}
 
-		Renderer::mGeomPass->Render(eCam, entityVector);
+		for (auto const& pass : Renderer::mRenderPasses) {
+			pass->Render(eCam, entityVector);
+		}
+
 		//Renderer::mGeomPass->Begin();
 		//{//Render Start
 		//	Utils::RenderContext renderContext(eCam.GetViewProjMatrix());
