@@ -12,10 +12,10 @@ namespace Graphics {
     ShadowPass(const RenderPassSpec& spec);
 
     bool IsActive() const noexcept { return mActive; }
-    void Render(EditorCamera const& camera) override;
+    void Render(EditorCamera const& camera, std::vector<ECS::Entity> const& entities) override;
 
   private:
-    bool SetLightUniforms(EditorCamera const& cam);
+    bool SetLightUniforms(EditorCamera const& cam, std::vector<ECS::Entity> const& entities);
     void StartRender();
     void EndRender();
 

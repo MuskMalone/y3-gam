@@ -336,6 +336,16 @@ namespace GUI
         modified = true;
       }
 
+      if (mEntityManager.HasChild(mRightClickedEntity)) {
+        if (ImGui::Selectable("Set Children to follow Layer")) {
+          mEntityManager.SetChildLayersToFollowParent(mRightClickedEntity);
+        }
+
+        if (ImGui::Selectable("Set Children to follow Active Status")) {
+          mEntityManager.SetChildActiveToFollowParent(mRightClickedEntity);
+        }
+      }
+
       // @TODO: need a way to deep copy components
       //ImGui::BeginDisabled();
       //if (ImGui::Selectable("Duplicate")) {

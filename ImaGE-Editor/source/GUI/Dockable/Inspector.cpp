@@ -311,7 +311,8 @@ namespace GUI {
           if (layerName == "") continue;
           if (ImGui::Selectable(layerName.c_str())) {
             layerSystemPtr->UpdateEntityLayer(entity, layer.name, layerName);
-            layer.name = layerName;     
+            entity.SetLayer(layerName);
+            //layer.name = layerName;     
             modified = true;
           }
         }
@@ -532,8 +533,15 @@ namespace GUI {
     if (isOpen) {
       std::string tag{ entity.GetTag() };
       ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
+
+      bool isEntityActive = entity.IsActive();
+      if (ImGui::Checkbox("##IsActiveCheckbox", &isEntityActive)) {
+        entity.SetIsActive(isEntityActive);
+      }
+      ImGui::SameLine();
+
       ImGui::SetNextItemWidth(INPUT_SIZE);
-      if (ImGui::InputText("##Tag", &tag, ImGuiInputTextFlags_EnterReturnsTrue)) {
+      if (ImGui::InputText("##TagComponentTag", &tag, ImGuiInputTextFlags_EnterReturnsTrue)) {
         entity.SetTag(tag);
         modified = true;
       }
@@ -819,7 +827,7 @@ namespace GUI {
       ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       ImGui::TableHeadersRow();
-
+      
       if (ImGuiHelpers::TableInputFloat3("Scale", &collider.scale.x, inputWidth, false, 0.f, 100.f, 1.f)) {
         SetIsComponentEdited(true);
       }

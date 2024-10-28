@@ -12,6 +12,7 @@ namespace ECS {
     entity.EmplaceComponent<Component::Tag>();
     entity.EmplaceComponent<Component::Transform>();
     entity.EmplaceComponent<Component::Layer>();
+    entity.SetLayer("Default");
 
     return entity;
   }
@@ -23,6 +24,7 @@ namespace ECS {
     entity.EmplaceComponent<Component::Tag>();
     entity.EmplaceComponent<Component::Transform>();
     entity.EmplaceComponent<Component::Layer>();
+    entity.SetLayer("Default");
 
     return entity;
   }
@@ -34,6 +36,7 @@ namespace ECS {
     entity.EmplaceComponent<Component::Tag>(tag);
     entity.EmplaceComponent<Component::Transform>();
     entity.EmplaceComponent<Component::Layer>();
+    entity.SetLayer("Default");
 
     return entity;
   }
@@ -157,6 +160,58 @@ namespace ECS {
 
     mChildren[parent.GetRawEnttEntityID()].insert(child.GetRawEnttEntityID());
     mParent[child.GetRawEnttEntityID()] = parent.GetRawEnttEntityID();
+  }
+
+  void EntityManager::SetChildLayersToFollowParent(Entity const& parent) {
+    if (!mRegistry.valid(parent.GetRawEnttEntityID())) {
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent is not valid!");
+      return;
+    }
+
+    if (!parent.HasComponent<Component::Layer>()) {
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent does not have a Layer!");
+      return;
+    }
+
+    if (mChildren.find(parent.GetRawEnttEntityID()) != mChildren.end()) {
+      for (EntityID id : mChildren[parent.GetRawEnttEntityID()]) {
+        if (Entity{ id }.HasComponent<Component::Layer>()) {
+          Entity{ id }.GetComponent<Component::Layer>().name =
+            parent.GetComponent<Component::Layer>().name;
+        }
+
+        // Recursively set the children of children
+        if (mChildren.find(id) != mChildren.end()) {
+          SetChildLayersToFollowParent(id);
+        }
+      }
+    }
+  }
+
+  void EntityManager::SetChildActiveToFollowParent(Entity const& parent) {
+    if (!mRegistry.valid(parent.GetRawEnttEntityID())) {
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent is not valid!");
+      return;
+    }
+
+    if (!parent.HasComponent<Component::Tag>()) {
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent does not have a Tag!");
+      return;
+    }
+
+    if (mChildren.find(parent.GetRawEnttEntityID()) != mChildren.end()) {
+      for (EntityID id : mChildren[parent.GetRawEnttEntityID()]) {
+        if (Entity{ id }.HasComponent<Component::Tag>()) {
+          Entity{ id }.GetComponent<Component::Tag>().isActive =
+            parent.GetComponent<Component::Tag>().isActive;
+        }
+
+        // Recursively set the children of children
+        if (mChildren.find(id) != mChildren.end()) {
+          SetChildActiveToFollowParent(id);
+        }
+      }
+    }
   }
 
   bool EntityManager::RemoveParent(Entity const& child) {

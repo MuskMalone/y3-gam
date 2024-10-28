@@ -2,9 +2,10 @@
 #include <utility>
 #include <Core/Systems/System.h>
 #include <Core/Entity.h>
+#include <Core/Systems/SystemManager/SystemManager.h>
 
 #include "Events/EventManager.h"
-#include <Events/EventCallback.h>
+#include "Events/EventCallback.h"
 
 namespace Systems {
 
@@ -31,20 +32,31 @@ namespace Systems {
     void Update() override;
 
     std::array<int, MAX_LAYERS>const& GetLayerCollisionList(int layerNumber) const;
-    std::array<std::string, MAX_LAYERS>const& GetLayerNames() const { return mLayerData.layerNames; }
-    std::array<int, MAX_LAYERS>& GetLayerVisibility() { return mLayerData.layerVisibility; }
+    inline std::array<std::string, MAX_LAYERS>const& GetLayerNames() const { return mLayerData.layerNames; }
+    inline std::array<int, MAX_LAYERS>& GetLayerVisibility() { return mLayerData.layerVisibility; }
+    inline LayerData const& GetLayerData() const noexcept { return mLayerData; }
+    inline std::unordered_map<std::string, std::vector<ECS::Entity>> const& GetLayerEntities() const { return mLayerEntities; }
+    inline bool GetCollidable(int lhsLayerNumber, int rhsLayerNumber) const noexcept {
+      return mLayerData.collisionMatrix[lhsLayerNumber][rhsLayerNumber];
+    }
 
     void SetLayerCollisionList(int layerNumber, int layerIndex, bool collisionStatus);
     void SetLayerName(int layerNumber, std::string layerName);
-
-    inline LayerData const& GetLayerData() const noexcept { return mLayerData; }
     inline void LoadLayerData(LayerData&& layerData) { mLayerData = std::move(layerData); }
 
     bool IsLayerVisible(std::string layerName);
     void UpdateEntityLayer(ECS::Entity entity, std::string oldLayer, std::string newLayer);
 
+    physx::PxFilterFlags LayerFilterShader(
+      physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
+      physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
+      physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize) const;
+
+    void SetupShapeFilterData(physx::PxShape** shape, ECS::Entity entity);
+
   private:
     EVENT_CALLBACK_DECL(OnSceneLoad);
+    EVENT_CALLBACK_DECL(OnLayerModification);
 
   private:
     LayerData mLayerData;

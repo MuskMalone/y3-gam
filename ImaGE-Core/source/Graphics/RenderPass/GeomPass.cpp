@@ -15,14 +15,16 @@ namespace Graphics {
 
   }
 
-  void GeomPass::Render(EditorCamera const& cam) {
+  void GeomPass::Render(EditorCamera const& cam, std::vector<ECS::Entity> const& entities) {
     Begin();
     //auto shader = mSpec.pipeline->GetShader();
 
     // Use a map to group entities by material ID
     MatGroupsMap matGroups;
 
-    for (ECS::Entity entity : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Transform, Component::Mesh>()) {
+    for (ECS::Entity const& entity : entities) {
+      if (!entity.HasComponent<Component::Mesh>()) { continue; }
+
       auto const& xform = entity.GetComponent<Component::Transform>();
       auto const& mesh = entity.GetComponent<Component::Mesh>();
 

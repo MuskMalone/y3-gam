@@ -28,15 +28,17 @@ namespace Graphics {
 
   }
 
-  void ShadowPass::Render(EditorCamera const& cam) {
+  void ShadowPass::Render(EditorCamera const& cam, std::vector<ECS::Entity> const& entities) {
     StartRender();
-    mActive = SetLightUniforms(cam);
+    mActive = SetLightUniforms(cam, entities);
 
     if (!mActive) { EndRender(); return; }
 
     auto const& shader = mSpec.pipeline->GetShader();
     // render the scene normally
-    for (ECS::Entity entity : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Transform, Component::Mesh>()) {
+    for (ECS::Entity const& entity : entities) {
+      if (!entity.HasComponent<Component::Mesh>()) { continue; }
+
       Graphics::Renderer::SubmitInstance(
         entity.GetComponent<Component::Mesh>().meshSource,
         entity.GetComponent<Component::Transform>().worldMtx,
@@ -50,11 +52,13 @@ namespace Graphics {
     EndRender();
   }
 
-  bool ShadowPass::SetLightUniforms(EditorCamera const& cam) {
+  bool ShadowPass::SetLightUniforms(EditorCamera const& cam, std::vector<ECS::Entity> const& entities) {
     bool found{ false };
 
     // iterate through entities to find the shadow-casting light
-    for (ECS::Entity entity : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Light>()) {
+    for (ECS::Entity const& entity : entities) {
+      if (!entity.HasComponent<Component::Light>()) { continue; }
+
       Component::Light const& light{ entity.GetComponent<Component::Light>() };
       Component::Transform const& transform{ entity.GetComponent<Component::Transform>() };
 

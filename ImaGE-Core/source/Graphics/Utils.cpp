@@ -104,6 +104,8 @@ namespace Graphics {
 
             bool GlLogCall(const char* function, const char* file, int line)
             {
+              return true;
+              /*
                 bool success = true;
                 while (GLenum error = glGetError())
                 {
@@ -125,6 +127,7 @@ namespace Graphics {
                     Debug::DebugLogger::GetInstance().LogError(ss.str());
                 }
                 return success;
+                */
             }
 
             void GlClearErrors() {

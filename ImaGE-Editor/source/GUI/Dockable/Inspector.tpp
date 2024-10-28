@@ -146,6 +146,9 @@ bool Inspector::DrawOptionButton(std::string const& name) {
       SetIsComponentEdited(true);
 
       component.Clear();
+      if (rttr::type::get<ComponentType>().get_name() == "Layer") {
+        ent.SetLayer("Default");
+      }
 
       // if its a prefab instance, add to overrides
       if (ent.HasComponent<Component::PrefabOverrides>()) {
@@ -190,7 +193,7 @@ bool Inspector::DrawOptionsListButton(std::string const& windowName) {
     if (ImGui::BeginTable("##options_table", 1, ImGuiTableFlags_SizingStretchSame)) {
       ImGui::TableSetupColumn("OptionNames", ImGuiTableColumnFlags_WidthFixed, 200.f);
       DrawOptionButton<Component>("Clear");
-      if (windowName != "Tag")
+      if ((windowName != "Tag") && (windowName != "Layer"))
         openMainWindow = DrawOptionButton<Component>("Remove Component");
 
       ImGui::EndTable();

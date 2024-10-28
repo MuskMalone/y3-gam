@@ -39,7 +39,7 @@ namespace Graphics {
         //void Prepare();
         void Begin();
         void End();
-        virtual void Render(EditorCamera const& camera) = 0; //Change this to take something like scene data instead of entities
+        virtual void Render(EditorCamera const& camera, std::vector<ECS::Entity> const& entities) = 0; //Change this to take something like scene data instead of entities
 
         //std::shared_ptr<Texture> GetOutput(uint32_t index);
 

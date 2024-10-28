@@ -38,6 +38,7 @@ namespace Events
     SAVE_SCENE,
     SCENE_MODIFIED,
     SCENE_STATE_CHANGE,
+    LAYER_MODIFIED
   };
 
   class Event

@@ -41,7 +41,8 @@ static void rttr_auto_register_reflection_function2_(); namespace {
   using namespace Component;
 
   REGISTER_COMPONENT(Tag, "Tag")
-    .property("tag", &Tag::tag);
+    .property("tag", &Tag::tag)
+    .property("isActive", &Tag::isActive);
 
   REGISTER_COMPONENT(Transform, "Transform")
     .property("position", &Transform::position)

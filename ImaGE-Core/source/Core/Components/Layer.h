@@ -20,7 +20,9 @@ namespace Component {
     \brief
       Resets the object to default values
     ************************************************************************/
-    inline void Clear() noexcept { name = "Default"; }
+    inline void Clear() noexcept { 
+      name = "Default"; 
+    }
 
     std::string name;
   };

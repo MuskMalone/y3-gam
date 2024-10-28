@@ -103,4 +103,14 @@ namespace Events
     std::vector<std::string> mPaths;
   };
 #endif
+
+  class EntityLayerModified : public Event
+  {
+  public:
+    EntityLayerModified(ECS::Entity entity, std::string oldLayer) : Event(EventType::LAYER_MODIFIED), mEntity{ entity }, mOldLayer{ oldLayer } {}
+    inline std::string GetName() const noexcept override { return "Modified Layer Component of Entity: " + mEntity.GetTag(); }
+
+    ECS::Entity const mEntity;
+    std::string mOldLayer;
+  };
 }
