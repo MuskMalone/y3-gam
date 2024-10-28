@@ -32,24 +32,22 @@ namespace Component {
 
 		inline void Clear() noexcept { 
 			type = DIRECTIONAL;
-			position = direction = color = {};
+			color = {};
 			// idk what the default values are
 
 			castShadows = false;
 			bias = 0.05f;
 		}
 
-		glm::vec3 position;        // Position of the light (used for Point and Spotlight)
-		glm::vec3 direction;       // Direction of the light (used for Directional and Spotlight)
-		glm::vec3 color;           // Color of the light
-		//ShadowConfig shadowConfig;
 		Light_Type type;
-		float linear;
-		float quadratic;
-		float radius;
+		glm::vec3 forwardVec{ 0, 0, -1.f };       // Set default forward vector to face the -z-axis
+		glm::vec3 color;						 // Color of the light
+		float mLightIntensity{ 1.f }; // Intensity of the light
 
-		float cutOff;				// Spotlight
-		float outerCutOff;  // Spotlight
+		//SpotLight 
+		float mInnerSpotAngle{ 5.f };   // Inner spot angle in degrees
+		float mOuterSpotAngle{ 12.5f }; // Outer spot angle in degrees
+		float mRange{ 10.f }; // Maximum range of the spotlight
 		
 		float bias = 0.05f;				// Shadows
 		bool castShadows = false;	// Shadows

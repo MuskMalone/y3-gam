@@ -912,17 +912,59 @@ namespace GUI {
       ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
       ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
       ImGui::TableHeadersRow();
-
-      if (ImGuiHelpers::TableInputFloat3("Position", &light.position[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
-        modified = true;
-      }
-      if (ImGuiHelpers::TableInputFloat3("Direction", &light.direction[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
-        modified = true;
-      }
+ 
+      //if (ImGuiHelpers::TableInputFloat3("Position", &light.position[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
+      //  modified = true;
+      //}
+      //if (ImGuiHelpers::TableInputFloat3("Direction", &light.direction[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
+      //  modified = true;
+      //}
       if (ImGuiHelpers::TableInputFloat3("Color", &light.color[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
         modified = true;
       }
+      
     
+    ImGui::EndTable();
+    float const charSize = ImGui::CalcTextSize("012345678901234").x;
+    ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV);
+    ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, charSize);
+
+    ImGui::TableNextRow();
+    ImGui::TableNextColumn();
+    ImGui::Text("Intensity");
+    ImGui::TableNextColumn();
+    if (ImGui::InputFloat("##", &light.mLightIntensity, 0, 0, 0)) {
+      modified = true;
+    }
+    if (light.type == Component::SPOTLIGHT)
+    {
+
+      ImGui::TableNextRow();
+      ImGui::TableNextColumn();
+      ImGui::Text("Inner Angle");
+      ImGui::TableNextColumn();
+      if (ImGui::InputFloat("##", &light.mInnerSpotAngle, 0, 0, 0)) {
+        modified = true;
+      }
+
+
+      ImGui::TableNextRow();
+      ImGui::TableNextColumn();
+      ImGui::Text("Output Angle");
+      ImGui::TableNextColumn();
+      if (ImGui::InputFloat("##", &light.mOuterSpotAngle, 0, 0, 0)) {
+        modified = true;
+      }
+
+
+      ImGui::TableNextRow();
+      ImGui::TableNextColumn();
+      ImGui::Text("Range");
+      ImGui::TableNextColumn();
+      if (ImGui::InputFloat("##", &light.mRange, 0, 0, 0)) {
+        modified = true;
+      }
+    }
     ImGui::EndTable();
 
     ImGui::BeginTable("##LightShadows1", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);

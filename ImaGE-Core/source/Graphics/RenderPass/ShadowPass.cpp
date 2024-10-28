@@ -72,7 +72,7 @@ namespace Graphics {
       auto const& shader = mSpec.pipeline->GetShader();
       shader->Use();
 
-      auto const orthoPlanes{ GetLightProjPlanes(cam, transform.worldPos, light.direction) };
+      auto const orthoPlanes{ GetLightProjPlanes(cam, transform.worldPos, transform.worldRot * light.forwardVec) };
 
 #ifdef CAMERA_VIEW
       shader->SetUniform("near", cam.GetNearPlane());
