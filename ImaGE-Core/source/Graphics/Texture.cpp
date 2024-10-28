@@ -223,7 +223,7 @@ namespace Graphics {
 
 	bool Texture::IsBindless() const
 	{
-		return mIsBindless;
+		return false;// mIsBindless;
 	}
 
 	/*  _________________________________________________________________________ */
@@ -248,10 +248,10 @@ namespace Graphics {
 	This function binds the texture to the specified texture unit.
 	*/
 	void Texture::Bind(unsigned int texUnit) const {
-		if (mIsBindless) {
+		/*if (mIsBindless) {
 			Debug::DebugLogger::GetInstance().LogWarning("Bind() called on a bindless texture. This operation is not applicable.");
 			return;
-		}
+		}*/
 		glBindTextureUnit(texUnit, mTexHdl);
 	}
 

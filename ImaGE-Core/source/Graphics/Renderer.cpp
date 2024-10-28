@@ -5,12 +5,17 @@
 #include "Asset/IGEAssets.h"
 #include "ElementBuffer.h"
 #include "Mesh.h"
+#pragma region RenderPasses
+#include <Graphics/RenderPass/GeomPass.h>
+#include <Graphics/RenderPass/ShadowPass.h>
+#pragma endregion
 
 namespace Graphics {
 	constexpr int INVALID_ENTITY_ID = -1;
 
 	RendererData Renderer::mData;
 	std::shared_ptr<Framebuffer> Renderer::mFinalFramebuffer;
+	std::unordered_map<std::type_index, std::shared_ptr<RenderPass>> Renderer::mTypeToRenderPass;
 	std::vector<std::shared_ptr<RenderPass>> Renderer::mRenderPasses;
 
 	void Renderer::Init() {
@@ -165,7 +170,7 @@ namespace Graphics {
 		geomPassSpec.pipeline = Pipeline::Create(geomPipelineSpec);
 		geomPassSpec.debugName = "Geometry Pass";
 
-		mRenderPasses.emplace_back(RenderPass::Create<GeomPass>(geomPassSpec));
+		AddPass(RenderPass::Create<GeomPass>(geomPassSpec));
 	}
 
 	void Renderer::InitPickPass() {
@@ -182,16 +187,16 @@ namespace Graphics {
 		pickPassSpec.pipeline = Pipeline::Create(pickPipelineSpec);
 		pickPassSpec.debugName = "Picking Pass";
 
-		mRenderPasses.emplace_back(RenderPass::Create(pickPassSpec));*/
+		AddPass(RenderPass::Create<PickPass>(pickPassSpec));*/
 	}
 
 	void Renderer::InitShadowMapPass() {
 		Graphics::FramebufferSpec shadowSpec;
 		shadowSpec.width = WINDOW_WIDTH<int>;
 		shadowSpec.height = WINDOW_HEIGHT<int>;
-		// @TODO: Allow for multiple shadow maps (need to ask xavier how to extend his code)
+		// @TODO: Allow for multiple shadow maps; need extend code
 		//				to use glTexImage3D and GL_TEXTURE_2D_ARRAY
-		shadowSpec.attachments = { Graphics::FramebufferTextureFormat::DEPTH };	// temporarily max. 1 shadow-caster
+		shadowSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::SHADOW_MAP };	// temporarily max. 1 shadow-caster
 
 		PipelineSpec shadowPSpec;
 		shadowPSpec.shader = Shader::Create("../Assets/Shaders/ShadowMap.vert.glsl", "../Assets/Shaders/ShadowMap.frag.glsl");
@@ -201,7 +206,7 @@ namespace Graphics {
 		shadowPassSpec.pipeline = Pipeline::Create(shadowPSpec);
 		shadowPassSpec.debugName = "Shadow Map Pass";
 
-		mRenderPasses.emplace_back(RenderPass::Create<ShadowPass>(shadowPassSpec));
+		AddPass(RenderPass::Create<ShadowPass>(shadowPassSpec));
 	}
 
 	void Renderer::Shutdown() {

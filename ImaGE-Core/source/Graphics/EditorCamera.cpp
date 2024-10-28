@@ -22,6 +22,12 @@ namespace Graphics {
     float EditorCamera::GetFOV() const noexcept {
       return mFov;
     }
+    float EditorCamera::GetNearPlane() const noexcept {
+      return mNearClip;
+    }
+    float EditorCamera::GetFarPlane() const noexcept {
+      return mFarClip;
+    }
 
     void EditorCamera::UpdateCamera(float dt) {
 

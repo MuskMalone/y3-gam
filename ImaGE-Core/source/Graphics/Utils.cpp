@@ -33,7 +33,9 @@ namespace Graphics {
         namespace Framebuffer {
             bool IsDepthFormat(FramebufferTextureFormat fmt) {
                 switch (fmt) {
-                case FramebufferTextureFormat::DEPTH24STENCIL8: return true;
+                case FramebufferTextureFormat::DEPTH24STENCIL8:
+                case FramebufferTextureFormat::SHADOW_MAP:
+                  return true;
                 default:
                     return false;
                 }
@@ -71,6 +73,29 @@ namespace Graphics {
                 glFramebufferTexture2D(GL_FRAMEBUFFER, attachType, GL_TEXTURE_2D, id, 0);
             }
 
+            void AttachShadowMapTexture(uint32_t id, uint32_t width, uint32_t height) {
+              glGenTextures(1, &id);
+              glBindTexture(GL_TEXTURE_2D, id);
+              glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+              //glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH_COMPONENT, width, height);
+              
+              glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+              glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+              glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+              glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+
+              // prevent darkness outside the frustrum
+              float clampColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+              glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, clampColor);
+
+              glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, id, 0);
+              // since we don't touch the color buffer
+
+              if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+                Debug::DebugLogger::GetInstance().LogCritical("Shadow map buffer incomplete!");
+              }
+            }
+
         }//namespace Framebuffer
 
         namespace GL {
@@ -95,7 +120,7 @@ namespace Graphics {
                 //    ss << "[OpenGL Error] (" << error << "): " << function
                 //        << " in file " << file << " at line " << line << std::endl;
 
-                //    //Debug::DebugLogger::GetInstance().LogError(ss.str());
+                //    Debug::DebugLogger::GetInstance().LogError(ss.str());
                 //}
                 return success;
             }

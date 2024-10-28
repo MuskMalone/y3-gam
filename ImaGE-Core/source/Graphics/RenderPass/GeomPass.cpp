@@ -12,7 +12,7 @@ namespace Graphics {
 
   }
 
-  void GeomPass::Render(EditorCamera const& cam, std::vector<ECS::Entity> const& entities) {
+  void GeomPass::Render(EditorCamera const& cam) {
     Begin();
 
     auto shader = mSpec.pipeline->GetShader();
@@ -22,10 +22,7 @@ namespace Graphics {
     //@TODO in future add light + materials
 
     //Renderer::BeginBatch();
-    for (auto const& entity : entities) {
-      if (!entity.HasComponent<Component::Transform>() || !entity.HasComponent<Component::Mesh>())
-        continue;
-
+    for (ECS::Entity entity : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Transform, Component::Mesh>()) {
       auto const& xform = entity.GetComponent<Component::Transform>();
       auto const& mesh = entity.GetComponent<Component::Mesh>();
 

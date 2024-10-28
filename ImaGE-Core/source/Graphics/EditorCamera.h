@@ -36,6 +36,8 @@ namespace Graphics {
 			mAspectRatio(aspectRatio), mNearClip(nearClip), mFarClip(farClip) {}
 
 		float GetFOV() const noexcept;
+		float GetNearPlane() const noexcept;
+		float GetFarPlane() const noexcept;
 		glm::mat4 GetViewMatrix() const;
 		glm::mat4 GetProjMatrix() const;
 		glm::mat4 GetViewProjMatrix() const;

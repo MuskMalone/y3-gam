@@ -12,15 +12,13 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma once
 #include <vector>
 #include <glm/glm.hpp>
-#pragma region RenderPasses
-#include <Graphics/RenderPass/GeomPass.h>
-#include <Graphics/RenderPass/ShadowPass.h>
-#pragma endregion
 #include "Shader.h"
 #include "Texture.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "Color.h"
+#include <typeindex>
+#include <Graphics/RenderPass/RenderPass.h>
 
 namespace Graphics {
 	class Material; class Mesh;
@@ -172,6 +170,12 @@ namespace Graphics {
 		static void InitGeomPass();
 		static void InitShadowMapPass();
 
+		template <typename T>
+		static void AddPass(std::shared_ptr<T>&& pass) {
+			mTypeToRenderPass.emplace(typeid(T), pass);
+			mRenderPasses.emplace_back(std::move(pass));
+		}
+
 		// Stats
 		static Statistics GetStats();
 		static void ResetStats();
@@ -181,6 +185,10 @@ namespace Graphics {
 		static std::shared_ptr<Framebuffer> mFinalFramebuffer;
 
 	public: // TEMP
+		template <typename T>
+		static std::shared_ptr<T> GetPass() { return std::static_pointer_cast<T>(mTypeToRenderPass[typeid(T)]); }
+
+		static std::unordered_map<std::type_index, std::shared_ptr<RenderPass>> mTypeToRenderPass;
 		static std::vector<std::shared_ptr<RenderPass>> mRenderPasses;
 	};
 }

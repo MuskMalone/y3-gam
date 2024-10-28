@@ -29,15 +29,9 @@ namespace Graphics {
 		auto entityList = entManager.GetAllEntitiesWithComponents<Component::Transform, Component::Mesh>();
 
 		//Frustum Culling should be here
-		
-		// Convert to a vector
-		std::vector<ECS::Entity> entityVector;
-		for (auto entity : entityList) {
-			entityVector.push_back(entity);
-		}
 
 		for (auto const& pass : Renderer::mRenderPasses) {
-			pass->Render(eCam, entityVector);
+			pass->Render(eCam);
 		}
 
 		//Renderer::mGeomPass->Begin();

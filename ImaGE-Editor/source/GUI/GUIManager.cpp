@@ -19,7 +19,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Dockable/AssetBrowser.h"
 #include "Dockable/Console.h"
 #include "Dockable/Inspector.h"
-#include "Dockable/PerformanceWindow.h"
+#include "Dockable/Debugging/PerformanceWindow.h"
+#include "Dockable/Debugging/RenderPassViewer.h"
 #include "Persistent/PrefabEditor.h"
 #include "Persistent/SceneControls.h"
 #include "Dockable/SceneHierarchy.h"
@@ -46,7 +47,7 @@ namespace GUI {
     auto vp{ std::make_shared<Viewport>("Viewport", renderTarget.camera) };
     mEditorViewport = vp; // hold a ptr to the viewport
 
-    mWindows.reserve(5);
+    mWindows.reserve(8);
     mWindows.emplace_back(std::move(vp)); // viewport should always be first
 
     mWindows.emplace_back(std::make_shared<Inspector>("Inspector"));
@@ -55,6 +56,7 @@ namespace GUI {
     mWindows.emplace_back(std::make_shared<Console>("Console"));
     mWindows.emplace_back(std::make_shared<PerformanceWindow>("Performance Window"));
     mWindows.emplace_back(std::make_shared<Layers>("Layers"));
+    mWindows.emplace_back(std::make_shared<RenderPassViewer>("Render Pass Viewer"));
 
     mStyler.LoadFonts();
     mStyler.SetCurrentTheme(static_cast<CustomTheme>(gEditorDefaultTheme)); // Default theme should be read from settings file

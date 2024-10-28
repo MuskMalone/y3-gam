@@ -96,34 +96,34 @@ namespace GUI
 
     ReceivePayload();
 
-    // object picking
-    if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
-      ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
+    if (!UpdateGuizmos()) {
+      // object picking
+      if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
+        ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
 
-      // check if clicking outside viewport
-      if (!(offset.x < 0 || offset.x > vpSize.x || offset.y < 0 || offset.y > vpSize.y)) {
-        Graphics::FramebufferSpec const& fbSpec{ framebuffer->GetFramebufferSpec() };
+        // check if clicking outside viewport
+        if (!(offset.x < 0 || offset.x > vpSize.x || offset.y < 0 || offset.y > vpSize.y)) {
+          Graphics::FramebufferSpec const& fbSpec{ framebuffer->GetFramebufferSpec() };
 
-        framebuffer->Bind();
-        int const entityId{ framebuffer->ReadPixel(1,
-          static_cast<int>(offset.x / vpSize.x * static_cast<float>(fbSpec.width)),
-          static_cast<int>((vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height))) };
-        framebuffer->Unbind();
+          framebuffer->Bind();
+          int const entityId{ framebuffer->ReadPixel(1,
+            static_cast<int>(offset.x / vpSize.x * static_cast<float>(fbSpec.width)),
+            static_cast<int>((vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height))) };
+          framebuffer->Unbind();
 
-        if (entityId > 0) {
-          ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
-            root{ GetRootEntity(selected) };
-          sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
-          GUIManager::SetSelectedEntity(sPrevSelectedEntity);
-        }
-        else {
-          sPrevSelectedEntity = {};
-          GUIManager::SetSelectedEntity({});
+          if (entityId > 0) {
+            ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
+              root{ GetRootEntity(selected) };
+            sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
+            GUIManager::SetSelectedEntity(sPrevSelectedEntity);
+          }
+          else {
+            sPrevSelectedEntity = {};
+            GUIManager::SetSelectedEntity({});
+          }
         }
       }
     }
-
-    UpdateGuizmos();
 
     ImGui::End();
   }
@@ -233,10 +233,11 @@ namespace GUI
     sMovingToEntity = true;
   }
 
-  void Viewport::UpdateGuizmos() const {
+  bool Viewport::UpdateGuizmos() const {
     ECS::Entity selectedEntity{ GUIManager::GetSelectedEntity() };
-    if (!selectedEntity || !selectedEntity.HasComponent<Component::Transform>()) { return; }
+    if (!selectedEntity || !selectedEntity.HasComponent<Component::Transform>()) { return false; }
 
+    bool usingGuizmos{ false };
     ImGuizmo::SetDrawlist();
     ImVec2 windowPos{ ImGui::GetWindowPos() };
 
@@ -266,6 +267,7 @@ namespace GUI
       glm::value_ptr(modelMatrix)
     );
     if (ImGuizmo::IsUsing()) {
+      usingGuizmos = true;
       glm::vec3 s{}, r{}, t{};
       ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(modelMatrix),
         glm::value_ptr(t), glm::value_ptr(r), glm::value_ptr(s));
@@ -286,6 +288,8 @@ namespace GUI
       transform.modified = true;
       TransformHelpers::UpdateWorldTransform(selectedEntity);  // must call this to update world transform according to changes to local
     }
+
+    return usingGuizmos;
   }
 
   void Viewport::ReceivePayload()
