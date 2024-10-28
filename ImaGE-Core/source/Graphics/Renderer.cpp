@@ -110,9 +110,7 @@ namespace Graphics {
 		for (unsigned int i{}; i < mData.maxTexUnits; ++i)
 			samplers[i] = i;
 
-		ShaderLibrary::Add("Tri", Shader::Create("Tri.vert.glsl", "Tri.frag.glsl"));
-		ShaderLibrary::Add("Tex", Shader::Create("Default.vert.glsl", "Default.frag.glsl"));
-
+		InitShaders();
 		std::shared_ptr<Shader> const& texShader = ShaderLibrary::Get("Tex");
 
 		texShader->Use();
@@ -122,10 +120,8 @@ namespace Graphics {
 		mData.quadVtxPos[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
 		mData.quadVtxPos[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
 		mData.quadVtxPos[3] = { -0.5f, 0.5f, 0.0f, 1.0f };
-		;
-		ShaderLibrary::Add("PBR", Shader::Create("PBR.vert.glsl", "PBR.frag.glsl"));
-		ShaderLibrary::Add("Unlit", Shader::Create("Unlit.vert.glsl", "Unlit.frag.glsl"));
-		ShaderLibrary::Add("ShadowMap", Shader::Create("ShadowMap.vert.glsl", "ShadowMap.frag.glsl"));
+
+		
 
 		//Init framebuffer
 		Graphics::FramebufferSpec framebufferSpec;
@@ -189,6 +185,14 @@ namespace Graphics {
 		//	MaterialTable::AddMaterial(material);
 		//}
 
+	}
+
+	void Renderer::InitShaders() {
+		ShaderLibrary::Add("Tri", Shader::Create("Tri.vert.glsl", "Tri.frag.glsl"));
+		ShaderLibrary::Add("Tex", Shader::Create("Default.vert.glsl", "Default.frag.glsl"));
+		ShaderLibrary::Add("PBR", Shader::Create("PBR.vert.glsl", "PBR.frag.glsl"));
+		ShaderLibrary::Add("Unlit", Shader::Create("Unlit.vert.glsl", "Unlit.frag.glsl"));
+		ShaderLibrary::Add("ShadowMap", Shader::Create("ShadowMap.vert.glsl", "ShadowMap.frag.glsl"));
 	}
 
 	void Renderer::InitGeomPass() {

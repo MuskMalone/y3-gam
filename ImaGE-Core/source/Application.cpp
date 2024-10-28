@@ -91,7 +91,8 @@ namespace IGE {
   // registration order is the update order
   void Application::RegisterSystems() {
     Systems::SystemManager& systemManager{ Systems::SystemManager::GetInstance() };
-    systemManager.RegisterSystem<Systems::TransformSystem>("Pre-Transform System"); // must be called first   
+
+    systemManager.RegisterSystem<Systems::TransformSystem>("Transform System");
     systemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
     systemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
     systemManager.RegisterSystem<Systems::LayerSystem>("Layer System");

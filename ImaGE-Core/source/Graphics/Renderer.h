@@ -156,6 +156,7 @@ namespace Graphics {
 		static Statistics GetStats();
 		static void ResetStats();
 
+		static void InitShaders();
 		static void InitPickPass();
 		static void InitGeomPass();
 		static void InitShadowMapPass();
@@ -171,6 +172,7 @@ namespace Graphics {
 		static MaterialTable mMaterialTable;
 		static ShaderLibrary mShaderLibrary;
 		static std::shared_ptr<Framebuffer> mFinalFramebuffer;
+
 	public: // TEMP
 		template <typename T>
 		static std::shared_ptr<T> GetPass() { return std::static_pointer_cast<T>(mTypeToRenderPass[typeid(T)]); }
