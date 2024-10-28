@@ -26,40 +26,40 @@ static void rttr_auto_register_reflection_function_(); namespace {
 {
   /* ------------------- GLM ------------------- */
   rttr::registration::class_<glm::vec2>("Vec2")
-    .constructor<>()
+    .constructor<>()(rttr::policy::ctor::as_object)
     .property("x", &glm::vec2::x)
     .property("y", &glm::vec2::y);
   rttr::registration::class_<glm::dvec2>("dVec2")
-    .constructor<>()
+    .constructor<>()(rttr::policy::ctor::as_object)
     .property("x", &glm::dvec2::x)
     .property("y", &glm::dvec2::y);
 
   rttr::registration::class_<glm::vec3>("Vec3")
-    .constructor<>()
+    .constructor<>()(rttr::policy::ctor::as_object)
     .property("x", &glm::vec3::x)
     .property("y", &glm::vec3::y)
     .property("z", &glm::vec3::z);
   rttr::registration::class_<glm::dvec3>("dVec3")
-    .constructor<>()
+    .constructor<>()(rttr::policy::ctor::as_object)
     .property("x", &glm::dvec3::x)
     .property("y", &glm::dvec3::y)
     .property("z", &glm::dvec3::z);
 
   rttr::registration::class_<glm::vec4>("Vec4")
-    .constructor<>()
+    .constructor<>()(rttr::policy::ctor::as_object)
     .property("x", &glm::vec4::x)
     .property("y", &glm::vec4::y)
     .property("z", &glm::vec4::z)
     .property("w", &glm::vec4::w);
   rttr::registration::class_<glm::dvec4>("dVec4")
-    .constructor<>()
+    .constructor<>()(rttr::policy::ctor::as_object)
     .property("x", &glm::dvec4::x)
     .property("y", &glm::dvec4::y)
     .property("z", &glm::dvec4::z)
     .property("w", &glm::dvec4::w);
 
   rttr::registration::class_<glm::quat>("GLMQuat")
-    .constructor<>()
+    .constructor<>()(rttr::policy::ctor::as_object)
     .property("x", &glm::quat::x)
     .property("y", &glm::quat::y)
     .property("z", &glm::quat::z)
@@ -69,12 +69,12 @@ static void rttr_auto_register_reflection_function_(); namespace {
   rttr::registration::class_<rttr::type>("RttrType");
 
   rttr::registration::class_<physx::PxVec3>("PxVec3")
-    .constructor<>()
+    .constructor<>()(rttr::policy::ctor::as_object)
     .property("x", &physx::PxVec3::x)
     .property("y", &physx::PxVec3::y)
     .property("z", &physx::PxVec3::z);
   rttr::registration::class_<physx::PxQuat>("PxQuat")
-      .constructor<>()
+      .constructor<>()(rttr::policy::ctor::as_object)
       .property("x", &physx::PxQuat::x)
       .property("y", &physx::PxQuat::y)
       .property("z", &physx::PxQuat::z)
@@ -84,19 +84,27 @@ static void rttr_auto_register_reflection_function_(); namespace {
           .property("first", &std::pair<std::string, unsigned>::first)
           .property("second", &std::pair<std::string, unsigned>::second);
   }
-  /* ------------------- Assets ------------------- */
-  rttr::registration::class_<IGE::Assets::AssetMetadata>("AssetMetadata")
-      .constructor<>()
-      .property("Metadata", &IGE::Assets::AssetMetadata::mAssetProperties);
+
+  {
+    using T = IGE::Assets::AssetMetadata;
+    rttr::registration::class_<T::AssetProps>("AssetProps")
+      .constructor<>()(rttr::policy::ctor::as_object);
+    rttr::registration::class_<T::AssetCategory>("AssetCategory")
+      .constructor<>()(rttr::policy::ctor::as_object);
+    rttr::registration::class_<T::IGEProjProperties>("IGEProjProperties")
+      .constructor<>()(rttr::policy::ctor::as_object);
+
+    /* ------------------- Assets ------------------- */
+    rttr::registration::class_<T>("AssetMetadata")
+      .constructor<>()(rttr::policy::ctor::as_object)
+      .property("Metadata", &T::mAssetProperties);
+  }
+
   //each kind of asset type reflects the corresponding folder in ../Assets
-  rttr::registration::class_<IGE::Assets::ModelAsset>("Models")
-      .constructor<std::string const&>();
-  rttr::registration::class_<IGE::Assets::TextureAsset>("Textures")
-      .constructor<std::string const&>();
-  rttr::registration::class_<IGE::Assets::PrefabAsset>("Prefabs")
-      .constructor<std::string const&>();
-  rttr::registration::class_<IGE::Assets::AudioAsset>("Audio")
-      .constructor<std::string const&>();
+  rttr::registration::class_<IGE::Assets::ModelAsset>("Models");
+  rttr::registration::class_<IGE::Assets::TextureAsset>("Textures");
+  rttr::registration::class_<IGE::Assets::PrefabAsset>("Prefabs");
+  rttr::registration::class_<IGE::Assets::AudioAsset>("Audio");
 
   /* ------------------- Script ------------------- */
   {
