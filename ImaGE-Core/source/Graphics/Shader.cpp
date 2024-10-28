@@ -6,6 +6,8 @@
 
 namespace Graphics {
 
+	std::unordered_map<std::string, std::shared_ptr<Shader>> ShaderLibrary::mShaders;
+	const std::string ShaderLibrary::cShaderDirectory = "../Assets/Shaders/";
 	static std::unordered_set<std::string> missingUniforms;
 	//creates a compute shader
 	Shader::Shader(std::string const& shdrFile) : pgmHdl{} {
@@ -34,7 +36,7 @@ namespace Graphics {
 	}
 
 	std::shared_ptr<Shader> Shader::Create(std::string const& vertFile, std::string const& fragFile) {
-		return std::make_shared<Shader>(vertFile, fragFile);
+		return std::make_shared<Shader>(ShaderLibrary::cShaderDirectory + vertFile, ShaderLibrary::cShaderDirectory + fragFile);
 	}
 
 	/*  _________________________________________________________________________ */
@@ -275,7 +277,8 @@ namespace Graphics {
 	*/
 	void Shader::CreateShaderFromString(std::string const& vertSrc, std::string const& fragSrc, std::string const& vertName, std::string const& fragName) {
 		// Create an empty vertex shader handle
-		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+		GLuint vertexShader;
+		GLCALL(vertexShader = glCreateShader(GL_VERTEX_SHADER));
 
 		// Send the vertex shader source code to GL
 		// Note that std::string's .c_str is NULL character terminated.
@@ -758,7 +761,7 @@ namespace Graphics {
 	void Shader::SetUniform(std::string const& name, int* val, unsigned int count) {
 		GLint loc = GetUniformLocation(name);
 		if (loc >= 0) {
-			glUniform1iv(loc, count, val);
+			GLCALL(glUniform1iv(loc, count, val));
 		}
 	}
 
@@ -780,11 +783,29 @@ namespace Graphics {
 		}
 	}
 
-	void Shader::SetUniform(std::string const& name, Texture* texture, unsigned int texUnit) {
-		if (texture->IsBindless()) {
-			SetUniform(name, texture->GetBindlessHandle());
-			return;
+	void Shader::SetUniform(std::string const& name, Texture const& texture, unsigned int texUnit) {
+		//if (texture->IsBindless()) {
+		//	SetUniform(name, texture->GetBindlessHandle());
+		//	return;
+		//}
+		// Activate the appropriate texture unit
+		GLCALL(glActiveTexture(GL_TEXTURE0 + texUnit));
+
+		// Bind the texture to that unit
+		texture.Bind(texUnit);
+
+		// Set the uniform in the shader to the correct texture unit
+		GLint loc = GetUniformLocation(name);
+		if (loc != -1) {
+			GLCALL(glUniform1i(loc, texUnit));
 		}
+	}
+
+	void Shader::SetUniform(std::string const& name, std::shared_ptr<Texture> texture, unsigned int texUnit) {
+		//if (texture->IsBindless()) {
+		//	SetUniform(name, texture->GetBindlessHandle());
+		//	return;
+		//}
 		// Activate the appropriate texture unit
 		GLCALL(glActiveTexture(GL_TEXTURE0 + texUnit));
 
