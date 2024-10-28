@@ -8,10 +8,13 @@
 #include <type_traits>
 #include "AssetUtils.h"
 #include <Events/EventCallback.h>
+#include "Asset/AssetMetadata.h"
 
 namespace IGE {
 	namespace Assets {
-      class AssetManager : public ThreadSafeSingleton<AssetManager>
+        const std::string cAssetProjectSettingsPath{ gAssetsDirectory }; // just the same directory as the exe
+        const std::string cSettingsFileName{ "metadata.igeproj" };
+        class AssetManager : public ThreadSafeSingleton<AssetManager>
       {
       private: 
           EVENT_CALLBACK_DECL(HandleAddFiles);
@@ -40,11 +43,13 @@ namespace IGE {
           using TypeAssetKey = std::uint64_t;
       private: 
           template <typename T>
-          auto GetTypeName() { return rttr::type::get<T>().get_name().to_string(); }
+          std::string GetTypeName() { return rttr::type::get<T>().get_name().to_string(); }
+          void Initialize();
+          std::string CreateProjectFile();
       public:
           //-------------------------------------------------------------------------
           AssetManager();
-
+          ~AssetManager();
           //-------------------------------------------------------------------------
           template< typename...T_ARGS >
           void RegisterTypes()
@@ -56,9 +61,10 @@ namespace IGE {
               ([&]< typename T >(T*)
               {
                   // Static assertions to check the existence of functions
-                  static_assert(HasStaticImport<T, GUID(std::string const&)>::value, "Ref<T> must have Import returning IGE::Assets::GUID.");
+                  static_assert(HasStaticImport<T, GUID(std::string const&, std::string&, AssetMetadata::AssetProps&)>::value, "Ref<T> must have Import returning IGE::Assets::GUID.");
                   static_assert(HasStaticLoad<T, void* (GUID)>::value, "Ref<T> must have Load returning void*.");
-                  static_assert(HasStaticUnload<T, void(T*, GUID)>::value, "Ref<T> must have Unload returning void.");                    auto name = GetTypeName<T>();
+                  static_assert(HasStaticUnload<T, void(T*, GUID)>::value, "Ref<T> must have Unload returning void.");
+                  auto name = GetTypeName<T>();
                   auto typeguid = TypeGUID{ name };
                   mRegisteredTypes.emplace
                   (
@@ -70,6 +76,13 @@ namespace IGE {
                       },
                       name }
                   );
+                  mRegisteredTypeNames.emplace(
+                      name
+                  );
+                  mRegisterTypeImports.emplace(
+                      name,
+                      std::bind(&AssetManager::ImportAsset<T>, this, std::placeholders::_1)
+                  );
               }(reinterpret_cast<T_ARGS*>(0))
                   , ...
                   );
@@ -78,30 +91,58 @@ namespace IGE {
           //returns the guid seeded by the absolute path to the folder in assets
           GUID ImportAsset(std::string const& filepathstr){//std::filesystem::path const& filepath) { //
               //get the absolute file path so that there cant be any duplicates
-              std::string absolutepath{filepathstr};
-              GUID guid{ absolutepath };
+              //std::string absolutepath{filepathstr};
+              GUID guid{};
               TypeGUID typeguid{ GetTypeName<T>() };
-              if (IsValidFilePath(absolutepath)) {
-                  std::filesystem::path filepath{absolutepath};
-                  guid = GUID{ std::filesystem::absolute(filepath).string() };
-                  absolutepath = std::filesystem::absolute(filepath).string();
+              try {
+                  guid = PathToGUID(filepathstr); // in case of duplicates
+                  return guid;
               }
-              else {
-                  guid = GUID{ filepathstr  };
-                  absolutepath = filepathstr;
+              catch (...) {
+                  Debug::DebugLogger::GetInstance().LogInfo("new asset " + filepathstr + " began importing!");
+                  // do nothing
               }
+
+              //if (IsValidFilePath(absolutepath)) {
+              //    std::filesystem::path filepath{absolutepath};
+              //    guid = GUID{ std::filesystem::absolute(filepath).string() };
+              //    absolutepath = std::filesystem::absolute(filepath).string();
+              //}
+              //else {
+              //    guid = GUID{ filepathstr  };
+              //    absolutepath = filepathstr;
+              //}
               TypeAssetKey key{ typeguid ^ guid };
               if (mAssetRefs.find(key) == mAssetRefs.end()) { //if asset not found, generate a new guid
-                  guid = T::Import(absolutepath);
+                  // newFp represents the file that is non compiled, 
+                  // not the compiled file that will be used during load time
+                  std::string newFp{};
+                  AssetMetadata::AssetProps metadata{};
+                  // this is to get the new FP
+                  guid = T::Import(filepathstr, newFp, metadata); 
                   key = TypeAssetKey{ typeguid ^ guid };
+                  if (!guid.IsValid())
+                      throw Debug::Exception<AssetManager>(Debug::LVL_ERROR, Msg("guid invalid after calling asset import"));
 
-                  Ref<T> ref{
-                      IGE::Assets::UniversalRef{ PartialRef{ guid, nullptr }, typeguid }, 
-                      IGE::Assets::Details::UniversalInfo{ mRegisteredTypes.at(typeguid) },
-                      IGE::Assets::Details::InstanceInfo{ guid, typeguid, 1, absolutepath, false }
-                  };
+                  // register under the respective categories in metadata, 
+                  AssetMetadata::IGEProjProperties& allmetadata{ mMetadata.mAssetProperties };
+                  std::string assetCategory{ GetTypeName<T>() };
+                  //if no category exists create one
+                  if (allmetadata.find(assetCategory) == allmetadata.end()) {
+                      allmetadata.emplace(assetCategory, AssetMetadata::AssetCategory{});
+                  }
+                  //if no asset with same guid exists insert this one
+                  if (allmetadata[assetCategory].find(guid) == allmetadata[assetCategory].end()) {
+                      allmetadata[assetCategory].emplace(guid, metadata);
+                  }
 
-                  mAssetRefs.emplace(key, ref);
+                  //tch: commented out cuz ref instance is created in Load now
+                  //Ref<T> ref{
+                  //    IGE::Assets::UniversalRef{ PartialRef{ guid, nullptr }, typeguid }, 
+                  //    IGE::Assets::Details::UniversalInfo{ mRegisteredTypes.at(typeguid) },
+                  //    IGE::Assets::Details::InstanceInfo{ guid, typeguid, 1, newFp, false }
+                  //};
+                  //mAssetRefs.emplace(key, ref);
                   return guid;
               }
               else {
@@ -145,7 +186,19 @@ namespace IGE {
               }
               else throw std::exception(); // should be a specialized exception
           }
+          private:
+          template <typename T> 
+          void InstantiateRefInAssetRefs(GUID const& guid, TypeGUID const& typeguid, std::string const& fp) {
+              TypeAssetKey key{ typeguid ^ guid };
+              Ref<T> ref{
+                  IGE::Assets::UniversalRef{ PartialRef{ guid, nullptr }, typeguid },
+                      IGE::Assets::Details::UniversalInfo{ mRegisteredTypes.at(typeguid) },
+                      IGE::Assets::Details::InstanceInfo{ guid, typeguid, 1, fp, false }
+              };
 
+              mAssetRefs.emplace(key, ref);
+          }
+          public:
           //-------------------------------------------------------------------------
           template <typename T>
           void LoadRef(Ref<T>& ref) {
@@ -155,14 +208,29 @@ namespace IGE {
           void LoadRef(GUID const& guid) {
               TypeGUID typeguid{ GetTypeName<T>() };
               TypeAssetKey key{ typeguid ^ guid };
+              std::string fp { GUIDToPath(guid) };
               if (mAssetRefs.find(key) != mAssetRefs.end())
                   LoadRef<T>(std::any_cast<Ref<T>&>(mAssetRefs.at(key)));
+              else {
+                  //I AM INSTANTIATING THE REF HERE INSTEAD OF IMPORT
+                  if (mPath2GUIDRegistry.find(fp) != mPath2GUIDRegistry.end()) {
+                      InstantiateRefInAssetRefs<T>(guid, typeguid, fp);
+                      LoadRef<T>(std::any_cast<Ref<T>&>(mAssetRefs.at(key)));
+                      return guid;
+                  }
+                  else
+                      throw Debug::Exception<AssetManager>(Debug::LVL_ERROR, Msg("no such filepath imported"));
+              }
           }
+
+          // deprecated, load via guids from now on
           template <typename T>
           GUID LoadRef(std::string const& fp) {
               std::string filepath {fp};
-              if (IsValidFilePath(fp) && !IsPathWithinDirectory(fp, gAssetsDirectory)) throw std::runtime_error("file is not within assets dir");
-              GUID guid{ IsValidFilePath(fp) ? GetAbsolutePath(fp) : fp }; //to account for keys that are not file paths etc "Cube"
+              if (IsValidFilePath(fp) && !IsPathWithinDirectory(fp, gAssetsDirectory)) 
+                  throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("file is not within assets dir"));
+              //GUID guid{ IsValidFilePath(fp) ? fp : fp }; //to account for keys that are not file paths etc "Cube"
+              GUID guid{ PathToGUID(fp) };
               TypeGUID typeguid{ GetTypeName<T>() };
               TypeAssetKey key{ typeguid ^ guid };
               if (mAssetRefs.find(key) != mAssetRefs.end()) {
@@ -170,9 +238,16 @@ namespace IGE {
                   return guid;
               }
               else {
-                  ImportAsset<T>(fp);
-                  LoadRef<T>(std::any_cast<Ref<T>&>(mAssetRefs.at(key)));
-                  return guid;
+
+                  //ImportAsset<T>(fp);
+                  //I AM INSTANTIATING THE REF HERE INSTEAD OF IMPORT
+                  if (mPath2GUIDRegistry.find(fp) != mPath2GUIDRegistry.end()) {
+                      InstantiateRefInAssetRefs<T>(guid, typeguid, fp);
+                      LoadRef<T>(std::any_cast<Ref<T>&>(mAssetRefs.at(key)));
+                      return guid;
+                  }
+                  else
+                      throw Debug::Exception<AssetManager>(Debug::LVL_ERROR, Msg("no such filepath imported"));
               }
           }
           template< typename T >
@@ -193,6 +268,7 @@ namespace IGE {
           {
               return ref.GetInfo();
           }
+
           template <typename T>
           bool IsGUIDValid(GUID const& guid) {
               TypeGUID typeguid{ GetTypeName<T>() };
@@ -200,14 +276,21 @@ namespace IGE {
               return (mAssetRefs.find(key) != mAssetRefs.end());
           }
 
-      protected:
+          std::string GUIDToPath(GUID const& guid);
 
-          //Details::InstanceInfo& AllocRscInfo(void)
-          //{
-          //}
-          //constexpr static auto max_resources_v = 1024;
+          GUID PathToGUID(std::string const& path);
+
+      protected:
+          AssetMetadata mMetadata;
+          std::unordered_map<std::string, GUID> mPath2GUIDRegistry;
+          std::unordered_map<GUID, std::string> mGUID2PathRegistry;
 
           std::unordered_map<TypeKey, Details::UniversalInfo>  mRegisteredTypes;
+          std::unordered_set<std::string> mRegisteredTypeNames;
+
+          //template function instantiation
+          using ImportFunc = std::function<GUID(std::string const&)>;
+          std::unordered_map<std::string, ImportFunc> mRegisterTypeImports;
 
           //keep in mind that any instance of Ref<T> always has a minimum of 1 reference
           std::unordered_map<TypeAssetKey, RefAny> mAssetRefs; //bitwise xor the typeguid and guid for the key;

@@ -13,6 +13,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Scripting/ScriptInstance.h>
 #include <Serialization/JsonKeys.h>
 #include <Reflection/ProxyScript.h>
+#include <Asset/AssetMetadata.h>
+#include <Asset/Assetables/Assetables.h>
 
 static void rttr_auto_register_reflection_function_(); namespace {
   struct rttr__auto__register__ {
@@ -78,10 +80,23 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("z", &physx::PxQuat::z)
       .property("w", &physx::PxQuat::w);
   if (IGE::Application::GetImGuiEnabled()) {
-    rttr::registration::class_<std::pair<std::string, unsigned>>("StringUnsignedPair")
-      .property("first", &std::pair<std::string, unsigned>::first)
-      .property("second", &std::pair<std::string, unsigned>::second);
+      rttr::registration::class_<std::pair<std::string, unsigned>>("StringUnsignedPair")
+          .property("first", &std::pair<std::string, unsigned>::first)
+          .property("second", &std::pair<std::string, unsigned>::second);
   }
+  /* ------------------- Assets ------------------- */
+  rttr::registration::class_<IGE::Assets::AssetMetadata>("AssetMetadata")
+      .constructor<>()
+      .property("Metadata", &IGE::Assets::AssetMetadata::mAssetProperties);
+  //each kind of asset type reflects the corresponding folder in ../Assets
+  rttr::registration::class_<IGE::Assets::ModelAsset>("Models")
+      .constructor<std::string const&>();
+  rttr::registration::class_<IGE::Assets::TextureAsset>("Textures")
+      .constructor<std::string const&>();
+  rttr::registration::class_<IGE::Assets::PrefabAsset>("Prefabs")
+      .constructor<std::string const&>();
+  rttr::registration::class_<IGE::Assets::AudioAsset>("Audio")
+      .constructor<std::string const&>();
 
   /* ------------------- Script ------------------- */
   {

@@ -22,6 +22,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 #include <Core/Systems/Systems.h>
 
+#include "Serialization/Serializer.h"
+#include "Serialization/Deserializer.h"
+#include "Asset/AssetMetadata.h"
+
 namespace IGE {
   // Static Initialization
   Application::ApplicationSpecification Application::mSpecification{};
@@ -44,9 +48,41 @@ namespace IGE {
     //IGE::Physics::PhysicsSystem::GetInstance()->Init();
 
     RegisterSystems();
-    IGEAssetsInitialize();
+    //IGEAssetsInitialize();
     mSystemManager.InitSystems();
     GetDefaultRenderTarget().scene.Init();
+
+    ////for testing only to revert after everything is done
+    //// Define MeshAsset properties
+    //using namespace IGE::Assets;
+    //
+    //AssetMetadata::AssetProps meshAssetProps;
+    //meshAssetProps["path"] = "../path/to/file";
+    //meshAssetProps["layers"] = "3";
+    //meshAssetProps["interpreter"] = "fbx";
+    //// Add more properties as needed
+    //// meshAssetProps["other_property"] = "value";
+
+    //// Insert into MeshAsset category
+    //AssetMetadata::AssetCategory meshCategory;
+    //meshCategory[123456789] = meshAssetProps;
+
+    //// Define TextureAsset properties (example)
+    //AssetMetadata::AssetProps textureAssetProps;
+    //textureAssetProps["path"] = "../path/to/texture";
+    //textureAssetProps["format"] = "png";
+    //textureAssetProps["compression"] = "high";
+    //// textureAssetProps["another_property"] = "value";
+
+    //// Insert into TextureAsset category
+    //AssetMetadata::AssetCategory textureCategory;
+    //textureCategory[987654321] = textureAssetProps;
+
+    //AssetMetadata test{};
+    //// Populate mAssetProperties
+    //test.mAssetProperties["MeshAsset"] = meshCategory;
+    //test.mAssetProperties["TextureAsset"] = textureCategory;
+    //Serialization::Serializer::SerializeAny(test, "TESTREFLECTION.txt");
   }
 
   void Application::Run() {

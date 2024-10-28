@@ -163,13 +163,15 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="source\Asset\Assetables\Assetables.h" />
+    <ClInclude Include="source\Asset\AssetMetadata.h" />
     <ClInclude Include="source\Physics\PhysicsFilter.h" />
     <ClInclude Include="source\Application.h" />
     <ClInclude Include="source\Asset\AssetManager.h" />
     <ClInclude Include="source\Asset\AssetUtils.h" />
     <ClInclude Include="source\Asset\Assetables\AssetExtensions.h" />
     <ClInclude Include="source\Asset\Assetables\Audio\AudioAsset.h" />
-    <ClInclude Include="source\Asset\Assetables\Mesh\MeshAsset.h" />
+    <ClInclude Include="source\Asset\Assetables\Mesh\ModelAsset.h" />
     <ClInclude Include="source\Asset\Assetables\Prefab\PrefabAsset.h" />
     <ClInclude Include="source\Asset\Assetables\Texture\TextureAsset.h" />
     <ClInclude Include="source\Asset\IGEAssets.h" />
@@ -340,7 +342,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Asset\AssetManager.cpp" />
     <ClCompile Include="source\Asset\AssetUtils.cpp" />
     <ClCompile Include="source\Asset\Assetables\Audio\AudioAsset.cpp" />
-    <ClCompile Include="source\Asset\Assetables\Mesh\MeshAsset.cpp" />
+    <ClCompile Include="source\Asset\Assetables\Mesh\ModelAsset.cpp" />
     <ClCompile Include="source\Asset\Assetables\Prefab\PrefabAsset.cpp" />
     <ClCompile Include="source\Asset\Assetables\Texture\TextureAsset.cpp" />
     <ClCompile Include="source\Asset\SmartPointer.cpp" />

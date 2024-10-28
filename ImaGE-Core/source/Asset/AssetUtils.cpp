@@ -6,6 +6,7 @@ namespace IGE {
         namespace fs = std::filesystem;
 
         bool CopyFileToAssets(const std::string& sourcePath, const std::string& destinationPath) {
+            if (IsDirectoriesEqual(sourcePath, destinationPath)) return true;
             try {
                 fs::copy(sourcePath, destinationPath, fs::copy_options::overwrite_existing);
                 return true;
@@ -38,21 +39,20 @@ namespace IGE {
             //return std::filesystem::path(filePath).filename().string();
             return GetFileName(filePath) + GetFileExtension(filePath);
         }
+        std::string GetDirectoryPath(const std::string& filePath) {
+            size_t pos = filePath.find_last_of("/\\");
+            if (pos != std::string::npos) {
+                return filePath.substr(0, pos);
+            }
+            return ""; // If no separator is found, return an empty string
+        }
         std::string GetAbsolutePath(const std::string& filePath) {
             return std::filesystem::absolute(filePath).string();
         }
         void CreateDirectoryIfNotExists(const std::string& directoryPath) {
             if (!fs::exists(directoryPath)) {
                 // Directory doesn't exist, create it
-                if (fs::create_directory(directoryPath)) {
-                    std::cout << "Directory created: " << directoryPath << std::endl;
-                }
-                else {
-                    std::cerr << "Failed to create directory: " << directoryPath << std::endl;
-                }
-            }
-            else {
-                std::cout << "Directory already exists: " << directoryPath << std::endl;
+                fs::create_directory(directoryPath);
             }
         }
         bool IsDirectoriesEqual(const std::string &fp1, const std::string &fp2) {

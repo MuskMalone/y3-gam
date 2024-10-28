@@ -3,6 +3,9 @@
 #include <string>
 #include <filesystem>
 #include <Asset/AssetUtils.h>
+#include "Asset/AssetManager.h"
+#include "Asset/AssetMetadata.h"
+#include "Asset/Assetables/AssetExtensions.h"
 namespace IGE {
 	namespace Assets {
 		namespace {
@@ -34,35 +37,45 @@ namespace IGE {
             }
 
 		}
-        GUID TextureAsset::Import(std::string const& fp) {
+        GUID TextureAsset::Import(std::string const& fp, std::string& newFp, AssetMetadata::AssetProps& metadata) {
             // Copy the image file to the assets folder
             std::string filename { GetFileName(fp) };
             std::string fileext { GetFileExtension(fp) };
-            std::string inputImagePath{ GetAbsolutePath(cTextureDirectory + filename + fileext) };
-            std::string ddsImagePath{ GetAbsolutePath(cTextureDirectory + filename + ".dds") };
+            std::string inputImagePath{ cTextureDirectory + filename + fileext };
             CreateDirectoryIfNotExists(cTextureDirectory);
-            if (IsDirectoriesEqual(inputImagePath, fp)) return GUID{ GetAbsolutePath(inputImagePath) };
-            
+            // if copy fails return an empty guid
             if (!CopyFileToAssets(fp, inputImagePath)) {
-                return -1;
+                return GUID{};
             }
 
-            if (fileext != ".dds") {
-                // Convert the copied image to DDS format
-                if (!ConvertToDDS(std::wstring(inputImagePath.begin(), inputImagePath.end()), std::wstring(ddsImagePath.begin(), ddsImagePath.end()))) {
-                    return -1;
-                }
-
-                // Delete the original copied image, keeping only the DDS file
-                if (!DeleteFileAssets(inputImagePath)) {
-                    return -1;
-                }
-                return GUID{ GetAbsolutePath(ddsImagePath) };
-            }
-            return GUID{ GetAbsolutePath(inputImagePath) };
+            newFp = inputImagePath;
+            metadata.emplace("path", newFp);
+            return GUID{ GUID::Seed{} };
         }
 		void* TextureAsset::Load([[maybe_unused]] GUID guid) {
-			return new TextureAsset(std::string(guid.GetSeed()));
+            std::string fp{ AssetManager::GetInstance().GUIDToPath(guid) };
+            std::string dirpath{ GetDirectoryPath(fp) };
+            std::filesystem::path const path{ fp };
+            std::string filename { GetFileName(fp) };
+            std::string fileext { GetFileExtension(fp) };
+            std::string ddsImagePath{ cTextureDirectory + cCompiledDirectory + filename + ".dds" };
+            CreateDirectoryIfNotExists(cTextureDirectory + cCompiledDirectory);
+
+            if (fileext != ".dds" && cImageExtensions.find(fileext) != cImageExtensions.end()) {
+                // Convert the copied image to DDS format
+                if (!ConvertToDDS(std::wstring(fp.begin(), fp.end()), std::wstring(ddsImagePath.begin(), ddsImagePath.end()))) {
+                    throw Debug::Exception<TextureAsset>(Debug::LVL_ERROR, Msg("compilation failed to convert " + fileext + " to .dds"));
+                }
+            }
+            else if (fileext == ".dds") {
+                CopyFileToAssets(fp, ddsImagePath);
+            }
+            else {
+                throw Debug::Exception<TextureAsset>(Debug::LVL_ERROR, Msg("couldnt compile " + fileext + " to dds"));
+            }
+            return new TextureAsset(
+                ddsImagePath
+            );
 		}
 		void TextureAsset::Unload([[maybe_unused]] TextureAsset* ptr, GUID guid) {
 			delete ptr;

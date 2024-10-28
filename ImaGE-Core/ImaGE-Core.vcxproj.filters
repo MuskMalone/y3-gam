@@ -166,7 +166,7 @@
     <ClInclude Include="source\Asset\Assetables\Audio\AudioAsset.h">
       <Filter>Asset\Assetables\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="source\Asset\Assetables\Mesh\MeshAsset.h">
+    <ClInclude Include="source\Asset\Assetables\Mesh\ModelAsset.h">
       <Filter>Asset\Assetables\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="source\Asset\Assetables\Prefab\PrefabAsset.h">
@@ -653,6 +653,8 @@
     <ClInclude Include="source\Physics\PhysicsFilter.h">
       <Filter>Physics</Filter>
     </ClInclude>
+    <ClInclude Include="source\Asset\AssetMetadata.h" />
+    <ClInclude Include="source\Asset\Assetables\Assetables.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -665,7 +667,7 @@
     <ClCompile Include="source\Asset\Assetables\Audio\AudioAsset.cpp">
       <Filter>Asset\Assetables\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="source\Asset\Assetables\Mesh\MeshAsset.cpp">
+    <ClCompile Include="source\Asset\Assetables\Mesh\ModelAsset.cpp">
       <Filter>Asset\Assetables\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="source\Asset\Assetables\Prefab\PrefabAsset.cpp">
