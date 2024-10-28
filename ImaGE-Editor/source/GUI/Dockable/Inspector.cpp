@@ -933,7 +933,7 @@ namespace GUI {
     ImGui::TableNextColumn();
     ImGui::Text("Intensity");
     ImGui::TableNextColumn();
-    if (ImGui::InputFloat("##", &light.mLightIntensity, 0, 0, 0)) {
+    if (ImGui::InputFloat("##In", &light.mLightIntensity, 0, 0, 0)) {
       modified = true;
     }
     if (light.type == Component::SPOTLIGHT)
@@ -943,7 +943,7 @@ namespace GUI {
       ImGui::TableNextColumn();
       ImGui::Text("Inner Angle");
       ImGui::TableNextColumn();
-      if (ImGui::InputFloat("##", &light.mInnerSpotAngle, 0, 0, 0)) {
+      if (ImGui::InputFloat("##T", &light.mInnerSpotAngle, 0, 0, 0)) {
         modified = true;
       }
 
@@ -952,7 +952,7 @@ namespace GUI {
       ImGui::TableNextColumn();
       ImGui::Text("Output Angle");
       ImGui::TableNextColumn();
-      if (ImGui::InputFloat("##", &light.mOuterSpotAngle, 0, 0, 0)) {
+      if (ImGui::InputFloat("##O", &light.mOuterSpotAngle, 0, 0, 0)) {
         modified = true;
       }
 
@@ -961,7 +961,7 @@ namespace GUI {
       ImGui::TableNextColumn();
       ImGui::Text("Range");
       ImGui::TableNextColumn();
-      if (ImGui::InputFloat("##", &light.mRange, 0, 0, 0)) {
+      if (ImGui::InputFloat("##R", &light.mRange, 0, 0, 0)) {
         modified = true;
       }
     }
