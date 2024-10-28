@@ -7,7 +7,7 @@
 #include <Core/Components/Transform.h>
 #include <Core/Components/Mesh.h>
 
-#define CAMERA_VIEW
+//#define CAMERA_VIEW
 
 namespace {
   static constexpr std::array<glm::vec4, 8> sFrustrumCorners = {
@@ -37,7 +37,7 @@ namespace Graphics {
     auto const& shader = mSpec.pipeline->GetShader();
     // render the scene normally
     for (ECS::Entity const& entity : entities) {
-      if (!entity.HasComponent<Component::Mesh>()) { continue; }
+      if (!entity.HasComponent<Component::Mesh>() || entity.HasComponent<Component::Light>()) { continue; }
 
       Graphics::Renderer::SubmitInstance(
         entity.GetComponent<Component::Mesh>().meshSource,
@@ -84,7 +84,7 @@ namespace Graphics {
 
       shader->SetUniform("u_LightProjMtx", glm::ortho(orthoPlanes.first.x, orthoPlanes.second.x,
         orthoPlanes.first.y, orthoPlanes.second.y, orthoPlanes.first.z, orthoPlanes.second.z));
-      shader->SetUniform("u_ViewProjMtx", cam.GetViewProjMatrix());
+      //shader->SetUniform("u_ViewProjMtx", cam.GetViewProjMatrix());
 
       break;
     }
@@ -105,15 +105,18 @@ namespace Graphics {
   }
 
   std::pair<glm::vec3, glm::vec3> ShadowPass::GetLightProjPlanes(EditorCamera const& cam, glm::vec3 const& lightPos, glm::vec3 const& lightDir) {
-    glm::mat4 const invViewProj{ glm::inverse(cam.GetViewProjMatrix()) * glm::lookAt(lightPos, glm::vec3(0.f)/*lightPos + lightDir*/, glm::vec3(0.f, 1.f, 0.f))};
+    glm::mat4 const invViewProj{ glm::inverse(cam.GetViewProjMatrix()) }, lightView{ glm::lookAt(lightPos, lightPos + lightDir, glm::vec3(0.f, 1.f, 0.f))};
+
     auto frustrumCorners{ sFrustrumCorners };
 
-    glm::vec4 min(FLT_MAX), max(-FLT_MAX);
+    glm::vec3 min(FLT_MAX), max(-FLT_MAX);
     for (glm::vec4& corner : frustrumCorners) {
       corner = invViewProj * corner;
       corner /= corner.w;
-      min = glm::min(min, corner);
-      max = glm::max(max, corner);
+      corner = lightView * corner;
+
+      min = glm::min(min, glm::vec3(corner));
+      max = glm::max(max, glm::vec3(corner));
     }
 
     return { min, max };

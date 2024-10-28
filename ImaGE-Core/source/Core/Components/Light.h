@@ -15,7 +15,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Component {
 	
-	enum Light_Type {
+	enum LightType {
 			DIRECTIONAL,
 			SPOTLIGHT,
 			LIGHT_COUNT
@@ -37,13 +37,14 @@ namespace Component {
 
 			castShadows = false;
 			bias = 0.05f;
+			nearPlane = 0.2f;
 		}
 
 		glm::vec3 position;        // Position of the light (used for Point and Spotlight)
 		glm::vec3 direction;       // Direction of the light (used for Directional and Spotlight)
 		glm::vec3 color;           // Color of the light
 		//ShadowConfig shadowConfig;
-		Light_Type type;
+		LightType type;
 		float linear;
 		float quadratic;
 		float radius;
@@ -52,6 +53,7 @@ namespace Component {
 		float outerCutOff;  // Spotlight
 		
 		float bias = 0.05f;				// Shadows
+		float nearPlane = 0.2f;		// Shadows
 		bool castShadows = false;	// Shadows
 	};
 

@@ -892,7 +892,7 @@ namespace GUI {
             if (ImGui::Selectable(Lights[s].c_str(), is_selected))
             {
               if (Lights[s] != Lights[light.type]) {
-                light.type = static_cast<Component::Light_Type>(s);
+                light.type = static_cast<Component::LightType>(s);
               }
             }
             if (is_selected)
@@ -945,14 +945,13 @@ namespace GUI {
           ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
           ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
-          ImGui::TableNextRow();
-          ImGui::TableSetColumnIndex(0);
-          ImGui::SetCursorPosX(ImGui::GetCursorPosX() + FIRST_COLUMN_LENGTH * 0.5f);
-          ImGui::Text("Bias");
-          ImGui::TableSetColumnIndex(1);
-          ImGui::SetNextItemWidth(INPUT_SIZE);
-
+          NextRowTable("Bias");
           if (ImGui::DragFloat("##BiasSlider", &light.bias, 0.005f, 0.f, 2.f, "% .3f")) {
+            modified = true;
+          }
+
+          NextRowTable("Near Plane");
+          if (ImGui::DragFloat("##NearPlane", &light.nearPlane, 0.05f, 0.1f, 10.f, "% .2f")) {
             modified = true;
           }
 

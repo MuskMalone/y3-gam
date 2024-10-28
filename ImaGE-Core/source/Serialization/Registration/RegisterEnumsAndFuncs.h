@@ -11,6 +11,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rttr/type.h>
 #include <rttr/registration>
 #include <Core/Components/RigidBody.h>
+#include <Core/Components/Light.h>
 
 namespace
 {
@@ -39,5 +40,10 @@ static void rttr_auto_register_reflection_function3_(); namespace {
   rttr::registration::enumeration<Component::RigidBody::MotionType>("MotionType")(
     rttr::value("DYNAMIC", Component::RigidBody::MotionType::DYNAMIC),
     rttr::value("KINEMATIC", Component::RigidBody::MotionType::KINEMATIC)
+    );
+
+  rttr::registration::enumeration<Component::LightType>("LightType")(
+    rttr::value("DIRECTIONAL", Component::LightType::DIRECTIONAL),
+    rttr::value("SPOTLIGHT", Component::LightType::SPOTLIGHT)
     );
 }

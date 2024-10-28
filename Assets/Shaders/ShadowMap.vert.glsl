@@ -13,6 +13,6 @@ uniform mat4 u_ViewProjMtx;
 void main()
 {
   // transform the vertex to the light's perspective
-  gl_Position = u_ViewProjMtx * a_ModelMatrix * vec4(a_Position, 1.0);
+  gl_Position = u_LightProjMtx * a_ModelMatrix * vec4(a_Position, 1.0);
   //gl_Position = u_ViewProjMtx * vec4(1.0);
 }
