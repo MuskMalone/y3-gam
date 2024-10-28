@@ -10,13 +10,12 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#include <vector>
-#include <glm/glm.hpp>
 #include "Shader.h"
 #include "Texture.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "Color.h"
+#include "MaterialTable.h"
 #include <typeindex>
 #include <Graphics/RenderPass/RenderPass.h>
 
@@ -83,12 +82,8 @@ namespace Graphics {
 
 		std::shared_ptr<VertexArray> quadVertexArray;
 		std::shared_ptr<VertexBuffer> quadVertexBuffer;
-		std::shared_ptr<Shader> texShader;
 		IGE::Assets::GUID defaultTex;
 		IGE::Assets::GUID whiteTex;
-
-		std::shared_ptr<Shader> lineShader;
-		std::shared_ptr<Shader> instancedShader;
 
 		uint32_t quadIdxCount{};
 		uint32_t triVtxCount{};
@@ -108,11 +103,6 @@ namespace Graphics {
 		std::unordered_map<IGE::Assets::GUID, std::shared_ptr<VertexBuffer>> instanceBuffers;
 
 		Statistics stats;
-
-		//TEMP FOR NOW
-		std::vector<std::shared_ptr<Material>> materialVector;
-		std::vector<IGE::Assets::GUID> albedoMaps;
-		std::vector<IGE::Assets::GUID> normalMaps;
 	};
 
 	class Renderer {
@@ -128,7 +118,7 @@ namespace Graphics {
 		static void SubmitTriangle(glm::vec3 const& v1, glm::vec3 const& v2, glm::vec3 const& v3, glm::vec4 const& clr = Color::COLOR_WHITE);
 
 		//Instancing
-		static void SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int entityID = -1, uint32_t matID = 0);
+		static void SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int entityID = -1, int matID = 0);
 		static void RenderInstances();
 
 		// Batching
@@ -138,10 +128,6 @@ namespace Graphics {
 
 		static void RenderSceneBegin(glm::mat4 const& viewProjMtx);
 		static void RenderSceneEnd();
-
-		static std::shared_ptr<Material> GetMaterial(uint32_t idx); //temp
-		static std::vector<IGE::Assets::GUID> const& GetAlbedoMaps();//temp
-		static std::vector<IGE::Assets::GUID> const& GetNormalMaps();
 
 		static unsigned int GetMaxTextureUnits();
 		static std::shared_ptr<Graphics::Framebuffer> GetFinalFramebuffer();
@@ -166,6 +152,10 @@ namespace Graphics {
 		//	const glm::vec4& clr, const glm::vec2& texCoord, float texIdx, int entity);
 		static void NextBatch();
 
+		// Stats
+		static Statistics GetStats();
+		static void ResetStats();
+
 		static void InitPickPass();
 		static void InitGeomPass();
 		static void InitShadowMapPass();
@@ -176,14 +166,11 @@ namespace Graphics {
 			mRenderPasses.emplace_back(std::move(pass));
 		}
 
-		// Stats
-		static Statistics GetStats();
-		static void ResetStats();
-
 	private:
 		static RendererData mData;
+		static MaterialTable mMaterialTable;
+		static ShaderLibrary mShaderLibrary;
 		static std::shared_ptr<Framebuffer> mFinalFramebuffer;
-
 	public: // TEMP
 		template <typename T>
 		static std::shared_ptr<T> GetPass() { return std::static_pointer_cast<T>(mTypeToRenderPass[typeid(T)]); }

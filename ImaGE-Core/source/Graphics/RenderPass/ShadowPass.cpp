@@ -34,7 +34,6 @@ namespace Graphics {
 
     if (!mActive) { EndRender(); return; }
 
-
     auto const& shader = mSpec.pipeline->GetShader();
     // render the scene normally
     for (ECS::Entity entity : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Transform, Component::Mesh>()) {
@@ -45,12 +44,6 @@ namespace Graphics {
         entity.GetEntityID(),
         0
       );
-      /*auto const& mesh{ IGE_ASSETMGR.GetAsset<IGE::Assets::MeshAsset>(entity.GetComponent<Component::Mesh>().meshSource)->mMeshSource };
-
-      glClear(GL_DEPTH_BUFFER_BIT);
-      shader->SetUniform("u_ModelMatrix", entity.GetComponent<Component::Transform>().worldMtx);
-      RenderAPI::DrawLines(mesh.GetVertexArray(), mesh.GetVertices().size());
-      glClear(GL_DEPTH_BUFFER_BIT);*/
     }
     Renderer::RenderInstances();
 

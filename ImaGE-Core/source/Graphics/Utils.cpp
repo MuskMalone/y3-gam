@@ -105,28 +105,30 @@ namespace Graphics {
             bool GlLogCall(const char* function, const char* file, int line)
             {
                 bool success = true;
-                //while (GLenum error = glGetError())
-                //{
-                //    // If the error has already been logged, skip it
-                //    if (ExistingErrors.find(error) != ExistingErrors.end())
-                //        continue;
+                while (GLenum error = glGetError())
+                {
+                    // If the error has already been logged, skip it
+                    if (ExistingErrors.find(error) != ExistingErrors.end())
+                        continue;
 
-                //    // Mark the error as logged
-                //    ExistingErrors.insert(error);
+                    // Mark the error as logged
+                    ExistingErrors.insert(error);
 
-                //    // Log the error
-                //    success = false;
-                //    std::stringstream ss;
-                //    ss << "[OpenGL Error] (" << error << "): " << function
-                //        << " in file " << file << " at line " << line << std::endl;
+                    // Log the error
+                    success = false;
+                    std::stringstream ss;
+                    ss << "[OpenGL Error] (" << error << "): " << function
+                        << " in file " << file << " at line " << line << std::endl;
 
-                //    Debug::DebugLogger::GetInstance().LogError(ss.str());
-                //}
+                    std::cout << ss.str() << std::endl;
+
+                    Debug::DebugLogger::GetInstance().LogError(ss.str());
+                }
                 return success;
             }
 
             void GlClearErrors() {
-                //while (glGetError() != GL_NO_ERROR);
+               // while (glGetError() != GL_NO_ERROR);
             }
 
         }//namespace GL
