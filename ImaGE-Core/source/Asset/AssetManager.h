@@ -127,27 +127,10 @@ namespace IGE {
                   // register under the respective categories in metadata, 
                   AssetMetadata::IGEProjProperties& allmetadata{ mMetadata.mAssetProperties };
                   std::string assetCategory{ GetTypeName<T>() };
-                  //if no category exists create one
-                  if (allmetadata.find(assetCategory) == allmetadata.end()) {
-                      allmetadata.emplace(assetCategory, AssetMetadata::AssetCategory{});
-                  }
-                  //if no asset with same guid exists insert this one
-                  if (allmetadata[assetCategory].find(guid) == allmetadata[assetCategory].end()) {
-                      allmetadata[assetCategory].emplace(guid, metadata);
-                  }
-
-                  //tch: commented out cuz ref instance is created in Load now
-                  //Ref<T> ref{
-                  //    IGE::Assets::UniversalRef{ PartialRef{ guid, nullptr }, typeguid }, 
-                  //    IGE::Assets::Details::UniversalInfo{ mRegisteredTypes.at(typeguid) },
-                  //    IGE::Assets::Details::InstanceInfo{ guid, typeguid, 1, newFp, false }
-                  //};
-                  //mAssetRefs.emplace(key, ref);
+                  mMetadata.Emplace(assetCategory, guid, metadata);
                   return guid;
               }
               else {
-                  TypeAssetKey key{ typeguid ^ guid };
-
                   Ref<T> ref { std::any_cast<Ref<T>>(mAssetRefs.at(key)) };
                   return ref.mInstance.partialRef.guid;
               }

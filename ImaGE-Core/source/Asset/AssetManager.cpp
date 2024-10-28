@@ -51,22 +51,21 @@ namespace IGE {
 		AssetManager::AssetManager() {
 			SUBSCRIBE_CLASS_FUNC(Events::EventType::ADD_FILES, &AssetManager::HandleAddFiles, this);
 			Initialize();
-			// code snippet to "manufacture" all the data needed for importing
-			// assumes that all the files are imported as is
-			for (const auto& folder : mRegisteredTypeNames) {
-				namespace fs = std::filesystem;
-				auto assetpath{ std::string(gAssetsDirectory) + "\\" + folder};
-				fs::path subDir{ assetpath };
-				CreateDirectoryIfNotExists(assetpath);
-				for (const auto& entry : fs::directory_iterator(subDir)) {
-					std::string p{ entry.path().string()};
-					mRegisterTypeImports[folder](p);
-				}
-			}
-			
-			//to delete
-			auto fp{ CreateProjectFile() };
-			Serialization::Serializer::SerializeAny(mMetadata, fp);
+			 //code snippet to "manufacture" all the data needed for importing
+			 //assumes that all the files are imported as is
+			//for (const auto& folder : mRegisteredTypeNames) {
+			//	namespace fs = std::filesystem;
+			//	auto assetpath{ std::string(gAssetsDirectory) + "\\" + folder};
+			//	fs::path subDir{ assetpath };
+			//	CreateDirectoryIfNotExists(assetpath);
+			//	for (const auto& entry : fs::directory_iterator(subDir)) {
+			//		std::string p{ entry.path().string()};
+			//		mRegisterTypeImports[folder](p);
+			//	}
+			//}
+			////to delete
+			//auto fp{ CreateProjectFile() };
+			//Serialization::Serializer::SerializeAny(mMetadata, fp);
 		}
 
 		AssetManager::~AssetManager()

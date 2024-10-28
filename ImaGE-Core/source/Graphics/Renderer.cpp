@@ -90,8 +90,8 @@ namespace Graphics {
 		mData.triBuffer = std::vector<TriVtx>(mData.cMaxVertices);
 
 		//========================================================
-		mData.defaultTex = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(gAssetsDirectory + std::string("Textures/default.dds"));
-		mData.whiteTex = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(gAssetsDirectory + std::string("Textures/white.dds"));
+		mData.defaultTex = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(gAssetsDirectory + std::string("Textures\\default.dds"));
+		mData.whiteTex = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(gAssetsDirectory + std::string("Textures\\white.dds"));
 		//unsigned int whiteTexData{ 0xffffffff };
 		//mData.whiteTex->SetData(&whiteTexData);
 		//mData.texUnits[0] = mData.whiteTex;
