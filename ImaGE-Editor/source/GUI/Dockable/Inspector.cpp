@@ -275,7 +275,8 @@ namespace GUI {
           if (layerName == "") continue;
           if (ImGui::Selectable(layerName.c_str())) {
             layerSystemPtr->UpdateEntityLayer(entity, layer.name, layerName);
-            layer.name = layerName;     
+            entity.SetLayer(layerName);
+            //layer.name = layerName;     
             modified = true;
           }
         }
@@ -842,7 +843,7 @@ namespace GUI {
       ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       ImGui::TableHeadersRow();
-
+      
       if (ImGuiHelpers::TableInputFloat3("Scale", &collider.scale.x, inputWidth, false, 0.f, 100.f, 1.f)) {
         SetIsComponentEdited(true);
       }

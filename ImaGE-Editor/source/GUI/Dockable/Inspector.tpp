@@ -144,6 +144,9 @@ bool Inspector::DrawOptionButton(std::string const& name) {
       SetIsComponentEdited(true);
 
       component.Clear();
+      if (rttr::type::get<ComponentType>().get_name() == "Layer") {
+        ent.SetLayer("Default");
+      }
 
       // if its a prefab instance, add to overrides
       if (ent.HasComponent<Component::PrefabOverrides>()) {

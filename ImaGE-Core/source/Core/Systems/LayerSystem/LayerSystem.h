@@ -56,6 +56,7 @@ namespace Systems {
 
   private:
     EVENT_CALLBACK_DECL(OnSceneLoad);
+    EVENT_CALLBACK_DECL(OnLayerModification);
 
   private:
     LayerData mLayerData;

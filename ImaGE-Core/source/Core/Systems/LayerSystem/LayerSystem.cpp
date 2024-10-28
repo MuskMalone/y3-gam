@@ -4,10 +4,13 @@
 #include "Core/EntityManager.h"
 #include "Core/Components/Components.h"
 
+#include "Physics/PhysicsSystem.h"
+
 namespace Systems {
 
   void LayerSystem::Start() {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::LOAD_SCENE, &LayerSystem::OnSceneLoad, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::LAYER_MODIFIED, &LayerSystem::OnLayerModification, this);
   }
 
   void LayerSystem::Update() {
@@ -141,6 +144,55 @@ namespace Systems {
         // Add entity with non-existent layer into default layer
         mLayerEntities[std::string(BUILTIN_LAYER_0)].push_back(ECS::Entity{ entity });
         ECS::Entity{ entity }.GetComponent<Component::Layer>().name = std::string(BUILTIN_LAYER_0);
+      }
+    }
+  }
+
+  EVENT_CALLBACK_DEF(LayerSystem, OnLayerModification) {
+    auto layerModifiedEvent{ std::static_pointer_cast<Events::EntityLayerModified>(event) };
+    ECS::Entity entity = layerModifiedEvent->mEntity;
+    std::string oldLayer = layerModifiedEvent->mOldLayer;
+
+    // Change layer in mLayerEntities
+    std::string newLayer = entity.GetComponent<Component::Layer>().name;
+    auto itr = std::find(mLayerData.layerNames.begin(), mLayerData.layerNames.end(), newLayer);
+    if (itr == mLayerData.layerNames.end()) {
+      std::string const tag = ECS::Entity{ entity }.GetComponent<Component::Tag>().tag;
+      Debug::DebugLogger::GetInstance().LogWarning("[Layers] The Entity with Tag: \"" + tag + "\" has a Non-Existent Layer");
+      newLayer = std::string(BUILTIN_LAYER_0);
+    }
+
+    // Remove previous
+    auto mapItr = mLayerEntities.find(oldLayer);
+    if (mapItr != mLayerEntities.end()) {
+      std::vector<ECS::Entity>& entities = mapItr->second;
+      entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
+    }
+
+    // Add new
+    mLayerEntities[newLayer].push_back(entity);
+    /*
+    mapItr = mLayerEntities.find(newLayer);
+    std::vector<ECS::Entity>& newLayerEntities = mapItr->second;
+    newLayerEntities.push_back(entity);
+    */
+
+    // For updating physics object's filter data (layer collision detection)
+    if (!entity.HasComponent<Component::Transform, Component::RigidBody>()) {
+      return;
+    }
+
+    if (std::shared_ptr<IGE::Physics::PhysicsSystem> physicsSys =
+      Systems::SystemManager::GetInstance().GetSystem<IGE::Physics::PhysicsSystem>().lock()) {
+      auto& xfm{ entity.GetComponent<Component::Transform>() };
+      auto& rb{ entity.GetComponent<Component::RigidBody>() };
+      auto const& rigidBodyMap = physicsSys->GetRigidBodyIDs();
+      auto rbiter{ rigidBodyMap.find(rb.bodyID) };
+      if (rbiter != rigidBodyMap.end()) {
+        physx::PxRigidDynamic* pxrigidbody{ rigidBodyMap.at(rb.bodyID) };
+        physx::PxShape* shape;
+        pxrigidbody->getShapes(&shape, 1);
+        SetupShapeFilterData(&shape, entity);
       }
     }
   }

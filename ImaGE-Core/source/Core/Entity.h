@@ -19,6 +19,11 @@ namespace ECS {
     bool IsActive() const;
     void SetIsActive(bool isActiveFlag);
 
+    // Use this function when setting layers, instead of the usual
+    // Entity.GetComponent<Component::Layer> as an event must be queued
+    // for the physics to update accordingly during runtime
+    void SetLayer(std::string layerName);
+
     operator bool() const;
     bool operator==(const Entity& entity) const;
     bool operator!=(const Entity& entity) const;

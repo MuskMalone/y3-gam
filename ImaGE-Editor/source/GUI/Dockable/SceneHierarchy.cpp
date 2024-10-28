@@ -322,8 +322,14 @@ namespace GUI
         mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
       }
 
-      if (ImGui::Selectable("Set Child Layers to follow Entity")) {
-        mEntityManager.SetChildLayersToFollowParent(mRightClickedEntity);
+      if (mEntityManager.HasChild(mRightClickedEntity)) {
+        if (ImGui::Selectable("Set Children to follow Layer")) {
+          mEntityManager.SetChildLayersToFollowParent(mRightClickedEntity);
+        }
+
+        if (ImGui::Selectable("Set Children to follow Active Status")) {
+          mEntityManager.SetChildActiveToFollowParent(mRightClickedEntity);
+        }
       }
 
       // @TODO: need a way to deep copy components

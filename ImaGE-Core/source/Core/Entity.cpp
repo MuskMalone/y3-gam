@@ -1,7 +1,10 @@
 #include <pch.h>
 #include "Entity.h"
 #include <Core/Components/Tag.h>
+#include <Core/Components/Layer.h>
+
 #include <Events/EventManager.h>
+#include <Events/EventCallback.h>
 
 namespace ECS
 {
@@ -52,6 +55,17 @@ namespace ECS
     }
 
     this->GetComponent<Component::Tag>().isActive = isActiveFlag;
+  }
+
+  void Entity::SetLayer(std::string layerName) {
+    if (!this->HasComponent<Component::Layer>()) {
+      Debug::DebugLogger::GetInstance().LogWarning("[Entity] Entity does not have Layer Component!");
+      return;
+    }
+
+    std::string oldLayer = this->GetComponent<Component::Layer>().name;
+    this->GetComponent<Component::Layer>().name = layerName;
+    QUEUE_EVENT(Events::EntityLayerModified, *this, oldLayer);
   }
 
   Entity::operator bool() const {
