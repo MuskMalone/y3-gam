@@ -208,14 +208,21 @@ namespace IGE {
               }
           }
 
-          // deprecated, load via guids from now on
+          // if you wanna do smth like LoadRef<Class>("SomeSpecialString"), do it with this function. 
           template <typename T>
           GUID LoadRef(std::string const& fp) {
               std::string filepath {fp};
-              if (IsValidFilePath(fp) && !IsPathWithinDirectory(fp, gAssetsDirectory)) 
+              if (IsValidFilePath(fp) && !IsPathWithinDirectory(fp, gAssetsDirectory))
                   throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("file is not within assets dir"));
+
               //GUID guid{ IsValidFilePath(fp) ? fp : fp }; //to account for keys that are not file paths etc "Cube"
-              GUID guid{ PathToGUID(fp) };
+              GUID guid{ };
+              try {
+                  guid = GUID{ PathToGUID(fp) };
+              }
+              catch (Debug::Exception<AssetManager> const& e) { // if there isnt any valid file path, just create a new guid
+                  guid = GUID{ GUID::Seed{} };
+              }
               TypeGUID typeguid{ GetTypeName<T>() };
               TypeAssetKey key{ typeguid ^ guid };
               if (mAssetRefs.find(key) != mAssetRefs.end()) {
@@ -226,13 +233,17 @@ namespace IGE {
 
                   //ImportAsset<T>(fp);
                   //I AM INSTANTIATING THE REF HERE INSTEAD OF IMPORT
-                  if (mPath2GUIDRegistry.find(fp) != mPath2GUIDRegistry.end()) {
+                  //if (mPath2GUIDRegistry.find(fp) != mPath2GUIDRegistry.end()) {
+                  if (!IsValidFilePath(fp)) { // if it is a special string like "cube"
+                      mGUID2PathRegistry.emplace(guid, fp);
+                      mPath2GUIDRegistry.emplace(fp, guid);
+                  }
                       InstantiateRefInAssetRefs<T>(guid, typeguid, fp);
                       LoadRef<T>(std::any_cast<Ref<T>&>(mAssetRefs.at(key)));
                       return guid;
-                  }
-                  else
-                      throw Debug::Exception<AssetManager>(Debug::LVL_ERROR, Msg("no such filepath imported"));
+                  //}
+                  //else
+                  //    throw Debug::Exception<AssetManager>(Debug::LVL_ERROR, Msg("no such filepath imported"));
               }
           }
           template< typename T >
@@ -242,6 +253,7 @@ namespace IGE {
 
           template< typename T >
           void UnloadRef(GUID const& guid) {
+
               TypeGUID typeguid{ GetTypeName<T>() };
               TypeAssetKey key{ typeguid ^ guid };
               if (mAssetRefs.find(key) != mAssetRefs.end())

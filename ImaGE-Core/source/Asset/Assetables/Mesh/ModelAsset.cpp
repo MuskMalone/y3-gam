@@ -63,6 +63,9 @@ namespace IGE {
 			//converting in imsh is done here
 			//assuming that this is an imsh file that is added via the assets folder
 			std::string fp{ AssetManager::GetInstance().GUIDToPath(guid) };
+			if (!IsValidFilePath(fp)) {
+				return new ModelAsset(fp);
+			}
 			std::string dirpath{ GetDirectoryPath(fp) };
 			std::filesystem::path const path{ fp };
 			std::string filename { GetFileName(fp) };
