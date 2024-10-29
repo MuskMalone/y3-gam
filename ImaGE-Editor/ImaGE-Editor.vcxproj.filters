@@ -74,6 +74,7 @@
       <Filter>GUI\Styles</Filter>
     </ClInclude>
     <ClInclude Include="source\GUI\Dockable\Debugging\RenderPassViewer.h" />
+    <ClInclude Include="source\GUI\Dockable\GameViewport.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\EditorApplication.cpp" />
@@ -121,5 +122,6 @@
     </ClCompile>
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\GUI\Dockable\Debugging\RenderPassViewer.cpp" />
+    <ClCompile Include="source\GUI\Dockable\GameViewport.cpp" />
   </ItemGroup>
 </Project>

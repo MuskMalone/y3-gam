@@ -659,6 +659,7 @@
     <ClInclude Include="source\Core\Components\Light.h" />
     <ClInclude Include="source\Graphics\RenderPass\GeomPass.h" />
     <ClInclude Include="source\Graphics\RenderPass\ShadowPass.h" />
+    <ClInclude Include="source\Graphics\RenderPass\FinalPass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -878,5 +879,6 @@
     <ClCompile Include="source\pch.cpp" />
     <ClCompile Include="source\Graphics\RenderPass\GeomPass.cpp" />
     <ClCompile Include="source\Graphics\RenderPass\ShadowPass.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\FinalPass.cpp" />
   </ItemGroup>
 </Project>

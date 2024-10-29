@@ -11,6 +11,7 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
+#include "CameraManager.h"
 
 namespace Graphics {
 	class EditorCamera;
@@ -22,5 +23,6 @@ namespace Graphics {
 		static void Release();
 		static void RenderScene();
 		static void RenderEditorScene(const EditorCamera& eCam);
+		static CameraManager mCameraManager; // Add CameraManager as a static member
 	};
 }

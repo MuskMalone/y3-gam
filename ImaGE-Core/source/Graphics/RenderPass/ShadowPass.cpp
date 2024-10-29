@@ -28,6 +28,32 @@ namespace Graphics {
 
   }
 
+  void ShadowPass::Render(const Component::Camera& camera, std::vector<ECS::Entity> const& entities) {
+      StartRender();
+      mActive = SetLightUniforms(camera, entities);
+
+      if (!mActive) { EndRender(); return; }
+
+      auto const& shader = mSpec.pipeline->GetShader();
+
+      // Render each entity
+      for (const auto& entity : entities) {
+          if (!entity.HasComponent<Component::Mesh>()) continue;
+
+          Renderer::SubmitInstance(
+              entity.GetComponent<Component::Mesh>().meshSource,
+              entity.GetComponent<Component::Transform>().worldMtx,
+              Color::COLOR_WHITE,
+              entity.GetEntityID(),
+              0
+          );
+      }
+
+      Renderer::RenderInstances();
+      EndRender();
+  }
+
+
   void ShadowPass::Render(EditorCamera const& cam, std::vector<ECS::Entity> const& entities) {
     StartRender();
     mActive = SetLightUniforms(cam, entities);
@@ -92,6 +118,47 @@ namespace Graphics {
     return found;
   }
 
+  //edit this, redundancy
+  bool ShadowPass::SetLightUniforms(Component::Camera const& cam, std::vector<ECS::Entity> const& entities) {
+      bool found{ false };
+
+      // iterate through entities to find the shadow-casting light
+      for (ECS::Entity const& entity : entities) {
+          if (!entity.HasComponent<Component::Light>()) { continue; }
+
+          Component::Light const& light{ entity.GetComponent<Component::Light>() };
+          Component::Transform const& transform{ entity.GetComponent<Component::Transform>() };
+
+          // only care about shadow casters
+          if (!light.castShadows) {
+              continue;
+          }
+          found = true;
+
+          // set uniforms
+          auto const& shader = mSpec.pipeline->GetShader();
+          shader->Use();
+
+          auto const orthoPlanes{ GetLightProjPlanes(cam, transform.worldPos, transform.worldRot * light.forwardVec) };
+
+#ifdef CAMERA_VIEW
+          shader->SetUniform("near",cam.nearClip);
+          shader->SetUniform("far", cam.farClip);
+#else
+          shader->SetUniform("near", orthoPlanes.first.z);
+          shader->SetUniform("far", orthoPlanes.second.z);
+#endif
+
+          shader->SetUniform("u_LightProjMtx", glm::ortho(orthoPlanes.first.x, orthoPlanes.second.x,
+              orthoPlanes.first.y, orthoPlanes.second.y, orthoPlanes.first.z, orthoPlanes.second.z));
+          shader->SetUniform("u_ViewProjMtx", cam.GetViewProjMatrix());
+
+          break;
+      }
+
+      return found;
+  }
+
   void ShadowPass::StartRender() {
     glEnable(GL_DEPTH_TEST);
     Begin();
@@ -118,5 +185,22 @@ namespace Graphics {
 
     return { min, max };
   }
+
+  //edit redundancy:
+  std::pair<glm::vec3, glm::vec3> ShadowPass::GetLightProjPlanes(Component::Camera const& cam, glm::vec3 const& lightPos, glm::vec3 const& lightDir) {
+      glm::mat4 const invViewProj{ glm::inverse(cam.GetViewProjMatrix()) * glm::lookAt(lightPos, glm::vec3(0.f)/*lightPos + lightDir*/, glm::vec3(0.f, 1.f, 0.f)) };
+      auto frustrumCorners{ sFrustrumCorners };
+
+      glm::vec4 min(FLT_MAX), max(-FLT_MAX);
+      for (glm::vec4& corner : frustrumCorners) {
+          corner = invViewProj * corner;
+          corner /= corner.w;
+          min = glm::min(min, corner);
+          max = glm::max(max, corner);
+      }
+
+      return { min, max };
+  }
+
 
 } // namespace Graphics

@@ -27,6 +27,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Persistent/Toolbar.h"
 #include "Dockable/Viewport.h"
 #include "Dockable/Layers.h"
+#include "Dockable/GameViewport.h"
 #pragma endregion
 
 namespace GUI {
@@ -50,6 +51,7 @@ namespace GUI {
     mWindows.reserve(8);
     mWindows.emplace_back(std::move(vp)); // viewport should always be first
 
+    mWindows.emplace_back(std::make_shared<GameViewport>("Game View"));
     mWindows.emplace_back(std::make_shared<Inspector>("Inspector"));
     mWindows.emplace_back(std::make_shared<SceneHierarchy>("Scene Hierarchy"));
     mWindows.emplace_back(std::make_shared<AssetBrowser>("Asset Browser"));
