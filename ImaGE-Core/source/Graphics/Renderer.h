@@ -102,6 +102,7 @@ namespace Graphics {
 		std::unordered_map<IGE::Assets::GUID, std::vector<InstanceData>> instanceBufferDataMap;
 		std::unordered_map<IGE::Assets::GUID, std::shared_ptr<VertexBuffer>> instanceBuffers;
 
+		IGE::Assets::GUID debugMeshSources[3];
 		Statistics stats;
 	};
 
@@ -134,6 +135,8 @@ namespace Graphics {
 		static void SetFinalFramebuffer(std::shared_ptr<Graphics::Framebuffer> const& framebuffer);
 		static IGE::Assets::GUID GetDefaultTexture();
 		static IGE::Assets::GUID GetWhiteTexture();
+
+		static IGE::Assets::GUID GetDebugMeshSource(size_t idx);
 	private:
 		static void SetQuadBufferData(glm::vec3 const& pos, glm::vec2 const& scale,
 			glm::vec3 const& norm, glm::vec2 const& texCoord,
