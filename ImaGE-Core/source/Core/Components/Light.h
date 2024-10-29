@@ -1,16 +1,16 @@
 #pragma once
 /*!*********************************************************************
-\file   Script.h
+\file   Light.h
 \author han.q\@digipen.edu
-\date   5 October 2024
+\date   27 October 2024
 \brief
-	This file contains the declaration of Script Component struct. This component
-	has a vector that stores all the c# script attached to the entity
+	This file contains the declaration of Light Component struct. It
+	contains the data members necessary to cast a light on the scene
+	and shadows if necessary.
 
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#include <string>
 #include <glm/glm.hpp>
 
 namespace Component {
@@ -24,37 +24,44 @@ namespace Component {
 	// @TODO: for use when shadows are improved on
 	struct ShadowConfig {
 		float bias;
+		float nearPlane;
 		// softness / shadow type
 	};
 
 	struct Light {
-		Light() = default;
+		Light() : forwardVec{ 0.f, 0.f, -1.f }, color{ 1.f, 1.f, 1.f }, type{ DIRECTIONAL }, mLightIntensity{ 1.f },
+			mInnerSpotAngle{ 5.f }, mOuterSpotAngle{ 12.5f }, mRange{ 10.f },
+			bias{ 0.05f }, nearPlane{ 0.2f }, castShadows{ false } {}
 
-		inline void Clear() noexcept { 
+		inline void Clear() noexcept {
+			forwardVec = { 0.f, 0.f, -1.f };
 			type = DIRECTIONAL;
-			position = direction = color = {};
-			// idk what the default values are
+			color = { 1.f, 1.f, 1.f };
+			mLightIntensity = 1.f;
 
+			mInnerSpotAngle = 5.f;
+			mOuterSpotAngle = 12.5f;
+			mRange = 10.f;
+			
 			castShadows = false;
 			bias = 0.05f;
 			nearPlane = 0.2f;
 		}
 
-		glm::vec3 position;        // Position of the light (used for Point and Spotlight)
-		glm::vec3 direction;       // Direction of the light (used for Directional and Spotlight)
-		glm::vec3 color;           // Color of the light
-		//ShadowConfig shadowConfig;
+		glm::vec3 forwardVec;		// Set default forward vector to face the -z-axis
+		glm::vec3 color;				// Color of the light
 		LightType type;
-		float linear;
-		float quadratic;
-		float radius;
+		float mLightIntensity;	// Intensity of the light
 
-		float cutOff;				// Spotlight
-		float outerCutOff;  // Spotlight
+		// SpotLight 
+		float mInnerSpotAngle;  // Inner spot angle in degrees
+		float mOuterSpotAngle;	// Outer spot angle in degrees
+		float mRange;						// Maximum range of the spotlight
 		
-		float bias = 0.05f;				// Shadows
-		float nearPlane = 0.2f;		// Shadows
-		bool castShadows = false;	// Shadows
+		// Shadows
+		float bias;
+		float nearPlane;
+		bool castShadows;
 	};
 
 } // namespace Component

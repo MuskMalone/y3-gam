@@ -38,6 +38,7 @@ namespace Graphics {
     // render the scene normally
     for (ECS::Entity const& entity : entities) {
       if (!entity.HasComponent<Component::Mesh>() || entity.HasComponent<Component::Light>()) { continue; }
+      if (!entity.GetComponent<Component::Mesh>().meshSource.IsValid()) { continue; }
 
       Graphics::Renderer::SubmitInstance(
         entity.GetComponent<Component::Mesh>().meshSource,
@@ -72,18 +73,18 @@ namespace Graphics {
       auto const& shader = mSpec.pipeline->GetShader();
       shader->Use();
 
-      auto const orthoPlanes{ GetLightProjPlanes(cam, transform.worldPos, light.direction) };
+      auto const orthoPlanes{ GetLightProjPlanes(cam, transform.worldPos, transform.worldRot * light.forwardVec) };
 
 #ifdef CAMERA_VIEW
       shader->SetUniform("near", cam.GetNearPlane());
       shader->SetUniform("far", cam.GetFarPlane());
 #else
-      shader->SetUniform("near", orthoPlanes.first.z);
+      shader->SetUniform("near", light.nearPlane);
       shader->SetUniform("far", orthoPlanes.second.z);
 #endif
 
       shader->SetUniform("u_LightProjMtx", glm::ortho(orthoPlanes.first.x, orthoPlanes.second.x,
-        orthoPlanes.first.y, orthoPlanes.second.y, orthoPlanes.first.z, orthoPlanes.second.z));
+        orthoPlanes.first.y, orthoPlanes.second.y, light.nearPlane, orthoPlanes.second.z));
       //shader->SetUniform("u_ViewProjMtx", cam.GetViewProjMatrix());
 
       break;

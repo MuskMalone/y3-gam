@@ -32,12 +32,27 @@ uniform sampler2D[16] u_AlbedoMaps;
 uniform sampler2D[16] u_NormalMaps;
 
 //lighting parameters
+const int typeDir = 0;
+const int typeSpot = 1;
+const int maxLights = 10;
 uniform vec3 u_CamPos;       // Camera position in world space
-// Single light source (hardcoded for now)
-const vec3 u_LightPos = vec3(5.0, 2.0, 5.0); // Example light position
-const vec3 u_LightColor = vec3(10.0, 10.0, 10.0);       // Example white light
-//uniform vec3 u_LightPos;     // Light position in world space
-//uniform vec3 u_LightColor;   // Light color
+uniform int numlights;
+
+
+uniform int u_type[maxLights ];       // Camera position in world space
+
+uniform vec3 u_LightDirection[maxLights ]; // Directional light direction in world space
+uniform vec3 u_LightColor[maxLights ];     // Directional light color
+
+//For spotlight
+uniform  vec3 u_LightPos[maxLights ]; // Position of the spotlight
+uniform  float u_InnerSpotAngle[maxLights ]; // Inner spot angle in degrees
+uniform  float u_OuterSpotAngle[maxLights ]; // Outer spot angle in degrees
+uniform  float u_LightIntensity[maxLights ]; // Intensity of the light
+uniform  float u_Range[maxLights ]; // Maximum range of the spotlight
+
+
+
 
 const float PI = 3.14159265359;
 
@@ -55,45 +70,72 @@ void main(){
     
     vec4 albedoTexture = texture2D(u_AlbedoMaps[int(v_MaterialIdx)], texCoord);
     vec3 albedo = albedoTexture.rgb * u_Albedo; // Mixing texture and uniform
-
 	// Normalize inputs
     vec3 N = normalize(v_Normal);
-    vec3 V = normalize(u_CamPos - v_FragPos);    // View direction
-    vec3 L = normalize(u_LightPos - v_FragPos);  // Light direction
-    vec3 H = normalize(V + L);                   // Halfway vector
+    vec3 Lo = vec3(0); 
 
-	// Calculate radiance
-    vec3 lightColor = u_LightColor;
-    float distance = length(u_LightPos - v_FragPos);
-    float attenuation = 1.0 / (distance * distance);
-    vec3 radiance = lightColor * attenuation;
+    for (int i = 0; i < numlights; ++i) {
+        vec3 V = normalize(u_CamPos - v_FragPos);    // View direction
+        vec3 L = vec3(0);
+        vec3 lightColor = vec3(0); 
 
-    vec3 F0 = vec3(0.04); 
-         F0 = mix(F0, albedo, u_Metalness);
+        if(u_type[i] == typeDir)
+        {
+            L = normalize(-u_LightDirection[i]); // Light direction (directional light)
+            lightColor = u_LightColor[i];
+        }
+        if(u_type[i] == typeSpot)
+        {
+                // Spotlight setup
+            L = normalize(u_LightPos[i] - v_FragPos);  // Vector from spotlight to fragment
+            float distance = length(u_LightPos[i] - v_FragPos);
 
-    // cook-torrance brdf
-    float NDF = DistributionGGX(N, H, u_Roughness);        
-    float G   = GeometrySmith(N, V, L, u_Roughness);      
-    vec3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0); 
+            // Use u_LightDirection for spotlight effect calculation
+            vec3 spotDir = normalize(u_LightDirection[i]);
+            float spotCosAngle = dot(spotDir, -L);  // Angle between spotlight direction and L
 
-    vec3 kS = F;
-    vec3 kD = vec3(1.0) - kS;
-    kD *= 1.0 - u_Metalness;	
+            // Convert inner and outer angles from degrees to cosine for comparison
+            float innerAngleCos = cos(radians(u_InnerSpotAngle[i] * 0.5));
+            float outerAngleCos = cos(radians(u_OuterSpotAngle[i] * 0.5));
 
-    vec3 numerator    = NDF * G * F;
-    float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
-    vec3 specular     = numerator / denominator;  
-            
-    vec3 Lo = vec3(0.0);
-    // add to outgoing radiance Lo
-    float NdotL = max(dot(N, L), 0.0);                
-    Lo += (kD * albedo / PI + specular) * radiance * NdotL; 
+            // Calculate spotlight intensity effect
+            float spotEffect = smoothstep(outerAngleCos, innerAngleCos, spotCosAngle);
+
+            // Calculate distance attenuation
+            float attenuation = smoothstep(0.0, u_Range[i], u_Range[i] - distance) * spotEffect;
+
+            // Final light color for spotlight
+            lightColor = u_LightColor[i] * u_LightIntensity[i] * attenuation;
+        }
+
+        vec3 H = normalize(V + L);                   // Halfway vector
+
+        vec3 F0 = vec3(0.04); 
+            F0 = mix(F0, albedo, u_Metalness);
+
+        // cook-torrance brdf
+        float NDF = DistributionGGX(N, H, u_Roughness);        
+        float G   = GeometrySmith(N, V, L, u_Roughness);      
+        vec3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0); 
+
+        vec3 kS = F;
+        vec3 kD = vec3(1.0) - kS;
+        kD *= 1.0 - u_Metalness;	
+
+        vec3 numerator    = NDF * G * F;
+        float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
+        vec3 specular     = numerator / denominator;  
+                
+        float NdotL = max(dot(N, L), 0.0);
+        Lo += (kD * albedo / PI + specular) * lightColor * NdotL;
+     
+     
+    }
 
     vec3 ambient = vec3(0.01) * albedo * u_AO;
-    vec3 color = ambient + Lo;
+    vec3  color = ambient + Lo;
     color = color / (color + vec3(1.0));
     color = pow(color, vec3(1.0/2.2)); //gamma correction
-
     //change transparency here
     float alpha = u_Transparency;
 	fragColor = vec4(color, alpha) * v_Color;

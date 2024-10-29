@@ -765,6 +765,20 @@ namespace Graphics {
 		}
 	}
 
+	void Shader::SetUniform(std::string const& name, float* val, unsigned int count) {
+		GLint loc = GetUniformLocation(name);
+		if (loc >= 0) {
+			GLCALL(glUniform1fv(loc, count, val));
+		}
+	}
+
+	void Shader::SetUniform(std::string const& name, glm::vec3* val, unsigned int count) {
+		GLint loc = GetUniformLocation(name);
+		if (loc >= 0) {
+			GLCALL(glUniform3fv(loc, count, glm::value_ptr(val[0])));
+		}
+	}
+
 	void Shader::SetUniform(std::string const& name, GLuint64 bindlessHandle) {
 		// Get the location of the uniform in the shader
 		GLint loc = GetUniformLocation(name);
