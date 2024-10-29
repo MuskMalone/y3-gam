@@ -23,7 +23,7 @@ namespace IGE{
             //>
             //sample json output (mimics .vcproj)
             // "Assets":{
-            //    "MeshAsset":{
+            //    "ModelAsset":{
             //        123456789 : { "path": "../path/to/file", "layers" : "3", "interpreter" : "fbx", ... yada yada }
             //    }
             //    "TextureAsset":{

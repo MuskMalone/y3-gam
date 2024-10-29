@@ -71,112 +71,61 @@ namespace GUI
 
   void Viewport::Render(std::shared_ptr<Graphics::Framebuffer> const& framebuffer)
   {
-    ImGui::Begin(mWindowName.c_str());
+      ImGui::Begin(mWindowName.c_str());
 
-    ImVec2 const vpSize = ImGui::GetContentRegionAvail();
-    ImVec2 const vpStartPos{ ImGui::GetCursorScreenPos() };
+      ImVec2 const vpSize = ImGui::GetContentRegionAvail();
+      ImVec2 const vpStartPos{ ImGui::GetCursorScreenPos() };
 
-    // only register input if viewport is focused
-    bool const checkInput{ mIsDragging || mIsPanning || sMovingToEntity };
-    if ((ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) || checkInput) {
-      ProcessCameraInputs();
-    }
-    // auto focus window when middle or right-clicked upon
-    else if (ImGui::IsWindowHovered() && (ImGui::IsMouseClicked(ImGuiMouseButton_Right) || ImGui::IsMouseClicked(ImGuiMouseButton_Middle))) {
-      ImGui::FocusWindow(ImGui::GetCurrentWindow());
-    }
-
-    // update framebuffer
-    ImGui::Image(
-      reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(framebuffer->GetColorAttachmentID())),
-      vpSize,
-      ImVec2(0, 1),
-      ImVec2(1, 0)
-    );
-
-    ReceivePayload();
-
-    if (!UpdateGuizmos()) {
-      // object picking
-      if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
-        ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
-
-        // check if clicking outside viewport
-        if (!(offset.x < 0 || offset.x > vpSize.x || offset.y < 0 || offset.y > vpSize.y)) {
-          Graphics::FramebufferSpec const& fbSpec{ framebuffer->GetFramebufferSpec() };
-
-          framebuffer->Bind();
-          int const entityId{ framebuffer->ReadPixel(1,
-            static_cast<int>(offset.x / vpSize.x * static_cast<float>(fbSpec.width)),
-            static_cast<int>((vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height))) };
-          framebuffer->Unbind();
-
-          if (entityId > 0) {
-            ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
-              root{ GetRootEntity(selected) };
-            sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
-            GUIManager::SetSelectedEntity(sPrevSelectedEntity);
-          }
-          else {
-            sPrevSelectedEntity = {};
-            GUIManager::SetSelectedEntity({});
-          }
-        }
+      // only register input if viewport is focused
+      bool const checkInput{ mIsDragging || mIsPanning || sMovingToEntity };
+      if ((ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) || checkInput) {
+          ProcessCameraInputs();
       }
-    }
+      // auto focus window when middle or right-clicked upon
+      else if (ImGui::IsWindowHovered() && (ImGui::IsMouseClicked(ImGuiMouseButton_Right) || ImGui::IsMouseClicked(ImGuiMouseButton_Middle))) {
+          ImGui::FocusWindow(ImGui::GetCurrentWindow());
+      }
 
-    if (GUIManager::GetSelectedEntity() > 0 && 
-        GUIManager::GetSelectedEntity().HasComponent<Component::Transform>()) {
-        ImGuizmo::SetDrawlist();
-        ImVec2 windowPos{ ImGui::GetWindowPos() };
+      // update framebuffer
+      ImGui::Image(
+          reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(framebuffer->GetColorAttachmentID())),
+          vpSize,
+          ImVec2(0, 1),
+          ImVec2(1, 0)
+      );
 
-        float windowWidth { ImGui::GetWindowWidth() };
-        float windowHeight{ ImGui::GetWindowHeight() };
-        ImGuizmo::SetRect(windowPos.x, windowPos.y, windowWidth, windowHeight);
-        auto& transform{ GUIManager::GetSelectedEntity().GetComponent<Component::Transform>() };
-        auto modelMatrix{ transform.worldMtx };
-        auto modelMatrixPrev{ transform.worldMtx };
-        auto viewMatrix{ renderTarget.scene.GetEditorCamera().GetViewMatrix() };
-        auto projMatrix{ renderTarget.scene.GetEditorCamera().GetProjMatrix() };
+      ReceivePayload();
 
-        static auto currentOperation = ImGuizmo::TRANSLATE ;
-        if (ImGui::IsWindowFocused() || ImGui::IsWindowHovered()) {
-            if (ImGui::IsKeyPressed(ImGuiKey_T))
-                currentOperation = ImGuizmo::TRANSLATE;
-            else if (ImGui::IsKeyPressed(ImGuiKey_R)) 
-                currentOperation = ImGuizmo::ROTATE;
-            else if (ImGui::IsKeyPressed(ImGuiKey_S)) 
-                currentOperation = ImGuizmo::SCALE;
-        }
-        ImGuizmo::Manipulate(
-            glm::value_ptr(viewMatrix),           
-            glm::value_ptr(projMatrix),     
-            currentOperation,                           
-            ImGuizmo::LOCAL,                 
-            glm::value_ptr(modelMatrix)          
-        );
-        if (ImGuizmo::IsUsing()) {
-            glm::vec3 s{}, r{}, t{};
-            ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(modelMatrix),
-                glm::value_ptr(t), glm::value_ptr(r), glm::value_ptr(s));
-            glm::vec3 s2{}, r2{}, t2{};
-            ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(modelMatrixPrev),
-                glm::value_ptr(t2), glm::value_ptr(r2), glm::value_ptr(s2));
-            if (currentOperation == ImGuizmo::TRANSLATE) {
-                transform.position += std::move(t - t2);
-            }
-            if (currentOperation == ImGuizmo::ROTATE) {
-                auto localRot{ transform.eulerAngles + std::move(r - r2) };
-                transform.SetLocalRotWithEuler(localRot);
-            }
-            if (currentOperation == ImGuizmo::SCALE) {
-                transform.scale += std::move(s - s2);
-            }
-            transform.modified = true;
-            TransformHelpers::UpdateWorldTransform(GUIManager::GetSelectedEntity());  // must call this to update world transform according to changes to local
-        }
-    }
-    ImGui::End();
+      if (!UpdateGuizmos()) {
+          // object picking
+          if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
+              ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
+
+              // check if clicking outside viewport
+              if (!(offset.x < 0 || offset.x > vpSize.x || offset.y < 0 || offset.y > vpSize.y)) {
+                  Graphics::FramebufferSpec const& fbSpec{ framebuffer->GetFramebufferSpec() };
+
+                  framebuffer->Bind();
+                  int const entityId{ framebuffer->ReadPixel(1,
+                    static_cast<int>(offset.x / vpSize.x * static_cast<float>(fbSpec.width)),
+                    static_cast<int>((vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height))) };
+                  framebuffer->Unbind();
+
+                  if (entityId > 0) {
+                      ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
+                          root{ GetRootEntity(selected) };
+                      sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
+                      GUIManager::SetSelectedEntity(sPrevSelectedEntity);
+                  }
+                  else {
+                      sPrevSelectedEntity = {};
+                      GUIManager::SetSelectedEntity({});
+                  }
+              }
+          }
+      }
+
+      ImGui::End();
   }
 
   void Viewport::ProcessCameraInputs() {
@@ -365,7 +314,7 @@ namespace GUI
         {
           // @TODO: ABSTRACT MORE; MAKE IT EASIER TO ADD A MESH
           ECS::Entity newEntity{ ECS::EntityManager::GetInstance().CreateEntityWithTag(assetPayload.GetFileName()) };
-          IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>(assetPayload.GetFilePath()) };
+          IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
           newEntity.EmplaceComponent<Component::Mesh>(meshSrc, assetPayload.GetFileName());
           break;
         }

@@ -51,6 +51,8 @@ namespace GUI {
       { typeid(Component::Tag), ICON_FA_TAG ICON_PADDING },
       { typeid(Component::Transform), ICON_FA_ROTATE ICON_PADDING },
       { typeid(Component::BoxCollider), ICON_FA_BOMB ICON_PADDING },
+      { typeid(Component::SphereCollider), ICON_FA_CIRCLE ICON_PADDING },
+      { typeid(Component::CapsuleCollider), ICON_FA_CAPSULES ICON_PADDING },
       { typeid(Component::Layer), ICON_FA_LAYER_GROUP ICON_PADDING },
       { typeid(Component::Material), ICON_FA_GEM ICON_PADDING },
       { typeid(Component::Mesh), ICON_FA_CUBE ICON_PADDING },
@@ -147,7 +149,7 @@ namespace GUI {
         rttr::type const colliderType{ rttr::type::get<Component::BoxCollider>() };
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(colliderType);
 
-        if (BoxColliderComponentWindow(currentEntity, std::string(ICON_FA_BOMB), componentOverriden)) {
+        if (BoxColliderComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
             prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::BoxCollider>());
@@ -159,7 +161,7 @@ namespace GUI {
           rttr::type const colliderType{ rttr::type::get<Component::SphereCollider>() };
           componentOverriden = prefabOverride && prefabOverride->IsComponentModified(colliderType);
 
-          if (SphereColliderComponentWindow(currentEntity, std::string(ICON_FA_BOMB), componentOverriden)) {
+          if (SphereColliderComponentWindow(currentEntity, componentOverriden)) {
               SetIsComponentEdited(true);
               if (prefabOverride) {
                   prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::SphereCollider>());
@@ -171,7 +173,7 @@ namespace GUI {
           rttr::type const colliderType{ rttr::type::get<Component::CapsuleCollider>() };
           componentOverriden = prefabOverride && prefabOverride->IsComponentModified(colliderType);
 
-          if (CapsuleColliderComponentWindow(currentEntity, std::string(ICON_FA_BOMB), componentOverriden)) {
+          if (CapsuleColliderComponentWindow(currentEntity, componentOverriden)) {
               SetIsComponentEdited(true);
               if (prefabOverride) {
                   prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::CapsuleCollider>());
@@ -707,7 +709,7 @@ namespace GUI {
             if (i != 0) {
 
               //mesh.mesh = std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromString(selected));
-                mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>(selected);
+                mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(selected);
             }
 
             if (selected != mesh.meshName) {
@@ -728,7 +730,7 @@ namespace GUI {
           AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
           if (assetPayload.mAssetType == AssetPayload::MODEL) {
             //auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
-            mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>(assetPayload.GetFilePath());
+            mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath());
             mesh.meshName = assetPayload.GetFileName();
             modified = true;
           }
@@ -835,8 +837,8 @@ namespace GUI {
     return modified;
   }
 
-  bool Inspector::BoxColliderComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
-    bool const isOpen{ WindowBegin<Component::BoxCollider>("Box Collider", icon, highlight) };
+  bool Inspector::BoxColliderComponentWindow(ECS::Entity entity, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::BoxCollider>("Box Collider", highlight) };
     bool modified{ false };
 
     if (isOpen) {
@@ -887,9 +889,9 @@ namespace GUI {
     return modified;
   }
 
-  bool Inspector::SphereColliderComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight)
+  bool Inspector::SphereColliderComponentWindow(ECS::Entity entity, bool highlight)
   {
-      bool const isOpen{ WindowBegin<Component::SphereCollider>("Sphere Collider", icon, highlight) };
+      bool const isOpen{ WindowBegin<Component::SphereCollider>("Sphere Collider", highlight) };
       bool modified{ false };
 
       if (isOpen) {
@@ -948,9 +950,9 @@ namespace GUI {
       return modified;
   }
 
-  bool Inspector::CapsuleColliderComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight)
+  bool Inspector::CapsuleColliderComponentWindow(ECS::Entity entity, bool highlight)
   {
-      bool const isOpen{ WindowBegin<Component::CapsuleCollider>("Capsule Collider", icon, highlight) };
+      bool const isOpen{ WindowBegin<Component::CapsuleCollider>("Capsule Collider", highlight) };
       bool modified{ false };
 
       if (isOpen) {
@@ -1200,28 +1202,18 @@ namespace GUI {
         
         // @TODO: EDIT WHEN NEW COMPONENTS
         DrawAddComponentButton<Component::BoxCollider>("Collider");
+        DrawAddComponentButton<Component::CapsuleCollider>("Capsule Collider");
         DrawAddComponentButton<Component::Layer>("Layer");
         DrawAddComponentButton<Component::Material>("Material");
         DrawAddComponentButton<Component::Mesh>("Mesh");
         DrawAddComponentButton<Component::RigidBody>("RigidBody");
         DrawAddComponentButton<Component::Script>("Script");
+        DrawAddComponentButton<Component::SphereCollider>("Sphere Collider");
         DrawAddComponentButton<Component::Tag>("Tag");
         DrawAddComponentButton<Component::Text>("Text");
         DrawAddComponentButton<Component::Transform>("Transform");
         DrawAddComponentButton<Component::Light>("Light");
-        DrawAddComponentButton<Component::BoxCollider>("Box Collider", ICON_FA_CUBE);
-        DrawAddComponentButton<Component::SphereCollider>("Sphere Collider", ICON_FA_CIRCLE);
-        DrawAddComponentButton<Component::CapsuleCollider>("Capsule Collider", ICON_FA_CAPSULES);
 
-        //DrawAddComponentButton<Component::Layer>("Layer", ICON_FA_LAYER_GROUP);
-        //DrawAddComponentButton<Component::Material>("Material", ICON_FA_GEM);
-        //// @TODO: Temporarily forcing material to be added with mesh
-        //DrawAddComponentButton<Component::Mesh>("Mesh", ICON_FA_CUBE);
-        //DrawAddComponentButton<Component::RigidBody>("RigidBody", ICON_FA_CAR);
-        //DrawAddComponentButton<Component::Script>("Script", ICON_FA_FILE_CODE);
-        //DrawAddComponentButton<Component::Tag>("Tag", ICON_FA_TAG);
-        //DrawAddComponentButton<Component::Text>("Text", ICON_FA_FONT);
-        //DrawAddComponentButton<Component::Transform>("Transform", std::string(ICON_FA_ROTATE));
 
         ImGui::EndTable();
       }

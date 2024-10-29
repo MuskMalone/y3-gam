@@ -271,7 +271,7 @@ namespace IGE {
 				xfm = physx::PxTransform(collider.positionOffset);
 			}
 
-			physx::PxShape* shape { CreateShape(geom, collider) };//mPhysics->createShape(geom, *mMaterial, true) };
+			physx::PxShape* shape { CreateShape(geom, collider, entity) };//mPhysics->createShape(geom, *mMaterial, true) };
 			rb->setGlobalPose(xfm);
 			shape->setLocalPose({ collider.positionOffset, collider.rotationOffset });
 			collider.idx = rb->getNbShapes();
@@ -295,7 +295,7 @@ namespace IGE {
 			rb = mPhysics->createRigidDynamic(xfm);
 			//ugly syntax to get the shape 
 			//assumes that there is only one shape (there should only ever be one starting out)
-			physx::PxShape* shape { CreateShape(geom, collider) };//mPhysics->createShape(geom, *mMaterial, true) };
+			physx::PxShape* shape { CreateShape(geom, collider, entity) };//mPhysics->createShape(geom, *mMaterial, true) };
 			shape->setLocalPose({ collider.positionOffset, collider.rotationOffset });
 			collider.idx = rb->getNbShapes();
 			rb->attachShape(*shape);
@@ -340,13 +340,13 @@ namespace IGE {
 		}
 
 		template<typename _physx_type, typename _collider_component>
-		physx::PxShape* PhysicsSystem::CreateShape(_physx_type const& geom, _collider_component const& collider)
+		physx::PxShape* PhysicsSystem::CreateShape(_physx_type const& geom, _collider_component const& collider, ECS::Entity entity)
 		{
 			physx::PxShape* shapeptr{ mPhysics->createShape(geom, *mMaterial, true) };
 
 			if (std::shared_ptr<Systems::LayerSystem> layerSys =
 				Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
-				layerSys->SetupShapeFilterData(&shape, entity);
+				layerSys->SetupShapeFilterData(&shapeptr, entity);
 			}
 			SetColliderAsSensor(shapeptr, collider.sensor);
 			return shapeptr;

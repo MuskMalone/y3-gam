@@ -188,12 +188,14 @@ namespace IGE {
               ref.Load();
           }
           template <typename T>
-          void LoadRef(GUID const& guid) {
+          GUID LoadRef(GUID const& guid) {
               TypeGUID typeguid{ GetTypeName<T>() };
               TypeAssetKey key{ typeguid ^ guid };
               std::string fp { GUIDToPath(guid) };
-              if (mAssetRefs.find(key) != mAssetRefs.end())
+              if (mAssetRefs.find(key) != mAssetRefs.end()) {
                   LoadRef<T>(std::any_cast<Ref<T>&>(mAssetRefs.at(key)));
+                  return guid;
+              }
               else {
                   //I AM INSTANTIATING THE REF HERE INSTEAD OF IMPORT
                   if (mPath2GUIDRegistry.find(fp) != mPath2GUIDRegistry.end()) {

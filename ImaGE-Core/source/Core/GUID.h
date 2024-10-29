@@ -43,14 +43,13 @@ namespace IGE {
 				//mSeed{ other.mSeed}, 
 				mID { other.mID } {}
 
-			bool IsValid() const noexcept { return mSeed != "INVALID"; }
 			operator uint64_t () { return mID; }
 			operator const uint64_t() const { return mID; }
 
 			bool operator==(const GUID& other) const { return mID == other.mID; } 
 			bool operator<(const GUID& other) const { return mID < other.mID; }
 			//std::string const& GetSeed() const noexcept { return mSeed; }
-			bool IsValid() { return mID != 0; }
+			bool IsValid() const noexcept { return mID != 0; }
 			void Reset() { mID = 0; }
 		private:
 			//static std::mt19937_64 sEng;

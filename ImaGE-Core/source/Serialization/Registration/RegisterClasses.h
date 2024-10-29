@@ -95,7 +95,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   {
     using T = IGE::Core::GUID<IGE::Assets::AssetGUIDTag>;
     rttr::registration::class_<T>("AssetGUID")
-      .property("Seed", &T::mSeed)
+      //.property("Seed", &T::mSeed)
       .property("ID", &T::mID);
   }
 
