@@ -10,21 +10,21 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
 #include <memory>
-#include "Pipeline.h"
-#include "Texture.h"
-#include "Core/Entity.h"
+#include <vector>
+#include <Graphics/Pipeline.h>
+
+namespace ECS { class Entity; }
 
 namespace Graphics {
     class EditorCamera;
 
-    struct RenderPassSpec
-    {
+    struct RenderPassSpec {
         std::shared_ptr<Pipeline> pipeline;
         std::string debugName;
         glm::vec4 markerColor;
     };
 
-    class RenderPass : public std::enable_shared_from_this<RenderPass>{
+    class RenderPass : public std::enable_shared_from_this<RenderPass> {
     public:
         RenderPass(const RenderPassSpec& spec);
         RenderPassSpec& GetSpecification();
@@ -39,13 +39,14 @@ namespace Graphics {
         //void Prepare();
         void Begin();
         void End();
-        void Render(EditorCamera const& camera, std::vector<ECS::Entity> const& entities); //Change this to take something like scene data instead of entities
+        virtual void Render(EditorCamera const& camera, std::vector<ECS::Entity> const& entities) = 0; //Change this to take something like scene data instead of entities
 
         //std::shared_ptr<Texture> GetOutput(uint32_t index);
 
-        static std::shared_ptr<RenderPass> Create(const RenderPassSpec& spec);
+        template <typename T>
+        static std::shared_ptr<T> Create(const RenderPassSpec& spec) { return std::make_shared<T>(spec); }
 
-    private:
+    protected:
         RenderPassSpec mSpec{};
     };
-}
+} // namespace Graphics

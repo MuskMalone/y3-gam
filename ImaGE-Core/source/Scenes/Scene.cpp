@@ -47,70 +47,43 @@ void Scene::Init()
   );
 
  
-  mEcam = editorCam;
+  //mEcam = editorCam;
   //IGE::Assets::GUID cubeMeshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>("../Assets/Models/bunny_high_poly.imsh");//Graphics::MeshFactory::CreateModelFromImport("../Assets/Models/bunny_high_poly.imsh");
   //mesh0 = std::make_shared<Graphics::Mesh>(cubeMeshSource);
 
   //IGE::Assets::GUID pyrMeshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>("Cube");
   //mesh1 = std::make_shared<Graphics::Mesh>(pyrMeshSource);
-  //
-  //// Create a debug albedo texture (bright magenta checkerboard)
-  //IGE::Assets::GUID texguid { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\white.dds")) };
-  //
-  //std::shared_ptr<Graphics::Shader> shader = std::make_shared<Graphics::Shader>("../Assets/Shaders/Default.vert.glsl", "../Assets/Shaders/Default.frag.glsl");
-  //std::shared_ptr<Graphics::MaterialSource> materialSource0 = Graphics::MaterialSource::Create(shader);
-  //materialSource0->SetAlbedoMap(texguid);
-  //std::shared_ptr<Graphics::MaterialSource> materialSource1 = Graphics::MaterialSource::Create(shader);
-  //materialSource1->SetAlbedoMap(texguid);
-  ////=====================================================================================================================
-
-  //for (int i = 0; i < 5; ++i) {
-  //    for (int j = 0; j < 5; ++j) {
-  //        // Create a new entity
-  //        ECS::Entity entity = ECS::EntityManager::GetInstance().CreateEntity();
-
-  //        // Set up the TransformComponent with different offsets
-  //        auto& transformComponent = entity.GetComponent<Component::Transform>();
-  //        transformComponent.worldPos = glm::vec3(i * 2.0f, 0.0f, j * 2.0f); // Offset for position
-  //        transformComponent.worldScale = glm::vec3(1.0f);  // Default scale
-  //        transformComponent.worldRot = { 1.f, 0.f, 0.f, 0.f };  // No rotation
-  //        transformComponent.modified = true;
-
-  //        // Set up the MeshComponent
-  //        auto& renderComponent = entity.EmplaceComponent<Component::Mesh>();
-
-  //        // Assign alternating meshes between cube and pyramid
-  //        if ((i + j) % 2 == 0) {
-  //            renderComponent.mesh = mesh0; // Assign cube mesh
-  //            transformComponent.worldScale = glm::vec3(5.f);
-  //        }
-  //        else {
-  //          renderComponent.mesh = mesh1; // Assign pyramid mesh
-  //        }
-
-  //        // Set up the MaterialComponent
+//  
+//  //=====================================================================================================================
+//
+//// Create 6 cube entities with different matIdx values
+//  int numRows = 20; // Total number of rows
+//  int numCols = 10; // Total number of columns
+//  int matIdx = 0; // Start material index at 0
+//
+//  for (int i = 0; i < numRows; ++i) { // Loop through rows
+//      for (int j = 0; j < numCols; ++j) { // Loop through columns
+//          // Create a new entity
+//          ECS::Entity entity = ECS::EntityManager::GetInstance().CreateEntity();
+//
+//          // Set up the TransformComponent with different offsets
+//          auto& transformComponent = entity.GetComponent<Component::Transform>();
+//          transformComponent.worldPos = glm::vec3(i * 2.0f, 0.0f, j * 2.0f); // Offset for position
+//          transformComponent.worldScale = glm::vec3(1.0f);  // Default scale
+//          transformComponent.worldRot = { 1.f, 0.f, 0.f, 0.f };  // No rotation
+//          transformComponent.modified = true;
+//
+//          // Set up the MeshComponent
+//          auto& renderComponent = entity.EmplaceComponent<Component::Mesh>();
+//          renderComponent.mesh = mesh1; // Assign cube mesh
+//
+//          // Set up the MaterialComponent
+//          auto& materialComponent = entity.EmplaceComponent<Component::Material>();
+//          materialComponent.matIdx = i; // Assign current matIdx based on the row number
+//      }
+//  }
 
 
-  //        // Assign different materials based on the mesh type
-  //        auto& materialComponent = entity.EmplaceComponent<Component::Material>();
-  //        if ((i + j) % 2 == 0) {
-  //            materialComponent.matIdx = 0;
-  //            //std::shared_ptr<Graphics::MaterialSource> materialSource;
-  //            //materialSource = materialSource0; // Assume this is a pre-defined MaterialSource for the cube
-  //            //materialComponent.material = std::make_shared<Graphics::Material>(materialSource);
-  //        }
-  //        else {
-  //            materialComponent.matIdx = 1;
-  //          // Assume this is a pre-defined MaterialSource for the pyramid
-  //        }
-
-  //        // Create a material instance from the MaterialSource and assign it to the material component
-
-
-  //        // Optionally, set per-instance material properties if needed
-  //       // materialComponent.material->SetAlbedoColor(glm::vec3(1.0f, 0.5f, 0.31f)); // Example customization
-  //    }
-  //}
 
 }
 
@@ -161,7 +134,7 @@ void Scene::Draw() const
   //}
 
   //Graphics::Renderer::RenderSceneEnd();
-  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+  
  
   glBindVertexArray(0);
 }

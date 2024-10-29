@@ -60,36 +60,7 @@ namespace Graphics {
 		// copy image data from client memory to GPU texture buffer memory
 		glTextureSubImage2D(mTexHdl, 0, 0, 0, mWidth, mHeight,
 			GL_RGBA, GL_UNSIGNED_BYTE, img->pixels);
-//		// Load image using stb_image
-//		int width, height, channels;
-//		stbi_set_flip_vertically_on_load(true);
-//		unsigned char* data = stbi_load(path.c_str(), &width, &height, &channels, STBI_rgb_alpha);
-//#ifndef _INSTALLER
-//		if (!data) {
-//			LoggingSystem::GetInstance().Log(LogLevel::ERROR_LEVEL, "ERROR: Failed to load texture: " + path + " ! ", __FUNCTION__);
-//		}
-//#endif
-//
-//		mWidth = static_cast<unsigned int>(width);
-//		mHeight = static_cast<unsigned int>(height);
-//
-//		glCreateTextures(GL_TEXTURE_2D, 1, &mTexHdl);
-//		// allocate GPU storage for texture image data loaded from file
-//		glTextureStorage2D(mTexHdl, 1, GL_RGBA8, mWidth, mHeight);
-//
-//
-//		// Set texture parameters
-//		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-//		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-//		glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-//		glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-//
-//		// copy image data from client memory to GPU texture buffer memory
-//		glTextureSubImage2D(mTexHdl, 0, 0, 0, mWidth, mHeight,
-//			GL_RGBA, GL_UNSIGNED_BYTE, data);
-//		// client memory not required since image is buffered in GPU memory
-//		stbi_image_free(data);
-//		stbi_set_flip_vertically_on_load(false);
+
 		if (mIsBindless) {
 			InitBindlessTexture();
 		}
@@ -223,7 +194,7 @@ namespace Graphics {
 
 	bool Texture::IsBindless() const
 	{
-		return mIsBindless;
+		return false;// mIsBindless;
 	}
 
 	/*  _________________________________________________________________________ */
@@ -236,7 +207,7 @@ namespace Graphics {
 	*/
 	void Texture::SetData(void* data) {
 		//TODO may add format to texture member variables
-		glTextureSubImage2D(mTexHdl, 0, 0, 0, mWidth, mHeight, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		GLCALL(glTextureSubImage2D(mTexHdl, 0, 0, 0, mWidth, mHeight, GL_RGBA, GL_UNSIGNED_BYTE, data));
 	}
 
 	/*  _________________________________________________________________________ */
@@ -248,11 +219,11 @@ namespace Graphics {
 	This function binds the texture to the specified texture unit.
 	*/
 	void Texture::Bind(unsigned int texUnit) const {
-		if (mIsBindless) {
-			Debug::DebugLogger::GetInstance().LogWarning("Bind() called on a bindless texture. This operation is not applicable.");
-			return;
-		}
-		glBindTextureUnit(texUnit, mTexHdl);
+		//if (mIsBindless) {
+		//	Debug::DebugLogger::GetInstance().LogWarning("Bind() called on a bindless texture. This operation is not applicable.");
+		//	return;
+		//}
+		GLCALL(glBindTextureUnit(texUnit, mTexHdl));
 	}
 
 	/*  _________________________________________________________________________ */
@@ -264,8 +235,8 @@ namespace Graphics {
 	This function unbinds the texture from the specified texture unit.
 	*/
 	void Texture::Unbind(unsigned int texUnit) const {
-		if (mIsBindless) return;
-		glBindTextureUnit(texUnit, 0);
+		//if (mIsBindless) return;
+		GLCALL(glBindTextureUnit(texUnit, 0));
 	}
 
 	/*  _________________________________________________________________________ */
@@ -291,6 +262,7 @@ namespace Graphics {
 		}
 		else {
 			Debug::DebugLogger::GetInstance().LogError("Bindless textures are not supported on this system.");
+			std::cout << "NOT SUPPORSED" << std::endl;
 		}
 	}
 

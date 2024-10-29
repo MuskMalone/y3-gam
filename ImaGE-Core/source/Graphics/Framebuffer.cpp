@@ -58,6 +58,9 @@ namespace Graphics
             case FramebufferTextureFormat::DEPTH24STENCIL8:
                 Utils::Framebuffer::AttachDepthTexture(mDepthAttachment, GL_DEPTH24_STENCIL8, GL_DEPTH_STENCIL_ATTACHMENT, mSpec.width, mSpec.height);
                 break;
+            case FramebufferTextureFormat::SHADOW_MAP:
+              Utils::Framebuffer::AttachShadowMapTexture(mDepthAttachment, mSpec.width, mSpec.height);
+              break;
             }
         }
 
@@ -125,6 +128,11 @@ namespace Graphics
         }
         return mColorAttachments[index];
     }
+
+    uint32_t Framebuffer::GetDepthAttachmentID() const noexcept {
+      return mDepthAttachment;
+    }
+
     FramebufferSpec const& Framebuffer::GetFramebufferSpec() const {
         return mSpec;
     }

@@ -30,16 +30,19 @@ namespace GUI {
     /*!*********************************************************************
     \brief
       Initializes the GUIManager along with all other GUI elements
+    \param renderTarget
+      Reference to the render target holding the framebuffer and editor
+      camera to initialize the viewport class
     ************************************************************************/
-    void Init();
+    void Init(Graphics::RenderTarget& renderTarget);
 
     /*!*********************************************************************
     \brief
       Updates all GUI elements managed by the class
-    \param renderTarget
-      The render target to be passed into the viewport
+    \param framebuffer
+      Theframebuffer to be passed into the viewport
     ************************************************************************/
-    void UpdateGUI(Graphics::RenderTarget& renderTarget);
+    void UpdateGUI(std::shared_ptr<Graphics::Framebuffer> const& framebuffer);
     
     /*!*********************************************************************
     \brief

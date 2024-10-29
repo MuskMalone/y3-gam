@@ -24,7 +24,6 @@ project "ImaGE-Game"
       "../ImaGE-Core/source/External/glad/include",
       "../ImaGE-Core/source/External/fmod/include",
       "../ImaGE-Core/source/External/ImTerm/",
-
       
       "../Libraries/assimp/include/**",
       "../Libraries/entt/single_include",
@@ -39,8 +38,12 @@ project "ImaGE-Game"
       "../Libraries/PhysX/physx/include",
       "../Libraries/PhysX/pxshared/include/**",
       "../Libraries/PhysX/pxshared/include",
-      "../Libraries/mono/msvc/include/**",
-      "../Libraries/Built-Libraries/Debug/Libraries/rttr/**",
+      --"../Libraries/filewatch",
+      --"../Libraries/mono/**",
+      "../ImaGE-Core/source/External/filewatch",
+      "../ImaGE-Core/source/External/mono/**",
+      
+      "../Libraries/rttr/Built-Libraries/Debug/Libraries/rttr/**",
       "../Libraries/DirectXTex/**"
    }
 
@@ -69,10 +72,17 @@ project "ImaGE-Game"
        runtime "Debug"
        symbols "On"
 
+       prebuildcommands {
+         --"{COPYFILE} %[%{wks.location}Libraries/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
+            "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
+         }
        postbuildcommands {
          "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/debug/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}ImaGE-Core/source/Externals/fmod/lib/fmodL.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]"
+         "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/fmod/lib/fmodL.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
+         --"{COPYDIR} %[%{wks.location}Libraries/mono/4.5] %[%{cfg.targetdir}/4.5]"
+         "{COPYDIR} %[%{wks.location}ImaGE-Core/source/External/mono/4.5] %[%{cfg.targetdir}/4.5]",
+         "{COPYFILE} %[%{wks.location}Libraries/rttr/Built-Libraries/Debug/bin/Debug/rttr_core_d.dll] %[%{cfg.targetdir}]",
       }
 
    filter "configurations:Release"
@@ -88,14 +98,22 @@ project "ImaGE-Game"
        optimize "On"
        symbols "On"
 
+       prebuildcommands {
+         --"{COPYFILE} %[%{wks.location}Libraries/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
+         }
        postbuildcommands {
          "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}ImaGE-Core/source/Externals/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]"
+         "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
+         --"{COPYDIR} %[%{wks.location}Libraries/mono/4.5] %[%{cfg.targetdir}/4.5]"
+         "{COPYDIR} %[%{wks.location}ImaGE-Core/source/External/mono/4.5] %[%{cfg.targetdir}/4.5]",
+         "{COPYFILE} %[%{wks.location}Libraries/rttr/Built-Libraries/Release/bin/Release/rttr_core.dll] %[%{cfg.targetdir}]",
       }
 
    filter "configurations:Distribution"
       defines {
+         "NDEBUG",
          "DISTRIBUTION",
          "_CRT_SECURE_NO_WARNINGS",
          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
@@ -107,8 +125,15 @@ project "ImaGE-Game"
       optimize "On"
       symbols "Off"
 
+      prebuildcommands {
+         --"{COPYFILE} %[%{wks.location}Libraries/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
+      }
       postbuildcommands {
          "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{wks.location}ImaGE-Core/source/Externals/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]"
+         "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
+         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
+         --"{COPYDIR} %[%{wks.location}Libraries/mono/4.5] %[%{cfg.targetdir}/4.5]"
+         "{COPYDIR} %[%{wks.location}ImaGE-Core/source/External/mono/4.5] %[%{cfg.targetdir}/4.5]",
+         "{COPYFILE} %[%{wks.location}Libraries/rttr/Built-Libraries/Release/bin/Release/rttr_core.dll] %[%{cfg.targetdir}]",
       }

@@ -61,8 +61,8 @@ namespace Reflection::ComponentUtils {
   void AddMesh(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Mesh, comp);
 
-    auto const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>(comp.meshName) };//Graphics::MeshFactory::CreateModelFromString(comp.meshName) };
-    entity.EmplaceOrReplaceComponent<Mesh>(std::make_shared<Graphics::Mesh>(meshSrc), comp.meshName);
+    IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>(comp.meshName) };//Graphics::MeshFactory::CreateModelFromString(comp.meshName) };
+    entity.EmplaceOrReplaceComponent<Mesh>(meshSrc, comp.meshName);
   }
 
   void AddText(ECS::Entity entity, rttr::variant const& var) {
@@ -75,6 +75,12 @@ namespace Reflection::ComponentUtils {
     EXTRACT_RAW_COMP(ProxyScriptComponent, comp);
 
     entity.EmplaceOrReplaceComponent<Script>(comp, entity);
+  }
+
+  void AddLight(ECS::Entity entity, rttr::variant const& var) {
+    EXTRACT_RAW_COMP(Light, comp);
+
+    entity.EmplaceOrReplaceComponent<Light>(comp);
   }
 
 } // namespace Reflection

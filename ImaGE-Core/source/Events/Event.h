@@ -28,6 +28,7 @@ namespace Events
     WINDOW_MINIMIZED,
     TOGGLE_FULLSCREEN,
     SPAWN_PREFAB,
+    ENTITY_ZOOM,
     LOAD_SCENE,
     UNLOAD_SCENE,
     REMOVE_COMPONENT,
@@ -37,6 +38,7 @@ namespace Events
     SAVE_SCENE,
     SCENE_MODIFIED,
     SCENE_STATE_CHANGE,
+    LAYER_MODIFIED
   };
 
   class Event

@@ -13,7 +13,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <string>
 #include <stack>
 #include <Events/EventCallback.h>
-#include <Reflection/ObjectFactory.h>
 
 namespace Scenes
 {
@@ -177,7 +176,6 @@ namespace Scenes
 
     std::stack<SaveState> mSaveStates;  // used to temporarily store scene saves when playing/stopping/transitioning to PrefabEditor
     std::string mSceneName, mTempDir;
-    Reflection::ObjectFactory* mObjFactory;
     SceneState mSceneState{};
     std::vector<std::function<void()>> mMainThreadQueue;
     std::mutex mMainThreadQueueMutex;

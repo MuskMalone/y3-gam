@@ -19,6 +19,16 @@ namespace Graphics {
         return mPosition;
     }
 
+    float EditorCamera::GetFOV() const noexcept {
+      return mFov;
+    }
+    float EditorCamera::GetNearPlane() const noexcept {
+      return mNearClip;
+    }
+    float EditorCamera::GetFarPlane() const noexcept {
+      return mFarClip;
+    }
+
     void EditorCamera::UpdateCamera(float dt) {
 
         if (Input::InputManager::IsKeyHeld(IK_W))
@@ -129,6 +139,14 @@ namespace Graphics {
         mFov -= scrollOffset * mZoomSpeed;
         if (mFov < 1.0f) mFov = 1.0f;
         if (mFov > 45.0f) mFov = 45.0f;
+    }
+    
+    void EditorCamera::SetPosition(glm::vec3 const& pos) {
+      mPosition = pos;
+    }
+
+    void EditorCamera::MoveCamera(glm::vec3 const& offset) {
+      mPosition += offset;
     }
 
     void EditorCamera::MoveAlongPlane(float xDisp, float yDisp) {

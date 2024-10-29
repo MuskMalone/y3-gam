@@ -1,16 +1,26 @@
 #include <pch.h>
 #include "Renderer.h"
 #include "RenderAPI.h"
-#include "RenderPass.h"
 #include <glm/gtx/quaternion.hpp>
 #include "Asset/IGEAssets.h"
+#include "ElementBuffer.h"
+#include "MaterialTable.h"
+#include "Material.h"
+#include "Mesh.h"
+#pragma region RenderPasses
+#include <Graphics/RenderPass/GeomPass.h>
+#include <Graphics/RenderPass/ShadowPass.h>
+#pragma endregion
+
 namespace Graphics {
 	constexpr int INVALID_ENTITY_ID = -1;
 
 	RendererData Renderer::mData;
+	MaterialTable Renderer::mMaterialTable;
+	ShaderLibrary Renderer::mShaderLibrary;
 	std::shared_ptr<Framebuffer> Renderer::mFinalFramebuffer;
-	std::shared_ptr<RenderPass> Renderer::mPickPass; //TODO put in a map/ vector
-	std::shared_ptr<RenderPass> Renderer::mGeomPass;
+	std::unordered_map<std::type_index, std::shared_ptr<RenderPass>> Renderer::mTypeToRenderPass;
+	std::vector<std::shared_ptr<RenderPass>> Renderer::mRenderPasses;
 
 	void Renderer::Init() {
 
@@ -100,17 +110,18 @@ namespace Graphics {
 		for (unsigned int i{}; i < mData.maxTexUnits; ++i)
 			samplers[i] = i;
 
-		mData.lineShader = std::make_shared<Shader>("../Assets/Shaders/Tri.vert.glsl", "../Assets/Shaders/Tri.frag.glsl");
-		mData.texShader = std::make_shared<Shader>("../Assets/Shaders/Default.vert.glsl", "../Assets/Shaders/Default.frag.glsl");
-		mData.texShader->Use();
-		mData.texShader->SetUniform("u_Tex", samplers.data(), mData.maxTexUnits);
+		InitShaders();
+		std::shared_ptr<Shader> const& texShader = ShaderLibrary::Get("Tex");
+
+		texShader->Use();
+		texShader->SetUniform("u_Tex", samplers.data(), mData.maxTexUnits);
 
 		mData.quadVtxPos[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
 		mData.quadVtxPos[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
 		mData.quadVtxPos[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
 		mData.quadVtxPos[3] = { -0.5f, 0.5f, 0.0f, 1.0f };
 
-		mData.instancedShader = Shader::Create("../Assets/Shaders/Instanced.vert.glsl", "../Assets/Shaders/Instanced.frag.glsl");
+		
 
 		//Init framebuffer
 		Graphics::FramebufferSpec framebufferSpec;
@@ -119,62 +130,124 @@ namespace Graphics {
 		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
 
 		//Init RenderPasses
+		//InitPickPass();
+		InitShadowMapPass();
+		InitGeomPass();
+
+		mFinalFramebuffer = mRenderPasses.back()->GetTargetFramebuffer();
+		//mFinalFramebuffer = Framebuffer::Create(framebufferSpec);
+
+
+		IGE::Assets::GUID texguid1{ Texture::Create(gAssetsDirectory + std::string("Textures\\default.dds")) };
+		IGE::Assets::GUID texguid{ Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
+		//Init Materials
+
+		// Create a default material with a default shader and properties
+		std::shared_ptr<Material> defaultMaterial = Material::Create(ShaderLibrary::Get("PBR")); //TODO STORE IN SHADER LIB
+		defaultMaterial->SetAlbedoColor(glm::vec3(1.0f));  // Set default white albedo
+		defaultMaterial->SetMetalness(0.0f);
+		defaultMaterial->SetRoughness(1.0f);
+
+		// Add default material to the table (e.g., at index 0)
+		MaterialTable::AddMaterial(defaultMaterial);
+
+		std::shared_ptr<Material> mat1 = Material::Create(ShaderLibrary::Get("PBR"));
+		mat1->SetAlbedoMap(texguid1);
+		MaterialTable::AddMaterial(mat1);
+
+		std::shared_ptr<Material> mat2 = Material::Create(ShaderLibrary::Get("Unlit"));
+		mat2->SetAlbedoMap(texguid);
+		MaterialTable::AddMaterial(mat2);
+		//--Material Init End--//
+
+		//// Generate multiple materials for testing
+		//const int numMaterials = 50; // Total number of materials to create
+
+		//// Random number generator setup
+		//std::random_device rd;  // Obtain a random number from hardware
+		//std::mt19937 eng(rd()); // Seed the generator
+		//std::uniform_real_distribution<> distr(0.0, 1.0); // Define the range for the random numbers
+
+		//for (int i = 0; i < numMaterials; ++i) {
+		//	// Create a new material based on the PBR shader
+		//	std::shared_ptr<Material> material = Material::Create(ShaderLibrary::Get("PBR"));
+
+		//	// Generate a random albedo color for each material
+		//	glm::vec3 albedoColor = glm::vec3(distr(eng), distr(eng), distr(eng)); // Random RGB values
+
+		//	material->SetAlbedoColor(albedoColor);
+
+		//	// Optionally set other properties if needed
+		//	material->SetMetalness(0.0f); // Keep metalness constant for this example
+		//	material->SetRoughness(distr(eng)); // Vary roughness randomly between 0 and 1
+
+		//	// Add the new material to the material table
+		//	MaterialTable::AddMaterial(material);
+		//}
+
+	}
+
+	void Renderer::InitShaders() {
+		ShaderLibrary::Add("Tri", Shader::Create("Tri.vert.glsl", "Tri.frag.glsl"));
+		ShaderLibrary::Add("Tex", Shader::Create("Default.vert.glsl", "Default.frag.glsl"));
+		ShaderLibrary::Add("PBR", Shader::Create("PBR.vert.glsl", "PBR.frag.glsl"));
+		ShaderLibrary::Add("Unlit", Shader::Create("Unlit.vert.glsl", "Unlit.frag.glsl"));
+		ShaderLibrary::Add("ShadowMap", Shader::Create("ShadowMap.vert.glsl", "ShadowMap.frag.glsl"));
+	}
+
+	void Renderer::InitGeomPass() {
+		//Init framebuffer
+		Graphics::FramebufferSpec framebufferSpec;
+		framebufferSpec.width = WINDOW_WIDTH<int>;
+		framebufferSpec.height = WINDOW_HEIGHT<int>;
+		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
+
 		PipelineSpec geomPipelineSpec;
-		geomPipelineSpec.shader = mData.instancedShader;
+		geomPipelineSpec.shader = ShaderLibrary::Get("PBR");
 		geomPipelineSpec.targetFramebuffer = Framebuffer::Create(framebufferSpec);
 
 		RenderPassSpec geomPassSpec;
 		geomPassSpec.pipeline = Pipeline::Create(geomPipelineSpec);
 		geomPassSpec.debugName = "Geometry Pass";
 
-		//Init PickingPass
-		Graphics::FramebufferSpec pickBufferSpec;
+		AddPass(RenderPass::Create<GeomPass>(geomPassSpec));
+	}
+
+	void Renderer::InitPickPass() {
+		/*Graphics::FramebufferSpec pickBufferSpec;
 		pickBufferSpec.width = WINDOW_WIDTH<int>;
 		pickBufferSpec.height = WINDOW_HEIGHT<int>;
 		pickBufferSpec.attachments = { Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
-		
+
 		PipelineSpec pickPipelineSpec;
-		pickPipelineSpec.shader = Shader::Create("../Assets/Shaders/Instanced/vert.glsl", "../Assets/Shaders/Instanced.frag.glsl");
+		pickPipelineSpec.shader = ShaderLibrary::Get("PBR");
 		pickPipelineSpec.targetFramebuffer = Framebuffer::Create(pickBufferSpec);
 
 		RenderPassSpec pickPassSpec;
 		pickPassSpec.pipeline = Pipeline::Create(pickPipelineSpec);
 		pickPassSpec.debugName = "Picking Pass";
 
-		mPickPass = RenderPass::Create(pickPassSpec);
-		mGeomPass = RenderPass::Create(geomPassSpec);
+		AddPass(RenderPass::Create<PickPass>(pickPassSpec));*/
+	}
 
-		mFinalFramebuffer = mGeomPass->GetTargetFramebuffer();
-		//mFinalFramebuffer = Framebuffer::Create(framebufferSpec);
+	void Renderer::InitShadowMapPass() {
+		Graphics::FramebufferSpec shadowSpec;
+		shadowSpec.width = WINDOW_WIDTH<int>;
+		shadowSpec.height = WINDOW_HEIGHT<int>;
+		// @TODO: Allow for multiple shadow maps; need extend code
+		//				to use glTexImage3D and GL_TEXTURE_2D_ARRAY
+		shadowSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::SHADOW_MAP };	// temporarily max. 1 shadow-caster
 
+		PipelineSpec shadowPSpec;
+		shadowPSpec.shader = ShaderLibrary::Get("ShadowMap");
+		shadowPSpec.targetFramebuffer = Framebuffer::Create(shadowSpec);
 
-		IGE::Assets::GUID texguid1 { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\ogre_normalmap.dds")) };
+		RenderPassSpec shadowPassSpec;
+		shadowPassSpec.pipeline = Pipeline::Create(shadowPSpec);
+		shadowPassSpec.debugName = "Shadow Map Pass";
 
-		IGE::Assets::GUID texguid { Graphics::Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
-		//unsigned int data[4] = {
-		//	0xffff00ff, // Bright magenta (ABGR)
-		//	0xffffff00, // Cyan (to create contrast for checkerboard)
-		//	0xffffff00, // Cyan
-		//	0xffff00ff  // Bright magenta
-		//};
-		//debugAlbedoTex->SetData(data);
-
-
-
-		//TESTING
-		//albedo
-		mData.albedoMaps.push_back(GetDefaultTexture());
-		mData.albedoMaps.push_back(GetWhiteTexture());
-		mData.albedoMaps.push_back(texguid1);
-
-		//normal
-		mData.normalMaps.push_back(GetWhiteTexture());
-		mData.normalMaps.push_back(GetWhiteTexture());
-		mData.normalMaps.push_back(texguid1);
-		
-		//mData.albedoMaps.push_back(texguid1);
-;	}
-
+		AddPass(RenderPass::Create<ShadowPass>(shadowPassSpec));
+	}
 
 	void Renderer::Shutdown() {
 		// Add shutdown logic if necessary
@@ -233,8 +306,8 @@ namespace Graphics {
 		// Set up the buffer layout for instance data
 		BufferLayout instanceLayout = {
 			{ AttributeType::MAT4, "a_ModelMatrix" },
-			{AttributeType::INT, "a_MaterialIdx"},
-			{AttributeType::INT, "a_EntityID"}
+			{ AttributeType::INT, "a_MaterialIdx"},
+			{ AttributeType::INT, "a_EntityID"}
 			//{ AttributeType::VEC4, "a_Color" }
 		};
 
@@ -274,7 +347,7 @@ namespace Graphics {
 		glm::vec3 bitangent = { 0.f, 1.f, 0.f };
 
 		for (size_t i{}; i < 4; ++i)
-			SetQuadBufferData(transformMtx * mData.quadVtxPos[i],scale, normal, texCoords[i], texIdx, tangent, bitangent, clr);
+			SetQuadBufferData(transformMtx * mData.quadVtxPos[i], scale, normal, texCoords[i], texIdx, tangent, bitangent, clr);
 
 		mData.quadIdxCount += 6;
 		++mData.stats.quadCount;
@@ -346,21 +419,16 @@ namespace Graphics {
 		SetTriangleBufferData(v3, clr);
 	}
 
-	void Renderer::SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, uint32_t matID) {
-		if (!mesh) return;
-
+	void Renderer::SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, int matID) {
 		InstanceData instance{};
 		instance.modelMatrix = worldMtx;
-		
+
 		if (id != INVALID_ENTITY_ID) {
 			instance.entityID = id;
 		}
 		instance.materialIdx = matID;
 
-		auto& meshSrc = mesh->GetMeshSource();
-		if (!meshSrc) return;
-
-		mData.instanceBufferDataMap[meshSrc].push_back(instance);
+		mData.instanceBufferDataMap[meshSource].push_back(instance);
 	}
 
 
@@ -373,7 +441,7 @@ namespace Graphics {
 
 			// Set instance data into the buffer
 			unsigned int dataSize = static_cast<unsigned int>(instances.size() * sizeof(InstanceData));
-			
+
 			instanceBuffer->SetData(instances.data(), dataSize);
 
 			// Bind the VAO and render the instances
@@ -402,7 +470,7 @@ namespace Graphics {
 			for (unsigned int i{}; i < mData.texUnitIdx; ++i) {
 				mData.texUnits[i]->Bind(i);
 			}
-			mData.texShader->Use();
+			ShaderLibrary::Get("Tex")->Use();
 			RenderAPI::DrawIndices(mData.quadVertexArray, mData.quadIdxCount);
 
 			++mData.stats.drawCalls;
@@ -413,7 +481,7 @@ namespace Graphics {
 
 			mData.triVertexBuffer->SetData(mData.triBuffer.data(), dataSize);
 
-			mData.lineShader->Use();
+			ShaderLibrary::Get("Tri")->Use();
 			RenderAPI::DrawLines(mData.triVertexArray, mData.triVtxCount);
 
 			++mData.stats.drawCalls;
@@ -426,7 +494,7 @@ namespace Graphics {
 			// Update the mesh vertex buffer with the batched data
 			mData.meshVertexBuffer->SetData(mData.meshBuffer.data(), dataSize);
 
- 			unsigned int idxDataSize = static_cast<unsigned int>(mData.meshIdxCount * sizeof(uint32_t));
+			unsigned int idxDataSize = static_cast<unsigned int>(mData.meshIdxCount * sizeof(uint32_t));
 			mData.meshVertexArray->Bind();
 			mData.meshVertexArray->GetElementBuffer()->SetData(mData.meshIdxBuffer.data(), idxDataSize);
 			mData.meshVertexArray->Unbind();
@@ -436,7 +504,7 @@ namespace Graphics {
 			}
 
 			// Use the appropriate shader and draw the indexed meshes
-			mData.texShader->Use();
+			ShaderLibrary::Get("Tex")->Use();
 			RenderAPI::DrawIndices(mData.meshVertexArray, mData.meshIdxCount);
 
 			// Increment draw call stats
@@ -524,18 +592,6 @@ namespace Graphics {
 		FlushBatch();
 	}
 
-	std::shared_ptr<Material> Renderer::GetMaterial(uint32_t idx){
-		return mData.materialVector[idx];
-	}
-
-	std::vector< IGE::Assets::GUID> const& Renderer::GetAlbedoMaps(){
-		return mData.albedoMaps;
-	}
-
-	std::vector<IGE::Assets::GUID> const& Renderer::GetNormalMaps() {
-		return mData.normalMaps;
-	}
-
 	Statistics Renderer::GetStats() {
 		return mData.stats;
 	}
@@ -566,5 +622,4 @@ namespace Graphics {
 	IGE::Assets::GUID Renderer::GetWhiteTexture() {
 		return mData.whiteTex;
 	}
-
 }
