@@ -10,7 +10,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
 #include "Inspector.h"
-
+#include <typeindex>
 #include <imgui/imgui.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include "Color.h"
@@ -25,13 +25,41 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/MeshFactory.h>
 #include <Graphics/Mesh.h>
 #include "Asset/IGEAssets.h"
-namespace GUI {
+#include <Core/Systems/LayerSystem/LayerSystem.h>
 
+#define ICON_PADDING "   "
 
+namespace {
   bool InputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled = false);
 
+  /*!*********************************************************************
+  \brief
+    Calculates the input width of the table row based on the current
+    content region after subtracting the label
+  \param padding
+    The extra space to subtract
+  \return
+    The remaining width of the row
+  ************************************************************************/
+  float CalcInputWidth(float padding);
+}
+
+namespace GUI {
   Inspector::Inspector(const char* name) : GUIWindow(name),
-    mComponentOpenStatusMap{}, mStyler{ GUIManager::GetStyler() }, mObjFactory{Reflection::ObjectFactory::GetInstance()},
+    mComponentOpenStatusMap{}, mStyler{ GUIManager::GetStyler() }, 
+    mComponentIcons{
+      { typeid(Component::Tag), ICON_FA_TAG ICON_PADDING },
+      { typeid(Component::Transform), ICON_FA_ROTATE ICON_PADDING },
+      { typeid(Component::BoxCollider), ICON_FA_BOMB ICON_PADDING },
+      { typeid(Component::Layer), ICON_FA_LAYER_GROUP ICON_PADDING },
+      { typeid(Component::Material), ICON_FA_GEM ICON_PADDING },
+      { typeid(Component::Mesh), ICON_FA_CUBE ICON_PADDING },
+      { typeid(Component::RigidBody), ICON_FA_CAR ICON_PADDING },
+      { typeid(Component::Script), ICON_FA_FILE_CODE ICON_PADDING },
+      { typeid(Component::Text), ICON_FA_FONT ICON_PADDING },
+      { typeid(Component::Light), ICON_FA_LIGHTBULB ICON_PADDING }
+    },
+    mObjFactory{Reflection::ObjectFactory::GetInstance()},
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
     for (auto const& component : Reflection::gComponentTypes) {
       mComponentOpenStatusMap[component.get_name().to_string().c_str()] = true;
@@ -41,6 +69,11 @@ namespace GUI {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SAVE_SCENE, &Inspector::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &Inspector::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &Inspector::HandleEvent, this);
+
+    // simple check to ensure all components have icons
+    if (Reflection::gComponentTypes.size() != mComponentIcons.size()) {
+      throw Debug::Exception<Inspector>(Debug::LVL_CRITICAL, Msg("sComponentIcons and gComponentTypes size mismatch! Did you forget to add an icon?"));
+    }
   }
 
   void Inspector::Run() {
@@ -78,7 +111,7 @@ namespace GUI {
         rttr::type const tagType{ rttr::type::get<Component::Tag>() };
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(tagType);
 
-        if (TagComponentWindow(currentEntity, std::string(ICON_FA_TAG), componentOverriden)) {
+        if (TagComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
             prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Tag>());
@@ -90,7 +123,7 @@ namespace GUI {
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(rttr::type::get<Component::Transform>());
         Component::Transform& trans{ currentEntity.GetComponent<Component::Transform>() };
         glm::vec3 const oldPos{ trans.position };
-        if (TransformComponentWindow(currentEntity, std::string(ICON_FA_ROTATE), componentOverriden)) {
+        if (TransformComponentWindow(currentEntity, componentOverriden)) {
           TransformHelpers::UpdateWorldTransform(currentEntity);  // must call this to update world transform according to changes to local
           SetIsComponentEdited(true);
 
@@ -149,7 +182,7 @@ namespace GUI {
         rttr::type const layerType{ rttr::type::get<Component::Layer>() };
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(layerType);
 
-        if (LayerComponentWindow(currentEntity, std::string(ICON_FA_LAYER_GROUP), componentOverriden)) {
+        if (LayerComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
             prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Layer>());
@@ -161,7 +194,7 @@ namespace GUI {
         rttr::type const materialType{ rttr::type::get<Component::Material>() };
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(materialType);
 
-        if (MaterialComponentWindow(currentEntity, std::string(ICON_FA_GEM), componentOverriden)) {
+        if (MaterialComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
             prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Material>());
@@ -173,7 +206,7 @@ namespace GUI {
         rttr::type const meshType{ rttr::type::get<Component::Mesh>() };
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(meshType);
 
-        if (MeshComponentWindow(currentEntity, std::string(ICON_FA_CUBE), componentOverriden)) {
+        if (MeshComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
             prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Mesh>());
@@ -185,7 +218,7 @@ namespace GUI {
         rttr::type const rigidBodyType{ rttr::type::get<Component::RigidBody>() };
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(rigidBodyType);
 
-        if (RigidBodyComponentWindow(currentEntity, std::string(ICON_FA_CAR), componentOverriden)) {
+        if (RigidBodyComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
             prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::RigidBody>());
@@ -198,22 +231,31 @@ namespace GUI {
         rttr::type const scriptType{ rttr::type::get<Component::Script>() };
      
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(scriptType);
-        if (ScriptComponentWindow(currentEntity, std::string(ICON_FA_FILE_CODE), componentOverriden)) {
+        if (ScriptComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
             prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Script>());
           }
         }
+      }
+      if (currentEntity.HasComponent<Component::Light>()) {
 
+        rttr::type const lightType{ rttr::type::get<Component::Light>() };
 
-       
+        componentOverriden = prefabOverride && prefabOverride->IsComponentModified(lightType);
+        if (LightComponentWindow(currentEntity, componentOverriden)) {
+          SetIsComponentEdited(true);
+          if (prefabOverride) {
+            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Light>());
+          }
+        }
       }
 
       if (currentEntity.HasComponent<Component::Text>()) {
         rttr::type const textType{ rttr::type::get<Component::Text>() };
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(textType);
 
-        if (TextComponentWindow(currentEntity, std::string(ICON_FA_FONT), componentOverriden)) {
+        if (TextComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
             prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Text>());
@@ -268,36 +310,32 @@ namespace GUI {
     ImGui::EndDisabled();
   }
 
-  bool Inspector::LayerComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
-    bool const isOpen{ WindowBegin<Component::Layer>("Layer", icon, highlight) };
+  bool Inspector::LayerComponentWindow(ECS::Entity entity, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Layer>("Layer", highlight) };
     bool modified{ false };
     
     if (isOpen) {
-      auto& layer = entity.GetComponent<Component::Layer>();
+      Component::Layer& layer = entity.GetComponent<Component::Layer>();
 
-      // @TODO: TEMP, TO BE REPLACED WITH ACTUAL LAYERS
-      std::vector<const char*> availableLayers{ "Default", "Test1", "Test2" };
-
-      float contentSize = ImGui::GetContentRegionAvail().x;
-      float charSize = ImGui::CalcTextSize("012345678901234").x;
-      float inputWidth = (contentSize - charSize - 60);
+      float const inputWidth{ CalcInputWidth(60.f) };
 
       ImGui::BeginTable("LayerTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
-      ImGui::TableNextRow();
-      ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Assigned Layer");
-
-      ImGui::TableSetColumnIndex(1);
-      ImGui::SetNextItemWidth(INPUT_SIZE);
+      NextRowTable("Assigned Layer");
 
       if (ImGui::BeginCombo("##LayerName", layer.name.c_str())) {
-        for (const char* layerName : availableLayers) {
-          if (ImGui::Selectable(layerName)) {
-            layer.name = layerName;
+        std::shared_ptr<Systems::LayerSystem> layerSystemPtr = 
+          Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock();
+
+        for (std::string const& layerName : layerSystemPtr->GetLayerNames()) {
+          if (layerName == "") continue;
+          if (ImGui::Selectable(layerName.c_str())) {
+            layerSystemPtr->UpdateEntityLayer(entity, layer.name, layerName);
+            entity.SetLayer(layerName);
+            //layer.name = layerName;     
             modified = true;
           }
         }
@@ -311,27 +349,21 @@ namespace GUI {
     return modified;
   }
 
-  bool Inspector::MaterialComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
-    bool const isOpen{ WindowBegin<Component::Material>("Material", icon, highlight) };
+  bool Inspector::MaterialComponentWindow(ECS::Entity entity, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Material>("Material", highlight) };
     bool modified{ false };
 
     if (isOpen) {
       Component::Material& material = entity.GetComponent<Component::Material>();
 
-      float contentSize = ImGui::GetContentRegionAvail().x;
-      float charSize = ImGui::CalcTextSize("012345678901234").x;
-      float inputWidth = (contentSize - charSize - 60);
+      float const inputWidth{ CalcInputWidth(60.f) };
 
       ImGui::BeginTable("MaterialTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
-      ImGui::TableNextRow();
-      ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Material Type");
-      ImGui::TableSetColumnIndex(1);
-      ImGui::SetNextItemWidth(INPUT_SIZE);
+      NextRowTable("Material Type");
 
       static const std::vector<const char*> materialNames{
         "Default"
@@ -358,16 +390,16 @@ namespace GUI {
     return modified;
   }
 
-  bool Inspector::ScriptComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
-    bool const isOpen{ WindowBegin<Component::Script>("Script", icon, highlight) };
+  bool Inspector::ScriptComponentWindow(ECS::Entity entity, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Script>("Script", highlight) };
     bool modified{ false };
 
     if (isOpen) {
       Mono::ScriptManager* sm = &Mono::ScriptManager::GetInstance();
       ImGuiStyle& style = ImGui::GetStyle();
       std::vector <std::string> toDeleteList{};
-      float charSize = ImGui::CalcTextSize("012345678901234").x;
-      float inputWidth = (ImGui::GetWindowSize().x - charSize - 30) / 3;
+      float const charSize = ImGui::CalcTextSize("012345678901234").x;
+      float const inputWidth = (ImGui::GetWindowSize().x - charSize - 30.f) / 3.f;
       Component::Script* allScripts = &entity.GetComponent<Component::Script>();
       for (Mono::ScriptInstance& s : allScripts->mScriptList)
       {
@@ -515,15 +547,24 @@ namespace GUI {
     return modified;
   }
 
-  bool Inspector::TagComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
-    bool const isOpen{ WindowBegin<Component::Tag>("Tag", icon, highlight) };
+
+
+  bool Inspector::TagComponentWindow(ECS::Entity entity, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Tag>("Tag", highlight) };
     bool modified{ false };
 
     if (isOpen) {
       std::string tag{ entity.GetTag() };
       ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
+
+      bool isEntityActive = entity.IsActive();
+      if (ImGui::Checkbox("##IsActiveCheckbox", &isEntityActive)) {
+        entity.SetIsActive(isEntityActive);
+      }
+      ImGui::SameLine();
+
       ImGui::SetNextItemWidth(INPUT_SIZE);
-      if (ImGui::InputText("##Tag", &tag, ImGuiInputTextFlags_EnterReturnsTrue)) {
+      if (ImGui::InputText("##TagComponentTag", &tag, ImGuiInputTextFlags_EnterReturnsTrue)) {
         entity.SetTag(tag);
         modified = true;
       }
@@ -536,8 +577,8 @@ namespace GUI {
     return modified;
   }
 
-  bool Inspector::TextComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
-    bool const isOpen{ WindowBegin<Component::Text>("Text", icon, highlight) };
+  bool Inspector::TextComponentWindow(ECS::Entity entity, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Text>("Text", highlight) };
     bool modified{ false };
 
     if (isOpen) {
@@ -546,20 +587,14 @@ namespace GUI {
       // @TODO: TEMP, TO BE REPLACED WITH ACTUAL FONTS
       std::vector<const char*> availableFonts{ "Arial", "Test1", "Test2" };
 
-      float contentSize = ImGui::GetContentRegionAvail().x;
-      float charSize = ImGui::CalcTextSize("012345678901234").x;
-      float inputWidth = (contentSize - charSize - 60);
+      float const inputWidth{ CalcInputWidth(60.f) };
 
       ImGui::BeginTable("TextTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
       
-      ImGui::TableNextRow();
-      ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Font Family");
-      ImGui::TableSetColumnIndex(1);
-      ImGui::SetNextItemWidth(INPUT_SIZE);
+      NextRowTable("Font Family");
       if (ImGui::BeginCombo("##TextName", text.fontName.c_str())) {
         for (const char* fontName : availableFonts) {
           if (ImGui::Selectable(fontName)) {
@@ -570,29 +605,17 @@ namespace GUI {
         ImGui::EndCombo();
       }
       
-      ImGui::TableNextRow();
-      ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Color");
-      ImGui::TableSetColumnIndex(1);
-      ImGui::SetNextItemWidth(INPUT_SIZE);
+      NextRowTable("Color");
       if (ImGui::ColorEdit4("##TextColor", &text.color[0])) {
         modified = true;
       }
 
-      ImGui::TableNextRow();
-      ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Text Input");
-      ImGui::TableSetColumnIndex(1);
-      ImGui::SetNextItemWidth(INPUT_SIZE);
+      NextRowTable("Text Input");
       if (ImGui::InputTextMultiline("##TextInput", &text.textContent)) {
         modified = true;
       }
 
-      ImGui::TableNextRow();
-      ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Scale");
-      ImGui::TableSetColumnIndex(1);
-      ImGui::SetNextItemWidth(INPUT_SIZE);
+      NextRowTable("Scale");
       if (ImGui::DragFloat("##TextScale", &text.scale, .001f, 0.f, 5.f)) {
         modified = true;
       }
@@ -604,16 +627,14 @@ namespace GUI {
     return modified;
   }
 
-  bool Inspector::TransformComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
-    bool const isOpen{ WindowBegin<Component::Transform>("Transform", icon, highlight) };
+  bool Inspector::TransformComponentWindow(ECS::Entity entity, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Transform>("Transform", highlight) };
     bool modified{ false };
 
     if (isOpen) {
       Component::Transform& transform = entity.GetComponent<Component::Transform>();
 
-      float contentSize = ImGui::GetContentRegionAvail().x;
-      float charSize = ImGui::CalcTextSize("012345678901234").x;
-      float inputWidth = (contentSize - charSize - 50) / 3;
+      float const inputWidth{ CalcInputWidth(50.f) / 3.f };
 
       ImGui::BeginTable("LocalTransformTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
@@ -660,8 +681,8 @@ namespace GUI {
     return modified;
   }
 
-  bool Inspector::MeshComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
-    bool const isOpen{ WindowBegin<Component::Mesh>("Mesh", icon, highlight) };
+  bool Inspector::MeshComponentWindow(ECS::Entity entity, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Mesh>("Mesh", highlight) };
     bool modified{ false };
 
     if (isOpen) {
@@ -670,20 +691,14 @@ namespace GUI {
         "None", "Cube", "Plane"
       };
 
-      float contentSize = ImGui::GetContentRegionAvail().x;
-      float charSize = ImGui::CalcTextSize("012345678901234").x;
-      float inputWidth = (contentSize - charSize - 60);
+      float const inputWidth{ CalcInputWidth(60.f) };
 
       ImGui::BeginTable("MeshTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
-      ImGui::TableNextRow();
-      ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Mesh Type");
-      ImGui::TableSetColumnIndex(1);
-      ImGui::SetNextItemWidth(INPUT_SIZE);
+      NextRowTable("Mesh Type");
 
       if (ImGui::BeginCombo("##MeshSelection", mesh.meshName.c_str())) {
         for (unsigned i{}; i < meshNames.size(); ++i) {
@@ -692,7 +707,7 @@ namespace GUI {
             if (i != 0) {
 
               //mesh.mesh = std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromString(selected));
-                mesh.mesh = std::make_shared<Graphics::Mesh>(IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(selected));
+                mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>(selected);
             }
 
             if (selected != mesh.meshName) {
@@ -706,7 +721,6 @@ namespace GUI {
         ImGui::EndCombo();
       }
       // allow dropping of models
-      // @TODO: ABSTRACT MORE; MAKE IT EASIER TO ADD A MESH
       else if (ImGui::BeginDragDropTarget())
       {
         ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
@@ -714,15 +728,23 @@ namespace GUI {
           AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
           if (assetPayload.mAssetType == AssetPayload::MODEL) {
             //auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
-            auto meshSrc{ std::make_shared<Graphics::Mesh>(IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath())) };
-
-            mesh.mesh = std::move(meshSrc);
+            mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>(assetPayload.GetFilePath());
             mesh.meshName = assetPayload.GetFileName();
             modified = true;
           }
         }
         ImGui::EndDragDropTarget();
       }
+
+      NextRowTable("Cast Shadows");
+      if (ImGui::Checkbox("##CastShadows", &mesh.castShadows)) {
+        modified = true;
+      }
+
+      ImGui::BeginDisabled();
+      NextRowTable("Receive Shadows");
+      ImGui::Checkbox("##CastShadows", &mesh.receiveShadows);
+      ImGui::EndDisabled();
 
       ImGui::EndTable();
     }
@@ -731,17 +753,15 @@ namespace GUI {
     return modified;
   }
 
-  bool Inspector::RigidBodyComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight) {
-    bool const isOpen{ WindowBegin<Component::RigidBody>("RigidBody", icon, highlight) };
+  bool Inspector::RigidBodyComponentWindow(ECS::Entity entity, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::RigidBody>("RigidBody", highlight) };
     bool modified{ false };
 
     if (isOpen) {
       // Assuming 'rigidBody' is an instance of RigidBody
       Component::RigidBody& rigidBody{ entity.GetComponent<Component::RigidBody>() };
 
-      float contentSize = ImGui::GetContentRegionAvail().x;
-      float charSize = ImGui::CalcTextSize("012345678901234").x;
-      float inputWidth = (contentSize - charSize - 50) / 3;
+      float const inputWidth{ CalcInputWidth(50.f) / 3.f };
 
       ImGui::BeginTable("RigidBodyTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
@@ -767,65 +787,41 @@ namespace GUI {
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
 
-      ImGui::TableNextRow();
-      ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Static Friction");
-      ImGui::TableSetColumnIndex(1);
-      ImGui::SetNextItemWidth(INPUT_SIZE);
+      NextRowTable("Static Friction");
       if (ImGui::DragFloat("##RigidBodyStaticFriction", &rigidBody.staticFriction, 0.01f, 0.0f, 1.0f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::STATIC_FRICTION);
         SetIsComponentEdited(true);
       }
 
-      ImGui::TableNextRow();
-      ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Dynamic Friction");
-      ImGui::TableSetColumnIndex(1);
-      ImGui::SetNextItemWidth(INPUT_SIZE);
+      NextRowTable("Dynamic Friction");
       if (ImGui::DragFloat("##RigidBodyDynamicFriction", &rigidBody.dynamicFriction, 0.01f, 0.0f, 1.0f)) {
           IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::STATIC_FRICTION);
           SetIsComponentEdited(true);
       }
 
-      ImGui::TableNextRow();
-      ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Restitution");
-      ImGui::TableSetColumnIndex(1);
-      ImGui::SetNextItemWidth(INPUT_SIZE);
+      NextRowTable("Restitution");
       if (ImGui::DragFloat("##RigidBodyRestitution", &rigidBody.restitution, 0.01f, 0.0f, 1.0f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::RESTITUTION);
         modified = true;
       }
 
-      ImGui::TableNextRow();
-      ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Gravity Factor");
-      ImGui::TableSetColumnIndex(1);
-      ImGui::SetNextItemWidth(INPUT_SIZE);
+      NextRowTable("Gravity Factor");
       if (ImGui::DragFloat("##RigidBodyGravityFactor", &rigidBody.gravityFactor, 0.01f, -10.0f, 10.0f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::GRAVITY_FACTOR);
         modified = true;
       }
 
-      ImGui::TableNextRow();
-      ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Mass");
-      ImGui::TableSetColumnIndex(1);
-      ImGui::SetNextItemWidth(INPUT_SIZE);
+      NextRowTable("Mass");
       if (ImGui::DragFloat("##RigidBodyMass", &rigidBody.mass, 0.01f, 0.0f, 1000'000.0f)) {
           IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::MASS);
           SetIsComponentEdited(true);
       }
 
       // Motion Type Selection
-      const char* motionTypes[] = { "Dynamic", "Kinematic" };
+      static const char* motionTypes[] = { "Dynamic", "Kinematic" };
       int currentMotionType = static_cast<int>(rigidBody.motionType);
 
-      ImGui::TableNextRow();
-      ImGui::TableSetColumnIndex(0);
-      ImGui::Text("Motion Type");
-      ImGui::TableSetColumnIndex(1);
-      ImGui::SetNextItemWidth(INPUT_SIZE);
+      NextRowTable("Motion Type");
       if (ImGui::Combo("##Motion Type", &currentMotionType, motionTypes, IM_ARRAYSIZE(motionTypes))) {
         rigidBody.motionType = static_cast<Component::RigidBody::MotionType>(currentMotionType);
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::MOTION);
@@ -844,11 +840,8 @@ namespace GUI {
     bool modified{ false };
 
     if (isOpen) {
-      // Assuming 'collider' is an instance of Collider
       Component::BoxCollider& collider{ entity.GetComponent<Component::BoxCollider>() };
-      float contentSize = ImGui::GetContentRegionAvail().x;
-      float charSize = ImGui::CalcTextSize("012345678901234").x;
-      float inputWidth = (contentSize - charSize - 50) / 3;
+      float const inputWidth{ CalcInputWidth(50.f) / 3.f };
 
       ImGui::BeginTable("BoxColliderTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
@@ -1024,6 +1017,157 @@ namespace GUI {
       return modified;
   }
 
+  bool Inspector::LightComponentWindow(ECS::Entity entity, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Light>("Light", highlight) };
+    bool modified{ false };
+
+    if (isOpen) {
+      const std::vector<std::string> Lights{ "Directional","Spotlight" };
+    //  // Assuming 'collider' is an instance of Collider
+      Component::Light& light{ entity.GetComponent<Component::Light>() };
+      float const inputWidth{ CalcInputWidth(50.f) }, vec3InputWidth{ inputWidth / 3.f };
+
+      ImGui::BeginTable("##LightTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+      NextRowTable("Type");
+
+      if (ImGui::BeginCombo("", Lights[light.type].c_str()))
+      {
+        for (int s{ 0 }; s < static_cast<int>(Component::LIGHT_COUNT); ++s)
+        {
+          if (Lights[s] != Lights[light.type])
+          {
+            bool is_selected = (Lights[light.type] == Lights[s]);
+            if (ImGui::Selectable(Lights[s].c_str(), is_selected))
+            {
+              if (Lights[s] != Lights[light.type]) {
+                light.type = static_cast<Component::Light_Type>(s);
+              }
+            }
+            if (is_selected)
+            {
+              ImGui::SetItemDefaultFocus();
+            }
+          }
+        }
+        ImGui::EndCombo();
+      }
+      ImGui::EndTable();
+
+
+      ImGui::BeginTable("##LightVec3Table", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
+      ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
+      ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
+      ImGui::TableHeadersRow();
+ 
+      //if (ImGuiHelpers::TableInputFloat3("Position", &light.position[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
+      //  modified = true;
+      //}
+      //if (ImGuiHelpers::TableInputFloat3("Direction", &light.direction[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
+      //  modified = true;
+      //}
+      if (ImGuiHelpers::TableInputFloat3("Color", &light.color[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
+        modified = true;
+      }
+      
+    
+    ImGui::EndTable();
+    float const charSize = ImGui::CalcTextSize("012345678901234").x;
+    ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV);
+    ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, charSize);
+
+    ImGui::TableNextRow();
+    ImGui::TableNextColumn();
+    ImGui::Text("Intensity");
+    ImGui::TableNextColumn();
+    if (ImGui::InputFloat("##In", &light.mLightIntensity, 0, 0, 0)) {
+      modified = true;
+    }
+    if (light.type == Component::SPOTLIGHT)
+    {
+
+      ImGui::TableNextRow();
+      ImGui::TableNextColumn();
+      ImGui::Text("Inner Angle");
+      ImGui::TableNextColumn();
+      if (ImGui::InputFloat("##T", &light.mInnerSpotAngle, 0, 0, 0)) {
+        modified = true;
+      }
+
+
+      ImGui::TableNextRow();
+      ImGui::TableNextColumn();
+      ImGui::Text("Output Angle");
+      ImGui::TableNextColumn();
+      if (ImGui::InputFloat("##O", &light.mOuterSpotAngle, 0, 0, 0)) {
+        modified = true;
+      }
+
+
+      ImGui::TableNextRow();
+      ImGui::TableNextColumn();
+      ImGui::Text("Range");
+      ImGui::TableNextColumn();
+      if (ImGui::InputFloat("##R", &light.mRange, 0, 0, 0)) {
+        modified = true;
+      }
+    }
+    ImGui::EndTable();
+
+    ImGui::BeginTable("##LightShadows1", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+    ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+    NextRowTable("Cast Shadows");
+    if (ImGui::Checkbox("##CastShadows", &light.castShadows)) {
+      modified = true;
+    }
+    ImGui::EndTable();
+
+    if (light.castShadows) {
+      ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
+      ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
+      if (ImGui::TreeNodeEx("Shadows", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanFullWidth)) {
+        ImGui::PopFont();
+
+        if (ImGui::BeginTable("##LightShadows2", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+          ImGui::TableNextRow();
+          ImGui::TableSetColumnIndex(0);
+          ImGui::SetCursorPosX(ImGui::GetCursorPosX() + FIRST_COLUMN_LENGTH * 0.5f);
+          ImGui::Text("Bias");
+          ImGui::TableSetColumnIndex(1);
+          ImGui::SetNextItemWidth(INPUT_SIZE);
+
+          if (ImGui::DragFloat("##BiasSlider", &light.bias, 0.005f, 0.f, 2.f, "% .3f")) {
+            modified = true;
+          }
+
+          ImGui::EndTable();
+        }
+
+        ImGui::TreePop();
+      }
+      else {
+        ImGui::PopFont();
+      }
+      ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
+    }
+
+    }
+
+    WindowEnd(isOpen);
+    return modified;
+  }
+
+
+
   void Inspector::DrawAddButton() {
     ImVec2 addTextSize = ImGui::CalcTextSize("Add");
     ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
@@ -1055,19 +1199,29 @@ namespace GUI {
         ImGui::TableSetupColumn("ComponentNames", ImGuiTableColumnFlags_WidthFixed, 200.f);
         
         // @TODO: EDIT WHEN NEW COMPONENTS
+        DrawAddComponentButton<Component::BoxCollider>("Collider");
+        DrawAddComponentButton<Component::Layer>("Layer");
+        DrawAddComponentButton<Component::Material>("Material");
+        DrawAddComponentButton<Component::Mesh>("Mesh");
+        DrawAddComponentButton<Component::RigidBody>("RigidBody");
+        DrawAddComponentButton<Component::Script>("Script");
+        DrawAddComponentButton<Component::Tag>("Tag");
+        DrawAddComponentButton<Component::Text>("Text");
+        DrawAddComponentButton<Component::Transform>("Transform");
+        DrawAddComponentButton<Component::Light>("Light");
         DrawAddComponentButton<Component::BoxCollider>("Box Collider", ICON_FA_CUBE);
         DrawAddComponentButton<Component::SphereCollider>("Sphere Collider", ICON_FA_CIRCLE);
         DrawAddComponentButton<Component::CapsuleCollider>("Capsule Collider", ICON_FA_CAPSULES);
 
-        DrawAddComponentButton<Component::Layer>("Layer", ICON_FA_LAYER_GROUP);
-        DrawAddComponentButton<Component::Material>("Material", ICON_FA_GEM);
-        // @TODO: Temporarily forcing material to be added with mesh
-        DrawAddComponentButton<Component::Mesh>("Mesh", ICON_FA_CUBE);
-        DrawAddComponentButton<Component::RigidBody>("RigidBody", ICON_FA_CAR);
-        DrawAddComponentButton<Component::Script>("Script", ICON_FA_FILE_CODE);
-        DrawAddComponentButton<Component::Tag>("Tag", ICON_FA_TAG);
-        DrawAddComponentButton<Component::Text>("Text", ICON_FA_FONT);
-        DrawAddComponentButton<Component::Transform>("Transform", std::string(ICON_FA_ROTATE));
+        //DrawAddComponentButton<Component::Layer>("Layer", ICON_FA_LAYER_GROUP);
+        //DrawAddComponentButton<Component::Material>("Material", ICON_FA_GEM);
+        //// @TODO: Temporarily forcing material to be added with mesh
+        //DrawAddComponentButton<Component::Mesh>("Mesh", ICON_FA_CUBE);
+        //DrawAddComponentButton<Component::RigidBody>("RigidBody", ICON_FA_CAR);
+        //DrawAddComponentButton<Component::Script>("Script", ICON_FA_FILE_CODE);
+        //DrawAddComponentButton<Component::Tag>("Tag", ICON_FA_TAG);
+        //DrawAddComponentButton<Component::Text>("Text", ICON_FA_FONT);
+        //DrawAddComponentButton<Component::Transform>("Transform", std::string(ICON_FA_ROTATE));
 
         ImGui::EndTable();
       }
@@ -1076,6 +1230,26 @@ namespace GUI {
     }
   }
 
+  void Inspector::WindowEnd(bool const isOpen) {
+    if (isOpen) {
+      ImGui::TreePop();
+      ImGui::PopFont();
+    }
+
+    ImGui::Separator();
+  }
+
+  void Inspector::NextRowTable(const char* labelName) const {
+    ImGui::TableNextRow();
+    ImGui::TableSetColumnIndex(0);
+    ImGui::Text(labelName);
+    ImGui::TableSetColumnIndex(1);
+    ImGui::SetNextItemWidth(INPUT_SIZE);
+  }
+ 
+} // namespace GUI
+
+namespace {
   bool InputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled)
   {
     bool valChanged{ false };
@@ -1094,13 +1268,8 @@ namespace GUI {
     return valChanged;
   }
 
-  void Inspector::WindowEnd(bool const isOpen) {
-    if (isOpen) {
-      ImGui::TreePop();
-      ImGui::PopFont();
-    }
-
-    ImGui::Separator();
+  float CalcInputWidth(float padding) {
+    static float const charSize = ImGui::CalcTextSize("012345678901234").x;
+    return ImGui::GetContentRegionAvail().x - charSize - padding;
   }
- 
-} // namespace GUI
+}

@@ -1,6 +1,7 @@
 #include <pch.h>
 #include "Physics/PhysicsSystem.h"
 #include <Core/Components/Components.h>
+#include <Core/Systems/LayerSystem/LayerSystem.h>
 #include "Core/EntityManager.h"
 #include "Events/EventManager.h"
 #include "Core/Entity.h"
@@ -14,6 +15,8 @@ namespace IGE {
 		bool HasAnyComponent(ECS::Entity entity) {
 			return (... || entity.HasComponent<_component>());
 		}
+		std::unordered_set<physx::PxRigidDynamic*> PhysicsSystem::mInactiveActors{};
+
 		const float gGravity{ -9.81f };
 		const float gTimeStep{ 1.f / 60.f };
 		std::shared_ptr<IGE::Physics::PhysicsSystem> PhysicsSystem::_mSelf;
@@ -48,8 +51,15 @@ namespace IGE {
 			// Use default CPU dispatcher
 			physx::PxDefaultCpuDispatcher* dispatcher = physx::PxDefaultCpuDispatcherCreate(2);
 			sceneDesc.cpuDispatcher = dispatcher;
-			sceneDesc.filterShader = FilterShader;//physx::PxDefaultSimulationFilterShader;
-			//sceneDesc.filterCallback = mFilter;
+
+			if (std::shared_ptr<Systems::LayerSystem> layerSys =
+				Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
+				sceneDesc.filterShader = LayerFilterShaderWrapper;
+			}
+
+			else
+				sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
+
 			mScene = mPhysics->createScene(sceneDesc);
 
 			// register callbacks for events
@@ -80,6 +90,19 @@ namespace IGE {
 						if (rbiter != mRigidBodyIDs.end()) {
 							pxrb = rbiter->second;
 
+							if (!ECS::Entity{ entity }.IsActive()) {
+								if (mInactiveActors.find(pxrb) == mInactiveActors.end()) {
+									mScene->removeActor(*pxrb);
+									mInactiveActors.insert(pxrb);
+								}
+								continue;
+							}
+							else {
+								if (mInactiveActors.find(pxrb) != mInactiveActors.end()) {
+									mScene->addActor(*pxrb);
+									mInactiveActors.erase(pxrb);
+								}
+							}
 						}
 						else throw std::runtime_error{ std::string("there is no rigidbody ") };
 
@@ -108,6 +131,22 @@ namespace IGE {
 					auto rbiter{ mRigidBodyIDs.find(rb.bodyID) };
 					if (rbiter != mRigidBodyIDs.end()) {
 						physx::PxRigidDynamic* pxrigidbody{ mRigidBodyIDs.at(rb.bodyID) };
+						
+						if (!ECS::Entity{ entity }.IsActive()) {
+							if (mInactiveActors.find(pxrigidbody) == mInactiveActors.end()) {
+								mScene->removeActor(*pxrigidbody);
+								mInactiveActors.insert(pxrigidbody);
+							}
+							continue;
+						}
+
+						else {
+							if (mInactiveActors.find(pxrigidbody) != mInactiveActors.end()) {
+								mScene->addActor(*pxrigidbody);
+								mInactiveActors.erase(pxrigidbody);
+							}
+						}
+						
 						//apply gravity
 						if (rb.motionType == Component::RigidBody::MotionType::DYNAMIC) {
 							float grav{ gGravity * rb.gravityFactor * rb.mass };
@@ -304,9 +343,11 @@ namespace IGE {
 		physx::PxShape* PhysicsSystem::CreateShape(_physx_type const& geom, _collider_component const& collider)
 		{
 			physx::PxShape* shapeptr{ mPhysics->createShape(geom, *mMaterial, true) };
-			physx::PxFilterData filterData{};
-			filterData.word0 = 1;  // arbitrary group 1, should replace with layers later
-			shapeptr->setSimulationFilterData(filterData);
+
+			if (std::shared_ptr<Systems::LayerSystem> layerSys =
+				Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
+				layerSys->SetupShapeFilterData(&shape, entity);
+			}
 			SetColliderAsSensor(shapeptr, collider.sensor);
 			return shapeptr;
 		}
@@ -566,6 +607,18 @@ namespace IGE {
 
 			delete mEventManager;
 		}
+	}
 
+	physx::PxFilterFlags LayerFilterShaderWrapper(
+		physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
+		physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
+		physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize) {
+		if (auto layerSys = Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
+			return layerSys->LayerFilterShader(
+				attributes0, filterData0, attributes1, filterData1, pairFlags, constantBlock, constantBlockSize);
+		}
+
+		pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
+		return physx::PxFilterFlag::eDEFAULT;
 	}
 }

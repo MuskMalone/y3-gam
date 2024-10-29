@@ -1,4 +1,4 @@
-#version 460 core
+#version 450 core
 
 layout(location = 0) in vec3 a_Position;
 layout(location = 1) in vec3 a_Normal;
@@ -23,6 +23,7 @@ out vec3 v_Normal;           // Normal in world space
 out vec3 v_Tangent;          // Tangent in world space
 out vec3 v_Bitangent;        // Bitangent in world space
 
+out uvec2 v_AlbedoHandle;
 out int v_MaterialIdx;
 out int v_EntityID;
 

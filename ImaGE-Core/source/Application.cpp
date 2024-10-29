@@ -9,18 +9,28 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <pch.h>
 #include "Application.h"
 
+#pragma region SingletonIncludes
 #include <Events/EventManager.h>
 #include <Scenes/SceneManager.h>
 #include <Prefabs/PrefabManager.h>
 #include <Input/InputManager.h>
 #include <Scripting/ScriptManager.h>
+#include <Reflection/ObjectFactory.h>
+#include <Core/EntityManager.h>
+#pragma endregion
 
 #include <Core/Entity.h>
-#include <Core/EntityManager.h>
 #include <Core/Components/Components.h>
 #include "Asset/IGEAssets.h"
 
-#include <Core/Systems/Systems.h>
+#pragma region SYSTEM_INCLUDES
+#include <Core/Systems/SystemManager/SystemManager.h>
+#include <Physics/PhysicsSystem.h>
+#include <Core/Systems/TransformSystem/TransformSystem.h>
+#include <Scripting/ScriptingSystem.h>
+#include <Core/Systems/LayerSystem/LayerSystem.h>
+#include <Graphics/RenderSystem.h>
+#pragma endregion
 
 #include "Serialization/Serializer.h"
 #include "Serialization/Deserializer.h"
@@ -42,53 +52,22 @@ namespace IGE {
     Input::InputManager::CreateInstance(mWindow, mSpecification.WindowWidth, mSpecification.WindowHeight, 0.1);
     Mono::ScriptManager::CreateInstance();
     ECS::EntityManager::CreateInstance();
+    Systems::SystemManager::CreateInstance();
 
     // @TODO: Init physics and audio singletons
     //IGE::Physics::PhysicsSystem::InitAllocator();
     //IGE::Physics::PhysicsSystem::GetInstance()->Init();
 
     RegisterSystems();
-    //IGEAssetsInitialize();
-    mSystemManager.InitSystems();
-    GetDefaultRenderTarget().scene.Init();
-
-    ////for testing only to revert after everything is done
-    //// Define MeshAsset properties
-    //using namespace IGE::Assets;
-    //
-    //AssetMetadata::AssetProps meshAssetProps;
-    //meshAssetProps["path"] = "../path/to/file";
-    //meshAssetProps["layers"] = "3";
-    //meshAssetProps["interpreter"] = "fbx";
-    //// Add more properties as needed
-    //// meshAssetProps["other_property"] = "value";
-
-    //// Insert into MeshAsset category
-    //AssetMetadata::AssetCategory meshCategory;
-    //meshCategory[123456789] = meshAssetProps;
-
-    //// Define TextureAsset properties (example)
-    //AssetMetadata::AssetProps textureAssetProps;
-    //textureAssetProps["path"] = "../path/to/texture";
-    //textureAssetProps["format"] = "png";
-    //textureAssetProps["compression"] = "high";
-    //// textureAssetProps["another_property"] = "value";
-
-    //// Insert into TextureAsset category
-    //AssetMetadata::AssetCategory textureCategory;
-    //textureCategory[987654321] = textureAssetProps;
-
-    //AssetMetadata test{};
-    //// Populate mAssetProperties
-    //test.mAssetProperties["MeshAsset"] = meshCategory;
-    //test.mAssetProperties["TextureAsset"] = textureCategory;
-    //Serialization::Serializer::SerializeAny(test, "TESTREFLECTION.txt");
+    Systems::SystemManager::GetInstance().InitSystems();
+    Graphics::RenderSystem::Init();
   }
 
   void Application::Run() {
     static auto& eventManager{ Events::EventManager::GetInstance() };
     static auto& inputManager{ Input::InputManager::GetInstance() };
     static auto& frameRateController{ Performance::FrameRateController::GetInstance() };
+    static auto& systemManager{ Systems::SystemManager::GetInstance() };
 
     while (!glfwWindowShouldClose(mWindow.get())) {
       frameRateController.Start();
@@ -97,11 +76,12 @@ namespace IGE {
       // dispatch all events in the queue at the start of game loop
       eventManager.DispatchAll();
 
-      mSystemManager.UpdateSystems();
-      GetDefaultRenderTarget().scene.Update(frameRateController.GetDeltaTime());
+      systemManager.UpdateSystems();
 
       glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
-      GetDefaultRenderTarget().scene.Draw();
+
+      Graphics::RenderSystem::RenderEditorScene(GetDefaultRenderTarget().camera);
+
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
       // check and call events, swap buffers
@@ -113,17 +93,15 @@ namespace IGE {
 
   // registration order is the update order
   void Application::RegisterSystems() {
-    mSystemManager.RegisterSystem<Systems::TransformSystem>("Pre-Transform System"); // must be called first   
-    mSystemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
-    mSystemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
-    //mSystemManager.RegisterSystem<Graphics::RenderSystem>("Render System");
+    Systems::SystemManager& systemManager{ Systems::SystemManager::GetInstance() };
 
-    // dont think i need this anymore
-    //mSystemManager.RegisterSystem<Systems::LocalToWorldTransformSystem>("Post-Transform System");
+    systemManager.RegisterSystem<Systems::TransformSystem>("Transform System");
+    systemManager.RegisterSystem<Systems::LayerSystem>("Layer System");
+    systemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
+    systemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
   }
 
-  Application::Application(ApplicationSpecification spec) :
-    mSystemManager{}, mRenderTargets{}, mWindow{}
+  Application::Application(ApplicationSpecification spec) : mRenderTargets{}, mWindow{}
   {
     mSpecification = spec;
     glfwInit();
@@ -150,8 +128,17 @@ namespace IGE {
       throw std::runtime_error("Failed to initialize GLAD");
     }
     
-    glfwSetWindowUserPointer(mWindow.get(), this); // set the window to reference this class
+    glClearColor(0.f, 0.f, 0.f, 1.f);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glEnable(GL_DEPTH_TEST);
 
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glfwSetWindowUserPointer(mWindow.get(), this); // set the window to reference this class
     glViewport(0, 0, spec.WindowWidth, spec.WindowHeight); // specify size of viewport
     SetCallbacks();
 
@@ -160,7 +147,17 @@ namespace IGE {
   framebufferSpec.width = spec.WindowWidth;
   framebufferSpec.height = spec.WindowHeight;
   framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
+
   mRenderTargets.emplace_back(framebufferSpec);
+  mRenderTargets.front().camera = Graphics::EditorCamera(
+      glm::vec3(0.0f, 5.0f, 10.0f),  // Position
+      -90.0f,                        // Yaw
+      -30.0f,                        // Pitch (look downwards slightly)
+      60.0f,                         // FOV
+      16.0f / 9.0f,                  // Aspect Ratio
+      0.1f,                          // Near Clip
+      100.0f                         // Far Clip
+    );
 }
 
   void Application::SetCallbacks() {
@@ -172,7 +169,7 @@ namespace IGE {
     glViewport(0, 0, width, height);
 
     Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
-    for (auto& [fb, fn] : app->mRenderTargets) {
+    for (auto& [cam, fb] : app->mRenderTargets) {
       fb->Resize(width, height);
     }
   }
@@ -186,9 +183,9 @@ namespace IGE {
 
   void Application::Shutdown()
   {
-    mSystemManager.Shutdown();
-
     // shutdown singletons
+    Systems::SystemManager::DestroyInstance();
+
     Scenes::SceneManager::DestroyInstance();
     Prefabs::PrefabManager::DestroyInstance();
     Mono::ScriptManager::DestroyInstance();

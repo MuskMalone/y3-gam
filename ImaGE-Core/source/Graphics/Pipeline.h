@@ -9,7 +9,6 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#include <pch.h>
 #include "RenderCommand.h"
 #include "Shader.h"
 #include "VertexBuffer.h"

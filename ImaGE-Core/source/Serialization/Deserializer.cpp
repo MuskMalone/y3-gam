@@ -18,6 +18,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <sstream>
 #include <cstdarg>
 #include <Prefabs/PrefabManager.h>
+#include <Core/Systems/SystemManager/SystemManager.h>
+#include <Core/Systems/LayerSystem/LayerSystem.h>
 #include <Core/Components/Script.h>
 #include <Reflection/ProxyScript.h>
 
@@ -57,16 +59,17 @@ namespace Serialization
       return;
     }
 
-    if (!document.IsArray()) {
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + filepath + ": root is not an array!");
+    if (!document.IsObject() || !document.HasMember(JSON_SCENE_KEY) || !document[JSON_SCENE_KEY].IsArray()) {
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + filepath + ": Scene object corrupted!");
 #ifdef _DEBUG
-      std::cout << filepath + ": root is not an array!" << "\n";
+      std::cout << filepath + ": Scene object corrupted!" << "\n";
 #endif
       return;
     }
 
     // okay code starts here
-    for (auto const& entity : document.GetArray())
+    // deserialize all entities
+    for (auto const& entity : document[JSON_SCENE_KEY].GetArray())
     {
       if (entity.HasMember(JSON_PREFAB_KEY)) {
 
@@ -156,6 +159,24 @@ namespace Serialization
       }
 
       entities.emplace_back(std::move(entityVar));
+    }
+
+    // deserialize layer data
+    if (!document.HasMember(JSON_LAYERS_KEY) || !document[JSON_LAYERS_KEY].IsObject()) {
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + filepath + ": Unable to find Layer data");
+#ifdef _DEBUG
+      std::cout << filepath + ": Unable to find Layer data" << "\n";
+#endif
+      return;
+    }
+
+    Systems::LayerSystem::LayerData layerData;
+    DeserializeRecursive(layerData, document[JSON_LAYERS_KEY]);
+    if (auto layerSys = Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
+      layerSys->LoadLayerData(std::move(layerData));
+    }
+    else {
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to get Layer System!");
     }
   }
 
@@ -524,6 +545,11 @@ namespace Serialization
               continue;
             }
           }
+          // fix for not being able to differentiate between ints and unsigned ints
+          else if (idxVal.IsInt()) {
+            seqView.set_value(i, idxVal.GetInt());
+            continue;
+          }
 
           std::string const msg{ "Unable to set sequential view of type " + seqView.get_type().get_name().to_string() };
           Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
@@ -838,5 +864,4 @@ namespace Serialization
     va_end(args);
     return status;
   }
-
 } // namespace Serialization

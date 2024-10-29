@@ -28,11 +28,6 @@ namespace Systems {
 
       frc.EndSystemTimer(system->GetName());
     }
-
-    // idk if we need this
-    //for (auto const& [name, system] : mSystems) {
-    //  system->RenderUpdate();
-    //}
   }
 
   void SystemManager::UpdateSystems(std::initializer_list<const char*> const& names) {
@@ -51,29 +46,10 @@ namespace Systems {
     }
   }
 
-  void SystemManager::LateUpdateSystems(std::initializer_list<const char*> const& names) {
-    Performance::FrameRateController& frc{ Performance::FrameRateController::GetInstance() };
-
-    for (const char* name : names) {
-#ifdef _DEBUG
-      if (!mNameToSystem.contains(name)) {
-        throw Debug::Exception<SystemManager>(Debug::LVL_ERROR, Msg(std::string("Trying to update unregistered system of type ") + name));
-      }
-#endif
-
-      frc.StartSystemTimer();
-      mNameToSystem[name]->RenderUpdate();
-      frc.EndSystemTimer(name);
-    }
-  }
-
-  void SystemManager::Shutdown() {
+  SystemManager::~SystemManager() {
     for (SystemPtr const& system : mSystems) {
       system->Destroy();
     }
-
-    mNameToSystem.clear();
-    mSystems.clear();
   }
 
 } // namespace Systems

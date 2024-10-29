@@ -16,6 +16,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Prefabs/PrefabManager.h>
 #include <Input/InputManager.h>
 
+#include <Core/Systems/SystemManager/SystemManager.h>
+
 #include <imgui/imgui.h>
 #include <imgui/backends/imgui_impl_glfw.h>
 #include <imgui/backends/imgui_impl_opengl3.h>
@@ -55,7 +57,10 @@ namespace IGE {
     Application::Init();  // perform default Init
 
     // init editor-specific stuff
-    mGUIManager.Init();
+    // im not sure if this is scalable;
+    // may just make SystemManager globally accesible in future
+    // if more stuff requires it
+    mGUIManager.Init(GetDefaultRenderTarget());
   }
 
   void EditorApplication::Run() {
@@ -63,6 +68,7 @@ namespace IGE {
     static auto& inputManager{ Input::InputManager::GetInstance() };
     static auto& frameRateController{ Performance::FrameRateController::GetInstance() };
     static auto& sceneManager{ Scenes::SceneManager::GetInstance() };
+    static auto& sysManager{ Systems::SystemManager::GetInstance() };
 
     while (!glfwWindowShouldClose(mWindow.get())) {
       frameRateController.Start();
@@ -78,10 +84,10 @@ namespace IGE {
           eventManager.DispatchAll();
 
           if (sceneManager.GetSceneState() == Scenes::PLAYING) {
-            mSystemManager.UpdateSystems();
+            sysManager.UpdateSystems();
           }
           else {
-            mSystemManager.UpdateSelectedSystems<Systems::TransformSystem, IGE::Physics::PhysicsSystem>();
+            sysManager.UpdateSelectedSystems<Systems::TransformSystem, IGE::Physics::PhysicsSystem>();
           }
         }
         catch (Debug::ExceptionBase& e)
@@ -98,9 +104,9 @@ namespace IGE {
 
             UpdateFramebuffers();
             
-            // @TODO: is this line still needed? - u can alr directly update the framebuffer in the draw function
-            mRenderTargets.front().framebuffer = Graphics::Renderer::GetFinalFramebuffer();
-            mGUIManager.UpdateGUI(mRenderTargets.front());
+            auto& fb{ GetDefaultRenderTarget().framebuffer };
+            fb = Graphics::Renderer::GetFinalFramebuffer();
+            mGUIManager.UpdateGUI(fb);
 
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -148,7 +154,7 @@ namespace IGE {
     {
       target.framebuffer->Bind();
 
-      target.scene.Draw();
+      Graphics::RenderSystem::RenderEditorScene(target.camera);
 
       target.framebuffer->Unbind();
     }

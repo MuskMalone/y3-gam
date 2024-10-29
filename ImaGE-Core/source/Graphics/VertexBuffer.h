@@ -21,6 +21,10 @@ namespace Graphics{
 		VEC4,
 		MAT3,
 		MAT4,
+		UINT,
+		UVEC2,
+		UVEC3,
+		UVEC4,
 		INT,
 		IVEC2,
 		IVEC3,
@@ -38,6 +42,10 @@ namespace Graphics{
 		case AttributeType::MAT3:	return 4 * 3 * 3;
 		case AttributeType::MAT4:	return 4 * 4 * 4;
 		case AttributeType::INT:	return 4;
+		case AttributeType::UINT:   return 4;
+		case AttributeType::UVEC2: return 4 * 2;
+		case AttributeType::UVEC3: return 4 * 3;
+		case AttributeType::UVEC4: return 4 * 4;
 		case AttributeType::IVEC2:	return 4 * 2;
 		case AttributeType::IVEC3:	return 4 * 3;
 		case AttributeType::IVEC4:	return 4 * 4;
@@ -58,6 +66,10 @@ namespace Graphics{
 		case AttributeType::VEC4:   return "VEC4";
 		case AttributeType::MAT3:   return "MAT3";
 		case AttributeType::MAT4:   return "MAT4";
+		case AttributeType::UINT:   return "UINT";
+		case AttributeType::UVEC2:  return "UVEC2";
+		case AttributeType::UVEC3:  return "UVEC3";
+		case AttributeType::UVEC4:  return "UVEC4";
 		case AttributeType::INT:    return "INT";
 		case AttributeType::IVEC2:  return "IVEC2";
 		case AttributeType::IVEC3:  return "IVEC3";
@@ -110,6 +122,10 @@ namespace Graphics{
 			case AttributeType::VEC3:	return 3;
 			case AttributeType::VEC4:	return 4;
 			case AttributeType::MAT4:   return 4;
+			case AttributeType::UINT:   return 1;
+			case AttributeType::UVEC2:	return 2;
+			case AttributeType::UVEC3:	return 3;
+			case AttributeType::UVEC4:	return 4;
 			case AttributeType::INT:	return 1;
 			case AttributeType::IVEC2:	return 2;
 			case AttributeType::IVEC3:	return 3;

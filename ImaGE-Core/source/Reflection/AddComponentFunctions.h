@@ -26,5 +26,6 @@ namespace Reflection::ComponentUtils {
   void AddRigidBody(ECS::Entity entity, rttr::variant const& var);
   void AddText(ECS::Entity entity, rttr::variant const& var);
   void AddScript(ECS::Entity entity, rttr::variant const& var);
+  void AddLight(ECS::Entity entity, rttr::variant const& var);
 
 } // namespace Reflection

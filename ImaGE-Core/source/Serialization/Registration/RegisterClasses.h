@@ -15,6 +15,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Reflection/ProxyScript.h>
 #include <Asset/AssetMetadata.h>
 #include <Asset/Assetables/Assetables.h>
+#include <Core/Systems/LayerSystem/LayerSystem.h>
+#include <Core/GUID.h>
 
 static void rttr_auto_register_reflection_function_(); namespace {
   struct rttr__auto__register__ {
@@ -73,12 +75,30 @@ static void rttr_auto_register_reflection_function_(); namespace {
     .property("x", &physx::PxVec3::x)
     .property("y", &physx::PxVec3::y)
     .property("z", &physx::PxVec3::z);
+
+  {
+    using T = Systems::LayerSystem::LayerData;
+    rttr::registration::class_<T>("LayerData")
+      .constructor<>()
+      .property("layerNames", &T::layerNames)
+      .property("layerVisibility", &T::layerVisibility)
+      .property("collisionMatrix", &T::collisionMatrix);
+  }
+
   rttr::registration::class_<physx::PxQuat>("PxQuat")
       .constructor<>()(rttr::policy::ctor::as_object)
       .property("x", &physx::PxQuat::x)
       .property("y", &physx::PxQuat::y)
       .property("z", &physx::PxQuat::z)
       .property("w", &physx::PxQuat::w);
+
+  {
+    using T = IGE::Core::GUID<IGE::Assets::AssetGUIDTag>;
+    rttr::registration::class_<T>("AssetGUID")
+      .property("Seed", &T::mSeed)
+      .property("ID", &T::mID);
+  }
+
   if (IGE::Application::GetImGuiEnabled()) {
       rttr::registration::class_<std::pair<std::string, unsigned>>("StringUnsignedPair")
           .property("first", &std::pair<std::string, unsigned>::first)

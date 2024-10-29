@@ -20,6 +20,7 @@ namespace Graphics
         NONE = 0,
         RGBA8,
         RED_INTEGER,
+        SHADOW_MAP,
         DEPTH24STENCIL8,
 
         DEPTH = DEPTH24STENCIL8 //default
@@ -63,6 +64,7 @@ namespace Graphics
         void ClearAttachmentInt(uint32_t attachIdx, int val);
 
         uint32_t GetColorAttachmentID(uint32_t index = 0) const;
+        uint32_t GetDepthAttachmentID() const noexcept;
         FramebufferSpec const& GetFramebufferSpec() const;
 
         static std::shared_ptr<Framebuffer> Create(FramebufferSpec const& spec);

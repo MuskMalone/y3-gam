@@ -45,14 +45,37 @@ namespace Graphics {
 		void SetUniform(std::string const& name, glm::mat3 const& val);
 		void SetUniform(std::string const& name, glm::mat4 const& val);
 		void SetUniform(std::string const& name, int* val, unsigned int count);
+		void SetUniform(std::string const& name, float* val, unsigned int count);
+		void SetUniform(std::string const& name, glm::vec3* val, unsigned int count);
 
 		void SetUniform(std::string const& name, GLuint64 bindlessHandle);
 
 		void SetUniform(std::string const& name, const GLuint64* bindlessHandles, unsigned int count);
 
-		void SetUniform(std::string const& name, Texture* texture, unsigned int texUnit); //TEXTURES
+		void SetUniform(std::string const& name, Texture const& texture, unsigned int texUnit); //TEXTURES
+		void SetUniform(std::string const& name, std::shared_ptr<Texture> texture, unsigned int texUnit); //TEXTURES
 		unsigned int PgmHdl() { return pgmHdl; };
 	private:
 		unsigned int pgmHdl;
 	};
+
+	class ShaderLibrary {
+	public:
+		inline static bool Add(const std::string& name, std::shared_ptr<Shader> shader) {
+			if (mShaders.find(name) != mShaders.end()) {
+				return false;  // Shader already exists
+			}
+			mShaders[name] = shader;  // Add shader if it doesn't exist
+			return true;
+		}
+
+		inline static std::shared_ptr<Shader> Get(const std::string& name) {
+			return mShaders.at(name);  // Handle exceptions as needed
+		}
+		static const std::string cShaderDirectory;  // Shader directory
+	private:
+		static std::unordered_map<std::string, std::shared_ptr<Shader>> mShaders;
+
+	};
 }	// namespace Graphics
+

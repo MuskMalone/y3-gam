@@ -22,6 +22,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Helper
 {
+  static std::string sSearchQuery, sLowerSearchQuery;
+
   /*!*********************************************************************
   \brief
     Checks if the given directory contains more directories
@@ -31,6 +33,16 @@ namespace Helper
     True if it contains at least 1 directory and false otherwise
   ************************************************************************/
   bool ContainsDirectories(std::filesystem::path const& dirEntry);
+
+  /*!*********************************************************************
+  \brief
+    Converts a string to lower case
+  \param str
+    The string
+  \return
+    The string in lower case
+  ************************************************************************/
+  std::string ToLower(std::string const& str);
 }
 
 namespace GUI
@@ -67,7 +79,7 @@ namespace GUI
   void AssetBrowser::MenuBar()
   {
     ImGui::BeginMenuBar();
-    bool const isSearching{ !mSearchQuery.empty() };
+    bool const isSearching{ !Helper::sSearchQuery.empty() };
     float const wWidth{ ImGui::GetWindowWidth() };
     
     ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(0, 0, 0, 70));
@@ -95,7 +107,9 @@ namespace GUI
 
     ImGui::SetCursorPosX(wWidth - wWidth * 0.25f);
     ImGui::PushItemWidth(wWidth * 0.24f);
-    ImGui::InputTextWithHint("##SearchBar", ICON_FA_MAGNIFYING_GLASS " Search Assets", &mSearchQuery, ImGuiInputTextFlags_AutoSelectAll);
+    if (ImGui::InputTextWithHint("##SearchBar", ICON_FA_MAGNIFYING_GLASS " Search Assets", &Helper::sSearchQuery, ImGuiInputTextFlags_AutoSelectAll)) {
+      Helper::sLowerSearchQuery = Helper::ToLower(Helper::sSearchQuery);
+    }
     ImGui::PopItemWidth();
 
     ImGui::PopStyleVar();
@@ -153,7 +167,7 @@ namespace GUI
     unsigned const maxChars{ static_cast<unsigned>(imgSize * 0.9f / ImGui::CalcTextSize("L").x) };
     if (ImGui::BeginTable("DirectoryTable", assetsPerRow, ImGuiTableFlags_Sortable | ImGuiTableFlags_ScrollY))
     {
-      if (mSearchQuery.empty()) {
+      if (Helper::sSearchQuery.empty()) {
         DisplayDirectory(imgSize, maxChars);
       }
       else {
@@ -201,7 +215,7 @@ namespace GUI
       if (file.is_directory()) { continue; }
 
       std::string const fileName{ file.path().filename().string() };
-      if (fileName.find(mSearchQuery) == std::string::npos) { continue; }
+      if (Helper::ToLower(fileName).find(Helper::sLowerSearchQuery) == std::string::npos) { continue; }
 
       ImGui::TableNextColumn();
       bool const exceed{ fileName.size() > maxChars };
@@ -464,5 +478,14 @@ namespace Helper
     }
 
     return false;
+  }
+
+  std::string ToLower(std::string const& str) {
+    std::string ret{ str };
+    for (char& ch : ret) {
+      ch = std::tolower(ch);
+    }
+
+    return ret;
   }
 }

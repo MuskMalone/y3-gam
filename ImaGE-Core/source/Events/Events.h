@@ -43,6 +43,15 @@ namespace Events
     inline std::string GetName() const noexcept override { return "Toggle Fullscreen"; }
   };
 
+  class ZoomInOnEntity : public Event
+  {
+  public:
+    ZoomInOnEntity(ECS::Entity entity) : Event(EventType::ENTITY_ZOOM), mEntity{ entity } {}
+    inline std::string GetName() const noexcept override { return "Zooming in on Entity " + mEntity.GetTag(); }
+
+    ECS::Entity const mEntity;
+  };
+
   // name, path, pos = {}, mapEntity = true
   class SpawnPrefabEvent : public Event
   {
@@ -75,7 +84,7 @@ namespace Events
   {
   public:
     RemoveEntityEvent(ECS::Entity entity) : Event(EventType::REMOVE_ENTITY), mEntity{ entity } {}
-    inline std::string GetName() const noexcept override { return "Deleted Prefab: " + std::to_string(mEntity.GetEntityID()); }
+    inline std::string GetName() const noexcept override { return "Deleted Entity: " + mEntity.GetTag(); }
 
     ECS::Entity const mEntity;
   };
@@ -94,4 +103,14 @@ namespace Events
     std::vector<std::string> mPaths;
   };
 #endif
+
+  class EntityLayerModified : public Event
+  {
+  public:
+    EntityLayerModified(ECS::Entity entity, std::string oldLayer) : Event(EventType::LAYER_MODIFIED), mEntity{ entity }, mOldLayer{ oldLayer } {}
+    inline std::string GetName() const noexcept override { return "Modified Layer Component of Entity: " + mEntity.GetTag(); }
+
+    ECS::Entity const mEntity;
+    std::string mOldLayer;
+  };
 }

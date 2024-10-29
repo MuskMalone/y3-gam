@@ -1,9 +1,9 @@
+#include <DebugTools/DebugLogger/DebugLogger.h>
+
 template <typename T>
 void SystemManager::RegisterSystem(const char* name) {
-  static_assert(!std::is_same<decltype(&System::Update), decltype(&T::Update)>::value
-  || !std::is_same<decltype(&System::RenderUpdate), decltype(&T::RenderUpdate)>::value,
-  "System must override at least 1 of { System::Update, System::RenderUpdate }!"
-  );
+  static_assert(!std::is_same<decltype(&System::Update), decltype(&T::Update)>::value,
+    "System must override System::Update!");
 
   SystemPtr sys{ std::make_shared<T>(name) };
   mNameToSystem.emplace(typeid(T).name(), sys);
@@ -11,7 +11,7 @@ void SystemManager::RegisterSystem(const char* name) {
 }
 
 template <typename T>
-std::shared_ptr<T> SystemManager::GetSystem() const {
+std::weak_ptr<T> SystemManager::GetSystem() const {
   const char* sysName{ typeid(T).name() };
   if (!mNameToSystem.contains(sysName)) {
     throw Debug::Exception<SystemManager>(Debug::LVL_ERROR, Msg(std::string("Trying to get unregistered system of type ") + typeid(T).name()));

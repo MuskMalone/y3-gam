@@ -1,7 +1,10 @@
 #include <pch.h>
 #include "Entity.h"
 #include <Core/Components/Tag.h>
+#include <Core/Components/Layer.h>
+
 #include <Events/EventManager.h>
+#include <Events/EventCallback.h>
 
 namespace ECS
 {
@@ -17,13 +20,52 @@ namespace ECS
   }
 
   std::string const& Entity::GetTag() const {
+    if (!this->HasComponent<Component::Tag>()) {
+      Debug::DebugLogger::GetInstance().LogWarning("[Entity] Entity does not have Tag Component!");
+      return std::string();
+    }
+
     Component::Tag const& tagComponent{ this->GetComponent<Component::Tag>() };
     return tagComponent.tag;
   }
 
   void Entity::SetTag(std::string const& tag) {
+    if (!this->HasComponent<Component::Tag>()) {
+      Debug::DebugLogger::GetInstance().LogWarning("[Entity] Entity does not have Tag Component!");
+      return;
+    }
+
     Component::Tag& tagRef{ this->GetComponent<Component::Tag>() };
-    tagRef = tag;
+    tagRef.tag = tag;
+  }
+
+  bool Entity::IsActive() const {
+    if (!this->HasComponent<Component::Tag>()) {
+      Debug::DebugLogger::GetInstance().LogWarning("[Entity] Entity does not have Tag Component!");
+      return false;
+    }
+
+    return this->GetComponent<Component::Tag>().isActive;
+  }
+
+  void Entity::SetIsActive(bool isActiveFlag) {
+    if (!this->HasComponent<Component::Tag>()) {
+      Debug::DebugLogger::GetInstance().LogWarning("[Entity] Entity does not have Tag Component!");
+      return;
+    }
+
+    this->GetComponent<Component::Tag>().isActive = isActiveFlag;
+  }
+
+  void Entity::SetLayer(std::string layerName) {
+    if (!this->HasComponent<Component::Layer>()) {
+      Debug::DebugLogger::GetInstance().LogWarning("[Entity] Entity does not have Layer Component!");
+      return;
+    }
+
+    std::string oldLayer = this->GetComponent<Component::Layer>().name;
+    this->GetComponent<Component::Layer>().name = layerName;
+    QUEUE_EVENT(Events::EntityLayerModified, *this, oldLayer);
   }
 
   Entity::operator bool() const {

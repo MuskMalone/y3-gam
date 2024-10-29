@@ -29,6 +29,7 @@ namespace IGE {
 			void ChangeCapsuleColliderVar(ECS::Entity entity);
 			void Debug(float dt); // to be called within rendersystems geom pass
 			void ClearSystem(); //clears all the rigidbodies. 
+			std::unordered_map<void*, physx::PxRigidDynamic*> const& GetRigidBodyIDs() const { return mRigidBodyIDs; }
 		//private:
 		//	const uint32_t cMaxBodies = 65536;
 		//	const uint32_t cNumBodyMutexes = 0;
@@ -60,6 +61,8 @@ namespace IGE {
 			static std::mutex _mMutex;
 			PhysicsSystem(PhysicsSystem& other) = delete;
 			void operator=(const PhysicsSystem&) = delete;
+			static std::unordered_set<physx::PxRigidDynamic*> mInactiveActors;
+
 		public:
 			PhysicsEventManager* mEventManager;
 		private:
@@ -87,6 +90,11 @@ namespace IGE {
 			PHYSICS_EVENT_LISTENER_DECL(OnTriggerSampleListener)
 		};
 	}
+
+	physx::PxFilterFlags LayerFilterShaderWrapper(
+		physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
+		physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
+		physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize);
 }
 template <>
 inline void Systems::SystemManager::RegisterSystem<IGE::Physics::PhysicsSystem>(const char* name) {
