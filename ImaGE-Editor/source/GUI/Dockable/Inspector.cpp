@@ -1158,14 +1158,19 @@ namespace GUI {
           modified = true;
         }
       }
-
-      NextRowTable("Cast Shadows");
-      if (ImGui::Checkbox("##CastShadows", &light.castShadows)) {
-        modified = true;
+      // @TODO: Remove else block when shadow is added for spotlight
+      else {
+        NextRowTable("Cast Shadows");
+        if (ImGui::Checkbox("##CastShadows", &light.castShadows)) {
+          modified = true;
+        }
+        if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+          ImGui::SetTooltip("Note: Only 1 shadow-casting light is supported");
+        }
       }
       ImGui::EndTable();
 
-      if (light.castShadows) {
+      if (light.castShadows && light.type == Component::LightType::DIRECTIONAL) {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
         if (ImGui::TreeNodeEx("Shadows", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanFullWidth)) {

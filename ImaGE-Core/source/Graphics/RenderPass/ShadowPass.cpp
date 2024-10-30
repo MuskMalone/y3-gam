@@ -9,7 +9,7 @@
 
 namespace Graphics {
   ShadowPass::ShadowPass(const RenderPassSpec& spec) : RenderPass(spec), mLightSpaceMtx{}, mShadowSoftness{}, mShadowBias{}, mActive{ false } {
-
+    
   }
 
   void ShadowPass::Render(EditorCamera const& cam, std::vector<ECS::Entity> const& entities) {
@@ -50,7 +50,7 @@ namespace Graphics {
       Component::Transform const& transform{ entity.GetComponent<Component::Transform>() };
 
       // only care about shadow casters
-      if (!light.castShadows) {
+      if (!light.castShadows || light.type != Component::LightType::DIRECTIONAL) {
         continue;
       }
       found = true;
