@@ -701,8 +701,8 @@ namespace Serialization
         DeserializeRecursive(scriptFIList, fieldInst);
 
 #ifdef DESERIALIZER_DEBUG
-        if (scriptFIList.is_type<std::shared_ptr<Mono::ScriptFieldInstance<double>>>()) {
-          Mono::ScriptFieldInstance<double> const& test = *scriptFIList.get_value<std::shared_ptr<Mono::ScriptFieldInstance<double>>>();
+        if (scriptFIList.is_type<std::shared_ptr<Mono::DataMemberInstance<double>>>()) {
+          Mono::DataMemberInstance<double> const& test = *scriptFIList.get_value<std::shared_ptr<Mono::DataMemberInstance<double>>>();
           std::cout << "Contains " << test.mData << "\n";
         }
 #endif

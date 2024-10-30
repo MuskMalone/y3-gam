@@ -30,23 +30,23 @@ namespace Image.Mono
     #region Transform
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vec3<float> GetScale(uint ID);
+    internal extern static Vec3<float> GetScale(int ID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetScale(ref uint entityHandle, ref Vec3<float> scale);
+    internal extern static void SetScale(int entityHandle, ref Vec3<float> scale);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vec3<float> GetWorldPosition(uint ID);
+    internal extern static Vec3<float> GetWorldPosition(int ID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vec3<float> GetPosition(uint ID);
+    internal extern static Vec3<float> GetPosition(int ID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetPosition(uint entityHandle, ref Vec3<float> position);
+    internal extern static void SetPosition(int entityHandle, ref Vec3<float> position);
 
     // avoid using this, prefer SetPosition (local)
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetWorldPosition(uint entityHandle, ref Vec3<float> position);
+    internal extern static void SetWorldPosition(int entityHandle, ref Vec3<float> position);
 
     //[MethodImplAttribute(MethodImplOptions.InternalCall)]
     //internal extern static void GetRotation(ref uint entityHandle, ref float rotation);
@@ -56,10 +56,35 @@ namespace Image.Mono
 
     #endregion
 
+
+    #region Input
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static bool IsKeyTriggered(KeyCode key);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static bool IsKeyHeld(KeyCode key);
+    #endregion
+
+
+    #region Logging
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void Log(string s);
+
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void LogWarning(string s);
+
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void LogError(string s);
+
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void LogCritical(string s);
+    #endregion
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static string GetTag(int EntityID);
+    
   }
 }

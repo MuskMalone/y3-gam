@@ -138,7 +138,7 @@ namespace Debug
     \return
       Logged message.
     ********************************************************************/
-        template <typename T>
+    template <typename T>
     std::string LogError(std::string msg, bool logToFile = LOG_TO_FILE);
 
     /*!******************************************************************

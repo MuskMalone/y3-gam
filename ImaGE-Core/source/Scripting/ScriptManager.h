@@ -292,6 +292,24 @@ namespace Mono
 		************************************************************************/
 		static glm::vec3 GetRotation(ECS::Entity::EntityID entity);
 
+		static MonoString* GetTag(ECS::Entity::EntityID entity);
+
+
+		static void Log(MonoString*);
+
+		static void LogWarning(MonoString*);
+
+		static void LogError(MonoString*);
+
+		static void LogCritical(MonoString*);
+
+
+
+		/*!**********************************************************************
+		*																																			  *
+		*								            Helper Function			          						  *
+		*																																			  *
+		************************************************************************/
 	/*!*********************************************************************
 		\brief
 			Function to read data from a file and store it in a char buffer
@@ -364,7 +382,7 @@ namespace Mono
 		************************************************************************/
 		MonoString* STDToMonoString(const std::string& str);
 
-
+		static float* Test(ECS::Entity::EntityID entity);
 
 		/*!**********************************************************************
 		*																																			  *

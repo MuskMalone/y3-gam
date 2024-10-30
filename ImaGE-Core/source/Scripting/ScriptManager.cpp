@@ -65,7 +65,8 @@ namespace Mono
     { "Image.Mono.Vec2<System.Double>", ScriptFieldType::DVEC2 },
     { "Image.Mono.Vec3<System.Double>", ScriptFieldType::DVEC3 },
     { "System.Int32[]", ScriptFieldType::INT_ARR },
-    { "System.String[]",ScriptFieldType::STRING_ARR}
+    { "System.String[]",ScriptFieldType::STRING_ARR},
+    { "Image.Mono.Entity",ScriptFieldType::ENTITY}
   };
 }
 
@@ -174,6 +175,13 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetWorldPosition);
   ADD_INTERNAL_CALL(SetPosition);
   ADD_INTERNAL_CALL(SetWorldScale);
+
+  //Debug Functions
+  ADD_INTERNAL_CALL(Log);
+  ADD_INTERNAL_CALL(LogWarning);
+  ADD_INTERNAL_CALL(LogError);
+  ADD_INTERNAL_CALL(LogCritical);
+
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -210,7 +218,7 @@ void ScriptManager::LoadAllMonoClass()
             MonoType* type = mono_field_get_type(field);
             ScriptFieldType fieldType = MonoTypeToScriptFieldType(type);
             std::string typeName = mono_type_get_name(type);
-            //std::cout << fieldName << "\n";
+            std::cout << fieldName <<  "::" << typeName  << "\n";
             newScriptClassInfo.mScriptFieldMap[fieldName] = { fieldType, fieldName, field };
           }
         }
@@ -615,6 +623,7 @@ void Mono::SetWorldScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment
   TransformHelpers::UpdateWorldTransform(entity);
 }
 
+
 void Mono::SetRotation(ECS::Entity::EntityID entity, glm::vec3 rotAdjustment)
 {
   // need to use quaternions
@@ -639,6 +648,36 @@ glm::vec3 Mono::GetRotation(ECS::Entity::EntityID entity)
 {
   return ECS::Entity(entity).GetComponent<Component::Transform>().position;
 }
+
+MonoString* Mono::GetTag(ECS::Entity::EntityID entity)
+{
+  return STDToMonoString(ECS::Entity(entity).GetComponent<Component::Tag>().tag);
+}
+
+void  Mono::Log(MonoString*s)
+{
+  std::string msg{ MonoStringToSTD(s) };
+  Debug::DebugLogger::GetInstance().LogInfo(msg);
+}
+
+void  Mono::LogWarning(MonoString* s)
+{
+  std::string msg{ MonoStringToSTD(s) };
+  Debug::DebugLogger::GetInstance().LogWarning(msg);
+}
+
+void  Mono::LogError(MonoString* s)
+{
+  std::string msg{ MonoStringToSTD(s) };
+  Debug::DebugLogger::GetInstance().LogError(msg);
+}
+
+void  Mono::LogCritical(MonoString* s)
+{
+  std::string msg{ MonoStringToSTD(s) };
+  Debug::DebugLogger::GetInstance().LogCritical(msg);
+}
+
 
 
 /*!**********************************************************************

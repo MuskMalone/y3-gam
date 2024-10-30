@@ -23,13 +23,18 @@ using System.Runtime.CompilerServices;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
+
+
 
 namespace Image.Mono
 {
-  public class Entity
+
+    public class Entity
   {
-    public uint mEntityID;
-    private readonly Dictionary<Type, Component> components = new Dictionary<Type, Component>();
+
+    public int mEntityID = 666;
+    //private readonly Dictionary<Type, Component> components = new Dictionary<Type, Component>();
 
     /*  _________________________________________________________________________ */
     /*! Entity
@@ -41,7 +46,7 @@ namespace Image.Mono
 
     Non-default, single-arg constructor for entity
     */
-    public Entity(uint entityHandle)
+    public Entity(int entityHandle)
     {
       mEntityID = entityHandle;
     }
@@ -61,21 +66,18 @@ namespace Image.Mono
 
 
     // Method to add a component
-    public void AddComponent<T>(T component) where T : Component
-    {
-        components[typeof(T)] = component;
-    }
 
     // Generic GetComponent method
-    public T GetComponent<T>() where T : Component
+    public T GetComponent<T>() where T : Component, new()
     {
-        // Try to retrieve the component of type T
-        if (components.TryGetValue(typeof(T), out var component))
-        {
-            return component as T; // Cast to type T
-        }
-
-        return null; // Return null if component not found
+      if (mEntityID == Utils.InvalidID)
+      {
+        InternalCalls.LogError("Invalid EntityID");
+        return null;
+      }
+      // Try to retrieve the component of type T
+      T component = new T() { entity = this };
+      return component;
     }
 
 

@@ -36,11 +36,13 @@ namespace Mono {
 	* data of the c# class field is stored in the struct                  	*
 	************************************************************************/
 	template<typename T>
-	struct ScriptFieldInstance
+	struct DataMemberInstance
 	{
-			ScriptFieldInstance() : mScriptField{}, mData{} { mType = rttr::variant(*this).get_type().get_name().to_string(); }
-			ScriptFieldInstance(ScriptFieldInfo const& scriptField) : mScriptField{ scriptField }, mData{  } {}
-			ScriptFieldInstance(ScriptFieldInfo const& scriptField, T data) : mScriptField{ scriptField }, mData{ data }
+			DataMemberInstance() : mScriptField{}, mData{} { mType = rttr::variant(*this).get_type().get_name().to_string(); }
+			DataMemberInstance(ScriptFieldInfo const& scriptField) : mScriptField{ scriptField }, mData{  } {
+				mType = rttr::variant(*this).get_type().get_name().to_string();	
+			}
+			DataMemberInstance(ScriptFieldInfo const& scriptField, T data) : mScriptField{ scriptField }, mData{ data }
 			{
 				mType = rttr::variant(*this).get_type().get_name().to_string();
 			}
@@ -69,7 +71,7 @@ namespace Mono {
 		\brief
 			Default constructor of Script Class
 		************************************************************************/
-		ScriptInstance() {  }
+		ScriptInstance() {};
 
 
 		/*!*********************************************************************
@@ -90,6 +92,16 @@ namespace Mono {
 			Function to hot reload the c# script
 		************************************************************************/
 		void ReloadScript();
+
+
+		/*!*********************************************************************
+		\brief
+			Function to get the instance of a C# class
+		************************************************************************/
+		void GetFieldCSClass(std::vector<rttr::variant>& mScriptFieldInstList, const Mono::ScriptFieldInfo& field);
+
+
+//		void GetFieldCSClass(std::vector<rttr::variant>& mScriptFieldInstList, const Mono::ScriptFieldInfo& field);
 
 		/*!*********************************************************************
 		\brief
@@ -225,11 +237,13 @@ namespace Mono {
 		shared pointer to the field we are trying to get
 		************************************************************************/
 		template<typename T>
-		void SetFieldValue(T value, MonoClassField* field)
+		void SetFieldValue(const T& value, MonoClassField* field)
 		{
 			std::memcpy(mFieldValBuffer, &value, sizeof(T));
 			mono_field_set_value(mClassInst, field, mFieldValBuffer);
 		}
+
+
 
 
 		/*!*********************************************************************
@@ -312,6 +326,8 @@ namespace Mono {
 
 
 	};
+
+
 
 }
 
