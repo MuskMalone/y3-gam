@@ -66,7 +66,6 @@ namespace IGE {
 			if (!IsValidFilePath(fp)) {
 				return new ModelAsset(fp);
 			}
-			std::string dirpath{ GetDirectoryPath(fp) };
 			std::filesystem::path const path{ fp };
 			std::string filename { GetFileName(fp) };
 			std::string fileext { GetFileExtension(fp) };
@@ -76,7 +75,7 @@ namespace IGE {
 			//copy the file to a "Compiled" folder
 			if (fileext == ".imsh") { // if it is already a compiled format
 				//return new ModelAsset(fp);
-				finalfp = dirpath + cCompiledDirectory + filename + fileext;
+				finalfp = cModelDirectory + cCompiledDirectory + filename + fileext;
 				CopyFileToAssets(fp, finalfp);
 			}
 			else if (std::string(gSupportedModelFormats).find(fileext) != std::string::npos) {

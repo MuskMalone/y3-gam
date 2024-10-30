@@ -54,7 +54,6 @@ namespace IGE {
         }
 		void* TextureAsset::Load([[maybe_unused]] GUID guid) {
             std::string fp{ AssetManager::GetInstance().GUIDToPath(guid) };
-            std::string dirpath{ GetDirectoryPath(fp) };
             std::filesystem::path const path{ fp };
             std::string filename { GetFileName(fp) };
             std::string fileext { GetFileExtension(fp) };
