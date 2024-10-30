@@ -27,7 +27,11 @@ out uvec2 v_AlbedoHandle;
 out int v_MaterialIdx;
 out int v_EntityID;
 
+// shadows
+out vec4 v_LightSpaceFragPos;
+
 uniform mat4 u_ViewProjMtx;
+uniform mat4 u_LightSpaceMtx;
 
 void main(){
     v_MaterialIdx = a_MaterialIdx;
@@ -47,4 +51,6 @@ void main(){
     v_TexIdx = a_TexIdx;
     gl_Position = u_ViewProjMtx * worldPosition;
 
+    // calculate the frag pos in light space
+    v_LightSpaceFragPos = u_LightSpaceMtx * worldPosition;
 }

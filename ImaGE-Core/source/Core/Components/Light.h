@@ -24,14 +24,14 @@ namespace Component {
 	// @TODO: for use when shadows are improved on
 	struct ShadowConfig {
 		float bias;
-		float nearPlane;
+		float nearPlaneMultiplier;
 		// softness / shadow type
 	};
 
 	struct Light {
 		Light() : forwardVec{ 0.f, 0.f, -1.f }, color{ 1.f, 1.f, 1.f }, type{ DIRECTIONAL }, mLightIntensity{ 1.f },
 			mInnerSpotAngle{ 5.f }, mOuterSpotAngle{ 12.5f }, mRange{ 10.f },
-			bias{ 0.05f }, nearPlane{ 0.2f }, castShadows{ false } {}
+			bias{ 0.05f }, nearPlaneMultiplier{ 10.f }, castShadows{ false } {}
 
 		inline void Clear() noexcept {
 			forwardVec = { 0.f, 0.f, -1.f };
@@ -45,7 +45,7 @@ namespace Component {
 			
 			castShadows = false;
 			bias = 0.05f;
-			nearPlane = 0.2f;
+			nearPlaneMultiplier = 10.f;
 		}
 
 		glm::vec3 forwardVec;		// Set default forward vector to face the -z-axis
@@ -60,7 +60,7 @@ namespace Component {
 		
 		// Shadows
 		float bias;
-		float nearPlane;
+		float nearPlaneMultiplier;
 		bool castShadows;
 	};
 

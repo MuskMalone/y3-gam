@@ -992,8 +992,8 @@ namespace GUI {
             modified = true;
           }
 
-          NextRowTable("Near Plane");
-          if (ImGui::DragFloat("##NearPlane", &light.nearPlane, 0.05f, 0.1f, 10.f, "% .2f")) {
+          NextRowTable("Near Plane Multiplier");
+          if (ImGui::DragFloat("##NearPlane", &light.nearPlaneMultiplier, 0.1f, 0.1f, 20.f, "% .2f")) {
             modified = true;
           }
 

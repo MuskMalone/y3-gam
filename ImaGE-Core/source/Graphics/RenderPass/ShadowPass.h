@@ -14,13 +14,18 @@ namespace Graphics {
     bool IsActive() const noexcept { return mActive; }
     void Render(EditorCamera const& camera, std::vector<ECS::Entity> const& entities) override;
 
+    int BindShadowMap();
+    inline glm::mat4 const& GetLightSpaceMatrix() const { return mLightSpaceMtx; }
+    inline uint32_t GetShadowMapBuffer() const { return GetTargetFramebuffer()->GetDepthAttachmentID(); }
+
   private:
-    bool SetLightUniforms(EditorCamera const& cam, std::vector<ECS::Entity> const& entities);
+    bool LocateLightSource(EditorCamera const& cam, std::vector<ECS::Entity> const& entities);
     void StartRender();
     void EndRender();
 
-    std::pair<glm::vec3, glm::vec3> GetLightProjPlanes(EditorCamera const& cam, glm::vec3 const& lightPos, glm::vec3 const& lightDir);
+    void SetLightUniforms(EditorCamera const& cam, glm::vec3 const& lightDir, float nearPlaneMultiplier, glm::vec3 test);
     
+    glm::mat4 mLightSpaceMtx;
     bool mActive;
   };
 

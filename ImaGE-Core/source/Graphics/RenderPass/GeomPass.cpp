@@ -5,6 +5,8 @@
 #include <Core/Components/Components.h>
 #include "Color.h"
 #include "Asset/IGEAssets.h"
+#include <Graphics/Renderer.h>
+#include <Graphics/RenderPass/ShadowPass.h>
 
 namespace Graphics {
   using EntityXform = std::pair<ECS::Entity, glm::mat4>;
@@ -29,7 +31,7 @@ namespace Graphics {
     glm::vec3 u_LightDirection[maxLights]; // Directional light direction in world space
     glm::vec3 u_LightColor[maxLights];     // Directional light color
 
-    //For spotlight
+    // For spotlight
     glm::vec3 u_LightPos[maxLights]; // Position of the spotlight
     float u_InnerSpotAngle[maxLights]; // Inner spot angle in degrees
     float u_OuterSpotAngle[maxLights]; // Outer spot angle in degrees
@@ -97,8 +99,8 @@ namespace Graphics {
       auto material = MaterialTable::GetMaterial(matID);
       auto shader = material->GetShader(); // Assuming Material has a method to retrieve its shader
 
-
       shader->Use();  // Bind the shader
+
       shader->SetUniform("u_ViewProjMtx", cam.GetViewProjMatrix());
       shader->SetUniform("u_CamPos", cam.GetPosition());
 
@@ -108,18 +110,21 @@ namespace Graphics {
       shader->SetUniform("u_LightDirection", u_LightDirection,maxLights);
       shader->SetUniform("u_LightColor", u_LightColor,maxLights);
 
-        
       shader->SetUniform("u_LightPos", u_LightPos,maxLights);
       shader->SetUniform("u_InnerSpotAngle", u_InnerSpotAngle, maxLights);
       shader->SetUniform("u_OuterSpotAngle", u_OuterSpotAngle, maxLights);
       shader->SetUniform("u_LightIntensity", u_LightIntensity, maxLights);
       shader->SetUniform("u_Range",u_Range, maxLights);
 
-
+      // set shadow uniforms
+      {
+        auto const& shadowPass{ Renderer::GetPass<ShadowPass>() };
+        shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
+        shader->SetUniform("u_ShadowMap", shadowPass->BindShadowMap());
+      }
 
       material->Apply(shader);    // Apply material properties
       MaterialTable::ApplyMaterialTextures(shader);   // Apply material textures
-
       for (const auto& [entity, worldMtx] : entityPairs) {
         auto const& mesh = entity.GetComponent<Component::Mesh>();
         Graphics::Renderer::SubmitInstance(mesh.meshSource, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
