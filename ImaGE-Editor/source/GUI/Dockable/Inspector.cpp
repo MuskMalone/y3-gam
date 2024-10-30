@@ -601,17 +601,35 @@ namespace GUI {
 
     if (isOpen) {
       auto& text = entity.GetComponent<Component::Text>();
-
-      // @TODO: TEMP, TO BE REPLACED WITH ACTUAL FONTS
-      std::vector<const char*> availableFonts{ "Arial", "Test1", "Test2" };
-
       float const inputWidth{ CalcInputWidth(60.f) };
 
       ImGui::BeginTable("TextTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+      NextRowTable("Font Family");
+
+      std::string fontText = (text.fontFamilyName == "None") ? "[None]: Drag in a Font" : text.fontFamilyName;
+
+      ImGui::BeginDisabled();
+      ImGui::InputText("##FontTextInput", &fontText);
+      ImGui::EndDisabled();
+
+      if (ImGui::BeginDragDropTarget()) {
+        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+        if (drop) {
+          AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+          if (assetPayload.mAssetType == AssetPayload::FONT) {
+            text.textAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::FontAsset>(assetPayload.GetFilePath());
+            text.fontFamilyName = assetPayload.GetFileName();
+            modified = true;
+          }
+        }
+        ImGui::EndDragDropTarget();
+      }
       
+      /*
       NextRowTable("Font Family");
       if (ImGui::BeginCombo("##TextName", text.fontName.c_str())) {
         for (const char* fontName : availableFonts) {
@@ -622,6 +640,7 @@ namespace GUI {
         }
         ImGui::EndCombo();
       }
+      */
       
       NextRowTable("Color");
       if (ImGui::ColorEdit4("##TextColor", &text.color[0])) {

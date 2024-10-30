@@ -26,7 +26,8 @@ namespace GUI
       PREFAB,
       SCENE,
       MODEL,
-      AUDIO
+      AUDIO,
+      FONT
     };
 
     static constexpr char sAssetDragDropPayload[] = "ASSET";
@@ -41,6 +42,9 @@ namespace GUI
       }
       else if (fileExt == gMeshFileExt) {
         mAssetType = AssetType::MODEL;
+      }
+      else if (fileExt == gFontFileExt) {
+        mAssetType = AssetType::FONT;
       }
     }
 
