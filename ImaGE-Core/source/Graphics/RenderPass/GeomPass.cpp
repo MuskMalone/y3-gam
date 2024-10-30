@@ -41,25 +41,23 @@ namespace Graphics {
     //Get the list of light
     std::vector<ECS::Entity> lights{};
     for (ECS::Entity const& entity : entities) {
-      if (entity.HasComponent<Component::Light>()){
-       auto const& light = entity.GetComponent<Component::Light>();
-       u_type[numlights] = light.type;
-        u_LightDirection[numlights] = entity.GetComponent<Component::Transform>().worldRot * light.forwardVec; // Directional light direction in world space
-        u_LightColor[numlights] = light.color;     // Directional light color
+      if (!entity.HasComponent<Component::Light>()) { continue; }
 
-        //For spotlight
-        u_LightPos[numlights] = entity.GetComponent<Component::Transform>().worldPos; // Position of the spotlight
-        u_InnerSpotAngle[numlights] = light.mInnerSpotAngle; // Inner spot angle in degrees
-        u_OuterSpotAngle[numlights] = light.mOuterSpotAngle; // Outer spot angle in degrees
-        u_LightIntensity[numlights] = light.mLightIntensity; // Intensity of the light
-        u_Range[numlights] = light.mRange; // Maximum range of the spotlight
-        ++numlights;
-      }
-        
-     }
+      auto const& light = entity.GetComponent<Component::Light>();
+      u_type[numlights] = light.type;
+      u_LightDirection[numlights] = entity.GetComponent<Component::Transform>().worldRot * light.forwardVec; // Directional light direction in world space
+      u_LightColor[numlights] = light.color;     // Directional light color
+
+      //For spotlight
+      u_LightPos[numlights] = entity.GetComponent<Component::Transform>().worldPos; // Position of the spotlight
+      u_InnerSpotAngle[numlights] = light.mInnerSpotAngle; // Inner spot angle in degrees
+      u_OuterSpotAngle[numlights] = light.mOuterSpotAngle; // Outer spot angle in degrees
+      u_LightIntensity[numlights] = light.mLightIntensity; // Intensity of the light
+      u_Range[numlights] = light.mRange; // Maximum range of the spotlight
+      ++numlights;
+    }
 
     for (ECS::Entity const& entity : entities) {
-      
       if (!entity.HasComponent<Component::Mesh>()) { continue; }
 
       auto const& xform = entity.GetComponent<Component::Transform>();

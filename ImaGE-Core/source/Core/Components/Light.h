@@ -29,14 +29,14 @@ namespace Component {
 	};
 
 	struct Light {
-		Light() : forwardVec{ 0.f, 0.f, -1.f }, color{ 1.f, 1.f, 1.f }, type{ DIRECTIONAL }, mLightIntensity{ 1.f },
+		Light() : forwardVec{ 0.f, 0.f, -1.f }, color{ 255.f, 255.f, 255.f }, type{ DIRECTIONAL }, mLightIntensity{ 1.f },
 			mInnerSpotAngle{ 5.f }, mOuterSpotAngle{ 12.5f }, mRange{ 10.f },
 			softness{ 1 }, bias{ 0.005f }, nearPlaneMultiplier{ 10.f }, castShadows{ false } {}
 
 		inline void Clear() noexcept {
 			forwardVec = { 0.f, 0.f, -1.f };
 			type = DIRECTIONAL;
-			color = { 1.f, 1.f, 1.f };
+			color = { 255.f, 255.f, 255.f };
 			mLightIntensity = 1.f;
 
 			mInnerSpotAngle = 5.f;

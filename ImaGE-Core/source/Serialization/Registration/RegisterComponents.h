@@ -85,11 +85,10 @@ static void rttr_auto_register_reflection_function2_(); namespace {
 
   REGISTER_COMPONENT(Text, "Text")
     .property("textContent", &Text::textContent)
-    .property("fontName", &Text::fontName)
     .property("color", &Text::color)
-    .property("scale", &Text::scale);
-
-
+    .property("scale", &Text::scale)
+    .property("textAssetGUID", &Text::textAsset)
+    .property("fontFamilyName", &Text::fontFamilyName);
 
   REGISTER_COMPONENT(RigidBody, "RigidBody")
     .property("velocity", &RigidBody::velocity)

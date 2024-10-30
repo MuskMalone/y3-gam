@@ -24,6 +24,6 @@ namespace Graphics{
 	private:
 		static MeshSource CreateCube();
 		static MeshSource CreatePlane();
-		static MeshSource CreatePyramid();
+		static MeshSource CreateCapsule();
 	};
 }

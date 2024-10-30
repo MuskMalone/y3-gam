@@ -4,6 +4,8 @@
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
 #include "GUI/GUIManager.h"
+#include "GUI/Dockable/Inspector.h"
+#include "Scenes/SceneManager.h"
 
 namespace GUI {
 
@@ -16,9 +18,15 @@ namespace GUI {
   void Layers::Run() {
     ImGui::Begin(mWindowName.c_str());
 
-    LayerNameNode();
-    VisibilityToggleNode();
-    CollisionMatrixNode();
+    if (!Scenes::SceneManager::GetInstance().NoSceneSelected()) {
+      LayerNameNode();
+      VisibilityToggleNode();
+      CollisionMatrixNode();
+    }
+
+    else {
+      ImGui::Text("No Scene Selected");
+    }
 
     ImGui::End();
   }

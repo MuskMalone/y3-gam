@@ -48,15 +48,15 @@ uniform int numlights;
 
 uniform int u_type[maxLights];       // Camera position in world space
 
-uniform vec3 u_LightDirection[maxLights ]; // Directional light direction in world space
-uniform vec3 u_LightColor[maxLights ];     // Directional light color
+uniform vec3 u_LightDirection[maxLights]; // Directional light direction in world space
+uniform vec3 u_LightColor[maxLights];     // Directional light color
 
 //For spotlight
-uniform  vec3 u_LightPos[maxLights ]; // Position of the spotlight
-uniform  float u_InnerSpotAngle[maxLights ]; // Inner spot angle in degrees
-uniform  float u_OuterSpotAngle[maxLights ]; // Outer spot angle in degrees
-uniform  float u_LightIntensity[maxLights ]; // Intensity of the light
-uniform  float u_Range[maxLights ]; // Maximum range of the spotlight
+uniform  vec3 u_LightPos[maxLights]; // Position of the spotlight
+uniform  float u_InnerSpotAngle[maxLights]; // Inner spot angle in degrees
+uniform  float u_OuterSpotAngle[maxLights]; // Outer spot angle in degrees
+uniform  float u_LightIntensity[maxLights]; // Intensity of the light
+uniform  float u_Range[maxLights]; // Maximum range of the spotlight
 
 
 const float PI = 3.14159265359;
