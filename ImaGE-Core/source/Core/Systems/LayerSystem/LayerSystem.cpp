@@ -55,7 +55,7 @@ namespace Systems {
     auto itr = std::find(mLayerData.layerNames.begin(), mLayerData.layerNames.end(), layerName);
 
     if (itr != mLayerData.layerNames.end()) {
-      size_t index = static_cast<int>(std::distance(mLayerData.layerNames.begin(), itr));
+      size_t index = static_cast<size_t>(std::distance(mLayerData.layerNames.begin(), itr));
       return mLayerData.layerVisibility[index];
     }
 

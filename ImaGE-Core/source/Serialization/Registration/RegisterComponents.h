@@ -59,11 +59,25 @@ static void rttr_auto_register_reflection_function2_(); namespace {
       rttr::metadata(Reflection::InspectorMetadata::DISABLED, true)
       );
 
+  REGISTER_COMPONENT(Light, "Light")
+    .property("lighttype", &Light::type)
+    .property("color", &Light::color)
+    .property("intensity", &Light::mLightIntensity)
+    .property("innerAngle", &Light::mInnerSpotAngle)
+    .property("outerAngle", &Light::mOuterSpotAngle)
+    .property("range", &Light::mRange)
+    .property("castShadows", &Light::castShadows)
+    .property("bias", &Light::bias);
+
+
   REGISTER_COMPONENT(Layer, "Layer")
     .property("layerName", &Layer::name);
 
   REGISTER_COMPONENT(Mesh, "Mesh")
-    .property("meshName", &Mesh::meshName);
+    .property("meshName", &Mesh::meshName)
+    .property("GUID", &Mesh::meshSource)
+    .property("castShadows", &Mesh::castShadows)
+    .property("receiveShadows", &Mesh::receiveShadows);
 
   REGISTER_COMPONENT(Material, "Material")
     .property("matIdx", &Material::matIdx);
@@ -73,6 +87,8 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("fontName", &Text::fontName)
     .property("color", &Text::color)
     .property("scale", &Text::scale);
+
+
 
   REGISTER_COMPONENT(RigidBody, "RigidBody")
     .property("velocity", &RigidBody::velocity)

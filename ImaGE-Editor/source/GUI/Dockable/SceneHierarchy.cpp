@@ -111,6 +111,7 @@ namespace GUI
     if (ImGui::IsKeyPressed(ImGuiKey_Delete) && GUIManager::GetSelectedEntity() && !mLockControls) {
       ECS::EntityManager::GetInstance().RemoveEntity(GUIManager::GetSelectedEntity());
       GUIManager::SetSelectedEntity(ECS::Entity());
+      QUEUE_EVENT(Events::SceneModifiedEvent);
     }
 
     if (mEntityOptionsMenu) {
@@ -126,8 +127,9 @@ namespace GUI
       mPrefabPopup = false;
       mFirstTimePfbPopup = true;
     }
-    RunRightClickMenu();
-    RunEntityOptions();
+    if (RunRightClickMenu() || RunEntityOptions()) {
+      QUEUE_EVENT(Events::SceneModifiedEvent);
+    }
     RunPrefabPopup();
 
     ImGui::End();
@@ -300,26 +302,38 @@ namespace GUI
     }
   }
 
-  void SceneHierarchy::RunRightClickMenu() const
+  bool SceneHierarchy::RunRightClickMenu() const
   {
+    bool modified{ false };
     if (ImGui::BeginPopup("HierarchyOptions"))
     {
-      if (ImGui::Selectable("Create Entity"))
-      {
+      if (ImGui::Selectable("Create Entity")) {
         CreateNewEntity();
+        modified = true;
+      }
+
+      if (ImGui::Selectable("Create Light")) {
+        ECS::Entity newEntity{ mEntityManager.CreateEntity() };
+        newEntity.SetTag("Light");
+        newEntity.EmplaceComponent<Component::Light>();
+        modified = true;
       }
 
       ImGui::EndPopup();
     }
+
+    return modified;
   }
 
-  void SceneHierarchy::RunEntityOptions()
+  bool SceneHierarchy::RunEntityOptions()
   {
+    bool modified{ false };
     if (ImGui::BeginPopup("EntityOptions"))
     {
       if (ImGui::Selectable("Create Entity")) {
         ECS::Entity newEntity{ CreateNewEntity() };
         mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
+        modified = true;
       }
 
       if (mEntityManager.HasChild(mRightClickedEntity)) {
@@ -348,10 +362,13 @@ namespace GUI
 
       if (ImGui::Selectable("Delete")) {
         mEntityManager.RemoveEntity(mRightClickedEntity);
+        modified = true;
       }
 
       ImGui::EndPopup();
     }
+
+    return modified;
   }
 
   void SceneHierarchy::RunPrefabPopup()

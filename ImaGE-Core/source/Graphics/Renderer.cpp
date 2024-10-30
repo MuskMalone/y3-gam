@@ -1,11 +1,16 @@
 #include <pch.h>
 #include "Renderer.h"
 #include "RenderAPI.h"
-#include "RenderPass.h"
 #include <glm/gtx/quaternion.hpp>
 #include "Asset/IGEAssets.h"
+#include "ElementBuffer.h"
 #include "MaterialTable.h"
 #include "Material.h"
+#include "Mesh.h"
+#pragma region RenderPasses
+#include <Graphics/RenderPass/GeomPass.h>
+#include <Graphics/RenderPass/ShadowPass.h>
+#pragma endregion
 
 namespace Graphics {
 	constexpr int INVALID_ENTITY_ID = -1;
@@ -14,8 +19,8 @@ namespace Graphics {
 	MaterialTable Renderer::mMaterialTable;
 	ShaderLibrary Renderer::mShaderLibrary;
 	std::shared_ptr<Framebuffer> Renderer::mFinalFramebuffer;
-	std::shared_ptr<RenderPass> Renderer::mPickPass; //TODO put in a map/ vector
-	std::shared_ptr<RenderPass> Renderer::mGeomPass;
+	std::unordered_map<std::type_index, std::shared_ptr<RenderPass>> Renderer::mTypeToRenderPass;
+	std::vector<std::shared_ptr<RenderPass>> Renderer::mRenderPasses;
 
 	void Renderer::Init() {
 
@@ -95,8 +100,10 @@ namespace Graphics {
 		mData.triBuffer = std::vector<TriVtx>(mData.cMaxVertices);
 
 		//========================================================
-		mData.defaultTex = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(gAssetsDirectory + std::string("Textures/default.dds"));
-		mData.whiteTex = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(gAssetsDirectory + std::string("Textures/white.dds"));
+		//mData.defaultTex = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(gAssetsDirectory + std::string("Texturesdefault.dds"));
+		mData.defaultTex = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(366429001515961616);
+		//mData.whiteTex = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(gAssetsDirectory + std::string("Textures/white.dds"));
+		mData.whiteTex = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(2203736300003804932);
 		//unsigned int whiteTexData{ 0xffffffff };
 		//mData.whiteTex->SetData(&whiteTexData);
 		//mData.texUnits[0] = mData.whiteTex;
@@ -105,9 +112,7 @@ namespace Graphics {
 		for (unsigned int i{}; i < mData.maxTexUnits; ++i)
 			samplers[i] = i;
 
-		ShaderLibrary::Add("Tri", Shader::Create("Tri.vert.glsl", "Tri.frag.glsl"));
-		ShaderLibrary::Add("Tex", Shader::Create("Default.vert.glsl", "Default.frag.glsl"));
-
+		InitShaders();
 		std::shared_ptr<Shader> const& texShader = ShaderLibrary::Get("Tex");
 
 		texShader->Use();
@@ -117,9 +122,8 @@ namespace Graphics {
 		mData.quadVtxPos[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
 		mData.quadVtxPos[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
 		mData.quadVtxPos[3] = { -0.5f, 0.5f, 0.0f, 1.0f };
-;
-		ShaderLibrary::Add("PBR", Shader::Create("PBR.vert.glsl", "PBR.frag.glsl"));
-		ShaderLibrary::Add("Unlit", Shader::Create("Unlit.vert.glsl", "Unlit.frag.glsl"));
+
+		
 
 		//Init framebuffer
 		Graphics::FramebufferSpec framebufferSpec;
@@ -128,40 +132,19 @@ namespace Graphics {
 		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
 
 		//Init RenderPasses
-		PipelineSpec geomPipelineSpec;
-		geomPipelineSpec.shader = ShaderLibrary::Get("PBR");
-		geomPipelineSpec.targetFramebuffer = Framebuffer::Create(framebufferSpec);
+		//InitPickPass();
+		InitShadowMapPass();
+		InitGeomPass();
 
-		RenderPassSpec geomPassSpec;
-		geomPassSpec.pipeline = Pipeline::Create(geomPipelineSpec);
-		geomPassSpec.debugName = "Geometry Pass";
-
-		//Init PickingPass
-		Graphics::FramebufferSpec pickBufferSpec;
-		pickBufferSpec.width = WINDOW_WIDTH<int>;
-		pickBufferSpec.height = WINDOW_HEIGHT<int>;
-		pickBufferSpec.attachments = { Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
-		
-		PipelineSpec pickPipelineSpec;
-		pickPipelineSpec.shader = ShaderLibrary::Get("PBR");
-		pickPipelineSpec.targetFramebuffer = Framebuffer::Create(pickBufferSpec);
-
-		RenderPassSpec pickPassSpec;
-		pickPassSpec.pipeline = Pipeline::Create(pickPipelineSpec);
-		pickPassSpec.debugName = "Picking Pass";
-
-		mPickPass = RenderPass::Create(pickPassSpec);
-		mGeomPass = RenderPass::Create(geomPassSpec);
-
-		mFinalFramebuffer = mGeomPass->GetTargetFramebuffer();
+		mFinalFramebuffer = mRenderPasses.back()->GetTargetFramebuffer();
 		//mFinalFramebuffer = Framebuffer::Create(framebufferSpec);
 
 
-		IGE::Assets::GUID texguid1 { Texture::Create(gAssetsDirectory + std::string("Textures\\default.dds")) };
-		IGE::Assets::GUID texguid { Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
+		IGE::Assets::GUID texguid1{ Texture::Create(gAssetsDirectory + std::string("Textures\\default.dds")) };
+		IGE::Assets::GUID texguid{ Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
 		//Init Materials
 
-// Create a default material with a default shader and properties
+		// Create a default material with a default shader and properties
 		std::shared_ptr<Material> defaultMaterial = Material::Create(ShaderLibrary::Get("PBR")); //TODO STORE IN SHADER LIB
 		defaultMaterial->SetAlbedoColor(glm::vec3(1.0f));  // Set default white albedo
 		defaultMaterial->SetMetalness(0.0f);
@@ -204,8 +187,69 @@ namespace Graphics {
 		//	MaterialTable::AddMaterial(material);
 		//}
 
-;	}
+	}
 
+	void Renderer::InitShaders() {
+		ShaderLibrary::Add("Tri", Shader::Create("Tri.vert.glsl", "Tri.frag.glsl"));
+		ShaderLibrary::Add("Tex", Shader::Create("Default.vert.glsl", "Default.frag.glsl"));
+		ShaderLibrary::Add("PBR", Shader::Create("PBR.vert.glsl", "PBR.frag.glsl"));
+		ShaderLibrary::Add("Unlit", Shader::Create("Unlit.vert.glsl", "Unlit.frag.glsl"));
+		ShaderLibrary::Add("ShadowMap", Shader::Create("ShadowMap.vert.glsl", "ShadowMap.frag.glsl"));
+	}
+
+	void Renderer::InitGeomPass() {
+		//Init framebuffer
+		Graphics::FramebufferSpec framebufferSpec;
+		framebufferSpec.width = WINDOW_WIDTH<int>;
+		framebufferSpec.height = WINDOW_HEIGHT<int>;
+		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
+
+		PipelineSpec geomPipelineSpec;
+		geomPipelineSpec.shader = ShaderLibrary::Get("PBR");
+		geomPipelineSpec.targetFramebuffer = Framebuffer::Create(framebufferSpec);
+
+		RenderPassSpec geomPassSpec;
+		geomPassSpec.pipeline = Pipeline::Create(geomPipelineSpec);
+		geomPassSpec.debugName = "Geometry Pass";
+
+		AddPass(RenderPass::Create<GeomPass>(geomPassSpec));
+	}
+
+	void Renderer::InitPickPass() {
+		/*Graphics::FramebufferSpec pickBufferSpec;
+		pickBufferSpec.width = WINDOW_WIDTH<int>;
+		pickBufferSpec.height = WINDOW_HEIGHT<int>;
+		pickBufferSpec.attachments = { Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
+
+		PipelineSpec pickPipelineSpec;
+		pickPipelineSpec.shader = ShaderLibrary::Get("PBR");
+		pickPipelineSpec.targetFramebuffer = Framebuffer::Create(pickBufferSpec);
+
+		RenderPassSpec pickPassSpec;
+		pickPassSpec.pipeline = Pipeline::Create(pickPipelineSpec);
+		pickPassSpec.debugName = "Picking Pass";
+
+		AddPass(RenderPass::Create<PickPass>(pickPassSpec));*/
+	}
+
+	void Renderer::InitShadowMapPass() {
+		Graphics::FramebufferSpec shadowSpec;
+		shadowSpec.width = WINDOW_WIDTH<int>;
+		shadowSpec.height = WINDOW_HEIGHT<int>;
+		// @TODO: Allow for multiple shadow maps; need extend code
+		//				to use glTexImage3D and GL_TEXTURE_2D_ARRAY
+		shadowSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::SHADOW_MAP };	// temporarily max. 1 shadow-caster
+
+		PipelineSpec shadowPSpec;
+		shadowPSpec.shader = ShaderLibrary::Get("ShadowMap");
+		shadowPSpec.targetFramebuffer = Framebuffer::Create(shadowSpec);
+
+		RenderPassSpec shadowPassSpec;
+		shadowPassSpec.pipeline = Pipeline::Create(shadowPSpec);
+		shadowPassSpec.debugName = "Shadow Map Pass";
+
+		AddPass(RenderPass::Create<ShadowPass>(shadowPassSpec));
+	}
 
 	void Renderer::Shutdown() {
 		// Add shutdown logic if necessary
@@ -272,7 +316,7 @@ namespace Graphics {
 		instanceBuffer->SetLayout(instanceLayout);
 
 		// Attach the instance buffer to the MeshSource's VAO
-		IGE_REF(IGE::Assets::MeshAsset, meshSrc)->mMeshSource.GetVertexArray()->AddVertexBuffer(instanceBuffer, true);
+		IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource.GetVertexArray()->AddVertexBuffer(instanceBuffer, true);
 
 		// Store the buffer in the map for future use
 		mData.instanceBuffers[meshSrc] = instanceBuffer;
@@ -305,7 +349,7 @@ namespace Graphics {
 		glm::vec3 bitangent = { 0.f, 1.f, 0.f };
 
 		for (size_t i{}; i < 4; ++i)
-			SetQuadBufferData(transformMtx * mData.quadVtxPos[i],scale, normal, texCoords[i], texIdx, tangent, bitangent, clr);
+			SetQuadBufferData(transformMtx * mData.quadVtxPos[i], scale, normal, texCoords[i], texIdx, tangent, bitangent, clr);
 
 		mData.quadIdxCount += 6;
 		++mData.stats.quadCount;
@@ -314,7 +358,7 @@ namespace Graphics {
 	void Renderer::SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr) {
 		if (mesh == nullptr) return;
 		auto const& meshSrc = mesh->GetMeshSource();
-		auto const& submeshes = IGE_REF(IGE::Assets::MeshAsset, meshSrc)->mMeshSource.GetSubmeshes();
+		auto const& submeshes = IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource.GetSubmeshes();
 
 		// Transformation matrices
 		glm::mat4 translateMtx{ glm::translate(glm::mat4{ 1.f }, pos) };
@@ -349,7 +393,7 @@ namespace Graphics {
 
 			// Collect vertex data from the submesh
 			for (size_t i = 0; i < submesh.vtxCount; ++i) {
-				const Vertex& vtx = IGE_REF(IGE::Assets::MeshAsset, meshSrc)->mMeshSource.GetVertices()[submesh.baseVtx + i];
+				const Vertex& vtx = IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource.GetVertices()[submesh.baseVtx + i];
 
 				// Transform position to world space
 				glm::vec3 worldPos = glm::vec3(finalxformMtx * glm::vec4(vtx.position, 1.0f));
@@ -377,21 +421,16 @@ namespace Graphics {
 		SetTriangleBufferData(v3, clr);
 	}
 
-	void Renderer::SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, int matID) {
-		if (!mesh) return;
-
+	void Renderer::SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, int matID) {
 		InstanceData instance{};
 		instance.modelMatrix = worldMtx;
-		
+
 		if (id != INVALID_ENTITY_ID) {
 			instance.entityID = id;
 		}
 		instance.materialIdx = matID;
 
-		auto& meshSrc = mesh->GetMeshSource();
-		if (!meshSrc) return;
-
-		mData.instanceBufferDataMap[meshSrc].push_back(instance);
+		mData.instanceBufferDataMap[meshSource].push_back(instance);
 	}
 
 
@@ -404,13 +443,13 @@ namespace Graphics {
 
 			// Set instance data into the buffer
 			unsigned int dataSize = static_cast<unsigned int>(instances.size() * sizeof(InstanceData));
-			
+
 			instanceBuffer->SetData(instances.data(), dataSize);
 
 			// Bind the VAO and render the instances
-			auto& vao = IGE_REF(IGE::Assets::MeshAsset, meshSrc)->mMeshSource.GetVertexArray();
+			auto& vao = IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource.GetVertexArray();
 
-			RenderAPI::DrawIndicesInstanced(vao, static_cast<unsigned>(IGE_REF(IGE::Assets::MeshAsset, meshSrc)->mMeshSource.GetIndices().size()), static_cast<unsigned>(instances.size()));
+			RenderAPI::DrawIndicesInstanced(vao, static_cast<unsigned>(IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource.GetIndices().size()), static_cast<unsigned>(instances.size()));
 
 		}
 
@@ -457,7 +496,7 @@ namespace Graphics {
 			// Update the mesh vertex buffer with the batched data
 			mData.meshVertexBuffer->SetData(mData.meshBuffer.data(), dataSize);
 
- 			unsigned int idxDataSize = static_cast<unsigned int>(mData.meshIdxCount * sizeof(uint32_t));
+			unsigned int idxDataSize = static_cast<unsigned int>(mData.meshIdxCount * sizeof(uint32_t));
 			mData.meshVertexArray->Bind();
 			mData.meshVertexArray->GetElementBuffer()->SetData(mData.meshIdxBuffer.data(), idxDataSize);
 			mData.meshVertexArray->Unbind();

@@ -32,6 +32,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/RenderSystem.h>
 #pragma endregion
 
+#include "Serialization/Serializer.h"
+#include "Serialization/Deserializer.h"
+#include "Asset/AssetMetadata.h"
+
 namespace IGE {
   // Static Initialization
   Application::ApplicationSpecification Application::mSpecification{};
@@ -55,7 +59,6 @@ namespace IGE {
     //IGE::Physics::PhysicsSystem::GetInstance()->Init();
 
     RegisterSystems();
-    IGEAssetsInitialize();
     Systems::SystemManager::GetInstance().InitSystems();
     Graphics::RenderSystem::Init();
   }
@@ -91,7 +94,8 @@ namespace IGE {
   // registration order is the update order
   void Application::RegisterSystems() {
     Systems::SystemManager& systemManager{ Systems::SystemManager::GetInstance() };
-    systemManager.RegisterSystem<Systems::TransformSystem>("Pre-Transform System"); // must be called first   
+
+    systemManager.RegisterSystem<Systems::TransformSystem>("Transform System");
     systemManager.RegisterSystem<Systems::LayerSystem>("Layer System");
     systemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
     systemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");

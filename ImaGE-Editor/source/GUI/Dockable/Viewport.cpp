@@ -71,61 +71,61 @@ namespace GUI
 
   void Viewport::Render(std::shared_ptr<Graphics::Framebuffer> const& framebuffer)
   {
-    ImGui::Begin(mWindowName.c_str());
+      ImGui::Begin(mWindowName.c_str());
 
-    ImVec2 const vpSize = ImGui::GetContentRegionAvail();
-    ImVec2 const vpStartPos{ ImGui::GetCursorScreenPos() };
+      ImVec2 const vpSize = ImGui::GetContentRegionAvail();
+      ImVec2 const vpStartPos{ ImGui::GetCursorScreenPos() };
 
-    // only register input if viewport is focused
-    bool const checkInput{ mIsDragging || mIsPanning || sMovingToEntity };
-    if ((ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) || checkInput) {
-      ProcessCameraInputs();
-    }
-    // auto focus window when middle or right-clicked upon
-    else if (ImGui::IsWindowHovered() && (ImGui::IsMouseClicked(ImGuiMouseButton_Right) || ImGui::IsMouseClicked(ImGuiMouseButton_Middle))) {
-      ImGui::FocusWindow(ImGui::GetCurrentWindow());
-    }
-
-    // update framebuffer
-    ImGui::Image(
-      reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(framebuffer->GetColorAttachmentID())),
-      vpSize,
-      ImVec2(0, 1),
-      ImVec2(1, 0)
-    );
-
-    ReceivePayload();
-
-    // object picking
-    if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
-      ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
-
-      // check if clicking outside viewport
-      if (!(offset.x < 0 || offset.x > vpSize.x || offset.y < 0 || offset.y > vpSize.y)) {
-        Graphics::FramebufferSpec const& fbSpec{ framebuffer->GetFramebufferSpec() };
-
-        framebuffer->Bind();
-        int const entityId{ framebuffer->ReadPixel(1,
-          static_cast<int>(offset.x / vpSize.x * static_cast<float>(fbSpec.width)),
-          static_cast<int>((vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height))) };
-        framebuffer->Unbind();
-
-        if (entityId > 0) {
-          ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
-            root{ GetRootEntity(selected) };
-          sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
-          GUIManager::SetSelectedEntity(sPrevSelectedEntity);
-        }
-        else {
-          sPrevSelectedEntity = {};
-          GUIManager::SetSelectedEntity({});
-        }
+      // only register input if viewport is focused
+      bool const checkInput{ mIsDragging || mIsPanning || sMovingToEntity };
+      if ((ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) || checkInput) {
+          ProcessCameraInputs();
       }
-    }
+      // auto focus window when middle or right-clicked upon
+      else if (ImGui::IsWindowHovered() && (ImGui::IsMouseClicked(ImGuiMouseButton_Right) || ImGui::IsMouseClicked(ImGuiMouseButton_Middle))) {
+          ImGui::FocusWindow(ImGui::GetCurrentWindow());
+      }
 
-    UpdateGuizmos();
+      // update framebuffer
+      ImGui::Image(
+          reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(framebuffer->GetColorAttachmentID())),
+          vpSize,
+          ImVec2(0, 1),
+          ImVec2(1, 0)
+      );
 
-    ImGui::End();
+      ReceivePayload();
+
+      if (!UpdateGuizmos()) {
+          // object picking
+          if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
+              ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
+
+              // check if clicking outside viewport
+              if (!(offset.x < 0 || offset.x > vpSize.x || offset.y < 0 || offset.y > vpSize.y)) {
+                  Graphics::FramebufferSpec const& fbSpec{ framebuffer->GetFramebufferSpec() };
+
+                  framebuffer->Bind();
+                  int const entityId{ framebuffer->ReadPixel(1,
+                    static_cast<int>(offset.x / vpSize.x * static_cast<float>(fbSpec.width)),
+                    static_cast<int>((vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height))) };
+                  framebuffer->Unbind();
+
+                  if (entityId > 0) {
+                      ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
+                          root{ GetRootEntity(selected) };
+                      sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
+                      GUIManager::SetSelectedEntity(sPrevSelectedEntity);
+                  }
+                  else {
+                      sPrevSelectedEntity = {};
+                      GUIManager::SetSelectedEntity({});
+                  }
+              }
+          }
+      }
+
+      ImGui::End();
   }
 
   void Viewport::ProcessCameraInputs() {
@@ -233,10 +233,11 @@ namespace GUI
     sMovingToEntity = true;
   }
 
-  void Viewport::UpdateGuizmos() const {
+  bool Viewport::UpdateGuizmos() const {
     ECS::Entity selectedEntity{ GUIManager::GetSelectedEntity() };
-    if (!selectedEntity || !selectedEntity.HasComponent<Component::Transform>()) { return; }
+    if (!selectedEntity || !selectedEntity.HasComponent<Component::Transform>()) { return false; }
 
+    bool usingGuizmos{ false };
     ImGuizmo::SetDrawlist();
     ImVec2 windowPos{ ImGui::GetWindowPos() };
 
@@ -266,6 +267,7 @@ namespace GUI
       glm::value_ptr(modelMatrix)
     );
     if (ImGuizmo::IsUsing()) {
+      usingGuizmos = true;
       glm::vec3 s{}, r{}, t{};
       ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(modelMatrix),
         glm::value_ptr(t), glm::value_ptr(r), glm::value_ptr(s));
@@ -286,6 +288,8 @@ namespace GUI
       transform.modified = true;
       TransformHelpers::UpdateWorldTransform(selectedEntity);  // must call this to update world transform according to changes to local
     }
+
+    return usingGuizmos;
   }
 
   void Viewport::ReceivePayload()
@@ -310,7 +314,7 @@ namespace GUI
         {
           // @TODO: ABSTRACT MORE; MAKE IT EASIER TO ADD A MESH
           ECS::Entity newEntity{ ECS::EntityManager::GetInstance().CreateEntityWithTag(assetPayload.GetFileName()) };
-          auto meshSrc{ std::make_shared<Graphics::Mesh>(IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>(assetPayload.GetFilePath())) };
+          IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
           newEntity.EmplaceComponent<Component::Mesh>(meshSrc, assetPayload.GetFileName());
           break;
         }

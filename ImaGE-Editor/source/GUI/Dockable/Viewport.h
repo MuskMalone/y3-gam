@@ -51,7 +51,7 @@ namespace GUI
     \brief
       Updates ImGuizmos controls based on the selected entity
     ************************************************************************/
-    void UpdateGuizmos() const;
+    bool UpdateGuizmos() const;
 
     /*!*********************************************************************
     \brief

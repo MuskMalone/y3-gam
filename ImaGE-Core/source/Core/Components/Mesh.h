@@ -8,20 +8,30 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#include "Graphics/Mesh.h"
 #include <string>
+#include <Asset/IGEAssets.h>
 
 namespace Component {
 	struct Mesh{
-		Mesh() : meshName{ "None" }, mesh{} {};
-		Mesh(std::shared_ptr<Graphics::Mesh> meshSource, std::string name)
-			: meshName{ std::move(name) }, mesh{ meshSource } {}
+		Mesh() : meshName{ "None" }, meshSource{}, castShadows{ true }, receiveShadows{ true } {}
+		Mesh(IGE::Assets::GUID const& meshSrc, std::string name) :
+			meshName{ std::move(name) }, meshSource { meshSrc }, castShadows{ true }, receiveShadows{ true } {}
+
+		const IGE::Assets::GUID& GetMeshSource() const { return meshSource; }
+		void SetMeshSource(const IGE::Assets::GUID& meshSrc) { meshSource = meshSrc; }
+		//const std::vector<std::shared_ptr<Material>>& GetMaterials() const { return mMaterials; }
 
 		inline void Clear() noexcept {
-			mesh.reset();
+			meshName = "None";
+			meshSource = {};
+			castShadows = receiveShadows = true;
 		}
 
 		std::string meshName;
-		std::shared_ptr<Graphics::Mesh> mesh;
+		IGE::Assets::GUID meshSource;  // The blueprint (geometry and submeshes)
+		bool castShadows;
+		bool receiveShadows;	// not implemented yet
+		//std::vector<uint32_t> m_Submeshes;  // Indices to submeshes in MeshSource - Maybe need in future?
+		// std::vector<std::shared_ptr<Material>> mMaterials;  // Instance-specific mat @TODO CHANGE TO MATERIAL TABLE INSTEAD?
 	};
 } // namespace Component

@@ -27,15 +27,6 @@ namespace Graphics {
 		glClear(GL_DEPTH_BUFFER_BIT);
 
 		//Frustum Culling should be here
-		/*
-	  auto& entManager = ECS::EntityManager::GetInstance();
-		auto entityList = entManager.GetAllEntitiesWithComponents<Component::Transform, Component::Mesh>();
-		// Convert to a vector
-		std::vector<ECS::Entity> entityVector;
-		for (auto entity : entityList) {
-			entityVector.push_back(entity);
-		}
-		*/
 		
 		std::vector<ECS::Entity> entityVector{};
 		if (std::shared_ptr<Systems::LayerSystem> layerSys =
@@ -48,8 +39,10 @@ namespace Graphics {
 				}
 			}
 		}
-		
-		Renderer::mGeomPass->Render(eCam, entityVector);
+
+		for (auto const& pass : Renderer::mRenderPasses) {
+			pass->Render(eCam, entityVector);
+		}
 
 		//Renderer::mGeomPass->Begin();
 		//{//Render Start

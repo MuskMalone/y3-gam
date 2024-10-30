@@ -24,9 +24,12 @@ namespace Reflection
 		rttr::type::get<Component::Material>(),
 		rttr::type::get<Component::Mesh>(),
 		rttr::type::get<Component::BoxCollider>(),
+		rttr::type::get<Component::SphereCollider>(),
+		rttr::type::get<Component::CapsuleCollider>(),
 		rttr::type::get<Component::RigidBody>(),
 		rttr::type::get<Component::Script>(),
-		rttr::type::get<Component::Text>()
+		rttr::type::get<Component::Text>(),
+		rttr::type::get<Component::Light>()
 	};
 
 } // namespace Reflection

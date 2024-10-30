@@ -14,15 +14,14 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Texture.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
-#include "ElementBuffer.h"
-#include "Mesh.h"
-#include "RenderPass.h"
 #include "Color.h"
 #include "MaterialTable.h"
+#include <typeindex>
+#include <Graphics/RenderPass/RenderPass.h>
 
 namespace Graphics {
+	class Material; class Mesh;
 
-	class Material;
 	struct Statistics {
 		uint32_t drawCalls{};
 		uint32_t quadCount{};
@@ -119,7 +118,7 @@ namespace Graphics {
 		static void SubmitTriangle(glm::vec3 const& v1, glm::vec3 const& v2, glm::vec3 const& v3, glm::vec4 const& clr = Color::COLOR_WHITE);
 
 		//Instancing
-		static void SubmitInstance(std::shared_ptr<Mesh> mesh, glm::mat4 const& worldMtx, glm::vec4 const& clr, int entityID = -1, int matID = 0);
+		static void SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int entityID = -1, int matID = 0);
 		static void RenderInstances();
 
 		// Batching
@@ -157,13 +156,28 @@ namespace Graphics {
 		static Statistics GetStats();
 		static void ResetStats();
 
+		static void InitShaders();
+		static void InitPickPass();
+		static void InitGeomPass();
+		static void InitShadowMapPass();
+
+		template <typename T>
+		static void AddPass(std::shared_ptr<T>&& pass) {
+			mTypeToRenderPass.emplace(typeid(T), pass);
+			mRenderPasses.emplace_back(std::move(pass));
+		}
+
 	private:
 		static RendererData mData;
 		static MaterialTable mMaterialTable;
 		static ShaderLibrary mShaderLibrary;
 		static std::shared_ptr<Framebuffer> mFinalFramebuffer;
+
 	public: // TEMP
-		static std::shared_ptr<RenderPass> mPickPass;
-		static std::shared_ptr<RenderPass> mGeomPass;
+		template <typename T>
+		static std::shared_ptr<T> GetPass() { return std::static_pointer_cast<T>(mTypeToRenderPass[typeid(T)]); }
+
+		static std::unordered_map<std::type_index, std::shared_ptr<RenderPass>> mTypeToRenderPass;
+		static std::vector<std::shared_ptr<RenderPass>> mRenderPasses;
 	};
 }

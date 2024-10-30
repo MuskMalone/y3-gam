@@ -194,7 +194,7 @@ namespace Graphics {
 
 	bool Texture::IsBindless() const
 	{
-		return mIsBindless;
+		return false;// mIsBindless;
 	}
 
 	/*  _________________________________________________________________________ */
