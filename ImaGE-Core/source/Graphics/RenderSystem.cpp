@@ -30,18 +30,11 @@ namespace Graphics {
 
 	}
 
-	void RenderSystem::RenderScene() {
-		// Clear the buffers
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	void RenderSystem::RenderScene(CameraSpec const& cam) {
+		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_DEPTH_BUFFER_BIT);
 
-		// Retrieve the active camera from the CameraManager
-		if (!mCameraManager.HasActiveCamera()) {
-			// Handle the case where there is no active camera
-			return;
-		}
-
-		const ECS::Entity& activeCameraEntity = mCameraManager.GetActiveCamera();
-		const Component::Camera& activeCamera = activeCameraEntity.GetComponent<Component::Camera>();
+		//Frustum Culling should be here
 
 		std::vector<ECS::Entity> entityVector{};
 		if (std::shared_ptr<Systems::LayerSystem> layerSys =
@@ -55,10 +48,10 @@ namespace Graphics {
 			}
 		}
 
-		// Render each pass with the active camera
-		for (const auto& pass : Renderer::mRenderPasses) {
-			pass->Render(activeCamera, entityVector);
+		for (auto const& pass : Renderer::mRenderPasses) {
+			pass->Render(cam, entityVector);
 		}
+
 	}
 
 

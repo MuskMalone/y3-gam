@@ -145,7 +145,10 @@ namespace IGE {
   framebufferSpec.height = spec.WindowHeight;
   framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
 
-  mRenderTargets.emplace_back(framebufferSpec);
+  mRenderTargets.emplace_back(framebufferSpec, true);
+
+  mRenderTargets.emplace_back(framebufferSpec, false);
+
   mRenderTargets.front().camera = Graphics::EditorCamera(
       glm::vec3(0.0f, 5.0f, 10.0f),  // Position
       -90.0f,                        // Yaw
@@ -166,8 +169,8 @@ namespace IGE {
     glViewport(0, 0, width, height);
 
     Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
-    for (auto& [cam, fb] : app->mRenderTargets) {
-      fb->Resize(width, height);
+    for (auto& target : app->mRenderTargets) {
+      target.framebuffer->Resize(width, height);
     }
   }
 

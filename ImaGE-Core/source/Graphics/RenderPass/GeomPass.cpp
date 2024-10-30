@@ -15,8 +15,9 @@ namespace Graphics {
 
   }
 
-  void GeomPass::Render(const Component::Camera& camera, std::vector<ECS::Entity> const& entities) {
+  void GeomPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
       Begin();
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       //auto shader = mSpec.pipeline->GetShader();
 
       // Use a map to group entities by material ID
@@ -86,8 +87,8 @@ namespace Graphics {
 
 
           shader->Use();  // Bind the shader
-          shader->SetUniform("u_ViewProjMtx", camera.GetViewProjMatrix());
-          shader->SetUniform("u_CamPos", camera.position);
+          shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);
+          shader->SetUniform("u_CamPos", cam.position);
 
           //Light Info
           shader->SetUniform("numlights", numlights);
@@ -113,13 +114,12 @@ namespace Graphics {
           }
           mSpec.pipeline->GetSpec().instanceLayout;
           // Flush all collected instances and render them in a single draw call
+
           Renderer::RenderInstances();
       }
 
-
-
-
       End();
+
   }
 
   void GeomPass::Render(EditorCamera const& cam, std::vector<ECS::Entity> const& entities) {

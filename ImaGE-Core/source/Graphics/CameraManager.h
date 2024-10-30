@@ -1,5 +1,7 @@
 #pragma once
 #include "Core/Entity.h"
+#include "Core/Components/Components.h"
+
 namespace Graphics {
     class CameraManager {
     public:
@@ -16,6 +18,11 @@ namespace Graphics {
         const ECS::Entity& GetActiveCamera() const {
             return cameras[activeCameraIndex];
         }
+
+        const Component::Camera& GetActiveCameraComponent() const {
+            return GetActiveCamera().GetComponent<Component::Camera>();
+        }
+
 
         bool HasActiveCamera() const {
             return !cameras.empty();

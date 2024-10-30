@@ -47,11 +47,13 @@ namespace GUI {
 
     auto vp{ std::make_shared<Viewport>("Viewport", renderTarget.camera) };
     mEditorViewport = vp; // hold a ptr to the viewport
+    auto gvp{ std::make_shared<GameViewport>("Game View")};
+    mGameViewport = gvp;
 
     mWindows.reserve(8);
     mWindows.emplace_back(std::move(vp)); // viewport should always be first
 
-    mWindows.emplace_back(std::make_shared<GameViewport>("Game View"));
+    mWindows.emplace_back(std::move(gvp));
     mWindows.emplace_back(std::make_shared<Inspector>("Inspector"));
     mWindows.emplace_back(std::make_shared<SceneHierarchy>("Scene Hierarchy"));
     mWindows.emplace_back(std::make_shared<AssetBrowser>("Asset Browser"));
@@ -64,16 +66,20 @@ namespace GUI {
     mStyler.SetCurrentTheme(static_cast<CustomTheme>(gEditorDefaultTheme)); // Default theme should be read from settings file
   }
 
-  void GUIManager::UpdateGUI(std::shared_ptr<Graphics::Framebuffer> const& framebuffer) {
+  void GUIManager::UpdateGUI(std::shared_ptr<Graphics::Framebuffer> const& framebuffer, std::shared_ptr<Graphics::Texture> const& tex) {
     // Always run persistent windows
     for (auto const& elem : mPersistentElements) {
       elem->Run();
     }
 
     // Run all active windows except viewport
-    for (unsigned i{ 1 }; i < mWindows.size(); ++i) {
+    for (unsigned i{ 2 }; i < mWindows.size(); ++i) {
       if (!mWindows[i]->IsActive()) { continue; }
       mWindows[i]->Run();
+    }
+
+    if (mGameViewport->IsActive()) {
+        mGameViewport->Render(tex);
     }
 
     // Update viewport if active

@@ -28,9 +28,10 @@ namespace Graphics {
 
   }
 
-  void ShadowPass::Render(const Component::Camera& camera, std::vector<ECS::Entity> const& entities) {
+  void ShadowPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
+
       StartRender();
-      mActive = SetLightUniforms(camera, entities);
+      mActive = SetLightUniforms(cam, entities);
 
       if (!mActive) { EndRender(); return; }
 
@@ -119,7 +120,7 @@ namespace Graphics {
   }
 
   //edit this, redundancy
-  bool ShadowPass::SetLightUniforms(Component::Camera const& cam, std::vector<ECS::Entity> const& entities) {
+  bool ShadowPass::SetLightUniforms(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
       bool found{ false };
 
       // iterate through entities to find the shadow-casting light
@@ -151,7 +152,7 @@ namespace Graphics {
 
           shader->SetUniform("u_LightProjMtx", glm::ortho(orthoPlanes.first.x, orthoPlanes.second.x,
               orthoPlanes.first.y, orthoPlanes.second.y, orthoPlanes.first.z, orthoPlanes.second.z));
-          shader->SetUniform("u_ViewProjMtx", cam.GetViewProjMatrix());
+          shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);
 
           break;
       }
@@ -187,8 +188,8 @@ namespace Graphics {
   }
 
   //edit redundancy:
-  std::pair<glm::vec3, glm::vec3> ShadowPass::GetLightProjPlanes(Component::Camera const& cam, glm::vec3 const& lightPos, glm::vec3 const& lightDir) {
-      glm::mat4 const invViewProj{ glm::inverse(cam.GetViewProjMatrix()) * glm::lookAt(lightPos, glm::vec3(0.f)/*lightPos + lightDir*/, glm::vec3(0.f, 1.f, 0.f)) };
+  std::pair<glm::vec3, glm::vec3> ShadowPass::GetLightProjPlanes(CameraSpec const& cam, glm::vec3 const& lightPos, glm::vec3 const& lightDir) {
+      glm::mat4 const invViewProj{ glm::inverse(cam.viewProjMatrix) * glm::lookAt(lightPos, glm::vec3(0.f)/*lightPos + lightDir*/, glm::vec3(0.f, 1.f, 0.f)) };
       auto frustrumCorners{ sFrustrumCorners };
 
       glm::vec4 min(FLT_MAX), max(-FLT_MAX);

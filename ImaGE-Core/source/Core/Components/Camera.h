@@ -17,7 +17,7 @@ namespace Component {
         float nearClip{ 0.1f };
         float farClip{ 100.0f };
 
-        glm::mat4 GetViewMatrix() const {
+        inline glm::mat4 GetViewMatrix() const {
             glm::vec3 front{
                 cos(glm::radians(yaw)) * cos(glm::radians(pitch)),
                 sin(glm::radians(pitch)),
@@ -28,7 +28,7 @@ namespace Component {
             return glm::lookAt(position, position + front, up);
         }
 
-        glm::mat4 GetProjMatrix() const {
+        inline glm::mat4 GetProjMatrix() const {
             if (projType == Type::PERSP) {
                 return glm::perspective(glm::radians(fov), aspectRatio, nearClip, farClip);
             }
@@ -42,7 +42,7 @@ namespace Component {
             }
         }
 
-        glm::mat4 GetViewProjMatrix() const {
+        inline glm::mat4 GetViewProjMatrix() const {
             return GetProjMatrix() * GetViewMatrix();
         }
     };

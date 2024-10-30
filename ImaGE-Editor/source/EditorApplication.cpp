@@ -23,6 +23,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <imgui/backends/imgui_impl_opengl3.h>
 
 #include <Core/Systems/Systems.h>
+#include "Graphics/CameraSpec.h"
 
 namespace IGE {
   EditorApplication::EditorApplication(Application::ApplicationSpecification const& spec) :
@@ -102,11 +103,19 @@ namespace IGE {
         try {
           if (GetApplicationSpecification().EnableImGui) {
 
+            Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() });
+            auto const& fb0 = Graphics::Renderer::GetFinalFramebuffer();
+            std::shared_ptr<Graphics::Texture> scene1Texture = std::make_shared<Graphics::Texture>(fb0->GetFramebufferSpec().width, fb0->GetFramebufferSpec().height);
+
+            glCopyImageSubData(fb0->GetColorAttachmentID(), GL_TEXTURE_2D, 0, 0, 0, 0,
+                scene1Texture->GetTexHdl(), GL_TEXTURE_2D, 0, 0, 0, 0,
+                fb0->GetFramebufferSpec().width, fb0->GetFramebufferSpec().height, 1);
+
             UpdateFramebuffers();
             
             auto& fb{ GetDefaultRenderTarget().framebuffer };
             fb = Graphics::Renderer::GetFinalFramebuffer();
-            mGUIManager.UpdateGUI(fb);
+            mGUIManager.UpdateGUI(fb, scene1Texture);
 
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -153,8 +162,14 @@ namespace IGE {
     for (Graphics::RenderTarget const& target : mRenderTargets)
     {
       target.framebuffer->Bind();
-
-      Graphics::RenderSystem::RenderEditorScene(target.camera);
+      auto const& cam = target.camera;
+      
+      if (target.isEditorView) {
+          Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{cam.GetViewProjMatrix(), cam.GetPosition(), cam.GetNearPlane(), cam.GetFarPlane(), cam.GetFOV()});
+      }
+      else {
+          //Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent()});
+      }
 
       target.framebuffer->Unbind();
     }

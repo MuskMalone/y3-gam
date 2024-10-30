@@ -18,9 +18,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Styles/Styler.h"
 #include <Graphics/RenderTarget.h>
 #include <Core/Entity.h>
+//#include "GUI/Dockable/GameViewport.h"
 
 namespace GUI {
   class Viewport;
+  class GameViewport;
 
   class GUIManager {
   public:
@@ -42,7 +44,7 @@ namespace GUI {
     \param framebuffer
       Theframebuffer to be passed into the viewport
     ************************************************************************/
-    void UpdateGUI(std::shared_ptr<Graphics::Framebuffer> const& framebuffer);
+    void UpdateGUI(std::shared_ptr<Graphics::Framebuffer> const& framebuffer, std::shared_ptr<Graphics::Texture> const& tex);
     
     /*!*********************************************************************
     \brief
@@ -78,6 +80,7 @@ namespace GUI {
     std::vector<std::unique_ptr<GUIWindow>> mPersistentElements;  // contains controls outside of the dockspace
     std::vector<std::shared_ptr<GUIWindow>> mWindows; // dockable/hideable windows
     std::shared_ptr<Viewport> mEditorViewport;  // ptr to the viewport in mWindows
+    std::shared_ptr<GameViewport> mGameViewport; // ptr to gameviewport
 
     static Styler mStyler; // handles editor's styles
     static ECS::Entity sSelectedEntity; // currently selected entity

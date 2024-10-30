@@ -660,6 +660,7 @@
     <ClInclude Include="source\Graphics\RenderPass\GeomPass.h" />
     <ClInclude Include="source\Graphics\RenderPass\ShadowPass.h" />
     <ClInclude Include="source\Graphics\RenderPass\FinalPass.h" />
+    <ClInclude Include="source\Graphics\CameraSpec.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />

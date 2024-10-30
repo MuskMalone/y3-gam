@@ -9,12 +9,13 @@ namespace GUI {
     public:
         GameViewport(const char* name);
 
-        void Run() override; // Declare the Run method without defining it here
+        void Run() override;
+        void Render(std::shared_ptr<Graphics::Texture> const& tex);
 
-    private:
+    //private:
         //Graphics::RenderTarget& mRenderTarget; // Reference to the render target for the game view
 
-        void ProcessCameraInputs(); // Handle camera inputs if needed
+        //void ProcessCameraInputs(); // Handle camera inputs if needed
     };
 
 } // namespace GUI
