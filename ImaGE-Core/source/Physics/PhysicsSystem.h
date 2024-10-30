@@ -4,7 +4,7 @@
 #include <Core/Systems/SystemManager/SystemManager.h>
 #include <Events/EventCallback.h>
 #include <Physics/PhysicsEventManager.h>
-#include <Physics/PhysicsFilter.h>
+
 namespace IGE {
 	namespace Physics {
 		const float gDeltaTime = 1.f / 60.f;

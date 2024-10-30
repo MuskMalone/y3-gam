@@ -39,6 +39,7 @@ namespace Graphics {
     //Get the list of light
     std::vector<ECS::Entity> lights{};
     for (ECS::Entity const& entity : entities) {
+      if (!entity.GetComponent<Component::Tag>().isActive) { continue; }
       if (entity.HasComponent<Component::Light>()){
        auto const& light = entity.GetComponent<Component::Light>();
        u_type[numlights] = light.type;
@@ -57,7 +58,7 @@ namespace Graphics {
      }
 
     for (ECS::Entity const& entity : entities) {
-      
+      if (!entity.GetComponent<Component::Tag>().isActive) { continue; }
       if (!entity.HasComponent<Component::Mesh>()) { continue; }
 
       auto const& xform = entity.GetComponent<Component::Transform>();

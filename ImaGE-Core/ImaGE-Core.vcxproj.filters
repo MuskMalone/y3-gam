@@ -604,9 +604,6 @@
     <ClInclude Include="source\Physics\PhysicsEventManager.h">
       <Filter>Physics</Filter>
     </ClInclude>
-    <ClInclude Include="source\Physics\PhysicsFilter.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
     <ClInclude Include="source\Physics\PhysicsHelpers.h">
       <Filter>Physics</Filter>
     </ClInclude>
@@ -873,9 +870,6 @@
       <Filter>Physics</Filter>
     </ClCompile>
     <ClCompile Include="source\Physics\PhysicsEventManager.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Physics\PhysicsFilter.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
     <ClCompile Include="source\Physics\PhysicsSystem.cpp">

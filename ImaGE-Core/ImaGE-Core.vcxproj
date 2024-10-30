@@ -321,7 +321,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Physics\PhysicsEvent.h" />
     <ClInclude Include="source\Physics\PhysicsEventData.h" />
     <ClInclude Include="source\Physics\PhysicsEventManager.h" />
-    <ClInclude Include="source\Physics\PhysicsFilter.h" />
     <ClInclude Include="source\Physics\PhysicsHelpers.h" />
     <ClInclude Include="source\Physics\PhysicsSystem.h" />
     <ClInclude Include="source\Prefabs\Prefab.h" />
@@ -450,7 +449,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Input\InputManager.cpp" />
     <ClCompile Include="source\Physics\PhysicsEvent.cpp" />
     <ClCompile Include="source\Physics\PhysicsEventManager.cpp" />
-    <ClCompile Include="source\Physics\PhysicsFilter.cpp" />
     <ClCompile Include="source\Physics\PhysicsSystem.cpp" />
     <ClCompile Include="source\Prefabs\Prefab.cpp" />
     <ClCompile Include="source\Prefabs\PrefabManager.cpp" />

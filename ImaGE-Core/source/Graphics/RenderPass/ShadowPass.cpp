@@ -37,6 +37,7 @@ namespace Graphics {
     auto const& shader = mSpec.pipeline->GetShader();
     // render the scene normally
     for (ECS::Entity const& entity : entities) {
+      if (!entity.GetComponent<Component::Tag>().isActive) { continue; }
       if (!entity.HasComponent<Component::Mesh>()) { continue; }
 
       Graphics::Renderer::SubmitInstance(
