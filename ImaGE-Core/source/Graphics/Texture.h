@@ -12,12 +12,16 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <string>
 #include <memory>
 #include <Asset/SmartPointer.h>
+
 namespace Graphics {
 
 	class Texture {
 	public:
 
 		static IGE::Assets::GUID Create(std::string const& path, bool isBindless = true);
+		static uint32_t BindToNextAvailUnit(uint32_t texture);
+		static void ResetTextureUnits();
+
 		//Temp default constructor
 		Texture();
 		Texture(std::string const& path, bool isBindless = false);
@@ -37,13 +41,15 @@ namespace Graphics {
 
 		void SetData(void* data);
 
-		void Bind(unsigned int texUnit = 0) const;
-		void Unbind(unsigned int texUnit = 0) const;
+		uint32_t Bind() const;
+		/*void Unbind(unsigned int texUnit = 0) const;*/
 
 		bool operator==(Texture const& rhs) const;
 
 	private:
 		void InitBindlessTexture();
+
+		inline static uint32_t sNextAvailTextureUnit = 0;
 
 		std::string mPath;
 		uint32_t mWidth;

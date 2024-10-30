@@ -8,7 +8,7 @@
 #include <Core/Components/Mesh.h>
 
 namespace Graphics {
-  ShadowPass::ShadowPass(const RenderPassSpec& spec) : RenderPass(spec), mLightSpaceMtx{}, mActive { false } {
+  ShadowPass::ShadowPass(const RenderPassSpec& spec) : RenderPass(spec), mLightSpaceMtx{}, mShadowSoftness{}, mShadowBias{}, mActive{ false } {
 
   }
 
@@ -55,6 +55,8 @@ namespace Graphics {
       }
       found = true;
 
+      mShadowBias = light.bias;
+      mShadowSoftness = light.softness;
       SetLightUniforms(cam, transform.worldRot * light.forwardVec, light.nearPlaneMultiplier, transform.worldPos);
 
       break;
@@ -111,26 +113,25 @@ namespace Graphics {
     }
 
     // pull back near plane and push back far plane based on multiplier
-    /*float const nearPlane{ min.z < 0.f ? min.z * nearPlaneMultiplier : min.z / nearPlaneMultiplier },
-      farPlane{ max.z < 0.f ? max.z / nearPlaneMultiplier : max.z * nearPlaneMultiplier };*/
-    float const nearPlane{ min.z }, farPlane{ max.z };
+    //float const nearPlane{ min.z < 0.f ? min.z * nearPlaneMultiplier : min.z / nearPlaneMultiplier },
+    //  farPlane{ max.z < 0.f ? max.z / nearPlaneMultiplier : max.z * nearPlaneMultiplier };
+    min *= nearPlaneMultiplier;
+    max *= nearPlaneMultiplier;
 
     auto const& shader = mSpec.pipeline->GetShader();
     shader->Use();
 
-    shader->SetUniform("u_Near", nearPlane);
-    shader->SetUniform("u_Far", farPlane);
+    shader->SetUniform("u_Near", min.z);
+    shader->SetUniform("u_Far", max.z);
 
     mLightSpaceMtx = glm::ortho(min.x, max.x,
-      min.y, max.y, nearPlane, farPlane) * lightView;
+      min.y, max.y, min.z, max.z) * lightView;
 
     shader->SetUniform("u_LightSpaceMtx", mLightSpaceMtx);
   }
 
-  int ShadowPass::BindShadowMap() {
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, GetShadowMapBuffer());
-    return 0;
+  uint32_t ShadowPass::BindShadowMap() {
+    return Texture::BindToNextAvailUnit(GetShadowMapBuffer());
   }
 
 } // namespace Graphics

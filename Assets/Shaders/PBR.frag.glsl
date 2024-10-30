@@ -17,6 +17,9 @@ in vec3 v_Bitangent;            // Bitangent in world space
 
 // shadows
 in vec4 v_LightSpaceFragPos;
+uniform bool u_ShadowsActive;
+uniform float u_ShadowBias;
+uniform int u_ShadowSoftness;
 uniform sampler2D u_ShadowMap;
 
 // Tiling and offset uniforms
@@ -136,7 +139,7 @@ void main(){
 
     vec3 ambient = vec3(0.01) * albedo * u_AO;
 
-    float shadow = CheckShadow(v_LightSpaceFragPos);    // 1.0 if in shadow and 0.0 otherwise
+    float shadow = u_ShadowsActive ? CheckShadow(v_LightSpaceFragPos) : 0.0;    // 1.0 if in shadow and 0.0 otherwise
     vec3 color = ambient + Lo * (1.0 - shadow);
     color = color / (color + vec3(1.0));
     color = pow(color, vec3(1.0/2.2)); //gamma correction
@@ -184,12 +187,38 @@ float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
     return ggx1 * ggx2;
 }
 
+float SimplePCF(vec3 projCoords) {
+    float shadow = 0;
+    vec2 texelSize = 1.0 / textureSize(u_ShadowMap, 0);
+    int range = u_ShadowSoftness;
+
+    for(int x = -range; x <= range; ++x)
+    {
+        for(int y = -range; y <= range; ++y)
+        {
+            float pcfDepth = texture(u_ShadowMap, projCoords.xy + vec2(x, y) * texelSize).r; 
+            // if current depth more than what is in the shadow map,
+            // it means that it is in shadow
+            shadow += projCoords.z - u_ShadowBias > pcfDepth ? 1.0 : 0.0;        
+        }    
+    }
+
+    int sampleSize = range * 2 + 1;
+    return shadow /= float(sampleSize * sampleSize);
+}
+
 float CheckShadow(vec4 lightSpacePos) {
     // perform perspective division and map to [0,1]
     vec3 projCoords = vec3(lightSpacePos / lightSpacePos.w) * 0.5 + 0.5;
-    float closestDepth = texture(u_ShadowMap, projCoords.xy).r;
+    projCoords.xy = clamp(projCoords.xy, 0.0, 1.0);
 
-    // if current depth more than what is in the shadow map,
-    // it means that it is in shadow
-    return projCoords.z > closestDepth ? 1.0 : 0.0;
+    if (u_ShadowSoftness == 0) {
+        float closestDepth = texture(u_ShadowMap, projCoords.xy).r;
+
+        // if current depth more than what is in the shadow map,
+        // it means that it is in shadow
+        return projCoords.z - u_ShadowBias > closestDepth ? 1.0 : 0.0;
+    }
+
+    return SimplePCF(projCoords);
 }

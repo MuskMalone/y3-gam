@@ -14,8 +14,10 @@ namespace Graphics {
     bool IsActive() const noexcept { return mActive; }
     void Render(EditorCamera const& camera, std::vector<ECS::Entity> const& entities) override;
 
-    int BindShadowMap();
-    inline glm::mat4 const& GetLightSpaceMatrix() const { return mLightSpaceMtx; }
+    uint32_t BindShadowMap();
+    inline glm::mat4 const& GetLightSpaceMatrix() const noexcept { return mLightSpaceMtx; }
+    inline float GetShadowBias() const noexcept { return mShadowBias; }
+    inline int GetShadowSoftness() const noexcept { return mShadowSoftness; }
     inline uint32_t GetShadowMapBuffer() const { return GetTargetFramebuffer()->GetDepthAttachmentID(); }
 
   private:
@@ -25,7 +27,12 @@ namespace Graphics {
 
     void SetLightUniforms(EditorCamera const& cam, glm::vec3 const& lightDir, float nearPlaneMultiplier, glm::vec3 test);
     
+    // temp
+    // @TODO: have to account for multiple lights in future
     glm::mat4 mLightSpaceMtx;
+    int mShadowSoftness;
+    float mShadowBias;
+
     bool mActive;
   };
 

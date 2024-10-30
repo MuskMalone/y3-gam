@@ -119,8 +119,13 @@ namespace Graphics {
       // set shadow uniforms
       {
         auto const& shadowPass{ Renderer::GetPass<ShadowPass>() };
-        shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
-        shader->SetUniform("u_ShadowMap", shadowPass->BindShadowMap());
+        shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
+        if (shadowPass->IsActive()) {
+          shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
+          shader->SetUniform("u_ShadowMap", static_cast<int>(shadowPass->BindShadowMap()));
+          shader->SetUniform("u_ShadowBias", shadowPass->GetShadowBias());
+          shader->SetUniform("u_ShadowSoftness", shadowPass->GetShadowSoftness());
+        }
       }
 
       material->Apply(shader);    // Apply material properties
@@ -132,11 +137,9 @@ namespace Graphics {
       mSpec.pipeline->GetSpec().instanceLayout;
       // Flush all collected instances and render them in a single draw call
       Renderer::RenderInstances();
+      Texture::ResetTextureUnits(); // unbind texture units after each group
     }
     
-
-
-
     End();
   }
 

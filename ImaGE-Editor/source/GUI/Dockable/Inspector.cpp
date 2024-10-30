@@ -349,9 +349,9 @@ namespace GUI {
       if (ImGui::BeginCombo("##MaterialSelection", materialNames[0])) {
         for (unsigned i{}; i < materialNames.size(); ++i) {
           if (ImGui::Selectable(materialNames[i])) {
-            if (i + 1 != material.matIdx) {
+            if (i != material.matIdx) {
               modified = true;
-              material.matIdx = i + 1;
+              material.matIdx = i;
             }
             break;
           }
@@ -987,13 +987,21 @@ namespace GUI {
           ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
           ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
+          NextRowTable("Softness");
+          if (ImGui::DragInt("##SoftnessSlider", &light.softness, 1, 0, 5)) {
+            modified = true;
+          }
+
           NextRowTable("Bias");
           if (ImGui::DragFloat("##BiasSlider", &light.bias, 0.005f, 0.f, 2.f, "% .3f")) {
             modified = true;
           }
 
-          NextRowTable("Near Plane Multiplier");
-          if (ImGui::DragFloat("##NearPlane", &light.nearPlaneMultiplier, 0.1f, 0.1f, 20.f, "% .2f")) {
+          NextRowTable("Near Plane");
+          if (ImGui::IsItemHovered()) {
+            ImGui::SetTooltip("How close the light is to the object (how much of the scene the light sees)");
+          }
+          if (ImGui::DragFloat("##NearPlane", &light.nearPlaneMultiplier, 0.1f, 0.1f, 2.f, "% .2f")) {
             modified = true;
           }
 

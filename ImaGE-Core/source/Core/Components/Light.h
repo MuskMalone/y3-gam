@@ -31,7 +31,7 @@ namespace Component {
 	struct Light {
 		Light() : forwardVec{ 0.f, 0.f, -1.f }, color{ 1.f, 1.f, 1.f }, type{ DIRECTIONAL }, mLightIntensity{ 1.f },
 			mInnerSpotAngle{ 5.f }, mOuterSpotAngle{ 12.5f }, mRange{ 10.f },
-			bias{ 0.05f }, nearPlaneMultiplier{ 10.f }, castShadows{ false } {}
+			softness{ 1 }, bias{ 0.005f }, nearPlaneMultiplier{ 10.f }, castShadows{ false } {}
 
 		inline void Clear() noexcept {
 			forwardVec = { 0.f, 0.f, -1.f };
@@ -44,7 +44,8 @@ namespace Component {
 			mRange = 10.f;
 			
 			castShadows = false;
-			bias = 0.05f;
+			bias = 0.005f;
+			softness = 1;
 			nearPlaneMultiplier = 10.f;
 		}
 
@@ -59,6 +60,7 @@ namespace Component {
 		float mRange;						// Maximum range of the spotlight
 		
 		// Shadows
+		int softness;
 		float bias;
 		float nearPlaneMultiplier;
 		bool castShadows;
