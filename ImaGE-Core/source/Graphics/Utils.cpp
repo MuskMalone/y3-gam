@@ -73,7 +73,7 @@ namespace Graphics {
                 glFramebufferTexture2D(GL_FRAMEBUFFER, attachType, GL_TEXTURE_2D, id, 0);
             }
 
-            void AttachShadowMapTexture(uint32_t id, uint32_t width, uint32_t height) {
+            void AttachShadowMapTexture(uint32_t& id, uint32_t width, uint32_t height) {
               glGenTextures(1, &id);
               glBindTexture(GL_TEXTURE_2D, id);
               glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
@@ -83,17 +83,19 @@ namespace Graphics {
               glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
               glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
               glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+              glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+              glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
 
               // prevent darkness outside the frustrum
-              float clampColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+              float clampColor[] = { 1.f, 1.f, 1.f, 1.f };
               glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, clampColor);
 
               glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, id, 0);
               // since we don't touch the color buffer
+          /*    glDrawBuffer(GL_NONE);
+              glReadBuffer(GL_NONE);*/
 
-              if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-                Debug::DebugLogger::GetInstance().LogCritical("Shadow map buffer incomplete!");
-              }
+              glBindTexture(GL_TEXTURE_2D, 0);
             }
 
         }//namespace Framebuffer

@@ -45,6 +45,20 @@ namespace Reflection::ComponentUtils {
     IGE::Physics::PhysicsSystem::GetInstance()->AddBoxCollider(entity, comp);
   }
 
+  void AddSphereCollider(ECS::Entity entity, rttr::variant const& var){
+      EXTRACT_RAW_COMP(SphereCollider, comp);
+
+      //entity.EmplaceOrReplaceComponent<Collider>(comp);
+      IGE::Physics::PhysicsSystem::GetInstance()->AddSphereCollider(entity, comp);
+  }
+
+  void AddCapsuleCollider(ECS::Entity entity, rttr::variant const& var){
+      EXTRACT_RAW_COMP(CapsuleCollider, comp);
+
+      //entity.EmplaceOrReplaceComponent<Collider>(comp);
+      IGE::Physics::PhysicsSystem::GetInstance()->AddCapsuleCollider(entity, comp);
+  }
+
   void AddRigidBody(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(RigidBody, comp);
 
@@ -61,7 +75,7 @@ namespace Reflection::ComponentUtils {
   void AddMesh(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Mesh, comp);
 
-    IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>(comp.meshName) };//Graphics::MeshFactory::CreateModelFromString(comp.meshName) };
+    IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(comp.meshName) };//Graphics::MeshFactory::CreateModelFromString(comp.meshName) };
     entity.EmplaceOrReplaceComponent<Mesh>(meshSrc, comp.meshName);
   }
 

@@ -1,21 +1,21 @@
 #pragma once
 /*!*********************************************************************
-\file   Script.h
+\file   Light.h
 \author han.q\@digipen.edu
-\date   5 October 2024
+\date   27 October 2024
 \brief
-	This file contains the declaration of Script Component struct. This component
-	has a vector that stores all the c# script attached to the entity
+	This file contains the declaration of Light Component struct. It
+	contains the data members necessary to cast a light on the scene
+	and shadows if necessary.
 
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#include <string>
 #include <glm/glm.hpp>
 
 namespace Component {
 	
-	enum Light_Type {
+	enum LightType {
 			DIRECTIONAL,
 			SPOTLIGHT,
 			LIGHT_COUNT
@@ -24,33 +24,46 @@ namespace Component {
 	// @TODO: for use when shadows are improved on
 	struct ShadowConfig {
 		float bias;
+		float nearPlaneMultiplier;
 		// softness / shadow type
 	};
 
 	struct Light {
-		Light() = default;
+		Light() : forwardVec{ 0.f, 0.f, -1.f }, color{ 255.f, 255.f, 255.f }, type{ DIRECTIONAL }, mLightIntensity{ 1.f },
+			mInnerSpotAngle{ 5.f }, mOuterSpotAngle{ 12.5f }, mRange{ 10.f },
+			softness{ 1 }, bias{ 0.005f }, nearPlaneMultiplier{ 10.f }, castShadows{ false } {}
 
-		inline void Clear() noexcept { 
+		inline void Clear() noexcept {
+			forwardVec = { 0.f, 0.f, -1.f };
 			type = DIRECTIONAL;
-			color = {};
-			// idk what the default values are
+			color = { 255.f, 255.f, 255.f };
+			mLightIntensity = 1.f;
 
+			mInnerSpotAngle = 5.f;
+			mOuterSpotAngle = 12.5f;
+			mRange = 10.f;
+			
 			castShadows = false;
-			bias = 0.05f;
+			bias = 0.005f;
+			softness = 1;
+			nearPlaneMultiplier = 10.f;
 		}
 
-		Light_Type type;
-		glm::vec3 forwardVec{ 0, 0, -1.f };       // Set default forward vector to face the -z-axis
-		glm::vec3 color;						 // Color of the light
-		float mLightIntensity{ 1.f }; // Intensity of the light
+		glm::vec3 forwardVec;		// Set default forward vector to face the -z-axis
+		glm::vec3 color;				// Color of the light
+		LightType type;
+		float mLightIntensity;	// Intensity of the light
 
-		//SpotLight 
-		float mInnerSpotAngle{ 5.f };   // Inner spot angle in degrees
-		float mOuterSpotAngle{ 12.5f }; // Outer spot angle in degrees
-		float mRange{ 10.f }; // Maximum range of the spotlight
+		// SpotLight 
+		float mInnerSpotAngle;  // Inner spot angle in degrees
+		float mOuterSpotAngle;	// Outer spot angle in degrees
+		float mRange;						// Maximum range of the spotlight
 		
-		float bias = 0.05f;				// Shadows
-		bool castShadows = false;	// Shadows
+		// Shadows
+		int softness;
+		float bias;
+		float nearPlaneMultiplier;
+		bool castShadows;
 	};
 
 } // namespace Component

@@ -11,19 +11,19 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rttr/rttr_enable.h>
 
 namespace Component {
-  enum class ColliderVars {
-     SCALE, POS, ROT
-  };
   struct ColliderAbstract {
   public:
       inline void Clear() noexcept {
           positionOffset = {};
-          rotationOffset = {};
+          rotationOffset = {physx::PxIdentity()};
           sensor = false;
       }
       physx::PxVec3 positionOffset{0, 0, 0};
-      physx::PxQuat rotationOffset{};
-      void* bodyID;
+      physx::PxQuat rotationOffset{physx::PxIdentity()};
+      
+      void* bodyID; // not serialized. decided at runtime
+      char idx; // not serialized. max value 3
+
       bool sensor{ false };
 
       RTTR_ENABLE()

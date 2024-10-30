@@ -5,6 +5,8 @@
 #include <Core/Components/Components.h>
 #include "Color.h"
 #include "Asset/IGEAssets.h"
+#include <Graphics/Renderer.h>
+#include <Graphics/RenderPass/ShadowPass.h>
 
 namespace Graphics {
   using EntityXform = std::pair<ECS::Entity, glm::mat4>;
@@ -29,7 +31,7 @@ namespace Graphics {
     glm::vec3 u_LightDirection[maxLights]; // Directional light direction in world space
     glm::vec3 u_LightColor[maxLights];     // Directional light color
 
-    //For spotlight
+    // For spotlight
     glm::vec3 u_LightPos[maxLights]; // Position of the spotlight
     float u_InnerSpotAngle[maxLights]; // Inner spot angle in degrees
     float u_OuterSpotAngle[maxLights]; // Outer spot angle in degrees
@@ -39,25 +41,23 @@ namespace Graphics {
     //Get the list of light
     std::vector<ECS::Entity> lights{};
     for (ECS::Entity const& entity : entities) {
-      if (entity.HasComponent<Component::Light>()){
-       auto const& light = entity.GetComponent<Component::Light>();
-       u_type[numlights] = light.type;
-        u_LightDirection[numlights] = entity.GetComponent<Component::Transform>().worldRot * light.forwardVec; // Directional light direction in world space
-        u_LightColor[numlights] = light.color;     // Directional light color
+      if (!entity.HasComponent<Component::Light>()) { continue; }
 
-        //For spotlight
-        u_LightPos[numlights] = entity.GetComponent<Component::Transform>().worldPos; // Position of the spotlight
-        u_InnerSpotAngle[numlights] = light.mInnerSpotAngle; // Inner spot angle in degrees
-        u_OuterSpotAngle[numlights] = light.mOuterSpotAngle; // Outer spot angle in degrees
-        u_LightIntensity[numlights] = light.mLightIntensity; // Intensity of the light
-        u_Range[numlights] = light.mRange; // Maximum range of the spotlight
-        ++numlights;
-      }
-        
-     }
+      auto const& light = entity.GetComponent<Component::Light>();
+      u_type[numlights] = light.type;
+      u_LightDirection[numlights] = entity.GetComponent<Component::Transform>().worldRot * light.forwardVec; // Directional light direction in world space
+      u_LightColor[numlights] = light.color;     // Directional light color
+
+      //For spotlight
+      u_LightPos[numlights] = entity.GetComponent<Component::Transform>().worldPos; // Position of the spotlight
+      u_InnerSpotAngle[numlights] = light.mInnerSpotAngle; // Inner spot angle in degrees
+      u_OuterSpotAngle[numlights] = light.mOuterSpotAngle; // Outer spot angle in degrees
+      u_LightIntensity[numlights] = light.mLightIntensity; // Intensity of the light
+      u_Range[numlights] = light.mRange; // Maximum range of the spotlight
+      ++numlights;
+    }
 
     for (ECS::Entity const& entity : entities) {
-      
       if (!entity.HasComponent<Component::Mesh>()) { continue; }
 
       auto const& xform = entity.GetComponent<Component::Transform>();
@@ -97,8 +97,8 @@ namespace Graphics {
       auto material = MaterialTable::GetMaterial(matID);
       auto shader = material->GetShader(); // Assuming Material has a method to retrieve its shader
 
-
       shader->Use();  // Bind the shader
+
       shader->SetUniform("u_ViewProjMtx", cam.GetViewProjMatrix());
       shader->SetUniform("u_CamPos", cam.GetPosition());
 
@@ -108,18 +108,26 @@ namespace Graphics {
       shader->SetUniform("u_LightDirection", u_LightDirection,maxLights);
       shader->SetUniform("u_LightColor", u_LightColor,maxLights);
 
-        
       shader->SetUniform("u_LightPos", u_LightPos,maxLights);
       shader->SetUniform("u_InnerSpotAngle", u_InnerSpotAngle, maxLights);
       shader->SetUniform("u_OuterSpotAngle", u_OuterSpotAngle, maxLights);
       shader->SetUniform("u_LightIntensity", u_LightIntensity, maxLights);
       shader->SetUniform("u_Range",u_Range, maxLights);
 
-
+      // set shadow uniforms
+      {
+        auto const& shadowPass{ Renderer::GetPass<ShadowPass>() };
+        shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
+        if (shadowPass->IsActive()) {
+          shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
+          shader->SetUniform("u_ShadowMap", static_cast<int>(shadowPass->BindShadowMap()));
+          shader->SetUniform("u_ShadowBias", shadowPass->GetShadowBias());
+          shader->SetUniform("u_ShadowSoftness", shadowPass->GetShadowSoftness());
+        }
+      }
 
       material->Apply(shader);    // Apply material properties
       MaterialTable::ApplyMaterialTextures(shader);   // Apply material textures
-
       for (const auto& [entity, worldMtx] : entityPairs) {
         auto const& mesh = entity.GetComponent<Component::Mesh>();
         Graphics::Renderer::SubmitInstance(mesh.meshSource, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
@@ -127,11 +135,9 @@ namespace Graphics {
       mSpec.pipeline->GetSpec().instanceLayout;
       // Flush all collected instances and render them in a single draw call
       Renderer::RenderInstances();
+      Texture::ResetTextureUnits(); // unbind texture units after each group
     }
     
-
-
-
     End();
   }
 
