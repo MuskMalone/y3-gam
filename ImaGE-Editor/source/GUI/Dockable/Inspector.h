@@ -46,13 +46,15 @@ namespace GUI {
       True if any part of the component was modified and false otherwise
     ************************************************************************/
     // Kindly put in alphabetical order, thank you!
-    bool ColliderComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool BoxColliderComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool CapsuleColliderComponentWindow(ECS::Entity entity, bool highlight = false);
     bool LayerComponentWindow(ECS::Entity entity, bool highlight = false);
     bool LightComponentWindow(ECS::Entity entity, bool highlight = false);
     bool MaterialComponentWindow(ECS::Entity entity, bool highlight = false);
     bool MeshComponentWindow(ECS::Entity entity, bool highlight = false);
     bool RigidBodyComponentWindow(ECS::Entity entity, bool highlight = false);
     bool ScriptComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool SphereColliderComponentWindow(ECS::Entity entity, bool highlight = false);
     bool TagComponentWindow(ECS::Entity entity, bool highlight = false);
     bool TextComponentWindow(ECS::Entity entity, bool highlight = false);
     bool TransformComponentWindow(ECS::Entity entity, bool highlight = false);
@@ -95,9 +97,11 @@ namespace GUI {
     bool mIsComponentEdited, mFirstEdit, mEditingPrefab;
     bool mEntityChanged;
 
-    static inline constexpr int INPUT_SIZE{ 200 };
-    static inline constexpr float FIRST_COLUMN_LENGTH{ 130 };
+    static inline constexpr int INPUT_SIZE{ 210 };
+    static inline constexpr float FIRST_COLUMN_LENGTH{ 175 };
     static inline constexpr ImU32 sComponentHighlightCol{ IM_COL32(253, 208, 23, 255) };
+    static inline constexpr float ITEM_SPACING{ 0 };
+    static inline constexpr float CELL_PADDING{ 1 };
 
     /*!*********************************************************************
     \brief

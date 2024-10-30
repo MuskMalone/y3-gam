@@ -100,8 +100,10 @@ namespace Graphics {
 		mData.triBuffer = std::vector<TriVtx>(mData.cMaxVertices);
 
 		//========================================================
-		mData.defaultTex = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(gAssetsDirectory + std::string("Textures/default.dds"));
-		mData.whiteTex = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(gAssetsDirectory + std::string("Textures/white.dds"));
+		//mData.defaultTex = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(gAssetsDirectory + std::string("Texturesdefault.dds"));
+		mData.defaultTex = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(366429001515961616);
+		//mData.whiteTex = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(gAssetsDirectory + std::string("Textures/white.dds"));
+		mData.whiteTex = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(2203736300003804932);
 		//unsigned int whiteTexData{ 0xffffffff };
 		//mData.whiteTex->SetData(&whiteTexData);
 		//mData.texUnits[0] = mData.whiteTex;
@@ -314,7 +316,7 @@ namespace Graphics {
 		instanceBuffer->SetLayout(instanceLayout);
 
 		// Attach the instance buffer to the MeshSource's VAO
-		IGE_REF(IGE::Assets::MeshAsset, meshSrc)->mMeshSource.GetVertexArray()->AddVertexBuffer(instanceBuffer, true);
+		IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource.GetVertexArray()->AddVertexBuffer(instanceBuffer, true);
 
 		// Store the buffer in the map for future use
 		mData.instanceBuffers[meshSrc] = instanceBuffer;
@@ -356,7 +358,7 @@ namespace Graphics {
 	void Renderer::SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr) {
 		if (mesh == nullptr) return;
 		auto const& meshSrc = mesh->GetMeshSource();
-		auto const& submeshes = IGE_REF(IGE::Assets::MeshAsset, meshSrc)->mMeshSource.GetSubmeshes();
+		auto const& submeshes = IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource.GetSubmeshes();
 
 		// Transformation matrices
 		glm::mat4 translateMtx{ glm::translate(glm::mat4{ 1.f }, pos) };
@@ -391,7 +393,7 @@ namespace Graphics {
 
 			// Collect vertex data from the submesh
 			for (size_t i = 0; i < submesh.vtxCount; ++i) {
-				const Vertex& vtx = IGE_REF(IGE::Assets::MeshAsset, meshSrc)->mMeshSource.GetVertices()[submesh.baseVtx + i];
+				const Vertex& vtx = IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource.GetVertices()[submesh.baseVtx + i];
 
 				// Transform position to world space
 				glm::vec3 worldPos = glm::vec3(finalxformMtx * glm::vec4(vtx.position, 1.0f));
@@ -445,9 +447,9 @@ namespace Graphics {
 			instanceBuffer->SetData(instances.data(), dataSize);
 
 			// Bind the VAO and render the instances
-			auto& vao = IGE_REF(IGE::Assets::MeshAsset, meshSrc)->mMeshSource.GetVertexArray();
+			auto& vao = IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource.GetVertexArray();
 
-			RenderAPI::DrawIndicesInstanced(vao, static_cast<unsigned>(IGE_REF(IGE::Assets::MeshAsset, meshSrc)->mMeshSource.GetIndices().size()), static_cast<unsigned>(instances.size()));
+			RenderAPI::DrawIndicesInstanced(vao, static_cast<unsigned>(IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource.GetIndices().size()), static_cast<unsigned>(instances.size()));
 
 		}
 

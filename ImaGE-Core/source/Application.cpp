@@ -32,6 +32,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/RenderSystem.h>
 #pragma endregion
 
+#include "Serialization/Serializer.h"
+#include "Serialization/Deserializer.h"
+#include "Asset/AssetMetadata.h"
+
 namespace IGE {
   // Static Initialization
   Application::ApplicationSpecification Application::mSpecification{};
@@ -55,7 +59,6 @@ namespace IGE {
     //IGE::Physics::PhysicsSystem::GetInstance()->Init();
 
     RegisterSystems();
-    IGEAssetsInitialize();
     Systems::SystemManager::GetInstance().InitSystems();
     Graphics::RenderSystem::Init();
   }
