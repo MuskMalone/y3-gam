@@ -10,11 +10,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GLFW/glfw3.h>
 #include <External/GLFWwindowDestructor.h>
 #include <FrameRateController/FrameRateController.h>
-#include <Scenes/Scene.h>
 #include <memory>
 #include <DebugTools/Exception/Exception.h>
 #include <Graphics/Framebuffer.h>
-#include <Core/Systems/SystemManager/SystemManager.h>
 #include <Graphics/RenderTarget.h>
 
 namespace IGE {
@@ -77,7 +75,6 @@ namespace IGE {
     static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
     static void ErrorCallback(int err, const char* desc);
 
-    Systems::SystemManager mSystemManager;
     std::vector<Graphics::RenderTarget> mRenderTargets;
     WindowPtr mWindow;
 

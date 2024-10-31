@@ -85,7 +85,12 @@ namespace Component {
     \param type
       The type of the removed component
     ************************************************************************/
-    void AddComponentRemoval(rttr::type const& type) { modifiedComponents.erase(type); removedComponents.emplace(type); }
+    void AddComponentRemoval(rttr::type const& type) {
+      // make sure to extract the base type if it is a wrapper/ptr
+      rttr::type rawType{ type.is_wrapper() ? type.get_wrapped_type().get_raw_type() : type.is_pointer() ? type.get_raw_type() : type };
+      modifiedComponents.erase(rawType);
+      removedComponents.emplace(std::move(rawType));
+    }
 
     IGE::Assets::GUID guid;
     std::unordered_map<rttr::type, rttr::variant> modifiedComponents;

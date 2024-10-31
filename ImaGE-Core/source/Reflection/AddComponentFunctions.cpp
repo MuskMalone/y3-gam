@@ -38,10 +38,25 @@ namespace Reflection::ComponentUtils {
     entity.EmplaceOrReplaceComponent<Layer>(comp);
   }
 
-  void AddCollider(ECS::Entity entity, rttr::variant const& var) {
-    EXTRACT_RAW_COMP(Collider, comp);
+  void AddBoxCollider(ECS::Entity entity, rttr::variant const& var) {
+    EXTRACT_RAW_COMP(BoxCollider, comp);
 
-    IGE::Physics::PhysicsSystem::GetInstance()->AddCollider(entity, comp);
+    //entity.EmplaceOrReplaceComponent<Collider>(comp);
+    IGE::Physics::PhysicsSystem::GetInstance()->AddBoxCollider(entity, comp);
+  }
+
+  void AddSphereCollider(ECS::Entity entity, rttr::variant const& var){
+      EXTRACT_RAW_COMP(SphereCollider, comp);
+
+      //entity.EmplaceOrReplaceComponent<Collider>(comp);
+      IGE::Physics::PhysicsSystem::GetInstance()->AddSphereCollider(entity, comp);
+  }
+
+  void AddCapsuleCollider(ECS::Entity entity, rttr::variant const& var){
+      EXTRACT_RAW_COMP(CapsuleCollider, comp);
+
+      //entity.EmplaceOrReplaceComponent<Collider>(comp);
+      IGE::Physics::PhysicsSystem::GetInstance()->AddCapsuleCollider(entity, comp);
   }
 
   void AddRigidBody(ECS::Entity entity, rttr::variant const& var) {
@@ -59,8 +74,8 @@ namespace Reflection::ComponentUtils {
   void AddMesh(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Mesh, comp);
 
-    IGE::Assets::GUID const meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::MeshAsset>(comp.meshName) };
-    entity.EmplaceOrReplaceComponent<Mesh>(std::make_shared<Graphics::Mesh>(meshSrc), comp.meshName);
+    IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(comp.meshName) };//Graphics::MeshFactory::CreateModelFromString(comp.meshName) };
+    entity.EmplaceOrReplaceComponent<Mesh>(meshSrc, comp.meshName);
   }
 
   void AddText(ECS::Entity entity, rttr::variant const& var) {
@@ -73,6 +88,12 @@ namespace Reflection::ComponentUtils {
     EXTRACT_RAW_COMP(ProxyScriptComponent, comp);
 
     entity.EmplaceOrReplaceComponent<Script>(comp);
+  }
+
+  void AddLight(ECS::Entity entity, rttr::variant const& var) {
+    EXTRACT_RAW_COMP(Light, comp);
+
+    entity.EmplaceOrReplaceComponent<Light>(comp);
   }
 
 } // namespace Reflection

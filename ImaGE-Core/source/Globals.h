@@ -17,6 +17,8 @@ constexpr char gPrefabFileExt[] = ".pfb";
 constexpr char gSupportedModelFormats[] = ".fbx.obj";
 constexpr char gMeshOutputDir[] = "..\\Assets\\Models\\";
 constexpr char gMeshFileExt[] = ".imsh";
+constexpr char gFontFileExt[] = ".ttf";
+//currently my Shaders are hard coded in ShaderLibrary in Shader.h* as cShaderDirectory
 
 // Editor
 constexpr char gRobotoBoldFontPath[] = "..\\Assets\\Editor-Fonts\\Roboto-Bold.ttf";

@@ -22,7 +22,7 @@ namespace Component {
       ************************************************************************/
       inline void Clear() noexcept {
         material.reset();
-        matIdx = 1;
+        matIdx = 0;
       }
 
       std::shared_ptr<Graphics::Material> material;

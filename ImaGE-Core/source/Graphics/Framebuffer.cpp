@@ -52,12 +52,15 @@ namespace Graphics
         }
 
         if (mDepthAttachmentSpec.textureFormat != FramebufferTextureFormat::NONE) {
-            Utils::Framebuffer::CreateTextures(&mDepthAttachment, 1);
-            Utils::Framebuffer::BindTexture(mDepthAttachment);
             switch (mDepthAttachmentSpec.textureFormat) {
             case FramebufferTextureFormat::DEPTH24STENCIL8:
-                Utils::Framebuffer::AttachDepthTexture(mDepthAttachment, GL_DEPTH24_STENCIL8, GL_DEPTH_STENCIL_ATTACHMENT, mSpec.width, mSpec.height);
-                break;
+              Utils::Framebuffer::CreateTextures(&mDepthAttachment, 1);
+              Utils::Framebuffer::BindTexture(mDepthAttachment);
+              Utils::Framebuffer::AttachDepthTexture(mDepthAttachment, GL_DEPTH24_STENCIL8, GL_DEPTH_STENCIL_ATTACHMENT, mSpec.width, mSpec.height);
+              break;
+            case FramebufferTextureFormat::SHADOW_MAP:
+              Utils::Framebuffer::AttachShadowMapTexture(mDepthAttachment, mSpec.width, mSpec.height);
+              break;
             }
         }
 
@@ -125,6 +128,11 @@ namespace Graphics
         }
         return mColorAttachments[index];
     }
+
+    uint32_t Framebuffer::GetDepthAttachmentID() const noexcept {
+      return mDepthAttachment;
+    }
+
     FramebufferSpec const& Framebuffer::GetFramebufferSpec() const {
         return mSpec;
     }

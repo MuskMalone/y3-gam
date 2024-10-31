@@ -9,23 +9,26 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
+#include <Singleton/ThreadSafeSingleton.h>
 #include <unordered_map>
 #include <memory>
 #include <typeindex>
 #include <Core/Systems/System.h>
+#include <string>
+
+// forward declaration
+namespace IGE { class Application; class EditorApplication; }
 
 namespace Systems {
-  class SystemManager
+  class SystemManager : public ThreadSafeSingleton<SystemManager>
   {
   public:
+    SystemManager() = default;
     /*!*********************************************************************
     \brief
-      Registers a system into the SystemManager
-    \param name
-      The name of the system
+      Releases all systems held by the class
     ************************************************************************/
-    template <typename T>
-    void RegisterSystem(const char* name);
+    ~SystemManager();
     
     /*!*********************************************************************
     \brief
@@ -34,7 +37,12 @@ namespace Systems {
       shared_ptr to the system
     ************************************************************************/
     template <typename T>
-    std::shared_ptr<T> GetSystem() const;
+    std::weak_ptr<T> GetSystem() const;
+
+  private:
+    friend class IGE::Application;
+    friend class IGE::EditorApplication;
+    // i dont want these to be globally accessible
 
     /*!*********************************************************************
     \brief
@@ -44,21 +52,38 @@ namespace Systems {
 
     /*!*********************************************************************
     \brief
-      Updates all systems held by the class
+      Updates all systems specified as template arguments
     ************************************************************************/
-    void UpdateSystems();
+    template <typename... Systems>
+    void UpdateSelectedSystems();
 
     /*!*********************************************************************
     \brief
-      Releases all systems held by the class
+      Registers a system to the manager. This system will update during
+      the normal update call.
     ************************************************************************/
-    void Shutdown();
+    template <typename T>
+    void RegisterSystem(const char* name);
+
+    /*!*********************************************************************
+    \brief
+      Updates all systems held by the class
+    ************************************************************************/
+    void UpdateSystems();
 
   private:
     using SystemPtr = std::shared_ptr<System>;
 
     std::unordered_map<const char*, SystemPtr> mNameToSystem;
-    std::vector<SystemPtr> mSystems;
+    std::vector<SystemPtr> mSystems, mRenderSystems;
+
+    /*!*********************************************************************
+    \brief
+      Updates a system and times it with the frame rate controller
+    \param names
+      The typeid names of the systems
+    ************************************************************************/
+    void UpdateSystems(std::initializer_list<const char*> const& names);
   };
 #include "SystemManager.tpp"
 } // namespace Systems

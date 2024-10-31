@@ -1,10 +1,12 @@
 #include <pch.h>
 #include <Core/Components/Components.h>
+#include <Core/Systems/LayerSystem/LayerSystem.h>
 #include "RenderSystem.h"
 #include "Core/EntityManager.h"
 #include "Core/Entity.h"
 #include "Renderer.h"
 #include "Utils.h"
+#include "EditorCamera.h"
 
 namespace Graphics {
 
@@ -21,19 +23,32 @@ namespace Graphics {
 	}
 
 	void RenderSystem::RenderEditorScene(const EditorCamera& eCam) {
-
-		auto& entManager = ECS::EntityManager::GetInstance();
-		auto entityList = entManager.GetAllEntitiesWithComponents<Component::Transform, Component::Mesh>();
+		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_DEPTH_BUFFER_BIT);
 
 		//Frustum Culling should be here
 		
-		// Convert to a vector
-		std::vector<ECS::Entity> entityVector;
-		for (auto entity : entityList) {
-			entityVector.push_back(entity);
+		std::vector<ECS::Entity> entityVector{};
+		if (std::shared_ptr<Systems::LayerSystem> layerSys =
+			Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
+			std::unordered_map<std::string, std::vector<ECS::Entity>> const& layerEntities{ layerSys->GetLayerEntities() };
+
+			for (std::pair<std::string, std::vector<ECS::Entity>> mapPair : layerEntities) {
+				if (layerSys->IsLayerVisible(mapPair.first)) {
+					// assuming majority of entities in a layer will be active, so .size is a decent estimate
+					entityVector.reserve(entityVector.size() + mapPair.second.size());
+					// insert all active entities
+					std::copy_if(mapPair.second.begin(), mapPair.second.end(), std::back_inserter(entityVector),
+						[](ECS::Entity const& e) { return e.GetComponent<Component::Tag>().isActive; });
+					//entityVector.insert(entityVector.end(), mapPair.second.begin(), mapPair.second.end());
+				}
+			}
 		}
 
-		Renderer::mGeomPass->Render(eCam, entityVector);
+		for (auto const& pass : Renderer::mRenderPasses) {
+			pass->Render(eCam, entityVector);
+		}
+
 		//Renderer::mGeomPass->Begin();
 		//{//Render Start
 		//	Utils::RenderContext renderContext(eCam.GetViewProjMatrix());
@@ -53,12 +68,5 @@ namespace Graphics {
 		//Renderer::mGeomPass->End();
 
 	}
+
 }
-
-
-
-
-
-
-
-

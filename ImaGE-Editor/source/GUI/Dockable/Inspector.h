@@ -46,15 +46,18 @@ namespace GUI {
       True if any part of the component was modified and false otherwise
     ************************************************************************/
     // Kindly put in alphabetical order, thank you!
-    bool ColliderComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
-    bool LayerComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
-    bool MaterialComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
-    bool MeshComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
-    bool RigidBodyComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
-    bool ScriptComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
-    bool TagComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
-    bool TextComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
-    bool TransformComponentWindow(ECS::Entity entity, std::string const& icon, bool highlight = false);
+    bool BoxColliderComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool CapsuleColliderComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool LayerComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool LightComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool MaterialComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool MeshComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool RigidBodyComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool ScriptComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool SphereColliderComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool TagComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool TextComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool TransformComponentWindow(ECS::Entity entity, bool highlight = false);
     
     /*!*********************************************************************
     \brief
@@ -62,15 +65,13 @@ namespace GUI {
       be called with WindowEnd.
     \param windowName
       The name of the property window
-    \param icon
-      The icon to display for the component
     \param highlight
       Whether to highlight the component
     \return
       True if any part of the component was modified and false otherwise
     ************************************************************************/
     template<typename Component>
-    bool WindowBegin(std::string const& windowName, std::string const& icon, bool highlight = false);
+    bool WindowBegin(std::string const& windowName, bool highlight = false);
 
     /*!*********************************************************************
     \brief
@@ -88,16 +89,19 @@ namespace GUI {
     void DrawAddButton();
 
   private:
-    std::map<std::string, bool> mComponentOpenStatusMap;
     GUI::Styler& mStyler;
+    std::unordered_map<std::type_index, const char*> const mComponentIcons;
+    std::unordered_map<std::string, bool> mComponentOpenStatusMap;
     Reflection::ObjectFactory& mObjFactory;
     ECS::Entity mPreviousEntity;
     bool mIsComponentEdited, mFirstEdit, mEditingPrefab;
     bool mEntityChanged;
 
-    static inline constexpr int INPUT_SIZE{ 200 };
-    static inline constexpr float FIRST_COLUMN_LENGTH{ 130 };
+    static inline constexpr int INPUT_SIZE{ 210 };
+    static inline constexpr float FIRST_COLUMN_LENGTH{ 175 };
     static inline constexpr ImU32 sComponentHighlightCol{ IM_COL32(253, 208, 23, 255) };
+    static inline constexpr float ITEM_SPACING{ 0 };
+    static inline constexpr float CELL_PADDING{ 1 };
 
     /*!*********************************************************************
     \brief
@@ -130,7 +134,7 @@ namespace GUI {
       The icon to display for the component
     ************************************************************************/
     template<typename Component>
-    bool DrawAddComponentButton(std::string const& name, std::string const& icon);
+    bool DrawAddComponentButton(std::string const& name);
 
     /*!*********************************************************************
     \brief
@@ -153,6 +157,14 @@ namespace GUI {
     ************************************************************************/
     template<typename Component>
     bool DrawOptionsListButton(std::string const& windowName);
+
+    /*!*********************************************************************
+    \brief
+      Helper function to set up the column for the next row
+    \param labelName
+      The name of the property
+    ************************************************************************/
+    void NextRowTable(const char* labelName) const;
   };
 #include "Inspector.tpp"
 } // namespace GUI

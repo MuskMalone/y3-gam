@@ -46,6 +46,7 @@ namespace Graphics {
             void BindTexture(uint32_t id);
             void AttachColorTexture(uint32_t id, GLenum intFmt, GLenum fmt, uint32_t width, uint32_t height, int index);
             void AttachDepthTexture(uint32_t id, GLenum intFmt, GLenum attachType, uint32_t width, uint32_t height);
+            void AttachShadowMapTexture(uint32_t& id, uint32_t width, uint32_t height);
         } //namespace Framebuffer
 
         namespace GL {

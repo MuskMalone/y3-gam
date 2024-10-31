@@ -10,3 +10,4 @@
 #include "Mesh.h"
 #include "PrefabOverrides.h"
 #include <Reflection/ProxyScript.h>
+#include "Light.h"

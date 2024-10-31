@@ -35,8 +35,10 @@ namespace Graphics {
       const std::vector<Submesh>& GetSubmeshes() const { return mSubmeshes; }
 
       //const AABB& GetBoundingBox() const { return mBoundingBox; } TO ADD IN THE FUTURE
-
+      bool IsWireframe() { return mIsWireframe; }
+      void ToggleWireframe() { mIsWireframe = !mIsWireframe; }
     private:
+        bool mIsWireframe{ false };
       std::vector<Vertex> mVertices;
       std::vector<uint32_t> mIndices;
 

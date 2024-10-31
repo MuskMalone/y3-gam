@@ -18,6 +18,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <fstream>
 #include <Reflection/ObjectFactory.h>
 #include <Prefabs/PrefabManager.h>
+#include <Core/Systems/SystemManager/SystemManager.h>
+#include <Core/Systems/LayerSystem/LayerSystem.h>
 
 namespace Helper {
   template <typename T>
@@ -107,6 +109,10 @@ namespace Serialization
 
     EntityList entityList{ GetSortedEntities() };
 
+    // serialize entities
+    writer.StartObject();
+
+    writer.Key(JSON_SCENE_KEY);
     writer.StartArray();
     while (!entityList.empty()) {
       SerializeEntity(entityList.top(), writer);
@@ -114,6 +120,16 @@ namespace Serialization
     }
     writer.EndArray();
 
+    // serialize layer data
+    writer.Key(JSON_LAYERS_KEY);
+    if (auto layerSys = Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
+      SerializeClassTypes(layerSys->GetLayerData(), writer);
+    }
+    else {
+      Debug::DebugLogger::GetInstance().LogError("[Serializer] Unable to get Layer System!");
+    }
+
+    writer.EndObject();
     // clean up
     ofs.close();
   }
@@ -208,7 +224,7 @@ namespace Serialization
 
     rttr::instance wrappedObj{ obj.get_type().get_raw_type().is_wrapper() ? obj.get_wrapped_instance() : obj };
 
-    auto const properties{ wrappedObj.get_derived_type().get_properties() };
+    auto const properties{ wrappedObj.get_type().get_properties() };
     for (auto const& property : properties)
     {
       //if (property.get_metadata("NO_SERIALIZE")) { continue; }

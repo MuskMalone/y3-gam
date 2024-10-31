@@ -8,7 +8,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
 #include "Event.h"
-#include <Core/EntityManager.h>
+#include <Core/Entity.h>
 #include <vector>
 #include "InputEvents.h"
 #include "SceneEvents.h"
@@ -43,6 +43,15 @@ namespace Events
     inline std::string GetName() const noexcept override { return "Toggle Fullscreen"; }
   };
 
+  class ZoomInOnEntity : public Event
+  {
+  public:
+    ZoomInOnEntity(ECS::Entity entity) : Event(EventType::ENTITY_ZOOM), mEntity{ entity } {}
+    inline std::string GetName() const noexcept override { return "Zooming in on Entity " + mEntity.GetTag(); }
+
+    ECS::Entity const mEntity;
+  };
+
   // name, path, pos = {}, mapEntity = true
   class SpawnPrefabEvent : public Event
   {
@@ -57,22 +66,27 @@ namespace Events
   };
 
 #ifndef IMGUI_DISABLE
-  class DeletePrefabEvent : public Event
+  class RemoveComponentEvent : public Event
   {
   public:
-    DeletePrefabEvent(std::string name) : Event(EventType::DELETE_PREFAB), mName{ std::move(name) } {}
-    inline std::string GetName() const noexcept override { return "Deleted Prefab: " + mName; }
+    RemoveComponentEvent(ECS::Entity entity, rttr::type const& compType) : Event(EventType::REMOVE_COMPONENT), mEntity{ entity }, mType{ compType } {}
+    inline std::string GetName() const noexcept override { return "Deleted Component " + mType.get_name().to_string()
+      + " from entity " + std::to_string(mEntity.GetEntityID()); }
 
-    std::string const mName;
+    template <typename T>
+    bool IsSameType() const noexcept { return mType == rttr::type::get<T>(); }
+
+    rttr::type const mType;
+    ECS::Entity const mEntity;
   };
 
   class RemoveEntityEvent : public Event
   {
   public:
-    RemoveEntityEvent(ECS::EntityManager::EntityID id) : Event(EventType::REMOVE_ENTITY), mEntityId{ id } {}
-    inline std::string GetName() const noexcept override { return "Deleted Prefab: " + static_cast<unsigned>(mEntityId); }
+    RemoveEntityEvent(ECS::Entity entity) : Event(EventType::REMOVE_ENTITY), mEntity{ entity } {}
+    inline std::string GetName() const noexcept override { return "Deleted Entity: " + mEntity.GetTag(); }
 
-    ECS::EntityManager::EntityID const mEntityId;
+    ECS::Entity const mEntity;
   };
 
   // int pathCount, const char* paths[]
@@ -89,4 +103,14 @@ namespace Events
     std::vector<std::string> mPaths;
   };
 #endif
+
+  class EntityLayerModified : public Event
+  {
+  public:
+    EntityLayerModified(ECS::Entity entity, std::string oldLayer) : Event(EventType::LAYER_MODIFIED), mEntity{ entity }, mOldLayer{ oldLayer } {}
+    inline std::string GetName() const noexcept override { return "Modified Layer Component of Entity: " + mEntity.GetTag(); }
+
+    ECS::Entity const mEntity;
+    std::string mOldLayer;
+  };
 }

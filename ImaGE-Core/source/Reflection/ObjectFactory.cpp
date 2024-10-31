@@ -29,7 +29,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 #define GET_RTTR_TYPE(T) rttr::type::get<T>()
 #ifdef _DEBUG
-#define OF_DEBUG
+//#define OF_DEBUG
 #endif
 
 using namespace IGE;
@@ -46,11 +46,19 @@ namespace Reflection
       { GET_RTTR_TYPE(Layer), ComponentUtils::AddLayer },
       { GET_RTTR_TYPE(Mesh), ComponentUtils::AddMesh },
       { GET_RTTR_TYPE(Material), ComponentUtils::AddMaterial },
-      { GET_RTTR_TYPE(Collider), ComponentUtils::AddCollider },
+      { GET_RTTR_TYPE(BoxCollider), ComponentUtils::AddBoxCollider },
+      { GET_RTTR_TYPE(SphereCollider), ComponentUtils::AddSphereCollider },
+      { GET_RTTR_TYPE(CapsuleCollider), ComponentUtils::AddCapsuleCollider },
       { GET_RTTR_TYPE(RigidBody), ComponentUtils::AddRigidBody },
-      { GET_RTTR_TYPE(Text), ComponentUtils::AddText }
-//      { GET_RTTR_TYPE(Script), ComponentUtils::AddScript }
+      { GET_RTTR_TYPE(ProxyScriptComponent), ComponentUtils::AddScript },
+      { GET_RTTR_TYPE(Text), ComponentUtils::AddText },
+      { GET_RTTR_TYPE(Light), ComponentUtils::AddLight }
     };
+
+    if (mAddComponentFuncs.size() != gComponentTypes.size()) {
+      throw Debug::Exception<ObjectFactory>(Debug::LVL_CRITICAL,
+        Msg("ObjectFactory::mAddComponentFuncs and Reflection::gComponentTypes size mismatch! Did you forget to update one?"));
+    }
   }
 
   void ObjectFactory::AddComponentsToEntity(ECS::Entity id, std::vector<rttr::variant> const& components) const
@@ -272,13 +280,17 @@ namespace Reflection
     else IF_GET_ENTITY_COMP(Component::Mesh)
     else IF_GET_ENTITY_COMP(Component::Material)
     else IF_GET_ENTITY_COMP(Component::RigidBody)
-    else IF_GET_ENTITY_COMP(Component::Collider)
+    else IF_GET_ENTITY_COMP(Component::BoxCollider)
+    else IF_GET_ENTITY_COMP(Component::SphereCollider)
+    else IF_GET_ENTITY_COMP(Component::CapsuleCollider)
     else IF_GET_ENTITY_COMP(Component::Script)
     else IF_GET_ENTITY_COMP(Component::Text)
+    else IF_GET_ENTITY_COMP(Component::Light)
     else
     {
       std::ostringstream oss{};
       oss << "Trying to get unsupported component type (" << compType.get_name().to_string() << ") from Entity " << entity.GetEntityID();
+      oss << " | Update ObjectFactory::GetEntityComponent";
       Debug::DebugLogger::GetInstance().LogError(oss.str());
       return rttr::variant();
     }
@@ -297,13 +309,15 @@ namespace Reflection
     else IF_REMOVE_COMP(Component::Mesh)
     else IF_REMOVE_COMP(Component::Material)
     else IF_REMOVE_COMP(Component::RigidBody)
-    else IF_REMOVE_COMP(Component::Collider)
+    else IF_REMOVE_COMP(Component::BoxCollider)
     else IF_REMOVE_COMP(Component::Script)
     else IF_REMOVE_COMP(Component::Text)
+    else IF_REMOVE_COMP(Component::Light)
     else
     {
       std::ostringstream oss{};
       oss << "Trying to remove unknown component type: " << compType.get_name().to_string() << " to entity " << entity << " | Update ObjectFactory::RemoveComponentFromEntity";
+      oss << " | Update ObjectFactory::RemoveComponentFromEntity";
       Debug::DebugLogger::GetInstance().LogError(oss.str());
     }
   }
