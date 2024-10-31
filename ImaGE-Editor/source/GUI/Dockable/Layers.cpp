@@ -59,10 +59,10 @@ namespace GUI {
           if (i < Systems::MAX_BUILTIN_LAYERS) {
             ImGui::BeginDisabled();
           }
-
-          ImGui::SetNextItemWidth(INPUT_SIZE);
+  
           ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_LIGHT));
-          std::string inputTextString = "##inputTextReadOnly" + i;
+          std::string inputTextString = "##inputTextReadOnly" + std::to_string(i);
+          ImGui::SetNextItemWidth(INPUT_SIZE);
           if (ImGui::InputText(inputTextString.c_str(), &layerName, ImGuiInputTextFlags_EnterReturnsTrue)) {
             layerSys->SetLayerName(i, layerName);
           }
