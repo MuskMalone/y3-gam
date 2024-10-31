@@ -8,7 +8,6 @@ namespace Graphics {
 
     void RenderSceneToShadowMap();
     void Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) override;
-    void Render(EditorCamera const& camera, std::vector<ECS::Entity> const& entities) override;
 
   private:
 

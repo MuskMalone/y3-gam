@@ -12,7 +12,6 @@ namespace Graphics {
 
     bool IsActive() const noexcept { return mActive; }
     void Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) override;
-    void Render(EditorCamera const& camera, std::vector<ECS::Entity> const& entities) override;
 
     uint32_t BindShadowMap();
     inline glm::mat4 const& GetLightSpaceMatrix() const noexcept { return mLightSpaceMtx; }
@@ -22,14 +21,11 @@ namespace Graphics {
 
   private:
 
-    std::pair<glm::vec3, glm::vec3> GetLightProjPlanes(EditorCamera const& cam, glm::vec3 const& lightPos, glm::vec3 const& lightDir);
-    std::pair<glm::vec3, glm::vec3> GetLightProjPlanes(CameraSpec const& cam, glm::vec3 const& lightPos, glm::vec3 const& lightDir); //edit tmp redundancy
-    bool LocateLightSource(EditorCamera const& cam, std::vector<ECS::Entity> const& entities);
     bool LocateLightSource(CameraSpec const& cam, std::vector<ECS::Entity> const& entities); //edit tmp redundamncy
     void StartRender();
     void EndRender();
 
-    void SetLightUniforms(EditorCamera const& cam, glm::vec3 const& lightDir, float nearPlaneMultiplier, glm::vec3 test);
+    void SetLightUniforms(CameraSpec const& cam, glm::vec3 const& lightDir, float nearPlaneMultiplier, glm::vec3 test);
     
     // temp
     // @TODO: have to account for multiple lights in future

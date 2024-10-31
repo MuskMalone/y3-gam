@@ -77,7 +77,7 @@ namespace GUI {
     static inline void SetSelectedEntity(ECS::Entity const& entity) noexcept { sSelectedEntity = entity; }
     
     inline bool IsGameViewActive() {
-        return  mGameViewport->IsActive();
+        return mGameViewport->IsActive();
     }
   private:
     std::vector<std::unique_ptr<GUIWindow>> mPersistentElements;  // contains controls outside of the dockspace

@@ -11,11 +11,6 @@ namespace GUI {
 
         void Run() override;
         void Render(std::shared_ptr<Graphics::Texture> const& tex);
-
-    //private:
-        //Graphics::RenderTarget& mRenderTarget; // Reference to the render target for the game view
-
-        //void ProcessCameraInputs(); // Handle camera inputs if needed
     };
 
 } // namespace GUI

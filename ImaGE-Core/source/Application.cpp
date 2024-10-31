@@ -80,7 +80,8 @@ namespace IGE {
 
       glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
 
-      Graphics::RenderSystem::RenderEditorScene(GetDefaultRenderTarget().camera);
+      auto const& cam = GetDefaultRenderTarget().camera;
+      Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ cam.GetViewProjMatrix(), cam.GetPosition(), cam.GetNearPlane(), cam.GetFarPlane(), cam.GetFOV() });
 
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
