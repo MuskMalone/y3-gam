@@ -66,8 +66,17 @@ namespace GUI
         return;
       }
 
-      IGE::Assets::GUID const guid{ IGE_ASSETMGR.LoadRef<IGE::Assets::PrefabAsset>(mPrefabPath) };
-      mPrefabInstance = Prefabs::PrefabManager().GetInstance().SpawnPrefabAndMap(guid);
+      IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+      try {
+        IGE::Assets::GUID const guid{ am.LoadRef<IGE::Assets::PrefabAsset>(mPrefabPath) };
+        mPrefabInstance = Prefabs::PrefabManager::GetInstance().SpawnPrefabAndMap(guid);
+      }
+      catch (Debug::ExceptionBase const&) {
+        IGE_DBGLOGGER.LogInfo("Untracked file detected. Registering to Asset Manager...");
+        am.ImportAsset<IGE::Assets::PrefabAsset>(mPrefabPath);
+        IGE::Assets::GUID const guid{ am.LoadRef<IGE::Assets::PrefabAsset>(mPrefabPath) };
+        mPrefabInstance = Prefabs::PrefabManager::GetInstance().SpawnPrefabAndMap(guid);
+      }
       break;
     }
     }

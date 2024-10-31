@@ -3,13 +3,14 @@
 
 #include "Core/EntityManager.h"
 #include "Core/Components/Components.h"
-
+#include "Events/EventManager.h"
 #include "Physics/PhysicsSystem.h"
+#include <Core/Systems/SystemManager/SystemManager.h>
 
 namespace Systems {
 
   void LayerSystem::Start() {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::LOAD_SCENE, &LayerSystem::OnSceneLoad, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &LayerSystem::OnSceneChange, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::LAYER_MODIFIED, &LayerSystem::OnLayerModification, this);
   }
 
@@ -120,7 +121,12 @@ namespace Systems {
     }
   }
 
-  EVENT_CALLBACK_DEF(LayerSystem, OnSceneLoad) {
+  EVENT_CALLBACK_DEF(LayerSystem, OnSceneChange) {
+    auto const sceneChangeEvent{ CAST_TO_EVENT(Events::SceneStateChange) };
+    if (!(sceneChangeEvent->mNewState == Events::SceneStateChange::CHANGED || sceneChangeEvent->mNewState == Events::SceneStateChange::NEW)) {
+      return;
+    }
+
     mLayerEntities.clear();
     
     // The built-in layer names should never change

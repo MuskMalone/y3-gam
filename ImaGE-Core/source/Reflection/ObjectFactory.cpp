@@ -176,8 +176,9 @@ namespace Reflection
           ent.EmplaceComponent<Component::PrefabOverrides>(instData.mOverrides);
         }
 
-        // @TODO: USE GUID FROM FILE TO GET ASSET FROM ASSET MANAGER
-        auto const& originalPfb{ IGE_ASSETMGR.GetAsset<Assets::PrefabAsset>(guid)->mPrefabData };
+        IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+        am.LoadRef<Assets::PrefabAsset>(guid);
+        auto const& originalPfb{ am.GetAsset<Assets::PrefabAsset>(guid)->mPrefabData };
 
         for (ECS::Entity& e : baseEntities) {
           std::unordered_map<Prefabs::SubDataId, ECS::Entity> idToEntity{};

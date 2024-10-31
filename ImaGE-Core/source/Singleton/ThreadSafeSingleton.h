@@ -30,12 +30,16 @@ public:
     if (mInstance) {
 #ifdef _DEBUG
       std::cout << "Singleton instance of " << typeid(T).name() << " already exists!\n";
+      std::cout << "Line " << __LINE__ << " | Function: " << __FUNCTION__ << "\n";
 #endif
       return;
     }
 
     std::call_once(mOnceFlag, [&]{
-      mInstance = std::make_unique<T>(std::forward<Args>(args)...);
+      std::unique_ptr<T> inst{ std::make_unique<T>(std::forward<Args>(args)...) };
+      // splitting this into 2 lines so i can check for unintended constructor calls
+      // in the default ctor
+       mInstance = std::move(inst);
     });
   }
 
@@ -51,7 +55,8 @@ public:
 #ifdef _DEBUG
     if (!mInstance) {
       std::ostringstream oss{};
-      oss << "Singleton instance of " << typeid(T).name() << " not initialized! Call static function CreateInstance() first!";
+      oss << "Singleton instance of " << typeid(T).name() << " not initialized! Call static function CreateInstance() first! | "
+        << "Line " << __LINE__ << ", Function: " << __FUNCTION__;
       std::cout << oss.str() << "\n";
       throw std::logic_error(oss.str());
     }
@@ -70,7 +75,18 @@ public:
   }
 
 protected:
-  ThreadSafeSingleton() = default;
+  ThreadSafeSingleton() {
+    if (mInstance) {
+      std::ostringstream oss{};
+      oss << "Singleton instance of " << typeid(T).name() << " already exists! | " 
+        << "Line " << __LINE__ << ", Function: " << __FUNCTION__;
+#ifdef _DEBUG
+      std::cout << oss.str() << "\n";
+#endif
+      throw std::logic_error(oss.str());
+    }
+  }
+
   virtual ~ThreadSafeSingleton() = default;
   ThreadSafeSingleton(ThreadSafeSingleton const&) = delete;
   ThreadSafeSingleton& operator=(ThreadSafeSingleton const&) = delete;

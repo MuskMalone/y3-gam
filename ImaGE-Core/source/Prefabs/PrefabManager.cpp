@@ -91,7 +91,7 @@ void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::stri
   }
 
   Serialization::Serializer::SerializePrefab(prefab, filePath);
-  // @TODO: RELOAD PREFAB IN ASSET MGR
+  // @TODO: Call asset manager to reload prefab here
 }
 
 void PrefabManager::CreatePrefabFromEntity(ECS::Entity const& entity, std::string const& name, std::string const& path)
@@ -109,7 +109,7 @@ void PrefabManager::CreatePrefabFromEntity(ECS::Entity const& entity, std::strin
   Serialization::Serializer::SerializePrefab(prefab, path);
 
   // add the new guid to the PrefabOverrides component
-  IGE::Assets::GUID const guid{ IGE_ASSETMGR.LoadRef<IGE::Assets::PrefabAsset>(path) };
+  IGE::Assets::GUID const guid{ IGE_ASSETMGR.ImportAsset<IGE::Assets::PrefabAsset>(path) };
   UpdateInstanceGUID(entity, guid);
 
   Debug::DebugLogger::GetInstance().LogInfo("Prefab " + name + " saved to " + savePath);
