@@ -18,7 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Styles/Styler.h"
 #include <Graphics/RenderTarget.h>
 #include <Core/Entity.h>
-//#include "GUI/Dockable/GameViewport.h"
+#include "GUI/Dockable/GameViewport.h"
 
 namespace GUI {
   class Viewport;
@@ -76,6 +76,9 @@ namespace GUI {
     ************************************************************************/
     static inline void SetSelectedEntity(ECS::Entity const& entity) noexcept { sSelectedEntity = entity; }
     
+    inline bool IsGameViewActive() {
+        return  mGameViewport->IsActive();
+    }
   private:
     std::vector<std::unique_ptr<GUIWindow>> mPersistentElements;  // contains controls outside of the dockspace
     std::vector<std::shared_ptr<GUIWindow>> mWindows; // dockable/hideable windows

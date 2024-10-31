@@ -145,9 +145,8 @@ namespace IGE {
   framebufferSpec.height = spec.WindowHeight;
   framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
 
-  mRenderTargets.emplace_back(framebufferSpec, true);
-
-  mRenderTargets.emplace_back(framebufferSpec, false);
+  mRenderTargets.emplace_back(framebufferSpec); //EditorView
+  mRenderTargets.emplace_back(framebufferSpec); //GameView
 
   mRenderTargets.front().camera = Graphics::EditorCamera(
       glm::vec3(0.0f, 5.0f, 10.0f),  // Position

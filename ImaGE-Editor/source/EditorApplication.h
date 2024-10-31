@@ -49,7 +49,7 @@ namespace IGE {
     \brief
       Updates all framebuffers
     ************************************************************************/
-    void UpdateFramebuffers();
+    void UpdateFramebuffers(std::shared_ptr<Graphics::Texture>& tex);
 
     /*!*********************************************************************
     \brief

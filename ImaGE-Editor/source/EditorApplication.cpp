@@ -103,19 +103,13 @@ namespace IGE {
         try {
           if (GetApplicationSpecification().EnableImGui) {
 
-            Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() });
-            auto const& fb0 = Graphics::Renderer::GetFinalFramebuffer();
-            std::shared_ptr<Graphics::Texture> scene1Texture = std::make_shared<Graphics::Texture>(fb0->GetFramebufferSpec().width, fb0->GetFramebufferSpec().height);
+            std::shared_ptr<Graphics::Texture> gameTex{ nullptr }; //texture to copy for game view
 
-            glCopyImageSubData(fb0->GetColorAttachmentID(), GL_TEXTURE_2D, 0, 0, 0, 0,
-                scene1Texture->GetTexHdl(), GL_TEXTURE_2D, 0, 0, 0, 0,
-                fb0->GetFramebufferSpec().width, fb0->GetFramebufferSpec().height, 1);
-
-            UpdateFramebuffers();
+            UpdateFramebuffers(gameTex);
             
             auto& fb{ GetDefaultRenderTarget().framebuffer };
             fb = Graphics::Renderer::GetFinalFramebuffer();
-            mGUIManager.UpdateGUI(fb, scene1Texture);
+            mGUIManager.UpdateGUI(fb, gameTex);
 
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -156,23 +150,34 @@ namespace IGE {
     }
   }
 
-  void EditorApplication::UpdateFramebuffers() {
+  void EditorApplication::UpdateFramebuffers(std::shared_ptr<Graphics::Texture>& gameTex) {
     // iterate through all render targets and
     // draw each scene to its framebuffer
-    for (Graphics::RenderTarget const& target : mRenderTargets)
-    {
-      target.framebuffer->Bind();
-      auto const& cam = target.camera;
-      
-      if (target.isEditorView) {
-          Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{cam.GetViewProjMatrix(), cam.GetPosition(), cam.GetNearPlane(), cam.GetFarPlane(), cam.GetFOV()});
-      }
-      else {
-          //Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent()});
+    //for (Graphics::RenderTarget const& target : mRenderTargets)
+    //{
+    //  target.framebuffer->Bind();
+    //  auto const& cam = target.camera;
+    //  
+    //  Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{cam.GetViewProjMatrix(), cam.GetPosition(), cam.GetNearPlane(), cam.GetFarPlane(), cam.GetFOV()});
+
+    //  target.framebuffer->Unbind();
+    //}
+      if (mGUIManager.IsGameViewActive() && Graphics::RenderSystem::mCameraManager.HasActiveCamera()) {
+          Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() });
+          auto const& fb0 = Graphics::Renderer::GetFinalFramebuffer();
+          gameTex = std::make_shared<Graphics::Texture>(fb0->GetFramebufferSpec().width, fb0->GetFramebufferSpec().height);
+
+          if (gameTex) {
+              GLCALL(glCopyImageSubData(fb0->GetColorAttachmentID(), GL_TEXTURE_2D, 0, 0, 0, 0,
+                  gameTex->GetTexHdl(), GL_TEXTURE_2D, 0, 0, 0, 0,
+                  fb0->GetFramebufferSpec().width, fb0->GetFramebufferSpec().height, 1));
+          }
       }
 
-      target.framebuffer->Unbind();
-    }
+      Graphics::RenderTarget const& target = mRenderTargets[0];
+      auto const& cam = target.camera;
+      Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ cam.GetViewProjMatrix(), cam.GetPosition(), cam.GetNearPlane(), cam.GetFarPlane(), cam.GetFOV() });
+
   }
 
   void EditorApplication::SetEditorCallbacks() {

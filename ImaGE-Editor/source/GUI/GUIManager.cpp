@@ -78,7 +78,7 @@ namespace GUI {
       mWindows[i]->Run();
     }
 
-    if (mGameViewport->IsActive()) {
+    if (mGameViewport->IsActive() && tex) {
         mGameViewport->Render(tex);
     }
 
