@@ -339,7 +339,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 5608277095779716955
+                            "ID": 3304945219234440849
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -427,7 +427,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 3276374588907663608
+                            "ID": 10545936669119358584
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -592,7 +592,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 5608277095779716955
+                            "ID": 3304945219234440849
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -673,7 +673,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 5608277095779716955
+                            "ID": 3304945219234440849
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -784,6 +784,23 @@
                             },
                             "sensor": false
                         }
+                    },
+                    {
+                        "key": "Text",
+                        "value": {
+                            "textContent": "YOUR TEXT HERE",
+                            "color": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "scale": 1.0,
+                            "textAssetGUID": {
+                                "ID": 0
+                            },
+                            "fontFamilyName": "None"
+                        }
                     }
                 ],
                 "removedComponents": [],
@@ -852,7 +869,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 5608277095779716955
+                            "ID": 3304945219234440849
                         },
                         "castShadows": true,
                         "receiveShadows": true

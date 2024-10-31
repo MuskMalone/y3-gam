@@ -101,6 +101,9 @@ namespace IGE {
 				else if (cAudioExtensions.find(ext) != cAudioExtensions.end()) {
 					ImportAsset<AudioAsset>(file);
 				}
+				else if (cFontExtensions.find(ext) != cFontExtensions.end()) {
+					ImportAsset<FontAsset>(file);
+				}
 			}
 
 		}

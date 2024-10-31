@@ -684,6 +684,7 @@
     </ClInclude>
     <ClInclude Include="source\pch.h" />
     <ClInclude Include="source\Asset\Assetables\Font\FontAsset.h" />
+    <ClInclude Include="source\Core\Systems\TextSystem\TextSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -914,5 +915,6 @@
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
     <ClCompile Include="source\Asset\Assetables\Font\FontAsset.cpp" />
+    <ClCompile Include="source\Core\Systems\TextSystem\TextSystem.cpp" />
   </ItemGroup>
 </Project>
