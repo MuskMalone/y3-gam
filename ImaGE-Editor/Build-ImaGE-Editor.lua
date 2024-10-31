@@ -27,7 +27,7 @@ project "ImaGE-Editor"
       
       "../Libraries/assimp/include/**",
       "../Libraries/entt/single_include",
-      "../Libraries/freetype/include/**",
+      "../Libraries/freetype/include/",
       "../Libraries/glfw/include",
       "../Libraries/glm",
       "../Libraries/rapidjson/include/**",
