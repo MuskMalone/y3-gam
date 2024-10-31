@@ -85,21 +85,36 @@ namespace IGE {
 				throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("path doesnt have GUID"));
 			return mPath2GUIDRegistry.at(path);
 		}
+
+		AssetManager::ImportFunc AssetManager::ImportFunction(std::string const& type)
+		{
+			// TODO
+			return mRegisterTypeImports[type];
+		}
+
+		AssetManager::DeleteFunc AssetManager::DeleteFunction(std::string const& type)
+		{
+			return mRegisterTypeDeletes[type];
+		}
 		
 		EVENT_CALLBACK_DEF(AssetManager, HandleAddFiles) {
 			auto const& paths{ CAST_TO_EVENT(Events::AddFilesFromExplorerEvent)->mPaths };
 			for (std::string const& file : paths) {
 				//@TODO: use reflection to invoke without hardcoding
 				auto ext{ GetFileExtension(file) };
-				if (cMeshExtensions.find(ext) != cMeshExtensions.end()){
-					ImportAsset<ModelAsset>(file);
+				std::string folder{};
+				
+				//finds the folder
+				//then breaks
+				for (auto const& filetype : cDirectoryToExtensions) {
+					if (filetype.second.find(ext) != filetype.second.end()) {
+						folder = filetype.first;
+						break;
+					}
 				}
-				else if (cImageExtensions.find(ext) != cImageExtensions.end()) {
-					ImportAsset<TextureAsset>(file);
-				}
-				else if (cAudioExtensions.find(ext) != cAudioExtensions.end()) {
-					ImportAsset<AudioAsset>(file);
-				}
+
+				mRegisterTypeImports[folder](file);
+				Debug::DebugLogger::GetInstance().LogInfo("Added " + file + " to assets");
 			}
 
 		}

@@ -27,5 +27,12 @@ namespace IGE {
 				".s3m",    // ScreamTracker 3 format
 				".xm"      // FastTracker 2 Extended Module
 		};
+
+		//the key should be the directory name in the Assets folder
+		const std::map<std::string, std::set<std::string>> cDirectoryToExtensions{
+			{ "Models", cMeshExtensions },
+			{ "Textures", cImageExtensions },
+			{ "Audio", cAudioExtensions}
+		};
 	}
 }

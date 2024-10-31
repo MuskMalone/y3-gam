@@ -4,9 +4,7 @@
 #include "AssetManager.h"
 #include <filesystem>
 //assetables
-#include "Assetables/Texture/TextureAsset.h"
-#include "Assetables/Audio/AudioAsset.h"
-#include "Assetables/Mesh/ModelAsset.h"
+#include "Assetables/Assetables.h"
 #include <Asset/AssetUtils.h>
 #include <windows.h>
 #include <wrl/wrappers/corewrappers.h>

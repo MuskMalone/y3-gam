@@ -604,9 +604,6 @@
     <ClInclude Include="source\Physics\PhysicsEventManager.h">
       <Filter>Physics</Filter>
     </ClInclude>
-    <ClInclude Include="source\Physics\PhysicsFilter.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
     <ClInclude Include="source\Physics\PhysicsHelpers.h">
       <Filter>Physics</Filter>
     </ClInclude>
@@ -686,6 +683,8 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
+    <ClInclude Include="source\Core\Components\AudioSource.h" />
+    <ClInclude Include="source\Core\Components\AudioListener.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -875,9 +874,6 @@
     <ClCompile Include="source\Physics\PhysicsEventManager.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Physics\PhysicsFilter.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
     <ClCompile Include="source\Physics\PhysicsSystem.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
@@ -918,5 +914,6 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
+    <ClCompile Include="source\Core\Components\AudioSource.cpp" />
   </ItemGroup>
 </Project>
