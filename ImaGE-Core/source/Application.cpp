@@ -64,6 +64,16 @@ namespace IGE {
     RegisterSystems();
     Systems::SystemManager::GetInstance().InitSystems();
     Graphics::RenderSystem::Init();
+
+    //testing to remove later
+    Component::AudioSource audiosource{};
+    audiosource.CreateSound("..\\Assets\\Audio\\boing.mp3");
+    audiosource.CreateSound("..\\Assets\\Audio\\hahaha.mp3");
+
+    audiosource.RenameSound("..\\Assets\\Audio\\boing.mp3", "boing");
+    audiosource.RenameSound("..\\Assets\\Audio\\hahaha.mp3", "haha");
+    audiosource.PlaySound("boing");
+    audiosource.PlaySound("haha");
   }
 
   void Application::Run() {
@@ -72,7 +82,7 @@ namespace IGE {
     static auto& frameRateController{ Performance::FrameRateController::GetInstance() };
     static auto& systemManager{ Systems::SystemManager::GetInstance() };
 
-    while (!glfwWindowShouldClose(mWindow.get())) {
+    while (!glfwWindowShouldClose(mWindow.get())) { 
       frameRateController.Start();
       inputManager.UpdateInput();
 

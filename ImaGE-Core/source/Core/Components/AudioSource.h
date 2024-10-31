@@ -18,7 +18,7 @@ namespace Component{
 		void Clear() noexcept;
 		void PlaySound(std::string const&) const;
 		void RemoveSound(std::string const&);
-		void CreateSound(IGE::Assets::GUID const&);
+		void CreateSound(std::string const&);
 		void RenameSound(std::string const& currentName, std::string const& newName);
 	};
 }

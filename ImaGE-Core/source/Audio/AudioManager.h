@@ -37,7 +37,7 @@ namespace IGE {
 
 			//atm, its used to watch whether the channel has stopped playing, 
 			//then set the channel pointer back to nullptr
-			FMOD_RESULT FMODChannelCallback(FMOD_CHANNELCONTROL* chanCtrl, FMOD_CHANNELCONTROL_TYPE type,
+			static FMOD_RESULT FMODChannelCallback(FMOD_CHANNELCONTROL* chanCtrl, FMOD_CHANNELCONTROL_TYPE type,
 				FMOD_CHANNELCONTROL_CALLBACK_TYPE callbackType, void* commanddata1, void* commanddata2);
 			mutable std::unordered_set<FMOD::Channel*> channels;
 		};
@@ -76,6 +76,7 @@ namespace IGE {
 			//Returns true if the group sound is paused, to prevent resume of playing groups
 			 bool IsGroupPaused(std::string const& name);
 
+			 void StopChannel(FMOD::Channel* channel);
 			//SOUND MANAGEMENT FUNCTIONS
 			//Releases all sounds from memory(audio manager), eg.moved to a new scene, we remove all old sounds thats no longer needed
 			 void ReleaseAllSounds();

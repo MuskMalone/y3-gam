@@ -260,6 +260,15 @@ namespace IGE {
             return status;  // return the paused status (true if paused, false otherwise)
         }
 
+        void AudioManager::StopChannel(FMOD::Channel* channel)
+        {
+            bool isplaying{ false };
+            FMOD_RESULT result{ channel->isPlaying(&isplaying) };
+            if (result == FMOD_OK) {
+                channel->stop();
+            }
+        }
+
         //Add a sound to FMOD and audio manager
         FMOD::Sound* AudioManager::AddSound(std::string const& filepath, uint32_t namehash)
         {
@@ -346,10 +355,12 @@ namespace IGE {
             }
 
             Debug::DebugLogger::GetInstance().LogInfo("Playing sound: " + std::to_string(sound), true);
-
+            temp->setCallback(
+                settings.FMODChannelCallback
+            );
+            temp->setUserData(const_cast<SoundInvokeSetting*>(&settings));
             settings.channels.insert(temp);
         }
-
 
         void AudioManager::PlaySound(IGE::Assets::GUID const& guid, SoundInvokeSetting const& settings, uint64_t group)
         {
@@ -371,7 +382,7 @@ namespace IGE {
             }
             else
             {
-                Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! Freeing non-existent sound: " + std::to_string(sound), true);
+                //Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! Freeing non-existent sound: " + std::to_string(sound), true);
             }
         }
 
@@ -432,18 +443,28 @@ namespace IGE {
         }
         Sound::~Sound()
         {
-            AudioManager::GetInstance().FreeSound(mKeyhash);
+            try {
+                AudioManager::GetInstance().FreeSound(mKeyhash);
+            }
+            catch (...) {
+                
+            }
         }
         void Sound::PlaySound(SoundInvokeSetting const& settings, FMOD::ChannelGroup* group) {
             AudioManager::GetInstance().    PlaySound(mKeyhash, settings, group);
         }
-        FMOD_RESULT SoundInvokeSetting::FMODChannelCallback(FMOD_CHANNELCONTROL* chanCtrl, FMOD_CHANNELCONTROL_TYPE type, FMOD_CHANNELCONTROL_CALLBACK_TYPE callbackType, void* commanddata1, void* commanddata2)
+        FMOD_RESULT SoundInvokeSetting::FMODChannelCallback(
+            FMOD_CHANNELCONTROL* chanCtrl, FMOD_CHANNELCONTROL_TYPE type, 
+            FMOD_CHANNELCONTROL_CALLBACK_TYPE callbackType, void* commanddata1, void* commanddata2) 
         {
-            if (callbackType == FMOD_CHANNELCONTROL_CALLBACK_END) {
-                FMOD::Channel* channel = reinterpret_cast<FMOD::Channel*>(chanCtrl);
+            // Retrieve the instance pointer from user data
+            FMOD::Channel* channel = reinterpret_cast<FMOD::Channel*>(chanCtrl);
+            void* userData = nullptr;
+            channel->getUserData(&userData);
 
-                // Remove the channel from the container
-                channels.erase(channel);
+            if (userData) {
+                SoundInvokeSetting* settings = static_cast<SoundInvokeSetting*>(userData);
+                settings->channels.erase(channel); // Remove channel from active list
                 Debug::DebugLogger::GetInstance().LogInfo("sound has finished playing, removing channel ptr");
             }
             return FMOD_OK;
