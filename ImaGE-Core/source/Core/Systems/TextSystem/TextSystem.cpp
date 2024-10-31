@@ -12,10 +12,6 @@ namespace Systems {
     }
   }
 
-  Font::~Font() {
-
-  }
-
   TextSystem::TextSystem(const char* name) : System(name), mFreeTypeLib{}, mFonts{}, mShader{} {
     if (FT_Init_FreeType(&mFreeTypeLib)) {
       throw Debug::Exception<TextSystem>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("FreeType could not be Initialized"));
@@ -39,7 +35,17 @@ namespace Systems {
   }
 
   void TextSystem::Update() {
+    // Render the fonts for all Entities with Text Components
 
+  }
+
+  void TextSystem::Destroy() {
+    for (std::pair<const uint32_t, Systems::Font>& font : mFonts) {
+      FaceObject& curr = font.second.mFace;
+      FT_Done_Face(curr.face);
+    }
+
+    FT_Done_FreeType(mFreeTypeLib);
   }
 
   void TextSystem::AddFont(uint32_t filePathHash) {

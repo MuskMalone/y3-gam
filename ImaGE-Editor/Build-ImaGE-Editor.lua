@@ -101,6 +101,7 @@ project "ImaGE-Editor"
        runtime "Release"
        optimize "On"
        symbols "On"
+       
        prebuildcommands {
          --"{COPYFILE} %[%{wks.location}Libraries/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/mono/lib/mono-2.0-sgen.dll] %[%{cfg.targetdir}]",

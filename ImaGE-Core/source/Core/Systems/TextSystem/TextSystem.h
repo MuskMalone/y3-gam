@@ -41,7 +41,6 @@ namespace Systems {
 	struct Font {
 		Font() = delete;
 		Font(std::string const& filePath);
-		~Font();
 
 		const std::string mFilePath;
 		const uint32_t mFilePathHash;
@@ -56,6 +55,7 @@ namespace Systems {
 
 		void Start() override;
 		void Update() override;
+		void Destroy() override;
 
 		void AddFont(uint32_t filePathHash);
 
