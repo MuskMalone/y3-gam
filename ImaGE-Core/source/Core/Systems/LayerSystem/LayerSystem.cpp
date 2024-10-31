@@ -19,8 +19,9 @@ namespace Systems {
 
   std::array<int, MAX_LAYERS> const& LayerSystem::GetLayerCollisionList(int layerNumber) const {
     if (layerNumber >= MAX_LAYERS || layerNumber < 0) {
-      Debug::DebugLogger::GetInstance().LogWarning("[Layers] Invalid Layer Number Passed");
-      return std::array<int, MAX_LAYERS>();
+      //Debug::DebugLogger::GetInstance().LogWarning("[Layers] Invalid Layer Number Passed");
+      //return std::array<int, MAX_LAYERS>();
+      throw Debug::Exception<LayerSystem>(Debug::LVL_WARN, Msg("Invalid Layer Number Passed"));
     }
 
     return mLayerData.collisionMatrix[layerNumber];
@@ -190,9 +191,22 @@ namespace Systems {
       auto rbiter{ rigidBodyMap.find(rb.bodyID) };
       if (rbiter != rigidBodyMap.end()) {
         physx::PxRigidDynamic* pxrigidbody{ rigidBodyMap.at(rb.bodyID) };
-        physx::PxShape* shape;
-        pxrigidbody->getShapes(&shape, 1);
-        SetupShapeFilterData(&shape, entity);
+
+        physx::PxShape* shape[3]{};
+        auto shapecount{ pxrigidbody->getNbShapes() };
+        pxrigidbody->getShapes(shape, 3);
+
+        for (unsigned i{}; i < shapecount; ++i) {
+          SetupShapeFilterData(&shape[i], entity);
+        }
+
+        /*
+        for (int i{ 1 }; i < pxrigidbody->getNbShapes(); ++i) {
+          physx::PxShape* shape;
+          pxrigidbody->getShapes(&shape, i);
+          SetupShapeFilterData(&shape, entity);
+        }
+        */
       }
     }
   }

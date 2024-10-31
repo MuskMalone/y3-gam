@@ -2,6 +2,7 @@
 #include "RenderPassViewer.h"
 #include <Graphics/Renderer.h>
 #include <Graphics/RenderPass/ShadowPass.h>
+#include <Core/Entity.h>
 
 namespace GUI {
 

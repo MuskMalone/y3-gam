@@ -23,7 +23,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Components/Script.h>
 #include <Reflection/ProxyScript.h>
 
-//#define DESERIALIZER_DEBUG
+#define DESERIALIZER_DEBUG
 
 namespace Serialization
 {
@@ -579,6 +579,19 @@ namespace Serialization
         }
         extractedVal = ctor.invoke();
         DeserializeRecursive(extractedVal, jsonVal);
+      }
+      else if (jsonVal.IsArray()) {
+        if (type.is_sequential_container()) {
+          extractedVal = type.create();
+          auto seqView{ extractedVal.create_sequential_view() };
+          DeserializeSequentialContainer(seqView, jsonVal);
+        }
+        else if (type.is_associative_container())
+        {
+          extractedVal = type.create();
+          auto associativeView{ extractedVal.create_associative_view() };
+          DeserializeAssociativeContainer(associativeView, jsonVal);
+        }
       }
     }
 

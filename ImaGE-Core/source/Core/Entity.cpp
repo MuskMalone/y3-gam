@@ -21,8 +21,9 @@ namespace ECS
 
   std::string const& Entity::GetTag() const {
     if (!this->HasComponent<Component::Tag>()) {
-      Debug::DebugLogger::GetInstance().LogWarning("[Entity] Entity does not have Tag Component!");
-      return std::string();
+      /*Debug::DebugLogger::GetInstance().LogWarning("[Entity] Entity does not have Tag Component!");
+      return std::string();*/
+      throw Debug::Exception<Entity>(Debug::LVL_CRITICAL, Msg("Entity does not have Tag Component!"));
     }
 
     Component::Tag const& tagComponent{ this->GetComponent<Component::Tag>() };

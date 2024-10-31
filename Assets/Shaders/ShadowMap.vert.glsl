@@ -7,12 +7,10 @@ layout(location = 7) in mat4 a_ModelMatrix; // Model transformation matrix for e
 layout(location = 11) in int a_MaterialIdx; 
 layout(location = 12) in int a_Entity;
 
-uniform mat4 u_LightProjMtx;
-uniform mat4 u_ViewProjMtx;
+uniform mat4 u_LightSpaceMtx;
 
 void main()
 {
   // transform the vertex to the light's perspective
-  gl_Position = u_ViewProjMtx * a_ModelMatrix * vec4(a_Position, 1.0);
-  //gl_Position = u_ViewProjMtx * vec4(1.0);
+  gl_Position = u_LightSpaceMtx * a_ModelMatrix * vec4(a_Position, 1.0);
 }

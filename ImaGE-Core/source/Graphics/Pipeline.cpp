@@ -52,10 +52,12 @@ namespace Graphics {
 	}
 
 	void Pipeline::Unbind() {
-		if (mSpec.targetFramebuffer)
+		if (mSpec.targetFramebuffer) {
 			mSpec.targetFramebuffer->Unbind();  // Unbind custom framebuffer
-		else
+		}
+		else {
 			Framebuffer::BindDefault();  // Bind the default framebuffer when done
+		}
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); //make sure not in wireframe mode
 	}
