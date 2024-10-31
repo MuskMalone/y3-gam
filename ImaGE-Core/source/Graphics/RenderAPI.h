@@ -21,6 +21,7 @@ namespace Graphics{
 
 		static void DrawIndicesInstanced(std::shared_ptr<VertexArray> const& vao, unsigned int idxCount, unsigned int instanceCount);
 		static void DrawIndices(std::shared_ptr<VertexArray> const& vao, unsigned int idxCount);
+		static void DrawTriangles(std::shared_ptr<VertexArray> const& vao, unsigned int vtxCount);
 		static void DrawLines(std::shared_ptr<VertexArray> const& vao, unsigned int vtxCount);
 
 		void SetLineWidth(float width);

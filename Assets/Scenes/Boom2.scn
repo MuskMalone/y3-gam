@@ -3,11 +3,147 @@
         {
             "ID": 0,
             "Parent": null,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "MainCamera",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1,
+            "Parent": 5,
+            "Child Entities": [
+                2,
+                3,
+                4
+            ],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Player"
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 6
+            }
+        },
+        {
+            "ID": 2,
+            "Parent": 1,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Player"
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 9
+            }
+        },
+        {
+            "ID": 3,
+            "Parent": 1,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Player"
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 8
+            }
+        },
+        {
+            "ID": 4,
+            "Parent": 1,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Player"
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 7
+            }
+        },
+        {
+            "ID": 5,
+            "Parent": null,
             "Child Entities": [
                 1,
-                5,
                 6,
-                7
+                7,
+                10
             ],
             "Prefab": {
                 "prefabName": "Plane",
@@ -109,102 +245,8 @@
             }
         },
         {
-            "ID": 1,
-            "Parent": 0,
-            "Child Entities": [
-                2,
-                3,
-                4
-            ],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Player"
-                        }
-                    }
-                ],
-                "removedComponents": [],
-                "subDataId": 6
-            }
-        },
-        {
-            "ID": 2,
-            "Parent": 1,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Player"
-                        }
-                    }
-                ],
-                "removedComponents": [],
-                "subDataId": 9
-            }
-        },
-        {
-            "ID": 3,
-            "Parent": 1,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Player"
-                        }
-                    }
-                ],
-                "removedComponents": [],
-                "subDataId": 8
-            }
-        },
-        {
-            "ID": 4,
-            "Parent": 1,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Player"
-                        }
-                    }
-                ],
-                "removedComponents": [],
-                "subDataId": 7
-            }
-        },
-        {
-            "ID": 5,
-            "Parent": 0,
-            "Child Entities": [],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Player"
-                        }
-                    }
-                ],
-                "removedComponents": [],
-                "subDataId": 5
-            }
-        },
-        {
             "ID": 6,
-            "Parent": 0,
+            "Parent": 5,
             "Child Entities": [],
             "Prefab": {
                 "prefabName": "Plane",
@@ -222,7 +264,7 @@
         },
         {
             "ID": 7,
-            "Parent": 0,
+            "Parent": 5,
             "Child Entities": [
                 8,
                 9
@@ -275,6 +317,24 @@
                 ],
                 "removedComponents": [],
                 "subDataId": 4
+            }
+        },
+        {
+            "ID": 10,
+            "Parent": 5,
+            "Child Entities": [],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Player"
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 5
             }
         },
         {
@@ -339,7 +399,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 5608277095779716955
+                            "ID": 5075111233336910971
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -427,7 +487,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 3276374588907663608
+                            "ID": 192321999425104222
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -437,7 +497,7 @@
         },
         {
             "ID": 15,
-            "Parent": 2097162,
+            "Parent": 25,
             "Child Entities": [],
             "Prefab": {
                 "prefabName": "Plane",
@@ -448,7 +508,7 @@
         },
         {
             "ID": 16,
-            "Parent": 2097162,
+            "Parent": 25,
             "Child Entities": [
                 17,
                 18
@@ -484,7 +544,7 @@
         },
         {
             "ID": 19,
-            "Parent": 2097162,
+            "Parent": 25,
             "Child Entities": [
                 21,
                 22,
@@ -592,7 +652,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 5608277095779716955
+                            "ID": 5075111233336910971
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -601,8 +661,117 @@
             ]
         },
         {
+            "ID": 25,
+            "Parent": null,
+            "Child Entities": [
+                15,
+                16,
+                19,
+                1048588
+            ],
+            "Prefab": {
+                "prefabName": "Plane",
+                "modifiedComponents": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Plane 2",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 1.0049999952316285,
+                                "y": 1.0049999952316285,
+                                "z": 1.0049999952316285
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 0.0
+                            },
+                            "sensor": false
+                        }
+                    },
+                    {
+                        "key": "RigidBody",
+                        "value": {
+                            "velocity": {
+                                "x": -20.700000762939454,
+                                "y": 3.5,
+                                "z": 5.800000190734863
+                            },
+                            "angularVelocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "staticFriction": 0.0,
+                            "dynamicFriction": 0.0,
+                            "restitution": 0.0,
+                            "gravityFactor": 0.0,
+                            "linearDamping": 0.9800000190734863,
+                            "motionType": "DYNAMIC"
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -4.800000190734863,
+                                "y": -2.0999999046325685,
+                                "z": -13.199999809265137
+                            },
+                            "scale": {
+                                "x": 2.009999990463257,
+                                "y": 2.009999990463257,
+                                "z": 2.009999990463257
+                            },
+                            "rotation": {
+                                "x": 0.14626935124397279,
+                                "y": -0.06200156360864639,
+                                "z": -0.07769519835710526,
+                                "w": 0.9842380285263062
+                            },
+                            "eulerAngles": {
+                                "x": 17.399999618530275,
+                                "y": -5.699999809265137,
+                                "z": -9.899999618530274
+                            },
+                            "worldPos": {
+                                "x": -4.800000190734863,
+                                "y": -2.0999999046325685,
+                                "z": -13.199999809265137
+                            },
+                            "worldScale": {
+                                "x": 2.009999990463257,
+                                "y": 2.009999990463257,
+                                "z": 2.009999990463257
+                            },
+                            "worldRot": {
+                                "x": 0.14626935124397279,
+                                "y": -0.06200156360864639,
+                                "z": -0.07769519835710526,
+                                "w": 0.9842380285263062
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 0
+            }
+        },
+        {
             "ID": 1048588,
-            "Parent": 2097162,
+            "Parent": 25,
             "Child Entities": [],
             "Prefab": {
                 "prefabName": "Plane",
@@ -673,122 +842,13 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 5608277095779716955
+                            "ID": 5075111233336910971
                         },
                         "castShadows": true,
                         "receiveShadows": true
                     }
                 }
             ]
-        },
-        {
-            "ID": 2097162,
-            "Parent": null,
-            "Child Entities": [
-                15,
-                16,
-                19,
-                1048588
-            ],
-            "Prefab": {
-                "prefabName": "Plane",
-                "modifiedComponents": [
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Plane 2",
-                            "isActive": true
-                        }
-                    },
-                    {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": -20.700000762939454,
-                                "y": 3.5,
-                                "z": 5.800000190734863
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 0.0,
-                            "dynamicFriction": 0.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "DYNAMIC"
-                        }
-                    },
-                    {
-                        "key": "Transform",
-                        "value": {
-                            "position": {
-                                "x": -4.800000190734863,
-                                "y": -2.0999999046325685,
-                                "z": -13.199999809265137
-                            },
-                            "scale": {
-                                "x": 2.009999990463257,
-                                "y": 2.009999990463257,
-                                "z": 2.009999990463257
-                            },
-                            "rotation": {
-                                "x": 0.14626935124397279,
-                                "y": -0.06200156360864639,
-                                "z": -0.07769519835710526,
-                                "w": 0.9842380285263062
-                            },
-                            "eulerAngles": {
-                                "x": 17.399999618530275,
-                                "y": -5.699999809265137,
-                                "z": -9.899999618530274
-                            },
-                            "worldPos": {
-                                "x": -4.800000190734863,
-                                "y": -2.0999999046325685,
-                                "z": -13.199999809265137
-                            },
-                            "worldScale": {
-                                "x": 2.009999990463257,
-                                "y": 2.009999990463257,
-                                "z": 2.009999990463257
-                            },
-                            "worldRot": {
-                                "x": 0.14626935124397279,
-                                "y": -0.06200156360864639,
-                                "z": -0.07769519835710526,
-                                "w": 0.9842380285263062
-                            }
-                        }
-                    },
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 1.0049999952316285,
-                                "y": 1.0049999952316285,
-                                "z": 1.0049999952316285
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 0.0
-                            },
-                            "sensor": false
-                        }
-                    }
-                ],
-                "removedComponents": [],
-                "subDataId": 0
-            }
         },
         {
             "ID": 2097163,
@@ -852,7 +912,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 5608277095779716955
+                            "ID": 5075111233336910971
                         },
                         "castShadows": true,
                         "receiveShadows": true

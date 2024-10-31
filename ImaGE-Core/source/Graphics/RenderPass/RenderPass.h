@@ -44,6 +44,9 @@ namespace Graphics {
   
         virtual void Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) = 0;
 
+        inline void SetInputTexture(std::shared_ptr<Texture> const& tex) { mInputTexture = tex; };
+        inline std::shared_ptr<Texture> const& GetOutputTexture() { return mOutputTexture; };
+
         //std::shared_ptr<Texture> GetOutput(uint32_t index);
 
         template <typename T>
@@ -51,5 +54,7 @@ namespace Graphics {
 
     protected:
         RenderPassSpec mSpec{};
+        std::shared_ptr<Texture> mInputTexture; 
+        std::shared_ptr<Texture> mOutputTexture;
     };
 } // namespace Graphics

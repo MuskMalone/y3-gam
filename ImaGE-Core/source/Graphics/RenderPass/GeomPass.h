@@ -6,7 +6,6 @@ namespace Graphics {
   public:
     GeomPass(const RenderPassSpec& spec);
 
-    void RenderSceneToShadowMap();
     void Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) override;
 
   private:

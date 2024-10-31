@@ -75,22 +75,7 @@ namespace Graphics {
               matID = matComponent.matIdx;
           }
           matGroups[matID].emplace_back(entity, xform.worldMtx);
-          //@TODO in future add light + materials
-
       }
-
-
-
-      //int u_type[maxLights];       // Camera position in world space
-      //glm::vec3 u_LightDirection[maxLights]; // Directional light direction in world space
-      //glm::vec3 u_LightColor[maxLights];     // Directional light color
-
-      ////For spotlight
-      //glm::vec3 u_LightPos[maxLights]; // Position of the spotlight
-      //float u_InnerSpotAngle[maxLights]; // Inner spot angle in degrees
-      //float u_OuterSpotAngle[maxLights]; // Outer spot angle in degrees
-      //float u_LightIntensity[maxLights]; // Intensity of the light
-      //float u_Range[maxLights]; // Maximum range of the spotlight
 
       // Now render each material group
       for (const auto& [matID, entityPairs] : matGroups) {
@@ -141,6 +126,18 @@ namespace Graphics {
 
       End();
 
+      auto const& fb = mSpec.pipeline->GetSpec().targetFramebuffer;
+
+      // Check if mOutputTexture is null or if dimensions don’t match
+      if (!mOutputTexture || mOutputTexture->GetWidth() != fb->GetFramebufferSpec().width || mOutputTexture->GetHeight() != fb->GetFramebufferSpec().height) {
+          // Create or resize mOutputTexture based on the framebuffer's specs
+          mOutputTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+      }
+
+      // Perform the copy operation
+      if (mOutputTexture) {
+          mOutputTexture->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+      }
   }
 
 } // namespace Graphics
