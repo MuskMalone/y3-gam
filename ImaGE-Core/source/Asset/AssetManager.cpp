@@ -25,6 +25,7 @@ namespace IGE {
 				IGE::Assets::TextureAsset,
 				IGE::Assets::AudioAsset,
 				IGE::Assets::ModelAsset,
+				IGE::Assets::PrefabAsset,
 				IGE::Assets::FontAsset
 			>();
 			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

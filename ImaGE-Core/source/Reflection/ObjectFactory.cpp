@@ -269,23 +269,23 @@ namespace Reflection
     mAddComponentFuncs.at(compType)(entity, compVar);
   }
 
-  #define IF_GET_ENTITY_COMP(ComponentClass) if (compType == rttr::type::get<ComponentClass>()) {\
-    return entity.HasComponent<ComponentClass>() ? std::make_shared<ComponentClass>(entity.GetComponent<ComponentClass>()) : rttr::variant(); }
+  #define IF_GET_ENTITY_COMP(ComponentClass) if (compType == rttr::type::get<Component::ComponentClass>()) {\
+    return entity.HasComponent<Component::ComponentClass>() ? std::make_shared<Component::ComponentClass>(entity.GetComponent<Component::ComponentClass>()) : rttr::variant(); }
 
   rttr::variant ObjectFactory::GetEntityComponent(ECS::Entity const& entity, rttr::type const& compType) const
   {
-    IF_GET_ENTITY_COMP(Component::Transform)
-    else IF_GET_ENTITY_COMP(Component::Tag)
-    else IF_GET_ENTITY_COMP(Component::Layer)
-    else IF_GET_ENTITY_COMP(Component::Mesh)
-    else IF_GET_ENTITY_COMP(Component::Material)
-    else IF_GET_ENTITY_COMP(Component::RigidBody)
-    else IF_GET_ENTITY_COMP(Component::BoxCollider)
-    else IF_GET_ENTITY_COMP(Component::SphereCollider)
-    else IF_GET_ENTITY_COMP(Component::CapsuleCollider)
-    else IF_GET_ENTITY_COMP(Component::Script)
-    else IF_GET_ENTITY_COMP(Component::Text)
-    else IF_GET_ENTITY_COMP(Component::Light)
+    IF_GET_ENTITY_COMP(Transform)
+    else IF_GET_ENTITY_COMP(Tag)
+    else IF_GET_ENTITY_COMP(Layer)
+    else IF_GET_ENTITY_COMP(Mesh)
+    else IF_GET_ENTITY_COMP(Material)
+    else IF_GET_ENTITY_COMP(RigidBody)
+    else IF_GET_ENTITY_COMP(BoxCollider)
+    else IF_GET_ENTITY_COMP(SphereCollider)
+    else IF_GET_ENTITY_COMP(CapsuleCollider)
+    else IF_GET_ENTITY_COMP(Script)
+    else IF_GET_ENTITY_COMP(Text)
+    else IF_GET_ENTITY_COMP(Light)
     else
     {
       std::ostringstream oss{};
@@ -296,30 +296,32 @@ namespace Reflection
     }
   }
 
-#define IF_REMOVE_COMP(ComponentClass) if (compType == rttr::type::get<ComponentClass>()) { entity.RemoveComponent<ComponentClass>(); }
+#define IF_REMOVE_COMP(ComponentClass) if (compType == rttr::type::get<Component::ComponentClass>()) { entity.RemoveComponent<Component::ComponentClass>(); }
 
+  // not in use for now
   void ObjectFactory::RemoveComponentFromEntity(ECS::Entity entity, rttr::type compType) const
   {
-    // get underlying type if it's wrapped in a pointer
-    compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
+    UNREFERENCED_PARAMETER(entity); UNREFERENCED_PARAMETER(compType);
+    //// get underlying type if it's wrapped in a pointer
+    //compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
 
-    IF_REMOVE_COMP(Component::Transform)
-    else IF_REMOVE_COMP(Component::Tag)
-    else IF_REMOVE_COMP(Component::Layer)
-    else IF_REMOVE_COMP(Component::Mesh)
-    else IF_REMOVE_COMP(Component::Material)
-    else IF_REMOVE_COMP(Component::RigidBody)
-    else IF_REMOVE_COMP(Component::BoxCollider)
-    else IF_REMOVE_COMP(Component::Script)
-    else IF_REMOVE_COMP(Component::Text)
-    else IF_REMOVE_COMP(Component::Light)
-    else
-    {
-      std::ostringstream oss{};
-      oss << "Trying to remove unknown component type: " << compType.get_name().to_string() << " to entity " << entity << " | Update ObjectFactory::RemoveComponentFromEntity";
-      oss << " | Update ObjectFactory::RemoveComponentFromEntity";
-      Debug::DebugLogger::GetInstance().LogError(oss.str());
-    }
+    //IF_REMOVE_COMP(Transform)
+    //else IF_REMOVE_COMP(Tag)
+    //else IF_REMOVE_COMP(Layer)
+    //else IF_REMOVE_COMP(Mesh)
+    //else IF_REMOVE_COMP(Material)
+    //else IF_REMOVE_COMP(RigidBody)
+    //else IF_REMOVE_COMP(BoxCollider)
+    //else IF_REMOVE_COMP(Script)
+    //else IF_REMOVE_COMP(Text)
+    //else IF_REMOVE_COMP(Light)
+    //else
+    //{
+    //  std::ostringstream oss{};
+    //  oss << "Trying to remove unknown component type: " << compType.get_name().to_string() << " to entity " << entity << " | Update ObjectFactory::RemoveComponentFromEntity";
+    //  oss << " | Update ObjectFactory::RemoveComponentFromEntity";
+    //  Debug::DebugLogger::GetInstance().LogError(oss.str());
+    //}
   }
 
 } // namespace Reflection
