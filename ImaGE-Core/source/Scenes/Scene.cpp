@@ -107,8 +107,6 @@ void Scene::Draw() const
   glClear(GL_DEPTH_BUFFER_BIT);
   // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-  Graphics::RenderSystem::RenderEditorScene(mEcam);
-
   //Graphics::Renderer::RenderSceneBegin(mtx);
 
   //// Imagine a 5x5 grid of cubes, each placed at different positions, scales, and colors

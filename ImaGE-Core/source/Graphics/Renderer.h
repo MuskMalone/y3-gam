@@ -20,6 +20,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/RenderPass/RenderPass.h>
 
 namespace Graphics {
+
+	class RenderPass; // Forward declaration
+	
 	class Material; class Mesh;
 
 	struct Statistics {

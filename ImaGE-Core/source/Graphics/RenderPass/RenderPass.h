@@ -12,6 +12,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <memory>
 #include <vector>
 #include <Graphics/Pipeline.h>
+#include "Core/Components/Camera.h"
+#include "Graphics/CameraSpec.h"
 
 namespace ECS { class Entity; }
 
@@ -39,7 +41,8 @@ namespace Graphics {
         //void Prepare();
         void Begin();
         void End();
-        virtual void Render(EditorCamera const& camera, std::vector<ECS::Entity> const& entities) = 0; //Change this to take something like scene data instead of entities
+  
+        virtual void Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) = 0;
 
         //std::shared_ptr<Texture> GetOutput(uint32_t index);
 

@@ -10,6 +10,9 @@
     <Filter Include="Asset\Assetables\Audio">
       <UniqueIdentifier>{1C29302E-0823-5980-F18F-EF90DD28BFEC}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Asset\Assetables\Font">
+      <UniqueIdentifier>{C1EC4985-2D59-0580-F64C-9DDD627827E8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Asset\Assetables\Mesh">
       <UniqueIdentifier>{77994D85-E305-0980-ACF9-A0DD18252BE8}</UniqueIdentifier>
     </Filter>
@@ -180,6 +183,9 @@
     </ClInclude>
     <ClInclude Include="source\Asset\Assetables\Audio\AudioAsset.h">
       <Filter>Asset\Assetables\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Asset\Assetables\Font\FontAsset.h">
+      <Filter>Asset\Assetables\Font</Filter>
     </ClInclude>
     <ClInclude Include="source\Asset\Assetables\Mesh\ModelAsset.h">
       <Filter>Asset\Assetables\Mesh</Filter>
@@ -517,6 +523,9 @@
     <ClInclude Include="source\Graphics\CameraManager.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="source\Graphics\CameraSpec.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
     <ClInclude Include="source\Graphics\EditorCamera.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -549,6 +558,9 @@
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderCommand.h">
       <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Graphics\RenderPass\FinalPass.h">
+      <Filter>Graphics\RenderPass</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderPass\GeomPass.h">
       <Filter>Graphics\RenderPass</Filter>
@@ -683,7 +695,6 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Asset\Assetables\Font\FontAsset.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -695,6 +706,9 @@
     </ClCompile>
     <ClCompile Include="source\Asset\Assetables\Audio\AudioAsset.cpp">
       <Filter>Asset\Assetables\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Asset\Assetables\Font\FontAsset.cpp">
+      <Filter>Asset\Assetables\Font</Filter>
     </ClCompile>
     <ClCompile Include="source\Asset\Assetables\Mesh\ModelAsset.cpp">
       <Filter>Asset\Assetables\Mesh</Filter>
@@ -834,6 +848,9 @@
     <ClCompile Include="source\Graphics\RenderAPI.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="source\Graphics\RenderPass\FinalPass.cpp">
+      <Filter>Graphics\RenderPass</Filter>
+    </ClCompile>
     <ClCompile Include="source\Graphics\RenderPass\GeomPass.cpp">
       <Filter>Graphics\RenderPass</Filter>
     </ClCompile>
@@ -913,6 +930,5 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\Asset\Assetables\Font\FontAsset.cpp" />
   </ItemGroup>
 </Project>
