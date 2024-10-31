@@ -685,6 +685,8 @@
     <ClInclude Include="source\pch.h" />
     <ClInclude Include="source\Asset\Assetables\Font\FontAsset.h" />
     <ClInclude Include="source\Core\Systems\TextSystem\TextSystem.h" />
+    <ClInclude Include="source\Core\Components\AudioSource.h" />
+    <ClInclude Include="source\Core\Components\AudioListener.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -916,5 +918,6 @@
     <ClCompile Include="source\pch.cpp" />
     <ClCompile Include="source\Asset\Assetables\Font\FontAsset.cpp" />
     <ClCompile Include="source\Core\Systems\TextSystem\TextSystem.cpp" />
+    <ClCompile Include="source\Core\Components\AudioSource.cpp" />
   </ItemGroup>
 </Project>

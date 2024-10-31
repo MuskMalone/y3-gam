@@ -32,6 +32,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Serialization/Deserializer.h"
 #include "Asset/AssetMetadata.h"
 
+#include <Audio/AudioManager.h>
+
 namespace IGE {
   // Static Initialization
   Application::ApplicationSpecification Application::mSpecification{};
@@ -49,7 +51,8 @@ namespace IGE {
     Mono::ScriptManager::CreateInstance();
     ECS::EntityManager::CreateInstance();
     Systems::SystemManager::CreateInstance();
-
+    IGE::Audio::AudioManager::CreateInstance();
+    
     // @TODO: Init physics and audio singletons
     //IGE::Physics::PhysicsSystem::InitAllocator();
     //IGE::Physics::PhysicsSystem::GetInstance()->Init();
@@ -73,6 +76,7 @@ namespace IGE {
       eventManager.DispatchAll();
 
       systemManager.UpdateSystems();
+      IGE::Audio::AudioManager::GetInstance().Update();
 
       glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
 
@@ -182,7 +186,7 @@ namespace IGE {
   {
     // shutdown singletons
     Systems::SystemManager::DestroyInstance();
-
+    IGE::Audio::AudioManager::DestroyInstance();
     Scenes::SceneManager::DestroyInstance();
     Prefabs::PrefabManager::DestroyInstance();
     Mono::ScriptManager::DestroyInstance();
