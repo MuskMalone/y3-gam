@@ -42,6 +42,8 @@ namespace ECS {
     bool HasParent(Entity entity) const;
     bool HasChild(Entity entity) const;
 
+    inline bool IsValidEntity(Entity entity) const { return mRegistry.valid(entity.GetRawEnttEntityID()); }
+
     auto GetAllEntities();
     Entity GetEntityFromTag(std::string tag);
     Entity GetParentEntity(Entity const& child) const;
