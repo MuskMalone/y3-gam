@@ -89,6 +89,12 @@ namespace GUI
 
     /*!*********************************************************************
     \brief
+      Resets the variables used to enable editing of entity name
+    ************************************************************************/
+    void ResetEditNameMode();
+
+    /*!*********************************************************************
+    \brief
       This function handles the corresponding events the PrefabEditor
       subscribed to.
 
