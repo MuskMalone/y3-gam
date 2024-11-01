@@ -344,8 +344,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "Seed": "Cube",
-                            "ID": 9115105366793692982
+                            "ID": 7600828058887352708
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -455,26 +454,15 @@
                 {
                     "Light": {
                         "lighttype": 0,
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "direction": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
                         "color": {
                             "x": 0.0,
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "linear": 0.0,
-                        "quadratic": 0.0,
-                        "radius": 0.0,
-                        "cutoff": 0.0,
-                        "outercutoff": 0.0,
+                        "intensity": 1.0,
+                        "innerAngle": 5.0,
+                        "outerAngle": 12.5,
+                        "range": 10.0,
                         "castShadows": true,
                         "bias": 0.05000000074505806
                     }
@@ -548,8 +536,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "Seed": "Cube",
-                            "ID": 9115105366793692982
+                            "ID": 7600828058887352708
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -665,8 +652,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "Seed": "Cube",
-                            "ID": 9115105366793692982
+                            "ID": 7600828058887352708
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -721,6 +707,37 @@
             "Child Entities": [],
             "isActive": true,
             "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "..\\Assets\\Audio\\boing.mp3",
+                                "value": {
+                                    "guid": {
+                                        "ID": 2162875126662710601
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -1.1703062057495118,
+                                            "y": 0.4263947010040283,
+                                            "z": 3.1060776710510256
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "LINEAR"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
                 {
                     "Tag": {
                         "tag": "Random Cube",
@@ -777,8 +794,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "Seed": "Cube",
-                            "ID": 9115105366793692982
+                            "ID": 7600828058887352708
                         },
                         "castShadows": true,
                         "receiveShadows": true

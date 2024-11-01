@@ -19,7 +19,16 @@ namespace Reflection::ComponentUtils {
   using namespace Component;
 
 #define EXTRACT_RAW_COMP(T, variable) T const& variable{ var.get_type().is_wrapper() ? var.get_wrapped_value<T>() : var.get_value<T>() }
+  void AddAudioListener(ECS::Entity entity, rttr::variant const& var) {
+      EXTRACT_RAW_COMP(AudioListener, comp);
 
+      entity.EmplaceOrReplaceComponent<AudioListener>(comp);
+  }  
+  void AddAudioSource(ECS::Entity entity, rttr::variant const& var) {
+      EXTRACT_RAW_COMP(AudioSource, comp);
+
+      entity.EmplaceOrReplaceComponent<AudioSource>(comp);
+  }
   void AddTag(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Tag, comp);
 

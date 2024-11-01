@@ -39,6 +39,8 @@ namespace Reflection
     using namespace Component;
 
     mAddComponentFuncs = {
+      { GET_RTTR_TYPE(AudioListener), ComponentUtils::AddAudioListener },      
+      { GET_RTTR_TYPE(AudioSource), ComponentUtils::AddAudioSource },
       { GET_RTTR_TYPE(Tag), ComponentUtils::AddTag },
       { GET_RTTR_TYPE(Transform), ComponentUtils::AddTransform },
       { GET_RTTR_TYPE(Layer), ComponentUtils::AddLayer },
@@ -285,6 +287,8 @@ namespace Reflection
     else IF_GET_ENTITY_COMP(Component::Script)
     else IF_GET_ENTITY_COMP(Component::Text)
     else IF_GET_ENTITY_COMP(Component::Light)
+    else IF_GET_ENTITY_COMP(Component::AudioListener)
+    else IF_GET_ENTITY_COMP(Component::AudioSource)
     else
     {
       std::ostringstream oss{};
@@ -309,9 +313,13 @@ namespace Reflection
     else IF_REMOVE_COMP(Component::Material)
     else IF_REMOVE_COMP(Component::RigidBody)
     else IF_REMOVE_COMP(Component::BoxCollider)
+    else IF_REMOVE_COMP(Component::SphereCollider)
+    else IF_REMOVE_COMP(Component::CapsuleCollider)
     else IF_REMOVE_COMP(Component::Script)
     else IF_REMOVE_COMP(Component::Text)
     else IF_REMOVE_COMP(Component::Light)
+    else IF_REMOVE_COMP(Component::AudioListener)
+    else IF_REMOVE_COMP(Component::AudioSource)
     else
     {
       std::ostringstream oss{};

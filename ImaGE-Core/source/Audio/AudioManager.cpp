@@ -5,10 +5,13 @@
 #include <fmod_errors.h>
 #include <Asset/IGEAssets.h>
 #include <Core/Components/Components.h>
+#include <Events/EventManager.h>
+#include "Scenes/SceneManager.h"
 namespace IGE {
     namespace Audio {
         AudioManager::AudioManager()
         {
+            SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &AudioManager::HandleSystemEvents, this);
             Initialize();
         }
         AudioManager::~AudioManager()
@@ -71,15 +74,6 @@ namespace IGE {
             return true;
         }
 
-        void AudioManager::Update()
-        {
-            FMOD_RESULT result = mSystem->update();
-            if (result != FMOD_OK) {
-                Debug::DebugLogger::GetInstance().LogError(std::string("FMOD Error: ") + FMOD_ErrorString(result));
-            }
-            auto system{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
-            
-        }
 
         void AudioManager::Release()
         {
@@ -365,10 +359,14 @@ namespace IGE {
         void AudioManager::PlaySound(IGE::Assets::GUID const& guid, SoundInvokeSetting const& settings, uint64_t group)
         {
             //gets the SoundAsset ref
+            if (IGE::Assets::AssetManager::GetInstance().IsGUIDValid<IGE::Assets::AudioAsset>(guid)) {
+                auto audioref{ IGE_ASSETMGR.GetAsset<IGE::Assets::AudioAsset>(guid) };
+                auto& sound{ audioref->mSound };
+                sound.PlaySound(settings, mGroup.at(group));
+            }else{
+                Debug::DebugLogger::GetInstance().LogError("sound " + std::to_string(guid) + " does not exist");
+            }
 
-            auto audioref{ IGE_ASSETMGR.GetAsset<IGE::Assets::AudioAsset>(guid) };
-            auto& sound{ audioref->mSound };
-            sound.PlaySound(settings, mGroup.at(group));
         }
 
         void AudioManager::FreeSound(uint32_t sound)
@@ -415,27 +413,20 @@ namespace IGE {
 
         void AudioManager::SetGroupFilter(std::string const& name, float filter)
         {
-            //// check if the group exists before applying the filter
-            //if (_mChannels.find(name) != _mChannels.end())
-            //{
-            //    //apply low-pass filter to all sound within a specific channel group
-            //    //access the list of channels associated with the group name
-            //    for (auto& c : _mChannels[name])
-            //    {
-            //        FMOD_RESULT result;
-            //        result = c->setLowPassGain(filter);
 
-            //        if (result != FMOD_OK)
-            //        {
-            //            std::string str(FMOD_ErrorString(result));
-            //            Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! Could not set low-pass filter for channel: " + str, true);
-            //        }
-            //    }
+        }
+
+        EVENT_CALLBACK_DEF(AudioManager, HandleSystemEvents) {
+            auto const& state{ CAST_TO_EVENT(Events::SceneStateChange)->mNewState };
+            if (state == Events::SceneStateChange::NewSceneState::STARTED) {
+                mSceneStarted = true;
+            }
+            //if (state == Events::SceneStateChange::NewSceneState::STOPPED) {
+            //    mSceneStopped = true;
             //}
-            //else
-            //{
-            //    Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! Channel group not found: " + std::string(name), true);
-            //}
+            if (state == Events::SceneStateChange::NewSceneState::PAUSED) {
+                mScenePaused = true;
+            }
         }
 
         Sound::Sound(std::string const& fp) : mKey{ fp }, mKeyhash{ IGE::Core::Fnv1a32(fp.c_str(), fp.size()) } {
@@ -463,11 +454,17 @@ namespace IGE {
             channel->getUserData(&userData);
 
             if (userData) {
-                SoundInvokeSetting* settings = static_cast<SoundInvokeSetting*>(userData);
-                settings->channels.erase(channel); // Remove channel from active list
-                Debug::DebugLogger::GetInstance().LogInfo("sound has finished playing, removing channel ptr");
+                try {
+                    SoundInvokeSetting* settings = static_cast<SoundInvokeSetting*>(userData);
+                    settings->channels.erase(channel); // Remove channel from active list
+                    Debug::DebugLogger::GetInstance().LogInfo("sound has finished playing, removing channel ptr");
+                }
+                catch (...) {
+                    Debug::DebugLogger::GetInstance().LogWarning("audio instance doesnt exist");
+                }
             }
             return FMOD_OK;
         }
-}
+
+    }
 }

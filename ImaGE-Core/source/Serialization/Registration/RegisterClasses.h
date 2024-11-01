@@ -17,6 +17,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Asset/Assetables/Assetables.h>
 #include <Core/Systems/LayerSystem/LayerSystem.h>
 #include <Core/GUID.h>
+#include <Audio/AudioManager.h>
+#include <Core/Components/AudioSource.h>
 
 static void rttr_auto_register_reflection_function_(); namespace {
   struct rttr__auto__register__ {
@@ -125,7 +127,27 @@ static void rttr_auto_register_reflection_function_(); namespace {
   rttr::registration::class_<IGE::Assets::TextureAsset>("Textures");
   rttr::registration::class_<IGE::Assets::PrefabAsset>("Prefabs");
   rttr::registration::class_<IGE::Assets::AudioAsset>("Audio");
-
+  /* ------------------- Audio ------------------- */
+  {
+      // Register the SoundInvokeSetting struct
+      rttr::registration::class_<IGE::Audio::SoundInvokeSetting>("SoundInvokeSetting")
+          .constructor<>()(rttr::policy::ctor::as_object)
+          .property("position", &IGE::Audio::SoundInvokeSetting::position)
+          .property("volume", &IGE::Audio::SoundInvokeSetting::volume)
+          .property("pitch", &IGE::Audio::SoundInvokeSetting::pitch)
+          .property("pan", &IGE::Audio::SoundInvokeSetting::pan)
+          .property("mute", &IGE::Audio::SoundInvokeSetting::mute)
+          .property("loop", &IGE::Audio::SoundInvokeSetting::loop)
+          .property("playOnAwake", &IGE::Audio::SoundInvokeSetting::playOnAwake)
+          .property("dopplerLevel", &IGE::Audio::SoundInvokeSetting::dopplerLevel)
+          .property("minDistance", &IGE::Audio::SoundInvokeSetting::minDistance)
+          .property("maxDistance", &IGE::Audio::SoundInvokeSetting::maxDistance)
+          .property("rolloffType", &IGE::Audio::SoundInvokeSetting::rolloffType); // As reference for mutable property
+      rttr::registration::class_<Component::AudioSource::AudioInstance>("AudioInstance")
+          .constructor<IGE::Assets::GUID>()(rttr::policy::ctor::as_object)
+          .property("guid", &Component::AudioSource::AudioInstance::guid)
+          .property("playSettings", &Component::AudioSource::AudioInstance::playSettings);
+  }
   /* ------------------- Script ------------------- */
   {
     using T = Reflection::ProxyScript;

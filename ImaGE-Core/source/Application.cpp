@@ -26,6 +26,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma region SYSTEM_INCLUDES
 #include <Core/Systems/SystemManager/SystemManager.h>
 #include <Physics/PhysicsSystem.h>
+#include <Audio/AudioManager.h>
 #include <Core/Systems/TransformSystem/TransformSystem.h>
 #include <Scripting/ScriptingSystem.h>
 #include <Core/Systems/LayerSystem/LayerSystem.h>
@@ -36,7 +37,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Serialization/Deserializer.h"
 #include "Asset/AssetMetadata.h"
 
-#include <Audio/AudioManager.h>
+#include <Audio/AudioSystem.h>
 
 namespace IGE {
   // Static Initialization
@@ -64,16 +65,6 @@ namespace IGE {
     RegisterSystems();
     Systems::SystemManager::GetInstance().InitSystems();
     Graphics::RenderSystem::Init();
-
-    //testing to remove later
-    Component::AudioSource audiosource{};
-    audiosource.CreateSound("..\\Assets\\Audio\\boing.mp3");
-    audiosource.CreateSound("..\\Assets\\Audio\\hahaha.mp3");
-
-    audiosource.RenameSound("..\\Assets\\Audio\\boing.mp3", "boing");
-    audiosource.RenameSound("..\\Assets\\Audio\\hahaha.mp3", "haha");
-    audiosource.PlaySound("boing");
-    audiosource.PlaySound("haha");
   }
 
   void Application::Run() {
@@ -90,7 +81,6 @@ namespace IGE {
       eventManager.DispatchAll();
 
       systemManager.UpdateSystems();
-      IGE::Audio::AudioManager::GetInstance().Update();
 
       glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
 
@@ -113,6 +103,7 @@ namespace IGE {
     systemManager.RegisterSystem<Systems::LayerSystem>("Layer System");
     systemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
     systemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
+    systemManager.RegisterSystem<IGE::Audio::AudioSystem>("Audio System");
   }
 
   Application::Application(ApplicationSpecification spec) : mRenderTargets{}, mWindow{}
@@ -199,7 +190,10 @@ namespace IGE {
   {
     // shutdown singletons
     Systems::SystemManager::DestroyInstance();
+
+    //not sure why this throws an error at destroy
     IGE::Audio::AudioManager::DestroyInstance();
+
     Scenes::SceneManager::DestroyInstance();
     Prefabs::PrefabManager::DestroyInstance();
     Mono::ScriptManager::DestroyInstance();

@@ -13,12 +13,14 @@ namespace Component{
 		
 		//honestly i couldve gone with categorizing the sounds instead of one channel group per entity
 		//but this way seems less convoluted
-		uint64_t channelGroup;
 		AudioSource();
 		void Clear() noexcept;
 		void PlaySound(std::string const&) const;
 		void RemoveSound(std::string const&);
 		void CreateSound(std::string const&);
 		void RenameSound(std::string const& currentName, std::string const& newName);
+	
+		uint64_t channelGroup;
+
 	};
 }
