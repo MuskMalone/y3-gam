@@ -296,6 +296,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Globals.h" />
     <ClInclude Include="source\Graphics\AssetIO\IMSH.h" />
     <ClInclude Include="source\Graphics\CameraManager.h" />
+    <ClInclude Include="source\Graphics\CameraSpec.h" />
     <ClInclude Include="source\Graphics\EditorCamera.h" />
     <ClInclude Include="source\Graphics\ElementBuffer.h" />
     <ClInclude Include="source\Graphics\Framebuffer.h" />
@@ -307,6 +308,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Graphics\Pipeline.h" />
     <ClInclude Include="source\Graphics\RenderAPI.h" />
     <ClInclude Include="source\Graphics\RenderCommand.h" />
+    <ClInclude Include="source\Graphics\RenderPass\FinalPass.h" />
     <ClInclude Include="source\Graphics\RenderPass\GeomPass.h" />
     <ClInclude Include="source\Graphics\RenderPass\RenderPass.h" />
     <ClInclude Include="source\Graphics\RenderPass\ShadowPass.h" />
@@ -443,6 +445,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Graphics\MeshSource.cpp" />
     <ClCompile Include="source\Graphics\Pipeline.cpp" />
     <ClCompile Include="source\Graphics\RenderAPI.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\FinalPass.cpp" />
     <ClCompile Include="source\Graphics\RenderPass\GeomPass.cpp" />
     <ClCompile Include="source\Graphics\RenderPass\RenderPass.cpp" />
     <ClCompile Include="source\Graphics\RenderPass\ShadowPass.cpp" />

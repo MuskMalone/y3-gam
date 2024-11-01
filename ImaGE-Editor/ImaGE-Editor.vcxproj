@@ -182,6 +182,7 @@ copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Release\bin\Release\rtt
     <ClInclude Include="source\GUI\Dockable\Console.h" />
     <ClInclude Include="source\GUI\Dockable\Debugging\PerformanceWindow.h" />
     <ClInclude Include="source\GUI\Dockable\Debugging\RenderPassViewer.h" />
+    <ClInclude Include="source\GUI\Dockable\GameViewport.h" />
     <ClInclude Include="source\GUI\Dockable\Inspector.h" />
     <ClInclude Include="source\GUI\Dockable\Layers.h" />
     <ClInclude Include="source\GUI\Dockable\SceneHierarchy.h" />
@@ -204,6 +205,7 @@ copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Release\bin\Release\rtt
     <ClCompile Include="source\GUI\Dockable\Console.cpp" />
     <ClCompile Include="source\GUI\Dockable\Debugging\PerformanceWindow.cpp" />
     <ClCompile Include="source\GUI\Dockable\Debugging\RenderPassViewer.cpp" />
+    <ClCompile Include="source\GUI\Dockable\GameViewport.cpp" />
     <ClCompile Include="source\GUI\Dockable\Inspector.cpp" />
     <ClCompile Include="source\GUI\Dockable\Layers.cpp" />
     <ClCompile Include="source\GUI\Dockable\SceneHierarchy.cpp" />
