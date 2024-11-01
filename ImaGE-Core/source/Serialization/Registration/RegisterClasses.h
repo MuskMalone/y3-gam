@@ -145,7 +145,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   rttr::registration::class_<Mono::ScriptFieldInfo>("ScriptFieldInfo")
     .property("fieldName", &Mono::ScriptFieldInfo::mFieldName);
   {
-    using T = Mono::ScriptFieldInstance<int>;
+    using T = Mono::DataMemberInstance<int>;
     rttr::registration::class_<T>("System.Int32")
       .constructor<>()
       .property("data", &T::mData)
@@ -153,7 +153,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("scriptField", &T::mScriptField);
   }
   {
-    using T = Mono::ScriptFieldInstance<float>;
+    using T = Mono::DataMemberInstance<float>;
     rttr::registration::class_<T>("System.Single")
       .constructor<>()
       .property("data", &T::mData)
@@ -161,7 +161,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("scriptField", &T::mScriptField);
   }
   {
-    using T = Mono::ScriptFieldInstance<double>;
+    using T = Mono::DataMemberInstance<double>;
     rttr::registration::class_<T>("System.Double")
       .constructor<>()
       .property("data", &T::mData)
@@ -169,7 +169,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("scriptField", &T::mScriptField);
   }
   {
-    using T = Mono::ScriptFieldInstance<unsigned>;
+    using T = Mono::DataMemberInstance<unsigned>;
     rttr::registration::class_<T>("System.UInt32")
       .constructor<>()
       .property("data", &T::mData)
@@ -177,7 +177,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("scriptField", &T::mScriptField);
   }
   {
-    using T = Mono::ScriptFieldInstance<std::vector<int>>;
+    using T = Mono::DataMemberInstance<std::vector<int>>;
     rttr::registration::class_<T>("System.Int32[]")
       .constructor<>()
       .property("data", &T::mData)
@@ -185,7 +185,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("scriptField", &T::mScriptField);
   }
   {
-    using T = Mono::ScriptFieldInstance<std::vector<unsigned>>;
+    using T = Mono::DataMemberInstance<std::vector<unsigned>>;
     rttr::registration::class_<T>("System.UInt32[]")
       .constructor<>()
       .property("data", &T::mData)
@@ -193,7 +193,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("scriptField", &T::mScriptField);
   }
   {
-    using T = Mono::ScriptFieldInstance<std::string>;
+    using T = Mono::DataMemberInstance<std::string>;
     rttr::registration::class_<T>("System.String")
       .constructor<>()
       .property("data", &T::mData)
@@ -201,7 +201,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("scriptField", &T::mScriptField);
   }
   {
-    using T = Mono::ScriptFieldInstance<std::vector<std::string>>;
+    using T = Mono::DataMemberInstance<std::vector<std::string>>;
     rttr::registration::class_<T>("System.String[]")
       .constructor<>()
       .property("data", &T::mData)
@@ -209,7 +209,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("scriptField", &T::mScriptField);
   }
   {
-    using T = Mono::ScriptFieldInstance<glm::vec3>;
+    using T = Mono::DataMemberInstance<glm::vec3>;
     rttr::registration::class_<T>("ImaGE-Script.Mono.Vec3<System.float>")
       .constructor<>()
       .property("data", &T::mData)
@@ -217,8 +217,16 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("scriptField", &T::mScriptField);
   }
   {
-    using T = Mono::ScriptFieldInstance<glm::dvec3>;
+    using T = Mono::DataMemberInstance<glm::dvec3>;
     rttr::registration::class_<T>("ImaGE-Script.Mono.Vec3<System.double>")
+      .constructor<>()
+      .property("data", &T::mData)
+      .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
+      .property("scriptField", &T::mScriptField);
+  }
+  {
+    using T = Mono::DataMemberInstance<Mono::ScriptInstance>;
+    rttr::registration::class_<T>("Image.Mono.ScriptInstance")
       .constructor<>()
       .property("data", &T::mData)
       .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)

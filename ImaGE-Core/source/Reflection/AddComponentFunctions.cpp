@@ -87,7 +87,7 @@ namespace Reflection::ComponentUtils {
   void AddScript(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(ProxyScriptComponent, comp);
 
-    entity.EmplaceOrReplaceComponent<Script>(comp);
+    entity.EmplaceOrReplaceComponent<Script>(comp, entity);
   }
 
   void AddLight(ECS::Entity entity, rttr::variant const& var) {
