@@ -14,8 +14,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Image.Mono
-{
+namespace Image.Mono.Utils
+{ 
   public struct Vec4<T>
   {    
     public T X { get; set; }

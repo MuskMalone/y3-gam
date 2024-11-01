@@ -34,10 +34,12 @@ namespace Mono
 
 	class ScriptManager : public ThreadSafeSingleton<ScriptManager>
 	{
-		static std::map<std::string, ScriptClassInfo> mMonoClassMap;
+		static std::map<std::string, ScriptClassInfo> mMonoClassMap;  //Map of Scripts 
 
+		
 	public:
 		static std::unordered_map<std::string, ScriptFieldType> mScriptFieldTypeMap;
+		static std::unordered_map<ScriptFieldType, std::string> mRevClassMap;			//Rev Map of Scripts, for getting the name of script based on type 
 		static std::vector<std::string> mAllScriptNames;
 		static std::shared_ptr<MonoDomain> mRootDomain;
 		static std::shared_ptr<MonoDomain> mAppDomain;
@@ -113,6 +115,9 @@ namespace Mono
 		static void AssemblyFileSystemEvent(const std::string& path, const filewatch::Event change_type);
 
 
+		static bool IsMonoBehaviourclass(MonoClass* mc);
+
+
 		
 
 		/*!**********************************************************************
@@ -136,7 +141,7 @@ namespace Mono
 			\return
 			Instance of the c# class in the form of MonoObject*
 		************************************************************************/
-		MonoObject* InstantiateClass(const char* className, std::vector<void*>& arg);
+		MonoObject* InstantiateClass(const char* className, std::vector<void*> arg = std::vector<void*>());
 
 		/*!*********************************************************************
 		\brief

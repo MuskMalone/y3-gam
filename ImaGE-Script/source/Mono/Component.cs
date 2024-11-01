@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
+using Image.Mono.Utils;
 
 namespace Image.Mono
 {
   
-  public abstract class Component
+  public class Component
   {
     // Base class for all components
     public Entity entity { get; internal set; }

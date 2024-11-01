@@ -24,12 +24,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using Image.Mono;
+using Image.Mono.Utils;
 
-namespace Image
+namespace Image.Mono
 {
-
-
 
 public class Test : Entity
 {
@@ -42,14 +40,14 @@ public class Test : Entity
     public float TestFloat = 20f;
     public double TestDouble = 30.0;
     public Vec3<double> dVec3 = new Vec3<double>(336.318f, 100f, 0f);
-    public Entity testEnt = new Entity(1000);
+    public Entity testEnt;
 
 
 
 
-    public Test(int entityID) : base(entityID)
+    public Test() : base()
     {
-      Console.WriteLine("ENTITYID" + entityID);
+      
       //AddComponent<Transform>(new Transform());
     }
 
@@ -57,6 +55,9 @@ public class Test : Entity
     \brief
       Initializes deck and combo managers based on the character type.
     ************************************************************************/
+
+   
+
     public void OnCreate()
     {
 
@@ -77,9 +78,12 @@ public class Test : Entity
     ************************************************************************/
     public void Update()
     {
-    //  Console.WriteLine(testEnt.mEntityID.ToString());
+      //  Console.WriteLine(testEnt.mEntityID.ToString());
       // Console.WriteLine("Hit\n");
-   
+      if (testEnt != null)
+      {
+        Console.WriteLine(testEnt.mEntityID + "::ID");
+      }
       //Vec3<float> Position = GetComponent<Transform>().Position;
       //GetComponent<Transform>().Position = new Vec3<float>(1,1,2);
       //  Console.WriteLine(Position.X + "," + Position.Y + "," + Position.Z);

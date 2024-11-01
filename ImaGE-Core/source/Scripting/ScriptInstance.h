@@ -26,7 +26,6 @@ namespace Mono {
 	const size_t maxBufferSize{ 1000 };
 	enum CtorType
 	{
-		DEFAULT_CTOR,
 		ENTITY_CTOR,
 		SPECIAL_CTOR
 	};
@@ -84,7 +83,7 @@ namespace Mono {
 		\params  std::vector<void*>& arg
 		arguments to pass into the scrip class's non-default constructor
 		************************************************************************/
-		ScriptInstance(const std::string& scriptName, std::vector<void*>& arg, bool isSpecial = false);
+		ScriptInstance(const std::string& scriptName, std::vector<void*> arg = std::vector<void*>(), bool isSpecial = false);
 
 
 		/*!*********************************************************************
@@ -241,6 +240,12 @@ namespace Mono {
 		{
 			std::memcpy(mFieldValBuffer, &value, sizeof(T));
 			mono_field_set_value(mClassInst, field, mFieldValBuffer);
+		}
+
+		template<typename T>
+		void SetFieldValue(T* value, MonoClassField* field)
+		{
+			mono_field_set_value(mClassInst, field, value);
 		}
 
 

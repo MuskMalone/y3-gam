@@ -513,44 +513,59 @@ namespace GUI {
           }
           else if (dataType == rttr::type::get<Mono::DataMemberInstance<Mono::ScriptInstance>>())
           {
-            Mono::DataMemberInstance<Mono::ScriptInstance>& sfi = f.get_value<Mono::DataMemberInstance<Mono::ScriptInstance>>();
-            if (sfi.mScriptField.mFieldType == Mono::ScriptFieldType::ENTITY)
-            {
-              ImGui::TableNextRow();
-              ImGui::TableNextColumn();
-              ImGui::Text(sfi.mScriptField.mFieldName.c_str());
-              ImGui::TableNextColumn();
-              ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
-              std::string msg{ "HUH?" };
-              if (sfi.mData.mEntityID != entt::null)
-                msg = ECS::Entity(sfi.mData.mEntityID).GetTag();
-              if (ImGui::BeginCombo("##", msg.c_str()))
+               Mono::DataMemberInstance<Mono::ScriptInstance>& sfi = f.get_value<Mono::DataMemberInstance<Mono::ScriptInstance>>();
+              if (sfi.mScriptField.mFieldType == Mono::ScriptFieldType::ENTITY)
               {
-                for (const ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntities())
-                {
-                  if (e.GetRawEnttEntityID() != sfi.mData.mEntityID)
+                  ImGui::TableNextRow();
+                  ImGui::TableNextColumn();
+                  ImGui::Text(sfi.mScriptField.mFieldName.c_str());
+                  ImGui::TableNextColumn();
+                  ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
+                 // std::cout << entt::null << "\n";
+                   std::string msg{ "" };
+                 // std::cout << sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData << "\n";
+                  if (sfi.mData.mClassInst && ECS::EntityManager::GetInstance().IsValidEntity(static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData)))
+                    msg = ECS::Entity(static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData)).GetTag();
+                  if (ImGui::BeginCombo("##", msg.c_str()))
                   {
-                    bool is_selected = (e.GetRawEnttEntityID() == sfi.mData.mEntityID);
-                    if (ImGui::Selectable(e.GetTag().c_str(), is_selected))
+                    for (const ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntities())
                     {
-                      if (e.GetRawEnttEntityID() != sfi.mData.mEntityID) {
-                         sfi.mData.mEntityID = e.GetRawEnttEntityID();
-                         std::cout << e.GetEntityID();
-                         s.SetFieldValue<Mono::ScriptInstance>(sfi.mData, sfi.mScriptField.mClassField);
+                      if (e.GetRawEnttEntityID() != sfi.mData.mEntityID)
+                      {
+                        bool is_selected = (e.GetRawEnttEntityID() == sfi.mData.mEntityID);
+                        if (ImGui::Selectable(e.GetTag().c_str(), is_selected))
+                        {
+                          if (e.GetRawEnttEntityID() != sfi.mData.mEntityID) {
+                            sfi.mData.mEntityID = e.GetRawEnttEntityID();
+                            
+                            if (!sfi.mData.mClassInst)
+                            {
+                              std::vector<void*> arg{ &sfi.mData.mEntityID };
+                              sfi.mData = Mono::ScriptInstance(sfi.mData.mScriptName, arg);
+                              s.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
+                            }
+                            else
+                            {
+                              sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData = static_cast<unsigned>(sfi.mData.mEntityID);
+                              sfi.mData.SetAllFields();
+                            }
+                              
+                              
+                           
+                          }
+                        }
+                        if (is_selected)
+                        {
+                          ImGui::SetItemDefaultFocus();
+                        }
                       }
+
                     }
-                    if (is_selected)
-                    {
-                      ImGui::SetItemDefaultFocus();
-                    }
+                    ImGui::EndCombo();
                   }
-
-                }
-                ImGui::EndCombo();
               }
-            }
 
-            
+
           }
 
 

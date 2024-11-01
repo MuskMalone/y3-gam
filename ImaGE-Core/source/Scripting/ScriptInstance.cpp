@@ -23,16 +23,32 @@ using namespace Mono;
 
 
 
-ScriptInstance::ScriptInstance(const std::string& scriptName, std::vector<void*>& arg, bool isSpecial) : mCtorType{ (isSpecial) ? SPECIAL_CTOR : (arg.size() == 0) ? DEFAULT_CTOR : ENTITY_CTOR }, mEntityID{(isSpecial) ? entt::null : (arg.size() == 0) ? entt::null : *(static_cast<ECS::Entity::EntityID*>(arg[0]))}, mScriptName{scriptName}
+ScriptInstance::ScriptInstance(const std::string& scriptName, std::vector<void*> arg, bool isSpecial) : mCtorType{ (isSpecial) ? SPECIAL_CTOR : ENTITY_CTOR }, mEntityID{(isSpecial) ? entt::null : (arg.size() == 0) ? entt::null : *(static_cast<ECS::Entity::EntityID*>(arg[0]))}, mScriptName{scriptName}
 {
   Mono::ScriptManager* sm = &Mono::ScriptManager::GetInstance();
   mScriptClass = sm->GetScriptClass(scriptName);
   if (!mScriptClass)
     throw Debug::Exception<ScriptInstance>(Debug::LVL_WARN, Msg(scriptName + ".cs not found"));
-  mClassInst = sm->InstantiateClass(scriptName.c_str(), arg);
+  if(isSpecial)
+    mClassInst = sm->InstantiateClass(scriptName.c_str(), arg);
+  else
+    mClassInst = sm->InstantiateClass(scriptName.c_str());   // All C# script with Monobehaviour will be default constructed
+  
+  
   mUpdateMethod = mono_class_get_method_from_name(mScriptClass, "Update", 0);
+
+    
   //mOnCreateMethod = mono_class_get_method_from_name(mScriptClass, "Create", 0);
   mGcHandle = mono_gchandle_new(mClassInst, true);
+  if (mCtorType == ENTITY_CTOR)
+  {
+    MonoMethod* InitMethod = mono_class_get_method_from_name(mScriptClass, "Init", 1);
+    if (InitMethod)
+    {
+      mono_runtime_invoke(InitMethod, mono_gchandle_get_target(mGcHandle), arg.data(), nullptr);  // We will call an init function to pass in the entityID
+    }
+  }
+
   GetAllFieldsInst();
 }
 
@@ -87,11 +103,12 @@ void ScriptInstance::GetFieldCSClass(std::vector<rttr::variant>& mScriptFieldIns
   {
     Mono::ScriptManager* sm = &Mono::ScriptManager::GetInstance();
     sfi.mData.mClassInst = mono_field_get_value_object(sm->mAppDomain.get(), sfi.mScriptField.mClassField, mClassInst);
-
+    sfi.mData.mScriptName = sm->mRevClassMap[sfi.mScriptField.mFieldType];
     if (sfi.mData.mClassInst)
     {
       sfi.mData.mScriptClass = mono_object_get_class(sfi.mData.mClassInst);
       sfi.mData.mScriptName = mono_class_get_name(sfi.mData.mScriptClass);
+     //* sfi.mData.mScriptName = sfi.mData.mScriptName + '.' + mono_class_get_name(sfi.mData.mScriptClass);
       sfi.mData.GetAllFieldsInst();
     }
   }
@@ -138,6 +155,13 @@ void ScriptInstance::GetAllFieldsInst()
         mScriptFieldInstList.emplace_back(test);
         break;
       }
+       case (ScriptFieldType::UINT):
+       {
+         unsigned value = GetFieldValue<unsigned>(field.mClassField);
+         DataMemberInstance<unsigned> test{ field,value };
+         mScriptFieldInstList.emplace_back(test);
+         break;
+       }
       case (ScriptFieldType::STRING):
       {
         MonoString* value = GetFieldValue<MonoString*>(field.mClassField);
@@ -191,6 +215,9 @@ void ScriptInstance::GetAllFieldsInst()
       case (ScriptFieldType::ENTITY):
       {
         GetFieldCSClass(mScriptFieldInstList, field);
+        Mono::DataMemberInstance<ScriptInstance>& sfi = mScriptFieldInstList[mScriptFieldInstList.size() - 1].get_value<Mono::DataMemberInstance<ScriptInstance>>();
+        if(sfi.mData.mClassInst)
+          sfi.mData.mEntityID = static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData);
         break;
       }
     }
@@ -219,12 +246,16 @@ void ScriptInstance::SetAllFields()
       Mono::DataMemberInstance<double>& sfi = f.get_value<Mono::DataMemberInstance<double>>();
       SetFieldValue<double>(sfi.mData, sfi.mScriptField.mClassField);
     }
+    else if (f.is_type<Mono::DataMemberInstance<unsigned>>())
+    {
+      Mono::DataMemberInstance<unsigned>& sfi = f.get_value<Mono::DataMemberInstance<unsigned>>();
+      SetFieldValue<unsigned>(sfi.mData, sfi.mScriptField.mClassField);
+    }
     else if (f.is_type<Mono::DataMemberInstance<std::string>>())
     {
       Mono::DataMemberInstance<std::string>& sfi = f.get_value<Mono::DataMemberInstance<std::string>>();
       mono_field_set_value(mClassInst, sfi.mScriptField.mClassField, STDToMonoString(sfi.mData));
     }
-
     else if (f.is_type<Mono::DataMemberInstance<glm::dvec3>>())
     {
       Mono::DataMemberInstance<glm::dvec3>& sfi = f.get_value<Mono::DataMemberInstance<glm::dvec3>>();

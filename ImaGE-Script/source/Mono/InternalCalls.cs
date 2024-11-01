@@ -23,30 +23,30 @@ using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
 
-namespace Image.Mono
+namespace Image.Mono.Utils
 {
   public static class InternalCalls
   {
     #region Transform
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vec3<float> GetScale(int ID);
+    internal extern static Vec3<float> GetScale(uint ID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetScale(int entityHandle, ref Vec3<float> scale);
+    internal extern static void SetScale(uint entityHandle, ref Vec3<float> scale);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vec3<float> GetWorldPosition(int ID);
+    internal extern static Vec3<float> GetWorldPosition(uint ID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vec3<float> GetPosition(int ID);
+    internal extern static Vec3<float> GetPosition(uint ID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetPosition(int entityHandle, ref Vec3<float> position);
+    internal extern static void SetPosition(uint entityHandle, ref Vec3<float> position);
 
     // avoid using this, prefer SetPosition (local)
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetWorldPosition(int entityHandle, ref Vec3<float> position);
+    internal extern static void SetWorldPosition(uint entityHandle, ref Vec3<float> position);
 
     //[MethodImplAttribute(MethodImplOptions.InternalCall)]
     //internal extern static void GetRotation(ref uint entityHandle, ref float rotation);
@@ -84,7 +84,7 @@ namespace Image.Mono
     #endregion
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static string GetTag(int EntityID);
+    internal extern static string GetTag(uint EntityID);
     
   }
 }

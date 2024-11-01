@@ -46,7 +46,7 @@ namespace Mono
   bool ScriptManager::mCSReloadPending{};
   bool ScriptManager::mRebuildCS{};
 
-
+  std::unordered_map<ScriptFieldType,std::string> ScriptManager::mRevClassMap{};
   std::unordered_map<std::string, ScriptFieldType> ScriptManager::mScriptFieldTypeMap
   {
     { "System.Boolean", ScriptFieldType::BOOL },
@@ -60,10 +60,10 @@ namespace Mono
     { "System.UInt32",  ScriptFieldType::UINT },
     { "System.UInt64",  ScriptFieldType::ULONG },
     { "System.String",  ScriptFieldType::STRING },
-    { "Image.Mono.Vec2<System.Single>", ScriptFieldType::VEC2 },
-    { "Image.Mono.Vec3<System.Single>", ScriptFieldType::VEC3 },
-    { "Image.Mono.Vec2<System.Double>", ScriptFieldType::DVEC2 },
-    { "Image.Mono.Vec3<System.Double>", ScriptFieldType::DVEC3 },
+    { "Image.Mono.Utils.Vec2<System.Single>", ScriptFieldType::VEC2 },
+    { "Image.Mono.Utils..Vec3<System.Single>", ScriptFieldType::VEC3 },
+    { "Image.Mono.Utils.Vec2<System.Double>", ScriptFieldType::DVEC2 },
+    { "Image.Mono.Utils.Vec3<System.Double>", ScriptFieldType::DVEC3 },
     { "System.Int32[]", ScriptFieldType::INT_ARR },
     { "System.String[]",ScriptFieldType::STRING_ARR},
     { "Image.Mono.Entity",ScriptFieldType::ENTITY}
@@ -155,8 +155,8 @@ void ScriptManager::LoadAppDomain()
   mono_domain_set(mAppDomain.get(), true);
 }
 
-#define ADD_INTERNAL_CALL(func) mono_add_internal_call("Image.Mono.InternalCalls::"#func, Mono::func);
-#define ADD_CLASS_INTERNAL_CALL(func, instance) mono_add_internal_call("Image.Mono.InternalCalls::"#func, instance.func);
+#define ADD_INTERNAL_CALL(func) mono_add_internal_call("Image.Mono.Utils.InternalCalls::"#func, Mono::func);
+#define ADD_CLASS_INTERNAL_CALL(func, instance) mono_add_internal_call("Image.Mono.Utils.InternalCalls::"#func, instance.func);
 
 void ScriptManager::AddInternalCalls()
 {
@@ -200,9 +200,10 @@ void ScriptManager::LoadAllMonoClass()
 
     std::string classNameSpace = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
     std::string className = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
-    if (classNameSpace.find("Image") != std::string::npos && classNameSpace.find("Mono") == std::string::npos)
+    if (classNameSpace.find("Image.Mono") != std::string::npos && classNameSpace.find("Utils") == std::string::npos)
     {
       std::cout << classNameSpace << "::" << className << "\n";
+      std::cout << "----------------------------------\n";
       MonoClass* newClass = GetClassInAssembly(coreAssembly, classNameSpace.c_str(), className.c_str());
       if (newClass)
       {
@@ -218,22 +219,48 @@ void ScriptManager::LoadAllMonoClass()
             MonoType* type = mono_field_get_type(field);
             ScriptFieldType fieldType = MonoTypeToScriptFieldType(type);
             std::string typeName = mono_type_get_name(type);
-            std::cout << fieldName <<  "::" << typeName  << "\n";
+            std::cout << typeName <<  "::" << fieldName  << "\n";
             newScriptClassInfo.mScriptFieldMap[fieldName] = { fieldType, fieldName, field };
           }
         }
-        mMonoClassMap[className] = newScriptClassInfo;
         MonoMethod* ctor = mono_class_get_method_from_name(newClass, ".ctor", 0);
-        MonoMethod* ctor2 = mono_class_get_method_from_name(newClass, ".ctor", 1);
-        if (ctor || ctor2)
+        if (ctor)
         {
-          mAllScriptNames.push_back(className);
+          mMonoClassMap[classNameSpace + '.' + className] = newScriptClassInfo;
         }
-
+#ifdef DEBUG_MONO
+        else
+          std::cout << classNameSpace + '.' + className << "\n";
+#endif // DEBUG
+        if (className.find("Entity") == std::string::npos &&  IsMonoBehaviourclass(newClass)) // If the class is not the base entity class and inherits from it, we will add it to the list for inspector
+        {          
+          mAllScriptNames.push_back(classNameSpace + '.' + className);
+        }
+        
       }
+      std::cout << "----------------------------------\n\n";
     }
   }
   std::sort(mAllScriptNames.begin(), mAllScriptNames.end());
+  for (const auto& pair : ScriptManager::mScriptFieldTypeMap) {
+    mRevClassMap[pair.second] = pair.first;
+  }
+}
+
+bool ScriptManager::IsMonoBehaviourclass(MonoClass* mc)
+{
+  bool isMonoBeh{ false };
+  MonoClass* parent = mc;
+  while (parent)
+  {
+    if (std::string(mono_class_get_name(parent)).find("Entity") != std::string::npos)
+    {
+      isMonoBeh = true;
+      break;
+    }
+    parent = mono_class_get_parent(parent);
+  }
+  return isMonoBeh;
 }
 
 MonoClass* Mono::GetClassInAssembly(MonoAssembly* assembly, const char* namespaceName, const char* className)
@@ -535,7 +562,7 @@ ScriptManager::~ScriptManager()
 *																																			  *
 ************************************************************************/
 
-MonoObject* Mono::ScriptManager::InstantiateClass(const char* className, std::vector<void*>& arg)
+MonoObject* Mono::ScriptManager::InstantiateClass(const char* className, std::vector<void*> arg)
 {
   if (mMonoClassMap.find(className) != mMonoClassMap.end())
   {

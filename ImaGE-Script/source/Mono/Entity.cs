@@ -24,6 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Image.Mono.Utils;
 
 
 
@@ -33,23 +34,10 @@ namespace Image.Mono
     public class Entity
   {
 
-    public int mEntityID = 666;
+    public uint mEntityID;
     //private readonly Dictionary<Type, Component> components = new Dictionary<Type, Component>();
 
-    /*  _________________________________________________________________________ */
-    /*! Entity
-
-    @param entityHandle
-    The mEntityID .
-
-    @return *this
-
-    Non-default, single-arg constructor for entity
-    */
-    public Entity(int entityHandle)
-    {
-      mEntityID = entityHandle;
-    }
+   
 
     /*  _________________________________________________________________________ */
     /*! Entity
@@ -60,17 +48,21 @@ namespace Image.Mono
     */
     public Entity()
     {
-      mEntityID  = 0;
+      //mEntityID = uint.MaxValue;
     }
-      
 
-
-    // Method to add a component
-
-    // Generic GetComponent method
-    public T GetComponent<T>() where T : Component, new()
+    public void Init(uint entityID)
     {
-      if (mEntityID == Utils.InvalidID)
+      mEntityID = entityID;
+    }
+
+
+   // Method to add a component
+
+   // Generic GetComponent method
+   public T GetComponent<T>() where T : Component, new()
+    {
+      if (mEntityID == null)
       {
         InternalCalls.LogError("Invalid EntityID");
         return null;
