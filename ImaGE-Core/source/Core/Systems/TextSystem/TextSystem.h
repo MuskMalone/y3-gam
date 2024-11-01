@@ -42,8 +42,8 @@ namespace Systems {
 		Font() = delete;
 		Font(std::string const& filePath);
 
-		const std::string mFilePath;
-		const uint32_t mFilePathHash;
+		std::string mFilePath;
+		uint32_t mFilePathHash;
 		FaceObject mFace;
 		std::map<char, Character> mCharacterMap;
 		std::shared_ptr<Graphics::Texture> mBitmap;
@@ -57,14 +57,32 @@ namespace Systems {
 		void Update() override;
 		void Destroy() override;
 
-		void AddFont(uint32_t filePathHash);
+		void AddFont(Systems::Font& font);
+		std::unordered_map<uint32_t, std::shared_ptr<Systems::Font>> const& GetLoadedFontMap() const;
+		void RenderText(uint32_t filePathHash, std::string textContent,
+			float xPos, float yPos, float scale, glm::vec3 color);
+		float GetTextWidth(uint32_t filePathHash, std::string textContent, float scale);
+		bool IsValid(Font const& font) const;
 
 	private:
+		const int MAX_ASCII{ 128 };
+		const unsigned int MAX_QUADS{ 1000 };
+		const unsigned int MAX_VERTICES{ MAX_QUADS * 4 };
+		const unsigned int MAX_INDICES{ MAX_QUADS * 6 };
+		const unsigned int DEFAULT_FONT_SIZE{ 100 };
+
+	private:
+		void LoadFontFace(Systems::Font& font) const;
+		void SetFontSize(uint32_t filePathHash, int fontSize);
+		void GenerateBitmap(uint32_t filePathHash, int fontSize);
+		void CreateGLObjects(uint32_t filePathHash);
+		void DebugGlyph(uint32_t filePathHash, int width, int height, unsigned char* buffer);
+
 		EVENT_CALLBACK_DECL(OnSceneLoad);
 
 	private:
 		FT_Library mFreeTypeLib;
-		std::unordered_map<uint32_t, Systems::Font> mFonts;
+		std::unordered_map<uint32_t, std::shared_ptr<Systems::Font>> mFonts;
 		std::shared_ptr<Graphics::Shader> mShader;
 	};
 

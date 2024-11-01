@@ -27,6 +27,7 @@ project "ImaGE-Core"
       "source/External/fmod/include",
       "source/External/ImTerm/",
       "source/External/ImGuizmo/",
+      "source/External/stb",
 
       "../Libraries/assimp/include/",
       "../Libraries/Built-Libraries/Release/Libraries/assimp/include",

@@ -24,6 +24,7 @@ project "ImaGE-Editor"
       "../ImaGE-Core/source/External/glad/include",
       "../ImaGE-Core/source/External/fmod/include",
       "../ImaGE-Core/source/External/ImTerm/",
+      "../ImaGE-Core/source/External/stb",
       
       "../Libraries/assimp/include/**",
       "../Libraries/entt/single_include",
