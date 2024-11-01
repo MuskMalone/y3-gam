@@ -13,3 +13,4 @@
 #include "PrefabOverrides.h"
 #include <Reflection/ProxyScript.h>
 #include "Light.h"
+#include "Camera.h"

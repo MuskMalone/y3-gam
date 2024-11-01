@@ -535,6 +535,9 @@
     <ClInclude Include="source\Graphics\CameraManager.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="source\Graphics\CameraSpec.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
     <ClInclude Include="source\Graphics\EditorCamera.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -567,6 +570,9 @@
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderCommand.h">
       <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Graphics\RenderPass\FinalPass.h">
+      <Filter>Graphics\RenderPass</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderPass\GeomPass.h">
       <Filter>Graphics\RenderPass</Filter>
@@ -859,6 +865,9 @@
     </ClCompile>
     <ClCompile Include="source\Graphics\RenderAPI.cpp">
       <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Graphics\RenderPass\FinalPass.cpp">
+      <Filter>Graphics\RenderPass</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\RenderPass\GeomPass.cpp">
       <Filter>Graphics\RenderPass</Filter>

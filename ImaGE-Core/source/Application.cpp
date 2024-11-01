@@ -80,7 +80,8 @@ namespace IGE {
 
       glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
 
-      Graphics::RenderSystem::RenderEditorScene(GetDefaultRenderTarget().camera);
+      auto const& cam = GetDefaultRenderTarget().camera;
+      Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ cam.GetViewProjMatrix(), cam.GetPosition(), cam.GetNearPlane(), cam.GetFarPlane(), cam.GetFOV() });
 
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -149,7 +150,9 @@ namespace IGE {
   framebufferSpec.height = spec.WindowHeight;
   framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
 
-  mRenderTargets.emplace_back(framebufferSpec);
+  mRenderTargets.emplace_back(framebufferSpec); //EditorView
+  mRenderTargets.emplace_back(framebufferSpec); //GameView
+
   mRenderTargets.front().camera = Graphics::EditorCamera(
       glm::vec3(0.0f, 5.0f, 10.0f),  // Position
       -90.0f,                        // Yaw
@@ -170,8 +173,8 @@ namespace IGE {
     glViewport(0, 0, width, height);
 
     Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
-    for (auto& [cam, fb] : app->mRenderTargets) {
-      fb->Resize(width, height);
+    for (auto& target : app->mRenderTargets) {
+      target.framebuffer->Resize(width, height);
     }
   }
 

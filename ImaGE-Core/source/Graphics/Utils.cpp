@@ -106,8 +106,7 @@ namespace Graphics {
 
             bool GlLogCall(const char* function, const char* file, int line)
             {
-              return true;
-              /*
+              
                 bool success = true;
                 while (GLenum error = glGetError())
                 {
@@ -126,10 +125,10 @@ namespace Graphics {
 
                     std::cout << ss.str() << std::endl;
 
-                    Debug::DebugLogger::GetInstance().LogError(ss.str());
+                    //Debug::DebugLogger::GetInstance().LogError(ss.str());
                 }
                 return success;
-                */
+                
             }
 
             void GlClearErrors() {

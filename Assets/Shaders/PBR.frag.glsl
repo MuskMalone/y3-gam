@@ -36,7 +36,7 @@ uniform float u_AO;
 in flat int v_MaterialIdx;
 
 uniform sampler2D[16] u_AlbedoMaps;
-uniform sampler2D[16] u_NormalMaps;
+//uniform sampler2D[16] u_NormalMaps;
 
 //lighting parameters
 const int typeDir = 0;
@@ -72,7 +72,7 @@ void main(){
 
     vec2 texCoord = v_TexCoord * u_Tiling + u_Offset;
     
-	vec4 texColor = texture2D(u_NormalMaps[int(v_MaterialIdx)], texCoord); //currently unused
+	//vec4 texColor = texture2D(u_NormalMaps[int(v_MaterialIdx)], texCoord); //currently unused
     
     vec4 albedoTexture = texture2D(u_AlbedoMaps[int(v_MaterialIdx)], texCoord);
     vec3 albedo = albedoTexture.rgb * u_Albedo; // Mixing texture and uniform
