@@ -4,3 +4,5 @@
 #include <Scripting/ScriptingSystem.h>
 #include <Physics/PhysicsSystem.h>
 #include <Graphics/RenderSystem.h>
+#include <Core/Systems/LayerSystem/LayerSystem.h>
+#include <Core/Systems/TextSystem/TextSystem.h>

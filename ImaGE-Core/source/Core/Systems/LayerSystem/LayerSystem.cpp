@@ -95,8 +95,13 @@ namespace Systems {
       return physx::PxFilterFlag::eSUPPRESS;
     }
 
-    // Collision allowed
-    pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
+    //// Collision allowed
+    //pairFlags |=
+    //    physx::PxPairFlag::eCONTACT_DEFAULT |
+    //    physx::PxPairFlag::eNOTIFY_TOUCH_FOUND |
+    //    physx::PxPairFlag::eNOTIFY_TOUCH_LOST |
+    //    physx::PxPairFlag::eNOTIFY_CONTACT_POINTS |
+    //    physx::PxPairFlag::eTRIGGER_DEFAULT;
     return physx::PxFilterFlag::eDEFAULT;
   }
 

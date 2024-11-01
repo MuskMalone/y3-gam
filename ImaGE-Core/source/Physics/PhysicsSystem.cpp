@@ -56,10 +56,9 @@ namespace IGE {
 				Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
 				sceneDesc.filterShader = LayerFilterShaderWrapper;
 			}
-
-			else
+			else {
 				sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
-
+			}
 			mScene = mPhysics->createScene(sceneDesc);
 
 			// register callbacks for events
@@ -613,12 +612,17 @@ namespace IGE {
 		physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
 		physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
 		physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize) {
+		pairFlags |=
+			physx::PxPairFlag::eCONTACT_DEFAULT |
+			physx::PxPairFlag::eNOTIFY_TOUCH_FOUND |
+			physx::PxPairFlag::eNOTIFY_TOUCH_LOST |
+			physx::PxPairFlag::eNOTIFY_CONTACT_POINTS |
+			physx::PxPairFlag::eTRIGGER_DEFAULT;
 		if (auto layerSys = Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
 			return layerSys->LayerFilterShader(
 				attributes0, filterData0, attributes1, filterData1, pairFlags, constantBlock, constantBlockSize);
 		}
 
-		pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
 		return physx::PxFilterFlag::eDEFAULT;
 	}
 }

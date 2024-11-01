@@ -23,7 +23,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Components/Script.h>
 #include <Reflection/ProxyScript.h>
 
-#define DESERIALIZER_DEBUG
+//#define DESERIALIZER_DEBUG
 
 namespace Serialization
 {

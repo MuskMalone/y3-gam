@@ -7,7 +7,7 @@ int Main(int argc, char** argv) {
   IGE::Application::ApplicationSpecification spec;
   spec.EnableImGui = false;
   spec.Fullscreen = false;
-  spec.Name = "ImaGE Editor";
+  spec.Name = "ImaGE Game";
   spec.Resizable = true;
   spec.StartMaximized = false;
   spec.VSync = true;
