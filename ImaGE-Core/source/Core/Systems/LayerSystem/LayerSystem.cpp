@@ -97,8 +97,13 @@ namespace Systems {
       return physx::PxFilterFlag::eSUPPRESS;
     }
 
-    // Collision allowed
-    pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
+    //// Collision allowed
+    //pairFlags |=
+    //    physx::PxPairFlag::eCONTACT_DEFAULT |
+    //    physx::PxPairFlag::eNOTIFY_TOUCH_FOUND |
+    //    physx::PxPairFlag::eNOTIFY_TOUCH_LOST |
+    //    physx::PxPairFlag::eNOTIFY_CONTACT_POINTS |
+    //    physx::PxPairFlag::eTRIGGER_DEFAULT;
     return physx::PxFilterFlag::eDEFAULT;
   }
 
@@ -126,6 +131,7 @@ namespace Systems {
     auto const sceneChangeEvent{ CAST_TO_EVENT(Events::SceneStateChange) };
     if (sceneChangeEvent->mNewState == Events::SceneStateChange::STOPPED) {
       mLayerEntities.clear();
+      return;
     }
     else if (!(sceneChangeEvent->mNewState == Events::SceneStateChange::CHANGED || sceneChangeEvent->mNewState == Events::SceneStateChange::NEW)) {
       return;

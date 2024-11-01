@@ -14,7 +14,7 @@ namespace Component {
   struct ColliderAbstract {
   public:
       inline void Clear() noexcept {
-          positionOffset = {};
+          positionOffset = { 0, 0, 0 };
           rotationOffset = { physx::PxIdentity };
           sensor = false;
       }

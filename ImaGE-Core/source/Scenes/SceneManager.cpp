@@ -58,7 +58,7 @@ namespace Scenes
   }
 
   void SceneManager::StopScene() {
-    QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::STOPPED, mSceneName);
+    Events::EventManager::GetInstance().DispatchImmediateEvent<Events::SceneStateChange>(Events::SceneStateChange::STOPPED, mSceneName);
     ClearScene();
     UnloadScene();
 
@@ -67,6 +67,7 @@ namespace Scenes
     if (!mSaveStates.empty()) {
       LoadTemporarySave();
       InitScene();
+      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mSceneName);
     }
 
     mSceneState = SceneState::STOPPED;

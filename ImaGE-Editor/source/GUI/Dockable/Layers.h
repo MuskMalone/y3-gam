@@ -13,7 +13,7 @@ namespace GUI {
 
   private:
     static inline constexpr float SAME_LINE_SPACING{ 350.f };
-    static inline constexpr float INPUT_SIZE{ 200 };
+    static inline constexpr float INPUT_SIZE{ 150 };
 
   private:
     static int sSelectedLayer;

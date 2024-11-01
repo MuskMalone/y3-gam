@@ -1,4 +1,6 @@
 #pragma once
+#include "AudioListener.h"
+#include "AudioSource.h"
 #include "Layer.h"
 #include "Script.h"
 #include "Tag.h"
@@ -11,3 +13,4 @@
 #include "PrefabOverrides.h"
 #include <Reflection/ProxyScript.h>
 #include "Light.h"
+#include "Camera.h"

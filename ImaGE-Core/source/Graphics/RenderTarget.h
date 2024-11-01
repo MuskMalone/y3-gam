@@ -6,7 +6,7 @@
 namespace Graphics {
   struct RenderTarget {
     RenderTarget(FramebufferSpec const& spec) :
-      camera{}, framebuffer{ std::make_shared<Framebuffer>(spec) } {}
+        camera{}, framebuffer{ std::make_shared<Framebuffer>(spec) } {}
 
     EditorCamera camera;
     std::shared_ptr<Framebuffer> framebuffer;
