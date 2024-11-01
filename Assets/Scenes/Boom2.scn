@@ -55,28 +55,6 @@
                         }
                     },
                     {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 0.5,
-                                "y": 0.5,
-                                "z": 0.5
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 0.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
                         "key": "Layer",
                         "value": {
                             "layerName": "Player"
@@ -101,6 +79,28 @@
                             "gravityFactor": 0.0,
                             "linearDamping": 0.9800000190734863,
                             "motionType": "DYNAMIC"
+                        }
+                    },
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 0.5,
+                                "y": 0.5,
+                                "z": 0.5
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 0.0
+                            },
+                            "sensor": false
                         }
                     }
                 ],
@@ -339,7 +339,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 11822399752580034924
+                            "ID": 1138862392476101895
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -427,7 +427,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 8021066120178354052
+                            "ID": 13755079139399089680
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -592,10 +592,26 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 11822399752580034924
+                            "ID": 1138862392476101895
                         },
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "Text": {
+                        "textContent": "YOUR TEXT HERE",
+                        "color": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "scale": 1.0,
+                        "textAssetGUID": {
+                            "ID": 10355075193979688064
+                        },
+                        "fontFamilyName": "PressStart2P-Regular"
                     }
                 }
             ]
@@ -673,7 +689,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 11822399752580034924
+                            "ID": 1138862392476101895
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -869,7 +885,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 11822399752580034924
+                            "ID": 1138862392476101895
                         },
                         "castShadows": true,
                         "receiveShadows": true

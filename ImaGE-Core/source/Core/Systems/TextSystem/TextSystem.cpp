@@ -85,7 +85,7 @@ namespace Systems {
   }
 
   void TextSystem::AddFont(Systems::Font& font) {
-    Debug::DebugLogger::GetInstance().LogInfo("[Text] Adding Font " + font.mFilePath);
+    Debug::DebugLogger::GetInstance().LogInfo("[Text] Adding Font \"" + font.mFilePath + "\"");
 
     // Check if the font has already been loaded
     if (mFonts.find(font.mFilePathHash) != mFonts.end()) {
@@ -100,6 +100,7 @@ namespace Systems {
     TextSystem::LoadFontFace(*mFonts[font.mFilePathHash]);
     TextSystem::SetFontSize(font.mFilePathHash, DEFAULT_FONT_SIZE);
     TextSystem::GenerateBitmap(font.mFilePathHash, DEFAULT_FONT_SIZE);
+    font = *mFonts[font.mFilePathHash];
   }
 
   std::unordered_map<uint32_t, std::shared_ptr<Systems::Font>> const& TextSystem::GetLoadedFontMap() const {
@@ -132,7 +133,7 @@ namespace Systems {
     FT_Error result{ FT_New_Face(mFreeTypeLib, font.mFilePath.c_str(), 0, &font.mFace.face)};
 
     if (result) {
-      Debug::DebugLogger::GetInstance().LogError("[Text] Failed to add font face for " + font.mFilePath);
+      Debug::DebugLogger::GetInstance().LogError("[Text] Failed to add font face for \"" + font.mFilePath + "\"");
       return;
     }
   }
@@ -142,7 +143,7 @@ namespace Systems {
     FT_Error result{ FT_Set_Pixel_Sizes(font->mFace.face, 0, fontSize) };
 
     if (result) {
-      Debug::DebugLogger::GetInstance().LogError("[Text] Failed to add font face for " + font->mFilePath);
+      Debug::DebugLogger::GetInstance().LogError("[Text] Failed to add font face for \"" + font->mFilePath + "\"");
       return;
     }
   }
@@ -170,15 +171,15 @@ namespace Systems {
       error = FT_Load_Glyph(currFace, glyphIndex, FT_LOAD_RENDER);
 
       if (error) {
-        Debug::DebugLogger::GetInstance().LogInfo("[Text] Failed to load Glyph for " + font->mFilePath + 
-          " with FreeType Error code: " + std::to_string(error));
+        Debug::DebugLogger::GetInstance().LogInfo("[Text] Failed to load Glyph for \"" + font->mFilePath + 
+          "\" with FreeType Error code: " + std::to_string(error));
         continue;
       }
 
       error = FT_Render_Glyph(currFace->glyph, FT_RENDER_MODE_NORMAL);
       if (error) {
-        Debug::DebugLogger::GetInstance().LogInfo("[Text] Failed to render Glyph for " + font->mFilePath +
-          " with FreeType Error code: " + std::to_string(error));
+        Debug::DebugLogger::GetInstance().LogInfo("[Text] Failed to render Glyph for \"" + font->mFilePath +
+          "\" with FreeType Error code: " + std::to_string(error));
       }
 
       // Save the character information
@@ -277,17 +278,21 @@ namespace Systems {
 
   void TextSystem::DebugGlyph(uint32_t filePathHash, [[maybe_unused]] int width, 
     [[maybe_unused]] int height, [[maybe_unused]] unsigned char* buffer) {
-    // Define the output file path (e.g., based on character's Unicode value).
-    std::string outputPath = "../Glyphs/test.png";
+    // Define the output file path
+    std::string outputPath = "../Assets/Fonts/Glyphs/" + std::to_string(filePathHash) + ".png";
 
-    // Save the glyph image as a PNG file.
+    // Skip if the glyph has already been generated
+    if (std::filesystem::exists(outputPath)) {
+      return;
+    }
+
     int result = stbi_write_png(outputPath.c_str(), width, height, 4, buffer, 0);
 
     if (result) {
-      Debug::DebugLogger::GetInstance().LogInfo("[Text] Image saved successfully to " + outputPath);
+      Debug::DebugLogger::GetInstance().LogInfo("[Text] Image saved successfully to \"" + outputPath + "\"");
     }
     else {
-      Debug::DebugLogger::GetInstance().LogInfo("[Text] Failed to save image to " + outputPath);
+      Debug::DebugLogger::GetInstance().LogInfo("[Text] Failed to save image to \"" + outputPath + "\"");
     }
   }
 
