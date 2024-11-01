@@ -4,7 +4,7 @@
 namespace IGE {
 	namespace Assets {
 		const std::set<std::string> cMeshExtensions{
-			".obj", ".fbx",    // JPEG format
+			".obj", ".fbx", ".imsh"  // JPEG format
 		};
 		const std::set<std::string> cImageExtensions{
 			".jpg", ".jpeg",    // JPEG format
@@ -35,7 +35,8 @@ namespace IGE {
 		const std::map<std::string, std::set<std::string>> cDirectoryToExtensions{
 			{ "Models", cMeshExtensions },
 			{ "Textures", cImageExtensions },
-			{ "Audio", cAudioExtensions}
+			{ "Audio", cAudioExtensions},
+			{ "Fonts", cFontExtensions }
 		};
 	}
 }
