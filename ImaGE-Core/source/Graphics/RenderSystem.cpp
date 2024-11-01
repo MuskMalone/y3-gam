@@ -7,6 +7,7 @@
 #include "Renderer.h"
 #include "Utils.h"
 #include "EditorCamera.h"
+#include <Scenes/SceneManager.h>
 
 namespace Graphics {
 
@@ -29,18 +30,28 @@ namespace Graphics {
 		//Frustum Culling should be here
 		
 		std::vector<ECS::Entity> entityVector{};
-		if (std::shared_ptr<Systems::LayerSystem> layerSys =
-			Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
-			std::unordered_map<std::string, std::vector<ECS::Entity>> const& layerEntities{ layerSys->GetLayerEntities() };
+		// if editing prefab, pass in all active entities
+		if (Scenes::SceneManager::GetInstance().GetSceneState() == Scenes::PREFAB_EDITOR) {
+			auto const& entities{ ECS::EntityManager::GetInstance().GetAllEntities() };
+			entityVector.reserve(entities.size());
+			std::copy_if(entities.begin(), entities.end(), std::back_inserter(entityVector),
+				[](ECS::Entity const& e) { return e.GetComponent<Component::Tag>().isActive; });
+		}
+		// else call on the layer system
+		else {
+			if (std::shared_ptr<Systems::LayerSystem> layerSys =
+				Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
+				std::unordered_map<std::string, std::vector<ECS::Entity>> const& layerEntities{ layerSys->GetLayerEntities() };
 
-			for (std::pair<std::string, std::vector<ECS::Entity>> mapPair : layerEntities) {
-				if (layerSys->IsLayerVisible(mapPair.first)) {
-					// assuming majority of entities in a layer will be active, so .size is a decent estimate
-					entityVector.reserve(entityVector.size() + mapPair.second.size());
-					// insert all active entities
-					std::copy_if(mapPair.second.begin(), mapPair.second.end(), std::back_inserter(entityVector),
-						[](ECS::Entity const& e) { return e.GetComponent<Component::Tag>().isActive; });
-					//entityVector.insert(entityVector.end(), mapPair.second.begin(), mapPair.second.end());
+				for (std::pair<std::string, std::vector<ECS::Entity>> mapPair : layerEntities) {
+					if (layerSys->IsLayerVisible(mapPair.first)) {
+						// assuming majority of entities in a layer will be active, so .size is a decent estimate
+						entityVector.reserve(entityVector.size() + mapPair.second.size());
+						// insert all active entities
+						std::copy_if(mapPair.second.begin(), mapPair.second.end(), std::back_inserter(entityVector),
+							[](ECS::Entity const& e) { return e.GetComponent<Component::Tag>().isActive; });
+						//entityVector.insert(entityVector.end(), mapPair.second.begin(), mapPair.second.end());
+					}
 				}
 			}
 		}

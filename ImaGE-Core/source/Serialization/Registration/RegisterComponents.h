@@ -128,6 +128,7 @@ static void rttr_auto_register_reflection_function2_(); namespace {
   // stuff below are not actual "Components", hence we skip the REGISTER_COMPONENT checks
   rttr::registration::class_<PrefabOverrides>("PrefabOverrides")
     .constructor<>()
+    .property(JSON_GUID_KEY, &PrefabOverrides::guid)
     .property("modifiedComponents", &PrefabOverrides::modifiedComponents)
     .property("removedComponents", &PrefabOverrides::removedComponents)
     .property("subDataId", &PrefabOverrides::subDataId);

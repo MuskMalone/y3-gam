@@ -269,12 +269,12 @@ namespace Serialization
 
   void Deserializer::DeserializePrefabOverrides(Component::PrefabOverrides& prefabOverride, rapidjson::Value const& json)
   {
-    if (!json.HasMember(JSON_GUID_KEY) || !json.HasMember("modifiedComponents") || !json.HasMember("removedComponents") || !json.HasMember("subDataId")) {
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] PrefabOverride json did not contain correct members!");
+    if (!ScanJsonFileForMembers(json, "PrefabOverrides", 4, JSON_GUID_KEY, rapidjson::kObjectType, "modifiedComponents", rapidjson::kArrayType,
+      "removedComponents", rapidjson::kArrayType, "subDataId", rapidjson::kNumberType)) {
       return;
     }
 
-    prefabOverride.guid = json[JSON_GUID_KEY].GetUint64();
+    DeserializeRecursive(prefabOverride.guid, json[JSON_GUID_KEY]);
     prefabOverride.subDataId = json["subDataId"].GetUint();
 
     // deserialize removed components
