@@ -86,7 +86,7 @@ namespace Reflection
 
     std::string const& name{ entity.GetComponent<Component::Tag>().tag };
     ECS::Entity newEntity{ entityMan.CreateEntityWithTag(name + " (Copy)") };
-    //entityMan.SetIsActiveEntity(newEntity, entityMan.GetIsActiveEntity(entity));
+    newEntity.SetIsActive(entity.IsActive());
 
     std::vector<rttr::variant> const components{ GetEntityComponents(entity) };
 
@@ -223,7 +223,7 @@ namespace Reflection
         mNewIDs.emplace(data.mID, newEntity);
       }
 
-      //entityMan.SetIsActiveEntity(id, arg.mIsActive);
+      newEntity.SetIsActive(data.mIsActive);
       AddComponentsToEntity(newEntity, data.mComponents);
     }
 

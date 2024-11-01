@@ -81,7 +81,8 @@ namespace Prefabs
     struct EntityMappings;
     using SubObjectComponentMap = std::unordered_map<SubDataId, std::vector<rttr::variant>>;
 
-    Prefab();
+    Prefab() = default;
+    Prefab(std::string name, bool isActive = true);
 
     /*!*********************************************************************
     \brief
@@ -154,6 +155,7 @@ namespace Prefabs
     ************************************************************************/
     void Clear() noexcept;
 
+    std::string mName;
     std::vector<PrefabSubData> mObjects;
     std::vector<rttr::variant> mComponents;
     bool mIsActive;

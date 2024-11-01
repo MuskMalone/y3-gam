@@ -105,12 +105,12 @@ namespace Prefabs
        The entity ID of the prefab instance
      \param mappings
        The mappings of entity to subdataid when the prefab was created
-     \param key
-       The key of the prefab
+     \param name
+       The name of the prefab
      \param filepath
        The path to save the prefab to
     ************************************************************************/
-    void UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::string const& key,
+    void UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::string const& name,
       Prefabs::Prefab::EntityMappings& mappings, std::string const& filePath);
 
   private:

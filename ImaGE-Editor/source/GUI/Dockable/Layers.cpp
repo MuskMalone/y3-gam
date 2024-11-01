@@ -6,29 +6,48 @@
 #include "GUI/GUIManager.h"
 #include "GUI/Dockable/Inspector.h"
 #include "Scenes/SceneManager.h"
+#include <Events/EventManager.h>
 
 namespace GUI {
 
   int Layers::sSelectedLayer{};
 
-  Layers::Layers(const char* name) : GUIWindow(name) {
+  Layers::Layers(const char* name) : GUIWindow(name), mIsActive{ true } {
     mLayerSystem = Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>();
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &Layers::OnPrefabEditor, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &Layers::OnSceneStop, this);
   }
 
   void Layers::Run() {
     ImGui::Begin(mWindowName.c_str());
+
+    if (!mIsActive) {
+      ImGui::Text("Layers not available for Prefabs!");
+      ImGui::End();
+      return;
+    }
 
     if (!Scenes::SceneManager::GetInstance().NoSceneSelected()) {
       LayerNameNode();
       VisibilityToggleNode();
       CollisionMatrixNode();
     }
-
     else {
       ImGui::Text("No Scene Selected");
     }
 
     ImGui::End();
+  }
+
+  EVENT_CALLBACK_DEF(Layers, OnPrefabEditor) {
+    mIsActive = false;
+  }
+  EVENT_CALLBACK_DEF(Layers, OnSceneStop) {
+    if (CAST_TO_EVENT(Events::SceneStateChange)->mNewState != Events::SceneStateChange::STOPPED) {
+      return;
+    }
+
+    mIsActive = true;
   }
 
   void Layers::LayerNameNode() {

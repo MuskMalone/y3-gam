@@ -12,6 +12,7 @@ namespace Systems {
   void LayerSystem::Start() {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &LayerSystem::OnSceneChange, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::LAYER_MODIFIED, &LayerSystem::OnLayerModification, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &LayerSystem::OnPrefabEditor, this);
   }
 
   void LayerSystem::Update() {
@@ -123,12 +124,13 @@ namespace Systems {
 
   EVENT_CALLBACK_DEF(LayerSystem, OnSceneChange) {
     auto const sceneChangeEvent{ CAST_TO_EVENT(Events::SceneStateChange) };
-    if (!(sceneChangeEvent->mNewState == Events::SceneStateChange::CHANGED || sceneChangeEvent->mNewState == Events::SceneStateChange::NEW)) {
+    if (sceneChangeEvent->mNewState == Events::SceneStateChange::STOPPED) {
+      mLayerEntities.clear();
+    }
+    else if (!(sceneChangeEvent->mNewState == Events::SceneStateChange::CHANGED || sceneChangeEvent->mNewState == Events::SceneStateChange::NEW)) {
       return;
     }
 
-    mLayerEntities.clear();
-    
     // The built-in layer names should never change
     // This code is necessary as someone might manually edit the built-in layers in the json file...
     mLayerData.layerNames[0] = std::string(BUILTIN_LAYER_0);
@@ -217,4 +219,8 @@ namespace Systems {
     }
   }
 
+  EVENT_CALLBACK_DEF(LayerSystem, OnPrefabEditor) {
+    // we simply clear; no layers for prefabs
+    mLayerEntities.clear();
+  }
 } // namespace Systems

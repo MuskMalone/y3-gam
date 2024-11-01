@@ -46,7 +46,8 @@ namespace Serialization
     writer.StartObject();
 
     // serialize the base layer of the prefab
-    writer.Key(JSON_PFB_ACTIVE_KEY); writer.Bool(true);
+    writer.Key(JSON_PFB_NAME_KEY); writer.String(prefab.mName.c_str());
+    writer.Key(JSON_PFB_ACTIVE_KEY); writer.Bool(prefab.mIsActive);
 
     writer.Key(JSON_COMPONENTS_KEY);
     SerializeVariantComponents(prefab.mComponents, writer);
@@ -181,10 +182,9 @@ namespace Serialization
     }
 
     // if not, serialize the entity as per normal
-    // 
     // serialize state
     writer.Key(JSON_ENTITY_STATE_KEY);
-    writer.Bool(true);// entityMan.GetIsActiveEntity(entity));
+    writer.Bool(entity.IsActive());
 
     writer.Key(JSON_COMPONENTS_KEY);
     std::vector<rttr::variant> const components{ Reflection::ObjectFactory::GetInstance().GetEntityComponents(entity) };

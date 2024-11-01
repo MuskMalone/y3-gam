@@ -54,6 +54,7 @@ namespace Systems {
   private:
     EVENT_CALLBACK_DECL(OnSceneChange);
     EVENT_CALLBACK_DECL(OnLayerModification);
+    EVENT_CALLBACK_DECL(OnPrefabEditor);
 
   private:
     LayerData mLayerData;

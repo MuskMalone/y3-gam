@@ -29,7 +29,7 @@ ECS::Entity PrefabSubData::Construct(IGE::Assets::GUID guid, bool createInst) co
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
   ECS::Entity entity{ entityMan.CreateEntity() };
 
-  //entityMan.SetIsActiveEntity(entity, mIsActive);
+  entity.SetIsActive(mIsActive);
   Reflection::ObjectFactory::GetInstance().AddComponentsToEntity(entity, mComponents);
   if (createInst) {
     entity.EmplaceComponent<Component::PrefabOverrides>(guid, mId);
@@ -39,7 +39,7 @@ ECS::Entity PrefabSubData::Construct(IGE::Assets::GUID guid, bool createInst) co
 }
 
 
-Prefab::Prefab() : mObjects{}, mComponents{}, mIsActive{ true } {}
+Prefab::Prefab(std::string name, bool isActive) : mName{ std::move(name) }, mObjects {}, mComponents{}, mIsActive{ isActive } {}
 
 std::pair<ECS::Entity, Prefab::EntityMappings> Prefab::ConstructAndMap(glm::vec3 const& pos) const
 {
@@ -52,7 +52,7 @@ std::pair<ECS::Entity, Prefab::EntityMappings> Prefab::ConstructAndMap(glm::vec3
 
   // first, create the base entity
   ECS::Entity entity{ entityMan.CreateEntity() };
-  //entityMan.SetIsActiveEntity(entity, mIsActive);
+  entity.SetIsActive(mIsActive);
   Reflection::ObjectFactory::GetInstance().AddComponentsToEntity(entity, mComponents);
   Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
   trans.worldPos = trans.position = pos;
@@ -73,9 +73,9 @@ std::pair<ECS::Entity, Prefab::EntityMappings> Prefab::ConstructAndMap(glm::vec3
   // establish the hierarchy
   for (PrefabSubData const& obj : mObjects)
   {
-    ECS::Entity const& child{ idsToEntities[obj.mId] }, parent{ idsToEntities[obj.mParent] };
+    ECS::Entity& child{ idsToEntities[obj.mId] }, parent{ idsToEntities[obj.mParent] };
     entityMan.SetParentEntity(parent, child);
-    //entityMan.SetIsActiveEntity(child, obj.mIsActive);
+    child.SetIsActive(obj.mIsActive);
   }
 
   return { entity, mappedData };
@@ -90,7 +90,7 @@ ECS::Entity Prefab::Construct(IGE::Assets::GUID guid, glm::vec3 const& pos) cons
 
   // first, create the base entity
   ECS::Entity entity{ entityMan.CreateEntity() };
-  //entityMan.SetIsActiveEntity(entity, mIsActive);
+  entity.SetIsActive(mIsActive);
   Reflection::ObjectFactory::GetInstance().AddComponentsToEntity(entity, mComponents);
   Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
   trans.worldPos = trans.position = pos;
@@ -109,9 +109,9 @@ ECS::Entity Prefab::Construct(IGE::Assets::GUID guid, glm::vec3 const& pos) cons
   // establish the hierarchy
   for (PrefabSubData const& obj : mObjects)
   {
-    ECS::Entity const& child{ idsToEntities[obj.mId] }, parent{ idsToEntities[obj.mParent] };
+    ECS::Entity& child{ idsToEntities[obj.mId] }, parent{ idsToEntities[obj.mParent] };
     entityMan.SetParentEntity(parent, child);
-    //entityMan.SetIsActiveEntity(child, obj.mIsActive);
+    child.SetIsActive(obj.mIsActive);
   }
 
   return entity;
@@ -163,7 +163,7 @@ void Prefab::CreateSubData(IGE::Assets::GUID guid, std::vector<ECS::Entity> cons
   {
     SubDataId const currId{ static_cast<SubDataId>(mObjects.size() + 1) };
     PrefabSubData obj{ currId, parent };
-    obj.mIsActive = true; // entityMan.GetIsActiveEntity(child);
+    obj.mIsActive = child.IsActive();
 
     obj.mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(child);
 
@@ -198,7 +198,7 @@ void Prefab::CreateFixedSubData(std::vector<ECS::Entity> const& children, Entity
       mappings.Insert(child.GetRawEnttEntityID(), currId);
     }
     PrefabSubData obj{ currId, parent };
-    obj.mIsActive = true; // entityMan.GetIsActiveEntity(child);
+    obj.mIsActive = child.IsActive();
 
     obj.mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(child);
 
@@ -213,4 +213,5 @@ void Prefab::Clear() noexcept
 {
   mComponents.clear();
   mObjects.clear();
+  mName.clear();
 }

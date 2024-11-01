@@ -79,12 +79,11 @@ std::pair<ECS::Entity, Prefabs::Prefab::EntityMappings> PrefabManager::SpawnPref
   return entityData;
 }
 
-void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::string const& key,
+void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::string const& name,
   Prefabs::Prefab::EntityMappings& mappings, std::string const& filePath)
 {
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
-  Prefab prefab{};
-  prefab.mIsActive = true; // entityMan.GetIsActiveEntity(entity);
+  Prefab prefab{ name, prefabInstance.IsActive() };
   prefab.mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(prefabInstance);
   if (entityMan.HasChild(prefabInstance)) {
     prefab.CreateFixedSubData(entityMan.GetChildEntity(prefabInstance), mappings);
@@ -97,8 +96,7 @@ void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::stri
 void PrefabManager::CreatePrefabFromEntity(ECS::Entity const& entity, std::string const& name, std::string const& path)
 {
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
-  Prefab prefab{};
-  prefab.mIsActive = true; // entityMan.GetIsActiveEntity(entity);
+  Prefab prefab{ name, entity.IsActive() };
   prefab.mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(entity);
 
   if (entityMan.HasChild(entity)) {

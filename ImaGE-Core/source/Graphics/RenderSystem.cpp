@@ -42,7 +42,6 @@ namespace Graphics {
 			if (std::shared_ptr<Systems::LayerSystem> layerSys =
 				Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
 				std::unordered_map<std::string, std::vector<ECS::Entity>> const& layerEntities{ layerSys->GetLayerEntities() };
-
 				for (std::pair<std::string, std::vector<ECS::Entity>> mapPair : layerEntities) {
 					if (layerSys->IsLayerVisible(mapPair.first)) {
 						// assuming majority of entities in a layer will be active, so .size is a decent estimate

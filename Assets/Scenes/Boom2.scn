@@ -271,6 +271,13 @@
                         "value": {
                             "layerName": "Player"
                         }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Prop1",
+                            "isActive": true
+                        }
                     }
                 ],
                 "removedComponents": [],
@@ -359,7 +366,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12646009280156475553
+                            "ID": 6258301960356637249
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -447,7 +454,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 10503490277462868259
+                            "ID": 10610366799000896879
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -628,10 +635,70 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12646009280156475553
+                            "ID": 6258301960356637249
                         },
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 25,
+            "Parent": null,
+            "Child Entities": [],
+            "isActive": false,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Inactive Test",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
                     }
                 }
             ]
@@ -711,7 +778,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12646009280156475553
+                            "ID": 6258301960356637249
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -738,6 +805,28 @@
                         "value": {
                             "tag": "Plane 2",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 1.0049999952316285,
+                                "y": 1.0049999952316285,
+                                "z": 1.0049999952316285
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 0.0
+                            },
+                            "sensor": false
                         }
                     },
                     {
@@ -802,28 +891,6 @@
                                 "w": 0.9842380285263062
                             }
                         }
-                    },
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 1.0049999952316285,
-                                "y": 1.0049999952316285,
-                                "z": 1.0049999952316285
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 0.0
-                            },
-                            "sensor": false
-                        }
                     }
                 ],
                 "removedComponents": [],
@@ -838,7 +905,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Entity 2097163",
+                        "tag": "d",
                         "isActive": true
                     }
                 },
@@ -892,7 +959,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12646009280156475553
+                            "ID": 6258301960356637249
                         },
                         "castShadows": true,
                         "receiveShadows": true
