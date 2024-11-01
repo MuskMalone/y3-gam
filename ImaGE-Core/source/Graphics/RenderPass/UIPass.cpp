@@ -9,10 +9,9 @@ namespace Graphics {
 	void UIPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities){
 		Begin();
 
-		auto const& shader = mSpec.pipeline->GetShader();
-		shader->SetUniform("u_ScreenTex", mInputTexture);
-
-		Renderer::RenderFullscreenTexture();
+		//auto const& shader = mSpec.pipeline->GetShader();
+		//shader->SetUniform("u_ScreenTex", mInputTexture);
+		//Renderer::RenderFullscreenTexture();
 
 		End();
 	}

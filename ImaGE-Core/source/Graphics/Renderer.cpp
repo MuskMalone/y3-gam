@@ -10,6 +10,7 @@
 #pragma region RenderPasses
 #include <Graphics/RenderPass/GeomPass.h>
 #include <Graphics/RenderPass/ShadowPass.h>
+#include <Graphics/RenderPass/ScreenPass.h>
 #include <Graphics/RenderPass/UIPass.h>
 #pragma endregion
 
@@ -134,6 +135,7 @@ namespace Graphics {
 		//InitPickPass();
 		InitShadowMapPass();
 		InitGeomPass();
+		InitScreenPass();
 		InitUIPass();
 
 		InitFullscreenQuad();
@@ -266,8 +268,25 @@ namespace Graphics {
 		uiPassSpec.pipeline = Pipeline::Create(uiPSpec);
 		uiPassSpec.debugName = "UI Pass";
 
-		AddPass(RenderPass::Create<UIPass>(uiPassSpec));
+		//AddPass(RenderPass::Create<UIPass>(uiPassSpec));
 
+	}
+
+	void Renderer::InitScreenPass() {
+		Graphics::FramebufferSpec screenSpec;
+		screenSpec.width = WINDOW_WIDTH<int>;
+		screenSpec.height = WINDOW_HEIGHT<int>;
+		screenSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };
+
+		PipelineSpec screenPSpec;
+		screenPSpec.shader = ShaderLibrary::Get("FullscreenQuad");
+		screenPSpec.targetFramebuffer = Framebuffer::Create(screenSpec);
+
+		RenderPassSpec screenPassSpec;
+		screenPassSpec.pipeline = Pipeline::Create(screenPSpec);
+		screenPassSpec.debugName = "Screen Pass";
+
+		AddPass(RenderPass::Create<ScreenPass>(screenPassSpec));
 	}
 
 	void Renderer::InitFullscreenQuad(){

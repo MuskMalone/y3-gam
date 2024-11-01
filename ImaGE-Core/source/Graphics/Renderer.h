@@ -175,6 +175,7 @@ namespace Graphics {
 		static void InitPickPass();
 		static void InitGeomPass();
 		static void InitShadowMapPass();
+		static void InitScreenPass();
 		static void InitUIPass();
 
 		static void InitFullscreenQuad();
