@@ -417,7 +417,7 @@ namespace GUI
           existingPrefabWarning = false;
         }
         else {
-          prefabMan.CreatePrefabFromEntity(mRightClickedEntity, input, {}, true);
+          prefabMan.CreatePrefabFromEntity(mRightClickedEntity, input);
           blankWarning = existingPrefabWarning = false;
           input.clear();
           ImGui::CloseCurrentPopup();

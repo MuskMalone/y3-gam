@@ -14,8 +14,6 @@ namespace Graphics {
 
     void ShadowPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
         mActive = LocateLightSource(cam, entities);
-        if (!mActive) { return; }
-
         StartRender();
 
         auto const& shader = mSpec.pipeline->GetShader();

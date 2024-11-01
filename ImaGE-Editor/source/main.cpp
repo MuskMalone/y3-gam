@@ -30,6 +30,10 @@ int Main(int argc, char** argv) {
     myApp.Run();
   }
 #ifdef _DEBUG
+  catch (Debug::ExceptionBase& e) {
+    e.LogSource();
+    std::cerr << e.ErrMsg() << std::endl;
+  }
   catch (std::exception const& e)
   {
     std::cerr << e.what() << std::endl;

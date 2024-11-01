@@ -102,11 +102,12 @@ namespace GUI {
       static bool componentOverriden{ false };
       if (!mEditingPrefab && currentEntity.HasComponent<Component::PrefabOverrides>()) {
         prefabOverride = &currentEntity.GetComponent<Component::PrefabOverrides>();
+        std::string const& pfbName{ IGE_ASSETMGR.GetAsset<IGE::Assets::PrefabAsset>(prefabOverride->guid)->mPrefabData.mName };
         ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
         ImGui::Text("Prefab instance of");
         ImGui::SameLine();
         ImGui::PushStyleColor(ImGuiCol_Text, sComponentHighlightCol);
-        ImGui::Text(prefabOverride->prefabName.c_str());
+        ImGui::Text(pfbName.c_str());
         ImGui::PopStyleColor();
         ImGui::PopFont();
       }
@@ -186,7 +187,9 @@ namespace GUI {
               }
           }
       }
-      if (currentEntity.HasComponent<Component::Layer>()) {
+
+      // don't run in PrefabEditor since layers are tied to a scene
+      if (!mEditingPrefab && currentEntity.HasComponent<Component::Layer>()) {
         rttr::type const layerType{ rttr::type::get<Component::Layer>() };
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(layerType);
 
@@ -562,8 +565,6 @@ namespace GUI {
     WindowEnd(isOpen);
     return modified;
   }
-
-
 
   bool Inspector::TagComponentWindow(ECS::Entity entity, bool highlight) {
     bool const isOpen{ WindowBegin<Component::Tag>("Tag", highlight) };
@@ -1213,7 +1214,6 @@ namespace GUI {
     WindowEnd(isOpen);
     return modified;
   }
-
 
 
   void Inspector::DrawAddButton() {

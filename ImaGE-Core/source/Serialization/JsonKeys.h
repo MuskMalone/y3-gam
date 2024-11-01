@@ -21,6 +21,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #define JSON_COMPONENTS_KEY         "Components"
 #define JSON_PREFAB_KEY             "Prefab"
 #define JSON_PFB_POS_KEY            "Position"
+#define JSON_GUID_KEY               "GUID"
 #define JSON_PFB_NAME_KEY           "Name"
 #define JSON_PFB_ACTIVE_KEY         "isActive"
 #define JSON_PFB_DATA_KEY           "SubData"

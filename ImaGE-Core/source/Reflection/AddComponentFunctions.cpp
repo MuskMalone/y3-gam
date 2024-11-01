@@ -62,7 +62,6 @@ namespace Reflection::ComponentUtils {
   void AddRigidBody(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(RigidBody, comp);
 
-    //entity.EmplaceOrReplaceComponent<RigidBody>(comp);
     IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(entity, comp);
   }
 

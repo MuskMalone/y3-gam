@@ -1,6 +1,6 @@
 template <typename T>
-Exception<T>::Exception(EXCEPTION_LEVEL lvl, std::string err, std::string loc, int line)
-  : mErrMsg{ err },  mSource{ loc },  mLine{ line }, mLvl{ lvl }, mErrLog{ DebugLogger::GetInstance() } 
+Exception<T>::Exception(EXCEPTION_LEVEL lvl, std::string const& err, std::string const& loc, int line)
+  : mSource{ std::move(loc) },  mLine{ line }, mLvl{ lvl }, mErrLog{ DebugLogger::GetInstance() } 
 {
     std::stringstream ss;
     ss << mSource << "(Line: " << mLine << ") " << err;

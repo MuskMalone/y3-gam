@@ -25,16 +25,14 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 #pragma region SYSTEM_INCLUDES
 #include <Core/Systems/SystemManager/SystemManager.h>
-#include <Physics/PhysicsSystem.h>
-#include <Core/Systems/TransformSystem/TransformSystem.h>
-#include <Scripting/ScriptingSystem.h>
-#include <Core/Systems/LayerSystem/LayerSystem.h>
-#include <Graphics/RenderSystem.h>
+#include <Core/Systems/Systems.h>
 #pragma endregion
 
 #include "Serialization/Serializer.h"
 #include "Serialization/Deserializer.h"
 #include "Asset/AssetMetadata.h"
+
+#include <Audio/AudioManager.h>
 
 namespace IGE {
   // Static Initialization
@@ -53,7 +51,8 @@ namespace IGE {
     Mono::ScriptManager::CreateInstance();
     ECS::EntityManager::CreateInstance();
     Systems::SystemManager::CreateInstance();
-
+    IGE::Audio::AudioManager::CreateInstance();
+    
     // @TODO: Init physics and audio singletons
     //IGE::Physics::PhysicsSystem::InitAllocator();
     //IGE::Physics::PhysicsSystem::GetInstance()->Init();
@@ -77,6 +76,7 @@ namespace IGE {
       eventManager.DispatchAll();
 
       systemManager.UpdateSystems();
+      IGE::Audio::AudioManager::GetInstance().Update();
 
       glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
 
@@ -100,6 +100,7 @@ namespace IGE {
     systemManager.RegisterSystem<Systems::LayerSystem>("Layer System");
     systemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
     systemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
+    systemManager.RegisterSystem<Systems::TextSystem>("Text System");
   }
 
   Application::Application(ApplicationSpecification spec) : mRenderTargets{}, mWindow{}
@@ -188,7 +189,7 @@ namespace IGE {
   {
     // shutdown singletons
     Systems::SystemManager::DestroyInstance();
-
+    IGE::Audio::AudioManager::DestroyInstance();
     Scenes::SceneManager::DestroyInstance();
     Prefabs::PrefabManager::DestroyInstance();
     Mono::ScriptManager::DestroyInstance();

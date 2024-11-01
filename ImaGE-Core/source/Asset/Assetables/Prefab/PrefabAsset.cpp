@@ -4,6 +4,7 @@
 #include <Serialization/Deserializer.h>
 #include "Asset/AssetManager.h"
 #include "Asset/AssetMetadata.h"
+
 namespace IGE {
 	namespace Assets {
 		PrefabAsset::PrefabAsset(std::string const& fp) :
@@ -14,6 +15,7 @@ namespace IGE {
 			std::string& newFp, 
 			AssetMetadata::AssetProps& metadata) {
 			newFp = cPrefabsDirectory + GetFileNameWithExtension(fp);
+			metadata.emplace("path", newFp);
 			return GUID{ GUID::Seed{} };
 		}
 
