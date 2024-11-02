@@ -366,7 +366,8 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 4457886328063760369
+                            "Seed": "Cube",
+                            "ID": 9115105366793692982
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -398,37 +399,6 @@
             "Child Entities": [],
             "isActive": true,
             "Components": [
-                {
-                    "AudioSource": {
-                        "sounds": [
-                            {
-                                "key": "..\\Assets\\Audio\\boing.mp3",
-                                "value": {
-                                    "guid": {
-                                        "ID": 2162875126662710601
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": -8.600000381469727,
-                                            "y": -10.0,
-                                            "z": 0.0
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": true,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "LINEAR"
-                                    }
-                                }
-                            }
-                        ]
-                    }
-                },
                 {
                     "Tag": {
                         "tag": "Entity 14",
@@ -482,11 +452,28 @@
                     }
                 },
                 {
-                    "Mesh": {
-                        "meshName": "Plane",
-                        "GUID": {
-                            "ID": 5676837599835405777
+                    "Light": {
+                        "lighttype": 0,
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
                         },
+                        "direction": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "color": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "linear": 0.0,
+                        "quadratic": 0.0,
+                        "radius": 0.0,
+                        "cutoff": 0.0,
+                        "outercutoff": 0.0,
                         "castShadows": true,
                         "receiveShadows": true
                     }
@@ -666,7 +653,8 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 4457886328063760369
+                            "Seed": "Cube",
+                            "ID": 9115105366793692982
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -809,7 +797,8 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 4457886328063760369
+                            "Seed": "Cube",
+                            "ID": 9115105366793692982
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -836,48 +825,6 @@
                         "value": {
                             "tag": "Plane 2",
                             "isActive": true
-                        }
-                    },
-                    {
-                        "key": "Transform",
-                        "value": {
-                            "position": {
-                                "x": -4.800000190734863,
-                                "y": -2.0999999046325685,
-                                "z": -13.199999809265137
-                            },
-                            "scale": {
-                                "x": 2.009999990463257,
-                                "y": 2.009999990463257,
-                                "z": 2.009999990463257
-                            },
-                            "rotation": {
-                                "x": 0.14626935124397279,
-                                "y": -0.06200156360864639,
-                                "z": -0.07769519835710526,
-                                "w": 0.9842380285263062
-                            },
-                            "eulerAngles": {
-                                "x": 17.399999618530275,
-                                "y": -5.699999809265137,
-                                "z": -9.899999618530274
-                            },
-                            "worldPos": {
-                                "x": -4.800000190734863,
-                                "y": -2.0999999046325685,
-                                "z": -13.199999809265137
-                            },
-                            "worldScale": {
-                                "x": 2.009999990463257,
-                                "y": 2.009999990463257,
-                                "z": 2.009999990463257
-                            },
-                            "worldRot": {
-                                "x": 0.14626935124397279,
-                                "y": -0.06200156360864639,
-                                "z": -0.07769519835710526,
-                                "w": 0.9842380285263062
-                            }
                         }
                     },
                     {
@@ -922,6 +869,48 @@
                             "linearDamping": 0.9800000190734863,
                             "motionType": "DYNAMIC"
                         }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -4.800000190734863,
+                                "y": -2.0999999046325685,
+                                "z": -13.199999809265137
+                            },
+                            "scale": {
+                                "x": 2.009999990463257,
+                                "y": 2.009999990463257,
+                                "z": 2.009999990463257
+                            },
+                            "rotation": {
+                                "x": 0.14626935124397279,
+                                "y": -0.06200156360864639,
+                                "z": -0.07769519835710526,
+                                "w": 0.9842380285263062
+                            },
+                            "eulerAngles": {
+                                "x": 17.399999618530275,
+                                "y": -5.699999809265137,
+                                "z": -9.899999618530274
+                            },
+                            "worldPos": {
+                                "x": -4.800000190734863,
+                                "y": -2.0999999046325685,
+                                "z": -13.199999809265137
+                            },
+                            "worldScale": {
+                                "x": 2.009999990463257,
+                                "y": 2.009999990463257,
+                                "z": 2.009999990463257
+                            },
+                            "worldRot": {
+                                "x": 0.14626935124397279,
+                                "y": -0.06200156360864639,
+                                "z": -0.07769519835710526,
+                                "w": 0.9842380285263062
+                            }
+                        }
                     }
                 ],
                 "removedComponents": [],
@@ -934,6 +923,37 @@
             "Child Entities": [],
             "isActive": true,
             "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "..\\Assets\\Audio\\boing.mp3",
+                                "value": {
+                                    "guid": {
+                                        "ID": 2162875126662710601
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -1.1703062057495118,
+                                            "y": 0.4263947010040283,
+                                            "z": 3.1060776710510256
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "LINEAR"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
                 {
                     "Tag": {
                         "tag": "d",
@@ -990,7 +1010,8 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 4457886328063760369
+                            "Seed": "Cube",
+                            "ID": 9115105366793692982
                         },
                         "castShadows": true,
                         "receiveShadows": true
