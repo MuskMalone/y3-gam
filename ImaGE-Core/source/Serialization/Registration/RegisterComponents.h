@@ -88,7 +88,9 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("color", &Text::color)
     .property("scale", &Text::scale)
     .property("textAssetGUID", &Text::textAsset)
-    .property("fontFamilyName", &Text::fontFamilyName);
+    .property("fontFamilyName", &Text::fontFamilyName)
+    .property("alignment", &Text::alignment)
+    .property("multiLineSpacingOffset", &Text::multiLineSpacingOffset);
 
   REGISTER_COMPONENT(RigidBody, "RigidBody")
     .property("velocity", &RigidBody::velocity)

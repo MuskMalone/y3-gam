@@ -47,6 +47,7 @@ namespace Systems {
 		FaceObject mFace;
 		std::map<char, Character> mCharacterMap;
 		std::shared_ptr<Graphics::Texture> mBitmap;
+		float mMaxHeight;
 	};
 
 	class TextSystem : public System {
@@ -59,10 +60,15 @@ namespace Systems {
 
 		void AddFont(Systems::Font& font);
 		std::unordered_map<uint32_t, std::shared_ptr<Systems::Font>> const& GetLoadedFontMap() const;
-		void RenderText(uint32_t filePathHash, std::string textContent,
-			float xPos, float yPos, float scale, glm::vec3 color);
-		float GetTextWidth(uint32_t filePathHash, std::string textContent, float scale);
+		void RenderText(uint32_t filePathHash, std::string const& textContent,
+			float xPos, float yPos, float scale, glm::vec3 color, 
+			std::vector<std::pair<size_t, float>> const& newLineIndices, int multiLineSpacingOffset);
+		float GetTextWidth(uint32_t filePathHash, std::string const& textContent, float scale);
 		bool IsValid(Font const& font) const;
+
+		// To be called once by entities with text component before rendering
+		void CalculateNewLineIndices(IGE::Assets::GUID textAsset, std::string const& textContent,
+			std::vector<std::pair<size_t, float>>& indices, bool& newLineIndicesUpdatedFlag, int alignment);
 
 	private:
 		const int MAX_ASCII{ 128 };

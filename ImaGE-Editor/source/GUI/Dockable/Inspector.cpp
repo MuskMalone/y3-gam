@@ -630,19 +630,6 @@ namespace GUI {
         ImGui::EndDragDropTarget();
       }
       
-      /*
-      NextRowTable("Font Family");
-      if (ImGui::BeginCombo("##TextName", text.fontName.c_str())) {
-        for (const char* fontName : availableFonts) {
-          if (ImGui::Selectable(fontName)) {
-            text.fontName = fontName;
-            modified = true;
-          }
-        }
-        ImGui::EndCombo();
-      }
-      */
-      
       NextRowTable("Color");
       if (ImGui::ColorEdit4("##TextColor", &text.color[0])) {
         modified = true;
@@ -650,12 +637,31 @@ namespace GUI {
 
       NextRowTable("Text Input");
       if (ImGui::InputTextMultiline("##TextInput", &text.textContent)) {
+        text.newLineIndicesUpdatedFlag = false;
         modified = true;
       }
 
       NextRowTable("Scale");
       if (ImGui::DragFloat("##TextScale", &text.scale, .001f, 0.f, 5.f)) {
         modified = true;
+      }
+
+      NextRowTable("Multi-Line Space Offset");
+      if (ImGui::DragFloat("##MultiLineSpacingOffset", &text.multiLineSpacingOffset, .01f, -5.f, 5.f)) {
+        modified = true;
+      }
+
+      NextRowTable("Text Alignment");
+      if (ImGui::RadioButton("Left##TextAlignment", text.alignment == Component::Text::LEFT)) {
+        text.alignment = Component::Text::LEFT;
+      }
+
+      if (ImGui::RadioButton("Right##TextAlignment", text.alignment == Component::Text::RIGHT)) {
+        text.alignment = Component::Text::RIGHT;
+      }
+
+      if (ImGui::RadioButton("Center##TextAlignment", text.alignment == Component::Text::CENTER)) {
+        text.alignment = Component::Text::CENTER;
       }
 
       ImGui::EndTable();

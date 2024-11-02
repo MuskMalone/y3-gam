@@ -11,7 +11,7 @@
 namespace Systems {
 
   Font::Font(std::string const& filePath) : mFilePath{ filePath }, 
-    mFilePathHash{ IGE::Core::Fnv1a32(filePath.c_str(), filePath.size()) } {
+    mFilePathHash{ IGE::Core::Fnv1a32(filePath.c_str(), filePath.size()) }, mMaxHeight{} {
     if (std::shared_ptr<Systems::TextSystem> textSys =
       Systems::SystemManager::GetInstance().GetSystem<Systems::TextSystem>().lock()) {
       if (!textSys->IsValid(*this))
@@ -49,7 +49,7 @@ namespace Systems {
     };
 
     for (auto const& entity : textEntities) {
-      auto const& textComp{ ECS::Entity{entity}.GetComponent<Component::Text>() };
+      auto& textComp{ ECS::Entity{entity}.GetComponent<Component::Text>() };
       auto const& transComp{ ECS::Entity{entity}.GetComponent<Component::Transform>() };
 
       if (!IGE_ASSETMGR.IsGUIDValid<IGE::Assets::FontAsset>(textComp.textAsset)) {
@@ -65,13 +65,12 @@ namespace Systems {
         continue;
       }
 
-      float lengthOfText{ 
-        TextSystem::GetTextWidth(fontAsset.mFilePathHash, textComp.textContent, textComp.scale)
-      };
-      
-      TextSystem::RenderText(fontAsset.mFilePathHash, textComp.textContent, 
-        transComp.position.x - (lengthOfText / 2.f), transComp.position.y,
-        textComp.scale, textComp.color);
+      TextSystem::CalculateNewLineIndices(textComp.textAsset, textComp.textContent,
+        textComp.newLineIndices, textComp.newLineIndicesUpdatedFlag, textComp.alignment);
+
+      TextSystem::RenderText(fontAsset.mFilePathHash, textComp.textContent,
+        transComp.position.x, transComp.position.y, textComp.scale, 
+        textComp.color, textComp.newLineIndices, textComp.multiLineSpacingOffset);
     }
   }
 
@@ -107,12 +106,106 @@ namespace Systems {
     return mFonts;
   }
 
-  void TextSystem::RenderText(uint32_t filePathHash, std::string textContent, 
-    float xPos, float yPos, float scale, glm::vec3 color) {
+  void TextSystem::RenderText(uint32_t filePathHash, std::string const& textContent, 
+    float xPos, float yPos, float scale, glm::vec3 color,
+    std::vector<std::pair<size_t, float>> const& newLineIndices, int multiLineSpacingOffset) {
+    if (mFonts.find(filePathHash) == mFonts.end()) {
+      Debug::DebugLogger::GetInstance().LogWarning("[Text] Trying to Render Invalid Font");
+      return;
+    }
+    
+    std::shared_ptr<Systems::Font> font{ mFonts[filePathHash] };
 
+    yPos = -yPos;
+    FaceObject const& currFace{ font->mFace };
+    std::shared_ptr<Graphics::Texture>const& currTex{ font->mBitmap };
+
+    // @TODO: Get UI Camera Projection Matrix
+    /*
+    glm::mat4 projection{ cam.GetProjMtx() };
+    glm::mat4 flipY{ glm::mat4(1.0f) };
+    flipY[1][1] = -1.0f;
+    projection = projection * flipY;
+
+    mShader->Use();
+    mShader->SetUniform("uTextColor", color.x, color.y, color.z);
+    mShader->SetUniform("uProjection", projection);
+    currFace.vao->Bind();
+    */
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glDisable(GL_DEPTH_TEST);
+
+    // update VBO for each character
+    GLfloat const initialXPos = xPos;
+    size_t currLineIdx{};
+    size_t currNewLineIndicesVectorIdx{};
+
+    xPos += scale * newLineIndices[currNewLineIndicesVectorIdx].second;
+    ++currNewLineIndicesVectorIdx;
+
+    std::vector<float> vertices{};
+    std::size_t verticesPerCharacter{ static_cast<size_t>(4 * 4) };
+    vertices.reserve((verticesPerCharacter - newLineIndices.size()) * textContent.length());
+    vertices.clear();
+    int index{};
+
+    for (size_t currStringIdx{}; currStringIdx < textContent.size(); ++currStringIdx) {
+      char ch = textContent[currStringIdx];
+      Character const& currChar{ (font->mCharacterMap)[ch] };
+
+      if (currNewLineIndicesVectorIdx < newLineIndices.size()
+        && currStringIdx == (newLineIndices[currNewLineIndicesVectorIdx].first - 1)
+        && currLineIdx != newLineIndices[currNewLineIndicesVectorIdx].first) {
+        yPos += (multiLineSpacingOffset + font->mMaxHeight * scale);
+        xPos = initialXPos + scale * newLineIndices[currNewLineIndicesVectorIdx].second;
+
+        currLineIdx = newLineIndices[currNewLineIndicesVectorIdx].first;
+        ++currNewLineIndicesVectorIdx;
+        continue; // skip rendering this character (as it is the new line character)
+      }
+
+      float xpos{ xPos + currChar.bearing.x * scale };
+      float ypos{ yPos - (currChar.size.y + currChar.bearing.y) * scale };
+
+      float width{ currChar.size.x * scale };
+      float height{ currChar.size.y * scale };
+
+      float arr[4 * 4] = {
+        xpos + width, ypos + height, currChar.uMax, currChar.vMin,
+        xpos + width, ypos + 2.f * height, currChar.uMax, currChar.vMax,
+        xpos, ypos + 2.f * height, currChar.uMin, currChar.vMax,
+        xpos, ypos + height, currChar.uMin, currChar.vMin
+      };
+
+      auto insertPosition{ vertices.begin() + (index * verticesPerCharacter) };
+      vertices.insert(insertPosition, arr, arr + std::size(arr));
+
+      xPos += (currChar.advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
+      index++;
+    }
+
+    // bind the bitmap font texture
+    currTex->Bind();
+
+    currFace.vbo->Bind();
+    currFace.vbo->SetData(vertices.data(),
+      static_cast<unsigned int>(vertices.size() * sizeof(float)));
+    currFace.ebo->Bind();
+    size_t eboSizePerChar{ 6 };
+
+    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(eboSizePerChar * textContent.length()),
+      GL_UNSIGNED_INT, NULL);
+
+    glEnable(GL_DEPTH_TEST);
+    currFace.vao->Unbind();
+    currFace.ebo->Unbind();
+    currFace.vbo->Unbind();
+    mShader->Unuse();
   }
 
-  float TextSystem::GetTextWidth(uint32_t filePathHash, std::string textContent, float scale) {
+  float TextSystem::GetTextWidth(uint32_t filePathHash, std::string const& textContent, float scale) {
     float xPos{ 0.f };
     std::shared_ptr<Systems::Font> font{ mFonts[filePathHash] };
 
@@ -127,6 +220,62 @@ namespace Systems {
   bool TextSystem::IsValid(Font const& font) const {
     if (font.mCharacterMap.empty() || !font.mBitmap || !font.mFace.face) return false;
     return true;
+  }
+
+  void TextSystem::CalculateNewLineIndices(IGE::Assets::GUID textAsset, std::string const& textContent, 
+    std::vector<std::pair<size_t, float>>& indices, bool& newLineIndicesUpdatedFlag, int alignment) {
+    if (newLineIndicesUpdatedFlag) {
+      return;
+    }
+
+    IGE_ASSETMGR.LoadRef<IGE::Assets::FontAsset>(textAsset);
+    if (!IGE_ASSETMGR.IsGUIDValid<IGE::Assets::FontAsset>(textAsset)) {
+      Debug::DebugLogger::GetInstance().LogWarning("[Text] Invalid Text Asset");
+      return;
+    }
+
+    Systems::Font& fontAsset{ IGE_ASSETMGR.GetAsset<IGE::Assets::FontAsset>(textAsset)->mFont };
+
+    if (mFonts.find(fontAsset.mFilePathHash) == mFonts.end()) {
+      Debug::DebugLogger::GetInstance().LogWarning("[Text] Trying to Calculate New Lines for Invalid Font");
+      return;
+    }
+
+    size_t currIdx{};
+    indices.clear();
+    indices.emplace_back(std::pair<size_t, float>(currIdx++, 0));
+    std::shared_ptr<Systems::Font> font{ mFonts[fontAsset.mFilePathHash] };
+
+    for (auto ch : textContent) {
+      if (ch == '\n') {
+        indices.emplace_back(std::pair<size_t, float>(currIdx, 0));
+        ++currIdx;
+        continue;
+      }
+
+      float const width{ static_cast<float>(font->mCharacterMap[ch].advance >> 6)};
+
+      switch (alignment) {
+      case Component::Text::Alignment::LEFT:
+        break;
+
+      case Component::Text::Alignment::RIGHT:
+        indices.back().second -= width;
+        break;
+
+      case Component::Text::Alignment::CENTER:
+        indices.back().second -= width * 0.5f;
+        break;
+      
+      default:
+        Debug::DebugLogger::GetInstance().LogWarning("[Text] Invalid Text Alignment");
+        break;
+      }
+
+      ++currIdx;
+    }
+
+    newLineIndicesUpdatedFlag = true;
   }
 
   void TextSystem::LoadFontFace(Systems::Font& font) const {
@@ -165,6 +314,8 @@ namespace Systems {
     // Create an array to save the character widths
     int* widths = new int[MAX_ASCII];
     int* heights = new int[MAX_ASCII];
+
+    float maxFontHeight{};
 
     for (int ch{}; ch < MAX_ASCII; ++ch) {
       glyphIndex = FT_Get_Char_Index(currFace, ch);
@@ -215,6 +366,11 @@ namespace Systems {
       currChar.vMax = currChar.vMin + static_cast<float>(heights[ch]) / imageHeight;
 
       (font->mCharacterMap)[static_cast<char>(ch)] = currChar;
+
+      if (ch > 32 && ch < 127) {
+        float currHeight = static_cast<float>(currFace->glyph->bitmap_top);
+        maxFontHeight = (currHeight > maxFontHeight) ? currHeight : maxFontHeight;
+      }
     }
 
     #ifdef _DEBUG
@@ -229,6 +385,7 @@ namespace Systems {
     delete[] widths;
     delete[] heights;
 
+    font->mMaxHeight = maxFontHeight;
     font->mBitmap = bitmapTex;
     CreateGLObjects(font->mFilePathHash);
   }
