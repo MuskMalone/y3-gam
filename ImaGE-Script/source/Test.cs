@@ -24,35 +24,40 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using Image.Mono;
+using Image.Mono.Utils;
 
-namespace Image
+namespace Image.Mono
 {
-
-
 
 public class Test : Entity
 {
 
-    private float speed = 20f; 
+    private float speed = 20f;
 
     // VARIABLES HERE SHOULD ONLY BE MODFIED THROUGH EDITOR
-    public int TestInt = 10;
+
+    //public int TestInt = 10;
     public float TestFloat = 20f;
     public double TestDouble = 30.0;
     public Vec3<double> dVec3 = new Vec3<double>(336.318f, 100f, 0f);
+    public Entity testEnt;
 
-    
 
-    public Test(uint entityID) : base(entityID)
+
+
+    public Test() : base()
     {
-      Console.WriteLine("ENTITYID" + entityID);
+      
+      //AddComponent<Transform>(new Transform());
     }
 
     /*!*********************************************************************
     \brief
       Initializes deck and combo managers based on the character type.
     ************************************************************************/
+
+   
+
     public void OnCreate()
     {
 
@@ -71,31 +76,40 @@ public class Test : Entity
       Update function for the class. Takes in the deltaTime from GameManager
       and updates the relevant members with it.
     ************************************************************************/
-    public void Update(double dt)
+    public void Update()
     {
-     // Console.WriteLine("Hit\n");
-      Vec3<float> currTrans = InternalCalls.GetPosition(mEntityID);
-      bool isChanged = false;
-
-      currTrans.Y += (InternalCalls.IsKeyTriggered(KeyCode.W) || InternalCalls.IsKeyHeld(KeyCode.W)) ? (speed * (float)dt) : 0;
-      currTrans.X -= (InternalCalls.IsKeyTriggered(KeyCode.A) || InternalCalls.IsKeyHeld(KeyCode.A)) ? (speed * (float)dt) : 0;
-      currTrans.Y -= (InternalCalls.IsKeyTriggered(KeyCode.S) || InternalCalls.IsKeyHeld(KeyCode.S)) ? (speed * (float)dt) : 0;
-      currTrans.X += (InternalCalls.IsKeyTriggered(KeyCode.D) || InternalCalls.IsKeyHeld(KeyCode.D)) ? (speed * (float)dt) : 0;
-
-      isChanged =
-          (InternalCalls.IsKeyTriggered(KeyCode.W) || InternalCalls.IsKeyHeld(KeyCode.W)) ||
-          (InternalCalls.IsKeyTriggered(KeyCode.A) || InternalCalls.IsKeyHeld(KeyCode.A)) ||
-          (InternalCalls.IsKeyTriggered(KeyCode.S) || InternalCalls.IsKeyHeld(KeyCode.S)) ||
-          (InternalCalls.IsKeyTriggered(KeyCode.D) || InternalCalls.IsKeyHeld(KeyCode.D));
-
-    if(isChanged)
+      //  Console.WriteLine(testEnt.mEntityID.ToString());
+      // Console.WriteLine("Hit\n");
+      if (testEnt != null)
       {
-        InternalCalls.SetPosition(mEntityID, ref currTrans);
+        Console.WriteLine(testEnt.mEntityID + "::ID");
       }
-    
+      //Vec3<float> Position = GetComponent<Transform>().Position;
+      //GetComponent<Transform>().Position = new Vec3<float>(1,1,2);
+      //  Console.WriteLine(Position.X + "," + Position.Y + "," + Position.Z);
+
+      //  bool isChanged = false;
+
+      //  currTrans.Y += (InternalCalls.IsKeyTriggered(KeyCode.W) || InternalCalls.IsKeyHeld(KeyCode.W)) ? (speed * (float)dt) : 0;
+      //  currTrans.X -= (InternalCalls.IsKeyTriggered(KeyCode.A) || InternalCalls.IsKeyHeld(KeyCode.A)) ? (speed * (float)dt) : 0;
+      //  currTrans.Y -= (InternalCalls.IsKeyTriggered(KeyCode.S) || InternalCalls.IsKeyHeld(KeyCode.S)) ? (speed * (float)dt) : 0;
+      //  currTrans.X += (InternalCalls.IsKeyTriggered(KeyCode.D) || InternalCalls.IsKeyHeld(KeyCode.D)) ? (speed * (float)dt) : 0;
 
 
-  }
+      //  isChanged =
+      //      (InternalCalls.IsKeyTriggered(KeyCode.W) || InternalCalls.IsKeyHeld(KeyCode.W)) ||
+      //      (InternalCalls.IsKeyTriggered(KeyCode.A) || InternalCalls.IsKeyHeld(KeyCode.A)) ||
+      //      (InternalCalls.IsKeyTriggered(KeyCode.S) || InternalCalls.IsKeyHeld(KeyCode.S)) ||
+      //      (InternalCalls.IsKeyTriggered(KeyCode.D) || InternalCalls.IsKeyHeld(KeyCode.D));
+
+      //if(isChanged)
+      //  {
+      //    InternalCalls.SetPosition(mEntityID, ref currTrans);
+      //  }
+
+
+
+    }
 
 
    

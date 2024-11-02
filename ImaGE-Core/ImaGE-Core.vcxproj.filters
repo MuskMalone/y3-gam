@@ -208,6 +208,9 @@
     <ClInclude Include="source\Audio\AudioManager.h">
       <Filter>Audio</Filter>
     </ClInclude>
+    <ClInclude Include="source\Audio\AudioSystem.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
     <ClInclude Include="source\Color.h" />
     <ClInclude Include="source\Core\Components\AudioListener.h">
       <Filter>Core\Components</Filter>
@@ -738,6 +741,9 @@
       <Filter>Asset</Filter>
     </ClCompile>
     <ClCompile Include="source\Audio\AudioManager.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Audio\AudioSystem.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Components\AudioSource.cpp">

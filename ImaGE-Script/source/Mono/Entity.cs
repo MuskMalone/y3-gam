@@ -23,27 +23,21 @@ using System.Runtime.CompilerServices;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using Image.Mono.Utils;
+
+
 
 namespace Image.Mono
 {
-  public class Entity
+
+    public class Entity
   {
+
     public uint mEntityID;
+    //private readonly Dictionary<Type, Component> components = new Dictionary<Type, Component>();
 
-    /*  _________________________________________________________________________ */
-    /*! Entity
-
-    @param entityHandle
-    The mEntityID .
-
-    @return *this
-
-    Non-default, single-arg constructor for entity
-    */
-    public Entity(uint entityHandle)
-    {
-      mEntityID = entityHandle;
-    }
+   
 
     /*  _________________________________________________________________________ */
     /*! Entity
@@ -54,144 +48,31 @@ namespace Image.Mono
     */
     public Entity()
     {
-      mEntityID  = 0;
+      //mEntityID = uint.MaxValue;
     }
 
-    /*  _________________________________________________________________________ */
-    /*! As
-
-    @return T
-
-    For turning any generic Entity into its respective child class.
-    */
-    //public T As<T>() where T : Entity, new()
-    //{
-    //  object instance = InternalCalls.EngineCore_GetScriptInstance(ref mEntityID );
-    //  return instance as T;
-    //}
-
-    //#region Graphics
-    //public Vector2 CameraPosition
-    //{
-    //  get
-    //  {
-    //    Vector2 pos = new Vector2(0, 0);
-    //    InternalCalls.GraphicsComponent_GetCamPosition(ref pos);
-    //    return pos;
-    //  }
-
-    //  set
-    //  {
-    //    InternalCalls.GraphicsComponent_SetCamPosition(ref value);
-    //  }
-    //}
-    /*  _________________________________________________________________________ */
-    /*! AnimationState
-
-    Getter setter for AnimationState.
-    */
-    //public int AnimationState
-    //{
-    //  get
-    //  {
-    //    int animationState = 0;
-    //    InternalCalls.AnimationComponent_GetAnimationState(ref mEntityID , ref animationState);
-    //    return AnimationState;
-    //  }
-    //  set
-    //  {
-    //    InternalCalls.AnimationComponent_SetAnimationState(ref mEntityID , ref value);
-    //  }
-    //}
-
-    /*  _________________________________________________________________________ */
-    /*! SetSprite
-
-    Wrapper function for setting the sprite based on the sprite's filename.
-    */
-    //public void SetSprite(string fileName)
-    //{
-    //  InternalCalls.GraphicsComponent_SetSprite(ref mEntityID , fileName);
-    //}
-
-
-    #region Transform
-
-    /*  _________________________________________________________________________ */
-    /*! Scale
-
-    Getter setter for Scale.
-    */
-    public Vec3<float> Scale
+    public void Init(uint entityID)
     {
-      get
-      {
-        Vec3<float> scale = new Vec3<float>();
-        InternalCalls.GetScale(mEntityID);
-        return scale;
-      }
-      set
-      {
-        InternalCalls.SetScale(ref mEntityID , ref value);
-      }
+      mEntityID = entityID;
     }
 
 
-    /*  _________________________________________________________________________ */
-    /*! GetScaleFromEntity
+   // Method to add a component
 
-    Get the scale, given the entity id.
-    */
-    public Vec3<float> GetScaleFromEntity(uint id)
+   // Generic GetComponent method
+   public T GetComponent<T>() where T : Component, new()
     {
-      Vec3<float> scale = new Vec3<float>();
-      InternalCalls.GetScale(id);
-      return scale;
-    }
-
-    /*  _________________________________________________________________________ */
-    /*! SetScaleFromEntity
-
-    Set the scale, given the entity id.
-    */
-    public void SetScaleFromEntity(uint id, Vec3<float> value)
-    {
-      InternalCalls.SetScale(ref id, ref value);
-    }
-
-
-
-    /*  _________________________________________________________________________ */
-    /*! Translation
-
-    Getter setter for Translation.
-    */
-    public Vec3<float> Position
-    {
-      get
+      if (mEntityID == null)
       {
-        Vec3<float> translation = new Vec3<float>();
-        InternalCalls.GetPosition(mEntityID);
-        return translation;
+        InternalCalls.LogError("Invalid EntityID");
+        return null;
       }
-      set
-      {
-        InternalCalls.SetPosition(mEntityID , ref value);
-      }
+      // Try to retrieve the component of type T
+      T component = new T() { entity = this };
+      return component;
     }
-    //public float Transform_Rotation
-    //{
-    //  get
-    //  {
-    //    float rot = 0;
-    //    InternalCalls.TransformComponent_GetRotation(ref mEntityID , ref rot);
-    //    return rot;
-    //  }
-    //  set
-    //  {
-    //    InternalCalls.TransformComponent_SetRotation(ref mEntityID , ref value);
-    //  }
-    //}
-    #endregion
+
+
+    
   }
 }

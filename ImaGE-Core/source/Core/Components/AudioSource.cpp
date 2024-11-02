@@ -17,12 +17,29 @@ namespace Component {
 	}
 	void AudioSource::RemoveSound(std::string const& id)
 	{
+		//stop all the channels first
+		auto& instance{sounds.at(id)};
+		for (auto channel : instance.playSettings.channels) {
+			IGE::Audio::AudioManager::GetInstance().StopChannel(channel);
+		}
 		sounds.erase(id);
 	}
-	void AudioSource::CreateSound(IGE::Assets::GUID const& guid)
+	void AudioSource::CreateSound(std::string const& fp)
 	{
 		//add a new sound according to guid
-		sounds.emplace("Sound " + std::to_string(sounds.size()), guid);
+		try {
+			auto guid{ IGE::Assets::AssetManager::GetInstance().PathToGUID(fp) };
+			IGE::Assets::AssetManager::GetInstance().LoadRef<IGE::Assets::AudioAsset>(guid);
+			AudioInstance ai{};
+			ai.guid = guid;
+			sounds.emplace(fp, ai);
+		}
+		catch (Debug::Exception<IGE::Assets::AssetManager> const& e) {
+			Debug::DebugLogger::GetInstance().LogWarning("couldnt load asset");
+		}
+		catch (...) {
+			Debug::DebugLogger::GetInstance().LogWarning("error while adding sound");
+		}
 	}
 	void AudioSource::RenameSound(std::string const& currentName, std::string const& newName) {
 		if (sounds.find(newName) != sounds.end()) { // if the new name is already in the map

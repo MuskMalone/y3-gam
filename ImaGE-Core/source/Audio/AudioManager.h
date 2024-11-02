@@ -5,6 +5,8 @@
 #include <Core/GUID.h>
 #include <Asset/AssetManager.h>
 #include "Singleton/ThreadSafeSingleton.h"
+#include "Events/EventCallback.h"
+#include <Audio/AudioSystem.h>
 //1: No filtering
 //0: Full filtering, completely muffles
 //0.5: Medium filtering
@@ -37,9 +39,9 @@ namespace IGE {
 
 			//atm, its used to watch whether the channel has stopped playing, 
 			//then set the channel pointer back to nullptr
-			FMOD_RESULT FMODChannelCallback(FMOD_CHANNELCONTROL* chanCtrl, FMOD_CHANNELCONTROL_TYPE type,
+			static FMOD_RESULT FMODChannelCallback(FMOD_CHANNELCONTROL* chanCtrl, FMOD_CHANNELCONTROL_TYPE type,
 				FMOD_CHANNELCONTROL_CALLBACK_TYPE callbackType, void* commanddata1, void* commanddata2);
-			mutable std::unordered_set<FMOD::Channel*> channels;
+			mutable std::unordered_set<FMOD::Channel*> channels; // not for imgui
 		};
 
 		struct Sound {
@@ -56,7 +58,7 @@ namespace IGE {
 			AudioManager();
 			~AudioManager();
 			 bool Initialize(); //Creates FMOD system
-			 void Update(); //Updates FMOD, to be called every frame
+			 //void Update(); //Updates FMOD, to be called every frame
 			 void Release(); //DELETES THE AUDIO SYSTEM, ONLY CALL AT END OF PROGRAM
 			//CHANNEL GROUP FUNCTIONS TO MANAGE MULTIPLE SOUNDS AT ONCE
 			//Creates a nameless group of sound
@@ -76,6 +78,7 @@ namespace IGE {
 			//Returns true if the group sound is paused, to prevent resume of playing groups
 			 bool IsGroupPaused(std::string const& name);
 
+			 void StopChannel(FMOD::Channel* channel);
 			//SOUND MANAGEMENT FUNCTIONS
 			//Releases all sounds from memory(audio manager), eg.moved to a new scene, we remove all old sounds thats no longer needed
 			 void ReleaseAllSounds();
@@ -102,6 +105,7 @@ namespace IGE {
 			// void SetPlayerAttributes(const FMOD_3D_ATTRIBUTES& attributes);
 
 		private:
+			friend AudioSystem;
 			using ChannelGroupGUID = Core::GUID<FMOD::Channel>;
 			//for managing FMOD system
 			 FMOD::System* mSystem;
@@ -110,6 +114,11 @@ namespace IGE {
 			//for managing groups of audio channels by grouping different sound effects, ambient sounds, etc., 
 			 std::unordered_map<ChannelGroupGUID, FMOD::ChannelGroup*> mGroup;
 			// std::unordered_map<std::string, std::list<FMOD::Channel*>> _mChannels;
+			 EVENT_CALLBACK_DECL(HandleSystemEvents);
+			 bool mSceneStarted{false};
+			 bool mSceneStopped{true}; // scene starts from a stopped state
+			 bool mScenePaused{false};
 		};
+
 	}
 }

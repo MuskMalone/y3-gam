@@ -26,6 +26,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Prefabs/PrefabManager.h>
 #include <Events/EventManager.h>
 #include "AddComponentFunctions.h"
+#include <Core/Components/Components.h>
 
 #define GET_RTTR_TYPE(T) rttr::type::get<T>()
 #ifdef _DEBUG
@@ -41,6 +42,8 @@ namespace Reflection
     using namespace Component;
 
     mAddComponentFuncs = {
+      { GET_RTTR_TYPE(AudioListener), ComponentUtils::AddAudioListener },      
+      { GET_RTTR_TYPE(AudioSource), ComponentUtils::AddAudioSource },
       { GET_RTTR_TYPE(Tag), ComponentUtils::AddTag },
       { GET_RTTR_TYPE(Transform), ComponentUtils::AddTransform },
       { GET_RTTR_TYPE(Layer), ComponentUtils::AddLayer },
@@ -284,6 +287,8 @@ namespace Reflection
     else IF_GET_ENTITY_COMP(Script)
     else IF_GET_ENTITY_COMP(Text)
     else IF_GET_ENTITY_COMP(Light)
+    else IF_GET_ENTITY_COMP(AudioListener)
+    else IF_GET_ENTITY_COMP(AudioSource)
     else
     {
       std::ostringstream oss{};
@@ -303,23 +308,27 @@ namespace Reflection
     //// get underlying type if it's wrapped in a pointer
     //compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
 
-    //IF_REMOVE_COMP(Transform)
-    //else IF_REMOVE_COMP(Tag)
-    //else IF_REMOVE_COMP(Layer)
-    //else IF_REMOVE_COMP(Mesh)
-    //else IF_REMOVE_COMP(Material)
-    //else IF_REMOVE_COMP(RigidBody)
-    //else IF_REMOVE_COMP(BoxCollider)
-    //else IF_REMOVE_COMP(Script)
-    //else IF_REMOVE_COMP(Text)
-    //else IF_REMOVE_COMP(Light)
-    //else
-    //{
-    //  std::ostringstream oss{};
-    //  oss << "Trying to remove unknown component type: " << compType.get_name().to_string() << " to entity " << entity << " | Update ObjectFactory::RemoveComponentFromEntity";
-    //  oss << " | Update ObjectFactory::RemoveComponentFromEntity";
-    //  Debug::DebugLogger::GetInstance().LogError(oss.str());
-    //}
+    IF_REMOVE_COMP(Transform)
+    else IF_REMOVE_COMP(Tag)
+    else IF_REMOVE_COMP(Layer)
+    else IF_REMOVE_COMP(Mesh)
+    else IF_REMOVE_COMP(Material)
+    else IF_REMOVE_COMP(RigidBody)
+    else IF_REMOVE_COMP(BoxCollider)
+    else IF_REMOVE_COMP(SphereCollider)
+    else IF_REMOVE_COMP(CapsuleCollider)
+    else IF_REMOVE_COMP(Script)
+    else IF_REMOVE_COMP(Text)
+    else IF_REMOVE_COMP(Light)
+    else IF_REMOVE_COMP(AudioListener)
+    else IF_REMOVE_COMP(AudioSource)
+    else
+    {
+      std::ostringstream oss{};
+      oss << "Trying to remove unknown component type: " << compType.get_name().to_string() << " to entity " << entity << " | Update ObjectFactory::RemoveComponentFromEntity";
+      oss << " | Update ObjectFactory::RemoveComponentFromEntity";
+      Debug::DebugLogger::GetInstance().LogError(oss.str());
+    }
   }
 
 } // namespace Reflection

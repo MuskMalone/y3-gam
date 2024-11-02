@@ -25,6 +25,12 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 #pragma region SYSTEM_INCLUDES
 #include <Core/Systems/SystemManager/SystemManager.h>
+#include <Physics/PhysicsSystem.h>
+#include <Audio/AudioManager.h>
+#include <Core/Systems/TransformSystem/TransformSystem.h>
+#include <Scripting/ScriptingSystem.h>
+#include <Core/Systems/LayerSystem/LayerSystem.h>
+#include <Graphics/RenderSystem.h>
 #include <Core/Systems/Systems.h>
 #pragma endregion
 
@@ -32,7 +38,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Serialization/Deserializer.h"
 #include "Asset/AssetMetadata.h"
 
-#include <Audio/AudioManager.h>
+#include <Audio/AudioSystem.h>
 
 namespace IGE {
   // Static Initialization
@@ -42,6 +48,7 @@ namespace IGE {
     // initialize singletons
     Debug::DebugLogger::CreateInstance();
     Events::EventManager::CreateInstance();
+    IGE::Audio::AudioManager::CreateInstance();
     Assets::AssetManager::CreateInstance();
     Reflection::ObjectFactory::CreateInstance();
     Scenes::SceneManager::CreateInstance();
@@ -51,7 +58,7 @@ namespace IGE {
     Mono::ScriptManager::CreateInstance();
     ECS::EntityManager::CreateInstance();
     Systems::SystemManager::CreateInstance();
-    IGE::Audio::AudioManager::CreateInstance();
+
     
     // @TODO: Init physics and audio singletons
     //IGE::Physics::PhysicsSystem::InitAllocator();
@@ -68,7 +75,7 @@ namespace IGE {
     static auto& frameRateController{ Performance::FrameRateController::GetInstance() };
     static auto& systemManager{ Systems::SystemManager::GetInstance() };
 
-    while (!glfwWindowShouldClose(mWindow.get())) {
+    while (!glfwWindowShouldClose(mWindow.get())) { 
       frameRateController.Start();
       inputManager.UpdateInput();
 
@@ -76,7 +83,6 @@ namespace IGE {
       eventManager.DispatchAll();
 
       systemManager.UpdateSystems();
-      IGE::Audio::AudioManager::GetInstance().Update();
 
       glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
 
@@ -100,6 +106,7 @@ namespace IGE {
     systemManager.RegisterSystem<Systems::LayerSystem>("Layer System");
     systemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
     systemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
+    systemManager.RegisterSystem<IGE::Audio::AudioSystem>("Audio System");
     systemManager.RegisterSystem<Systems::TextSystem>("Text System");
   }
 
@@ -189,7 +196,10 @@ namespace IGE {
   {
     // shutdown singletons
     Systems::SystemManager::DestroyInstance();
+
+    //not sure why this throws an error at destroy
     IGE::Audio::AudioManager::DestroyInstance();
+
     Scenes::SceneManager::DestroyInstance();
     Prefabs::PrefabManager::DestroyInstance();
     Mono::ScriptManager::DestroyInstance();

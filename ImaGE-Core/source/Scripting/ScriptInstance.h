@@ -26,7 +26,6 @@ namespace Mono {
 	const size_t maxBufferSize{ 1000 };
 	enum CtorType
 	{
-		DEFAULT_CTOR,
 		ENTITY_CTOR,
 		SPECIAL_CTOR
 	};
@@ -36,11 +35,13 @@ namespace Mono {
 	* data of the c# class field is stored in the struct                  	*
 	************************************************************************/
 	template<typename T>
-	struct ScriptFieldInstance
+	struct DataMemberInstance
 	{
-			ScriptFieldInstance() : mScriptField{}, mData{} { mType = rttr::variant(*this).get_type().get_name().to_string(); }
-			ScriptFieldInstance(ScriptFieldInfo const& scriptField) : mScriptField{ scriptField }, mData{  } {}
-			ScriptFieldInstance(ScriptFieldInfo const& scriptField, T data) : mScriptField{ scriptField }, mData{ data }
+			DataMemberInstance() : mScriptField{}, mData{} { mType = rttr::variant(*this).get_type().get_name().to_string(); }
+			DataMemberInstance(ScriptFieldInfo const& scriptField) : mScriptField{ scriptField }, mData{  } {
+				mType = rttr::variant(*this).get_type().get_name().to_string();	
+			}
+			DataMemberInstance(ScriptFieldInfo const& scriptField, T data) : mScriptField{ scriptField }, mData{ data }
 			{
 				mType = rttr::variant(*this).get_type().get_name().to_string();
 			}
@@ -54,14 +55,14 @@ namespace Mono {
 
 	struct ScriptInstance
 	{
+		bool mHasStarted{ false };
 		CtorType mCtorType;
 		ECS::Entity::EntityID mEntityID;
 		std::string mScriptName;
 		uint32_t mGcHandle;
 		MonoClass* mScriptClass{ nullptr };   //I didn't use shared ptr for these 2 ptrs because Mono frees this memory by itself behind the scene, using its own function (Which we do not have access to). 
 		MonoObject* mClassInst{ nullptr };	  //If i were to put this in a shared ptr, it will cause an error as shared ptr will try to delete the mono ptr, which is not allowed. we need to use mono's own function to delete it,but we do not have access to it
-		MonoMethod* mOnCreateMethod = { nullptr };
-		MonoMethod* mOnUpdateMethod = { nullptr };
+		MonoMethod* mUpdateMethod = { nullptr };
 		std::vector<rttr::variant> mScriptFieldInstList;
 		inline static char mFieldValBuffer[maxBufferSize];
 
@@ -69,7 +70,7 @@ namespace Mono {
 		\brief
 			Default constructor of Script Class
 		************************************************************************/
-		ScriptInstance() {  }
+		ScriptInstance() {};
 
 
 		/*!*********************************************************************
@@ -82,7 +83,7 @@ namespace Mono {
 		\params  std::vector<void*>& arg
 		arguments to pass into the scrip class's non-default constructor
 		************************************************************************/
-		ScriptInstance(const std::string& scriptName, std::vector<void*>& arg, bool isSpecial = false);
+		ScriptInstance(const std::string& scriptName, std::vector<void*> arg = std::vector<void*>(), bool isSpecial = false);
 
 
 		/*!*********************************************************************
@@ -90,6 +91,16 @@ namespace Mono {
 			Function to hot reload the c# script
 		************************************************************************/
 		void ReloadScript();
+
+
+		/*!*********************************************************************
+		\brief
+			Function to get the instance of a C# class
+		************************************************************************/
+		void GetFieldCSClass(std::vector<rttr::variant>& mScriptFieldInstList, const Mono::ScriptFieldInfo& field);
+
+
+//		void GetFieldCSClass(std::vector<rttr::variant>& mScriptFieldInstList, const Mono::ScriptFieldInfo& field);
 
 		/*!*********************************************************************
 		\brief
@@ -151,7 +162,12 @@ namespace Mono {
 		void SetAllFields();
 
 
-
+		/*!*********************************************************************
+		\brief
+			Function to update all the class field instance in c# script with the value inside c++
+			THis function is called to ensure the value displayed in the inspector is updated into the c# script
+		************************************************************************/
+		void SetAllFields(std::vector<rttr::variant> scriptFieldProxyList);
 
 
 
@@ -220,11 +236,19 @@ namespace Mono {
 		shared pointer to the field we are trying to get
 		************************************************************************/
 		template<typename T>
-		void SetFieldValue(T value, MonoClassField* field)
+		void SetFieldValue(const T& value, MonoClassField* field)
 		{
 			std::memcpy(mFieldValBuffer, &value, sizeof(T));
 			mono_field_set_value(mClassInst, field, mFieldValBuffer);
 		}
+
+		template<typename T>
+		void SetFieldValue(T* value, MonoClassField* field)
+		{
+			mono_field_set_value(mClassInst, field, value);
+		}
+
+
 
 
 		/*!*********************************************************************
@@ -307,6 +331,8 @@ namespace Mono {
 
 
 	};
+
+
 
 }
 

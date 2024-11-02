@@ -283,6 +283,27 @@ namespace IGE {
                   return UnloadRef<T>(std::any_cast<Ref<T>&>(mAssetRefs.at(key)));
           }
 
+
+          //i do not perform any checks here, reload at your own risk
+          template<typename T>
+          void ReloadRef(Ref<T>& ref) {
+              if (ref.GetInfo().refCount > 0) {
+                  ref.Unload();
+                  ref.Load();
+              }
+          }
+          template<typename T>
+          void ReloadRef(GUID const& guid) {
+              TypeGUID typeguid{ GetTypeName<T>() };
+              TypeAssetKey key{ typeguid ^ guid };
+              if (mAssetRefs.find(key) != mAssetRefs.end())
+                  return ReloadRef<T>(std::any_cast<Ref<T>&>(mAssetRefs.at(key)));
+          }
+          template<typename T>
+          void ReloadRef(std::string const& fp) {
+              ReloadRef<T>(PathToGUID(fp));
+          }
+
           template< typename T >
           Details::InstanceInfo GetInstanceInfo(Ref<T>& ref) const
           {

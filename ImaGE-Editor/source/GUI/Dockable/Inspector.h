@@ -46,6 +46,8 @@ namespace GUI {
       True if any part of the component was modified and false otherwise
     ************************************************************************/
     // Kindly put in alphabetical order, thank you!
+    bool AudioListenerComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool AudioSourceComponentWindow(ECS::Entity entity, bool highlight = false);
     bool BoxColliderComponentWindow(ECS::Entity entity, bool highlight = false);
     bool CapsuleColliderComponentWindow(ECS::Entity entity, bool highlight = false);
     bool LayerComponentWindow(ECS::Entity entity, bool highlight = false);
