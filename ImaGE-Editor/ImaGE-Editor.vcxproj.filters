@@ -34,6 +34,9 @@
     <ClInclude Include="source\GUI\Dockable\Debugging\RenderPassViewer.h">
       <Filter>GUI\Dockable\Debugging</Filter>
     </ClInclude>
+    <ClInclude Include="source\GUI\Dockable\GameViewport.h">
+      <Filter>GUI\Dockable</Filter>
+    </ClInclude>
     <ClInclude Include="source\GUI\Dockable\Inspector.h">
       <Filter>GUI\Dockable</Filter>
     </ClInclude>
@@ -93,6 +96,9 @@
     </ClCompile>
     <ClCompile Include="source\GUI\Dockable\Debugging\RenderPassViewer.cpp">
       <Filter>GUI\Dockable\Debugging</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\Dockable\GameViewport.cpp">
+      <Filter>GUI\Dockable</Filter>
     </ClCompile>
     <ClCompile Include="source\GUI\Dockable\Inspector.cpp">
       <Filter>GUI\Dockable</Filter>

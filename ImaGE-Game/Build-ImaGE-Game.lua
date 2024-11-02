@@ -27,7 +27,7 @@ project "ImaGE-Game"
       
       "../Libraries/assimp/include/**",
       "../Libraries/entt/single_include",
-      "../Libraries/freetype/include/**",
+      "../Libraries/freetype/include/",
       "../Libraries/glfw/include",
       "../Libraries/glm",
       "../Libraries/rapidjson/include/**",
@@ -67,6 +67,8 @@ project "ImaGE-Game"
          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
          "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
          "GLM_ENABLE_EXPERIMENTAL",
+         "PX_PHYSX_STATIC_LIB",
+         "RTTR_DLL"
       }
 
        runtime "Debug"
@@ -93,6 +95,8 @@ project "ImaGE-Game"
          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
          "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
          "GLM_ENABLE_EXPERIMENTAL",
+         "PX_PHYSX_STATIC_LIB",
+         "RTTR_DLL"
       }
        runtime "Release"
        optimize "On"
@@ -119,6 +123,8 @@ project "ImaGE-Game"
          "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
          "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
          "GLM_ENABLE_EXPERIMENTAL",
+         "PX_PHYSX_STATIC_LIB",
+         "RTTR_DLL"
       }
       kind "WindowedApp"
       runtime "Release"

@@ -470,7 +470,7 @@ namespace Graphics {
 
 			//Bind all the textures that has been set
 			for (unsigned int i{}; i < mData.texUnitIdx; ++i) {
-				mData.texUnits[i]->Bind(i);
+				mData.texUnits[i]->Bind();
 			}
 			ShaderLibrary::Get("Tex")->Use();
 			RenderAPI::DrawIndices(mData.quadVertexArray, mData.quadIdxCount);
@@ -502,7 +502,7 @@ namespace Graphics {
 			mData.meshVertexArray->Unbind();
 			// Bind the textures for the meshes
 			for (unsigned int i{}; i < mData.texUnitIdx; ++i) {
-				mData.texUnits[i]->Bind(i);
+				mData.texUnits[i]->Bind();
 			}
 
 			// Use the appropriate shader and draw the indexed meshes
@@ -541,7 +541,7 @@ namespace Graphics {
 			//mData.meshVertexArray->Unbind();
 			// Bind the textures for the meshes
 			for (unsigned int i{}; i < mData.texUnitIdx; ++i) {
-				mData.texUnits[i]->Bind(i);
+				mData.texUnits[i]->Bind();
 			}
 
 			RenderAPI::DrawIndices(mData.meshVertexArray, mData.meshIdxCount);

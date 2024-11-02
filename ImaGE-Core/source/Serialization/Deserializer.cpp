@@ -23,7 +23,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Components/Script.h>
 #include <Reflection/ProxyScript.h>
 
-#define DESERIALIZER_DEBUG
+//#define DESERIALIZER_DEBUG
 
 namespace Serialization
 {
@@ -102,7 +102,7 @@ namespace Serialization
         }
 
         DeserializePrefabOverrides(inst.mOverrides, entity[JSON_PREFAB_KEY]);
-        Reflection::ObjectFactory::PrefabInstMap& pfbInstances{ prefabInstances[inst.mOverrides.prefabName] };
+        Reflection::ObjectFactory::PrefabInstMap& pfbInstances{ prefabInstances[inst.mOverrides.guid] };
         ECS::EntityManager::EntityID const instId{ inst.mId };
         pfbInstances.emplace(instId, std::move(inst));
         continue;
@@ -185,12 +185,11 @@ namespace Serialization
     rapidjson::Document document{};
     if (!ParseJsonIntoDocument(document, json)) { return {}; }
 
-    if (!ScanJsonFileForMembers(document, json, 3, JSON_PFB_NAME_KEY, rapidjson::kStringType,
-      JSON_COMPONENTS_KEY, rapidjson::kArrayType, JSON_PFB_DATA_KEY, rapidjson::kArrayType)) {
+    if (!ScanJsonFileForMembers(document, json, 2, JSON_COMPONENTS_KEY, rapidjson::kArrayType, JSON_PFB_DATA_KEY, rapidjson::kArrayType)) {
       return {};
     }
 
-    Prefabs::Prefab prefab{ document[JSON_PFB_NAME_KEY].GetString() };
+    Prefabs::Prefab prefab{};
     prefab.mIsActive = (document.HasMember(JSON_PFB_ACTIVE_KEY) ? document[JSON_PFB_ACTIVE_KEY].GetBool() : true);
 
     // iterate through component objects in json array
@@ -270,12 +269,12 @@ namespace Serialization
 
   void Deserializer::DeserializePrefabOverrides(Component::PrefabOverrides& prefabOverride, rapidjson::Value const& json)
   {
-    if (!json.HasMember("prefabName") || !json.HasMember("modifiedComponents") || !json.HasMember("removedComponents") || !json.HasMember("subDataId")) {
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] PrefabOverride json did not contain correct members!");
+    if (!ScanJsonFileForMembers(json, "PrefabOverrides", 4, JSON_GUID_KEY, rapidjson::kObjectType, "modifiedComponents", rapidjson::kArrayType,
+      "removedComponents", rapidjson::kArrayType, "subDataId", rapidjson::kNumberType)) {
       return;
     }
 
-    prefabOverride.prefabName = json["prefabName"].GetString();
+    DeserializeRecursive(prefabOverride.guid, json[JSON_GUID_KEY]);
     prefabOverride.subDataId = json["subDataId"].GetUint();
 
     // deserialize removed components

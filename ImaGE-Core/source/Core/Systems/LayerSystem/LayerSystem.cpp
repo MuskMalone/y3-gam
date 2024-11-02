@@ -3,14 +3,16 @@
 
 #include "Core/EntityManager.h"
 #include "Core/Components/Components.h"
-
+#include "Events/EventManager.h"
 #include "Physics/PhysicsSystem.h"
+#include <Core/Systems/SystemManager/SystemManager.h>
 
 namespace Systems {
 
   void LayerSystem::Start() {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::LOAD_SCENE, &LayerSystem::OnSceneLoad, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &LayerSystem::OnSceneChange, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::LAYER_MODIFIED, &LayerSystem::OnLayerModification, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &LayerSystem::OnPrefabEditor, this);
   }
 
   void LayerSystem::Update() {
@@ -19,8 +21,9 @@ namespace Systems {
 
   std::array<int, MAX_LAYERS> const& LayerSystem::GetLayerCollisionList(int layerNumber) const {
     if (layerNumber >= MAX_LAYERS || layerNumber < 0) {
-      Debug::DebugLogger::GetInstance().LogWarning("[Layers] Invalid Layer Number Passed");
-      return std::array<int, MAX_LAYERS>();
+      //Debug::DebugLogger::GetInstance().LogWarning("[Layers] Invalid Layer Number Passed");
+      //return std::array<int, MAX_LAYERS>();
+      throw Debug::Exception<LayerSystem>(Debug::LVL_WARN, Msg("Invalid Layer Number Passed"));
     }
 
     return mLayerData.collisionMatrix[layerNumber];
@@ -124,9 +127,16 @@ namespace Systems {
     }
   }
 
-  EVENT_CALLBACK_DEF(LayerSystem, OnSceneLoad) {
-    mLayerEntities.clear();
-    
+  EVENT_CALLBACK_DEF(LayerSystem, OnSceneChange) {
+    auto const sceneChangeEvent{ CAST_TO_EVENT(Events::SceneStateChange) };
+    if (sceneChangeEvent->mNewState == Events::SceneStateChange::STOPPED) {
+      mLayerEntities.clear();
+      return;
+    }
+    else if (!(sceneChangeEvent->mNewState == Events::SceneStateChange::CHANGED || sceneChangeEvent->mNewState == Events::SceneStateChange::NEW)) {
+      return;
+    }
+
     // The built-in layer names should never change
     // This code is necessary as someone might manually edit the built-in layers in the json file...
     mLayerData.layerNames[0] = std::string(BUILTIN_LAYER_0);
@@ -195,11 +205,28 @@ namespace Systems {
       auto rbiter{ rigidBodyMap.find(rb.bodyID) };
       if (rbiter != rigidBodyMap.end()) {
         physx::PxRigidDynamic* pxrigidbody{ rigidBodyMap.at(rb.bodyID) };
-        physx::PxShape* shape;
-        pxrigidbody->getShapes(&shape, 1);
-        SetupShapeFilterData(&shape, entity);
+
+        physx::PxShape* shape[3]{};
+        auto shapecount{ pxrigidbody->getNbShapes() };
+        pxrigidbody->getShapes(shape, 3);
+
+        for (unsigned i{}; i < shapecount; ++i) {
+          SetupShapeFilterData(&shape[i], entity);
+        }
+
+        /*
+        for (int i{ 1 }; i < pxrigidbody->getNbShapes(); ++i) {
+          physx::PxShape* shape;
+          pxrigidbody->getShapes(&shape, i);
+          SetupShapeFilterData(&shape, entity);
+        }
+        */
       }
     }
   }
 
+  EVENT_CALLBACK_DEF(LayerSystem, OnPrefabEditor) {
+    // we simply clear; no layers for prefabs
+    mLayerEntities.clear();
+  }
 } // namespace Systems

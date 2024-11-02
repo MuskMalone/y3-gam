@@ -24,7 +24,9 @@ namespace IGE {
 			RegisterTypes<
 				IGE::Assets::TextureAsset,
 				IGE::Assets::AudioAsset,
-				IGE::Assets::ModelAsset
+				IGE::Assets::ModelAsset,
+				IGE::Assets::PrefabAsset,
+				IGE::Assets::FontAsset
 			>();
 			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			auto fp{ CreateProjectFile() }; // create project file if it doesnt exist

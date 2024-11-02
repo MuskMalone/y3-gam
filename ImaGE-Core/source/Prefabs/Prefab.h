@@ -18,6 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <unordered_set>
 #include <rttr/type.h>
 #include <Core/EntityManager.h>
+#include <Asset/SmartPointer.h>
 
 // forward declaration
 namespace Reflection { class ObjectFactory; struct PrefabInst; }
@@ -57,12 +58,14 @@ namespace Prefabs
       will be created with its components and is automatically added to
       the ECS.
       This function does not handle the mapping of parent-child relations.
-    \param name
-      The name of the prefab. Leave empty if its not an instance
+    \param guid
+      The guid of the prefab
+    \param createInst
+      Whether to add the prefab overrides component
     \return
       The ID of the created entity
     ************************************************************************/
-    ECS::Entity Construct(std::string const& name) const;
+    ECS::Entity Construct(IGE::Assets::GUID guid, bool createInst = true) const;
 
     std::vector<rttr::variant> mComponents;
     SubDataId mId, mParent;
@@ -79,7 +82,7 @@ namespace Prefabs
     using SubObjectComponentMap = std::unordered_map<SubDataId, std::vector<rttr::variant>>;
 
     Prefab() = default;
-    Prefab(std::string name);
+    Prefab(std::string name, bool isActive = true);
 
     /*!*********************************************************************
     \brief
@@ -94,10 +97,14 @@ namespace Prefabs
       Constructs an entity with the data in the current Prefab.
       The entity will be created along with it's relevant hierarchy and
       is automatically added to the ECS.
+    \param guid
+      The guid of the prefab
+    \param
+      The position to construct the prefab at
     \return
       The ID of the created entity
     ************************************************************************/
-    ECS::Entity Construct(glm::vec3 const& pos) const;
+    ECS::Entity Construct(IGE::Assets::GUID guid, glm::vec3 const& pos = {}) const;
 
     /*!*********************************************************************
     \brief
@@ -106,6 +113,8 @@ namespace Prefabs
       is automatically added to the ECS. This overload stores the mappings
       of each entity to its subdata and returns it as an EntityMappings
       object.
+    \param
+      The position to construct the prefab at
     \return
       The ID of the created entity and the entity mappings as a pair
     ************************************************************************/
@@ -115,10 +124,12 @@ namespace Prefabs
     \brief
       Fills up a prefab instance with its components along with any missing
       sub-objects
+    \param guid
+      The guid of the prefab
     \param idToEntity
       The map of ids to entities
     ************************************************************************/
-    void FillPrefabInstance(std::unordered_map<Prefabs::SubDataId, ECS::Entity>& idToEntity) const;
+    void FillPrefabInstance(IGE::Assets::GUID guid, std::unordered_map<Prefabs::SubDataId, ECS::Entity>& idToEntity) const;
 
     /*!*********************************************************************
     \brief
@@ -129,16 +140,12 @@ namespace Prefabs
       children is encountered.
     \param children
       The list of child entities of the current entity
-    \param assignInstance
-      Set to true if you want to turn the entity being traversed into a
-      prefab instance. This adds a PrefabOverrides component to every
-      entity encountered.
     \param parent
       The SubDataId of the parent (current) object.
       This is defaulted to the BasePrefabId and should not be used
       externally.
     ************************************************************************/
-    void CreateSubData(std::vector<ECS::Entity> const& children, bool assignInstance = false,
+    void CreateSubData(IGE::Assets::GUID guid, std::vector<ECS::Entity> const& children,
       SubDataId parent = PrefabSubData::BasePrefabId);
     void CreateFixedSubData(std::vector<ECS::Entity> const& children, EntityMappings& mappings, SubDataId parent = PrefabSubData::BasePrefabId);
 

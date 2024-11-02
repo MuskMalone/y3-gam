@@ -99,9 +99,11 @@ namespace GUI {
     bool mIsComponentEdited, mFirstEdit, mEditingPrefab;
     bool mEntityChanged;
 
-    static inline constexpr int INPUT_SIZE{ 200 };
-    static inline constexpr float FIRST_COLUMN_LENGTH{ 130 };
+    static inline constexpr int INPUT_SIZE{ 210 };
+    static inline constexpr float FIRST_COLUMN_LENGTH{ 175 };
     static inline constexpr ImU32 sComponentHighlightCol{ IM_COL32(253, 208, 23, 255) };
+    static inline constexpr float ITEM_SPACING{ 0 };
+    static inline constexpr float CELL_PADDING{ 1 };
 
     /*!*********************************************************************
     \brief

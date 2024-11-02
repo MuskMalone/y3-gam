@@ -15,11 +15,11 @@ namespace Component {
   public:
       inline void Clear() noexcept {
           positionOffset = { 0, 0, 0 };
-          rotationOffset = {physx::PxIdentity()};
+          rotationOffset = { physx::PxIdentity };
           sensor = false;
       }
       physx::PxVec3 positionOffset{0, 0, 0};
-      physx::PxQuat rotationOffset{physx::PxIdentity()};
+      physx::PxQuat rotationOffset{ physx::PxIdentity };
       
       void* bodyID; // not serialized. decided at runtime
       char idx; // not serialized. max value 3

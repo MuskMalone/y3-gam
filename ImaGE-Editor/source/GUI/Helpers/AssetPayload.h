@@ -27,7 +27,8 @@ namespace GUI
       PREFAB,
       SCENE,
       MODEL,
-      AUDIO
+      AUDIO,
+      FONT
     };
 
     static constexpr char sAssetDragDropPayload[] = "ASSET";
@@ -45,6 +46,9 @@ namespace GUI
       }
       else if (IGE::Assets::cAudioExtensions.find(fileExt) != IGE::Assets::cAudioExtensions.end()) {
           mAssetType = AssetType::AUDIO;
+      }
+      else if (fileExt == gFontFileExt) {
+        mAssetType = AssetType::FONT;
       }
     }
 

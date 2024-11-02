@@ -17,14 +17,16 @@ constexpr char gPrefabFileExt[] = ".pfb";
 constexpr char gSupportedModelFormats[] = ".fbx.obj";
 constexpr char gMeshOutputDir[] = "..\\Assets\\Models\\";
 constexpr char gMeshFileExt[] = ".imsh";
+constexpr char gFontFileExt[] = ".ttf";
 //currently my Shaders are hard coded in ShaderLibrary in Shader.h* as cShaderDirectory
 
 // Editor
-constexpr char gRobotoBoldFontPath[] = "..\\Assets\\Editor-Fonts\\Roboto-Bold.ttf";
-constexpr char gRobotoMediumFontPath[] = "..\\Assets\\Editor-Fonts\\Roboto-Medium.ttf";
-constexpr char gRobotoThinFontPath[] = "..\\Assets\\Editor-Fonts\\Roboto-Thin.ttf";
-constexpr char gMontserratSemiBoldFontPath[] = "..\\Assets\\Editor-Fonts\\Montserrat-SemiBold.ttf";
-constexpr char gMontserratLightFontPath[] = "..\\Assets\\Editor-Fonts\\Montserrat-Light.ttf";
-constexpr char gMontserratRegularFontPath[] = "..\\Assets\\Editor-Fonts\\Montserrat-Regular.ttf";
-constexpr char gIconsFontPath[] = "..\\Assets\\Editor-Fonts\\fa-solid-900.ttf";
+constexpr char gRobotoBoldFontPath[] = "..\\Assets\\Editor\\Fonts\\Roboto-Bold.ttf";
+constexpr char gRobotoMediumFontPath[] = "..\\Assets\\Editor\\Fonts\\Roboto-Medium.ttf";
+constexpr char gRobotoThinFontPath[] = "..\\Assets\\Editor\\Fonts\\Roboto-Thin.ttf";
+constexpr char gMontserratSemiBoldFontPath[] = "..\\Assets\\Editor\\Fonts\\Montserrat-SemiBold.ttf";
+constexpr char gMontserratLightFontPath[] = "..\\Assets\\Editor\\Fonts\\Montserrat-Light.ttf";
+constexpr char gMontserratRegularFontPath[] = "..\\Assets\\Editor\\Fonts\\Montserrat-Regular.ttf";
+constexpr char gIconsFontPath[] = "..\\Assets\\Editor\\Fonts\\fa-solid-900.ttf";
+constexpr char gFileIconPath[] = "..\\Assets\\Editor\\Images\\FileIcon.dds";
 constexpr int gEditorDefaultTheme = 1;

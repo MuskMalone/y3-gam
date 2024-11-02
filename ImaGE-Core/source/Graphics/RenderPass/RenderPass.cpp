@@ -29,6 +29,7 @@ namespace Graphics {
 
     void RenderPass::End() {
       mSpec.pipeline->Unbind();
+      Texture::ResetTextureUnits();
     }
 
     //std::shared_ptr<Image2D> RenderPass::GetOutput(uint32_t index)

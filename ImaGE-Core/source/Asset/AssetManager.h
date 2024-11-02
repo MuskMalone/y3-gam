@@ -134,12 +134,14 @@ namespace IGE {
                   AssetMetadata::IGEProjProperties& allmetadata{ mMetadata.mAssetProperties };
                   std::string assetCategory{ GetTypeName<T>() };
                   mMetadata.Emplace(assetCategory, guid, metadata);
+                  mPath2GUIDRegistry.emplace(filepathstr, guid);
+                  mGUID2PathRegistry.emplace(guid, filepathstr);
                   return guid;
               }
-              else {
-                  Ref<T> ref { std::any_cast<Ref<T>>(mAssetRefs.at(key)) };
-                  return ref.mInstance.partialRef.guid;
-              }
+              //else {
+              //    Ref<T> ref { std::any_cast<Ref<T>>(mAssetRefs.at(key)) };
+              //    return ref.mInstance.partialRef.guid;
+              //}
 
           }
           template <typename T>
@@ -240,7 +242,7 @@ namespace IGE {
               try {
                   guid = GUID{ PathToGUID(fp) };
               }
-              catch (Debug::Exception<AssetManager> const& e) { // if there isnt any valid file path, just create a new guid
+              catch ([[maybe_unused]] Debug::Exception<AssetManager> const& e) { // if there isnt any valid file path, just create a new guid
                   guid = GUID{ GUID::Seed{} };
               }
               TypeGUID typeguid{ GetTypeName<T>() };

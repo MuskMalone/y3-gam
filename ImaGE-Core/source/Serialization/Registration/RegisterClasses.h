@@ -127,6 +127,8 @@ static void rttr_auto_register_reflection_function_(); namespace {
   rttr::registration::class_<IGE::Assets::TextureAsset>("Textures");
   rttr::registration::class_<IGE::Assets::PrefabAsset>("Prefabs");
   rttr::registration::class_<IGE::Assets::AudioAsset>("Audio");
+  rttr::registration::class_<IGE::Assets::FontAsset>("Fonts");
+
   /* ------------------- Audio ------------------- */
   {
       // Register the SoundInvokeSetting struct

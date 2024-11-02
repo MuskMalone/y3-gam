@@ -81,6 +81,12 @@ namespace GUI {
   }
 
   void Inspector::Run() {
+    ImGuiStyle& style = ImGui::GetStyle();
+    float oldItemSpacingX = style.ItemSpacing.x;
+    float oldCellPaddingX = style.CellPadding.x;
+    style.ItemSpacing.x = ITEM_SPACING;
+    style.CellPadding.x = CELL_PADDING;
+
     ImGui::Begin(mWindowName.c_str());
     ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
     ECS::Entity currentEntity{ GUIManager::GetSelectedEntity() };
@@ -98,11 +104,12 @@ namespace GUI {
       static bool componentOverriden{ false };
       if (!mEditingPrefab && currentEntity.HasComponent<Component::PrefabOverrides>()) {
         prefabOverride = &currentEntity.GetComponent<Component::PrefabOverrides>();
+        std::string const& pfbName{ IGE_ASSETMGR.GetAsset<IGE::Assets::PrefabAsset>(prefabOverride->guid)->mPrefabData.mName };
         ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
         ImGui::Text("Prefab instance of");
         ImGui::SameLine();
         ImGui::PushStyleColor(ImGuiCol_Text, sComponentHighlightCol);
-        ImGui::Text(prefabOverride->prefabName.c_str());
+        ImGui::Text(pfbName.c_str());
         ImGui::PopStyleColor();
         ImGui::PopFont();
       }
@@ -182,7 +189,9 @@ namespace GUI {
               }
           }
       }
-      if (currentEntity.HasComponent<Component::Layer>()) {
+
+      // don't run in PrefabEditor since layers are tied to a scene
+      if (!mEditingPrefab && currentEntity.HasComponent<Component::Layer>()) {
         rttr::type const layerType{ rttr::type::get<Component::Layer>() };
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(layerType);
 
@@ -296,6 +305,8 @@ namespace GUI {
       }
     }
     ImGui::PopFont();
+    style.ItemSpacing.x = oldItemSpacingX;
+    style.CellPadding.x = oldCellPaddingX;
     ImGui::End();
 
     // if edit is the first of this session, dispatch a SceneModifiedEvent
@@ -398,9 +409,9 @@ namespace GUI {
       if (ImGui::BeginCombo("##MaterialSelection", materialNames[0])) {
         for (unsigned i{}; i < materialNames.size(); ++i) {
           if (ImGui::Selectable(materialNames[i])) {
-            if (i + 1 != material.matIdx) {
+            if (i != material.matIdx) {
               modified = true;
-              material.matIdx = i + 1;
+              material.matIdx = i;
             }
             break;
           }
@@ -546,7 +557,13 @@ namespace GUI {
       ImVec4 originalHColor = style.Colors[ImGuiCol_ButtonHovered];
       style.Colors[ImGuiCol_Button] = ImVec4(0.18f, 0.28f, 0.66f, 1.0f);
       style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.28f, 0.48f, 0.86f, 1.0f);
-      if (ImGui::Button("Add Script", ImVec2(ImGui::GetWindowSize().x, 0.0f))) {
+
+      float windowWidth = ImGui::GetContentRegionAvail().x;
+      ImVec2 buttonSize(100.0f, 30.0f);
+      float buttonOffsetX = (windowWidth - buttonSize.x) * 0.5f;
+      ImGui::SetCursorPosX(ImGui::GetCursorPosX() + buttonOffsetX);
+
+      if (ImGui::Button("Add Script", buttonSize)) {
         for (const std::string& sn : sm->mAllScriptNames)
         {
           auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [sn](const Mono::ScriptInstance pair) { return pair.mScriptName == sn; });;
@@ -573,8 +590,6 @@ namespace GUI {
     return modified;
   }
 
-
-
   bool Inspector::TagComponentWindow(ECS::Entity entity, bool highlight) {
     bool const isOpen{ WindowBegin<Component::Tag>("Tag", highlight) };
     bool modified{ false };
@@ -587,6 +602,8 @@ namespace GUI {
       if (ImGui::Checkbox("##IsActiveCheckbox", &isEntityActive)) {
         entity.SetIsActive(isEntityActive);
       }
+      ImGui::SameLine();
+      ImGui::Text(" ");
       ImGui::SameLine();
 
       ImGui::SetNextItemWidth(INPUT_SIZE);
@@ -609,17 +626,35 @@ namespace GUI {
 
     if (isOpen) {
       auto& text = entity.GetComponent<Component::Text>();
-
-      // @TODO: TEMP, TO BE REPLACED WITH ACTUAL FONTS
-      std::vector<const char*> availableFonts{ "Arial", "Test1", "Test2" };
-
       float const inputWidth{ CalcInputWidth(60.f) };
 
       ImGui::BeginTable("TextTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+      NextRowTable("Font Family");
+
+      std::string fontText = (text.fontFamilyName == "None") ? "[None]: Drag in a Font" : text.fontFamilyName;
+
+      ImGui::BeginDisabled();
+      ImGui::InputText("##FontTextInput", &fontText);
+      ImGui::EndDisabled();
+
+      if (ImGui::BeginDragDropTarget()) {
+        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+        if (drop) {
+          AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+          if (assetPayload.mAssetType == AssetPayload::FONT) {
+            text.textAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::FontAsset>(assetPayload.GetFilePath());
+            text.fontFamilyName = assetPayload.GetFileName();
+            modified = true;
+          }
+        }
+        ImGui::EndDragDropTarget();
+      }
       
+      /*
       NextRowTable("Font Family");
       if (ImGui::BeginCombo("##TextName", text.fontName.c_str())) {
         for (const char* fontName : availableFonts) {
@@ -630,6 +665,7 @@ namespace GUI {
         }
         ImGui::EndCombo();
       }
+      */
       
       NextRowTable("Color");
       if (ImGui::ColorEdit4("##TextColor", &text.color[0])) {
@@ -682,6 +718,7 @@ namespace GUI {
       if (ImGuiHelpers::TableInputFloat3("Scale", &transform.scale[0], inputWidth, false, 0.001f, 100.f, 0.3f)) {
         modified = true;
       }
+
       ImGui::EndTable();
 
       ImGui::BeginTable("WorldTransformTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
@@ -699,7 +736,6 @@ namespace GUI {
       ImGuiHelpers::TableInputFloat3("World Rotation", &worldRot[0], inputWidth, false, 0.f, 360.f, 0.1f);
       ImGuiHelpers::TableInputFloat3("World Scale", &transform.worldScale[0], inputWidth, false, 0.001f, 100.f, 1.f);
       ImGui::EndDisabled();
-
       ImGui::EndTable();
     }
 
@@ -1051,7 +1087,11 @@ namespace GUI {
           SetIsComponentEdited(true);
       }
 
+      // End the table
+      ImGui::EndTable();
+
       // Modify sensor (bool input)
+      /*
       ImGui::TableNextRow();
       ImGui::TableSetColumnIndex(0); ImGui::Text("Sensor");
       ImGui::TableSetColumnIndex(1);  // Align in the X column
@@ -1059,8 +1099,16 @@ namespace GUI {
           IGE::Physics::PhysicsSystem::GetInstance()->ChangeBoxColliderVar(entity);
           SetIsComponentEdited(true);
       }
+      */
 
-      // End the table
+      ImGui::BeginTable("BoxSensorTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      NextRowTable("Box Sensor");
+      if (ImGui::Checkbox("##BoxSensor", &collider.sensor)) {
+        IGE::Physics::PhysicsSystem::GetInstance()->ChangeBoxColliderVar(entity);
+        SetIsComponentEdited(true);
+      }
       ImGui::EndTable();
     }
 
@@ -1111,7 +1159,11 @@ namespace GUI {
               SetIsComponentEdited(true);
           }
 
+          // End the table
+          ImGui::EndTable();
+
           // Modify sensor (bool input)
+          /*
           ImGui::TableNextRow();
           ImGui::TableSetColumnIndex(0); ImGui::Text("Sensor");
           ImGui::TableSetColumnIndex(1);  // Align in the X column
@@ -1119,10 +1171,17 @@ namespace GUI {
               IGE::Physics::PhysicsSystem::GetInstance()->ChangeSphereColliderVar(entity);
               SetIsComponentEdited(true);
           }
+          */
 
-          // End the table
+          ImGui::BeginTable("SphereSensorTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+          NextRowTable("Sphere Sensor");
+          if (ImGui::Checkbox("##SphereSensor", &collider.sensor)) {
+            IGE::Physics::PhysicsSystem::GetInstance()->ChangeSphereColliderVar(entity);
+            SetIsComponentEdited(true);
+          }
           ImGui::EndTable();
-
       }
 
       WindowEnd(isOpen);
@@ -1181,16 +1240,22 @@ namespace GUI {
               SetIsComponentEdited(true);
           }
 
+          // End the table
+          ImGui::EndTable();
+
           // Modify sensor (bool input)
-          ImGui::TableNextRow();
-          ImGui::TableSetColumnIndex(0); ImGui::Text("Sensor");
-          ImGui::TableSetColumnIndex(1);  // Align in the X column
-          if (ImGui::Checkbox("##Sensor", &collider.sensor)) {
+          //ImGui::TableNextRow();
+          //ImGui::TableSetColumnIndex(0); 
+          //ImGui::TableSetColumnIndex(1);  // Align in the X column
+
+          ImGui::BeginTable("ColliderSensorTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+          NextRowTable("Capsule Sensor");
+          if (ImGui::Checkbox("##ColliderSensor", &collider.sensor)) {
               IGE::Physics::PhysicsSystem::GetInstance()->ChangeCapsuleColliderVar(entity);
               SetIsComponentEdited(true);
           }
-
-          // End the table
           ImGui::EndTable();
       }
 
@@ -1204,7 +1269,7 @@ namespace GUI {
 
     if (isOpen) {
       const std::vector<std::string> Lights{ "Directional","Spotlight" };
-    //  // Assuming 'collider' is an instance of Collider
+      //  // Assuming 'collider' is an instance of Collider
       Component::Light& light{ entity.GetComponent<Component::Light>() };
       float const inputWidth{ CalcInputWidth(50.f) }, vec3InputWidth{ inputWidth / 3.f };
 
@@ -1213,7 +1278,6 @@ namespace GUI {
       ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
       NextRowTable("Type");
-
       if (ImGui::BeginCombo("", Lights[light.type].c_str()))
       {
         for (int s{ 0 }; s < static_cast<int>(Component::LIGHT_COUNT); ++s)
@@ -1224,7 +1288,7 @@ namespace GUI {
             if (ImGui::Selectable(Lights[s].c_str(), is_selected))
             {
               if (Lights[s] != Lights[light.type]) {
-                light.type = static_cast<Component::Light_Type>(s);
+                light.type = static_cast<Component::LightType>(s);
               }
             }
             if (is_selected)
@@ -1235,118 +1299,100 @@ namespace GUI {
         }
         ImGui::EndCombo();
       }
-      ImGui::EndTable();
 
-
-      ImGui::BeginTable("##LightVec3Table", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
-      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-      ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
-      ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
-      ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
-      ImGui::TableHeadersRow();
- 
-      //if (ImGuiHelpers::TableInputFloat3("Position", &light.position[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
-      //  modified = true;
-      //}
-      //if (ImGuiHelpers::TableInputFloat3("Direction", &light.direction[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
-      //  modified = true;
-      //}
-      if (ImGuiHelpers::TableInputFloat3("Color", &light.color[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
-        modified = true;
-      }
-      
-    
-    ImGui::EndTable();
-    float const charSize = ImGui::CalcTextSize("012345678901234").x;
-    ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV);
-    ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, charSize);
-
-    ImGui::TableNextRow();
-    ImGui::TableNextColumn();
-    ImGui::Text("Intensity");
-    ImGui::TableNextColumn();
-    if (ImGui::InputFloat("##In", &light.mLightIntensity, 0, 0, 0)) {
-      modified = true;
-    }
-    if (light.type == Component::SPOTLIGHT)
-    {
-
-      ImGui::TableNextRow();
-      ImGui::TableNextColumn();
-      ImGui::Text("Inner Angle");
-      ImGui::TableNextColumn();
-      if (ImGui::InputFloat("##T", &light.mInnerSpotAngle, 0, 0, 0)) {
+      NextRowTable("Color");
+      if (ImGui::ColorEdit4("##LightCol", &light.color[0], ImGuiColorEditFlags_NoAlpha)) {
         modified = true;
       }
 
-
-      ImGui::TableNextRow();
-      ImGui::TableNextColumn();
-      ImGui::Text("Output Angle");
-      ImGui::TableNextColumn();
-      if (ImGui::InputFloat("##O", &light.mOuterSpotAngle, 0, 0, 0)) {
+      NextRowTable("Intensity");
+      if (ImGui::DragFloat("##In", &light.mLightIntensity, 0.5f, 0.f, FLT_MAX, "%.2f")) {
         modified = true;
       }
+      if (light.type == Component::SPOTLIGHT)
+      {
 
-
-      ImGui::TableNextRow();
-      ImGui::TableNextColumn();
-      ImGui::Text("Range");
-      ImGui::TableNextColumn();
-      if (ImGui::InputFloat("##R", &light.mRange, 0, 0, 0)) {
-        modified = true;
-      }
-    }
-    ImGui::EndTable();
-
-    ImGui::BeginTable("##LightShadows1", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
-    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-    ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, inputWidth);
-
-    NextRowTable("Cast Shadows");
-    if (ImGui::Checkbox("##CastShadows", &light.castShadows)) {
-      modified = true;
-    }
-    ImGui::EndTable();
-
-    if (light.castShadows) {
-      ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-      ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
-      if (ImGui::TreeNodeEx("Shadows", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanFullWidth)) {
-        ImGui::PopFont();
-
-        if (ImGui::BeginTable("##LightShadows2", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
-          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
-
-          ImGui::TableNextRow();
-          ImGui::TableSetColumnIndex(0);
-          ImGui::SetCursorPosX(ImGui::GetCursorPosX() + FIRST_COLUMN_LENGTH * 0.5f);
-          ImGui::Text("Bias");
-          ImGui::TableSetColumnIndex(1);
-          ImGui::SetNextItemWidth(INPUT_SIZE);
-
-          if (ImGui::DragFloat("##BiasSlider", &light.bias, 0.005f, 0.f, 2.f, "% .3f")) {
-            modified = true;
-          }
-
-          ImGui::EndTable();
+        ImGui::TableNextRow();
+        ImGui::TableNextColumn();
+        ImGui::Text("Inner Angle");
+        ImGui::TableNextColumn();
+        if (ImGui::SliderFloat("##T", &light.mInnerSpotAngle, -360.f, 360.f, "%.f")) {
+          modified = true;
         }
 
-        ImGui::TreePop();
-      }
-      else {
-        ImGui::PopFont();
-      }
-      ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
-    }
 
+        ImGui::TableNextRow();
+        ImGui::TableNextColumn();
+        ImGui::Text("Output Angle");
+        ImGui::TableNextColumn();
+        if (ImGui::SliderFloat("##O", &light.mOuterSpotAngle, -360.f, 360.f, "%.f")) {
+          modified = true;
+        }
+
+
+        ImGui::TableNextRow();
+        ImGui::TableNextColumn();
+        ImGui::Text("Range");
+        ImGui::TableNextColumn();
+        if (ImGui::DragFloat("##R", &light.mRange, 0.5f, 0.f, FLT_MAX)) {
+          modified = true;
+        }
+      }
+      // @TODO: Remove else block when shadow is added for spotlight
+      else {
+        NextRowTable("Cast Shadows");
+        if (ImGui::Checkbox("##CastShadows", &light.castShadows)) {
+          modified = true;
+        }
+        if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+          ImGui::SetTooltip("Note: Only 1 shadow-casting light is supported");
+        }
+      }
+      ImGui::EndTable();
+
+      if (light.castShadows && light.type == Component::LightType::DIRECTIONAL) {
+        ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
+        ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
+        if (ImGui::TreeNodeEx("Shadows", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanFullWidth)) {
+          ImGui::PopFont();
+
+          if (ImGui::BeginTable("##LightShadows2", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+            ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+            ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+            NextRowTable("Softness");
+            if (ImGui::SliderInt("##SoftnessSlider", &light.softness, 0, 5)) {
+              modified = true;
+            }
+
+            NextRowTable("Bias");
+            if (ImGui::SliderFloat("##BiasSlider", &light.bias, 0.f, 2.f, "% .3f")) {
+              modified = true;
+            }
+
+            NextRowTable("Near Plane");
+            if (ImGui::IsItemHovered()) {
+              ImGui::SetTooltip("How close the light is to the object (how much of the scene the light sees)");
+            }
+            if (ImGui::SliderFloat("##NearPlane", &light.nearPlaneMultiplier, 0.1f, 2.f, "% .2f")) {
+              modified = true;
+            }
+
+            ImGui::EndTable();
+          }
+
+          ImGui::TreePop();
+        }
+        else {
+          ImGui::PopFont();
+        }
+        ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
+      }
     }
 
     WindowEnd(isOpen);
     return modified;
   }
-
 
 
   void Inspector::DrawAddButton() {
@@ -1377,7 +1423,7 @@ namespace GUI {
     if (ImGui::BeginPopup("AddComponentPanel", ImGuiWindowFlags_NoMove)) {
 
       if (ImGui::BeginTable("##component_table", 1, ImGuiTableFlags_SizingStretchSame)) {
-        ImGui::TableSetupColumn("ComponentNames", ImGuiTableColumnFlags_WidthFixed, 200.f);
+        ImGui::TableSetupColumn("ComponentNames", ImGuiTableColumnFlags_WidthFixed, 220.f);
         
         // @TODO: EDIT WHEN NEW COMPONENTS
         DrawAddComponentButton<Component::AudioListener>("Audio Listener");

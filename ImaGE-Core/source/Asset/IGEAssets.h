@@ -35,6 +35,7 @@ inline void IGEAssetsImportAllAssets() {
     fs::path textures { IGE::Assets::cTextureDirectory };
     fs::path audio { IGE::Assets::cAudioDirectory };
     fs::path model { IGE::Assets::cModelDirectory };
+    fs::path font { IGE::Assets::cFontDirectory };
     // Iterate through the directories in the root path
     for (const auto& entry : fs::directory_iterator(rootDir)) {
         if (entry.is_directory()) {
@@ -62,6 +63,13 @@ inline void IGEAssetsImportAllAssets() {
                         am.ImportAsset<IGE::Assets::ModelAsset>(entry.path().string());
                     }
                 }
+            }
+            else if (IGE::Assets::IsDirectoriesEqual(subDir, font)) {
+              for (const auto& entry : fs::directory_iterator(subDir)) {
+                if (entry.is_regular_file()) {
+                  am.ImportAsset<IGE::Assets::FontAsset>(entry.path().string());
+                }
+              }
             }
         }
     }

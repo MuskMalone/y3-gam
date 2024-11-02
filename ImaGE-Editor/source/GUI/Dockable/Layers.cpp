@@ -4,23 +4,50 @@
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
 #include "GUI/GUIManager.h"
+#include "GUI/Dockable/Inspector.h"
+#include "Scenes/SceneManager.h"
+#include <Events/EventManager.h>
 
 namespace GUI {
 
   int Layers::sSelectedLayer{};
 
-  Layers::Layers(const char* name) : GUIWindow(name) {
+  Layers::Layers(const char* name) : GUIWindow(name), mIsActive{ true } {
     mLayerSystem = Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>();
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &Layers::OnPrefabEditor, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &Layers::OnSceneStop, this);
   }
 
   void Layers::Run() {
     ImGui::Begin(mWindowName.c_str());
 
-    LayerNameNode();
-    VisibilityToggleNode();
-    CollisionMatrixNode();
+    if (!mIsActive) {
+      ImGui::Text("Layers not available for Prefabs!");
+      ImGui::End();
+      return;
+    }
+
+    if (!Scenes::SceneManager::GetInstance().NoSceneSelected()) {
+      LayerNameNode();
+      VisibilityToggleNode();
+      CollisionMatrixNode();
+    }
+    else {
+      ImGui::Text("No Scene Selected");
+    }
 
     ImGui::End();
+  }
+
+  EVENT_CALLBACK_DEF(Layers, OnPrefabEditor) {
+    mIsActive = false;
+  }
+  EVENT_CALLBACK_DEF(Layers, OnSceneStop) {
+    if (CAST_TO_EVENT(Events::SceneStateChange)->mNewState != Events::SceneStateChange::STOPPED) {
+      return;
+    }
+
+    mIsActive = true;
   }
 
   void Layers::LayerNameNode() {
@@ -51,10 +78,10 @@ namespace GUI {
           if (i < Systems::MAX_BUILTIN_LAYERS) {
             ImGui::BeginDisabled();
           }
-
-          ImGui::SetNextItemWidth(INPUT_SIZE);
+  
           ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_LIGHT));
-          std::string inputTextString = "##inputTextReadOnly" + i;
+          std::string inputTextString = "##inputTextReadOnly" + std::to_string(i);
+          ImGui::SetNextItemWidth(INPUT_SIZE);
           if (ImGui::InputText(inputTextString.c_str(), &layerName, ImGuiInputTextFlags_EnterReturnsTrue)) {
             layerSys->SetLayerName(i, layerName);
           }

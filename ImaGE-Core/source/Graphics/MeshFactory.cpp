@@ -176,67 +176,108 @@ namespace Graphics {
     return MeshSource(vao, submeshes, planeVertices, planeIndices);
   }
 
-  MeshSource MeshFactory::CreatePyramid() {
-    std::vector<Vertex> pyramidVertices{
-      // Base (square)
-      {{-0.5f, 0.0f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 0.0f}, {}, {}},  // Bottom-left
-      {{ 0.5f, 0.0f, -0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 0.0f}, {}, {}},  // Bottom-right
-      {{ 0.5f, 0.0f,  0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f}, {}, {}},  // Top-right
-      {{-0.5f, 0.0f,  0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 1.0f}, {}, {}},  // Top-left
+  MeshSource MeshFactory::CreateCapsule() {
+      std::vector<Vertex> capsuleVertices;
 
-      // Apex
-      {{ 0.0f,  0.75f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.5f, 1.0f}, {}, {}}  // Apex (top)
-    };
+      const int radialSegments = 16; // Number of segments for the rounded ends
+      const int heightSegments = 8; // Number of segments along the height of the cylinder
+      const float radius = 1.0f; // Radius of the unit capsule
+      const float halfHeight = 0.5f; // Half of the total height (1 unit in total)
 
-    // Pyramid indices
-    std::vector<uint32_t> pyramidIndices = {
-      // Base (square)
-      0, 1, 2, 2, 3, 0,       // Base face
+      // Generate the hemispherical caps
+      for (int i = 0; i <= radialSegments; ++i) {
+          float theta = i * glm::two_pi<float>() / radialSegments;
+          float x = radius * cos(theta);
+          float z = radius * sin(theta);
 
-      // Faces (triangles)
-      0, 1, 4,   // Front face
-      1, 2, 4,   // Right face
-      2, 3, 4,   // Back face
-      3, 0, 4    // Left face
-    };
+          // Top hemisphere vertices
+          capsuleVertices.push_back({ {x, halfHeight, z}, {0, 1, 0}, {0, 0}, {1, 0, 0}, {0, 1, 0} });
 
-    // Create VAO and VBO
-    auto vao = VertexArray::Create();
-    auto vbo = VertexBuffer::Create(sizeof(pyramidVertices));
+          // Bottom hemisphere vertices
+          capsuleVertices.push_back({ {x, -halfHeight, z}, {0, -1, 0}, {0, 1}, {1, 0, 0}, {0, 1, 0} });
+      }
 
-    BufferLayout pyramidLayout = {
-        {AttributeType::VEC3, "a_Position"},
-        {AttributeType::VEC3, "a_Normal"},
-        {AttributeType::VEC2, "a_TexCoord"},
-        {AttributeType::FLOAT, "a_TexIdx"},
-        {AttributeType::VEC3, "a_Tangent"},
-        {AttributeType::VEC3, "a_Bitangent"},
-        {AttributeType::VEC4, "a_Color"},
-    };
+      // Generate the cylinder sides
+      for (int j = 0; j <= heightSegments; ++j) {
+          float y = -halfHeight + (j * (1.0f / heightSegments)); // Height range from -0.5 to 0.5
+          for (int i = 0; i <= radialSegments; ++i) {
+              float theta = i * glm::two_pi<float>() / radialSegments;
+              float x = radius * cos(theta);
+              float z = radius * sin(theta);
+              capsuleVertices.push_back({ {x, y, z}, {0, 0, 1}, {static_cast<float>(i) / radialSegments, static_cast<float>(j) / heightSegments}, {1, 0, 0}, {0, 1, 0} });
+          }
 
-    vbo->SetLayout(pyramidLayout);
-    vao->AddVertexBuffer(vbo);
+          // Create indices for the hemispherical caps
+          std::vector<uint32_t> capsuleIndices;
 
-    // Create and bind Element Buffer Object (EBO) for the indices
-    std::shared_ptr<ElementBuffer> ebo = ElementBuffer::Create(pyramidIndices.data(), static_cast<uint32_t>(pyramidIndices.size()));
-    vao->SetElementBuffer(ebo);
+          // Top hemisphere
+          for (int i = 0; i < radialSegments; ++i) {
+              capsuleIndices.push_back(i);
+              capsuleIndices.push_back(i + 1);
+              capsuleIndices.push_back(radialSegments + 1 + i);
 
-    // Set up submesh
-    std::vector<Submesh> submeshes;
-    Submesh pyramidSubmesh{
-        0,                                 // baseVtx
-        0,                                 // baseIdx
-        static_cast<uint32_t>(pyramidVertices.size()),   // vtxCount
-        static_cast<uint32_t>(pyramidIndices.size()),    // idxCount
-        0,                                 // materialIdx
-        glm::mat4(1.0f),                   // Identity matrix for transform
-        pyramidIndices                     // Indices for the submesh
-    };
+              capsuleIndices.push_back(i + 1);
+              capsuleIndices.push_back(radialSegments + 1 + i + 1);
+              capsuleIndices.push_back(radialSegments + 1 + i);
+          }
 
-    submeshes.push_back(pyramidSubmesh);
+          // Cylinder sides
+          for (int j = 0; j < heightSegments; ++j) {
+              for (int i = 0; i < radialSegments; ++i) {
+                  int first = (j * (radialSegments + 1)) + i;
+                  int second = first + radialSegments + 1;
 
-    // Create MeshSource with the generated data
-    return MeshSource(vao, submeshes, pyramidVertices, pyramidIndices);
+                  capsuleIndices.push_back(first);
+                  capsuleIndices.push_back(second);
+                  capsuleIndices.push_back(first + 1);
+
+                  capsuleIndices.push_back(second);
+                  capsuleIndices.push_back(second + 1);
+                  capsuleIndices.push_back(first + 1);
+              }
+          }
+
+          // Create VAO and VBO for the capsule
+          auto vao = VertexArray::Create();
+          auto vbo = VertexBuffer::Create(static_cast<unsigned>(capsuleVertices.size() * sizeof(Vertex)));
+
+          // Set vertex buffer data
+          vbo->SetData(capsuleVertices.data(), static_cast<unsigned>(capsuleVertices.size() * sizeof(Vertex)));
+
+          BufferLayout capsuleLayout = {
+              {AttributeType::VEC3, "a_Position"},
+              {AttributeType::VEC3, "a_Normal"},
+              {AttributeType::VEC2, "a_TexCoord"},
+              {AttributeType::FLOAT, "a_TexIdx"},
+              {AttributeType::VEC3, "a_Tangent"},
+              {AttributeType::VEC3, "a_Bitangent"},
+              {AttributeType::VEC4, "a_Color"},
+          };
+
+          vbo->SetLayout(capsuleLayout);
+          vao->AddVertexBuffer(vbo);
+
+          // Create and bind Element Buffer Object (EBO) for the indices
+          auto ebo = ElementBuffer::Create(capsuleIndices.data(), static_cast<uint32_t>(capsuleIndices.size()));
+          vao->SetElementBuffer(ebo);
+
+          // Set up submesh
+          std::vector<Submesh> submeshes;
+          Submesh capsuleSubmesh{
+              0,                                 // baseVtx
+              0,                                 // baseIdx
+              static_cast<uint32_t>(capsuleVertices.size()),   // vtxCount
+              static_cast<uint32_t>(capsuleIndices.size()),    // idxCount
+              0,                                 // materialIdx
+              glm::mat4(1.0f),                   // Identity matrix for transform
+              capsuleIndices                        // Indices for the submesh
+          };
+
+          submeshes.push_back(capsuleSubmesh);
+
+          // Create MeshSource with the generated data
+          return MeshSource(vao, submeshes, capsuleVertices, capsuleIndices);
+      }
   }
 
   MeshSource MeshFactory::CreateModelFromImport(std::string const& imshFile) {

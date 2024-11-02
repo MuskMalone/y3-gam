@@ -23,12 +23,12 @@ namespace Graphics {
         if (size <= 1) return;  // Exit if there's only the default material
 
         // Bind default textures once to specific units
-        int defaultAlbedoUnit = 0;   // Unit 0 for default albedo texture
-        int defaultNormalUnit = 16;  // Unit 16 for default normal map
+        //int defaultAlbedoUnit = 0;   // Unit 0 for default albedo texture
+        //int defaultNormalUnit = 16;  // Unit 16 for default normal map
 
         // Bind the default textures only once @TODO CHANGE THIS TO SOMEWHERE ELSE
-        IGE_REF(IGE::Assets::TextureAsset, Renderer::GetWhiteTexture())->mTexture.Bind(defaultAlbedoUnit);
-        IGE_REF(IGE::Assets::TextureAsset, Renderer::GetWhiteTexture())->mTexture.Bind(defaultNormalUnit); // cahnge to normal Tex
+        int const defaultAlbedoUnit{ static_cast<int>(IGE_REF(IGE::Assets::TextureAsset, Renderer::GetWhiteTexture())->mTexture.Bind()) };
+        int const defaultNormalUnit{ static_cast<int>(IGE_REF(IGE::Assets::TextureAsset, Renderer::GetWhiteTexture())->mTexture.Bind()) }; // cahnge to normal Tex
 
         // Initialize texture unit arrays to default values
         std::vector<int> albedoTextureUnits(size, defaultAlbedoUnit);
@@ -44,14 +44,14 @@ namespace Graphics {
 
             // Only bind the albedo map if it’s unique (not the default texture)
             if (albedoMap != Renderer::GetWhiteTexture()) {
-                IGE_REF(IGE::Assets::TextureAsset, albedoMap)->mTexture.Bind(i);
-                albedoTextureUnits[i] = i;  // Assign this unique texture unit to the shader array
+              int const texUnit{ static_cast<int>(IGE_REF(IGE::Assets::TextureAsset, albedoMap)->mTexture.Bind()) };
+              albedoTextureUnits[i] = texUnit;  // Assign this unique texture unit to the shader array
             }
 
             // Only bind the normal map if it’s unique (not the default texture)
             if (normalMap != Renderer::GetWhiteTexture()) { // @TODO Change to normal Tex
-                IGE_REF(IGE::Assets::TextureAsset, normalMap)->mTexture.Bind(i + 16);
-                normalTextureUnits[i] = i + 16;
+              int const texUnit{ static_cast<int>(IGE_REF(IGE::Assets::TextureAsset, normalMap)->mTexture.Bind()) };
+              normalTextureUnits[i] = texUnit; 
             }
         }
 

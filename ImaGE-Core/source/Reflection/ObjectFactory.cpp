@@ -32,6 +32,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 //#define OF_DEBUG
 #endif
 
+using namespace IGE;
+
 namespace Reflection
 {
 
@@ -86,7 +88,7 @@ namespace Reflection
 
     std::string const& name{ entity.GetComponent<Component::Tag>().tag };
     ECS::Entity newEntity{ entityMan.CreateEntityWithTag(name + " (Copy)") };
-    //entityMan.SetIsActiveEntity(newEntity, entityMan.GetIsActiveEntity(entity));
+    newEntity.SetIsActive(entity.IsActive());
 
     std::vector<rttr::variant> const components{ GetEntityComponents(entity) };
 
@@ -154,56 +156,53 @@ namespace Reflection
   void ObjectFactory::LoadPrefabInstances() {
     Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
-
-    for (auto const& [pfb, data] : mPrefabInstances) {
-      pm.LoadPrefab(pfb);
-
+    IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+    
+    for (auto const& [guid, data] : mPrefabInstances) {
       std::vector<ECS::Entity> baseEntities;
 
-      {
-        // first, construct each entity while creating a map of parent to children
-        // we will use this to traverse down the root entity of each prefab instance,
-        for (auto const&[id, instData] : data) {
-          ECS::Entity ent{ entityMan.CreateEntityWithID({}, id) };
-          // if the ID is taken, map it to the new ID
-          if (ent.GetRawEnttEntityID() != id) {
-            mNewIDs.emplace(id, ent);
-          }
-
-          if (instData.mParent == entt::null) {
-            baseEntities.emplace_back(id); // collect the root entities
-          }
-
-          // restore its prefab overrides
-          ent.EmplaceComponent<Component::PrefabOverrides>(instData.mOverrides);
+      // first, construct each entity while creating a map of parent to children
+      // we will use this to traverse down the root entity of each prefab instance,
+      for (auto const& [id, instData] : data) {
+        ECS::Entity ent{ entityMan.CreateEntityWithID({}, id) };
+        // if the ID is taken, map it to the new ID
+        if (ent.GetRawEnttEntityID() != id) {
+          mNewIDs.emplace(id, ent);
         }
 
-        auto const& originalPfb{ pm.GetVariantPrefab(pfb) };
-
-        for (ECS::Entity& e : baseEntities) {
-          std::unordered_map<Prefabs::SubDataId, ECS::Entity> idToEntity{};
-          // traverse down each root entity and
-          // create it along with its children
-          TraverseDownInstance(e, idToEntity, data);
-
-          // fill the instance with its components and missing sub-objects
-          originalPfb.FillPrefabInstance(idToEntity);
-
+        if (instData.mParent == entt::null) {
+          baseEntities.emplace_back(id); // collect the root entities
         }
 
-        // set the root positions
-        for (ECS::Entity& e : baseEntities) {
-          std::optional<glm::vec3> const& pos{ data.at(e.GetRawEnttEntityID()).mPosition };
-          if (!pos) { continue; }
+        // restore its prefab overrides
+        ent.EmplaceComponent<Component::PrefabOverrides>(instData.mOverrides);
+      }
+      am.LoadRef<Assets::PrefabAsset>(guid);
+      auto const& originalPfb{ am.GetAsset<Assets::PrefabAsset>(guid)->mPrefabData };
 
-          // set position if needed
-          if (mNewIDs.contains(e.GetRawEnttEntityID())) {
-            mNewIDs.at(e.GetRawEnttEntityID()).GetComponent<Component::Transform>().worldPos = *pos;
-          }
-          else {
-            Component::Transform& trans{ e.GetComponent<Component::Transform>() };
-            trans.worldPos = trans.position = *pos;
-          }
+      for (ECS::Entity& e : baseEntities) {
+        std::unordered_map<Prefabs::SubDataId, ECS::Entity> idToEntity{};
+        // traverse down each root entity and
+        // create it along with its children
+        TraverseDownInstance(e, idToEntity, data);
+
+        // fill the instance with its components and missing sub-objects
+        originalPfb.FillPrefabInstance(guid, idToEntity);
+
+      }
+
+      // set the root positions
+      for (ECS::Entity& e : baseEntities) {
+        std::optional<glm::vec3> const& pos{ data.at(e.GetRawEnttEntityID()).mPosition };
+        if (!pos) { continue; }
+
+        // set position if needed
+        if (mNewIDs.contains(e.GetRawEnttEntityID())) {
+          mNewIDs.at(e.GetRawEnttEntityID()).GetComponent<Component::Transform>().worldPos = *pos;
+        }
+        else {
+          Component::Transform& trans{ e.GetComponent<Component::Transform>() };
+          trans.worldPos = trans.position = *pos;
         }
       }
     }
@@ -226,7 +225,7 @@ namespace Reflection
         mNewIDs.emplace(data.mID, newEntity);
       }
 
-      //entityMan.SetIsActiveEntity(id, arg.mIsActive);
+      newEntity.SetIsActive(data.mIsActive);
       AddComponentsToEntity(newEntity, data.mComponents);
     }
 
@@ -270,8 +269,8 @@ namespace Reflection
     mAddComponentFuncs.at(compType)(entity, compVar);
   }
 
-  #define IF_GET_ENTITY_COMP(ComponentClass) if (compType == rttr::type::get<ComponentClass>()) {\
-    return entity.HasComponent<ComponentClass>() ? std::make_shared<ComponentClass>(entity.GetComponent<ComponentClass>()) : rttr::variant(); }
+  #define IF_GET_ENTITY_COMP(ComponentClass) if (compType == rttr::type::get<Component::ComponentClass>()) {\
+    return entity.HasComponent<Component::ComponentClass>() ? std::make_shared<Component::ComponentClass>(entity.GetComponent<Component::ComponentClass>()) : rttr::variant(); }
 
   rttr::variant ObjectFactory::GetEntityComponent(ECS::Entity const& entity, rttr::type const& compType) const
   {
@@ -299,12 +298,14 @@ namespace Reflection
     }
   }
 
-#define IF_REMOVE_COMP(ComponentClass) if (compType == rttr::type::get<ComponentClass>()) { entity.RemoveComponent<ComponentClass>(); }
+#define IF_REMOVE_COMP(ComponentClass) if (compType == rttr::type::get<Component::ComponentClass>()) { entity.RemoveComponent<Component::ComponentClass>(); }
 
+  // not in use for now
   void ObjectFactory::RemoveComponentFromEntity(ECS::Entity entity, rttr::type compType) const
   {
-    // get underlying type if it's wrapped in a pointer
-    compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
+    UNREFERENCED_PARAMETER(entity); UNREFERENCED_PARAMETER(compType);
+    //// get underlying type if it's wrapped in a pointer
+    //compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
 
     IF_REMOVE_COMP(Component::Transform)
     else IF_REMOVE_COMP(Component::Tag)

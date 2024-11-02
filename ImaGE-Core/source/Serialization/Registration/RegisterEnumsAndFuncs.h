@@ -11,6 +11,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rttr/type.h>
 #include <rttr/registration>
 #include <Core/Components/RigidBody.h>
+#include <Core/Components/Light.h>
+
 #include <Audio/AudioManager.h>
 namespace
 {
@@ -45,4 +47,9 @@ static void rttr_auto_register_reflection_function3_(); namespace {
           rttr::value("LINEAR", IGE::Audio::SoundInvokeSetting::RolloffType::LINEAR),
           rttr::value("LOGARITHMIC", IGE::Audio::SoundInvokeSetting::RolloffType::LOGARITHMIC)
           );
+
+  rttr::registration::enumeration<Component::LightType>("LightType")(
+    rttr::value("DIRECTIONAL", Component::LightType::DIRECTIONAL),
+    rttr::value("SPOTLIGHT", Component::LightType::SPOTLIGHT)
+    );
 }
