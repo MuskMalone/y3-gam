@@ -109,6 +109,8 @@ namespace Graphics {
 		//unsigned int whiteTexData{ 0xffffffff };
 		//mData.whiteTex->SetData(&whiteTexData);
 		//mData.texUnits[0] = mData.whiteTex;
+		InitMeshSources();
+
 
 		std::vector<int> samplers(mData.maxTexUnits);
 		for (unsigned int i{}; i < mData.maxTexUnits; ++i)
@@ -135,7 +137,6 @@ namespace Graphics {
 		//InitPickPass();
 		InitShadowMapPass();
 		InitGeomPass();
-		InitScreenPass();
 		InitUIPass();
 
 		InitFullscreenQuad();
@@ -198,6 +199,7 @@ namespace Graphics {
 		ShaderLibrary::Add("Unlit", Shader::Create("Unlit.vert.glsl", "Unlit.frag.glsl"));
 		ShaderLibrary::Add("ShadowMap", Shader::Create("ShadowMap.vert.glsl", "ShadowMap.frag.glsl"));
 		ShaderLibrary::Add("FullscreenQuad", Shader::Create("FullscreenQuad.vert.glsl", "FullscreenQuad.frag.glsl"));
+		ShaderLibrary::Add("Tex2D", Shader::Create("Tex2D.vert.glsl", "Tex2D.frag.glsl"));
 	}
 
 	void Renderer::InitGeomPass() {
@@ -254,25 +256,7 @@ namespace Graphics {
 		AddPass(RenderPass::Create<ShadowPass>(shadowPassSpec));
 	}
 
-	void Renderer::InitUIPass() {
-		Graphics::FramebufferSpec uiSpec;
-		uiSpec.width = WINDOW_WIDTH<int>;
-		uiSpec.height = WINDOW_HEIGHT<int>;
-		uiSpec.attachments = {Graphics::FramebufferTextureFormat::RGBA8};
-
-		PipelineSpec uiPSpec;
-		uiPSpec.shader = ShaderLibrary::Get("FullscreenQuad");
-		uiPSpec.targetFramebuffer = Framebuffer::Create(uiSpec);
-
-		RenderPassSpec uiPassSpec;
-		uiPassSpec.pipeline = Pipeline::Create(uiPSpec);
-		uiPassSpec.debugName = "UI Pass";
-
-		//AddPass(RenderPass::Create<UIPass>(uiPassSpec));
-
-	}
-
-	void Renderer::InitScreenPass() {
+	void Renderer::InitScreenPass() { //might remove
 		Graphics::FramebufferSpec screenSpec;
 		screenSpec.width = WINDOW_WIDTH<int>;
 		screenSpec.height = WINDOW_HEIGHT<int>;
@@ -287,6 +271,38 @@ namespace Graphics {
 		screenPassSpec.debugName = "Screen Pass";
 
 		AddPass(RenderPass::Create<ScreenPass>(screenPassSpec));
+	}
+
+	void Renderer::InitUIPass() {
+		Graphics::FramebufferSpec screenSpec;
+		screenSpec.width = WINDOW_WIDTH<int>;
+		screenSpec.height = WINDOW_HEIGHT<int>;
+		screenSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };
+
+		PipelineSpec screenPSpec;
+		screenPSpec.shader = ShaderLibrary::Get("FullscreenQuad");
+		screenPSpec.targetFramebuffer = Framebuffer::Create(screenSpec);
+
+		RenderPassSpec screenPassSpec;
+		screenPassSpec.pipeline = Pipeline::Create(screenPSpec);
+		screenPassSpec.debugName = "Screen Pass";
+
+		AddPass(RenderPass::Create<ScreenPass>(screenPassSpec));
+
+		PipelineSpec uiPSpec;
+		uiPSpec.shader = ShaderLibrary::Get("Tex2D");
+		uiPSpec.targetFramebuffer = screenPSpec.targetFramebuffer;
+
+		RenderPassSpec uiPassSpec;
+		uiPassSpec.pipeline = Pipeline::Create(uiPSpec);
+		uiPassSpec.debugName = "UI Pass";
+
+		AddPass(RenderPass::Create<UIPass>(uiPassSpec));
+	}
+
+	void Renderer::InitMeshSources(){
+		//mData.debugMeshSources[0] = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>("Cube");
+		mData.quadMeshSource = { IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>("Quad") };
 	}
 
 	void Renderer::InitFullscreenQuad(){
@@ -313,6 +329,10 @@ namespace Graphics {
 
 	void Renderer::Shutdown() {
 		// Add shutdown logic if necessary
+	}
+
+	void Renderer::Clear(){
+		RenderAPI::Clear();
 	}
 
 	void Renderer::SetQuadBufferData(glm::vec3 const& pos, glm::vec2 const& scale, glm::vec3 const& norm, glm::vec2 const& texCoord, float texIdx, glm::vec3 const& tangent, glm::vec3 const& bitangent, glm::vec4 const& clr) {
@@ -370,7 +390,8 @@ namespace Graphics {
 			{ AttributeType::MAT4, "a_ModelMatrix" },
 			{ AttributeType::INT, "a_MaterialIdx"},
 			{ AttributeType::INT, "a_EntityID"}
-			//{ AttributeType::VEC4, "a_Color" }
+			//{ AttributeType::VEC4, "a_Color" },
+
 		};
 
 		instanceBuffer->SetLayout(instanceLayout);
@@ -488,6 +509,7 @@ namespace Graphics {
 	void Renderer::SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, int matID) {
 		InstanceData instance{};
 		instance.modelMatrix = worldMtx;
+		//instance.color = clr;
 
 		if (id != INVALID_ENTITY_ID) {
 			instance.entityID = id;
@@ -687,5 +709,12 @@ namespace Graphics {
 
 	IGE::Assets::GUID Renderer::GetWhiteTexture() {
 		return mData.whiteTex;
+	}
+	IGE::Assets::GUID Renderer::GetDebugMeshSource(size_t idx){
+		return mData.debugMeshSources[idx];
+	}
+
+	IGE::Assets::GUID Renderer::GetQuadMeshSource() {
+		return mData.quadMeshSource;
 	}
 }

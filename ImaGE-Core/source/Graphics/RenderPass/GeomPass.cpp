@@ -19,7 +19,7 @@ namespace Graphics {
 
   void GeomPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
       Begin();
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      Renderer::Clear();
       //auto shader = mSpec.pipeline->GetShader();
 
       // Use a map to group entities by material ID
@@ -117,6 +117,7 @@ namespace Graphics {
           for (const auto& [entity, worldMtx] : entityPairs) {
               auto const& mesh = entity.GetComponent<Component::Mesh>();
               Graphics::Renderer::SubmitInstance(mesh.meshSource, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
+
           }
           mSpec.pipeline->GetSpec().instanceLayout;
           // Flush all collected instances and render them in a single draw call

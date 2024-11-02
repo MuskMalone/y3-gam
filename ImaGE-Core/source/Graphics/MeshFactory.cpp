@@ -10,12 +10,67 @@ namespace Graphics {
     else if (meshName == "Plane") {
       return CreatePlane();
     }
+    else if (meshName == "Quad") {
+        return CreateQuad();
+    }
     else if (meshName == "None") {
         return MeshSource{ {},{},{},{} };
     }
 
     Debug::DebugLogger::GetInstance().LogError("[MeshFactory] No such model exists: " + meshName);
     return MeshSource{ {},{},{},{} };
+  }
+
+  MeshSource MeshFactory::CreateQuad() {
+      std::vector<Vertex2D> quadVertices{
+          {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f}},  // Bottom-left
+          {{ 0.5f, -0.5f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f}},  // Bottom-right
+          {{ 0.5f,  0.5f, 0.0f}, {1.0f, 1.0f}, {1.0f, 1.0f, 1.0f, 1.0f}},  // Top-right
+          {{-0.5f,  0.5f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f, 1.0f, 1.0f}}   // Top-left
+      };
+
+      std::vector<uint32_t> quadIndices = {
+          0, 1, 2,  // First triangle
+          2, 3, 0   // Second triangle
+      };
+
+      // Create VAO and VBO
+      auto vao = VertexArray::Create();
+      auto vbo = VertexBuffer::Create(static_cast<unsigned>(quadVertices.size() * sizeof(Vertex2D)));
+
+      // Set vertex buffer data to quadVertices2D
+      vbo->SetData(quadVertices.data(), static_cast<unsigned>(quadVertices.size() * sizeof(Vertex2D)));
+
+      // Define the layout only for position, texcoord, and color
+      BufferLayout quadLayout = {
+          {AttributeType::VEC3, "a_Position"},
+          {AttributeType::VEC2, "a_TexCoord"},
+          {AttributeType::VEC4, "a_Color"},
+      };
+
+      vbo->SetLayout(quadLayout);
+      vao->AddVertexBuffer(vbo);
+
+      // Create and bind Element Buffer Object (EBO) for the indices
+      auto ebo = ElementBuffer::Create(quadIndices.data(), static_cast<uint32_t>(quadIndices.size()));
+      vao->SetElementBuffer(ebo);
+
+      // Set up submesh
+      std::vector<Submesh> submeshes;
+      Submesh quadSubmesh{
+          0,                                 // baseVtx
+          0,                                 // baseIdx
+          static_cast<uint32_t>(quadVertices.size()),   // vtxCount
+          static_cast<uint32_t>(quadIndices.size()),    // idxCount
+          0,                                 // materialIdx
+          glm::mat4(1.0f),                   // Identity matrix for transform
+          quadIndices                        // Indices for the submesh
+      };
+
+      submeshes.push_back(quadSubmesh);
+
+      // Create MeshSource with the generated data
+      return MeshSource(vao, submeshes, {}, quadIndices);  // Empty vertices list, since we use Vertex2D locally
   }
 
   MeshSource MeshFactory::CreateCube() {

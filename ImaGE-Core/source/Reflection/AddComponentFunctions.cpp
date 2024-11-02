@@ -97,4 +97,10 @@ namespace Reflection::ComponentUtils {
     entity.EmplaceOrReplaceComponent<Light>(comp);
   }
 
+  void AddCanvas(ECS::Entity entity, rttr::variant const& var) {
+      EXTRACT_RAW_COMP(Canvas, comp);
+
+      entity.EmplaceOrReplaceComponent<Canvas>(comp);
+  }
+
 } // namespace Reflection

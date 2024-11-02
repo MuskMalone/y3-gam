@@ -113,6 +113,7 @@ namespace Graphics {
 		std::unordered_map<IGE::Assets::GUID, std::shared_ptr<VertexBuffer>> instanceBuffers;
 
 		IGE::Assets::GUID debugMeshSources[3];
+		IGE::Assets::GUID quadMeshSource;
 		FullscreenQuad screen;
 		Statistics stats;
 	};
@@ -122,6 +123,7 @@ namespace Graphics {
 
 		static void Init();
 		static void Shutdown();
+		static void Clear();
 
 		// Quads
 		static void DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::vec4 const& clr, float rot = 0.f);
@@ -148,7 +150,10 @@ namespace Graphics {
 		static IGE::Assets::GUID GetDefaultTexture();
 		static IGE::Assets::GUID GetWhiteTexture();
 
-		static IGE::Assets::GUID GetDebugMeshSource(size_t idx);
+		static IGE::Assets::GUID GetDebugMeshSource(size_t idx = 0);
+
+		static IGE::Assets::GUID GetQuadMeshSource();
+		
 	private:
 		static void SetQuadBufferData(glm::vec3 const& pos, glm::vec2 const& scale,
 			glm::vec3 const& norm, glm::vec2 const& texCoord,
@@ -177,6 +182,8 @@ namespace Graphics {
 		static void InitShadowMapPass();
 		static void InitScreenPass();
 		static void InitUIPass();
+
+		static void InitMeshSources();
 
 		static void InitFullscreenQuad();
 

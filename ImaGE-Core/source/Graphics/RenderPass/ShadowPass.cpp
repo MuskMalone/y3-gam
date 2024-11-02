@@ -69,7 +69,7 @@ namespace Graphics {
         glEnable(GL_DEPTH_TEST);
         glCullFace(GL_FRONT);
         Begin();
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        Renderer::Clear();
     }
 
     void ShadowPass::EndRender() {

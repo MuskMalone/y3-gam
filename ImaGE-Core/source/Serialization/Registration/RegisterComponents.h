@@ -123,6 +123,8 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .constructor<std::vector<std::string> const&>()
     .property(JSON_SCRIPT_LIST_KEY, &Script::mScriptList);
 
+  REGISTER_COMPONENT(Canvas, "Canvas")
+    .property("isActive", &Component::Canvas::isActive);
 
 
   // stuff below are not actual "Components", hence we skip the REGISTER_COMPONENT checks
