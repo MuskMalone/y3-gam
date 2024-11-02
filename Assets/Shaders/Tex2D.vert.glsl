@@ -28,5 +28,5 @@ void main(){
 
 	v_FragPos = worldPosition.xyz;
 	v_TexCoord = a_TexCoord;
-	gl_Position = u_ViewProjMtx * worldPosition;
+	gl_Position = worldPosition;
 } 
