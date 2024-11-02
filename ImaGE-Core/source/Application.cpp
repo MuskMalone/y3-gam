@@ -48,6 +48,7 @@ namespace IGE {
     // initialize singletons
     Debug::DebugLogger::CreateInstance();
     Events::EventManager::CreateInstance();
+    IGE::Audio::AudioManager::CreateInstance();
     Assets::AssetManager::CreateInstance();
     Reflection::ObjectFactory::CreateInstance();
     Scenes::SceneManager::CreateInstance();
@@ -57,7 +58,7 @@ namespace IGE {
     Mono::ScriptManager::CreateInstance();
     ECS::EntityManager::CreateInstance();
     Systems::SystemManager::CreateInstance();
-    IGE::Audio::AudioManager::CreateInstance();
+
     
     // @TODO: Init physics and audio singletons
     //IGE::Physics::PhysicsSystem::InitAllocator();

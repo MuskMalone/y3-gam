@@ -5,10 +5,9 @@ namespace Component{
 	struct AudioSource {
 		
 		struct AudioInstance {
-			//IGE::Assets::GUID guid{};
-			uint64_t guid{};
+			IGE::Assets::GUID guid{};
 			IGE::Audio::SoundInvokeSetting playSettings;
-			AudioInstance(IGE::Assets::GUID g) : guid{ g } {}
+			AudioInstance() = default;
 		};
 		std::unordered_map<std::string, AudioInstance> sounds{};
 		

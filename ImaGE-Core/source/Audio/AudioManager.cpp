@@ -359,14 +359,18 @@ namespace IGE {
         void AudioManager::PlaySound(IGE::Assets::GUID const& guid, SoundInvokeSetting const& settings, uint64_t group)
         {
             //gets the SoundAsset ref
+            if (!IGE::Assets::AssetManager::GetInstance().IsGUIDValid<IGE::Assets::AudioAsset>(guid)) {
+                IGE_ASSETMGR.LoadRef<IGE::Assets::AudioAsset>(guid);
+            }
             if (IGE::Assets::AssetManager::GetInstance().IsGUIDValid<IGE::Assets::AudioAsset>(guid)) {
                 auto audioref{ IGE_ASSETMGR.GetAsset<IGE::Assets::AudioAsset>(guid) };
                 auto& sound{ audioref->mSound };
                 sound.PlaySound(settings, mGroup.at(group));
-            }else{
+            }
+            else {
+
                 Debug::DebugLogger::GetInstance().LogError("sound " + std::to_string(guid) + " does not exist");
             }
-
         }
 
         void AudioManager::FreeSound(uint32_t sound)

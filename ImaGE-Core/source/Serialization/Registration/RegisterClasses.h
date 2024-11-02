@@ -146,7 +146,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
           .property("maxDistance", &IGE::Audio::SoundInvokeSetting::maxDistance)
           .property("rolloffType", &IGE::Audio::SoundInvokeSetting::rolloffType); // As reference for mutable property
       rttr::registration::class_<Component::AudioSource::AudioInstance>("AudioInstance")
-          .constructor<IGE::Assets::GUID>()(rttr::policy::ctor::as_object)
+          .constructor<>()(rttr::policy::ctor::as_object)
           .property("guid", &Component::AudioSource::AudioInstance::guid)
           .property("playSettings", &Component::AudioSource::AudioInstance::playSettings);
   }

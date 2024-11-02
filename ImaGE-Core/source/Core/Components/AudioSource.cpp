@@ -30,7 +30,9 @@ namespace Component {
 		try {
 			auto guid{ IGE::Assets::AssetManager::GetInstance().PathToGUID(fp) };
 			IGE::Assets::AssetManager::GetInstance().LoadRef<IGE::Assets::AudioAsset>(guid);
-			sounds.emplace(fp, guid);
+			AudioInstance ai{};
+			ai.guid = guid;
+			sounds.emplace(fp, ai);
 		}
 		catch (Debug::Exception<IGE::Assets::AssetManager> const& e) {
 			Debug::DebugLogger::GetInstance().LogWarning("couldnt load asset");
