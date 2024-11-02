@@ -126,6 +126,8 @@ static void rttr_auto_register_reflection_function2_(); namespace {
       .property("sounds", &AudioSource::sounds);
   REGISTER_COMPONENT(AudioListener, "AudioListener");
 
+  REGISTER_COMPONENT(Canvas, "Canvas")
+    .property("isActive", &Component::Canvas::isActive);
 
   // stuff below are not actual "Components", hence we skip the REGISTER_COMPONENT checks
   rttr::registration::class_<PrefabOverrides>("PrefabOverrides")

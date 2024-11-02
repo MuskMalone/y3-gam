@@ -22,6 +22,7 @@ namespace Graphics{
 		static MeshSource CreateModelFromImport(std::string const& file);	// load from file (obj, fbx etc.)
 
 	private:
+		static MeshSource CreateQuad();
 		static MeshSource CreateCube();
 		static MeshSource CreatePlane();
 		static MeshSource CreateCapsule();

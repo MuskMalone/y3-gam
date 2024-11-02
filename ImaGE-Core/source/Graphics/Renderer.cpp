@@ -10,6 +10,8 @@
 #pragma region RenderPasses
 #include <Graphics/RenderPass/GeomPass.h>
 #include <Graphics/RenderPass/ShadowPass.h>
+#include <Graphics/RenderPass/ScreenPass.h>
+#include <Graphics/RenderPass/UIPass.h>
 #pragma endregion
 
 namespace Graphics {
@@ -107,6 +109,8 @@ namespace Graphics {
 		//unsigned int whiteTexData{ 0xffffffff };
 		//mData.whiteTex->SetData(&whiteTexData);
 		//mData.texUnits[0] = mData.whiteTex;
+		InitMeshSources();
+
 
 		std::vector<int> samplers(mData.maxTexUnits);
 		for (unsigned int i{}; i < mData.maxTexUnits; ++i)
@@ -123,8 +127,6 @@ namespace Graphics {
 		mData.quadVtxPos[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
 		mData.quadVtxPos[3] = { -0.5f, 0.5f, 0.0f, 1.0f };
 
-		
-
 		//Init framebuffer
 		Graphics::FramebufferSpec framebufferSpec;
 		framebufferSpec.width = WINDOW_WIDTH<int>;
@@ -135,17 +137,18 @@ namespace Graphics {
 		//InitPickPass();
 		InitShadowMapPass();
 		InitGeomPass();
+		InitUIPass();
+
+		InitFullscreenQuad();
 
 		mFinalFramebuffer = mRenderPasses.back()->GetTargetFramebuffer();
-		//mFinalFramebuffer = Framebuffer::Create(framebufferSpec);
-
 
 		IGE::Assets::GUID texguid1{ Texture::Create(gAssetsDirectory + std::string("Textures\\default.dds")) };
 		IGE::Assets::GUID texguid{ Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
 		//Init Materials
 
 		// Create a default material with a default shader and properties
-		std::shared_ptr<Material> defaultMaterial = Material::Create(ShaderLibrary::Get("PBR")); //TODO STORE IN SHADER LIB
+		std::shared_ptr<Material> defaultMaterial = Material::Create(ShaderLibrary::Get("PBR"));
 		defaultMaterial->SetAlbedoColor(glm::vec3(1.0f));  // Set default white albedo
 		defaultMaterial->SetMetalness(0.0f);
 		defaultMaterial->SetRoughness(1.0f);
@@ -157,7 +160,7 @@ namespace Graphics {
 		mat1->SetAlbedoMap(texguid1);
 		MaterialTable::AddMaterial(mat1);
 
-		std::shared_ptr<Material> mat2 = Material::Create(ShaderLibrary::Get("Unlit"));
+		std::shared_ptr<Material> mat2 = Material::Create(ShaderLibrary::Get("Unlit")); //@TODO support other shaders like Unlit
 		mat2->SetAlbedoMap(texguid);
 		MaterialTable::AddMaterial(mat2);
 		//--Material Init End--//
@@ -195,6 +198,8 @@ namespace Graphics {
 		ShaderLibrary::Add("PBR", Shader::Create("PBR.vert.glsl", "PBR.frag.glsl"));
 		ShaderLibrary::Add("Unlit", Shader::Create("Unlit.vert.glsl", "Unlit.frag.glsl"));
 		ShaderLibrary::Add("ShadowMap", Shader::Create("ShadowMap.vert.glsl", "ShadowMap.frag.glsl"));
+		ShaderLibrary::Add("FullscreenQuad", Shader::Create("FullscreenQuad.vert.glsl", "FullscreenQuad.frag.glsl"));
+		ShaderLibrary::Add("Tex2D", Shader::Create("Tex2D.vert.glsl", "Tex2D.frag.glsl"));
 	}
 
 	void Renderer::InitGeomPass() {
@@ -251,8 +256,83 @@ namespace Graphics {
 		AddPass(RenderPass::Create<ShadowPass>(shadowPassSpec));
 	}
 
+	void Renderer::InitScreenPass() { //might remove
+		Graphics::FramebufferSpec screenSpec;
+		screenSpec.width = WINDOW_WIDTH<int>;
+		screenSpec.height = WINDOW_HEIGHT<int>;
+		screenSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };
+
+		PipelineSpec screenPSpec;
+		screenPSpec.shader = ShaderLibrary::Get("FullscreenQuad");
+		screenPSpec.targetFramebuffer = Framebuffer::Create(screenSpec);
+
+		RenderPassSpec screenPassSpec;
+		screenPassSpec.pipeline = Pipeline::Create(screenPSpec);
+		screenPassSpec.debugName = "Screen Pass";
+
+		AddPass(RenderPass::Create<ScreenPass>(screenPassSpec));
+	}
+
+	void Renderer::InitUIPass() {
+		Graphics::FramebufferSpec screenSpec;
+		screenSpec.width = WINDOW_WIDTH<int>;
+		screenSpec.height = WINDOW_HEIGHT<int>;
+		screenSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };
+
+		PipelineSpec screenPSpec;
+		screenPSpec.shader = ShaderLibrary::Get("FullscreenQuad");
+		screenPSpec.targetFramebuffer = Framebuffer::Create(screenSpec);
+
+		RenderPassSpec screenPassSpec;
+		screenPassSpec.pipeline = Pipeline::Create(screenPSpec);
+		screenPassSpec.debugName = "Screen Pass";
+
+		AddPass(RenderPass::Create<ScreenPass>(screenPassSpec));
+
+		PipelineSpec uiPSpec;
+		uiPSpec.shader = ShaderLibrary::Get("Tex2D");
+		uiPSpec.targetFramebuffer = screenPSpec.targetFramebuffer;
+
+		RenderPassSpec uiPassSpec;
+		uiPassSpec.pipeline = Pipeline::Create(uiPSpec);
+		uiPassSpec.debugName = "UI Pass";
+
+		AddPass(RenderPass::Create<UIPass>(uiPassSpec));
+	}
+
+	void Renderer::InitMeshSources(){
+		//mData.debugMeshSources[0] = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>("Cube");
+		mData.quadMeshSource = { IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>("Quad") };
+	}
+
+	void Renderer::InitFullscreenQuad(){
+		//Setting up Fullscreen Quad
+		mData.screen.screenVertices[0] = { {-1.0f,  1.0f}, {0.0f, 1.0f} };
+		mData.screen.screenVertices[1] = { {-1.0f, -1.0f}, {0.0f, 0.0f} };
+		mData.screen.screenVertices[2] = { { 1.0f, -1.0f}, {1.0f, 0.0f} };
+		mData.screen.screenVertices[3] = { {-1.0f,  1.0f}, {0.0f, 1.0f} };
+		mData.screen.screenVertices[4] = { { 1.0f, -1.0f}, {1.0f, 0.0f} };
+		mData.screen.screenVertices[5] = { { 1.0f,  1.0f}, {1.0f, 1.0f} };
+
+		mData.screen.screenVertexArray = VertexArray::Create();
+		mData.screen.screenVertexBuffer = VertexBuffer::Create(sizeof(mData.screen.screenVertices));
+
+		mData.screen.screenVertexBuffer->Bind();
+		mData.screen.screenVertexBuffer->SetData(mData.screen.screenVertices.data(), sizeof(mData.screen.screenVertices));
+		BufferLayout screenLayout = {
+			{AttributeType::VEC2, "a_Position"},
+			{AttributeType::VEC2, "a_TexCoord"},
+		};
+		mData.screen.screenVertexBuffer->SetLayout(screenLayout);
+		mData.screen.screenVertexArray->AddVertexBuffer(mData.screen.screenVertexBuffer);
+	}
+
 	void Renderer::Shutdown() {
 		// Add shutdown logic if necessary
+	}
+
+	void Renderer::Clear(){
+		RenderAPI::Clear();
 	}
 
 	void Renderer::SetQuadBufferData(glm::vec3 const& pos, glm::vec2 const& scale, glm::vec3 const& norm, glm::vec2 const& texCoord, float texIdx, glm::vec3 const& tangent, glm::vec3 const& bitangent, glm::vec4 const& clr) {
@@ -310,7 +390,8 @@ namespace Graphics {
 			{ AttributeType::MAT4, "a_ModelMatrix" },
 			{ AttributeType::INT, "a_MaterialIdx"},
 			{ AttributeType::INT, "a_EntityID"}
-			//{ AttributeType::VEC4, "a_Color" }
+			//{ AttributeType::VEC4, "a_Color" },
+
 		};
 
 		instanceBuffer->SetLayout(instanceLayout);
@@ -353,6 +434,10 @@ namespace Graphics {
 
 		mData.quadIdxCount += 6;
 		++mData.stats.quadCount;
+	}
+
+	void Renderer::RenderFullscreenTexture(){
+		RenderAPI::DrawTriangles(mData.screen.screenVertexArray, 6);
 	}
 
 	void Renderer::SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr) {
@@ -424,6 +509,7 @@ namespace Graphics {
 	void Renderer::SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, int matID) {
 		InstanceData instance{};
 		instance.modelMatrix = worldMtx;
+		//instance.color = clr;
 
 		if (id != INVALID_ENTITY_ID) {
 			instance.entityID = id;
@@ -484,7 +570,7 @@ namespace Graphics {
 			mData.triVertexBuffer->SetData(mData.triBuffer.data(), dataSize);
 
 			ShaderLibrary::Get("Tri")->Use();
-			RenderAPI::DrawLines(mData.triVertexArray, mData.triVtxCount);
+			RenderAPI::DrawTriangles(mData.triVertexArray, mData.triVtxCount);
 
 			++mData.stats.drawCalls;
 		}
@@ -523,7 +609,7 @@ namespace Graphics {
 
 			mData.triVertexBuffer->SetData(mData.triBuffer.data(), dataSize);
 
-			RenderAPI::DrawLines(mData.triVertexArray, mData.triVtxCount);
+			RenderAPI::DrawTriangles(mData.triVertexArray, mData.triVtxCount);
 
 			++mData.stats.drawCalls;
 		}
@@ -623,5 +709,12 @@ namespace Graphics {
 
 	IGE::Assets::GUID Renderer::GetWhiteTexture() {
 		return mData.whiteTex;
+	}
+	IGE::Assets::GUID Renderer::GetDebugMeshSource(size_t idx){
+		return mData.debugMeshSources[idx];
+	}
+
+	IGE::Assets::GUID Renderer::GetQuadMeshSource() {
+		return mData.quadMeshSource;
 	}
 }

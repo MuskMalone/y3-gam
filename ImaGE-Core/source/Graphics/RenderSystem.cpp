@@ -34,8 +34,7 @@ namespace Graphics {
 	}
 
 	void RenderSystem::RenderScene(CameraSpec const& cam) {
-		glClear(GL_COLOR_BUFFER_BIT);
-		glClear(GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//Frustum Culling should be here
 
@@ -74,8 +73,13 @@ namespace Graphics {
 		}
 		
 
+		std::shared_ptr<Texture> prevOutputTex{ nullptr };
 		for (auto const& pass : Renderer::mRenderPasses) {
+			if (prevOutputTex) {
+				pass->SetInputTexture(prevOutputTex);
+			}
 			pass->Render(cam, entityVector);
+			prevOutputTex = pass->GetOutputTexture();
 		}
 
 	}

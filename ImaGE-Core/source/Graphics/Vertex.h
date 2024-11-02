@@ -30,4 +30,15 @@ namespace Graphics {
       : position{ pos }, normal{ norm }, texcoord{ tex }, tangent{ tan }, bitangent{ bitan }, color{ clr }
     {}
   };
+
+  struct Vertex2D {
+      glm::vec3 position;
+      glm::vec2 texcoord;
+      glm::vec4 color;
+
+      Vertex2D(glm::vec3 pos = { 0.0f, 0.0f, 0.0f },
+          glm::vec2 tex = { 0.0f, 0.0f },
+          glm::vec4 clr = { 1.0f, 1.0f, 1.0f, 1.0f })
+          : position{ pos }, texcoord{ tex }, color{ clr } {}
+  };
 } // namespace Graphics

@@ -33,6 +33,17 @@ namespace Graphics {
 		uint32_t GetTotalIdxCount() { return quadCount * 6; }
 	};
 
+	struct FullscreenQuad {
+		struct ScreenVtx {
+			glm::vec2 pos;
+			glm::vec2 texCoord;
+		};
+
+		std::shared_ptr<VertexArray> screenVertexArray;
+		std::shared_ptr<VertexBuffer> screenVertexBuffer;
+		std::array<ScreenVtx, 6> screenVertices;
+	};
+
 	struct QuadVtx {
 		glm::vec3 pos;
 		glm::vec3 normal;
@@ -57,10 +68,6 @@ namespace Graphics {
 
 	struct RendererData {
 		uint32_t maxTexUnits{};
-
-		//static const uint32_t cMaxMeshes = 1;
-		//static const uint32_t cMaxVertices = cMaxMeshes * 100; // estimate based on average mesh complexity
-		//static const uint32_t cMaxIndices = cMaxMeshes * 360;
 
 		static const uint32_t cMaxVertices = 500000;
 		static const uint32_t cMaxIndices = cMaxVertices * 3;
@@ -106,6 +113,8 @@ namespace Graphics {
 		std::unordered_map<IGE::Assets::GUID, std::shared_ptr<VertexBuffer>> instanceBuffers;
 
 		IGE::Assets::GUID debugMeshSources[3];
+		IGE::Assets::GUID quadMeshSource;
+		FullscreenQuad screen;
 		Statistics stats;
 	};
 
@@ -114,9 +123,11 @@ namespace Graphics {
 
 		static void Init();
 		static void Shutdown();
+		static void Clear();
 
 		// Quads
 		static void DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::vec4 const& clr, float rot = 0.f);
+		static void RenderFullscreenTexture();
 
 		static void SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr = Color::COLOR_WHITE);
 		static void SubmitTriangle(glm::vec3 const& v1, glm::vec3 const& v2, glm::vec3 const& v3, glm::vec4 const& clr = Color::COLOR_WHITE);
@@ -139,7 +150,10 @@ namespace Graphics {
 		static IGE::Assets::GUID GetDefaultTexture();
 		static IGE::Assets::GUID GetWhiteTexture();
 
-		static IGE::Assets::GUID GetDebugMeshSource(size_t idx);
+		static IGE::Assets::GUID GetDebugMeshSource(size_t idx = 0);
+
+		static IGE::Assets::GUID GetQuadMeshSource();
+		
 	private:
 		static void SetQuadBufferData(glm::vec3 const& pos, glm::vec2 const& scale,
 			glm::vec3 const& norm, glm::vec2 const& texCoord,
@@ -166,6 +180,12 @@ namespace Graphics {
 		static void InitPickPass();
 		static void InitGeomPass();
 		static void InitShadowMapPass();
+		static void InitScreenPass();
+		static void InitUIPass();
+
+		static void InitMeshSources();
+
+		static void InitFullscreenQuad();
 
 		template <typename T>
 		static void AddPass(std::shared_ptr<T>&& pass) {

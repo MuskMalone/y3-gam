@@ -210,6 +210,14 @@ namespace Graphics {
 		GLCALL(glTextureSubImage2D(mTexHdl, 0, 0, 0, mWidth, mHeight, GL_RGBA, GL_UNSIGNED_BYTE, data));
 	}
 
+	void Texture::CopyFrom(GLuint srcTexHdl, GLsizei width, GLsizei height){
+		if (mTexHdl) {
+			GLCALL(glCopyImageSubData(srcTexHdl, GL_TEXTURE_2D, 0, 0, 0, 0,
+				mTexHdl, GL_TEXTURE_2D, 0, 0, 0, 0,
+				width, height, 1));
+		}
+	}
+
 	/*  _________________________________________________________________________ */
 	/*! Bind
 
