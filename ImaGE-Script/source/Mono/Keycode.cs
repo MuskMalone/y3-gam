@@ -15,7 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Image.Mono
+namespace Image.Mono.Utils
 {
 
   public enum KeyCode

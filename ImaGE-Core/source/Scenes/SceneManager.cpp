@@ -92,6 +92,18 @@ namespace Scenes
     ECS::EntityManager::GetInstance().Reset();
   }
 
+  void SceneManager::ReloadScene()
+  {
+    // trigger a temp save 
+    TemporarySave();
+
+    // load it back
+    LoadTemporarySave();
+    InitScene();
+
+    QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mSceneName);
+  }
+
   EVENT_CALLBACK_DEF(SceneManager, HandleEvent)
   {
     switch (event->GetCategory())
@@ -182,6 +194,23 @@ namespace Scenes
     for (auto const& file : filesToRemove) {
       std::filesystem::remove(file);
     }
+  }
+
+
+  void SceneManager::SubmitToMainThread(const std::function<void()>& function)
+  {
+    std::scoped_lock<std::mutex> lock(mMainThreadQueueMutex);
+    mMainThreadQueue.emplace_back(function);
+  }
+
+  void SceneManager::ExecuteMainThreadQueue()
+  {
+    std::scoped_lock<std::mutex> lock(mMainThreadQueueMutex);
+
+    for (auto& func : mMainThreadQueue)
+      func();
+
+    mMainThreadQueue.clear();
   }
 
 } // namespace Scenes
