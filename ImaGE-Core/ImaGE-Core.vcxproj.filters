@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Asset">
@@ -184,14 +184,14 @@
     <ClInclude Include="source\Asset\Assetables\Audio\AudioAsset.h">
       <Filter>Asset\Assetables\Audio</Filter>
     </ClInclude>
+    <ClInclude Include="source\Asset\Assetables\Font\FontAsset.h">
+      <Filter>Asset\Assetables\Font</Filter>
+    </ClInclude>
     <ClInclude Include="source\Asset\Assetables\Mesh\ModelAsset.h">
       <Filter>Asset\Assetables\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="source\Asset\Assetables\Prefab\PrefabAsset.h">
       <Filter>Asset\Assetables\Prefab</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Asset\Assetables\Prefabs\PrefabAsset.h">
-      <Filter>Asset\Assetables\Prefabs</Filter>
     </ClInclude>
     <ClInclude Include="source\Asset\Assetables\Texture\TextureAsset.h">
       <Filter>Asset\Assetables\Texture</Filter>
@@ -205,7 +205,16 @@
     <ClInclude Include="source\Audio\AudioManager.h">
       <Filter>Audio</Filter>
     </ClInclude>
+    <ClInclude Include="source\Audio\AudioSystem.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
     <ClInclude Include="source\Color.h" />
+    <ClInclude Include="source\Core\Components\AudioListener.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\Components\AudioSource.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
     <ClInclude Include="source\Core\Components\Camera.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
@@ -269,6 +278,9 @@
     <ClInclude Include="source\Core\Systems\Systems.h">
       <Filter>Core\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="source\Core\Systems\TextSystem\TextSystem.h">
+      <Filter>Core\Systems\TextSystem</Filter>
+    </ClInclude>
     <ClInclude Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.h">
       <Filter>Core\Systems\TransformSystem</Filter>
     </ClInclude>
@@ -279,89 +291,248 @@
       <Filter>Core\Systems\TransformSystem</Filter>
     </ClInclude>
     <ClInclude Include="source\Debug.h" />
-    <ClInclude Include="source\DebugTools\DebugLogger\DebugLogger.h" />
-    <ClInclude Include="source\DebugTools\Exception\Exception.h" />
-    <ClInclude Include="source\DebugTools\Exception\ExceptionBase.h" />
-    <ClInclude Include="source\Events\Event.h" />
-    <ClInclude Include="source\Events\EventCallback.h" />
-    <ClInclude Include="source\Events\EventManager.h" />
-    <ClInclude Include="source\Events\Events.h" />
-    <ClInclude Include="source\Events\InputEvents.h" />
-    <ClInclude Include="source\Events\SceneEvents.h" />
-    <ClInclude Include="source\External\GLFWwindowDestructor.h" />
-    <ClInclude Include="source\External\ImGui\backends\imgui_impl_glfw.h" />
-    <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl2.h" />
-    <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl3.h" />
-    <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl3_loader.h" />
-    <ClInclude Include="source\External\ImGui\imconfig.h" />
-    <ClInclude Include="source\External\ImGui\imgui.h" />
-    <ClInclude Include="source\External\ImGui\imgui_internal.h" />
-    <ClInclude Include="source\External\ImGui\imstb_rectpack.h" />
-    <ClInclude Include="source\External\ImGui\imstb_textedit.h" />
-    <ClInclude Include="source\External\ImGui\imstb_truetype.h" />
-    <ClInclude Include="source\External\ImGui\misc\cpp\imgui_stdlib.h" />
-    <ClInclude Include="source\External\ImGui\misc\freetype\imgui_freetype.h" />
-    <ClInclude Include="source\External\ImGui\misc\single_file\imgui_single_file.h" />
-    <ClInclude Include="source\External\ImGuizmo\GraphEditor.h" />
-    <ClInclude Include="source\External\ImGuizmo\ImCurveEdit.h" />
-    <ClInclude Include="source\External\ImGuizmo\ImGradient.h" />
-    <ClInclude Include="source\External\ImGuizmo\ImGuizmo.h" />
-    <ClInclude Include="source\External\ImGuizmo\ImSequencer.h" />
-    <ClInclude Include="source\External\ImGuizmo\ImZoomSlider.h" />
-    <ClInclude Include="source\External\filewatch\FileWatch.h" />
-    <ClInclude Include="source\External\fmod\include\fmod.h" />
-    <ClInclude Include="source\External\fmod\include\fmod_codec.h" />
-    <ClInclude Include="source\External\fmod\include\fmod_common.h" />
-    <ClInclude Include="source\External\fmod\include\fmod_dsp.h" />
-    <ClInclude Include="source\External\fmod\include\fmod_dsp_effects.h" />
-    <ClInclude Include="source\External\fmod\include\fmod_errors.h" />
-    <ClInclude Include="source\External\fmod\include\fmod_output.h" />
-    <ClInclude Include="source\External\glad\include\KHR\khrplatform.h" />
-    <ClInclude Include="source\External\glad\include\glad\glad.h" />
-    <ClInclude Include="source\External\mono\include\mono\jit\jit.h" />
-    <ClInclude Include="source\External\mono\include\mono\jit\mono-private-unstable.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\appdomain.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\assembly.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\attrdefs.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\blob.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\class.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\debug-helpers.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\debug-mono-symfile.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\environment.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\exception.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\image.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\loader.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\metadata.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\mono-config.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\mono-debug.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\mono-gc.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\mono-private-unstable.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\object-forward.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\object.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\opcodes.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\profiler-events.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\profiler.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\reflection.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\row-indexes.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\sgen-bridge.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\tabledefs.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\threads.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\tokentype.h" />
-    <ClInclude Include="source\External\mono\include\mono\metadata\verify.h" />
-    <ClInclude Include="source\External\mono\include\mono\utils\mono-counters.h" />
-    <ClInclude Include="source\External\mono\include\mono\utils\mono-dl-fallback.h" />
-    <ClInclude Include="source\External\mono\include\mono\utils\mono-error.h" />
-    <ClInclude Include="source\External\mono\include\mono\utils\mono-forward.h" />
-    <ClInclude Include="source\External\mono\include\mono\utils\mono-jemalloc.h" />
-    <ClInclude Include="source\External\mono\include\mono\utils\mono-logger.h" />
-    <ClInclude Include="source\External\mono\include\mono\utils\mono-private-unstable.h" />
-    <ClInclude Include="source\External\mono\include\mono\utils\mono-publib.h" />
-    <ClInclude Include="source\FrameRateController\FrameRateController.h" />
+    <ClInclude Include="source\DebugTools\DebugLogger\DebugLogger.h">
+      <Filter>DebugTools\DebugLogger</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DebugTools\Exception\Exception.h">
+      <Filter>DebugTools\Exception</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DebugTools\Exception\ExceptionBase.h">
+      <Filter>DebugTools\Exception</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Events\Event.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Events\EventCallback.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Events\EventManager.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Events\Events.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Events\InputEvents.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Events\SceneEvents.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\GLFWwindowDestructor.h">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGui\backends\imgui_impl_glfw.h">
+      <Filter>External\ImGui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl2.h">
+      <Filter>External\ImGui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl3.h">
+      <Filter>External\ImGui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl3_loader.h">
+      <Filter>External\ImGui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGui\imconfig.h">
+      <Filter>External\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGui\imgui.h">
+      <Filter>External\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGui\imgui_internal.h">
+      <Filter>External\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGui\imstb_rectpack.h">
+      <Filter>External\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGui\imstb_textedit.h">
+      <Filter>External\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGui\imstb_truetype.h">
+      <Filter>External\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGui\misc\cpp\imgui_stdlib.h">
+      <Filter>External\ImGui\misc\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGui\misc\freetype\imgui_freetype.h">
+      <Filter>External\ImGui\misc\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGui\misc\single_file\imgui_single_file.h">
+      <Filter>External\ImGui\misc\single_file</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGuizmo\GraphEditor.h">
+      <Filter>External\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGuizmo\ImCurveEdit.h">
+      <Filter>External\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGuizmo\ImGradient.h">
+      <Filter>External\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGuizmo\ImGuizmo.h">
+      <Filter>External\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGuizmo\ImSequencer.h">
+      <Filter>External\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImGuizmo\ImZoomSlider.h">
+      <Filter>External\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\filewatch\FileWatch.h">
+      <Filter>External\filewatch</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod_codec.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod_common.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod_dsp.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod_dsp_effects.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod_errors.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\fmod\include\fmod_output.h">
+      <Filter>External\fmod\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\glad\include\KHR\khrplatform.h">
+      <Filter>External\glad\include\KHR</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\glad\include\glad\glad.h">
+      <Filter>External\glad\include\glad</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\jit\jit.h">
+      <Filter>External\mono\include\mono\jit</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\jit\mono-private-unstable.h">
+      <Filter>External\mono\include\mono\jit</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\appdomain.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\assembly.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\attrdefs.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\blob.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\class.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\debug-helpers.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\debug-mono-symfile.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\environment.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\exception.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\image.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\loader.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\metadata.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\mono-config.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\mono-debug.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\mono-gc.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\mono-private-unstable.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\object-forward.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\object.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\opcodes.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\profiler-events.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\profiler.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\reflection.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\row-indexes.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\sgen-bridge.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\tabledefs.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\threads.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\tokentype.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\metadata\verify.h">
+      <Filter>External\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-counters.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-dl-fallback.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-error.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-forward.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-jemalloc.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-logger.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-private-unstable.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\mono\include\mono\utils\mono-publib.h">
+      <Filter>External\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FrameRateController\FrameRateController.h">
+      <Filter>FrameRateController</Filter>
+    </ClInclude>
     <ClInclude Include="source\Globals.h" />
     <ClInclude Include="source\Graphics\AssetIO\IMSH.h">
       <Filter>Graphics\AssetIO</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\CameraManager.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Graphics\CameraSpec.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\EditorCamera.h">
@@ -396,6 +567,9 @@
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderCommand.h">
       <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Graphics\RenderPass\FinalPass.h">
+      <Filter>Graphics\RenderPass</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderPass\GeomPass.h">
       <Filter>Graphics\RenderPass</Filter>
@@ -530,8 +704,6 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Core\Components\AudioSource.h" />
-    <ClInclude Include="source\Core\Components\AudioListener.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -544,14 +716,14 @@
     <ClCompile Include="source\Asset\Assetables\Audio\AudioAsset.cpp">
       <Filter>Asset\Assetables\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="source\Asset\Assetables\Font\FontAsset.cpp">
+      <Filter>Asset\Assetables\Font</Filter>
+    </ClCompile>
     <ClCompile Include="source\Asset\Assetables\Mesh\ModelAsset.cpp">
       <Filter>Asset\Assetables\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="source\Asset\Assetables\Prefab\PrefabAsset.cpp">
       <Filter>Asset\Assetables\Prefab</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Asset\Assetables\Prefabs\PrefabAsset.cpp">
-      <Filter>Asset\Assetables\Prefabs</Filter>
     </ClCompile>
     <ClCompile Include="source\Asset\Assetables\Texture\TextureAsset.cpp">
       <Filter>Asset\Assetables\Texture</Filter>
@@ -561,6 +733,12 @@
     </ClCompile>
     <ClCompile Include="source\Audio\AudioManager.cpp">
       <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Audio\AudioSystem.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Components\AudioSource.cpp">
+      <Filter>Core\Components</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Components\Transform.cpp">
       <Filter>Core\Components</Filter>
@@ -576,6 +754,9 @@
     </ClCompile>
     <ClCompile Include="source\Core\Systems\SystemManager\SystemManager.cpp">
       <Filter>Core\Systems\SystemManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Systems\TextSystem\TextSystem.cpp">
+      <Filter>Core\Systems\TextSystem</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.cpp">
       <Filter>Core\Systems\TransformSystem</Filter>
@@ -682,6 +863,9 @@
     <ClCompile Include="source\Graphics\RenderAPI.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="source\Graphics\RenderPass\FinalPass.cpp">
+      <Filter>Graphics\RenderPass</Filter>
+    </ClCompile>
     <ClCompile Include="source\Graphics\RenderPass\GeomPass.cpp">
       <Filter>Graphics\RenderPass</Filter>
     </ClCompile>
@@ -761,6 +945,5 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\Core\Components\AudioSource.cpp" />
   </ItemGroup>
 </Project>

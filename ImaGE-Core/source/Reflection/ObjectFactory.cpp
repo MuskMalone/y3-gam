@@ -26,6 +26,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Prefabs/PrefabManager.h>
 #include <Events/EventManager.h>
 #include "AddComponentFunctions.h"
+#include <Core/Components/Components.h>
 
 #define GET_RTTR_TYPE(T) rttr::type::get<T>()
 #ifdef _DEBUG
@@ -274,20 +275,20 @@ namespace Reflection
 
   rttr::variant ObjectFactory::GetEntityComponent(ECS::Entity const& entity, rttr::type const& compType) const
   {
-    IF_GET_ENTITY_COMP(Component::Transform)
-    else IF_GET_ENTITY_COMP(Component::Tag)
-    else IF_GET_ENTITY_COMP(Component::Layer)
-    else IF_GET_ENTITY_COMP(Component::Mesh)
-    else IF_GET_ENTITY_COMP(Component::Material)
-    else IF_GET_ENTITY_COMP(Component::RigidBody)
-    else IF_GET_ENTITY_COMP(Component::BoxCollider)
-    else IF_GET_ENTITY_COMP(Component::SphereCollider)
-    else IF_GET_ENTITY_COMP(Component::CapsuleCollider)
-    else IF_GET_ENTITY_COMP(Component::Script)
-    else IF_GET_ENTITY_COMP(Component::Text)
-    else IF_GET_ENTITY_COMP(Component::Light)
-    else IF_GET_ENTITY_COMP(Component::AudioListener)
-    else IF_GET_ENTITY_COMP(Component::AudioSource)
+    IF_GET_ENTITY_COMP(Transform)
+    else IF_GET_ENTITY_COMP(Tag)
+    else IF_GET_ENTITY_COMP(Layer)
+    else IF_GET_ENTITY_COMP(Mesh)
+    else IF_GET_ENTITY_COMP(Material)
+    else IF_GET_ENTITY_COMP(RigidBody)
+    else IF_GET_ENTITY_COMP(BoxCollider)
+    else IF_GET_ENTITY_COMP(SphereCollider)
+    else IF_GET_ENTITY_COMP(CapsuleCollider)
+    else IF_GET_ENTITY_COMP(Script)
+    else IF_GET_ENTITY_COMP(Text)
+    else IF_GET_ENTITY_COMP(Light)
+    else IF_GET_ENTITY_COMP(AudioListener)
+    else IF_GET_ENTITY_COMP(AudioSource)
     else
     {
       std::ostringstream oss{};
@@ -307,20 +308,20 @@ namespace Reflection
     //// get underlying type if it's wrapped in a pointer
     //compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
 
-    IF_REMOVE_COMP(Component::Transform)
-    else IF_REMOVE_COMP(Component::Tag)
-    else IF_REMOVE_COMP(Component::Layer)
-    else IF_REMOVE_COMP(Component::Mesh)
-    else IF_REMOVE_COMP(Component::Material)
-    else IF_REMOVE_COMP(Component::RigidBody)
-    else IF_REMOVE_COMP(Component::BoxCollider)
-    else IF_REMOVE_COMP(Component::SphereCollider)
-    else IF_REMOVE_COMP(Component::CapsuleCollider)
-    else IF_REMOVE_COMP(Component::Script)
-    else IF_REMOVE_COMP(Component::Text)
-    else IF_REMOVE_COMP(Component::Light)
-    else IF_REMOVE_COMP(Component::AudioListener)
-    else IF_REMOVE_COMP(Component::AudioSource)
+    IF_REMOVE_COMP(Transform)
+    else IF_REMOVE_COMP(Tag)
+    else IF_REMOVE_COMP(Layer)
+    else IF_REMOVE_COMP(Mesh)
+    else IF_REMOVE_COMP(Material)
+    else IF_REMOVE_COMP(RigidBody)
+    else IF_REMOVE_COMP(BoxCollider)
+    else IF_REMOVE_COMP(SphereCollider)
+    else IF_REMOVE_COMP(CapsuleCollider)
+    else IF_REMOVE_COMP(Script)
+    else IF_REMOVE_COMP(Text)
+    else IF_REMOVE_COMP(Light)
+    else IF_REMOVE_COMP(AudioListener)
+    else IF_REMOVE_COMP(AudioSource)
     else
     {
       std::ostringstream oss{};

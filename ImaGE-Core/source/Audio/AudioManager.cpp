@@ -421,9 +421,18 @@ namespace IGE {
             if (state == Events::SceneStateChange::NewSceneState::STARTED) {
                 mSceneStarted = true;
             }
-            //if (state == Events::SceneStateChange::NewSceneState::STOPPED) {
-            //    mSceneStopped = true;
-            //}
+            if (state == Events::SceneStateChange::NewSceneState::STOPPED) {
+                mSceneStopped = true;
+                auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
+                for (auto entity : rbsystem) {
+                    auto& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
+                    auto grpiter{ mGroup.find(audiosource.channelGroup) };
+                    if (grpiter != mGroup.end()) {
+                        grpiter->second->stop();
+                    }
+                }
+
+            }
             if (state == Events::SceneStateChange::NewSceneState::PAUSED) {
                 mScenePaused = true;
             }
