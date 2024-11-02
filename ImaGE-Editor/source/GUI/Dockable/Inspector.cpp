@@ -440,9 +440,8 @@ namespace GUI {
               if (ImGui::Selectable(sn.c_str(), is_selected))
               {
                 if (sn != s.mScriptName) {
-                  uint32_t id{ entity.GetEntityID() };
-                  std::vector<void*> arg{ &(id) };
-                  s = Mono::ScriptInstance(sn, arg);
+                  s = Mono::ScriptInstance(sn);
+                  s.SetEntityID(entity.GetRawEnttEntityID());
                 }
               }
               if (is_selected)
@@ -514,39 +513,42 @@ namespace GUI {
           else if (dataType == rttr::type::get<Mono::DataMemberInstance<Mono::ScriptInstance>>())
           {
                Mono::DataMemberInstance<Mono::ScriptInstance>& sfi = f.get_value<Mono::DataMemberInstance<Mono::ScriptInstance>>();
-              if (sfi.mScriptField.mFieldType == Mono::ScriptFieldType::ENTITY)
+              if (sfi.mScriptField.mFieldType == Mono::ScriptFieldType::ENTITY || sfi.mScriptField.mFieldType == Mono::ScriptFieldType::INSIDE)
               {
                   ImGui::TableNextRow();
                   ImGui::TableNextColumn();
                   ImGui::Text(sfi.mScriptField.mFieldName.c_str());
                   ImGui::TableNextColumn();
                   ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
-                 // std::cout << entt::null << "\n";
-                   std::string msg{ "" };
-                 // std::cout << sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData << "\n";
+
+                  //Set the default display value.
+                  ECS::Entity::EntityID currID = entt::null;
+                  std::string msg{ "No Entity Attached" };
                   if (sfi.mData.mClassInst && ECS::EntityManager::GetInstance().IsValidEntity(static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData)))
+                  {
                     msg = ECS::Entity(static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData)).GetTag();
+                    ECS::Entity::EntityID currID = static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData);
+                  }
+
                   if (ImGui::BeginCombo("##", msg.c_str()))
                   {
                     for (const ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntities())
                     {
-                      if (e.GetRawEnttEntityID() != sfi.mData.mEntityID)
+                      if (e.GetRawEnttEntityID() != currID)
                       {
-                        bool is_selected = (e.GetRawEnttEntityID() == sfi.mData.mEntityID);
+                        bool is_selected = (e.GetRawEnttEntityID() == currID);
                         if (ImGui::Selectable(e.GetTag().c_str(), is_selected))
                         {
-                          if (e.GetRawEnttEntityID() != sfi.mData.mEntityID) {
-                            sfi.mData.mEntityID = e.GetRawEnttEntityID();
-                            
+                          if (e.GetRawEnttEntityID() != currID) {
                             if (!sfi.mData.mClassInst)
                             {
-                              std::vector<void*> arg{ &sfi.mData.mEntityID };
-                              sfi.mData = Mono::ScriptInstance(sfi.mData.mScriptName, arg);
+                              sfi.mData = Mono::ScriptInstance(sfi.mData.mScriptName);
+                              sfi.mData.SetEntityID(e.GetRawEnttEntityID());
                               s.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
                             }
                             else
                             {
-                              sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData = static_cast<unsigned>(sfi.mData.mEntityID);
+                              sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData = static_cast<unsigned>(e.GetRawEnttEntityID());
                               sfi.mData.SetAllFields();
                             }
                               
@@ -599,9 +601,8 @@ namespace GUI {
           auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [sn](const Mono::ScriptInstance pair) { return pair.mScriptName == sn; });;
           if (it == allScripts->mScriptList.end())
           {
-            uint32_t id{ entity.GetEntityID() };
-            std::vector<void*> arg{ &(id) };
-            allScripts->mScriptList.emplace_back(sn, arg);
+            allScripts->mScriptList.emplace_back(sn);
+            allScripts->mScriptList[allScripts->mScriptList.size() - 1].SetEntityID(entity.GetRawEnttEntityID());
             break;
           }
         }

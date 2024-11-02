@@ -46,13 +46,12 @@ namespace Component {
 			Script(Reflection::ProxyScriptComponent const& proxyScriptComp, ECS::Entity entity) {
 				// @TODO: QD to define
 
-				uint32_t id{ entity.GetEntityID() };
-				std::vector<void*> arg{ &(id) };
 				int currPos{ 0 };
 			
 				for (const Reflection::ProxyScript& ps : proxyScriptComp.proxyScriptList)
 				{
-					mScriptList.emplace_back(ps.scriptName, arg);
+					mScriptList.emplace_back(ps.scriptName);
+					mScriptList[currPos].SetEntityID(entity.GetRawEnttEntityID());
 					mScriptList[currPos].SetAllFields(ps.scriptFieldProxyList);
 				}
 			}

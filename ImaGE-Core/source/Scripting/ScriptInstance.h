@@ -56,9 +56,10 @@ namespace Mono {
 	struct ScriptInstance
 	{
 		bool mHasStarted{ false };
-		CtorType mCtorType;
-		ECS::Entity::EntityID mEntityID;
 		std::string mScriptName;
+		//CtorType mCtorType;
+		ECS::Entity::EntityID mEntityID;
+	
 		uint32_t mGcHandle;
 		MonoClass* mScriptClass{ nullptr };   //I didn't use shared ptr for these 2 ptrs because Mono frees this memory by itself behind the scene, using its own function (Which we do not have access to). 
 		MonoObject* mClassInst{ nullptr };	  //If i were to put this in a shared ptr, it will cause an error as shared ptr will try to delete the mono ptr, which is not allowed. we need to use mono's own function to delete it,but we do not have access to it
@@ -83,7 +84,14 @@ namespace Mono {
 		\params  std::vector<void*>& arg
 		arguments to pass into the scrip class's non-default constructor
 		************************************************************************/
-		ScriptInstance(const std::string& scriptName, std::vector<void*> arg = std::vector<void*>(), bool isSpecial = false);
+		ScriptInstance(const std::string& scriptName);
+
+
+		/*!*********************************************************************
+		\brief
+			Function to set the entity ID for any monobehaviour script
+		************************************************************************/
+		void SetEntityID(ECS::Entity::EntityID entityID);
 
 
 		/*!*********************************************************************
@@ -91,6 +99,8 @@ namespace Mono {
 			Function to hot reload the c# script
 		************************************************************************/
 		void ReloadScript();
+
+
 
 
 		/*!*********************************************************************
@@ -130,14 +140,6 @@ namespace Mono {
 			Delta time
 		************************************************************************/
 		void InvokeOnUpdate(double dt);
-
-		/*!*********************************************************************
-		\brief
-			Function to pass in the entity Id into the c# class
-		\param entityId
-			Id of the script's owner
-		************************************************************************/
-		void SetEntityID(ECS::Entity::EntityID entityId);
 
 		/*!*********************************************************************
 			\brief

@@ -37,7 +37,6 @@ namespace Image.Mono
     public uint mEntityID;
     //private readonly Dictionary<Type, Component> components = new Dictionary<Type, Component>();
 
-   
 
     /*  _________________________________________________________________________ */
     /*! Entity
@@ -54,6 +53,7 @@ namespace Image.Mono
     public void Init(uint entityID)
     {
       mEntityID = entityID;
+      Console.WriteLine("ID: " + mEntityID);
     }
 
 
