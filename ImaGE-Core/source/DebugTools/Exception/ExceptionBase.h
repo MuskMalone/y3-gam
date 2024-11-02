@@ -12,7 +12,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <exception>
 #include <string>
 
-
 namespace Debug
 {
 	enum EXCEPTION_LEVEL
@@ -51,7 +50,10 @@ namespace Debug
 		********************************************************************/
 		virtual std::string LogSource(bool logToFile = true) = 0;
 
+		std::string const& ErrMsg() const noexcept { return mErrMsg; }
 
+	protected:
+		std::string mErrMsg{ "Unknown Error" };
 	};
 }
 

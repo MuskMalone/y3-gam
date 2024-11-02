@@ -102,11 +102,12 @@ namespace GUI {
       static bool componentOverriden{ false };
       if (!mEditingPrefab && currentEntity.HasComponent<Component::PrefabOverrides>()) {
         prefabOverride = &currentEntity.GetComponent<Component::PrefabOverrides>();
+        std::string const& pfbName{ IGE_ASSETMGR.GetAsset<IGE::Assets::PrefabAsset>(prefabOverride->guid)->mPrefabData.mName };
         ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
         ImGui::Text("Prefab instance of");
         ImGui::SameLine();
         ImGui::PushStyleColor(ImGuiCol_Text, sComponentHighlightCol);
-        ImGui::Text(prefabOverride->prefabName.c_str());
+        ImGui::Text(pfbName.c_str());
         ImGui::PopStyleColor();
         ImGui::PopFont();
       }
@@ -186,7 +187,9 @@ namespace GUI {
               }
           }
       }
-      if (currentEntity.HasComponent<Component::Layer>()) {
+
+      // don't run in PrefabEditor since layers are tied to a scene
+      if (!mEditingPrefab && currentEntity.HasComponent<Component::Layer>()) {
         rttr::type const layerType{ rttr::type::get<Component::Layer>() };
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(layerType);
 
@@ -562,8 +565,6 @@ namespace GUI {
     WindowEnd(isOpen);
     return modified;
   }
-
-
 
   bool Inspector::TagComponentWindow(ECS::Entity entity, bool highlight) {
     bool const isOpen{ WindowBegin<Component::Tag>("Tag", highlight) };
@@ -1158,14 +1159,19 @@ namespace GUI {
           modified = true;
         }
       }
-
-      NextRowTable("Cast Shadows");
-      if (ImGui::Checkbox("##CastShadows", &light.castShadows)) {
-        modified = true;
+      // @TODO: Remove else block when shadow is added for spotlight
+      else {
+        NextRowTable("Cast Shadows");
+        if (ImGui::Checkbox("##CastShadows", &light.castShadows)) {
+          modified = true;
+        }
+        if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+          ImGui::SetTooltip("Note: Only 1 shadow-casting light is supported");
+        }
       }
       ImGui::EndTable();
 
-      if (light.castShadows) {
+      if (light.castShadows && light.type == Component::LightType::DIRECTIONAL) {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
         if (ImGui::TreeNodeEx("Shadows", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanFullWidth)) {
@@ -1208,7 +1214,6 @@ namespace GUI {
     WindowEnd(isOpen);
     return modified;
   }
-
 
 
   void Inspector::DrawAddButton() {
