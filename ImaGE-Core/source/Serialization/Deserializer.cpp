@@ -23,7 +23,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Components/Script.h>
 #include <Reflection/ProxyScript.h>
 
-//#define DESERIALIZER_DEBUG
+#define DESERIALIZER_DEBUG
 
 namespace Serialization
 {
@@ -102,7 +102,7 @@ namespace Serialization
         }
 
         DeserializePrefabOverrides(inst.mOverrides, entity[JSON_PREFAB_KEY]);
-        Reflection::ObjectFactory::PrefabInstMap& pfbInstances{ prefabInstances[inst.mOverrides.prefabName] };
+        Reflection::ObjectFactory::PrefabInstMap& pfbInstances{ prefabInstances[inst.mOverrides.guid] };
         ECS::EntityManager::EntityID const instId{ inst.mId };
         pfbInstances.emplace(instId, std::move(inst));
         continue;
@@ -185,12 +185,11 @@ namespace Serialization
     rapidjson::Document document{};
     if (!ParseJsonIntoDocument(document, json)) { return {}; }
 
-    if (!ScanJsonFileForMembers(document, json, 3, JSON_PFB_NAME_KEY, rapidjson::kStringType,
-      JSON_COMPONENTS_KEY, rapidjson::kArrayType, JSON_PFB_DATA_KEY, rapidjson::kArrayType)) {
+    if (!ScanJsonFileForMembers(document, json, 2, JSON_COMPONENTS_KEY, rapidjson::kArrayType, JSON_PFB_DATA_KEY, rapidjson::kArrayType)) {
       return {};
     }
 
-    Prefabs::Prefab prefab{ document[JSON_PFB_NAME_KEY].GetString() };
+    Prefabs::Prefab prefab{};
     prefab.mIsActive = (document.HasMember(JSON_PFB_ACTIVE_KEY) ? document[JSON_PFB_ACTIVE_KEY].GetBool() : true);
 
     // iterate through component objects in json array
@@ -270,12 +269,12 @@ namespace Serialization
 
   void Deserializer::DeserializePrefabOverrides(Component::PrefabOverrides& prefabOverride, rapidjson::Value const& json)
   {
-    if (!json.HasMember("prefabName") || !json.HasMember("modifiedComponents") || !json.HasMember("removedComponents") || !json.HasMember("subDataId")) {
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] PrefabOverride json did not contain correct members!");
+    if (!ScanJsonFileForMembers(json, "PrefabOverrides", 4, JSON_GUID_KEY, rapidjson::kObjectType, "modifiedComponents", rapidjson::kArrayType,
+      "removedComponents", rapidjson::kArrayType, "subDataId", rapidjson::kNumberType)) {
       return;
     }
 
-    prefabOverride.prefabName = json["prefabName"].GetString();
+    DeserializeRecursive(prefabOverride.guid, json[JSON_GUID_KEY]);
     prefabOverride.subDataId = json["subDataId"].GetUint();
 
     // deserialize removed components
@@ -516,6 +515,9 @@ namespace Serialization
 
   void Deserializer::DeserializeSequentialContainer(rttr::variant_sequential_view& seqView, rapidjson::Value const& jsonVal)
   {
+#ifdef DESERIALIZER_DEBUG
+    std::cout << "    Sequential Container - " << seqView.get_type() << "\n";
+#endif
     seqView.set_size(jsonVal.Size());
     for (rapidjson::SizeType i{}; i < jsonVal.Size(); ++i)
     {
@@ -529,9 +531,10 @@ namespace Serialization
       // if its a class, deserialize each of its members
       else if (idxVal.IsObject())
       {
-        rttr::variant wrappedVal{ seqView.get_value(i).extract_wrapped_value() };
+        rttr::variant wrappedVal{ wrappedVal.get_type().is_wrapper() ? seqView.get_value(i).extract_wrapped_value() : seqView.get_value(i) };
+
         DeserializeRecursive(wrappedVal, idxVal);
-        //seqView.set_value(i, result);
+        seqView.set_value(i, wrappedVal);
       }
       // else its a basic type
       else
@@ -600,6 +603,9 @@ namespace Serialization
 
   void Deserializer::DeserializeAssociativeContainer(rttr::variant_associative_view& view, rapidjson::Value const& jsonVal)
   {
+#ifdef DESERIALIZER_DEBUG
+    std::cout << "    Associative Container - " << view.get_type() << "\n";
+#endif
     for (rapidjson::SizeType i{}; i < jsonVal.Size(); ++i)
     {
       auto& idxVal{ jsonVal[i] };
@@ -675,10 +681,11 @@ namespace Serialization
     }
   }
 
+#pragma region ScriptStuff
   void Deserializer::DeserializeProxyScript(rttr::variant& var, rapidjson::Value const& jsonVal) {
 
     if (!jsonVal.HasMember(JSON_SCRIPT_LIST_KEY) || !jsonVal[JSON_SCRIPT_LIST_KEY].IsArray()) {
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Script component missing " + std::string(JSON_SCRIPT_LIST_KEY) + " field");
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Script component missing \"" JSON_SCRIPT_LIST_KEY "\" field");
       var = {}; return;
     }
 
@@ -686,11 +693,10 @@ namespace Serialization
     auto const& jsonScriptArr{ jsonVal[JSON_SCRIPT_LIST_KEY].GetArray() };
     proxyScriptComp.proxyScriptList.reserve(jsonScriptArr.Size());
     for (rapidjson::Value const& elem : jsonScriptArr) {
-
       // check if fields exist in json file
-      if (!ScanJsonFileForMembers(elem, "Script Component", 2, JSON_SCRIPT_NAME_KEY, rapidjson::kStringType,
+      if (!ScanJsonFileForMembers(elem, "Script Instance", 2, JSON_SCRIPT_NAME_KEY, rapidjson::kStringType,
         JSON_SCRIPT_FIELD_LIST_KEY, rapidjson::kArrayType)) {
-        var = {}; return;
+        continue;
       }
 
       Reflection::ProxyScript scriptInst{ elem[JSON_SCRIPT_NAME_KEY].GetString() };
@@ -698,35 +704,96 @@ namespace Serialization
       scriptInst.scriptFieldProxyList.reserve(fieldListJson.Size());
 
       for (rapidjson::Value const& fieldInst : fieldListJson) {
-        if (!fieldInst.HasMember(JSON_SCRIPT_FILIST_TYPE_KEY)) {
-          Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to find type of script field inst list");
-          continue;
-        }
+        rttr::variant scriptFIList{ DeserializeDataMemberInstance(fieldInst) };
+        if (!scriptFIList.is_valid()) { continue; }
 
-        rttr::variant scriptFIList{ rttr::type::get_by_name(fieldInst[JSON_SCRIPT_FILIST_TYPE_KEY].GetString()).create() };
-#ifdef DESERIALIZER_DEBUG
-        std::cout << "  Processing FieldInstList of type " << fieldInst[JSON_SCRIPT_FILIST_TYPE_KEY].GetString() << "\n";
-        if (!scriptFIList.is_valid()) {
-          std::cout << "    Unable to create variant!\n";
-        }
-#endif
-
-        DeserializeRecursive(scriptFIList, fieldInst);
-
-#ifdef DESERIALIZER_DEBUG
-        if (scriptFIList.is_type<std::shared_ptr<Mono::DataMemberInstance<double>>>()) {
-          Mono::DataMemberInstance<double> const& test = *scriptFIList.get_value<std::shared_ptr<Mono::DataMemberInstance<double>>>();
-          std::cout << "Contains " << test.mData << "\n";
-        }
-#endif
         scriptInst.scriptFieldProxyList.emplace_back(std::move(scriptFIList));
       }
-
       proxyScriptComp.proxyScriptList.emplace_back(std::move(scriptInst));
     }
 
     var = std::move(proxyScriptComp);
   }
+
+  rttr::variant Deserializer::DeserializeDataMemberInstance(rapidjson::Value const& jsonVal) {
+    // maybe should just call ScanJsonFileForMembers()
+    if (!jsonVal.HasMember(JSON_SCRIPT_DMI_TYPE_KEY) || !jsonVal.HasMember(JSON_SCRIPT_DMI_DATA_KEY)
+      || !jsonVal.HasMember(JSON_SCRIPT_DMI_SF_KEY)) {
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Data member inst missing members!");
+      return {};
+    }
+
+    rttr::type const scriptFIType{ rttr::type::get_by_name(jsonVal[JSON_SCRIPT_DMI_TYPE_KEY].GetString()) };
+    rttr::variant scriptFIList{ scriptFIType.create() };
+#ifdef DESERIALIZER_DEBUG
+    std::cout << "  Processing DataMemberInstance of type " << jsonVal[JSON_SCRIPT_DMI_TYPE_KEY].GetString() << "\n";
+    if (!scriptFIList.is_valid()) {
+      std::cout << "    Unable to create variant!\n";
+    }
+#endif
+
+    //  if it is a multi-layered DataMemberInstance, recursively extract each layer
+    if (scriptFIType == rttr::type::get<Mono::DataMemberInstance<Mono::ScriptInstance>>()) {
+      // set the data property
+      rttr::variant data{ DeserializeScriptInstance(jsonVal[JSON_SCRIPT_DMI_DATA_KEY]) };
+      if (!scriptFIType.set_property_value(JSON_SCRIPT_DMI_DATA_KEY, scriptFIList, data)) {
+        std::ostringstream oss{};
+        oss << "[Deserializer] Unable to set " JSON_SCRIPT_DMI_DATA_KEY " of DataMemberInstance : "
+          << jsonVal[JSON_SCRIPT_DMI_SF_KEY].GetObject()["fieldName"].GetString();
+        IGE_DBGLOGGER.LogError(oss.str());
+#ifdef DESERIALIZER_DEBUG
+        std::cout << oss.str() << "\n";
+        std::cout << "  Argument was " << data.get_type() << ", expected "
+          << scriptFIType.get_property(JSON_SCRIPT_DMI_DATA_KEY).get_type() << "\n";
+#endif
+      }
+
+      // set script field property
+      Mono::ScriptFieldInfo sfInfo{};
+      DeserializeRecursive(sfInfo, jsonVal[JSON_SCRIPT_DMI_SF_KEY]);
+      if (!scriptFIType.set_property_value(JSON_SCRIPT_DMI_SF_KEY, scriptFIList, sfInfo)) {
+        std::ostringstream oss{};
+        oss << "[Deserializer] Unable to set " JSON_SCRIPT_DMI_SF_KEY " of DataMemberInstance: "
+          << jsonVal[JSON_SCRIPT_DMI_SF_KEY].GetObject()["fieldName"].GetString();
+        IGE_DBGLOGGER.LogError(oss.str());
+#ifdef DESERIALIZER_DEBUG
+        std::cout << oss.str() << "\n";
+        std::cout << "  Argument was " << rttr::type::get(sfInfo) << ", expected "
+          << scriptFIType.get_property(JSON_SCRIPT_DMI_SF_KEY).get_type() << "\n";
+#endif
+      }
+    }
+    //  else deserialize normally
+    else {
+      DeserializeRecursive(scriptFIList, jsonVal);
+    }
+
+    return scriptFIList;
+  }
+
+  Mono::ScriptInstance Deserializer::DeserializeScriptInstance(rapidjson::Value const& jsonVal) {
+    // check if fields exist in json file
+    if (!ScanJsonFileForMembers(jsonVal, "Script Instance", 2, JSON_SCRIPT_NAME_KEY, rapidjson::kStringType,
+      JSON_SCRIPT_FIELD_LIST_KEY, rapidjson::kArrayType)) {
+      return {};
+    }
+
+    Mono::ScriptInstance scriptInst{};
+    scriptInst.mScriptName = jsonVal[JSON_SCRIPT_NAME_KEY].GetString();
+
+    auto const& fieldListJson{ jsonVal[JSON_SCRIPT_FIELD_LIST_KEY].GetArray() };
+    scriptInst.mScriptFieldInstList.reserve(fieldListJson.Size());
+
+    for (rapidjson::Value const& fieldInst : fieldListJson) {
+      rttr::variant scriptFIList{ DeserializeDataMemberInstance(fieldInst) };
+      if (!scriptFIList.is_valid()) { continue; }
+
+      scriptInst.mScriptFieldInstList.emplace_back(std::move(scriptFIList));
+    }
+
+    return scriptInst;
+  }
+#pragma endregion
 
   bool Deserializer::ParseJsonIntoDocument(rapidjson::Document& document, std::string const& filepath)
   {

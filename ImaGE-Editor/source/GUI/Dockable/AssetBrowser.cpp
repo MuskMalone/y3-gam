@@ -455,9 +455,16 @@ namespace GUI
 
         //  Events::EventManager::GetInstance().Dispatch(Events::DeleteAssetEvent(type, asset.stem().string()));
         //}
+        // should be done w events i think
+
         auto path{ mSelectedAsset.relative_path().string() };
-        auto guid{ IGE_ASSETMGR.PathToGUID(mSelectedAsset.relative_path().string()) };
-        IGE_ASSETMGR.DeleteFunction(mSelectedAsset.parent_path().filename().string())(guid);
+        try {
+            auto guid{ IGE_ASSETMGR.PathToGUID(mSelectedAsset.relative_path().string()) };
+            IGE_ASSETMGR.DeleteFunction(mSelectedAsset.parent_path().filename().string())(guid);
+        }
+        catch (...) {
+            //do nothing
+        }
         std::remove(mSelectedAsset.relative_path().string().c_str());
 
         ImGui::CloseCurrentPopup();

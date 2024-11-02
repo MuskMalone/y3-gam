@@ -5,10 +5,13 @@
 #include <fmod_errors.h>
 #include <Asset/IGEAssets.h>
 #include <Core/Components/Components.h>
+#include <Events/EventManager.h>
+#include "Scenes/SceneManager.h"
 namespace IGE {
     namespace Audio {
         AudioManager::AudioManager()
         {
+            SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &AudioManager::HandleSystemEvents, this);
             Initialize();
         }
         AudioManager::~AudioManager()
@@ -71,15 +74,6 @@ namespace IGE {
             return true;
         }
 
-        void AudioManager::Update()
-        {
-            FMOD_RESULT result = mSystem->update();
-            if (result != FMOD_OK) {
-                Debug::DebugLogger::GetInstance().LogError(std::string("FMOD Error: ") + FMOD_ErrorString(result));
-            }
-            auto system{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
-            
-        }
 
         void AudioManager::Release()
         {
@@ -260,6 +254,15 @@ namespace IGE {
             return status;  // return the paused status (true if paused, false otherwise)
         }
 
+        void AudioManager::StopChannel(FMOD::Channel* channel)
+        {
+            bool isplaying{ false };
+            FMOD_RESULT result{ channel->isPlaying(&isplaying) };
+            if (result == FMOD_OK) {
+                channel->stop();
+            }
+        }
+
         //Add a sound to FMOD and audio manager
         FMOD::Sound* AudioManager::AddSound(std::string const& filepath, uint32_t namehash)
         {
@@ -346,18 +349,28 @@ namespace IGE {
             }
 
             Debug::DebugLogger::GetInstance().LogInfo("Playing sound: " + std::to_string(sound), true);
-
+            temp->setCallback(
+                settings.FMODChannelCallback
+            );
+            temp->setUserData(const_cast<SoundInvokeSetting*>(&settings));
             settings.channels.insert(temp);
         }
-
 
         void AudioManager::PlaySound(IGE::Assets::GUID const& guid, SoundInvokeSetting const& settings, uint64_t group)
         {
             //gets the SoundAsset ref
+            if (!IGE::Assets::AssetManager::GetInstance().IsGUIDValid<IGE::Assets::AudioAsset>(guid)) {
+                IGE_ASSETMGR.LoadRef<IGE::Assets::AudioAsset>(guid);
+            }
+            if (IGE::Assets::AssetManager::GetInstance().IsGUIDValid<IGE::Assets::AudioAsset>(guid)) {
+                auto audioref{ IGE_ASSETMGR.GetAsset<IGE::Assets::AudioAsset>(guid) };
+                auto& sound{ audioref->mSound };
+                sound.PlaySound(settings, mGroup.at(group));
+            }
+            else {
 
-            auto audioref{ IGE_ASSETMGR.GetAsset<IGE::Assets::AudioAsset>(guid) };
-            auto& sound{ audioref->mSound };
-            sound.PlaySound(settings, mGroup.at(group));
+                Debug::DebugLogger::GetInstance().LogError("sound " + std::to_string(guid) + " does not exist");
+            }
         }
 
         void AudioManager::FreeSound(uint32_t sound)
@@ -371,7 +384,7 @@ namespace IGE {
             }
             else
             {
-                Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! Freeing non-existent sound: " + std::to_string(sound), true);
+                //Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! Freeing non-existent sound: " + std::to_string(sound), true);
             }
         }
 
@@ -404,27 +417,29 @@ namespace IGE {
 
         void AudioManager::SetGroupFilter(std::string const& name, float filter)
         {
-            //// check if the group exists before applying the filter
-            //if (_mChannels.find(name) != _mChannels.end())
-            //{
-            //    //apply low-pass filter to all sound within a specific channel group
-            //    //access the list of channels associated with the group name
-            //    for (auto& c : _mChannels[name])
-            //    {
-            //        FMOD_RESULT result;
-            //        result = c->setLowPassGain(filter);
 
-            //        if (result != FMOD_OK)
-            //        {
-            //            std::string str(FMOD_ErrorString(result));
-            //            Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! Could not set low-pass filter for channel: " + str, true);
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! Channel group not found: " + std::string(name), true);
-            //}
+        }
+
+        EVENT_CALLBACK_DEF(AudioManager, HandleSystemEvents) {
+            auto const& state{ CAST_TO_EVENT(Events::SceneStateChange)->mNewState };
+            if (state == Events::SceneStateChange::NewSceneState::STARTED) {
+                mSceneStarted = true;
+            }
+            if (state == Events::SceneStateChange::NewSceneState::STOPPED) {
+                mSceneStopped = true;
+                auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
+                for (auto entity : rbsystem) {
+                    auto& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
+                    auto grpiter{ mGroup.find(audiosource.channelGroup) };
+                    if (grpiter != mGroup.end()) {
+                        grpiter->second->stop();
+                    }
+                }
+
+            }
+            if (state == Events::SceneStateChange::NewSceneState::PAUSED) {
+                mScenePaused = true;
+            }
         }
 
         Sound::Sound(std::string const& fp) : mKey{ fp }, mKeyhash{ IGE::Core::Fnv1a32(fp.c_str(), fp.size()) } {
@@ -432,21 +447,37 @@ namespace IGE {
         }
         Sound::~Sound()
         {
-            AudioManager::GetInstance().FreeSound(mKeyhash);
+            try {
+                AudioManager::GetInstance().FreeSound(mKeyhash);
+            }
+            catch (...) {
+                
+            }
         }
         void Sound::PlaySound(SoundInvokeSetting const& settings, FMOD::ChannelGroup* group) {
             AudioManager::GetInstance().    PlaySound(mKeyhash, settings, group);
         }
-        FMOD_RESULT SoundInvokeSetting::FMODChannelCallback(FMOD_CHANNELCONTROL* chanCtrl, FMOD_CHANNELCONTROL_TYPE type, FMOD_CHANNELCONTROL_CALLBACK_TYPE callbackType, void* commanddata1, void* commanddata2)
+        FMOD_RESULT SoundInvokeSetting::FMODChannelCallback(
+            FMOD_CHANNELCONTROL* chanCtrl, FMOD_CHANNELCONTROL_TYPE type, 
+            FMOD_CHANNELCONTROL_CALLBACK_TYPE callbackType, void* commanddata1, void* commanddata2) 
         {
-            if (callbackType == FMOD_CHANNELCONTROL_CALLBACK_END) {
-                FMOD::Channel* channel = reinterpret_cast<FMOD::Channel*>(chanCtrl);
+            // Retrieve the instance pointer from user data
+            FMOD::Channel* channel = reinterpret_cast<FMOD::Channel*>(chanCtrl);
+            void* userData = nullptr;
+            channel->getUserData(&userData);
 
-                // Remove the channel from the container
-                channels.erase(channel);
-                Debug::DebugLogger::GetInstance().LogInfo("sound has finished playing, removing channel ptr");
+            if (userData) {
+                try {
+                    SoundInvokeSetting* settings = static_cast<SoundInvokeSetting*>(userData);
+                    settings->channels.erase(channel); // Remove channel from active list
+                    Debug::DebugLogger::GetInstance().LogInfo("sound has finished playing, removing channel ptr");
+                }
+                catch (...) {
+                    Debug::DebugLogger::GetInstance().LogWarning("audio instance doesnt exist");
+                }
             }
             return FMOD_OK;
         }
-}
+
+    }
 }

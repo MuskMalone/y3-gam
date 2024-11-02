@@ -17,6 +17,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Reflection/ObjectFactory.h>
 #include <Prefabs/Prefab.h>
 
+namespace Mono { struct ScriptInstance; }
+
 namespace Serialization
 {
   class Deserializer
@@ -170,6 +172,7 @@ namespace Serialization
     ************************************************************************/
     static void DeserializeAssociativeContainer(rttr::variant_associative_view& view, rapidjson::Value const& jsonVal);
 
+#pragma region ScriptStuff
     /*!*********************************************************************
     \brief
       This function handles the deserialization of the scripts component
@@ -179,6 +182,20 @@ namespace Serialization
       The json data
     ************************************************************************/
     static void DeserializeProxyScript(rttr::variant& var, rapidjson::Value const& jsonVal);
+
+    static Mono::ScriptInstance DeserializeScriptInstance(rapidjson::Value const& jsonVal);
+
+    /*!*********************************************************************
+    \brief
+      This function handles the deserialization of a DataMemberInstance
+      for scripts
+    \param jsonVal
+      The rapidjson value containing the serialized data
+    \return
+      The deserialized DataMemberInstance in the form of an rttr::variant
+    ************************************************************************/
+    static rttr::variant DeserializeDataMemberInstance(rapidjson::Value const& jsonVal);
+#pragma endregion
 
     /*!*********************************************************************
       \brief

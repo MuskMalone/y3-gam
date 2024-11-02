@@ -22,7 +22,7 @@ namespace AssetHelpers
 {
 
   std::string GetRelativeFilePath(std::string const& filepath, std::string const& rootDir) {
-    return "." + filepath.substr(filepath.find(rootDir) + rootDir.size());
+    return ".." + filepath.substr(filepath.find(rootDir) + rootDir.size());
   }
 
   std::vector<std::string> SelectFilesFromExplorer(const char* winTitle, const char* extensionsFilter,

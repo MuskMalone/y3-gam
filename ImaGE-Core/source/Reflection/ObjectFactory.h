@@ -22,6 +22,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "EntityData.h"
 #include <Core/Entity.h>
 #include <variant.h>
+#include <Asset/IGEAssets.h>
 
 namespace Reflection
 {
@@ -30,7 +31,7 @@ namespace Reflection
   {
   public:
     using PrefabInstMap = std::unordered_map<ECS::EntityManager::EntityID, PrefabInst>;
-    using PrefabInstanceContainer = std::unordered_map<std::string, PrefabInstMap>;
+    using PrefabInstanceContainer = std::unordered_map<IGE::Assets::GUID, PrefabInstMap>;
 
     /*!*********************************************************************
     \brief

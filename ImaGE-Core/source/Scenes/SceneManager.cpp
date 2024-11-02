@@ -58,14 +58,13 @@ namespace Scenes
   }
 
   void SceneManager::StopScene() {
+    Events::EventManager::GetInstance().DispatchImmediateEvent<Events::SceneStateChange>(Events::SceneStateChange::STOPPED, mSceneName);
+    ClearScene();
+    UnloadScene();
+
     // if no save states in stack, return to no scene
     // else it means we're loading back to a previous scene
-    if (mSaveStates.empty()) {
-      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::STOPPED, mSceneName);
-      ClearScene();
-      UnloadScene();
-    }
-    else {
+    if (!mSaveStates.empty()) {
       LoadTemporarySave();
       InitScene();
       QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mSceneName);

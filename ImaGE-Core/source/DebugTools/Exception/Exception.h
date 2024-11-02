@@ -31,8 +31,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
     class Exception : public ExceptionBase
     {
     private:
-      std::string mErrMsg{ "Unknown Error" }; 
-      std::string mSource{ "Unknown Source"};
+      std::string mSource{ "Unknown Source" };
 
       // Error line
       int mLine;
@@ -69,7 +68,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
         The line number of the error
         __LINE__
       ********************************************************************/
-      Exception(EXCEPTION_LEVEL lvl, std::string err, std::string src, int line);
+      Exception(EXCEPTION_LEVEL lvl, std::string const& err, std::string const& src, int line);
       // Copy ctor & copy assignment are default
        
 
@@ -100,8 +99,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 				Logged message.
       ********************************************************************/
       std::string LogSource(bool logToFile = true);
-
-
     };
 
 #include "Exception.tpp"

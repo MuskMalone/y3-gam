@@ -10,7 +10,9 @@
                 7
             ],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [
                     {
                         "key": "Transform",
@@ -117,7 +119,9 @@
                 4
             ],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [
                     {
                         "key": "Layer",
@@ -135,7 +139,9 @@
             "Parent": 1,
             "Child Entities": [],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [
                     {
                         "key": "Layer",
@@ -153,7 +159,9 @@
             "Parent": 1,
             "Child Entities": [],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [
                     {
                         "key": "Layer",
@@ -171,7 +179,9 @@
             "Parent": 1,
             "Child Entities": [],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [
                     {
                         "key": "Layer",
@@ -189,7 +199,9 @@
             "Parent": 0,
             "Child Entities": [],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [
                     {
                         "key": "Layer",
@@ -207,7 +219,9 @@
             "Parent": 0,
             "Child Entities": [],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [
                     {
                         "key": "Layer",
@@ -228,7 +242,9 @@
                 9
             ],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [
                     {
                         "key": "Layer",
@@ -246,12 +262,21 @@
             "Parent": 7,
             "Child Entities": [],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [
                     {
                         "key": "Layer",
                         "value": {
                             "layerName": "Player"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Prop1",
+                            "isActive": true
                         }
                     }
                 ],
@@ -264,7 +289,9 @@
             "Parent": 7,
             "Child Entities": [],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [
                     {
                         "key": "Layer",
@@ -339,7 +366,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 11822399752580034924
+                            "ID": 4457886328063760369
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -371,6 +398,37 @@
             "Child Entities": [],
             "isActive": true,
             "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "..\\Assets\\Audio\\boing.mp3",
+                                "value": {
+                                    "guid": {
+                                        "ID": 2162875126662710601
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -8.600000381469727,
+                                            "y": -10.0,
+                                            "z": 0.0
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "LINEAR"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
                 {
                     "Tag": {
                         "tag": "Entity 14",
@@ -427,7 +485,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 8021066120178354052
+                            "ID": 5676837599835405777
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -440,7 +498,9 @@
             "Parent": 2097162,
             "Child Entities": [],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [],
                 "removedComponents": [],
                 "subDataId": 1
@@ -454,7 +514,9 @@
                 18
             ],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [],
                 "removedComponents": [],
                 "subDataId": 2
@@ -465,7 +527,9 @@
             "Parent": 16,
             "Child Entities": [],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [],
                 "removedComponents": [],
                 "subDataId": 3
@@ -476,7 +540,9 @@
             "Parent": 16,
             "Child Entities": [],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [],
                 "removedComponents": [],
                 "subDataId": 4
@@ -491,7 +557,9 @@
                 23
             ],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [],
                 "removedComponents": [],
                 "subDataId": 6
@@ -502,7 +570,9 @@
             "Parent": 19,
             "Child Entities": [],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [],
                 "removedComponents": [],
                 "subDataId": 9
@@ -513,7 +583,9 @@
             "Parent": 19,
             "Child Entities": [],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [],
                 "removedComponents": [],
                 "subDataId": 8
@@ -524,7 +596,9 @@
             "Parent": 19,
             "Child Entities": [],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [],
                 "removedComponents": [],
                 "subDataId": 7
@@ -592,10 +666,70 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 11822399752580034924
+                            "ID": 4457886328063760369
                         },
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 25,
+            "Parent": null,
+            "Child Entities": [],
+            "isActive": false,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Inactive Test",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
                     }
                 }
             ]
@@ -605,7 +739,9 @@
             "Parent": 2097162,
             "Child Entities": [],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [],
                 "removedComponents": [],
                 "subDataId": 5
@@ -673,7 +809,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 11822399752580034924
+                            "ID": 4457886328063760369
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -691,34 +827,15 @@
                 1048588
             ],
             "Prefab": {
-                "prefabName": "Plane",
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
                 "modifiedComponents": [
                     {
                         "key": "Tag",
                         "value": {
                             "tag": "Plane 2",
                             "isActive": true
-                        }
-                    },
-                    {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": -20.700000762939454,
-                                "y": 3.5,
-                                "z": 5.800000190734863
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 0.0,
-                            "dynamicFriction": 0.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "DYNAMIC"
                         }
                     },
                     {
@@ -786,20 +903,24 @@
                         }
                     },
                     {
-                        "key": "Text",
+                        "key": "RigidBody",
                         "value": {
-                            "textContent": "YOUR TEXT HERE",
-                            "color": {
+                            "velocity": {
+                                "x": -20.700000762939454,
+                                "y": 3.5,
+                                "z": 5.800000190734863
+                            },
+                            "angularVelocity": {
                                 "x": 0.0,
                                 "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
+                                "z": 0.0
                             },
-                            "scale": 1.0,
-                            "textAssetGUID": {
-                                "ID": 11715672305158928427
-                            },
-                            "fontFamilyName": "Sniglet-Regular"
+                            "staticFriction": 0.0,
+                            "dynamicFriction": 0.0,
+                            "restitution": 0.0,
+                            "gravityFactor": 0.0,
+                            "linearDamping": 0.9800000190734863,
+                            "motionType": "DYNAMIC"
                         }
                     }
                 ],
@@ -815,7 +936,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Entity 2097163",
+                        "tag": "d",
                         "isActive": true
                     }
                 },
@@ -869,7 +990,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 11822399752580034924
+                            "ID": 4457886328063760369
                         },
                         "castShadows": true,
                         "receiveShadows": true

@@ -2,9 +2,6 @@
 #include <utility>
 #include <Core/Systems/System.h>
 #include <Core/Entity.h>
-#include <Core/Systems/SystemManager/SystemManager.h>
-
-#include "Events/EventManager.h"
 #include "Events/EventCallback.h"
 
 namespace Systems {
@@ -55,8 +52,9 @@ namespace Systems {
     void SetupShapeFilterData(physx::PxShape** shape, ECS::Entity entity);
 
   private:
-    EVENT_CALLBACK_DECL(OnSceneLoad);
+    EVENT_CALLBACK_DECL(OnSceneChange);
     EVENT_CALLBACK_DECL(OnLayerModification);
+    EVENT_CALLBACK_DECL(OnPrefabEditor);
 
   private:
     LayerData mLayerData;

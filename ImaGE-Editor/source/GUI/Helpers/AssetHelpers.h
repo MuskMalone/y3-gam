@@ -9,6 +9,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
 #include <filesystem>
+#include <Globals.h>
 
 namespace AssetHelpers
 {
@@ -23,7 +24,7 @@ namespace AssetHelpers
 	\return
 		The filepath relative to the given root directory
 	************************************************************************/
-	std::string GetRelativeFilePath(std::string const& filepath, std::string const& rootDir = "y3-gam");
+	std::string GetRelativeFilePath(std::string const& filepath, std::string const& rootDir = gRootDirectory);
 
 	/*!*********************************************************************
 	\brief

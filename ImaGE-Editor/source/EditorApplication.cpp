@@ -84,11 +84,12 @@ namespace IGE {
           // dispatch all events in the queue at the start of game loop
           eventManager.DispatchAll();
 
+          
           if (sceneManager.GetSceneState() == Scenes::PLAYING) {
             sysManager.UpdateSystems();
           }
           else {
-            sysManager.UpdateSelectedSystems<Systems::TransformSystem, IGE::Physics::PhysicsSystem>();
+            sysManager.UpdateSelectedSystems<Systems::TransformSystem, IGE::Physics::PhysicsSystem, IGE::Audio::AudioSystem>();
           }
         }
         catch (Debug::ExceptionBase& e)

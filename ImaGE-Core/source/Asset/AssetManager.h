@@ -134,12 +134,14 @@ namespace IGE {
                   AssetMetadata::IGEProjProperties& allmetadata{ mMetadata.mAssetProperties };
                   std::string assetCategory{ GetTypeName<T>() };
                   mMetadata.Emplace(assetCategory, guid, metadata);
+                  mPath2GUIDRegistry.emplace(filepathstr, guid);
+                  mGUID2PathRegistry.emplace(guid, filepathstr);
                   return guid;
               }
-              else {
-                  Ref<T> ref { std::any_cast<Ref<T>>(mAssetRefs.at(key)) };
-                  return ref.mInstance.partialRef.guid;
-              }
+              //else {
+              //    Ref<T> ref { std::any_cast<Ref<T>>(mAssetRefs.at(key)) };
+              //    return ref.mInstance.partialRef.guid;
+              //}
 
           }
           template <typename T>
@@ -278,6 +280,27 @@ namespace IGE {
               TypeAssetKey key{ typeguid ^ guid };
               if (mAssetRefs.find(key) != mAssetRefs.end())
                   return UnloadRef<T>(std::any_cast<Ref<T>&>(mAssetRefs.at(key)));
+          }
+
+
+          //i do not perform any checks here, reload at your own risk
+          template<typename T>
+          void ReloadRef(Ref<T>& ref) {
+              if (ref.GetInfo().refCount > 0) {
+                  ref.Unload();
+                  ref.Load();
+              }
+          }
+          template<typename T>
+          void ReloadRef(GUID const& guid) {
+              TypeGUID typeguid{ GetTypeName<T>() };
+              TypeAssetKey key{ typeguid ^ guid };
+              if (mAssetRefs.find(key) != mAssetRefs.end())
+                  return ReloadRef<T>(std::any_cast<Ref<T>&>(mAssetRefs.at(key)));
+          }
+          template<typename T>
+          void ReloadRef(std::string const& fp) {
+              ReloadRef<T>(PathToGUID(fp));
           }
 
           template< typename T >
