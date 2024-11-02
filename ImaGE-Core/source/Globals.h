@@ -8,6 +8,7 @@ template <typename T>
 inline constexpr T WINDOW_HEIGHT{ static_cast<T>(1600) };
 
 // should move to config file and retrieve from asset manager
+constexpr char gRootDirectory[] = "y3-gam";
 constexpr char gTempDirectory[] = ".temp\\";
 constexpr char gAssetsDirectory[] = "..\\Assets\\";
 constexpr char gScenesDirectory[] = "..\\Assets\\Scenes\\";
