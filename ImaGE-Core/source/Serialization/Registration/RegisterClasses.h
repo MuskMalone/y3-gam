@@ -20,7 +20,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Audio/AudioManager.h>
 #include <Core/Components/AudioSource.h>
 
-#define REGISTER_DATA_MEMBER_INST(T, nameStr) rttr::registration::class_<T>(nameStr).constructor<>()\
+#define REGISTER_DATA_MEMBER_INST(T, nameStr) rttr::registration::class_<T>(nameStr).constructor<>()(rttr::policy::ctor::as_object)\
   .property(JSON_SCRIPT_DMI_DATA_KEY, &T::mData)\
   .property(JSON_SCRIPT_DMI_TYPE_KEY, &T::mType)\
   .property(JSON_SCRIPT_DMI_SF_KEY, &T::mScriptField)
