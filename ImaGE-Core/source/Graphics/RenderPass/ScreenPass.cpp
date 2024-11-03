@@ -8,6 +8,7 @@ namespace Graphics {
 
 	void ScreenPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
 		Begin();
+		Renderer::Clear();
 
 		auto const& shader = mSpec.pipeline->GetShader();
 		shader->SetUniform("u_ScreenTex", mInputTexture);

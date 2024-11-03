@@ -446,7 +446,6 @@ namespace Graphics {
 		const float texIdx{}; // white tex index = 0
 
 		glm::mat4 translateMtx{ glm::translate(glm::mat4{ 1.f }, pos) };
-		//glm::mat4 rotateMtx{ glm::rotate(glm::mat4{ 1.f }, glm::radians(rot), {0.f, 0.f, 1.f}) };
 		glm::mat4 rotateMtx{ glm::toMat4(rot)};
 		glm::mat4 scaleMtx{ glm::scale(glm::mat4{ 1.f }, { scale.x, scale.y, 1.f }) };
 		glm::mat4 transformMtx{ translateMtx * rotateMtx * scaleMtx };
@@ -458,21 +457,25 @@ namespace Graphics {
 		++mData.stats.quadCount;
 	}
 
-	void Renderer::DrawSprite(glm::vec3 const& pos, glm::vec2 const& scale, std::shared_ptr<Texture> const& tex, glm::vec4 const& tint, float rot, int entity){
+	void Renderer::DrawSprite(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, Texture const& tex, glm::vec4 const& tint, int entity){
+
+		if (tex.GetTexHdl() == 0)
+			DrawQuad(pos, scale, rot, tint);
 		if (mData.quadIdxCount >= RendererData::cMaxIndices2D)
 			NextBatch();
 
-		std::array<glm::vec2, 4> texCoords{ };
+		//std::array<glm::vec2, 4> texCoords{ };
 		//std::shared_ptr<Texture> tex = subtex->GetTexture();
 		//if (subtex->GetProperties().id == 1698985226353418500) {
 		//	int i = 1;
 		//	UNREFERENCED_PARAMETER(i);
 		//}
+		constexpr glm::vec2 texCoords[4]{ { 0.f, 0.f }, {1.f, 0.f}, {1.f, 1.f}, {0.f, 1.f} };
 		float texIdx = 0.f;
 
 		//don't need to iterate all 32 slots every time
 		for (uint32_t i{ 1 }; i < mData.texUnitIdx; ++i) {
-			if (mData.texUnits[i] == *tex.get()) { //check if the particular texture has already been set
+			if (mData.texUnits[i] == tex) { //check if the particular texture has already been set
 				texIdx = static_cast<float>(i);
 				break;
 			}
@@ -480,12 +483,12 @@ namespace Graphics {
 
 		if (texIdx == 0.f) {
 			texIdx = static_cast<float>(mData.texUnitIdx);
-			//mData.texUnits[mData.texUnitIdx] = tex;
+			mData.texUnits[mData.texUnitIdx] = tex;
 			++mData.texUnitIdx;
 		}
 
 		glm::mat4 translateMtx{ glm::translate(glm::mat4{ 1.f }, pos) };
-		glm::mat4 rotateMtx{ glm::rotate(glm::mat4{ 1.f }, glm::radians(rot), {0.f, 0.f, 1.f}) };
+		glm::mat4 rotateMtx{ glm::toMat4(rot) };
 		glm::mat4 scaleMtx{ glm::scale(glm::mat4{ 1.f }, { scale.x, scale.y, 1.f }) };
 
 		glm::mat4 transformMtx{ translateMtx * rotateMtx * scaleMtx };

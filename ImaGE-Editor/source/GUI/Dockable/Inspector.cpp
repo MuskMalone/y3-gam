@@ -273,6 +273,18 @@ namespace GUI {
         }
       }
 
+      if (currentEntity.HasComponent<Component::Image>()) {
+          rttr::type const imageType{ rttr::type::get<Component::Image>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(imageType);
+
+          if (ImageComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Image>());
+              }
+          }
+      }
+
       if (prefabOverride) {
         for (rttr::type const& type : prefabOverride->removedComponents) {
           DisplayRemovedComponent(type);
@@ -733,6 +745,79 @@ namespace GUI {
 
       WindowEnd(isOpen);
       return modified;
+  }
+
+  bool Inspector::ImageComponentWindow(ECS::Entity entity, bool highlight) {
+      bool const isOpen{ WindowBegin<Component::Image>("Image", highlight) };
+      bool modified{ false };
+
+      if (isOpen) {
+          Component::Image& image = entity.GetComponent<Component::Image>();
+
+          float const inputWidth{ CalcInputWidth(60.f) };
+
+          // Start a table for organizing the color and textureAsset inputs
+          ImGui::BeginTable("ImageTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+          // Color input
+          NextRowTable("Color");
+          if (ImGui::ColorEdit4("##ImageColor", &image.color[0])) {
+              modified = true;
+          }
+
+          // Texture Asset input - assuming textureAsset is a GUID or string
+          
+
+
+          NextRowTable("Texture Asset");
+          static std::string textureText;
+          try {
+              textureText = (image.textureAsset) ? IGE_ASSETMGR.GUIDToPath(image.textureAsset) : "[None]: Drag in a Texture";
+          }
+          catch (Debug::ExceptionBase& e) {
+              // If the GUID is not found, log the exception and set a default message
+              textureText = "[Invalid GUID]: Unable to load texture";
+              e.LogSource();
+             ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), e.what());
+          }
+
+          
+          //(image.textureAsset) ? IGE_ASSETMGR.GUIDToPath(image.textureAsset) : "[None]: Drag in a Texture";
+
+          //catch (const Debug::ExceptionBase& e) {
+
+          //}
+
+          ImGui::BeginDisabled();
+          ImGui::InputText("##TextureAsset", &textureText);
+          ImGui::EndDisabled();
+
+          if (ImGui::BeginDragDropTarget()) {
+              ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+              if (drop) {
+                  AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+                  if (assetPayload.mAssetType == AssetPayload::SPRITE) {
+                      image.textureAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
+                      textureText = assetPayload.GetFileName();  // Display the file name in the UI
+                      modified = true;
+                  }
+              }
+              ImGui::EndDragDropTarget();
+          }
+
+          ImGui::EndTable();
+      }
+
+      WindowEnd(isOpen);
+      return modified;
+  }
+
+  bool Inspector::CameraComponentWindow(ECS::Entity entity, bool highlight)
+  {
+      return false;
   }
 
   bool Inspector::MeshComponentWindow(ECS::Entity entity, bool highlight) {

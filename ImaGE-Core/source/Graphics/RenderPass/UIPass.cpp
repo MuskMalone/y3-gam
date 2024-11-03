@@ -50,7 +50,11 @@ namespace Graphics {
 				}
 				else if (uiEntity.HasComponent<Component::Image>()) {
 					auto const& imageComp = uiEntity.GetComponent<Component::Image>();
-					Renderer::DrawQuad(uiXform.position, glm::vec2{ uiXform.scale }, uiXform.rotation, imageComp.color); //TO CHANGE TO SPRITE VERSION
+
+					if (imageComp.textureAsset)
+						Renderer::DrawSprite(uiXform.position, glm::vec2{ uiXform.scale}, uiXform.rotation, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(imageComp.textureAsset)->mTexture, imageComp.color);
+					else
+						Renderer::DrawQuad(uiXform.position, glm::vec2{ uiXform.scale }, uiXform.rotation, imageComp.color);
 				}
 				else {
 					Renderer::DrawQuad(uiXform.position, glm::vec2{ uiXform.scale }, uiXform.rotation, Color::COLOR_WHITE);

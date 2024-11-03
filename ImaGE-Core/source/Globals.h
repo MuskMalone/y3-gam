@@ -18,6 +18,7 @@ constexpr char gSupportedModelFormats[] = ".fbx.obj";
 constexpr char gMeshOutputDir[] = "..\\Assets\\Models\\";
 constexpr char gMeshFileExt[] = ".imsh";
 constexpr char gFontFileExt[] = ".ttf";
+constexpr char gSpriteFileExt[] = ".dds";
 //currently my Shaders are hard coded in ShaderLibrary in Shader.h* as cShaderDirectory
 
 // Editor

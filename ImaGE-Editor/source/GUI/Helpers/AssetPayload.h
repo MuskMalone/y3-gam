@@ -46,6 +46,9 @@ namespace GUI
       else if (fileExt == gFontFileExt) {
         mAssetType = AssetType::FONT;
       }
+      else if (fileExt == gSpriteFileExt) {
+        mAssetType = AssetType::SPRITE;
+      }
     }
 
     std::string GetFileName() const { return mPath.stem().string(); }
