@@ -305,7 +305,7 @@ void ScriptInstance::SetAllFields()
 
 }
 
-void ScriptInstance::SetAllFields(std::vector<rttr::variant> scriptFieldProxyList)
+void ScriptInstance::SetAllFields(std::vector<rttr::variant> const& scriptFieldProxyList)
 {
   Mono::ScriptManager* sm = &Mono::ScriptManager::GetInstance();
   //ScriptClassInfo sci = sm->GetScriptClassInfo(mScriptName);
@@ -313,6 +313,7 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> scriptFieldProxyLis
   {
     for (rttr::variant& f : mScriptFieldInstList)
     {
+      // @TODO: QD to addif block for Mono::DataMemberInstance<unsigned>
       if (f.is_type<Mono::DataMemberInstance<float>>() && i.get_type() == f.get_type())
       {
         Mono::DataMemberInstance<float>& sfi = f.get_value<Mono::DataMemberInstance<float>>();
@@ -322,6 +323,7 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> scriptFieldProxyLis
           sfi.mData = psi.mData;
           SetFieldValue<float>(sfi.mData, sfi.mScriptField.mClassField);
         }
+        break;
       }
       else if (f.is_type<Mono::DataMemberInstance<int>>() && i.get_type() == f.get_type())
       {
@@ -332,6 +334,7 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> scriptFieldProxyLis
           sfi.mData = psi.mData;
           SetFieldValue<int>(sfi.mData, sfi.mScriptField.mClassField);
         }
+        break;
       }
       else if (f.is_type<Mono::DataMemberInstance<double>>() && i.get_type() == f.get_type())
       {
@@ -342,6 +345,7 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> scriptFieldProxyLis
           sfi.mData = psi.mData;
           SetFieldValue<double>(sfi.mData, sfi.mScriptField.mClassField);
         }
+        break;
       }
       else if (f.is_type<Mono::DataMemberInstance<std::string>>() && i.get_type() == f.get_type())
       {
@@ -352,6 +356,7 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> scriptFieldProxyLis
           sfi.mData = psi.mData;
           mono_field_set_value(mClassInst, sfi.mScriptField.mClassField, STDToMonoString(sfi.mData));
         }
+        break;
       }
       else if (f.is_type<Mono::DataMemberInstance<glm::dvec3>>() && i.get_type() == f.get_type())
       {
@@ -362,6 +367,7 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> scriptFieldProxyLis
           sfi.mData = psi.mData;
           SetFieldValue<glm::dvec3>(sfi.mData, sfi.mScriptField.mClassField);
         }
+        break;
       }
       else if (f.is_type<Mono::DataMemberInstance<std::vector<int>>>() && i.get_type() == f.get_type())
       {
@@ -372,6 +378,7 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> scriptFieldProxyLis
           sfi.mData = psi.mData;
           SetFieldValueArr<int>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain);
         }
+        break;
       }
       else if (f.is_type<Mono::DataMemberInstance<std::vector<unsigned>>>() && i.get_type() == f.get_type())
       {
@@ -382,6 +389,7 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> scriptFieldProxyLis
           sfi.mData = psi.mData;
           SetFieldValueArr<unsigned>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain);
         }
+        break;
       }
       else if (f.is_type<Mono::DataMemberInstance<std::vector<std::string>>>() && i.get_type() == f.get_type())
       {
@@ -397,6 +405,7 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> scriptFieldProxyLis
           }
           SetFieldValueArr<MonoString*>(proxy, sfi.mScriptField.mClassField, sm->mAppDomain);
         }
+        break;
       }
       else if (f.is_type<Mono::DataMemberInstance<ScriptInstance>>() && i.get_type() == f.get_type())
       {
@@ -410,6 +419,7 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> scriptFieldProxyLis
             SetFieldValue<MonoObject*>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
           }
         }
+        break;
       }
 
     }

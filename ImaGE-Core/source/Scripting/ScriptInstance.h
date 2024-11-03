@@ -169,7 +169,7 @@ namespace Mono {
 			Function to update all the class field instance in c# script with the value inside c++
 			THis function is called to ensure the value displayed in the inspector is updated into the c# script
 		************************************************************************/
-		void SetAllFields(std::vector<rttr::variant> scriptFieldProxyList);
+		void SetAllFields(std::vector<rttr::variant> const& scriptFieldProxyList);
 
 
 

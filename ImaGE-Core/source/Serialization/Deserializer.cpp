@@ -23,7 +23,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Components/Script.h>
 #include <Reflection/ProxyScript.h>
 
-#define DESERIALIZER_DEBUG
+//#define DESERIALIZER_DEBUG
 
 namespace Serialization
 {
@@ -726,7 +726,7 @@ namespace Serialization
     rttr::type const scriptFIType{ rttr::type::get_by_name(jsonVal[JSON_SCRIPT_DMI_TYPE_KEY].GetString()) };
     rttr::variant scriptFIList{ scriptFIType.create() };
 #ifdef DESERIALIZER_DEBUG
-    std::cout << "  Processing DataMemberInstance of type " << jsonVal[JSON_SCRIPT_DMI_TYPE_KEY].GetString() << "\n";
+    std::cout << "    Processing DataMemberInstance of type " << jsonVal[JSON_SCRIPT_DMI_TYPE_KEY].GetString() << "\n";
     if (!scriptFIList.is_valid()) {
       std::cout << "    Unable to create variant!\n";
     }
@@ -778,18 +778,23 @@ namespace Serialization
       return {};
     }
 
-    Mono::ScriptInstance scriptInst{};
-    scriptInst.mScriptName = jsonVal[JSON_SCRIPT_NAME_KEY].GetString();
+#ifdef DESERIALIZER_DEBUG
+    std::cout << "  Deserializing ScriptInstance: \"" << jsonVal[JSON_SCRIPT_NAME_KEY].GetString() << "\"\n";
+#endif
+
+    Mono::ScriptInstance scriptInst{ jsonVal[JSON_SCRIPT_NAME_KEY].GetString() };
 
     auto const& fieldListJson{ jsonVal[JSON_SCRIPT_FIELD_LIST_KEY].GetArray() };
-    scriptInst.mScriptFieldInstList.reserve(fieldListJson.Size());
+    std::vector<rttr::variant> sfInstList{};
+    sfInstList.reserve(fieldListJson.Size());
 
     for (rapidjson::Value const& fieldInst : fieldListJson) {
       rttr::variant scriptFIList{ DeserializeDataMemberInstance(fieldInst) };
       if (!scriptFIList.is_valid()) { continue; }
 
-      scriptInst.mScriptFieldInstList.emplace_back(std::move(scriptFIList));
+      sfInstList.emplace_back(std::move(scriptFIList));
     }
+    scriptInst.SetAllFields(sfInstList);
 
     return scriptInst;
   }

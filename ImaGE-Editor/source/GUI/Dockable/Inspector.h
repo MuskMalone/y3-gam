@@ -162,6 +162,15 @@ namespace GUI {
 
     /*!*********************************************************************
     \brief
+      Helper function to set up the table for a vec3 field
+    \param inputWidth
+      The width of the input column
+    ************************************************************************/
+    bool BeginVec3Table(const char* fieldName, float inputWidth);
+    void EndVec3Table();
+
+    /*!*********************************************************************
+    \brief
       Helper function to set up the column for the next row
     \param labelName
       The name of the property
