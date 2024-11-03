@@ -38,9 +38,10 @@ namespace Graphics {
 		GLuint64 GetBindlessHandle() const;
 
 		bool IsBindless() const;
-
 		void SetData(void* data);
+		void CopyFrom(GLuint srcTexHdl, GLsizei width, GLsizei height);
 
+		void Bind(uint32_t texUnit) const;
 		uint32_t Bind() const;
 		/*void Unbind(unsigned int texUnit = 0) const;*/
 

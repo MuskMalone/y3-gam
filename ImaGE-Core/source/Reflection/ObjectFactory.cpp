@@ -55,7 +55,9 @@ namespace Reflection
       { GET_RTTR_TYPE(RigidBody), ComponentUtils::AddRigidBody },
       { GET_RTTR_TYPE(ProxyScriptComponent), ComponentUtils::AddScript },
       { GET_RTTR_TYPE(Text), ComponentUtils::AddText },
-      { GET_RTTR_TYPE(Light), ComponentUtils::AddLight }
+      { GET_RTTR_TYPE(Light), ComponentUtils::AddLight },
+      { GET_RTTR_TYPE(Canvas), ComponentUtils::AddCanvas },
+      { GET_RTTR_TYPE(Image), ComponentUtils::AddImage }
     };
 
     if (mAddComponentFuncs.size() != gComponentTypes.size()) {
@@ -289,6 +291,8 @@ namespace Reflection
     else IF_GET_ENTITY_COMP(Light)
     else IF_GET_ENTITY_COMP(AudioListener)
     else IF_GET_ENTITY_COMP(AudioSource)
+    else IF_GET_ENTITY_COMP(Canvas)
+    else IF_GET_ENTITY_COMP(Image)
     else
     {
       std::ostringstream oss{};
@@ -322,6 +326,8 @@ namespace Reflection
     else IF_REMOVE_COMP(Light)
     else IF_REMOVE_COMP(AudioListener)
     else IF_REMOVE_COMP(AudioSource)
+    else IF_REMOVE_COMP(Canvas)
+    else IF_REMOVE_COMP(Image)
     else
     {
       std::ostringstream oss{};

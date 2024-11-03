@@ -31,7 +31,6 @@ namespace Graphics {
       mSpec.pipeline->Unbind();
       Texture::ResetTextureUnits();
     }
-
     //std::shared_ptr<Image2D> RenderPass::GetOutput(uint32_t index)
     //{
     //    std::shared_ptr<Framebuffer> framebuffer = mSpec.pipeline->GetSpec().targetFramebuffer;

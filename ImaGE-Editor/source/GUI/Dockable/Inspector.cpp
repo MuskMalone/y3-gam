@@ -62,7 +62,9 @@ namespace GUI {
       { typeid(Component::RigidBody), ICON_FA_CAR ICON_PADDING },
       { typeid(Component::Script), ICON_FA_FILE_CODE ICON_PADDING },
       { typeid(Component::Text), ICON_FA_FONT ICON_PADDING },
-      { typeid(Component::Light), ICON_FA_LIGHTBULB ICON_PADDING }
+      { typeid(Component::Light), ICON_FA_LIGHTBULB ICON_PADDING },
+      { typeid(Component::Canvas), ICON_FA_PAINTBRUSH},
+      { typeid(Component::Image), ICON_FA_IMAGE}
     },
     mObjFactory{Reflection::ObjectFactory::GetInstance()},
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
@@ -806,6 +808,21 @@ namespace GUI {
     return modified;
   }
 
+  bool Inspector::CanvasComponentWindow(ECS::Entity entity, bool highlight){
+      bool const isOpen{ WindowBegin<Component::Canvas>("Canvas", highlight) };
+      bool modified{ false };
+
+      if (isOpen) {
+          Component::Canvas& canvas = entity.GetComponent<Component::Canvas>();
+
+
+          ImGui::EndTable();
+      }
+
+      WindowEnd(isOpen);
+      return modified;
+  }
+
   bool Inspector::MeshComponentWindow(ECS::Entity entity, bool highlight) {
     bool const isOpen{ WindowBegin<Component::Mesh>("Mesh", highlight) };
     bool modified{ false };
@@ -1503,7 +1520,8 @@ namespace GUI {
         DrawAddComponentButton<Component::Text>("Text");
         DrawAddComponentButton<Component::Transform>("Transform");
         DrawAddComponentButton<Component::Light>("Light");
-
+        DrawAddComponentButton<Component::Canvas>("Canvas");
+        DrawAddComponentButton<Component::Image>("Image");
 
         ImGui::EndTable();
       }

@@ -27,6 +27,7 @@ namespace Graphics {
         bool HasActiveCamera() const {
             return !cameras.empty();
         }
+        
 
     private:
         std::vector<ECS::Entity> cameras;

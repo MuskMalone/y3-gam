@@ -46,20 +46,20 @@ namespace Graphics {
 		mWidth = static_cast<uint32_t>(img->width);
 		mHeight = static_cast<uint32_t>(img->height);
 
-		glCreateTextures(GL_TEXTURE_2D, 1, &mTexHdl);
+		GLCALL(glCreateTextures(GL_TEXTURE_2D, 1, &mTexHdl));
 		// allocate GPU storage for texture image data loaded from file
-		glTextureStorage2D(mTexHdl, 1, GL_RGBA8, mWidth, mHeight);
+		GLCALL(glTextureStorage2D(mTexHdl, 1, GL_RGBA8, mWidth, mHeight));
 
 
 		// Set texture parameters
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
+		GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
+		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
 
 		// copy image data from client memory to GPU texture buffer memory
-		glTextureSubImage2D(mTexHdl, 0, 0, 0, mWidth, mHeight,
-			GL_RGBA, GL_UNSIGNED_BYTE, img->pixels);
+		GLCALL(glTextureSubImage2D(mTexHdl, 0, 0, 0, mWidth, mHeight,
+			GL_RGBA, GL_UNSIGNED_BYTE, img->pixels));
 
 		if (mIsBindless) {
 			InitBindlessTexture();
@@ -87,10 +87,12 @@ namespace Graphics {
 		GLCALL(glTextureStorage2D(mTexHdl, 1, GL_RGBA8, mWidth, mHeight));
 
 		// Set texture parameters
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		//GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
+		//GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
+		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_WRAP_S, GL_REPEAT));
+		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_WRAP_T, GL_REPEAT));
+		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
 
 		if (mIsBindless) {
 			InitBindlessTexture();
@@ -210,6 +212,20 @@ namespace Graphics {
 		GLCALL(glTextureSubImage2D(mTexHdl, 0, 0, 0, mWidth, mHeight, GL_RGBA, GL_UNSIGNED_BYTE, data));
 	}
 
+	void Texture::CopyFrom(GLuint srcTexHdl, GLsizei width, GLsizei height){
+		if (mTexHdl) {
+			GLCALL(glCopyImageSubData(srcTexHdl, GL_TEXTURE_2D, 0, 0, 0, 0,
+				mTexHdl, GL_TEXTURE_2D, 0, 0, 0, 0,
+				width, height, 1));
+		}
+	}
+
+
+	void Texture::Bind(uint32_t texUnit) const {
+		GLCALL(glBindTextureUnit(texUnit, mTexHdl));
+	}
+
+
 	/*  _________________________________________________________________________ */
 	/*! Bind
 
@@ -225,7 +241,6 @@ namespace Graphics {
 		//}
 		return BindToNextAvailUnit(mTexHdl);
 	}
-
 	/*  _________________________________________________________________________ */
 	/*! Unbind
 

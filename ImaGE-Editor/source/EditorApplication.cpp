@@ -25,6 +25,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Systems/Systems.h>
 #include "Graphics/CameraSpec.h"
 
+#include <Graphics/Renderer.h>
+#include <Graphics/RenderPass/GeomPass.h>
+
 namespace IGE {
   EditorApplication::EditorApplication(Application::ApplicationSpecification const& spec) :
     mGUIManager{}, Application(spec) {
@@ -169,15 +172,14 @@ namespace IGE {
           gameTex = std::make_shared<Graphics::Texture>(fb0->GetFramebufferSpec().width, fb0->GetFramebufferSpec().height);
 
           if (gameTex) {
-              GLCALL(glCopyImageSubData(fb0->GetColorAttachmentID(), GL_TEXTURE_2D, 0, 0, 0, 0,
-                  gameTex->GetTexHdl(), GL_TEXTURE_2D, 0, 0, 0, 0,
-                  fb0->GetFramebufferSpec().width, fb0->GetFramebufferSpec().height, 1));
+              gameTex->CopyFrom(fb0->GetColorAttachmentID(), fb0->GetFramebufferSpec().width, fb0->GetFramebufferSpec().height);
           }
+
       }
 
       Graphics::RenderTarget const& target = mRenderTargets[0];
       auto const& cam = target.camera;
-      Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ cam.GetViewProjMatrix(), cam.GetPosition(), cam.GetNearPlane(), cam.GetFarPlane(), cam.GetFOV() });
+      Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ cam.GetViewProjMatrix(), cam.GetViewMatrix(), cam.GetPosition(), cam.GetNearPlane(), cam.GetFarPlane(), cam.GetFOV(), cam.GetAspectRatio(), true});
 
   }
 

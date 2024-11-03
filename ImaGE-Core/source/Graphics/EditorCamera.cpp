@@ -22,6 +22,11 @@ namespace Graphics {
     float EditorCamera::GetFOV() const noexcept {
       return mFov;
     }
+
+    float EditorCamera::GetAspectRatio() const noexcept {
+        return mAspectRatio;
+    }
+
     float EditorCamera::GetNearPlane() const noexcept {
       return mNearClip;
     }
