@@ -642,7 +642,7 @@ namespace GUI {
         ImGui::SameLine();
         ImGui::SetCursorPosX(dropdownPos);
         ImGui::SetNextItemWidth(inputWidth);
-        if (ImGui::BeginCombo("##ScriptSelection", selectedScript.c_str()))
+        if (ImGui::BeginCombo("##ScriptSelection", selectedScript.empty()  ? "Select Script" : selectedScript.c_str()))
         {
           for (const std::string& sn : sm->mAllScriptNames)
           {
