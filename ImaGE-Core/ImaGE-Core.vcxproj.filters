@@ -124,6 +124,9 @@
     <Filter Include="External\mono\include\mono\utils">
       <UniqueIdentifier>{AB68BFDF-97B9-AA21-C01D-99E3ACCD3D8B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="External\stb">
+      <UniqueIdentifier>{609F6B0A-4C02-FBAE-F587-3365E1C9C631}</UniqueIdentifier>
+    </Filter>
     <Filter Include="FrameRateController">
       <UniqueIdentifier>{60BC59B9-CC1D-37C7-558B-7D79C1EB6D86}</UniqueIdentifier>
     </Filter>
@@ -522,6 +525,12 @@
     <ClInclude Include="source\External\mono\include\mono\utils\mono-publib.h">
       <Filter>External\mono\include\mono\utils</Filter>
     </ClInclude>
+    <ClInclude Include="source\External\stb\stb_image.h">
+      <Filter>External\stb</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\stb\stb_image_write.h">
+      <Filter>External\stb</Filter>
+    </ClInclude>
     <ClInclude Include="source\FrameRateController\FrameRateController.h">
       <Filter>FrameRateController</Filter>
     </ClInclude>
@@ -823,6 +832,9 @@
     </ClCompile>
     <ClCompile Include="source\External\glad.c">
       <Filter>External</Filter>
+    </ClCompile>
+    <ClCompile Include="source\External\stb\stb_image.cpp.cpp">
+      <Filter>External\stb</Filter>
     </ClCompile>
     <ClCompile Include="source\FrameRateController\FrameRateController.cpp">
       <Filter>FrameRateController</Filter>
