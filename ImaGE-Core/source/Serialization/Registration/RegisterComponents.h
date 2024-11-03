@@ -126,6 +126,11 @@ static void rttr_auto_register_reflection_function2_(); namespace {
   REGISTER_COMPONENT(Canvas, "Canvas")
     .property("isActive", &Component::Canvas::isActive);
 
+  REGISTER_COMPONENT(Image, "Image")
+      .property("color", &Image::color)
+      .property("textureAssetGUID", &Image::textureAsset);
+
+
 
   // stuff below are not actual "Components", hence we skip the REGISTER_COMPONENT checks
   rttr::registration::class_<PrefabOverrides>("PrefabOverrides")

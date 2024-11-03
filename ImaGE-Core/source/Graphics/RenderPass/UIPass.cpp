@@ -44,8 +44,18 @@ namespace Graphics {
 
 			for (ECS::Entity const& uiEntity : children) {
 				auto const& uiXform = uiEntity.GetComponent<Component::Transform>(); //ui element transform in screen space
-
-				Renderer::DrawQuad(uiXform.position, glm::vec2{ uiXform.scale}, Color::COLOR_BLUE );
+				if (uiEntity.HasComponent<Component::Text>()) {
+					auto const& textComp = uiEntity.GetComponent<Component::Text>();
+					//Draw Text here
+				}
+				else if (uiEntity.HasComponent<Component::Image>()) {
+					auto const& imageComp = uiEntity.GetComponent<Component::Image>();
+					Renderer::DrawQuad(uiXform.position, glm::vec2{ uiXform.scale }, uiXform.rotation, imageComp.color); //TO CHANGE TO SPRITE VERSION
+				}
+				else {
+					Renderer::DrawQuad(uiXform.position, glm::vec2{ uiXform.scale }, uiXform.rotation, Color::COLOR_WHITE);
+				}
+				
 
 				//Graphics::Renderer::SubmitInstance(Renderer::GetQuadMeshSource(), uiXform.worldMtx, Color::COLOR_WHITE, uiEntity.GetEntityID());
 			}

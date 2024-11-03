@@ -28,4 +28,5 @@ namespace Reflection::ComponentUtils {
   void AddScript(ECS::Entity entity, rttr::variant const& var);
   void AddLight(ECS::Entity entity, rttr::variant const& var);
   void AddCanvas(ECS::Entity entity, rttr::variant const& var);
+  void AddImage(ECS::Entity entity, rttr::variant const& var);
 } // namespace Reflection

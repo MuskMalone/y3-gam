@@ -141,7 +141,7 @@ namespace Graphics {
 		static void Clear();
 
 		// Quads
-		static void DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::vec4 const& clr, float rot = 0.f);
+		static void DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, glm::vec4 const& clr);
 		static void DrawSprite(glm::vec3 const& pos, glm::vec2 const& scale, std::shared_ptr<Texture>const& subtex, glm::vec4 const& tint, float rot, int entity);
 		static void RenderFullscreenTexture();
 

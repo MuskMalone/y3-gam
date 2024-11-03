@@ -13,3 +13,4 @@
 #include "Light.h"
 #include "Camera.h"
 #include "Canvas.h"
+#include "Image.h"

@@ -30,7 +30,8 @@ namespace Reflection
 		rttr::type::get<Component::Script>(),
 		rttr::type::get<Component::Text>(),
 		rttr::type::get<Component::Light>(),
-		rttr::type::get<Component::Canvas>()
+		rttr::type::get<Component::Canvas>(),
+		rttr::type::get<Component::Image>()
 	};
 
 } // namespace Reflection

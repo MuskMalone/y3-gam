@@ -60,7 +60,8 @@ namespace GUI {
       { typeid(Component::Script), ICON_FA_FILE_CODE ICON_PADDING },
       { typeid(Component::Text), ICON_FA_FONT ICON_PADDING },
       { typeid(Component::Light), ICON_FA_LIGHTBULB ICON_PADDING },
-      { typeid(Component::Canvas), ICON_FA_PAINTBRUSH}
+      { typeid(Component::Canvas), ICON_FA_PAINTBRUSH},
+      { typeid(Component::Image), ICON_FA_IMAGE}
     },
     mObjFactory{Reflection::ObjectFactory::GetInstance()},
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
@@ -1271,6 +1272,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Transform>("Transform");
         DrawAddComponentButton<Component::Light>("Light");
         DrawAddComponentButton<Component::Canvas>("Canvas");
+        DrawAddComponentButton<Component::Image>("Image");
 
         ImGui::EndTable();
       }

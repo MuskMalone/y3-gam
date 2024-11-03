@@ -438,7 +438,7 @@ namespace Graphics {
 		return instanceBuffer;
 	}
 
-	void Renderer::DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::vec4 const& clr, float rot) {
+	void Renderer::DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, glm::vec4 const& clr) {
 		if (mData.quadIdxCount >= RendererData::cMaxIndices2D)
 			NextBatch();
 
@@ -446,7 +446,8 @@ namespace Graphics {
 		const float texIdx{}; // white tex index = 0
 
 		glm::mat4 translateMtx{ glm::translate(glm::mat4{ 1.f }, pos) };
-		glm::mat4 rotateMtx{ glm::rotate(glm::mat4{ 1.f }, glm::radians(rot), {0.f, 0.f, 1.f}) };
+		//glm::mat4 rotateMtx{ glm::rotate(glm::mat4{ 1.f }, glm::radians(rot), {0.f, 0.f, 1.f}) };
+		glm::mat4 rotateMtx{ glm::toMat4(rot)};
 		glm::mat4 scaleMtx{ glm::scale(glm::mat4{ 1.f }, { scale.x, scale.y, 1.f }) };
 		glm::mat4 transformMtx{ translateMtx * rotateMtx * scaleMtx };
 

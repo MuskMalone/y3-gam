@@ -172,6 +172,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="source\Core\Components\Canvas.h" />
+    <ClInclude Include="source\Core\Components\Image.h" />
     <ClInclude Include="source\Graphics\RenderPass\ScreenPass.h" />
     <ClInclude Include="source\Application.h" />
     <ClInclude Include="source\Asset\AssetManager.h" />
