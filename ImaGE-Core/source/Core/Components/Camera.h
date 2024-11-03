@@ -42,6 +42,8 @@ namespace Component {
             }
         }
 
+
+
         inline glm::mat4 GetViewProjMatrix() const {
             return GetProjMatrix() * GetViewMatrix();
         }
