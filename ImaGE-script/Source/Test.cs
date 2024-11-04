@@ -36,10 +36,11 @@ public class Test : Entity
 
     // VARIABLES HERE SHOULD ONLY BE MODFIED THROUGH EDITOR
 
-    //public int TestInt = 10;
+    public int TestInt = 10;
     public float TestFloat = 20f;
-    public double TestDouble = 30.0;
     public Vec3<double> dVec3 = new Vec3<double>(336.318f, 100f, 0f);
+    public double TestDouble = 30.0;
+  
     public Entity testEnt;
 
 
@@ -80,10 +81,10 @@ public class Test : Entity
     {
       //  Console.WriteLine(testEnt.mEntityID.ToString());
       // Console.WriteLine("Hit\n");
-      if (testEnt != null)
-      {
-        Console.WriteLine(testEnt.mEntityID + "::ID");
-      }
+      //if (testEnt != null)
+      //{
+      //  Console.WriteLine(testEnt.mEntityID + "::ID");
+      //}
       //Vec3<float> Position = GetComponent<Transform>().Position;
       //GetComponent<Transform>().Position = new Vec3<float>(1,1,2);
       //  Console.WriteLine(Position.X + "," + Position.Y + "," + Position.Z);

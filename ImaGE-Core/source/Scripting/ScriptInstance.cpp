@@ -305,11 +305,11 @@ void ScriptInstance::SetAllFields()
 
 }
 
-void ScriptInstance::SetAllFields(std::vector<rttr::variant> const& scriptFieldProxyList)
+void ScriptInstance::SetAllFields(const std::vector<rttr::variant>& scriptFieldProxyList)
 {
   Mono::ScriptManager* sm = &Mono::ScriptManager::GetInstance();
   //ScriptClassInfo sci = sm->GetScriptClassInfo(mScriptName);
-  for (const rttr::variant& i : scriptFieldProxyList)
+  for ( const rttr::variant& i : scriptFieldProxyList)
   {
     for (rttr::variant& f : mScriptFieldInstList)
     {
@@ -333,6 +333,17 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> const& scriptFieldP
         {
           sfi.mData = psi.mData;
           SetFieldValue<int>(sfi.mData, sfi.mScriptField.mClassField);
+        }
+        break;
+      }
+      else if (f.is_type<Mono::DataMemberInstance<unsigned>>() && i.get_type() == f.get_type())
+      {
+        Mono::DataMemberInstance<unsigned>& sfi = f.get_value<Mono::DataMemberInstance<unsigned>>();
+        const Mono::DataMemberInstance<unsigned>& psi = i.get_value<Mono::DataMemberInstance<unsigned>>();
+        if (sfi.mScriptField.mFieldName == psi.mScriptField.mFieldName)
+        {
+          sfi.mData = psi.mData;
+          SetFieldValue<unsigned>(sfi.mData, sfi.mScriptField.mClassField);
         }
         break;
       }
@@ -410,13 +421,13 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> const& scriptFieldP
       else if (f.is_type<Mono::DataMemberInstance<ScriptInstance>>() && i.get_type() == f.get_type())
       {
         Mono::DataMemberInstance<ScriptInstance>& sfi = f.get_value<Mono::DataMemberInstance<ScriptInstance>>();
-        const Mono::DataMemberInstance<ScriptInstance>& psi = i.get_value<Mono::DataMemberInstance<ScriptInstance>>();
+         const Mono::DataMemberInstance<ScriptInstance>& psi = i.get_value<Mono::DataMemberInstance<ScriptInstance>>();
         if (psi.mData.mClassInst)
         {
           if (sfi.mScriptField.mFieldName == psi.mScriptField.mFieldName)
           {
             sfi.mData = psi.mData;
-            SetFieldValue<MonoObject*>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
+            SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
           }
         }
         break;

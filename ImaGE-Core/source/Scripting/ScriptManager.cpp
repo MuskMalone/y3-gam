@@ -305,7 +305,7 @@ MonoAssembly* Mono::LoadCSharpAssembly(const std::string& assemblyPath)
     throw Debug::Exception<ScriptManager>(Debug::LVL_ERROR, errorMessage, __FUNCTION__, __LINE__);
   }
 
-  MonoAssembly* assembly = mono_assembly_load_from_full(image, assemblyPath.c_str(), &status, 0);
+  MonoAssembly* assembly = mono_assembly_load_from_full(image, "../Assets/Scripts/ImaGE-Script.dll", &status, 0);
   mono_image_close(image);
 
   //Free the memory from Read Bytes
@@ -510,7 +510,7 @@ void ScriptManager::ReloadAssembly()
   std::cout << "ASSReload\n";
 #endif
   mono_domain_set(mono_get_root_domain(), false);
-  mono_domain_unload(mAppDomain.get());
+  mAppDomain.reset();
   mMonoClassMap.clear();
   mAllScriptNames.clear();
 

@@ -604,7 +604,8 @@ namespace GUI {
         if (isPrevVec3) { EndVec3Table(); }
 
         // Check if the mouse is over the second table and the right mouse button is clicked
-        ImGui::EndTable();
+        if (!isPrevVec3)
+          ImGui::EndTable();
         ImGui::Separator();
 
       }
