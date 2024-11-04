@@ -21,7 +21,6 @@ struct aiScene; struct aiNode;
 
 namespace Graphics::AssetIO
 {
-
   struct MeshImportFlags
   {
     MeshImportFlags() : boneWeights{ false }, animations{ false },
