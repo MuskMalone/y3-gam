@@ -11,6 +11,7 @@
 #include <Graphics/RenderPass/GeomPass.h>
 #include <Graphics/RenderPass/ShadowPass.h>
 #include <Graphics/RenderPass/ScreenPass.h>
+#include <Graphics/RenderPass/PostProcessPass.h>
 #include <Graphics/RenderPass/UIPass.h>
 #pragma endregion
 
@@ -137,6 +138,7 @@ namespace Graphics {
 		//InitPickPass();
 		InitShadowMapPass();
 		InitGeomPass();
+		InitPostProcessPass();
 		InitUIPass();
 
 		InitFullscreenQuad();
@@ -271,6 +273,26 @@ namespace Graphics {
 		screenPassSpec.debugName = "Screen Pass";
 
 		AddPass(RenderPass::Create<ScreenPass>(screenPassSpec));
+	}
+
+	void Renderer::InitPostProcessPass()
+	{
+		Graphics::FramebufferSpec postprocessSpec;
+		postprocessSpec.width = WINDOW_WIDTH<int>;
+		postprocessSpec.height = WINDOW_HEIGHT<int>;
+		postprocessSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };	// temporarily max. 1 shadow-caster
+
+		PipelineSpec postprocessPSpec;
+
+		//leaving this blank, i have multipel shaders in postproc mgr to be run in a pingpong fashion
+		postprocessPSpec.shader = nullptr; //ShaderLibrary::Get("ShadowMap");
+		postprocessPSpec.targetFramebuffer = Framebuffer::Create(postprocessSpec);
+
+		RenderPassSpec postprocessPassSpec;
+		postprocessPassSpec.pipeline = Pipeline::Create(postprocessPSpec);
+		postprocessPassSpec.debugName = "Post Process Pass";
+
+		AddPass(RenderPass::Create<PostProcessingPass>(postprocessPassSpec));
 	}
 
 	void Renderer::InitUIPass() {

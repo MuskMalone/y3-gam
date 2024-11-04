@@ -26,7 +26,8 @@ namespace IGE {
 				IGE::Assets::AudioAsset,
 				IGE::Assets::ModelAsset,
 				IGE::Assets::PrefabAsset,
-				IGE::Assets::FontAsset
+				IGE::Assets::FontAsset,
+				IGE::Assets::ShaderAsset
 			>();
 			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			auto fp{ CreateProjectFile() }; // create project file if it doesnt exist
@@ -102,6 +103,7 @@ namespace IGE {
 		EVENT_CALLBACK_DEF(AssetManager, HandleAddFiles) {
 			auto const& paths{ CAST_TO_EVENT(Events::AddFilesFromExplorerEvent)->mPaths };
 			for (std::string const& file : paths) {
+				//auto file{ std::filesystem::path{f}.relative_path().string() };
 				//@TODO: use reflection to invoke without hardcoding
 				auto ext{ GetFileExtension(file) };
 				std::string folder{};
@@ -114,9 +116,12 @@ namespace IGE {
 						break;
 					}
 				}
-
-				mRegisterTypeImports[folder](file);
-				Debug::DebugLogger::GetInstance().LogInfo("Added " + file + " to assets");
+				if (mRegisterTypeImports.find(folder) != mRegisterTypeImports.end()) {
+					mRegisterTypeImports[folder](file);
+					Debug::DebugLogger::GetInstance().LogInfo("Added " + file + " to assets");
+				}else{
+					Debug::DebugLogger::GetInstance().LogWarning(file + " no asset category found");
+				}
 			}
 
 		}

@@ -290,7 +290,7 @@ namespace Reflection
     else IF_GET_ENTITY_COMP(Light)
     else IF_GET_ENTITY_COMP(AudioListener)
     else IF_GET_ENTITY_COMP(AudioSource)
-    else IF_GET_ENTITY_COMP(Component::Canvas)
+    else IF_GET_ENTITY_COMP(Canvas)
     else
     {
       std::ostringstream oss{};
@@ -324,7 +324,7 @@ namespace Reflection
     else IF_REMOVE_COMP(Light)
     else IF_REMOVE_COMP(AudioListener)
     else IF_REMOVE_COMP(AudioSource)
-    else IF_REMOVE_COMP(Component::Canvas)
+    else IF_REMOVE_COMP(Canvas)
     else
     {
       std::ostringstream oss{};

@@ -9,7 +9,8 @@
 #include "AssetUtils.h"
 #include <Events/EventCallback.h>
 #include "Asset/AssetMetadata.h"
-
+#define IGE_ASSETMGR IGE::Assets::AssetManager::GetInstance()
+#define IGE_REF(type, guid) IGE::Assets::AssetManager::GetInstance().GetAsset<type>(guid)
 namespace IGE {
 	namespace Assets {
         const std::string cAssetProjectSettingsPath{ gAssetsDirectory }; // just the same directory as the exe

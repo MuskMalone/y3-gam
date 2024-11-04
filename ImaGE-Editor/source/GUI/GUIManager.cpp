@@ -28,6 +28,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Dockable/Viewport.h"
 #include "Dockable/Layers.h"
 #include "Dockable/GameViewport.h"
+#include "Dockable/PostProcessingSettings.h"
 #pragma endregion
 
 namespace GUI {
@@ -61,6 +62,7 @@ namespace GUI {
     mWindows.emplace_back(std::make_shared<PerformanceWindow>("Performance Window"));
     mWindows.emplace_back(std::make_shared<Layers>("Layers"));
     mWindows.emplace_back(std::make_shared<RenderPassViewer>("Render Pass Viewer"));
+    mWindows.emplace_back(std::make_shared<PostProcessingSettings>(""));
 
     mStyler.LoadFonts();
     mStyler.SetCurrentTheme(static_cast<CustomTheme>(gEditorDefaultTheme)); // Default theme should be read from settings file

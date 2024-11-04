@@ -181,8 +181,8 @@ namespace Graphics {
 		static void InitGeomPass();
 		static void InitShadowMapPass();
 		static void InitScreenPass();
+		static void InitPostProcessPass();
 		static void InitUIPass();
-
 		static void InitMeshSources();
 
 		static void InitFullscreenQuad();
