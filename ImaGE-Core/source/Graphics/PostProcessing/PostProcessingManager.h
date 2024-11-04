@@ -1,6 +1,7 @@
 #pragma once
 #include <Asset/Assetables/Shader/ShaderAsset.h>
 #include <Singleton/ThreadSafeSingleton.h>
+#include "Events/EventCallback.h"
 
 namespace Graphics {
 	class PostProcessingManager : public ThreadSafeSingleton<PostProcessingManager>{
@@ -22,5 +23,6 @@ namespace Graphics {
 		// idx 1 will be second ... idx n will be the n + 1th
 		std::shared_ptr<Graphics::Shader> mDefaultShader;
 		std::unordered_map<std::string, IGE::Assets::GUID> mConfigs;
+		EVENT_CALLBACK_DECL(HandleSystemEvents);
 	};
 }

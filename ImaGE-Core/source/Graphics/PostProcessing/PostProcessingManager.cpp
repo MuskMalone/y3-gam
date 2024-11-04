@@ -4,16 +4,19 @@
 #include <Serialization/Serializer.h>
 #include <Serialization/Deserializer.h>
 #include <Scenes/SceneManager.h>
+#include <Events/EventManager.h>
 namespace Graphics {
 	PostProcessingManager::PostProcessingManager() : 
 		mDefaultShader{ std::make_shared<Graphics::Shader>(IGE::Assets::cDefaultVertShader, std::string(gAssetsDirectory) + "Shaders\\PostProcessingDefault.frag.glsl")}
 	{
+		SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &PostProcessingManager::HandleSystemEvents, this);
+
 		CreateConfigFile();
-		//Serialization::Deserializer::DeserializeAny(mConfigs, cConfigFilePath);
+		Serialization::Deserializer::DeserializeAny(mConfigs, cConfigFilePath);
 	}
 	PostProcessingManager::~PostProcessingManager()
 	{
-		//Serialization::Serializer::SerializeAny(mConfigs, cConfigFilePath);
+		Serialization::Serializer::SerializeAny(mConfigs, cConfigFilePath);
 	}
 
 	void PostProcessingManager::SetShader(IGE::Assets::GUID guid)
@@ -73,5 +76,10 @@ namespace Graphics {
 			std::ofstream file(cConfigFilePath);
 			file.close();
 		}
+	}
+
+	EVENT_CALLBACK_DEF(PostProcessingManager, HandleSystemEvents) {
+		//auto const& state{ CAST_TO_EVENT(Events::SceneStateChange)->mNewState };
+		
 	}
 }

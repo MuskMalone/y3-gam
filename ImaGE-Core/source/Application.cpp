@@ -199,10 +199,8 @@ namespace IGE {
   {
     // shutdown singletons
     Systems::SystemManager::DestroyInstance();
-
-    //not sure why this throws an error at destroy
     IGE::Audio::AudioManager::DestroyInstance();
-
+    Graphics::PostProcessingManager::DestroyInstance();
     Scenes::SceneManager::DestroyInstance();
     Prefabs::PrefabManager::DestroyInstance();
     Mono::ScriptManager::DestroyInstance();

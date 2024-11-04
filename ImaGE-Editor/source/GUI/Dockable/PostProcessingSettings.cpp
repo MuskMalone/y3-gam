@@ -33,6 +33,7 @@ namespace GUI {
     }
 	void PostProcessingSettings::Run()
 	{
+        std::string fileContent = "";
         ImGui::Begin("Post Processing");
         if (Graphics::PostProcessingManager::GetInstance().GetShaderName().empty()) {
             // Set the size of the drop box
@@ -50,16 +51,27 @@ namespace GUI {
             ImGui::TextUnformatted("Drag here to add shader");
             ShaderDragDropEvent();
             ImGui::EndChild();
+            if (!fileContent.empty()) {
+                fileContent.clear();
+            }
         }
         else {
 
-            std::string fileContent{};
+            
             // Display file name with Refresh and Delete buttons next to it
             auto fileName{ Graphics::PostProcessingManager::GetInstance().GetShaderName()};
             ImGui::TextUnformatted(fileName.c_str());
             ImGui::SameLine();
 
             // Refresh Button
+            if (fileContent.empty()) {
+                std::ifstream file(fileName);
+                if (file) {
+                    std::ostringstream ss;
+                    ss << file.rdbuf();
+                    fileContent = ss.str();  // Load file content into fileContent string
+                }
+            }
             if (ImGui::Button("Refresh")) {
                 // Reload the file content 
                 Graphics::PostProcessingManager::GetInstance().ReloadShader();
@@ -75,29 +87,19 @@ namespace GUI {
 
             // Delete Button
             if (ImGui::Button("Delete")) {
-                // Confirm delete dialog
-                if (ImGui::BeginPopupModal("Confirm Delete", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
-                    ImGui::Text("Are you sure you want to delete this shader?");
-                    ImGui::Separator();
-
-                    if (ImGui::Button("Yes")) {
-                        //std::remove(fileName.c_str());  // Delete the file
-                        Graphics::PostProcessingManager::GetInstance().RemoveShader();
-                        ImGui::CloseCurrentPopup();
-                    }
-                    ImGui::SameLine();
-                    if (ImGui::Button("No")) {
-                        ImGui::CloseCurrentPopup();
-                    }
-                    ImGui::EndPopup();
-                }
-                ImGui::OpenPopup("Confirm Delete");
+                Graphics::PostProcessingManager::GetInstance().RemoveShader();
             }
 
             // Display the text editor
             ImGui::Separator();
             ImGui::BeginChild("FileContent", ImVec2(0, ImGui::GetTextLineHeight() * 20), true, ImGuiWindowFlags_HorizontalScrollbar);
             ImGui::TextWrapped("%s", fileContent.c_str());  // Display content with wrapped text
+            if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
+            {
+                if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+                    AssetHelpers::OpenFileWithDefaultProgram(fileName);
+                }
+            }
             ShaderDragDropEvent();
             ImGui::EndChild();
         }
