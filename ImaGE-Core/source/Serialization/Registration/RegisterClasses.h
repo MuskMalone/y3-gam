@@ -19,6 +19,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/GUID.h>
 #include <Audio/AudioManager.h>
 #include <Core/Components/AudioSource.h>
+#include <Graphics/PostProcessing/PostProcessingManager.h>
 
 static void rttr_auto_register_reflection_function_(); namespace {
   struct rttr__auto__register__ {
@@ -151,6 +152,10 @@ static void rttr_auto_register_reflection_function_(); namespace {
           .property("guid", &Component::AudioSource::AudioInstance::guid)
           .property("playSettings", &Component::AudioSource::AudioInstance::playSettings);
   }
+  /* ------------------ Shaders ---------------------*/
+  rttr::registration::class_<Graphics::PostProcessingManager::PostProcessingConfigs>("PostProcessingConfigs")
+      .constructor<>()(rttr::policy::ctor::as_object)
+      .property("configs", &Graphics::PostProcessingManager::PostProcessingConfigs::mConfigs);
   /* ------------------- Script ------------------- */
   {
     using T = Reflection::ProxyScript;

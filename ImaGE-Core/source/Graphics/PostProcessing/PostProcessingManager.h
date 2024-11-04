@@ -6,6 +6,10 @@
 namespace Graphics {
 	class PostProcessingManager : public ThreadSafeSingleton<PostProcessingManager>{
 	public:
+		struct PostProcessingConfigs {
+			std::unordered_map<std::string, uint64_t> mConfigs;
+		};
+	public:
 		PostProcessingManager();
 		~PostProcessingManager();
 		void SetShader(IGE::Assets::GUID);
@@ -22,7 +26,7 @@ namespace Graphics {
 		// stored in order. idx 0 will be the very first pass run on the framebuffer
 		// idx 1 will be second ... idx n will be the n + 1th
 		std::shared_ptr<Graphics::Shader> mDefaultShader;
-		std::unordered_map<std::string, IGE::Assets::GUID> mConfigs;
+		PostProcessingConfigs mPpc;
 		EVENT_CALLBACK_DECL(HandleSystemEvents);
 	};
 }
