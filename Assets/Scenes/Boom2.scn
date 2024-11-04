@@ -1,186 +1,6 @@
 {
     "Scene": [
         {
-            "ID": 0,
-            "Parent": null,
-            "Child Entities": [],
-            "isActive": true,
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "MainCamera",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1,
-            "Parent": null,
-            "Child Entities": [],
-            "isActive": true,
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "MainCamera",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 2,
-            "Parent": null,
-            "Child Entities": [],
-            "isActive": true,
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "MainCamera",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
             "ID": 3,
             "Parent": 6,
             "Child Entities": [],
@@ -498,7 +318,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 10992103174517510700
+                            "ID": 15299710194714288536
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -586,7 +406,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 5118619837698394441
+                            "ID": 5408769616568067525
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -761,7 +581,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 10992103174517510700
+                            "ID": 15299710194714288536
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -1089,7 +909,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 10992103174517510700
+                            "ID": 15299710194714288536
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -1159,7 +979,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 10992103174517510700
+                            "ID": 15299710194714288536
                         },
                         "castShadows": true,
                         "receiveShadows": true

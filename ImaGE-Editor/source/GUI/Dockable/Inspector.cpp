@@ -61,7 +61,8 @@ namespace GUI {
       { typeid(Component::Text), ICON_FA_FONT ICON_PADDING },
       { typeid(Component::Light), ICON_FA_LIGHTBULB ICON_PADDING },
       { typeid(Component::Canvas), ICON_FA_PAINTBRUSH},
-      { typeid(Component::Image), ICON_FA_IMAGE}
+      { typeid(Component::Image), ICON_FA_IMAGE},
+      { typeid(Component::Camera), ICON_FA_CAMERA}
     },
     mObjFactory{Reflection::ObjectFactory::GetInstance()},
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
@@ -281,6 +282,18 @@ namespace GUI {
               SetIsComponentEdited(true);
               if (prefabOverride) {
                   prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Image>());
+              }
+          }
+      }
+
+      if (currentEntity.HasComponent<Component::Camera>()) {
+          rttr::type const cameraType{ rttr::type::get<Component::Camera>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(cameraType);
+
+          if (CameraComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Camera>());
               }
           }
       }
@@ -817,7 +830,56 @@ namespace GUI {
 
   bool Inspector::CameraComponentWindow(ECS::Entity entity, bool highlight)
   {
-      return false;
+      bool const isOpen{ WindowBegin<Component::Camera>("Camera", highlight) };
+      bool modified{ false };
+
+      if (isOpen) {
+          Component::Camera& camera = entity.GetComponent<Component::Camera>();
+
+          float const inputWidth{ CalcInputWidth(60.f) };
+
+          // Start a table for organizing the color and textureAsset inputs
+          ImGui::BeginTable("CameraTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+          // Color input
+          NextRowTable("Projection Type");
+          //if (ImGui::ColorEdit4("##ProjType", &camera.projType)) {
+          //    modified = true;
+          //}
+
+          NextRowTable("Yaw");
+          if (ImGui::DragFloat("##Yaw", &camera.yaw, 1.f, -180.f, 180.f)) {
+              modified = true;
+          }
+          NextRowTable("Pitch");
+          if (ImGui::DragFloat("##Pitch", &camera.pitch, 1.f, -180.f, 180.f)) {
+              modified = true;
+          }
+          NextRowTable("FOV");
+          if (ImGui::DragFloat("##FOV", &camera.fov, 1.f, 0.f, 180.f)) {
+              modified = true;
+          }
+          NextRowTable("Aspect Ratio");
+
+          NextRowTable("Near Clip");
+          if (ImGui::DragFloat("##Near", &camera.nearClip, 5.f, -100.f, 0.f)) {
+              modified = true;
+          }
+          NextRowTable("Far Clip");
+          if (ImGui::DragFloat("##Far", &camera.farClip, 5.f, 0.f, 1000.f)) {
+              modified = true;
+          }
+          
+
+
+          ImGui::EndTable();
+      }
+
+      WindowEnd(isOpen);
+      return modified;
   }
 
   bool Inspector::MeshComponentWindow(ECS::Entity entity, bool highlight) {
@@ -1358,6 +1420,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Light>("Light");
         DrawAddComponentButton<Component::Canvas>("Canvas");
         DrawAddComponentButton<Component::Image>("Image");
+        DrawAddComponentButton<Component::Camera>("Camera");
 
         ImGui::EndTable();
       }

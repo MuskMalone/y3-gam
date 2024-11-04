@@ -108,4 +108,9 @@ namespace Reflection::ComponentUtils {
 
       entity.EmplaceOrReplaceComponent<Image>(comp);
   }
+  void AddCamera(ECS::Entity entity, rttr::variant const& var){
+      EXTRACT_RAW_COMP(Camera, comp);
+
+      entity.EmplaceOrReplaceComponent<Camera>(comp);
+  }
 } // namespace Reflection

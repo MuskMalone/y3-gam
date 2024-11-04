@@ -127,8 +127,18 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("isActive", &Component::Canvas::isActive);
 
   REGISTER_COMPONENT(Image, "Image")
-      .property("color", &Image::color)
-      .property("textureAssetGUID", &Image::textureAsset);
+    .property("color", &Image::color)
+    .property("textureAssetGUID", &Image::textureAsset);
+
+  REGISTER_COMPONENT(Camera, "Camera")
+      .property("projType", &Component::Camera::projType)
+      .property("position", &Component::Camera::position)
+      .property("yaw", &Component::Camera::yaw)
+      .property("pitch", &Component::Camera::pitch)
+      .property("fov", &Component::Camera::fov)
+      .property("aspectRatio", &Component::Camera::aspectRatio)
+      .property("nearClip", &Component::Camera::nearClip)
+      .property("farClip", &Component::Camera::farClip);
 
 
 

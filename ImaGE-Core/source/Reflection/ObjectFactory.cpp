@@ -52,7 +52,8 @@ namespace Reflection
       { GET_RTTR_TYPE(Text), ComponentUtils::AddText },
       { GET_RTTR_TYPE(Light), ComponentUtils::AddLight },
       { GET_RTTR_TYPE(Canvas), ComponentUtils::AddCanvas },
-      { GET_RTTR_TYPE(Image), ComponentUtils::AddImage }
+      { GET_RTTR_TYPE(Image), ComponentUtils::AddImage },
+      { GET_RTTR_TYPE(Camera), ComponentUtils::AddCamera }
     };
 
     if (mAddComponentFuncs.size() != gComponentTypes.size()) {
@@ -289,6 +290,7 @@ namespace Reflection
     else IF_GET_ENTITY_COMP(Component::Light)
     else IF_GET_ENTITY_COMP(Component::Canvas)
     else IF_GET_ENTITY_COMP(Component::Image)
+    else IF_GET_ENTITY_COMP(Component::Camera)
     else
     {
       std::ostringstream oss{};
@@ -318,6 +320,7 @@ namespace Reflection
     else IF_REMOVE_COMP(Component::Light)
     else IF_REMOVE_COMP(Component::Canvas)
     else IF_REMOVE_COMP(Component::Image)
+    else IF_REMOVE_COMP(Component::Camera)
     else
     {
       std::ostringstream oss{};

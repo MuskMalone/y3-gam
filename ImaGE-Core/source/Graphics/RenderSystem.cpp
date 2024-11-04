@@ -12,18 +12,6 @@ namespace Graphics {
 	CameraManager RenderSystem::mCameraManager;
 	void RenderSystem::Init() {
 		Renderer::Init();
-
-		ECS::Entity mainCameraEntity = ECS::EntityManager::GetInstance().CreateEntity();
-		auto & camCom = mainCameraEntity.EmplaceComponent<Component::Camera>(); // Add your Camera component
-		camCom.position = glm::vec3(0.0f, 5.0f, 20.0f);
-		camCom.yaw = -90.f;
-		camCom.pitch = -30.f;
-		
-		// Optionally, add a tag or mark it as the main camera
-		mainCameraEntity.SetTag("MainCamera"); // Assuming you have a SetTag method
-		Graphics::RenderSystem::mCameraManager.AddCamera(mainCameraEntity);
-		Graphics::RenderSystem::mCameraManager.SetActiveCamera(0);
-
 	}
 
 	void RenderSystem::Release() {

@@ -583,7 +583,6 @@ namespace Graphics {
 		mData.instanceBufferDataMap[meshSource].push_back(instance);
 	}
 
-
 	void Renderer::RenderInstances() {
 		for (auto& [meshSrc, instances] : mData.instanceBufferDataMap) {
 			if (instances.empty()) continue;
