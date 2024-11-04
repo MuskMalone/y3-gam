@@ -26,8 +26,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/EntityManager.h>
 #include <GUI/GUIManager.h>
 #include <Asset/IGEAssets.h>
+#include <ImGui/misc/cpp/imgui_stdlib.h>
 
 namespace {
+  static std::string sMeshPopupInput;
+
   /*!*********************************************************************
     \brief
       Projects a 3d vector onto the camera's view plane
@@ -312,11 +315,14 @@ namespace GUI
           break;
         case AssetPayload::MODEL:
         {
+          sMeshPopupInput = assetPayload.GetFilePath();
+          
           // @TODO: ABSTRACT MORE; MAKE IT EASIER TO ADD A MESH
           ECS::Entity newEntity{ ECS::EntityManager::GetInstance().CreateEntityWithTag(assetPayload.GetFileName()) };
           IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
           Graphics::MeshSource const& e{ IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(meshSrc)->mMeshSource };
-          newEntity.EmplaceComponent<Component::Mesh>(meshSrc, assetPayload.GetFileName());
+          newEntity.EmplaceComponent<Component::Mesh>(meshSrc, assetPayload.GetFileName(), true);
+          ImGui::OpenPopup(sMeshPopupTitle);
           break;
         }
         case AssetPayload::SPRITE:
@@ -327,6 +333,56 @@ namespace GUI
       }
       ImGui::EndDragDropTarget();
     }
+  }
+
+  void Viewport::RunImportMeshPopup() {
+    ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    if (!ImGui::BeginPopupModal(sMeshPopupTitle, NULL, ImGuiWindowFlags_AlwaysAutoResize)) { return; }
+
+    static bool blankWarning{ false }, overwriteWarning{ false };
+
+    if (blankWarning) {
+      ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Path cannot be blank!!!");
+    }
+    else if (overwriteWarning) {
+      ImGui::TextColored(ImVec4(0.99f, 0.82f, 0.09f, 1.0f), "Warning: File already exists.");
+      ImGui::TextColored(ImVec4(0.99f, 0.82f, 0.09f, 1.0f), "File will be overwritten!!");
+    }
+
+    ImGui::Text("Import mesh to:");
+    if (!ImGui::IsAnyItemActive()) { ImGui::SetKeyboardFocusHere(); }
+    if (ImGui::InputText("##MeshPathInput", &sMeshPopupInput)) {
+      overwriteWarning = std::filesystem::exists(sMeshPopupInput);
+      blankWarning = false;
+    }
+
+    ImGui::SetCursorPosX(0.5f * (ImGui::GetWindowContentRegionMax().x - ImGui::CalcTextSize("Cancel Create ").x));
+    if (ImGui::Button("Cancel") || ImGui::IsKeyPressed(ImGuiKey_Escape)) {
+      sMeshPopupInput.clear();
+      blankWarning = overwriteWarning = false;
+      ImGui::CloseCurrentPopup();
+    }
+
+    ImGui::SameLine();
+    if (ImGui::Button("Create") || ImGui::IsKeyPressed(ImGuiKey_Enter)) {
+      // if name is blank / whitespace, reject it
+      if (sMeshPopupInput.find_first_not_of(" ") == std::string::npos) {
+        blankWarning = true;
+        overwriteWarning = false;
+      }
+      else {
+        // @TODO: ABSTRACT MORE; MAKE IT EASIER TO ADD A MESH
+        //ECS::Entity newEntity{ ECS::EntityManager::GetInstance().CreateEntityWithTag(sMeshPopupInput) };
+        //IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(sMeshPopupInput) };
+        //newEntity.EmplaceComponent<Component::Mesh>(meshSrc, assetPayload.GetFileName());
+
+        blankWarning = overwriteWarning = false;
+        sMeshPopupInput.clear();
+        ImGui::CloseCurrentPopup();
+      }
+    }
+
+    ImGui::EndPopup();
   }
 
 } // namespace GUI

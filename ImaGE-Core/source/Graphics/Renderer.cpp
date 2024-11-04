@@ -447,6 +447,7 @@ namespace Graphics {
 			instanceBuffer->SetData(instances.data(), dataSize);
 
 			// Bind the VAO and render the instances
+			
 			auto& vao = IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource.GetVertexArray();
 
 			RenderAPI::DrawIndicesInstanced(vao, static_cast<unsigned>(IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource.GetIndices().size()), static_cast<unsigned>(instances.size()));

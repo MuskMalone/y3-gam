@@ -14,7 +14,8 @@ namespace Graphics {
         return MeshSource{ {},{},{},{} };
     }
 
-    Debug::DebugLogger::GetInstance().LogError("[MeshFactory] No such model exists: " + meshName);
+    //Debug::DebugLogger::GetInstance().LogError("[MeshFactory] No such model exists: " + meshName);
+    throw Debug::Exception<MeshFactory>(Debug::LVL_ERROR, Msg("[MeshFactory] No such model exists: " + meshName));
     return MeshSource{ {},{},{},{} };
   }
 
