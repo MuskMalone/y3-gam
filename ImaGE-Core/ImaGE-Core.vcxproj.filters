@@ -215,10 +215,16 @@
     <ClInclude Include="source\Core\Components\CameraController.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
+    <ClInclude Include="source\Core\Components\Canvas.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
     <ClInclude Include="source\Core\Components\Collider.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Components\Components.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\Components\Image.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Components\Layer.h">
@@ -559,16 +565,19 @@
     <ClInclude Include="source\Graphics\RenderCommand.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="source\Graphics\RenderPass\UIPass.h">
-      <Filter>Graphics\RenderPass</Filter>
-    </ClInclude>
     <ClInclude Include="source\Graphics\RenderPass\GeomPass.h">
       <Filter>Graphics\RenderPass</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderPass\RenderPass.h">
       <Filter>Graphics\RenderPass</Filter>
     </ClInclude>
+    <ClInclude Include="source\Graphics\RenderPass\ScreenPass.h">
+      <Filter>Graphics\RenderPass</Filter>
+    </ClInclude>
     <ClInclude Include="source\Graphics\RenderPass\ShadowPass.h">
+      <Filter>Graphics\RenderPass</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Graphics\RenderPass\UIPass.h">
       <Filter>Graphics\RenderPass</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderSystem.h">
@@ -695,9 +704,6 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Graphics\RenderPass\ScreenPass.h" />
-    <ClInclude Include="source\Core\Components\Canvas.h" />
-    <ClInclude Include="source\Core\Components\Image.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -851,16 +857,19 @@
     <ClCompile Include="source\Graphics\RenderAPI.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\RenderPass\UIPass.cpp">
-      <Filter>Graphics\RenderPass</Filter>
-    </ClCompile>
     <ClCompile Include="source\Graphics\RenderPass\GeomPass.cpp">
       <Filter>Graphics\RenderPass</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\RenderPass\RenderPass.cpp">
       <Filter>Graphics\RenderPass</Filter>
     </ClCompile>
+    <ClCompile Include="source\Graphics\RenderPass\ScreenPass.cpp">
+      <Filter>Graphics\RenderPass</Filter>
+    </ClCompile>
     <ClCompile Include="source\Graphics\RenderPass\ShadowPass.cpp">
+      <Filter>Graphics\RenderPass</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Graphics\RenderPass\UIPass.cpp">
       <Filter>Graphics\RenderPass</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\RenderSystem.cpp">
@@ -933,6 +942,5 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\Graphics\RenderPass\ScreenPass.cpp" />
   </ItemGroup>
 </Project>
