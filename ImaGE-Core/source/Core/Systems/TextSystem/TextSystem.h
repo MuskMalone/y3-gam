@@ -60,9 +60,15 @@ namespace Systems {
 
 		void AddFont(Systems::Font& font);
 		std::unordered_map<uint32_t, std::shared_ptr<Systems::Font>> const& GetLoadedFontMap() const;
-		void RenderText(uint32_t filePathHash, std::string const& textContent,
-			float xPos, float yPos, float scale, glm::vec3 color, 
+
+		void RenderTextForAllEntities(glm::mat4 viewProj);
+
+		/*
+		void DrawTextFont(std::shared_ptr<Graphics::Shader> const& shader, uint32_t filePathHash, std::string const& textContent,
+			float xPos, float yPos, float scale, glm::quat rotation, glm::vec4 color,
 			std::vector<std::pair<size_t, float>> const& newLineIndices, int multiLineSpacingOffset);
+		*/
+
 		float GetTextWidth(uint32_t filePathHash, std::string const& textContent, float scale);
 		bool IsValid(Font const& font) const;
 
@@ -78,6 +84,9 @@ namespace Systems {
 		const unsigned int DEFAULT_FONT_SIZE{ 100 };
 
 	private:
+		void RenderText(uint32_t filePathHash, std::string const& textContent,
+			float xPos, float yPos, float scale, glm::quat rotation, glm::vec3 color,
+			std::vector<std::pair<size_t, float>> const& newLineIndices, float multiLineSpacingOffset, glm::mat4 viewProj);
 		void LoadFontFace(Systems::Font& font) const;
 		void SetFontSize(uint32_t filePathHash, int fontSize);
 		void GenerateBitmap(uint32_t filePathHash, int fontSize);

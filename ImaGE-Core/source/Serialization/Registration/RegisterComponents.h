@@ -90,7 +90,9 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("textAssetGUID", &Text::textAsset)
     .property("fontFamilyName", &Text::fontFamilyName)
     .property("alignment", &Text::alignment)
-    .property("multiLineSpacingOffset", &Text::multiLineSpacingOffset);
+    .property("multiLineSpacingOffset", &Text::multiLineSpacingOffset)
+    .property("textBoxEnabledFlag", &Text::textBoxEnabledFlag)
+    .property("textBoxDimensions", &Text::textBoxDimensions);
 
   REGISTER_COMPONENT(RigidBody, "RigidBody")
     .property("velocity", &RigidBody::velocity)
