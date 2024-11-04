@@ -13,7 +13,6 @@ namespace Systems {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &LayerSystem::OnSceneChange, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::LAYER_MODIFIED, &LayerSystem::OnLayerModification, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &LayerSystem::OnPrefabEditor, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::REMOVE_ENTITY, &LayerSystem::OnRemoveEntity, this);
   }
 
   void LayerSystem::Update() {
@@ -225,19 +224,6 @@ namespace Systems {
         */
       }
     }
-  }
-
-  EVENT_CALLBACK_DEF(LayerSystem, OnRemoveEntity) {
-    ECS::Entity const& entity{ CAST_TO_EVENT(Events::RemoveEntityEvent)->mEntity };
-
-    std::string const& layerName{ entity.GetComponent<Component::Layer>().name };
-    auto iter{ mLayerEntities.find(layerName) };
-    if (iter == mLayerEntities.end()) {
-      IGE_DBGLOGGER.LogError("[Layers] Entity \"" + entity.GetTag() + "\" has a Non-Existent Layer!");
-      return;
-    }
-
-    mLayerEntities.erase(iter);
   }
 
   EVENT_CALLBACK_DEF(LayerSystem, OnPrefabEditor) {
