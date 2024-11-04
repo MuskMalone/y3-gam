@@ -39,7 +39,6 @@ namespace Graphics {
 
 		//Frustum Culling should be here
 
-		// waiting for ernest reply before i revert the commented the changes
 		std::vector<ECS::Entity> entityVector{};
 		// if editing prefab, pass in all active entities
 		if (Scenes::SceneManager::GetInstance().GetSceneState() == Scenes::PREFAB_EDITOR) {

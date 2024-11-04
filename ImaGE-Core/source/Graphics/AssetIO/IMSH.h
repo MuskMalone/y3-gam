@@ -90,7 +90,7 @@ namespace Graphics::AssetIO
     std::vector<SubmeshData> mSubmeshData;
     bool mStatus;
 
-    static unsigned sAssimpImportFlags;
+    static const unsigned sAssimpImportFlags, sMinimalAssimpImportFlags;
 
     void ProcessSubmeshes(aiNode* node, aiScene const* scene);
     void ProcessMeshes(aiNode* node, aiScene const* scene);

@@ -315,6 +315,7 @@ namespace GUI
           // @TODO: ABSTRACT MORE; MAKE IT EASIER TO ADD A MESH
           ECS::Entity newEntity{ ECS::EntityManager::GetInstance().CreateEntityWithTag(assetPayload.GetFileName()) };
           IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
+          Graphics::MeshSource const& e{ IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(meshSrc)->mMeshSource };
           newEntity.EmplaceComponent<Component::Mesh>(meshSrc, assetPayload.GetFileName());
           break;
         }

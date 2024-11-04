@@ -28,9 +28,11 @@ namespace {
 namespace Graphics::AssetIO
 {
   // erm i read through all the flags and these seemed like the best setup? Idk needs some testing
-  unsigned IMSH::sAssimpImportFlags = aiProcess_ValidateDataStructure | aiProcess_JoinIdenticalVertices | aiProcess_Triangulate
+  unsigned const IMSH::sMinimalAssimpImportFlags = aiProcess_ValidateDataStructure | aiProcess_Triangulate | aiProcess_JoinIdenticalVertices
+    | aiProcess_GenSmoothNormals | aiProcess_SortByPType;
+  unsigned const IMSH::sAssimpImportFlags = aiProcess_ValidateDataStructure | aiProcess_JoinIdenticalVertices | aiProcess_Triangulate
     | aiProcess_RemoveComponent | aiProcess_GenSmoothNormals | aiProcess_ImproveCacheLocality | aiProcess_FixInfacingNormals
-    | aiProcess_FindDegenerates | aiProcess_FindInvalidData | aiProcess_SortByPType | aiProcess_OptimizeMeshes | aiProcess_FlipUVs;
+    | aiProcess_FindInvalidData | aiProcess_SortByPType | aiProcess_OptimizeMeshes | aiProcess_FlipUVs;
 
 
   int MeshImportFlags::GetFlags() const {

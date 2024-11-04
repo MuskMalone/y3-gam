@@ -16,7 +16,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 18.100000381469728,
                             "z": 0.0
                         },
                         "scale": {
@@ -25,19 +25,19 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 0.0,
+                            "x": -0.5446390509605408,
                             "y": 0.0,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.838670551776886
                         },
                         "eulerAngles": {
-                            "x": 0.0,
+                            "x": -66.0,
                             "y": 0.0,
                             "z": 0.0
                         },
                         "worldPos": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 18.100000381469728,
                             "z": 0.0
                         },
                         "worldScale": {
@@ -46,10 +46,10 @@
                             "z": 1.0
                         },
                         "worldRot": {
-                            "x": 0.0,
+                            "x": -0.5446390509605408,
                             "y": 0.0,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.838670551776886
                         }
                     }
                 },
@@ -62,9 +62,9 @@
                     "Light": {
                         "lightType": "DIRECTIONAL",
                         "color": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
                         },
                         "intensity": 1.0,
                         "innerAngle": 5.0,
@@ -116,24 +116,6 @@
                                                     "type": "System.UInt32",
                                                     "scriptField": {
                                                         "fieldName": "mEntityID"
-                                                    }
-                                                },
-                                                {
-                                                    "data": {
-                                                        "scriptName": "Image.Mono.InsideB",
-                                                        "scriptFieldInstList": [
-                                                            {
-                                                                "data": 369,
-                                                                "type": "System.Int32",
-                                                                "scriptField": {
-                                                                    "fieldName": "INSIDEHERE"
-                                                                }
-                                                            }
-                                                        ]
-                                                    },
-                                                    "type": "Image.Mono.ScriptInstance",
-                                                    "scriptField": {
-                                                        "fieldName": "testInside"
                                                     }
                                                 }
                                             ]
@@ -231,8 +213,8 @@
             ""
         ],
         "layerVisibility": [
-            0,
-            0,
+            1,
+            1,
             0,
             0,
             0,

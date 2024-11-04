@@ -13,6 +13,7 @@ namespace Systems {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &LayerSystem::OnSceneChange, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::LAYER_MODIFIED, &LayerSystem::OnLayerModification, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &LayerSystem::OnPrefabEditor, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::REMOVE_ENTITY, &LayerSystem::OnRemoveEntity, this);
   }
 
   void LayerSystem::Update() {
@@ -146,7 +147,7 @@ namespace Systems {
     auto const& allEntities{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Layer>() };
 
     for (auto const& entity : allEntities) {
-      std::string const layerName = ECS::Entity{ entity }.GetComponent<Component::Layer>().name;
+      std::string const& layerName = ECS::Entity{ entity }.GetComponent<Component::Layer>().name;
       
       auto itr = std::find(mLayerData.layerNames.begin(), mLayerData.layerNames.end(), layerName);
       if (itr != mLayerData.layerNames.end()) {
@@ -154,7 +155,7 @@ namespace Systems {
       }
 
       else {
-        std::string const tag = ECS::Entity{ entity }.GetComponent<Component::Tag>().tag;
+        std::string const& tag = ECS::Entity{ entity }.GetComponent<Component::Tag>().tag;
         Debug::DebugLogger::GetInstance().LogWarning("[Layers] The Entity with Tag: \"" + tag + "\" has a Non-Existent Layer");
 
         // Add entity with non-existent layer into default layer
@@ -167,13 +168,13 @@ namespace Systems {
   EVENT_CALLBACK_DEF(LayerSystem, OnLayerModification) {
     auto layerModifiedEvent{ std::static_pointer_cast<Events::EntityLayerModified>(event) };
     ECS::Entity entity = layerModifiedEvent->mEntity;
-    std::string oldLayer = layerModifiedEvent->mOldLayer;
+    std::string const& oldLayer = layerModifiedEvent->mOldLayer;
 
     // Change layer in mLayerEntities
     std::string newLayer = entity.GetComponent<Component::Layer>().name;
     auto itr = std::find(mLayerData.layerNames.begin(), mLayerData.layerNames.end(), newLayer);
     if (itr == mLayerData.layerNames.end()) {
-      std::string const tag = ECS::Entity{ entity }.GetComponent<Component::Tag>().tag;
+      std::string const& tag = ECS::Entity{ entity }.GetComponent<Component::Tag>().tag;
       Debug::DebugLogger::GetInstance().LogWarning("[Layers] The Entity with Tag: \"" + tag + "\" has a Non-Existent Layer");
       newLayer = std::string(BUILTIN_LAYER_0);
     }
@@ -224,6 +225,19 @@ namespace Systems {
         */
       }
     }
+  }
+
+  EVENT_CALLBACK_DEF(LayerSystem, OnRemoveEntity) {
+    ECS::Entity const& entity{ CAST_TO_EVENT(Events::RemoveEntityEvent)->mEntity };
+
+    std::string const& layerName{ entity.GetComponent<Component::Layer>().name };
+    auto iter{ mLayerEntities.find(layerName) };
+    if (iter == mLayerEntities.end()) {
+      IGE_DBGLOGGER.LogError("[Layers] Entity \"" + entity.GetTag() + "\" has a Non-Existent Layer!");
+      return;
+    }
+
+    mLayerEntities.erase(iter);
   }
 
   EVENT_CALLBACK_DEF(LayerSystem, OnPrefabEditor) {
