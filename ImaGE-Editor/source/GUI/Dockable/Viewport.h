@@ -35,7 +35,6 @@ namespace GUI
 
   private:
     static inline constexpr float sEntityScaleFactor = 1.f; // for camera zooming
-    static inline constexpr char sMeshPopupTitle[] = "Mesh Import Config";
 
     Graphics::EditorCamera& mEditorCam;
     bool mIsPanning, mIsDragging;
@@ -62,8 +61,6 @@ namespace GUI
     void ReceivePayload();
 
     EVENT_CALLBACK_DECL(HandleEvent);
-
-    void RunImportMeshPopup();
   };
   
 } // namespace GUI

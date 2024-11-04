@@ -65,6 +65,9 @@ namespace Graphics::AssetIO
     // the MeshSource and accessing contents afterwards is undefined
     MeshSource ToMeshSource(std::shared_ptr<VertexArray> vao);
 
+    // this is a workaround to not being able to pass extra flags during AssetManager import
+    static inline bool sStaticMeshConversion = true;
+
   private:
     // serialized as first 24 bytes
     struct Header {

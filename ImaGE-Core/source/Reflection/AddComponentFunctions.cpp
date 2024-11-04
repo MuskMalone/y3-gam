@@ -85,7 +85,13 @@ namespace Reflection::ComponentUtils {
 
     IGE::Assets::GUID const& meshSrc{ comp.isCustomMesh ? IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(comp.meshSource)
       : IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(comp.meshName) };
-    entity.EmplaceOrReplaceComponent<Mesh>(meshSrc, comp.meshName);
+
+    try {
+      entity.EmplaceOrReplaceComponent<Mesh>(meshSrc, comp.meshName);
+    }
+    catch (Debug::ExceptionBase const&) {
+      // skip the component
+    }
   }
 
   void AddText(ECS::Entity entity, rttr::variant const& var) {

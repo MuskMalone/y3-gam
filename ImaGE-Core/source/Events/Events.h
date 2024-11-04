@@ -102,6 +102,16 @@ namespace Events
 
     std::vector<std::string> mPaths;
   };
+
+  class RegisterAssetsEvent : public Event
+  {
+  public:
+    RegisterAssetsEvent(std::vector<std::string> const& paths) : Event(EventType::REGISTER_FILES), mPaths{ paths } {}
+    RegisterAssetsEvent(std::vector<std::string>&& paths) : Event(EventType::REGISTER_FILES), mPaths{ std::move(paths) } {}
+    inline std::string GetName() const noexcept override { return "Registering " + std::to_string(mPaths.size()) + " files to AssetManager"; }
+
+    std::vector<std::string> const mPaths;
+  };
 #endif
 
   class EntityLayerModified : public Event

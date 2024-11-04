@@ -20,9 +20,15 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/AssetIO/IMSH.h>
 #include <GUI/Helpers/AssetPayload.h>
 
-namespace Helper
+namespace MeshPopup {
+  static std::vector<std::string> sModelsToImport;
+  static std::string sMeshPopupInput, sMeshName;
+  static bool sOpenMeshPopup{ false }, sMeshOverwriteWarning{ false };
+}
+
+namespace
 {
-  static std::string sSearchQuery, sLowerSearchQuery;
+  static std::string sSearchQuery, sLowerSearchQuery;  
 
   /*!*********************************************************************
   \brief
@@ -52,8 +58,8 @@ namespace GUI
     mCurrentDir{ gAssetsDirectory }, mRightClickedDir{},
     mSelectedAsset{}, mDirMenuPopup{ false }, mAssetMenuPopup{ false }, mDisableSceneChange{ false }, mDisablePrefabSpawn{ true }
   {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &AssetBrowser::HandleEvent, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::ADD_FILES, &AssetBrowser::HandleEvent, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &AssetBrowser::SceneStateChanged, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::ADD_FILES, &AssetBrowser::FilesImported, this);
   }
 
   void AssetBrowser::Run()
@@ -74,12 +80,18 @@ namespace GUI
     ImGui::EndChild();
 
     ImGui::End();
+
+    if (MeshPopup::sOpenMeshPopup) {
+      ImGui::OpenPopup(sMeshPopupTitle);
+      MeshPopup::sOpenMeshPopup = false;
+    }
+    ImportMeshPopup();
   }
 
   void AssetBrowser::MenuBar()
   {
     ImGui::BeginMenuBar();
-    bool const isSearching{ !Helper::sSearchQuery.empty() };
+    bool const isSearching{ !sSearchQuery.empty() };
     float const wWidth{ ImGui::GetWindowWidth() };
     
     ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(0, 0, 0, 70));
@@ -87,7 +99,7 @@ namespace GUI
       auto const files{ AssetHelpers::SelectFilesFromExplorer("Add Files") };
 
       if (!files.empty()) {
-        AddAssets(files);
+        QUEUE_EVENT(Events::RegisterAssetsEvent, files);
       }
     }
     ImGui::PopStyleColor();
@@ -107,8 +119,8 @@ namespace GUI
 
     ImGui::SetCursorPosX(wWidth - wWidth * 0.25f);
     ImGui::PushItemWidth(wWidth * 0.24f);
-    if (ImGui::InputTextWithHint("##SearchBar", ICON_FA_MAGNIFYING_GLASS " Search Assets", &Helper::sSearchQuery, ImGuiInputTextFlags_AutoSelectAll)) {
-      Helper::sLowerSearchQuery = Helper::ToLower(Helper::sSearchQuery);
+    if (ImGui::InputTextWithHint("##SearchBar", ICON_FA_MAGNIFYING_GLASS " Search Assets", &sSearchQuery, ImGuiInputTextFlags_AutoSelectAll)) {
+      sLowerSearchQuery = ToLower(sSearchQuery);
     }
     ImGui::PopItemWidth();
 
@@ -167,7 +179,7 @@ namespace GUI
     unsigned const maxChars{ static_cast<unsigned>(imgSize * 0.9f / ImGui::CalcTextSize("L").x) };
     if (ImGui::BeginTable("DirectoryTable", assetsPerRow, ImGuiTableFlags_Sortable | ImGuiTableFlags_ScrollY))
     {
-      if (Helper::sSearchQuery.empty()) {
+      if (sSearchQuery.empty()) {
         DisplayDirectory(imgSize, maxChars);
       }
       else {
@@ -215,7 +227,7 @@ namespace GUI
       if (file.is_directory()) { continue; }
 
       std::string const fileName{ file.path().filename().string() };
-      if (Helper::ToLower(fileName).find(Helper::sLowerSearchQuery) == std::string::npos) { continue; }
+      if (ToLower(fileName).find(sLowerSearchQuery) == std::string::npos) { continue; }
 
       ImGui::TableNextColumn();
       bool const exceed{ fileName.size() > maxChars };
@@ -278,36 +290,56 @@ namespace GUI
     }
   }
 
-  EVENT_CALLBACK_DEF(AssetBrowser, HandleEvent)
+  EVENT_CALLBACK_DEF(AssetBrowser, SceneStateChanged)
   {
-    switch (event->GetCategory())
+    switch (CAST_TO_EVENT(Events::SceneStateChange)->mNewState)
     {
-    case Events::EventType::ADD_FILES:
-      AddAssets(std::static_pointer_cast<Events::AddFilesFromExplorerEvent>(event)->mPaths);
+    case Events::SceneStateChange::NEW:
+    case Events::SceneStateChange::CHANGED:
+    case Events::SceneStateChange::STOPPED:
+      mDisableSceneChange = mDisablePrefabSpawn = false;
       break;
-    case Events::EventType::SCENE_STATE_CHANGE:
-    {
-      switch (CAST_TO_EVENT(Events::SceneStateChange)->mNewState)
-      {
-      case Events::SceneStateChange::NEW:
-      case Events::SceneStateChange::CHANGED:
-      case Events::SceneStateChange::STOPPED:
-        mDisableSceneChange = mDisablePrefabSpawn = false;
-        break;
-      case Events::SceneStateChange::STARTED:
-      case Events::SceneStateChange::PAUSED:
-        mDisableSceneChange = true;
-        break;
-      default: break;
+    case Events::SceneStateChange::STARTED:
+    case Events::SceneStateChange::PAUSED:
+      mDisableSceneChange = true;
+      break;
+    default: break;
+    }
+  }
+
+  void OpenMeshPopup() {
+    MeshPopup::sOpenMeshPopup = true;
+    MeshPopup::sMeshName = MeshPopup::sMeshPopupInput = std::filesystem::path(MeshPopup::sModelsToImport.back()).filename().string();
+    MeshPopup::sMeshOverwriteWarning = std::filesystem::exists(gMeshOutputDir + MeshPopup::sMeshPopupInput);
+  }
+
+  EVENT_CALLBACK_DEF(AssetBrowser, FilesImported) {
+    auto const& files{ CAST_TO_EVENT(Events::AddFilesFromExplorerEvent)->mPaths };
+    std::vector<std::string> filesToRegister{};
+
+    for (std::string const& file : files) {
+      std::filesystem::path const path{ file };
+      if (std::string(gSupportedModelFormats).find(path.extension().string()) == std::string::npos) {
+        filesToRegister.emplace_back(file);
+      }
+      else {
+        MeshPopup::sModelsToImport.emplace_back(file);
       }
     }
+
+    if (!filesToRegister.empty()) {
+      QUEUE_EVENT(Events::RegisterAssetsEvent, std::move(filesToRegister));
+    }
+
+    if (!MeshPopup::sModelsToImport.empty()) {
+      OpenMeshPopup();
     }
   }
 
   void AssetBrowser::RecurseDownDirectory(std::filesystem::path const& path)
   {
     std::string const fileName{ path.filename().string() };
-    bool const hasDirectories{ Helper::ContainsDirectories(path) };
+    bool const hasDirectories{ ContainsDirectories(path) };
     ImGuiTreeNodeFlags flag{ ImGuiTreeNodeFlags_SpanFullWidth };
     flag |= hasDirectories ? ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick : ImGuiTreeNodeFlags_Leaf;
     if (path == mCurrentDir) { flag |= ImGuiTreeNodeFlags_Selected; }
@@ -336,26 +368,6 @@ namespace GUI
     }
   }
 
-  void AssetBrowser::AddAssets(std::vector<std::string> const& files)
-  {
-    for (std::string const& file : files) {
-      // @TODO: SHOULD BE DONE BY ASSET MANAGER
-      //EMIT EVENT
-      
-      //std::filesystem::path const path{ file };
-      //if (std::string(gSupportedModelFormats).find(path.extension().string()) != std::string::npos) {
-      //  Graphics::AssetIO::IMSH imsh{ file };
-      //  Debug::DebugLogger::GetInstance().LogInfo("Model detected. Converting to .imsh file...");
-      //  imsh.WriteToBinFile(path.stem().string());
-      //  Debug::DebugLogger::GetInstance().LogInfo(("Added " + path.stem().string() + gMeshFileExt) + " to assets");
-      //  continue;
-      //}
-
-      //std::filesystem::copy(file, mCurrentDir);
-
-    }
-  }
-
   void AssetBrowser::DirectoryMenuPopup() const
   {
     static bool deletePopup{ false };
@@ -374,7 +386,7 @@ namespace GUI
     static bool deletePopup{ false };
     if (ImGui::BeginPopup("AssetsMenu"))
     {
-      if (ImGui::Selectable("Open")) {
+      if (ImGui::Selectable("Open##AssetMenu")) {
         AssetHelpers::OpenFileWithDefaultProgram(mSelectedAsset.string());
       }
 
@@ -395,7 +407,7 @@ namespace GUI
         ImGui::EndDisabled();
       }
 
-      if (ImGui::Selectable("Delete")) {
+      if (ImGui::Selectable("Delete##AssetMenu")) {
         deletePopup = true;
       }
 
@@ -422,7 +434,7 @@ namespace GUI
 
       ImGui::SetCursorPosX(ImGui::GetWindowContentRegionMax().x * 0.5f - ImGui::CalcTextSize("Yes ").x);
       ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.65f, 0.f, 1.f));
-      if (ImGui::Button("No"))
+      if (ImGui::Button("No##Confirm"))
       {
         ImGui::CloseCurrentPopup();
       }
@@ -430,7 +442,7 @@ namespace GUI
 
       ImGui::SameLine();
       ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.2f, 0.2f, 1.f));
-      if (ImGui::Button("Yes"))
+      if (ImGui::Button("Yes##Confirm"))
       {
         // @TODO: UPDATE ASSET MANAGER ACCORDINGLY
         //Assets::AssetManager const& am{ Assets::AssetManager::GetInstance() };
@@ -475,12 +487,101 @@ namespace GUI
     }
   }
 
-  
+  void AssetBrowser::ImportMeshPopup() const {
+    ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    if (!ImGui::BeginPopupModal(sMeshPopupTitle, NULL, ImGuiWindowFlags_AlwaysAutoResize)) { return; }
+    static bool blankWarning{ false };
+    bool close{ false };
+
+    ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.5f, 0.5f, 0.5f, 1.f));
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 1.f);
+    ImGui::Text("Importing ");
+    ImGui::SameLine();
+    ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(124, 252, 0, 255));
+    ImGui::Text(MeshPopup::sMeshName.c_str());
+    ImGui::PopStyleColor();
+    ImGui::NewLine();
+
+    if (blankWarning) {
+      ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Path cannot be blank!!!");
+    }
+    else if (MeshPopup::sMeshOverwriteWarning) {
+      ImGui::TextColored(ImVec4(0.99f, 0.82f, 0.09f, 1.0f), "Warning: File already exists.");
+      ImGui::TextColored(ImVec4(0.99f, 0.82f, 0.09f, 1.0f), "File will be overwritten!!");
+    }
+
+    ImGui::Text("Import mesh to:");
+    float const offset{ ImGui::GetTextLineHeight() * 0.5f };
+    ImGui::AlignTextToFramePadding();
+    ImGui::Text("Assets\\Models\\");
+    ImGui::SameLine();
+    //if (!ImGui::IsAnyItemActive()) { ImGui::SetKeyboardFocusHere(); }
+    ImGui::BeginDisabled();
+    if (ImGui::InputText("##MeshPathInput", &MeshPopup::sMeshPopupInput)) {
+      MeshPopup::sMeshOverwriteWarning = std::filesystem::exists(gMeshOutputDir + MeshPopup::sMeshPopupInput);
+      blankWarning = false;
+    }
+    ImGui::EndDisabled();
+    if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+      ImGui::SetTooltip("Rename feature coming soon!");
+    }
+    ImGui::NewLine();
+
+    float const contentRegionX{ ImGui::GetWindowContentRegionMax().x };
+    ImGui::SetCursorPosX(0.5f * (contentRegionX - ImGui::CalcTextSize("Static Mesh 123").x));
+    ImGui::AlignTextToFramePadding();
+    ImGui::Text("Static Mesh");
+    ImGui::SameLine();
+    ImGui::Checkbox("##StaticMesh", &Graphics::AssetIO::IMSH::sStaticMeshConversion);
+    if (ImGui::IsItemHovered()) {
+      ImGui::SetTooltip("Combine all sub-meshes into a single mesh entity");
+    }
+
+    ImGui::NewLine();
+    ImGui::SetCursorPosX(0.5f * (contentRegionX - ImGui::CalcTextSize("Cancel Create ").x));
+    if (ImGui::Button("Cancel##Mesh") || ImGui::IsKeyPressed(ImGuiKey_Escape)) {
+      close = true;
+      ImGui::CloseCurrentPopup();
+    }
+
+    ImGui::SameLine();
+    if (ImGui::Button("Create##Mesh") || ImGui::IsKeyPressed(ImGuiKey_Enter)) {
+      // if name is blank / whitespace, reject it
+      if (MeshPopup::sMeshPopupInput.find_first_not_of(" ") == std::string::npos) {
+        blankWarning = true;
+        MeshPopup::sMeshOverwriteWarning = false;
+      }
+      else {
+        // send the relevant file path to the asset manager
+        IGE_ASSETMGR.ImportAsset<IGE::Assets::ModelAsset>(MeshPopup::sModelsToImport.back());
+
+        close = true;
+        ImGui::CloseCurrentPopup();
+      }
+    }
+
+    if (close) {
+      blankWarning = MeshPopup::sMeshOverwriteWarning = false;
+      // erase the last element
+      MeshPopup::sModelsToImport.erase(MeshPopup::sModelsToImport.begin() + MeshPopup::sModelsToImport.size() - 1);
+      // if there are still more to import, run the popup again
+      if (!MeshPopup::sModelsToImport.empty()) {
+        OpenMeshPopup();
+      }
+      else {
+        MeshPopup::sMeshPopupInput.clear();
+      }
+    }
+
+    ImGui::PopStyleVar();
+    ImGui::PopStyleColor();
+    ImGui::EndPopup();
+  }
 
 } // namespace GUI
 
 
-namespace Helper
+namespace
 {
   bool ContainsDirectories(std::filesystem::path const& dirEntry)
   {
