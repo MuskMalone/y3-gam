@@ -137,6 +137,7 @@ namespace Systems {
       return;
     }
 
+    mLayerEntities.clear();
     // The built-in layer names should never change
     // This code is necessary as someone might manually edit the built-in layers in the json file...
     mLayerData.layerNames[0] = std::string(BUILTIN_LAYER_0);
