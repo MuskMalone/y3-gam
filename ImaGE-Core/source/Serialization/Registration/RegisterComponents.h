@@ -88,7 +88,11 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("color", &Text::color)
     .property("scale", &Text::scale)
     .property("textAssetGUID", &Text::textAsset)
-    .property("fontFamilyName", &Text::fontFamilyName);
+    .property("fontFamilyName", &Text::fontFamilyName)
+    .property("alignment", &Text::alignment)
+    .property("multiLineSpacingOffset", &Text::multiLineSpacingOffset)
+    .property("textBoxEnabledFlag", &Text::textBoxEnabledFlag)
+    .property("textBoxDimensions", &Text::textBoxDimensions);
 
   REGISTER_COMPONENT(RigidBody, "RigidBody")
     .property("velocity", &RigidBody::velocity)
@@ -123,6 +127,10 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .constructor<std::vector<std::string> const&>()
     .property(JSON_SCRIPT_LIST_KEY, &Script::mScriptList);
 
+  REGISTER_COMPONENT(AudioSource, "AudioSource")
+      .property("sounds", &AudioSource::sounds);
+  REGISTER_COMPONENT(AudioListener, "AudioListener");
+
   REGISTER_COMPONENT(Canvas, "Canvas")
     .property("isActive", &Component::Canvas::isActive);
 
@@ -141,11 +149,10 @@ static void rttr_auto_register_reflection_function2_(); namespace {
       .property("farClip", &Component::Camera::farClip);
 
 
-
   // stuff below are not actual "Components", hence we skip the REGISTER_COMPONENT checks
   rttr::registration::class_<PrefabOverrides>("PrefabOverrides")
     .constructor<>()
-    .property("prefabName", &PrefabOverrides::prefabName)
+    .property(JSON_GUID_KEY, &PrefabOverrides::guid)
     .property("modifiedComponents", &PrefabOverrides::modifiedComponents)
     .property("removedComponents", &PrefabOverrides::removedComponents)
     .property("subDataId", &PrefabOverrides::subDataId);

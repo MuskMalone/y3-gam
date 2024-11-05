@@ -30,6 +30,11 @@ project "ImaGE-Script"
       defines { "DEBUG" }
       symbols "On"
 
+      postbuildcommands {
+         "{COPYFILE} %[ImaGE-Script.dll] %[%{wks.location}Assets/Scripts/] ",
+         "{COPYFILE} %[ImaGE-Script.pdb] %[%{wks.location}Assets/Scripts/] ",
+     }
+
    filter "configurations:Release"
       defines { "NDEBUG" }
       optimize "On"

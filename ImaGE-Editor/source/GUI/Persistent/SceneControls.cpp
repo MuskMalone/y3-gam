@@ -50,7 +50,7 @@ namespace GUI
     {
       if (ImGui::BeginMenuBar())
       {
-        static float const xOffset{ (ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize("     PlayPauseStep").x) * 0.5f };
+        float const xOffset{ (ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize("     PlayPauseStep").x) * 0.5f };
         ImGui::SetCursorPosX(xOffset);
 
         // stop button

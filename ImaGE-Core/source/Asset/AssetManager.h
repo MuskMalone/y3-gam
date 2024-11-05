@@ -41,6 +41,8 @@ namespace IGE {
           using RefAny = std::any;
           using TypeKey = std::uint64_t;
           using TypeAssetKey = std::uint64_t;
+          using ImportFunc = std::function<GUID(std::string const&)>;
+          using DeleteFunc = std::function<void(GUID const&)>;
       private: 
           template <typename T>
           std::string GetTypeName() { return rttr::type::get<T>().get_name().to_string(); }
@@ -82,6 +84,10 @@ namespace IGE {
                   mRegisterTypeImports.emplace(
                       name,
                       std::bind(&AssetManager::ImportAsset<T>, this, std::placeholders::_1)
+                  );
+                  mRegisterTypeDeletes.emplace(
+                      name,
+                      std::bind(&AssetManager::DeleteAsset<T>, this, std::placeholders::_1)
                   );
               }(reinterpret_cast<T_ARGS*>(0))
                   , ...
@@ -128,6 +134,9 @@ namespace IGE {
                   AssetMetadata::IGEProjProperties& allmetadata{ mMetadata.mAssetProperties };
                   std::string assetCategory{ GetTypeName<T>() };
                   mMetadata.Emplace(assetCategory, guid, metadata);
+                  mPath2GUIDRegistry.emplace(newFp, guid);
+                  mGUID2PathRegistry.emplace(guid, newFp);
+
                   return guid;
               }
               else {
@@ -137,14 +146,28 @@ namespace IGE {
 
           }
           template <typename T>
-          GUID DeleteAsset(GUID const& guid) {
-              TypeGUID typeguid{ GetTypeName<T>() };
+          void DeleteAsset(GUID const& guid) {
+              auto type{ GetTypeName<T>() };
+              TypeGUID typeguid{ type };
               TypeAssetKey key{ typeguid ^ guid };
-              Ref<T> ref { std::any_cast<Ref<T>>(mAssetRefs.at(key)) };
-              std::filesystem::remove(ref.mInfo.filepath);
-              ref.mUInfo.destroyFunc();
-              mAssetRefs.erase(key);
-              //ref destructor will take care of unloading the asset
+              //removes the file from all maps
+              auto path{ GUIDToPath(guid) };
+              AssetMetadata::AssetCategory& category{ mMetadata.mAssetProperties.at(type) };
+              if (mAssetRefs.find(key) != mAssetRefs.end()) {
+                  Ref<T> ref { std::any_cast<Ref<T>>(mAssetRefs.at(key)) };
+                  //std::filesystem::remove(ref.mInfo.filepath);
+                  mAssetRefs.erase(key);
+                  //ref auto unloads if its the last reference
+              }
+              if (category.find(guid) != category.end()) {
+                  category.erase(guid);
+              }
+              if (mPath2GUIDRegistry.find(path) != mPath2GUIDRegistry.end()) {
+                  mPath2GUIDRegistry.erase(path);
+              }
+              if (mGUID2PathRegistry.find(guid) != mGUID2PathRegistry.end()) {
+                  mGUID2PathRegistry.erase(guid);
+              }
           }
 
           //-------------------------------------------------------------------------
@@ -164,10 +187,10 @@ namespace IGE {
               TypeGUID typeguid{ GetTypeName<T>() };
               TypeAssetKey key{ typeguid ^ guid };
               if (mAssetRefs.find(key) != mAssetRefs.end()) {
-                  auto out{ std::any_cast<Ref<T>>(mAssetRefs.at(key)) };
-                  return out;
+                  return std::any_cast<Ref<T>>(mAssetRefs.at(key));
               }
-              else throw std::exception(); // should be a specialized exception
+              else
+                  throw Debug::Exception<AssetManager>(Debug::LVL_ERROR, Msg("no such asset could be found with guid " + std::to_string(static_cast<uint64_t>(guid)))); // should be a specialized exception
           }
           private:
           template <typename T> 
@@ -260,6 +283,27 @@ namespace IGE {
                   return UnloadRef<T>(std::any_cast<Ref<T>&>(mAssetRefs.at(key)));
           }
 
+
+          //i do not perform any checks here, reload at your own risk
+          template<typename T>
+          void ReloadRef(Ref<T>& ref) {
+              if (ref.GetInfo().refCount > 0) {
+                  ref.Unload();
+                  ref.Load();
+              }
+          }
+          template<typename T>
+          void ReloadRef(GUID const& guid) {
+              TypeGUID typeguid{ GetTypeName<T>() };
+              TypeAssetKey key{ typeguid ^ guid };
+              if (mAssetRefs.find(key) != mAssetRefs.end())
+                  return ReloadRef<T>(std::any_cast<Ref<T>&>(mAssetRefs.at(key)));
+          }
+          template<typename T>
+          void ReloadRef(std::string const& fp) {
+              ReloadRef<T>(PathToGUID(fp));
+          }
+
           template< typename T >
           Details::InstanceInfo GetInstanceInfo(Ref<T>& ref) const
           {
@@ -273,11 +317,7 @@ namespace IGE {
               return (mAssetRefs.find(key) != mAssetRefs.end());
           }
 
-          std::string GUIDToPath(GUID const& guid);
-
-          GUID PathToGUID(std::string const& path);
-
-      protected:
+        private:
           AssetMetadata mMetadata;
           std::unordered_map<std::string, GUID> mPath2GUIDRegistry;
           std::unordered_map<GUID, std::string> mGUID2PathRegistry;
@@ -286,11 +326,18 @@ namespace IGE {
           std::unordered_set<std::string> mRegisteredTypeNames;
 
           //template function instantiation
-          using ImportFunc = std::function<GUID(std::string const&)>;
+
           std::unordered_map<std::string, ImportFunc> mRegisterTypeImports;
+          std::unordered_map<std::string, DeleteFunc> mRegisterTypeDeletes;
 
           //keep in mind that any instance of Ref<T> always has a minimum of 1 reference
           std::unordered_map<TypeAssetKey, RefAny> mAssetRefs; //bitwise xor the typeguid and guid for the key;
+        public: //get set
+            std::string GUIDToPath(GUID const& guid);
+
+            GUID PathToGUID(std::string const& path);
+            ImportFunc ImportFunction(std::string const& type);
+            DeleteFunc DeleteFunction(std::string const& type);
       };
 	}
 }

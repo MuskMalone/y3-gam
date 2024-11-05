@@ -4,7 +4,7 @@
 namespace IGE {
 	namespace Assets {
 		const std::set<std::string> cMeshExtensions{
-			".obj", ".fbx",    // JPEG format
+			".obj", ".fbx", ".imsh"  // JPEG format
 		};
 		const std::set<std::string> cImageExtensions{
 			".jpg", ".jpeg",    // JPEG format
@@ -29,6 +29,14 @@ namespace IGE {
 		};
 		const std::set<std::string> cFontExtensions{
 			".ttf",		 // True Type Font
+		};
+
+		//the key should be the directory name in the Assets folder
+		const std::map<std::string, std::set<std::string>> cDirectoryToExtensions{
+			{ "Models", cMeshExtensions },
+			{ "Textures", cImageExtensions },
+			{ "Audio", cAudioExtensions},
+			{ "Fonts", cFontExtensions }
 		};
 	}
 }

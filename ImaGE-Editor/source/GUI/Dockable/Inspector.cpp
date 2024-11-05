@@ -26,6 +26,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/Mesh.h>
 #include "Asset/IGEAssets.h"
 #include <Core/Systems/LayerSystem/LayerSystem.h>
+#
 
 #define ICON_PADDING "   "
 
@@ -48,6 +49,8 @@ namespace GUI {
   Inspector::Inspector(const char* name) : GUIWindow(name),
     mComponentOpenStatusMap{}, mStyler{ GUIManager::GetStyler() }, 
     mComponentIcons{
+      { typeid(Component::AudioListener), ICON_FA_EAR_LISTEN ICON_PADDING},
+      { typeid(Component::AudioSource), ICON_FA_VOLUME_HIGH ICON_PADDING},
       { typeid(Component::Tag), ICON_FA_TAG ICON_PADDING },
       { typeid(Component::Transform), ICON_FA_ROTATE ICON_PADDING },
       { typeid(Component::BoxCollider), ICON_FA_BOMB ICON_PADDING },
@@ -105,11 +108,12 @@ namespace GUI {
       static bool componentOverriden{ false };
       if (!mEditingPrefab && currentEntity.HasComponent<Component::PrefabOverrides>()) {
         prefabOverride = &currentEntity.GetComponent<Component::PrefabOverrides>();
+        std::string const& pfbName{ IGE_ASSETMGR.GetAsset<IGE::Assets::PrefabAsset>(prefabOverride->guid)->mPrefabData.mName };
         ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
         ImGui::Text("Prefab instance of");
         ImGui::SameLine();
         ImGui::PushStyleColor(ImGuiCol_Text, sComponentHighlightCol);
-        ImGui::Text(prefabOverride->prefabName.c_str());
+        ImGui::Text(pfbName.c_str());
         ImGui::PopStyleColor();
         ImGui::PopFont();
       }
@@ -189,7 +193,9 @@ namespace GUI {
               }
           }
       }
-      if (currentEntity.HasComponent<Component::Layer>()) {
+
+      // don't run in PrefabEditor since layers are tied to a scene
+      if (!mEditingPrefab && currentEntity.HasComponent<Component::Layer>()) {
         rttr::type const layerType{ rttr::type::get<Component::Layer>() };
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(layerType);
 
@@ -298,6 +304,28 @@ namespace GUI {
           }
       }
 
+      if (currentEntity.HasComponent<Component::AudioListener>()) {
+          rttr::type const listenerType{ rttr::type::get<Component::AudioListener>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(listenerType);
+
+          if (AudioListenerComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::AudioListener>());
+              }
+          }
+      }
+      if (currentEntity.HasComponent<Component::AudioSource>()) {
+          rttr::type const sourceType{ rttr::type::get<Component::AudioSource>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(sourceType);
+
+          if (AudioSourceComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::AudioSource>());
+              }
+          }
+      }
       if (prefabOverride) {
         for (rttr::type const& type : prefabOverride->removedComponents) {
           DisplayRemovedComponent(type);
@@ -501,41 +529,97 @@ namespace GUI {
         {
           rttr::type dataType{ f.get_type() };
           // get underlying type if it's wrapped in a pointer
-          if (dataType == rttr::type::get<Mono::ScriptFieldInstance<int>>())
+          if (dataType == rttr::type::get<Mono::DataMemberInstance<int>>())
           {
             ImGui::TableNextRow();
-            Mono::ScriptFieldInstance<int>& sfi = f.get_value<Mono::ScriptFieldInstance<int>>();
+            Mono::DataMemberInstance<int>& sfi = f.get_value<Mono::DataMemberInstance<int>>();
             ImGui::TableNextColumn();
             ImGui::Text(sfi.mScriptField.mFieldName.c_str());
             ImGui::TableNextColumn();
             ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
             if (ImGui::InputInt(("##" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0, 0, 0)) { s.SetFieldValue<int>(sfi.mData, sfi.mScriptField.mClassField); }
           }
-          else if (dataType == rttr::type::get<Mono::ScriptFieldInstance<float>>())
+          else if (dataType == rttr::type::get<Mono::DataMemberInstance<float>>())
           {
             ImGui::TableNextRow();
-            Mono::ScriptFieldInstance<float>& sfi = f.get_value<Mono::ScriptFieldInstance<float>>();
+            Mono::DataMemberInstance<float>& sfi = f.get_value<Mono::DataMemberInstance<float>>();
             ImGui::TableNextColumn();
             ImGui::Text(sfi.mScriptField.mFieldName.c_str());
             ImGui::TableNextColumn();
             ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
             if (ImGui::InputFloat(("##" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0, 0, 0)) { s.SetFieldValue<float>(sfi.mData, sfi.mScriptField.mClassField); }
           }
-          else if (dataType == rttr::type::get<Mono::ScriptFieldInstance<double>>())
+          else if (dataType == rttr::type::get<Mono::DataMemberInstance<double>>())
           {
             ImGui::TableNextRow();
-            Mono::ScriptFieldInstance<double>& sfi = f.get_value<Mono::ScriptFieldInstance<double>>();
+            Mono::DataMemberInstance<double>& sfi = f.get_value<Mono::DataMemberInstance<double>>();
             ImGui::TableNextColumn();
             ImGui::Text(sfi.mScriptField.mFieldName.c_str());
             ImGui::TableNextColumn();
             ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
             if (ImGui::InputDouble(("##" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0, 0, 0)) { s.SetFieldValue<double>(sfi.mData, sfi.mScriptField.mClassField); }
           }
-          else if (dataType == rttr::type::get<Mono::ScriptFieldInstance<glm::dvec3>>())
+          else if (dataType == rttr::type::get<Mono::DataMemberInstance<glm::dvec3>>())
           {
             ImGui::TableNextRow();
-            Mono::ScriptFieldInstance<glm::dvec3>& sfi = f.get_value<Mono::ScriptFieldInstance<glm::dvec3>>();
+            Mono::DataMemberInstance<glm::dvec3>& sfi = f.get_value<Mono::DataMemberInstance<glm::dvec3>>();
             if (InputDouble3(("## " + sfi.mScriptField.mFieldName).c_str(), sfi.mData, inputWidth)) { s.SetFieldValue<glm::dvec3>(sfi.mData, sfi.mScriptField.mClassField); };
+          }
+          else if (dataType == rttr::type::get<Mono::DataMemberInstance<Mono::ScriptInstance>>())
+          {
+               Mono::DataMemberInstance<Mono::ScriptInstance>& sfi = f.get_value<Mono::DataMemberInstance<Mono::ScriptInstance>>();
+              if (sfi.mScriptField.mFieldType == Mono::ScriptFieldType::ENTITY)
+              {
+                  ImGui::TableNextRow();
+                  ImGui::TableNextColumn();
+                  ImGui::Text(sfi.mScriptField.mFieldName.c_str());
+                  ImGui::TableNextColumn();
+                  ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
+                 // std::cout << entt::null << "\n";
+                   std::string msg{ "" };
+                 // std::cout << sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData << "\n";
+                  if (sfi.mData.mClassInst && ECS::EntityManager::GetInstance().IsValidEntity(static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData)))
+                    msg = ECS::Entity(static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData)).GetTag();
+                  if (ImGui::BeginCombo("##", msg.c_str()))
+                  {
+                    for (const ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntities())
+                    {
+                      if (e.GetRawEnttEntityID() != sfi.mData.mEntityID)
+                      {
+                        bool is_selected = (e.GetRawEnttEntityID() == sfi.mData.mEntityID);
+                        if (ImGui::Selectable(e.GetTag().c_str(), is_selected))
+                        {
+                          if (e.GetRawEnttEntityID() != sfi.mData.mEntityID) {
+                            sfi.mData.mEntityID = e.GetRawEnttEntityID();
+                            
+                            if (!sfi.mData.mClassInst)
+                            {
+                              std::vector<void*> arg{ &sfi.mData.mEntityID };
+                              sfi.mData = Mono::ScriptInstance(sfi.mData.mScriptName, arg);
+                              s.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
+                            }
+                            else
+                            {
+                              sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData = static_cast<unsigned>(sfi.mData.mEntityID);
+                              sfi.mData.SetAllFields();
+                            }
+                              
+                              
+                           
+                          }
+                        }
+                        if (is_selected)
+                        {
+                          ImGui::SetItemDefaultFocus();
+                        }
+                      }
+
+                    }
+                    ImGui::EndCombo();
+                  }
+              }
+
+
           }
 
 
@@ -590,8 +674,6 @@ namespace GUI {
     return modified;
   }
 
-
-
   bool Inspector::TagComponentWindow(ECS::Entity entity, bool highlight) {
     bool const isOpen{ WindowBegin<Component::Tag>("Tag", highlight) };
     bool modified{ false };
@@ -627,21 +709,36 @@ namespace GUI {
     bool modified{ false };
 
     if (isOpen) {
+      ImGui::Text("Usage: Must be child of an Entity with the \"Canvas\" Component");
+
       auto& text = entity.GetComponent<Component::Text>();
-      float const inputWidth{ CalcInputWidth(60.f) };
+      float inputWidth{ CalcInputWidth(60.f) };
 
       ImGui::BeginTable("TextTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
-      NextRowTable("Font Family");
+      NextRowTable("");
+      ImVec2 boxSize = ImVec2(200.0f, 40.0f); // Width and height of the box
+      ImVec2 cursorPos = ImGui::GetCursorScreenPos();
+      ImVec2 boxEnd = ImVec2(cursorPos.x + boxSize.x, cursorPos.y + boxSize.y);
 
-      std::string fontText = (text.fontFamilyName == "None") ? "[None]: Drag in a Font" : text.fontFamilyName;
+      // Draw a child window to act as the box
+      ImGui::BeginChild("DragDropTargetBox", boxSize, false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
-      ImGui::BeginDisabled();
-      ImGui::InputText("##FontTextInput", &fontText);
-      ImGui::EndDisabled();
+      // Get draw list and add a thin black border around the box
+      ImGui::GetWindowDrawList()->AddRect(cursorPos, boxEnd, IM_COL32(0, 0, 0, 255), 0.0f, 0, 1.0f);
+
+      // Center the text inside the box
+      ImVec2 textSize = ImGui::CalcTextSize("Drag here to add font");
+      ImVec2 textPos = ImVec2(
+        cursorPos.x + (boxSize.x - textSize.x) * 0.5f,
+        cursorPos.y + (boxSize.y - textSize.y) * 0.5f
+      );
+      ImGui::SetCursorScreenPos(textPos);
+      ImGui::TextUnformatted("Drag here to add font");
+      ImGui::EndChild();
 
       if (ImGui::BeginDragDropTarget()) {
         ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
@@ -650,41 +747,82 @@ namespace GUI {
           if (assetPayload.mAssetType == AssetPayload::FONT) {
             text.textAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::FontAsset>(assetPayload.GetFilePath());
             text.fontFamilyName = assetPayload.GetFileName();
+            text.newLineIndicesUpdatedFlag = false;
             modified = true;
           }
         }
         ImGui::EndDragDropTarget();
       }
-      
-      /*
+
+      std::string fontText = (text.fontFamilyName == "None") ? "[None]" : text.fontFamilyName;
       NextRowTable("Font Family");
-      if (ImGui::BeginCombo("##TextName", text.fontName.c_str())) {
-        for (const char* fontName : availableFonts) {
-          if (ImGui::Selectable(fontName)) {
-            text.fontName = fontName;
-            modified = true;
-          }
-        }
-        ImGui::EndCombo();
-      }
-      */
+      ImGui::BeginDisabled();
+      ImGui::InputText("##FontTextInput", &fontText);
+      ImGui::EndDisabled();
       
       NextRowTable("Color");
-      if (ImGui::ColorEdit4("##TextColor", &text.color[0])) {
+      if (ImGui::ColorEdit4("##TextColor", &text.color[0], ImGuiColorEditFlags_NoAlpha)) {
         modified = true;
       }
 
       NextRowTable("Text Input");
       if (ImGui::InputTextMultiline("##TextInput", &text.textContent)) {
+        text.newLineIndicesUpdatedFlag = false;
         modified = true;
       }
 
       NextRowTable("Scale");
-      if (ImGui::DragFloat("##TextScale", &text.scale, .001f, 0.f, 5.f)) {
+      if (ImGui::DragFloat("##TextScale", &text.scale, .001f, 0.f, 2.f)) {
+        modified = true;
+      }
+
+      NextRowTable("Multi-Line Space Offset");
+      if (ImGui::DragFloat("##MultiLineSpacingOffset", &text.multiLineSpacingOffset, .01f, -2.f, 2.f)) {
+        modified = true;
+      }
+
+      NextRowTable("Text Alignment");
+      if (ImGui::RadioButton("Left##TextAlignment", text.alignment == Component::Text::LEFT)) {
+        text.alignment = Component::Text::LEFT;
+        text.newLineIndicesUpdatedFlag = false;
+        modified = true;
+      }
+
+      if (ImGui::RadioButton("Right##TextAlignment", text.alignment == Component::Text::RIGHT)) {
+        text.alignment = Component::Text::RIGHT;
+        text.newLineIndicesUpdatedFlag = false;
+        modified = true;
+      }
+
+      if (ImGui::RadioButton("Center##TextAlignment", text.alignment == Component::Text::CENTER)) {
+        text.alignment = Component::Text::CENTER;
+        text.newLineIndicesUpdatedFlag = false;
+        modified = true;
+      }
+
+      NextRowTable("Textbox Enabled");
+      if (ImGui::Checkbox("##TextBoxEnabled", &text.textBoxEnabledFlag)) {
+        text.newLineIndicesUpdatedFlag = false;
         modified = true;
       }
 
       ImGui::EndTable();
+
+      if (text.textBoxEnabledFlag) {
+        inputWidth = CalcInputWidth(50.f) / 3.f;
+        ImGui::BeginTable("Text Box Dimensions", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+        ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+        ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+        ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+        ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+        ImGui::TableHeadersRow();
+
+        if (ImGuiHelpers::TableInputFloat3("Textbox Dimensions", &text.textBoxDimensions.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
+          text.newLineIndicesUpdatedFlag = false;
+          modified = true;
+        }
+        ImGui::EndTable();
+      }
     }
 
     WindowEnd(isOpen);
@@ -959,6 +1097,7 @@ namespace GUI {
     bool modified{ false };
 
     if (isOpen) {
+
       // Assuming 'rigidBody' is an instance of RigidBody
       Component::RigidBody& rigidBody{ entity.GetComponent<Component::RigidBody>() };
 
@@ -1034,6 +1173,160 @@ namespace GUI {
 
     WindowEnd(isOpen);
     return modified;
+  }
+
+  bool Inspector::AudioListenerComponentWindow(ECS::Entity entity, bool highlight)
+  {
+      bool const isOpen{ WindowBegin<Component::AudioListener>("AudioListener", highlight) };
+      bool modified{ false };
+
+      if (isOpen) {
+          ImGui::Text("Virtual \"Ear\" for the world");
+      }
+
+      WindowEnd(isOpen);
+      return modified;
+  }
+
+  bool Inspector::AudioSourceComponentWindow(ECS::Entity entity, bool highlight) {
+      bool const isOpen{ WindowBegin<Component::AudioSource>("AudioSource", highlight) };
+      bool modified{ false };
+
+      if (isOpen) {
+          Component::AudioSource& audioSource{ entity.GetComponent<Component::AudioSource>() };
+          float const inputWidth{ CalcInputWidth(50.f) / 3.f };
+          ImVec2 boxSize = ImVec2(200.0f, 40.0f); // Width and height of the box
+          ImVec2 cursorPos = ImGui::GetCursorScreenPos();
+          ImVec2 boxEnd = ImVec2(cursorPos.x + boxSize.x, cursorPos.y + boxSize.y);
+
+          // Draw a child window to act as the box
+          ImGui::BeginChild("DragDropTargetBox", boxSize, false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+
+          // Get draw list and add a thin black border around the box
+          ImGui::GetWindowDrawList()->AddRect(cursorPos, boxEnd, IM_COL32(0, 0, 0, 255), 0.0f, 0, 1.0f);
+
+          // Center the text inside the box
+          ImVec2 textSize = ImGui::CalcTextSize("Drag here to add sound");
+          ImVec2 textPos = ImVec2(
+              cursorPos.x + (boxSize.x - textSize.x) * 0.5f,
+              cursorPos.y + (boxSize.y - textSize.y) * 0.5f
+          );
+          ImGui::SetCursorScreenPos(textPos);
+          ImGui::TextUnformatted("Drag here to add sound");
+          ImGui::EndChild();
+          if (ImGui::BeginDragDropTarget())
+          {
+              ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+              if (drop) {
+                  AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+                  if (assetPayload.mAssetType == AssetPayload::AUDIO) {
+                      //auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
+                      auto fp{ assetPayload.GetFilePath() };
+                      audioSource.CreateSound(fp);
+                      modified = true;
+                  }
+              }
+              ImGui::EndDragDropTarget();
+          }
+          // Iterate through each AudioInstance in the sounds map
+          static std::string editingKey = ""; // Track the current sound name being edited
+          static char renameBuffer[128] = "";
+          for (auto& [currentName, audioInstance] : audioSource.sounds) {
+              // Display Sound Name
+              ImGui::Text("%s", currentName.c_str());
+
+              // Begin a Tree Node for sound properties
+              if (ImGui::TreeNode("Sound Properties")) {
+                  // Table for 3D position
+                  if (ImGui::BeginTable("PositionTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+                      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+                      ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+                      ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+                      ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+                      ImGui::TableHeadersRow();
+
+                      if (ImGuiHelpers::TableInputFloat3("Position", &audioInstance.playSettings.position.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
+                          modified = true;
+                      }
+                      ImGui::EndTable();
+                  }
+
+                  // Table for single properties
+                  if (ImGui::BeginTable("SoundPropertyTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+                      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+                      ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
+
+                      NextRowTable("Volume");
+                      if (ImGui::DragFloat("##Volume", &audioInstance.playSettings.volume, 0.01f, 0.0f, 1.0f)) {
+                          modified = true;
+                      }
+
+                      NextRowTable("Pitch");
+                      if (ImGui::DragFloat("##Pitch", &audioInstance.playSettings.pitch, 0.01f, 0.1f, 3.0f)) {
+                          modified = true;
+                      }
+
+                      NextRowTable("Pan");
+                      if (ImGui::DragFloat("##Pan", &audioInstance.playSettings.pan, 0.01f, -1.0f, 1.0f)) {
+                          modified = true;
+                      }
+
+                      NextRowTable("Doppler Level");
+                      if (ImGui::DragFloat("##DopplerLevel", &audioInstance.playSettings.dopplerLevel, 0.01f, 0.0f, 5.0f)) {
+                          modified = true;
+                      }
+
+                      NextRowTable("Min Distance");
+                      if (ImGui::DragFloat("##MinDistance", &audioInstance.playSettings.minDistance, 0.1f, 0.0f, 1000.0f)) {
+                          modified = true;
+                      }
+
+                      NextRowTable("Max Distance");
+                      if (ImGui::DragFloat("##MaxDistance", &audioInstance.playSettings.maxDistance, 0.1f, 0.0f, 1000.0f)) {
+                          modified = true;
+                      }
+                      // Checkboxes for Mute, Loop, and Play on Awake
+                      NextRowTable("Mute");
+                      if (ImGui::Checkbox("##Mute", &audioInstance.playSettings.mute)) {
+                          modified = true;
+                      }
+
+                      NextRowTable("Loop");
+                      if (ImGui::Checkbox("##Loop", &audioInstance.playSettings.loop)) {
+                          modified = true;
+                      }
+
+                      NextRowTable("Play On Awake");
+                      if (ImGui::Checkbox("##PlayOnAwake", &audioInstance.playSettings.playOnAwake)) {
+                          modified = true;
+                      }
+
+                      ImGui::EndTable();
+                  }
+
+                  // Table for Rolloff Type
+                  static const char* rolloffTypes[] = { "Linear", "Logarithmic" };
+                  int currentRolloff = static_cast<int>(audioInstance.playSettings.rolloffType);
+
+                  ImGui::BeginTable("RolloffTypeTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+                  ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+                  ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
+
+                  NextRowTable("Rolloff Type");
+                  if (ImGui::Combo("##RolloffType", &currentRolloff, rolloffTypes, IM_ARRAYSIZE(rolloffTypes))) {
+                      audioInstance.playSettings.rolloffType = static_cast<IGE::Audio::SoundInvokeSetting::RolloffType>(currentRolloff);
+                      modified = true;
+                  }
+
+                  ImGui::EndTable();
+
+                  ImGui::TreePop();
+              }
+          }
+      }
+
+      WindowEnd(isOpen);
+      return modified;
   }
 
   bool Inspector::BoxColliderComponentWindow(ECS::Entity entity, bool highlight) {
@@ -1322,14 +1615,19 @@ namespace GUI {
           modified = true;
         }
       }
-
-      NextRowTable("Cast Shadows");
-      if (ImGui::Checkbox("##CastShadows", &light.castShadows)) {
-        modified = true;
+      // @TODO: Remove else block when shadow is added for spotlight
+      else {
+        NextRowTable("Cast Shadows");
+        if (ImGui::Checkbox("##CastShadows", &light.castShadows)) {
+          modified = true;
+        }
+        if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+          ImGui::SetTooltip("Note: Only 1 shadow-casting light is supported");
+        }
       }
       ImGui::EndTable();
 
-      if (light.castShadows) {
+      if (light.castShadows && light.type == Component::LightType::DIRECTIONAL) {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
         if (ImGui::TreeNodeEx("Shadows", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanFullWidth)) {
@@ -1374,7 +1672,6 @@ namespace GUI {
   }
 
 
-
   void Inspector::DrawAddButton() {
     ImVec2 addTextSize = ImGui::CalcTextSize("Add");
     ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
@@ -1406,7 +1703,9 @@ namespace GUI {
         ImGui::TableSetupColumn("ComponentNames", ImGuiTableColumnFlags_WidthFixed, 220.f);
         
         // @TODO: EDIT WHEN NEW COMPONENTS
-        DrawAddComponentButton<Component::BoxCollider>("Collider");
+        DrawAddComponentButton<Component::AudioListener>("Audio Listener");
+        DrawAddComponentButton<Component::AudioSource>("Audio Source");
+        DrawAddComponentButton<Component::BoxCollider>("Box Collider");
         DrawAddComponentButton<Component::CapsuleCollider>("Capsule Collider");
         DrawAddComponentButton<Component::Layer>("Layer");
         DrawAddComponentButton<Component::Material>("Material");

@@ -3,14 +3,17 @@
 
 #include "Core/EntityManager.h"
 #include "Core/Components/Components.h"
-
+#include "Events/EventManager.h"
 #include "Physics/PhysicsSystem.h"
+#include <Core/Systems/SystemManager/SystemManager.h>
 
 namespace Systems {
 
   void LayerSystem::Start() {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::LOAD_SCENE, &LayerSystem::OnSceneLoad, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &LayerSystem::OnSceneChange, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::LAYER_MODIFIED, &LayerSystem::OnLayerModification, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &LayerSystem::OnPrefabEditor, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::REMOVE_ENTITY, &LayerSystem::OnEntityRemove, this);
   }
 
   void LayerSystem::Update() {
@@ -95,8 +98,13 @@ namespace Systems {
       return physx::PxFilterFlag::eSUPPRESS;
     }
 
-    // Collision allowed
-    pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
+    //// Collision allowed
+    //pairFlags |=
+    //    physx::PxPairFlag::eCONTACT_DEFAULT |
+    //    physx::PxPairFlag::eNOTIFY_TOUCH_FOUND |
+    //    physx::PxPairFlag::eNOTIFY_TOUCH_LOST |
+    //    physx::PxPairFlag::eNOTIFY_CONTACT_POINTS |
+    //    physx::PxPairFlag::eTRIGGER_DEFAULT;
     return physx::PxFilterFlag::eDEFAULT;
   }
 
@@ -120,9 +128,16 @@ namespace Systems {
     }
   }
 
-  EVENT_CALLBACK_DEF(LayerSystem, OnSceneLoad) {
-    mLayerEntities.clear();
-    
+  EVENT_CALLBACK_DEF(LayerSystem, OnSceneChange) {
+    auto const sceneChangeEvent{ CAST_TO_EVENT(Events::SceneStateChange) };
+    if (sceneChangeEvent->mNewState == Events::SceneStateChange::STOPPED) {
+      mLayerEntities.clear();
+      return;
+    }
+    else if (!(sceneChangeEvent->mNewState == Events::SceneStateChange::CHANGED || sceneChangeEvent->mNewState == Events::SceneStateChange::NEW)) {
+      return;
+    }
+
     // The built-in layer names should never change
     // This code is necessary as someone might manually edit the built-in layers in the json file...
     mLayerData.layerNames[0] = std::string(BUILTIN_LAYER_0);
@@ -211,4 +226,26 @@ namespace Systems {
     }
   }
 
+  EVENT_CALLBACK_DEF(LayerSystem, OnPrefabEditor) {
+    // we simply clear; no layers for prefabs
+    mLayerEntities.clear();
+  }
+
+  EVENT_CALLBACK_DEF(LayerSystem, OnEntityRemove) {
+    // Remove from mLayerEntities
+    auto entityRemovedEvent{ std::static_pointer_cast<Events::RemoveEntityEvent>(event) };
+    ECS::Entity entityToRemove = entityRemovedEvent->mEntity;
+    if (entityToRemove.HasComponent<Component::Layer>()) {
+      std::string layerName = entityToRemove.GetComponent<Component::Layer>().name;
+
+      auto it = mLayerEntities.find(layerName);
+      if (it != mLayerEntities.end()) {
+        std::vector<ECS::Entity>& entities = it->second;
+        entities.erase(std::remove_if(entities.begin(), entities.end(),
+          [&entityToRemove](const ECS::Entity& entity) {
+          return entity == entityToRemove;
+        }), entities.end());
+      }
+    }
+  }
 } // namespace Systems

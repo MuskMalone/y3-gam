@@ -18,6 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "mono/metadata/threads.h"
 #include <Prefabs/PrefabManager.h>
 #include <Core/Systems/TransformSystem/TransformHelpers.h>
+#include <Scenes/SceneManager.h>
 
 #include <filesystem>
 #include <Core/Components/Components.h>
@@ -45,7 +46,7 @@ namespace Mono
   bool ScriptManager::mCSReloadPending{};
   bool ScriptManager::mRebuildCS{};
 
-
+  std::unordered_map<ScriptFieldType,std::string> ScriptManager::mRevClassMap{};
   std::unordered_map<std::string, ScriptFieldType> ScriptManager::mScriptFieldTypeMap
   {
     { "System.Boolean", ScriptFieldType::BOOL },
@@ -59,12 +60,13 @@ namespace Mono
     { "System.UInt32",  ScriptFieldType::UINT },
     { "System.UInt64",  ScriptFieldType::ULONG },
     { "System.String",  ScriptFieldType::STRING },
-    { "Image.Mono.Vec2<System.Single>", ScriptFieldType::VEC2 },
-    { "Image.Mono.Vec3<System.Single>", ScriptFieldType::VEC3 },
-    { "Image.Mono.Vec2<System.Double>", ScriptFieldType::DVEC2 },
-    { "Image.Mono.Vec3<System.Double>", ScriptFieldType::DVEC3 },
+    { "Image.Mono.Utils.Vec2<System.Single>", ScriptFieldType::VEC2 },
+    { "Image.Mono.Utils..Vec3<System.Single>", ScriptFieldType::VEC3 },
+    { "Image.Mono.Utils.Vec2<System.Double>", ScriptFieldType::DVEC2 },
+    { "Image.Mono.Utils.Vec3<System.Double>", ScriptFieldType::DVEC3 },
     { "System.Int32[]", ScriptFieldType::INT_ARR },
-    { "System.String[]",ScriptFieldType::STRING_ARR}
+    { "System.String[]",ScriptFieldType::STRING_ARR},
+    { "Image.Mono.Entity",ScriptFieldType::ENTITY}
   };
 }
 
@@ -113,29 +115,29 @@ ScriptManager::ScriptManager()
   AddInternalCalls();
 
   //Set the path for the core aseembly
-  mCoreAssFilePath = "../Assets/Scripts/ImaGE-script.dll";
+  mCoreAssFilePath = "../Assets/Scripts/ImaGE-Script.dll";
 
   //Load All the MonoClasses
   LoadAllMonoClass();
 
   try
   {
-    mFileWatcher = std::make_unique<filewatch::FileWatch<std::string>>("../Assets/Scripts/ImaGE-script.dll", AssemblyFileSystemEvent);
+    mFileWatcher = std::make_unique<filewatch::FileWatch<std::string>>("../Assets/Scripts/ImaGE-Script.dll", AssemblyFileSystemEvent);
     mAssemblyReloadPending = false;
 
-    std::ifstream csfile("../ImaGE-script/ImaGE-script.csproj");
+    std::ifstream csfile("../ImaGE-Script/ImaGE-Script.csproj");
     if (csfile.good())
     {
-      mCsprojPath = "../ImaGE-script/Source";
-      mBatfilePath = "../ImaGE-script/reb.bat";
-      mCsProjWatcher = std::make_unique < filewatch::FileWatch < std::string>>("../ImaGE-script/Source", CSReloadEvent);
+      mCsprojPath = "../ImaGE-Script/Source";
+      mBatfilePath = "../ImaGE-Script/reb.bat";
+      mCsProjWatcher = std::make_unique < filewatch::FileWatch < std::string>>("../ImaGE-Script/Source", CSReloadEvent);
       csfile.close();
     }
     else
     {
-      mCsprojPath = "../../ImaGE-script/Source";
-      mBatfilePath = "../../ImaGE-script/reb.bat";
-      mCsProjWatcher = std::make_unique < filewatch::FileWatch < std::string>>("../../ImaGE-script/Source", CSReloadEvent);
+      mCsprojPath = "../../ImaGE-Script/Source";
+      mBatfilePath = "../../ImaGE-Script/reb.bat";
+      mCsProjWatcher = std::make_unique < filewatch::FileWatch < std::string>>("../../ImaGE-Script/Source", CSReloadEvent);
     }
     mCSReloadPending = false;
   }
@@ -153,8 +155,8 @@ void ScriptManager::LoadAppDomain()
   mono_domain_set(mAppDomain.get(), true);
 }
 
-#define ADD_INTERNAL_CALL(func) mono_add_internal_call("Image.Mono.InternalCalls::"#func, Mono::func);
-#define ADD_CLASS_INTERNAL_CALL(func, instance) mono_add_internal_call("Image.Mono.InternalCalls::"#func, instance.func);
+#define ADD_INTERNAL_CALL(func) mono_add_internal_call("Image.Mono.Utils.InternalCalls::"#func, Mono::func);
+#define ADD_CLASS_INTERNAL_CALL(func, instance) mono_add_internal_call("Image.Mono.Utils.InternalCalls::"#func, instance.func);
 
 void ScriptManager::AddInternalCalls()
 {
@@ -173,6 +175,13 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetWorldPosition);
   ADD_INTERNAL_CALL(SetPosition);
   ADD_INTERNAL_CALL(SetWorldScale);
+
+  //Debug Functions
+  ADD_INTERNAL_CALL(Log);
+  ADD_INTERNAL_CALL(LogWarning);
+  ADD_INTERNAL_CALL(LogError);
+  ADD_INTERNAL_CALL(LogCritical);
+
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -191,9 +200,10 @@ void ScriptManager::LoadAllMonoClass()
 
     std::string classNameSpace = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
     std::string className = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
-    if (classNameSpace.find("Image") != std::string::npos && classNameSpace.find("Mono") == std::string::npos)
+    if (classNameSpace.find("Image.Mono") != std::string::npos && classNameSpace.find("Utils") == std::string::npos)
     {
       std::cout << classNameSpace << "::" << className << "\n";
+      std::cout << "----------------------------------\n";
       MonoClass* newClass = GetClassInAssembly(coreAssembly, classNameSpace.c_str(), className.c_str());
       if (newClass)
       {
@@ -209,22 +219,48 @@ void ScriptManager::LoadAllMonoClass()
             MonoType* type = mono_field_get_type(field);
             ScriptFieldType fieldType = MonoTypeToScriptFieldType(type);
             std::string typeName = mono_type_get_name(type);
-            //std::cout << fieldName << "\n";
+            std::cout << typeName <<  "::" << fieldName  << "\n";
             newScriptClassInfo.mScriptFieldMap[fieldName] = { fieldType, fieldName, field };
           }
         }
-        mMonoClassMap[className] = newScriptClassInfo;
         MonoMethod* ctor = mono_class_get_method_from_name(newClass, ".ctor", 0);
-        MonoMethod* ctor2 = mono_class_get_method_from_name(newClass, ".ctor", 1);
-        if (ctor || ctor2)
+        if (ctor)
         {
-          mAllScriptNames.push_back(className);
+          mMonoClassMap[classNameSpace + '.' + className] = newScriptClassInfo;
         }
-
+#ifdef DEBUG_MONO
+        else
+          std::cout << classNameSpace + '.' + className << "\n";
+#endif // DEBUG
+        if (className.find("Entity") == std::string::npos &&  IsMonoBehaviourclass(newClass)) // If the class is not the base entity class and inherits from it, we will add it to the list for inspector
+        {          
+          mAllScriptNames.push_back(classNameSpace + '.' + className);
+        }
+        
       }
+      std::cout << "----------------------------------\n\n";
     }
   }
   std::sort(mAllScriptNames.begin(), mAllScriptNames.end());
+  for (const auto& pair : ScriptManager::mScriptFieldTypeMap) {
+    mRevClassMap[pair.second] = pair.first;
+  }
+}
+
+bool ScriptManager::IsMonoBehaviourclass(MonoClass* mc)
+{
+  bool isMonoBeh{ false };
+  MonoClass* parent = mc;
+  while (parent)
+  {
+    if (std::string(mono_class_get_name(parent)).find("Entity") != std::string::npos)
+    {
+      isMonoBeh = true;
+      break;
+    }
+    parent = mono_class_get_parent(parent);
+  }
+  return isMonoBeh;
 }
 
 MonoClass* Mono::GetClassInAssembly(MonoAssembly* assembly, const char* namespaceName, const char* className)
@@ -329,10 +365,10 @@ void ScriptManager::ReloadAllScripts()
   //Assets::AssetManager& assetManager{ Assets::AssetManager::GetInstance() };
   //static auto& ecs = GE::ECS::EntityComponentSystem::GetInstance();
   //std::string scnName = gsm->GetCurrentScene();
-  //mScnfilePath = assetManager.GetConfigData<std::string>("Assets Dir") + "Scenes/" + scnName + ".scn";
-  ////std::cout << "SCENE FILE PATH: " << mScnfilePath << "\n";
+  //m_scnfilePath = assetManager.GetConfigData<std::string>("Assets Dir") + "Scenes/" + scnName + ".scn";
+  ////std::cout << "SCENE FILE PATH: " << m_scnfilePath << "\n";
   ////std::cout << "Reload All Scripts\n";
-
+  Scenes::SceneManager::GetInstance().ReloadScene();
 
   //for (GE::ECS::Entity const& entity : ecs.GetEntities())
   //{
@@ -340,21 +376,21 @@ void ScriptManager::ReloadAllScripts()
   //  if (ecs.HasComponent<GE::Component::Scripts>(entity))
   //  {
   //    GE::Component::Scripts* scripts = ecs.GetComponent<GE::Component::Scripts>(entity);
-  //    //for (auto& script : scripts->mScriptList)
+  //    //for (auto& script : scripts->m_scriptList)
   //    //{
   //    //  //script.ReloadScript();
   //    //}
-  //    //for (auto sp : scripts->mScriptList)
+  //    //for (auto sp : scripts->m_scriptList)
   //    //{
-  //    //  std::cout << entity << ": " << sp.mScriptName << " deleted\n";
+  //    //  std::cout << entity << ": " << sp.m_scriptName << " deleted\n";
   //    //}
-  //    scripts->mScriptList.clear();
+  //    scripts->m_scriptList.clear();
 
   //  }
   //}
 
   //GE::Prefabs::PrefabManager::GetInstance().ReloadPrefabs();
-  //auto newScriptMap{ GE::Serialization::Deserializer::DeserializeSceneScripts(mScnfilePath) };
+  //auto newScriptMap{ GE::Serialization::Deserializer::DeserializeSceneScripts(m_scnfilePath) };
   //for (auto& s : newScriptMap)
   //{
   //  if (ecs.HasComponent<GE::Component::Scripts>(s.first))
@@ -365,51 +401,49 @@ void ScriptManager::ReloadAllScripts()
   //    //#endif
   //    for (auto& si : s.second)
   //    {
-  //      scripts->mScriptList.push_back(si);
+  //      scripts->m_scriptList.push_back(si);
   //    }
   //  }
   //}
-
-
 }
 
 void ScriptManager::AssemblyFileSystemEvent(const std::string& path, const filewatch::Event change_type)
 {
 
-  //if (!mAssemblyReloadPending && change_type == filewatch::Event::modified)
-  //{
-  //  mAssemblyReloadPending = true;
-  //  auto gsm = &GE::GSM::GameStateManager::GetInstance();
-  //  //#ifdef _DEBUG
-  //  //    std::cout << "AddCmd to main thread\n";
-  //  //#endif
-  //  gsm->SubmitToMainThread([]()
-  //    {
-  //      mFileWatcher.reset();
-  //      ReloadAssembly();
-  //    });
-  //}
+  if (!mAssemblyReloadPending && change_type == filewatch::Event::modified)
+  {
+    mAssemblyReloadPending = true;
+    auto sm = &Scenes::SceneManager::GetInstance();
+    //#ifdef _DEBUG
+    //    std::cout << "AddCmd to main thread\n";
+    //#endif
+    sm->SubmitToMainThread([]()
+      {
+        mFileWatcher.reset();
+        ReloadAssembly();
+      });
+  }
 }
 
 void ScriptManager::CSReloadEvent(const std::string& path, const filewatch::Event change_type)
 {
-//  if (!mCSReloadPending && change_type == filewatch::Event::modified && !mRebuildCS)
-//  {
-//#ifdef _DEBUG
-//    std::cout << "RELOAD CS\n";
-//#endif
-//    mCSReloadPending = true;
-//    auto gsm = &GE::GSM::GameStateManager::GetInstance();
-//    //#ifdef _DEBUG
-//    //    std::cout << "Lets rebuild\n";
-//    //#endif
-//    mRebuildCS = true;
-//    gsm->SubmitToMainThread([]()
-//      {
-//        mCsProjWatcher.reset();
-//        RebuildCS();
-//      });
-//  }
+  if (!mCSReloadPending && change_type == filewatch::Event::modified && !mRebuildCS)
+  {
+#ifdef _DEBUG
+    std::cout << "RELOAD CS\n";
+#endif
+    mCSReloadPending = true;
+    auto sm = &Scenes::SceneManager::GetInstance();
+    //#ifdef _DEBUG
+    //    std::cout << "Lets rebuild\n";
+    //#endif
+    mRebuildCS = true;
+    sm->SubmitToMainThread([]()
+      {
+        mCsProjWatcher.reset();
+        RebuildCS();
+      });
+  }
 }
 
 // Function to get Visual Studio version
@@ -473,15 +507,15 @@ void ScriptManager::ReloadAssembly()
 #ifdef _DEBUG
   std::cout << "ASSReload\n";
 #endif
-  //mono_domain_set(mono_get_root_domain(), false);
-  //mono_domain_unload(mAppDomain.get());
-  //mMonoClassMap.clear();
-  //mAllScriptNames.clear();
+  mono_domain_set(mono_get_root_domain(), false);
+  mono_domain_unload(mAppDomain.get());
+  mMonoClassMap.clear();
+  mAllScriptNames.clear();
 
-  //LoadAppDomain();
+  LoadAppDomain();
   //Assets::AssetManager& assetManager{ Assets::AssetManager::GetInstance() };
-  //mFileWatcher = std::make_unique < filewatch::FileWatch < std::string>>(assetManager.GetConfigData<std::string>("CAssembly"), AssemblyFileSystemEvent);
-  //mAssemblyReloadPending = false;
+  mFileWatcher = std::make_unique < filewatch::FileWatch < std::string>>("../Assets/Scripts/ImaGE-Script.dll", AssemblyFileSystemEvent);
+  mAssemblyReloadPending = false;
 
   ReloadScripts();
 
@@ -528,7 +562,7 @@ ScriptManager::~ScriptManager()
 *																																			  *
 ************************************************************************/
 
-MonoObject* Mono::ScriptManager::InstantiateClass(const char* className, std::vector<void*>& arg)
+MonoObject* Mono::ScriptManager::InstantiateClass(const char* className, std::vector<void*> arg)
 {
   if (mMonoClassMap.find(className) != mMonoClassMap.end())
   {
@@ -616,6 +650,7 @@ void Mono::SetWorldScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment
   TransformHelpers::UpdateWorldTransform(entity);
 }
 
+
 void Mono::SetRotation(ECS::Entity::EntityID entity, glm::vec3 rotAdjustment)
 {
   // need to use quaternions
@@ -640,6 +675,36 @@ glm::vec3 Mono::GetRotation(ECS::Entity::EntityID entity)
 {
   return ECS::Entity(entity).GetComponent<Component::Transform>().position;
 }
+
+MonoString* Mono::GetTag(ECS::Entity::EntityID entity)
+{
+  return STDToMonoString(ECS::Entity(entity).GetComponent<Component::Tag>().tag);
+}
+
+void  Mono::Log(MonoString*s)
+{
+  std::string msg{ MonoStringToSTD(s) };
+  Debug::DebugLogger::GetInstance().LogInfo(msg);
+}
+
+void  Mono::LogWarning(MonoString* s)
+{
+  std::string msg{ MonoStringToSTD(s) };
+  Debug::DebugLogger::GetInstance().LogWarning(msg);
+}
+
+void  Mono::LogError(MonoString* s)
+{
+  std::string msg{ MonoStringToSTD(s) };
+  Debug::DebugLogger::GetInstance().LogError(msg);
+}
+
+void  Mono::LogCritical(MonoString* s)
+{
+  std::string msg{ MonoStringToSTD(s) };
+  Debug::DebugLogger::GetInstance().LogCritical(msg);
+}
+
 
 
 /*!**********************************************************************

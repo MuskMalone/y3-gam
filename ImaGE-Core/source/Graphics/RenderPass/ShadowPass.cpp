@@ -14,8 +14,6 @@ namespace Graphics {
 
     void ShadowPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
         mActive = LocateLightSource(cam, entities);
-        if (!mActive) { return; }
-
         StartRender();
 
         auto const& shader = mSpec.pipeline->GetShader();
@@ -49,11 +47,11 @@ namespace Graphics {
             Component::Light const& light{ entity.GetComponent<Component::Light>() };
             Component::Transform const& transform{ entity.GetComponent<Component::Transform>() };
 
-            // only care about shadow casters
-            if (!light.castShadows) {
-                continue;
-            }
-            found = true;
+      // only care about shadow casters
+      if (!light.castShadows || light.type != Component::LightType::DIRECTIONAL) {
+        continue;
+      }
+      found = true;
 
             mShadowBias = light.bias;
             mShadowSoftness = light.softness;

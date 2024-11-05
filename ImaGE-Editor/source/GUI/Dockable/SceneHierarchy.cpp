@@ -217,16 +217,14 @@ namespace GUI
         }
         if (ImGui::InputText("##EntityRename", &entityName, ImGuiInputTextFlags_AutoSelectAll)) {
           entity.GetComponent<Component::Tag>().tag = entityName;
-          sEditNameMode = mLockControls = false;
-          sFirstEnterEditMode = true;
-          QUEUE_EVENT(Events::SceneModifiedEvent);
+          if (!mSceneModified) {
+            QUEUE_EVENT(Events::SceneModifiedEvent);
+          }
         }
         ImGui::PopStyleVar();
 
-        if (ImGui::IsKeyPressed(ImGuiKey_Escape)) {
-          ImGui::SetWindowFocus(NULL);
-          sEditNameMode = mLockControls = false;
-          sFirstEnterEditMode = true;
+        if (ImGui::IsKeyPressed(ImGuiKey_Escape) || ImGui::IsKeyPressed(ImGuiKey_Enter)) {
+          ResetEditNameMode();
         }
       }
 
@@ -296,9 +294,12 @@ namespace GUI
       }
       else {
         GUIManager::SetSelectedEntity(entity);
-        sEditNameMode = mLockControls = sEntityDoubleClicked = false;
       }
-      sFirstEnterEditMode = true;
+    }
+
+    if (sEditNameMode && (ImGui::IsMouseClicked(ImGuiMouseButton_Left) 
+      || ImGui::IsMouseClicked(ImGuiMouseButton_Right) || ImGui::IsMouseClicked(ImGuiMouseButton_Middle))) {
+      ResetEditNameMode();
     }
   }
 
@@ -417,7 +418,7 @@ namespace GUI
           existingPrefabWarning = false;
         }
         else {
-          prefabMan.CreatePrefabFromEntity(mRightClickedEntity, input, {}, true);
+          prefabMan.CreatePrefabFromEntity(mRightClickedEntity, input);
           blankWarning = existingPrefabWarning = false;
           input.clear();
           ImGui::CloseCurrentPopup();
@@ -426,6 +427,12 @@ namespace GUI
 
       ImGui::EndPopup();
     }
+  }
+
+  void SceneHierarchy::ResetEditNameMode() {
+    ImGui::SetWindowFocus(NULL);
+    sEditNameMode = mLockControls = false;
+    sFirstEnterEditMode = true;
   }
 
 } // namespace GUI

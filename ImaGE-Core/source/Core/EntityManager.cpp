@@ -84,6 +84,10 @@ namespace ECS {
     return iter != mChildren.end() && !iter->second.empty();
   }
 
+  bool EntityManager::IsValidEntity(Entity entity) const {
+     return mRegistry.valid(entity.GetRawEnttEntityID());
+  }
+
   Entity EntityManager::GetEntityFromTag(std::string tag) {
     auto view{ GetAllEntitiesWithComponents<Component::Tag>() };
     for (Entity::EntityID entity : view) {

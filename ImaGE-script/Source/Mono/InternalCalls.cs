@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
 
-namespace Image.Mono
+namespace Image.Mono.Utils
 {
   public static class InternalCalls
   {
@@ -33,7 +33,7 @@ namespace Image.Mono
     internal extern static Vec3<float> GetScale(uint ID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetScale(ref uint entityHandle, ref Vec3<float> scale);
+    internal extern static void SetScale(uint entityHandle, ref Vec3<float> scale);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vec3<float> GetWorldPosition(uint ID);
@@ -56,10 +56,35 @@ namespace Image.Mono
 
     #endregion
 
+
+    #region Input
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static bool IsKeyTriggered(KeyCode key);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static bool IsKeyHeld(KeyCode key);
+    #endregion
+
+
+    #region Logging
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void Log(string s);
+
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void LogWarning(string s);
+
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void LogError(string s);
+
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void LogCritical(string s);
+    #endregion
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static string GetTag(uint EntityID);
+    
   }
 }

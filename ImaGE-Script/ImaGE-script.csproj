@@ -83,6 +83,7 @@
     <Reference Include="System.Windows" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="source\Mono\Component.cs" />
     <Compile Include="source\Mono\Entity.cs" />
     <Compile Include="source\Mono\InternalCalls.cs" />
     <Compile Include="source\Mono\Keycode.cs" />
@@ -101,4 +102,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>copy /B /Y "ImaGE-Script.dll" "$(SolutionDir)Assets\Scripts\"
+copy /B /Y "ImaGE-Script.pdb" "$(SolutionDir)Assets\Scripts\"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

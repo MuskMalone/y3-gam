@@ -14,6 +14,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <string>
 #include <Globals.h>
 #include <memory>
+#include <Asset/Assetables/AssetExtensions.h>
 
 namespace GUI
 {
@@ -40,8 +41,11 @@ namespace GUI
       else if (fileExt == gPrefabFileExt) {
         mAssetType = AssetType::PREFAB;
       }
-      else if (fileExt == gMeshFileExt) {
+      else if (IGE::Assets::cMeshExtensions.find(fileExt) != IGE::Assets::cMeshExtensions.end()) {
         mAssetType = AssetType::MODEL;
+      }
+      else if (IGE::Assets::cAudioExtensions.find(fileExt) != IGE::Assets::cAudioExtensions.end()) {
+          mAssetType = AssetType::AUDIO;
       }
       else if (fileExt == gFontFileExt) {
         mAssetType = AssetType::FONT;

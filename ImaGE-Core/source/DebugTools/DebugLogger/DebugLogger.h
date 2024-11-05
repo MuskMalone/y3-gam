@@ -14,7 +14,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Singleton/ThreadSafeSingleton.h>
 #include <DebugTools/Exception/ExceptionBase.h>
 #include <memory>
-#include <map>
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
@@ -23,6 +22,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #else
 #define LOG_TO_FILE false
 #endif
+
+#define IGE_DBGLOGGER Debug::DebugLogger::GetInstance()
 
 using namespace spdlog;
 //#define PRINTTOCOUT
@@ -138,7 +139,7 @@ namespace Debug
     \return
       Logged message.
     ********************************************************************/
-        template <typename T>
+    template <typename T>
     std::string LogError(std::string msg, bool logToFile = LOG_TO_FILE);
 
     /*!******************************************************************

@@ -8,7 +8,8 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Entity 0"
+                        "tag": "Entity 0",
+                        "isActive": true
                     }
                 },
                 {
@@ -58,33 +59,135 @@
                     }
                 },
                 {
-                    "ScriptComponent": {
-                        "scriptList": []
-                    }
-                },
-                {
                     "Light": {
-                        "lighttype": 0,
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "direction": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
+                        "lightType": "DIRECTIONAL",
                         "color": {
                             "x": 0.0,
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "linear": 0.0,
-                        "quadratic": 0.0,
-                        "radius": 0.0,
-                        "cutoff": 0.0,
-                        "outercutoff": 0.0
+                        "intensity": 1.0,
+                        "innerAngle": 5.0,
+                        "outerAngle": 12.5,
+                        "range": 10.0,
+                        "castShadows": false,
+                        "bias": 0.05000000074505806,
+                        "softness": 1,
+                        "nearPlaneMultiplier": 10.0
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "scriptName": "Image.Mono.Test",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": 30.0,
+                                        "type": "System.Double",
+                                        "scriptField": {
+                                            "fieldName": "TestDouble"
+                                        }
+                                    },
+                                    {
+                                        "data": 20.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "TestFloat"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 336.3179931640625,
+                                            "y": 100.0,
+                                            "z": 0.0
+                                        },
+                                        "type": "ImaGE-Script.Mono.Vec3<System.double>",
+                                        "scriptField": {
+                                            "fieldName": "dVec3"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "scriptName": "Image.Mono.Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 0,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "testEnt"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1,
+            "Parent": null,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Entity 1",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
                     }
                 }
             ]

@@ -59,14 +59,13 @@ namespace Scenes
   }
 
   void SceneManager::StopScene() {
+    Events::EventManager::GetInstance().DispatchImmediateEvent<Events::SceneStateChange>(Events::SceneStateChange::STOPPED, mSceneName);
+    ClearScene();
+    UnloadScene();
+
     // if no save states in stack, return to no scene
     // else it means we're loading back to a previous scene
-    if (mSaveStates.empty()) {
-      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::STOPPED, mSceneName);
-      ClearScene();
-      UnloadScene();
-    }
-    else {
+    if (!mSaveStates.empty()) {
       LoadTemporarySave();
       InitScene();
       QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mSceneName);
@@ -92,6 +91,18 @@ namespace Scenes
   {
     Reflection::ObjectFactory::GetInstance().ClearData();
     ECS::EntityManager::GetInstance().Reset();
+  }
+
+  void SceneManager::ReloadScene()
+  {
+    // trigger a temp save 
+    TemporarySave();
+
+    // load it back
+    LoadTemporarySave();
+    InitScene();
+
+    QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mSceneName);
   }
 
   EVENT_CALLBACK_DEF(SceneManager, HandleEvent)
@@ -186,6 +197,23 @@ namespace Scenes
     for (auto const& file : filesToRemove) {
       std::filesystem::remove(file);
     }
+  }
+
+
+  void SceneManager::SubmitToMainThread(const std::function<void()>& function)
+  {
+    std::scoped_lock<std::mutex> lock(mMainThreadQueueMutex);
+    mMainThreadQueue.emplace_back(function);
+  }
+
+  void SceneManager::ExecuteMainThreadQueue()
+  {
+    std::scoped_lock<std::mutex> lock(mMainThreadQueueMutex);
+
+    for (auto& func : mMainThreadQueue)
+      func();
+
+    mMainThreadQueue.clear();
   }
 
 } // namespace Scenes

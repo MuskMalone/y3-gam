@@ -57,6 +57,7 @@ namespace GUI
     {
       auto editPrefabEvent{ std::static_pointer_cast<Events::EditPrefabEvent>(event) };
       mPrefabName = editPrefabEvent->mPrefab;
+      mPrefabPath = editPrefabEvent->mPath;
       mIsEditing = true;
       // if new prefab, create an entity with the prefab's name
       if (editPrefabEvent->mPath.empty()) {
@@ -65,10 +66,17 @@ namespace GUI
         return;
       }
 
-      auto& prefabMan{ Prefabs::PrefabManager().GetInstance() };
-      prefabMan.LoadPrefab(mPrefabName); // force load the prefab first
-      mPrefabInstance = prefabMan.SpawnPrefabAndMap(mPrefabName);
-      mPrefabPath = editPrefabEvent->mPath;
+      IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+      try {
+        IGE::Assets::GUID const guid{ am.LoadRef<IGE::Assets::PrefabAsset>(mPrefabPath) };
+        mPrefabInstance = Prefabs::PrefabManager::GetInstance().SpawnPrefabAndMap(guid);
+      }
+      catch (Debug::ExceptionBase const&) {
+        IGE_DBGLOGGER.LogInfo("Untracked file detected. Registering to Asset Manager...");
+        am.ImportAsset<IGE::Assets::PrefabAsset>(mPrefabPath);
+        IGE::Assets::GUID const guid{ am.LoadRef<IGE::Assets::PrefabAsset>(mPrefabPath) };
+        mPrefabInstance = Prefabs::PrefabManager::GetInstance().SpawnPrefabAndMap(guid);
+      }
       break;
     }
     }

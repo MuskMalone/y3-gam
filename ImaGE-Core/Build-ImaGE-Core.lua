@@ -27,6 +27,7 @@ project "ImaGE-Core"
       "source/External/fmod/include",
       "source/External/ImTerm/",
       "source/External/ImGuizmo/",
+      "source/External/stb",
 
       "../Libraries/assimp/include/",
       "../Libraries/Built-Libraries/Release/Libraries/assimp/include",
@@ -112,6 +113,7 @@ project "ImaGE-Core"
         "DirectXTex.lib",
         "fmodL_vc.lib",
         "mono-2.0-sgen.lib",
+        "freetyped.lib",
        }
 
        libdirs 
@@ -123,8 +125,7 @@ project "ImaGE-Core"
           "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Debug/",
           "source/External/fmod/lib",
           "source/External/mono/lib",
-          "../Libraries/rttr/Built-Libraries/Debug/**"
-
+          "../Libraries/rttr/Built-Libraries/Debug/**",
        }
 
        postbuildcommands {
@@ -182,6 +183,7 @@ project "ImaGE-Core"
         "DirectXTex.lib",
         "fmod_vc.lib",
         "mono-2.0-sgen.lib",
+        "freetype.lib",
        }
 
        postbuildcommands {
@@ -237,6 +239,7 @@ project "ImaGE-Core"
         "DirectXTex.lib",
         "fmod_vc.lib",
         "mono-2.0-sgen.lib",
+        "freetype.lib",
        }
 
        postbuildcommands {

@@ -23,6 +23,11 @@ namespace Reflection {
     std::string fieldName;
     std::string type;
     T data;
+
+    std::string Getfieldname()
+    {
+      return fieldName;
+    }
   };
 
   struct ProxyScript {

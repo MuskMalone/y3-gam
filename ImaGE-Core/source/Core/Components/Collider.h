@@ -14,12 +14,12 @@ namespace Component {
   struct ColliderAbstract {
   public:
       inline void Clear() noexcept {
-          positionOffset = {};
-          rotationOffset = {physx::PxIdentity()};
+          positionOffset = { 0, 0, 0 };
+          rotationOffset = { physx::PxIdentity };
           sensor = false;
       }
       physx::PxVec3 positionOffset{0, 0, 0};
-      physx::PxQuat rotationOffset{physx::PxIdentity()};
+      physx::PxQuat rotationOffset{ physx::PxIdentity };
       
       void* bodyID; // not serialized. decided at runtime
       char idx; // not serialized. max value 3
