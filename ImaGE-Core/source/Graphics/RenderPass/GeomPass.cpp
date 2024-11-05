@@ -19,7 +19,7 @@ namespace Graphics {
 
   void GeomPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
       Begin();
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      Renderer::Clear();
       //auto shader = mSpec.pipeline->GetShader();
 
       // Use a map to group entities by material ID
@@ -75,22 +75,7 @@ namespace Graphics {
               matID = matComponent.matIdx;
           }
           matGroups[matID].emplace_back(entity, xform.worldMtx);
-          //@TODO in future add light + materials
-
       }
-
-
-
-      //int u_type[maxLights];       // Camera position in world space
-      //glm::vec3 u_LightDirection[maxLights]; // Directional light direction in world space
-      //glm::vec3 u_LightColor[maxLights];     // Directional light color
-
-      ////For spotlight
-      //glm::vec3 u_LightPos[maxLights]; // Position of the spotlight
-      //float u_InnerSpotAngle[maxLights]; // Inner spot angle in degrees
-      //float u_OuterSpotAngle[maxLights]; // Outer spot angle in degrees
-      //float u_LightIntensity[maxLights]; // Intensity of the light
-      //float u_Range[maxLights]; // Maximum range of the spotlight
 
       // Now render each material group
       for (const auto& [matID, entityPairs] : matGroups) {
@@ -132,6 +117,7 @@ namespace Graphics {
           for (const auto& [entity, worldMtx] : entityPairs) {
               auto const& mesh = entity.GetComponent<Component::Mesh>();
               Graphics::Renderer::SubmitInstance(mesh.meshSource, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
+
           }
           mSpec.pipeline->GetSpec().instanceLayout;
           // Flush all collected instances and render them in a single draw call
@@ -141,6 +127,18 @@ namespace Graphics {
 
       End();
 
+      auto const& fb = mSpec.pipeline->GetSpec().targetFramebuffer;
+
+      // Check if mOutputTexture is null or if dimensions don’t match
+      if (!mOutputTexture || mOutputTexture->GetWidth() != fb->GetFramebufferSpec().width || mOutputTexture->GetHeight() != fb->GetFramebufferSpec().height) {
+          // Create or resize mOutputTexture based on the framebuffer's specs
+          mOutputTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+      }
+
+      // Perform the copy operation
+      if (mOutputTexture) {
+          mOutputTexture->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+      }
   }
 
 } // namespace Graphics

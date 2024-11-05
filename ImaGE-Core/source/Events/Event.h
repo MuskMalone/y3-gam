@@ -39,7 +39,8 @@ namespace Events
     SAVE_SCENE,
     SCENE_MODIFIED,
     SCENE_STATE_CHANGE,
-    LAYER_MODIFIED
+    LAYER_MODIFIED,
+    PREFAB_GUID_REMAP
   };
 
   class Event

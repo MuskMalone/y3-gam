@@ -132,7 +132,7 @@ namespace Graphics {
             }
 
             void GlClearErrors() {
-               // while (glGetError() != GL_NO_ERROR);
+                while (glGetError() != GL_NO_ERROR);
             }
 
         }//namespace GL

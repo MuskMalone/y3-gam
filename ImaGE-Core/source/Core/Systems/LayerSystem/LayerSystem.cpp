@@ -13,6 +13,7 @@ namespace Systems {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &LayerSystem::OnSceneChange, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::LAYER_MODIFIED, &LayerSystem::OnLayerModification, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &LayerSystem::OnPrefabEditor, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::REMOVE_ENTITY, &LayerSystem::OnEntityRemove, this);
   }
 
   void LayerSystem::Update() {
@@ -229,5 +230,23 @@ namespace Systems {
   EVENT_CALLBACK_DEF(LayerSystem, OnPrefabEditor) {
     // we simply clear; no layers for prefabs
     mLayerEntities.clear();
+  }
+
+  EVENT_CALLBACK_DEF(LayerSystem, OnEntityRemove) {
+    // Remove from mLayerEntities
+    auto entityRemovedEvent{ std::static_pointer_cast<Events::RemoveEntityEvent>(event) };
+    ECS::Entity entityToRemove = entityRemovedEvent->mEntity;
+    if (entityToRemove.HasComponent<Component::Layer>()) {
+      std::string layerName = entityToRemove.GetComponent<Component::Layer>().name;
+
+      auto it = mLayerEntities.find(layerName);
+      if (it != mLayerEntities.end()) {
+        std::vector<ECS::Entity>& entities = it->second;
+        entities.erase(std::remove_if(entities.begin(), entities.end(),
+          [&entityToRemove](const ECS::Entity& entity) {
+          return entity == entityToRemove;
+        }), entities.end());
+      }
+    }
   }
 } // namespace Systems

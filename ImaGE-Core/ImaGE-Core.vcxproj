@@ -191,8 +191,10 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Core\Components\AudioSource.h" />
     <ClInclude Include="source\Core\Components\Camera.h" />
     <ClInclude Include="source\Core\Components\CameraController.h" />
+    <ClInclude Include="source\Core\Components\Canvas.h" />
     <ClInclude Include="source\Core\Components\Collider.h" />
     <ClInclude Include="source\Core\Components\Components.h" />
+    <ClInclude Include="source\Core\Components\Image.h" />
     <ClInclude Include="source\Core\Components\Layer.h" />
     <ClInclude Include="source\Core\Components\Light.h" />
     <ClInclude Include="source\Core\Components\Material.h" />
@@ -310,10 +312,11 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Graphics\Pipeline.h" />
     <ClInclude Include="source\Graphics\RenderAPI.h" />
     <ClInclude Include="source\Graphics\RenderCommand.h" />
-    <ClInclude Include="source\Graphics\RenderPass\FinalPass.h" />
     <ClInclude Include="source\Graphics\RenderPass\GeomPass.h" />
     <ClInclude Include="source\Graphics\RenderPass\RenderPass.h" />
+    <ClInclude Include="source\Graphics\RenderPass\ScreenPass.h" />
     <ClInclude Include="source\Graphics\RenderPass\ShadowPass.h" />
+    <ClInclude Include="source\Graphics\RenderPass\UIPass.h" />
     <ClInclude Include="source\Graphics\RenderSystem.h" />
     <ClInclude Include="source\Graphics\RenderTarget.h" />
     <ClInclude Include="source\Graphics\Renderer.h" />
@@ -448,10 +451,11 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Graphics\MeshSource.cpp" />
     <ClCompile Include="source\Graphics\Pipeline.cpp" />
     <ClCompile Include="source\Graphics\RenderAPI.cpp" />
-    <ClCompile Include="source\Graphics\RenderPass\FinalPass.cpp" />
     <ClCompile Include="source\Graphics\RenderPass\GeomPass.cpp" />
     <ClCompile Include="source\Graphics\RenderPass\RenderPass.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\ScreenPass.cpp" />
     <ClCompile Include="source\Graphics\RenderPass\ShadowPass.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\UIPass.cpp" />
     <ClCompile Include="source\Graphics\RenderSystem.cpp" />
     <ClCompile Include="source\Graphics\Renderer.cpp" />
     <ClCompile Include="source\Graphics\Shader.cpp" />

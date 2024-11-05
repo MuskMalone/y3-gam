@@ -10,7 +10,10 @@
 #pragma region RenderPasses
 #include <Graphics/RenderPass/GeomPass.h>
 #include <Graphics/RenderPass/ShadowPass.h>
+#include <Graphics/RenderPass/ScreenPass.h>
+#include <Graphics/RenderPass/UIPass.h>
 #pragma endregion
+#include "Core/Components/Camera.h"
 
 namespace Graphics {
 	constexpr int INVALID_ENTITY_ID = -1;
@@ -21,34 +24,30 @@ namespace Graphics {
 	std::shared_ptr<Framebuffer> Renderer::mFinalFramebuffer;
 	std::unordered_map<std::type_index, std::shared_ptr<RenderPass>> Renderer::mTypeToRenderPass;
 	std::vector<std::shared_ptr<RenderPass>> Renderer::mRenderPasses;
+	Component::Camera Renderer::mUICamera;
 
 	void Renderer::Init() {
+		InitUICamera();
 
-		mData.maxTexUnits = GetMaxTextureUnits();
-		mData.texUnits = std::vector<std::shared_ptr<Texture>>(mData.maxTexUnits);
-
-		// Quads
+		//----------------------Init Batching Quads------------------------------------------------------------//
 		mData.quadVertexArray = VertexArray::Create();
-		mData.quadVertexBuffer = VertexBuffer::Create(mData.cMaxVertices * sizeof(QuadVtx));
+		mData.quadVertexBuffer = VertexBuffer::Create(mData.cMaxVertices2D * sizeof(QuadVtx));
 
 		BufferLayout quadLayout = {
 			{AttributeType::VEC3, "a_Position"},
-			{AttributeType::VEC3, "a_Normal"},
-			{AttributeType::VEC2, "a_TexCoord"},
-			{AttributeType::FLOAT, "a_TexIdx"},
-			{AttributeType::VEC3, "a_Tangent"},
-			{AttributeType::VEC3, "a_Bitangent"},
 			{AttributeType::VEC4, "a_Color"},
+			{AttributeType::VEC2, "a_TexCoord"},
+			{AttributeType::FLOAT, "a_TexIdx"}
 		};
 
 		mData.quadVertexBuffer->SetLayout(quadLayout);
 		mData.quadVertexArray->AddVertexBuffer(mData.quadVertexBuffer);
-		mData.quadBuffer = std::vector<QuadVtx>(mData.cMaxVertices);
+		mData.quadBuffer = std::vector<QuadVtx>(mData.cMaxVertices2D);
 
-		std::vector<unsigned int> quadIndices(mData.cMaxIndices);
+		std::vector<unsigned int> quadIndices(mData.cMaxIndices2D);
 
 		unsigned int offset{};
-		for (size_t i{}; i < mData.cMaxIndices; i += 6) {
+		for (size_t i{}; i < mData.cMaxIndices2D; i += 6) {
 			quadIndices[i + 0] = offset + 0;
 			quadIndices[i + 1] = offset + 1;
 			quadIndices[i + 2] = offset + 2;
@@ -60,10 +59,12 @@ namespace Graphics {
 			offset += 4;
 		}
 
-		std::shared_ptr<ElementBuffer> quadEbo = ElementBuffer::Create(quadIndices.data(), mData.cMaxIndices);
+		std::shared_ptr<ElementBuffer> quadEbo = ElementBuffer::Create(quadIndices.data(), mData.cMaxIndices2D);
 		mData.quadVertexArray->SetElementBuffer(quadEbo);
 
-		//Meshes
+		//--------------------------------------------------------------------------------------------------------//
+	
+		//----------------------------------Meshes Batching-------------------------------------------------------//
 		mData.meshVertexArray = VertexArray::Create();
 		mData.meshVertexBuffer = VertexBuffer::Create(mData.cMaxVertices * sizeof(Vertex));
 
@@ -84,9 +85,9 @@ namespace Graphics {
 		std::shared_ptr<ElementBuffer> meshEbo = ElementBuffer::Create(mData.cMaxIndices);
 		mData.meshVertexArray->SetElementBuffer(meshEbo);
 
-		//====================================================================
+		//----------------------------------------------------------------------------------------------------------//
 
-		//Triangles
+		//----------------------------------Triangles Batching-------------------------------------------------------//
 		mData.triVertexArray = VertexArray::Create();
 		mData.triVertexBuffer = VertexBuffer::Create(mData.cMaxVertices * sizeof(TriVtx));
 
@@ -99,7 +100,8 @@ namespace Graphics {
 		mData.triVertexArray->AddVertexBuffer(mData.triVertexBuffer);
 		mData.triBuffer = std::vector<TriVtx>(mData.cMaxVertices);
 
-		//========================================================
+		//----------------------------------------------------------------------------------------------------------//
+		
 		//mData.defaultTex = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(gAssetsDirectory + std::string("Texturesdefault.dds"));
 		mData.defaultTex = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(366429001515961616);
 		//mData.whiteTex = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(gAssetsDirectory + std::string("Textures/white.dds"));
@@ -107,13 +109,20 @@ namespace Graphics {
 		//unsigned int whiteTexData{ 0xffffffff };
 		//mData.whiteTex->SetData(&whiteTexData);
 		//mData.texUnits[0] = mData.whiteTex;
+		InitMeshSources();
+
+		InitShaders();
+		std::shared_ptr<Shader> const& texShader = ShaderLibrary::Get("Tex2D");
+
+
+		mData.maxTexUnits = GetMaxTextureUnits();
+		mData.texUnits = std::vector<Texture>(mData.maxTexUnits);
+
+		mData.texUnits[0] = IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(mData.whiteTex)->mTexture;
 
 		std::vector<int> samplers(mData.maxTexUnits);
 		for (unsigned int i{}; i < mData.maxTexUnits; ++i)
 			samplers[i] = i;
-
-		InitShaders();
-		std::shared_ptr<Shader> const& texShader = ShaderLibrary::Get("Tex");
 
 		texShader->Use();
 		texShader->SetUniform("u_Tex", samplers.data(), mData.maxTexUnits);
@@ -122,8 +131,6 @@ namespace Graphics {
 		mData.quadVtxPos[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
 		mData.quadVtxPos[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
 		mData.quadVtxPos[3] = { -0.5f, 0.5f, 0.0f, 1.0f };
-
-		
 
 		//Init framebuffer
 		Graphics::FramebufferSpec framebufferSpec;
@@ -135,17 +142,18 @@ namespace Graphics {
 		//InitPickPass();
 		InitShadowMapPass();
 		InitGeomPass();
+		InitUIPass();
+
+		InitFullscreenQuad();
 
 		mFinalFramebuffer = mRenderPasses.back()->GetTargetFramebuffer();
-		//mFinalFramebuffer = Framebuffer::Create(framebufferSpec);
-
 
 		IGE::Assets::GUID texguid1{ Texture::Create(gAssetsDirectory + std::string("Textures\\default.dds")) };
 		IGE::Assets::GUID texguid{ Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
 		//Init Materials
 
 		// Create a default material with a default shader and properties
-		std::shared_ptr<Material> defaultMaterial = Material::Create(ShaderLibrary::Get("PBR")); //TODO STORE IN SHADER LIB
+		std::shared_ptr<Material> defaultMaterial = Material::Create(ShaderLibrary::Get("PBR"));
 		defaultMaterial->SetAlbedoColor(glm::vec3(1.0f));  // Set default white albedo
 		defaultMaterial->SetMetalness(0.0f);
 		defaultMaterial->SetRoughness(1.0f);
@@ -157,7 +165,7 @@ namespace Graphics {
 		mat1->SetAlbedoMap(texguid1);
 		MaterialTable::AddMaterial(mat1);
 
-		std::shared_ptr<Material> mat2 = Material::Create(ShaderLibrary::Get("Unlit"));
+		std::shared_ptr<Material> mat2 = Material::Create(ShaderLibrary::Get("Unlit")); //@TODO support other shaders like Unlit
 		mat2->SetAlbedoMap(texguid);
 		MaterialTable::AddMaterial(mat2);
 		//--Material Init End--//
@@ -195,6 +203,8 @@ namespace Graphics {
 		ShaderLibrary::Add("PBR", Shader::Create("PBR.vert.glsl", "PBR.frag.glsl"));
 		ShaderLibrary::Add("Unlit", Shader::Create("Unlit.vert.glsl", "Unlit.frag.glsl"));
 		ShaderLibrary::Add("ShadowMap", Shader::Create("ShadowMap.vert.glsl", "ShadowMap.frag.glsl"));
+		ShaderLibrary::Add("FullscreenQuad", Shader::Create("FullscreenQuad.vert.glsl", "FullscreenQuad.frag.glsl"));
+		ShaderLibrary::Add("Tex2D", Shader::Create("Tex2D.vert.glsl", "Tex2D.frag.glsl"));
 	}
 
 	void Renderer::InitGeomPass() {
@@ -246,28 +256,130 @@ namespace Graphics {
 
 		RenderPassSpec shadowPassSpec;
 		shadowPassSpec.pipeline = Pipeline::Create(shadowPSpec);
+
 		shadowPassSpec.debugName = "Shadow Map Pass";
 
 		AddPass(RenderPass::Create<ShadowPass>(shadowPassSpec));
+	}
+
+	void Renderer::InitScreenPass() { //might remove
+		Graphics::FramebufferSpec screenSpec;
+		screenSpec.width = WINDOW_WIDTH<int>;
+		screenSpec.height = WINDOW_HEIGHT<int>;
+		screenSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };
+
+		PipelineSpec screenPSpec;
+		screenPSpec.shader = ShaderLibrary::Get("FullscreenQuad");
+		screenPSpec.targetFramebuffer = Framebuffer::Create(screenSpec);
+
+		RenderPassSpec screenPassSpec;
+		screenPassSpec.pipeline = Pipeline::Create(screenPSpec);
+		screenPassSpec.debugName = "Screen Pass";
+
+		AddPass(RenderPass::Create<ScreenPass>(screenPassSpec));
+	}
+
+	void Renderer::InitUIPass() {
+		Graphics::FramebufferSpec screenSpec;
+		screenSpec.width = WINDOW_WIDTH<int>;
+		screenSpec.height = WINDOW_HEIGHT<int>;
+		screenSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };
+
+		PipelineSpec screenPSpec;
+		screenPSpec.shader = ShaderLibrary::Get("FullscreenQuad");
+		screenPSpec.targetFramebuffer = Framebuffer::Create(screenSpec);
+
+		RenderPassSpec screenPassSpec;
+		screenPassSpec.pipeline = Pipeline::Create(screenPSpec);
+		screenPassSpec.debugName = "Screen Pass";
+
+		AddPass(RenderPass::Create<ScreenPass>(screenPassSpec));
+
+		PipelineSpec uiPSpec;
+		uiPSpec.shader = ShaderLibrary::Get("Tex2D");
+		uiPSpec.targetFramebuffer = screenPSpec.targetFramebuffer;
+
+		RenderPassSpec uiPassSpec;
+		uiPassSpec.pipeline = Pipeline::Create(uiPSpec);
+		uiPassSpec.debugName = "UI Pass";
+
+		AddPass(RenderPass::Create<UIPass>(uiPassSpec));
+	}
+
+	void Renderer::InitMeshSources(){
+		//mData.debugMeshSources[0] = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>("Cube");
+		mData.quadMeshSource = { IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>("Quad") };
+	}
+
+	void Renderer::InitFullscreenQuad(){
+		//Setting up Fullscreen Quad
+		mData.screen.screenVertices[0] = { {-1.0f,  1.0f}, {0.0f, 1.0f} };
+		mData.screen.screenVertices[1] = { {-1.0f, -1.0f}, {0.0f, 0.0f} };
+		mData.screen.screenVertices[2] = { { 1.0f, -1.0f}, {1.0f, 0.0f} };
+		mData.screen.screenVertices[3] = { {-1.0f,  1.0f}, {0.0f, 1.0f} };
+		mData.screen.screenVertices[4] = { { 1.0f, -1.0f}, {1.0f, 0.0f} };
+		mData.screen.screenVertices[5] = { { 1.0f,  1.0f}, {1.0f, 1.0f} };
+
+		mData.screen.screenVertexArray = VertexArray::Create();
+		mData.screen.screenVertexBuffer = VertexBuffer::Create(sizeof(mData.screen.screenVertices));
+
+		mData.screen.screenVertexBuffer->Bind();
+		mData.screen.screenVertexBuffer->SetData(mData.screen.screenVertices.data(), sizeof(mData.screen.screenVertices));
+		BufferLayout screenLayout = {
+			{AttributeType::VEC2, "a_Position"},
+			{AttributeType::VEC2, "a_TexCoord"},
+		};
+		mData.screen.screenVertexBuffer->SetLayout(screenLayout);
+		mData.screen.screenVertexArray->AddVertexBuffer(mData.screen.screenVertexBuffer);
+	}
+
+	void Renderer::InitUICamera(){
+		// Initialize the UI camera with an orthographic projection
+		mUICamera.projType = Component::Camera::Type::ORTHO;
+		mUICamera.position = glm::vec3(0.0f, 0.0f, 0.0f);  // Centered for screen space
+		mUICamera.aspectRatio = 16.0f / 9.0f;              // Adjust based on screen dimensions
+		mUICamera.nearClip = -100.0f;
+		mUICamera.farClip = 100.0f;
 	}
 
 	void Renderer::Shutdown() {
 		// Add shutdown logic if necessary
 	}
 
-	void Renderer::SetQuadBufferData(glm::vec3 const& pos, glm::vec2 const& scale, glm::vec3 const& norm, glm::vec2 const& texCoord, float texIdx, glm::vec3 const& tangent, glm::vec3 const& bitangent, glm::vec4 const& clr) {
+	void Renderer::Clear(){
+		RenderAPI::Clear();
+	}
+
+	void Renderer::SetQuadBufferData(glm::vec3 const& pos, glm::vec4 const& clr, glm::vec2 const& texCoord, float texIdx, int entity) {
+		//UNREFERENCED_PARAMETER(scale);
+		//mData.quadBufferPtr->pos = pos;
+		//mData.quadBufferPtr->clr = clr; // Ensure color is set for each vertex
+		//mData.quadBufferPtr->texCoord = texCoord;
+		//mData.quadBufferPtr->texIdx = texIdx;
+		//mData.quadBufferPtr->entity = entity;
+		//++mData.quadBufferPtr;
+
+		UNREFERENCED_PARAMETER(entity);
 		if (mData.quadBufferIndex < mData.quadBuffer.size()) {
 			QuadVtx& vtx = mData.quadBuffer[mData.quadBufferIndex];
 			vtx.pos = pos;
-			vtx.normal = norm;
 			vtx.texCoord = texCoord;
 			vtx.texIdx = texIdx;
-			vtx.tangent = tangent;
-			vtx.bitangent = bitangent;
 			vtx.clr = clr;
 		}
 		++mData.quadBufferIndex;
 	}
+
+	//void Renderer::SetQuadBufferData(glm::vec3 const& pos, glm::vec2 const& scale, glm::vec2 const& texCoord, float texIdx, glm::vec4 const& clr) {
+	//	if (mData.quadBufferIndex < mData.quadBuffer.size()) {
+	//		QuadVtx& vtx = mData.quadBuffer[mData.quadBufferIndex];
+	//		vtx.pos = pos;
+	//		vtx.texCoord = texCoord;
+	//		vtx.texIdx = texIdx;
+	//		vtx.clr = clr;
+	//	}
+	//	++mData.quadBufferIndex;
+	//}
 
 	void Renderer::SetTriangleBufferData(glm::vec3 const& pos, glm::vec4 const& clr) {
 		if (mData.triVtxCount < mData.triBuffer.size()) {
@@ -310,7 +422,8 @@ namespace Graphics {
 			{ AttributeType::MAT4, "a_ModelMatrix" },
 			{ AttributeType::INT, "a_MaterialIdx"},
 			{ AttributeType::INT, "a_EntityID"}
-			//{ AttributeType::VEC4, "a_Color" }
+			//{ AttributeType::VEC4, "a_Color" },
+
 		};
 
 		instanceBuffer->SetLayout(instanceLayout);
@@ -325,34 +438,70 @@ namespace Graphics {
 		return instanceBuffer;
 	}
 
-	void Renderer::DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::vec4 const& clr, float rot) {
-		if (mData.quadIdxCount >= RendererData::cMaxIndices)
+	void Renderer::DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, glm::vec4 const& clr) {
+		if (mData.quadIdxCount >= RendererData::cMaxIndices2D)
 			NextBatch();
 
 		constexpr glm::vec2 texCoords[4]{ { 0.f, 0.f }, {1.f, 0.f}, {1.f, 1.f}, {0.f, 1.f} };
 		const float texIdx{}; // white tex index = 0
 
 		glm::mat4 translateMtx{ glm::translate(glm::mat4{ 1.f }, pos) };
-		glm::mat4 rotateMtx{ glm::rotate(glm::mat4{ 1.f }, glm::radians(rot), {0.f, 0.f, 1.f}) };
+		glm::mat4 rotateMtx{ glm::toMat4(rot)};
 		glm::mat4 scaleMtx{ glm::scale(glm::mat4{ 1.f }, { scale.x, scale.y, 1.f }) };
 		glm::mat4 transformMtx{ translateMtx * rotateMtx * scaleMtx };
 
-
-
-		// Normal for a quad is typically perpendicular to the surface (pointing along z-axis in local space)
-		glm::vec3 normal = { 0.f, 0.f, 1.f };
-
-		// Tangent points in the direction of increasing U (horizontal direction in texture space)
-		glm::vec3 tangent = { 1.f, 0.f, 0.f };
-
-		// Bitangent points in the direction of increasing V (vertical direction in texture space)
-		glm::vec3 bitangent = { 0.f, 1.f, 0.f };
-
 		for (size_t i{}; i < 4; ++i)
-			SetQuadBufferData(transformMtx * mData.quadVtxPos[i], scale, normal, texCoords[i], texIdx, tangent, bitangent, clr);
+			SetQuadBufferData(transformMtx * mData.quadVtxPos[i], clr, texCoords[i], texIdx, 0);
 
 		mData.quadIdxCount += 6;
 		++mData.stats.quadCount;
+	}
+
+	void Renderer::DrawSprite(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, Texture const& tex, glm::vec4 const& tint, int entity){
+
+		if (tex.GetTexHdl() == 0)
+			DrawQuad(pos, scale, rot, tint);
+		if (mData.quadIdxCount >= RendererData::cMaxIndices2D)
+			NextBatch();
+
+		//std::array<glm::vec2, 4> texCoords{ };
+		//std::shared_ptr<Texture> tex = subtex->GetTexture();
+		//if (subtex->GetProperties().id == 1698985226353418500) {
+		//	int i = 1;
+		//	UNREFERENCED_PARAMETER(i);
+		//}
+		constexpr glm::vec2 texCoords[4]{ { 0.f, 0.f }, {1.f, 0.f}, {1.f, 1.f}, {0.f, 1.f} };
+		float texIdx = 0.f;
+
+		//don't need to iterate all 32 slots every time
+		for (uint32_t i{ 1 }; i < mData.texUnitIdx; ++i) {
+			if (mData.texUnits[i] == tex) { //check if the particular texture has already been set
+				texIdx = static_cast<float>(i);
+				break;
+			}
+		}
+
+		if (texIdx == 0.f) {
+			texIdx = static_cast<float>(mData.texUnitIdx);
+			mData.texUnits[mData.texUnitIdx] = tex;
+			++mData.texUnitIdx;
+		}
+
+		glm::mat4 translateMtx{ glm::translate(glm::mat4{ 1.f }, pos) };
+		glm::mat4 rotateMtx{ glm::toMat4(rot) };
+		glm::mat4 scaleMtx{ glm::scale(glm::mat4{ 1.f }, { scale.x, scale.y, 1.f }) };
+
+		glm::mat4 transformMtx{ translateMtx * rotateMtx * scaleMtx };
+
+		for (size_t i{}; i < 4; ++i)
+			SetQuadBufferData(transformMtx * mData.quadVtxPos[i], tint, texCoords[i], texIdx, entity);
+
+		mData.quadIdxCount += 6;
+		++mData.stats.quadCount;
+	}
+
+	void Renderer::RenderFullscreenTexture(){
+		RenderAPI::DrawTriangles(mData.screen.screenVertexArray, 6);
 	}
 
 	void Renderer::SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr) {
@@ -424,6 +573,7 @@ namespace Graphics {
 	void Renderer::SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, int matID) {
 		InstanceData instance{};
 		instance.modelMatrix = worldMtx;
+		//instance.color = clr;
 
 		if (id != INVALID_ENTITY_ID) {
 			instance.entityID = id;
@@ -432,7 +582,6 @@ namespace Graphics {
 
 		mData.instanceBufferDataMap[meshSource].push_back(instance);
 	}
-
 
 	void Renderer::RenderInstances() {
 		for (auto& [meshSrc, instances] : mData.instanceBufferDataMap) {
@@ -471,9 +620,13 @@ namespace Graphics {
 
 			//Bind all the textures that has been set
 			for (unsigned int i{}; i < mData.texUnitIdx; ++i) {
-				mData.texUnits[i]->Bind();
+				mData.texUnits[i].Bind(i);
 			}
-			ShaderLibrary::Get("Tex")->Use();
+
+			//IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(GetWhiteTexture())->mTexture.Bind(0);
+			
+
+			//ShaderLibrary::Get("Tex2D")->Use();
 			RenderAPI::DrawIndices(mData.quadVertexArray, mData.quadIdxCount);
 
 			++mData.stats.drawCalls;
@@ -485,7 +638,7 @@ namespace Graphics {
 			mData.triVertexBuffer->SetData(mData.triBuffer.data(), dataSize);
 
 			ShaderLibrary::Get("Tri")->Use();
-			RenderAPI::DrawLines(mData.triVertexArray, mData.triVtxCount);
+			RenderAPI::DrawTriangles(mData.triVertexArray, mData.triVtxCount);
 
 			++mData.stats.drawCalls;
 		}
@@ -503,7 +656,7 @@ namespace Graphics {
 			mData.meshVertexArray->Unbind();
 			// Bind the textures for the meshes
 			for (unsigned int i{}; i < mData.texUnitIdx; ++i) {
-				mData.texUnits[i]->Bind();
+				mData.texUnits[i].Bind();
 			}
 
 			// Use the appropriate shader and draw the indexed meshes
@@ -524,7 +677,7 @@ namespace Graphics {
 
 			mData.triVertexBuffer->SetData(mData.triBuffer.data(), dataSize);
 
-			RenderAPI::DrawLines(mData.triVertexArray, mData.triVtxCount);
+			RenderAPI::DrawTriangles(mData.triVertexArray, mData.triVtxCount);
 
 			++mData.stats.drawCalls;
 		}
@@ -542,7 +695,7 @@ namespace Graphics {
 			//mData.meshVertexArray->Unbind();
 			// Bind the textures for the meshes
 			for (unsigned int i{}; i < mData.texUnitIdx; ++i) {
-				mData.texUnits[i]->Bind();
+				mData.texUnits[i].Bind();
 			}
 
 			RenderAPI::DrawIndices(mData.meshVertexArray, mData.meshIdxCount);
@@ -624,5 +777,12 @@ namespace Graphics {
 
 	IGE::Assets::GUID Renderer::GetWhiteTexture() {
 		return mData.whiteTex;
+	}
+	IGE::Assets::GUID Renderer::GetDebugMeshSource(size_t idx){
+		return mData.debugMeshSources[idx];
+	}
+
+	IGE::Assets::GUID Renderer::GetQuadMeshSource() {
+		return mData.quadMeshSource;
 	}
 }

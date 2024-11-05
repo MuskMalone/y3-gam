@@ -87,7 +87,7 @@ namespace Reflection::ComponentUtils {
       : IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(comp.meshName) };
 
     try {
-      entity.EmplaceOrReplaceComponent<Mesh>(meshSrc, comp.meshName);
+      entity.EmplaceOrReplaceComponent<Mesh>(meshSrc, comp.meshName, comp.isCustomMesh);
     }
     catch (Debug::ExceptionBase const&) {
       // skip the component
@@ -112,4 +112,20 @@ namespace Reflection::ComponentUtils {
     entity.EmplaceOrReplaceComponent<Light>(comp);
   }
 
+  void AddCanvas(ECS::Entity entity, rttr::variant const& var) {
+      EXTRACT_RAW_COMP(Canvas, comp);
+
+      entity.EmplaceOrReplaceComponent<Canvas>(comp);
+  }
+    
+  void AddImage(ECS::Entity entity, rttr::variant const& var) {
+      EXTRACT_RAW_COMP(Image, comp);
+
+      entity.EmplaceOrReplaceComponent<Image>(comp);
+  }
+  void AddCamera(ECS::Entity entity, rttr::variant const& var){
+      EXTRACT_RAW_COMP(Camera, comp);
+
+      entity.EmplaceOrReplaceComponent<Camera>(comp);
+  }
 } // namespace Reflection

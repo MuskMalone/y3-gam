@@ -42,36 +42,7 @@ namespace Systems {
   }
 
   void TextSystem::Update() {
-    // Render the fonts for all Entities with Text Components
-    // @TODO: Account for potential UI Component
-    auto const& textEntities{ 
-      ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Text, Component::Transform>() 
-    };
 
-    for (auto const& entity : textEntities) {
-      auto& textComp{ ECS::Entity{entity}.GetComponent<Component::Text>() };
-      auto const& transComp{ ECS::Entity{entity}.GetComponent<Component::Transform>() };
-
-      if (!IGE_ASSETMGR.IsGUIDValid<IGE::Assets::FontAsset>(textComp.textAsset)) {
-        Debug::DebugLogger::GetInstance().LogWarning("[Text] Invalid Text Asset attached to Entity: "
-          + ECS::Entity{entity}.GetTag());
-        continue;
-      }
-
-      Systems::Font const& fontAsset{ IGE_ASSETMGR.GetAsset<IGE::Assets::FontAsset>(textComp.textAsset)->mFont };
-      if (!IsValid(fontAsset)) {
-        Debug::DebugLogger::GetInstance().LogWarning("[Text] Invalid Font attached to Entity: "
-          + ECS::Entity{ entity }.GetTag());
-        continue;
-      }
-
-      TextSystem::CalculateNewLineIndices(textComp.textAsset, textComp.textContent,
-        textComp.newLineIndices, textComp.newLineIndicesUpdatedFlag, textComp.alignment);
-
-      TextSystem::RenderText(fontAsset.mFilePathHash, textComp.textContent,
-        transComp.position.x, transComp.position.y, textComp.scale, 
-        textComp.color, textComp.newLineIndices, textComp.multiLineSpacingOffset);
-    }
   }
 
   void TextSystem::Destroy() {
@@ -106,32 +77,53 @@ namespace Systems {
     return mFonts;
   }
 
-  void TextSystem::RenderText(uint32_t filePathHash, std::string const& textContent, 
-    float xPos, float yPos, float scale, glm::vec3 color,
-    std::vector<std::pair<size_t, float>> const& newLineIndices, int multiLineSpacingOffset) {
+  void TextSystem::RenderTextForAllEntities(glm::mat4 viewProj) {
+    auto const& textEntities{
+      ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Text, Component::Transform>()
+    };
+
+    for (auto const& entity : textEntities) {
+      auto& textComp{ ECS::Entity{entity}.GetComponent<Component::Text>() };
+      auto const& transComp{ ECS::Entity{entity}.GetComponent<Component::Transform>() };
+
+      if (!IGE_ASSETMGR.IsGUIDValid<IGE::Assets::FontAsset>(textComp.textAsset)) {
+        Debug::DebugLogger::GetInstance().LogWarning("[Text] Invalid Text Asset attached to Entity: "
+          + ECS::Entity{ entity }.GetTag());
+        continue;
+      }
+
+      Systems::Font const& fontAsset{ IGE_ASSETMGR.GetAsset<IGE::Assets::FontAsset>(textComp.textAsset)->mFont };
+      if (!IsValid(fontAsset)) {
+        Debug::DebugLogger::GetInstance().LogWarning("[Text] Invalid Font attached to Entity: "
+          + ECS::Entity{ entity }.GetTag());
+        continue;
+      }
+
+      TextSystem::CalculateNewLineIndices(textComp.textAsset, textComp.textContent,
+        textComp.newLineIndices, textComp.newLineIndicesUpdatedFlag, textComp.alignment);
+
+      TextSystem::RenderText(fontAsset.mFilePathHash, textComp.textContent,
+        transComp.position.x, transComp.position.y, textComp.scale, transComp.rotation,
+        textComp.color, textComp.newLineIndices, textComp.multiLineSpacingOffset, viewProj);
+    }
+  }
+
+/*
+  void TextSystem::DrawTextFont(std::shared_ptr<Graphics::Shader> const& shader, uint32_t filePathHash, 
+    std::string const& textContent, float xPos, float yPos, float scale, glm::quat rotation,
+    glm::vec4 color, std::vector<std::pair<size_t, float>> const& newLineIndices, int multiLineSpacingOffset) {
     if (mFonts.find(filePathHash) == mFonts.end()) {
       Debug::DebugLogger::GetInstance().LogWarning("[Text] Trying to Render Invalid Font");
       return;
     }
-    
+
     std::shared_ptr<Systems::Font> font{ mFonts[filePathHash] };
 
     yPos = -yPos;
     FaceObject const& currFace{ font->mFace };
     std::shared_ptr<Graphics::Texture>const& currTex{ font->mBitmap };
 
-    // @TODO: Get UI Camera Projection Matrix
-    /*
-    glm::mat4 projection{ cam.GetProjMtx() };
-    glm::mat4 flipY{ glm::mat4(1.0f) };
-    flipY[1][1] = -1.0f;
-    projection = projection * flipY;
-
-    mShader->Use();
-    mShader->SetUniform("uTextColor", color.x, color.y, color.z);
-    mShader->SetUniform("uProjection", projection);
     currFace.vao->Bind();
-    */
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -146,8 +138,8 @@ namespace Systems {
     ++currNewLineIndicesVectorIdx;
 
     std::vector<float> vertices{};
-    std::size_t verticesPerCharacter{ static_cast<size_t>(4 * 4) };
-    vertices.reserve((verticesPerCharacter - newLineIndices.size()) * textContent.length());
+    std::size_t verticesPerCharacter{ static_cast<size_t>(4 * 10) };
+    vertices.reserve(verticesPerCharacter * textContent.length());
     vertices.clear();
     int index{};
 
@@ -171,12 +163,18 @@ namespace Systems {
 
       float width{ currChar.size.x * scale };
       float height{ currChar.size.y * scale };
+      
+      float texIdx = 0; // White Tex
 
-      float arr[4 * 4] = {
-        xpos + width, ypos + height, currChar.uMax, currChar.vMin,
-        xpos + width, ypos + 2.f * height, currChar.uMax, currChar.vMax,
-        xpos, ypos + 2.f * height, currChar.uMin, currChar.vMax,
-        xpos, ypos + height, currChar.uMin, currChar.vMin
+      float arr[4 * 10] = {
+        // Vertex 1: position (xpos + width, ypos + height, 0.0), color, texCoord, texIdx
+        xpos + width, ypos + height, 0.0f, color.r, color.g, color.b, color.a, currChar.uMax, currChar.vMin, texIdx,
+        // Vertex 2: position (xpos + width, ypos + 2.f * height, 0.0), color, texCoord, texIdx
+        xpos + width, ypos + 2.f * height, 0.0f, color.r, color.g, color.b, color.a, currChar.uMax, currChar.vMax, texIdx,
+        // Vertex 3: position (xpos, ypos + 2.f * height, 0.0), color, texCoord, texIdx
+        xpos, ypos + 2.f * height, 0.0f, color.r, color.g, color.b, color.a, currChar.uMin, currChar.vMax, texIdx,
+        // Vertex 4: position (xpos, ypos + height, 0.0), color, texCoord, texIdx
+        xpos, ypos + height, 0.0f, color.r, color.g, color.b, color.a, currChar.uMin, currChar.vMin, texIdx
       };
 
       auto insertPosition{ vertices.begin() + (index * verticesPerCharacter) };
@@ -195,15 +193,16 @@ namespace Systems {
     currFace.ebo->Bind();
     size_t eboSizePerChar{ 6 };
 
-    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(eboSizePerChar * textContent.length()),
+    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(eboSizePerChar* textContent.length()),
       GL_UNSIGNED_INT, NULL);
 
     glEnable(GL_DEPTH_TEST);
     currFace.vao->Unbind();
     currFace.ebo->Unbind();
     currFace.vbo->Unbind();
-    mShader->Unuse();
+    //shader->Unuse();
   }
+  */
 
   float TextSystem::GetTextWidth(uint32_t filePathHash, std::string const& textContent, float scale) {
     float xPos{ 0.f };
@@ -276,6 +275,110 @@ namespace Systems {
     }
 
     newLineIndicesUpdatedFlag = true;
+  }
+
+  void TextSystem::RenderText(uint32_t filePathHash, std::string const& textContent,
+    float xPos, float yPos, float scale, glm::quat rotation, glm::vec3 color,
+    std::vector<std::pair<size_t, float>> const& newLineIndices, float multiLineSpacingOffset, glm::mat4 viewProj) {
+    if (mFonts.find(filePathHash) == mFonts.end()) {
+      Debug::DebugLogger::GetInstance().LogWarning("[Text] Trying to Render Invalid Font");
+      return;
+    }
+
+    std::shared_ptr<Systems::Font> font{ mFonts[filePathHash] };
+    FaceObject const& currFace{ font->mFace };
+    std::shared_ptr<Graphics::Texture>const& currTex{ font->mBitmap };
+
+    glm::mat4 projection{ viewProj };
+
+    yPos = -yPos;
+    glm::mat4 flipY{ glm::mat4(1.0f) };
+    flipY[1][1] = -1.0f;
+    projection = projection * flipY;
+
+    // update VBO for each character
+    GLfloat const initialXPos = xPos;
+    size_t currLineIdx{};
+    size_t currNewLineIndicesVectorIdx{};
+
+    xPos += scale * newLineIndices[currNewLineIndicesVectorIdx].second;
+    ++currNewLineIndicesVectorIdx;
+
+    std::vector<float> vertices{};
+    std::size_t verticesPerCharacter{ static_cast<size_t>(4 * 4) };
+    vertices.reserve(verticesPerCharacter * (textContent.length() - newLineIndices.size() + 1));
+    vertices.clear();
+    int index{};
+
+    for (size_t currStringIdx{}; currStringIdx < textContent.size(); ++currStringIdx) {
+      char ch = textContent[currStringIdx];
+      Character const& currChar{ (font->mCharacterMap)[ch] };
+
+      if (currNewLineIndicesVectorIdx < newLineIndices.size()
+        && currStringIdx == (newLineIndices[currNewLineIndicesVectorIdx].first - 1)
+        && currLineIdx != newLineIndices[currNewLineIndicesVectorIdx].first) {
+        yPos += (multiLineSpacingOffset + font->mMaxHeight * scale);
+        xPos = initialXPos + scale * newLineIndices[currNewLineIndicesVectorIdx].second;
+
+        currLineIdx = newLineIndices[currNewLineIndicesVectorIdx].first;
+        ++currNewLineIndicesVectorIdx;
+        continue; // skip rendering this character (as it is the new line character)
+      }
+
+      float xpos{ xPos + currChar.bearing.x * scale };
+      float ypos{ yPos - (currChar.size.y + currChar.bearing.y) * scale };
+
+      float width{ currChar.size.x * scale };
+      float height{ currChar.size.y * scale };
+
+      glm::vec4 topRight(xpos + width, ypos + height, 0.0f, 1.0f);
+      glm::vec4 bottomRight(xpos + width, ypos + 2.f * height, 0.0f, 1.0f);
+      glm::vec4 bottomLeft(xpos, ypos + 2.f * height, 0.0f, 1.0f);
+      glm::vec4 topLeft(xpos, ypos + height, 0.0f, 1.0f);
+
+      // Store the transformed positions in arr[4*4]
+      float arr[4 * 4] = {
+          topRight.x, topRight.y, currChar.uMax, currChar.vMin,
+          bottomRight.x, bottomRight.y, currChar.uMax, currChar.vMax,
+          bottomLeft.x, bottomLeft.y, currChar.uMin, currChar.vMax,
+          topLeft.x, topLeft.y, currChar.uMin, currChar.vMin
+      };
+
+      auto insertPosition{ vertices.begin() + (index * verticesPerCharacter) };
+      vertices.insert(insertPosition, arr, arr + std::size(arr));
+
+      xPos += (currChar.advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
+      index++;
+    }
+
+    // bind the bitmap font texture
+    currFace.vbo->SetData(nullptr, 0);
+    currTex->Bind();
+
+    mShader->Use();
+    mShader->SetUniform("uTextColor", color.x, color.y, color.z);
+    mShader->SetUniform("uProjection", projection);
+    currFace.vao->Bind();
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_CULL_FACE);
+
+    currFace.vbo->Bind();
+    currFace.vbo->SetData(vertices.data(),
+      static_cast<unsigned int>(vertices.size() * sizeof(float)));
+    currFace.ebo->Bind();
+    size_t eboSizePerChar{ 6 };
+
+    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(eboSizePerChar * (textContent.length() - newLineIndices.size() + 1)),
+      GL_UNSIGNED_INT, NULL);
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_DEPTH_TEST);
+    currFace.vao->Unbind();
+    currFace.ebo->Unbind();
+    currFace.vbo->Unbind();
+    mShader->Unuse();
   }
 
   void TextSystem::LoadFontFace(Systems::Font& font) const {
@@ -398,6 +501,15 @@ namespace Systems {
 
     // position and texture coordinates
     currVbo.reset(new Graphics::VertexBuffer(MAX_VERTICES * sizeof(float)));
+
+    /*
+    Graphics::BufferLayout fontLayout = {
+      { Graphics::AttributeType::VEC3, "a_Position" },
+      { Graphics::AttributeType::VEC4, "a_Color" },
+      { Graphics::AttributeType::VEC2, "a_TexCoord" },
+      { Graphics::AttributeType::FLOAT, "a_TexIdx" }
+    };
+    */
 
     Graphics::BufferLayout fontLayout = {
       { Graphics::AttributeType::VEC2, "a_Position" },

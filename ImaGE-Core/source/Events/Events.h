@@ -120,7 +120,18 @@ namespace Events
     EntityLayerModified(ECS::Entity entity, std::string oldLayer) : Event(EventType::LAYER_MODIFIED), mEntity{ entity }, mOldLayer{ oldLayer } {}
     inline std::string GetName() const noexcept override { return "Modified Layer Component of Entity: " + mEntity.GetTag(); }
 
-    ECS::Entity const mEntity;
     std::string mOldLayer;
+    ECS::Entity const mEntity;
+  };
+
+  // entity, prefabName
+  class RemapPrefabGUID : public Event
+  {
+  public:
+    RemapPrefabGUID(ECS::Entity entity, std::string prefabName) : Event(EventType::PREFAB_GUID_REMAP), mPrefabName{ prefabName }, mEntity{ entity } {}
+    inline std::string GetName() const noexcept override { return "Prefab instance of " + mPrefabName + " has to be remapped"; }
+
+    std::string const mPrefabName;
+    ECS::Entity const mEntity;
   };
 }

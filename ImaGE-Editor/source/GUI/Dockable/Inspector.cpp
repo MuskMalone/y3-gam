@@ -62,7 +62,10 @@ namespace GUI {
       { typeid(Component::RigidBody), ICON_FA_CAR ICON_PADDING },
       { typeid(Component::Script), ICON_FA_FILE_CODE ICON_PADDING },
       { typeid(Component::Text), ICON_FA_FONT ICON_PADDING },
-      { typeid(Component::Light), ICON_FA_LIGHTBULB ICON_PADDING }
+      { typeid(Component::Light), ICON_FA_LIGHTBULB ICON_PADDING },
+      { typeid(Component::Canvas), ICON_FA_PAINTBRUSH},
+      { typeid(Component::Image), ICON_FA_IMAGE},
+      { typeid(Component::Camera), ICON_FA_CAMERA}
     },
     mObjFactory{Reflection::ObjectFactory::GetInstance()},
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
@@ -275,6 +278,30 @@ namespace GUI {
             prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Text>());
           }
         }
+      }
+
+      if (currentEntity.HasComponent<Component::Image>()) {
+          rttr::type const imageType{ rttr::type::get<Component::Image>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(imageType);
+
+          if (ImageComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Image>());
+              }
+          }
+      }
+
+      if (currentEntity.HasComponent<Component::Camera>()) {
+          rttr::type const cameraType{ rttr::type::get<Component::Camera>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(cameraType);
+
+          if (CameraComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Camera>());
+              }
+          }
       }
 
       if (currentEntity.HasComponent<Component::AudioListener>()) {
@@ -717,21 +744,36 @@ namespace GUI {
     bool modified{ false };
 
     if (isOpen) {
+      ImGui::Text("Usage: Must be child of an Entity with the \"Canvas\" Component");
+
       auto& text = entity.GetComponent<Component::Text>();
-      float const inputWidth{ CalcInputWidth(60.f) };
+      float inputWidth{ CalcInputWidth(60.f) };
 
       ImGui::BeginTable("TextTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
-      NextRowTable("Font Family");
+      NextRowTable("");
+      ImVec2 boxSize = ImVec2(200.0f, 40.0f); // Width and height of the box
+      ImVec2 cursorPos = ImGui::GetCursorScreenPos();
+      ImVec2 boxEnd = ImVec2(cursorPos.x + boxSize.x, cursorPos.y + boxSize.y);
 
-      std::string fontText = (text.fontFamilyName == "None") ? "[None]: Drag in a Font" : text.fontFamilyName;
+      // Draw a child window to act as the box
+      ImGui::BeginChild("DragDropTargetBox", boxSize, false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
-      ImGui::BeginDisabled();
-      ImGui::InputText("##FontTextInput", &fontText);
-      ImGui::EndDisabled();
+      // Get draw list and add a thin black border around the box
+      ImGui::GetWindowDrawList()->AddRect(cursorPos, boxEnd, IM_COL32(0, 0, 0, 255), 0.0f, 0, 1.0f);
+
+      // Center the text inside the box
+      ImVec2 textSize = ImGui::CalcTextSize("Drag here to add font");
+      ImVec2 textPos = ImVec2(
+        cursorPos.x + (boxSize.x - textSize.x) * 0.5f,
+        cursorPos.y + (boxSize.y - textSize.y) * 0.5f
+      );
+      ImGui::SetCursorScreenPos(textPos);
+      ImGui::TextUnformatted("Drag here to add font");
+      ImGui::EndChild();
 
       if (ImGui::BeginDragDropTarget()) {
         ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
@@ -740,14 +782,21 @@ namespace GUI {
           if (assetPayload.mAssetType == AssetPayload::FONT) {
             text.textAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::FontAsset>(assetPayload.GetFilePath());
             text.fontFamilyName = assetPayload.GetFileName();
+            text.newLineIndicesUpdatedFlag = false;
             modified = true;
           }
         }
         ImGui::EndDragDropTarget();
       }
+
+      std::string fontText = (text.fontFamilyName == "None") ? "[None]" : text.fontFamilyName;
+      NextRowTable("Font Family");
+      ImGui::BeginDisabled();
+      ImGui::InputText("##FontTextInput", &fontText);
+      ImGui::EndDisabled();
       
       NextRowTable("Color");
-      if (ImGui::ColorEdit4("##TextColor", &text.color[0])) {
+      if (ImGui::ColorEdit4("##TextColor", &text.color[0], ImGuiColorEditFlags_NoAlpha)) {
         modified = true;
       }
 
@@ -758,29 +807,57 @@ namespace GUI {
       }
 
       NextRowTable("Scale");
-      if (ImGui::DragFloat("##TextScale", &text.scale, .001f, 0.f, 5.f)) {
+      if (ImGui::DragFloat("##TextScale", &text.scale, .001f, 0.f, 2.f)) {
         modified = true;
       }
 
       NextRowTable("Multi-Line Space Offset");
-      if (ImGui::DragFloat("##MultiLineSpacingOffset", &text.multiLineSpacingOffset, .01f, -5.f, 5.f)) {
+      if (ImGui::DragFloat("##MultiLineSpacingOffset", &text.multiLineSpacingOffset, .01f, -2.f, 2.f)) {
         modified = true;
       }
 
       NextRowTable("Text Alignment");
       if (ImGui::RadioButton("Left##TextAlignment", text.alignment == Component::Text::LEFT)) {
         text.alignment = Component::Text::LEFT;
+        text.newLineIndicesUpdatedFlag = false;
+        modified = true;
       }
 
       if (ImGui::RadioButton("Right##TextAlignment", text.alignment == Component::Text::RIGHT)) {
         text.alignment = Component::Text::RIGHT;
+        text.newLineIndicesUpdatedFlag = false;
+        modified = true;
       }
 
       if (ImGui::RadioButton("Center##TextAlignment", text.alignment == Component::Text::CENTER)) {
         text.alignment = Component::Text::CENTER;
+        text.newLineIndicesUpdatedFlag = false;
+        modified = true;
+      }
+
+      NextRowTable("Textbox Enabled");
+      if (ImGui::Checkbox("##TextBoxEnabled", &text.textBoxEnabledFlag)) {
+        text.newLineIndicesUpdatedFlag = false;
+        modified = true;
       }
 
       ImGui::EndTable();
+
+      if (text.textBoxEnabledFlag) {
+        inputWidth = CalcInputWidth(50.f) / 3.f;
+        ImGui::BeginTable("Text Box Dimensions", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+        ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+        ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+        ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+        ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+        ImGui::TableHeadersRow();
+
+        if (ImGuiHelpers::TableInputFloat3("Textbox Dimensions", &text.textBoxDimensions.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
+          text.newLineIndicesUpdatedFlag = false;
+          modified = true;
+        }
+        ImGui::EndTable();
+      }
     }
 
     WindowEnd(isOpen);
@@ -828,6 +905,152 @@ namespace GUI {
 
     WindowEnd(isOpen);
     return modified;
+  }
+
+  bool Inspector::CanvasComponentWindow(ECS::Entity entity, bool highlight){
+      bool const isOpen{ WindowBegin<Component::Canvas>("Canvas", highlight) };
+      bool modified{ false };
+
+      if (isOpen) {
+          Component::Canvas& canvas = entity.GetComponent<Component::Canvas>();
+          float const inputWidth{ CalcInputWidth(60.f) };
+          // Start a table for organizing the color and textureAsset inputs
+          ImGui::BeginTable("ImageTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+          NextRowTable("Toggle Visiblity");
+          if (ImGui::Checkbox("##IsActive", &canvas.isActive)) {
+              modified = true;
+          }
+          ImGui::EndTable();
+      }
+
+      WindowEnd(isOpen);
+      return modified;
+  }
+
+  bool Inspector::ImageComponentWindow(ECS::Entity entity, bool highlight) {
+      bool const isOpen{ WindowBegin<Component::Image>("Image", highlight) };
+      bool modified{ false };
+
+      if (isOpen) {
+          Component::Image& image = entity.GetComponent<Component::Image>();
+
+          float const inputWidth{ CalcInputWidth(60.f) };
+
+          // Start a table for organizing the color and textureAsset inputs
+          ImGui::BeginTable("ImageTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+          // Color input
+          NextRowTable("Color");
+          if (ImGui::ColorEdit4("##ImageColor", &image.color[0])) {
+              modified = true;
+          }
+
+          // Texture Asset input - assuming textureAsset is a GUID or string
+          
+
+
+          NextRowTable("Texture Asset");
+          static std::string textureText;
+          try {
+              textureText = (image.textureAsset) ? IGE_ASSETMGR.GUIDToPath(image.textureAsset) : "[None]: Drag in a Texture";
+          }
+          catch (Debug::ExceptionBase& e) {
+              // If the GUID is not found, log the exception and set a default message
+              textureText = "[Invalid GUID]: Unable to load texture";
+              e.LogSource();
+             ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), e.what());
+          }
+
+          
+          //(image.textureAsset) ? IGE_ASSETMGR.GUIDToPath(image.textureAsset) : "[None]: Drag in a Texture";
+
+          //catch (const Debug::ExceptionBase& e) {
+
+          //}
+
+          ImGui::BeginDisabled();
+          ImGui::InputText("##TextureAsset", &textureText);
+          ImGui::EndDisabled();
+
+          if (ImGui::BeginDragDropTarget()) {
+              ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+              if (drop) {
+                  AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+                  if (assetPayload.mAssetType == AssetPayload::SPRITE) {
+                      image.textureAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
+                      textureText = assetPayload.GetFileName();  // Display the file name in the UI
+                      modified = true;
+                  }
+              }
+              ImGui::EndDragDropTarget();
+          }
+
+          ImGui::EndTable();
+      }
+
+      WindowEnd(isOpen);
+      return modified;
+  }
+
+  bool Inspector::CameraComponentWindow(ECS::Entity entity, bool highlight)
+  {
+      bool const isOpen{ WindowBegin<Component::Camera>("Camera", highlight) };
+      bool modified{ false };
+
+      if (isOpen) {
+          Component::Camera& camera = entity.GetComponent<Component::Camera>();
+
+          float const inputWidth{ CalcInputWidth(60.f) };
+
+          // Start a table for organizing the color and textureAsset inputs
+          ImGui::BeginTable("CameraTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+          // Color input
+          NextRowTable("Projection Type");
+          //if (ImGui::ColorEdit4("##ProjType", &camera.projType)) {
+          //    modified = true;
+          //}
+
+          NextRowTable("Yaw");
+          if (ImGui::DragFloat("##Yaw", &camera.yaw, 1.f, -180.f, 180.f)) {
+              modified = true;
+          }
+          NextRowTable("Pitch");
+          if (ImGui::DragFloat("##Pitch", &camera.pitch, 1.f, -180.f, 180.f)) {
+              modified = true;
+          }
+          NextRowTable("FOV");
+          if (ImGui::DragFloat("##FOV", &camera.fov, 1.f, 0.f, 180.f)) {
+              modified = true;
+          }
+          NextRowTable("Aspect Ratio");
+
+          NextRowTable("Near Clip");
+          if (ImGui::DragFloat("##Near", &camera.nearClip, 5.f, -100.f, 0.f)) {
+              modified = true;
+          }
+          NextRowTable("Far Clip");
+          if (ImGui::DragFloat("##Far", &camera.farClip, 5.f, 0.f, 1000.f)) {
+              modified = true;
+          }
+          
+
+
+          ImGui::EndTable();
+      }
+
+      WindowEnd(isOpen);
+      return modified;
   }
 
   bool Inspector::MeshComponentWindow(ECS::Entity entity, bool highlight) {
@@ -1496,7 +1719,9 @@ namespace GUI {
         DrawAddComponentButton<Component::Text>("Text");
         DrawAddComponentButton<Component::Transform>("Transform");
         DrawAddComponentButton<Component::Light>("Light");
-
+        DrawAddComponentButton<Component::Canvas>("Canvas");
+        DrawAddComponentButton<Component::Image>("Image");
+        DrawAddComponentButton<Component::Camera>("Camera");
 
         ImGui::EndTable();
       }

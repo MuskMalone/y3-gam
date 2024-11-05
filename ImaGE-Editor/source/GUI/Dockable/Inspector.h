@@ -60,6 +60,9 @@ namespace GUI {
     bool TagComponentWindow(ECS::Entity entity, bool highlight = false);
     bool TextComponentWindow(ECS::Entity entity, bool highlight = false);
     bool TransformComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool CanvasComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool ImageComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool CameraComponentWindow(ECS::Entity entity, bool highlight = false);
     
     /*!*********************************************************************
     \brief

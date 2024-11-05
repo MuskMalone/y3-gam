@@ -14,19 +14,7 @@
 namespace Graphics {
 	CameraManager RenderSystem::mCameraManager;
 	void RenderSystem::Init() {
-		Renderer::Init(); 
-
-		//ECS::Entity mainCameraEntity = ECS::EntityManager::GetInstance().CreateEntity();
-		//auto & camCom = mainCameraEntity.EmplaceComponent<Component::Camera>(); // Add your Camera component
-		//camCom.position = glm::vec3(0.0f, 5.0f, 20.0f);
-		//camCom.yaw = -90.f;
-		//camCom.pitch = -30.f;
-		//
-		//// Optionally, add a tag or mark it as the main camera
-		//mainCameraEntity.SetTag("MainCamera"); // Assuming you have a SetTag method
-		//Graphics::RenderSystem::mCameraManager.AddCamera(mainCameraEntity);
-		//Graphics::RenderSystem::mCameraManager.SetActiveCamera(0);
-
+		Renderer::Init();
 	}
 
 	void RenderSystem::Release() {
@@ -34,8 +22,7 @@ namespace Graphics {
 	}
 
 	void RenderSystem::RenderScene(CameraSpec const& cam) {
-		glClear(GL_COLOR_BUFFER_BIT);
-		glClear(GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//Frustum Culling should be here
 
@@ -73,8 +60,13 @@ namespace Graphics {
 		}
 		
 
+		std::shared_ptr<Texture> prevOutputTex{ nullptr };
 		for (auto const& pass : Renderer::mRenderPasses) {
+			if (prevOutputTex) {
+				pass->SetInputTexture(prevOutputTex);
+			}
 			pass->Render(cam, entityVector);
+			prevOutputTex = pass->GetOutputTexture();
 		}
 
 	}

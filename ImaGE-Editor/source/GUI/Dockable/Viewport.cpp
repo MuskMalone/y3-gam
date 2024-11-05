@@ -24,6 +24,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/EntityManager.h>
 #include <GUI/GUIManager.h>
 #include <Asset/IGEAssets.h>
+#include <Graphics/RenderPass/GeomPass.h>
 
 namespace {
   /*!*********************************************************************
@@ -101,13 +102,16 @@ namespace GUI
 
               // check if clicking outside viewport
               if (!(offset.x < 0 || offset.x > vpSize.x || offset.y < 0 || offset.y > vpSize.y)) {
-                  Graphics::FramebufferSpec const& fbSpec{ framebuffer->GetFramebufferSpec() };
+                  
+                  auto const& geomPass{ Graphics::Renderer::GetPass<Graphics::GeomPass>() };
+                  auto const& pickFb { geomPass->GetTargetFramebuffer() };
+                  Graphics::FramebufferSpec const& fbSpec{ pickFb->GetFramebufferSpec() };
 
-                  framebuffer->Bind();
-                  int const entityId{ framebuffer->ReadPixel(1,
+                  pickFb->Bind();
+                  int const entityId{ pickFb->ReadPixel(1,
                     static_cast<int>(offset.x / vpSize.x * static_cast<float>(fbSpec.width)),
                     static_cast<int>((vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height))) };
-                  framebuffer->Unbind();
+                  pickFb->Unbind();
 
                   if (entityId > 0) {
                       ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
