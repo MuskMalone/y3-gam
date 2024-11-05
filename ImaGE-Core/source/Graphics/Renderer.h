@@ -156,6 +156,7 @@ namespace Graphics {
 		static void DrawRect(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, glm::vec4 const& clr);
 		static void DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, glm::vec4 const& clr);
 		static void DrawSprite(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, Texture const& tex, glm::vec4 const& tint, int entity = -1);
+		static void DrawBox(glm::vec3 const& pos, glm::vec3 const& scale, glm::quat const& rot, glm::vec4 const& clr);
 		static void RenderFullscreenTexture();
 
 		static void SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr = Color::COLOR_WHITE);
@@ -182,6 +183,8 @@ namespace Graphics {
 		static IGE::Assets::GUID GetDebugMeshSource(size_t idx = 0);
 
 		static IGE::Assets::GUID GetQuadMeshSource();
+		
+
 		
 	private:
 		static void SetQuadBufferData(glm::vec3 const& pos, glm::vec4 const& clr,
