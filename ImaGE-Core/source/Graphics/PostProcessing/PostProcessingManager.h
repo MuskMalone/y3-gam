@@ -7,16 +7,24 @@ namespace Graphics {
 	class PostProcessingManager : public ThreadSafeSingleton<PostProcessingManager>{
 	public:
 		struct PostProcessingConfigs {
-			std::unordered_map<std::string, uint64_t> mConfigs;
+			using ShaderOrder = std::vector<uint64_t>;
+			std::unordered_map<std::string, std::vector<uint64_t>> mConfigs;
 		};
 	public:
 		PostProcessingManager();
 		~PostProcessingManager();
+
+		void LoadShader(IGE::Assets::GUID);
+		//push in from the back
 		void SetShader(IGE::Assets::GUID);
-		void RemoveShader();
-		std::shared_ptr<Graphics::Shader> GetShader();
-		std::string GetShaderName();
-		void ReloadShader();
+		void MovePriorityUp(unsigned idx);
+		void MovePriorityDown(unsigned idx);
+		void RemoveShader(unsigned idx);
+		std::shared_ptr<Graphics::Shader> GetShader(unsigned idx);
+		std::string GetShaderName(unsigned idx);
+		unsigned GetShaderNum();
+		void ReloadShaders();
+		void ReloadShader(unsigned idx);
 	private:
 		void CreateConfigFile();
 	private: 

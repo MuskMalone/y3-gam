@@ -31,11 +31,22 @@ namespace GUI {
             ImGui::EndDragDropTarget();
         }
     }
+    std::string GetFileContents(std::string path) {
+        std::ifstream file(path);
+        if (!file.is_open()) {
+            Debug::DebugLogger::GetInstance().LogWarning("couldnt open shader");
+            return "error reading shader!";
+        }
+
+        std::stringstream buffer;
+        buffer << file.rdbuf();
+        return buffer.str();
+    }
 	void PostProcessingSettings::Run()
 	{
-        std::string fileContent = "";
+        
         ImGui::Begin("Post Processing");
-        if (Graphics::PostProcessingManager::GetInstance().GetShaderName().empty()) {
+        {
             // Set the size of the drop box
             ImVec2 boxSize(200.0f, 50.0f);
             ImVec2 cursorPos = ImGui::GetCursorScreenPos();
@@ -51,49 +62,44 @@ namespace GUI {
             ImGui::TextUnformatted("Drag here to add shader");
             ShaderDragDropEvent();
             ImGui::EndChild();
-            if (!fileContent.empty()) {
-                fileContent.clear();
-            }
+            //if (!fileContent.empty()) {
+            //    fileContent.clear();
+            //}
         }
-        else {
+        auto numShaders{ Graphics::PostProcessingManager::GetInstance().GetShaderNum() };
+        for (unsigned i{}; i < numShaders; ++i) {
+            static std::unordered_map<std::string, std::string> fileContents;
 
-            
+            // Load each file's content only once
+            for (unsigned j{}; j < numShaders; ++j) {
+                std::string path { Graphics::PostProcessingManager::GetInstance().GetShaderName(j) };
+                if (fileContents.find(path) == fileContents.end()) {
+                    fileContents.emplace(path, GetFileContents(path));
+                }
+            }
+
             // Display file name with Refresh and Delete buttons next to it
-            auto fileName{ Graphics::PostProcessingManager::GetInstance().GetShaderName()};
+            auto fileName{ Graphics::PostProcessingManager::GetInstance().GetShaderName(i)};
             ImGui::TextUnformatted(fileName.c_str());
             ImGui::SameLine();
 
-            // Refresh Button
-            if (fileContent.empty()) {
-                std::ifstream file(fileName);
-                if (file) {
-                    std::ostringstream ss;
-                    ss << file.rdbuf();
-                    fileContent = ss.str();  // Load file content into fileContent string
-                }
-            }
-            if (ImGui::Button("Refresh")) {
+            if (ImGui::Button(("Refresh##" + std::to_string(i)).c_str())) {
                 // Reload the file content 
-                Graphics::PostProcessingManager::GetInstance().ReloadShader();
-                std::ifstream file(fileName);
-                if (file) {
-                    std::ostringstream ss;
-                    ss << file.rdbuf();
-                    fileContent = ss.str();  // Load file content into fileContent string
-                }
+                Graphics::PostProcessingManager::GetInstance().ReloadShader(i);
+                fileContents[fileName] = std::move(GetFileContents(fileName));
             }
 
             ImGui::SameLine();
 
             // Delete Button
-            if (ImGui::Button("Delete")) {
-                Graphics::PostProcessingManager::GetInstance().RemoveShader();
+            if (ImGui::Button(("Delete##" + std::to_string(i)).c_str())) {
+                Graphics::PostProcessingManager::GetInstance().RemoveShader(i);
             }
 
             // Display the text editor
             ImGui::Separator();
-            ImGui::BeginChild("FileContent", ImVec2(0, ImGui::GetTextLineHeight() * 20), true, ImGuiWindowFlags_HorizontalScrollbar);
-            ImGui::TextWrapped("%s", fileContent.c_str());  // Display content with wrapped text
+            ImGui::BeginChild(("FileContent##" + std::to_string(i)).c_str(), ImVec2(0, ImGui::GetTextLineHeight() * 20), true, ImGuiWindowFlags_HorizontalScrollbar);
+            ImGui::TextWrapped("%s", fileContents[fileName].c_str());  // Display content with wrapped text
             if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
             {
                 if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {

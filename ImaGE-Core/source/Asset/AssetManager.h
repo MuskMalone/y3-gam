@@ -135,8 +135,8 @@ namespace IGE {
                   AssetMetadata::IGEProjProperties& allmetadata{ mMetadata.mAssetProperties };
                   std::string assetCategory{ GetTypeName<T>() };
                   mMetadata.Emplace(assetCategory, guid, metadata);
-                  mPath2GUIDRegistry.emplace(filepathstr, guid);
-                  mGUID2PathRegistry.emplace(guid, filepathstr);
+                  mPath2GUIDRegistry.emplace(newFp, guid);
+                  mGUID2PathRegistry.emplace(guid, newFp);
                   return guid;
               }
               //else {

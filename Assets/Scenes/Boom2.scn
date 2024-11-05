@@ -57,6 +57,27 @@
                         }
                     },
                     {
+                        "key": "RigidBody",
+                        "value": {
+                            "velocity": {
+                                "x": -5.099999904632568,
+                                "y": -0.800000011920929,
+                                "z": -2.700000047683716
+                            },
+                            "angularVelocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "staticFriction": 0.0,
+                            "dynamicFriction": 0.0,
+                            "restitution": 0.0,
+                            "gravityFactor": 0.0,
+                            "linearDamping": 0.9800000190734863,
+                            "motionType": "DYNAMIC"
+                        }
+                    },
+                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -82,27 +103,6 @@
                         "key": "Layer",
                         "value": {
                             "layerName": "Player"
-                        }
-                    },
-                    {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": -5.099999904632568,
-                                "y": -0.800000011920929,
-                                "z": -2.700000047683716
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 0.0,
-                            "dynamicFriction": 0.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "DYNAMIC"
                         }
                     }
                 ],
@@ -366,8 +366,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "Seed": "Cube",
-                            "ID": 9115105366793692982
+                            "ID": 10931113021213421160
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -453,29 +452,20 @@
                 },
                 {
                     "Light": {
-                        "lighttype": 0,
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "direction": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
+                        "lightType": "DIRECTIONAL",
                         "color": {
                             "x": 0.0,
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "linear": 0.0,
-                        "quadratic": 0.0,
-                        "radius": 0.0,
-                        "cutoff": 0.0,
-                        "outercutoff": 0.0,
+                        "intensity": 1.0,
+                        "innerAngle": 5.0,
+                        "outerAngle": 12.5,
+                        "range": 10.0,
                         "castShadows": true,
-                        "receiveShadows": true
+                        "bias": 0.004999999888241291,
+                        "softness": 1,
+                        "nearPlaneMultiplier": 10.0
                     }
                 }
             ]
@@ -653,8 +643,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "Seed": "Cube",
-                            "ID": 9115105366793692982
+                            "ID": 10931113021213421160
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -797,8 +786,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "Seed": "Cube",
-                            "ID": 9115105366793692982
+                            "ID": 10931113021213421160
                         },
                         "castShadows": true,
                         "receiveShadows": true
@@ -934,9 +922,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -1.1703062057495118,
-                                            "y": 0.4263947010040283,
-                                            "z": 3.1060776710510256
+                                            "x": -25.600000381469728,
+                                            "y": -2.299999952316284,
+                                            "z": 0.0
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -1010,8 +998,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "Seed": "Cube",
-                            "ID": 9115105366793692982
+                            "ID": 10931113021213421160
                         },
                         "castShadows": true,
                         "receiveShadows": true

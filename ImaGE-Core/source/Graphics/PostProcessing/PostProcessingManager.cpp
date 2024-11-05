@@ -19,6 +19,11 @@ namespace Graphics {
 		Serialization::Serializer::SerializeAny(mPpc, cConfigFilePath);
 	}
 
+	void PostProcessingManager::LoadShader(IGE::Assets::GUID guid)
+	{
+		IGE_ASSETMGR.LoadRef<IGE::Assets::ShaderAsset>(guid);
+	}
+
 	void PostProcessingManager::SetShader(IGE::Assets::GUID guid)
 	{
 		auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
@@ -26,13 +31,12 @@ namespace Graphics {
 		if (!name.empty()) {
 			//load the asset first before emplacing (to account for on change scene event)
 			try {
-				IGE_ASSETMGR.LoadRef<IGE::Assets::ShaderAsset>(guid);
-				if (mPpc.mConfigs.find(name) != mPpc.mConfigs.end()) {
-					if (IGE::Assets::GUID{ mPpc.mConfigs.at(name) } == guid) return;
-					else RemoveShader();
+				LoadShader(guid);
+				//if name is not found, create a vector
+				if (mPpc.mConfigs.find(name) == mPpc.mConfigs.end()) {
+					mPpc.mConfigs.emplace(name, PostProcessingConfigs::ShaderOrder{});
 				}
-
-				mPpc.mConfigs.emplace(name, guid);
+				mPpc.mConfigs.at(name).push_back(guid);
 			}
 			catch (...) {
 				Debug::DebugLogger::GetInstance().LogError("failed to load post processing shader");
@@ -40,37 +44,84 @@ namespace Graphics {
 
 		}
 	}
-	void PostProcessingManager::RemoveShader()
+	void PostProcessingManager::MovePriorityUp(unsigned idx)
 	{
 		auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
 		if (mPpc.mConfigs.find(name) != mPpc.mConfigs.end()) {
 			//should unload shdr here
-			mPpc.mConfigs.erase(name);
+			if (idx > 0 && idx < mPpc.mConfigs.at(name).size()) {
+				std::swap(mPpc.mConfigs.at(name)[idx], mPpc.mConfigs.at(name)[idx - 1]);
+			}
 		}
 	}
-	std::shared_ptr<Graphics::Shader> PostProcessingManager::GetShader()
+	void PostProcessingManager::MovePriorityDown(unsigned idx)
+	{
+		auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
+		if (mPpc.mConfigs.find(name) != mPpc.mConfigs.end()) {
+			//should unload shdr here
+			if (mPpc.mConfigs.at(name).size() > 1 && idx < mPpc.mConfigs.at(name).size() - 1) {
+				std::swap(mPpc.mConfigs.at(name)[idx], mPpc.mConfigs.at(name)[idx + 1]);
+			}
+		}
+	}
+	void PostProcessingManager::RemoveShader(unsigned idx)
+	{
+		auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
+		if (mPpc.mConfigs.find(name) != mPpc.mConfigs.end()) {
+			if (idx < mPpc.mConfigs.at(name).size()) {
+				//delete the element at idx
+				//should unload shdr here
+				mPpc.mConfigs.at(name).erase(mPpc.mConfigs.at(name).begin() + idx);
+			}
+			if (mPpc.mConfigs.at(name).empty()) {
+				mPpc.mConfigs.erase(name);
+			}
+		}
+	}
+	std::shared_ptr<Graphics::Shader> PostProcessingManager::GetShader(unsigned idx)
 	{
 		auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
 		if (name.empty() || mPpc.mConfigs.find(name) == mPpc.mConfigs.end()) {
 			return mDefaultShader;
 		}
-		return IGE_ASSETMGR.GetAsset<IGE::Assets::ShaderAsset>(mPpc.mConfigs.at(name))->mShader;
+		if (idx >= mPpc.mConfigs.at(name).size()) return mDefaultShader;
+		return IGE_ASSETMGR.GetAsset<IGE::Assets::ShaderAsset>(mPpc.mConfigs.at(name)[idx])->mShader;
 	}
-	std::string PostProcessingManager::GetShaderName()
+	std::string PostProcessingManager::GetShaderName(unsigned idx)
 	{
 		auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
 		if (name.empty() || mPpc.mConfigs.find(name) == mPpc.mConfigs.end()) {
 			return "";
 		}
-		return IGE_ASSETMGR.GUIDToPath(mPpc.mConfigs.at(name));
+		if (idx >= mPpc.mConfigs.at(name).size()) return "";
+		return IGE_ASSETMGR.GUIDToPath(mPpc.mConfigs.at(name)[idx]);
 	}
-	void PostProcessingManager::ReloadShader()
+	unsigned PostProcessingManager::GetShaderNum()
+	{
+		auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
+		if (name.empty() || mPpc.mConfigs.find(name) == mPpc.mConfigs.end()) {
+			return 0;
+		}
+		return mPpc.mConfigs.at(name).size();
+	}
+	void PostProcessingManager::ReloadShaders()
 	{
 		auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
 		if (mPpc.mConfigs.find(name) != mPpc.mConfigs.end()) {
-			IGE_ASSETMGR.ReloadRef<IGE::Assets::ShaderAsset>(mPpc.mConfigs.at(name));
+			for (auto guid : mPpc.mConfigs.at(name)) {
+				IGE_ASSETMGR.ReloadRef<IGE::Assets::ShaderAsset>(guid);
+			}
 		}
 
+	}
+	void PostProcessingManager::ReloadShader(unsigned idx)
+	{
+		auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
+		if (mPpc.mConfigs.find(name) != mPpc.mConfigs.end()) {
+			if (idx < mPpc.mConfigs.at(name).size()) {
+				IGE_ASSETMGR.ReloadRef<IGE::Assets::ShaderAsset>(mPpc.mConfigs.at(name)[idx]);
+			}
+		}
 	}
 	void PostProcessingManager::CreateConfigFile()
 	{
@@ -87,7 +138,9 @@ namespace Graphics {
 		if (state == Events::SceneStateChange::CHANGED) {
 			auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
 			if (mPpc.mConfigs.find(name) != mPpc.mConfigs.end()) {
-				SetShader(mPpc.mConfigs.at(name));
+				for (auto guid : mPpc.mConfigs.at(name)) {
+					LoadShader(guid);
+				}
 			}
 		}
 	}

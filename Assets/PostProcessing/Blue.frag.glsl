@@ -16,5 +16,5 @@ uniform sampler2D u_ScreenTex;
 out vec4 fragColor;
 
 void main() {
-    fragColor = texture(u_ScreenTex, fragTexCoord) * vec4(1,0.1,0.5,1);
+    fragColor = vec4(0,1,1,1) * texture(u_ScreenTex, fragTexCoord);
 }

@@ -79,6 +79,10 @@ namespace Performance {
     return mVsyncEnabled;
   }
 
+  unsigned int FrameRateController::GetFrameCounter() const noexcept {
+      return mFrameCounter;
+  }
+
   void FrameRateController::SetFPSCalculationInterval(float fpsCalculationInterval) {
     mFPSCalculationInterval = fpsCalculationInterval;
   }
@@ -93,6 +97,8 @@ namespace Performance {
     glfwSwapInterval((mVsyncEnabled) ? 1 : 0);
   }
 
+
+    
   void FrameRateController::Reset() {
     mCurrFrameTime = 0.f;
     mNewFrameTime = 0.f;
