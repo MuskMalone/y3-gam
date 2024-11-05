@@ -61,6 +61,10 @@ namespace Graphics::AssetIO
     }    
 
     ProcessMeshes(aiScn->mRootNode, aiScn);
+
+    if (sRecenterMesh) {
+      RecenterMesh();
+    }
   }
 
   void IMSH::ProcessSubmeshes(aiNode* node, aiScene const* scene, aiMatrix4x4 const& parentMtx)
@@ -73,8 +77,8 @@ namespace Graphics::AssetIO
       aiMesh const* mesh{ scene->mMeshes[node->mMeshes[i]] };
       AddVertices(mVertexBuffer, mesh, transMtx);
       AddIndices(mIndices, mesh, offset);
-
-      if (!sStaticMeshConversion) {
+      
+      if (!mIsStatic) {
         uint32_t const vtxOffset{ static_cast<uint32_t>(mVertexBuffer.size()) }, idxOffset{ static_cast<uint32_t>(mIndices.size()) };
         mSubmeshData.emplace_back(vtxOffset, idxOffset, mesh->mNumVertices, mIndices.size() - idxOffset, 0);
       }
@@ -111,6 +115,7 @@ namespace Graphics::AssetIO
       ofs.write(reinterpret_cast<char const*>(mVertexBuffer.data()), header.vtxSize * sizeof(Graphics::Vertex));
       ofs.write(reinterpret_cast<char const*>(mIndices.data()), header.idxSize * sizeof(uint32_t));
       ofs.write(reinterpret_cast<char const*>(mSubmeshData.data()), header.submeshSize * sizeof(SubmeshData));
+      ofs.write(reinterpret_cast<char const*>(&mIsStatic), sizeof(bool));
 
       ofs.close();
   }
@@ -144,8 +149,29 @@ namespace Graphics::AssetIO
     ifs.read(reinterpret_cast<char*>(mIndices.data()), header.idxSize * sizeof(uint32_t));
     mSubmeshData.resize(header.submeshSize);
     ifs.read(reinterpret_cast<char*>(mSubmeshData.data()), header.submeshSize * sizeof(SubmeshData));
+    ifs.read(reinterpret_cast<char*>(&mIsStatic), sizeof(bool));
 
     ifs.close();
+  }
+
+  void IMSH::RecenterMesh() {
+    glm::vec3 min{ FLT_MAX }, max{ -FLT_MAX };
+
+    // find the min and max AABB
+    for (Graphics::Vertex const& vtx : mVertexBuffer) {
+      min = glm::min(vtx.position, min);
+      max = glm::max(vtx.position, max);
+    }
+
+    // get the center of the AABB
+    glm::vec3 const center{ (min + max) * 0.5f };
+    // if already centered, return
+    if (glm::all(glm::lessThan(glm::abs(center), glm::vec3(glm::epsilon<float>())))) { return; }
+
+    // map center to { 0, 0, 0 }
+    for (Graphics::Vertex& vtx : mVertexBuffer) {
+      vtx.position -= center;
+    }
   }
 
 } // namespace Graphics::AssetIO

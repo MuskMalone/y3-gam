@@ -21,6 +21,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GUI/Helpers/AssetPayload.h>
 
 namespace MeshPopup {
+  static constexpr float sTableCol1Width = 250.f;
   static std::vector<std::string> sModelsToImport;
   static std::string sMeshPopupInput, sMeshName;
   static bool sOpenMeshPopup{ false }, sMeshOverwriteWarning{ false };
@@ -49,6 +50,8 @@ namespace
     The string in lower case
   ************************************************************************/
   std::string ToLower(std::string const& str);
+
+  void NextRowTable(const char* label);
 }
 
 namespace GUI
@@ -489,6 +492,7 @@ namespace GUI
 
   void AssetBrowser::ImportMeshPopup() const {
     ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    //ImGui::SetNextWindowSize(ImVec2(450, 300), ImGuiCond_Always);
     if (!ImGui::BeginPopupModal(sMeshPopupTitle, NULL, ImGuiWindowFlags_AlwaysAutoResize)) { return; }
     static bool blankWarning{ false };
     bool close{ false };
@@ -510,38 +514,62 @@ namespace GUI
       ImGui::TextColored(ImVec4(0.99f, 0.82f, 0.09f, 1.0f), "File will be overwritten!!");
     }
 
-    ImGui::Text("Import mesh to:");
-    float const offset{ ImGui::GetTextLineHeight() * 0.5f };
-    ImGui::AlignTextToFramePadding();
-    ImGui::Text("Assets\\Models\\");
-    ImGui::SameLine();
-    //if (!ImGui::IsAnyItemActive()) { ImGui::SetKeyboardFocusHere(); }
-    ImGui::BeginDisabled();
-    if (ImGui::InputText("##MeshPathInput", &MeshPopup::sMeshPopupInput)) {
-      MeshPopup::sMeshOverwriteWarning = std::filesystem::exists(gMeshOutputDir + MeshPopup::sMeshPopupInput);
-      blankWarning = false;
-    }
-    ImGui::EndDisabled();
-    if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
-      ImGui::SetTooltip("Rename feature coming soon!");
-    }
-    ImGui::NewLine();
+    float const firstColWidth{ 150.f };
+    if (ImGui::BeginTable("MeshPopupTable", 2, ImGuiTableFlags_SizingFixedFit)) {
+      ImGui::TableSetupColumn("##col0", ImGuiTableColumnFlags_WidthFixed, firstColWidth);
+      ImGui::TableSetupColumn("##col1", ImGuiTableColumnFlags_WidthFixed, MeshPopup::sTableCol1Width);
+      ImGui::TableNextRow();
 
-    float const contentRegionX{ ImGui::GetWindowContentRegionMax().x };
-    ImGui::SetCursorPosX(0.5f * (contentRegionX - ImGui::CalcTextSize("Static Mesh 123").x));
-    ImGui::AlignTextToFramePadding();
-    ImGui::Text("Static Mesh");
-    ImGui::SameLine();
-    ImGui::Checkbox("##StaticMesh", &Graphics::AssetIO::IMSH::sStaticMeshConversion);
-    if (ImGui::IsItemHovered()) {
-      ImGui::SetTooltip("Combine all sub-meshes into a single mesh entity");
+      NextRowTable("Import mesh to:");
+      NextRowTable("Assets\\Models\\");
+      //if (!ImGui::IsAnyItemActive()) { ImGui::SetKeyboardFocusHere(); }
+      ImGui::BeginDisabled();
+      if (ImGui::InputText("##MeshPathInput", &MeshPopup::sMeshPopupInput)) {
+        MeshPopup::sMeshOverwriteWarning = std::filesystem::exists(gMeshOutputDir + MeshPopup::sMeshPopupInput);
+        blankWarning = false;
+      }
+      ImGui::EndDisabled();
+      if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+        ImGui::SetTooltip("Rename feature coming soon!");
+      }
+
+      NextRowTable("");
+
+      bool elementHover{ false };
+
+      // recenter checkbox
+      ImGui::AlignTextToFramePadding();
+      NextRowTable("Recenter Mesh?");
+      if (ImGui::IsItemHovered()) { elementHover = true; }
+
+      ImGui::Checkbox("##RecenterMesh", &Graphics::AssetIO::IMSH::sRecenterMesh);
+      if (ImGui::IsItemHovered()) { elementHover = true; }
+
+      if (elementHover) {
+        ImGui::SetTooltip("Remap the mesh's vertices so its center is the origin");
+        elementHover = false;
+      }
+      ImGui::TableNextRow();
+
+      // static mesh checkbox
+      ImGui::AlignTextToFramePadding();
+      NextRowTable("Static Mesh");
+      if (ImGui::IsItemHovered()) { elementHover = true; }
+      
+      ImGui::Checkbox("##StaticMesh", &Graphics::AssetIO::IMSH::sStaticMeshConversion);
+      if (ImGui::IsItemHovered()) { elementHover = true; }
+
+      if (elementHover) {
+        ImGui::SetTooltip("Combine all sub-meshes into a single mesh entity");
+      }
+
+      ImGui::EndTable();
     }
 
     ImGui::NewLine();
-    ImGui::SetCursorPosX(0.5f * (contentRegionX - ImGui::CalcTextSize("Cancel Create ").x));
+    ImGui::SetCursorPosX(0.5f * (ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize("Cancel Create ").x));
     if (ImGui::Button("Cancel##Mesh") || ImGui::IsKeyPressed(ImGuiKey_Escape)) {
       close = true;
-      ImGui::CloseCurrentPopup();
     }
 
     ImGui::SameLine();
@@ -556,7 +584,6 @@ namespace GUI
         IGE_ASSETMGR.ImportAsset<IGE::Assets::ModelAsset>(MeshPopup::sModelsToImport.back());
 
         close = true;
-        ImGui::CloseCurrentPopup();
       }
     }
 
@@ -571,6 +598,8 @@ namespace GUI
       else {
         MeshPopup::sMeshPopupInput.clear();
       }
+
+      ImGui::CloseCurrentPopup();
     }
 
     ImGui::PopStyleVar();
@@ -599,5 +628,13 @@ namespace
     }
 
     return ret;
+  }
+
+  void NextRowTable(const char* label) {
+    ImGui::TableNextRow();
+    ImGui::TableSetColumnIndex(0);
+    ImGui::Text(label);
+    ImGui::TableSetColumnIndex(1);
+    ImGui::SetNextItemWidth(MeshPopup::sTableCol1Width);
   }
 }
