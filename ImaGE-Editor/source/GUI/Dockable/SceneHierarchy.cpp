@@ -72,18 +72,19 @@ namespace GUI
     if (ImGuiHelpers::BeginDrapDropTargetWindow(sDragDropPayload))
     {
       ImGuiPayload const* drop{ ImGui::AcceptDragDropPayload(sDragDropPayload) };
-      ECS::Entity droppedEntity{ *reinterpret_cast<ECS::Entity*>(drop->Data) };
-      if (mEntityManager.HasParent(droppedEntity)) {
-        mEntityManager.RemoveParent(droppedEntity);
+      if (drop) {
+        ECS::Entity droppedEntity{ *reinterpret_cast<ECS::Entity*>(drop->Data) };
+        if (mEntityManager.HasParent(droppedEntity)) {
+          mEntityManager.RemoveParent(droppedEntity);
 
-        // entity unparented - convert to local and recompute matrix
-        Component::Transform& trans{ droppedEntity.GetComponent<Component::Transform>() };
-        trans.SetLocalToWorld();
-        trans.modified = true;
+          // entity unparented - convert to local and recompute matrix
+          Component::Transform& trans{ droppedEntity.GetComponent<Component::Transform>() };
+          trans.SetLocalToWorld();
+          trans.modified = true;
 
-        QUEUE_EVENT(Events::SceneModifiedEvent);
+          QUEUE_EVENT(Events::SceneModifiedEvent);
+        }
       }
-
       ImGui::EndDragDropTarget();
     }
 
