@@ -73,6 +73,9 @@ static void rttr_auto_register_reflection_function_(); namespace {
   /* ------------------- Other ------------------- */
   rttr::registration::class_<rttr::type>("RttrType");
 
+  rttr::registration::class_<std::vector<uint64_t>>("std::vector<uint64_t>")
+    .constructor<>()(rttr::policy::ctor::as_object);
+  
   rttr::registration::class_<physx::PxVec3>("PxVec3")
     .constructor<>()(rttr::policy::ctor::as_object)
     .property("x", &physx::PxVec3::x)

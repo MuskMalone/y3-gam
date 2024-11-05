@@ -492,14 +492,14 @@ namespace Serialization
     {
       if (jsonVal.IsUint())
         return jsonVal.GetUint();
+      else if (jsonVal.IsUint64())
+        return jsonVal.GetUint64();
       else if (jsonVal.IsInt())
         return jsonVal.GetInt();
       else if (jsonVal.IsDouble())
         return jsonVal.GetDouble();
       else if (jsonVal.IsInt64())
         return jsonVal.GetInt64();
-      else if (jsonVal.IsUint64())
-        return jsonVal.GetUint64();
       break;
     }
 
@@ -515,6 +515,12 @@ namespace Serialization
 
   void Deserializer::DeserializeSequentialContainer(rttr::variant_sequential_view& seqView, rapidjson::Value const& jsonVal)
   {
+#ifdef DESERIALIZER_DEBUG
+    if (!seqView.is_valid()) {
+      std::cout << "Sequential view is not valid!\n";
+    }
+#endif
+
     seqView.set_size(jsonVal.Size());
     for (rapidjson::SizeType i{}; i < jsonVal.Size(); ++i)
     {
@@ -537,8 +543,9 @@ namespace Serialization
       {
         rttr::variant result{ ExtractBasicTypes(idxVal) };
         if (!seqView.set_value(i, result)) {
+          rttr::type const seqViewType{ seqView.get_value_type() };
           // temp fix for entt::entity idk man conversion function didnt work
-          if (seqView.get_value_type() == rttr::type::get<entt::entity>()) {
+          if (seqViewType == rttr::type::get<entt::entity>()) {
             result = static_cast<entt::entity>(result.get_value<uint32_t>());
             if (seqView.set_value(i, result)) {
               continue;
@@ -549,8 +556,12 @@ namespace Serialization
             seqView.set_value(i, idxVal.GetInt());
             continue;
           }
+          else if (seqViewType == rttr::type::get<uint64_t>()) {
+            seqView.set_value(i, idxVal.GetUint64());
+            continue;
+          }
 
-          std::string const msg{ "Unable to set sequential view of type " + seqView.get_type().get_name().to_string() };
+          std::string const msg{ "Unable to set sequential view of type " + seqView.get_value_type().get_name().to_string()};
           Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
           std::cout << msg << "\n";
@@ -562,6 +573,9 @@ namespace Serialization
 
   rttr::variant Deserializer::ExtractValue(rapidjson::Value const& jsonVal, rttr::type const& type)
   {
+#ifdef DESERIALIZER_DEBUG
+    std::cout << "  Extracting value of type " << type << "\n";
+#endif
     rttr::variant extractedVal{ ExtractBasicTypes(jsonVal) };
     if (!extractedVal.convert(type))
     {
@@ -619,12 +633,13 @@ namespace Serialization
 
         auto keyVar{ ExtractValue(keyIter->value, view.get_key_type()) }, valVar{ ExtractValue(valIter->value, view.get_value_type()) };
         if (!keyVar || !valVar) {
-          std::ostringstream oss{};
+          std::ostringstream oss{}, oss2{};
           oss << "Unable to extract key-value pair for element of type " << view.get_key_type().get_name().to_string()
             << "-" << view.get_value_type().get_name().to_string() << " in associative view ";
+          oss2 << "Types are " << keyVar.get_type().get_name().to_string() << ", " << valVar.get_type().get_name().to_string();
           Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
-          std::cout << oss.str() << "\n";
+          std::cout << oss.str() << "\n" << oss2.str() << '\n';
 #endif
         }
         else
