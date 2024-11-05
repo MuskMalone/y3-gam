@@ -43,7 +43,9 @@ namespace Mono {
 		DOUBLE_ARR,
 		STRING_ARR,
 		UINT_ARR,
-		ENTITY
+		ENTITY,
+		INSIDE,
+		INSIDEB
 	};
 
 

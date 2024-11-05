@@ -117,6 +117,24 @@
                                                     "scriptField": {
                                                         "fieldName": "mEntityID"
                                                     }
+                                                },
+                                                {
+                                                    "data": {
+                                                        "scriptName": "Image.Mono.InsideB",
+                                                        "scriptFieldInstList": [
+                                                            {
+                                                                "data": 369,
+                                                                "type": "System.Int32",
+                                                                "scriptField": {
+                                                                    "fieldName": "INSIDEHERE"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    "type": "Image.Mono.ScriptInstance",
+                                                    "scriptField": {
+                                                        "fieldName": "testInside"
+                                                    }
                                                 }
                                             ]
                                         },

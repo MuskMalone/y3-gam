@@ -85,6 +85,8 @@
   <ItemGroup>
     <Compile Include="source\Mono\Component.cs" />
     <Compile Include="source\Mono\Entity.cs" />
+    <Compile Include="source\Mono\Inside.cs" />
+    <Compile Include="source\Mono\InsideB.cs" />
     <Compile Include="source\Mono\InternalCalls.cs" />
     <Compile Include="source\Mono\Keycode.cs" />
     <Compile Include="source\Mono\Vec2.cs" />

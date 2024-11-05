@@ -17,18 +17,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Reflection {
 
-  // proxy script field info
-  template<typename T>
-  struct ProxySFInfo {
-    std::string fieldName;
-    std::string type;
-    T data;
-
-    std::string Getfieldname()
-    {
-      return fieldName;
-    }
-  };
 
   struct ProxyScript {
     ProxyScript() = default;

@@ -66,7 +66,9 @@ namespace Mono
     { "Image.Mono.Utils.Vec3<System.Double>", ScriptFieldType::DVEC3 },
     { "System.Int32[]", ScriptFieldType::INT_ARR },
     { "System.String[]",ScriptFieldType::STRING_ARR},
-    { "Image.Mono.Entity",ScriptFieldType::ENTITY}
+    { "Image.Mono.Entity",ScriptFieldType::ENTITY},
+    { "Image.Mono.Inside",ScriptFieldType::INSIDE},
+    { "Image.Mono.InsideB",ScriptFieldType::INSIDEB}
   };
 }
 
