@@ -50,7 +50,7 @@ namespace GUI
       else if (fileExt == gFontFileExt) {
         mAssetType = AssetType::FONT;
       }
-      else if (fileExt == gSpriteFileExt) {
+      else if (IGE::Assets::cImageExtensions.find(fileExt) != IGE::Assets::cImageExtensions.end()) {
         mAssetType = AssetType::SPRITE;
       }
     }
