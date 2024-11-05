@@ -275,9 +275,9 @@
                     "Light": {
                         "lightType": "DIRECTIONAL",
                         "color": {
-                            "x": 0.572549045085907,
-                            "y": 0.0,
-                            "z": 0.0
+                            "x": 0.3270708918571472,
+                            "y": 0.5050166845321655,
+                            "z": 0.3209136128425598
                         },
                         "intensity": 1.0,
                         "innerAngle": 5.0,
@@ -287,6 +287,77 @@
                         "bias": 0.004999999888241291,
                         "softness": 5,
                         "nearPlaneMultiplier": 10.0
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 6,
+            "Parent": null,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "banana-monster",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 88.72026062011719,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.05000000074505806,
+                            "y": 0.05000000074505806,
+                            "z": 0.05000000074505806
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 88.72026062011719,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.05000000074505806,
+                            "y": 0.05000000074505806,
+                            "z": 0.05000000074505806
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "banana-monster",
+                        "GUID": {
+                            "ID": 2365944062561285119
+                        },
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
                     }
                 }
             ]
@@ -351,7 +422,7 @@
                 },
                 {
                     "Camera": {
-                        "projType": 0,
+                        "projType": "PERSP",
                         "position": {
                             "x": 0.0,
                             "y": 0.0,
@@ -429,7 +500,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 11531779585991036820
+                            "ID": 13539703151939950973
                         },
                         "isCustomMesh": false,
                         "castShadows": true,
