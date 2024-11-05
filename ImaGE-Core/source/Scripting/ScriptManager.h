@@ -308,7 +308,7 @@ namespace Mono
 
 		static void LogCritical(MonoString*);
 
-
+		static float GetAxis(MonoString*);
 
 		/*!**********************************************************************
 		*																																			  *

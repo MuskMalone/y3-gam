@@ -24,10 +24,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using Image.Mono.Utils;
+using Image.Utils;
 
-namespace Image.Mono
-{
 
 public class Test : Entity
 {
@@ -115,5 +113,4 @@ public class Test : Entity
 
    
   }
-}
 

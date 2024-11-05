@@ -15,33 +15,43 @@ written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************************/
 
-using Image.Mono.Utils;
+
+using Image.Utils;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
 
-namespace Image.Mono
+namespace Image.Utils
 {
-  public class InsideB 
+  public static class Debug
   {
-    public int INSIDEHERE = 369;
-    // Start is called before the first frame update
-    void Start()
+    public static void Log(string s)
     {
-
+      InternalCalls.Log(s);
     }
 
-    // Update is called once per frame
-    void Update()
+    public static void LogWarning(string s)
     {
-
+      InternalCalls.LogWarning(s);
     }
+
+
+    public static void LogError(string s)
+    {
+      InternalCalls.LogError(s);
+    }
+
+
+    public static void LogCritical(string s)
+    {
+      InternalCalls.LogCritical(s);
+    }
+
+
+
+
   }
-
 }

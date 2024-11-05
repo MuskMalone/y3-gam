@@ -92,6 +92,9 @@ void InputManager::UpdateInput()
 	}
 
 	QueueInputEvents();
+
+	//Update the Axis
+
 }
 
 
@@ -214,6 +217,33 @@ vec2 InputManager::GetMousePosWorld()
 	//Graphics::gVec2 worldPosF32{ gEngine.ScreenToWS({ static_cast<GLfloat>(mMousePos.x), static_cast<GLfloat>(mHeight - mMousePos.y) }, m_currFramebuffer) };
 	//return  {worldPosF32.x, worldPosF32.y};
 	return { 0,0 };
+}
+
+void InputManager::UpdateAllAxis()
+{
+	// For now we assume W,A,S,D will affect the axis
+	if (IsKeyHeld(KEY_CODE::KEY_W)) 
+		UpdateAxis("Vertical", 1 * InputSensitivity);
+	if (IsKeyHeld(KEY_CODE::KEY_S))
+		UpdateAxis("Vertical",-1 * InputSensitivity);
+	if (IsKeyHeld(KEY_CODE::KEY_D))
+		UpdateAxis("Horizontal", 1 * InputSensitivity);
+	if (IsKeyHeld(KEY_CODE::KEY_A))
+		UpdateAxis("Horizontal", -1 * InputSensitivity);
+	
+}
+
+void InputManager::UpdateAxis(std::string name, float val)
+{
+	float currVal = axes[name];
+	currVal += (val * Performance::FrameRateController::GetInstance().GetDeltaTime());
+	currVal = (currVal < 0.f) ? 0.f : (currVal > 1.f)? 1.f : currVal;
+	axes[name] = currVal;
+}
+
+float InputManager::GetAxis(std::string name)
+{
+	return axes[name];
 }
 
 

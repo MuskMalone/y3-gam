@@ -26,7 +26,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Scripting/ScriptInstance.h>
 #include "Input/InputManager.h"
 #include "Asset/AssetManager.h"
-
+#define DEBUG_MONO
 namespace Mono
 {
   std::map<std::string, ScriptClassInfo> ScriptManager::mMonoClassMap{};
@@ -66,9 +66,9 @@ namespace Mono
     { "Image.Mono.Utils.Vec3<System.Double>", ScriptFieldType::DVEC3 },
     { "System.Int32[]", ScriptFieldType::INT_ARR },
     { "System.String[]",ScriptFieldType::STRING_ARR},
-    { "Image.Mono.Entity",ScriptFieldType::ENTITY},
-    { "Image.Mono.Inside",ScriptFieldType::INSIDE},
-    { "Image.Mono.InsideB",ScriptFieldType::INSIDEB}
+    { "Entity",ScriptFieldType::ENTITY},
+    { "Inside",ScriptFieldType::INSIDE},
+    { "InsideB",ScriptFieldType::INSIDEB}
   };
 }
 
@@ -202,10 +202,12 @@ void ScriptManager::LoadAllMonoClass()
 
     std::string classNameSpace = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
     std::string className = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
-    if (classNameSpace.find("Image.Mono") != std::string::npos && classNameSpace.find("Utils") == std::string::npos)
+    if (className.find("<") == std::string::npos && classNameSpace.find("Utils") == std::string::npos)
     {
+#ifdef DEBUG_MONO
       std::cout << classNameSpace << "::" << className << "\n";
       std::cout << "----------------------------------\n";
+#endif 
       MonoClass* newClass = GetClassInAssembly(coreAssembly, classNameSpace.c_str(), className.c_str());
       if (newClass)
       {
@@ -221,7 +223,9 @@ void ScriptManager::LoadAllMonoClass()
             MonoType* type = mono_field_get_type(field);
             ScriptFieldType fieldType = MonoTypeToScriptFieldType(type);
             std::string typeName = mono_type_get_name(type);
+#ifdef DEBUG_MONO
             std::cout << typeName <<  "::" << fieldName  << "\n";
+#endif 
             newScriptClassInfo.mScriptFieldMap[fieldName] = { fieldType, fieldName, field };
           }
         }
@@ -240,7 +244,9 @@ void ScriptManager::LoadAllMonoClass()
         }
         
       }
+#ifdef DEBUG_MONO
       std::cout << "----------------------------------\n\n";
+#endif 
     }
   }
   std::sort(mAllScriptNames.begin(), mAllScriptNames.end());
@@ -707,7 +713,11 @@ void  Mono::LogCritical(MonoString* s)
   Debug::DebugLogger::GetInstance().LogCritical(msg);
 }
 
-
+float  Mono::GetAxis(MonoString* s)
+{
+  std::string msg{ MonoStringToSTD(s) };
+  return Input::InputManager::GetInstance().GetAxis(msg);
+}
 
 /*!**********************************************************************
 *																																			  *

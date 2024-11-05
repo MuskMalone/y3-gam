@@ -23,15 +23,11 @@ using System.Runtime.CompilerServices;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Diagnostics;
-using Image.Mono.Utils;
+//using System.Diagnostics;
+using Image.Utils;
 
 
-
-namespace Image.Mono
-{
-
-    public class Entity
+  public class Entity
   {
 
     public uint mEntityID;
@@ -64,7 +60,7 @@ namespace Image.Mono
     {
       if (mEntityID == null)
       {
-        InternalCalls.LogError("Invalid EntityID");
+        Debug.LogError("Invalid EntityID");
         return null;
       }
       // Try to retrieve the component of type T
@@ -72,7 +68,12 @@ namespace Image.Mono
       return component;
     }
 
+    public void SetActive(bool active)
+    {
+      InternalCalls.SetActive(mEntityID, active);
+    }
+
 
     
   }
-}
+

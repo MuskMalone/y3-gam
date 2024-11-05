@@ -15,33 +15,26 @@ written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************************/
 
-using Image.Mono.Utils;
+
+using Image.Utils;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
 
-namespace Image.Mono
+namespace Image.Utils
 {
-  public class Inside  : Entity
+  public static class Time
   {
-    public InsideB ib;
-    // Start is called before the first frame update
-    void Start()
+    public static float deltaTime
     {
-
+      get
+      {
+        return InternalCalls.GetDeltaTime(); // Push update to C++ side
+      }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
   }
-
 }
