@@ -18,6 +18,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 // forward declarations
 struct aiScene; struct aiNode;
+template <typename T> class aiMatrix4x4t;
+typedef aiMatrix4x4t<float> aiMatrix4x4;
 
 namespace Graphics::AssetIO
 {
@@ -36,7 +38,7 @@ namespace Graphics::AssetIO
   class IMSH
   {
   public:
-    IMSH() : mVertexBuffer{}, mIndices{}, mSubmeshData{}, mStatus{ true } {}
+    IMSH() : mVertexBuffer{}, mIndices{}, mSubmeshData{}, mStatus{ true }, mIsStatic{ true } {}
     // conversions for use in editor only
     IMSH(std::string const& file, MeshImportFlags const& = {});
 
@@ -90,11 +92,12 @@ namespace Graphics::AssetIO
     std::vector<Graphics::Vertex> mVertexBuffer;
     std::vector<uint32_t> mIndices;
     std::vector<SubmeshData> mSubmeshData;
-    bool mStatus;
+    //std::vector<std::string> mMeshNames;
+    bool mStatus, mIsStatic;
 
     static const unsigned sAssimpImportFlags, sMinimalAssimpImportFlags;
 
-    void ProcessSubmeshes(aiNode* node, aiScene const* scene);
+    void ProcessSubmeshes(aiNode* node, aiScene const* scene, aiMatrix4x4 const& parentMtx);
     void ProcessMeshes(aiNode* node, aiScene const* scene);
   };
 

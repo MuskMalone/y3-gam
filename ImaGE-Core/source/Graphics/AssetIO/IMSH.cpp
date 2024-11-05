@@ -23,7 +23,7 @@ namespace {
 
   void AddVertices(std::vector<Graphics::Vertex>& vertexBuffer, aiMesh const* mesh);
   void AddVertices(std::vector<Graphics::Vertex>& vertexBuffer, aiMesh const* mesh, aiMatrix4x4 const& transMtx);
-  void AddIndices(std::vector<uint32_t>& indices, aiMesh const* mesh);
+  void AddIndices(std::vector<uint32_t>& indices, aiMesh const* mesh, unsigned offset = 0);
 }
 
 namespace Graphics::AssetIO
@@ -47,7 +47,8 @@ namespace Graphics::AssetIO
     return ret;
   }
 
-  IMSH::IMSH(std::string const& file, MeshImportFlags const& importFlags) : mVertexBuffer{}, mIndices{}, mSubmeshData{}, mStatus { true } {
+  IMSH::IMSH(std::string const& file, MeshImportFlags const& importFlags) : mVertexBuffer{}, mIndices{}, mSubmeshData{},
+    mStatus{ true }, mIsStatic{ sStaticMeshConversion } {
     Assimp::Importer importer;
 
     importer.SetPropertyInteger(AI_CONFIG_PP_RVC_FLAGS, importFlags.GetFlags());
@@ -62,13 +63,16 @@ namespace Graphics::AssetIO
     ProcessMeshes(aiScn->mRootNode, aiScn);
   }
 
-  void IMSH::ProcessSubmeshes(aiNode* node, aiScene const* scene)
+  void IMSH::ProcessSubmeshes(aiNode* node, aiScene const* scene, aiMatrix4x4 const& parentMtx)
   {
+    aiMatrix4x4 const transMtx{ parentMtx * node->mTransformation };
+
     // now add the submeshes
+    unsigned const offset = mVertexBuffer.size();
     for (unsigned i{}; i < node->mNumMeshes; ++i) {
       aiMesh const* mesh{ scene->mMeshes[node->mMeshes[i]] };
-      AddVertices(mVertexBuffer, mesh);
-      AddIndices(mIndices, mesh);
+      AddVertices(mVertexBuffer, mesh, transMtx);
+      AddIndices(mIndices, mesh, offset);
 
       if (!sStaticMeshConversion) {
         uint32_t const vtxOffset{ static_cast<uint32_t>(mVertexBuffer.size()) }, idxOffset{ static_cast<uint32_t>(mIndices.size()) };
@@ -77,7 +81,7 @@ namespace Graphics::AssetIO
     }
 
     for (unsigned i{}; i < node->mNumChildren; ++i) {
-      ProcessSubmeshes(node->mChildren[i], scene);
+      ProcessSubmeshes(node->mChildren[i], scene, transMtx);
     }
   }
 
@@ -86,12 +90,12 @@ namespace Graphics::AssetIO
     for (unsigned i{}; i < node->mNumMeshes; ++i) {
       aiMesh const* mesh{ scene->mMeshes[node->mMeshes[i]] };
       AddVertices(mVertexBuffer, mesh, node->mTransformation);
-      AddIndices(mIndices, mesh);
+      AddIndices(mIndices, mesh, 0);
     }
 
     mSubmeshData.reserve(node->mNumChildren);
     for (unsigned i{}; i < node->mNumChildren; ++i) {
-      ProcessSubmeshes(node->mChildren[i], scene);
+      ProcessSubmeshes(node->mChildren[i], scene, node->mTransformation);
     }
   }
 
@@ -203,13 +207,13 @@ namespace {
     vertexBuffer.insert(vertexBuffer.end(), temp.begin(), temp.end());
   }
 
-  void AddIndices(std::vector<uint32_t>& indices, aiMesh const* mesh) {
+  void AddIndices(std::vector<uint32_t>& indices, aiMesh const* mesh, unsigned offset) {
     for (size_t i{}, totalCount{ indices.size() }; i < mesh->mNumFaces; ++i) {
       auto const& face{ mesh->mFaces[i] };
       totalCount += face.mNumIndices;
       indices.reserve(totalCount);
       for (unsigned j{}; j < face.mNumIndices; ++j) {
-        indices.emplace_back(face.mIndices[j]);
+        indices.emplace_back(face.mIndices[j] + offset);
       }
     }
   }
