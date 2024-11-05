@@ -8,25 +8,11 @@ namespace Graphics {
 
 	void UIPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities){
 
+		Begin();
 		auto const& shader{ mSpec.pipeline->GetShader() };
 
-		Begin();
-		//Renderer::Clear();
-
-		//auto const& fbSpec{ mSpec.pipeline->GetSpec().targetFramebuffer->GetFramebufferSpec()};
-		////create ortho proj matrix
-		//float width = static_cast<float>(fbSpec.width);
-		//float height = static_cast<float>(fbSpec.height);
-
-		Renderer::BeginBatch(); //scene begin
-
 		glm::mat4 viewProj{};
-		if (cam.isEditor) {
-			viewProj = cam.viewProjMatrix;
-		}
-		else {
-			viewProj = Renderer::mUICamera.GetViewProjMatrix();
-		}
+		viewProj = cam.isEditor ? cam.viewProjMatrix : Renderer::mUICamera.GetViewProjMatrix();
 
 		// @TODO: TEMP, TO MERGE WITH XAVIER
 		shader->Unuse();
@@ -35,8 +21,10 @@ namespace Graphics {
 			textSys->RenderTextForAllEntities(viewProj);
 		}
 		shader->Use();
-
 		shader->SetUniform("u_ViewProjMtx", viewProj);
+
+		Renderer::RenderSceneBegin(viewProj);
+
 
 		for (ECS::Entity const& entity : entities) {
 			if (!entity.HasComponent<Component::Canvas>()) { continue; } //if not canvas skip
@@ -47,8 +35,14 @@ namespace Graphics {
 			auto children{ entityMan.GetChildEntity(entity) }; //vector of UI element entity
 			auto const& xform = entity.GetComponent<Component::Transform>(); //canvas xform
 
+			// Calculate scale for the canvas based on the orthographic camera
+			float orthoWidth = 2.0f * cam.aspectRatio * UI_SCALING_FACTOR<float>;
+			float orthoHeight = 2.0f * cam.aspectRatio * UI_SCALING_FACTOR<float>;
+			glm::vec2 canvasScale = glm::vec2{ orthoWidth, orthoHeight };
 
-			//Graphics::Renderer::SubmitInstance(Renderer::GetQuadMeshSource(), xform.worldMtx, Color::COLOR_BLUE, entity.GetEntityID()); //canvas
+			if (cam.isEditor) {
+				Graphics::Renderer::DrawRect(xform.position, glm::vec2{ canvasScale }, xform.rotation, Color::COLOR_WHITE); //canvas drawn only in editor
+			}
 
 			for (ECS::Entity& uiEntity : children) {
 				auto& uiXform = uiEntity.GetComponent<Component::Transform>(); //ui element transform in screen space
@@ -92,13 +86,14 @@ namespace Graphics {
 					auto const& imageComp = uiEntity.GetComponent<Component::Image>();
 
 					if (imageComp.textureAsset)
-						Renderer::DrawSprite(uiXform.position, glm::vec2{ uiXform.scale}, uiXform.rotation, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(imageComp.textureAsset)->mTexture, imageComp.color);
+						Renderer::DrawSprite(uiXform.worldPos, glm::vec2{ uiXform.worldScale}, uiXform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(imageComp.textureAsset)->mTexture, imageComp.color);
 					else
-						Renderer::DrawQuad(uiXform.position, glm::vec2{ uiXform.scale }, uiXform.rotation, imageComp.color);
+						Renderer::DrawQuad(uiXform.worldPos, glm::vec2{ uiXform.worldScale }, uiXform.worldRot, imageComp.color);
+						
 				}
 
 				else {
-					Renderer::DrawQuad(uiXform.position, glm::vec2{ uiXform.scale }, uiXform.rotation, Color::COLOR_WHITE);
+					Renderer::DrawRect(uiXform.worldPos, glm::vec2{ uiXform.worldScale }, uiXform.worldRot, Color::COLOR_WHITE);
 				}
 				
 
@@ -107,11 +102,6 @@ namespace Graphics {
 		}
 		Renderer::RenderSceneEnd();
 		//Renderer::RenderInstances();
-
-
-		//auto const& shader = mSpec.pipeline->GetShader();
-		//shader->SetUniform("u_ScreenTex", mInputTexture);
-		//Renderer::RenderFullscreenTexture();
 
 		End();
 	}

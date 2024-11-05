@@ -51,8 +51,8 @@ namespace Component {
             }
             else {
                 // Example values for orthographic projection
-                float left = -aspectRatio * 10.0f;
-                float right = aspectRatio * 10.0f;
+                float left = -aspectRatio * UI_SCALING_FACTOR<float>;
+                float right = aspectRatio * UI_SCALING_FACTOR<float>;
                 float bottom = -10.0f;
                 float top = 10.0f;
                 return glm::ortho(left, right, bottom, top, nearClip, farClip);

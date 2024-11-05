@@ -6,6 +6,8 @@ template <typename T>
 inline constexpr T WINDOW_WIDTH{ static_cast<T>(1920) };
 template <typename T>
 inline constexpr T WINDOW_HEIGHT{ static_cast<T>(1600) };
+template <typename T>
+inline constexpr T UI_SCALING_FACTOR{ static_cast<T>(10) };
 
 // should move to config file and retrieve from asset manager
 constexpr char gRootDirectory[] = "y3-gam";
