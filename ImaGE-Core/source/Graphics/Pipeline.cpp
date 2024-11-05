@@ -47,7 +47,6 @@ namespace Graphics {
 		else {
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		}
-
 		glLineWidth(mSpec.lineWidth);
 	}
 

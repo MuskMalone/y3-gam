@@ -89,16 +89,26 @@ namespace Graphics {
 
 		//----------------------------------Triangles Batching-------------------------------------------------------//
 		mData.triVertexArray = VertexArray::Create();
-		mData.triVertexBuffer = VertexBuffer::Create(mData.cMaxVertices * sizeof(TriVtx));
+		mData.triVertexBuffer = VertexBuffer::Create(mData.cMaxVertices * sizeof(LineVtx));
 
-		BufferLayout triLayout = {
+		BufferLayout lineLayout = { //same layout for tri and line
 			{AttributeType::VEC3, "a_Position"},
 			{AttributeType::VEC4, "a_Color"},
 		};
 
-		mData.triVertexBuffer->SetLayout(triLayout);
+		mData.triVertexBuffer->SetLayout(lineLayout);
 		mData.triVertexArray->AddVertexBuffer(mData.triVertexBuffer);
-		mData.triBuffer = std::vector<TriVtx>(mData.cMaxVertices);
+		mData.triBuffer = std::vector<LineVtx>(mData.cMaxVertices);
+
+		//----------------------------------------------------------------------------------------------------------//
+
+		//----------------------------------Line Batching-------------------------------------------------------//
+		mData.lineVertexArray = VertexArray::Create();
+		mData.lineVertexBuffer = VertexBuffer::Create(mData.cMaxVertices * sizeof(LineVtx));
+
+		mData.lineVertexBuffer->SetLayout(lineLayout);
+		mData.lineVertexArray->AddVertexBuffer(mData.lineVertexBuffer);
+		mData.lineBuffer = std::vector<LineVtx>(mData.cMaxVertices);
 
 		//----------------------------------------------------------------------------------------------------------//
 		
@@ -198,7 +208,7 @@ namespace Graphics {
 	}
 
 	void Renderer::InitShaders() {
-		ShaderLibrary::Add("Tri", Shader::Create("Tri.vert.glsl", "Tri.frag.glsl"));
+		ShaderLibrary::Add("Line", Shader::Create("Line.vert.glsl", "Line.frag.glsl"));
 		ShaderLibrary::Add("Tex", Shader::Create("Default.vert.glsl", "Default.frag.glsl"));
 		ShaderLibrary::Add("PBR", Shader::Create("PBR.vert.glsl", "PBR.frag.glsl"));
 		ShaderLibrary::Add("Unlit", Shader::Create("Unlit.vert.glsl", "Unlit.frag.glsl"));
@@ -298,6 +308,7 @@ namespace Graphics {
 		PipelineSpec uiPSpec;
 		uiPSpec.shader = ShaderLibrary::Get("Tex2D");
 		uiPSpec.targetFramebuffer = screenPSpec.targetFramebuffer;
+		uiPSpec.lineWidth = 2.5f;
 
 		RenderPassSpec uiPassSpec;
 		uiPassSpec.pipeline = Pipeline::Create(uiPSpec);
@@ -315,7 +326,7 @@ namespace Graphics {
 		//Setting up Fullscreen Quad
 		mData.screen.screenVertices[0] = { {-1.0f,  1.0f}, {0.0f, 1.0f} };
 		mData.screen.screenVertices[1] = { {-1.0f, -1.0f}, {0.0f, 0.0f} };
-		mData.screen.screenVertices[2] = { { 1.0f, -1.0f}, {1.0f, 0.0f} };
+		mData.screen.screenVertices[2] = { { 1.0f, -1.0f}, {1.0f, 0.0f} };	
 		mData.screen.screenVertices[3] = { {-1.0f,  1.0f}, {0.0f, 1.0f} };
 		mData.screen.screenVertices[4] = { { 1.0f, -1.0f}, {1.0f, 0.0f} };
 		mData.screen.screenVertices[5] = { { 1.0f,  1.0f}, {1.0f, 1.0f} };
@@ -351,14 +362,6 @@ namespace Graphics {
 	}
 
 	void Renderer::SetQuadBufferData(glm::vec3 const& pos, glm::vec4 const& clr, glm::vec2 const& texCoord, float texIdx, int entity) {
-		//UNREFERENCED_PARAMETER(scale);
-		//mData.quadBufferPtr->pos = pos;
-		//mData.quadBufferPtr->clr = clr; // Ensure color is set for each vertex
-		//mData.quadBufferPtr->texCoord = texCoord;
-		//mData.quadBufferPtr->texIdx = texIdx;
-		//mData.quadBufferPtr->entity = entity;
-		//++mData.quadBufferPtr;
-
 		UNREFERENCED_PARAMETER(entity);
 		if (mData.quadBufferIndex < mData.quadBuffer.size()) {
 			QuadVtx& vtx = mData.quadBuffer[mData.quadBufferIndex];
@@ -370,25 +373,24 @@ namespace Graphics {
 		++mData.quadBufferIndex;
 	}
 
-	//void Renderer::SetQuadBufferData(glm::vec3 const& pos, glm::vec2 const& scale, glm::vec2 const& texCoord, float texIdx, glm::vec4 const& clr) {
-	//	if (mData.quadBufferIndex < mData.quadBuffer.size()) {
-	//		QuadVtx& vtx = mData.quadBuffer[mData.quadBufferIndex];
-	//		vtx.pos = pos;
-	//		vtx.texCoord = texCoord;
-	//		vtx.texIdx = texIdx;
-	//		vtx.clr = clr;
-	//	}
-	//	++mData.quadBufferIndex;
-	//}
-
 	void Renderer::SetTriangleBufferData(glm::vec3 const& pos, glm::vec4 const& clr) {
 		if (mData.triVtxCount < mData.triBuffer.size()) {
-			TriVtx& vtx = mData.triBuffer[mData.triBufferIndex];
+			LineVtx& vtx = mData.triBuffer[mData.triBufferIndex];
 			vtx.pos = pos;
 			vtx.clr = clr;
 		}
 		++mData.triBufferIndex;
 		++mData.triVtxCount;
+	}
+	
+	void Renderer::SetLineBufferData(glm::vec3 const& pos, glm::vec4 const& clr) {
+		if (mData.lineVtxCount < mData.lineBuffer.size()) {
+			LineVtx& vtx = mData.lineBuffer[mData.lineBufferIndex];
+			vtx.pos = pos;
+			vtx.clr = clr;
+		}
+		++mData.lineBufferIndex;
+		++mData.lineVtxCount;
 	}
 
 	void Renderer::SetMeshBufferData(glm::vec3 const& pos, glm::vec3 const& norm, glm::vec2 const& texCoord, float texIdx, glm::vec3 const& tangent, glm::vec3 const& bitangent, glm::vec4 const& clr) {
@@ -436,6 +438,35 @@ namespace Graphics {
 
 		// Return the new instance buffer
 		return instanceBuffer;
+	}
+
+	void Renderer::DrawLine(glm::vec3 const& p0, glm::vec3 const& p1, glm::vec4 const& clr) {
+		if (mData.lineVtxCount >= RendererData::cMaxVertices)
+			NextBatch();
+
+		SetLineBufferData(p0, clr);
+		SetLineBufferData(p1, clr);
+
+		mData.lineVtxCount += 2;
+
+		++mData.stats.lineCount;
+	}
+
+	void Renderer::DrawRect(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, glm::vec4 const& clr) {
+		glm::mat4 translateMtx{ glm::translate(glm::mat4{ 1.f }, pos) };
+		glm::mat4 rotateMtx{ glm::toMat4(rot) };
+		glm::mat4 scaleMtx{ glm::scale(glm::mat4{ 1.f }, { scale.x, scale.y, 1.f }) };
+		glm::mat4 transformMtx{ translateMtx * rotateMtx * scaleMtx };
+
+		glm::vec3 lineVertices[4]{};
+		for (size_t i{}; i < 4; ++i)
+			lineVertices[i] = transformMtx * mData.quadVtxPos[i];
+
+		DrawLine(lineVertices[0], lineVertices[1], clr);
+		DrawLine(lineVertices[1], lineVertices[2], clr);
+		DrawLine(lineVertices[2], lineVertices[3], clr);
+		DrawLine(lineVertices[3], lineVertices[0], clr);
+
 	}
 
 	void Renderer::DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, glm::vec4 const& clr) {
@@ -626,18 +657,28 @@ namespace Graphics {
 			//IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(GetWhiteTexture())->mTexture.Bind(0);
 			
 
-			//ShaderLibrary::Get("Tex2D")->Use();
+			ShaderLibrary::Get("Tex2D")->Use();
 			RenderAPI::DrawIndices(mData.quadVertexArray, mData.quadIdxCount);
+
+			++mData.stats.drawCalls;
+		}
+		if (mData.lineVtxCount) {
+			unsigned int dataSize = static_cast<unsigned int>(mData.lineBufferIndex * sizeof(LineVtx));
+
+			mData.lineVertexBuffer->SetData(mData.lineBuffer.data(), dataSize);
+
+			ShaderLibrary::Get("Line")->Use();
+			RenderAPI::DrawLines(mData.lineVertexArray, mData.lineVtxCount);
 
 			++mData.stats.drawCalls;
 		}
 		if (mData.triVtxCount) {
 
-			unsigned int dataSize = static_cast<unsigned int>(mData.triBufferIndex * sizeof(TriVtx));
+			unsigned int dataSize = static_cast<unsigned int>(mData.triBufferIndex * sizeof(LineVtx));
 
 			mData.triVertexBuffer->SetData(mData.triBuffer.data(), dataSize);
 
-			ShaderLibrary::Get("Tri")->Use();
+			ShaderLibrary::Get("Line")->Use();
 			RenderAPI::DrawTriangles(mData.triVertexArray, mData.triVtxCount);
 
 			++mData.stats.drawCalls;
@@ -673,7 +714,7 @@ namespace Graphics {
 
 		if (mData.triVtxCount) {
 
-			unsigned int dataSize = static_cast<unsigned int>(mData.triBufferIndex * sizeof(TriVtx));
+			unsigned int dataSize = static_cast<unsigned int>(mData.triBufferIndex * sizeof(LineVtx));
 
 			mData.triVertexBuffer->SetData(mData.triBuffer.data(), dataSize);
 
@@ -708,9 +749,12 @@ namespace Graphics {
 	void Renderer::BeginBatch() {
 		mData.quadIdxCount = 0;
 		mData.triVtxCount = 0;
+		mData.lineVtxCount = 0;
 		//mData.quadBufferPtr = mData.quadBuffer.data();
 		mData.quadBufferIndex = 0;  // Reset the index for the new batch
 		mData.triBufferIndex = 0;
+		mData.lineBufferIndex = 0;
+
 		mData.texUnitIdx = 1;
 
 		// Reset for general meshes
@@ -727,7 +771,10 @@ namespace Graphics {
 
 	void Renderer::RenderSceneBegin(glm::mat4 const& viewProjMtx) {
 
-		//mData.lineShader->Use();
+		auto const& lineShader = ShaderLibrary::Get("Line");
+		lineShader->Use();
+		lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
+
 		//mData.lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
 		//mData.texShader->Use();
 		//mData.texShader->SetUniform("u_ViewProjMtx", viewProjMtx);

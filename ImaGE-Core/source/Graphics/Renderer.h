@@ -33,6 +33,7 @@ namespace Graphics {
 	struct Statistics {
 		uint32_t drawCalls{};
 		uint32_t quadCount{};
+		uint32_t lineCount{};
 
 		uint32_t GetTotalVtxCount() { return quadCount * 4; }
 		uint32_t GetTotalIdxCount() { return quadCount * 6; }
@@ -57,7 +58,7 @@ namespace Graphics {
 		//int entity{};
 	};
 
-	struct TriVtx {
+	struct LineVtx {
 		glm::vec3 pos;
 		glm::vec4 clr;
 	};
@@ -106,19 +107,29 @@ namespace Graphics {
 		uint32_t texUnitIdx{ 1 }; // 0 = white tex
 		//------------------------------------------------------------------//
 
+		//-----------------Line Batching--------------------------------//
+		std::shared_ptr<VertexArray> lineVertexArray;
+		std::shared_ptr<VertexBuffer> lineVertexBuffer;
+
+
+		uint32_t lineVtxCount{};
+
+		std::vector<LineVtx> lineBuffer; // Dynamic buffer to hold vertex data for batching
+		uint32_t lineBufferIndex = 0;     // Index into the quadBuffer instead of a pointer
+		//-------------------------------------------------------------------//
+
 		//-----------------Triangle Batching--------------------------------//
 		std::shared_ptr<VertexArray> triVertexArray;
 		std::shared_ptr<VertexBuffer> triVertexBuffer;
 
+		uint32_t triVtxCount{};
+
+		std::vector<LineVtx> triBuffer; // Dynamic buffer to hold vertex data for batching
+		uint32_t triBufferIndex = 0;     // Index into the quadBuffer instead of a pointer
+		//-------------------------------------------------------------------//
 
 		IGE::Assets::GUID defaultTex;
 		IGE::Assets::GUID whiteTex;
-
-		uint32_t triVtxCount{};
-
-		std::vector<TriVtx> triBuffer; // Dynamic buffer to hold vertex data for batching
-		uint32_t triBufferIndex = 0;     // Index into the quadBuffer instead of a pointer
-		//-------------------------------------------------------------------//
 
 		//------------------------Instancing related-------------------------//
 		std::unordered_map<IGE::Assets::GUID, std::vector<InstanceData>> instanceBufferDataMap;
@@ -140,7 +151,9 @@ namespace Graphics {
 		static void Shutdown();
 		static void Clear();
 
-		// Quads
+		// Batching
+		static void DrawLine(glm::vec3 const& p0, glm::vec3 const& p1, glm::vec4 const& clr);
+		static void DrawRect(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, glm::vec4 const& clr);
 		static void DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, glm::vec4 const& clr);
 		static void DrawSprite(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, Texture const& tex, glm::vec4 const& tint, int entity = -1);
 		static void RenderFullscreenTexture();
@@ -177,6 +190,8 @@ namespace Graphics {
 		//static void SetQuadBufferData(glm::vec3 const& pos, glm::vec2 const& scale, float texIdx, glm::vec4 const& clr);
 
 		static void SetTriangleBufferData(glm::vec3 const& pos, glm::vec4 const& clr);
+
+		static void SetLineBufferData(glm::vec3 const& pos, glm::vec4 const& clr);
 
 		static void SetMeshBufferData(glm::vec3 const& pos, glm::vec3 const& norm,
 			glm::vec2 const& texCoord, float texIdx,
