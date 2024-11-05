@@ -21,6 +21,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Components/AudioSource.h>
 #include <Graphics/PostProcessing/PostProcessingManager.h>
 
+#define REGISTER_DATA_MEMBER_INST(T, nameStr) rttr::registration::class_<T>(nameStr).constructor<>()(rttr::policy::ctor::as_object)\
+  .property(JSON_SCRIPT_DMI_DATA_KEY, &T::mData)\
+  .property(JSON_SCRIPT_DMI_TYPE_KEY, &T::mType)\
+  .property(JSON_SCRIPT_DMI_SF_KEY, &T::mScriptField)
+
 static void rttr_auto_register_reflection_function_(); namespace {
   struct rttr__auto__register__ {
     rttr__auto__register__() {
@@ -167,6 +172,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("scriptName", &T::scriptName)
       .property("scriptFieldProxyList", &T::scriptFieldProxyList);
   }
+
   {
     using T = Mono::ScriptInstance;
     rttr::registration::class_<T>("ScriptInstance")
@@ -176,84 +182,17 @@ static void rttr_auto_register_reflection_function_(); namespace {
 
   rttr::registration::class_<Mono::ScriptFieldInfo>("ScriptFieldInfo")
     .property("fieldName", &Mono::ScriptFieldInfo::mFieldName);
-  {
-    using T = Mono::ScriptFieldInstance<int>;
-    rttr::registration::class_<T>("System.Int32")
-      .constructor<>()
-      .property("data", &T::mData)
-      .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
-      .property("scriptField", &T::mScriptField);
-  }
-  {
-    using T = Mono::ScriptFieldInstance<float>;
-    rttr::registration::class_<T>("System.Single")
-      .constructor<>()
-      .property("data", &T::mData)
-      .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
-      .property("scriptField", &T::mScriptField);
-  }
-  {
-    using T = Mono::ScriptFieldInstance<double>;
-    rttr::registration::class_<T>("System.Double")
-      .constructor<>()
-      .property("data", &T::mData)
-      .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
-      .property("scriptField", &T::mScriptField);
-  }
-  {
-    using T = Mono::ScriptFieldInstance<unsigned>;
-    rttr::registration::class_<T>("System.UInt32")
-      .constructor<>()
-      .property("data", &T::mData)
-      .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
-      .property("scriptField", &T::mScriptField);
-  }
-  {
-    using T = Mono::ScriptFieldInstance<std::vector<int>>;
-    rttr::registration::class_<T>("System.Int32[]")
-      .constructor<>()
-      .property("data", &T::mData)
-      .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
-      .property("scriptField", &T::mScriptField);
-  }
-  {
-    using T = Mono::ScriptFieldInstance<std::vector<unsigned>>;
-    rttr::registration::class_<T>("System.UInt32[]")
-      .constructor<>()
-      .property("data", &T::mData)
-      .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
-      .property("scriptField", &T::mScriptField);
-  }
-  {
-    using T = Mono::ScriptFieldInstance<std::string>;
-    rttr::registration::class_<T>("System.String")
-      .constructor<>()
-      .property("data", &T::mData)
-      .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
-      .property("scriptField", &T::mScriptField);
-  }
-  {
-    using T = Mono::ScriptFieldInstance<std::vector<std::string>>;
-    rttr::registration::class_<T>("System.String[]")
-      .constructor<>()
-      .property("data", &T::mData)
-      .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
-      .property("scriptField", &T::mScriptField);
-  }
-  {
-    using T = Mono::ScriptFieldInstance<glm::vec3>;
-    rttr::registration::class_<T>("ImaGE-Script.Mono.Vec3<System.float>")
-      .constructor<>()
-      .property("data", &T::mData)
-      .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
-      .property("scriptField", &T::mScriptField);
-  }
-  {
-    using T = Mono::ScriptFieldInstance<glm::dvec3>;
-    rttr::registration::class_<T>("ImaGE-Script.Mono.Vec3<System.double>")
-      .constructor<>()
-      .property("data", &T::mData)
-      .property(JSON_SCRIPT_FILIST_TYPE_KEY, &T::mType)
-      .property("scriptField", &T::mScriptField);
-  }
+
+  // yay more macros
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<int>, "System.Int32");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<unsigned>, "System.UInt32");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<float>, "System.Single");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<double>, "System.Double");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<std::string>, "System.String");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<std::vector<int>>, "System.Int32[]");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<std::vector<unsigned>>, "System.UInt32[]");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<std::vector<std::string>>, "System.String[]");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<glm::vec3>, "ImaGE-Script.Mono.Vec3<System.float>");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<glm::dvec3>, "ImaGE-Script.Mono.Vec3<System.double>");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<Mono::ScriptInstance>, "Image.Mono.ScriptInstance");
 }

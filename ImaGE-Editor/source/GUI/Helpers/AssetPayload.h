@@ -54,6 +54,9 @@ namespace GUI
       else if (IGE::Assets::cShaderExtensions.find(fileExt) != IGE::Assets::cShaderExtensions.end()){
           mAssetType = AssetType::SHADER;
       }
+      else if (IGE::Assets::cImageExtensions.find(fileExt) != IGE::Assets::cImageExtensions.end()) {
+        mAssetType = AssetType::SPRITE;
+      }
     }
 
     std::string GetFileName() const { return mPath.stem().string(); }

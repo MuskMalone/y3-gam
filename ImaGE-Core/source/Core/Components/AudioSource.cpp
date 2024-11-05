@@ -34,7 +34,7 @@ namespace Component {
 			ai.guid = guid;
 			sounds.emplace(fp, ai);
 		}
-		catch (Debug::Exception<IGE::Assets::AssetManager> const& e) {
+		catch ([[maybe_unused]] Debug::Exception<IGE::Assets::AssetManager> const& e) {
 			Debug::DebugLogger::GetInstance().LogWarning("couldnt load asset");
 		}
 		catch (...) {

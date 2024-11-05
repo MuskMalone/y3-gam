@@ -112,25 +112,42 @@ namespace GUI
 
       if (ImGui::BeginMenu("Help")) {
         if (ImGui::BeginMenu("Controls")) {
-          if (ImGui::BeginTable("ControlsTable", 2, ImGuiTableFlags_None)) {
-            ImGui::TableNextColumn(); ImGui::Text("Left Click:");
-            ImGui::TableNextColumn(); ImGui::Text("Select Entity");
+          if (ImGui::BeginTable("ControlsTable", 3, ImGuiTableFlags_None)) {
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0); ImGui::Text("CAMERA");
+            ImGui::TableNextRow();
 
-            ImGui::TableNextColumn(); ImGui::Text("Middle Click:");
-            ImGui::TableNextColumn(); ImGui::Text("Pan");
+            ImGui::TableSetColumnIndex(1); ImGui::Text("Left Click:");
+            ImGui::TableSetColumnIndex(2); ImGui::Text("Select Entity");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(1); ImGui::Text("Middle Click:");
+            ImGui::TableSetColumnIndex(2); ImGui::Text("Pan");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(1); ImGui::Text("Scroll:");
+            ImGui::TableSetColumnIndex(2); ImGui::Text("Zoom");
 
-            ImGui::TableNextColumn(); ImGui::Text("Scroll:");
-            ImGui::TableNextColumn(); ImGui::Text("Zoom");
+            ImGui::TableNextRow(); ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(1); ImGui::Text("While Right-click Held:");
+            ImGui::TableSetColumnIndex(2); ImGui::Text("");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(1); ImGui::Text("Left Click:");
+            ImGui::TableSetColumnIndex(2); ImGui::Text("Look");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(1); ImGui::Text("WASD QE:");
+            ImGui::TableSetColumnIndex(2); ImGui::Text("Move");
 
             ImGui::TableNextRow();
-            ImGui::TableNextColumn(); ImGui::Text("While Right-click Held:");
-            ImGui::TableNextColumn(); ImGui::Text("");
+            ImGui::TableSetColumnIndex(0); ImGui::Text("GUIZMOS:");
 
-            ImGui::TableNextColumn(); ImGui::Text("Left Click:");
-            ImGui::TableNextColumn(); ImGui::Text("Look");
-
-            ImGui::TableNextColumn(); ImGui::Text("WASD QE:");
-            ImGui::TableNextColumn(); ImGui::Text("Move");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(1); ImGui::Text("Translate: ");
+            ImGui::TableSetColumnIndex(2); ImGui::Text("T");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(1); ImGui::Text("Scale: ");
+            ImGui::TableSetColumnIndex(2); ImGui::Text("S");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(1); ImGui::Text("Rotate: ");
+            ImGui::TableSetColumnIndex(2); ImGui::Text("R");
 
             ImGui::EndTable();
           }

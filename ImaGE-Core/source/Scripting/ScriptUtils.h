@@ -16,6 +16,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <memory>
 #include <rttr/variant.h>
 #include <vector>
+#include "Core/Entity.h"
 
 namespace Mono {
 
@@ -41,7 +42,10 @@ namespace Mono {
 		FLOAT_ARR,
 		DOUBLE_ARR,
 		STRING_ARR,
-		UINT_ARR
+		UINT_ARR,
+		ENTITY,
+		INSIDE,
+		INSIDEB
 	};
 
 
@@ -67,6 +71,16 @@ namespace Mono {
 		MonoClass* mScriptClass{ nullptr };
 		std::map<std::string, ScriptFieldInfo> mScriptFieldMap;
 	};
+
+
+
+
+	//template<std::size_t M, std::size_t N>
+	//struct CSClass
+	//{
+
+	//};
+
 
 
 

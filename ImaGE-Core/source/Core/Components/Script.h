@@ -43,8 +43,17 @@ namespace Component {
 				}*/
 			}
 
-			Script(Reflection::ProxyScriptComponent const& proxyScriptComp) {
+			Script(Reflection::ProxyScriptComponent const& proxyScriptComp, ECS::Entity entity) {
 				// @TODO: QD to define
+
+				int currPos{ 0 };
+			
+				for (const Reflection::ProxyScript& ps : proxyScriptComp.proxyScriptList)
+				{
+					mScriptList.emplace_back(ps.scriptName);
+					mScriptList[currPos].SetEntityID(entity.GetRawEnttEntityID());
+					mScriptList[currPos].SetAllFields(ps.scriptFieldProxyList);
+				}
 			}
 
 			void UpdateAllScripts()

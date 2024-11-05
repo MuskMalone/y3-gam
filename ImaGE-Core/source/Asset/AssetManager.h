@@ -139,10 +139,10 @@ namespace IGE {
                   mGUID2PathRegistry.emplace(guid, newFp);
                   return guid;
               }
-              //else {
-              //    Ref<T> ref { std::any_cast<Ref<T>>(mAssetRefs.at(key)) };
-              //    return ref.mInstance.partialRef.guid;
-              //}
+              else {
+                  Ref<T> ref { std::any_cast<Ref<T>>(mAssetRefs.at(key)) };
+                  return ref.mInstance.partialRef.guid;
+              }
 
           }
           template <typename T>

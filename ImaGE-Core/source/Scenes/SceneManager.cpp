@@ -16,6 +16,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Entity.h>
 #include <Physics/PhysicsSystem.h> //tch: this is to clear the physics rbs for now 
 #include <Reflection/ObjectFactory.h>
+#include "Graphics/RenderSystem.h"
 
 #ifdef _DEBUG
 //#define EVENTS_DEBUG
@@ -92,6 +93,18 @@ namespace Scenes
     ECS::EntityManager::GetInstance().Reset();
   }
 
+  void SceneManager::ReloadScene()
+  {
+    // trigger a temp save 
+    TemporarySave();
+
+    // load it back
+    LoadTemporarySave();
+    InitScene();
+
+    QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mSceneName);
+  }
+
   EVENT_CALLBACK_DEF(SceneManager, HandleEvent)
   {
     switch (event->GetCategory())
@@ -111,6 +124,7 @@ namespace Scenes
       }
       else {
         QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::NEW, mSceneName);
+        Graphics::RenderSystem::mCameraManager.AddMainCamera();
       }
       Debug::DebugLogger::GetInstance().LogInfo("Loading scene: " + mSceneName + "...");
       
@@ -118,6 +132,7 @@ namespace Scenes
     }
     case Events::EventType::SAVE_SCENE:
       SaveScene();
+      
       break;
     case Events::EventType::EDIT_PREFAB:
     {
@@ -182,6 +197,23 @@ namespace Scenes
     for (auto const& file : filesToRemove) {
       std::filesystem::remove(file);
     }
+  }
+
+
+  void SceneManager::SubmitToMainThread(const std::function<void()>& function)
+  {
+    std::scoped_lock<std::mutex> lock(mMainThreadQueueMutex);
+    mMainThreadQueue.emplace_back(function);
+  }
+
+  void SceneManager::ExecuteMainThreadQueue()
+  {
+    std::scoped_lock<std::mutex> lock(mMainThreadQueueMutex);
+
+    for (auto& func : mMainThreadQueue)
+      func();
+
+    mMainThreadQueue.clear();
   }
 
 } // namespace Scenes

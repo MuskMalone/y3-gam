@@ -77,6 +77,7 @@ static void rttr_auto_register_reflection_function2_(); namespace {
   REGISTER_COMPONENT(Mesh, "Mesh")
     .property("meshName", &Mesh::meshName)
     .property("GUID", &Mesh::meshSource)
+    .property("isCustomMesh", &Mesh::isCustomMesh)
     .property("castShadows", &Mesh::castShadows)
     .property("receiveShadows", &Mesh::receiveShadows);
 
@@ -88,7 +89,11 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("color", &Text::color)
     .property("scale", &Text::scale)
     .property("textAssetGUID", &Text::textAsset)
-    .property("fontFamilyName", &Text::fontFamilyName);
+    .property("fontFamilyName", &Text::fontFamilyName)
+    .property("alignment", &Text::alignment)
+    .property("multiLineSpacingOffset", &Text::multiLineSpacingOffset)
+    .property("textBoxEnabledFlag", &Text::textBoxEnabledFlag)
+    .property("textBoxDimensions", &Text::textBoxDimensions);
 
   REGISTER_COMPONENT(RigidBody, "RigidBody")
     .property("velocity", &RigidBody::velocity)
@@ -122,12 +127,28 @@ static void rttr_auto_register_reflection_function2_(); namespace {
   REGISTER_COMPONENT(Script, "ScriptComponent")
     .constructor<std::vector<std::string> const&>()
     .property(JSON_SCRIPT_LIST_KEY, &Script::mScriptList);
+
   REGISTER_COMPONENT(AudioSource, "AudioSource")
       .property("sounds", &AudioSource::sounds);
   REGISTER_COMPONENT(AudioListener, "AudioListener");
 
   REGISTER_COMPONENT(Canvas, "Canvas")
     .property("isActive", &Component::Canvas::isActive);
+
+  REGISTER_COMPONENT(Image, "Image")
+    .property("color", &Image::color)
+    .property("textureAssetGUID", &Image::textureAsset);
+
+  REGISTER_COMPONENT(Camera, "Camera")
+      .property("projType", &Component::Camera::projType)
+      .property("position", &Component::Camera::position)
+      .property("yaw", &Component::Camera::yaw)
+      .property("pitch", &Component::Camera::pitch)
+      .property("fov", &Component::Camera::fov)
+      .property("aspectRatio", &Component::Camera::aspectRatio)
+      .property("nearClip", &Component::Camera::nearClip)
+      .property("farClip", &Component::Camera::farClip);
+
 
   // stuff below are not actual "Components", hence we skip the REGISTER_COMPONENT checks
   rttr::registration::class_<PrefabOverrides>("PrefabOverrides")

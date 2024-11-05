@@ -98,10 +98,16 @@ namespace IGE {
         catch (Debug::ExceptionBase& e)
         {
           PrintException(e);
+#ifdef _DEBUG
+          std::cerr << e.ErrMsg() << std::endl;
+#endif
         }
         catch (std::exception& e)
         {
           PrintException(e);
+#ifdef _DEBUG
+          std::cerr << e.what() << std::endl;
+#endif
         }
 
         try {
@@ -132,10 +138,16 @@ namespace IGE {
         catch (Debug::ExceptionBase& e)
         {
           PrintException(e);
+#ifdef _DEBUG
+          std::cerr << e.ErrMsg() << std::endl;
+#endif
         }
         catch (std::exception& e)
         {
           PrintException(e);
+#ifdef _DEBUG
+          std::cerr << e.what() << std::endl;
+#endif
         }
 
         // check and call events, swap buffers
@@ -146,10 +158,16 @@ namespace IGE {
       catch (Debug::ExceptionBase& e)
       {
         PrintException(e);
+#ifdef _DEBUG
+        std::cerr << e.ErrMsg() << std::endl;
+#endif
       }
       catch (std::exception& e)
       {
         PrintException(e);
+#ifdef _DEBUG
+        std::cerr << e.what() << std::endl;
+#endif
       }
     }
   }
@@ -179,7 +197,7 @@ namespace IGE {
 
       Graphics::RenderTarget const& target = mRenderTargets[0];
       auto const& cam = target.camera;
-      Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ cam.GetViewProjMatrix(), cam.GetPosition(), cam.GetNearPlane(), cam.GetFarPlane(), cam.GetFOV() });
+      Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ cam.GetViewProjMatrix(), cam.GetViewMatrix(), cam.GetPosition(), cam.GetNearPlane(), cam.GetFarPlane(), cam.GetFOV(), cam.GetAspectRatio(), true});
 
   }
 

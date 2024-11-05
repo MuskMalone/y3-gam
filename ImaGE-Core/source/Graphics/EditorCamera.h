@@ -31,11 +31,12 @@ namespace Graphics {
 			float fov = 45.0f,                                // Default field of view
 			float aspectRatio = 16.0f / 9.0f,                 // Default aspect ratio
 			float nearClip = 0.1f,                            // Near clipping plane
-			float farClip = 100.0f)                           // Far clipping plane
+			float farClip = 300.0f)                           // Far clipping plane
 			: mPosition(position), mYaw(yaw), mPitch(pitch), mFov(fov),
 			mAspectRatio(aspectRatio), mNearClip(nearClip), mFarClip(farClip) {}
 
 		float GetFOV() const noexcept;
+		float GetAspectRatio() const noexcept;
 		float GetNearPlane() const noexcept;
 		float GetFarPlane() const noexcept;
 		glm::mat4 GetViewMatrix() const;

@@ -18,10 +18,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 // forward declarations
 struct aiScene; struct aiNode;
+template <typename T> class aiMatrix4x4t;
+typedef aiMatrix4x4t<float> aiMatrix4x4;
 
 namespace Graphics::AssetIO
 {
-
   struct MeshImportFlags
   {
     MeshImportFlags() : boneWeights{ false }, animations{ false },
@@ -37,7 +38,7 @@ namespace Graphics::AssetIO
   class IMSH
   {
   public:
-    IMSH() : mVertexBuffer{}, mIndices{}, mSubmeshData{}, mStatus{ true } {}
+    IMSH() : mVertexBuffer{}, mIndices{}, mSubmeshData{}, mStatus{ true }, mIsStatic{ true } {}
     // conversions for use in editor only
     IMSH(std::string const& file, MeshImportFlags const& = {});
 
@@ -65,6 +66,9 @@ namespace Graphics::AssetIO
     // the MeshSource and accessing contents afterwards is undefined
     MeshSource ToMeshSource(std::shared_ptr<VertexArray> vao);
 
+    // this is a workaround to not being able to pass extra flags during AssetManager import
+    static inline bool sStaticMeshConversion = true;
+
   private:
     // serialized as first 24 bytes
     struct Header {
@@ -88,11 +92,12 @@ namespace Graphics::AssetIO
     std::vector<Graphics::Vertex> mVertexBuffer;
     std::vector<uint32_t> mIndices;
     std::vector<SubmeshData> mSubmeshData;
-    bool mStatus;
+    //std::vector<std::string> mMeshNames;
+    bool mStatus, mIsStatic;
 
-    static unsigned sAssimpImportFlags;
+    static const unsigned sAssimpImportFlags, sMinimalAssimpImportFlags;
 
-    void ProcessSubmeshes(aiNode* node, aiScene const* scene);
+    void ProcessSubmeshes(aiNode* node, aiScene const* scene, aiMatrix4x4 const& parentMtx);
     void ProcessMeshes(aiNode* node, aiScene const* scene);
   };
 

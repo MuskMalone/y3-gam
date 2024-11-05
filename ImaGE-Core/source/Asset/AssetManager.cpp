@@ -52,7 +52,7 @@ namespace IGE {
 			return out;
 		}
 		AssetManager::AssetManager() {
-			SUBSCRIBE_CLASS_FUNC(Events::EventType::ADD_FILES, &AssetManager::HandleAddFiles, this);
+			SUBSCRIBE_CLASS_FUNC(Events::EventType::REGISTER_FILES, &AssetManager::HandleAddFiles, this);
 			Initialize();
 			 //code snippet to "manufacture" all the data needed for importing
 			 //assumes that all the files are imported as is
@@ -101,7 +101,7 @@ namespace IGE {
 		}
 		
 		EVENT_CALLBACK_DEF(AssetManager, HandleAddFiles) {
-			auto const& paths{ CAST_TO_EVENT(Events::AddFilesFromExplorerEvent)->mPaths };
+			auto const& paths{ CAST_TO_EVENT(Events::RegisterAssetsEvent)->mPaths };
 			for (std::string const& file : paths) {
 				//auto file{ std::filesystem::path{f}.relative_path().string() };
 				//@TODO: use reflection to invoke without hardcoding
@@ -111,6 +111,7 @@ namespace IGE {
 				//finds the folder
 				//then breaks
 				for (auto const& filetype : cDirectoryToExtensions) {
+
 					if (filetype.second.find(ext) != filetype.second.end()) {
 						folder = filetype.first;
 						break;

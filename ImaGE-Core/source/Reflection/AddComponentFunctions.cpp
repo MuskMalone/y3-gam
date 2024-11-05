@@ -83,8 +83,15 @@ namespace Reflection::ComponentUtils {
   void AddMesh(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Mesh, comp);
 
-    IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(comp.meshName) };//Graphics::MeshFactory::CreateModelFromString(comp.meshName) };
-    entity.EmplaceOrReplaceComponent<Mesh>(meshSrc, comp.meshName);
+    IGE::Assets::GUID const& meshSrc{ comp.isCustomMesh ? IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(comp.meshSource)
+      : IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(comp.meshName) };
+
+    try {
+      entity.EmplaceOrReplaceComponent<Mesh>(meshSrc, comp.meshName, comp.isCustomMesh);
+    }
+    catch (Debug::ExceptionBase const&) {
+      // skip the component
+    }
   }
 
   void AddText(ECS::Entity entity, rttr::variant const& var) {
@@ -96,7 +103,7 @@ namespace Reflection::ComponentUtils {
   void AddScript(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(ProxyScriptComponent, comp);
 
-    entity.EmplaceOrReplaceComponent<Script>(comp);
+    entity.EmplaceOrReplaceComponent<Script>(comp, entity);
   }
 
   void AddLight(ECS::Entity entity, rttr::variant const& var) {
@@ -110,5 +117,15 @@ namespace Reflection::ComponentUtils {
 
       entity.EmplaceOrReplaceComponent<Canvas>(comp);
   }
+    
+  void AddImage(ECS::Entity entity, rttr::variant const& var) {
+      EXTRACT_RAW_COMP(Image, comp);
 
+      entity.EmplaceOrReplaceComponent<Image>(comp);
+  }
+  void AddCamera(ECS::Entity entity, rttr::variant const& var){
+      EXTRACT_RAW_COMP(Camera, comp);
+
+      entity.EmplaceOrReplaceComponent<Camera>(comp);
+  }
 } // namespace Reflection

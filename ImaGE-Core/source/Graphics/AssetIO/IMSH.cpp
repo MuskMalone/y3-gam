@@ -22,15 +22,18 @@ namespace {
   glm::vec4 ToGLMVec4(aiColor4D const& vec) { return { vec.r, vec.g, vec.b, vec.a }; }
 
   void AddVertices(std::vector<Graphics::Vertex>& vertexBuffer, aiMesh const* mesh);
-  void AddIndices(std::vector<uint32_t>& indices, aiMesh const* mesh);
+  void AddVertices(std::vector<Graphics::Vertex>& vertexBuffer, aiMesh const* mesh, aiMatrix4x4 const& transMtx);
+  void AddIndices(std::vector<uint32_t>& indices, aiMesh const* mesh, unsigned offset = 0);
 }
 
 namespace Graphics::AssetIO
 {
   // erm i read through all the flags and these seemed like the best setup? Idk needs some testing
-  unsigned IMSH::sAssimpImportFlags = aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices | aiProcess_Triangulate
+  unsigned const IMSH::sMinimalAssimpImportFlags = aiProcess_ValidateDataStructure | aiProcess_Triangulate | aiProcess_JoinIdenticalVertices
+    | aiProcess_GenSmoothNormals | aiProcess_SortByPType;
+  unsigned const IMSH::sAssimpImportFlags = aiProcess_ValidateDataStructure | aiProcess_JoinIdenticalVertices | aiProcess_Triangulate
     | aiProcess_RemoveComponent | aiProcess_GenSmoothNormals | aiProcess_ImproveCacheLocality | aiProcess_FixInfacingNormals
-    | aiProcess_FindDegenerates | aiProcess_FindInvalidData | aiProcess_SortByPType | aiProcess_OptimizeMeshes | aiProcess_FlipUVs;
+    | aiProcess_FindInvalidData | aiProcess_SortByPType | aiProcess_OptimizeMeshes | aiProcess_FlipUVs;
 
 
   int MeshImportFlags::GetFlags() const {
@@ -44,7 +47,8 @@ namespace Graphics::AssetIO
     return ret;
   }
 
-  IMSH::IMSH(std::string const& file, MeshImportFlags const& importFlags) : mVertexBuffer{}, mIndices{}, mSubmeshData{}, mStatus { true } {
+  IMSH::IMSH(std::string const& file, MeshImportFlags const& importFlags) : mVertexBuffer{}, mIndices{}, mSubmeshData{},
+    mStatus{ true }, mIsStatic{ sStaticMeshConversion } {
     Assimp::Importer importer;
 
     importer.SetPropertyInteger(AI_CONFIG_PP_RVC_FLAGS, importFlags.GetFlags());
@@ -54,24 +58,30 @@ namespace Graphics::AssetIO
       mStatus = false;
       Debug::DebugLogger::GetInstance().LogError("Unable to import model " + file);
       return;
-    }
+    }    
 
     ProcessMeshes(aiScn->mRootNode, aiScn);
   }
 
-  void IMSH::ProcessSubmeshes(aiNode* node, aiScene const* scene)
+  void IMSH::ProcessSubmeshes(aiNode* node, aiScene const* scene, aiMatrix4x4 const& parentMtx)
   {
+    aiMatrix4x4 const transMtx{ parentMtx * node->mTransformation };
+
     // now add the submeshes
+    unsigned const offset = mVertexBuffer.size();
     for (unsigned i{}; i < node->mNumMeshes; ++i) {
       aiMesh const* mesh{ scene->mMeshes[node->mMeshes[i]] };
-      uint32_t const vtxOffset{ static_cast<uint32_t>(mVertexBuffer.size()) }, idxOffset{ static_cast<uint32_t>(mIndices.size()) };
-      AddVertices(mVertexBuffer, mesh);
-      AddIndices(mIndices, mesh);
-      mSubmeshData.emplace_back(vtxOffset, idxOffset, mesh->mNumVertices, mIndices.size() - idxOffset, 0);
+      AddVertices(mVertexBuffer, mesh, transMtx);
+      AddIndices(mIndices, mesh, offset);
+
+      if (!sStaticMeshConversion) {
+        uint32_t const vtxOffset{ static_cast<uint32_t>(mVertexBuffer.size()) }, idxOffset{ static_cast<uint32_t>(mIndices.size()) };
+        mSubmeshData.emplace_back(vtxOffset, idxOffset, mesh->mNumVertices, mIndices.size() - idxOffset, 0);
+      }
     }
 
     for (unsigned i{}; i < node->mNumChildren; ++i) {
-      ProcessSubmeshes(node->mChildren[i], scene);
+      ProcessSubmeshes(node->mChildren[i], scene, transMtx);
     }
   }
 
@@ -79,13 +89,13 @@ namespace Graphics::AssetIO
     // process base meshes
     for (unsigned i{}; i < node->mNumMeshes; ++i) {
       aiMesh const* mesh{ scene->mMeshes[node->mMeshes[i]] };
-      AddVertices(mVertexBuffer, mesh);
-      AddIndices(mIndices, mesh);
+      AddVertices(mVertexBuffer, mesh, node->mTransformation);
+      AddIndices(mIndices, mesh, 0);
     }
 
     mSubmeshData.reserve(node->mNumChildren);
     for (unsigned i{}; i < node->mNumChildren; ++i) {
-      ProcessSubmeshes(node->mChildren[i], scene);
+      ProcessSubmeshes(node->mChildren[i], scene, node->mTransformation);
     }
   }
 
@@ -111,8 +121,9 @@ namespace Graphics::AssetIO
     std::vector<Submesh> submeshes;
     submeshes.reserve(mSubmeshData.size());
     for (auto const& data : mSubmeshData) {
+      auto beginIter{ mIndices.begin() + data.baseIdx };
       submeshes.emplace_back(data.baseVtx, data.baseIdx, data.vtxCount, data.idxCount, data.materialIdx,
-        glm::mat4(1.f), std::vector<uint32_t>(mIndices.begin() + data.baseIdx, mIndices.begin() + data.idxCount));
+        glm::mat4(1.f), std::vector<uint32_t>(beginIter, beginIter + data.idxCount));
     }
 
     return MeshSource{ vao, submeshes, mVertexBuffer, mIndices };
@@ -143,36 +154,66 @@ namespace Graphics::AssetIO
 namespace {
   void AddVertices(std::vector<Graphics::Vertex>& vertexBuffer, aiMesh const* mesh)
   {
-    vertexBuffer.resize(vertexBuffer.size() + mesh->mNumVertices);
+    vertexBuffer.reserve(vertexBuffer.size() + mesh->mNumVertices);
+    std::vector<Graphics::Vertex> temp(mesh->mNumVertices);
     for (unsigned i{}; i < mesh->mNumVertices; ++i) {
-      vertexBuffer[i].position = ToGLMVec3(mesh->mVertices[i]);
+      temp[i].position = ToGLMVec3(mesh->mVertices[i]);
 
       // should be automatically generated by assimp if not present
-      vertexBuffer[i].normal = ToGLMVec3(mesh->mNormals[i]);
+      temp[i].normal = ToGLMVec3(mesh->mNormals[i]);
     }
-
+    
     if (mesh->HasTextureCoords(0)) {
       for (unsigned i{}; i < mesh->mNumVertices; ++i) {
-        vertexBuffer[i].texcoord = ToGLMVec2(mesh->mTextureCoords[0][i]);
-        vertexBuffer[i].tangent = ToGLMVec3(mesh->mTangents[i]);
-        vertexBuffer[i].bitangent = ToGLMVec3(mesh->mBitangents[i]);
+        temp[i].texcoord = ToGLMVec2(mesh->mTextureCoords[0][i]);
+        //vertexBuffer[i].tangent = ToGLMVec3(mesh->mTangents[i]);
+        //vertexBuffer[i].bitangent = ToGLMVec3(mesh->mBitangents[i]);
       }
     }
 
     if (mesh->HasVertexColors(0)) {
       for (unsigned i{}; i < mesh->mNumVertices; ++i) {
-        vertexBuffer[i].texcoord = ToGLMVec4(mesh->mColors[0][i]);
+        temp[i].texcoord = ToGLMVec4(mesh->mColors[0][i]);
       }
     }
+
+    vertexBuffer.insert(vertexBuffer.end(), temp.begin(), temp.end());
   }
 
-  void AddIndices(std::vector<uint32_t>& indices, aiMesh const* mesh) {
+  void AddVertices(std::vector<Graphics::Vertex>& vertexBuffer, aiMesh const* mesh, aiMatrix4x4 const& transMtx) {
+    vertexBuffer.reserve(vertexBuffer.size() + mesh->mNumVertices);
+    std::vector<Graphics::Vertex> temp(mesh->mNumVertices);
+    for (unsigned i{}; i < mesh->mNumVertices; ++i) {
+      temp[i].position = ToGLMVec3(transMtx * mesh->mVertices[i]);
+
+      // should be automatically generated by assimp if not present
+      temp[i].normal = ToGLMVec3(mesh->mNormals[i]);
+    }
+
+    if (mesh->HasTextureCoords(0)) {
+      for (unsigned i{}; i < mesh->mNumVertices; ++i) {
+        temp[i].texcoord = ToGLMVec2(mesh->mTextureCoords[0][i]);
+        //vertexBuffer[i].tangent = ToGLMVec3(mesh->mTangents[i]);
+        //vertexBuffer[i].bitangent = ToGLMVec3(mesh->mBitangents[i]);
+      }
+    }
+
+    if (mesh->HasVertexColors(0)) {
+      for (unsigned i{}; i < mesh->mNumVertices; ++i) {
+        temp[i].texcoord = ToGLMVec4(mesh->mColors[0][i]);
+      }
+    }
+
+    vertexBuffer.insert(vertexBuffer.end(), temp.begin(), temp.end());
+  }
+
+  void AddIndices(std::vector<uint32_t>& indices, aiMesh const* mesh, unsigned offset) {
     for (size_t i{}, totalCount{ indices.size() }; i < mesh->mNumFaces; ++i) {
       auto const& face{ mesh->mFaces[i] };
       totalCount += face.mNumIndices;
       indices.reserve(totalCount);
       for (unsigned j{}; j < face.mNumIndices; ++j) {
-        indices.emplace_back(face.mIndices[j]);
+        indices.emplace_back(face.mIndices[j] + offset);
       }
     }
   }

@@ -56,7 +56,9 @@ namespace Reflection
       { GET_RTTR_TYPE(ProxyScriptComponent), ComponentUtils::AddScript },
       { GET_RTTR_TYPE(Text), ComponentUtils::AddText },
       { GET_RTTR_TYPE(Light), ComponentUtils::AddLight },
-      { GET_RTTR_TYPE(Canvas), ComponentUtils::AddCanvas }
+      { GET_RTTR_TYPE(Canvas), ComponentUtils::AddCanvas },
+      { GET_RTTR_TYPE(Image), ComponentUtils::AddImage },
+      { GET_RTTR_TYPE(Camera), ComponentUtils::AddCamera }
     };
 
     if (mAddComponentFuncs.size() != gComponentTypes.size()) {
@@ -179,7 +181,20 @@ namespace Reflection
         // restore its prefab overrides
         ent.EmplaceComponent<Component::PrefabOverrides>(instData.mOverrides);
       }
-      am.LoadRef<Assets::PrefabAsset>(guid);
+
+      try {
+        am.LoadRef<Assets::PrefabAsset>(guid);
+      }
+      // @TODO: Start a blocking call to an ImGui::Popup to allow selection of the prefab file,
+      //        then remap the GUIDs to the newly generated one
+      catch ([[maybe_unused]] Debug::ExceptionBase& e) {
+        PrefabInst const& inst{ data.cbegin()->second };
+        IGE_DBGLOGGER.LogCritical("GUID of Prefab: " + inst.mName + " invalid!");
+        IGE_DBGLOGGER.LogCritical("Say bye bye to Entity " + ECS::Entity(inst.mId).GetTag() + " until I implement GUI to allow remapping!");
+        //IGE_EVENT_MGR.DispatchImmediateEvent<Events::RemapPrefabGUID>(inst.mId, inst.mName);
+        continue;
+      }
+
       auto const& originalPfb{ am.GetAsset<Assets::PrefabAsset>(guid)->mPrefabData };
 
       for (ECS::Entity& e : baseEntities) {
@@ -207,7 +222,7 @@ namespace Reflection
           trans.worldPos = trans.position = *pos;
         }
       }
-    }
+  }
 
     // override each entity's components
     OverrideInstanceComponents();
@@ -291,6 +306,8 @@ namespace Reflection
     else IF_GET_ENTITY_COMP(AudioListener)
     else IF_GET_ENTITY_COMP(AudioSource)
     else IF_GET_ENTITY_COMP(Canvas)
+    else IF_GET_ENTITY_COMP(Image)
+    else IF_GET_ENTITY_COMP(Camera)
     else
     {
       std::ostringstream oss{};
@@ -325,6 +342,8 @@ namespace Reflection
     else IF_REMOVE_COMP(AudioListener)
     else IF_REMOVE_COMP(AudioSource)
     else IF_REMOVE_COMP(Canvas)
+    else IF_REMOVE_COMP(Image)
+    else IF_REMOVE_COMP(Camera)
     else
     {
       std::ostringstream oss{};

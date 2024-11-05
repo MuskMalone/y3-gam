@@ -48,10 +48,14 @@ namespace ImGuiHelpers
       };
 
     bool valChanged{ false };
+    float const elemSize{ ImGui::GetContentRegionAvail().x * 0.9f }, cursorOffset{ ImGui::GetContentRegionAvail().x * 0.05f };
     ImGui::TableNextRow();
     ImGui::TableSetColumnIndex(0);
     ImGui::Text(propertyName.c_str());
     ImGui::TableSetColumnIndex(1);
+    ImGui::SetNextItemWidth(elemSize);
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + cursorOffset);
+
     ImGui::PushStyleColor(ImGuiCol_FrameBg, Col32ToImVec4(Color::IMGUI_COLOR_RED));
     std::string labelX{ "##X" + propertyName };
     if (ImGui::DragFloat(labelX.c_str(), &property[0], step, minVal, maxVal)) {
@@ -60,6 +64,8 @@ namespace ImGuiHelpers
     ImGui::PopStyleColor();
 
     ImGui::TableSetColumnIndex(2);
+    ImGui::SetNextItemWidth(elemSize);
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + cursorOffset);
     ImGui::PushStyleColor(ImGuiCol_FrameBg, Col32ToImVec4(Color::IMGUI_COLOR_GREEN));
     std::string labelY{ "##Y" + propertyName };
     if (ImGui::DragFloat(labelY.c_str(), &property[1], step, minVal, maxVal)) {
@@ -69,6 +75,8 @@ namespace ImGuiHelpers
     ImGui::PopStyleColor();
 
     ImGui::TableSetColumnIndex(3);
+    ImGui::SetNextItemWidth(elemSize);
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + cursorOffset);
     ImGui::PushStyleColor(ImGuiCol_FrameBg, Col32ToImVec4(Color::IMGUI_COLOR_BLUE));
     std::string labelZ{ "##Z" + propertyName };
     if (ImGui::DragFloat(labelZ.c_str(), &property[2], step, minVal, maxVal)) {
@@ -81,7 +89,7 @@ namespace ImGuiHelpers
     return valChanged;
   }
 
-  bool TableInputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled) {
+  bool TableInputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled, double minVal, double maxVal, float step) {
     ImGui::BeginDisabled(disabled);
 
     // Convert IM_COL32 colors to ImVec4
@@ -95,30 +103,37 @@ namespace ImGuiHelpers
     };
 
     bool valChanged{ false };
+    float const elemSize{ ImGui::GetContentRegionAvail().x * 0.9f }, cursorOffset{ ImGui::GetContentRegionAvail().x * 0.05f };
     ImGui::TableNextRow();
     ImGui::TableSetColumnIndex(0);
     ImGui::Text(propertyName.c_str());
     ImGui::TableSetColumnIndex(1);
+    ImGui::SetNextItemWidth(elemSize);
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + cursorOffset);
     ImGui::PushStyleColor(ImGuiCol_FrameBg, Col32ToImVec4(Color::IMGUI_COLOR_RED));
     std::string labelX{ "##X" + propertyName };
-    if (ImGui::InputDouble(labelX.c_str(), &property.x, 0.0, 0.0, "%.3f")) {
+    if (ImGui::DragScalar(labelX.c_str(), ImGuiDataType_Double, &property.x, step, &minVal, &maxVal, "%.3f")) {
       valChanged = true;
     }
     ImGui::PopStyleColor();
 
     ImGui::TableSetColumnIndex(2);
+    ImGui::SetNextItemWidth(elemSize);
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + cursorOffset);
     ImGui::PushStyleColor(ImGuiCol_FrameBg, Col32ToImVec4(Color::IMGUI_COLOR_GREEN));
     std::string labelY{ "##Y" + propertyName };
-    if (ImGui::InputDouble(labelY.c_str(), &property.y, 0.0, 0.0, "%.3f")) {
+    if (ImGui::DragScalar(labelY.c_str(), ImGuiDataType_Double, &property.y, step, &minVal, &maxVal, "%.3f")) {
       valChanged = true;
     }
 
     ImGui::PopStyleColor();
 
     ImGui::TableSetColumnIndex(3);
+    ImGui::SetNextItemWidth(elemSize);
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + cursorOffset);
     ImGui::PushStyleColor(ImGuiCol_FrameBg, Col32ToImVec4(Color::IMGUI_COLOR_BLUE));
     std::string labelZ{ "##Z" + propertyName };
-    if (ImGui::InputDouble(labelZ.c_str(), &property.z, 0.0, 0.0, "%.3f")) {
+    if (ImGui::DragScalar(labelZ.c_str(), ImGuiDataType_Double, &property.z, step, &minVal, &maxVal, "%.3f")) {
       valChanged = true;
     }
     ImGui::PopStyleColor();

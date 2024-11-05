@@ -61,10 +61,16 @@ namespace ImGuiHelpers
     The width of the field
   \param disabled
     Whether it is disabled
+  \param minVal
+    The minimum value
+  \param maxVal
+    The maximum value
+  \param step
+    The increment for the input
   \return
     True if the field was modified and false otherwise
   ************************************************************************/
-  bool TableInputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled);
+  bool TableInputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled, double minVal, double maxVal, float step);
 
   /*!*********************************************************************
   \brief

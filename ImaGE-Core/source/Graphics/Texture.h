@@ -41,6 +41,7 @@ namespace Graphics {
 		void SetData(void* data);
 		void CopyFrom(GLuint srcTexHdl, GLsizei width, GLsizei height);
 
+		void Bind(uint32_t texUnit) const;
 		uint32_t Bind() const;
 		/*void Unbind(unsigned int texUnit = 0) const;*/
 

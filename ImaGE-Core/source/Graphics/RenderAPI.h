@@ -24,7 +24,7 @@ namespace Graphics{
 		static void DrawTriangles(std::shared_ptr<VertexArray> const& vao, unsigned int vtxCount);
 		static void DrawLines(std::shared_ptr<VertexArray> const& vao, unsigned int vtxCount);
 
-		void SetLineWidth(float width);
+		static void SetLineWidth(float width);
 	};
 }
 

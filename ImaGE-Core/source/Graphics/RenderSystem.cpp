@@ -14,19 +14,7 @@
 namespace Graphics {
 	CameraManager RenderSystem::mCameraManager;
 	void RenderSystem::Init() {
-		Renderer::Init(); 
-
-		//ECS::Entity mainCameraEntity = ECS::EntityManager::GetInstance().CreateEntity();
-		//auto & camCom = mainCameraEntity.EmplaceComponent<Component::Camera>(); // Add your Camera component
-		//camCom.position = glm::vec3(0.0f, 5.0f, 20.0f);
-		//camCom.yaw = -90.f;
-		//camCom.pitch = -30.f;
-		//
-		//// Optionally, add a tag or mark it as the main camera
-		//mainCameraEntity.SetTag("MainCamera"); // Assuming you have a SetTag method
-		//Graphics::RenderSystem::mCameraManager.AddCamera(mainCameraEntity);
-		//Graphics::RenderSystem::mCameraManager.SetActiveCamera(0);
-
+		Renderer::Init();
 	}
 
 	void RenderSystem::Release() {
@@ -38,7 +26,6 @@ namespace Graphics {
 
 		//Frustum Culling should be here
 
-		// waiting for ernest reply before i revert the commented the changes
 		std::vector<ECS::Entity> entityVector{};
 		// if editing prefab, pass in all active entities
 		if (Scenes::SceneManager::GetInstance().GetSceneState() == Scenes::PREFAB_EDITOR) {

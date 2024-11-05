@@ -9,6 +9,8 @@ namespace Graphics {
 
 		GLCALL(glEnable(GL_DEPTH_TEST));
 		GLCALL(glEnable(GL_LINE_SMOOTH));
+		GLCALL(glHint(GL_LINE_SMOOTH_HINT, GL_NICEST));
+
 	}
 
 	void RenderAPI::SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height){
@@ -38,6 +40,7 @@ namespace Graphics {
 	void RenderAPI::DrawLines(std::shared_ptr<VertexArray> const& vao, unsigned int vtxCount){
 		vao->Bind();
 		GLCALL(glDrawArrays(GL_LINES, 0, vtxCount));
+
 	}
 
 	void RenderAPI::DrawTriangles(std::shared_ptr<VertexArray> const& vao, unsigned int vtxCount){

@@ -26,6 +26,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/Mesh.h>
 #include "Asset/IGEAssets.h"
 #include <Core/Systems/LayerSystem/LayerSystem.h>
+#
 
 #define ICON_PADDING "   "
 
@@ -62,7 +63,9 @@ namespace GUI {
       { typeid(Component::Script), ICON_FA_FILE_CODE ICON_PADDING },
       { typeid(Component::Text), ICON_FA_FONT ICON_PADDING },
       { typeid(Component::Light), ICON_FA_LIGHTBULB ICON_PADDING },
-      { typeid(Component::Canvas), ICON_FA_PAINTBRUSH}
+      { typeid(Component::Canvas), ICON_FA_PAINTBRUSH},
+      { typeid(Component::Image), ICON_FA_IMAGE},
+      { typeid(Component::Camera), ICON_FA_CAMERA}
     },
     mObjFactory{Reflection::ObjectFactory::GetInstance()},
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
@@ -277,6 +280,30 @@ namespace GUI {
         }
       }
 
+      if (currentEntity.HasComponent<Component::Image>()) {
+          rttr::type const imageType{ rttr::type::get<Component::Image>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(imageType);
+
+          if (ImageComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Image>());
+              }
+          }
+      }
+
+      if (currentEntity.HasComponent<Component::Camera>()) {
+          rttr::type const cameraType{ rttr::type::get<Component::Camera>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(cameraType);
+
+          if (CameraComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Camera>());
+              }
+          }
+      }
+
       if (currentEntity.HasComponent<Component::AudioListener>()) {
           rttr::type const listenerType{ rttr::type::get<Component::AudioListener>() };
           componentOverriden = prefabOverride && prefabOverride->IsComponentModified(listenerType);
@@ -434,43 +461,226 @@ namespace GUI {
 
     if (isOpen) {
       Mono::ScriptManager* sm = &Mono::ScriptManager::GetInstance();
-      ImGuiStyle& style = ImGui::GetStyle();
       std::vector <std::string> toDeleteList{};
-      float const charSize = ImGui::CalcTextSize("012345678901234").x;
-      float const inputWidth = (ImGui::GetWindowSize().x - charSize - 30.f) / 3.f;
+      static std::string selectedScript{};
+      float const inputWidth{ CalcInputWidth(60.f) };
       Component::Script* allScripts = &entity.GetComponent<Component::Script>();
       for (Mono::ScriptInstance& s : allScripts->mScriptList)
       {
         s.GetAllUpdatedFields();
         ImGui::Separator();
-        ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV);
-        ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, charSize);
 
-        ImGui::TableNextRow();
-        ImGui::BeginDisabled(false);
-        ImGui::TableNextColumn();
-        ImGui::Text("Script");
-        ImGui::TableNextColumn();
+        {
+          ImGuiStyle& style = ImGui::GetStyle();
+          float const deleteBtnPos{ ImGui::GetCursorPosX() + FIRST_COLUMN_LENGTH };
+          ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
+          ImGui::Text(s.mScriptName.c_str());
+          ImGui::PopFont();
+          ImGui::SameLine();
+          ImVec4 const boriginalColor = style.Colors[ImGuiCol_Button];
+          ImVec4 const boriginalHColor = style.Colors[ImGuiCol_ButtonHovered];
+          ImVec4 const boriginalAColor = style.Colors[ImGuiCol_ButtonActive];
+          style.Colors[ImGuiCol_Button] = ImVec4(0.6f, 0.f, 0.29f, 1.0f);
+          style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.8f, 0.1f, 0.49f, 1.0f);
+          style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.7f, 0.3f, 0.39f, 1.0f);
+          ImGui::SetCursorPosX(deleteBtnPos);
+          if (ImGui::Button(("Delete##" + s.mScriptName).c_str()))
+          {
+            toDeleteList.push_back(s.mScriptName);
+
+            // if selection is empty, set it to the deleted script
+            if (selectedScript.empty()) {
+              selectedScript = s.mScriptName;
+            }
+          }
+          style.Colors[ImGuiCol_Button] = boriginalColor;
+          style.Colors[ImGuiCol_ButtonHovered] = boriginalHColor;
+          style.Colors[ImGuiCol_ButtonActive] = boriginalAColor;
+        }
+
+        ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+        ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+        ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+        bool isPrevVec3{ false };
+        for (rttr::variant& f : s.mScriptFieldInstList)
+        {
+          bool const isCurrVec3{ f.is_type<Mono::DataMemberInstance<Mono::DataMemberInstance<glm::dvec3>>>()
+            || f.is_type<Mono::DataMemberInstance<Mono::DataMemberInstance<glm::vec3>>>() };
+          // if there is a current vec3 table and we don't need it, end it
+          if (isPrevVec3 && !isCurrVec3) {
+            EndVec3Table();
+            ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+            ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+            ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+          }
+
+          if (f.is_type<Mono::DataMemberInstance<int>>())
+          {
+            Mono::DataMemberInstance<int>& sfi = f.get_value<Mono::DataMemberInstance<int>>();
+            NextRowTable(sfi.mScriptField.mFieldName.c_str());
+            if (ImGui::DragInt(("##" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 1)) {
+              s.SetFieldValue<int>(sfi.mData, sfi.mScriptField.mClassField);
+              modified = true;
+            }
+          }
+          else if (f.is_type<Mono::DataMemberInstance<float>>())
+          {
+            Mono::DataMemberInstance<float>& sfi = f.get_value<Mono::DataMemberInstance<float>>();
+            NextRowTable(sfi.mScriptField.mFieldName.c_str());
+            if (ImGui::DragFloat(("##" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0.1f)) {
+              s.SetFieldValue<float>(sfi.mData, sfi.mScriptField.mClassField);
+              modified = true;
+            }
+          }
+          else if (f.is_type<Mono::DataMemberInstance<double>>())
+          {
+            Mono::DataMemberInstance<double>& sfi = f.get_value<Mono::DataMemberInstance<double>>();
+            NextRowTable(sfi.mScriptField.mFieldName.c_str());
+            if (ImGui::DragScalar(("##" + sfi.mScriptField.mFieldName).c_str(), ImGuiDataType_Double, &sfi.mData, 0.1f, "%.3f")) {
+              s.SetFieldValue<double>(sfi.mData, sfi.mScriptField.mClassField);
+              modified = true;
+            }
+          }
+          else if (f.is_type<Mono::DataMemberInstance<glm::vec3>>())
+          {
+            // if prev element wasnt a vec3, end it and start a new table
+            if (!isPrevVec3) {
+              ImGui::EndTable();
+              BeginVec3Table("ScriptVec3Table", inputWidth / 3.f);
+            }
+
+            Mono::DataMemberInstance<glm::vec3>& sfi = f.get_value<Mono::DataMemberInstance<glm::vec3>>();
+            if (ImGuiHelpers::TableInputFloat3(sfi.mScriptField.mFieldName, &sfi.mData[0], inputWidth, false, -FLT_MAX, FLT_MAX, 0.1f)) {
+              s.SetFieldValue<glm::dvec3>(sfi.mData, sfi.mScriptField.mClassField);
+              modified = true;
+            }
+          }
+          else if (f.is_type<Mono::DataMemberInstance<glm::dvec3>>())
+          {
+            // if prev element wasnt a vec3, end it and start a new table
+            if (!isPrevVec3) {
+              ImGui::EndTable();
+              BeginVec3Table("ScriptdVec3Table", inputWidth / 3.f);
+            }
+
+            Mono::DataMemberInstance<glm::dvec3>& sfi = f.get_value<Mono::DataMemberInstance<glm::dvec3>>();
+            if (ImGuiHelpers::TableInputDouble3(sfi.mScriptField.mFieldName, sfi.mData, inputWidth, false, -DBL_MAX, DBL_MAX, 0.1f)) {
+              s.SetFieldValue<glm::dvec3>(sfi.mData, sfi.mScriptField.mClassField);
+              modified = true;
+            }
+          }
+          else if (f.is_type<Mono::DataMemberInstance<Mono::ScriptInstance>>())
+          {
+            Mono::DataMemberInstance<Mono::ScriptInstance>& sfi = f.get_value<Mono::DataMemberInstance<Mono::ScriptInstance>>();
+            if (sfi.mScriptField.mFieldType == Mono::ScriptFieldType::ENTITY || sfi.mScriptField.mFieldType == Mono::ScriptFieldType::INSIDE)
+            {
+              NextRowTable(sfi.mScriptField.mFieldName.c_str());
+
+              //Set the default display value.
+              ECS::Entity::EntityID currID = entt::null;
+              std::string msg{ "No Entity Attached" };
+              if (sfi.mData.mClassInst && ECS::EntityManager::GetInstance().IsValidEntity(static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData)))
+              {
+                msg = ECS::Entity(static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData)).GetTag();
+                ECS::Entity::EntityID currID = static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData);
+              }
+
+              if (ImGui::BeginCombo("##", msg.c_str()))
+              {
+                for (const ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntities())
+                {
+                  if (e.GetRawEnttEntityID() != currID)
+                  {
+                    bool is_selected = (e.GetRawEnttEntityID() == currID);
+                    if (ImGui::Selectable(e.GetTag().c_str(), is_selected))
+                    {
+                      if (e.GetRawEnttEntityID() != currID) {
+                        if (!sfi.mData.mClassInst)
+                        {
+                          sfi.mData = Mono::ScriptInstance(sfi.mData.mScriptName);
+                          sfi.mData.SetEntityID(e.GetRawEnttEntityID());
+                          s.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
+                        }
+                        else
+                        {
+                          sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData = static_cast<unsigned>(e.GetRawEnttEntityID());
+                          sfi.mData.SetAllFields();
+                        }
+                      }
+                      modified = true;
+                      break;
+                    }
+                    if (is_selected)
+                    {
+                      ImGui::SetItemDefaultFocus();
+                    }
+                  }
+
+                }
+                ImGui::EndCombo();
+              }
+            }
+
+          }
+
+          isPrevVec3 = f.is_type<Mono::DataMemberInstance<glm::dvec3>>()
+            || f.is_type<Mono::DataMemberInstance<glm::vec3>>();
+        }
+
+        // remember to end table if the last element was a vec3
+        if (isPrevVec3) { EndVec3Table(); }
+
+        // Check if the mouse is over the second table and the right mouse button is clicked
+        ImGui::EndTable();
+        ImGui::Separator();
+
+      }
+
+      {
+        ImVec2 const buttonSize(100.0f, 30.0f);
+        float const dropdownPos{ ImGui::GetCursorPosX() + FIRST_COLUMN_LENGTH };
         ImGuiStyle& style = ImGui::GetStyle();
-        ImVec4 originalColor = style.Colors[ImGuiCol_FrameBg];
-        ImVec4 originalHColor = style.Colors[ImGuiCol_FrameBgHovered];
+        ImVec4 const originalColor = style.Colors[ImGuiCol_FrameBg];
+        ImVec4 const originalHColor = style.Colors[ImGuiCol_FrameBgHovered];
+        ImVec4 const originalBColor = style.Colors[ImGuiCol_Button];
+        ImVec4 const originalBHColor = style.Colors[ImGuiCol_ButtonHovered];
         style.Colors[ImGuiCol_FrameBg] = ImVec4(0.18f, 0.28f, 0.66f, 1.0f);
         style.Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.28f, 0.48f, 0.86f, 1.0f);
-        if (ImGui::BeginCombo("", s.mScriptName.c_str()))
+        style.Colors[ImGuiCol_Button] = ImVec4(0.18f, 0.28f, 0.66f, 1.0f);
+        style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.28f, 0.48f, 0.86f, 1.0f);
+        if (ImGui::Button("Add Script", buttonSize)) {
+          if (!selectedScript.empty()) {
+            allScripts->mScriptList.emplace_back(selectedScript);
+            allScripts->mScriptList[allScripts->mScriptList.size() - 1].SetEntityID(entity.GetRawEnttEntityID());
+
+            // refresh the displayed script in the dropdown box
+            // display the next available script. If not, leave it blank
+            selectedScript.clear();
+            for (const std::string& sn : sm->mAllScriptNames)
+            {
+              auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [sn](const Mono::ScriptInstance pair) { return pair.mScriptName == sn; });;
+              if (it != allScripts->mScriptList.end()) { continue; }
+
+              selectedScript = sn;
+              break;
+            }
+          }
+        }
+        ImGui::SameLine();
+        ImGui::SetCursorPosX(dropdownPos);
+        ImGui::SetNextItemWidth(inputWidth);
+        if (ImGui::BeginCombo("##ScriptSelection", selectedScript.empty()  ? "Select Script" : selectedScript.c_str()))
         {
           for (const std::string& sn : sm->mAllScriptNames)
           {
             auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [sn](const Mono::ScriptInstance pair) { return pair.mScriptName == sn; });
             if (it == allScripts->mScriptList.end())
             {
-              bool is_selected = (s.mScriptName.c_str() == sn);
+              bool const is_selected = (selectedScript.c_str() == sn);
               if (ImGui::Selectable(sn.c_str(), is_selected))
               {
-                if (sn != s.mScriptName) {
-                  uint32_t id{ entity.GetEntityID() };
-                  std::vector<void*> arg{ &(id) };
-                  s = Mono::ScriptInstance(sn, arg);
-                }
+                selectedScript = sn;
+                break;
               }
               if (is_selected)
               {
@@ -480,110 +690,18 @@ namespace GUI {
           }
           ImGui::EndCombo();
         }
-        ImGui::SameLine();
-        ImVec4 boriginalColor = style.Colors[ImGuiCol_Button];
-        ImVec4 boriginalHColor = style.Colors[ImGuiCol_ButtonHovered];
-        ImVec4 boriginalAColor = style.Colors[ImGuiCol_ButtonActive];
-        style.Colors[ImGuiCol_Button] = ImVec4(0.6f, 0.f, 0.29f, 1.0f);
-        style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.8f, 0.1f, 0.49f, 1.0f);
-        style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.7f, 0.3f, 0.39f, 1.0f);
-        if (ImGui::Button("Delete"))
-        {
-          toDeleteList.push_back(s.mScriptName);
-        }
-        style.Colors[ImGuiCol_Button] = boriginalColor;
-        style.Colors[ImGuiCol_ButtonHovered] = boriginalHColor;
-        style.Colors[ImGuiCol_ButtonActive] = boriginalAColor;
-        ImGui::EndDisabled();
         style.Colors[ImGuiCol_FrameBg] = originalColor;
         style.Colors[ImGuiCol_FrameBgHovered] = originalHColor;
-
-        for (rttr::variant& f : s.mScriptFieldInstList)
-        {
-          rttr::type dataType{ f.get_type() };
-          // get underlying type if it's wrapped in a pointer
-          if (dataType == rttr::type::get<Mono::ScriptFieldInstance<int>>())
-          {
-            ImGui::TableNextRow();
-            Mono::ScriptFieldInstance<int>& sfi = f.get_value<Mono::ScriptFieldInstance<int>>();
-            ImGui::TableNextColumn();
-            ImGui::Text(sfi.mScriptField.mFieldName.c_str());
-            ImGui::TableNextColumn();
-            ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
-            if (ImGui::InputInt(("##" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0, 0, 0)) { s.SetFieldValue<int>(sfi.mData, sfi.mScriptField.mClassField); }
-          }
-          else if (dataType == rttr::type::get<Mono::ScriptFieldInstance<float>>())
-          {
-            ImGui::TableNextRow();
-            Mono::ScriptFieldInstance<float>& sfi = f.get_value<Mono::ScriptFieldInstance<float>>();
-            ImGui::TableNextColumn();
-            ImGui::Text(sfi.mScriptField.mFieldName.c_str());
-            ImGui::TableNextColumn();
-            ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
-            if (ImGui::InputFloat(("##" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0, 0, 0)) { s.SetFieldValue<float>(sfi.mData, sfi.mScriptField.mClassField); }
-          }
-          else if (dataType == rttr::type::get<Mono::ScriptFieldInstance<double>>())
-          {
-            ImGui::TableNextRow();
-            Mono::ScriptFieldInstance<double>& sfi = f.get_value<Mono::ScriptFieldInstance<double>>();
-            ImGui::TableNextColumn();
-            ImGui::Text(sfi.mScriptField.mFieldName.c_str());
-            ImGui::TableNextColumn();
-            ImGui::SetNextItemWidth(ImGui::GetWindowSize().x);
-            if (ImGui::InputDouble(("##" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0, 0, 0)) { s.SetFieldValue<double>(sfi.mData, sfi.mScriptField.mClassField); }
-          }
-          else if (dataType == rttr::type::get<Mono::ScriptFieldInstance<glm::dvec3>>())
-          {
-            ImGui::TableNextRow();
-            Mono::ScriptFieldInstance<glm::dvec3>& sfi = f.get_value<Mono::ScriptFieldInstance<glm::dvec3>>();
-            if (InputDouble3(("## " + sfi.mScriptField.mFieldName).c_str(), sfi.mData, inputWidth)) { s.SetFieldValue<glm::dvec3>(sfi.mData, sfi.mScriptField.mClassField); };
-          }
-
-
-
-
-        }
-
-
-        // Check if the mouse is over the second table and the right mouse button is clicked
-        ImGui::EndTable();
-        ImGui::Separator();
-
+        style.Colors[ImGuiCol_Button] = originalBColor;
+        style.Colors[ImGuiCol_ButtonHovered] = originalBHColor;
       }
 
-
-
-
-      ImVec4 originalColor = style.Colors[ImGuiCol_Button];
-      ImVec4 originalHColor = style.Colors[ImGuiCol_ButtonHovered];
-      style.Colors[ImGuiCol_Button] = ImVec4(0.18f, 0.28f, 0.66f, 1.0f);
-      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.28f, 0.48f, 0.86f, 1.0f);
-
-      float windowWidth = ImGui::GetContentRegionAvail().x;
-      ImVec2 buttonSize(100.0f, 30.0f);
-      float buttonOffsetX = (windowWidth - buttonSize.x) * 0.5f;
-      ImGui::SetCursorPosX(ImGui::GetCursorPosX() + buttonOffsetX);
-
-      if (ImGui::Button("Add Script", buttonSize)) {
-        for (const std::string& sn : sm->mAllScriptNames)
+      if (!toDeleteList.empty()) {
+        for (const std::string& tds : toDeleteList)
         {
-          auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [sn](const Mono::ScriptInstance pair) { return pair.mScriptName == sn; });;
-          if (it == allScripts->mScriptList.end())
-          {
-            uint32_t id{ entity.GetEntityID() };
-            std::vector<void*> arg{ &(id) };
-            allScripts->mScriptList.emplace_back(sn, arg);
-            break;
-          }
+          auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [tds](const Mono::ScriptInstance pair) { return pair.mScriptName == tds; });
+          allScripts->mScriptList.erase(it);
         }
-      }
-      style.Colors[ImGuiCol_Button] = originalColor;
-      style.Colors[ImGuiCol_ButtonHovered] = originalHColor;
-
-      for (const std::string& tds : toDeleteList)
-      {
-        auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [tds](const Mono::ScriptInstance pair) { return pair.mScriptName == tds; });
-        allScripts->mScriptList.erase(it);
       }
     }
 
@@ -626,21 +744,36 @@ namespace GUI {
     bool modified{ false };
 
     if (isOpen) {
+      ImGui::Text("Usage: Must be child of an Entity with the \"Canvas\" Component");
+
       auto& text = entity.GetComponent<Component::Text>();
-      float const inputWidth{ CalcInputWidth(60.f) };
+      float inputWidth{ CalcInputWidth(60.f) };
 
       ImGui::BeginTable("TextTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
-      NextRowTable("Font Family");
+      NextRowTable("");
+      ImVec2 boxSize = ImVec2(200.0f, 40.0f); // Width and height of the box
+      ImVec2 cursorPos = ImGui::GetCursorScreenPos();
+      ImVec2 boxEnd = ImVec2(cursorPos.x + boxSize.x, cursorPos.y + boxSize.y);
 
-      std::string fontText = (text.fontFamilyName == "None") ? "[None]: Drag in a Font" : text.fontFamilyName;
+      // Draw a child window to act as the box
+      ImGui::BeginChild("DragDropTargetBox", boxSize, false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
-      ImGui::BeginDisabled();
-      ImGui::InputText("##FontTextInput", &fontText);
-      ImGui::EndDisabled();
+      // Get draw list and add a thin black border around the box
+      ImGui::GetWindowDrawList()->AddRect(cursorPos, boxEnd, IM_COL32(0, 0, 0, 255), 0.0f, 0, 1.0f);
+
+      // Center the text inside the box
+      ImVec2 textSize = ImGui::CalcTextSize("Drag here to add font");
+      ImVec2 textPos = ImVec2(
+        cursorPos.x + (boxSize.x - textSize.x) * 0.5f,
+        cursorPos.y + (boxSize.y - textSize.y) * 0.5f
+      );
+      ImGui::SetCursorScreenPos(textPos);
+      ImGui::TextUnformatted("Drag here to add font");
+      ImGui::EndChild();
 
       if (ImGui::BeginDragDropTarget()) {
         ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
@@ -649,41 +782,82 @@ namespace GUI {
           if (assetPayload.mAssetType == AssetPayload::FONT) {
             text.textAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::FontAsset>(assetPayload.GetFilePath());
             text.fontFamilyName = assetPayload.GetFileName();
+            text.newLineIndicesUpdatedFlag = false;
             modified = true;
           }
         }
         ImGui::EndDragDropTarget();
       }
-      
-      /*
+
+      std::string fontText = (text.fontFamilyName == "None") ? "[None]" : text.fontFamilyName;
       NextRowTable("Font Family");
-      if (ImGui::BeginCombo("##TextName", text.fontName.c_str())) {
-        for (const char* fontName : availableFonts) {
-          if (ImGui::Selectable(fontName)) {
-            text.fontName = fontName;
-            modified = true;
-          }
-        }
-        ImGui::EndCombo();
-      }
-      */
+      ImGui::BeginDisabled();
+      ImGui::InputText("##FontTextInput", &fontText);
+      ImGui::EndDisabled();
       
       NextRowTable("Color");
-      if (ImGui::ColorEdit4("##TextColor", &text.color[0])) {
+      if (ImGui::ColorEdit4("##TextColor", &text.color[0], ImGuiColorEditFlags_NoAlpha)) {
         modified = true;
       }
 
       NextRowTable("Text Input");
       if (ImGui::InputTextMultiline("##TextInput", &text.textContent)) {
+        text.newLineIndicesUpdatedFlag = false;
         modified = true;
       }
 
       NextRowTable("Scale");
-      if (ImGui::DragFloat("##TextScale", &text.scale, .001f, 0.f, 5.f)) {
+      if (ImGui::DragFloat("##TextScale", &text.scale, .001f, 0.f, 2.f)) {
+        modified = true;
+      }
+
+      NextRowTable("Multi-Line Space Offset");
+      if (ImGui::DragFloat("##MultiLineSpacingOffset", &text.multiLineSpacingOffset, .01f, -2.f, 2.f)) {
+        modified = true;
+      }
+
+      NextRowTable("Text Alignment");
+      if (ImGui::RadioButton("Left##TextAlignment", text.alignment == Component::Text::LEFT)) {
+        text.alignment = Component::Text::LEFT;
+        text.newLineIndicesUpdatedFlag = false;
+        modified = true;
+      }
+
+      if (ImGui::RadioButton("Right##TextAlignment", text.alignment == Component::Text::RIGHT)) {
+        text.alignment = Component::Text::RIGHT;
+        text.newLineIndicesUpdatedFlag = false;
+        modified = true;
+      }
+
+      if (ImGui::RadioButton("Center##TextAlignment", text.alignment == Component::Text::CENTER)) {
+        text.alignment = Component::Text::CENTER;
+        text.newLineIndicesUpdatedFlag = false;
+        modified = true;
+      }
+
+      NextRowTable("Textbox Enabled");
+      if (ImGui::Checkbox("##TextBoxEnabled", &text.textBoxEnabledFlag)) {
+        text.newLineIndicesUpdatedFlag = false;
         modified = true;
       }
 
       ImGui::EndTable();
+
+      if (text.textBoxEnabledFlag) {
+        inputWidth = CalcInputWidth(50.f) / 3.f;
+        ImGui::BeginTable("Text Box Dimensions", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+        ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+        ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+        ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+        ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+        ImGui::TableHeadersRow();
+
+        if (ImGuiHelpers::TableInputFloat3("Textbox Dimensions", &text.textBoxDimensions.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
+          text.newLineIndicesUpdatedFlag = false;
+          modified = true;
+        }
+        ImGui::EndTable();
+      }
     }
 
     WindowEnd(isOpen);
@@ -699,13 +873,7 @@ namespace GUI {
 
       float const inputWidth{ CalcInputWidth(50.f) / 3.f };
 
-      ImGui::BeginTable("LocalTransformTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
-
-      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-      ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
-      ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
-      ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
-      ImGui::TableHeadersRow();
+      BeginVec3Table("LocalTransformTable", inputWidth);
 
       // @TODO: Replace min and max with the world min and max
       if (ImGuiHelpers::TableInputFloat3("Position", &transform.position[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
@@ -720,15 +888,9 @@ namespace GUI {
         modified = true;
       }
 
-      ImGui::EndTable();
+      EndVec3Table();
 
-      ImGui::BeginTable("WorldTransformTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
-
-      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-      ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
-      ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
-      ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
-      ImGui::TableHeadersRow();
+      BeginVec3Table("WorldTransformTable", inputWidth);
 
       // only allow local transform to be modified
       glm::vec3 worldRot{ transform.GetWorldEulerAngles() };
@@ -737,7 +899,8 @@ namespace GUI {
       ImGuiHelpers::TableInputFloat3("World Rotation", &worldRot[0], inputWidth, false, 0.f, 360.f, 0.1f);
       ImGuiHelpers::TableInputFloat3("World Scale", &transform.worldScale[0], inputWidth, false, 0.001f, 100.f, 1.f);
       ImGui::EndDisabled();
-      ImGui::EndTable();
+
+      EndVec3Table();
     }
 
     WindowEnd(isOpen);
@@ -750,6 +913,137 @@ namespace GUI {
 
       if (isOpen) {
           Component::Canvas& canvas = entity.GetComponent<Component::Canvas>();
+          float const inputWidth{ CalcInputWidth(60.f) };
+          // Start a table for organizing the color and textureAsset inputs
+          ImGui::BeginTable("ImageTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+          NextRowTable("Toggle Visiblity");
+          if (ImGui::Checkbox("##IsActive", &canvas.isActive)) {
+              modified = true;
+          }
+          ImGui::EndTable();
+      }
+
+      WindowEnd(isOpen);
+      return modified;
+  }
+
+  bool Inspector::ImageComponentWindow(ECS::Entity entity, bool highlight) {
+      bool const isOpen{ WindowBegin<Component::Image>("Image", highlight) };
+      bool modified{ false };
+
+      if (isOpen) {
+          Component::Image& image = entity.GetComponent<Component::Image>();
+
+          float const inputWidth{ CalcInputWidth(60.f) };
+
+          // Start a table for organizing the color and textureAsset inputs
+          ImGui::BeginTable("ImageTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+          // Color input
+          NextRowTable("Color");
+          if (ImGui::ColorEdit4("##ImageColor", &image.color[0])) {
+              modified = true;
+          }
+
+          // Texture Asset input - assuming textureAsset is a GUID or string
+          
+
+
+          NextRowTable("Texture Asset");
+          static std::string textureText;
+          try {
+              textureText = (image.textureAsset) ? IGE_ASSETMGR.GUIDToPath(image.textureAsset) : "[None]: Drag in a Texture";
+          }
+          catch (Debug::ExceptionBase& e) {
+              // If the GUID is not found, log the exception and set a default message
+              textureText = "[Invalid GUID]: Unable to load texture";
+              e.LogSource();
+             ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), e.what());
+          }
+
+          
+          //(image.textureAsset) ? IGE_ASSETMGR.GUIDToPath(image.textureAsset) : "[None]: Drag in a Texture";
+
+          //catch (const Debug::ExceptionBase& e) {
+
+          //}
+
+          ImGui::BeginDisabled();
+          ImGui::InputText("##TextureAsset", &textureText);
+          ImGui::EndDisabled();
+
+          if (ImGui::BeginDragDropTarget()) {
+              ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+              if (drop) {
+                  AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+                  if (assetPayload.mAssetType == AssetPayload::SPRITE) {
+                      image.textureAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
+                      textureText = assetPayload.GetFileName();  // Display the file name in the UI
+                      modified = true;
+                  }
+              }
+              ImGui::EndDragDropTarget();
+          }
+
+          ImGui::EndTable();
+      }
+
+      WindowEnd(isOpen);
+      return modified;
+  }
+
+  bool Inspector::CameraComponentWindow(ECS::Entity entity, bool highlight)
+  {
+      bool const isOpen{ WindowBegin<Component::Camera>("Camera", highlight) };
+      bool modified{ false };
+
+      if (isOpen) {
+          Component::Camera& camera = entity.GetComponent<Component::Camera>();
+
+          float const inputWidth{ CalcInputWidth(60.f) };
+
+          // Start a table for organizing the color and textureAsset inputs
+          ImGui::BeginTable("CameraTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+          // Color input
+          NextRowTable("Projection Type");
+          //if (ImGui::ColorEdit4("##ProjType", &camera.projType)) {
+          //    modified = true;
+          //}
+
+          NextRowTable("Yaw");
+          if (ImGui::DragFloat("##Yaw", &camera.yaw, 1.f, -180.f, 180.f)) {
+              modified = true;
+          }
+          NextRowTable("Pitch");
+          if (ImGui::DragFloat("##Pitch", &camera.pitch, 1.f, -180.f, 180.f)) {
+              modified = true;
+          }
+          NextRowTable("FOV");
+          if (ImGui::DragFloat("##FOV", &camera.fov, 1.f, 0.f, 180.f)) {
+              modified = true;
+          }
+          NextRowTable("Aspect Ratio");
+
+          NextRowTable("Near Clip");
+          if (ImGui::DragFloat("##Near", &camera.nearClip, 5.f, -100.f, 0.f)) {
+              modified = true;
+          }
+          NextRowTable("Far Clip");
+          if (ImGui::DragFloat("##Far", &camera.farClip, 5.f, 0.f, 1000.f)) {
+              modified = true;
+          }
+          
 
 
           ImGui::EndTable();
@@ -842,13 +1136,7 @@ namespace GUI {
 
       float const inputWidth{ CalcInputWidth(50.f) / 3.f };
 
-      ImGui::BeginTable("RigidBodyTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
-
-      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-      ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
-      ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
-      ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
-      ImGui::TableHeadersRow();
+      BeginVec3Table("RigidBodyTable", inputWidth);
 
       if (ImGuiHelpers::TableInputFloat3("Velocity", &rigidBody.velocity.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
@@ -859,7 +1147,7 @@ namespace GUI {
         modified = true;
       }
 
-      ImGui::EndTable();
+      EndVec3Table();
 
       ImGui::BeginTable("ShapeSelectionTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
@@ -869,13 +1157,13 @@ namespace GUI {
       NextRowTable("Static Friction");
       if (ImGui::DragFloat("##RigidBodyStaticFriction", &rigidBody.staticFriction, 0.01f, 0.0f, 1.0f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::STATIC_FRICTION);
-        SetIsComponentEdited(true);
+        modified = true;
       }
 
       NextRowTable("Dynamic Friction");
       if (ImGui::DragFloat("##RigidBodyDynamicFriction", &rigidBody.dynamicFriction, 0.01f, 0.0f, 1.0f)) {
           IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::STATIC_FRICTION);
-          SetIsComponentEdited(true);
+          modified = true;
       }
 
       NextRowTable("Restitution");
@@ -893,7 +1181,7 @@ namespace GUI {
       NextRowTable("Mass");
       if (ImGui::DragFloat("##RigidBodyMass", &rigidBody.mass, 0.01f, 0.0f, 1000'000.0f)) {
           IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::MASS);
-          SetIsComponentEdited(true);
+          modified = true;
       }
 
       // Motion Type Selection
@@ -934,9 +1222,9 @@ namespace GUI {
       if (isOpen) {
           Component::AudioSource& audioSource{ entity.GetComponent<Component::AudioSource>() };
           float const inputWidth{ CalcInputWidth(50.f) / 3.f };
-          ImVec2 boxSize = ImVec2(200.0f, 40.0f); // Width and height of the box
-          ImVec2 cursorPos = ImGui::GetCursorScreenPos();
-          ImVec2 boxEnd = ImVec2(cursorPos.x + boxSize.x, cursorPos.y + boxSize.y);
+          ImVec2 const boxSize = ImVec2(200.0f, 40.0f); // Width and height of the box
+          ImVec2 const cursorPos = ImGui::GetCursorScreenPos();
+          ImVec2 const boxEnd = ImVec2(cursorPos.x + boxSize.x, cursorPos.y + boxSize.y);
 
           // Draw a child window to act as the box
           ImGui::BeginChild("DragDropTargetBox", boxSize, false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
@@ -945,8 +1233,8 @@ namespace GUI {
           ImGui::GetWindowDrawList()->AddRect(cursorPos, boxEnd, IM_COL32(0, 0, 0, 255), 0.0f, 0, 1.0f);
 
           // Center the text inside the box
-          ImVec2 textSize = ImGui::CalcTextSize("Drag here to add sound");
-          ImVec2 textPos = ImVec2(
+          ImVec2 const textSize = ImGui::CalcTextSize("Drag here to add sound");
+          ImVec2 const textPos = ImVec2(
               cursorPos.x + (boxSize.x - textSize.x) * 0.5f,
               cursorPos.y + (boxSize.y - textSize.y) * 0.5f
           );
@@ -977,17 +1265,11 @@ namespace GUI {
               // Begin a Tree Node for sound properties
               if (ImGui::TreeNode("Sound Properties")) {
                   // Table for 3D position
-                  if (ImGui::BeginTable("PositionTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
-                      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-                      ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
-                      ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
-                      ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
-                      ImGui::TableHeadersRow();
-
+                  if (BeginVec3Table("PositionTable", inputWidth)) {
                       if (ImGuiHelpers::TableInputFloat3("Position", &audioInstance.playSettings.position.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
                           modified = true;
                       }
-                      ImGui::EndTable();
+                      EndVec3Table();
                   }
 
                   // Table for single properties
@@ -1076,35 +1358,28 @@ namespace GUI {
       Component::BoxCollider& collider{ entity.GetComponent<Component::BoxCollider>() };
       float const inputWidth{ CalcInputWidth(50.f) / 3.f };
 
-      ImGui::BeginTable("BoxColliderTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
-
-      // Set up columns for labels and inputs
-      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);  // Labels
-      ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);            // X column
-      ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);            // Y column
-      ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);            // Z column
-      ImGui::TableHeadersRow();  // Create header row for the table
+      BeginVec3Table("BoxColliderTable", inputWidth);
 
       // Modify the scale (vec3 input)
       if (ImGuiHelpers::TableInputFloat3("Box Scale", &collider.scale.x, inputWidth, false, 0.1f, 10.0f, 0.1f)) {
           IGE::Physics::PhysicsSystem::GetInstance()->ChangeBoxColliderVar(entity);
-          SetIsComponentEdited(true);
+          modified = true;
       }
 
       // Modify positionOffset (vec3 input)
       if (ImGuiHelpers::TableInputFloat3("Box Position Offset", &collider.positionOffset.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
           IGE::Physics::PhysicsSystem::GetInstance()->ChangeBoxColliderVar(entity);
-          SetIsComponentEdited(true);
+          modified = true;
       }
 
       // Modify rotationOffset (vec3 input)
       if (ImGuiHelpers::TableInputFloat3("Box Rotation Offset", &collider.rotationOffset.x, inputWidth, false, -360.f, 360.f, 1.f)) {
           IGE::Physics::PhysicsSystem::GetInstance()->ChangeBoxColliderVar(entity);
-          SetIsComponentEdited(true);
+          modified = true;
       }
 
       // End the table
-      ImGui::EndTable();
+      EndVec3Table();
 
       // Modify sensor (bool input)
       /*
@@ -1123,7 +1398,7 @@ namespace GUI {
       NextRowTable("Box Sensor");
       if (ImGui::Checkbox("##BoxSensor", &collider.sensor)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeBoxColliderVar(entity);
-        SetIsComponentEdited(true);
+        modified = true;
       }
       ImGui::EndTable();
     }
@@ -1145,14 +1420,7 @@ namespace GUI {
           float inputWidth = (contentSize - charSize - 50) / 3;
 
           // Start a table for the Collider component
-          ImGui::BeginTable("SphereColliderTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
-
-          // Set up columns for labels and inputs
-          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);  // Labels
-          ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);            // X column
-          ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);            // Y column
-          ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);            // Z column
-          ImGui::TableHeadersRow();  // Create header row for the table
+          BeginVec3Table("SphereColliderTable", inputWidth);
 
           // Modify the radius (single float input)
           ImGui::TableNextRow();
@@ -1160,23 +1428,23 @@ namespace GUI {
           ImGui::TableSetColumnIndex(1);  // Span across X column
           if (ImGui::DragFloat("##Radius", &collider.radius, 0.1f, 0.f, 100.f)) {
               IGE::Physics::PhysicsSystem::GetInstance()->ChangeSphereColliderVar(entity);
-              SetIsComponentEdited(true);
+              modified = true;
           }
 
           // Modify positionOffset (vec3 input)
           if (ImGuiHelpers::TableInputFloat3("Sphere Position Offset", &collider.positionOffset.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
               IGE::Physics::PhysicsSystem::GetInstance()->ChangeSphereColliderVar(entity);
-              SetIsComponentEdited(true);
+              modified = true;
           }
 
           // Modify rotationOffset (vec3 input)
           if (ImGuiHelpers::TableInputFloat3("Sphere Rotation Offset", &collider.rotationOffset.x, inputWidth, false, -360.f, 360.f, 1.f)) {
               IGE::Physics::PhysicsSystem::GetInstance()->ChangeSphereColliderVar(entity);
-              SetIsComponentEdited(true);
+              modified = true;
           }
 
           // End the table
-          ImGui::EndTable();
+          EndVec3Table();
 
           // Modify sensor (bool input)
           /*
@@ -1195,7 +1463,7 @@ namespace GUI {
           NextRowTable("Sphere Sensor");
           if (ImGui::Checkbox("##SphereSensor", &collider.sensor)) {
             IGE::Physics::PhysicsSystem::GetInstance()->ChangeSphereColliderVar(entity);
-            SetIsComponentEdited(true);
+            modified = true;
           }
           ImGui::EndTable();
       }
@@ -1217,14 +1485,7 @@ namespace GUI {
           float inputWidth = (contentSize - charSize - 50) / 3;
 
           // Start a table for the Collider component
-          ImGui::BeginTable("CapsuleColliderTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
-
-          // Set up columns for labels and inputs
-          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);  // Labels
-          ImGui::TableSetupColumn("X", ImGuiTableColumnFlags_WidthFixed, inputWidth);            // X column
-          ImGui::TableSetupColumn("Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);            // Y column
-          ImGui::TableSetupColumn("Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);            // Z column
-          ImGui::TableHeadersRow();  // Create header row for the table
+          BeginVec3Table("CapsuleColliderTable", inputWidth);
 
           // Modify the radius (single float input)
           ImGui::TableNextRow();
@@ -1232,7 +1493,7 @@ namespace GUI {
           ImGui::TableSetColumnIndex(1);  // Span across X column
           if (ImGui::DragFloat("##Radius", &collider.radius, 0.1f, 0.1f, 100.f)) {
               IGE::Physics::PhysicsSystem::GetInstance()->ChangeCapsuleColliderVar(entity);
-              SetIsComponentEdited(true);
+              modified = true;
           }
 
           // Modify the halfHeight (single float input)
@@ -1241,23 +1502,23 @@ namespace GUI {
           ImGui::TableSetColumnIndex(1);  // Span across X column
           if (ImGui::DragFloat("##HalfHeight", &collider.halfheight, 0.1f, 0.1f, 100.f)) {
               IGE::Physics::PhysicsSystem::GetInstance()->ChangeCapsuleColliderVar(entity);
-              SetIsComponentEdited(true);
+              modified = true;
           }
 
           // Modify positionOffset (vec3 input)
           if (ImGuiHelpers::TableInputFloat3("Capsule Position Offset", &collider.positionOffset.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
               IGE::Physics::PhysicsSystem::GetInstance()->ChangeCapsuleColliderVar(entity);
-              SetIsComponentEdited(true);
+              modified = true;
           }
 
           // Modify rotationOffset (vec3 input)
           if (ImGuiHelpers::TableInputFloat3("Capsule Rotation Offset", &collider.rotationOffset.x, inputWidth, false, -360.f, 360.f, 1.f)) {
               IGE::Physics::PhysicsSystem::GetInstance()->ChangeCapsuleColliderVar(entity);
-              SetIsComponentEdited(true);
+              modified = true;
           }
 
           // End the table
-          ImGui::EndTable();
+          EndVec3Table();
 
           // Modify sensor (bool input)
           //ImGui::TableNextRow();
@@ -1270,7 +1531,7 @@ namespace GUI {
           NextRowTable("Capsule Sensor");
           if (ImGui::Checkbox("##ColliderSensor", &collider.sensor)) {
               IGE::Physics::PhysicsSystem::GetInstance()->ChangeCapsuleColliderVar(entity);
-              SetIsComponentEdited(true);
+              modified = true;
           }
           ImGui::EndTable();
       }
@@ -1306,6 +1567,8 @@ namespace GUI {
               if (Lights[s] != Lights[light.type]) {
                 light.type = static_cast<Component::LightType>(s);
               }
+              modified = true;
+              break;
             }
             if (is_selected)
             {
@@ -1457,6 +1720,8 @@ namespace GUI {
         DrawAddComponentButton<Component::Transform>("Transform");
         DrawAddComponentButton<Component::Light>("Light");
         DrawAddComponentButton<Component::Canvas>("Canvas");
+        DrawAddComponentButton<Component::Image>("Image");
+        DrawAddComponentButton<Component::Camera>("Camera");
 
         ImGui::EndTable();
       }
@@ -1473,6 +1738,21 @@ namespace GUI {
 
     ImGui::Separator();
   }
+
+  bool Inspector::BeginVec3Table(const char* fieldName, float inputWidth) {
+    if (!ImGui::BeginTable(fieldName, 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+      return false;
+    }
+
+    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+    ImGui::TableSetupColumn(" X", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+    ImGui::TableSetupColumn(" Y", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+    ImGui::TableSetupColumn(" Z", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+    ImGui::TableHeadersRow();
+
+    return true;
+  }
+  void Inspector::EndVec3Table() { ImGui::EndTable(); }
 
   void Inspector::NextRowTable(const char* labelName) const {
     ImGui::TableNextRow();
@@ -1492,7 +1772,7 @@ namespace {
     ImGui::BeginDisabled(disabled);
     ImGui::TableNextColumn();
     ImGui::Text(propertyName.c_str());
-    propertyName = "##" + propertyName;
+    //propertyName = "##" + propertyName;
     ImGui::TableNextColumn();
     ImGui::SetNextItemWidth(fieldWidth);
     if (ImGui::InputDouble((propertyName + "X").c_str(), &property.x, 0, 0, "%.5f")) { valChanged = true; };
@@ -1501,7 +1781,7 @@ namespace {
     ImGui::EndDisabled();
 
     return valChanged;
-  }
+  }  
 
   float CalcInputWidth(float padding) {
     static float const charSize = ImGui::CalcTextSize("012345678901234").x;

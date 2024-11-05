@@ -61,6 +61,8 @@ namespace GUI {
     bool TextComponentWindow(ECS::Entity entity, bool highlight = false);
     bool TransformComponentWindow(ECS::Entity entity, bool highlight = false);
     bool CanvasComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool ImageComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool CameraComponentWindow(ECS::Entity entity, bool highlight = false);
     
     /*!*********************************************************************
     \brief
@@ -160,6 +162,15 @@ namespace GUI {
     ************************************************************************/
     template<typename Component>
     bool DrawOptionsListButton(std::string const& windowName);
+
+    /*!*********************************************************************
+    \brief
+      Helper function to set up the table for a vec3 field
+    \param inputWidth
+      The width of the input column
+    ************************************************************************/
+    bool BeginVec3Table(const char* fieldName, float inputWidth);
+    void EndVec3Table();
 
     /*!*********************************************************************
     \brief
