@@ -889,8 +889,17 @@ namespace GUI {
 
       if (isOpen) {
           Component::Canvas& canvas = entity.GetComponent<Component::Canvas>();
+          float const inputWidth{ CalcInputWidth(60.f) };
+          // Start a table for organizing the color and textureAsset inputs
+          ImGui::BeginTable("ImageTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
+          NextRowTable("Toggle Visiblity");
+          if (ImGui::Checkbox("##IsActive", &canvas.isActive)) {
+              modified = true;
+          }
           ImGui::EndTable();
       }
 
