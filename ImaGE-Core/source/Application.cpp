@@ -17,6 +17,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Scripting/ScriptManager.h>
 #include <Reflection/ObjectFactory.h>
 #include <Core/EntityManager.h>
+#include <Graphics/PostProcessing/PostProcessingManager.h>
 #pragma endregion
 
 #include <Core/Entity.h>
@@ -32,13 +33,14 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Systems/LayerSystem/LayerSystem.h>
 #include <Graphics/RenderSystem.h>
 #include <Core/Systems/Systems.h>
+#include <Audio/AudioSystem.h>
 #pragma endregion
 
 #include "Serialization/Serializer.h"
 #include "Serialization/Deserializer.h"
 #include "Asset/AssetMetadata.h"
 
-#include <Audio/AudioSystem.h>
+
 
 namespace IGE {
   // Static Initialization
@@ -58,6 +60,7 @@ namespace IGE {
     Mono::ScriptManager::CreateInstance();
     ECS::EntityManager::CreateInstance();
     Systems::SystemManager::CreateInstance();
+    Graphics::PostProcessingManager::CreateInstance();
 
     
     // @TODO: Init physics and audio singletons
@@ -196,10 +199,8 @@ namespace IGE {
   {
     // shutdown singletons
     Systems::SystemManager::DestroyInstance();
-
-    //not sure why this throws an error at destroy
     IGE::Audio::AudioManager::DestroyInstance();
-
+    Graphics::PostProcessingManager::DestroyInstance();
     Scenes::SceneManager::DestroyInstance();
     Prefabs::PrefabManager::DestroyInstance();
     Mono::ScriptManager::DestroyInstance();

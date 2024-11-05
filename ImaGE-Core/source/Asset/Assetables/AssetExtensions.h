@@ -30,13 +30,16 @@ namespace IGE {
 		const std::set<std::string> cFontExtensions{
 			".ttf",		 // True Type Font
 		};
-
+		const std::set<std::string> cShaderExtensions{
+			".glsl",		 // GLSL
+		};
 		//the key should be the directory name in the Assets folder
 		const std::map<std::string, std::set<std::string>> cDirectoryToExtensions{
 			{ "Models", cMeshExtensions },
 			{ "Textures", cImageExtensions },
 			{ "Audio", cAudioExtensions},
-			{ "Fonts", cFontExtensions }
+			{ "Fonts", cFontExtensions },
+			{ "PostProcessing", cShaderExtensions }
 		};
 	}
 }

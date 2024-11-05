@@ -59,6 +59,15 @@
                     ]
                 },
                 {
+                    "key": 2365944062561285119,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Models\\banana-monster.fbx"
+                        }
+                    ]
+                },
+                {
                     "key": 2911002203277076724,
                     "value": [
                         {
@@ -91,15 +100,6 @@
                         {
                             "key": "path",
                             "value": "..\\Assets\\Models\\cube_high_poly.imsh"
-                        }
-                    ]
-                },
-                {
-                    "key": 5716134224813816898,
-                    "value": [
-                        {
-                            "key": "path",
-                            "value": "..\\Assets\\Models\\Environment_Fountain.fbx"
                         }
                     ]
                 },
@@ -158,38 +158,11 @@
                     ]
                 },
                 {
-                    "key": 10987301549562329025,
-                    "value": [
-                        {
-                            "key": "path",
-                            "value": "..\\Assets\\Models\\Environment_Fountain.fbx"
-                        }
-                    ]
-                },
-                {
-                    "key": 12780276205274690575,
-                    "value": [
-                        {
-                            "key": "path",
-                            "value": "..\\Assets\\Models\\Environment_Tree.fbx"
-                        }
-                    ]
-                },
-                {
                     "key": 14072702128965246323,
                     "value": [
                         {
                             "key": "path",
                             "value": "..\\Assets\\Models\\sphere_mid_poly.imsh"
-                        }
-                    ]
-                },
-                {
-                    "key": 15784687868860897376,
-                    "value": [
-                        {
-                            "key": "path",
-                            "value": "..\\Assets\\Models\\Environment_Fountain.fbx"
                         }
                     ]
                 },
@@ -201,13 +174,54 @@
                             "value": "..\\Assets\\Models\\Environment_Fountain.fbx"
                         }
                     ]
-                },
+                }
+            ]
+        },
+        {
+            "key": "PostProcessing",
+            "value": [
                 {
-                    "key": 16717459292708288444,
+                    "key": 3357145615205506964,
                     "value": [
                         {
                             "key": "path",
-                            "value": "..\\Assets\\Models\\dragon.fbx"
+                            "value": "..\\Assets\\PostProcessing\\sinwave.frag.glsl"
+                        }
+                    ]
+                },
+                {
+                    "key": 5252750118345199729,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\PostProcessing\\crt.frag.glsl"
+                        }
+                    ]
+                },
+                {
+                    "key": 7488299143892968521,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\PostProcessing\\chromaticabberation.frag.glsl"
+                        }
+                    ]
+                },
+                {
+                    "key": 14222384982541115964,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\PostProcessing\\Blue.frag.glsl"
+                        }
+                    ]
+                },
+                {
+                    "key": 15223746351810559861,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\PostProcessing\\Red.frag.glsl"
                         }
                     ]
                 }

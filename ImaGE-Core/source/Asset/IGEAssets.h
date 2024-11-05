@@ -10,8 +10,7 @@
 #include <wrl/wrappers/corewrappers.h>
 #include <DirectXTex.h>
 
-#define IGE_ASSETMGR IGE::Assets::AssetManager::GetInstance()
-#define IGE_REF(type, guid) IGE::Assets::AssetManager::GetInstance().GetAsset<type>(guid)
+
 
 inline void IGEAssetsRegisterTypes() {
     // COM initialization

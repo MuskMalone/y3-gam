@@ -25,11 +25,14 @@ namespace Performance {
     TimeType GetDeltaTime() const noexcept;
     TimeType GetFPS() const noexcept;
     bool GetVsyncFlag() const noexcept;
+    unsigned int GetFrameCounter() const noexcept;
 
     // Setters
     void SetFPSCalculationInterval(float fpsCalculationInterval);
     void SetTargetFPS(float target);
     void SetVsync(bool vsyncEnabled);
+
+
 
     void Reset();
 

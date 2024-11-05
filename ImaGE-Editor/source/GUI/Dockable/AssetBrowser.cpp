@@ -274,8 +274,12 @@ namespace GUI
     }
     
     if (ImGui::BeginDragDropSource()) {
-      bool const canSpawnPfb{ mDisablePrefabSpawn && draggedAsset.extension() == gPrefabFileExt };
+      std::string const ext{ draggedAsset.extension().string() };
+      bool const canSpawnPfb{ mDisablePrefabSpawn && ext == gPrefabFileExt };
       if (mDisableSceneChange || canSpawnPfb) {
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+      }
+      else if (mDisableSceneChange && ext == gMeshFileExt) {
         ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
       }
       else {

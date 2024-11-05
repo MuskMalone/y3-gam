@@ -19,6 +19,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/GUID.h>
 #include <Audio/AudioManager.h>
 #include <Core/Components/AudioSource.h>
+#include <Graphics/PostProcessing/PostProcessingManager.h>
 
 #define REGISTER_DATA_MEMBER_INST(T, nameStr) rttr::registration::class_<T>(nameStr).constructor<>()(rttr::policy::ctor::as_object)\
   .property(JSON_SCRIPT_DMI_DATA_KEY, &T::mData)\
@@ -77,6 +78,9 @@ static void rttr_auto_register_reflection_function_(); namespace {
   /* ------------------- Other ------------------- */
   rttr::registration::class_<rttr::type>("RttrType");
 
+  rttr::registration::class_<std::vector<uint64_t>>("std::vector<uint64_t>")
+    .constructor<>()(rttr::policy::ctor::as_object);
+  
   rttr::registration::class_<physx::PxVec3>("PxVec3")
     .constructor<>()(rttr::policy::ctor::as_object)
     .property("x", &physx::PxVec3::x)
@@ -133,6 +137,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   rttr::registration::class_<IGE::Assets::PrefabAsset>("Prefabs");
   rttr::registration::class_<IGE::Assets::AudioAsset>("Audio");
   rttr::registration::class_<IGE::Assets::FontAsset>("Fonts");
+  rttr::registration::class_<IGE::Assets::ShaderAsset>("PostProcessing");
 
   /* ------------------- Audio ------------------- */
   {
@@ -155,6 +160,10 @@ static void rttr_auto_register_reflection_function_(); namespace {
           .property("guid", &Component::AudioSource::AudioInstance::guid)
           .property("playSettings", &Component::AudioSource::AudioInstance::playSettings);
   }
+  /* ------------------ Shaders ---------------------*/
+  rttr::registration::class_<Graphics::PostProcessingManager::PostProcessingConfigs>("PostProcessingConfigs")
+      .constructor<>()(rttr::policy::ctor::as_object)
+      .property("configs", &Graphics::PostProcessingManager::PostProcessingConfigs::mConfigs);
   /* ------------------- Script ------------------- */
   {
     using T = Reflection::ProxyScript;
