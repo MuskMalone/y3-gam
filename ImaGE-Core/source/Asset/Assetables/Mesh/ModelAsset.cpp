@@ -28,30 +28,23 @@ namespace IGE {
 
 			//new file path for the asset to live in
 			std::filesystem::path const path{ fp };
-			std::string filename { GetFileName(fp) };
-			std::string fileext { GetFileExtension(fp) };
-			std::string inputModelPath{ cModelDirectory + filename + fileext };
+			std::string const filename { GetFileName(fp) };
+			std::string const fileext { GetFileExtension(fp) };
+			std::string const inputModelPath{ cModelDirectory + filename + fileext };
 			CreateDirectoryIfNotExists(cModelDirectory);
-
 
 			//copy the file over to the assets folder
 			if (!CopyFileToAssets(fp, inputModelPath)) {
 				return GUID{}; // invalid guid
 			}
 
-			//assuming that this is an imsh file that is added via the assets folder
-			// tch: i commented this out cuz this if clause should be for loading
-			//if (IsDirectoriesEqual(inputModelPath, fp) && fileext == ".imsh") {
-			//	return AssetManager::GetInstance().PathToGUID(inputModelPath);
-			//}
-			//if (std::string(gSupportedModelFormats).find(path.extension().string()) != std::string::npos) {
-			//	Graphics::AssetIO::IMSH imsh{ fp };
-			//	Debug::DebugLogger::GetInstance().LogInfo("Model detected. Converting to .imsh file...");
-			//	imsh.WriteToBinFile(path.stem().string());
-			//	Debug::DebugLogger::GetInstance().LogInfo(("Added " + path.stem().string() + gMeshFileExt) + " to assets");
-			//	newFp = cModelDirectory + GetFileName(fp) + gMeshFileExt;
-			//	return GUID{ GUID::Seed{} };
-			//}
+			std::string const compiledDir{ cModelDirectory + cCompiledDirectory };
+			CreateDirectoryIfNotExists(compiledDir);
+
+			Debug::DebugLogger::GetInstance().LogInfo("Model detected. Converting to .imsh file...");
+			Graphics::AssetIO::IMSH imsh{ fp };
+			imsh.WriteToBinFile(compiledDir + filename + gMeshFileExt);
+			Debug::DebugLogger::GetInstance().LogInfo(("Added " + filename + fileext) + " to assets");
 
 			//populate metadata (right now its only path)
 			metadata.emplace("path", inputModelPath);
@@ -67,31 +60,22 @@ namespace IGE {
 				return new ModelAsset(fp);
 			}
 			std::filesystem::path const path{ fp };
-			std::string filename { GetFileName(fp) };
-			std::string fileext { GetFileExtension(fp) };
+			std::string filename{ GetFileName(fp) };
+			std::string fileext{ GetFileExtension(fp) };
 			CreateDirectoryIfNotExists(cModelDirectory + cCompiledDirectory);
+			std::string const finalfp{ cModelDirectory + cCompiledDirectory + GetFileName(fp) + gMeshFileExt };
 
-			std::string finalfp{};
 			//copy the file to a "Compiled" folder
-			if (fileext == ".imsh") { // if it is already a compiled format
-				//return new ModelAsset(fp);
-				finalfp = cModelDirectory + cCompiledDirectory + filename + fileext;
-				CopyFileToAssets(fp, finalfp);
-			}
-			else if (std::string(gSupportedModelFormats).find(fileext) != std::string::npos) {
-				finalfp = cModelDirectory + cCompiledDirectory + GetFileName(fp) + gMeshFileExt;
+			//if (fileext == ".imsh") { // if it is already a compiled format
+			//	//return new ModelAsset(fp);
+			//	finalfp = cModelDirectory + cCompiledDirectory + filename + fileext;
+			//	CopyFileToAssets(fp, finalfp);
+			//}
 
-				// CHENG EN: Added this check for now cause i need import to NOT run if its alr been converted
-				if (!std::filesystem::exists(finalfp)) {
-					Graphics::AssetIO::IMSH imsh{ fp };
-					Debug::DebugLogger::GetInstance().LogInfo("Model detected. Converting to .imsh file...");
-					imsh.WriteToBinFile(path.stem().string());
-					Debug::DebugLogger::GetInstance().LogInfo(("Added " + filename + fileext) + " to assets");
-				}
-			}
-			else {
+			if (std::string(gSupportedModelFormats).find(fileext) == std::string::npos) {
 				throw Debug::Exception<ModelAsset>(Debug::LVL_ERROR, Msg("couldnt compile" + fileext + "to imsh"));
 			}
+			
 			return new ModelAsset(
 				finalfp
 			);

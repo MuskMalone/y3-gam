@@ -45,10 +45,10 @@ namespace Graphics::AssetIO
     /*!*********************************************************************
     \brief
       Writes the object to a binary file
-    \param name
-      The name of the output file
+    \param path
+      The path of the output file
     ************************************************************************/
-    void WriteToBinFile(std::string const& name) const;
+    void WriteToBinFile(std::string const& path) const;
 
     operator bool() const noexcept { return mStatus; } // check if object is valid
     inline std::vector<Graphics::Vertex> const& GetVertexBuffer() const noexcept { return mVertexBuffer; }
