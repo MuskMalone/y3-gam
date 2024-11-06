@@ -8,6 +8,7 @@
 #include "Scenes/SceneManager.h"
 #include "Physics/PhysicsHelpers.h"
 #include "Physics/PhysicsEventData.h"
+#include "Graphics/Renderer.h"
 namespace IGE {
 	namespace Physics {
 		void SetColliderAsSensor(physx::PxShape* shapeptr, bool sensor);
@@ -151,19 +152,24 @@ namespace IGE {
 							float grav{ gGravity * rb.gravityFactor * rb.mass };
 							pxrigidbody->addForce(ToPxVec3(glm::vec3(0.f, grav, 0.f)));
 						}
-						xfm.worldPos += ToGLMVec3(pxrigidbody->getLinearVelocity() * gTimeStep);
-						{
-							auto angularVelocity = pxrigidbody->getAngularVelocity();
-							float angle = angularVelocity.magnitude() * gTimeStep;
-							if (glm::abs(angle) > glm::epsilon<float>()) {
-								auto axis = angularVelocity.getNormalized();
-								physx::PxQuat deltaRotation(angle, axis);
-								// to add rotations, multiply 2 quats tgt
-								xfm.worldRot *= ToGLMQuat(deltaRotation);
-							}
-						}
+						auto pose{ pxrigidbody->getGlobalPose() };
+						xfm.worldPos = ToGLMVec3(pose.p);
+						xfm.worldRot = ToGLMQuat(pose.q);
+						//xfm.worldPos += ToGLMVec3(pxrigidbody->getLinearVelocity() * gTimeStep);
+						//{
+						//	auto angularVelocity = pxrigidbody->getAngularVelocity();
+						//	float angle = angularVelocity.magnitude() * gTimeStep;
+						//	if (glm::abs(angle) > glm::epsilon<float>()) {
+						//		auto axis = angularVelocity.getNormalized();
+						//		physx::PxQuat deltaRotation(angle, axis);
+						//		// to add rotations, multiply 2 quats tgt
+						//		xfm.worldRot *= ToGLMQuat(deltaRotation);
+						//	}
+						//}
 						xfm.modified = true; // include this 
-						pxrigidbody->setLinearVelocity(rb.velocity);
+
+						rb.velocity = pxrigidbody->getLinearVelocity();
+						//pxrigidbody->setLinearVelocity(rb.velocity);
 					}
 					//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
 					//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));
@@ -272,7 +278,7 @@ namespace IGE {
 
 			physx::PxShape* shape { CreateShape(geom, collider, entity) };//mPhysics->createShape(geom, *mMaterial, true) };
 			rb->setGlobalPose(xfm);
-			shape->setLocalPose({ collider.positionOffset, collider.rotationOffset });
+			shape->setLocalPose({ collider.positionOffset, collider.rotationOffset.getNormalized()});
 			collider.idx = rb->getNbShapes();
 			rb->attachShape(*shape);
 
@@ -295,7 +301,7 @@ namespace IGE {
 			//ugly syntax to get the shape 
 			//assumes that there is only one shape (there should only ever be one starting out)
 			physx::PxShape* shape { CreateShape(geom, collider, entity) };//mPhysics->createShape(geom, *mMaterial, true) };
-			shape->setLocalPose({ collider.positionOffset, collider.rotationOffset });
+			shape->setLocalPose({ collider.positionOffset, collider.rotationOffset.getNormalized() });
 			collider.idx = rb->getNbShapes();
 			rb->attachShape(*shape);
 			mScene->addActor(*rb);
@@ -438,7 +444,7 @@ namespace IGE {
 		{
 			auto const& collider{ entity.GetComponent<Component::BoxCollider>() };
 			auto shapeptr { GetShapePtr<Component::BoxCollider>(collider) };
-			shapeptr->setLocalPose(physx::PxTransform(collider.positionOffset, collider.rotationOffset));
+			shapeptr->setLocalPose(physx::PxTransform(collider.positionOffset, collider.rotationOffset.getNormalized()));
 			shapeptr->setGeometry(physx::PxBoxGeometry{ collider.scale });
 			SetColliderAsSensor(shapeptr, collider.sensor);
 		}
@@ -448,7 +454,7 @@ namespace IGE {
 			auto const& collider{ entity.GetComponent<Component::SphereCollider>() };
 			auto shapeptr{ GetShapePtr<Component::SphereCollider>(collider) };
 			auto shapeid{ shapeptr->getGeometryType()};
-			shapeptr->setLocalPose(physx::PxTransform(collider.positionOffset, collider.rotationOffset));
+			shapeptr->setLocalPose(physx::PxTransform(collider.positionOffset, collider.rotationOffset.getNormalized()));
 			shapeptr->setGeometry(physx::PxSphereGeometry{ collider.radius });
 			SetColliderAsSensor(shapeptr, collider.sensor);
 		}
@@ -457,14 +463,34 @@ namespace IGE {
 		{
 			auto const& collider{ entity.GetComponent<Component::CapsuleCollider>() };
 			auto shapeptr{ GetShapePtr<Component::CapsuleCollider>(collider) };
-			shapeptr->setLocalPose(physx::PxTransform(collider.positionOffset, collider.rotationOffset));
+			shapeptr->setLocalPose(physx::PxTransform(collider.positionOffset, collider.rotationOffset.getNormalized()));
 			shapeptr->setGeometry(physx::PxCapsuleGeometry{ collider.radius, collider.halfheight });
 			SetColliderAsSensor(shapeptr, collider.sensor);
 		}
 
-		void PhysicsSystem::Debug(float dt) {
+		void PhysicsSystem::Debug() {
+			auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::BoxCollider>() };
+			for (auto entity : rbsystem) {
+				auto& collider{ rbsystem.get<Component::BoxCollider>(entity) };
+				ECS::Entity e{ entity };
+				auto rbiter{ mRigidBodyIDs.find(e.GetComponent<Component::BoxCollider>().bodyID) };
 
-
+				if (rbiter != mRigidBodyIDs.end()) {
+					physx::PxRigidDynamic* pxrb { rbiter->second };
+					physx::PxShape* shape[3];
+					physx::PxBoxGeometry geom{};
+					auto num{ pxrb->getNbShapes() };
+					if (collider.idx < num) {
+						pxrb->getShapes(shape, 3);
+						auto globPos{ pxrb->getGlobalPose() };
+						auto locPos{ shape[collider.idx]->getLocalPose() };
+						shape[collider.idx]->getBoxGeometry(geom);
+						auto scale{ geom.halfExtents };
+						Graphics::Renderer::DrawBox(ToGLMVec3(globPos.p + locPos.p), ToGraphicUnits(ToGLMVec3(scale)), ToGLMQuat(globPos.q * locPos.q), { 0,1,0,1 });
+					}
+				}
+				
+			}
 		}
 
 		void PhysicsSystem::ClearSystem()
