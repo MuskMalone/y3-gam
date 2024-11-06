@@ -553,6 +553,44 @@ namespace Graphics {
 		++mData.stats.quadCount;
 	}
 
+	void Renderer::DrawBox(glm::vec3 const& pos, glm::vec3 const& scale, glm::quat const& rot, glm::vec4 const& clr){
+		// Define the 8 vertices of a unit cube centered at the origin
+		glm::vec3 cubeVertices[8] = {
+			{ -0.5f, -0.5f, -0.5f }, // 0: Bottom-left-back
+			{  0.5f, -0.5f, -0.5f }, // 1: Bottom-right-back
+			{  0.5f,  0.5f, -0.5f }, // 2: Top-right-back
+			{ -0.5f,  0.5f, -0.5f }, // 3: Top-left-back
+			{ -0.5f, -0.5f,  0.5f }, // 4: Bottom-left-front
+			{  0.5f, -0.5f,  0.5f }, // 5: Bottom-right-front
+			{  0.5f,  0.5f,  0.5f }, // 6: Top-right-front
+			{ -0.5f,  0.5f,  0.5f }  // 7: Top-left-front
+		};
+
+		// Build the transformation matrix
+		glm::mat4 translateMtx = glm::translate(glm::mat4(1.0f), pos);
+		glm::mat4 rotateMtx = glm::toMat4(rot);
+		glm::mat4 scaleMtx = glm::scale(glm::mat4(1.0f), scale);
+		glm::mat4 transformMtx = translateMtx * rotateMtx * scaleMtx;
+
+		// Transform each vertex
+		glm::vec3 transformedVertices[8];
+		for (int i = 0; i < 8; ++i) {
+			transformedVertices[i] = transformMtx * glm::vec4(cubeVertices[i], 1.0f);
+		}
+
+		// Define the 12 edges of the cube by connecting vertex pairs
+		int edges[12][2] = {
+			{ 0, 1 }, { 1, 2 }, { 2, 3 }, { 3, 0 }, // Back face
+			{ 4, 5 }, { 5, 6 }, { 6, 7 }, { 7, 4 }, // Front face
+			{ 0, 4 }, { 1, 5 }, { 2, 6 }, { 3, 7 }  // Connecting edges between front and back faces
+		};
+
+		// Draw each edge as a line
+		for (int i = 0; i < 12; ++i) {
+			DrawLine(transformedVertices[edges[i][0]], transformedVertices[edges[i][1]], clr);
+		}
+	}
+
 	void Renderer::RenderFullscreenTexture(){
 		RenderAPI::DrawTriangles(mData.screen.screenVertexArray, 6);
 	}
