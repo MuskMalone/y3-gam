@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
-using Image.Mono.Utils;
+using Image.Utils;
 
-namespace Image.Mono
-{
+
   
   public class Component
   {
@@ -21,7 +20,7 @@ namespace Image.Mono
   public class Transform : Component
   {
 
-    public Vec3<float> position
+    public Vector3 position
     {
       get
       {
@@ -33,27 +32,20 @@ namespace Image.Mono
       }
     }
 
-    //public Quaternion Rotation
-    //{
-    //  get => mRotation;
-    //  set
-    //  {
-    //    mRotation = value;
-    //    UpdateCPlusPlusTransform(); // Push update to C++ side
-    //  }
-    //}
+    public Quaternion rotation
+    {
+      get
+      {
+        return InternalCalls.GetRotation(entity.mEntityID); // Push update to C++ side
+      }
+      set
+      {
+        InternalCalls.SetRotation(entity.mEntityID, ref value); // Push update to C++ side
+      }
+    }
+  
 
-    //public Vec3<float> Scale
-    //{
-    //  get => mScale;
-    //  set
-    //  {
-    //    mScale = value;
-    //    UpdateCPlusPlusTransform(); // Push update to C++ side
-    //  }
-    //}
-
-    public Vec3<float> scale
+    public Vector3 scale
     {
       get
       {
@@ -64,7 +56,32 @@ namespace Image.Mono
         InternalCalls.SetScale(entity.mEntityID, ref value); // Push update to C++ side
       }
     }
-  }
+
+    public Vector3 TransformDirection(Vector3 direction)
+    {
+        Quaternion rot = InternalCalls.GetRotation(entity.mEntityID);
+        // Convert the direction to world space using the quaternion rotation
+        float x = rotation.X * direction.X + rotation.W * direction.Z - rotation.Y * direction.Y;
+        float y = rotation.Y * direction.X + rotation.W * direction.Y + rotation.Z * direction.Z;
+        float z = rotation.Z * direction.X - rotation.Y * direction.Y + rotation.W * direction.Z;
+
+        return new Vector3(x, y, z);
+    }
+
+   public void Rotate(Vector3 Angle)
+    {
+      // Convert angles from degrees to radians
+      float xRad = Angle.X * Mathf.Deg2Rad;
+      float yRad = Angle.Y * Mathf.Deg2Rad;
+      float zRad = Angle.Z * Mathf.Deg2Rad;
+
+      // Create a new rotation quaternion based on the given angles
+      Quaternion deltaRotation = Mathf.EulertoQuat(new Vector3(xRad, yRad, zRad));
+
+      // Apply the rotation
+      rotation = rotation * deltaRotation; // Combine the current rotation with the new rotation
+    }
+}
   #endregion
 
     public class Tag : Component
@@ -78,4 +95,4 @@ namespace Image.Mono
         }
     }
     }
-  }
+  

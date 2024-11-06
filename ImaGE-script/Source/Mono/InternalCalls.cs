@@ -21,32 +21,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using System.Numerics;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
 
-namespace Image.Mono.Utils
+namespace Image.Utils
 {
   public static class InternalCalls
   {
     #region Transform
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vec3<float> GetScale(uint ID);
+    internal extern static Vector3 GetScale(uint ID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetScale(uint entityHandle, ref Vec3<float> scale);
+    internal extern static void SetScale(uint entityHandle, ref Vector3 scale);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vec3<float> GetWorldPosition(uint ID);
+    internal extern static Vector3 GetWorldPosition(uint ID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vec3<float> GetPosition(uint ID);
+    internal extern static Vector3 GetPosition(uint ID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetPosition(uint entityHandle, ref Vec3<float> position);
+    internal extern static void SetPosition(uint entityHandle, ref Vector3 position);
 
     // avoid using this, prefer SetPosition (local)
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetWorldPosition(uint entityHandle, ref Vec3<float> position);
+    internal extern static void SetWorldPosition(uint entityHandle, ref Vector3 position);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static Quaternion GetRotation(uint ID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void SetRotation(uint entityHandle, ref Quaternion position);
 
     //[MethodImplAttribute(MethodImplOptions.InternalCall)]
     //internal extern static void GetRotation(ref uint entityHandle, ref float rotation);
@@ -63,6 +70,12 @@ namespace Image.Mono.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static bool IsKeyHeld(KeyCode key);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetAxis(string s);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool anyKeyDown();
     #endregion
 
 
@@ -83,8 +96,23 @@ namespace Image.Mono.Utils
     extern public static void LogCritical(string s);
     #endregion
 
+
+    #region Entity
+
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static string GetTag(uint EntityID);
-    
+
+
+    // avoid using this, prefer SetPosition (local)
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void SetActive(uint entityHandle, bool active);
+
+
+    #endregion
+
+
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static float GetDeltaTime();
   }
 }
