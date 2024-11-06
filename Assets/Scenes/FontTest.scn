@@ -60,7 +60,7 @@
                 },
                 {
                     "Camera": {
-                        "projType": 0,
+                        "projType": "PERSP",
                         "position": {
                             "x": 0.0,
                             "y": 0.0,
@@ -136,9 +136,9 @@
                 },
                 {
                     "Text": {
-                        "textContent": "YOUR TEXT HERE\nThe quick brown fox\njumps over somethin'\n\nBa dum tss",
+                        "textContent": "I am a Game Engine\nalso known as ImaGE\n====================",
                         "color": {
-                            "x": 0.9765887260437012,
+                            "x": 0.9966555833816528,
                             "y": 1.0,
                             "z": 0.0,
                             "w": 1.0
@@ -165,7 +165,8 @@
             "Parent": null,
             "Child Entities": [
                 12,
-                14
+                14,
+                1048582
             ],
             "isActive": true,
             "Components": [
@@ -244,7 +245,7 @@
                     "Transform": {
                         "position": {
                             "x": 14.899999618530274,
-                            "y": -8.699999809265137,
+                            "y": -6.099999904632568,
                             "z": 0.0
                         },
                         "scale": {
@@ -265,7 +266,7 @@
                         },
                         "worldPos": {
                             "x": 13.754999160766602,
-                            "y": -10.095381736755371,
+                            "y": -7.495381832122803,
                             "z": 0.5193405151367188
                         },
                         "worldScale": {
@@ -292,6 +293,79 @@
                             "x": 1.0,
                             "y": 1.0,
                             "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048582,
+            "Parent": 13,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Entity 1048582",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -13.055000305175782,
+                            "y": -5.90500020980835,
+                            "z": -0.5193405151367188
+                        },
+                        "scale": {
+                            "x": 4.0,
+                            "y": 10.600000381469727,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -14.200000762939454,
+                            "y": -7.300382137298584,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 4.0,
+                            "y": 10.600000381469727,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 0.585538387298584,
+                            "y": 0.9096989631652832,
+                            "z": 0.535474956035614,
                             "w": 1.0
                         },
                         "textureAssetGUID": {

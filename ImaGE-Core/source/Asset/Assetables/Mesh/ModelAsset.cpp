@@ -79,11 +79,13 @@ namespace IGE {
 				CopyFileToAssets(fp, finalfp);
 			}
 			else if (std::string(gSupportedModelFormats).find(fileext) != std::string::npos) {
-				Graphics::AssetIO::IMSH imsh{ fp };
-				Debug::DebugLogger::GetInstance().LogInfo("Model detected. Converting to .imsh file...");
-				imsh.WriteToBinFile(path.stem().string());
-				Debug::DebugLogger::GetInstance().LogInfo(("Added " + filename + fileext) + " to assets");
 				finalfp = cModelDirectory + cCompiledDirectory + GetFileName(fp) + gMeshFileExt;
+				if (!std::filesystem::exists(finalfp)) {
+					Graphics::AssetIO::IMSH imsh{ fp };
+					Debug::DebugLogger::GetInstance().LogInfo("Model detected. Converting to .imsh file...");
+					imsh.WriteToBinFile(path.stem().string());
+					Debug::DebugLogger::GetInstance().LogInfo(("Added " + filename + fileext) + " to assets");
+				}
 			}
 			else {
 				throw Debug::Exception<ModelAsset>(Debug::LVL_ERROR, Msg("couldnt compile" + fileext + "to imsh"));
