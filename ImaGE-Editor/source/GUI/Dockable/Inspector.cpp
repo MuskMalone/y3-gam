@@ -1070,6 +1070,36 @@ namespace GUI {
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
+      NextRowTable("");
+      ImVec2 boxSize = ImVec2(200.0f, 40.0f);
+      ImVec2 cursorPos = ImGui::GetCursorScreenPos();
+      ImVec2 boxEnd = ImVec2(cursorPos.x + boxSize.x, cursorPos.y + boxSize.y);
+      ImGui::BeginChild("DragDropTargetBox", boxSize, false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+      ImGui::GetWindowDrawList()->AddRect(cursorPos, boxEnd, IM_COL32(0, 0, 0, 255), 0.0f, 0, 1.0f);
+      ImVec2 textSize = ImGui::CalcTextSize("Drag here to add mesh");
+      ImVec2 textPos = ImVec2(
+        cursorPos.x + (boxSize.x - textSize.x) * 0.5f,
+        cursorPos.y + (boxSize.y - textSize.y) * 0.5f
+      );
+      ImGui::SetCursorScreenPos(textPos);
+      ImGui::TextUnformatted("Drag here to add mesh");
+      ImGui::EndChild();
+
+      // allow dropping of models
+      if (ImGui::BeginDragDropTarget()) {
+        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+        if (drop) {
+          AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+          if (assetPayload.mAssetType == AssetPayload::MODEL) {
+            //auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
+            mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath());
+            mesh.meshName = assetPayload.GetFileName();
+            modified = true;
+          }
+        }
+        ImGui::EndDragDropTarget();
+      }
+
       NextRowTable("Mesh Type");
 
       if (ImGui::BeginCombo("##MeshSelection", mesh.meshName.c_str())) {
@@ -1091,21 +1121,6 @@ namespace GUI {
         }
 
         ImGui::EndCombo();
-      }
-      // allow dropping of models
-      else if (ImGui::BeginDragDropTarget())
-      {
-        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
-        if (drop) {
-          AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
-          if (assetPayload.mAssetType == AssetPayload::MODEL) {
-            //auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
-            mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath());
-            mesh.meshName = assetPayload.GetFileName();
-            modified = true;
-          }
-        }
-        ImGui::EndDragDropTarget();
       }
 
       NextRowTable("Cast Shadows");
