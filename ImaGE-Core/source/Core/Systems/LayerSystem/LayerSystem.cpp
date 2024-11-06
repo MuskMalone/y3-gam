@@ -20,6 +20,18 @@ namespace Systems {
 
   }
 
+  bool LayerSystem::IsValidAndActiveEntity(const ECS::Entity& e) {
+    if (!ECS::EntityManager::GetInstance().IsValidEntity(e) || !e.HasComponent<Component::Tag>()) {
+      Debug::DebugLogger::GetInstance().LogCritical("[Render System] Trying to render entity that does not exist!");
+      return false; // This should never happen
+    }
+    return e.GetComponent<Component::Tag>().isActive;
+  }
+
+  void LayerSystem::CopyValidEntities(std::vector<ECS::Entity>& entityVector, const std::pair<std::string, std::vector<ECS::Entity>>& mapPair) {
+    std::copy_if(mapPair.second.begin(), mapPair.second.end(), std::back_inserter(entityVector), IsValidAndActiveEntity);
+  }
+
   std::array<int, MAX_LAYERS> const& LayerSystem::GetLayerCollisionList(int layerNumber) const {
     if (layerNumber >= MAX_LAYERS || layerNumber < 0) {
       throw Debug::Exception<LayerSystem>(Debug::LVL_WARN, Msg("Invalid Layer Number Passed"));

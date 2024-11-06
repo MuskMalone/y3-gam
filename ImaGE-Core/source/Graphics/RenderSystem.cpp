@@ -46,11 +46,7 @@ namespace Graphics {
 				for (std::pair<std::string, std::vector<ECS::Entity>> mapPair : layerEntities) {
 					if (layerSys->IsLayerVisible(mapPair.first)) {
 #ifdef INSERT_ACTIVE
-						// assuming majority of entities in a layer will be active, so .size is a decent estimate
-						entityVector.reserve(entityVector.size() + mapPair.second.size());
-						// insert all active entities
-						std::copy_if(mapPair.second.begin(), mapPair.second.end(), std::back_inserter(entityVector),
-							[](ECS::Entity const& e) { return e.GetComponent<Component::Tag>().isActive; });
+						layerSys->CopyValidEntities(entityVector, mapPair);
 #else
 						entityVector.insert(entityVector.end(), mapPair.second.begin(), mapPair.second.end());
 #endif

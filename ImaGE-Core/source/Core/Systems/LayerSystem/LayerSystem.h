@@ -29,6 +29,9 @@ namespace Systems {
     void Start() override;
     void Update() override;
 
+    static bool IsValidAndActiveEntity(const ECS::Entity& e);
+    void CopyValidEntities(std::vector<ECS::Entity>& entityVector, const std::pair<std::string, std::vector<ECS::Entity>>& mapPair);
+
     std::array<int, MAX_LAYERS>const& GetLayerCollisionList(int layerNumber) const;
     inline std::array<std::string, MAX_LAYERS>const& GetLayerNames() const { return mLayerData.layerNames; }
     inline std::array<int, MAX_LAYERS>& GetLayerVisibility() { return mLayerData.layerVisibility; }
