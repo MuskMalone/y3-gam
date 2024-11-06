@@ -62,7 +62,7 @@ namespace GUI {
     mWindows.emplace_back(std::make_shared<PerformanceWindow>("Performance Window"));
     mWindows.emplace_back(std::make_shared<Layers>("Layers"));
     mWindows.emplace_back(std::make_shared<RenderPassViewer>("Render Pass Viewer"));
-    mWindows.emplace_back(std::make_shared<PostProcessingSettings>(""));
+    mWindows.emplace_back(std::make_shared<PostProcessingSettings>("Post Processing"));
 
     mStyler.LoadFonts();
     mStyler.SetCurrentTheme(static_cast<CustomTheme>(gEditorDefaultTheme)); // Default theme should be read from settings file

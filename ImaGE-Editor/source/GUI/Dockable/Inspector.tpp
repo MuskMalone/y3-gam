@@ -2,14 +2,16 @@ template<typename Component>
 bool Inspector::WindowBegin(std::string const& windowName, bool highlight) {
   ImGui::Separator();
 
-  if (mEntityChanged) {
-    bool& openMapStatus = mComponentOpenStatusMap[windowName];
-    ImGui::SetNextItemOpen(openMapStatus, ImGuiCond_Always);
-  }
-
   std::string const display{ mComponentIcons.at(typeid(Component)) + windowName };
 
+  std::string cleanWindowName{ windowName }; // Remove Spaces
+  cleanWindowName.erase(std::remove(cleanWindowName.begin(), cleanWindowName.end(), ' '), cleanWindowName.end());
+
   if (highlight) { ImGui::PushStyleColor(ImGuiCol_Text, sComponentHighlightCol); }
+  if (mEntityChanged) {
+    bool& openMapStatus = mComponentOpenStatusMap[cleanWindowName];
+    ImGui::SetNextItemOpen(openMapStatus, ImGuiCond_Always);
+  }
   bool const isOpen{ ImGui::TreeNodeEx(display.c_str()) };
   if (highlight) { ImGui::PopStyleColor(); }
 
@@ -22,7 +24,7 @@ bool Inspector::WindowBegin(std::string const& windowName, bool highlight) {
     }
   }
 
-  mComponentOpenStatusMap[windowName] = isOpen;
+  mComponentOpenStatusMap[cleanWindowName] = isOpen;
   return isOpen;
 }
 

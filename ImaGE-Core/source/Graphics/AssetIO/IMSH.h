@@ -45,12 +45,12 @@ namespace Graphics::AssetIO
     /*!*********************************************************************
     \brief
       Writes the object to a binary file
-    \param name
-      The name of the output file
+    \param path
+      The path of the output file
     ************************************************************************/
-    void WriteToBinFile(std::string const& name) const;
+    void WriteToBinFile(std::string const& path) const;
 
-    operator bool() const { return mStatus; } // check if object is valid
+    operator bool() const noexcept { return mStatus; } // check if object is valid
     inline std::vector<Graphics::Vertex> const& GetVertexBuffer() const noexcept { return mVertexBuffer; }
     inline std::vector<uint32_t> const& GetIndices() const noexcept { return mIndices; }
     
@@ -68,6 +68,7 @@ namespace Graphics::AssetIO
 
     // this is a workaround to not being able to pass extra flags during AssetManager import
     static inline bool sStaticMeshConversion = true;
+    static inline bool sRecenterMesh = true;
 
   private:
     // serialized as first 24 bytes
@@ -97,6 +98,7 @@ namespace Graphics::AssetIO
 
     static const unsigned sAssimpImportFlags, sMinimalAssimpImportFlags;
 
+    void RecenterMesh();
     void ProcessSubmeshes(aiNode* node, aiScene const* scene, aiMatrix4x4 const& parentMtx);
     void ProcessMeshes(aiNode* node, aiScene const* scene);
   };
