@@ -6,11 +6,12 @@
 
 namespace Systems {
 
-  constexpr size_t MAX_USER_DEFINED_LAYERS{ 14 };
+  constexpr size_t MAX_USER_DEFINED_LAYERS{ 13 };
 
-  constexpr size_t MAX_BUILTIN_LAYERS{ 2 };
+  constexpr size_t MAX_BUILTIN_LAYERS{ 3 };
   constexpr std::string_view  BUILTIN_LAYER_0{ "Default" };
   constexpr std::string_view  BUILTIN_LAYER_1{ "Player" };
+  constexpr std::string_view  BUILTIN_LAYER_2{ "UI" };
 
   constexpr size_t MAX_LAYERS{ MAX_USER_DEFINED_LAYERS + MAX_BUILTIN_LAYERS };
 

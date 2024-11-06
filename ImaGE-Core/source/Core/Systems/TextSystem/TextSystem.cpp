@@ -7,6 +7,7 @@
 #include "Core/GUID.h"
 #include "Core/Components/Text.h"
 #include "Core/Components/Transform.h"
+#include "Core/Components/Canvas.h"
 
 namespace Systems {
 
