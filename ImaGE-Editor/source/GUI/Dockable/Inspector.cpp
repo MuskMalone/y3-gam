@@ -725,7 +725,7 @@ namespace GUI {
       ImGui::Text(" ");
       ImGui::SameLine();
 
-      ImGui::SetNextItemWidth(INPUT_SIZE);
+      ImGui::SetNextItemWidth(INPUT_SIZE + 70);
       if (ImGui::InputText("##TagComponentTag", &tag, ImGuiInputTextFlags_EnterReturnsTrue)) {
         entity.SetTag(tag);
         modified = true;

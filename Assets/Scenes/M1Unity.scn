@@ -138,7 +138,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 3895675832443839102
+                            "ID": 17375351983629191137
                         },
                         "isCustomMesh": false,
                         "castShadows": true,
@@ -268,7 +268,7 @@
         },
         {
             "ID": 3,
-            "Parent": 6,
+            "Parent": 8,
             "Child Entities": [],
             "isActive": true,
             "Components": [
@@ -321,7 +321,7 @@
                 },
                 {
                     "Layer": {
-                        "layerName": "Props"
+                        "layerName": "Environment"
                     }
                 },
                 {
@@ -394,12 +394,12 @@
                     "Transform": {
                         "position": {
                             "x": -11.05024528503418,
-                            "y": 1.3570551872253419,
+                            "y": 1.6179630756378174,
                             "z": -8.325712203979493
                         },
                         "scale": {
                             "x": 0.02759491093456745,
-                            "y": 0.02800000086426735,
+                            "y": 0.03359892591834068,
                             "z": 0.02800000086426735
                         },
                         "rotation": {
@@ -415,12 +415,12 @@
                         },
                         "worldPos": {
                             "x": -11.05024528503418,
-                            "y": 1.3570551872253419,
+                            "y": 1.6179630756378174,
                             "z": -8.325712203979493
                         },
                         "worldScale": {
                             "x": 0.02759491093456745,
-                            "y": 0.02800000086426735,
+                            "y": 0.03359892591834068,
                             "z": 0.02800000086426735
                         },
                         "worldRot": {
@@ -451,7 +451,7 @@
                     "BoxCollider": {
                         "scale": {
                             "x": 0.013797455467283726,
-                            "y": 0.014000000432133675,
+                            "y": 0.01679946295917034,
                             "z": 0.014000000432133675
                         },
                         "positionOffset": {
@@ -606,9 +606,9 @@
             "ID": 6,
             "Parent": null,
             "Child Entities": [
-                3,
                 4,
-                5
+                5,
+                7
             ],
             "isActive": false,
             "Components": [
@@ -665,6 +665,793 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 7,
+            "Parent": 6,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Table",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -8.696438789367676,
+                            "y": 0.7655612826347351,
+                            "z": -7.875269412994385
+                        },
+                        "scale": {
+                            "x": 0.019999999552965165,
+                            "y": 0.019975893199443818,
+                            "z": 0.019999999552965165
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -8.696438789367676,
+                            "y": 0.7655612826347351,
+                            "z": -7.875269412994385
+                        },
+                        "worldScale": {
+                            "x": 0.019999999552965165,
+                            "y": 0.019975893199443818,
+                            "z": 0.019999999552965165
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Props"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Props_Table",
+                        "GUID": {
+                            "ID": 256387811898410112
+                        },
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.009999999776482582,
+                            "y": 0.009987946599721909,
+                            "z": 0.009999999776482582
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 8,
+            "Parent": null,
+            "Child Entities": [
+                3,
+                9
+            ],
+            "isActive": false,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Environment",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Environment"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 9,
+            "Parent": 8,
+            "Child Entities": [
+                10
+            ],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Tree",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -15.194328308105469,
+                            "y": 6.418488502502441,
+                            "z": -11.130690574645996
+                        },
+                        "scale": {
+                            "x": 0.10000000149011612,
+                            "y": 0.10000000149011612,
+                            "z": 0.10000000149011612
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -15.194328308105469,
+                            "y": 6.418488502502441,
+                            "z": -11.130690574645996
+                        },
+                        "worldScale": {
+                            "x": 0.10000000149011612,
+                            "y": 0.10000000149011612,
+                            "z": 0.10000000149011612
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Environment"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Environment_Tree",
+                        "GUID": {
+                            "ID": 8813115538048211657
+                        },
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.05000000074505806,
+                            "y": 0.05000000074505806,
+                            "z": 0.05000000074505806
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 10,
+            "Parent": 9,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Periwinkle Poster",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 5.3647003173828129,
+                            "y": -31.939815521240236,
+                            "z": 4.25732421875
+                        },
+                        "scale": {
+                            "x": 15.061904907226563,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "rotation": {
+                            "x": 0.19682958722114564,
+                            "y": -0.272046834230423,
+                            "z": -0.5521454215049744,
+                            "w": 0.7631409168243408
+                        },
+                        "eulerAngles": {
+                            "x": 37.80344772338867,
+                            "y": -11.412022590637207,
+                            "z": -75.69178771972656
+                        },
+                        "worldPos": {
+                            "x": -14.657857894897461,
+                            "y": 3.2245068550109865,
+                            "z": -10.704957962036133
+                        },
+                        "worldScale": {
+                            "x": 1.506190538406372,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.19682958722114564,
+                            "y": -0.272046834230423,
+                            "z": -0.5521454215049744,
+                            "w": 0.7631409168243408
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 17375351983629191137
+                        },
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 11,
+            "Parent": null,
+            "Child Entities": [
+                12
+            ],
+            "isActive": false,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Puzzle",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Puzzle"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 12,
+            "Parent": 11,
+            "Child Entities": [
+                14,
+                1048589
+            ],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Toolbox",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -14.676424980163575,
+                            "y": 0.5554320812225342,
+                            "z": -12.064325332641602
+                        },
+                        "scale": {
+                            "x": 0.03999999910593033,
+                            "y": 0.03999999910593033,
+                            "z": 0.03999999910593033
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.23985937237739564,
+                            "z": 0.0,
+                            "w": 0.970807671546936
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -27.756481170654298,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -14.676424980163575,
+                            "y": 0.5554320812225342,
+                            "z": -12.064325332641602
+                        },
+                        "worldScale": {
+                            "x": 0.03999999910593033,
+                            "y": 0.03999999910593033,
+                            "z": 0.03999999910593033
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": -0.23985937237739564,
+                            "z": 0.0,
+                            "w": 0.970807671546936
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Puzzle"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Puzzle_Toolbox2",
+                        "GUID": {
+                            "ID": 12835664918802118053
+                        },
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.019999999552965165,
+                            "y": 0.019999999552965165,
+                            "z": 0.019999999552965165
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 14,
+            "Parent": 12,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Crowbar",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 12.85260009765625,
+                            "y": 5.227174758911133,
+                            "z": 1.7094268798828126
+                        },
+                        "scale": {
+                            "x": 1.2999999523162842,
+                            "y": 1.2999999523162842,
+                            "z": 1.2999999523162842
+                        },
+                        "rotation": {
+                            "x": 0.5437034368515015,
+                            "y": 0.44522935152053835,
+                            "z": -0.38765597343444826,
+                            "w": 0.5965569615364075
+                        },
+                        "eulerAngles": {
+                            "x": 87.67652130126953,
+                            "y": 72.3165283203125,
+                            "z": 4.082939624786377
+                        },
+                        "worldPos": {
+                            "x": -14.253320693969727,
+                            "y": 0.7645190954208374,
+                            "z": -11.76439094543457
+                        },
+                        "worldScale": {
+                            "x": 0.05199999734759331,
+                            "y": 0.05199999734759331,
+                            "z": 0.05199999734759331
+                        },
+                        "worldRot": {
+                            "x": 0.6208144426345825,
+                            "y": 0.28914231061935427,
+                            "z": -0.24592703580856324,
+                            "w": 0.6859345436096191
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Puzzle"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Puzzle_Crowbar",
+                        "GUID": {
+                            "ID": 16327445614933921073
+                        },
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.025999998673796655,
+                            "y": 0.025999998673796655,
+                            "z": 0.025999998673796655
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "DYNAMIC"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048589,
+            "Parent": 12,
+            "Child Entities": [],
+            "isActive": false,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Hammer",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 465.1553039550781,
+                            "y": -13.885807991027832,
+                            "z": 96.02794647216797
+                        },
+                        "scale": {
+                            "x": 25.0,
+                            "y": 25.0,
+                            "z": 25.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.23985937237739564,
+                            "z": 0.0,
+                            "w": 0.970807671546936
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 27.756481170654298,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.0000019073486328125,
+                            "y": -2.384185791015625e-7,
+                            "z": -9.5367431640625e-7
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Puzzle"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048591,
+            "Parent": null,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Secondary Light",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.0000019073486328125,
+                            "y": 0.6999920606613159,
+                            "z": -9.5367431640625e-7
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.27145320177078249,
+                            "z": 0.0,
+                            "w": 0.9624516367912293
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 59.25800323486328,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.0000019073486328125,
+                            "y": 0.6999920606613159,
+                            "z": -9.5367431640625e-7
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.27145320177078249,
+                            "z": 0.0,
+                            "w": 0.9624516367912293
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "SPOTLIGHT",
+                        "color": {
+                            "x": 0.782608687877655,
+                            "y": 0.5871337652206421,
+                            "z": 0.023556791245937349
+                        },
+                        "intensity": 6.0,
+                        "innerAngle": 38.0,
+                        "outerAngle": 78.0,
+                        "range": 26.5,
+                        "castShadows": false,
+                        "bias": 0.004999999888241291,
+                        "softness": 1,
+                        "nearPlaneMultiplier": 10.0
+                    }
+                }
+            ]
         }
     ],
     "Layers": {
@@ -673,8 +1460,8 @@
             "Player",
             "UI",
             "Props",
-            "",
-            "",
+            "Environment",
+            "Puzzle",
             "",
             "",
             "",
@@ -691,8 +1478,8 @@
             1,
             1,
             1,
-            0,
-            0,
+            1,
+            1,
             0,
             0,
             0,
