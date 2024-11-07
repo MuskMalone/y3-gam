@@ -9,6 +9,7 @@
 #include "Physics/PhysicsHelpers.h"
 #include "Physics/PhysicsEventData.h"
 #include "Graphics/Renderer.h"
+#include "Input/InputManager.h"
 namespace IGE {
 	namespace Physics {
 		void SetColliderAsSensor(physx::PxShape* shapeptr, bool sensor);
@@ -106,6 +107,7 @@ namespace IGE {
 						}
 						else throw std::runtime_error{ std::string("there is no rigidbody ") };
 
+						//getting from graphics
 						if (pxrb->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC))
 							pxrb->setKinematicTarget(physx::PxTransform{ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot)});
 						else
@@ -124,6 +126,8 @@ namespace IGE {
 
 				// Wait for the simulation to complete
 				mScene->fetchResults(true);
+
+				//i only need to fetch rigidbodies as they are the only ones that can move
 				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::RigidBody, Component::Transform>() };
 				for (auto entity : rbsystem) {
 					auto& xfm{ rbsystem.get<Component::Transform>(entity) };
@@ -154,13 +158,15 @@ namespace IGE {
 						}
 						auto pose{ pxrigidbody->getGlobalPose() };
 						xfm.worldPos = ToGLMVec3(pose.p);
+
+						//getting from physics
 						xfm.worldRot = ToGLMQuat(pose.q);
 						//xfm.worldPos += ToGLMVec3(pxrigidbody->getLinearVelocity() * gTimeStep);
 						//{
 						//	auto angularVelocity = pxrigidbody->getAngularVelocity();
 						//	float angle = angularVelocity.magnitude() * gTimeStep;
 						//	if (glm::abs(angle) > glm::epsilon<float>()) {
-						//		auto axis = angularVelocity.getNormalized();
+						//		auto axis = angularVelocity;
 						//		physx::PxQuat deltaRotation(angle, axis);
 						//		// to add rotations, multiply 2 quats tgt
 						//		xfm.worldRot *= ToGLMQuat(deltaRotation);
@@ -220,7 +226,8 @@ namespace IGE {
 			else if (entity.HasComponent<Component::Transform>()) {
 				Component::Transform const& transform = entity.GetComponent<Component::Transform>();
 				rb = mPhysics->createRigidDynamic(
-					physx::PxTransform(ToPxVec3(transform.worldPos)));
+					//getting from graphics
+					physx::PxTransform(ToPxVec3(transform.worldPos), ToPxQuat(transform.worldRot)));
 				mScene->addActor(*rb);
 			}
 			rb->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, (bool)rigidbody.motionType);
@@ -268,7 +275,8 @@ namespace IGE {
 				Component::Transform const& transform = entity.GetComponent<Component::Transform>();
 				//box shape, this will be a box collider
 				SetGeom(geom, collider, transform);
-				xfm = physx::PxTransform(ToPxVec3(transform.worldPos), ToPxQuat(transform.rotation));
+				//getting from graphics
+				xfm = physx::PxTransform(ToPxVec3(transform.worldPos), ToPxQuat(transform.worldRot));
 
 			}
 			else {
@@ -278,7 +286,8 @@ namespace IGE {
 
 			physx::PxShape* shape { CreateShape(geom, collider, entity) };//mPhysics->createShape(geom, *mMaterial, true) };
 			rb->setGlobalPose(xfm);
-			shape->setLocalPose({ collider.positionOffset, collider.rotationOffset.getNormalized()});
+			collider.rotationOffset = ToPxQuat(collider.degreeRotationOffsetEuler);
+			shape->setLocalPose({ collider.positionOffset, collider.rotationOffset});
 			collider.idx = rb->getNbShapes();
 			rb->attachShape(*shape);
 
@@ -290,7 +299,8 @@ namespace IGE {
 				transform.worldScale = { 1,1,1 }; //temp fix
 			}
 			_physx_type geom{};
-			physx::PxTransform xfm(ToPxVec3(transform.worldPos), ToPxQuat(transform.rotation));
+			//getting from graphics
+			physx::PxTransform xfm(ToPxVec3(transform.worldPos), ToPxQuat(transform.worldRot));
 			SetGeom(geom, collider, transform);
 			//rb = physx::PxCreateDynamic(
 			//	*mPhysics,
@@ -301,7 +311,8 @@ namespace IGE {
 			//ugly syntax to get the shape 
 			//assumes that there is only one shape (there should only ever be one starting out)
 			physx::PxShape* shape { CreateShape(geom, collider, entity) };//mPhysics->createShape(geom, *mMaterial, true) };
-			shape->setLocalPose({ collider.positionOffset, collider.rotationOffset.getNormalized() });
+			collider.rotationOffset = ToPxQuat(collider.degreeRotationOffsetEuler);
+			shape->setLocalPose({ collider.positionOffset, collider.rotationOffset });
 			collider.idx = rb->getNbShapes();
 			rb->attachShape(*shape);
 			mScene->addActor(*rb);
@@ -442,33 +453,40 @@ namespace IGE {
 		}
 		void PhysicsSystem::ChangeBoxColliderVar(ECS::Entity entity)
 		{
-			auto const& collider{ entity.GetComponent<Component::BoxCollider>() };
+			auto& collider{ entity.GetComponent<Component::BoxCollider>() };
 			auto shapeptr { GetShapePtr<Component::BoxCollider>(collider) };
-			shapeptr->setLocalPose(physx::PxTransform(collider.positionOffset, collider.rotationOffset.getNormalized()));
+			collider.rotationOffset = ToPxQuat(collider.degreeRotationOffsetEuler);
+			shapeptr->setLocalPose(physx::PxTransform(collider.positionOffset, collider.rotationOffset));
 			shapeptr->setGeometry(physx::PxBoxGeometry{ collider.scale });
 			SetColliderAsSensor(shapeptr, collider.sensor);
 		}
 
 		void PhysicsSystem::ChangeSphereColliderVar(ECS::Entity entity)
 		{
-			auto const& collider{ entity.GetComponent<Component::SphereCollider>() };
+			auto& collider{ entity.GetComponent<Component::SphereCollider>() };
 			auto shapeptr{ GetShapePtr<Component::SphereCollider>(collider) };
 			auto shapeid{ shapeptr->getGeometryType()};
-			shapeptr->setLocalPose(physx::PxTransform(collider.positionOffset, collider.rotationOffset.getNormalized()));
+			collider.rotationOffset = ToPxQuat(collider.degreeRotationOffsetEuler);
+			shapeptr->setLocalPose(physx::PxTransform(collider.positionOffset, collider.rotationOffset));
 			shapeptr->setGeometry(physx::PxSphereGeometry{ collider.radius });
 			SetColliderAsSensor(shapeptr, collider.sensor);
 		}
 
 		void PhysicsSystem::ChangeCapsuleColliderVar(ECS::Entity entity)
 		{
-			auto const& collider{ entity.GetComponent<Component::CapsuleCollider>() };
+			auto& collider{ entity.GetComponent<Component::CapsuleCollider>() };
 			auto shapeptr{ GetShapePtr<Component::CapsuleCollider>(collider) };
-			shapeptr->setLocalPose(physx::PxTransform(collider.positionOffset, collider.rotationOffset.getNormalized()));
+			collider.rotationOffset = ToPxQuat(collider.degreeRotationOffsetEuler);
+			shapeptr->setLocalPose(physx::PxTransform(collider.positionOffset, collider.rotationOffset));
 			shapeptr->setGeometry(physx::PxCapsuleGeometry{ collider.radius, collider.halfheight });
 			SetColliderAsSensor(shapeptr, collider.sensor);
 		}
 
 		void PhysicsSystem::Debug() {
+			static bool drawDebug = false;
+			if (Input::InputManager::GetInstance().IsKeyHeld(KEY_CODE::KEY_LEFT_CONTROL) &&
+				Input::InputManager::GetInstance().IsKeyTriggered(KEY_CODE::KEY_D)) drawDebug = !drawDebug;
+			if (!drawDebug) return;
 			auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::BoxCollider>() };
 			for (auto entity : rbsystem) {
 				auto& collider{ rbsystem.get<Component::BoxCollider>(entity) };
@@ -483,10 +501,17 @@ namespace IGE {
 					if (collider.idx < num) {
 						pxrb->getShapes(shape, 3);
 						auto globPos{ pxrb->getGlobalPose() };
-						auto locPos{ shape[collider.idx]->getLocalPose() };
+						if (pxrb->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC))
+							pxrb->getKinematicTarget(globPos);
+						physx::PxTransform locPos{ shape[collider.idx]->getLocalPose() };
+
 						shape[collider.idx]->getBoxGeometry(geom);
 						auto scale{ geom.halfExtents };
-						Graphics::Renderer::DrawBox(ToGLMVec3(globPos.p + locPos.p), ToGraphicUnits(ToGLMVec3(scale)), ToGLMQuat(globPos.q * locPos.q), { 0,1,0,1 });
+						auto drawpos{ ToGLMVec3(globPos.p + locPos.p) };
+						auto drawrot{ ToGLMQuat(globPos.q) * ToGLMQuat(locPos.q) };
+						auto meshrot{ e.GetComponent<Component::Transform>().worldRot };
+						auto shapeGlobPos(globPos * locPos);
+						Graphics::Renderer::DrawBox(ToGLMVec3(shapeGlobPos.p), ToGraphicUnits(ToGLMVec3(scale)), ToGLMQuat(shapeGlobPos.q), {0,1,0,1});
 					}
 				}
 				
@@ -524,7 +549,7 @@ namespace IGE {
 				}
 			}
 
-			if (numShapes == 1) {
+			if (numShapes == 1 && !entity.HasComponent<Component::Transform>()) {
 				mScene->removeActor(*rb);
 				rb->release();
 				//mRigidBodyIDs.erase(collider.bodyID);
