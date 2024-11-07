@@ -152,7 +152,24 @@ namespace Scenes
     }
   }
 
-  void SceneManager::BackupSave(std::string const& path) const {
+  void SceneManager::BackupSave() const {
+    // create backup directory if it doesn't already exist
+    if (!std::filesystem::exists(gBackupDirectory))
+    {
+      if (std::filesystem::create_directory(gBackupDirectory)) {
+        Debug::DebugLogger::GetInstance().LogInfo(std::string("Backup directory doesn't exist. Created at: ") + gBackupDirectory);
+      }
+      else {
+        Debug::DebugLogger::GetInstance().LogWarning("Unable to create temp directory at: " + std::string(gBackupDirectory) + ". Scene reloading features may be unavailable!");
+      }
+    }
+
+    std::ostringstream filepath{};
+    filepath << gBackupDirectory << mSceneName << sSceneFileExtension;
+    Serialization::Serializer::SerializeScene(filepath.str());
+  }
+
+  void SceneManager::BackupCopy(std::string const& path) const {
     // create backup directory if it doesn't already exist
     if (!std::filesystem::exists(gBackupDirectory))
     {
@@ -176,7 +193,7 @@ namespace Scenes
     std::ostringstream filepath{};
     filepath << gAssetsDirectory << "Scenes\\" << mSceneName << sSceneFileExtension;
 
-    BackupSave(filepath.str());
+    BackupCopy(filepath.str());
     Serialization::Serializer::SerializeScene(filepath.str());
 
     Debug::DebugLogger::GetInstance().LogInfo("Successfully saved scene to " + filepath.str());
