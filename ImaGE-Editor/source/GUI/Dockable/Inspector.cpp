@@ -26,7 +26,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/Mesh.h>
 #include "Asset/IGEAssets.h"
 #include <Core/Systems/LayerSystem/LayerSystem.h>
-#
+#include <Physics/PhysicsHelpers.h>
 
 #define ICON_PADDING "   "
 
@@ -1094,6 +1094,7 @@ namespace GUI {
             //auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
             mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath());
             mesh.meshName = assetPayload.GetFileName();
+            mesh.isCustomMesh = true;
             modified = true;
           }
         }
@@ -1114,6 +1115,7 @@ namespace GUI {
 
             if (selected != mesh.meshName) {
               modified = true;
+              mesh.isCustomMesh = false;
               mesh.meshName = selected;
             }
             break;
@@ -1388,7 +1390,9 @@ namespace GUI {
       }
 
       // Modify rotationOffset (vec3 input)
-      if (ImGuiHelpers::TableInputFloat3("Box Rotation Offset", &collider.rotationOffset.x, inputWidth, false, -360.f, 360.f, 1.f)) {
+      physx::PxVec3 rotOffsetEuler{ IGE::Physics::ToPxEuler(collider.rotationOffset) };
+      if (ImGuiHelpers::TableInputFloat3("Box Rotation Offset", &rotOffsetEuler.x, inputWidth, false, -360.f, 360.f, 1.f)) {
+          collider.rotationOffset = IGE::Physics::ToPxQuat(rotOffsetEuler);
           IGE::Physics::PhysicsSystem::GetInstance()->ChangeBoxColliderVar(entity);
           modified = true;
       }
@@ -1453,7 +1457,9 @@ namespace GUI {
           }
 
           // Modify rotationOffset (vec3 input)
-          if (ImGuiHelpers::TableInputFloat3("Sphere Rotation Offset", &collider.rotationOffset.x, inputWidth, false, -360.f, 360.f, 1.f)) {
+          physx::PxVec3 rotOffsetEuler{ IGE::Physics::ToPxEuler(collider.rotationOffset) };
+          if (ImGuiHelpers::TableInputFloat3("Sphere Rotation Offset", &rotOffsetEuler.x, inputWidth, false, -360.f, 360.f, 1.f)) {
+              collider.rotationOffset = IGE::Physics::ToPxQuat(rotOffsetEuler);
               IGE::Physics::PhysicsSystem::GetInstance()->ChangeSphereColliderVar(entity);
               modified = true;
           }
@@ -1527,7 +1533,9 @@ namespace GUI {
           }
 
           // Modify rotationOffset (vec3 input)
-          if (ImGuiHelpers::TableInputFloat3("Capsule Rotation Offset", &collider.rotationOffset.x, inputWidth, false, -360.f, 360.f, 1.f)) {
+          physx::PxVec3 rotOffsetEuler{ IGE::Physics::ToPxEuler(collider.rotationOffset) };
+          if (ImGuiHelpers::TableInputFloat3("Capsule Rotation Offset", &rotOffsetEuler.x, inputWidth, false, -360.f, 360.f, 1.f)) {
+              collider.rotationOffset = IGE::Physics::ToPxQuat(rotOffsetEuler);
               IGE::Physics::PhysicsSystem::GetInstance()->ChangeCapsuleColliderVar(entity);
               modified = true;
           }

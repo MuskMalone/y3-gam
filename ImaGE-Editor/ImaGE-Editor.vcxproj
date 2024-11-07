@@ -177,6 +177,7 @@ copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Release\bin\Release\rtt
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="source\GUI\Persistent\PopupHelper.h" />
     <ClInclude Include="source\EditorApplication.h" />
     <ClInclude Include="source\GUI\Dockable\AssetBrowser.h" />
     <ClInclude Include="source\GUI\Dockable\Console.h" />
@@ -201,6 +202,7 @@ copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Release\bin\Release\rtt
     <ClInclude Include="source\GUI\Styles\Styler.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\GUI\Persistent\PopupHelper.cpp" />
     <ClCompile Include="source\EditorApplication.cpp" />
     <ClCompile Include="source\GUI\Dockable\AssetBrowser.cpp" />
     <ClCompile Include="source\GUI\Dockable\Console.cpp" />

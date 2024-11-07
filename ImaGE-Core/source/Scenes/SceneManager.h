@@ -151,7 +151,7 @@ namespace Scenes
     ************************************************************************/
     void LoadTemporarySave();
 
-
+    void BackupSave(std::string const& path) const;
   
     /*!*********************************************************************
     \brief
