@@ -739,6 +739,7 @@
     <ClInclude Include="source\pch.h" />
     <ClInclude Include="source\Graphics\RenderPass\ScreenPass.h" />
     <ClInclude Include="source\Core\Components\Canvas.h" />
+    <ClInclude Include="source\Graphics\RenderPass\PostProcessPass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -996,5 +997,7 @@
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
     <ClCompile Include="source\Graphics\RenderPass\ScreenPass.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\PostProcessPass.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\RenderPass.cpp" />
   </ItemGroup>
 </Project>

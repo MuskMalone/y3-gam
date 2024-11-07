@@ -20,6 +20,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Audio/AudioManager.h>
 #include <Core/Components/AudioSource.h>
 #include <Graphics/PostProcessing/PostProcessingManager.h>
+#include <Graphics/MaterialTable.h>
 
 #define REGISTER_DATA_MEMBER_INST(T, nameStr) rttr::registration::class_<T>(nameStr).constructor<>()(rttr::policy::ctor::as_object)\
   .property(JSON_SCRIPT_DMI_DATA_KEY, &T::mData)\
@@ -95,6 +96,20 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("layerVisibility", &T::layerVisibility)
       .property("collisionMatrix", &T::collisionMatrix);
   }
+
+  {
+      using T = Graphics::MatData;
+      rttr::registration::class_<T>("MatData")
+          .property("albedoColor", &T::albedoColor)
+          .property("metalness", &T::metalness)
+          .property("roughness", &T::roughness)
+          .property("ao", &T::ao)
+          .property("emission", &T::emission)
+          .property("transparency", &T::transparency)
+          .property("tiling", &T::tiling)
+          .property("offset", &T::offset);
+  }
+
 
   rttr::registration::class_<physx::PxQuat>("PxQuat")
       .constructor<>()(rttr::policy::ctor::as_object)

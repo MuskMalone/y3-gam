@@ -10,84 +10,33 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma once
 #include "Color.h"
 #include <Asset/IGEAssets.h>
-
-namespace Graphics {
-    class Material;
-    class ShaderLibrary;
-}
+#include "Graphics/MaterialTable.h"
 
 namespace Component {
     struct Material {
-        Material() {
+        Material() = default;
 
-        };
-        //Material(std::shared_ptr<Graphics::Material> material) : material{ material } {} // Constructor to set material instance
+        Material(IGE::Assets::GUID guid)
+            : materialGUID(guid),
+            matIdx(Graphics::MaterialTable::AddMaterialByGUID(guid))
+        {}
 
-        /*!*********************************************************************
-        \brief Resets the material to default values.
-        ************************************************************************/
-
+        // Clear method to reset the component to a default material
         inline void Clear() noexcept {
-           // material.reset();
-            matIdx = 0;
+            materialGUID = IGE::Assets::GUID{};  // Clear GUID
+            matIdx = 0;                          // Reset to default material
         }
-       /* void Clear() noexcept;
 
-        const std::string& GetShaderName() const;
-        void SetShaderName(const std::string& name);
+        // Getters and Setters for GUID
+        inline IGE::Assets::GUID GetGUID() const { return materialGUID; }
 
-        glm::vec3 GetAlbedoColor() const;
-        void SetAlbedoColor(const glm::vec3& color);
+        inline void SetGUID(const IGE::Assets::GUID& guid) {
+            materialGUID = guid;
+            matIdx = Graphics::MaterialTable::AddMaterialByGUID(guid); // Update matIdx
+        }
 
-        float GetMetalness() const;
-        void SetMetalness(float value);
-
-        float GetRoughness() const;
-        void SetRoughness(float value);
-
-        float GetAO() const;
-        void SetAO(float aoValue);
-
-        float GetEmission() const;
-        void SetEmission(float value);
-
-        float GetTransparency() const;
-        void SetTransparency(float value);
-
-        glm::vec2 GetTiling() const;
-        void SetTiling(const glm::vec2& tilingValue);
-
-        glm::vec2 GetOffset() const;
-        void SetOffset(const glm::vec2& offsetValue);
-
-        IGE::Assets::GUID GetAlbedoMap() const;
-        void SetAlbedoMap(const IGE::Assets::GUID& texture);
-
-        IGE::Assets::GUID GetNormalMap() const;
-        void SetNormalMap(const IGE::Assets::GUID& texture);
-
-        IGE::Assets::GUID GetMetalnessMap() const;
-        void SetMetalnessMap(const IGE::Assets::GUID& texture);
-
-        IGE::Assets::GUID GetRoughnessMap() const;
-        void SetRoughnessMap(const IGE::Assets::GUID& texture);*/
-        //std::shared_ptr<Graphics::Material> material;
+        // Material GUID and matIdx for instancing
+        IGE::Assets::GUID materialGUID{};
         uint32_t matIdx = 0;
-        std::string shaderName;
-        glm::vec3 albedoColor{ 1.0f, 1.0f, 1.0f };
-        float metalness{ 0.0f };
-        float roughness{ 0.5f };
-        float ao{ 1.0f };
-        float emission{ 0.0f };
-        float transparency{ 1.0f };
-        uint32_t flags{ 0 };
-        glm::vec2 tiling{ 1.0f, 1.0f };
-        glm::vec2 offset{ 0.0f, 0.0f };
-
-        // Texture GUIDs for material maps
-        IGE::Assets::GUID albedoMap{};
-        IGE::Assets::GUID normalMap{};
-        IGE::Assets::GUID metalnessMap{};
-        IGE::Assets::GUID roughnessMap{};
     };
 }

@@ -175,6 +175,7 @@ namespace Graphics {
 
 		std::shared_ptr<MaterialData> mat1 = MaterialData::Create(ShaderLibrary::Get("PBR"));
 		mat1->SetAlbedoMap(texguid1);
+		mat1->SetAlbedoColor({ 0.7f,0.6f,0.9f });
 		MaterialTable::AddMaterial(mat1);
 
 		std::shared_ptr<MaterialData> mat2 = MaterialData::Create(ShaderLibrary::Get("Unlit")); //@TODO support other shaders like Unlit
@@ -206,6 +207,8 @@ namespace Graphics {
 		//	// Add the new material to the material table
 		//	MaterialTable::AddMaterial(material);
 		//}
+
+		MaterialTable::SaveMaterials();
 
 	}
 
