@@ -93,7 +93,7 @@ void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::stri
   // @TODO: Call asset manager to reload prefab here
 }
 
-void PrefabManager::CreatePrefabFromEntity(ECS::Entity const& entity, std::string const& name, std::string const& path)
+void PrefabManager::CreatePrefabFromEntity(ECS::Entity entity, std::string const& name, std::string const& path)
 {
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
   Prefab prefab{ name, entity.IsActive() };
@@ -104,10 +104,11 @@ void PrefabManager::CreatePrefabFromEntity(ECS::Entity const& entity, std::strin
   }
 
   std::string const savePath{ path.empty() ? gPrefabsDirectory + name + gPrefabFileExt : path };
-  Serialization::Serializer::SerializePrefab(prefab, path);
+  Serialization::Serializer::SerializePrefab(prefab, savePath);
 
   // add the new guid to the PrefabOverrides component
-  IGE::Assets::GUID const guid{ IGE_ASSETMGR.ImportAsset<IGE::Assets::PrefabAsset>(path) };
+  IGE::Assets::GUID const guid{ IGE_ASSETMGR.ImportAsset<IGE::Assets::PrefabAsset>(savePath) };
+  entity.EmplaceComponent<Component::PrefabOverrides>();
   UpdateInstanceGUID(entity, guid);
 
   Debug::DebugLogger::GetInstance().LogInfo("Prefab " + name + " saved to " + savePath);
