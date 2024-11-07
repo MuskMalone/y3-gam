@@ -91,8 +91,6 @@ namespace IGE {
 
 		AssetManager::~AssetManager()
 		{
-
-
 			auto fp{ CreateProjectFile() }; // get the project file if exists
 			Serialization::Serializer::SerializeAny(mMetadata, fp);
 		}

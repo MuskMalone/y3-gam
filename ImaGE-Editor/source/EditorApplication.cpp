@@ -208,6 +208,9 @@ namespace IGE {
     auto lambd = [](int signal) { 
       std::cerr << ">>>>>>>>>>>>>>>>>>>>>> Crash detected! Scene has been backed-up to \"./.backup/\" folder <<<<<<<<<<<<<<<<<<<\n";
       Scenes::SceneManager::GetInstance().BackupSave();
+
+      IGE_ASSETMGR.DestroyInstance();
+      IGE_DBGLOGGER.DestroyInstance();
     };
 
     std::signal(SIGABRT, lambd);
