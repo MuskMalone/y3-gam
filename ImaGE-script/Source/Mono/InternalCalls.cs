@@ -100,26 +100,24 @@ namespace Image.Utils
     #region Entity
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static string GetTag(uint EntityID);
+    extern public static string GetTag(uint EntityID);
 
 
     // avoid using this, prefer SetPosition (local)
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetActive(uint entityHandle, bool active);
+    extern public static void SetActive(uint entityHandle, bool active);
 
 
     #endregion
 
 
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetDeltaTime();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static float GetDeltaTime();
+    extern public static void MoveCharacter(uint mEntityID, Vector3 dVec);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void MoveCharacter(uint mEntityID, Vector3 dVec);
-
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static bool IsGrounded(uint mEntityID); 
+    extern public static bool IsGrounded(uint mEntityID); 
   }
 }

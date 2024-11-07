@@ -87,13 +87,33 @@ void InputManager::UpdateInput()
 	for (int i{ 0 }; i < static_cast<int>(IK_KEY_COUNT); ++i)
 	{
 
-		mKeyFramesHeld[i] = (mKeyReleased[i]) ? 0: (mKeyFramesHeld[i] > 0.f || mKeysTriggered[i]) ? (mKeyFramesHeld[i] < mKeyHeldTime) ? mKeyFramesHeld[i] + dt: mKeyFramesHeld[i]: 0;
+		mKeyFramesHeld[i] = (mKeyReleased[i]) ? 0 : (mKeyFramesHeld[i] > 0.f || mKeysTriggered[i]) ? (mKeyFramesHeld[i] < mKeyHeldTime) ? mKeyFramesHeld[i] + dt : mKeyFramesHeld[i] : 0;
 		mKeyHeld[i] = (mKeyFramesHeld[i] >= mKeyHeldTime);
 	}
 
 	QueueInputEvents();
 
+	if (axes["Vertical"] < 0.f)
+	{
+		axes["Vertical"] += Performance::FrameRateController::GetInstance().GetDeltaTime();
+		axes["Vertical"] = (axes["Vertical"] > 0.f) ? 0.f: axes["Vertical"];
+	}
+	else if (axes["Vertical"] > 0.f) {
+		axes["Vertical"] -= Performance::FrameRateController::GetInstance().GetDeltaTime();
+		axes["Vertical"] = (axes["Vertical"] < 0.f) ? 0.f : axes["Vertical"];
+	}
+
 	//Update the Axis
+	if (IsKeyHeld(KEY_CODE::KEY_W) || IsKeyTriggered(KEY_CODE::KEY_W))
+	{
+		axes["Vertical"] += Performance::FrameRateController::GetInstance().GetDeltaTime() * 10.f;
+		axes["Vertical"] = (axes["Vertical"] > 1.f) ? 1.f : axes["Vertical"];
+	}
+	if (IsKeyHeld(KEY_CODE::KEY_S) || IsKeyTriggered(KEY_CODE::KEY_S))
+	{
+		axes["Vertical"] -= Performance::FrameRateController::GetInstance().GetDeltaTime() * 10.f;
+		axes["Vertical"] = (axes["Vertical"] < -1.f) ? -1.f : axes["Vertical"];
+	}
 
 }
 

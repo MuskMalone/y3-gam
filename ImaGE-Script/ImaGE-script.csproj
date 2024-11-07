@@ -86,6 +86,7 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="source\PlayerMove.cs" />
     <Compile Include="source\Mono\Color.cs" />
     <Compile Include="source\Mono\Component.cs" />
     <Compile Include="source\Mono\Debug.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="source\Mono\InternalCalls.cs" />
     <Compile Include="source\Mono\Keycode.cs" />
     <Compile Include="source\Mono\Math.cs" />
+    <Compile Include="source\Mono\PlayerCamControl.cs" />
     <Compile Include="source\Mono\Time.cs" />
     <Compile Include="source\Mono\Vec2.cs" />
     <Compile Include="source\Mono\Vec3.cs" />

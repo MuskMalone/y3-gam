@@ -157,8 +157,8 @@ void ScriptManager::LoadAppDomain()
   mono_domain_set(mAppDomain.get(), true);
 }
 
-#define ADD_INTERNAL_CALL(func) mono_add_internal_call("Image.Mono.Utils.InternalCalls::"#func, Mono::func);
-#define ADD_CLASS_INTERNAL_CALL(func, instance) mono_add_internal_call("Image.Mono.Utils.InternalCalls::"#func, instance.func);
+#define ADD_INTERNAL_CALL(func) mono_add_internal_call("Image.Utils.InternalCalls::"#func, Mono::func);
+#define ADD_CLASS_INTERNAL_CALL(func, instance) mono_add_internal_call("Image.Utils.InternalCalls::"#func, instance.func);
 
 void ScriptManager::AddInternalCalls()
 {
@@ -171,18 +171,31 @@ void ScriptManager::AddInternalCalls()
   //// Get Functions
   ADD_INTERNAL_CALL(GetWorldPosition);
   ADD_INTERNAL_CALL(GetPosition);
+  ADD_INTERNAL_CALL(GetRotation);
   ADD_INTERNAL_CALL(GetWorldScale);
 
   //// Set Functions
   ADD_INTERNAL_CALL(SetWorldPosition);
   ADD_INTERNAL_CALL(SetPosition);
+  ADD_INTERNAL_CALL(SetRotation);
   ADD_INTERNAL_CALL(SetWorldScale);
+  ADD_INTERNAL_CALL(MoveCharacter);
+
 
   //Debug Functions
   ADD_INTERNAL_CALL(Log);
   ADD_INTERNAL_CALL(LogWarning);
   ADD_INTERNAL_CALL(LogError);
   ADD_INTERNAL_CALL(LogCritical);
+
+  //ADD_INTERNAL_CALL(Anykeydow)
+  ADD_INTERNAL_CALL(GetAxis);
+  ADD_INTERNAL_CALL(GetDeltaTime);
+  ADD_INTERNAL_CALL(MoveCharacter);
+  ADD_INTERNAL_CALL(IsGrounded);
+  
+
+
 
 }
 
@@ -658,9 +671,17 @@ void Mono::SetWorldScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment
   TransformHelpers::UpdateWorldTransform(entity);
 }
 
-
-void Mono::SetRotation(ECS::Entity::EntityID entity, glm::vec3 rotAdjustment)
+glm::quat Mono::GetRotation(ECS::Entity::EntityID entity)
 {
+  Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+  return trans.rotation;
+  // need to use quaternions
+}
+
+void Mono::SetRotation(ECS::Entity::EntityID entity, glm::quat rotAdjustment)
+{
+  Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+  trans.rotation += rotAdjustment;
   // need to use quaternions
 }
 
@@ -677,11 +698,6 @@ glm::vec3 Mono::GetPosition(ECS::Entity::EntityID entity)
 glm::vec3 Mono::GetWorldScale(ECS::Entity::EntityID entity)
 {
   return ECS::Entity(entity).GetComponent<Component::Transform>().scale;
-}
-
-glm::vec3 Mono::GetRotation(ECS::Entity::EntityID entity)
-{
-  return ECS::Entity(entity).GetComponent<Component::Transform>().position;
 }
 
 MonoString* Mono::GetTag(ECS::Entity::EntityID entity)
@@ -723,7 +739,7 @@ void Mono::MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec)
 {
   if (ECS::Entity(entity).HasComponent<Component::Transform>())
   {
-    std::cout << "Move: " << dVec.x << "," << dVec.y << "," << dVec.z << "\n";
+    //std::cout << "Move: " << dVec.x << "," << dVec.y << "," << dVec.z << "\n";
     ECS::Entity(entity).GetComponent<Component::Transform>().position += dVec;
   }
     
@@ -731,7 +747,14 @@ void Mono::MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec)
 
 bool  Mono::IsGrounded(ECS::Entity::EntityID entity)
 {
-  return true;
+  if (ECS::Entity(entity).HasComponent<Component::RigidBody>())
+    return(ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y == 0.f);
+  return false;
+}
+
+float Mono::GetDeltaTime()
+{
+  return Performance::FrameRateController::GetInstance().GetDeltaTime();
 }
 
 /*!**********************************************************************

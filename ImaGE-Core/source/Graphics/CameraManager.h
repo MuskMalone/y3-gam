@@ -50,9 +50,9 @@ namespace Graphics {
             Component::Camera& cameraComp = activeCamera.GetComponent<Component::Camera>();
             const auto& transformComp = activeCamera.GetComponent<Component::Transform>();
             // Update the Camera component’s values with Transform data
-            cameraComp.position = transformComp.position;
+            cameraComp.position = transformComp.worldPos;
 
-            cameraComp.rotation = transformComp.rotation;
+            cameraComp.rotation = transformComp.worldRot;
 
             // If your Transform component uses quaternion for rotation
             //cameraComp.yaw = glm::degrees(glm::yaw(transformComp.rotation));
