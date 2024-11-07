@@ -115,6 +115,30 @@ void InputManager::UpdateInput()
 		axes["Vertical"] = (axes["Vertical"] < -1.f) ? -1.f : axes["Vertical"];
 	}
 
+
+
+	if (axes["Horizontal"] < 0.f)
+	{
+		axes["Horizontal"] += Performance::FrameRateController::GetInstance().GetDeltaTime();
+		axes["Horizontal"] = (axes["Horizontal"] > 0.f) ? 0.f : axes["Horizontal"];
+	}
+	else if (axes["Horizontal"] > 0.f) {
+		axes["Horizontal"] -= Performance::FrameRateController::GetInstance().GetDeltaTime();
+		axes["Horizontal"] = (axes["Horizontal"] < 0.f) ? 0.f : axes["Horizontal"];
+	}
+
+	//Update the Axis
+	if (IsKeyHeld(KEY_CODE::KEY_D) || IsKeyTriggered(KEY_CODE::KEY_D))
+	{
+		axes["Horizontal"] += Performance::FrameRateController::GetInstance().GetDeltaTime() * 10.f;
+		axes["Horizontal"] = (axes["Horizontal"] > 1.f) ? 1.f : axes["Horizontal"];
+	}
+	if (IsKeyHeld(KEY_CODE::KEY_A) || IsKeyTriggered(KEY_CODE::KEY_A))
+	{
+		axes["Horizontal"] -= Performance::FrameRateController::GetInstance().GetDeltaTime() * 10.f;
+		axes["Horizontal"] = (axes["Horizontal"] < -1.f) ? -1.f : axes["Horizontal"];
+	}
+
 }
 
 

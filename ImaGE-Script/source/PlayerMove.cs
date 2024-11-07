@@ -70,10 +70,11 @@ public class  PlayerMove : Entity
 
       float x = Input.GetAxis("Horizontal");
       float z = Input.GetAxis("Vertical");
-      Console.WriteLine(z);
+      //Console.WriteLine(z);
+      Console.WriteLine(x);
 
-      //right is the red Axis, foward is the blue axis
-      Vector3 move = GetComponent<Transform>().right * x + GetComponent<Transform>().forward * z;
+    //right is the red Axis, foward is the blue axis
+    Vector3 move = GetComponent<Transform>().right * x + GetComponent<Transform>().forward * z;
 
       InternalCalls.MoveCharacter(mEntityID,move * speed * Time.deltaTime);
 

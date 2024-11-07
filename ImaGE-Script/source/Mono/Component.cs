@@ -61,7 +61,7 @@ using Image.Utils;
     {
       get
       {
-        return Mathf.QuatMulVec3(InternalCalls.GetRotation(entity.mEntityID),new Vector3(0, 0, 1)); // Push update to C++ side
+        return Mathf.QuatMulVec3(InternalCalls.GetRotation(entity.mEntityID),new Vector3(1, 0, 0)); // Push update to C++ side
       }
     }
 
@@ -69,7 +69,7 @@ using Image.Utils;
     {
       get
       {
-        return Mathf.QuatMulVec3(InternalCalls.GetRotation(entity.mEntityID), new Vector3(0, 0, 1)); // Push update to C++ side
+        return Mathf.QuatMulVec3(InternalCalls.GetRotation(entity.mEntityID), new Vector3(0, 0, -1)); // Push update to C++ side
       }
 
     }
