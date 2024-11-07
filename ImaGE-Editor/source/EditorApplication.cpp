@@ -27,6 +27,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 #include <Graphics/Renderer.h>
 #include <Graphics/RenderPass/GeomPass.h>
+#include <csignal>
 
 namespace IGE {
   EditorApplication::EditorApplication(Application::ApplicationSpecification const& spec) :
@@ -203,6 +204,20 @@ namespace IGE {
 
   void EditorApplication::SetEditorCallbacks() {
     glfwSetDropCallback(mWindow.get(), WindowDropCallback);
+
+    auto lambd = [](int signal) { 
+      std::cerr << ">>>>>>>>>>>>>>>>>>>>>> Crash detected! Scene has been backed-up to \"./.backup/\" folder <<<<<<<<<<<<<<<<<<<\n";
+      Scenes::SceneManager::GetInstance().BackupSave();
+
+      IGE_ASSETMGR.DestroyInstance();
+      IGE_DBGLOGGER.DestroyInstance();
+    };
+
+    std::signal(SIGABRT, lambd);
+    std::signal(SIGILL, lambd);
+    std::signal(SIGSEGV, lambd);
+    std::signal(SIGFPE, lambd);
+    std::signal(SIGTERM, lambd);
   }
 
   void EditorApplication::ImGuiStartFrame() const {

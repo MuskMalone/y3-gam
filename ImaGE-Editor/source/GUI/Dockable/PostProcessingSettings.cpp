@@ -44,8 +44,7 @@ namespace GUI {
     }
 	void PostProcessingSettings::Run()
 	{
-        
-        ImGui::Begin("Post Processing");
+        ImGui::Begin(mWindowName.c_str());
         {
             // Set the size of the drop box
             ImVec2 boxSize(200.0f, 50.0f);

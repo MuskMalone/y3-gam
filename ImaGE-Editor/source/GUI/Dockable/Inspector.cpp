@@ -1084,6 +1084,7 @@ namespace GUI {
 
             if (selected != mesh.meshName) {
               modified = true;
+              mesh.isCustomMesh = false;
               mesh.meshName = selected;
             }
             break;
@@ -1099,9 +1100,9 @@ namespace GUI {
         if (drop) {
           AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
           if (assetPayload.mAssetType == AssetPayload::MODEL) {
-            //auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
             mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath());
             mesh.meshName = assetPayload.GetFileName();
+            mesh.isCustomMesh = true;
             modified = true;
           }
         }

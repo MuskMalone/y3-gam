@@ -45,8 +45,26 @@ namespace IGE {
 		}
 		std::string AssetManager::CreateProjectFile()
 		{
-			auto out{ cAssetProjectSettingsPath + cSettingsFileName };
-			if (IsValidFilePath(out)) return out;
+			std::string const out{ cAssetProjectSettingsPath + cSettingsFileName };
+
+			// make a copy of the file as backup before overwriting it
+			// create backup directory if it doesn't already exist
+			if (!std::filesystem::exists(gBackupDirectory))
+			{
+				if (std::filesystem::create_directory(gBackupDirectory)) {
+					Debug::DebugLogger::GetInstance().LogInfo(std::string("Backup directory doesn't exist. Created at: ") + gBackupDirectory);
+				}
+				else {
+					Debug::DebugLogger::GetInstance().LogWarning("Unable to create temp directory at: " + std::string(gBackupDirectory) + ". Scene reloading features may be unavailable!");
+				}
+			}
+
+			// now copy the file over
+			if (IsValidFilePath(out)) {
+				std::filesystem::copy(out, gBackupDirectory, std::filesystem::copy_options::overwrite_existing);
+				return out;
+			}
+
 			std::ofstream file(out);
 			file.close();
 			return out;

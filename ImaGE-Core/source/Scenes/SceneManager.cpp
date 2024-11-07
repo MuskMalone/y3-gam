@@ -31,7 +31,7 @@ namespace Scenes
     mTempDir = gTempDirectory;
 
     // create temp directory if it doesn't already exist
-    if (!std::filesystem::exists(mTempDir) || !std::filesystem::is_directory(mTempDir))
+    if (!std::filesystem::exists(mTempDir))
     {
       if (std::filesystem::create_directory(mTempDir)) {
         Debug::DebugLogger::GetInstance().LogInfo("Temp directory doesn't exist. Created at: " + mTempDir);
@@ -152,11 +152,48 @@ namespace Scenes
     }
   }
 
+  void SceneManager::BackupSave() const {
+    // create backup directory if it doesn't already exist
+    if (!std::filesystem::exists(gBackupDirectory))
+    {
+      if (std::filesystem::create_directory(gBackupDirectory)) {
+        Debug::DebugLogger::GetInstance().LogInfo(std::string("Backup directory doesn't exist. Created at: ") + gBackupDirectory);
+      }
+      else {
+        Debug::DebugLogger::GetInstance().LogWarning("Unable to create temp directory at: " + std::string(gBackupDirectory) + ". Scene reloading features may be unavailable!");
+      }
+    }
+
+    std::ostringstream filepath{};
+    filepath << gBackupDirectory << mSceneName << sSceneFileExtension;
+    Serialization::Serializer::SerializeScene(filepath.str());
+  }
+
+  void SceneManager::BackupCopy(std::string const& path) const {
+    // create backup directory if it doesn't already exist
+    if (!std::filesystem::exists(gBackupDirectory))
+    {
+      if (std::filesystem::create_directory(gBackupDirectory)) {
+        Debug::DebugLogger::GetInstance().LogInfo(std::string("Backup directory doesn't exist. Created at: ") + gBackupDirectory);
+      }
+      else {
+        Debug::DebugLogger::GetInstance().LogWarning("Unable to create temp directory at: " + std::string(gBackupDirectory) + ". Scene reloading features may be unavailable!");
+      }
+    }
+
+    // now copy the file over
+    if (std::filesystem::exists(path)) {
+      std::filesystem::copy(path, gBackupDirectory, std::filesystem::copy_options::overwrite_existing);
+    }
+  }
+
   void SceneManager::SaveScene() const
   {
     // Save the scene
     std::ostringstream filepath{};
     filepath << gAssetsDirectory << "Scenes\\" << mSceneName << sSceneFileExtension;
+
+    BackupCopy(filepath.str());
     Serialization::Serializer::SerializeScene(filepath.str());
 
     Debug::DebugLogger::GetInstance().LogInfo("Successfully saved scene to " + filepath.str());

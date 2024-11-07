@@ -12,6 +12,7 @@ inline constexpr T UI_SCALING_FACTOR{ static_cast<T>(10) };
 // should move to config file and retrieve from asset manager
 constexpr char gRootDirectory[] = "y3-gam";
 constexpr char gTempDirectory[] = ".temp\\";
+constexpr char gBackupDirectory[] = ".backup\\";
 constexpr char gAssetsDirectory[] = "..\\Assets\\";
 constexpr char gScenesDirectory[] = "..\\Assets\\Scenes\\";
 constexpr char gPrefabsDirectory[] = "..\\Assets\\Prefabs\\";

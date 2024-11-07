@@ -89,8 +89,8 @@ namespace Reflection::ComponentUtils {
     try {
       entity.EmplaceOrReplaceComponent<Mesh>(meshSrc, comp.meshName, comp.isCustomMesh);
     }
-    catch (Debug::ExceptionBase const&) {
-      // skip the component
+    catch (Debug::ExceptionBase& e) {
+      e.LogSource();
     }
   }
 

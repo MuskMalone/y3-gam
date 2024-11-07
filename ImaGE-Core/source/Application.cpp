@@ -40,8 +40,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Serialization/Deserializer.h"
 #include "Asset/AssetMetadata.h"
 
-
-
 namespace IGE {
   // Static Initialization
   Application::ApplicationSpecification Application::mSpecification{};
