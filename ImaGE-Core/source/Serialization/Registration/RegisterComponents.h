@@ -108,12 +108,14 @@ static void rttr_auto_register_reflection_function2_(); namespace {
   REGISTER_COMPONENT(BoxCollider, "BoxCollider")
       .property("scale", &BoxCollider::scale)
       .property("positionOffset", &BoxCollider::positionOffset)
+      .property("degreeRotationOffsetEuler", &BoxCollider::degreeRotationOffsetEuler)
       .property("rotationOffset", &BoxCollider::rotationOffset)
       .property("sensor", &BoxCollider::sensor);
 
   REGISTER_COMPONENT(SphereCollider, "SphereCollider")
       .property("radius", &SphereCollider::radius)
       .property("positionOffset", &SphereCollider::positionOffset)
+      .property("degreeRotationOffsetEuler", &SphereCollider::degreeRotationOffsetEuler)
       .property("rotationOffset", &SphereCollider::rotationOffset)
       .property("sensor", &SphereCollider::sensor);
 
@@ -121,6 +123,7 @@ static void rttr_auto_register_reflection_function2_(); namespace {
       .property("radius", &CapsuleCollider::radius)
       .property("halfheight", &CapsuleCollider::halfheight)
       .property("positionOffset", &CapsuleCollider::positionOffset)
+      .property("degreeRotationOffsetEuler", &CapsuleCollider::degreeRotationOffsetEuler)
       .property("rotationOffset", &CapsuleCollider::rotationOffset)
       .property("sensor", &CapsuleCollider::sensor);
 

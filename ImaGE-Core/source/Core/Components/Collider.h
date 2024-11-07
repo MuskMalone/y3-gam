@@ -15,10 +15,12 @@ namespace Component {
   public:
       inline void Clear() noexcept {
           positionOffset = { 0, 0, 0 };
+          degreeRotationOffsetEuler = { 0,0,0 };
           rotationOffset = { physx::PxIdentity };
           sensor = false;
       }
       physx::PxVec3 positionOffset{0, 0, 0};
+      physx::PxVec3 degreeRotationOffsetEuler{0, 0, 0};
       physx::PxQuat rotationOffset{ physx::PxIdentity };
       
       void* bodyID; // not serialized. decided at runtime
