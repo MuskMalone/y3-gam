@@ -60,7 +60,7 @@ namespace GUI
 
   AssetBrowser::AssetBrowser(const char* name) : GUIWindow(name),
     mCurrentDir{ gAssetsDirectory }, mRightClickedDir{},
-    mSelectedAsset{}, mDirMenuPopup{ false }, mAssetMenuPopup{ false }, mDisableSceneChange{ false }, mDisablePrefabSpawn{ true }
+    mSelectedAsset{}, mDirMenuPopup{ false }, mAssetMenuPopup{ false }
   {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::ADD_FILES, &AssetBrowser::FilesImported, this);
   }
@@ -388,12 +388,10 @@ namespace GUI
       // only enabled for prefabs
       if (mSelectedAsset.extension().string() == ".pfb")
       {
-        ImGui::BeginDisabled(mDisableSceneChange);
-        if (ImGui::Selectable("Edit Prefab"))
-        {
+        ImGui::BeginDisabled(IGE_SCENEMGR.GetSceneState() & ~(Scenes::STOPPED | Scenes::NO_SCENE));
+        if (ImGui::Selectable("Edit Prefab")) {
           QUEUE_EVENT(Events::EditPrefabEvent, mSelectedAsset.stem().string(),
             mSelectedAsset.relative_path().string());
-          mDisableSceneChange = true;
         }
         ImGui::EndDisabled();
       }

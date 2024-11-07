@@ -111,7 +111,7 @@ namespace Prefabs
        The path to save the prefab to
     ************************************************************************/
     void UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::string const& name,
-      Prefabs::Prefab::EntityMappings& mappings, std::string const& filePath);
+      Prefabs::Prefab::EntityMappings& mappings, IGE::Assets::GUID guid);
 
   private:
   };

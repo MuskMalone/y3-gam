@@ -27,7 +27,7 @@ namespace GUI
 {
 
   PrefabEditor::PrefabEditor(const char* name) :
-    mPrefabName{}, mPrefabPath{}, mPrefabInstance{},
+    mPrefabName{}, mGUID{}, mPrefabInstance{},
     mIsEditing{ false }, mEscTriggered{ false }, GUIWindow(name)
   {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &PrefabEditor::HandleEvent, this);
@@ -56,8 +56,9 @@ namespace GUI
     case Events::EventType::EDIT_PREFAB:
     {
       auto editPrefabEvent{ std::static_pointer_cast<Events::EditPrefabEvent>(event) };
+      IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+
       mPrefabName = editPrefabEvent->mPrefab;
-      mPrefabPath = editPrefabEvent->mPath;
       mIsEditing = true;
       // if new prefab, create an entity with the prefab's name
       if (editPrefabEvent->mPath.empty()) {
@@ -66,16 +67,17 @@ namespace GUI
         return;
       }
 
-      IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
       try {
-        IGE::Assets::GUID const guid{ am.LoadRef<IGE::Assets::PrefabAsset>(mPrefabPath) };
-        mPrefabInstance = Prefabs::PrefabManager::GetInstance().SpawnPrefabAndMap(guid);
+        mGUID = am.LoadRef<IGE::Assets::PrefabAsset>(editPrefabEvent->mPath);
+        mPrefabInstance = Prefabs::PrefabManager::GetInstance().SpawnPrefabAndMap(mGUID);
       }
       catch (Debug::ExceptionBase const&) {
         IGE_DBGLOGGER.LogInfo("Untracked file detected. Registering to Asset Manager...");
-        am.ImportAsset<IGE::Assets::PrefabAsset>(mPrefabPath);
-        IGE::Assets::GUID const guid{ am.LoadRef<IGE::Assets::PrefabAsset>(mPrefabPath) };
+        std::string const filepath{ gPrefabsDirectory + mPrefabName + gPrefabFileExt };
+        am.ImportAsset<IGE::Assets::PrefabAsset>(filepath);
+        IGE::Assets::GUID const guid{ am.LoadRef<IGE::Assets::PrefabAsset>(filepath) };
         mPrefabInstance = Prefabs::PrefabManager::GetInstance().SpawnPrefabAndMap(guid);
+        mGUID = {};
       }
       break;
     }
@@ -124,13 +126,13 @@ namespace GUI
         
         Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
 
-        if (mPrefabPath.empty() || mPrefabInstance.second.Empty()) {
+        if (!mGUID.IsValid() || mPrefabInstance.second.Empty()) {
           pm.CreatePrefabFromEntity(mPrefabInstance.first, mPrefabName);
         }
         else
         {
           Debug::DebugLogger::GetInstance().LogInfo("[PrefabEditor] Saved " + mPrefabName);
-          pm.UpdatePrefabFromEditor(mPrefabInstance.first, mPrefabName, mPrefabInstance.second, mPrefabPath);
+          pm.UpdatePrefabFromEditor(mPrefabInstance.first, mPrefabName, mPrefabInstance.second, mGUID);
         }
         Scenes::SceneManager::GetInstance().StopScene();
 
@@ -147,7 +149,7 @@ namespace GUI
   {
     mPrefabInstance = {};
     mPrefabName.clear();
-    mPrefabPath.clear();
+    mGUID = {};
     mIsEditing = mEscTriggered = false;
     mRemovedChildren.clear();
     mRemovedComponents.clear();
