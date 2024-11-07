@@ -20,8 +20,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Components/Mesh.h>
 #include <Core/Components/Transform.h>
 #include <Core/Systems/TransformSystem/TransformHelpers.h>
-#include <Graphics/MeshFactory.h>
-#include <Graphics/Mesh.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
 #include <Core/EntityManager.h>
 #include <GUI/GUIManager.h>
@@ -317,10 +315,9 @@ namespace GUI
           break;
         case AssetPayload::MODEL:
         {
-          // @TODO: ABSTRACT MORE; MAKE IT EASIER TO ADD A MESH
           ECS::Entity newEntity{ ECS::EntityManager::GetInstance().CreateEntityWithTag(assetPayload.GetFileName()) };
           IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
-          newEntity.EmplaceComponent<Component::Mesh>(meshSrc, assetPayload.GetFileName());
+          newEntity.EmplaceComponent<Component::Mesh>(meshSrc, assetPayload.GetFileName(), true);
           break;
         }
         case AssetPayload::SPRITE:

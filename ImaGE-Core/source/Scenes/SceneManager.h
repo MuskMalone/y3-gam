@@ -93,7 +93,7 @@ namespace Scenes
 
     void SubmitToMainThread(const std::function<void()>& function);
     void ExecuteMainThreadQueue();
-
+    void BackupSave() const;
 
   private:
     struct SaveState
@@ -150,9 +150,9 @@ namespace Scenes
       m_tempScene.
     ************************************************************************/
     void LoadTemporarySave();
-
-
   
+    void BackupCopy(std::string const& path) const;
+
     /*!*********************************************************************
     \brief
       Handles the events the SceneManager subscribed to

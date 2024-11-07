@@ -59,11 +59,29 @@
                     ]
                 },
                 {
+                    "key": 2365944062561285119,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Models\\banana-monster.fbx"
+                        }
+                    ]
+                },
+                {
                     "key": 2911002203277076724,
                     "value": [
                         {
                             "key": "path",
                             "value": "..\\Assets\\Models\\horse_high_poly.imsh"
+                        }
+                    ]
+                },
+                {
+                    "key": 3889053144261511713,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Models\\Environment_Tree.fbx"
                         }
                     ]
                 },
@@ -127,6 +145,56 @@
                         {
                             "key": "path",
                             "value": "..\\Assets\\Models\\sphere_mid_poly.imsh"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "PostProcessing",
+            "value": [
+                {
+                    "key": 3357145615205506964,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\PostProcessing\\sinwave.frag.glsl"
+                        }
+                    ]
+                },
+                {
+                    "key": 5252750118345199729,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\PostProcessing\\crt.frag.glsl"
+                        }
+                    ]
+                },
+                {
+                    "key": 7488299143892968521,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\PostProcessing\\chromaticabberation.frag.glsl"
+                        }
+                    ]
+                },
+                {
+                    "key": 14222384982541115964,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\PostProcessing\\Blue.frag.glsl"
+                        }
+                    ]
+                },
+                {
+                    "key": 15223746351810559861,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\PostProcessing\\Red.frag.glsl"
                         }
                     ]
                 }

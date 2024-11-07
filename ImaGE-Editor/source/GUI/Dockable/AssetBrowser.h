@@ -33,19 +33,21 @@ namespace GUI
     bool mDisableSceneChange, mDisablePrefabSpawn;
 
     static constexpr float sMaxAssetSize = 100.f;
+    static inline constexpr char sMeshPopupTitle[] = "Mesh Import Config";
 
     /*!*********************************************************************
     \brief
-      Handles the events the AssetBrowser subscribed to.
-
-      SCENE_STATE_CHANGE
-        - Disables certain menu options based on the current scene state
-      ADD_FILES
-        - Adds a list of files into the engine from the explorer
-    \param event
-      The event to handle
+      Disables certain menu options based on the current scene state
     ************************************************************************/
-    EVENT_CALLBACK_DECL(HandleEvent);
+    EVENT_CALLBACK_DECL(SceneStateChanged);
+
+    /*!*********************************************************************
+    \brief
+      Forwards any non-mesh imports to the asset manager, then render a
+      popup for the user to select mesh-import settings before sending
+      them to the asset manager
+    ************************************************************************/
+    EVENT_CALLBACK_DECL(FilesImported);
 
     /*!*********************************************************************
     \brief
@@ -106,15 +108,6 @@ namespace GUI
 
     /*!*********************************************************************
     \brief
-      Copies the filepaths in the container into their respective
-      directories into the currently browsed directory.
-    \param files
-      The container of filepahts
-    ************************************************************************/
-    void AddAssets(std::vector<std::string> const& files);
-
-    /*!*********************************************************************
-    \brief
       Creates the popup menu for when a directory is right-clicked upon
     ************************************************************************/
     void DirectoryMenuPopup() const;
@@ -130,6 +123,12 @@ namespace GUI
       Creates the confirmation popup for when an asset is deleted
     ************************************************************************/
     void ConfirmDeletePopup() const;
+
+    /*!*********************************************************************
+    \brief
+      Runs the popup for importing a mesh
+    ************************************************************************/
+    void ImportMeshPopup() const;
   };
 
 } // namespace GUI

@@ -19,6 +19,9 @@
     <Filter Include="Asset\Assetables\Prefab">
       <UniqueIdentifier>{BAE2FC16-261A-45AE-2F24-A9D19BDA6BA7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Asset\Assetables\Shader">
+      <UniqueIdentifier>{212E451D-8D65-8DB4-966F-F1D70226B4AD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Asset\Assetables\Texture">
       <UniqueIdentifier>{3BF38E0D-2718-DE8D-5063-C31D3CE7DCAB}</UniqueIdentifier>
     </Filter>
@@ -136,6 +139,12 @@
     <Filter Include="Graphics\AssetIO">
       <UniqueIdentifier>{1D275E7D-0920-7DCF-3252-62541EAA5CDB}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\PostProcessing">
+      <UniqueIdentifier>{48EFA335-B426-ECCC-BD30-50F029E712C6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\PostProcessing\Shaders">
+      <UniqueIdentifier>{21DC0668-8DBF-15A8-96C2-43E40225DCF8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Graphics\RenderPass">
       <UniqueIdentifier>{7C819DD9-E8E2-7AE7-7150-C199DDB0B1A6}</UniqueIdentifier>
     </Filter>
@@ -195,6 +204,9 @@
     </ClInclude>
     <ClInclude Include="source\Asset\Assetables\Prefab\PrefabAsset.h">
       <Filter>Asset\Assetables\Prefab</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Asset\Assetables\Shader\ShaderAsset.h">
+      <Filter>Asset\Assetables\Shader</Filter>
     </ClInclude>
     <ClInclude Include="source\Asset\Assetables\Texture\TextureAsset.h">
       <Filter>Asset\Assetables\Texture</Filter>
@@ -577,6 +589,9 @@
     <ClInclude Include="source\Graphics\Pipeline.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="source\Graphics\PostProcessing\PostProcessingManager.h">
+      <Filter>Graphics\PostProcessing\Shaders</Filter>
+    </ClInclude>
     <ClInclude Include="source\Graphics\RenderAPI.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -722,6 +737,8 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
+    <ClInclude Include="source\Graphics\RenderPass\ScreenPass.h" />
+    <ClInclude Include="source\Core\Components\Canvas.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -742,6 +759,9 @@
     </ClCompile>
     <ClCompile Include="source\Asset\Assetables\Prefab\PrefabAsset.cpp">
       <Filter>Asset\Assetables\Prefab</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Asset\Assetables\Shader\ShaderAsset.cpp">
+      <Filter>Asset\Assetables\Shader</Filter>
     </ClCompile>
     <ClCompile Include="source\Asset\Assetables\Texture\TextureAsset.cpp">
       <Filter>Asset\Assetables\Texture</Filter>
@@ -881,13 +901,19 @@
     <ClCompile Include="source\Graphics\Pipeline.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="source\Graphics\PostProcessing\PostProcessingManager.cpp">
+      <Filter>Graphics\PostProcessing\Shaders</Filter>
+    </ClCompile>
     <ClCompile Include="source\Graphics\RenderAPI.cpp">
       <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Graphics\RenderPass\UIPass.cpp">
+      <Filter>Graphics\RenderPass</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\RenderPass\GeomPass.cpp">
       <Filter>Graphics\RenderPass</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\RenderPass\RenderPass.cpp">
+    <ClCompile Include="source\Graphics\RenderPass\ScreenPass.cpp">
       <Filter>Graphics\RenderPass</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\RenderPass\ScreenPass.cpp">
@@ -969,5 +995,6 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\ScreenPass.cpp" />
   </ItemGroup>
 </Project>

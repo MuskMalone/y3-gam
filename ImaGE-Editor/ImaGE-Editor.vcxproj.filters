@@ -43,6 +43,9 @@
     <ClInclude Include="source\GUI\Dockable\Layers.h">
       <Filter>GUI\Dockable</Filter>
     </ClInclude>
+    <ClInclude Include="source\GUI\Dockable\PostProcessingSettings.h">
+      <Filter>GUI\Dockable</Filter>
+    </ClInclude>
     <ClInclude Include="source\GUI\Dockable\SceneHierarchy.h">
       <Filter>GUI\Dockable</Filter>
     </ClInclude>
@@ -82,6 +85,7 @@
     <ClInclude Include="source\GUI\Styles\Styler.h">
       <Filter>GUI\Styles</Filter>
     </ClInclude>
+    <ClInclude Include="source\GUI\Persistent\PopupHelper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\EditorApplication.cpp" />
@@ -104,6 +108,9 @@
       <Filter>GUI\Dockable</Filter>
     </ClCompile>
     <ClCompile Include="source\GUI\Dockable\Layers.cpp">
+      <Filter>GUI\Dockable</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\Dockable\PostProcessingSettings.cpp">
       <Filter>GUI\Dockable</Filter>
     </ClCompile>
     <ClCompile Include="source\GUI\Dockable\SceneHierarchy.cpp">
@@ -134,5 +141,6 @@
       <Filter>GUI\Styles</Filter>
     </ClCompile>
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\GUI\Persistent\PopupHelper.cpp" />
   </ItemGroup>
 </Project>

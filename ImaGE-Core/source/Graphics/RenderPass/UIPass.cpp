@@ -5,6 +5,7 @@
 #include "Core/Components/Transform.h"
 #include "Core/Components/Text.h"
 #include "Core/Components/Image.h"
+#include <Physics/PhysicsSystem.h>
 
 namespace Graphics {
 	UIPass::UIPass(const RenderPassSpec& spec) : RenderPass{ spec } {
@@ -29,6 +30,9 @@ namespace Graphics {
 		shader->SetUniform("u_ViewProjMtx", viewProj);
 
 		Renderer::RenderSceneBegin(viewProj);
+
+		//temp physics debug hack
+		IGE::Physics::PhysicsSystem::GetInstance()->Debug();
 
 
 		for (ECS::Entity const& entity : entities) {

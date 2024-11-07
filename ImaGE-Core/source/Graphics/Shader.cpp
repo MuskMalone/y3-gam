@@ -378,7 +378,7 @@ namespace Graphics {
 
 			std::string str(infoLog.data());
 			Debug::DebugLogger::GetInstance().LogError("Shader Link Failure: " + std::string(infoLog.data()) + "Files: " + vertName + ", " + fragName);
-			//throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Shader Link Failure: " + std::string(infoLog.data()) + "Files: " + vertName + ", " + fragName));
+			throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Shader Link Failure: " + std::string(infoLog.data()) + "Files: " + vertName + ", " + fragName));
 			return;
 		}
 

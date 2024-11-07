@@ -41,15 +41,19 @@ static void rttr_auto_register_reflection_function3_(); namespace {
   rttr::registration::enumeration<Component::RigidBody::MotionType>("MotionType")(
     rttr::value("DYNAMIC", Component::RigidBody::MotionType::DYNAMIC),
     rttr::value("KINEMATIC", Component::RigidBody::MotionType::KINEMATIC)
-  );
-  rttr::registration::enumeration<IGE::Audio::SoundInvokeSetting::RolloffType>("RolloffType")
-      (
-          rttr::value("LINEAR", IGE::Audio::SoundInvokeSetting::RolloffType::LINEAR),
-          rttr::value("LOGARITHMIC", IGE::Audio::SoundInvokeSetting::RolloffType::LOGARITHMIC)
-          );
+    );
+  rttr::registration::enumeration<IGE::Audio::SoundInvokeSetting::RolloffType>("RolloffType")(
+    rttr::value("LINEAR", IGE::Audio::SoundInvokeSetting::RolloffType::LINEAR),
+    rttr::value("LOGARITHMIC", IGE::Audio::SoundInvokeSetting::RolloffType::LOGARITHMIC)
+    );
 
   rttr::registration::enumeration<Component::LightType>("LightType")(
     rttr::value("DIRECTIONAL", Component::LightType::DIRECTIONAL),
     rttr::value("SPOTLIGHT", Component::LightType::SPOTLIGHT)
+    );
+
+  rttr::registration::enumeration<Component::Camera::Type>("CameraType")(
+    rttr::value("ORTHO", Component::Camera::Type::ORTHO),
+    rttr::value("PERSP", Component::Camera::Type::PERSP)
     );
 }

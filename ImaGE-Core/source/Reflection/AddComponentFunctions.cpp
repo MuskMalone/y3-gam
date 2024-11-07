@@ -83,8 +83,15 @@ namespace Reflection::ComponentUtils {
   void AddMesh(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Mesh, comp);
 
-    IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(comp.meshName) };//Graphics::MeshFactory::CreateModelFromString(comp.meshName) };
-    entity.EmplaceOrReplaceComponent<Mesh>(meshSrc, comp.meshName);
+    IGE::Assets::GUID const& meshSrc{ comp.isCustomMesh ? IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(comp.meshSource)
+      : IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(comp.meshName) };
+
+    try {
+      entity.EmplaceOrReplaceComponent<Mesh>(meshSrc, comp.meshName, comp.isCustomMesh);
+    }
+    catch (Debug::ExceptionBase& e) {
+      e.LogSource();
+    }
   }
 
   void AddText(ECS::Entity entity, rttr::variant const& var) {

@@ -26,7 +26,8 @@ namespace IGE {
 				IGE::Assets::AudioAsset,
 				IGE::Assets::ModelAsset,
 				IGE::Assets::PrefabAsset,
-				IGE::Assets::FontAsset
+				IGE::Assets::FontAsset,
+				IGE::Assets::ShaderAsset
 			>();
 			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			auto fp{ CreateProjectFile() }; // create project file if it doesnt exist
@@ -44,14 +45,32 @@ namespace IGE {
 		}
 		std::string AssetManager::CreateProjectFile()
 		{
-			auto out{ cAssetProjectSettingsPath + cSettingsFileName };
-			if (IsValidFilePath(out)) return out;
+			std::string const out{ cAssetProjectSettingsPath + cSettingsFileName };
+
+			// make a copy of the file as backup before overwriting it
+			// create backup directory if it doesn't already exist
+			if (!std::filesystem::exists(gBackupDirectory))
+			{
+				if (std::filesystem::create_directory(gBackupDirectory)) {
+					Debug::DebugLogger::GetInstance().LogInfo(std::string("Backup directory doesn't exist. Created at: ") + gBackupDirectory);
+				}
+				else {
+					Debug::DebugLogger::GetInstance().LogWarning("Unable to create temp directory at: " + std::string(gBackupDirectory) + ". Scene reloading features may be unavailable!");
+				}
+			}
+
+			// now copy the file over
+			if (IsValidFilePath(out)) {
+				std::filesystem::copy(out, gBackupDirectory, std::filesystem::copy_options::overwrite_existing);
+				return out;
+			}
+
 			std::ofstream file(out);
 			file.close();
 			return out;
 		}
 		AssetManager::AssetManager() {
-			SUBSCRIBE_CLASS_FUNC(Events::EventType::ADD_FILES, &AssetManager::HandleAddFiles, this);
+			SUBSCRIBE_CLASS_FUNC(Events::EventType::REGISTER_FILES, &AssetManager::HandleAddFiles, this);
 			Initialize();
 			 //code snippet to "manufacture" all the data needed for importing
 			 //assumes that all the files are imported as is
@@ -100,8 +119,9 @@ namespace IGE {
 		}
 		
 		EVENT_CALLBACK_DEF(AssetManager, HandleAddFiles) {
-			auto const& paths{ CAST_TO_EVENT(Events::AddFilesFromExplorerEvent)->mPaths };
+			auto const& paths{ CAST_TO_EVENT(Events::RegisterAssetsEvent)->mPaths };
 			for (std::string const& file : paths) {
+				//auto file{ std::filesystem::path{f}.relative_path().string() };
 				//@TODO: use reflection to invoke without hardcoding
 				auto ext{ GetFileExtension(file) };
 				std::string folder{};
@@ -109,14 +129,18 @@ namespace IGE {
 				//finds the folder
 				//then breaks
 				for (auto const& filetype : cDirectoryToExtensions) {
+
 					if (filetype.second.find(ext) != filetype.second.end()) {
 						folder = filetype.first;
 						break;
 					}
 				}
-
-				mRegisterTypeImports[folder](file);
-				Debug::DebugLogger::GetInstance().LogInfo("Added " + file + " to assets");
+				if (mRegisterTypeImports.find(folder) != mRegisterTypeImports.end()) {
+					mRegisterTypeImports[folder](file);
+					Debug::DebugLogger::GetInstance().LogInfo("Added " + file + " to assets");
+				}else{
+					Debug::DebugLogger::GetInstance().LogWarning(file + " no asset category found");
+				}
 			}
 
 		}

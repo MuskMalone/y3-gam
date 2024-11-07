@@ -121,13 +121,16 @@ namespace GUI {
         ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
         for (int i{}; i < Systems::MAX_LAYERS; i += 2) {
-          //if (layerNames[i] == "") { continue; }
-
           ImGui::TableNextRow();
           ImGui::TableSetColumnIndex(0);
-
+          if (i == 0) {
+            ImGui::BeginDisabled();
+          }
           ImGui::Checkbox(("##readonly" + std::to_string(i)).c_str(),
             reinterpret_cast<bool*>(&layerSys->GetLayerVisibility()[i]));
+          if (i == 0) {
+            ImGui::EndDisabled();
+          }
           ImGui::SameLine();
           ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_REGULAR));
           std::string nameText = "Layer " + std::to_string(i) + ": ";

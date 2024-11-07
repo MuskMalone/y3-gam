@@ -22,8 +22,6 @@ namespace Systems {
 
   std::array<int, MAX_LAYERS> const& LayerSystem::GetLayerCollisionList(int layerNumber) const {
     if (layerNumber >= MAX_LAYERS || layerNumber < 0) {
-      //Debug::DebugLogger::GetInstance().LogWarning("[Layers] Invalid Layer Number Passed");
-      //return std::array<int, MAX_LAYERS>();
       throw Debug::Exception<LayerSystem>(Debug::LVL_WARN, Msg("Invalid Layer Number Passed"));
     }
 
@@ -98,13 +96,6 @@ namespace Systems {
       return physx::PxFilterFlag::eSUPPRESS;
     }
 
-    //// Collision allowed
-    //pairFlags |=
-    //    physx::PxPairFlag::eCONTACT_DEFAULT |
-    //    physx::PxPairFlag::eNOTIFY_TOUCH_FOUND |
-    //    physx::PxPairFlag::eNOTIFY_TOUCH_LOST |
-    //    physx::PxPairFlag::eNOTIFY_CONTACT_POINTS |
-    //    physx::PxPairFlag::eTRIGGER_DEFAULT;
     return physx::PxFilterFlag::eDEFAULT;
   }
 
@@ -112,20 +103,23 @@ namespace Systems {
     auto itr = std::find(mLayerData.layerNames.begin(), mLayerData.layerNames.end(), 
       entity.GetComponent<Component::Layer>().name);
 
-    if (itr != mLayerData.layerNames.end()) {
-      size_t index = std::distance(mLayerData.layerNames.begin(), itr);
-
-      physx::PxFilterData filterData;
-      filterData.word0 = static_cast<physx::PxU32>(index);
-      /*
-      bool isActive = entity.IsActive();
-      filterData.word1 = isActive;
-      */
-      (*shape)->setSimulationFilterData(filterData);
-    }
-    else {
+    if (itr == mLayerData.layerNames.end()) {
       Debug::DebugLogger::GetInstance().LogWarning("[Layers] Entiy does not have Valid Layer");
+
+      // Add entity with non-existent layer into default layer
+      mLayerEntities[std::string(BUILTIN_LAYER_0)].push_back(ECS::Entity{ entity });
+      ECS::Entity{ entity }.GetComponent<Component::Layer>().name = std::string(BUILTIN_LAYER_0);
     }
+
+    size_t index = std::distance(mLayerData.layerNames.begin(), itr);
+
+    physx::PxFilterData filterData;
+    filterData.word0 = static_cast<physx::PxU32>(index);
+    /*
+    bool isActive = entity.IsActive();
+    filterData.word1 = isActive;
+    */
+    (*shape)->setSimulationFilterData(filterData);
   }
 
   EVENT_CALLBACK_DEF(LayerSystem, OnSceneChange) {
@@ -138,15 +132,20 @@ namespace Systems {
       return;
     }
 
+    mLayerEntities.clear();
     // The built-in layer names should never change
     // This code is necessary as someone might manually edit the built-in layers in the json file...
     mLayerData.layerNames[0] = std::string(BUILTIN_LAYER_0);
     mLayerData.layerNames[1] = std::string(BUILTIN_LAYER_1);
+    mLayerData.layerNames[2] = std::string(BUILTIN_LAYER_2);
+
+    // The default layer should always be visible
+    mLayerData.layerVisibility[0] = true;
 
     auto const& allEntities{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Layer>() };
 
     for (auto const& entity : allEntities) {
-      std::string const layerName = ECS::Entity{ entity }.GetComponent<Component::Layer>().name;
+      std::string const& layerName = ECS::Entity{ entity }.GetComponent<Component::Layer>().name;
       
       auto itr = std::find(mLayerData.layerNames.begin(), mLayerData.layerNames.end(), layerName);
       if (itr != mLayerData.layerNames.end()) {
@@ -154,7 +153,7 @@ namespace Systems {
       }
 
       else {
-        std::string const tag = ECS::Entity{ entity }.GetComponent<Component::Tag>().tag;
+        std::string const& tag = ECS::Entity{ entity }.GetComponent<Component::Tag>().tag;
         Debug::DebugLogger::GetInstance().LogWarning("[Layers] The Entity with Tag: \"" + tag + "\" has a Non-Existent Layer");
 
         // Add entity with non-existent layer into default layer
@@ -167,13 +166,13 @@ namespace Systems {
   EVENT_CALLBACK_DEF(LayerSystem, OnLayerModification) {
     auto layerModifiedEvent{ std::static_pointer_cast<Events::EntityLayerModified>(event) };
     ECS::Entity entity = layerModifiedEvent->mEntity;
-    std::string oldLayer = layerModifiedEvent->mOldLayer;
+    std::string const& oldLayer = layerModifiedEvent->mOldLayer;
 
     // Change layer in mLayerEntities
     std::string newLayer = entity.GetComponent<Component::Layer>().name;
     auto itr = std::find(mLayerData.layerNames.begin(), mLayerData.layerNames.end(), newLayer);
     if (itr == mLayerData.layerNames.end()) {
-      std::string const tag = ECS::Entity{ entity }.GetComponent<Component::Tag>().tag;
+      std::string const& tag = ECS::Entity{ entity }.GetComponent<Component::Tag>().tag;
       Debug::DebugLogger::GetInstance().LogWarning("[Layers] The Entity with Tag: \"" + tag + "\" has a Non-Existent Layer");
       newLayer = std::string(BUILTIN_LAYER_0);
     }

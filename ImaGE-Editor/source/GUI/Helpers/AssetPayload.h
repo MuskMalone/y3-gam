@@ -28,7 +28,8 @@ namespace GUI
       SCENE,
       MODEL,
       AUDIO,
-      FONT
+      FONT,
+      SHADER
     };
 
     static constexpr char sAssetDragDropPayload[] = "ASSET";
@@ -49,6 +50,9 @@ namespace GUI
       }
       else if (fileExt == gFontFileExt) {
         mAssetType = AssetType::FONT;
+      }
+      else if (IGE::Assets::cShaderExtensions.find(fileExt) != IGE::Assets::cShaderExtensions.end()){
+          mAssetType = AssetType::SHADER;
       }
       else if (IGE::Assets::cImageExtensions.find(fileExt) != IGE::Assets::cImageExtensions.end()) {
         mAssetType = AssetType::SPRITE;

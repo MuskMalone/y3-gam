@@ -181,7 +181,20 @@ namespace Reflection
         // restore its prefab overrides
         ent.EmplaceComponent<Component::PrefabOverrides>(instData.mOverrides);
       }
-      am.LoadRef<Assets::PrefabAsset>(guid);
+
+      try {
+        am.LoadRef<Assets::PrefabAsset>(guid);
+      }
+      // @TODO: Start a blocking call to an ImGui::Popup to allow selection of the prefab file,
+      //        then remap the GUIDs to the newly generated one
+      catch ([[maybe_unused]] Debug::ExceptionBase& e) {
+        PrefabInst const& inst{ data.cbegin()->second };
+        IGE_DBGLOGGER.LogCritical("GUID of Prefab: " + inst.mName + " invalid!");
+        IGE_DBGLOGGER.LogCritical("Say bye bye to Entity " + ECS::Entity(inst.mId).GetTag() + " until I implement GUI to allow remapping!");
+        //IGE_EVENT_MGR.DispatchImmediateEvent<Events::RemapPrefabGUID>(inst.mId, inst.mName);
+        continue;
+      }
+
       auto const& originalPfb{ am.GetAsset<Assets::PrefabAsset>(guid)->mPrefabData };
 
       for (ECS::Entity& e : baseEntities) {
@@ -209,7 +222,7 @@ namespace Reflection
           trans.worldPos = trans.position = *pos;
         }
       }
-    }
+  }
 
     // override each entity's components
     OverrideInstanceComponents();
