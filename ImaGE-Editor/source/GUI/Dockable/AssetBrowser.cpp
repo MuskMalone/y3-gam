@@ -496,7 +496,6 @@ namespace GUI
 
   void AssetBrowser::ImportMeshPopup() const {
     ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
-    //ImGui::SetNextWindowSize(ImVec2(450, 300), ImGuiCond_Always);
     if (!ImGui::BeginPopupModal(sMeshPopupTitle, NULL, ImGuiWindowFlags_AlwaysAutoResize)) { return; }
     static bool blankWarning{ false };
     bool close{ false };
