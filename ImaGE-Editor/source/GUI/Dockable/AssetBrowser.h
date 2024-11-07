@@ -37,12 +37,6 @@ namespace GUI
 
     /*!*********************************************************************
     \brief
-      Disables certain menu options based on the current scene state
-    ************************************************************************/
-    EVENT_CALLBACK_DECL(SceneStateChanged);
-
-    /*!*********************************************************************
-    \brief
       Forwards any non-mesh imports to the asset manager, then render a
       popup for the user to select mesh-import settings before sending
       them to the asset manager
