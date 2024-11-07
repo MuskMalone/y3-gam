@@ -17,6 +17,8 @@ namespace Graphics {
         static void ApplyMaterialTextures(std::shared_ptr<Graphics::Shader>& shader, size_t batchStart, size_t batchEnd);
         static void ApplyMaterialTextures(std::shared_ptr<Graphics::Shader>& shader);
 
+        static void ClearMaterials();
+
     private:
         std::shared_ptr<Shader> mDefaultShader; //TODO CHANGE TO SHADER LIB
         static std::vector<std::shared_ptr<MaterialData>> mMaterials;

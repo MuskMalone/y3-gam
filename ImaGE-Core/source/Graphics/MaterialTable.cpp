@@ -59,4 +59,9 @@ namespace Graphics {
         shader->SetUniform("u_AlbedoMaps", albedoTextureUnits.data(), static_cast<unsigned>(albedoTextureUnits.size()));
         shader->SetUniform("u_NormalMaps", normalTextureUnits.data(), static_cast<unsigned>(normalTextureUnits.size()));
     }
+    void MaterialTable::ClearMaterials(){
+        if (mMaterials.size() > 1) {
+            mMaterials.erase(mMaterials.begin() + 1, mMaterials.end());
+        }
+    }
 }
