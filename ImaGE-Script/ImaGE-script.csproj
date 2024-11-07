@@ -59,6 +59,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Threading" />
     <Reference Include="System.Windows" />
+    <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <Reference Include="System" />
@@ -70,6 +71,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Threading" />
     <Reference Include="System.Windows" />
+    <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Distribution|x64' ">
     <Reference Include="System" />
@@ -81,9 +83,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Threading" />
     <Reference Include="System.Windows" />
+    <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PlayerMove.cs" />
     <Compile Include="source\Mono\Color.cs" />
     <Compile Include="source\Mono\Component.cs" />
     <Compile Include="source\Mono\Debug.cs" />
@@ -101,7 +103,6 @@
     <Compile Include="source\Test.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Numerics" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
