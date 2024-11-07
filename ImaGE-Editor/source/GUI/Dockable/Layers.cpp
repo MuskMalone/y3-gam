@@ -52,7 +52,7 @@ namespace GUI {
 
   void Layers::LayerNameNode() {
     ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
-    if (ImGui::TreeNodeEx("Layer Names##")) {
+    if (ImGui::TreeNodeEx("Layer Names##Layers", ImGuiTreeNodeFlags_DefaultOpen)) {
       if (std::shared_ptr<Systems::LayerSystem> layerSys = mLayerSystem.lock()) {
 
         float contentSize = ImGui::GetContentRegionAvail().x;
@@ -107,7 +107,7 @@ namespace GUI {
   void Layers::VisibilityToggleNode() {
     ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
 
-    if (ImGui::TreeNodeEx("Visibility##")) {
+    if (ImGui::TreeNodeEx("Visibility##Layers", ImGuiTreeNodeFlags_DefaultOpen)) {
       if (std::shared_ptr<Systems::LayerSystem> layerSys = mLayerSystem.lock()) {
         auto const& layerNames{ layerSys->GetLayerNames() };
 
@@ -167,7 +167,7 @@ namespace GUI {
 
   void Layers::CollisionMatrixNode() {
     ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
-    if (ImGui::TreeNodeEx("Collision##")) {
+    if (ImGui::TreeNodeEx("Collision##Layers", ImGuiTreeNodeFlags_DefaultOpen)) {
       if (std::shared_ptr<Systems::LayerSystem> layerSys = mLayerSystem.lock()) {
 
         auto const& layerNames{ layerSys->GetLayerNames() };
