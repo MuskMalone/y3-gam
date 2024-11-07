@@ -48,7 +48,7 @@ namespace Reflection
       { GET_RTTR_TYPE(Transform), ComponentUtils::AddTransform },
       { GET_RTTR_TYPE(Layer), ComponentUtils::AddLayer },
       { GET_RTTR_TYPE(Mesh), ComponentUtils::AddMesh },
-      { GET_RTTR_TYPE(MaterialComponent), ComponentUtils::AddMaterial },
+      { GET_RTTR_TYPE(Material), ComponentUtils::AddMaterial },
       { GET_RTTR_TYPE(BoxCollider), ComponentUtils::AddBoxCollider },
       { GET_RTTR_TYPE(SphereCollider), ComponentUtils::AddSphereCollider },
       { GET_RTTR_TYPE(CapsuleCollider), ComponentUtils::AddCapsuleCollider },
@@ -282,7 +282,7 @@ namespace Reflection
     else IF_GET_ENTITY_COMP(Tag)
     else IF_GET_ENTITY_COMP(Layer)
     else IF_GET_ENTITY_COMP(Mesh)
-    else IF_GET_ENTITY_COMP(MaterialComponent)
+    else IF_GET_ENTITY_COMP(Material)
     else IF_GET_ENTITY_COMP(RigidBody)
     else IF_GET_ENTITY_COMP(BoxCollider)
     else IF_GET_ENTITY_COMP(SphereCollider)
@@ -318,7 +318,7 @@ namespace Reflection
     else IF_REMOVE_COMP(Tag)
     else IF_REMOVE_COMP(Layer)
     else IF_REMOVE_COMP(Mesh)
-    else IF_REMOVE_COMP(MaterialComponent)
+    else IF_REMOVE_COMP(Material)
     else IF_REMOVE_COMP(RigidBody)
     else IF_REMOVE_COMP(BoxCollider)
     else IF_REMOVE_COMP(SphereCollider)

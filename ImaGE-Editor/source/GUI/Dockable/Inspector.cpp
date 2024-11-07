@@ -57,7 +57,7 @@ namespace GUI {
       { typeid(Component::SphereCollider), ICON_FA_CIRCLE ICON_PADDING },
       { typeid(Component::CapsuleCollider), ICON_FA_CAPSULES ICON_PADDING },
       { typeid(Component::Layer), ICON_FA_LAYER_GROUP ICON_PADDING },
-      { typeid(Component::MaterialComponent), ICON_FA_GEM ICON_PADDING },
+      { typeid(Component::Material), ICON_FA_GEM ICON_PADDING },
       { typeid(Component::Mesh), ICON_FA_CUBE ICON_PADDING },
       { typeid(Component::RigidBody), ICON_FA_CAR ICON_PADDING },
       { typeid(Component::Script), ICON_FA_FILE_CODE ICON_PADDING },
@@ -207,14 +207,14 @@ namespace GUI {
         }
       }
 
-      if (currentEntity.HasComponent<Component::MaterialComponent>()) {
-        rttr::type const materialType{ rttr::type::get<Component::MaterialComponent>() };
+      if (currentEntity.HasComponent<Component::Material>()) {
+        rttr::type const materialType{ rttr::type::get<Component::Material>() };
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(materialType);
 
-        if (MaterialComponentWindow(currentEntity, componentOverriden)) {
+        if (MaterialWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::MaterialComponent>());
+            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Material>());
           }
         }
       }
@@ -414,12 +414,12 @@ namespace GUI {
     return modified;
   }
 
-  bool Inspector::MaterialComponentWindow(ECS::Entity entity, bool highlight) {
-    bool const isOpen{ WindowBegin<Component::MaterialComponent>("Material", highlight) };
+  bool Inspector::MaterialWindow(ECS::Entity entity, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Material>("Material", highlight) };
     bool modified{ false };
 
     if (isOpen) {
-      Component::MaterialComponent& material = entity.GetComponent<Component::MaterialComponent>();
+      Component::Material& material = entity.GetComponent<Component::Material>();
 
       float const inputWidth{ CalcInputWidth(60.f) };
 
@@ -1710,7 +1710,7 @@ namespace GUI {
         DrawAddComponentButton<Component::BoxCollider>("Box Collider");
         DrawAddComponentButton<Component::CapsuleCollider>("Capsule Collider");
         DrawAddComponentButton<Component::Layer>("Layer");
-        DrawAddComponentButton<Component::MaterialComponent>("Material");
+        DrawAddComponentButton<Component::Material>("Material");
         DrawAddComponentButton<Component::Mesh>("Mesh");
         DrawAddComponentButton<Component::RigidBody>("RigidBody");
         DrawAddComponentButton<Component::Script>("Script");

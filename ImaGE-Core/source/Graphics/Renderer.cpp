@@ -5,7 +5,7 @@
 #include "Asset/IGEAssets.h"
 #include "ElementBuffer.h"
 #include "MaterialTable.h"
-#include "Material.h"
+#include "MaterialData.h"
 #include "Mesh.h"
 #pragma region RenderPasses
 #include <Graphics/RenderPass/GeomPass.h>
@@ -163,7 +163,7 @@ namespace Graphics {
 		//Init Materials
 
 		// Create a default material with a default shader and properties
-		std::shared_ptr<Material> defaultMaterial = Material::Create(ShaderLibrary::Get("PBR"));
+		std::shared_ptr<MaterialData> defaultMaterial = MaterialData::Create(ShaderLibrary::Get("PBR"));
 		defaultMaterial->SetAlbedoColor(glm::vec3(1.0f));  // Set default white albedo
 		defaultMaterial->SetMetalness(0.0f);
 		defaultMaterial->SetRoughness(1.0f);
@@ -171,11 +171,11 @@ namespace Graphics {
 		// Add default material to the table (e.g., at index 0)
 		MaterialTable::AddMaterial(defaultMaterial);
 
-		std::shared_ptr<Material> mat1 = Material::Create(ShaderLibrary::Get("PBR"));
+		std::shared_ptr<MaterialData> mat1 = MaterialData::Create(ShaderLibrary::Get("PBR"));
 		mat1->SetAlbedoMap(texguid1);
 		MaterialTable::AddMaterial(mat1);
 
-		std::shared_ptr<Material> mat2 = Material::Create(ShaderLibrary::Get("Unlit")); //@TODO support other shaders like Unlit
+		std::shared_ptr<MaterialData> mat2 = MaterialData::Create(ShaderLibrary::Get("Unlit")); //@TODO support other shaders like Unlit
 		mat2->SetAlbedoMap(texguid);
 		MaterialTable::AddMaterial(mat2);
 		//--Material Init End--//

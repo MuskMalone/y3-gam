@@ -1,18 +1,18 @@
 #include "pch.h"
 #include "MaterialTable.h"
-#include "Material.h"
+#include "MaterialData.h"
 
 namespace Graphics {
-    std::vector<std::shared_ptr<Material>> MaterialTable::mMaterials;
+    std::vector<std::shared_ptr<MaterialData>> MaterialTable::mMaterials;
     // Add a material to the table and return its index
-    uint32_t Graphics::MaterialTable::AddMaterial(std::shared_ptr<Graphics::Material>& material) {
+    uint32_t Graphics::MaterialTable::AddMaterial(std::shared_ptr<Graphics::MaterialData>& material) {
         mMaterials.push_back(material);
         return static_cast<uint32_t>(mMaterials.size() - 1);
     }
 
     // Retrieve material by index
 
-    std::shared_ptr<Material> MaterialTable::GetMaterial(uint32_t index = 0) {
+    std::shared_ptr<MaterialData> MaterialTable::GetMaterial(uint32_t index = 0) {
         return mMaterials[index];
     }
 
@@ -36,7 +36,7 @@ namespace Graphics {
 
         // Start from index 1 to skip the default material
         for (uint32_t i = 1; i < mMaterials.size() && i < 16; ++i) {  // Up to 16 unique textures
-            std::shared_ptr<Material> const& material = mMaterials[i];
+            std::shared_ptr<MaterialData> const& material = mMaterials[i];
 
             // Get the material’s textures
             auto albedoMap = material->GetAlbedoMap();

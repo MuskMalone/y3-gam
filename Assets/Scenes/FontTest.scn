@@ -1,14 +1,91 @@
 {
     "Scene": [
         {
-            "ID": 9,
+            "ID": 3,
             "Parent": null,
             "Child Entities": [],
             "isActive": true,
             "Components": [
                 {
                     "Tag": {
-                        "tag": "MainCamera",
+                        "tag": "Cube",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 5.757999897003174,
+                            "y": 4.521999835968018,
+                            "z": -38.24399948120117
+                        },
+                        "scale": {
+                            "x": 12.069835662841797,
+                            "y": 12.069835662841797,
+                            "z": 12.069835662841797
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 5.757999897003174,
+                            "y": 4.521999835968018,
+                            "z": -38.24399948120117
+                        },
+                        "worldScale": {
+                            "x": 12.069835662841797,
+                            "y": 12.069835662841797,
+                            "z": 12.069835662841797
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "matIdx": 0
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 5365423291267554267
+                        },
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 4,
+            "Parent": null,
+            "Child Entities": [
+                9
+            ],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Entity 4",
                         "isActive": true
                     }
                 },
@@ -44,6 +121,66 @@
                             "x": 1.0,
                             "y": 1.0,
                             "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 9,
+            "Parent": 4,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "MainCamera",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.4700000286102296,
+                            "y": 1.4700000286102296,
+                            "z": 1.4700000286102296
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.4700000286102296,
+                            "y": 1.4700000286102296,
+                            "z": 1.4700000286102296
                         },
                         "worldRot": {
                             "x": 0.0,

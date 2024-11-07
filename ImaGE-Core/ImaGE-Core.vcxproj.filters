@@ -242,7 +242,7 @@
     <ClInclude Include="source\Core\Components\Light.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="source\Core\Components\MaterialComponent.h">
+    <ClInclude Include="source\Core\Components\Material.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Components\Mesh.h">
@@ -559,7 +559,7 @@
     <ClInclude Include="source\Graphics\Framebuffer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="source\Graphics\Material.h">
+    <ClInclude Include="source\Graphics\MaterialData.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\MaterialTable.h">
@@ -863,7 +863,7 @@
     <ClCompile Include="source\Graphics\Framebuffer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\Material.cpp">
+    <ClCompile Include="source\Graphics\MaterialData.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\MaterialTable.cpp">
@@ -969,6 +969,5 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\Core\Components\MaterialComponent.cpp" />
   </ItemGroup>
 </Project>

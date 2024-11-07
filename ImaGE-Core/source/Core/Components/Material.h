@@ -17,13 +17,19 @@ namespace Graphics {
 }
 
 namespace Component {
-    struct MaterialComponent {
-        MaterialComponent();
+    struct Material {
+        Material() = default;
+        Material(std::shared_ptr<Graphics::Material> material) : material{ material } {} // Constructor to set material instance
 
         /*!*********************************************************************
         \brief Resets the material to default values.
         ************************************************************************/
-        void Clear() noexcept;
+
+        inline void Clear() noexcept {
+            material.reset();
+            matIdx = 0;
+        }
+       /* void Clear() noexcept;
 
         const std::string& GetShaderName() const;
         void SetShaderName(const std::string& name);
@@ -62,8 +68,8 @@ namespace Component {
         void SetMetalnessMap(const IGE::Assets::GUID& texture);
 
         IGE::Assets::GUID GetRoughnessMap() const;
-        void SetRoughnessMap(const IGE::Assets::GUID& texture);
-
+        void SetRoughnessMap(const IGE::Assets::GUID& texture);*/
+        std::shared_ptr<Graphics::Material> material;
         uint32_t matIdx = 0;
         std::string shaderName;
         glm::vec3 albedoColor{ 1.0f, 1.0f, 1.0f };
