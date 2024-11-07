@@ -27,7 +27,8 @@ namespace Graphics {
     class MaterialData {
     public:
         MaterialData(std::shared_ptr<Shader> shader)
-            : mShader(std::move(shader)),       // Initialize the shader with the passed-in shared_ptr
+            : mShader(std::move(shader)),
+            mShaderName(""),// Initialize the shader with the passed-in shared_ptr
             mAlbedoColor(1.0f, 1.0f, 1.0f),   // Default white albedo color
             mMetalness(0.0f),                 // Default non-metallic
             mRoughness(0.5f),                 // Default roughness value
@@ -41,6 +42,10 @@ namespace Graphics {
 
         static std::shared_ptr<MaterialData> Create(std::shared_ptr<Shader> shader) {
             return std::make_shared<MaterialData>(shader);
+        }
+
+        static std::shared_ptr<MaterialData> Create(std::string const& shaderName) {
+            return Create(ShaderLibrary::Get(shaderName));
         }
 
         // Shader access
@@ -96,7 +101,7 @@ namespace Graphics {
 
     private:
         std::shared_ptr<Shader> mShader;
-
+        std::string mShaderName;
         glm::vec3 mAlbedoColor;
         float mMetalness;
         float mRoughness;

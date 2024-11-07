@@ -49,6 +49,7 @@ namespace Graphics {
         }
 
         std::cerr << "Warning: Material with GUID " << " not found in MaterialTable.\n"; //@TODO CHANGE THIS TO DEBUGLOGGER
+        Debug::DebugLogger::GetInstance().LogError("Material With GUID not found in MaterialTable");
         return nullptr;
     }
 
@@ -117,6 +118,10 @@ namespace Graphics {
             data.transparency = material->GetTransparency();
             data.tiling = material->GetTiling();
             data.offset = material->GetOffset();
+            data.albedoMap = material->GetAlbedoMap();
+            data.normalMap = material->GetNormalMap();
+            data.metalnessMap = material->GetMetalnessMap();
+            data.roughnessMap = material->GetRoughnessMap();
 
             // Serialize the metadata into the file
             Serialization::Serializer::SerializeAny(data, filename);
@@ -153,7 +158,7 @@ namespace Graphics {
                 material->SetOffset(data.offset);
 
                 // Add the material to the MaterialTable (if it doesn't already exist)
-                AddMaterialByGUID(data.guid);
+                //AddMaterialByGUID(data.guid);
             }
         }
     }

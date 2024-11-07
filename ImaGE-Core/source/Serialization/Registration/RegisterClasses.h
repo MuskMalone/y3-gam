@@ -97,20 +97,6 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("collisionMatrix", &T::collisionMatrix);
   }
 
-  {
-      using T = Graphics::MatData;
-      rttr::registration::class_<T>("MatData")
-          .property("albedoColor", &T::albedoColor)
-          .property("metalness", &T::metalness)
-          .property("roughness", &T::roughness)
-          .property("ao", &T::ao)
-          .property("emission", &T::emission)
-          .property("transparency", &T::transparency)
-          .property("tiling", &T::tiling)
-          .property("offset", &T::offset);
-  }
-
-
   rttr::registration::class_<physx::PxQuat>("PxQuat")
       .constructor<>()(rttr::policy::ctor::as_object)
       .property("x", &physx::PxQuat::x)
@@ -179,6 +165,23 @@ static void rttr_auto_register_reflection_function_(); namespace {
   rttr::registration::class_<Graphics::PostProcessingManager::PostProcessingConfigs>("PostProcessingConfigs")
       .constructor<>()(rttr::policy::ctor::as_object)
       .property("configs", &Graphics::PostProcessingManager::PostProcessingConfigs::mConfigs);
+  /* ------------------ Materials ---------------------*/
+  {
+      using T = Graphics::MatData;
+      rttr::registration::class_<T>("MatData")
+          .property("albedoColor", &T::albedoColor)
+          .property("metalness", &T::metalness)
+          .property("roughness", &T::roughness)
+          .property("ao", &T::ao)
+          .property("emission", &T::emission)
+          .property("transparency", &T::transparency)
+          .property("tiling", &T::tiling)
+          .property("offset", &T::offset)
+          .property("albedoMap", &T::albedoMap)
+          .property("normalMap", &T::normalMap)
+          .property("metalnessMap", &T::metalnessMap)
+          .property("roughnessMap", &T::roughnessMap);
+  }
   /* ------------------- Script ------------------- */
   {
     using T = Reflection::ProxyScript;

@@ -6,7 +6,7 @@
 namespace Graphics {
 
     struct MatData {
-        IGE::Assets::GUID guid;
+
         glm::vec3 albedoColor{ 1.0f, 1.0f, 1.0f };
         float metalness{ 0.0f };
         float roughness{ 0.5f };
@@ -15,8 +15,10 @@ namespace Graphics {
         float transparency{ 1.0f };
         glm::vec2 tiling{ 1.0f, 1.0f };
         glm::vec2 offset{ 0.0f, 0.0f };
-
-        // You can add more fields as needed, like maps for textures, flags, etc.
+        IGE::Assets::GUID albedoMap{};
+        IGE::Assets::GUID normalMap{};
+        IGE::Assets::GUID metalnessMap{};
+        IGE::Assets::GUID roughnessMap{};
     };
 
 
