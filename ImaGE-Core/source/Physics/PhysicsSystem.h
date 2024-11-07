@@ -26,7 +26,7 @@ namespace IGE {
 			void ChangeBoxColliderVar(ECS::Entity entity);
 			void ChangeSphereColliderVar(ECS::Entity entity);
 			void ChangeCapsuleColliderVar(ECS::Entity entity);
-			void Debug(float dt); // to be called within rendersystems geom pass
+			void Debug(); // to be called within rendersystems geom pass
 			void ClearSystem(); //clears all the rigidbodies. 
 			std::unordered_map<void*, physx::PxRigidDynamic*> const& GetRigidBodyIDs() const { return mRigidBodyIDs; }
 		//private:
