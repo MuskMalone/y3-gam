@@ -15,7 +15,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************************/
 
-using Image.Mono.Utils;
+using Image.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,8 +26,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace Image.Mono
-{
   public class InsideB 
   {
     public int INSIDEHERE = 369;
@@ -44,4 +42,4 @@ namespace Image.Mono
     }
   }
 
-}
+

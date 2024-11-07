@@ -36,7 +36,7 @@ using Image.Utils;
     {
       get
       {
-        return InternalCalls.GetRotation(entity.mEntityID); // Push update to C++ side
+        return InternalCalls.GetRotation(entity.mEntityID) ; // Push update to C++ side
       }
       set
       {
@@ -57,7 +57,26 @@ using Image.Utils;
       }
     }
 
-    public Vector3 TransformDirection(Vector3 direction)
+    public Vector3 right
+    {
+      get
+      {
+        return Mathf.QuatMulVec3(InternalCalls.GetRotation(entity.mEntityID),new Vector3(0, 0, 1)); // Push update to C++ side
+      }
+    }
+
+    public Vector3 forward
+    {
+      get
+      {
+        return Mathf.QuatMulVec3(InternalCalls.GetRotation(entity.mEntityID), new Vector3(0, 0, 1)); // Push update to C++ side
+      }
+
+    }
+
+
+
+  public Vector3 TransformDirection(Vector3 direction)
     {
         Quaternion rot = InternalCalls.GetRotation(entity.mEntityID);
         // Convert the direction to world space using the quaternion rotation
@@ -93,6 +112,8 @@ using Image.Utils;
         {
           return InternalCalls.GetTag(entity.mEntityID); // Push update to C++ side
         }
+      }
     }
-    }
-  
+
+
+

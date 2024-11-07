@@ -114,5 +114,12 @@ namespace Image.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static float GetDeltaTime();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void MoveCharacter(uint mEntityID, Vector3 dVec);
+
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static bool IsGrounded(uint mEntityID); 
   }
 }

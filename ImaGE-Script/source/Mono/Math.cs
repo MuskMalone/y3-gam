@@ -219,5 +219,29 @@ namespace Image.Utils
       return (float)(min + (max - min) * random.NextDouble());  // Inclusive of max
     }
 
+    public static Vector3 QuatMulVec3(Quaternion rotation, Vector3 point)
+    {
+      // Extract quaternion components
+      float x = rotation.X * 2.0f;
+      float y = rotation.Y * 2.0f;
+      float z = rotation.Z * 2.0f;
+      float xx = rotation.X * x;
+      float yy = rotation.Y * y;
+      float zz = rotation.Z * z;
+      float xy = rotation.X * y;
+      float xz = rotation.X * z;
+      float yz = rotation.Y * z;
+      float wx = rotation.W * x;
+      float wy = rotation.W * y;
+      float wz = rotation.W * z;
+
+      // Apply rotation to the vector
+      Vector3 result;
+      result.X = (1.0f - (yy + zz)) * point.X + (xy - wz) * point.Y + (xz + wy) * point.Z;
+      result.Y = (xy + wz) * point.X + (1.0f - (xx + zz)) * point.Y + (yz - wx) * point.Z;
+      result.Z = (xz - wy) * point.X + (yz + wx) * point.Y + (1.0f - (xx + yy)) * point.Z;
+      return result;
+    }
+
   }
 }

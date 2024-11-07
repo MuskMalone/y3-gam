@@ -416,7 +416,7 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> const& scriptFieldP
           if (sfi.mScriptField.mFieldName == psi.mScriptField.mFieldName)
           {
             sfi.mData = psi.mData;
-            SetFieldValue<MonoObject*>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
+            SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
           }
         }
         break;

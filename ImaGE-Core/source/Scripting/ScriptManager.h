@@ -308,7 +308,11 @@ namespace Mono
 
 		static void LogCritical(MonoString*);
 
+		static float GetAxis(MonoString*);
 
+		static void MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec);
+
+		static bool IsGrounded(ECS::Entity::EntityID entity);
 
 		/*!**********************************************************************
 		*																																			  *
