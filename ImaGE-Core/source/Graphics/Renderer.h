@@ -28,7 +28,7 @@ namespace Component{
 namespace Graphics {
 	class RenderPass; // Forward declaration
 	
-	class Material; class Mesh;
+	class Mesh;
 
 	struct Statistics {
 		uint32_t drawCalls{};

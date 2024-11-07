@@ -7,6 +7,7 @@
 #include "Asset/IGEAssets.h"
 #include <Graphics/Renderer.h>
 #include <Graphics/RenderPass/ShadowPass.h>
+#include "Graphics/Material.h"
 
 namespace Graphics {
   using EntityXform = std::pair<ECS::Entity, glm::mat4>;
@@ -70,8 +71,8 @@ namespace Graphics {
           }
 
           uint32_t matID = 0;
-          if (entity.HasComponent<Component::Material>()) {
-              auto const& matComponent = entity.GetComponent<Component::Material>();
+          if (entity.HasComponent<Component::MaterialComponent>()) {
+              auto const& matComponent = entity.GetComponent<Component::MaterialComponent>();
               matID = matComponent.matIdx;
           }
           matGroups[matID].emplace_back(entity, xform.worldMtx);

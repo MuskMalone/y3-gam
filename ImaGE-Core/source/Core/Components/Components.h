@@ -8,7 +8,7 @@
 #include "Transform.h"
 #include "Collider.h"
 #include "RigidBody.h"
-#include "Material.h"
+#include "MaterialComponent.h"
 #include "Mesh.h"
 #include "PrefabOverrides.h"
 #include <Reflection/ProxyScript.h>

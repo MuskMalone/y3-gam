@@ -14,7 +14,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "GUIManager.h"
 #include <ImGui/imgui.h>
 #include <Core/Entity.h>
-
+#include "Graphics/Texture.h"
 #pragma region IndivWindowIncludes
 #include "Dockable/AssetBrowser.h"
 #include "Dockable/Console.h"

@@ -19,6 +19,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "GUI/GUIManager.h"
 #include <Graphics/AssetIO/IMSH.h>
 #include <GUI/Helpers/AssetPayload.h>
+#include "Asset/IGEAssets.h"
 
 namespace Helper
 {
