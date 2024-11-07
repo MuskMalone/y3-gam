@@ -248,7 +248,6 @@ namespace GUI
 
   void SceneHierarchy::ProcessInput(ECS::Entity entity) {
 
-    bool dragNDropped{ false };
     if (!mLockControls) {
       if (ImGui::BeginDragDropSource())
       {
@@ -259,7 +258,6 @@ namespace GUI
       }
       if (ImGui::BeginDragDropTarget())
       {
-        dragNDropped = true;
         ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(sDragDropPayload);
         if (drop)
         {
@@ -290,7 +288,7 @@ namespace GUI
     }
     else if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && ImGui::IsItemHovered()) {
       if (GUIManager::GetSelectedEntity() == entity) {
-        if (!dragNDropped) {
+        if (!ImGui::IsMouseDown(ImGuiMouseButton_Left)) {
           sEntityDoubleClicked = true;
         }
       }

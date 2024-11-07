@@ -555,6 +555,20 @@ namespace GUI
       }
       ImGui::TableNextRow();
 
+      // normalize scale checkbox
+      ImGui::AlignTextToFramePadding();
+      NextRowTable("Normalize Scale?");
+      if (ImGui::IsItemHovered()) { elementHover = true; }
+
+      ImGui::Checkbox("##NormalizeScale", &Graphics::AssetIO::IMSH::sNormalizeScale);
+      if (ImGui::IsItemHovered()) { elementHover = true; }
+
+      if (elementHover) {
+        ImGui::SetTooltip("Rescale the mesh to a unit size");
+        elementHover = false;
+      }
+      ImGui::TableNextRow();
+
       // static mesh checkbox
       ImGui::AlignTextToFramePadding();
       NextRowTable("Static Mesh");
