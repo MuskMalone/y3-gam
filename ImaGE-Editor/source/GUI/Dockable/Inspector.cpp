@@ -63,9 +63,9 @@ namespace GUI {
       { typeid(Component::Script), ICON_FA_FILE_CODE ICON_PADDING },
       { typeid(Component::Text), ICON_FA_FONT ICON_PADDING },
       { typeid(Component::Light), ICON_FA_LIGHTBULB ICON_PADDING },
-      { typeid(Component::Canvas), ICON_FA_PAINTBRUSH},
-      { typeid(Component::Image), ICON_FA_IMAGE},
-      { typeid(Component::Camera), ICON_FA_CAMERA}
+      { typeid(Component::Canvas), ICON_FA_PAINTBRUSH ICON_PADDING },
+      { typeid(Component::Image), ICON_FA_IMAGE ICON_PADDING },
+      { typeid(Component::Camera), ICON_FA_CAMERA ICON_PADDING }
     },
     mObjFactory{Reflection::ObjectFactory::GetInstance()},
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
