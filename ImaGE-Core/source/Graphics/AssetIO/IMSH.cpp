@@ -15,6 +15,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
+#include <glm/gtx/transform.hpp>
 
 namespace {
   glm::vec2 ToGLMVec2(aiVector3D const& vec) { return { vec.x, vec.y }; }
@@ -58,12 +59,15 @@ namespace Graphics::AssetIO
       mStatus = false;
       Debug::DebugLogger::GetInstance().LogError("Unable to import model " + file);
       return;
-    }    
+    }
 
     ProcessMeshes(aiScn->mRootNode, aiScn);
 
     if (sRecenterMesh) {
       RecenterMesh();
+    }
+    if (sNormalizeScale) {
+      NormalizeScale();
     }
   }
 
@@ -171,6 +175,36 @@ namespace Graphics::AssetIO
     // map center to { 0, 0, 0 }
     for (Graphics::Vertex& vtx : mVertexBuffer) {
       vtx.position -= center;
+    }
+  }
+
+  void IMSH::NormalizeScale() {
+    glm::vec3 min{ FLT_MAX }, max{ -FLT_MAX };
+
+    // find the min and max AABB
+    for (Graphics::Vertex const& vtx : mVertexBuffer) {
+      min = glm::min(vtx.position, min);
+      max = glm::max(vtx.position, max);
+    }
+
+    glm::vec3 const center{ sRecenterMesh ? glm::vec3() : (min + max) * 0.5f };
+    glm::vec3 const scale{ max - min };
+    float const maxScale{ std::min(scale.x, std::min(scale.y, scale.z)) };
+    glm::mat4 transform{
+      1.f / maxScale, 0.f, 0.f, 0.f,
+      0.f, 1.f / maxScale, 0.f, 0.f,
+      0.f, 0.f, 1.f / maxScale, 0.f,
+      center.x, center.y, center.z, 1.f
+    };
+
+    // if mesh wasn't centered at origin, move it to origin before scaling
+    if (!sRecenterMesh) {
+      transform = transform * glm::translate(glm::identity<glm::mat4>(), -center);
+    }
+
+    // transform all vertices
+    for (Graphics::Vertex& vtx : mVertexBuffer) {
+      vtx.position = transform * glm::vec4(vtx.position, 1.f);
     }
   }
 
