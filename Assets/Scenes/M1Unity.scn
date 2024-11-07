@@ -2,7 +2,7 @@
     "Scene": [
         {
             "ID": 0,
-            "Parent": null,
+            "Parent": 40,
             "Child Entities": [],
             "isActive": true,
             "Components": [
@@ -16,8 +16,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 3.0999999046325685,
-                            "z": 9.399999618530274
+                            "y": 0.5,
+                            "z": 0.0
                         },
                         "scale": {
                             "x": 1.0,
@@ -31,14 +31,14 @@
                             "w": 0.9998458027839661
                         },
                         "eulerAngles": {
-                            "x": 1.7999999523162842,
-                            "y": 0.8999999761581421,
+                            "x": 1.8000000715255738,
+                            "y": 0.9000000357627869,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.0,
-                            "y": 3.0999999046325685,
-                            "z": 9.399999618530274
+                            "x": 7.599999904632568,
+                            "y": 4.0,
+                            "z": -1.7000000476837159
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -62,9 +62,9 @@
                     "Camera": {
                         "projType": "PERSP",
                         "position": {
-                            "x": 0.0,
-                            "y": 3.0999999046325685,
-                            "z": 9.399999618530274
+                            "x": 7.599999904632568,
+                            "y": 4.0,
+                            "z": -1.7000000476837159
                         },
                         "yaw": 0.0,
                         "pitch": 0.0,
@@ -157,6 +157,11 @@
                             "y": 0.0,
                             "z": 0.0
                         },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
                         "rotationOffset": {
                             "x": 0.0,
                             "y": 0.0,
@@ -164,26 +169,6 @@
                             "w": 1.0
                         },
                         "sensor": false
-                    }
-                },
-                {
-                    "RigidBody": {
-                        "velocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "angularVelocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "staticFriction": 0.0,
-                        "dynamicFriction": 0.0,
-                        "restitution": 0.0,
-                        "gravityFactor": 0.0,
-                        "linearDamping": 0.9800000190734863,
-                        "motionType": "KINEMATIC"
                     }
                 }
             ]
@@ -347,6 +332,11 @@
                             "y": 0.0,
                             "z": 0.0
                         },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
                         "rotationOffset": {
                             "x": 0.0,
                             "y": 0.0,
@@ -459,6 +449,11 @@
                             "y": 0.0,
                             "z": 0.0
                         },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
                         "rotationOffset": {
                             "x": 0.0,
                             "y": 0.0,
@@ -567,6 +562,11 @@
                             "z": 0.02500000037252903
                         },
                         "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
                             "x": 0.0,
                             "y": 0.0,
                             "z": 0.0
@@ -747,6 +747,11 @@
                             "y": 0.0,
                             "z": 0.0
                         },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
                         "rotationOffset": {
                             "x": 0.0,
                             "y": 0.0,
@@ -922,6 +927,11 @@
                             "z": 0.05000000074505806
                         },
                         "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
                             "x": 0.0,
                             "y": 0.0,
                             "z": 0.0
@@ -1174,6 +1184,11 @@
                             "y": 0.0,
                             "z": 0.0
                         },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
                         "rotationOffset": {
                             "x": 0.0,
                             "y": 0.0,
@@ -1282,6 +1297,11 @@
                             "z": 0.025999998673796655
                         },
                         "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
                             "x": 0.0,
                             "y": 0.0,
                             "z": 0.0
@@ -1752,6 +1772,157 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 40,
+            "Parent": null,
+            "Child Entities": [
+                0
+            ],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Player",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 7.599999904632568,
+                            "y": 3.5,
+                            "z": -1.7000000476837159
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 7.599999904632568,
+                            "y": 3.5,
+                            "z": -1.7000000476837159
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 10301504183252952431
+                        },
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.5,
+                            "y": 0.5,
+                            "z": 0.5
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "DYNAMIC"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "scriptName": ".PlayerMove",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": -19.6200008392334,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "gravity"
+                                        }
+                                    },
+                                    {
+                                        "data": 3.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "jumpHeight"
+                                        }
+                                    },
+                                    {
+                                        "data": 12.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "speed"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]

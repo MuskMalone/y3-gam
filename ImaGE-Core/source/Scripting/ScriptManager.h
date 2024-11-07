@@ -264,7 +264,10 @@ namespace Mono
 		\param GE::Math::dVec3 PosAdjustment
 			Vector 3 of the new rotation
 		************************************************************************/
-		static void SetRotation(ECS::Entity::EntityID entity, glm::vec3 rotAdjustment);
+		static glm::quat GetRotation(ECS::Entity::EntityID entity);
+		static void SetRotation(ECS::Entity::EntityID entity, glm::quat rotAdjustment);
+
+
 
 		/*!*********************************************************************
 			\brief
@@ -287,15 +290,6 @@ namespace Mono
 		************************************************************************/
 		static glm::vec3 GetWorldScale(ECS::Entity::EntityID entity);
 
-		/*!*********************************************************************
-		\brief
-			Get the rotation of the entity
-		\param GE::ECS::Entity entity
-			ID of the entity
-		\return GE::Math::dVec3
-			Returns a vector 3 of the rotation of the entity
-		************************************************************************/
-		static glm::vec3 GetRotation(ECS::Entity::EntityID entity);
 
 		static MonoString* GetTag(ECS::Entity::EntityID entity);
 
@@ -312,7 +306,10 @@ namespace Mono
 
 		static void MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec);
 
+
 		static bool IsGrounded(ECS::Entity::EntityID entity);
+
+		static float GetDeltaTime();
 
 		/*!**********************************************************************
 		*																																			  *
