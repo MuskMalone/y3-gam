@@ -10,21 +10,22 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
-#include "Viewport.h"
 #include <imgui/imgui.h>
+#include "Viewport.h"
 #include <GUI/Helpers/AssetPayload.h>
-#include "AssetBrowser.h"
+#include <GUI/Helpers/ImGuiHelpers.h>
 #include <Events/EventManager.h>
 #include <FrameRateController/FrameRateController.h>
 #include <Core/Entity.h>
 #include <Core/Components/Mesh.h>
 #include <Core/Components/Transform.h>
+#include <Core/Components/PrefabOverrides.h>
 #include <Core/Systems/TransformSystem/TransformHelpers.h>
-#include <GUI/Helpers/ImGuiHelpers.h>
 #include <Core/EntityManager.h>
 #include <GUI/GUIManager.h>
 #include <Asset/IGEAssets.h>
 #include <Graphics/RenderPass/GeomPass.h>
+#include "Graphics/Renderer.h"
 
 namespace {
   /*!*********************************************************************

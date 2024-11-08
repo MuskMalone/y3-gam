@@ -7,6 +7,7 @@
 #include "Asset/IGEAssets.h"
 #include <Graphics/Renderer.h>
 #include <Graphics/RenderPass/ShadowPass.h>
+#include "Graphics/MaterialData.h"
 
 namespace Graphics {
   using EntityXform = std::pair<ECS::Entity, glm::mat4>;

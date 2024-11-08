@@ -214,7 +214,7 @@ namespace GUI {
         rttr::type const materialType{ rttr::type::get<Component::Material>() };
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(materialType);
 
-        if (MaterialComponentWindow(currentEntity, componentOverriden)) {
+        if (MaterialWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
             prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Material>());
@@ -417,7 +417,7 @@ namespace GUI {
     return modified;
   }
 
-  bool Inspector::MaterialComponentWindow(ECS::Entity entity, bool highlight) {
+  bool Inspector::MaterialWindow(ECS::Entity entity, bool highlight) {
     bool const isOpen{ WindowBegin<Component::Material>("Material", highlight) };
     bool modified{ false };
 

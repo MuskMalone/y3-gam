@@ -20,6 +20,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/AssetIO/IMSH.h>
 #include <GUI/Helpers/AssetPayload.h>
 #include <Scenes/SceneManager.h>
+#include "Asset/IGEAssets.h"
 
 namespace MeshPopup {
   static constexpr float sTableCol1Width = 250.f;

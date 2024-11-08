@@ -23,6 +23,7 @@ constexpr char gMeshOutputDir[] = "..\\Assets\\Models\\";
 constexpr char gMeshFileExt[] = ".imsh";
 constexpr char gFontFileExt[] = ".ttf";
 constexpr char gSpriteFileExt[] = ".dds";
+constexpr char gMaterialDirectory[] = "..\\Assets\\Materials\\";
 //currently my Shaders are hard coded in ShaderLibrary in Shader.h* as cShaderDirectory
 
 // Editor

@@ -571,7 +571,7 @@
     <ClInclude Include="source\Graphics\Framebuffer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="source\Graphics\Material.h">
+    <ClInclude Include="source\Graphics\MaterialData.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\MaterialTable.h">
@@ -739,6 +739,7 @@
     <ClInclude Include="source\pch.h" />
     <ClInclude Include="source\Graphics\RenderPass\ScreenPass.h" />
     <ClInclude Include="source\Core\Components\Canvas.h" />
+    <ClInclude Include="source\Graphics\RenderPass\PostProcessPass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -883,7 +884,7 @@
     <ClCompile Include="source\Graphics\Framebuffer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\Material.cpp">
+    <ClCompile Include="source\Graphics\MaterialData.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\MaterialTable.cpp">
@@ -996,5 +997,7 @@
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
     <ClCompile Include="source\Graphics\RenderPass\ScreenPass.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\PostProcessPass.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\RenderPass.cpp" />
   </ItemGroup>
 </Project>
