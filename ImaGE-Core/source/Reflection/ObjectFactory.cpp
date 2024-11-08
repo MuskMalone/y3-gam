@@ -129,6 +129,11 @@ namespace Reflection
     if (pfbInst.mChildren.empty()) { return; }
 
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
+    // in case this instance is nested under an entity, set its parent too
+    if (pfbInst.mParent != entt::null) {
+      entityMan.SetParentEntity(mNewIDs.contains(pfbInst.mParent) ? mNewIDs.at(pfbInst.mParent) : pfbInst.mParent, remappedID);
+    }
+
     // else recursively call this function for each child
     for (ECS::Entity e : pfbInst.mChildren) {
       TraverseDownInstance(e, idToEntity, prefabInstMap);
@@ -174,7 +179,7 @@ namespace Reflection
           mNewIDs.emplace(id, ent);
         }
 
-        if (instData.mParent == entt::null) {
+        if (instData.mParent == entt::null || !data.contains(instData.mParent)) {
           baseEntities.emplace_back(id); // collect the root entities
         }
 

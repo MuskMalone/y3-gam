@@ -105,7 +105,7 @@ namespace GUI
       if (sTimeElapsed >= sTimeBeforeRename) {
         // after target time, check whether mouse was released
         // to determine if it was a rename operation
-        if (sLMouseReleased) {
+        if (sLMouseReleased && !mEditingPrefab) {
           sEditNameMode = mLockControls = true;
         }
         sTimeElapsed = 0;
