@@ -65,7 +65,7 @@ namespace GUI
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.5f, 0.f, 0.f, 0.7f));
           }
 
-          if (ImGui::Button(ICON_FA_STOP) || Input::InputManager::GetInstance().IsKeyTriggered(KEY_CODE::KEY_P)) {
+          if (ImGui::Button(ICON_FA_STOP) || (Input::InputManager::GetInstance().IsKeyPressed(KEY_CODE::KEY_LEFT_CONTROL) && Input::InputManager::GetInstance().IsKeyPressed(KEY_CODE::KEY_P))) {
             QUEUE_EVENT(Events::LockMouseEvent, false);
             mSceneManager.StopScene();
           }
@@ -97,7 +97,7 @@ namespace GUI
             if (sceneStopped) {
               ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.f, 0.5f, 0.f, 0.7f));
             }
-            if (ImGui::Button(ICON_FA_PLAY) || Input::InputManager::GetInstance().IsKeyTriggered(KEY_CODE::KEY_L)) {
+            if (ImGui::Button(ICON_FA_PLAY) || (Input::InputManager::GetInstance().IsKeyPressed(KEY_CODE::KEY_LEFT_CONTROL) && Input::InputManager::GetInstance().IsKeyPressed(KEY_CODE::KEY_L))) {
               QUEUE_EVENT(Events::LockMouseEvent,true);
               mSceneManager.PlayScene();
             }
