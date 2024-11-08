@@ -71,6 +71,8 @@ namespace IGE {
 		}
 
 		void PhysicsSystem::Update() {
+
+
 			if (Scenes::SceneManager::GetInstance().GetSceneState() != Scenes::SceneState::PLAYING) {
 				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Transform>() };
 				for (auto entity : rbsystem) {
@@ -120,13 +122,13 @@ namespace IGE {
 				}
 			}
 			else {
+
 				//mPhysicsSystem.Update(gDeltaTime, 1, &mTempAllocator, &mJobSystem);
 					// Simulate one time step (1/60 second)
 				mScene->simulate(gTimeStep);
 
 				// Wait for the simulation to complete
 				mScene->fetchResults(true);
-
 				//i only need to fetch rigidbodies as they are the only ones that can move
 				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::RigidBody, Component::Transform>() };
 				for (auto entity : rbsystem) {
@@ -498,6 +500,23 @@ namespace IGE {
 			if (Input::InputManager::GetInstance().IsKeyHeld(KEY_CODE::KEY_LEFT_CONTROL) &&
 				Input::InputManager::GetInstance().IsKeyTriggered(KEY_CODE::KEY_D)) drawDebug = !drawDebug;
 			if (!drawDebug) return;
+
+			{//test
+				static glm::vec3 origin{0, 10, 0};
+				static glm::vec3 end{0, 0, 0};
+				RaycastHit hit{};
+
+				if (RayCastSingular(origin, end, hit)) {
+					Debug::DebugLogger::GetInstance().LogInfo(hit.entity.GetComponent<Component::Tag>().tag);
+					Graphics::Renderer::DrawLine(hit.position, hit.position + hit.normal * 2.f, { 1,0,0, 1 });
+					Graphics::Renderer::DrawLine(origin, origin + glm::normalize(end-origin) * hit.distance, {0,0, 1, 1});
+					Graphics::Renderer::DrawLine(origin + glm::normalize(end - origin) * hit.distance, end, { 0, 1, 0, 1 });
+				}
+				else {
+					Graphics::Renderer::DrawLine(origin, end, { 0, 1, 0, 1 });
+				}
+			}
+
 			auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::BoxCollider>() };
 			for (auto entity : rbsystem) {
 				auto& collider{ rbsystem.get<Component::BoxCollider>(entity) };
@@ -538,6 +557,23 @@ namespace IGE {
 			}
 			mRigidBodyIDs.clear();
 			mRigidBodyToEntity.clear();
+		}
+
+		//assume direction is normalized
+		bool PhysicsSystem::RayCastSingular(glm::vec3 const& origin, glm::vec3 const& end, RaycastHit& result)
+		{
+			physx::PxRaycastBuffer hitBuffer{};
+			auto dir{ glm::normalize(end - origin) };
+			auto mag{ glm::distance(origin, end) };
+			bool hit{ mScene->raycast(ToPxVec3(origin), ToPxVec3(dir), mag, hitBuffer) };
+			if (hit) {
+				result.entity = mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.block.actor));
+				result.distance = hitBuffer.block.distance;
+				result.normal = ToGLMVec3(hitBuffer.block.normal);
+				result.position = ToGLMVec3(hitBuffer.block.position);
+				return true;
+			}
+			return false;
 		}
 
 

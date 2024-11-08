@@ -7,7 +7,12 @@
 namespace IGE {
 	namespace Physics {
 		const float gDeltaTime = 1.f / 60.f;
-
+		struct RaycastHit {
+			ECS::Entity entity;
+			glm::vec3 position;
+			glm::vec3 normal;
+			float distance;
+		};
 		class PhysicsSystem : public Systems::System {
 		public:
 			static std::shared_ptr<IGE::Physics::PhysicsSystem> GetInstance();
@@ -29,9 +34,12 @@ namespace IGE {
 			void Debug(); // to be called within rendersystems geom pass
 			void ClearSystem(); //clears all the rigidbodies. 
 			std::unordered_map<void*, physx::PxRigidDynamic*> const& GetRigidBodyIDs() const { return mRigidBodyIDs; }
-			void RayCast(glm::vec3 const& start, glm::vec3 const& end) {
-				
-			}
+
+			//returns the first object hit
+			bool RayCastSingular(
+				glm::vec3 const& origin, glm::vec3 const& end,
+				RaycastHit& result
+			);
 
 		//private:
 		//	const uint32_t cMaxBodies = 65536;
