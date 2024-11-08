@@ -26,9 +26,10 @@ namespace Graphics {
 
     class MaterialData {
     public:
-        MaterialData(std::shared_ptr<Shader> shader)
+        MaterialData(std::shared_ptr<Shader> shader, std::string const& shaderName, std::string const& matName = "unknown")
             : mShader(std::move(shader)),
-            mShaderName(""),// Initialize the shader with the passed-in shared_ptr
+            mName(matName),
+            mShaderName(shaderName),// Initialize the shader with the passed-in shared_ptr
             mAlbedoColor(1.0f, 1.0f, 1.0f),   // Default white albedo color
             mMetalness(0.0f),                 // Default non-metallic
             mRoughness(0.5f),                 // Default roughness value
@@ -40,18 +41,24 @@ namespace Graphics {
             mOffset(0.0f, 0.0f)               // Default offset
         {}
 
-        static std::shared_ptr<MaterialData> Create(std::shared_ptr<Shader> shader) {
-            return std::make_shared<MaterialData>(shader);
+        static std::shared_ptr<MaterialData> Create(std::shared_ptr<Shader> shader, std::string const& shaderName, std::string const& matName ="unknown") {
+            return std::make_shared<MaterialData>(shader, shaderName, matName);
         }
 
-        static std::shared_ptr<MaterialData> Create(std::string const& shaderName) {
-            return Create(ShaderLibrary::Get(shaderName));
+        static std::shared_ptr<MaterialData> Create(std::string const& shaderName, std::string const& matName = "unknown") {
+            return Create(ShaderLibrary::Get(shaderName), shaderName, matName);
         }
 
         // Shader access
         inline std::shared_ptr<Shader> GetShader() const { return mShader; }
 
         // Property Getters and Setters
+        std::string const& GetName() { return mName; };
+        void SetName(std::string const& name) { mName = name; }
+
+        std::string const& GetShaderName() { return mShaderName; }
+        void SetShaderName(std::string const& name) {mShaderName = name ;}
+
         glm::vec3 GetAlbedoColor() const { return mAlbedoColor; }
         void SetAlbedoColor(const glm::vec3& color) { mAlbedoColor = color; }
 
@@ -101,6 +108,7 @@ namespace Graphics {
 
     private:
         std::shared_ptr<Shader> mShader;
+        std::string mName;
         std::string mShaderName;
         glm::vec3 mAlbedoColor;
         float mMetalness;

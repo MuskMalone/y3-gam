@@ -6,7 +6,8 @@
 namespace Graphics {
 
     struct MatData {
-
+        std::string name;
+        std::string shader;
         glm::vec3 albedoColor{ 1.0f, 1.0f, 1.0f };
         float metalness{ 0.0f };
         float roughness{ 0.5f };
@@ -40,7 +41,7 @@ namespace Graphics {
         static void ApplyMaterialTextures(std::shared_ptr<Graphics::Shader>& shader);
 
         static void SaveMaterials();
-        static void LoadMaterials();
+        static std::shared_ptr<MaterialData> LoadMaterial(std::string const& fp);
 
         static void ClearMaterials();
 
