@@ -168,7 +168,7 @@ namespace IGE {
       60.0f,                         // FOV
       16.0f / 9.0f,                  // Aspect Ratio
       0.1f,                          // Near Clip
-      100.0f                         // Far Clip
+      1500.0f                         // Far Clip
     );
 }
 
