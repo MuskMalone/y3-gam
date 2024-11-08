@@ -82,24 +82,27 @@ namespace Graphics::AssetIO
     aiMatrix4x4 const transMtx{ parentMtx * node->mTransformation };
 
     // now add the submeshes
-    unsigned const offset = mVertexBuffer.size();
+    unsigned const vtxOffset{ static_cast<unsigned>(mVertexBuffer.size()) }, idxOffset{ static_cast<unsigned>(mIndices.size()) };
     for (unsigned i{}; i < node->mNumMeshes; ++i) {
       unsigned const meshIdx{ node->mMeshes[i] };
       aiMesh const* mesh{ scene->mMeshes[meshIdx] };
 
       AddVertices(mVertexBuffer, mesh, transMtx);
-      AddIndices(mIndices, mesh, offset);
+      AddIndices(mIndices, mesh, vtxOffset);
 
       //if (meshIdx < scene->mNumMaterials) {
       //  mMatValues.emplace_back(GetMaterial(scene->mMaterials[meshIdx]));
       //}
       
+      // add a submesh entry if needed
       if (!mIsStatic) {
-        uint32_t const vtxOffset{ static_cast<uint32_t>(mVertexBuffer.size()) }, idxOffset{ static_cast<uint32_t>(mIndices.size()) };
-        mSubmeshData.emplace_back(vtxOffset, idxOffset, mesh->mNumVertices, mIndices.size() - idxOffset, 0);
+        mSubmeshData.emplace_back(vtxOffset, idxOffset, mesh->mNumVertices, mIndices.size() - idxOffset);
       }
     }
 
+    if (!mIsStatic) {
+      mSubmeshData.reserve(mSubmeshData.size() + node->mNumChildren);
+    }
     for (unsigned i{}; i < node->mNumChildren; ++i) {
       ProcessSubmeshes(node->mChildren[i], scene, transMtx);
     }
@@ -117,9 +120,16 @@ namespace Graphics::AssetIO
       //if (scene->HasMaterials()) {
       //  mMatValues.emplace_back(GetMaterial(scene->mMaterials[meshIdx]));
       //}
+
+      // since the first mesh is also rendered as a submesh
+      if (!mIsStatic) {
+        mSubmeshData.emplace_back(0, 0, mesh->mNumVertices, mIndices.size());
+      }
     }
 
-    mSubmeshData.reserve(node->mNumChildren);
+    if (!mIsStatic) {
+      mSubmeshData.reserve(node->mNumChildren);
+    }
     for (unsigned i{}; i < node->mNumChildren; ++i) {
       ProcessSubmeshes(node->mChildren[i], scene, node->mTransformation);
     }
@@ -149,9 +159,8 @@ namespace Graphics::AssetIO
     if (!mIsStatic) {
       submeshes.reserve(mSubmeshData.size());
       for (auto const& data : mSubmeshData) {
-        auto beginIter{ mIndices.begin() + data.baseIdx };
-        submeshes.emplace_back(data.baseVtx, data.baseIdx, data.vtxCount, data.idxCount, data.materialIdx,
-          glm::mat4(1.f), std::vector<uint32_t>(beginIter, beginIter + data.idxCount));
+        submeshes.emplace_back(data.baseVtx, data.baseIdx, data.vtxCount, data.idxCount,
+          0, glm::identity<glm::mat4>(), std::vector<uint32_t>());
       }
     }
 

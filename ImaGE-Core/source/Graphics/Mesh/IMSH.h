@@ -66,7 +66,7 @@ namespace Graphics::AssetIO
     MeshSource ToMeshSource(std::shared_ptr<VertexArray> vao);
 
     // this is a workaround to not being able to pass extra flags during AssetManager import
-    static inline bool sStaticMeshConversion = true;
+    static inline bool sStaticMeshConversion = false;
     static inline bool sRecenterMesh = true;
     static inline bool sNormalizeScale = true;
 
@@ -84,10 +84,10 @@ namespace Graphics::AssetIO
     struct SubmeshData
     {
       SubmeshData() = default;
-      SubmeshData(uint32_t _baseVtx, uint32_t _baseIdx, uint32_t _vtxCount, uint32_t _idxCount, uint32_t _materialIdx)
-        : baseVtx{ _baseVtx }, baseIdx{ _baseIdx }, vtxCount{ _vtxCount }, idxCount{ _idxCount }, materialIdx{ _materialIdx } {}
+      SubmeshData(uint32_t _baseVtx, uint32_t _baseIdx, uint32_t _vtxCount, uint32_t _idxCount)
+        : baseVtx{ _baseVtx }, baseIdx{ _baseIdx }, vtxCount{ _vtxCount }, idxCount{ _idxCount } {}
 
-      uint32_t baseVtx, baseIdx, vtxCount, idxCount, materialIdx;
+      uint32_t baseVtx, baseIdx, vtxCount, idxCount;
     };
 
     std::vector<Graphics::Vertex> mVertexBuffer;
