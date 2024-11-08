@@ -318,7 +318,8 @@ namespace GUI
     if (ImGui::BeginPopup("HierarchyOptions"))
     {
       if (ImGui::Selectable("Create Entity")) {
-        CreateNewEntity();
+        ECS::Entity const newEntity{ CreateNewEntity() };
+        GUIManager::SetSelectedEntity(newEntity);
         modified = true;
       }
 
@@ -341,8 +342,9 @@ namespace GUI
     if (ImGui::BeginPopup("EntityOptions"))
     {
       if (ImGui::Selectable("Create Entity")) {
-        ECS::Entity newEntity{ CreateNewEntity() };
+        ECS::Entity const newEntity{ CreateNewEntity() };
         mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
+        GUIManager::SetSelectedEntity(newEntity);
         modified = true;
       }
 
