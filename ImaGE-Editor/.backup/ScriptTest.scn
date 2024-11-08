@@ -193,26 +193,6 @@
             ]
         },
         {
-            "ID": 2,
-            "Parent": null,
-            "Child Entities": [
-                4
-            ],
-            "Position": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "Prefab": {
-                "GUID": {
-                    "ID": 2518563132736436313
-                },
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 0
-            }
-        },
-        {
             "ID": 3,
             "Parent": null,
             "Child Entities": [],
@@ -227,7 +207,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
+                            "x": -4.503484725952148,
                             "y": 0.0,
                             "z": 0.0
                         },
@@ -248,7 +228,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.0,
+                            "x": -4.503484725952148,
                             "y": 0.0,
                             "z": 0.0
                         },
@@ -274,7 +254,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12235009791149974469
+                            "ID": 2883418631442307777
                         },
                         "isCustomMesh": false,
                         "castShadows": true,
@@ -282,47 +262,6 @@
                     }
                 }
             ]
-        },
-        {
-            "ID": 4,
-            "Parent": 2,
-            "Child Entities": [
-                5
-            ],
-            "Prefab": {
-                "GUID": {
-                    "ID": 2518563132736436313
-                },
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 1
-            }
-        },
-        {
-            "ID": 5,
-            "Parent": 4,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 2518563132736436313
-                },
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 2
-            }
-        },
-        {
-            "ID": 6,
-            "Parent": null,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 2518563132736436313
-                },
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 3
-            }
         }
     ],
     "Layers": {

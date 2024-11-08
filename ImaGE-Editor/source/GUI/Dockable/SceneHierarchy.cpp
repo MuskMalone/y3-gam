@@ -358,13 +358,12 @@ namespace GUI
         }
       }
 
-      // @TODO: need a way to deep copy components
-      //ImGui::BeginDisabled();
-      //if (ImGui::Selectable("Duplicate")) {
-      //  //mEntityManager.CopyEntity(mRightClickedEntity);
-      //  Reflection::ObjectFactory::GetInstance().CloneObject(mRightClickedEntity);
-      //}
-      //ImGui::EndDisabled();
+      if (ImGui::Selectable("Duplicate")) {
+        ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
+        ECS::Entity newEntity{ Reflection::ObjectFactory::GetInstance().CloneObject(mRightClickedEntity,
+          em.HasParent(mRightClickedEntity) ? em.GetParentEntity(mRightClickedEntity) : ECS::Entity()) };
+        GUIManager::SetSelectedEntity(newEntity);
+      }
 
       if (mEditingPrefab) { ImGui::BeginDisabled(); }
       if (ImGui::Selectable("Save as Prefab")) {

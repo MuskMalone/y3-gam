@@ -86,17 +86,29 @@ namespace Reflection
     return ret;
   }
 
-  void ObjectFactory::CloneObject(ECS::Entity const& entity, ECS::Entity const& parent) const
+  ECS::Entity ObjectFactory::CloneObject(ECS::Entity const& entity, ECS::Entity const& parent) const
   {
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
 
-    std::string const& name{ entity.GetComponent<Component::Tag>().tag };
-    ECS::Entity newEntity{ entityMan.CreateEntityWithTag(name + " (Copy)") };
+    ECS::Entity newEntity{ entityMan.CreateEntity() };
     newEntity.SetIsActive(entity.IsActive());
 
-    std::vector<rttr::variant> const components{ GetEntityComponents(entity) };
+    //std::vector<rttr::variant> const components{ GetEntityComponents(entity) };
+    std::vector<rttr::variant> components{};
+    components.reserve(3);
+
+    for (rttr::type const& type : Reflection::gComponentTypes) {
+      // we're not handling copying of scripts now
+      // @TODO: Allow material when circular includes are fixed
+      if (type == GET_RTTR_TYPE(Component::Script)
+          || type == GET_RTTR_TYPE(Component::Material)) { continue; }
+
+      auto compVar{ GetEntityComponent(entity, type) };
+      if (compVar) { components.emplace_back(std::move(compVar)); }
+    }
 
     AddComponentsToEntity(newEntity, components);
+    newEntity.GetComponent<Component::Tag>().tag += " (Copy)";
 
     if (entity.HasComponent<Component::PrefabOverrides>()) {
       newEntity.EmplaceComponent<Component::PrefabOverrides>(entity.GetComponent<Component::PrefabOverrides>());
@@ -111,6 +123,8 @@ namespace Reflection
         CloneObject(child, newEntity);  // recursively clone all children
       }
     }
+
+    return newEntity;
   }
 
   void ObjectFactory::TraverseDownInstance(ECS::Entity base, std::unordered_map<Prefabs::SubDataId, ECS::Entity>& idToEntity,
@@ -329,33 +343,33 @@ namespace Reflection
   void ObjectFactory::RemoveComponentFromEntity(ECS::Entity entity, rttr::type compType) const
   {
     UNREFERENCED_PARAMETER(entity); UNREFERENCED_PARAMETER(compType);
-    //// get underlying type if it's wrapped in a pointer
-    //compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
+    ////// get underlying type if it's wrapped in a pointer
+    ////compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
 
-    IF_REMOVE_COMP(Transform)
-    else IF_REMOVE_COMP(Tag)
-    else IF_REMOVE_COMP(Layer)
-    else IF_REMOVE_COMP(Mesh)
-    else IF_REMOVE_COMP(Material)
-    else IF_REMOVE_COMP(RigidBody)
-    else IF_REMOVE_COMP(BoxCollider)
-    else IF_REMOVE_COMP(SphereCollider)
-    else IF_REMOVE_COMP(CapsuleCollider)
-    else IF_REMOVE_COMP(Script)
-    else IF_REMOVE_COMP(Text)
-    else IF_REMOVE_COMP(Light)
-    else IF_REMOVE_COMP(AudioListener)
-    else IF_REMOVE_COMP(AudioSource)
-    else IF_REMOVE_COMP(Canvas)
-    else IF_REMOVE_COMP(Image)
-    else IF_REMOVE_COMP(Camera)
-    else
-    {
-      std::ostringstream oss{};
-      oss << "Trying to remove unknown component type: " << compType.get_name().to_string() << " to entity " << entity << " | Update ObjectFactory::RemoveComponentFromEntity";
-      oss << " | Update ObjectFactory::RemoveComponentFromEntity";
-      Debug::DebugLogger::GetInstance().LogError(oss.str());
-    }
+    //IF_REMOVE_COMP(Transform)
+    //else IF_REMOVE_COMP(Tag)
+    //else IF_REMOVE_COMP(Layer)
+    //else IF_REMOVE_COMP(Mesh)
+    //else IF_REMOVE_COMP(Material)
+    //else IF_REMOVE_COMP(RigidBody)
+    //else IF_REMOVE_COMP(BoxCollider)
+    //else IF_REMOVE_COMP(SphereCollider)
+    //else IF_REMOVE_COMP(CapsuleCollider)
+    //else IF_REMOVE_COMP(Script)
+    //else IF_REMOVE_COMP(Text)
+    //else IF_REMOVE_COMP(Light)
+    //else IF_REMOVE_COMP(AudioListener)
+    //else IF_REMOVE_COMP(AudioSource)
+    //else IF_REMOVE_COMP(Canvas)
+    //else IF_REMOVE_COMP(Image)
+    //else IF_REMOVE_COMP(Camera)
+    //else
+    //{
+    //  std::ostringstream oss{};
+    //  oss << "Trying to remove unknown component type: " << compType.get_name().to_string() << " to entity " << entity << " | Update ObjectFactory::RemoveComponentFromEntity";
+    //  oss << " | Update ObjectFactory::RemoveComponentFromEntity";
+    //  Debug::DebugLogger::GetInstance().LogError(oss.str());
+    //}
   }
 
 } // namespace Reflection
