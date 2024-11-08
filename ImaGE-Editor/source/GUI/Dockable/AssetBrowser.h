@@ -30,16 +30,9 @@ namespace GUI
     std::filesystem::path mCurrentDir, mRightClickedDir; 
     std::filesystem::path mSelectedAsset;
     bool mDirMenuPopup, mAssetMenuPopup;
-    bool mDisableSceneChange, mDisablePrefabSpawn;
 
     static constexpr float sMaxAssetSize = 100.f;
     static inline constexpr char sMeshPopupTitle[] = "Mesh Import Config";
-
-    /*!*********************************************************************
-    \brief
-      Disables certain menu options based on the current scene state
-    ************************************************************************/
-    EVENT_CALLBACK_DECL(SceneStateChanged);
 
     /*!*********************************************************************
     \brief

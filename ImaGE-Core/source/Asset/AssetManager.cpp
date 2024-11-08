@@ -43,7 +43,7 @@ namespace IGE {
 				}
 			}
 		}
-		std::string AssetManager::CreateProjectFile()
+		std::string AssetManager::CreateProjectFile() const
 		{
 			std::string const out{ cAssetProjectSettingsPath + cSettingsFileName };
 
@@ -91,6 +91,10 @@ namespace IGE {
 
 		AssetManager::~AssetManager()
 		{
+			
+		}
+
+		void AssetManager::SaveMetadata() const {
 			auto fp{ CreateProjectFile() }; // get the project file if exists
 			Serialization::Serializer::SerializeAny(mMetadata, fp);
 		}
