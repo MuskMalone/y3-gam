@@ -80,6 +80,38 @@ namespace GUI
       bool const checkInput{ mIsDragging || mIsPanning || sMovingToEntity };
       if ((ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) || checkInput) {
           ProcessCameraInputs();
+
+          if (!UpdateGuizmos()) {
+            // object picking
+            if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
+              ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
+
+              // check if clicking outside viewport
+              if (!(offset.x < 0 || offset.x > vpSize.x || offset.y < 0 || offset.y > vpSize.y)) {
+
+                auto const& geomPass{ Graphics::Renderer::GetPass<Graphics::GeomPass>() };
+                auto const& pickFb{ geomPass->GetTargetFramebuffer() };
+                Graphics::FramebufferSpec const& fbSpec{ pickFb->GetFramebufferSpec() };
+
+                pickFb->Bind();
+                int const entityId{ pickFb->ReadPixel(1,
+                  static_cast<int>(offset.x / vpSize.x * static_cast<float>(fbSpec.width)),
+                  static_cast<int>((vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height))) };
+                pickFb->Unbind();
+
+                if (entityId > 0) {
+                  ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
+                    root{ GetRootEntity(selected) };
+                  sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
+                  GUIManager::SetSelectedEntity(sPrevSelectedEntity);
+                }
+                else {
+                  sPrevSelectedEntity = {};
+                  GUIManager::SetSelectedEntity({});
+                }
+              }
+            }
+          }
       }
       // auto focus window when middle or right-clicked upon
       else if (ImGui::IsWindowHovered() && (ImGui::IsMouseClicked(ImGuiMouseButton_Right) || ImGui::IsMouseClicked(ImGuiMouseButton_Middle))) {
@@ -95,38 +127,6 @@ namespace GUI
       );
 
       ReceivePayload();
-
-      if (!UpdateGuizmos()) {
-          // object picking
-          if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
-              ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
-
-              // check if clicking outside viewport
-              if (!(offset.x < 0 || offset.x > vpSize.x || offset.y < 0 || offset.y > vpSize.y)) {
-                  
-                  auto const& geomPass{ Graphics::Renderer::GetPass<Graphics::GeomPass>() };
-                  auto const& pickFb { geomPass->GetTargetFramebuffer() };
-                  Graphics::FramebufferSpec const& fbSpec{ pickFb->GetFramebufferSpec() };
-
-                  pickFb->Bind();
-                  int const entityId{ pickFb->ReadPixel(1,
-                    static_cast<int>(offset.x / vpSize.x * static_cast<float>(fbSpec.width)),
-                    static_cast<int>((vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height))) };
-                  pickFb->Unbind();
-
-                  if (entityId > 0) {
-                      ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
-                          root{ GetRootEntity(selected) };
-                      sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
-                      GUIManager::SetSelectedEntity(sPrevSelectedEntity);
-                  }
-                  else {
-                      sPrevSelectedEntity = {};
-                      GUIManager::SetSelectedEntity({});
-                  }
-              }
-          }
-      }
 
       ImGui::End();
   }
@@ -339,6 +339,7 @@ namespace GUI
           IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
           //auto const& mesh{ IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(meshSrc)->mMeshSource };
           newEntity.EmplaceComponent<Component::Mesh>(meshSrc, assetPayload.GetFileName(), true);
+          GUIManager::SetSelectedEntity(newEntity);
           break;
         }
         case AssetPayload::SPRITE:
