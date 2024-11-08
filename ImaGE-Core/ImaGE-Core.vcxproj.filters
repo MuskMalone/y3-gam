@@ -13,6 +13,9 @@
     <Filter Include="Asset\Assetables\Font">
       <UniqueIdentifier>{C1EC4985-2D59-0580-F64C-9DDD627827E8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Asset\Assetables\Material">
+      <UniqueIdentifier>{D9B7510B-457A-8595-8E2A-1422FA2B5E73}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Asset\Assetables\Mesh">
       <UniqueIdentifier>{77994D85-E305-0980-ACF9-A0DD18252BE8}</UniqueIdentifier>
     </Filter>
@@ -136,14 +139,11 @@
     <Filter Include="Graphics">
       <UniqueIdentifier>{1653CE33-0220-293F-2B39-17E717655ECD}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\AssetIO">
-      <UniqueIdentifier>{1D275E7D-0920-7DCF-3252-62541EAA5CDB}</UniqueIdentifier>
+    <Filter Include="Graphics\Mesh">
+      <UniqueIdentifier>{92268A97-FEE6-05CE-C721-4F4B33A14AAA}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\PostProcessing">
       <UniqueIdentifier>{48EFA335-B426-ECCC-BD30-50F029E712C6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\PostProcessing\Shaders">
-      <UniqueIdentifier>{21DC0668-8DBF-15A8-96C2-43E40225DCF8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\RenderPass">
       <UniqueIdentifier>{7C819DD9-E8E2-7AE7-7150-C199DDB0B1A6}</UniqueIdentifier>
@@ -198,6 +198,9 @@
     </ClInclude>
     <ClInclude Include="source\Asset\Assetables\Font\FontAsset.h">
       <Filter>Asset\Assetables\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Asset\Assetables\Material\MaterialAsset.h">
+      <Filter>Asset\Assetables\Material</Filter>
     </ClInclude>
     <ClInclude Include="source\Asset\Assetables\Mesh\ModelAsset.h">
       <Filter>Asset\Assetables\Mesh</Filter>
@@ -553,9 +556,6 @@
       <Filter>FrameRateController</Filter>
     </ClInclude>
     <ClInclude Include="source\Globals.h" />
-    <ClInclude Include="source\Graphics\Mesh\IMSH.h">
-      <Filter>Graphics\AssetIO</Filter>
-    </ClInclude>
     <ClInclude Include="source\Graphics\CameraManager.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -577,20 +577,29 @@
     <ClInclude Include="source\Graphics\MaterialTable.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="source\Graphics\Mesh\IMSH.h">
+      <Filter>Graphics\Mesh</Filter>
+    </ClInclude>
     <ClInclude Include="source\Graphics\Mesh\Mesh.h">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\Mesh\MeshFactory.h">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Graphics\Mesh\MeshMatValues.h">
+      <Filter>Graphics\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\Mesh\MeshSource.h">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Graphics\Mesh\Submesh.h">
+      <Filter>Graphics\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\Pipeline.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\PostProcessing\PostProcessingManager.h">
-      <Filter>Graphics\PostProcessing\Shaders</Filter>
+      <Filter>Graphics\PostProcessing</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderAPI.h">
       <Filter>Graphics</Filter>
@@ -599,6 +608,9 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderPass\GeomPass.h">
+      <Filter>Graphics\RenderPass</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Graphics\RenderPass\PostProcessPass.h">
       <Filter>Graphics\RenderPass</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderPass\RenderPass.h">
@@ -623,9 +635,6 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\Shader.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Graphics\Mesh\Submesh.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\Texture.h">
@@ -727,17 +736,10 @@
     <ClInclude Include="source\Serialization\Serializer.h">
       <Filter>Serialization</Filter>
     </ClInclude>
-    <ClInclude Include="source\Singleton\Singleton.h">
-      <Filter>Singleton</Filter>
-    </ClInclude>
     <ClInclude Include="source\Singleton\ThreadSafeSingleton.h">
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Graphics\RenderPass\ScreenPass.h" />
-    <ClInclude Include="source\Core\Components\Canvas.h" />
-    <ClInclude Include="source\Graphics\RenderPass\PostProcessPass.h" />
-    <ClInclude Include="source\Asset\Assetables\Material\MaterialAsset.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -752,6 +754,9 @@
     </ClCompile>
     <ClCompile Include="source\Asset\Assetables\Font\FontAsset.cpp">
       <Filter>Asset\Assetables\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Asset\Assetables\Material\MaterialAsset.cpp">
+      <Filter>Asset\Assetables\Material</Filter>
     </ClCompile>
     <ClCompile Include="source\Asset\Assetables\Mesh\ModelAsset.cpp">
       <Filter>Asset\Assetables\Mesh</Filter>
@@ -775,6 +780,9 @@
       <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Components\AudioSource.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Components\RigidBody.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Components\Transform.cpp">
@@ -867,9 +875,6 @@
     <ClCompile Include="source\FrameRateController\FrameRateController.cpp">
       <Filter>FrameRateController</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\Mesh\IMSH.cpp">
-      <Filter>Graphics\AssetIO</Filter>
-    </ClCompile>
     <ClCompile Include="source\Graphics\CameraManager.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
@@ -888,31 +893,34 @@
     <ClCompile Include="source\Graphics\MaterialTable.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="source\Graphics\Mesh\IMSH.cpp">
+      <Filter>Graphics\Mesh</Filter>
+    </ClCompile>
     <ClCompile Include="source\Graphics\Mesh\Mesh.cpp">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\Mesh\MeshFactory.cpp">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\Mesh\MeshSource.cpp">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\Pipeline.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\PostProcessing\PostProcessingManager.cpp">
-      <Filter>Graphics\PostProcessing\Shaders</Filter>
+      <Filter>Graphics\PostProcessing</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\RenderAPI.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\RenderPass\UIPass.cpp">
-      <Filter>Graphics\RenderPass</Filter>
-    </ClCompile>
     <ClCompile Include="source\Graphics\RenderPass\GeomPass.cpp">
       <Filter>Graphics\RenderPass</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\RenderPass\ScreenPass.cpp">
+    <ClCompile Include="source\Graphics\RenderPass\PostProcessPass.cpp">
+      <Filter>Graphics\RenderPass</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Graphics\RenderPass\RenderPass.cpp">
       <Filter>Graphics\RenderPass</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\RenderPass\ScreenPass.cpp">
@@ -991,9 +999,5 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\Graphics\RenderPass\ScreenPass.cpp" />
-    <ClCompile Include="source\Graphics\RenderPass\PostProcessPass.cpp" />
-    <ClCompile Include="source\Graphics\RenderPass\RenderPass.cpp" />
-    <ClCompile Include="source\Asset\Assetables\Material\MaterialAsset.cpp" />
   </ItemGroup>
 </Project>
