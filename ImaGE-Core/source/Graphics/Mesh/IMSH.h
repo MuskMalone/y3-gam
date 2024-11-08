@@ -25,9 +25,9 @@ namespace Graphics::AssetIO
   struct MeshImportFlags
   {
     MeshImportFlags() : boneWeights{ false }, animations{ false },
-      lights{ false }, cameras{ false }, materials{ true } {}
+      lights{ false }, cameras{ false }, materials{ false } {}
 
-    inline bool IsDefault() const noexcept { return boneWeights || animations || lights || cameras; }
+    inline bool IsDefault() const noexcept { return !(boneWeights || animations || lights || cameras || materials); }
     int GetFlags() const;
 
     bool boneWeights, animations, lights, cameras, materials;
@@ -74,9 +74,9 @@ namespace Graphics::AssetIO
     // serialized as first 24 bytes
     struct Header {
       Header() = default;
-      Header(uint64_t _vtxSize, uint64_t _idxSize, uint64_t _submeshSize, uint64_t _materialsSize)
-        : vtxSize{ _vtxSize }, idxSize{ _idxSize }, submeshSize{ _submeshSize }, materialsSize{ _materialsSize } {}
-      uint64_t vtxSize, idxSize, submeshSize, materialsSize;
+      Header(uint64_t _vtxSize, uint64_t _idxSize, uint64_t _submeshSize)
+        : vtxSize{ _vtxSize }, idxSize{ _idxSize }, submeshSize{ _submeshSize } {}
+      uint64_t vtxSize, idxSize, submeshSize;
     };
 
     // used to read/write submesh data
@@ -93,7 +93,6 @@ namespace Graphics::AssetIO
     std::vector<Graphics::Vertex> mVertexBuffer;
     std::vector<uint32_t> mIndices;
     std::vector<SubmeshData> mSubmeshData;
-    std::vector<MeshMatValues> mMatValues;
     std::vector<std::string> mMeshNames;
     bool mStatus, mIsStatic;
 

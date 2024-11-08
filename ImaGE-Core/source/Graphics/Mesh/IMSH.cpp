@@ -131,13 +131,12 @@ namespace Graphics::AssetIO
       std::ofstream ofs{ outputFile, std::ios::binary };
       if (!ofs) { throw Debug::Exception<IMSH>(Debug::LVL_ERROR, Msg("Unable to create binary file: " + outputFile)); }
 
-      Header const header{ mVertexBuffer.size(), mIndices.size(), mSubmeshData.size(), mMatValues.size() };
+      Header const header{ mVertexBuffer.size(), mIndices.size(), mSubmeshData.size() };
 
       ofs.write(reinterpret_cast<char const*>(&header), sizeof(Header));
       ofs.write(reinterpret_cast<char const*>(mVertexBuffer.data()), header.vtxSize * sizeof(Graphics::Vertex));
       ofs.write(reinterpret_cast<char const*>(mIndices.data()), header.idxSize * sizeof(uint32_t));
       ofs.write(reinterpret_cast<char const*>(mSubmeshData.data()), header.submeshSize * sizeof(SubmeshData));
-      ofs.write(reinterpret_cast<char const*>(mMatValues.data()), header.materialsSize * sizeof(MeshMatValues));
       ofs.write(reinterpret_cast<char const*>(&mIsStatic), sizeof(bool));
 
       ofs.close();
@@ -174,8 +173,6 @@ namespace Graphics::AssetIO
     ifs.read(reinterpret_cast<char*>(mIndices.data()), header.idxSize * sizeof(uint32_t));
     mSubmeshData.resize(header.submeshSize);
     ifs.read(reinterpret_cast<char*>(mSubmeshData.data()), header.submeshSize * sizeof(SubmeshData));
-    mMatValues.resize(header.materialsSize);
-    ifs.read(reinterpret_cast<char*>(mMatValues.data()), header.materialsSize * sizeof(MeshMatValues));
     ifs.read(reinterpret_cast<char*>(&mIsStatic), sizeof(bool));
 
     ifs.close();
