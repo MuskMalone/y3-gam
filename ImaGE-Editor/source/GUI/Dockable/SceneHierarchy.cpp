@@ -215,8 +215,13 @@ namespace GUI
       ImGui::PushStyleColor(ImGuiCol_Text, sEntityHighlightCol);
     }
 
+    if (!entity.IsActive()) {
+      ImGui::PushStyleColor(ImGuiCol_Text, isPrefabInstance ? sInactivePfbInstCol : sEntityInactiveCol);
+    }
     if (ImGui::TreeNodeEx((displayName + "##" + std::to_string(entity.GetEntityID())).c_str(), treeFlag))
     {
+      if (!entity.IsActive()) { ImGui::PopStyleColor(); }
+
       // if renaming entity
       if (isEditMode) {
         ImGui::SetItemAllowOverlap();
@@ -249,6 +254,9 @@ namespace GUI
       }
 
       ImGui::TreePop();
+    }
+    else if (!entity.IsActive()) {
+      ImGui::PopStyleColor();
     }
 
     if (isPrefabInstance) {

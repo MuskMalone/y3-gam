@@ -41,6 +41,8 @@ namespace GUI
 
     static inline constexpr char sDragDropPayload[] = "ENTITY";
     static inline constexpr ImU32 sEntityHighlightCol{ IM_COL32(253, 208, 23, 255) };
+    static inline constexpr ImU32 sInactivePfbInstCol{ IM_COL32(253, 208, 23, 120) };
+    static inline constexpr ImU32 sEntityInactiveCol{ IM_COL32(120, 120, 120, 255) };
     static inline constexpr float sTimeBeforeRename = 0.5f; // time after a click before triggerring an entity rename
 
     /*!*********************************************************************
