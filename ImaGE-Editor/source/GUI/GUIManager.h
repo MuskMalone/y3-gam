@@ -68,8 +68,6 @@ namespace GUI {
       The currently selected entity
     ************************************************************************/
     static inline ECS::Entity GetSelectedEntity() noexcept { return sSelectedEntity; }
-    static inline std::unordered_set<ECS::Entity::EntityID> const& GetSelectedEntities() noexcept { return sSelectedEntities; }
-    static inline bool IsEntitySelected(ECS::Entity const& entity) { return sSelectedEntities.contains(entity.GetRawEnttEntityID()); }
 
     /*!*********************************************************************
     \brief
@@ -78,7 +76,12 @@ namespace GUI {
       The entity to set
     ************************************************************************/
     static inline void SetSelectedEntity(ECS::Entity const& entity) noexcept { sSelectedEntity = entity; }
+
+
+    static inline std::unordered_set<ECS::Entity::EntityID> const& GetSelectedEntities() noexcept { return sSelectedEntities; }
+    static inline bool IsEntitySelected(ECS::Entity const& entity) { return sSelectedEntities.contains(entity.GetRawEnttEntityID()); }
     static inline void AddSelectedEntity(ECS::Entity const& entity) { sSelectedEntities.emplace(entity.GetRawEnttEntityID()); }
+    static void RemoveSelectedEntity(ECS::Entity const& entity) { sSelectedEntities.erase(entity.GetRawEnttEntityID()); }
     static void ClearSelectedEntities() { sSelectedEntities.clear(); }
     
     inline bool IsGameViewActive() {

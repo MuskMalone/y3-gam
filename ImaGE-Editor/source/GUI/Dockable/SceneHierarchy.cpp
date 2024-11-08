@@ -124,7 +124,18 @@ namespace GUI
     }
 
     if (ImGui::IsKeyPressed(ImGuiKey_Delete) && GUIManager::GetSelectedEntity() && !mLockControls) {
-      ECS::EntityManager::GetInstance().RemoveEntity(GUIManager::GetSelectedEntity());
+      ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
+      auto entities{ GUIManager::GetSelectedEntities() };
+      if (!entities.empty()) {
+        for (ECS::Entity e : entities) {
+          em.RemoveEntity(e);
+        }
+        GUIManager::ClearSelectedEntities();
+      }
+      else {
+        em.RemoveEntity(GUIManager::GetSelectedEntity());
+      }
+
       GUIManager::SetSelectedEntity(ECS::Entity());
       QUEUE_EVENT(Events::SceneModifiedEvent);
     }
@@ -309,20 +320,39 @@ namespace GUI
       sFirstEnterEditMode = true;
     }
     else if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-      if (GUIManager::GetSelectedEntity() == entity) {
+      if (GUIManager::GetSelectedEntity() == entity && !sCtrlHeld) {
         sEntityDoubleClicked = true;
         sLMouseReleased = false;
       }
       else {
         if (sCtrlHeld) {
-          GUIManager::AddSelectedEntity(entity);
+          ECS::Entity const curr{ GUIManager::GetSelectedEntity() };
+          if (GUIManager::GetSelectedEntities().empty() && curr) {
+            GUIManager::AddSelectedEntity(curr);
+          }
+          
+          if (GUIManager::IsEntitySelected(entity)) {
+            GUIManager::RemoveSelectedEntity(entity);
+            if (GUIManager::GetSelectedEntities().empty()) {
+              GUIManager::SetSelectedEntity({});
+            }
+            else {
+              GUIManager::SetSelectedEntity(*GUIManager::GetSelectedEntities().begin());
+            }
+          }
+          else {
+            GUIManager::AddSelectedEntity(entity);
+            GUIManager::SetSelectedEntity(entity);
+          }
         }
-        else if (sWasCtrlHeld) {
-          GUIManager::ClearSelectedEntities();
-          sWasCtrlHeld = false;
-        }
+        else {
+          if (sWasCtrlHeld) {
+            GUIManager::ClearSelectedEntities();
+            sWasCtrlHeld = false;
+          }
 
-        GUIManager::SetSelectedEntity(entity);
+          GUIManager::SetSelectedEntity(entity);
+        }
       }
     }
 

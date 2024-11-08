@@ -120,16 +120,32 @@ namespace GUI
             if (entityId >= 0) {
               ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
                 root{ GetRootEntity(selected) };
+              sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
 
               if (sCtrlHeld) {
-                GUIManager::AddSelectedEntity(selected);
+                ECS::Entity const curr{ GUIManager::GetSelectedEntity() };
+                if (GUIManager::GetSelectedEntities().empty() && curr) {
+                  GUIManager::AddSelectedEntity(curr);
+                }
+
+                if (GUIManager::IsEntitySelected(root)) {
+                  GUIManager::RemoveSelectedEntity(root);
+                  if (GUIManager::GetSelectedEntities().empty()) {
+                    GUIManager::SetSelectedEntity({});
+                  }
+                  else {
+                    GUIManager::SetSelectedEntity(*GUIManager::GetSelectedEntities().begin());
+                  }
+                }
+                else {
+                  GUIManager::AddSelectedEntity(root);
+                  GUIManager::SetSelectedEntity(sPrevSelectedEntity);
+                }
               }
               else {
                 GUIManager::ClearSelectedEntities();
+                GUIManager::SetSelectedEntity(sPrevSelectedEntity);
               }
-
-              sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
-              GUIManager::SetSelectedEntity(sPrevSelectedEntity);
             }
             else {
               sPrevSelectedEntity = {};
@@ -296,6 +312,7 @@ namespace GUI
       ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(modelMatrixPrev),
         glm::value_ptr(t2), glm::value_ptr(r2), glm::value_ptr(s2));
 
+      // for each operation, if multi-select active, update all their transforms
       bool const multiSelectActive{ !GUIManager::GetSelectedEntities().empty() };
       if (currentOperation == ImGuizmo::TRANSLATE) {
         glm::vec3 const offset{ t - t2 };
@@ -336,29 +353,29 @@ namespace GUI
         ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
         for (ECS::Entity e : GUIManager::GetSelectedEntities()) {
           TransformHelpers::UpdateWorldTransform(e);
+          if (!e.HasComponent<Component::PrefabOverrides>()) { continue; }
+
+          Component::Transform& trans{ e.GetComponent<Component::Transform>() };
+          Component::PrefabOverrides& pfbOverrides{ e.GetComponent<Component::PrefabOverrides>() };
+          if (pfbOverrides.IsComponentModified<Component::Transform>() || pfbOverrides.subDataId != Prefabs::PrefabSubData::BasePrefabId) {
+            pfbOverrides.AddComponentModification(trans);
+          }
+          else if (currentOperation != ImGuizmo::TRANSLATE) {
+            pfbOverrides.AddComponentModification(trans);
+          }
         }
       }
       else {
         TransformHelpers::UpdateWorldTransform(selectedEntity);
-      }
-      QUEUE_EVENT(Events::SceneModifiedEvent);
-    }
-
-    // update prefab overrides
-    if (usingGuizmos && prefabOverrides) {
-      if (prefabOverrides->IsComponentModified<Component::Transform>() && prefabOverrides->subDataId == Prefabs::PrefabSubData::BasePrefabId) {
-        // if root entity, ignore position changes
-        // here, im assuming only 1 value can be modified per frame.
-        // So if position wasn't modified, it means either rot or scale was
-        if (oldPos == transform.position) {
+        if (prefabOverrides->IsComponentModified<Component::Transform>() || prefabOverrides->subDataId != Prefabs::PrefabSubData::BasePrefabId) {
+          prefabOverrides->AddComponentModification(transform);
+        }
+        else if (currentOperation != ImGuizmo::TRANSLATE) {
           prefabOverrides->AddComponentModification(transform);
         }
       }
-      else {
-        prefabOverrides->AddComponentModification(transform);
-      }
+      QUEUE_EVENT(Events::SceneModifiedEvent);
     }
-
 
     return usingGuizmos;
   }
