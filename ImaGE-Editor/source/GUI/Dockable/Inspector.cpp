@@ -1167,6 +1167,53 @@ namespace GUI {
         modified = true;
       }
 
+      // Add first row of checkboxes
+      ImGui::TableNextRow();
+      ImGui::TableNextColumn();
+      ImGui::Text("Lock Position");
+      ImGui::TableNextColumn();
+      bool lockPosX{rigidBody.IsAxisLocked((int)Component::RigidBody::Axis::X)};
+      if (ImGui::Checkbox("##LockPosX", &lockPosX)) {
+          (lockPosX) ? rigidBody.SetAxisLock((int)Component::RigidBody::Axis::X) : rigidBody.RemoveAxisLock((int)Component::RigidBody::Axis::X);
+          modified = true;
+      }
+      ImGui::TableNextColumn();
+      bool lockPosY{ rigidBody.IsAxisLocked((int)Component::RigidBody::Axis::Y) };
+      if (ImGui::Checkbox("##LockPosY", &lockPosY)) {
+          (lockPosY) ? rigidBody.SetAxisLock((int)Component::RigidBody::Axis::Y) : rigidBody.RemoveAxisLock((int)Component::RigidBody::Axis::Y);
+          modified = true;
+      }
+      ImGui::TableNextColumn();
+      bool lockPosZ{ rigidBody.IsAxisLocked((int)Component::RigidBody::Axis::Z) };
+      if (ImGui::Checkbox("##LockPosZ", &lockPosZ)) {
+          (lockPosZ) ? rigidBody.SetAxisLock((int)Component::RigidBody::Axis::Z) : rigidBody.RemoveAxisLock((int)Component::RigidBody::Axis::Z);
+          modified = true;
+      }
+      // Add second row of checkboxes
+      ImGui::TableNextRow();
+      ImGui::TableNextColumn();
+      ImGui::Text("Lock Rotation");
+      ImGui::TableNextColumn();
+      bool lockRotX{ rigidBody.IsAngleAxisLocked((int)Component::RigidBody::Axis::X) };
+      if (ImGui::Checkbox("##LockRotX", &lockRotX)) {
+          (lockRotX) ? rigidBody.SetAngleAxisLock((int)Component::RigidBody::Axis::X) : rigidBody.RemoveAngleAxisLock((int)Component::RigidBody::Axis::X);
+          modified = true;
+      }
+      ImGui::TableNextColumn();
+      bool lockRotY{ rigidBody.IsAngleAxisLocked((int)Component::RigidBody::Axis::Y) };
+      if (ImGui::Checkbox("##LockRotY", &lockRotY)) {
+          (lockRotY) ? rigidBody.SetAngleAxisLock((int)Component::RigidBody::Axis::Y) : rigidBody.RemoveAngleAxisLock((int)Component::RigidBody::Axis::Y);
+          modified = true;
+      }
+      ImGui::TableNextColumn();
+      bool lockRotZ{ rigidBody.IsAngleAxisLocked((int)Component::RigidBody::Axis::Z) };
+      if (ImGui::Checkbox("##LockRotZ", &lockRotZ)) {
+          (lockRotZ) ? rigidBody.SetAngleAxisLock((int)Component::RigidBody::Axis::Z) : rigidBody.RemoveAngleAxisLock((int)Component::RigidBody::Axis::Z);
+          modified = true;
+      }
+      if (modified)
+          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::LOCK);
+
       EndVec3Table();
 
       ImGui::BeginTable("ShapeSelectionTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);

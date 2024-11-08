@@ -175,6 +175,7 @@ namespace IGE {
 						xfm.modified = true; // include this 
 
 						rb.velocity = pxrigidbody->getLinearVelocity();
+						rb.angularVelocity = pxrigidbody->getAngularVelocity();
 						//pxrigidbody->setLinearVelocity(rb.velocity);
 					}
 					//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
@@ -382,7 +383,7 @@ namespace IGE {
 		}
 		void PhysicsSystem::ChangeRigidBodyVar(ECS::Entity entity, Component::RigidBodyVars var)
 		{
-			auto const& rb{ entity.GetComponent<Component::RigidBody>() };
+			auto& rb{ entity.GetComponent<Component::RigidBody>() };
 			auto rbiter{ mRigidBodyIDs.find(rb.bodyID) };
 			if (rbiter != mRigidBodyIDs.end()) {
 				physx::PxRigidDynamic* rbptr{ rbiter->second };
@@ -401,13 +402,23 @@ namespace IGE {
 					return;
 				}break;
 				case Component::RigidBodyVars::ANGULAR_VELOCITY: {
-					//todo add smth here
+					rbptr->setAngularVelocity(rb.angularVelocity);
 					return;
 				}break;
 				case Component::RigidBodyVars::MOTION: {
 					rbptr->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, (bool)rb.motionType);
 					return;
 				}break;
+				case Component::RigidBodyVars::LOCK: {
+					rbptr->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_LINEAR_X, rb.IsAxisLocked((int)Component::RigidBody::Axis::X) ? true : false);
+					rbptr->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_LINEAR_Y, rb.IsAxisLocked((int)Component::RigidBody::Axis::Y) ? true : false);
+					rbptr->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_LINEAR_Z, rb.IsAxisLocked((int)Component::RigidBody::Axis::Z) ? true : false);
+
+					rbptr->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_X, rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::X) ? true : false);
+					rbptr->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y, rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::Y) ? true : false);
+					rbptr->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z, rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::Z) ? true : false);
+
+				}
 				}
 				if (entity.HasComponent<Component::BoxCollider>()) {
 					physx::PxShape* shape[3]{};

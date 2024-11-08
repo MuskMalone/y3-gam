@@ -188,7 +188,9 @@
                         "restitution": 0.0,
                         "gravityFactor": 0.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "KINEMATIC"
+                        "motionType": "KINEMATIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0
                     }
                 }
             ]
@@ -383,7 +385,9 @@
                         "restitution": 0.0,
                         "gravityFactor": 0.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "KINEMATIC"
+                        "motionType": "KINEMATIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0
                     }
                 }
             ]
@@ -500,7 +504,9 @@
                         "restitution": 0.0,
                         "gravityFactor": 0.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "KINEMATIC"
+                        "motionType": "KINEMATIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0
                     }
                 }
             ]
@@ -617,7 +623,9 @@
                         "restitution": 0.0,
                         "gravityFactor": 0.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "KINEMATIC"
+                        "motionType": "KINEMATIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0
                     }
                 }
             ]
@@ -801,7 +809,9 @@
                         "restitution": 0.0,
                         "gravityFactor": 0.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "KINEMATIC"
+                        "motionType": "KINEMATIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0
                     }
                 }
             ]
@@ -987,7 +997,9 @@
                         "restitution": 0.0,
                         "gravityFactor": 0.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "KINEMATIC"
+                        "motionType": "KINEMATIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0
                     }
                 }
             ]
@@ -1242,7 +1254,9 @@
                         "restitution": 0.0,
                         "gravityFactor": 0.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "KINEMATIC"
+                        "motionType": "KINEMATIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0
                     }
                 }
             ]
@@ -1359,7 +1373,9 @@
                         "restitution": 0.0,
                         "gravityFactor": 0.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "DYNAMIC"
+                        "motionType": "DYNAMIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0
                     }
                 }
             ]
@@ -2130,7 +2146,9 @@
                         "restitution": 0.0,
                         "gravityFactor": 5.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "DYNAMIC"
+                        "motionType": "DYNAMIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 5
                     }
                 },
                 {
