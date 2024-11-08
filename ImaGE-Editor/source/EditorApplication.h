@@ -37,6 +37,7 @@ namespace IGE {
 
   private:
     GUI::GUIManager mGUIManager;
+    EVENT_CALLBACK_DECL(LockMouse);
 
   private:
     /*!*********************************************************************

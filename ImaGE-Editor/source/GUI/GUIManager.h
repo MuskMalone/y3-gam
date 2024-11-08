@@ -87,6 +87,8 @@ namespace GUI {
 
     static Styler mStyler; // handles editor's styles
     static ECS::Entity sSelectedEntity; // currently selected entity
+
+
   };
 
 } // namespace GUI

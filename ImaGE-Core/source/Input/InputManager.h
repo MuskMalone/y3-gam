@@ -161,7 +161,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 			\return
 				xoffset of  mouse scroll
 			************************************************************************/
-			static vec2 GetMouseDelta();
+			glm::vec2 GetMouseDelta();
 
 			/*!*********************************************************************
 			\brief

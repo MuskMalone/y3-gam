@@ -43,9 +43,21 @@ using Image.Utils;
         InternalCalls.SetRotation(entity.mEntityID, ref value); // Push update to C++ side
       }
     }
-  
 
-    public Vector3 scale
+    public Quaternion worldRotation
+    {
+      get
+      {
+        return InternalCalls.GetWorldRotation(entity.mEntityID); // Push update to C++ side
+      }
+      set
+      {
+        InternalCalls.SetWorldRotation(entity.mEntityID, ref value); // Push update to C++ side
+      }
+    }
+
+
+  public Vector3 scale
     {
       get
       {
@@ -61,7 +73,7 @@ using Image.Utils;
     {
       get
       {
-        return Mathf.QuatMulVec3(InternalCalls.GetRotation(entity.mEntityID),new Vector3(1, 0, 0)); // Push update to C++ side
+        return Vector3.Transform(new Vector3(1, 0, 0), InternalCalls.GetWorldRotation(entity.mEntityID)); // Push update to C++ side
       }
     }
 
@@ -69,8 +81,8 @@ using Image.Utils;
     {
       get
       {
-        return Mathf.QuatMulVec3(InternalCalls.GetRotation(entity.mEntityID), new Vector3(0, 0, -1)); // Push update to C++ side
-      }
+        return Vector3.Transform(new Vector3(0, 0, -1), InternalCalls.GetWorldRotation(entity.mEntityID)); // Push update to C++ side
+    }
 
     }
 
@@ -97,13 +109,14 @@ using Image.Utils;
       // Create a new rotation quaternion based on the given angles
       Quaternion deltaRotation = Mathf.EulertoQuat(new Vector3(xRad, yRad, zRad));
 
-      // Apply the rotation
-      rotation = rotation * deltaRotation; // Combine the current rotation with the new rotation
+    // Apply the rotation
+      worldRotation = rotation * deltaRotation; // Combine the current rotation with the new rotation
     }
 }
-  #endregion
+#endregion
 
-    public class Tag : Component
+
+  public class Tag : Component
     {
 
       public string tag

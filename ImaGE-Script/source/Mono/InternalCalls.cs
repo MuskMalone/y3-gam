@@ -55,6 +55,13 @@ namespace Image.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void SetRotation(uint entityHandle, ref Quaternion position);
 
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static Quaternion GetWorldRotation(uint ID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void SetWorldRotation(uint entityHandle, ref Quaternion position);
+
     //[MethodImplAttribute(MethodImplOptions.InternalCall)]
     //internal extern static void GetRotation(ref uint entityHandle, ref float rotation);
 
@@ -76,6 +83,10 @@ namespace Image.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static bool anyKeyDown();
+
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static Vector3 GetMouseDelta();
     #endregion
 
 
@@ -118,6 +129,8 @@ namespace Image.Utils
     extern public static void MoveCharacter(uint mEntityID, Vector3 dVec);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static bool IsGrounded(uint mEntityID); 
+    extern public static bool IsGrounded(uint mEntityID);
+
+
   }
 }

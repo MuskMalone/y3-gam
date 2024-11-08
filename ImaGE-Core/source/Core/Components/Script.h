@@ -53,6 +53,7 @@ namespace Component {
 					mScriptList.emplace_back(ps.scriptName);
 					mScriptList[currPos].SetEntityID(entity.GetRawEnttEntityID());
 					mScriptList[currPos].SetAllFields(ps.scriptFieldProxyList);
+					++currPos;
 				}
 			}
 
