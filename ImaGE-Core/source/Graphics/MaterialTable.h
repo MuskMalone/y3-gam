@@ -1,5 +1,4 @@
 #pragma once
-#include "Asset/IGEAssets.h"
 #include "Shader.h"
 
 //TODO CHANGE TO GUID LATER
@@ -40,6 +39,8 @@ namespace Graphics {
         static void ApplyMaterialTextures(std::shared_ptr<Graphics::Shader>& shader, size_t batchStart, size_t batchEnd);
         static void ApplyMaterialTextures(std::shared_ptr<Graphics::Shader>& shader);
 
+
+        static IGE::Assets::GUID CreateAndImportMatFile(const std::string& name = "NewMaterial");
         static void SaveMaterials();
         static std::shared_ptr<MaterialData> LoadMaterial(std::string const& fp);
 

@@ -27,7 +27,8 @@ namespace IGE {
 				IGE::Assets::ModelAsset,
 				IGE::Assets::PrefabAsset,
 				IGE::Assets::FontAsset,
-				IGE::Assets::ShaderAsset
+				IGE::Assets::ShaderAsset,
+				IGE::Assets::MaterialAsset
 			>();
 			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			auto fp{ CreateProjectFile() }; // create project file if it doesnt exist

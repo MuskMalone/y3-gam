@@ -384,6 +384,11 @@ namespace GUI
       if (ImGui::Selectable("Open in File Explorer")) {
         AssetHelpers::OpenDirectoryInExplorer(mRightClickedDir);
       }
+      if (mRightClickedDir == L"..\\Assets\\Materials") {
+          if (ImGui::Selectable("Create Material")) {
+              AssetHelpers::CreateNewMaterial();
+          }
+      }
 
       ImGui::EndPopup();
     }

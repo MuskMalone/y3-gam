@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "MaterialTable.h"
 #include "MaterialData.h"
+#include "Asset/Assetables/Material/MaterialAsset.h"
 #include "Serialization/Serializer.h"
 #include "Serialization/Deserializer.h"
+#include "Asset/AssetManager.h"
 
 namespace Graphics {
     std::unordered_map<IGE::Assets::GUID, uint32_t> MaterialTable::mGUIDToIndexMap;
@@ -14,17 +16,21 @@ namespace Graphics {
     }
 
     uint32_t MaterialTable::AddMaterialByGUID(IGE::Assets::GUID const& guid){
-        // Check if the material already exists
+        // Check if the material already exists 
         auto it = mGUIDToIndexMap.find(guid);
         if (it != mGUIDToIndexMap.end()) {
             return it->second; // Return existing index
         }
-
+        
         // Load the material data from the AssetManager
-        //auto materialData = IGE::AssetManager::GetInstance().GetAsset<MaterialData>(guid);
-        std::shared_ptr<MaterialData> materialData{}; //TODO change this
+        IGE_ASSETMGR.LoadRef<IGE::Assets::MaterialAsset>(guid);
+       auto & materialData = IGE_ASSETMGR.GetAsset<IGE::Assets::MaterialAsset>(guid)->mMaterial;
+        //std::shared_ptr<MaterialData> materialData{};
         if (!materialData) {
             // Handle missing material (use a default material if needed)
+            std::stringstream ss;
+            ss << "Material with GUID: " << guid << " not found.\n";
+            Debug::DebugLogger::GetInstance().LogError(ss.str());
             materialData = MaterialData::Create("PBR", "null"); //TODO CHNAGE THIS
         }
 
@@ -95,6 +101,45 @@ namespace Graphics {
         // Set texture unit arrays in the shader; any unused slots will point to default textures
         shader->SetUniform("u_AlbedoMaps", albedoTextureUnits.data(), static_cast<unsigned>(albedoTextureUnits.size()));
         shader->SetUniform("u_NormalMaps", normalTextureUnits.data(), static_cast<unsigned>(normalTextureUnits.size()));
+    }
+    IGE::Assets::GUID MaterialTable::CreateAndImportMatFile(const std::string& name){
+        // Step 1: Create a new material with default properties
+        auto newMaterial = MaterialData::Create("PBR", "new");
+        newMaterial->SetName(name);
+        newMaterial->SetShaderName("PBR"); // Set a default shader if applicable
+        newMaterial->SetAlbedoColor({ 1.0f, 1.0f, 1.0f });
+        newMaterial->SetMetalness(0.5f);
+        newMaterial->SetRoughness(0.5f);
+        // Set other default properties as needed...
+
+        // Step 2: Add the new material to the MaterialTable
+        //mMaterials.push_back(newMaterial);
+
+        // Step 3: Generate a unique filename based on the material's name
+        std::stringstream ss;
+        ss << gMaterialDirectory << newMaterial->GetName() << ".mat"; // You can use a unique identifier if needed
+        std::string filename = ss.str();
+
+        // Step 4: Prepare metadata struct
+        MatData data;
+        data.name = newMaterial->GetName();
+        data.shader = newMaterial->GetShaderName();
+        data.albedoColor = newMaterial->GetAlbedoColor();
+        data.metalness = newMaterial->GetMetalness();
+        data.roughness = newMaterial->GetRoughness();
+        // Set other material properties as needed...
+
+        // Step 5: Serialize the material data to the file
+        Serialization::Serializer::SerializeAny(data, filename);
+
+        ss << "New material created and saved at " << filename << std::endl;
+        Debug::DebugLogger::GetInstance().LogInfo(ss.str());
+
+        IGE::Assets::GUID guid = IGE_ASSETMGR.ImportAsset<IGE::Assets::MaterialAsset>(filename);
+
+        AddMaterialByGUID(guid);
+        return guid;
+
     }
     void MaterialTable::SaveMaterials() {
         for (size_t i = 1; i < mMaterials.size(); ++i) {  // Start from index 1 to skip the default material at index 0

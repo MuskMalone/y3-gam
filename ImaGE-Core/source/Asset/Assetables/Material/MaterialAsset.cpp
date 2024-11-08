@@ -8,7 +8,7 @@
 namespace IGE {
 
     namespace Assets {
-        MaterialAsset::MaterialAsset(std::string const& fp) : mMaterial{ *Graphics::MaterialTable::LoadMaterial(fp) } {
+        MaterialAsset::MaterialAsset(std::string const& fp) : mMaterial{ Graphics::MaterialTable::LoadMaterial(fp) } {
 
         }
 
