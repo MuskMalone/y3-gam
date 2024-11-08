@@ -319,6 +319,24 @@ namespace IGE {
               TypeAssetKey key{ typeguid ^ guid };
               return (mAssetRefs.find(key) != mAssetRefs.end());
           }
+          template <typename T>
+          AssetMetadata::AssetProps& GetMetadata(GUID const& guid) {
+              auto category{ GetTypeName<T>() };
+              auto& props{ mMetadata.mAssetProperties };
+              if (props.find(category) != props.end()) {
+                  auto& cat{ props.at(category) };
+                  if (cat.find(guid) != cat.end()) {
+                      return cat.at(guid);
+                  }
+                  else throw Debug::Exception<AssetManager>(Debug::LVL_ERROR, Msg("asset category has no such guid: " + std::to_string(guid)));
+              }
+              else throw Debug::Exception<AssetManager>(Debug::LVL_ERROR, Msg("asset metadatas have no such category: " + category));
+          }
+          template <typename T>
+          AssetMetadata::AssetProps const& GetCMetadata(GUID const& guid) const {
+              return GetMetadata<T>(guid);
+          }
+
 
         private:
           AssetMetadata mMetadata;
