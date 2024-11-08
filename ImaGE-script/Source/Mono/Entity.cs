@@ -49,7 +49,7 @@ using Image.Utils;
     public void Init(uint entityID)
     {
       mEntityID = entityID;
-      Console.WriteLine("ID: " + mEntityID);
+      Console.WriteLine("Init ID: " + mEntityID);
     }
 
 

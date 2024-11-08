@@ -47,7 +47,7 @@ namespace IGE {
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(mWindow.get(), true);
     ImGui_ImplOpenGL3_Init("#version 460 core");
-
+    
     SetEditorCallbacks();
   }
 
@@ -66,6 +66,7 @@ namespace IGE {
     // may just make SystemManager globally accesible in future
     // if more stuff requires it
     mGUIManager.Init(GetDefaultRenderTarget());
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::LOCK_MOUSE, &EditorApplication::LockMouse, this);
   }
 
   void EditorApplication::Run() {
@@ -251,4 +252,18 @@ namespace IGE {
       Debug::DebugLogger::GetInstance().PrintToCout(e.what(), Debug::LVL_CRITICAL);
     }
   }
+
+  EVENT_CALLBACK_DEF(EditorApplication, LockMouse) {
+    if (CAST_TO_EVENT(Events::LockMouseEvent)->isLocked)
+    {
+      // Set the cursor position to the center of the window
+      glfwSetCursorPos(mWindow.get(), mSpecification.WindowWidth / 2.0, mSpecification.WindowHeight / 2.0);
+      glfwSetInputMode(mWindow.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    }
+
+    else
+      glfwSetInputMode(mWindow.get(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    //CAST_TO_EVENT(Events::LockMouseEvent)->isLocked = !(CAST_TO_EVENT(Events::LockMouseEvent)->isLocked);
+  }
+
 } // namespace IGE

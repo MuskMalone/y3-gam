@@ -29,12 +29,26 @@ using System.Numerics;
 
 public class  PlayerMove : Entity
 {
-  public float speed = 12f;
+  public float speed = 8f;
   public float gravity = -9.81f * 2;
   public float jumpHeight = 3f;
 
+  public Entity cam;
 
-  Vector3 velocity;
+  private float yaw = 0f;  // Rotation around the Y-axis (horizontal, for player)
+  private float pitch = 0f;  // Rotation around the X-axis (vertical, for camera)
+
+  private float sensitivity = 0.1f;  // Mouse sensitivity
+  private float maxPitch = 89f;  // Limit to prevent camera flipping (in degrees)
+  private float minPitch = -89f; // Limit to prevent camera flipping (in degrees)
+
+  private Quaternion playerRotation = Quaternion.Identity;  // Player rotation (yaw only)
+  private Quaternion cameraRotation = Quaternion.Identity;  // Camera rotation (pitch only)
+
+  // New flag to control whether the player can look around
+  public bool canLook = true;
+
+  Vector3 velocity = new Vector3();
   bool isGrounded = true;
   public PlayerMove() : base()
   {
@@ -53,14 +67,14 @@ public class  PlayerMove : Entity
   void Update()
   {
     //HandleBotSpawningAndSwitching();
-
+    ProcessLook();
     forPlayerMovement();
 
   }
     void forPlayerMovement()
     {
 
-     // isGrounded = InternalCalls.IsGrounded(mEntityID);
+      isGrounded = InternalCalls.IsGrounded(mEntityID);
 
       if (isGrounded && velocity.Y < 0)
       {
@@ -71,25 +85,56 @@ public class  PlayerMove : Entity
       float x = Input.GetAxis("Horizontal");
       float z = Input.GetAxis("Vertical");
       //Console.WriteLine(z);
-      Console.WriteLine(x);
+      //Console.WriteLine(isGrounded);
 
     //right is the red Axis, foward is the blue axis
-    Vector3 move = GetComponent<Transform>().right * x + GetComponent<Transform>().forward * z;
+    Vector3 move = GetComponent<Transform>().right * x *speed + GetComponent<Transform>().forward * z * speed;
+    //move *= speed;
 
-      InternalCalls.MoveCharacter(mEntityID,move * speed * Time.deltaTime);
+      
 
       //check if the player is on the ground so he can jump
       if (Input.GetKeyDown(KeyCode.SPACE) && isGrounded)
       {
-        //the equation for jumping
-        velocity.Y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-      }
-      
-     // velocity.Y += gravity * Time.deltaTime;
+      //the equation for jumping
+      // velocity.Y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+      Console.WriteLine("JUmp");
+       move.Y = 20f;  
+     }
+     // Console.WriteLine(GetComponent<Transform>().right.ToString());
+   // Console.WriteLine(GetComponent<Transform>().forward.ToString() + "\n");
+    InternalCalls.MoveCharacter(mEntityID, move);
+    // velocity.Y += gravity * Time.deltaTime;
 
-      InternalCalls.MoveCharacter(mEntityID, velocity * Time.deltaTime);
+
+
+
 
   }
+
+    void ProcessLook()
+    {
+      if (!canLook) return;  // Skip look processing if the player is frozen
+      Vector3 mouseDelt = InternalCalls.GetMouseDelta();
+      float mouseDeltaX = mouseDelt.X;
+      float mouseDeltaY = mouseDelt.Y;
+      //Console.WriteLine(mouseDeltaX);
+      yaw -= mouseDeltaX * sensitivity;
+      Console.WriteLine(yaw);
+
+      // Apply mouse delta to pitch (rotate camera around the X-axis)
+      pitch -= mouseDeltaY * sensitivity;
+
+      // Clamp pitch to prevent camera from flipping upside down
+      pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
+      //Console.WriteLine(pitch);
+
+      // Update the camera's rotation (pitch)
+      //cam.GetComponent<Transform>().worldRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(pitch));
+
+      // Update the player's rotation (yaw)
+      GetComponent<Transform>().worldRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, Mathf.DegToRad(yaw));
   }
+}
 
 

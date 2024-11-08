@@ -62,6 +62,7 @@ InputManager::InputManager(std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& wi
 	mKeysTriggered.reset();
 	mKeyFramesHeld.fill(0);
 	mKeyHeldTime = holdTime;
+	mPrevMousePos = mCurrMousePos = glm::vec2();
 	
 	// Subscribe to the mouse/keyboard event
 	glfwSetKeyCallback(window.get(), KeyCallback);
@@ -138,6 +139,9 @@ void InputManager::UpdateInput()
 		axes["Horizontal"] -= Performance::FrameRateController::GetInstance().GetDeltaTime() * 10.f;
 		axes["Horizontal"] = (axes["Horizontal"] < -1.f) ? -1.f : axes["Horizontal"];
 	}
+
+
+
 
 }
 
@@ -301,9 +305,12 @@ double InputManager::GetMouseScrollHor()
 	return mScrollX;
 }
 
-vec2 InputManager::GetMouseDelta()
+glm::vec2 InputManager::GetMouseDelta()
 {
-	return (mCurrMousePos - mPrevMousePos);
+	//std::cout << "MouseX: " << mCurrMousePos.x << " MouseY: " << mCurrMousePos.y << std::endl;
+	//std::cout << "PRevMouseX: " << mPrevMousePos.x << " MouseY: " << mPrevMousePos.y << std::endl;
+	//glm::vec2 delt = mCurrMousePos - mPrevMousePos;
+	return  (mCurrMousePos - mPrevMousePos);
 }
 
 void InputManager::KeyCallback(GLFWwindow* window, int key, int scanCode, int action, int mod)

@@ -44,6 +44,15 @@ namespace Events
     inline std::string GetName() const noexcept override { return "Unloading Scene"; }
   };
 
+  class LockMouseEvent : public Event
+  {
+  public:
+    bool isLocked{ false };
+    LockMouseEvent(bool lock) : Event(EventType::LOCK_MOUSE) { isLocked = lock; }
+    inline std::string GetName() const noexcept override { return "Saving Scene"; }
+  };
+
+
   class SaveSceneEvent : public Event
   {
   public:

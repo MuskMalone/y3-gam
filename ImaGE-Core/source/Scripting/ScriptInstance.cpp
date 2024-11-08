@@ -17,6 +17,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "mono/metadata/mono-debug.h"
 #include "mono/metadata/threads.h"
 #include "Reflection/ProxyScript.h"
+#include "Input/InputManager.h"
 
 
 using namespace Mono;
@@ -58,7 +59,7 @@ void ScriptInstance::SetEntityID(ECS::Entity::EntityID entityID)
 {
   mEntityID = entityID;
   std::vector<void*> arg{ &mEntityID };
-  MonoMethod* InitMethod = mono_class_get_method_from_name(mScriptClass, "Init", 1);
+  MonoMethod* InitMethod = mono_class_get_method_from_name(mono_class_get_parent(mScriptClass), "Init", 1);
   if (InitMethod)
   {
     mono_runtime_invoke(InitMethod, mono_gchandle_get_target(mGcHandle), arg.data(), nullptr);  // We will call an init function to pass in the entityID
@@ -85,6 +86,7 @@ void ScriptInstance::ReloadScript()
 
 void ScriptInstance::InvokeOnUpdate(double dt)
 {
+  glm::vec2 delt = Input::InputManager::GetInstance().GetMouseDelta();
   if ( mUpdateMethod)
   {
     std::vector<void*> params = { &dt };

@@ -14,6 +14,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <ImGui/imgui_internal.h> // for BeginViewportSideBar
 #include <Events/EventManager.h>
 #include <GUI/Styles/FontAwesome6Icons.h>
+#include <Input/InputManager.h>
 
 namespace {
   void BeginDisabledBlock(bool flag);
@@ -64,7 +65,8 @@ namespace GUI
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.5f, 0.f, 0.f, 0.7f));
           }
 
-          if (ImGui::Button(ICON_FA_STOP)) {
+          if (ImGui::Button(ICON_FA_STOP) || Input::InputManager::GetInstance().IsKeyTriggered(KEY_CODE::KEY_P)) {
+            QUEUE_EVENT(Events::LockMouseEvent, false);
             mSceneManager.StopScene();
           }
           if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
@@ -81,11 +83,12 @@ namespace GUI
           // play / pause button
           if (mSceneManager.GetSceneState() & Scenes::SceneState::PLAYING)
           {
-            if (ImGui::Button(ICON_FA_PAUSE)) {
+            if (ImGui::Button(ICON_FA_PAUSE) ) {
               mSceneManager.PauseScene();
             }
             if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
               ImGui::SetTooltip("Pause");
+              
             }
           }
           else
@@ -94,7 +97,8 @@ namespace GUI
             if (sceneStopped) {
               ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.f, 0.5f, 0.f, 0.7f));
             }
-            if (ImGui::Button(ICON_FA_PLAY)) {
+            if (ImGui::Button(ICON_FA_PLAY) || Input::InputManager::GetInstance().IsKeyTriggered(KEY_CODE::KEY_L)) {
+              QUEUE_EVENT(Events::LockMouseEvent,true);
               mSceneManager.PlayScene();
             }
             if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {

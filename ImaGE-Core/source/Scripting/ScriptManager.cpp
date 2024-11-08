@@ -26,6 +26,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Scripting/ScriptInstance.h>
 #include "Input/InputManager.h"
 #include "Asset/AssetManager.h"
+#include "Physics/PhysicsSystem.h"
 #define DEBUG_MONO
 namespace Mono
 {
@@ -167,10 +168,12 @@ void ScriptManager::AddInternalCalls()
   //ADD_CLASS_INTERNAL_CALL(IsKeyReleased, Input::InputManager::GetInstance());
   //ADD_CLASS_INTERNAL_CALL(IsKeyPressed, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(IsKeyHeld, Input::InputManager::GetInstance());
+  ADD_INTERNAL_CALL(GetMouseDelta);
 
   //// Get Functions
   ADD_INTERNAL_CALL(GetWorldPosition);
   ADD_INTERNAL_CALL(GetPosition);
+  ADD_INTERNAL_CALL(GetWorldRotation);
   ADD_INTERNAL_CALL(GetRotation);
   ADD_INTERNAL_CALL(GetWorldScale);
 
@@ -178,6 +181,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetWorldPosition);
   ADD_INTERNAL_CALL(SetPosition);
   ADD_INTERNAL_CALL(SetRotation);
+  ADD_INTERNAL_CALL(SetWorldRotation);
   ADD_INTERNAL_CALL(SetWorldScale);
   ADD_INTERNAL_CALL(MoveCharacter);
 
@@ -245,7 +249,7 @@ void ScriptManager::LoadAllMonoClass()
         MonoMethod* ctor = mono_class_get_method_from_name(newClass, ".ctor", 0);
         if (ctor)
         {
-          mMonoClassMap[classNameSpace + '.' + className] = newScriptClassInfo;
+          mMonoClassMap[className] = newScriptClassInfo;
         }
 #ifdef DEBUG_MONO
         else
@@ -253,7 +257,7 @@ void ScriptManager::LoadAllMonoClass()
 #endif // DEBUG
         if (className.find("Entity") == std::string::npos &&  IsMonoBehaviourclass(newClass)) // If the class is not the base entity class and inherits from it, we will add it to the list for inspector
         {          
-          mAllScriptNames.push_back(classNameSpace + '.' + className);
+          mAllScriptNames.push_back(className);
         }
         
       }
@@ -671,6 +675,20 @@ void Mono::SetWorldScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment
   TransformHelpers::UpdateWorldTransform(entity);
 }
 
+glm::quat Mono::GetWorldRotation(ECS::Entity::EntityID entity)
+{
+  Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+  return trans.worldRot;
+  // need to use quaternions
+}
+
+void Mono::SetWorldRotation(ECS::Entity::EntityID entity, glm::quat rotAdjustment)
+{
+  Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+  trans.worldRot += rotAdjustment;
+  // need to use quaternions
+}
+
 glm::quat Mono::GetRotation(ECS::Entity::EntityID entity)
 {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
@@ -737,18 +755,34 @@ float  Mono::GetAxis(MonoString* s)
 
 void Mono::MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec)
 {
-  if (ECS::Entity(entity).HasComponent<Component::Transform>())
+  if (ECS::Entity(entity).HasComponent<Component::RigidBody>())
   {
     //std::cout << "Move: " << dVec.x << "," << dVec.y << "," << dVec.z << "\n";
-    ECS::Entity(entity).GetComponent<Component::Transform>().position += dVec;
+    ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.x = dVec.x;
+    if(dVec.y == 20.f)
+      ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y = dVec.y;
+    ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.z = dVec.z;
+     
+    IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
+
   }
     
+}
+
+glm::vec3 Mono::GetMouseDelta()
+{
+  //std::cout << Input::InputManager::GetInstance().GetMousePos() << "\n";
+  return glm::vec3(Input::InputManager::GetInstance().GetMouseDelta(),0);
 }
 
 bool  Mono::IsGrounded(ECS::Entity::EntityID entity)
 {
   if (ECS::Entity(entity).HasComponent<Component::RigidBody>())
-    return(ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y == 0.f);
+  {
+    //std::cout << ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y << "\n";
+    return(ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y <= -0.002 && ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y >= -0.003);
+  }
+    
   return false;
 }
 
@@ -756,7 +790,6 @@ float Mono::GetDeltaTime()
 {
   return Performance::FrameRateController::GetInstance().GetDeltaTime();
 }
-
 /*!**********************************************************************
 *																																			  *
 *								  Helper Functions to get data from C#			          	*
