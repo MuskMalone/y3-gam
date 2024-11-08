@@ -238,6 +238,9 @@ namespace GUI
   bool Viewport::UpdateGuizmos() const {
     ECS::Entity selectedEntity{ GUIManager::GetSelectedEntity() };
     if (!selectedEntity || !selectedEntity.HasComponent<Component::Transform>()) { return false; }
+    static Component::PrefabOverrides* prefabOverrides{ nullptr };
+    prefabOverrides = selectedEntity.HasComponent<Component::PrefabOverrides>() ? 
+      &selectedEntity.GetComponent<Component::PrefabOverrides>() : nullptr;
 
     bool usingGuizmos{ false };
     ImGuizmo::SetDrawlist();
@@ -246,7 +249,8 @@ namespace GUI
     float windowWidth{ ImGui::GetWindowWidth() };
     float windowHeight{ ImGui::GetWindowHeight() };
     ImGuizmo::SetRect(windowPos.x, windowPos.y, windowWidth, windowHeight);
-    auto& transform{ selectedEntity.GetComponent<Component::Transform>() };
+    Component::Transform& transform{ selectedEntity.GetComponent<Component::Transform>() };
+    glm::vec3 const oldPos{ transform.position };
     auto modelMatrix{ transform.worldMtx };
     auto modelMatrixPrev{ transform.worldMtx };
     auto viewMatrix{ mEditorCam.GetViewMatrix() };
@@ -278,7 +282,6 @@ namespace GUI
         glm::value_ptr(t2), glm::value_ptr(r2), glm::value_ptr(s2));
       if (currentOperation == ImGuizmo::TRANSLATE) {
         transform.position += std::move(t - t2);
-
       }
       if (currentOperation == ImGuizmo::ROTATE) {
         auto localRot{ transform.eulerAngles + std::move(r - r2) };
@@ -289,7 +292,24 @@ namespace GUI
       }
       transform.modified = true;
       TransformHelpers::UpdateWorldTransform(selectedEntity);  // must call this to update world transform according to changes to local
+      QUEUE_EVENT(Events::SceneModifiedEvent);
     }
+
+    // update prefab overrides
+    if (usingGuizmos && prefabOverrides) {
+      if (prefabOverrides->IsComponentModified<Component::Transform>() && prefabOverrides->subDataId == Prefabs::PrefabSubData::BasePrefabId) {
+        // if root entity, ignore position changes
+        // here, im assuming only 1 value can be modified per frame.
+        // So if position wasn't modified, it means either rot or scale was
+        if (oldPos == transform.position) {
+          prefabOverrides->AddComponentModification(transform);
+        }
+      }
+      else {
+        prefabOverrides->AddComponentModification(transform);
+      }
+    }
+
 
     return usingGuizmos;
   }
