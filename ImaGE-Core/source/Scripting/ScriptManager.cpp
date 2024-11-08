@@ -158,8 +158,8 @@ void ScriptManager::LoadAppDomain()
   mono_domain_set(mAppDomain.get(), true);
 }
 
-#define ADD_INTERNAL_CALL(func) mono_add_internal_call("Image.Utils.InternalCalls::"#func, Mono::func);
-#define ADD_CLASS_INTERNAL_CALL(func, instance) mono_add_internal_call("Image.Utils.InternalCalls::"#func, instance.func);
+#define ADD_INTERNAL_CALL(func) mono_add_internal_call("IGE.Utils.InternalCalls::"#func, Mono::func);
+#define ADD_CLASS_INTERNAL_CALL(func, instance) mono_add_internal_call("IGE.Utils.InternalCalls::"#func, instance.func);
 
 void ScriptManager::AddInternalCalls()
 {
