@@ -377,6 +377,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Audio\AudioManager.cpp" />
     <ClCompile Include="source\Audio\AudioSystem.cpp" />
     <ClCompile Include="source\Core\Components\AudioSource.cpp" />
+    <ClCompile Include="source\Core\Components\RigidBody.cpp" />
     <ClCompile Include="source\Core\Components\Transform.cpp" />
     <ClCompile Include="source\Core\Entity.cpp" />
     <ClCompile Include="source\Core\EntityManager.cpp" />

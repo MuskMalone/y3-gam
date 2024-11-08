@@ -29,6 +29,10 @@ namespace IGE {
 			void Debug(); // to be called within rendersystems geom pass
 			void ClearSystem(); //clears all the rigidbodies. 
 			std::unordered_map<void*, physx::PxRigidDynamic*> const& GetRigidBodyIDs() const { return mRigidBodyIDs; }
+			void RayCast(glm::vec3 const& start, glm::vec3 const& end) {
+				
+			}
+
 		//private:
 		//	const uint32_t cMaxBodies = 65536;
 		//	const uint32_t cNumBodyMutexes = 0;
@@ -87,6 +91,11 @@ namespace IGE {
 			//for testing purposes only
 			PHYSICS_EVENT_LISTENER_DECL(OnContactSampleListener)
 			PHYSICS_EVENT_LISTENER_DECL(OnTriggerSampleListener)
+		private:
+			friend Component::RigidBody;
+			friend Component::BoxCollider;
+			friend Component::SphereCollider;
+			friend Component::CapsuleCollider;
 		};
 	}
 

@@ -96,14 +96,16 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("textBoxDimensions", &Text::textBoxDimensions);
 
   REGISTER_COMPONENT(RigidBody, "RigidBody")
-    .property("velocity", &RigidBody::velocity)
-    .property("angularVelocity", &RigidBody::angularVelocity)
-    .property("staticFriction", &RigidBody::staticFriction)
-    .property("dynamicFriction", &RigidBody::dynamicFriction)
-    .property("restitution", &RigidBody::restitution)
-    .property("gravityFactor", &RigidBody::gravityFactor)
-    .property("linearDamping", &RigidBody::linearDamping)
-    .property("motionType", &RigidBody::motionType);
+      .property("velocity", &RigidBody::velocity)
+      .property("angularVelocity", &RigidBody::angularVelocity)
+      .property("staticFriction", &RigidBody::staticFriction)
+      .property("dynamicFriction", &RigidBody::dynamicFriction)
+      .property("restitution", &RigidBody::restitution)
+      .property("gravityFactor", &RigidBody::gravityFactor)
+      .property("linearDamping", &RigidBody::linearDamping)
+      .property("motionType", &RigidBody::motionType)
+      .property("axisLock", &RigidBody::axisLock)
+      .property("angularAxisLock", &RigidBody::angularAxisLock);
 
   REGISTER_COMPONENT(BoxCollider, "BoxCollider")
       .property("scale", &BoxCollider::scale)
