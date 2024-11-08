@@ -337,6 +337,7 @@ namespace GUI
         {
           ECS::Entity newEntity{ ECS::EntityManager::GetInstance().CreateEntityWithTag(assetPayload.GetFileName()) };
           IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
+          auto const& mesh{ IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(meshSrc) };
           newEntity.EmplaceComponent<Component::Mesh>(meshSrc, assetPayload.GetFileName(), true);
           break;
         }

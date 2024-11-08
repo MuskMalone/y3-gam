@@ -10,9 +10,9 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#include "Vertex.h"
-#include "VertexArray.h"
-#include "Submesh.h"
+#include <Graphics/Vertex.h>
+#include <Graphics/VertexArray.h>
+#include <Graphics/Mesh/Submesh.h>
 
 namespace Graphics {
 	class MeshSource {
@@ -26,7 +26,8 @@ namespace Graphics {
         std::vector<Submesh>&& submeshes,
         std::vector<Vertex>&& vertices,
         std::vector<uint32_t>&& indices)
-        : mVertexArray{ std::move(vao) }, mSubmeshes{ std::move(submeshes) }, mVertices{ std::move(vertices) }, mIndices{ std::move(indices) } {}
+        : mVertices{ std::move(vertices) }, mIndices{ std::move(indices) },
+          mVertexArray{ std::move(vao) }, mSubmeshes{ std::move(submeshes) } {}
 
       const std::vector<Vertex>& GetVertices() const { return mVertices; }
       const std::vector<uint32_t>& GetIndices() const { return mIndices; }
@@ -38,12 +39,12 @@ namespace Graphics {
       bool IsWireframe() { return mIsWireframe; }
       void ToggleWireframe() { mIsWireframe = !mIsWireframe; }
     private:
-        bool mIsWireframe{ false };
       std::vector<Vertex> mVertices;
       std::vector<uint32_t> mIndices;
 
       std::shared_ptr<VertexArray> mVertexArray;
       std::vector<Submesh> mSubmeshes;
+      bool mIsWireframe{ false };
 
       //MATERIALS VECTOR TO ADD
       //AABB mBoundingBox add in the future

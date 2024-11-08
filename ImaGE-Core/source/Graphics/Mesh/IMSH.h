@@ -13,8 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <memory>
 #include <string>
 #include <vector>
-#include <Graphics/MeshSource.h>
-#include <Graphics/Vertex.h>
+#include <Graphics/Mesh/MeshSource.h>
 
 // forward declarations
 struct aiScene; struct aiNode;
@@ -26,9 +25,9 @@ namespace Graphics::AssetIO
   struct MeshImportFlags
   {
     MeshImportFlags() : boneWeights{ false }, animations{ false },
-      lights{ false }, cameras{ false }, materials{ false } {}
+      lights{ false }, cameras{ false }, materials{ true } {}
 
-    inline bool IsDefault() const noexcept { return boneWeights || animations || lights || cameras || materials; }
+    inline bool IsDefault() const noexcept { return boneWeights || animations || lights || cameras; }
     int GetFlags() const;
 
     bool boneWeights, animations, lights, cameras, materials;
@@ -75,9 +74,9 @@ namespace Graphics::AssetIO
     // serialized as first 24 bytes
     struct Header {
       Header() = default;
-      Header(uint64_t _vtxSize, uint64_t _idxSize, uint64_t _submeshSize)
-        : vtxSize{ _vtxSize }, idxSize{ _idxSize }, submeshSize{ _submeshSize } {}
-      uint64_t vtxSize, idxSize, submeshSize;
+      Header(uint64_t _vtxSize, uint64_t _idxSize, uint64_t _submeshSize, uint64_t _materialsSize)
+        : vtxSize{ _vtxSize }, idxSize{ _idxSize }, submeshSize{ _submeshSize }, materialsSize{ _materialsSize } {}
+      uint64_t vtxSize, idxSize, submeshSize, materialsSize;
     };
 
     // used to read/write submesh data
@@ -94,13 +93,15 @@ namespace Graphics::AssetIO
     std::vector<Graphics::Vertex> mVertexBuffer;
     std::vector<uint32_t> mIndices;
     std::vector<SubmeshData> mSubmeshData;
-    //std::vector<std::string> mMeshNames;
+    std::vector<MeshMatValues> mMatValues;
+    std::vector<std::string> mMeshNames;
     bool mStatus, mIsStatic;
 
     static const unsigned sAssimpImportFlags, sMinimalAssimpImportFlags;
 
     void RecenterMesh();
     void NormalizeScale();
+
     void ProcessSubmeshes(aiNode* node, aiScene const* scene, aiMatrix4x4 const& parentMtx);
     void ProcessMeshes(aiNode* node, aiScene const* scene);
   };

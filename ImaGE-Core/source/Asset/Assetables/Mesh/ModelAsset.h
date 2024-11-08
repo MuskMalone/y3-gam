@@ -1,6 +1,6 @@
 #pragma once
 #include "Asset/SmartPointer.h"
-#include "Graphics/MeshFactory.h"
+#include "Graphics/Mesh/MeshFactory.h"
 #include "Asset/AssetMetadata.h"
 namespace IGE {
 	namespace Assets {

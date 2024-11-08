@@ -22,8 +22,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <functional>
 #include <Reflection/ComponentTypes.h>
 #include <Events/EventManager.h>
-#include <Graphics/MeshFactory.h>
-#include <Graphics/Mesh.h>
+#include <Graphics/Mesh/MeshFactory.h>
+#include <Graphics/Mesh/Mesh.h>
 #include "Asset/IGEAssets.h"
 #include <Core/Systems/LayerSystem/LayerSystem.h>
 #include <Physics/PhysicsHelpers.h>
