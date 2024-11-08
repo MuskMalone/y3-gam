@@ -336,7 +336,25 @@ namespace IGE {
           AssetMetadata::AssetProps const& GetCMetadata(GUID const& guid) const {
               return GetMetadata<T>(guid);
           }
+          template <typename T>
+          void ChangeAssetPath(GUID const& guid, std::string newPath) {
+              try {
+                  auto& metadata{ GetMetadata<T>(guid) };
+                  auto const& oldPath{ metadata.at("path") };
+                  //since guid is already in the metadata, safe to assume that it will be in the registries as well
+                  mGUID2PathRegistry.at(guid) = newPath;
+                  mPath2GUIDRegistry.emplace(newPath, guid);
+                  mPath2GUIDRegistry.erase(oldPath);
 
+                  metadata.at("path") = newPath;
+              }
+              catch (Debug::Exception<AssetManager> const& e) {
+                  Debug::DebugLogger::GetInstance().LogWarning("guid " + std::to_string(guid) + " does not exist within metadata");
+              }
+              catch (...) {
+                  Debug::DebugLogger::GetInstance().LogWarning("guid " + std::to_string(guid) + " with filepath " + newPath + " could not be changed");
+              }
+          }
 
         private:
           AssetMetadata mMetadata;
