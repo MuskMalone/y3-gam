@@ -25,7 +25,7 @@ namespace Graphics {
         std::shared_ptr<MaterialData> materialData{}; //TODO change this
         if (!materialData) {
             // Handle missing material (use a default material if needed)
-            materialData = MaterialData::Create("PBR", "Default"); //TODO CHNAGE THIS
+            materialData = MaterialData::Create("PBR", "null"); //TODO CHNAGE THIS
         }
 
         // Add the new material to the table

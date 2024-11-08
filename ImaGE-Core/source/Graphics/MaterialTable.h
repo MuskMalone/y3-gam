@@ -41,7 +41,7 @@ namespace Graphics {
         static void ApplyMaterialTextures(std::shared_ptr<Graphics::Shader>& shader);
 
         static void SaveMaterials();
-        static void LoadMaterials();
+        static std::shared_ptr<MaterialData> LoadMaterial(std::string const& fp);
 
         static void ClearMaterials();
 
