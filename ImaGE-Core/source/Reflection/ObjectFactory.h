@@ -51,8 +51,9 @@ namespace Reflection
       The parent of the entity. It is set to entt::null by default,
       indicating no parent.
     \return
+      The new entity
     ************************************************************************/
-    void CloneObject(ECS::Entity const& entity, ECS::Entity const& parent = {}) const;
+    ECS::Entity CloneObject(ECS::Entity const& entity, ECS::Entity const& parent = {}) const;
 
     /*!*********************************************************************
     \brief

@@ -4,27 +4,25 @@
 \date   10-September-2024
 \brief  Macros to simplify event callback declaration and definition.
         Example usage:
+          // in ur constructor / init
+          SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &MyClass::MyCallback, this);
+          SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &MyClass::MyCallback2, this);
+
           // in .h
-          EVENT_CALLBACK_DECL(HandleEvent);
+          EVENT_CALLBACK_DECL(MyCallback);
 
           // in .cpp
-          EVENT_CALLBACK_DEF(PrefabEditor, HandleEvent)
+          EVENT_CALLBACK_DEF(PrefabEditor, MyCallback)
           {
-            switch (event->GetCategory())
-            {
-            case Events::EventType::EDIT_PREFAB:
-            {
-              auto editPrefabEvent{ std::static_pointer_cast<Events::EditPrefabEvent>(event) };
-              //...
-              break;
-            }
-            case Events::EventType::KEY_TRIGGERED:
-            {
-              auto keyTriggeredEvent{ std::static_pointer_cast<Events::EditPrefabEvent>(event) };
-              //...
-              break;
-            }
-            }
+            auto editPrefabEvent{ CAST_TO_EVENT(Events::EditPrefabEvent) };
+            // access data members and do ur stuff
+            // ...
+          }
+
+          EVENT_CALLBACK_DEF(PrefabEditor, MyCallback2)
+          {
+            auto keyTriggeredEvent{ CAST_TO_EVENT(Events::EditPrefabEvent) };
+            // ...
           }
 
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.

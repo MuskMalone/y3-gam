@@ -109,11 +109,6 @@
                                 "y": 0.0,
                                 "z": 0.0
                             },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
                             "rotationOffset": {
                                 "x": 0.0,
                                 "y": 0.0,
@@ -341,9 +336,8 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 11472399875514191353
+                            "ID": 15299710194714288536
                         },
-                        "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
                     }
@@ -430,9 +424,8 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 3326639866084949892
+                            "ID": 5408769616568067525
                         },
-                        "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
                     }
@@ -622,9 +615,8 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 11472399875514191353
+                            "ID": 15299710194714288536
                         },
-                        "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
                     }
@@ -661,11 +653,6 @@
                                 "z": 1.0049999952316285
                             },
                             "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
                                 "x": 0.0,
                                 "y": 0.0,
                                 "z": 0.0
@@ -962,9 +949,8 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 11472399875514191353
+                            "ID": 15299710194714288536
                         },
-                        "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
                     }
@@ -1033,9 +1019,8 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 11472399875514191353
+                            "ID": 15299710194714288536
                         },
-                        "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
                     }
@@ -1047,7 +1032,7 @@
         "layerNames": [
             "Default",
             "Player",
-            "UI",
+            "Buildings",
             "",
             "",
             "",

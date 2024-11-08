@@ -16,6 +16,8 @@ namespace Component {
       Material() = default;
       Material(std::shared_ptr<Graphics::Material> material) : material{ material } {} // Constructor to set material instance
 
+      //Material(Material const& rhs) : material{ Graphics::Material::Create(rhs.material->GetShader()) }, matIdx{rhs.matIdx} {}
+
       /*!*********************************************************************
       \brief
         Resets the material to default values

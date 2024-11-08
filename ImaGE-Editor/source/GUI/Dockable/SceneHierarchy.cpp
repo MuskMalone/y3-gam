@@ -105,7 +105,7 @@ namespace GUI
       if (sTimeElapsed >= sTimeBeforeRename) {
         // after target time, check whether mouse was released
         // to determine if it was a rename operation
-        if (sLMouseReleased) {
+        if (sLMouseReleased && !mEditingPrefab) {
           sEditNameMode = mLockControls = true;
         }
         sTimeElapsed = 0;
@@ -318,7 +318,8 @@ namespace GUI
     if (ImGui::BeginPopup("HierarchyOptions"))
     {
       if (ImGui::Selectable("Create Entity")) {
-        CreateNewEntity();
+        ECS::Entity const newEntity{ CreateNewEntity() };
+        GUIManager::SetSelectedEntity(newEntity);
         modified = true;
       }
 
@@ -341,8 +342,9 @@ namespace GUI
     if (ImGui::BeginPopup("EntityOptions"))
     {
       if (ImGui::Selectable("Create Entity")) {
-        ECS::Entity newEntity{ CreateNewEntity() };
+        ECS::Entity const newEntity{ CreateNewEntity() };
         mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
+        GUIManager::SetSelectedEntity(newEntity);
         modified = true;
       }
 
@@ -356,13 +358,12 @@ namespace GUI
         }
       }
 
-      // @TODO: need a way to deep copy components
-      //ImGui::BeginDisabled();
-      //if (ImGui::Selectable("Duplicate")) {
-      //  //mEntityManager.CopyEntity(mRightClickedEntity);
-      //  Reflection::ObjectFactory::GetInstance().CloneObject(mRightClickedEntity);
-      //}
-      //ImGui::EndDisabled();
+      if (ImGui::Selectable("Duplicate")) {
+        ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
+        ECS::Entity newEntity{ Reflection::ObjectFactory::GetInstance().CloneObject(mRightClickedEntity,
+          em.HasParent(mRightClickedEntity) ? em.GetParentEntity(mRightClickedEntity) : ECS::Entity()) };
+        GUIManager::SetSelectedEntity(newEntity);
+      }
 
       if (mEditingPrefab) { ImGui::BeginDisabled(); }
       if (ImGui::Selectable("Save as Prefab")) {
