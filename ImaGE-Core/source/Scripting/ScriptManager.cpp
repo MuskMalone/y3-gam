@@ -783,7 +783,7 @@ bool  Mono::IsGrounded(ECS::Entity::EntityID entity)
   if (ECS::Entity(entity).HasComponent<Component::RigidBody>())
   {
     //std::cout << ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y << "\n";
-    return(ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y <= -0.002 && ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y >= -0.003);
+    return(ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y <= 0 && ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y >= -0.005);
   }
     
   return false;
