@@ -35,7 +35,8 @@ namespace GUI
     void Run() override;
 
   private:
-    std::string mPrefabName, mPrefabPath;
+    std::string mPrefabName;
+    IGE::Assets::GUID mGUID;
     std::vector<Prefabs::SubDataId> mRemovedChildren;
     std::vector<std::pair<Prefabs::SubDataId, rttr::type>> mRemovedComponents;
     std::pair<ECS::Entity, Prefabs::Prefab::EntityMappings> mPrefabInstance;

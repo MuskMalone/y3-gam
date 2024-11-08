@@ -128,7 +128,7 @@ namespace Systems {
       mLayerEntities.clear();
       return;
     }
-    else if (!(sceneChangeEvent->mNewState == Events::SceneStateChange::CHANGED || sceneChangeEvent->mNewState == Events::SceneStateChange::NEW)) {
+    else if (sceneChangeEvent->mNewState & ~(Events::SceneStateChange::CHANGED | Events::SceneStateChange::NEW)) {
       return;
     }
 

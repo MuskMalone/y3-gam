@@ -24,6 +24,7 @@
 namespace GUI
 {
   static bool sEntityDoubleClicked{ false }, sEditNameMode{ false }, sFirstEnterEditMode{ true };
+  static bool sLMouseReleased{ false };
   static float sTimeElapsed;  // for renaming entity
 
   SceneHierarchy::SceneHierarchy(const char* name) : GUIWindow(name),
@@ -35,7 +36,6 @@ namespace GUI
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &SceneHierarchy::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &SceneHierarchy::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_MODIFIED, &SceneHierarchy::HandleEvent, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SAVE_SCENE, &SceneHierarchy::HandleEvent, this);
   }
 
   void SceneHierarchy::Run()
@@ -56,6 +56,10 @@ namespace GUI
       // Ctrl + S to save
       if (ImGui::GetIO().KeyCtrl && ImGui::IsKeyPressed(ImGuiKey_S, false)) {
         QUEUE_EVENT(Events::SaveSceneEvent);
+        if (mSceneModified) {
+          mSceneName.erase(mSceneName.size() - 2);
+          mSceneModified = false;
+        }
       }
 
       ImGui::Text(sceneNameSave.c_str());
@@ -93,8 +97,17 @@ namespace GUI
     // this is to prevent clashing with double-clicks
     if (sEntityDoubleClicked) {
       sTimeElapsed += Performance::FrameRateController::GetInstance().GetDeltaTime();
+      // set flag when click is released
+      if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
+        sLMouseReleased = true;
+      }
+
       if (sTimeElapsed >= sTimeBeforeRename) {
-        sEditNameMode = mLockControls = true;
+        // after target time, check whether mouse was released
+        // to determine if it was a rename operation
+        if (sLMouseReleased && !mEditingPrefab) {
+          sEditNameMode = mLockControls = true;
+        }
         sTimeElapsed = 0;
         sEntityDoubleClicked = false;
       }
@@ -169,9 +182,6 @@ namespace GUI
 
       mSceneName += " *";
       mSceneModified = true;
-      break;
-    case Events::EventType::SAVE_SCENE:
-      mSceneName.erase(mSceneName.size() - 2);
       break;
     default:break;
     }
@@ -286,11 +296,10 @@ namespace GUI
       sEntityDoubleClicked = false;
       sFirstEnterEditMode = true;
     }
-    else if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && ImGui::IsItemHovered()) {
+    else if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
       if (GUIManager::GetSelectedEntity() == entity) {
-        if (!ImGui::IsMouseDown(ImGuiMouseButton_Left)) {
-          sEntityDoubleClicked = true;
-        }
+        sEntityDoubleClicked = true;
+        sLMouseReleased = false;
       }
       else {
         GUIManager::SetSelectedEntity(entity);
@@ -309,7 +318,8 @@ namespace GUI
     if (ImGui::BeginPopup("HierarchyOptions"))
     {
       if (ImGui::Selectable("Create Entity")) {
-        CreateNewEntity();
+        ECS::Entity const newEntity{ CreateNewEntity() };
+        GUIManager::SetSelectedEntity(newEntity);
         modified = true;
       }
 
@@ -332,8 +342,9 @@ namespace GUI
     if (ImGui::BeginPopup("EntityOptions"))
     {
       if (ImGui::Selectable("Create Entity")) {
-        ECS::Entity newEntity{ CreateNewEntity() };
+        ECS::Entity const newEntity{ CreateNewEntity() };
         mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
+        GUIManager::SetSelectedEntity(newEntity);
         modified = true;
       }
 
@@ -347,13 +358,12 @@ namespace GUI
         }
       }
 
-      // @TODO: need a way to deep copy components
-      //ImGui::BeginDisabled();
-      //if (ImGui::Selectable("Duplicate")) {
-      //  //mEntityManager.CopyEntity(mRightClickedEntity);
-      //  Reflection::ObjectFactory::GetInstance().CloneObject(mRightClickedEntity);
-      //}
-      //ImGui::EndDisabled();
+      if (ImGui::Selectable("Duplicate")) {
+        ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
+        ECS::Entity newEntity{ Reflection::ObjectFactory::GetInstance().CloneObject(mRightClickedEntity,
+          em.HasParent(mRightClickedEntity) ? em.GetParentEntity(mRightClickedEntity) : ECS::Entity()) };
+        GUIManager::SetSelectedEntity(newEntity);
+      }
 
       if (mEditingPrefab) { ImGui::BeginDisabled(); }
       if (ImGui::Selectable("Save as Prefab")) {
