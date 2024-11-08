@@ -15,31 +15,15 @@ written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************************/
 
-using IGE.Utils;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
+using System.Drawing;      // For Bitmap (or use other graphics libraries)
+using System.Drawing.Imaging;
 
-  public class InsideB 
-  {
-    public int INSIDEHERE = 369;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-  }
-
-
+namespace IGE.Utils
+{
+}

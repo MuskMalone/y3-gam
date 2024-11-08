@@ -4,7 +4,9 @@
 //using System.Text;
 //using System.Threading.Tasks;
 //using System.Numerics;
-//using Image.Utils;
+//using IGE.Utils;
+//using System.Drawing;      // For Bitmap (or use other graphics libraries)
+//using System.Drawing.Imaging;
 //public class Inventory : Entity
 //{
 //  private const int SLOTS = 6;
@@ -15,17 +17,17 @@
 //  public event EventHandler<InventoryEventArgs> ItemRemoved;
 //  private watercloth waterCloth;
 
-//  //public Image item1;
-// // public Image item2;     //NEED TO DO
-// // public Image item3;
-// // public Image item4;
-////  public Image item5;
-// // public Image item6;
+//  public Image item1;
+//  public Image item2;     //NEED TO DO
+//  public Image item3;
+//  public Image item4;
+//  public Image item5;
+//  public Image item6;
 
-//  public Color normalColor = Color.white;
-//  public Color highlightColor = Color.yellow;
+//  public Color normalColor = Color.White;
+//  public Color highlightColor = Color.Yellow;
 
-//  //private Image currentItem;
+//  private Image currentItem;
 //  private bool highlighted = false;
 
 //  public Entity pitPaintingUI;

@@ -15,7 +15,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************************/
 
-using Image.Utils;
+using IGE.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;

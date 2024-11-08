@@ -24,7 +24,7 @@ using System.Runtime.CompilerServices;
 using System.Numerics;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
 
-namespace Image.Utils
+namespace IGE.Utils
 {
   public static class InternalCalls
   {

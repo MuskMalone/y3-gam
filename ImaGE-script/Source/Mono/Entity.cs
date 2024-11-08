@@ -24,7 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 //using System.Diagnostics;
-using Image.Utils;
+using IGE.Utils;
 
 
   public class Entity

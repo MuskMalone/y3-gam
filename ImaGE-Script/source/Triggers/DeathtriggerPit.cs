@@ -7,7 +7,7 @@
 //using System.Text;
 //using System.Threading.Tasks;
 //using System.Xml;
-//using Image.Utils;
+//using IGE.Utils;
 
 
 //  public class DeathtriggerPit : Entity

@@ -16,7 +16,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 /******************************************************************************/
 
 
-using Image.Utils;
+using IGE.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +24,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Image.Utils
+namespace IGE.Utils
 {
   public static class Mathf
   {

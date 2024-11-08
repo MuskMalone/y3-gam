@@ -4,7 +4,7 @@
 //using System.Text;
 //using System.Threading.Tasks;
 //using System.Numerics;
-//using Image.Utils;
+//using IGE.Utils;
 //public class PictureAlignTools : Entity
 //{
 //    public Transform player;            // Assign the player object
