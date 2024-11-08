@@ -130,7 +130,7 @@ public class  PlayerMove : Entity
       //Console.WriteLine(pitch);
 
       // Update the camera's rotation (pitch)
-      //cam.GetComponent<Transform>().worldRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(pitch));
+      cam.GetComponent<Transform>().rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(pitch));
 
       // Update the player's rotation (yaw)
       GetComponent<Transform>().worldRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, Mathf.DegToRad(yaw));

@@ -679,13 +679,15 @@ glm::quat Mono::GetWorldRotation(ECS::Entity::EntityID entity)
 {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
   return trans.worldRot;
+
   // need to use quaternions
 }
 
 void Mono::SetWorldRotation(ECS::Entity::EntityID entity, glm::quat rotAdjustment)
 {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
-  trans.worldRot += rotAdjustment;
+  trans.worldRot = rotAdjustment;
+  trans.modified = true;
   // need to use quaternions
 }
 
@@ -699,7 +701,8 @@ glm::quat Mono::GetRotation(ECS::Entity::EntityID entity)
 void Mono::SetRotation(ECS::Entity::EntityID entity, glm::quat rotAdjustment)
 {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
-  trans.rotation += rotAdjustment;
+  trans.rotation = rotAdjustment;
+  trans.modified = true;
   // need to use quaternions
 }
 
