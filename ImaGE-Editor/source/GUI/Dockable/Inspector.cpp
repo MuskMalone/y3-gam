@@ -108,7 +108,10 @@ namespace GUI {
       static bool componentOverriden{ false };
       if (!mEditingPrefab && currentEntity.HasComponent<Component::PrefabOverrides>()) {
         prefabOverride = &currentEntity.GetComponent<Component::PrefabOverrides>();
-        std::string const& pfbName{ IGE_ASSETMGR.GetAsset<IGE::Assets::PrefabAsset>(prefabOverride->guid)->mPrefabData.mName };
+        IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+
+        am.LoadRef<IGE::Assets::PrefabAsset>(prefabOverride->guid);
+        std::string const& pfbName{ am.GetAsset<IGE::Assets::PrefabAsset>(prefabOverride->guid)->mPrefabData.mName };
         ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
         ImGui::Text("Prefab instance of");
         ImGui::SameLine();
@@ -876,7 +879,7 @@ namespace GUI {
       BeginVec3Table("LocalTransformTable", inputWidth);
 
       // @TODO: Replace min and max with the world min and max
-      if (ImGuiHelpers::TableInputFloat3("Position", &transform.position[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
+      if (ImGuiHelpers::TableInputFloat3("Position", &transform.position[0], inputWidth, false, -1000.f, 1000.f, 0.1f)) {
         modified = true;
       }
       glm::vec3 localRot{ transform.eulerAngles };
@@ -884,7 +887,7 @@ namespace GUI {
         transform.SetLocalRotWithEuler(localRot);
         modified = true;
       }
-      if (ImGuiHelpers::TableInputFloat3("Scale", &transform.scale[0], inputWidth, false, 0.001f, 100.f, 0.3f)) {
+      if (ImGuiHelpers::TableInputFloat3("Scale", &transform.scale[0], inputWidth, false, 0.001f, 200.f, 0.02f)) {
         modified = true;
       }
 

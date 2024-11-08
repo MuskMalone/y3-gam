@@ -207,10 +207,10 @@ namespace IGE {
     glfwSetDropCallback(mWindow.get(), WindowDropCallback);
 
     auto lambd = [](int signal) { 
-      std::cerr << ">>>>>>>>>>>>>>>>>>>>>> Crash detected! Scene has been backed-up to \"./.backup/\" folder <<<<<<<<<<<<<<<<<<<\n";
+      std::cerr << ">>>>>>>>>>>>>>>>>>>>>> Crash detected! Scene and Metadata has been backed-up to \"./.backup/\" folder <<<<<<<<<<<<<<<<<<<\n";
       Scenes::SceneManager::GetInstance().BackupSave();
+      IGE_ASSETMGR.SaveMetadata();
 
-      IGE_ASSETMGR.DestroyInstance();
       IGE_DBGLOGGER.DestroyInstance();
     };
 

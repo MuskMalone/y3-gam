@@ -24,11 +24,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Scenes
 {
-  SceneManager::SceneManager()
+  SceneManager::SceneManager() : mSaveStates{}, mMainThreadQueue{}, mSceneName{},
+    mTempDir{ gTempDirectory }, mMainThreadQueueMutex{}, mSceneState{ NO_SCENE }
   {
-    mSceneState = SceneState::STOPPED;
     // @TODO: SHOULD RETREIVE FROM CONFIG FILE IN FUTURE
-    mTempDir = gTempDirectory;
+    //mTempDir = gTempDirectory;
 
     // create temp directory if it doesn't already exist
     if (!std::filesystem::exists(mTempDir))
@@ -127,7 +127,8 @@ namespace Scenes
         Graphics::RenderSystem::mCameraManager.AddMainCamera();
       }
       Debug::DebugLogger::GetInstance().LogInfo("Loading scene: " + mSceneName + "...");
-      
+       
+      mSceneState = SceneState::STOPPED;
       break;
     }
     case Events::EventType::SAVE_SCENE:

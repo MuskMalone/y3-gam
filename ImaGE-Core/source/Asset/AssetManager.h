@@ -48,7 +48,7 @@ namespace IGE {
           template <typename T>
           std::string GetTypeName() { return rttr::type::get<T>().get_name().to_string(); }
           void Initialize();
-          std::string CreateProjectFile();
+          std::string CreateProjectFile() const;
       public:
           //-------------------------------------------------------------------------
           AssetManager();
@@ -137,6 +137,9 @@ namespace IGE {
                   mMetadata.Emplace(assetCategory, guid, metadata);
                   mPath2GUIDRegistry.emplace(newFp, guid);
                   mGUID2PathRegistry.emplace(guid, newFp);
+
+                  SaveMetadata();
+
                   return guid;
               }
               else {
@@ -338,6 +341,7 @@ namespace IGE {
             GUID PathToGUID(std::string const& path);
             ImportFunc ImportFunction(std::string const& type);
             DeleteFunc DeleteFunction(std::string const& type);
+            void SaveMetadata() const;
       };
 	}
 }

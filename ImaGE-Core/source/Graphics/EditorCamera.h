@@ -31,7 +31,7 @@ namespace Graphics {
 			float fov = 45.0f,                                // Default field of view
 			float aspectRatio = 16.0f / 9.0f,                 // Default aspect ratio
 			float nearClip = 0.1f,                            // Near clipping plane
-			float farClip = 300.0f)                           // Far clipping plane
+			float farClip = 3000.0f)                           // Far clipping plane
 			: mPosition(position), mYaw(yaw), mPitch(pitch), mFov(fov),
 			mAspectRatio(aspectRatio), mNearClip(nearClip), mFarClip(farClip) {}
 
@@ -76,7 +76,7 @@ namespace Graphics {
 		float mNearClip;
 		float mFarClip;
 
-		float mMoveSpeed{ 8.f };
+		float mMoveSpeed{ 15.f };
 		float mMousePanningSpeed{ 5.f };
 		float mMouseSense{ 50.f };
 		float mZoomSpeed{ 2.5f };

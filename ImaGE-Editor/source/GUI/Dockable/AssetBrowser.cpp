@@ -19,6 +19,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "GUI/GUIManager.h"
 #include <Graphics/AssetIO/IMSH.h>
 #include <GUI/Helpers/AssetPayload.h>
+#include <Scenes/SceneManager.h>
 
 namespace MeshPopup {
   static constexpr float sTableCol1Width = 250.f;
@@ -59,9 +60,8 @@ namespace GUI
 
   AssetBrowser::AssetBrowser(const char* name) : GUIWindow(name),
     mCurrentDir{ gAssetsDirectory }, mRightClickedDir{},
-    mSelectedAsset{}, mDirMenuPopup{ false }, mAssetMenuPopup{ false }, mDisableSceneChange{ false }, mDisablePrefabSpawn{ true }
+    mSelectedAsset{}, mDirMenuPopup{ false }, mAssetMenuPopup{ false }
   {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &AssetBrowser::SceneStateChanged, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::ADD_FILES, &AssetBrowser::FilesImported, this);
   }
 
@@ -275,12 +275,15 @@ namespace GUI
     
     if (ImGui::BeginDragDropSource()) {
       std::string const ext{ draggedAsset.extension().string() };
-      bool const canSpawnPfb{ mDisablePrefabSpawn && ext == gPrefabFileExt };
-      if (mDisableSceneChange || canSpawnPfb) {
+      Scenes::SceneState const sceneState{ IGE_SCENEMGR.GetSceneState() };
+      bool popStyleCol{ false };
+      if (ext == gPrefabFileExt && (sceneState & (Scenes::NO_SCENE | Scenes::PREFAB_EDITOR))) {
         ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+        popStyleCol = true;
       }
-      else if (mDisableSceneChange && ext == gMeshFileExt) {
+      else if (std::string(gSupportedModelFormats).find(ext) != std::string::npos && (sceneState & ~(Scenes::STOPPED | Scenes::PREFAB_EDITOR))) {
         ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+        popStyleCol = true;
       }
       else {
         std::string const pathStr{ draggedAsset.relative_path().string() };
@@ -289,28 +292,9 @@ namespace GUI
       
       ImGui::Text(draggedAsset.filename().string().c_str());
 
-      if (mDisableSceneChange || canSpawnPfb) {
-        ImGui::PopStyleColor();
-      }
+      if (popStyleCol) { ImGui::PopStyleColor(); }
 
       ImGui::EndDragDropSource();
-    }
-  }
-
-  EVENT_CALLBACK_DEF(AssetBrowser, SceneStateChanged)
-  {
-    switch (CAST_TO_EVENT(Events::SceneStateChange)->mNewState)
-    {
-    case Events::SceneStateChange::NEW:
-    case Events::SceneStateChange::CHANGED:
-    case Events::SceneStateChange::STOPPED:
-      mDisableSceneChange = mDisablePrefabSpawn = false;
-      break;
-    case Events::SceneStateChange::STARTED:
-    case Events::SceneStateChange::PAUSED:
-      mDisableSceneChange = true;
-      break;
-    default: break;
     }
   }
 
@@ -404,12 +388,10 @@ namespace GUI
       // only enabled for prefabs
       if (mSelectedAsset.extension().string() == ".pfb")
       {
-        ImGui::BeginDisabled(mDisableSceneChange);
-        if (ImGui::Selectable("Edit Prefab"))
-        {
+        ImGui::BeginDisabled(IGE_SCENEMGR.GetSceneState() & ~(Scenes::STOPPED | Scenes::NO_SCENE));
+        if (ImGui::Selectable("Edit Prefab")) {
           QUEUE_EVENT(Events::EditPrefabEvent, mSelectedAsset.stem().string(),
             mSelectedAsset.relative_path().string());
-          mDisableSceneChange = true;
         }
         ImGui::EndDisabled();
       }
@@ -550,6 +532,20 @@ namespace GUI
 
       if (elementHover) {
         ImGui::SetTooltip("Remap the mesh's vertices so its center is the origin");
+        elementHover = false;
+      }
+      ImGui::TableNextRow();
+
+      // normalize scale checkbox
+      ImGui::AlignTextToFramePadding();
+      NextRowTable("Normalize Scale?");
+      if (ImGui::IsItemHovered()) { elementHover = true; }
+
+      ImGui::Checkbox("##NormalizeScale", &Graphics::AssetIO::IMSH::sNormalizeScale);
+      if (ImGui::IsItemHovered()) { elementHover = true; }
+
+      if (elementHover) {
+        ImGui::SetTooltip("Rescale the mesh to a unit size");
         elementHover = false;
       }
       ImGui::TableNextRow();
