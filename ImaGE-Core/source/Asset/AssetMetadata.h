@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <string>
+#include <Asset/SmartPointer.h>
 namespace IGE{
     namespace Assets {
         struct AssetMetadata {
