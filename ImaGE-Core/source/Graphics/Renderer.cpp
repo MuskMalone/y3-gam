@@ -173,12 +173,12 @@ namespace Graphics {
 		// Add default material to the table (e.g., at index 0)
 		MaterialTable::AddMaterial(defaultMaterial);
 
-		std::shared_ptr<MaterialData> mat1 = MaterialData::Create(ShaderLibrary::Get("PBR"));
+		std::shared_ptr<MaterialData> mat1 = MaterialData::Create("PBR", "MatLighting");
 		mat1->SetAlbedoMap(texguid1);
 		mat1->SetAlbedoColor({ 0.7f,0.6f,0.9f });
 		MaterialTable::AddMaterial(mat1);
 
-		std::shared_ptr<MaterialData> mat2 = MaterialData::Create(ShaderLibrary::Get("Unlit")); //@TODO support other shaders like Unlit
+		std::shared_ptr<MaterialData> mat2 = MaterialData::Create("Unlit", "MatNoLight"); //@TODO support other shaders like Unlit
 		mat2->SetAlbedoMap(texguid);
 		MaterialTable::AddMaterial(mat2);
 		//--Material Init End--//

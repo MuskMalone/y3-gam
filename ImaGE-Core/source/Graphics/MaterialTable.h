@@ -6,7 +6,8 @@
 namespace Graphics {
 
     struct MatData {
-
+        std::string name;
+        std::string shader;
         glm::vec3 albedoColor{ 1.0f, 1.0f, 1.0f };
         float metalness{ 0.0f };
         float roughness{ 0.5f };

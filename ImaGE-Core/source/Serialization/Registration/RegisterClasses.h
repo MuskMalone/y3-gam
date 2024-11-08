@@ -169,6 +169,8 @@ static void rttr_auto_register_reflection_function_(); namespace {
   {
       using T = Graphics::MatData;
       rttr::registration::class_<T>("MatData")
+          .property("name", &T::name)
+          .property("shader", &T::shader)
           .property("albedoColor", &T::albedoColor)
           .property("metalness", &T::metalness)
           .property("roughness", &T::roughness)

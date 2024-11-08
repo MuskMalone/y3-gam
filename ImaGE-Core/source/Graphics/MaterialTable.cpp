@@ -25,7 +25,7 @@ namespace Graphics {
         std::shared_ptr<MaterialData> materialData{}; //TODO change this
         if (!materialData) {
             // Handle missing material (use a default material if needed)
-            materialData = MaterialData::Create(ShaderLibrary::Get("PBR")); //TODO CHNAGE THIS
+            materialData = MaterialData::Create("PBR", "Default"); //TODO CHNAGE THIS
         }
 
         // Add the new material to the table
@@ -103,13 +103,15 @@ namespace Graphics {
 
             // Create a unique filename for each material based on its GUID
             std::stringstream ss;
-            ss << gMaterialDirectory << "mat" << i << ".mat";
+            ss << gMaterialDirectory << material->GetName() << i << ".mat";
            // std::string filename = "Materials/" + material->GetGUID().ToString() + ".mat";
             std::string filename = ss.str();
 
             // Prepare the metadata struct with material properties
             MatData data;
             //metadata.guid = material->GetGUID();
+            data.name = material->GetName();
+            data.shader = material->GetShaderName();
             data.albedoColor = material->GetAlbedoColor();
             data.metalness = material->GetMetalness();
             data.roughness = material->GetRoughness();
@@ -129,38 +131,43 @@ namespace Graphics {
     }
 
 
-    void MaterialTable::LoadMaterials() {
-        std::string directory = "Materials/";
-
-        // Check if directory exists or handle error if it doesn't
-        if (!std::filesystem::exists(directory)) {
-            std::cerr << "Directory " << directory << " does not exist. No materials to load.\n";
-            return;
+    std::shared_ptr<MaterialData> MaterialTable::LoadMaterial(std::string const& fp) {
+        // Ensure the file exists
+        if (!std::filesystem::exists(fp)) {
+            std::stringstream ss;
+            ss << "Failed to load material data, file " << fp << " does not exist.\n";
+            Debug::DebugLogger::GetInstance().LogError(ss.str());
+            return nullptr;
         }
 
-        // Iterate over each .mat file in the directory
-        for (const auto& entry : std::filesystem::directory_iterator(directory)) {
-            if (entry.path().extension() == ".mat") {
-                // Deserialize the material data from the file
-                MatData data;
-                Serialization::Deserializer::DeserializeAny(data, entry.path().string());
+        // Deserialize the material data from the specified file
+        MatData data;
+        Serialization::Deserializer::DeserializeAny(data, fp);
 
-                // Create a new MaterialData instance and populate it from metadata
-                auto material = MaterialData::Create(ShaderLibrary::Get("PBR"));/* Pass any required shader or default values */
-                //material->SetGUID(metadata.guid);
-                material->SetAlbedoColor(data.albedoColor);
-                material->SetMetalness(data.metalness);
-                material->SetRoughness(data.roughness);
-                material->SetAO(data.ao);
-                material->SetEmission(data.emission);
-                material->SetTransparency(data.transparency);
-                material->SetTiling(data.tiling);
-                material->SetOffset(data.offset);
+        // Retrieve the shader name from `data` (if it's stored there) or use a default
+        auto shaderName = data.shader.empty() ? "PBR" : data.shader;
+        
+        // Create a new MaterialData instance with the shader name
+        auto material = MaterialData::Create(shaderName, data.name);
 
-                // Add the material to the MaterialTable (if it doesn't already exist)
-                //AddMaterialByGUID(data.guid);
-            }
-        }
+        // Populate MaterialData properties
+        material->SetName(data.name);
+        material->SetShaderName(data.shader);
+        material->SetAlbedoColor(data.albedoColor);
+        material->SetMetalness(data.metalness);
+        material->SetRoughness(data.roughness);
+        material->SetAO(data.ao);
+        material->SetEmission(data.emission);
+        material->SetTransparency(data.transparency);
+        material->SetTiling(data.tiling);
+        material->SetOffset(data.offset);
+        material->SetAlbedoMap(data.albedoMap);
+        material->SetNormalMap(data.normalMap);
+        material->SetMetalnessMap(data.metalnessMap);
+        material->SetRoughnessMap(data.roughnessMap);
+
+        // Return the loaded material
+        return material;
     }
 
     void MaterialTable::ClearMaterials(){
