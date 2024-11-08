@@ -233,9 +233,10 @@ namespace IGE {
 					physx::PxTransform(ToPxVec3(transform.worldPos), ToPxQuat(transform.worldRot)));
 				mScene->addActor(*rb);
 			}
-			rb->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, (bool)rigidbody.motionType);
 			rb->setLinearVelocity(rigidbody.velocity);
 			rb->setLinearDamping(rigidbody.linearDamping);
+			rb->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, (bool)rigidbody.motionType);
+
 
 			rigidbody.bodyID = reinterpret_cast<void*>(rb);
 			//mRigidBodyIDs.emplace(rigidbody.bodyID, rb);
@@ -253,31 +254,35 @@ namespace IGE {
 		}
 		namespace {
 			template <typename _physx_type, typename _collider_component>
-			void SetGeom(_physx_type& geom, _collider_component& collider, Component::Transform const& transform) {
+			void SetGeom(_physx_type& geom, _collider_component& collider, Component::Transform const& transform, bool newCollider) {
 				if constexpr (std::is_same_v<_physx_type, physx::PxBoxGeometry>) {
-					collider.scale = ToPxVec3(ToPhysicsUnits(transform.worldScale));
+					if (newCollider) 
+						collider.scale = ToPxVec3(ToPhysicsUnits(transform.worldScale));
 					geom = _physx_type{ collider.scale };
 				}
 				else if constexpr (std::is_same_v<_physx_type, physx::PxSphereGeometry>) {
-					collider.radius = Physics::ToPhysicsUnits(std::max({ transform.worldScale.x, transform.worldScale.y, transform.worldScale.z }));
+					if (newCollider) 
+						collider.radius = Physics::ToPhysicsUnits(std::max({ transform.worldScale.x, transform.worldScale.y, transform.worldScale.z }));
 					geom = _physx_type{ collider.radius };
 				}
 				else if constexpr (std::is_same_v < _physx_type, physx::PxCapsuleGeometry>) {
-					collider.radius = Physics::ToPhysicsUnits(std::max(transform.worldScale.x, transform.worldScale.z));
-					collider.halfheight = Physics::ToPhysicsUnits(transform.worldScale.y);
+					if (newCollider) {
+						collider.radius = Physics::ToPhysicsUnits(std::max(transform.worldScale.x, transform.worldScale.z));
+						collider.halfheight = Physics::ToPhysicsUnits(transform.worldScale.y);
+					}
 					geom = _physx_type{ collider.radius, collider.halfheight };
 				}
 			}
 		}
 
 		template <typename _physx_type, typename _collider_component>
-		void PhysicsSystem::AddShape(physx::PxRigidDynamic* rb, ECS::Entity const& entity, _collider_component& collider) {
+		void PhysicsSystem::AddShape(physx::PxRigidDynamic* rb, ECS::Entity const& entity, _collider_component& collider, bool newCollider) {
 			_physx_type geom{};
 			physx::PxTransform xfm{};
 			if (entity.HasComponent<Component::Transform>()) {
 				Component::Transform const& transform = entity.GetComponent<Component::Transform>();
 				//box shape, this will be a box collider
-				SetGeom(geom, collider, transform);
+				SetGeom(geom, collider, transform, newCollider);
 				//getting from graphics
 				xfm = physx::PxTransform(ToPxVec3(transform.worldPos), ToPxQuat(transform.worldRot));
 
@@ -296,7 +301,10 @@ namespace IGE {
 
 		}
 		template <typename _physx_type, typename _collider_component>
-		void PhysicsSystem::AddNewCollider(physx::PxRigidDynamic*& rb, ECS::Entity const& entity, _collider_component& collider) {
+		void PhysicsSystem::AddNewCollider(physx::PxRigidDynamic*& rb, ECS::Entity const& entity, _collider_component& collider, bool newCollider) {
+			if (entity.GetComponent<Component::Tag>().tag == std::string{"MainGround"}) {
+				std::cout << "hello\n";
+			}
 			Component::Transform transform = entity.GetComponent<Component::Transform>();
 			if ((glm::abs(transform.worldScale.x) + glm::abs(transform.worldScale.y) + glm::abs(transform.worldScale.z)) <= glm::epsilon<float>()) {
 				transform.worldScale = { 1,1,1 }; //temp fix
@@ -304,7 +312,7 @@ namespace IGE {
 			_physx_type geom{};
 			//getting from graphics
 			physx::PxTransform xfm(ToPxVec3(transform.worldPos), ToPxQuat(transform.worldRot));
-			SetGeom(geom, collider, transform);
+			SetGeom(geom, collider, transform, newCollider);
 			//rb = physx::PxCreateDynamic(
 			//	*mPhysics,
 			//	xfm,
@@ -323,7 +331,7 @@ namespace IGE {
 			rb->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
 		}
 		template <typename _physx_type, typename _collider_component>
-		_collider_component& PhysicsSystem::AddCollider(ECS::Entity entity, _collider_component collider) {
+		_collider_component& PhysicsSystem::AddCollider(ECS::Entity entity, _collider_component collider, bool newCollider) {
 			//check to prevent additional shap adding
 			//if (entity.HasComponent<Component::Collider>()) return;
 			physx::PxRigidDynamic* rb{};
@@ -344,10 +352,10 @@ namespace IGE {
 				}
 				else throw std::runtime_error{ std::string("there is no rigidbody ") };
 
-				AddShape<_physx_type>(rb, entity, collider);
+				AddShape<_physx_type>(rb, entity, collider, newCollider);
 			}
 			else if (entity.HasComponent<Component::Transform>()) { // this is a given
-				AddNewCollider<_physx_type>(rb, entity, collider);
+				AddNewCollider<_physx_type>(rb, entity, collider, newCollider);
 				//mRigidBodyIDs.emplace(rb, rb);
 				RegisterRB(reinterpret_cast<void*>(rb), rb, entity);
 			}
@@ -371,17 +379,17 @@ namespace IGE {
 			return shapeptr;
 		}
 
-		Component::BoxCollider& PhysicsSystem::AddBoxCollider(ECS::Entity entity, Component::BoxCollider collider)
+		Component::BoxCollider& PhysicsSystem::AddBoxCollider(ECS::Entity entity, bool newCollider, Component::BoxCollider collider)
 		{
-			return AddCollider<physx::PxBoxGeometry>(entity, collider);
+			return AddCollider<physx::PxBoxGeometry>(entity, collider, newCollider);
 		}
-		Component::SphereCollider& PhysicsSystem::AddSphereCollider(ECS::Entity entity, Component::SphereCollider collider)
+		Component::SphereCollider& PhysicsSystem::AddSphereCollider(ECS::Entity entity, bool newCollider, Component::SphereCollider collider)
 		{
-			return AddCollider<physx::PxSphereGeometry>(entity, collider);
+			return AddCollider<physx::PxSphereGeometry>(entity, collider, newCollider);
 		}
-		Component::CapsuleCollider& PhysicsSystem::AddCapsuleCollider(ECS::Entity entity, Component::CapsuleCollider collider)
+		Component::CapsuleCollider& PhysicsSystem::AddCapsuleCollider(ECS::Entity entity, bool newCollider, Component::CapsuleCollider collider)
 		{
-			return AddCollider<physx::PxCapsuleGeometry>(entity, collider);
+			return AddCollider<physx::PxCapsuleGeometry>(entity, collider, newCollider);
 		}
 		void PhysicsSystem::ChangeRigidBodyVar(ECS::Entity entity, Component::RigidBodyVars var)
 		{
@@ -500,22 +508,6 @@ namespace IGE {
 			if (Input::InputManager::GetInstance().IsKeyHeld(KEY_CODE::KEY_LEFT_CONTROL) &&
 				Input::InputManager::GetInstance().IsKeyTriggered(KEY_CODE::KEY_D)) drawDebug = !drawDebug;
 			if (!drawDebug) return;
-
-			{//test
-				static glm::vec3 origin{0, 10, 0};
-				static glm::vec3 end{0, 0, 0};
-				RaycastHit hit{};
-
-				if (RayCastSingular(origin, end, hit)) {
-					Debug::DebugLogger::GetInstance().LogInfo(hit.entity.GetComponent<Component::Tag>().tag);
-					Graphics::Renderer::DrawLine(hit.position, hit.position + hit.normal * 2.f, { 1,0,0, 1 });
-					Graphics::Renderer::DrawLine(origin, origin + glm::normalize(end-origin) * hit.distance, {0,0, 1, 1});
-					Graphics::Renderer::DrawLine(origin + glm::normalize(end - origin) * hit.distance, end, { 0, 1, 0, 1 });
-				}
-				else {
-					Graphics::Renderer::DrawLine(origin, end, { 0, 1, 0, 1 });
-				}
-			}
 
 			auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::BoxCollider>() };
 			for (auto entity : rbsystem) {

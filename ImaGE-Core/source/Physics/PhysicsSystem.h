@@ -25,9 +25,9 @@ namespace IGE {
 			void ChangeRigidBodyVar(ECS::Entity entity, Component::RigidBodyVars var);
 
 			// temporarily using this to deserialize a copy of the collider from file
-			Component::BoxCollider& AddBoxCollider(ECS::Entity entity, Component::BoxCollider collider = {});
-			Component::SphereCollider& AddSphereCollider(ECS::Entity entity, Component::SphereCollider collider = {});
-			Component::CapsuleCollider& AddCapsuleCollider(ECS::Entity entity, Component::CapsuleCollider collider = {});
+			Component::BoxCollider& AddBoxCollider(ECS::Entity entity, bool newCollider, Component::BoxCollider collider = {});
+			Component::SphereCollider& AddSphereCollider(ECS::Entity entity, bool newCollider, Component::SphereCollider collider = {});
+			Component::CapsuleCollider& AddCapsuleCollider(ECS::Entity entity, bool newCollider, Component::CapsuleCollider collider = {});
 			void ChangeBoxColliderVar(ECS::Entity entity);
 			void ChangeSphereColliderVar(ECS::Entity entity);
 			void ChangeCapsuleColliderVar(ECS::Entity entity);
@@ -85,11 +85,11 @@ namespace IGE {
 			EVENT_CALLBACK_DECL(HandleRemoveComponent);
 			EVENT_CALLBACK_DECL(HandleRemoveEntity);
 			template <typename _physx_type, typename _collider_component>
-			void AddShape(physx::PxRigidDynamic* rb, ECS::Entity const& entity, _collider_component& collider);
+			void AddShape(physx::PxRigidDynamic* rb, ECS::Entity const& entity, _collider_component& collider, bool newCollider);
 			template <typename _physx_type, typename _collider_component>
-			void AddNewCollider(physx::PxRigidDynamic*& rb, ECS::Entity const& entity, _collider_component& collider);
+			void AddNewCollider(physx::PxRigidDynamic*& rb, ECS::Entity const& entity, _collider_component& collider, bool newCollider);
 			template<typename _physx_type, typename _collider_component>
-			_collider_component& AddCollider(ECS::Entity entity, _collider_component collider);
+			_collider_component& AddCollider(ECS::Entity entity, _collider_component collider, bool newCollider);
 			template<typename _physx_type, typename _collider_component>
 			physx::PxShape* CreateShape(_physx_type const& geom, _collider_component const& collider, ECS::Entity entity);
 			void RegisterRB(void* bodyID, physx::PxRigidDynamic* rbptr, ECS::Entity const& entity) noexcept;

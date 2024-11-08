@@ -27,7 +27,8 @@ namespace Graphics {
 		Renderer::RenderSceneBegin(viewProj);
 
 		//temp physics debug hack
-		IGE::Physics::PhysicsSystem::GetInstance()->Debug();
+		if(cam.isEditor)
+			IGE::Physics::PhysicsSystem::GetInstance()->Debug();
 
 
 		for (ECS::Entity const& entity : entities) {

@@ -51,21 +51,21 @@ namespace Reflection::ComponentUtils {
     EXTRACT_RAW_COMP(BoxCollider, comp);
 
     //entity.EmplaceOrReplaceComponent<Collider>(comp);
-    IGE::Physics::PhysicsSystem::GetInstance()->AddBoxCollider(entity, comp);
+    IGE::Physics::PhysicsSystem::GetInstance()->AddBoxCollider(entity, false, comp);
   }
 
   void AddSphereCollider(ECS::Entity entity, rttr::variant const& var){
       EXTRACT_RAW_COMP(SphereCollider, comp);
 
       //entity.EmplaceOrReplaceComponent<Collider>(comp);
-      IGE::Physics::PhysicsSystem::GetInstance()->AddSphereCollider(entity, comp);
+      IGE::Physics::PhysicsSystem::GetInstance()->AddSphereCollider(entity, false, comp);
   }
 
   void AddCapsuleCollider(ECS::Entity entity, rttr::variant const& var){
       EXTRACT_RAW_COMP(CapsuleCollider, comp);
 
       //entity.EmplaceOrReplaceComponent<Collider>(comp);
-      IGE::Physics::PhysicsSystem::GetInstance()->AddCapsuleCollider(entity, comp);
+      IGE::Physics::PhysicsSystem::GetInstance()->AddCapsuleCollider(entity, false, comp);
   }
 
   void AddRigidBody(ECS::Entity entity, rttr::variant const& var) {
