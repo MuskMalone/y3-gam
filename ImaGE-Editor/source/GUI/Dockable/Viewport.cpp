@@ -35,6 +35,7 @@ namespace {
   static ECS::Entity sPrevSelectedEntity;
 
   // for multi-select
+  static bool sCtrlHeld{ false };
 
   /*!*********************************************************************
     \brief
@@ -78,25 +79,27 @@ namespace GUI
       ImVec2 const vpSize = ImGui::GetContentRegionAvail();
       ImVec2 const vpStartPos{ ImGui::GetCursorScreenPos() };
 
+      sCtrlHeld = ImGui::IsKeyDown(ImGuiKey_LeftCtrl) || ImGui::IsKeyDown(ImGuiKey_RightCtrl);
+
       // only register input if viewport is focused
       bool const checkInput{ (ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) || mIsDragging || mIsPanning || sMovingToEntity };
       if (checkInput) {
-          ProcessCameraInputs();
+        ProcessCameraInputs();
       }
       // auto focus window when middle or right-clicked upon
       else if (ImGui::IsWindowHovered() && (ImGui::IsMouseClicked(ImGuiMouseButton_Right) || ImGui::IsMouseClicked(ImGuiMouseButton_Middle))) {
-          ImGui::FocusWindow(ImGui::GetCurrentWindow());
+        ImGui::FocusWindow(ImGui::GetCurrentWindow());
       }
 
       // update framebuffer
       ImGui::Image(
-          reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(framebuffer->GetColorAttachmentID())),
-          vpSize,
-          ImVec2(0, 1),
-          ImVec2(1, 0)
+        reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(framebuffer->GetColorAttachmentID())),
+        vpSize,
+        ImVec2(0, 1),
+        ImVec2(1, 0)
       );
 
-      if (checkInput && !UpdateGuizmos()) {
+      if (!UpdateGuizmos() && checkInput) {
         // object picking
         if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
           ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
@@ -114,15 +117,24 @@ namespace GUI
               static_cast<int>((vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height))) };
             pickFb->Unbind();
 
-            if (entityId > 0) {
+            if (entityId >= 0) {
               ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
                 root{ GetRootEntity(selected) };
+
+              if (sCtrlHeld) {
+                GUIManager::AddSelectedEntity(selected);
+              }
+              else {
+                GUIManager::ClearSelectedEntities();
+              }
+
               sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
               GUIManager::SetSelectedEntity(sPrevSelectedEntity);
             }
             else {
               sPrevSelectedEntity = {};
               GUIManager::SetSelectedEntity({});
+              GUIManager::ClearSelectedEntities();
             }
           }
         }
@@ -283,18 +295,52 @@ namespace GUI
       glm::vec3 s2{}, r2{}, t2{};
       ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(modelMatrixPrev),
         glm::value_ptr(t2), glm::value_ptr(r2), glm::value_ptr(s2));
+
+      bool const multiSelectActive{ !GUIManager::GetSelectedEntities().empty() };
       if (currentOperation == ImGuizmo::TRANSLATE) {
-        transform.position += t - t2;
+        glm::vec3 const offset{ t - t2 };
+        if (multiSelectActive) {
+          for (ECS::Entity e : GUIManager::GetSelectedEntities()) {
+            e.GetComponent<Component::Transform>().position += offset;
+          }
+        }
+        else {
+          transform.position += offset;
+        }
       }
       if (currentOperation == ImGuizmo::ROTATE) {
-        auto localRot{ transform.eulerAngles + r - r2 };
-        transform.SetLocalRotWithEuler(localRot);
+        glm::vec3 const offset{ r - r2 };
+        if (multiSelectActive) {
+          for (ECS::Entity e : GUIManager::GetSelectedEntities()) {
+            Component::Transform& trans{ e.GetComponent<Component::Transform>() };
+            trans.SetLocalRotWithEuler(trans.eulerAngles + offset);
+          }
+        }
+        else {
+          glm::vec3 const localRot{ transform.eulerAngles + offset };
+          transform.SetLocalRotWithEuler(localRot);
+        }
       }
       if (currentOperation == ImGuizmo::SCALE) {
-        transform.scale += s - s2;
+        glm::vec3 const offset{ s - s2 };
+        if (multiSelectActive) {
+          for (ECS::Entity e : GUIManager::GetSelectedEntities()) {
+            e.GetComponent<Component::Transform>().scale += offset;
+          }
+        }
+        else {
+          transform.scale += offset;
+        }
       }
-      transform.modified = true;
-      TransformHelpers::UpdateWorldTransform(selectedEntity);  // must call this to update world transform according to changes to local
+      if (multiSelectActive) {
+        ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
+        for (ECS::Entity e : GUIManager::GetSelectedEntities()) {
+          TransformHelpers::UpdateWorldTransform(e);
+        }
+      }
+      else {
+        TransformHelpers::UpdateWorldTransform(selectedEntity);
+      }
       QUEUE_EVENT(Events::SceneModifiedEvent);
     }
 

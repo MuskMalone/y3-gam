@@ -24,7 +24,7 @@
 namespace GUI
 {
   static bool sEntityDoubleClicked{ false }, sEditNameMode{ false }, sFirstEnterEditMode{ true };
-  static bool sLMouseReleased{ false };
+  static bool sLMouseReleased{ false }, sCtrlHeld{ false }, sWasCtrlHeld{ false };
   static float sTimeElapsed;  // for renaming entity
 
   SceneHierarchy::SceneHierarchy(const char* name) : GUIWindow(name),
@@ -129,6 +129,9 @@ namespace GUI
       QUEUE_EVENT(Events::SceneModifiedEvent);
     }
 
+    sCtrlHeld = ImGui::IsKeyDown(ImGuiKey_LeftCtrl) || ImGui::IsKeyDown(ImGuiKey_RightCtrl);
+    if (sCtrlHeld) { sWasCtrlHeld = true; }
+
     if (mEntityOptionsMenu) {
       ImGui::OpenPopup("EntityOptions");
       mEntityOptionsMenu = false;
@@ -196,7 +199,8 @@ namespace GUI
 
   void SceneHierarchy::RecurseDownHierarchy(ECS::Entity entity)
   {
-    bool const isCurrentEntity{ GUIManager::GetSelectedEntity() == entity }, isEditMode{ isCurrentEntity && sEditNameMode };
+    bool const isCurrentEntity{ GUIManager::GetSelectedEntity() == entity || GUIManager::IsEntitySelected(entity) },
+      isEditMode{isCurrentEntity && sEditNameMode};
     // set the flag accordingly
     ImGuiTreeNodeFlags treeFlag{ ImGuiTreeNodeFlags_SpanFullWidth };
     bool const hasChildren{ mEntityManager.HasChild(entity) };
@@ -310,6 +314,14 @@ namespace GUI
         sLMouseReleased = false;
       }
       else {
+        if (sCtrlHeld) {
+          GUIManager::AddSelectedEntity(entity);
+        }
+        else if (sWasCtrlHeld) {
+          GUIManager::ClearSelectedEntities();
+          sWasCtrlHeld = false;
+        }
+
         GUIManager::SetSelectedEntity(entity);
       }
     }
