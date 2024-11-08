@@ -67,6 +67,9 @@
     <ClInclude Include="source\GUI\Helpers\ImGuiHelpers.h">
       <Filter>GUI\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="source\GUI\Persistent\PopupHelper.h">
+      <Filter>GUI\Persistent</Filter>
+    </ClInclude>
     <ClInclude Include="source\GUI\Persistent\PrefabEditor.h">
       <Filter>GUI\Persistent</Filter>
     </ClInclude>
@@ -126,6 +129,9 @@
     </ClCompile>
     <ClCompile Include="source\GUI\Helpers\ImGuiHelpers.cpp">
       <Filter>GUI\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUI\Persistent\PopupHelper.cpp">
+      <Filter>GUI\Persistent</Filter>
     </ClCompile>
     <ClCompile Include="source\GUI\Persistent\PrefabEditor.cpp">
       <Filter>GUI\Persistent</Filter>

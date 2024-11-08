@@ -86,7 +86,6 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="source\PlayerMove.cs" />
     <Compile Include="source\Mono\Color.cs" />
     <Compile Include="source\Mono\Component.cs" />
     <Compile Include="source\Mono\Debug.cs" />
@@ -101,6 +100,7 @@
     <Compile Include="source\Mono\Vec2.cs" />
     <Compile Include="source\Mono\Vec3.cs" />
     <Compile Include="source\Mono\Vec4.cs" />
+    <Compile Include="source\PlayerMove.cs" />
     <Compile Include="source\Test.cs" />
   </ItemGroup>
   <ItemGroup>
