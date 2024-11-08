@@ -28,6 +28,14 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Graphics/Renderer.h"
 
 namespace {
+  // for panning camera to entity when double-clicked upon
+  static bool sMovingToEntity{ false };
+  static glm::vec3 sTargetPosition, sMoveDir;
+  static float sDistToCover;
+  static ECS::Entity sPrevSelectedEntity;
+
+  // for multi-select
+
   /*!*********************************************************************
     \brief
       Projects a 3d vector onto the camera's view plane
@@ -58,12 +66,6 @@ namespace {
 
 namespace GUI
 {
-  // for panning camera to entity when double-clicked upon
-  static bool sMovingToEntity{ false };
-  static glm::vec3 sTargetPosition, sMoveDir;
-  static float sDistToCover;
-  static ECS::Entity sPrevSelectedEntity;
-
   Viewport::Viewport(const char* name, Graphics::EditorCamera& camera) : GUIWindow(name),
     mEditorCam{ camera }, mIsPanning{ false }, mIsDragging{ false } {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_ZOOM, &Viewport::HandleEvent, this);
@@ -77,41 +79,9 @@ namespace GUI
       ImVec2 const vpStartPos{ ImGui::GetCursorScreenPos() };
 
       // only register input if viewport is focused
-      bool const checkInput{ mIsDragging || mIsPanning || sMovingToEntity };
-      if ((ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) || checkInput) {
+      bool const checkInput{ (ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) || mIsDragging || mIsPanning || sMovingToEntity };
+      if (checkInput) {
           ProcessCameraInputs();
-
-          if (!UpdateGuizmos()) {
-            // object picking
-            if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
-              ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
-
-              // check if clicking outside viewport
-              if (!(offset.x < 0 || offset.x > vpSize.x || offset.y < 0 || offset.y > vpSize.y)) {
-
-                auto const& geomPass{ Graphics::Renderer::GetPass<Graphics::GeomPass>() };
-                auto const& pickFb{ geomPass->GetTargetFramebuffer() };
-                Graphics::FramebufferSpec const& fbSpec{ pickFb->GetFramebufferSpec() };
-
-                pickFb->Bind();
-                int const entityId{ pickFb->ReadPixel(1,
-                  static_cast<int>(offset.x / vpSize.x * static_cast<float>(fbSpec.width)),
-                  static_cast<int>((vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height))) };
-                pickFb->Unbind();
-
-                if (entityId > 0) {
-                  ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
-                    root{ GetRootEntity(selected) };
-                  sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
-                  GUIManager::SetSelectedEntity(sPrevSelectedEntity);
-                }
-                else {
-                  sPrevSelectedEntity = {};
-                  GUIManager::SetSelectedEntity({});
-                }
-              }
-            }
-          }
       }
       // auto focus window when middle or right-clicked upon
       else if (ImGui::IsWindowHovered() && (ImGui::IsMouseClicked(ImGuiMouseButton_Right) || ImGui::IsMouseClicked(ImGuiMouseButton_Middle))) {
@@ -125,6 +95,38 @@ namespace GUI
           ImVec2(0, 1),
           ImVec2(1, 0)
       );
+
+      if (checkInput && !UpdateGuizmos()) {
+        // object picking
+        if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
+          ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
+
+          // check if clicking outside viewport
+          if (!(offset.x < 0 || offset.x > vpSize.x || offset.y < 0 || offset.y > vpSize.y)) {
+
+            auto const& geomPass{ Graphics::Renderer::GetPass<Graphics::GeomPass>() };
+            auto const& pickFb{ geomPass->GetTargetFramebuffer() };
+            Graphics::FramebufferSpec const& fbSpec{ pickFb->GetFramebufferSpec() };
+
+            pickFb->Bind();
+            int const entityId{ pickFb->ReadPixel(1,
+              static_cast<int>(offset.x / vpSize.x * static_cast<float>(fbSpec.width)),
+              static_cast<int>((vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height))) };
+            pickFb->Unbind();
+
+            if (entityId > 0) {
+              ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
+                root{ GetRootEntity(selected) };
+              sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
+              GUIManager::SetSelectedEntity(sPrevSelectedEntity);
+            }
+            else {
+              sPrevSelectedEntity = {};
+              GUIManager::SetSelectedEntity({});
+            }
+          }
+        }
+      }
 
       ReceivePayload();
 
@@ -282,14 +284,14 @@ namespace GUI
       ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(modelMatrixPrev),
         glm::value_ptr(t2), glm::value_ptr(r2), glm::value_ptr(s2));
       if (currentOperation == ImGuizmo::TRANSLATE) {
-        transform.position += std::move(t - t2);
+        transform.position += t - t2;
       }
       if (currentOperation == ImGuizmo::ROTATE) {
-        auto localRot{ transform.eulerAngles + std::move(r - r2) };
+        auto localRot{ transform.eulerAngles + r - r2 };
         transform.SetLocalRotWithEuler(localRot);
       }
       if (currentOperation == ImGuizmo::SCALE) {
-        transform.scale += std::move(s - s2);
+        transform.scale += s - s2;
       }
       transform.modified = true;
       TransformHelpers::UpdateWorldTransform(selectedEntity);  // must call this to update world transform according to changes to local
