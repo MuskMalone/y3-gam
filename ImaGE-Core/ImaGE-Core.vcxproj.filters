@@ -40,9 +40,6 @@
     <Filter Include="Core\Systems\LayerSystem">
       <UniqueIdentifier>{2681F8F6-12A6-4777-3BF1-2C0727754695}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Systems\PlayerControllerSystem">
-      <UniqueIdentifier>{FA988342-6652-EEEC-EFB1-08C75B6AA45C}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Systems\SystemManager">
       <UniqueIdentifier>{646CE924-507C-95F5-B935-FA13A564848E}</UniqueIdentifier>
     </Filter>
@@ -144,6 +141,9 @@
     </Filter>
     <Filter Include="Graphics\PostProcessing">
       <UniqueIdentifier>{48EFA335-B426-ECCC-BD30-50F029E712C6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\PostProcessing\Shaders">
+      <UniqueIdentifier>{21DC0668-8DBF-15A8-96C2-43E40225DCF8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\RenderPass">
       <UniqueIdentifier>{7C819DD9-E8E2-7AE7-7150-C199DDB0B1A6}</UniqueIdentifier>
@@ -289,9 +289,6 @@
     </ClInclude>
     <ClInclude Include="source\Core\Systems\LayerSystem\LayerSystem.h">
       <Filter>Core\Systems\LayerSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Core\Systems\PlayerControllerSystem\PlayerControllerSystem.h">
-      <Filter>Core\Systems\PlayerControllerSystem</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Systems\System.h">
       <Filter>Core\Systems</Filter>
@@ -593,7 +590,7 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\PostProcessing\PostProcessingManager.h">
-      <Filter>Graphics\PostProcessing</Filter>
+      <Filter>Graphics\PostProcessing\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderAPI.h">
       <Filter>Graphics</Filter>
@@ -602,9 +599,6 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderPass\GeomPass.h">
-      <Filter>Graphics\RenderPass</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Graphics\RenderPass\PostProcessPass.h">
       <Filter>Graphics\RenderPass</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderPass\RenderPass.h">
@@ -743,6 +737,9 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
+    <ClInclude Include="source\Graphics\RenderPass\ScreenPass.h" />
+    <ClInclude Include="source\Core\Components\Canvas.h" />
+    <ClInclude Include="source\Graphics\RenderPass\PostProcessPass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -793,9 +790,6 @@
     </ClCompile>
     <ClCompile Include="source\Core\Systems\LayerSystem\LayerSystem.cpp">
       <Filter>Core\Systems\LayerSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Core\Systems\PlayerControllerSystem\PlayerControllerSystem.cpp">
-      <Filter>Core\Systems\PlayerControllerSystem</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Systems\SystemManager\SystemManager.cpp">
       <Filter>Core\Systems\SystemManager</Filter>
@@ -909,18 +903,18 @@
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\PostProcessing\PostProcessingManager.cpp">
-      <Filter>Graphics\PostProcessing</Filter>
+      <Filter>Graphics\PostProcessing\Shaders</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\RenderAPI.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="source\Graphics\RenderPass\UIPass.cpp">
+      <Filter>Graphics\RenderPass</Filter>
+    </ClCompile>
     <ClCompile Include="source\Graphics\RenderPass\GeomPass.cpp">
       <Filter>Graphics\RenderPass</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\RenderPass\PostProcessPass.cpp">
-      <Filter>Graphics\RenderPass</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Graphics\RenderPass\RenderPass.cpp">
+    <ClCompile Include="source\Graphics\RenderPass\ScreenPass.cpp">
       <Filter>Graphics\RenderPass</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\RenderPass\ScreenPass.cpp">
@@ -1002,5 +996,9 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\ScreenPass.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\PostProcessPass.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\RenderPass.cpp" />
+    <ClCompile Include="source\Core\Components\RigidBody.cpp" />
   </ItemGroup>
 </Project>

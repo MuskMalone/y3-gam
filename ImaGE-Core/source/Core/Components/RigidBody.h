@@ -18,13 +18,18 @@ namespace Component {
 		GRAVITY_FACTOR,
 		VELOCITY,
 		ANGULAR_VELOCITY,
-		MOTION
+		MOTION,
+		LOCK
 	};
 
 	struct RigidBody {
 		enum class MotionType {
 			DYNAMIC = 0,
 			KINEMATIC
+		};
+
+		enum class Axis : int{
+			X = 1 << 0, Y = 1 << 1, Z = 1 << 2
 		};
 
 		inline void Clear() noexcept {
@@ -46,6 +51,20 @@ namespace Component {
 		float gravityFactor{ 0.f };
 		float linearDamping{ 0.98f };
 		MotionType motionType{ MotionType::KINEMATIC }; //static, dynamic, kinematic
+		//locks the axis the rb can move in
+		int axisLock{0};
+		//locks the axis the rb can rotate around
+		int angularAxisLock{0};
+
+		void SetImpulse(glm::vec3 const& impulse);
+		void SetForce(glm::vec3 const& force);
+		void SetPosition(glm::vec3 const& pos);
+		void SetAxisLock(int lock);
+		void RemoveAxisLock(int lock);
+		bool IsAxisLocked(int axis);
+		void SetAngleAxisLock(int lock);
+		void RemoveAngleAxisLock(int lock);
+		bool IsAngleAxisLocked(int axis);
 		void* bodyID;
 
 	};
