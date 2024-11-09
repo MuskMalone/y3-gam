@@ -52,7 +52,7 @@ namespace GUI {
     bool CapsuleColliderComponentWindow(ECS::Entity entity, bool highlight = false);
     bool LayerComponentWindow(ECS::Entity entity, bool highlight = false);
     bool LightComponentWindow(ECS::Entity entity, bool highlight = false);
-    bool MaterialComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool MaterialWindow(ECS::Entity entity, bool highlight = false);
     bool MeshComponentWindow(ECS::Entity entity, bool highlight = false);
     bool RigidBodyComponentWindow(ECS::Entity entity, bool highlight = false);
     bool ScriptComponentWindow(ECS::Entity entity, bool highlight = false);

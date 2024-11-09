@@ -11,8 +11,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <pch.h>
 #include "AddComponentFunctions.h"
 #include <Physics/PhysicsSystem.h>
-#include <Graphics/MeshFactory.h>
-#include <Graphics/Mesh.h>
+#include <Graphics/Mesh/MeshFactory.h>
+#include <Graphics/Mesh/Mesh.h>
 #include <Asset/IGEAssets.h>
 
 namespace Reflection::ComponentUtils {

@@ -14,12 +14,13 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace ImGuiHelpers
 {
-
-  bool BeginDrapDropTargetWindow(const char* payloadName)
+  // How to accept payload in entire window as well as Tree nodes?
+  // https://github.com/ocornut/imgui/issues/5539
+  ImGuiPayload const* BeginDrapDropTargetWindow(const char* payloadName)
   {
-    ImRect inner_rect = ImGui::GetCurrentWindow()->InnerRect;
-    if (ImGui::BeginDragDropTargetCustom(inner_rect, ImGui::GetID("##WindowBgArea")))
-      if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(payloadName, ImGuiDragDropFlags_AcceptBeforeDelivery | ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
+    ImRect const inner_rect = ImGui::GetCurrentWindow()->InnerRect;
+    if (ImGui::BeginDragDropTargetCustom(inner_rect, ImGui::GetID("##WindowBgArea"))) {
+      if (ImGuiPayload const* payload = ImGui::AcceptDragDropPayload(payloadName, ImGuiDragDropFlags_AcceptBeforeDelivery | ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
       {
         if (payload->IsPreview())
         {
@@ -27,11 +28,14 @@ namespace ImGuiHelpers
           draw_list->AddRectFilled(inner_rect.Min, inner_rect.Max, ImGui::GetColorU32(ImGuiCol_DragDropTarget, 0.05f));
           draw_list->AddRect(inner_rect.Min, inner_rect.Max, ImGui::GetColorU32(ImGuiCol_DragDropTarget), 0.0f, 0, 2.0f);
         }
-        if (payload->IsDelivery())
-          return true;
-        ImGui::EndDragDropTarget();
+        if (payload->IsDelivery()) {
+          return payload;
+        }
       }
-    return false;
+      ImGui::EndDragDropTarget();
+    }
+
+    return nullptr;
   }
 
   bool TableInputFloat3(std::string propertyName, float* property, float fieldWidth, bool disabled, float minVal, float maxVal, float step) {

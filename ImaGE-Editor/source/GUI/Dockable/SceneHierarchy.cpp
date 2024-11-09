@@ -24,7 +24,7 @@
 namespace GUI
 {
   static bool sEntityDoubleClicked{ false }, sEditNameMode{ false }, sFirstEnterEditMode{ true };
-  static bool sLMouseReleased{ false };
+  static bool sLMouseReleased{ false }, sCtrlHeld{ false }, sWasCtrlHeld{ false };
   static float sTimeElapsed;  // for renaming entity
 
   SceneHierarchy::SceneHierarchy(const char* name) : GUIWindow(name),
@@ -124,10 +124,24 @@ namespace GUI
     }
 
     if (ImGui::IsKeyPressed(ImGuiKey_Delete) && GUIManager::GetSelectedEntity() && !mLockControls) {
-      ECS::EntityManager::GetInstance().RemoveEntity(GUIManager::GetSelectedEntity());
+      ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
+      auto entities{ GUIManager::GetSelectedEntities() };
+      if (!entities.empty()) {
+        for (ECS::Entity e : entities) {
+          em.RemoveEntity(e);
+        }
+        GUIManager::ClearSelectedEntities();
+      }
+      else {
+        em.RemoveEntity(GUIManager::GetSelectedEntity());
+      }
+
       GUIManager::SetSelectedEntity(ECS::Entity());
       QUEUE_EVENT(Events::SceneModifiedEvent);
     }
+
+    sCtrlHeld = ImGui::IsKeyDown(ImGuiKey_LeftCtrl) || ImGui::IsKeyDown(ImGuiKey_RightCtrl);
+    if (sCtrlHeld) { sWasCtrlHeld = true; }
 
     if (mEntityOptionsMenu) {
       ImGui::OpenPopup("EntityOptions");
@@ -196,7 +210,8 @@ namespace GUI
 
   void SceneHierarchy::RecurseDownHierarchy(ECS::Entity entity)
   {
-    bool const isCurrentEntity{ GUIManager::GetSelectedEntity() == entity }, isEditMode{ isCurrentEntity && sEditNameMode };
+    bool const isCurrentEntity{ GUIManager::GetSelectedEntity() == entity || GUIManager::IsEntitySelected(entity) },
+      isEditMode{isCurrentEntity && sEditNameMode};
     // set the flag accordingly
     ImGuiTreeNodeFlags treeFlag{ ImGuiTreeNodeFlags_SpanFullWidth };
     bool const hasChildren{ mEntityManager.HasChild(entity) };
@@ -215,8 +230,13 @@ namespace GUI
       ImGui::PushStyleColor(ImGuiCol_Text, sEntityHighlightCol);
     }
 
+    if (!entity.IsActive()) {
+      ImGui::PushStyleColor(ImGuiCol_Text, isPrefabInstance ? sInactivePfbInstCol : sEntityInactiveCol);
+    }
     if (ImGui::TreeNodeEx((displayName + "##" + std::to_string(entity.GetEntityID())).c_str(), treeFlag))
     {
+      if (!entity.IsActive()) { ImGui::PopStyleColor(); }
+
       // if renaming entity
       if (isEditMode) {
         ImGui::SetItemAllowOverlap();
@@ -249,6 +269,9 @@ namespace GUI
       }
 
       ImGui::TreePop();
+    }
+    else if (!entity.IsActive()) {
+      ImGui::PopStyleColor();
     }
 
     if (isPrefabInstance) {
@@ -297,12 +320,39 @@ namespace GUI
       sFirstEnterEditMode = true;
     }
     else if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-      if (GUIManager::GetSelectedEntity() == entity) {
+      if (GUIManager::GetSelectedEntity() == entity && !sCtrlHeld) {
         sEntityDoubleClicked = true;
         sLMouseReleased = false;
       }
       else {
-        GUIManager::SetSelectedEntity(entity);
+        if (sCtrlHeld) {
+          ECS::Entity const curr{ GUIManager::GetSelectedEntity() };
+          if (GUIManager::GetSelectedEntities().empty() && curr) {
+            GUIManager::AddSelectedEntity(curr);
+          }
+          
+          if (GUIManager::IsEntitySelected(entity)) {
+            GUIManager::RemoveSelectedEntity(entity);
+            if (GUIManager::GetSelectedEntities().empty()) {
+              GUIManager::SetSelectedEntity({});
+            }
+            else {
+              GUIManager::SetSelectedEntity(*GUIManager::GetSelectedEntities().begin());
+            }
+          }
+          else {
+            GUIManager::AddSelectedEntity(entity);
+            GUIManager::SetSelectedEntity(entity);
+          }
+        }
+        else {
+          if (sWasCtrlHeld) {
+            GUIManager::ClearSelectedEntities();
+            sWasCtrlHeld = false;
+          }
+
+          GUIManager::SetSelectedEntity(entity);
+        }
       }
     }
 

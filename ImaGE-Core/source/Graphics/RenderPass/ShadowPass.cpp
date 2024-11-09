@@ -1,6 +1,7 @@
 #include <pch.h>
 #include "ShadowPass.h"
 #include "Core/Entity.h"
+#include "Graphics/Renderer.h"
 #include <Graphics/EditorCamera.h>
 #include <Graphics/RenderAPI.h>
 #include <Core/Components/Light.h>

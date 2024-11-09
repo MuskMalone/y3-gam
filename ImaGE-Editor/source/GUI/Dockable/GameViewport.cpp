@@ -2,6 +2,7 @@
 #include "GameViewport.h"
 #include <imgui/imgui.h>
 #include <Graphics/RenderPass/GeomPass.h>
+#include "Graphics/Renderer.h"
 
 namespace GUI {
 

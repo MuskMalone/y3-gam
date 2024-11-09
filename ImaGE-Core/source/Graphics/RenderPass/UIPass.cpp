@@ -1,5 +1,10 @@
 #include "pch.h"
 #include "UIPass.h"
+#include "Graphics/Renderer.h"
+#include "Core/Components/Canvas.h"
+#include "Core/Components/Transform.h"
+#include "Core/Components/Text.h"
+#include "Core/Components/Image.h"
 #include <Physics/PhysicsSystem.h>
 
 namespace Graphics {

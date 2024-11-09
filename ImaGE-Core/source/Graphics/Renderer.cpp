@@ -5,8 +5,8 @@
 #include "Asset/IGEAssets.h"
 #include "ElementBuffer.h"
 #include "MaterialTable.h"
-#include "Material.h"
-#include "Mesh.h"
+#include "MaterialData.h"
+#include <Graphics/Mesh/Mesh.h>
 #pragma region RenderPasses
 #include <Graphics/RenderPass/GeomPass.h>
 #include <Graphics/RenderPass/ShadowPass.h>
@@ -165,7 +165,7 @@ namespace Graphics {
 		//Init Materials
 
 		// Create a default material with a default shader and properties
-		std::shared_ptr<Material> defaultMaterial = Material::Create(ShaderLibrary::Get("PBR"));
+		std::shared_ptr<MaterialData> defaultMaterial = MaterialData::Create("PBR", "Default");
 		defaultMaterial->SetAlbedoColor(glm::vec3(1.0f));  // Set default white albedo
 		defaultMaterial->SetMetalness(0.0f);
 		defaultMaterial->SetRoughness(1.0f);
@@ -173,11 +173,12 @@ namespace Graphics {
 		// Add default material to the table (e.g., at index 0)
 		MaterialTable::AddMaterial(defaultMaterial);
 
-		std::shared_ptr<Material> mat1 = Material::Create(ShaderLibrary::Get("PBR"));
+		std::shared_ptr<MaterialData> mat1 = MaterialData::Create("PBR", "MatLighting");
 		mat1->SetAlbedoMap(texguid1);
+		mat1->SetAlbedoColor({ 0.7f,0.6f,0.9f });
 		MaterialTable::AddMaterial(mat1);
 
-		std::shared_ptr<Material> mat2 = Material::Create(ShaderLibrary::Get("Unlit")); //@TODO support other shaders like Unlit
+		std::shared_ptr<MaterialData> mat2 = MaterialData::Create("Unlit", "MatNoLight"); //@TODO support other shaders like Unlit
 		mat2->SetAlbedoMap(texguid);
 		MaterialTable::AddMaterial(mat2);
 		//--Material Init End--//
@@ -206,6 +207,8 @@ namespace Graphics {
 		//	// Add the new material to the material table
 		//	MaterialTable::AddMaterial(material);
 		//}
+
+		MaterialTable::SaveMaterials();
 
 	}
 
@@ -576,6 +579,39 @@ namespace Graphics {
 		glm::vec3 transformedVertices[8];
 		for (int i = 0; i < 8; ++i) {
 			transformedVertices[i] = transformMtx * glm::vec4(cubeVertices[i], 1.0f);
+		}
+
+		// Define the 12 edges of the cube by connecting vertex pairs
+		int edges[12][2] = {
+			{ 0, 1 }, { 1, 2 }, { 2, 3 }, { 3, 0 }, // Back face
+			{ 4, 5 }, { 5, 6 }, { 6, 7 }, { 7, 4 }, // Front face
+			{ 0, 4 }, { 1, 5 }, { 2, 6 }, { 3, 7 }  // Connecting edges between front and back faces
+		};
+
+		// Draw each edge as a line
+		for (int i = 0; i < 12; ++i) {
+			DrawLine(transformedVertices[edges[i][0]], transformedVertices[edges[i][1]], clr);
+		}
+	}
+
+	void Renderer::DrawBox(glm::mat4 const& mtx, glm::vec4 const& clr){
+		// Define the 8 vertices of a unit cube centered at the origin
+		glm::vec3 cubeVertices[8] = {
+			{ -0.5f, -0.5f, -0.5f }, // 0: Bottom-left-back
+			{  0.5f, -0.5f, -0.5f }, // 1: Bottom-right-back
+			{  0.5f,  0.5f, -0.5f }, // 2: Top-right-back
+			{ -0.5f,  0.5f, -0.5f }, // 3: Top-left-back
+			{ -0.5f, -0.5f,  0.5f }, // 4: Bottom-left-front
+			{  0.5f, -0.5f,  0.5f }, // 5: Bottom-right-front
+			{  0.5f,  0.5f,  0.5f }, // 6: Top-right-front
+			{ -0.5f,  0.5f,  0.5f }  // 7: Top-left-front
+		};
+
+
+		// Transform each vertex
+		glm::vec3 transformedVertices[8];
+		for (int i = 0; i < 8; ++i) {
+			transformedVertices[i] = mtx * glm::vec4(cubeVertices[i], 1.0f);
 		}
 
 		// Define the 12 edges of the cube by connecting vertex pairs

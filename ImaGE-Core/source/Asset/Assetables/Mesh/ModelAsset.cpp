@@ -2,8 +2,8 @@
 #include "ModelAsset.h"
 #include <filesystem>
 #include <string>
-#include <Graphics/AssetIO/IMSH.h>
-#include "Graphics/MeshFactory.h"
+#include <Graphics/Mesh/IMSH.h>
+#include "Graphics/Mesh/MeshFactory.h"
 #include "Asset/AssetUtils.h"
 #include "Asset/AssetManager.h"
 #include "Asset/AssetMetadata.h"

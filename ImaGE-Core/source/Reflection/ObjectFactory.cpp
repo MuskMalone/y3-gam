@@ -180,7 +180,7 @@ namespace Reflection
     Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
     IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
-    
+
     for (auto const& [guid, data] : mPrefabInstances) {
       std::vector<ECS::Entity> baseEntities;
 
@@ -241,7 +241,7 @@ namespace Reflection
           trans.worldPos = trans.position = *pos;
         }
       }
-  }
+    }
 
     // override each entity's components
     OverrideInstanceComponents();

@@ -28,7 +28,7 @@ namespace Component{
 namespace Graphics {
 	class RenderPass; // Forward declaration
 	
-	class Material; class Mesh;
+	class Mesh;
 
 	struct Statistics {
 		uint32_t drawCalls{};
@@ -157,6 +157,7 @@ namespace Graphics {
 		static void DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, glm::vec4 const& clr);
 		static void DrawSprite(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, Texture const& tex, glm::vec4 const& tint, int entity = -1);
 		static void DrawBox(glm::vec3 const& pos, glm::vec3 const& scale, glm::quat const& rot, glm::vec4 const& clr);
+		static void DrawBox(glm::mat4 const& mtx, glm::vec4 const& clr);
 		static void RenderFullscreenTexture();
 
 		static void SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr = Color::COLOR_WHITE);

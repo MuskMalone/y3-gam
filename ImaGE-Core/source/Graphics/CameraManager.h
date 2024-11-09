@@ -54,9 +54,6 @@ namespace Graphics {
 
             cameraComp.rotation = transformComp.worldRot;
 
-            // If your Transform component uses quaternion for rotation
-            //cameraComp.yaw = glm::degrees(glm::yaw(transformComp.rotation));
-            //cameraComp.pitch = glm::degrees(glm::pitch(transformComp.rotation));
 
             return cameraComp;
             

@@ -8,7 +8,7 @@
 #include <fstream>
 #include <filesystem>
 #include "Graphics/Renderer.h"
-#include "Graphics/MeshFactory.h"
+#include <Graphics/Mesh/MeshFactory.h>
 
 #include "Graphics/RenderSystem.h"
 
@@ -77,9 +77,9 @@ void Scene::Init()
 //          auto& renderComponent = entity.EmplaceComponent<Component::Mesh>();
 //          renderComponent.mesh = mesh1; // Assign cube mesh
 //
-//          // Set up the MaterialComponent
-//          auto& materialComponent = entity.EmplaceComponent<Component::Material>();
-//          materialComponent.matIdx = i; // Assign current matIdx based on the row number
+//          // Set up the Material
+//          auto& Material = entity.EmplaceComponent<Component::Material>();
+//          Material.matIdx = i; // Assign current matIdx based on the row number
 //      }
 //  }
 

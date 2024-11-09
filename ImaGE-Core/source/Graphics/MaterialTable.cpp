@@ -1,19 +1,56 @@
 #include "pch.h"
 #include "MaterialTable.h"
-#include "Material.h"
+#include "MaterialData.h"
+#include "Serialization/Serializer.h"
+#include "Serialization/Deserializer.h"
 
 namespace Graphics {
-    std::vector<std::shared_ptr<Material>> MaterialTable::mMaterials;
+    std::unordered_map<IGE::Assets::GUID, uint32_t> MaterialTable::mGUIDToIndexMap;
+    std::vector<std::shared_ptr<MaterialData>> MaterialTable::mMaterials;
     // Add a material to the table and return its index
-    uint32_t Graphics::MaterialTable::AddMaterial(std::shared_ptr<Graphics::Material>& material) {
+    uint32_t Graphics::MaterialTable::AddMaterial(std::shared_ptr<Graphics::MaterialData>& material) {
         mMaterials.push_back(material);
         return static_cast<uint32_t>(mMaterials.size() - 1);
     }
 
+    uint32_t MaterialTable::AddMaterialByGUID(IGE::Assets::GUID const& guid){
+        // Check if the material already exists
+        auto it = mGUIDToIndexMap.find(guid);
+        if (it != mGUIDToIndexMap.end()) {
+            return it->second; // Return existing index
+        }
+
+        // Load the material data from the AssetManager
+        //auto materialData = IGE::AssetManager::GetInstance().GetAsset<MaterialData>(guid);
+        std::shared_ptr<MaterialData> materialData{}; //TODO change this
+        if (!materialData) {
+            // Handle missing material (use a default material if needed)
+            materialData = MaterialData::Create("PBR", "null"); //TODO CHNAGE THIS
+        }
+
+        // Add the new material to the table
+        uint32_t newIndex = static_cast<uint32_t>(mMaterials.size());
+        mMaterials.push_back(materialData);
+        mGUIDToIndexMap[guid] = newIndex;
+
+        return newIndex;
+    }
+
     // Retrieve material by index
 
-    std::shared_ptr<Material> MaterialTable::GetMaterial(uint32_t index = 0) {
+    std::shared_ptr<MaterialData> MaterialTable::GetMaterial(uint32_t index = 0) {
         return mMaterials[index];
+    }
+
+    std::shared_ptr<MaterialData> MaterialTable::GetMaterialByGUID(const IGE::Assets::GUID& guid){
+        auto it = mGUIDToIndexMap.find(guid);
+        if (it != mGUIDToIndexMap.end()) {
+            return GetMaterial(it->second);
+        }
+
+        std::cerr << "Warning: Material with GUID " << " not found in MaterialTable.\n"; //@TODO CHANGE THIS TO DEBUGLOGGER
+        Debug::DebugLogger::GetInstance().LogError("Material With GUID not found in MaterialTable");
+        return nullptr;
     }
 
     // Bind textures for all materials to the shader
@@ -36,7 +73,7 @@ namespace Graphics {
 
         // Start from index 1 to skip the default material
         for (uint32_t i = 1; i < mMaterials.size() && i < 16; ++i) {  // Up to 16 unique textures
-            std::shared_ptr<Material> const& material = mMaterials[i];
+            std::shared_ptr<MaterialData> const& material = mMaterials[i];
 
             // Get the material’s textures
             auto albedoMap = material->GetAlbedoMap();
@@ -58,5 +95,84 @@ namespace Graphics {
         // Set texture unit arrays in the shader; any unused slots will point to default textures
         shader->SetUniform("u_AlbedoMaps", albedoTextureUnits.data(), static_cast<unsigned>(albedoTextureUnits.size()));
         shader->SetUniform("u_NormalMaps", normalTextureUnits.data(), static_cast<unsigned>(normalTextureUnits.size()));
+    }
+    void MaterialTable::SaveMaterials() {
+        for (size_t i = 1; i < mMaterials.size(); ++i) {  // Start from index 1 to skip the default material at index 0
+            auto& material = mMaterials[i];
+            if (!material) continue;
+
+            // Create a unique filename for each material based on its GUID
+            std::stringstream ss;
+            ss << gMaterialDirectory << material->GetName() << i << ".mat";
+           // std::string filename = "Materials/" + material->GetGUID().ToString() + ".mat";
+            std::string filename = ss.str();
+
+            // Prepare the metadata struct with material properties
+            MatData data;
+            //metadata.guid = material->GetGUID();
+            data.name = material->GetName();
+            data.shader = material->GetShaderName();
+            data.albedoColor = material->GetAlbedoColor();
+            data.metalness = material->GetMetalness();
+            data.roughness = material->GetRoughness();
+            data.ao = material->GetAO();
+            data.emission = material->GetEmission();
+            data.transparency = material->GetTransparency();
+            data.tiling = material->GetTiling();
+            data.offset = material->GetOffset();
+            data.albedoMap = material->GetAlbedoMap();
+            data.normalMap = material->GetNormalMap();
+            data.metalnessMap = material->GetMetalnessMap();
+            data.roughnessMap = material->GetRoughnessMap();
+
+            // Serialize the metadata into the file
+            Serialization::Serializer::SerializeAny(data, filename);
+        }
+    }
+
+
+    std::shared_ptr<MaterialData> MaterialTable::LoadMaterial(std::string const& fp) {
+        // Ensure the file exists
+        if (!std::filesystem::exists(fp)) {
+            std::stringstream ss;
+            ss << "Failed to load material data, file " << fp << " does not exist.\n";
+            Debug::DebugLogger::GetInstance().LogError(ss.str());
+            return nullptr;
+        }
+
+        // Deserialize the material data from the specified file
+        MatData data;
+        Serialization::Deserializer::DeserializeAny(data, fp);
+
+        // Retrieve the shader name from `data` (if it's stored there) or use a default
+        auto shaderName = data.shader.empty() ? "PBR" : data.shader;
+        
+        // Create a new MaterialData instance with the shader name
+        auto material = MaterialData::Create(shaderName, data.name);
+
+        // Populate MaterialData properties
+        material->SetName(data.name);
+        material->SetShaderName(data.shader);
+        material->SetAlbedoColor(data.albedoColor);
+        material->SetMetalness(data.metalness);
+        material->SetRoughness(data.roughness);
+        material->SetAO(data.ao);
+        material->SetEmission(data.emission);
+        material->SetTransparency(data.transparency);
+        material->SetTiling(data.tiling);
+        material->SetOffset(data.offset);
+        material->SetAlbedoMap(data.albedoMap);
+        material->SetNormalMap(data.normalMap);
+        material->SetMetalnessMap(data.metalnessMap);
+        material->SetRoughnessMap(data.roughnessMap);
+
+        // Return the loaded material
+        return material;
+    }
+
+    void MaterialTable::ClearMaterials(){
+        if (mMaterials.size() > 1) {
+            mMaterials.erase(mMaterials.begin() + 1, mMaterials.end());
+        }
     }
 }

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "ScreenPass.h"
+#include "Graphics/Renderer.h"
 
 namespace Graphics {
 	ScreenPass::ScreenPass(const RenderPassSpec& spec) : RenderPass{ spec } {

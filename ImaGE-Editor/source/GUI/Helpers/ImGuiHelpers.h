@@ -24,9 +24,9 @@ namespace ImGuiHelpers
   \param payloadName
     The name of the payload
   \return
-    True if the drop was received and false otherwise
+    The ImGui payload and nullptr otherwise
   ************************************************************************/
-  bool BeginDrapDropTargetWindow(const char* payloadName);
+  ImGuiPayload const* BeginDrapDropTargetWindow(const char* payloadName);
 
   /*!*********************************************************************
   \brief

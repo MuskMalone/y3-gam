@@ -13,6 +13,9 @@
     <Filter Include="Asset\Assetables\Font">
       <UniqueIdentifier>{C1EC4985-2D59-0580-F64C-9DDD627827E8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Asset\Assetables\Material">
+      <UniqueIdentifier>{D9B7510B-457A-8595-8E2A-1422FA2B5E73}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Asset\Assetables\Mesh">
       <UniqueIdentifier>{77994D85-E305-0980-ACF9-A0DD18252BE8}</UniqueIdentifier>
     </Filter>
@@ -139,8 +142,8 @@
     <Filter Include="Graphics">
       <UniqueIdentifier>{1653CE33-0220-293F-2B39-17E717655ECD}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\AssetIO">
-      <UniqueIdentifier>{1D275E7D-0920-7DCF-3252-62541EAA5CDB}</UniqueIdentifier>
+    <Filter Include="Graphics\Mesh">
+      <UniqueIdentifier>{92268A97-FEE6-05CE-C721-4F4B33A14AAA}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\PostProcessing">
       <UniqueIdentifier>{48EFA335-B426-ECCC-BD30-50F029E712C6}</UniqueIdentifier>
@@ -198,6 +201,9 @@
     </ClInclude>
     <ClInclude Include="source\Asset\Assetables\Font\FontAsset.h">
       <Filter>Asset\Assetables\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Asset\Assetables\Material\MaterialAsset.h">
+      <Filter>Asset\Assetables\Material</Filter>
     </ClInclude>
     <ClInclude Include="source\Asset\Assetables\Mesh\ModelAsset.h">
       <Filter>Asset\Assetables\Mesh</Filter>
@@ -556,9 +562,6 @@
       <Filter>FrameRateController</Filter>
     </ClInclude>
     <ClInclude Include="source\Globals.h" />
-    <ClInclude Include="source\Graphics\AssetIO\IMSH.h">
-      <Filter>Graphics\AssetIO</Filter>
-    </ClInclude>
     <ClInclude Include="source\Graphics\CameraManager.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -574,20 +577,29 @@
     <ClInclude Include="source\Graphics\Framebuffer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="source\Graphics\Material.h">
+    <ClInclude Include="source\Graphics\MaterialData.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\MaterialTable.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="source\Graphics\Mesh.h">
-      <Filter>Graphics</Filter>
+    <ClInclude Include="source\Graphics\Mesh\IMSH.h">
+      <Filter>Graphics\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="source\Graphics\MeshFactory.h">
-      <Filter>Graphics</Filter>
+    <ClInclude Include="source\Graphics\Mesh\Mesh.h">
+      <Filter>Graphics\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="source\Graphics\MeshSource.h">
-      <Filter>Graphics</Filter>
+    <ClInclude Include="source\Graphics\Mesh\MeshFactory.h">
+      <Filter>Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Graphics\Mesh\MeshMatValues.h">
+      <Filter>Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Graphics\Mesh\MeshSource.h">
+      <Filter>Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Graphics\Mesh\Submesh.h">
+      <Filter>Graphics\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\Pipeline.h">
       <Filter>Graphics</Filter>
@@ -629,9 +641,6 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\Shader.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Graphics\Submesh.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\Texture.h">
@@ -694,9 +703,6 @@
     <ClInclude Include="source\Reflection\ProxyScript.h">
       <Filter>Reflection</Filter>
     </ClInclude>
-    <ClInclude Include="source\Scenes\Scene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="source\Scenes\SceneManager.h">
       <Filter>Scenes</Filter>
     </ClInclude>
@@ -736,9 +742,6 @@
     <ClInclude Include="source\Serialization\Serializer.h">
       <Filter>Serialization</Filter>
     </ClInclude>
-    <ClInclude Include="source\Singleton\Singleton.h">
-      <Filter>Singleton</Filter>
-    </ClInclude>
     <ClInclude Include="source\Singleton\ThreadSafeSingleton.h">
       <Filter>Singleton</Filter>
     </ClInclude>
@@ -757,6 +760,9 @@
     </ClCompile>
     <ClCompile Include="source\Asset\Assetables\Font\FontAsset.cpp">
       <Filter>Asset\Assetables\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Asset\Assetables\Material\MaterialAsset.cpp">
+      <Filter>Asset\Assetables\Material</Filter>
     </ClCompile>
     <ClCompile Include="source\Asset\Assetables\Mesh\ModelAsset.cpp">
       <Filter>Asset\Assetables\Mesh</Filter>
@@ -878,9 +884,6 @@
     <ClCompile Include="source\FrameRateController\FrameRateController.cpp">
       <Filter>FrameRateController</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\AssetIO\IMSH.cpp">
-      <Filter>Graphics\AssetIO</Filter>
-    </ClCompile>
     <ClCompile Include="source\Graphics\CameraManager.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
@@ -893,20 +896,23 @@
     <ClCompile Include="source\Graphics\Framebuffer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\Material.cpp">
+    <ClCompile Include="source\Graphics\MaterialData.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\MaterialTable.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\Mesh.cpp">
-      <Filter>Graphics</Filter>
+    <ClCompile Include="source\Graphics\Mesh\IMSH.cpp">
+      <Filter>Graphics\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\MeshFactory.cpp">
-      <Filter>Graphics</Filter>
+    <ClCompile Include="source\Graphics\Mesh\Mesh.cpp">
+      <Filter>Graphics\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\MeshSource.cpp">
-      <Filter>Graphics</Filter>
+    <ClCompile Include="source\Graphics\Mesh\MeshFactory.cpp">
+      <Filter>Graphics\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Graphics\Mesh\MeshSource.cpp">
+      <Filter>Graphics\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\Pipeline.cpp">
       <Filter>Graphics</Filter>
@@ -979,9 +985,6 @@
     </ClCompile>
     <ClCompile Include="source\Reflection\ObjectFactory.cpp">
       <Filter>Reflection</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Scenes\Scene.cpp">
-      <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="source\Scenes\SceneManager.cpp">
       <Filter>Scenes</Filter>

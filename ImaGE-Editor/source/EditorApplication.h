@@ -9,6 +9,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include "Application.h"
 #include "GUI/GUIManager.h"
+#include "Graphics/Texture.h"
 
 namespace IGE {
   class EditorApplication : public Application {
