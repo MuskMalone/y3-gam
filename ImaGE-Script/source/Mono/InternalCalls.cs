@@ -62,6 +62,9 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void SetWorldRotation(uint entityHandle, ref Quaternion position);
 
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static Vector3 GetVelocity(uint ID);
+
     //[MethodImplAttribute(MethodImplOptions.InternalCall)]
     //internal extern static void GetRotation(ref uint entityHandle, ref float rotation);
 
@@ -72,7 +75,7 @@ namespace IGE.Utils
 
 
     #region Input
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static bool IsKeyTriggered(KeyCode key);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -119,14 +122,22 @@ namespace IGE.Utils
     extern public static void SetActive(uint entityHandle, bool active);
 
 
-    #endregion
+        #endregion
 
     #region Utility
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static uint Raycast(Vector3 start, Vector3 end);
-    #endregion
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static string GetLayerName(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static uint Raycast(Vector3 start, Vector3 end);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void PlaySound(uint entity, string sound);
+
+    #endregion
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static float GetDeltaTime();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]

@@ -15,14 +15,34 @@ namespace IGE {
             
             //track updates to position
             //track whether guids are valid
-            auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
-            for (auto entity : rbsystem) {
-                auto& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
-                auto& xfm{ rbsystem.get<Component::Transform>(entity) };
-                for (auto& sound : audiosource.sounds) {
-                    auto& setting{ sound.second.playSettings };
-                    setting.position = xfm.worldPos;
+            {
+                auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
+                for (auto entity : rbsystem) {
+                    auto& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
+                    auto& xfm{ rbsystem.get<Component::Transform>(entity) };
+                    for (auto& sound : audiosource.sounds) {
+                        auto& setting{ sound.second.playSettings };
+                        setting.position = xfm.worldPos;
+
+                        for (auto channel : sound.second.playSettings.channels) {
+                            channel->setPitch(sound.second.playSettings.pitch);
+                            if (sound.second.playSettings.mute) {
+                                channel->setVolume(0);
+                            }
+                            else {
+                                channel->setVolume(sound.second.playSettings.volume);
+                            }
+
+                        }
+                    }
                 }
+            }
+            {
+                auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioListener, Component::Transform>() };
+                for (auto entity : rbsystem) {
+                    auto& audiolistener{ rbsystem.get<Component::AudioListener>(entity) };
+                }
+
             }
             //auto rbsystem2{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioListener, Component::Transform>() };
             //mgr.mSystem->set3DNumListeners(rbsystem2.)

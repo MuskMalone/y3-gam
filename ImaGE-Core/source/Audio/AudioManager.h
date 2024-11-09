@@ -16,7 +16,8 @@ namespace IGE {
 		struct SoundInvokeSetting {
 			enum class RolloffType {
 				LINEAR,
-				LOGARITHMIC
+				LOGARITHMIC, 
+				NONE
 			};
 			// Position in 3D space for 3D sounds
 			glm::vec3 position{0.0f, 0.0f, 0.0f};
@@ -35,7 +36,7 @@ namespace IGE {
 			float maxDistance{ 500.0f }; // Maximum distance for 3D attenuation
 
 			// Custom rolloff curves for advanced sound properties
-			RolloffType rolloffType{ RolloffType::LINEAR };
+			RolloffType rolloffType{ RolloffType::NONE };
 
 			//atm, its used to watch whether the channel has stopped playing, 
 			//then set the channel pointer back to nullptr

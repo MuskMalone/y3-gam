@@ -176,6 +176,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetWorldRotation);
   ADD_INTERNAL_CALL(GetRotation);
   ADD_INTERNAL_CALL(GetWorldScale);
+  ADD_INTERNAL_CALL(GetVelocity);
 
   //// Set Functions
   ADD_INTERNAL_CALL(SetWorldPosition);
@@ -198,11 +199,10 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(IsGrounded);
   ADD_INTERNAL_CALL(GetTag);
 
-
-
-
   // Utility Functions
   ADD_INTERNAL_CALL(Raycast);
+  ADD_INTERNAL_CALL(PlaySound);
+  ADD_INTERNAL_CALL(GetLayerName);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -797,6 +797,33 @@ ECS::Entity::EntityID Mono::Raycast(glm::vec3 start, glm::vec3 end)
     IGE::Physics::PhysicsSystem::GetInstance()->RayCastSingular(start, end, hit);
     ECS::Entity::EntityID out {hit.entity.GetEntityID()};
     return out;
+}
+
+void Mono::PlaySound(ECS::Entity::EntityID e, MonoString* s)
+{
+    std::string name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().PlaySound(name);
+}
+
+glm::vec3 Mono::GetVelocity(ECS::Entity::EntityID e)
+{
+    ECS::Entity entity{ e };
+    if (entity.HasComponent<Component::RigidBody>()) {
+        auto& rb{ entity.GetComponent<Component::RigidBody>() };
+        return glm::vec3{ rb.velocity.x, rb.velocity.y, rb.velocity.z };
+    }
+    return glm::vec3();
+}
+
+MonoString* Mono::GetLayerName(ECS::Entity::EntityID e)
+{
+    ECS::Entity entity{ e };
+    if (entity.HasComponent<Component::Layer>()) {
+        auto& layer{ entity.GetComponent<Component::Layer>() };
+        return STDToMonoString(layer.name);
+    }
+    return nullptr;
 }
 
 float Mono::GetDeltaTime()
