@@ -64,6 +64,16 @@ void ScriptInstance::SetEntityID(ECS::Entity::EntityID entityID)
   {
     mono_runtime_invoke(InitMethod, mono_gchandle_get_target(mGcHandle), arg.data(), nullptr);  // We will call an init function to pass in the entityID
   }
+  else
+  {
+    MonoMethod* InitMethod = mono_class_get_method_from_name(mScriptClass, "Init", 1);
+    if (InitMethod)
+    {
+      mono_runtime_invoke(InitMethod, mono_gchandle_get_target(mGcHandle), arg.data(), nullptr);  // We will call an init function to pass in the entityID
+    }
+    else
+      Debug::DebugLogger::GetInstance().LogError("you are trying to pass an entityID to a script that doesnt inherit from entity");
+  }
 }
 
 
@@ -453,6 +463,11 @@ void ScriptInstance::GetAllUpdatedFields()
     {
       Mono::DataMemberInstance<double>& sfi = f.get_value<Mono::DataMemberInstance<double>>();
       sfi.mData = GetFieldValue<double>(sfi.mScriptField.mClassField);
+    }
+    else if (f.is_type<Mono::DataMemberInstance<unsigned>>())
+    {
+      Mono::DataMemberInstance<unsigned>& sfi = f.get_value<Mono::DataMemberInstance<unsigned>>();
+      sfi.mData = GetFieldValue<unsigned>(sfi.mScriptField.mClassField);
     }
     else if (f.is_type<Mono::DataMemberInstance<std::string>>())
     {

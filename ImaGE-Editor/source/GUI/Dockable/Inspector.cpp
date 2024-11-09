@@ -585,7 +585,7 @@ namespace GUI {
               if (sfi.mData.mClassInst && ECS::EntityManager::GetInstance().IsValidEntity(static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData)))
               {
                 msg = ECS::Entity(static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData)).GetTag();
-                ECS::Entity::EntityID currID = static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData);
+                currID = static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData);
               }
 
               if (ImGui::BeginCombo("##", msg.c_str()))
@@ -605,6 +605,7 @@ namespace GUI {
                           sfi.mData.SetEntityID(e.GetRawEnttEntityID());
                           std::cout << (uint32_t)e.GetRawEnttEntityID() << std::endl;
                           s.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
+                          sfi.mData.GetAllUpdatedFields();
                         }
                         else
                         {

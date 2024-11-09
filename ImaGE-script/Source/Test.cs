@@ -35,8 +35,8 @@ public class Test : Entity
 
     // VARIABLES HERE SHOULD ONLY BE MODFIED THROUGH EDITOR
 
-    //public int TestInt = 10;
-    public float TestFloat = 20f;
+    public int TestInt = 10;
+    public float TestFloat = 22f;
     public double TestDouble = 30.0;
     public Vec3<double> dVec3 = new Vec3<double>(336.318f, 100f, 0f);
     public Entity testEnt;
