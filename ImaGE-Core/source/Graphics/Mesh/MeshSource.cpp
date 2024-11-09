@@ -16,8 +16,9 @@ namespace Graphics {
     ECS::Entity parent{ em.CreateEntityWithTag(fileName) };
     // if submeshes exist, create an entity for each one
     for (unsigned i{}; i < mSubmeshes.size(); ++i) {
-      ECS::Entity entity{ em.CreateEntityWithTag(fileName + std::to_string(i)) };
-      entity.EmplaceComponent<Component::Mesh>(guid, fileName, true, i);
+      std::string const& name{ mMeshNames[i] };
+      ECS::Entity entity{ em.CreateEntityWithTag(name) };
+      entity.EmplaceComponent<Component::Mesh>(guid, name, true, i);
       em.SetParentEntity(parent, entity);
     }
 

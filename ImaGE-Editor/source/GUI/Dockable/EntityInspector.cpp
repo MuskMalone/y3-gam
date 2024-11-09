@@ -438,7 +438,7 @@ namespace GUI {
       NextRowTable("Material Type");
 
       static const std::vector<const char*> materialNames{
-        "Default"
+        "Default", "1"
       };
 
       if (ImGui::BeginCombo("##MaterialSelection", materialNames[0])) {

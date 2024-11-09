@@ -74,9 +74,9 @@ namespace Graphics::AssetIO
     // serialized as first 24 bytes
     struct Header {
       Header() = default;
-      Header(uint64_t _vtxSize, uint64_t _idxSize, uint64_t _submeshSize)
-        : vtxSize{ _vtxSize }, idxSize{ _idxSize }, submeshSize{ _submeshSize } {}
-      uint64_t vtxSize, idxSize, submeshSize;
+      Header(uint64_t _vtxSize, uint64_t _idxSize, uint64_t _submeshSize, uint64_t _nameSize)
+        : vtxSize{ _vtxSize }, idxSize{ _idxSize }, submeshSize{ _submeshSize }, nameSize{ _nameSize } {}
+      uint64_t vtxSize, idxSize, submeshSize, nameSize;
     };
 
     // used to read/write submesh data

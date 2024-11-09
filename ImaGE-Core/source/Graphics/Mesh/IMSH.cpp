@@ -89,6 +89,7 @@ namespace Graphics::AssetIO
 
       AddVertices(mVertexBuffer, mesh, transMtx);
       AddIndices(mIndices, mesh, mIsStatic ? vtxOffset : 0);
+      mMeshNames.emplace_back(mesh->mName.C_Str());
 
       //if (meshIdx < scene->mNumMaterials) {
       //  mMatValues.emplace_back(GetMaterial(scene->mMaterials[meshIdx]));
@@ -116,6 +117,7 @@ namespace Graphics::AssetIO
 
       AddVertices(mVertexBuffer, mesh, node->mTransformation);
       AddIndices(mIndices, mesh, 0);
+      mMeshNames.emplace_back(mesh->mName.C_Str());
 
       //if (scene->HasMaterials()) {
       //  mMatValues.emplace_back(GetMaterial(scene->mMaterials[meshIdx]));
@@ -141,12 +143,20 @@ namespace Graphics::AssetIO
       std::ofstream ofs{ outputFile, std::ios::binary };
       if (!ofs) { throw Debug::Exception<IMSH>(Debug::LVL_ERROR, Msg("Unable to create binary file: " + outputFile)); }
 
-      Header const header{ mVertexBuffer.size(), mIndices.size(), mSubmeshData.size() };
+      // to reduce read/write calls, concatenate all names together
+      // and write it all at once
+      std::string combinedNames;
+      for (std::string const& str : mMeshNames) {
+        combinedNames.append(str.empty() ? " \0" : str + '\0');
+      }
+
+      Header const header{ mVertexBuffer.size(), mIndices.size(), mSubmeshData.size(), combinedNames.size() };
 
       ofs.write(reinterpret_cast<char const*>(&header), sizeof(Header));
       ofs.write(reinterpret_cast<char const*>(mVertexBuffer.data()), header.vtxSize * sizeof(Graphics::Vertex));
       ofs.write(reinterpret_cast<char const*>(mIndices.data()), header.idxSize * sizeof(uint32_t));
       ofs.write(reinterpret_cast<char const*>(mSubmeshData.data()), header.submeshSize * sizeof(SubmeshData));
+      ofs.write(reinterpret_cast<char const*>(combinedNames.data()), header.nameSize);
       ofs.write(reinterpret_cast<char const*>(&mIsStatic), sizeof(bool));
 
       ofs.close();
@@ -164,7 +174,7 @@ namespace Graphics::AssetIO
       }
     }
 
-    return MeshSource(std::move(vao), std::move(submeshes), std::move(mVertexBuffer), std::move(mIndices));
+    return MeshSource(std::move(vao), std::move(submeshes), std::move(mVertexBuffer), std::move(mIndices), std::move(mMeshNames));
   }
 
   void IMSH::ReadFromBinFile(std::string const& file) {
@@ -182,7 +192,16 @@ namespace Graphics::AssetIO
     ifs.read(reinterpret_cast<char*>(mIndices.data()), header.idxSize * sizeof(uint32_t));
     mSubmeshData.resize(header.submeshSize);
     ifs.read(reinterpret_cast<char*>(mSubmeshData.data()), header.submeshSize * sizeof(SubmeshData));
+    std::string buffer(header.nameSize, ' ');
+    ifs.read(reinterpret_cast<char*>(buffer.data()), header.nameSize);
     ifs.read(reinterpret_cast<char*>(&mIsStatic), sizeof(bool));
+
+    // retrieve each name separated by the null-terminating character
+    std::string::size_type pos{}, end;
+    while ((end = buffer.find_first_of('\0', pos)) != std::string::npos) {
+      mMeshNames.emplace_back(buffer.substr(pos, end - pos));
+      pos = end + 1;
+    }
 
     ifs.close();
   }
