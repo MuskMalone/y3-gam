@@ -29,6 +29,8 @@ namespace Graphics {
         static uint32_t AddMaterial(std::shared_ptr<MaterialData>& material);
         static uint32_t AddMaterialByGUID(IGE::Assets::GUID const& guid);
 
+        static void DeleteMaterial(IGE::Assets::GUID const& guid);
+
         // Retrieve material by index
         static std::shared_ptr<MaterialData> GetMaterial(uint32_t index);
 

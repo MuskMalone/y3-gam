@@ -43,6 +43,30 @@ namespace Graphics {
         return newIndex;
     }
 
+    void MaterialTable::DeleteMaterial(IGE::Assets::GUID const& guid) {
+        // Check if the material exists in the map
+        auto it = mGUIDToIndexMap.find(guid);
+        if (it == mGUIDToIndexMap.end()) {
+            Debug::DebugLogger::GetInstance().LogError("DeleteMaterial: Material with specified GUID not found.");
+            return;  // Material does not exist
+        }
+
+        uint32_t indexToDelete = it->second;
+
+        // Remove from mMaterials vector
+        mMaterials.erase(mMaterials.begin() + indexToDelete);
+
+        // Remove the GUID from mGUIDToIndexMap
+        mGUIDToIndexMap.erase(it);
+
+        // Update indices in mGUIDToIndexMap for materials shifted down
+        for (auto& [key, index] : mGUIDToIndexMap) {
+            if (index > indexToDelete) {
+                index--;  // Decrement indices after the removed material
+            }
+        }
+    }
+
     // Retrieve material by index
 
     std::shared_ptr<MaterialData> MaterialTable::GetMaterial(uint32_t index = 0) {
