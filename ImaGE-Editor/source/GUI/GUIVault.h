@@ -33,6 +33,16 @@ namespace GUI {
 
     /*!*********************************************************************
     \brief
+      Sets the currently selected file in the editor. Automatically sets
+      the selected entity to {}.
+    \param file
+      The path of the file to set
+    ************************************************************************/
+    static inline void SetSelectedFile(std::filesystem::path const& file) { mSelectedFile = file; sSelectedEntity = {}; }
+    static inline std::filesystem::path const& GetSelectedFile() noexcept { return mSelectedFile; }
+
+    /*!*********************************************************************
+    \brief
       Gets the styler of the engine
     \return
       Reference to the Styler
@@ -43,7 +53,7 @@ namespace GUI {
     inline static Styler mStyler; // handles editor's styles
 
     inline static std::unordered_set<ECS::Entity::EntityID> sSelectedEntities;
-    inline static std::filesystem::path mSelectedFile;
+    inline static std::filesystem::path mSelectedFile;  // @TODO: should change to GUID in future
     inline static ECS::Entity sSelectedEntity; // currently selected entity
   };
 

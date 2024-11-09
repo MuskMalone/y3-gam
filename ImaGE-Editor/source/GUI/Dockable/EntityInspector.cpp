@@ -95,8 +95,12 @@ namespace GUI {
     ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
     ECS::Entity currentEntity{ GUIVault::GetSelectedEntity() };
     
-    if (currentEntity) {
-
+    // run the inspector for the selected file
+    if (!currentEntity) {
+      RunFileInspector();
+    }
+    // run default inspector for selected entity
+    else {
       if (currentEntity != mPreviousEntity) {
         mPreviousEntity = currentEntity;
         mEntityChanged = true;

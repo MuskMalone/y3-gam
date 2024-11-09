@@ -124,4 +124,10 @@ namespace AssetHelpers
 	************************************************************************/
 	void OpenDirectoryInExplorer(std::filesystem::path const& filePath);
 
+	/*!*********************************************************************
+	\brief
+		Creates new material
+	************************************************************************/
+	void CreateNewMaterial();
+
 } // namespace AssetHelpers

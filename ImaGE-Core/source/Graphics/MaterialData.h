@@ -9,8 +9,7 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#include "Renderer.h"
-#include "Asset/IGEAssets.h"
+#include <Asset/SmartPointer.h>
 #include <Graphics/Shader.h>
 #include <Graphics/Texture.h>
 

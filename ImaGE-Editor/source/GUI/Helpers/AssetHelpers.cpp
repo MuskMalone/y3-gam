@@ -17,6 +17,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <commdlg.h>	// to open file explorer
 #include <shellapi.h>
 #include <shlobj_core.h>  // enable selection in file explorer
+#include "Graphics/MaterialTable.h"
 
 namespace AssetHelpers
 {
@@ -141,4 +142,7 @@ namespace AssetHelpers
     ShellExecuteA(NULL, "open", absolutePath.c_str(), NULL, NULL, SW_SHOWDEFAULT);
   }
 
+  void CreateNewMaterial() {
+      Graphics::MaterialTable::CreateAndImportMatFile();
+  }
 } // namespace AssetHelpers

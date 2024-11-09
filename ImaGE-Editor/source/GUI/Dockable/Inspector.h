@@ -109,6 +109,8 @@ namespace GUI {
     static inline constexpr float ITEM_SPACING{ 0 };
     static inline constexpr float CELL_PADDING{ 1 };
 
+    void RunFileInspector();
+
     /*!*********************************************************************
     \brief
       This function handles the corresponding events the Inspector

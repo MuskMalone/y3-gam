@@ -88,7 +88,7 @@ namespace Graphics::AssetIO
       aiMesh const* mesh{ scene->mMeshes[meshIdx] };
 
       AddVertices(mVertexBuffer, mesh, transMtx);
-      AddIndices(mIndices, mesh, vtxOffset);
+      AddIndices(mIndices, mesh, mIsStatic ? vtxOffset : 0);
 
       //if (meshIdx < scene->mNumMaterials) {
       //  mMatValues.emplace_back(GetMaterial(scene->mMaterials[meshIdx]));

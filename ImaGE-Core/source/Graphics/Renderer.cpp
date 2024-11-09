@@ -207,9 +207,6 @@ namespace Graphics {
 		//	// Add the new material to the material table
 		//	MaterialTable::AddMaterial(material);
 		//}
-
-		MaterialTable::SaveMaterials();
-
 	}
 
 	void Renderer::InitShaders() {
@@ -728,6 +725,35 @@ namespace Graphics {
 
 			RenderAPI::DrawIndicesInstanced(vao, static_cast<unsigned>(IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource.GetIndices().size()), static_cast<unsigned>(instances.size()));
 
+		}
+
+		mData.instanceBufferDataMap.clear();
+	}
+
+	void Renderer::RenderSubmeshInstances() {
+		for (auto& [meshSrc, instances] : mData.instanceBufferDataMap) {
+			if (instances.empty()) continue;
+
+			auto instanceBuffer = GetInstanceBuffer(meshSrc);
+
+			// Set instance data into the buffer
+			unsigned int dataSize = static_cast<unsigned int>(instances.size() * sizeof(InstanceData));
+			instanceBuffer->SetData(instances.data(), dataSize);
+
+			// Get the VAO for the entire mesh
+			auto& vao = IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource.GetVertexArray();
+
+			// Iterate over each submesh in the MeshSource
+			for (const auto& submesh : IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource.GetSubmeshes()) {
+				// Render each submesh individually
+				RenderAPI::DrawIndicesInstancedBaseVertex(
+					vao,
+					submesh.idxCount,                 // Number of indices in this submesh
+					static_cast<unsigned>(instances.size()),  // Instance count
+					submesh.baseIdx,                  // Index offset within the element buffer
+					submesh.baseVtx                   // Vertex offset within the vertex buffer
+				);
+			}
 		}
 
 		mData.instanceBufferDataMap.clear();

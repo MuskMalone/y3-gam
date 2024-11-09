@@ -171,6 +171,8 @@ namespace IGE {
               if (mGUID2PathRegistry.find(guid) != mGUID2PathRegistry.end()) {
                   mGUID2PathRegistry.erase(guid);
               }
+
+              SaveMetadata();
           }
 
           //-------------------------------------------------------------------------
