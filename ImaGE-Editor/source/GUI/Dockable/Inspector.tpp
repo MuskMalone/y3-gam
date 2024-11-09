@@ -30,7 +30,7 @@ bool Inspector::WindowBegin(std::string const& windowName, bool highlight) {
 
 template<typename ComponentType>
 bool Inspector::DrawAddComponentButton(std::string const& name) {
-  if (GUIManager::GetSelectedEntity().HasComponent<ComponentType>()) {
+  if (GUIVault::GetSelectedEntity().HasComponent<ComponentType>()) {
     return false;
   }
     
@@ -71,7 +71,7 @@ bool Inspector::DrawAddComponentButton(std::string const& name) {
     fillRowWithColour(Color::IMGUI_COLOR_ORANGE);
 
   if (isRowClicked) {
-    ECS::Entity ent{ GUIManager::GetSelectedEntity().GetRawEnttEntityID() };
+    ECS::Entity ent{ GUIVault::GetSelectedEntity().GetRawEnttEntityID() };
     if constexpr (std::is_same<ComponentType, Component::RigidBody>::value) {
         ComponentType& newComp{ IGE::Physics::PhysicsSystem::GetInstance()->AddRigidBody(ent) };
     } else if constexpr (std::is_same<ComponentType, Component::BoxCollider>::value) {
@@ -134,7 +134,7 @@ bool Inspector::DrawOptionButton(std::string const& name) {
     fillRowWithColour(Color::IMGUI_COLOR_RED);
 
   if (isRowClicked) {
-    ECS::Entity ent{ GUIManager::GetSelectedEntity().GetRawEnttEntityID() };
+    ECS::Entity ent{ GUIVault::GetSelectedEntity().GetRawEnttEntityID() };
 
     if (name == "Remove Component") {
       ent.RemoveComponent<ComponentType>();

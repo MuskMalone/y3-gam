@@ -10,7 +10,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
 #include "GUI/GUIWindow.h"
-#include "GUI/GUIManager.h"
+#include "GUI/GUIVault.h"
+#include "GUI/Styles/Styler.h"
 
 #include <imgui/imgui.h>
 #include <ImGui/imgui_internal.h>
