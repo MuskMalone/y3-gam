@@ -19,6 +19,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <typeindex>
 #include <Graphics/RenderPass/RenderPass.h>
 #include "Core/Components/Camera.h"
+#include "MeshSubmeshKeyHash.h"
 
 
 namespace Component{
@@ -26,6 +27,7 @@ namespace Component{
 }
 
 namespace Graphics {
+	using MeshSubmeshKey = std::pair<IGE::Assets::GUID, uint32_t>;
 	class RenderPass; // Forward declaration
 	
 	class Mesh;
@@ -134,6 +136,9 @@ namespace Graphics {
 		//------------------------Instancing related-------------------------//
 		std::unordered_map<IGE::Assets::GUID, std::vector<InstanceData>> instanceBufferDataMap;
 		std::unordered_map<IGE::Assets::GUID, std::shared_ptr<VertexBuffer>> instanceBuffers;
+
+		std::unordered_map<MeshSubmeshKey, std::vector<InstanceData>> instanceSubmeshBufferDataMap;
+		std::unordered_map<MeshSubmeshKey, std::shared_ptr<VertexBuffer>> instanceSubmeshBuffers;
 		//-------------------------------------------------------------------//
 
 		IGE::Assets::GUID debugMeshSources[3];
@@ -165,6 +170,7 @@ namespace Graphics {
 
 		//Instancing
 		static void SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int entityID = -1, int matID = 0);
+		static void SubmitSubmeshInstance(IGE::Assets::GUID meshSource, size_t submeshIndex, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, int matID);
 		static void RenderInstances();
 
 		static void RenderSubmeshInstances();
@@ -205,6 +211,7 @@ namespace Graphics {
 			glm::vec4 const& clr);
 
 		static std::shared_ptr<VertexBuffer> GetInstanceBuffer(IGE::Assets::GUID const& meshSrc);
+		static std::shared_ptr<VertexBuffer> GetSubmeshInstanceBuffer(MeshSubmeshKey const& meshSubmeshKey);
 		//static void SetQuadBufferData(const glm::vec3& pos, const glm::vec2& scale,
 		//	const glm::vec4& clr, const glm::vec2& texCoord, float texIdx, int entity);
 		static void NextBatch();
