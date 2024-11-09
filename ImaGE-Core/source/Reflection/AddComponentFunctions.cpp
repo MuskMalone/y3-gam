@@ -77,7 +77,7 @@ namespace Reflection::ComponentUtils {
   void AddMaterial(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Material, comp);
 
-    entity.EmplaceOrReplaceComponent<Material>();
+    entity.EmplaceOrReplaceComponent<Material>(comp.materialGUID);
   }
 
   void AddMesh(ECS::Entity entity, rttr::variant const& var) {
@@ -87,7 +87,7 @@ namespace Reflection::ComponentUtils {
       : IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(comp.meshName) };
 
     try {
-      entity.EmplaceOrReplaceComponent<Mesh>(meshSrc, comp.meshName, comp.isCustomMesh);
+      entity.EmplaceOrReplaceComponent<Mesh>(meshSrc, comp.meshName, comp.isCustomMesh, comp.submeshIdx);
     }
     catch (Debug::ExceptionBase& e) {
       e.LogSource();
