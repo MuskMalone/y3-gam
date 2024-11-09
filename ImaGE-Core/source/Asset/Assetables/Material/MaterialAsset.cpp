@@ -56,10 +56,10 @@ namespace IGE {
             std::string fileext = GetFileExtension(fp);
 
             // Ensure the material directory exists for compiled materials
-            CreateDirectoryIfNotExists(cMaterialDirectory + cCompiledDirectory);
+            CreateDirectoryIfNotExists(cMaterialDirectory);
 
             // Define the final file path in the compiled directory
-            std::string const finalfp = cMaterialDirectory + cCompiledDirectory + filename + ".mat";
+            std::string const finalfp = cMaterialDirectory + filename + ".mat";
 
             // Validate the file extension (assuming ".mat" for materials)
             if (fileext != ".mat") {

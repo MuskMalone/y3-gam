@@ -97,6 +97,27 @@
                         }
                     },
                     {
+                        "key": "RigidBody",
+                        "value": {
+                            "velocity": {
+                                "x": -5.099999904632568,
+                                "y": -0.800000011920929,
+                                "z": -2.700000047683716
+                            },
+                            "angularVelocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "staticFriction": 0.0,
+                            "dynamicFriction": 0.0,
+                            "restitution": 0.0,
+                            "gravityFactor": 0.0,
+                            "linearDamping": 0.9800000190734863,
+                            "motionType": "DYNAMIC"
+                        }
+                    },
+                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -127,27 +148,6 @@
                         "key": "Layer",
                         "value": {
                             "layerName": "Player"
-                        }
-                    },
-                    {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": -5.099999904632568,
-                                "y": -0.800000011920929,
-                                "z": -2.700000047683716
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 0.0,
-                            "dynamicFriction": 0.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "DYNAMIC"
                         }
                     }
                 ],
@@ -341,7 +341,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 4383697370122094996
+                            "ID": 11366223141720001023
                         },
                         "isCustomMesh": false,
                         "castShadows": true,
@@ -430,7 +430,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 1832492174271804351
+                            "ID": 10286054092524180666
                         },
                         "isCustomMesh": false,
                         "castShadows": true,
@@ -622,7 +622,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 4383697370122094996
+                            "ID": 11366223141720001023
                         },
                         "isCustomMesh": false,
                         "castShadows": true,
@@ -962,7 +962,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 4383697370122094996
+                            "ID": 11366223141720001023
                         },
                         "isCustomMesh": false,
                         "castShadows": true,
@@ -1033,7 +1033,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 4383697370122094996
+                            "ID": 11366223141720001023
                         },
                         "isCustomMesh": false,
                         "castShadows": true,
