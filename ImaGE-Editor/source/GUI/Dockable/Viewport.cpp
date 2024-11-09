@@ -349,12 +349,15 @@ namespace GUI
           transform.scale += offset;
         }
       }
+
+      // update all the world values based on the changes
       if (multiSelectActive) {
         ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
         for (ECS::Entity e : GUIManager::GetSelectedEntities()) {
           TransformHelpers::UpdateWorldTransform(e);
           if (!e.HasComponent<Component::PrefabOverrides>()) { continue; }
 
+          // at the same time, update prefab instances with the new overrides
           Component::Transform& trans{ e.GetComponent<Component::Transform>() };
           Component::PrefabOverrides& pfbOverrides{ e.GetComponent<Component::PrefabOverrides>() };
           if (pfbOverrides.IsComponentModified<Component::Transform>() || pfbOverrides.subDataId != Prefabs::PrefabSubData::BasePrefabId) {
@@ -366,12 +369,15 @@ namespace GUI
         }
       }
       else {
+        // if single select, simply update that entity normally
         TransformHelpers::UpdateWorldTransform(selectedEntity);
-        if (prefabOverrides->IsComponentModified<Component::Transform>() || prefabOverrides->subDataId != Prefabs::PrefabSubData::BasePrefabId) {
-          prefabOverrides->AddComponentModification(transform);
-        }
-        else if (currentOperation != ImGuizmo::TRANSLATE) {
-          prefabOverrides->AddComponentModification(transform);
+        if (prefabOverrides) {
+          if (prefabOverrides->IsComponentModified<Component::Transform>() || prefabOverrides->subDataId != Prefabs::PrefabSubData::BasePrefabId) {
+            prefabOverrides->AddComponentModification(transform);
+          }
+          else if (currentOperation != ImGuizmo::TRANSLATE) {
+            prefabOverrides->AddComponentModification(transform);
+          }
         }
       }
       QUEUE_EVENT(Events::SceneModifiedEvent);
