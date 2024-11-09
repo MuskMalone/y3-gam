@@ -14,6 +14,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/VertexArray.h>
 #include <Graphics/Mesh/Submesh.h>
 
+// forward declarations
+namespace ECS { class Entity; }
+namespace IGE::Core { template <typename T> class GUID; }
+namespace IGE::Assets { struct AssetGUIDTag; using GUID = IGE::Core::GUID<AssetGUIDTag>; }
+
 namespace Graphics {
 	class MeshSource {
     public:
@@ -34,6 +39,8 @@ namespace Graphics {
 
       const std::shared_ptr<VertexArray>& GetVertexArray() const { return mVertexArray; }
       const std::vector<Submesh>& GetSubmeshes() const { return mSubmeshes; }
+
+      ECS::Entity ConstructEntity(IGE::Assets::GUID const& guid, std::string const& fileName) const;
 
       //const AABB& GetBoundingBox() const { return mBoundingBox; } TO ADD IN THE FUTURE
       bool IsWireframe() { return mIsWireframe; }

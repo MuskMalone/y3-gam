@@ -191,10 +191,10 @@ namespace Graphics {
 
           // Submit all instances of each submesh for this material
           for (const auto& [entity, worldMtx] : entityPairs) {
-              auto const& mesh = entity.GetComponent<Component::Mesh>();
+            auto const& mesh = entity.GetComponent<Component::Mesh>();
 
-              Graphics::Renderer::SubmitSubmeshInstance(mesh.meshSource, 0, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
-             //Graphics::Renderer::SubmitSubmeshInstance(mesh.meshSource, mesh.submeshIdx, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
+            //Graphics::Renderer::SubmitSubmeshInstance(mesh.meshSource, 0, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
+            Graphics::Renderer::SubmitSubmeshInstance(mesh.meshSource, mesh.submeshIdx, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
           }
 
           mSpec.pipeline->GetSpec().instanceLayout;

@@ -63,6 +63,8 @@ namespace {
 
     return GetRootEntity(em.GetParentEntity(entity));
   }
+
+  ECS::Entity ConstructEntity(IGE::Assets::GUID const& guid, Graphics::MeshSource const& meshSource);
 }
 
 namespace GUI
@@ -406,10 +408,8 @@ namespace GUI
           break;
         case AssetPayload::MODEL:
         {
-          ECS::Entity newEntity{ ECS::EntityManager::GetInstance().CreateEntityWithTag(assetPayload.GetFileName()) };
           IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
-          auto const& mesh{ IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(meshSrc)->mMeshSource };
-          newEntity.EmplaceComponent<Component::Mesh>(meshSrc, assetPayload.GetFileName(), true);
+          ECS::Entity const newEntity{ IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(meshSrc)->mMeshSource.ConstructEntity(meshSrc, assetPayload.GetFileName()) };
           GUIVault::SetSelectedEntity(newEntity);
           break;
         }

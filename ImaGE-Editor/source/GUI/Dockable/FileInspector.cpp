@@ -1,5 +1,5 @@
 /*!*********************************************************************
-\file   Inspector.cpp
+\file   FileInspector.cpp
 \author
 \date   5-October-2024
 \brief  Class encapsulating functions to run the inspector / property
