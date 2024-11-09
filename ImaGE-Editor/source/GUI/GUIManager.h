@@ -19,6 +19,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/RenderTarget.h>
 #include <Core/Entity.h>
 #include "GUI/Dockable/GameViewport.h"
+#include <unordered_set>
 
 namespace GUI {
   class Viewport;
@@ -75,6 +76,13 @@ namespace GUI {
       The entity to set
     ************************************************************************/
     static inline void SetSelectedEntity(ECS::Entity const& entity) noexcept { sSelectedEntity = entity; }
+
+
+    static inline std::unordered_set<ECS::Entity::EntityID> const& GetSelectedEntities() noexcept { return sSelectedEntities; }
+    static inline bool IsEntitySelected(ECS::Entity const& entity) { return sSelectedEntities.contains(entity.GetRawEnttEntityID()); }
+    static inline void AddSelectedEntity(ECS::Entity const& entity) { sSelectedEntities.emplace(entity.GetRawEnttEntityID()); }
+    static void RemoveSelectedEntity(ECS::Entity const& entity) { sSelectedEntities.erase(entity.GetRawEnttEntityID()); }
+    static void ClearSelectedEntities() { sSelectedEntities.clear(); }
     
     inline bool IsGameViewActive() {
         return mGameViewport->IsActive();
@@ -85,8 +93,9 @@ namespace GUI {
     std::shared_ptr<Viewport> mEditorViewport;  // ptr to the viewport in mWindows
     std::shared_ptr<GameViewport> mGameViewport; // ptr to gameviewport
 
-    static Styler mStyler; // handles editor's styles
-    static ECS::Entity sSelectedEntity; // currently selected entity
+    inline static Styler mStyler; // handles editor's styles
+    inline static std::unordered_set<ECS::Entity::EntityID> sSelectedEntities;
+    inline static ECS::Entity sSelectedEntity; // currently selected entity
   };
 
 } // namespace GUI

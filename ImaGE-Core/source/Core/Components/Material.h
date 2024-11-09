@@ -36,7 +36,7 @@ namespace Component {
         }
 
         // Material GUID and matIdx for instancing
-        IGE::Assets::GUID materialGUID{};
+        IGE::Assets::GUID materialGUID;
         uint32_t matIdx = 0;
     };
 }

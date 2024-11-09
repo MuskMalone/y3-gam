@@ -1,5 +1,5 @@
 #pragma once
-#include "Mesh.h"
+#include <Graphics/Mesh/Mesh.h>
 #include <glm/glm.hpp>
 
 namespace Graphics {

@@ -15,10 +15,11 @@ namespace Scenes
 
   enum SceneState : uint8_t
   {
-    PLAYING = 1,
-    PAUSED = 2,
-    STOPPED = 4,
-    PREFAB_EDITOR = 8
+    NO_SCENE = 1,
+    PLAYING = 2,
+    PAUSED = 4,
+    STOPPED = 8,
+    PREFAB_EDITOR = 16
   };
 
 } // namespace Scenes

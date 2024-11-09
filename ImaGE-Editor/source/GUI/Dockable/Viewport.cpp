@@ -10,17 +10,17 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
-#include "Viewport.h"
 #include <imgui/imgui.h>
+#include "Viewport.h"
 #include <GUI/Helpers/AssetPayload.h>
-#include "AssetBrowser.h"
+#include <GUI/Helpers/ImGuiHelpers.h>
 #include <Events/EventManager.h>
 #include <FrameRateController/FrameRateController.h>
 #include <Core/Entity.h>
 #include <Core/Components/Mesh.h>
 #include <Core/Components/Transform.h>
+#include <Core/Components/PrefabOverrides.h>
 #include <Core/Systems/TransformSystem/TransformHelpers.h>
-#include <GUI/Helpers/ImGuiHelpers.h>
 #include <Core/EntityManager.h>
 #include <GUI/GUIManager.h>
 #include <Asset/IGEAssets.h>
@@ -28,6 +28,15 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Graphics/Renderer.h"
 
 namespace {
+  // for panning camera to entity when double-clicked upon
+  static bool sMovingToEntity{ false };
+  static glm::vec3 sTargetPosition, sMoveDir;
+  static float sDistToCover;
+  static ECS::Entity sPrevSelectedEntity;
+
+  // for multi-select
+  static bool sCtrlHeld{ false };
+
   /*!*********************************************************************
     \brief
       Projects a 3d vector onto the camera's view plane
@@ -58,12 +67,6 @@ namespace {
 
 namespace GUI
 {
-  // for panning camera to entity when double-clicked upon
-  static bool sMovingToEntity{ false };
-  static glm::vec3 sTargetPosition, sMoveDir;
-  static float sDistToCover;
-  static ECS::Entity sPrevSelectedEntity;
-
   Viewport::Viewport(const char* name, Graphics::EditorCamera& camera) : GUIWindow(name),
     mEditorCam{ camera }, mIsPanning{ false }, mIsDragging{ false } {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_ZOOM, &Viewport::HandleEvent, this);
@@ -76,57 +79,84 @@ namespace GUI
       ImVec2 const vpSize = ImGui::GetContentRegionAvail();
       ImVec2 const vpStartPos{ ImGui::GetCursorScreenPos() };
 
+      sCtrlHeld = ImGui::IsKeyDown(ImGuiKey_LeftCtrl) || ImGui::IsKeyDown(ImGuiKey_RightCtrl);
+
       // only register input if viewport is focused
-      bool const checkInput{ mIsDragging || mIsPanning || sMovingToEntity };
-      if ((ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) || checkInput) {
-          ProcessCameraInputs();
+      bool const checkInput{ (ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) || mIsDragging || mIsPanning || sMovingToEntity };
+      if (checkInput) {
+        ProcessCameraInputs();
       }
       // auto focus window when middle or right-clicked upon
       else if (ImGui::IsWindowHovered() && (ImGui::IsMouseClicked(ImGuiMouseButton_Right) || ImGui::IsMouseClicked(ImGuiMouseButton_Middle))) {
-          ImGui::FocusWindow(ImGui::GetCurrentWindow());
+        ImGui::FocusWindow(ImGui::GetCurrentWindow());
       }
 
       // update framebuffer
       ImGui::Image(
-          reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(framebuffer->GetColorAttachmentID())),
-          vpSize,
-          ImVec2(0, 1),
-          ImVec2(1, 0)
+        reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(framebuffer->GetColorAttachmentID())),
+        vpSize,
+        ImVec2(0, 1),
+        ImVec2(1, 0)
       );
 
-      ReceivePayload();
+      if (!UpdateGuizmos() && checkInput) {
+        // object picking
+        if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
+          ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
 
-      if (!UpdateGuizmos()) {
-          // object picking
-          if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
-              ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
+          // check if clicking outside viewport
+          if (!(offset.x < 0 || offset.x > vpSize.x || offset.y < 0 || offset.y > vpSize.y)) {
 
-              // check if clicking outside viewport
-              if (!(offset.x < 0 || offset.x > vpSize.x || offset.y < 0 || offset.y > vpSize.y)) {
-                  
-                  auto const& geomPass{ Graphics::Renderer::GetPass<Graphics::GeomPass>() };
-                  auto const& pickFb { geomPass->GetTargetFramebuffer() };
-                  Graphics::FramebufferSpec const& fbSpec{ pickFb->GetFramebufferSpec() };
+            auto const& geomPass{ Graphics::Renderer::GetPass<Graphics::GeomPass>() };
+            auto const& pickFb{ geomPass->GetTargetFramebuffer() };
+            Graphics::FramebufferSpec const& fbSpec{ pickFb->GetFramebufferSpec() };
 
-                  pickFb->Bind();
-                  int const entityId{ pickFb->ReadPixel(1,
-                    static_cast<int>(offset.x / vpSize.x * static_cast<float>(fbSpec.width)),
-                    static_cast<int>((vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height))) };
-                  pickFb->Unbind();
+            pickFb->Bind();
+            int const entityId{ pickFb->ReadPixel(1,
+              static_cast<int>(offset.x / vpSize.x * static_cast<float>(fbSpec.width)),
+              static_cast<int>((vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height))) };
+            pickFb->Unbind();
 
-                  if (entityId > 0) {
-                      ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
-                          root{ GetRootEntity(selected) };
-                      sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
-                      GUIManager::SetSelectedEntity(sPrevSelectedEntity);
+            if (entityId >= 0) {
+              ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
+                root{ GetRootEntity(selected) };
+              sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
+
+              if (sCtrlHeld) {
+                ECS::Entity const curr{ GUIManager::GetSelectedEntity() };
+                if (GUIManager::GetSelectedEntities().empty() && curr) {
+                  GUIManager::AddSelectedEntity(curr);
+                }
+
+                if (GUIManager::IsEntitySelected(root)) {
+                  GUIManager::RemoveSelectedEntity(root);
+                  if (GUIManager::GetSelectedEntities().empty()) {
+                    GUIManager::SetSelectedEntity({});
                   }
                   else {
-                      sPrevSelectedEntity = {};
-                      GUIManager::SetSelectedEntity({});
+                    GUIManager::SetSelectedEntity(*GUIManager::GetSelectedEntities().begin());
                   }
+                }
+                else {
+                  GUIManager::AddSelectedEntity(root);
+                  GUIManager::SetSelectedEntity(sPrevSelectedEntity);
+                }
               }
+              else {
+                GUIManager::ClearSelectedEntities();
+                GUIManager::SetSelectedEntity(sPrevSelectedEntity);
+              }
+            }
+            else {
+              sPrevSelectedEntity = {};
+              GUIManager::SetSelectedEntity({});
+              GUIManager::ClearSelectedEntities();
+            }
           }
+        }
       }
+
+      ReceivePayload();
 
       ImGui::End();
   }
@@ -239,6 +269,9 @@ namespace GUI
   bool Viewport::UpdateGuizmos() const {
     ECS::Entity selectedEntity{ GUIManager::GetSelectedEntity() };
     if (!selectedEntity || !selectedEntity.HasComponent<Component::Transform>()) { return false; }
+    static Component::PrefabOverrides* prefabOverrides{ nullptr };
+    prefabOverrides = selectedEntity.HasComponent<Component::PrefabOverrides>() ? 
+      &selectedEntity.GetComponent<Component::PrefabOverrides>() : nullptr;
 
     bool usingGuizmos{ false };
     ImGuizmo::SetDrawlist();
@@ -247,7 +280,8 @@ namespace GUI
     float windowWidth{ ImGui::GetWindowWidth() };
     float windowHeight{ ImGui::GetWindowHeight() };
     ImGuizmo::SetRect(windowPos.x, windowPos.y, windowWidth, windowHeight);
-    auto& transform{ selectedEntity.GetComponent<Component::Transform>() };
+    Component::Transform& transform{ selectedEntity.GetComponent<Component::Transform>() };
+    glm::vec3 const oldPos{ transform.position };
     auto modelMatrix{ transform.worldMtx };
     auto modelMatrixPrev{ transform.worldMtx };
     auto viewMatrix{ mEditorCam.GetViewMatrix() };
@@ -277,19 +311,70 @@ namespace GUI
       glm::vec3 s2{}, r2{}, t2{};
       ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(modelMatrixPrev),
         glm::value_ptr(t2), glm::value_ptr(r2), glm::value_ptr(s2));
-      if (currentOperation == ImGuizmo::TRANSLATE) {
-        transform.position += std::move(t - t2);
 
+      // for each operation, if multi-select active, update all their transforms
+      bool const multiSelectActive{ !GUIManager::GetSelectedEntities().empty() };
+      if (currentOperation == ImGuizmo::TRANSLATE) {
+        glm::vec3 const offset{ t - t2 };
+        if (multiSelectActive) {
+          for (ECS::Entity e : GUIManager::GetSelectedEntities()) {
+            e.GetComponent<Component::Transform>().position += offset;
+          }
+        }
+        else {
+          transform.position += offset;
+        }
       }
       if (currentOperation == ImGuizmo::ROTATE) {
-        auto localRot{ transform.eulerAngles + std::move(r - r2) };
-        transform.SetLocalRotWithEuler(localRot);
+        glm::vec3 const offset{ r - r2 };
+        if (multiSelectActive) {
+          for (ECS::Entity e : GUIManager::GetSelectedEntities()) {
+            Component::Transform& trans{ e.GetComponent<Component::Transform>() };
+            trans.SetLocalRotWithEuler(trans.eulerAngles + offset);
+          }
+        }
+        else {
+          glm::vec3 const localRot{ transform.eulerAngles + offset };
+          transform.SetLocalRotWithEuler(localRot);
+        }
       }
       if (currentOperation == ImGuizmo::SCALE) {
-        transform.scale += std::move(s - s2);
+        glm::vec3 const offset{ s - s2 };
+        if (multiSelectActive) {
+          for (ECS::Entity e : GUIManager::GetSelectedEntities()) {
+            e.GetComponent<Component::Transform>().scale += offset;
+          }
+        }
+        else {
+          transform.scale += offset;
+        }
       }
-      transform.modified = true;
-      TransformHelpers::UpdateWorldTransform(selectedEntity);  // must call this to update world transform according to changes to local
+      if (multiSelectActive) {
+        ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
+        for (ECS::Entity e : GUIManager::GetSelectedEntities()) {
+          TransformHelpers::UpdateWorldTransform(e);
+          if (!e.HasComponent<Component::PrefabOverrides>()) { continue; }
+
+          Component::Transform& trans{ e.GetComponent<Component::Transform>() };
+          Component::PrefabOverrides& pfbOverrides{ e.GetComponent<Component::PrefabOverrides>() };
+          if (pfbOverrides.IsComponentModified<Component::Transform>() || pfbOverrides.subDataId != Prefabs::PrefabSubData::BasePrefabId) {
+            pfbOverrides.AddComponentModification(trans);
+          }
+          else if (currentOperation != ImGuizmo::TRANSLATE) {
+            pfbOverrides.AddComponentModification(trans);
+          }
+        }
+      }
+      else {
+        TransformHelpers::UpdateWorldTransform(selectedEntity);
+        if (prefabOverrides->IsComponentModified<Component::Transform>() || prefabOverrides->subDataId != Prefabs::PrefabSubData::BasePrefabId) {
+          prefabOverrides->AddComponentModification(transform);
+        }
+        else if (currentOperation != ImGuizmo::TRANSLATE) {
+          prefabOverrides->AddComponentModification(transform);
+        }
+      }
+      QUEUE_EVENT(Events::SceneModifiedEvent);
     }
 
     return usingGuizmos;
@@ -317,7 +402,9 @@ namespace GUI
         {
           ECS::Entity newEntity{ ECS::EntityManager::GetInstance().CreateEntityWithTag(assetPayload.GetFileName()) };
           IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
+          //auto const& mesh{ IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(meshSrc)->mMeshSource };
           newEntity.EmplaceComponent<Component::Mesh>(meshSrc, assetPayload.GetFileName(), true);
+          GUIManager::SetSelectedEntity(newEntity);
           break;
         }
         case AssetPayload::SPRITE:

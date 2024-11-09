@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <variant>
-#include <Graphics/Mesh.h>
+#include <Graphics/Mesh/Mesh.h>
 #include <Graphics/EditorCamera.h>
 
 #include "Core/Entity.h"

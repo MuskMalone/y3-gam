@@ -1,6 +1,6 @@
 #include <pch.h>
 #include "MeshFactory.h"
-#include "AssetIO/IMSH.h"
+#include <Graphics/Mesh/IMSH.h>
 
 namespace Graphics {
   MeshSource MeshFactory::CreateModelFromString(std::string const& meshName) {

@@ -8,7 +8,7 @@
 #include <fstream>
 #include <filesystem>
 #include "Graphics/Renderer.h"
-#include "Graphics/MeshFactory.h"
+#include <Graphics/Mesh/MeshFactory.h>
 
 #include "Graphics/RenderSystem.h"
 

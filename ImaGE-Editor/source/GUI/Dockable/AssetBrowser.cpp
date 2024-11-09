@@ -17,8 +17,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <GUI/Styles/FontAwesome6Icons.h>
 #include "GUI/GUIManager.h"
-#include <Graphics/AssetIO/IMSH.h>
+#include <Graphics/Mesh/IMSH.h>
 #include <GUI/Helpers/AssetPayload.h>
+#include <Scenes/SceneManager.h>
 #include "Asset/IGEAssets.h"
 
 namespace MeshPopup {
@@ -60,9 +61,8 @@ namespace GUI
 
   AssetBrowser::AssetBrowser(const char* name) : GUIWindow(name),
     mCurrentDir{ gAssetsDirectory }, mRightClickedDir{},
-    mSelectedAsset{}, mDirMenuPopup{ false }, mAssetMenuPopup{ false }, mDisableSceneChange{ false }, mDisablePrefabSpawn{ true }
+    mSelectedAsset{}, mDirMenuPopup{ false }, mAssetMenuPopup{ false }
   {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &AssetBrowser::SceneStateChanged, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::ADD_FILES, &AssetBrowser::FilesImported, this);
   }
 
@@ -283,12 +283,15 @@ namespace GUI
     
     if (ImGui::BeginDragDropSource()) {
       std::string const ext{ draggedAsset.extension().string() };
-      bool const canSpawnPfb{ mDisablePrefabSpawn && ext == gPrefabFileExt };
-      if (mDisableSceneChange || canSpawnPfb) {
+      Scenes::SceneState const sceneState{ IGE_SCENEMGR.GetSceneState() };
+      bool popStyleCol{ false };
+      if (ext == gPrefabFileExt && (sceneState & (Scenes::NO_SCENE | Scenes::PREFAB_EDITOR))) {
         ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+        popStyleCol = true;
       }
-      else if (mDisableSceneChange && ext == gMeshFileExt) {
+      else if (std::string(gSupportedModelFormats).find(ext) != std::string::npos && (sceneState & ~(Scenes::STOPPED | Scenes::PREFAB_EDITOR))) {
         ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+        popStyleCol = true;
       }
       else {
         std::string const pathStr{ draggedAsset.relative_path().string() };
@@ -297,28 +300,9 @@ namespace GUI
       
       ImGui::Text(draggedAsset.filename().string().c_str());
 
-      if (mDisableSceneChange || canSpawnPfb) {
-        ImGui::PopStyleColor();
-      }
+      if (popStyleCol) { ImGui::PopStyleColor(); }
 
       ImGui::EndDragDropSource();
-    }
-  }
-
-  EVENT_CALLBACK_DEF(AssetBrowser, SceneStateChanged)
-  {
-    switch (CAST_TO_EVENT(Events::SceneStateChange)->mNewState)
-    {
-    case Events::SceneStateChange::NEW:
-    case Events::SceneStateChange::CHANGED:
-    case Events::SceneStateChange::STOPPED:
-      mDisableSceneChange = mDisablePrefabSpawn = false;
-      break;
-    case Events::SceneStateChange::STARTED:
-    case Events::SceneStateChange::PAUSED:
-      mDisableSceneChange = true;
-      break;
-    default: break;
     }
   }
 
@@ -417,12 +401,10 @@ namespace GUI
       // only enabled for prefabs
       if (mSelectedAsset.extension().string() == ".pfb")
       {
-        ImGui::BeginDisabled(mDisableSceneChange);
-        if (ImGui::Selectable("Edit Prefab"))
-        {
+        ImGui::BeginDisabled(IGE_SCENEMGR.GetSceneState() & ~(Scenes::STOPPED | Scenes::NO_SCENE));
+        if (ImGui::Selectable("Edit Prefab")) {
           QUEUE_EVENT(Events::EditPrefabEvent, mSelectedAsset.stem().string(),
             mSelectedAsset.relative_path().string());
-          mDisableSceneChange = true;
         }
         ImGui::EndDisabled();
       }

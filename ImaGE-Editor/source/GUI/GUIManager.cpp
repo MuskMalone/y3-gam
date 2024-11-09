@@ -32,10 +32,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma endregion
 
 namespace GUI {
-  // Static Initialization
-  ECS::Entity GUIManager::sSelectedEntity{};
-  Styler GUIManager::mStyler{};
-
   GUIManager::GUIManager() : mPersistentElements{}, mWindows{}, mEditorViewport{} {
   
   }

@@ -6,7 +6,7 @@
 #include "ElementBuffer.h"
 #include "MaterialTable.h"
 #include "MaterialData.h"
-#include "Mesh.h"
+#include <Graphics/Mesh/Mesh.h>
 #pragma region RenderPasses
 #include <Graphics/RenderPass/GeomPass.h>
 #include <Graphics/RenderPass/ShadowPass.h>

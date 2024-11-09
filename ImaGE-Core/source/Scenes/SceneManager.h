@@ -13,6 +13,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <string>
 #include <stack>
 #include <Events/EventCallback.h>
+#include <functional>
+
+#define IGE_SCENEMGR Scenes::SceneManager::GetInstance()
 
 namespace Scenes
 {
@@ -80,7 +83,7 @@ namespace Scenes
     \return
       True if a scene is in play and false otherwise
     ************************************************************************/
-    inline bool IsSceneInProgress() const noexcept { return mSceneState & (Scenes::SceneState::PAUSED | Scenes::SceneState::PLAYING); }
+    inline bool IsSceneInProgress() const noexcept { return mSceneState & (SceneState::PAUSED | SceneState::PLAYING); }
 
     /*!*********************************************************************
     \brief
@@ -88,7 +91,7 @@ namespace Scenes
     \return
       True if a sccene is selected and false otherwise
     ************************************************************************/
-    inline bool NoSceneSelected() const noexcept { return mSceneName.empty(); }
+    inline bool NoSceneSelected() const noexcept { return mSceneState == SceneState::NO_SCENE; }
 
 
     void SubmitToMainThread(const std::function<void()>& function);
@@ -175,10 +178,10 @@ namespace Scenes
     EVENT_CALLBACK_DECL(HandleEvent);
 
     std::stack<SaveState> mSaveStates;  // used to temporarily store scene saves when playing/stopping/transitioning to PrefabEditor
-    std::string mSceneName, mTempDir;
-    SceneState mSceneState{};
     std::vector<std::function<void()>> mMainThreadQueue;
+    std::string mSceneName, mTempDir;
     std::mutex mMainThreadQueueMutex;
+    SceneState mSceneState;
   };
 
 };  // namespace Scenes

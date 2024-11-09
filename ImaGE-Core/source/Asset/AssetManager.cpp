@@ -92,7 +92,7 @@ namespace IGE {
 
 		AssetManager::~AssetManager()
 		{
-			
+			SaveMetadata();
 		}
 
 		void AssetManager::SaveMetadata() const {
