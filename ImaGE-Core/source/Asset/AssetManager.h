@@ -350,7 +350,7 @@ namespace IGE {
 
                   metadata.at("path") = newPath;
               }
-              catch (Debug::Exception<AssetManager> const& e) {
+              catch ([[maybe_unused]] Debug::Exception<AssetManager> const& e) {
                   Debug::DebugLogger::GetInstance().LogWarning("guid " + std::to_string(guid) + " does not exist within metadata");
               }
               catch (...) {

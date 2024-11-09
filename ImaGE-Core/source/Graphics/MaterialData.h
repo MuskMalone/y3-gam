@@ -58,7 +58,7 @@ namespace Graphics {
         std::string const& GetShaderName() { return mShaderName; }
         void SetShaderName(std::string const& name) {mShaderName = name ;}
 
-        glm::vec3 GetAlbedoColor() const { return mAlbedoColor; }
+        glm::vec3 const& GetAlbedoColor() const { return mAlbedoColor; }
         void SetAlbedoColor(const glm::vec3& color) { mAlbedoColor = color; }
 
         float GetMetalness() const { return mMetalness; }
@@ -76,10 +76,10 @@ namespace Graphics {
         float GetTransparency() const { return mTransparency; }
         void SetTransparency(float value) { mTransparency = value; }
 
-        glm::vec2 GetTiling() const { return mTiling; }
+        glm::vec2 const& GetTiling() const { return mTiling; }
         void SetTiling(const glm::vec2& tiling) { mTiling = tiling; }
 
-        glm::vec2 GetOffset() const { return mOffset; }
+        glm::vec2 const& GetOffset() const { return mOffset; }
         void SetOffset(const glm::vec2& offset) { mOffset = offset; }
 
         // Texture Getters and Setters

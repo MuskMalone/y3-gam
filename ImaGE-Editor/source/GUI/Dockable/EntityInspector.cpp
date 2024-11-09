@@ -32,17 +32,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace {
   bool InputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled = false);
-
-  /*!*********************************************************************
-  \brief
-    Calculates the input width of the table row based on the current
-    content region after subtracting the label
-  \param padding
-    The extra space to subtract
-  \return
-    The remaining width of the row
-  ************************************************************************/
-  float CalcInputWidth(float padding);
 }
 
 namespace GUI {
@@ -82,6 +71,10 @@ namespace GUI {
     if (Reflection::gComponentTypes.size() != mComponentIcons.size()) {
       throw Debug::Exception<Inspector>(Debug::LVL_CRITICAL, Msg("sComponentIcons and gComponentTypes size mismatch! Did you forget to add an icon?"));
     }
+  }
+
+  Inspector::~Inspector() {
+    SaveFileInspectorData();
   }
 
   void Inspector::Run() {
@@ -761,7 +754,7 @@ namespace GUI {
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
-      NextRowTable("");
+      NextRowTable("##");
       ImVec2 boxSize = ImVec2(200.0f, 40.0f); // Width and height of the box
       ImVec2 cursorPos = ImGui::GetCursorScreenPos();
       ImVec2 boxEnd = ImVec2(cursorPos.x + boxSize.x, cursorPos.y + boxSize.y);
@@ -883,7 +876,7 @@ namespace GUI {
       BeginVec3Table("LocalTransformTable", inputWidth);
 
       // @TODO: Replace min and max with the world min and max
-      if (ImGuiHelpers::TableInputFloat3("Position", &transform.position[0], inputWidth, false, -100.f, 100.f, 0.1f)) {
+      if (ImGuiHelpers::TableInputFloat3("Position", &transform.position[0], inputWidth, false, -FLT_MAX, FLT_MAX, 0.3f)) {
         modified = true;
       }
       glm::vec3 localRot{ transform.eulerAngles };
@@ -891,7 +884,7 @@ namespace GUI {
         transform.SetLocalRotWithEuler(localRot);
         modified = true;
       }
-      if (ImGuiHelpers::TableInputFloat3("Scale", &transform.scale[0], inputWidth, false, 0.001f, 100.f, 0.3f)) {
+      if (ImGuiHelpers::TableInputFloat3("Scale", &transform.scale[0], inputWidth, false, 0.001f, FLT_MAX, 0.3f)) {
         modified = true;
       }
 
@@ -1817,6 +1810,10 @@ namespace GUI {
     ImGui::SetNextItemWidth(INPUT_SIZE);
   }
  
+  float Inspector::CalcInputWidth(float padding) const {
+    static float const charSize = ImGui::CalcTextSize("012345678901234").x;
+    return ImGui::GetContentRegionAvail().x - charSize - padding;
+  }
 } // namespace GUI
 
 namespace {
@@ -1836,10 +1833,5 @@ namespace {
     ImGui::EndDisabled();
 
     return valChanged;
-  }  
-
-  float CalcInputWidth(float padding) {
-    static float const charSize = ImGui::CalcTextSize("012345678901234").x;
-    return ImGui::GetContentRegionAvail().x - charSize - padding;
-  }
+  } 
 }

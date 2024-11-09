@@ -24,10 +24,13 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Components/Components.h>
 #include <Physics/PhysicsSystem.h>
 
+namespace std::filesystem { class path; }
+
 namespace GUI {
   class Inspector : public GUIWindow {
   public:
     Inspector(const char* name);
+    ~Inspector();
     void Run() override;
 
     inline void SetIsComponentEdited(bool isComponentEdited) noexcept { mIsComponentEdited = isComponentEdited; }
@@ -109,7 +112,13 @@ namespace GUI {
     static inline constexpr float ITEM_SPACING{ 0 };
     static inline constexpr float CELL_PADDING{ 1 };
 
+#pragma region FileInspector
     void RunFileInspector();
+
+    void MaterialInspector(std::filesystem::path const& selectedFile);
+
+    void SaveFileInspectorData() const;
+#pragma endregion
 
     /*!*********************************************************************
     \brief
@@ -182,6 +191,17 @@ namespace GUI {
       The name of the property
     ************************************************************************/
     void NextRowTable(const char* labelName) const;
+
+    /*!*********************************************************************
+    \brief
+      Calculates the input width of the table row based on the current
+      content region after subtracting the label
+    \param padding
+      The extra space to subtract
+    \return
+      The remaining width of the row
+    ************************************************************************/
+    float CalcInputWidth(float padding) const;
   };
 #include "Inspector.tpp"
 } // namespace GUI

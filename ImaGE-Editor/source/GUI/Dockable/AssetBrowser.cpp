@@ -21,6 +21,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GUI/Helpers/AssetPayload.h>
 #include <Scenes/SceneManager.h>
 #include "Asset/IGEAssets.h"
+#include <Graphics/MaterialTable.h>
 
 namespace MeshPopup {
   static constexpr float sTableCol1Width = 250.f;
@@ -204,7 +205,7 @@ namespace GUI
     ContentViewerPopup();
   }
 
-  void RenameMaterial(std::filesystem::path const& original, std::string const& newFile) {
+  void RenameFile(std::filesystem::path const& original, std::string const& newFile) {
     std::filesystem::path newPath{ std::filesystem::path(original).replace_filename(newFile) };
 
     // add extension if missing
@@ -224,7 +225,9 @@ namespace GUI
       am.ChangeAssetPath<IGE::Assets::ModelAsset>(am.LoadRef<IGE::Assets::ModelAsset>(original.string()), newPath.string());
     }
     else if (ext == gMaterialFileExt) {
-      am.ChangeAssetPath<IGE::Assets::MaterialAsset>(am.LoadRef<IGE::Assets::MaterialAsset>(original.string()), newPath.string());
+      IGE::Assets::GUID const guid{ am.LoadRef<IGE::Assets::MaterialAsset>(original.string()) };
+      am.GetAsset<IGE::Assets::MaterialAsset>(guid)->mMaterial->SetName(newPath.stem().string());
+      am.ChangeAssetPath<IGE::Assets::MaterialAsset>(guid, newPath.string());
     }
     else if (ext == gSpriteFileExt) {
       am.ChangeAssetPath<IGE::Assets::TextureAsset>(am.LoadRef<IGE::Assets::TextureAsset>(original.string()), newPath.string());
@@ -257,17 +260,19 @@ namespace GUI
           ImGui::SetKeyboardFocusHere();
           cpy = fileName;
         }
+
         ImGui::InputText("##renameInput", &cpy, ImGuiInputTextFlags_AutoSelectAll);
 
         if ((ImGui::IsMouseClicked(ImGuiMouseButton_Left) || ImGui::IsMouseClicked(ImGuiMouseButton_Right) && !ImGui::IsItemHovered())) {
           if (file.path().filename() != cpy) {
-            RenameMaterial(file, cpy);
+            RenameFile(file, cpy);
           }
 
           sRenameMode = false;
           sFirstTimeRename = true;
           ImGui::SetWindowFocus(NULL);
         }
+
         if (ImGui::IsKeyPressed(ImGuiKey_Escape)) {
           ImGui::SetWindowFocus(NULL); sRenameMode = false;
           sFirstTimeRename = true;
@@ -431,14 +436,34 @@ namespace GUI
     if (!ImGui::BeginPopup(sContentViewerMenuTitle)) { return; }
 
     if (ImGui::Selectable("New Material")) {
-      std::string const fileName{ std::string(gMaterialDirectory) + "NewMaterial.mat" };
-      if (std::filesystem::exists(fileName)) {
-        std::filesystem::remove(fileName);
+      if (!std::filesystem::exists(gMaterialDirectory)) {
+        std::filesystem::create_directory(gMaterialDirectory);
       }
-      AssetHelpers::CreateNewMaterial();
-      mCurrentDir = gMaterialDirectory;
-      sRenameMode = true;
-      mSelectedAsset = fileName;
+
+      std::string fileName{ "NewMaterial" };
+
+      if (std::filesystem::exists(std::string(gMaterialDirectory) + fileName + gMaterialFileExt)) {
+        int i{};
+        std::string newFileName{ fileName };
+        // loop until a valid name
+        do {
+          newFileName = fileName + " (" + std::to_string(i) + ")";
+          ++i;
+        } while (std::filesystem::exists(std::string(gMaterialDirectory) + newFileName + gMaterialFileExt));
+        fileName = std::move(newFileName);
+      }
+      
+      std::ofstream ofs{ fileName };
+      if (ofs) {
+        ofs.close();
+        mCurrentDir = gMaterialDirectory;
+        sRenameMode = true;
+        mSelectedAsset = gMaterialDirectory + fileName + gMaterialFileExt;
+        Graphics::MaterialTable::CreateAndImportMatFile(fileName);
+      }
+      else {
+        IGE_DBGLOGGER.LogError("Unable to create new material file " + fileName);
+      }
     }
 
     ImGui::EndPopup();
