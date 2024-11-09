@@ -22,8 +22,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <functional>
 #include <Reflection/ComponentTypes.h>
 #include <Events/EventManager.h>
-#include <Graphics/MeshFactory.h>
-#include <Graphics/Mesh.h>
+#include <Graphics/Mesh/MeshFactory.h>
+#include <Graphics/Mesh/Mesh.h>
 #include "Asset/IGEAssets.h"
 #include <Core/Systems/LayerSystem/LayerSystem.h>
 #include <Physics/PhysicsHelpers.h>
@@ -214,7 +214,7 @@ namespace GUI {
         rttr::type const materialType{ rttr::type::get<Component::Material>() };
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(materialType);
 
-        if (MaterialComponentWindow(currentEntity, componentOverriden)) {
+        if (MaterialWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
             prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Material>());
@@ -417,7 +417,7 @@ namespace GUI {
     return modified;
   }
 
-  bool Inspector::MaterialComponentWindow(ECS::Entity entity, bool highlight) {
+  bool Inspector::MaterialWindow(ECS::Entity entity, bool highlight) {
     bool const isOpen{ WindowBegin<Component::Material>("Material", highlight) };
     bool modified{ false };
 

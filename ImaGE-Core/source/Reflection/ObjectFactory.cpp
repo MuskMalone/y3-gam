@@ -99,9 +99,7 @@ namespace Reflection
 
     for (rttr::type const& type : Reflection::gComponentTypes) {
       // we're not handling copying of scripts now
-      // @TODO: Allow material when circular includes are fixed
-      if (type == GET_RTTR_TYPE(Component::Script)
-          || type == GET_RTTR_TYPE(Component::Material)) { continue; }
+      if (type == GET_RTTR_TYPE(Component::Script)) { continue; }
 
       auto compVar{ GetEntityComponent(entity, type) };
       if (compVar) { components.emplace_back(std::move(compVar)); }
@@ -139,14 +137,14 @@ namespace Reflection
     // contain an id that corresponds to a sub-object
     idToEntity.emplace(pfbInst.mOverrides.subDataId, remappedID);
 
-    // if no children, return
-    if (pfbInst.mChildren.empty()) { return; }
-
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
     // in case this instance is nested under an entity, set its parent too
     if (pfbInst.mParent != entt::null) {
       entityMan.SetParentEntity(mNewIDs.contains(pfbInst.mParent) ? mNewIDs.at(pfbInst.mParent) : pfbInst.mParent, remappedID);
     }
+
+    // if no children, return
+    if (pfbInst.mChildren.empty()) { return; }
 
     // else recursively call this function for each child
     for (ECS::Entity e : pfbInst.mChildren) {
@@ -180,7 +178,7 @@ namespace Reflection
     Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
     IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
-    
+
     for (auto const& [guid, data] : mPrefabInstances) {
       std::vector<ECS::Entity> baseEntities;
 
@@ -234,14 +232,14 @@ namespace Reflection
 
         // set position if needed
         if (mNewIDs.contains(e.GetRawEnttEntityID())) {
-          mNewIDs.at(e.GetRawEnttEntityID()).GetComponent<Component::Transform>().worldPos = *pos;
+          mNewIDs.at(e.GetRawEnttEntityID()).GetComponent<Component::Transform>().position = *pos;
         }
         else {
           Component::Transform& trans{ e.GetComponent<Component::Transform>() };
           trans.worldPos = trans.position = *pos;
         }
       }
-  }
+    }
 
     // override each entity's components
     OverrideInstanceComponents();

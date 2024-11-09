@@ -17,9 +17,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <GUI/Styles/FontAwesome6Icons.h>
 #include "GUI/GUIManager.h"
-#include <Graphics/AssetIO/IMSH.h>
+#include <Graphics/Mesh/IMSH.h>
 #include <GUI/Helpers/AssetPayload.h>
 #include <Scenes/SceneManager.h>
+#include "Asset/IGEAssets.h"
 
 namespace MeshPopup {
   static constexpr float sTableCol1Width = 250.f;

@@ -1,5 +1,6 @@
 #include <pch.h>
 #include "Utils.h"
+#include "Renderer.h"
 
 namespace Graphics {
     namespace Utils {

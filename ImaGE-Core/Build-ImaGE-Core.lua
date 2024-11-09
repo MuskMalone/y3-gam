@@ -6,7 +6,7 @@ project "ImaGE-Core"
    staticruntime "off"
 
    buildoptions { "/bigobj" }
-
+   flags { "MultiProcessorCompile" }
    files { "source/**.h", "source/**.cpp", "source/**.c" }
 
    includedirs 
@@ -43,8 +43,6 @@ project "ImaGE-Core"
       "../Libraries/PhysX/physx/include",
       "../Libraries/PhysX/pxshared/include/**",
       "../Libraries/PhysX/pxshared/include",
-      --"../Libraries/mono/**",
-      --"../Libraries/filewatch",
       "../ImaGE-Core/source/External/filewatch",
       "../ImaGE-Core/source/External/mono/**",
       
@@ -120,7 +118,6 @@ project "ImaGE-Core"
        {
            "../Libraries/glfw/build/src/Debug",
           "../Libraries/Built-Libraries/Debug/Libraries/**",
-          --"../Libraries/mono/msvc/build/sgen/x64/**",
           "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/debug",
           "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Debug/",
           "source/External/fmod/lib",
@@ -153,7 +150,6 @@ project "ImaGE-Core"
         {
            "../Libraries/glfw/build/src/Release",
            "../Libraries/Built-Libraries/Release/Libraries/**",
-           --"../Libraries/mono/msvc/build/sgen/x64/**",
            "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release",
            "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Release/",
            "source/External/fmod/lib",
@@ -210,7 +206,6 @@ project "ImaGE-Core"
        {
           "../Libraries/glfw/build/src/Release",
           "../Libraries/Built-Libraries/Release/Libraries/**",
-          --"../Libraries/mono/msvc/build/sgen/x64/**",
           "../Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release",
           "../Libraries/DirectXTex/DirectXTex/Bin/Desktop_2022_Win10/x64/Release/",
           "source/External/fmod/lib",

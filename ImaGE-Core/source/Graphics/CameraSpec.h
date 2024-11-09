@@ -1,7 +1,7 @@
 // CameraSpec.h
 #pragma once
 #include <glm/glm.hpp>        // Include the EditorCamera class
-#include "Core/Components/Components.h"  // Include the Camera component struct
+#include "Core/Components/Camera.h"  // Include the Camera component struct
 
 namespace Graphics {
  

@@ -6,7 +6,7 @@ project "ImaGE-Editor"
    staticruntime "off"
 
    buildoptions { "/bigobj" }
-   
+   flags { "MultiProcessorCompile" }
    files { "source/**.h", "source/**.cpp", "source/**.c" }
 
    includedirs

@@ -18,13 +18,17 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <glm/gtx/transform.hpp>
 
 namespace {
+  static bool sFirstMaterialEncountered{ false };
+
   glm::vec2 ToGLMVec2(aiVector3D const& vec) { return { vec.x, vec.y }; }
   glm::vec3 ToGLMVec3(aiVector3D const& vec) { return { vec.x, vec.y, vec.z }; }
+  glm::vec3 ToGLMVec3(aiColor3D const& col) { return { col.r, col.g, col.b }; }
   glm::vec4 ToGLMVec4(aiColor4D const& vec) { return { vec.r, vec.g, vec.b, vec.a }; }
 
   void AddVertices(std::vector<Graphics::Vertex>& vertexBuffer, aiMesh const* mesh);
   void AddVertices(std::vector<Graphics::Vertex>& vertexBuffer, aiMesh const* mesh, aiMatrix4x4 const& transMtx);
   void AddIndices(std::vector<uint32_t>& indices, aiMesh const* mesh, unsigned offset = 0);
+  //Graphics::MeshMatValues GetMaterial(aiMaterial* material);
 }
 
 namespace Graphics::AssetIO
@@ -34,7 +38,8 @@ namespace Graphics::AssetIO
     | aiProcess_GenSmoothNormals | aiProcess_SortByPType;
   unsigned const IMSH::sAssimpImportFlags = aiProcess_ValidateDataStructure | aiProcess_JoinIdenticalVertices | aiProcess_Triangulate
     | aiProcess_RemoveComponent | aiProcess_GenSmoothNormals | aiProcess_ImproveCacheLocality | aiProcess_FixInfacingNormals
-    | aiProcess_FindInvalidData | aiProcess_SortByPType | aiProcess_OptimizeMeshes | aiProcess_FlipUVs;
+    | aiProcess_FindInvalidData | aiProcess_SortByPType | aiProcess_OptimizeMeshes | aiProcess_FlipUVs | aiProcess_RemoveRedundantMaterials
+    | aiProcess_SplitLargeMeshes | aiProcess_TransformUVCoords;
 
 
   int MeshImportFlags::GetFlags() const {
@@ -61,6 +66,7 @@ namespace Graphics::AssetIO
       return;
     }
 
+    sFirstMaterialEncountered = false;
     ProcessMeshes(aiScn->mRootNode, aiScn);
 
     if (sRecenterMesh) {
@@ -76,18 +82,27 @@ namespace Graphics::AssetIO
     aiMatrix4x4 const transMtx{ parentMtx * node->mTransformation };
 
     // now add the submeshes
-    unsigned const offset = mVertexBuffer.size();
+    unsigned const vtxOffset{ static_cast<unsigned>(mVertexBuffer.size()) }, idxOffset{ static_cast<unsigned>(mIndices.size()) };
     for (unsigned i{}; i < node->mNumMeshes; ++i) {
-      aiMesh const* mesh{ scene->mMeshes[node->mMeshes[i]] };
+      unsigned const meshIdx{ node->mMeshes[i] };
+      aiMesh const* mesh{ scene->mMeshes[meshIdx] };
+
       AddVertices(mVertexBuffer, mesh, transMtx);
-      AddIndices(mIndices, mesh, offset);
+      AddIndices(mIndices, mesh, vtxOffset);
+
+      //if (meshIdx < scene->mNumMaterials) {
+      //  mMatValues.emplace_back(GetMaterial(scene->mMaterials[meshIdx]));
+      //}
       
+      // add a submesh entry if needed
       if (!mIsStatic) {
-        uint32_t const vtxOffset{ static_cast<uint32_t>(mVertexBuffer.size()) }, idxOffset{ static_cast<uint32_t>(mIndices.size()) };
-        mSubmeshData.emplace_back(vtxOffset, idxOffset, mesh->mNumVertices, mIndices.size() - idxOffset, 0);
+        mSubmeshData.emplace_back(vtxOffset, idxOffset, mesh->mNumVertices, mIndices.size() - idxOffset);
       }
     }
 
+    if (!mIsStatic) {
+      mSubmeshData.reserve(mSubmeshData.size() + node->mNumChildren);
+    }
     for (unsigned i{}; i < node->mNumChildren; ++i) {
       ProcessSubmeshes(node->mChildren[i], scene, transMtx);
     }
@@ -96,12 +111,25 @@ namespace Graphics::AssetIO
   void IMSH::ProcessMeshes(aiNode* node, aiScene const* scene) {
     // process base meshes
     for (unsigned i{}; i < node->mNumMeshes; ++i) {
-      aiMesh const* mesh{ scene->mMeshes[node->mMeshes[i]] };
+      unsigned const meshIdx{ node->mMeshes[i] };
+      aiMesh const* mesh{ scene->mMeshes[meshIdx] };
+
       AddVertices(mVertexBuffer, mesh, node->mTransformation);
       AddIndices(mIndices, mesh, 0);
+
+      //if (scene->HasMaterials()) {
+      //  mMatValues.emplace_back(GetMaterial(scene->mMaterials[meshIdx]));
+      //}
+
+      // since the first mesh is also rendered as a submesh
+      if (!mIsStatic) {
+        mSubmeshData.emplace_back(0, 0, mesh->mNumVertices, mIndices.size());
+      }
     }
 
-    mSubmeshData.reserve(node->mNumChildren);
+    if (!mIsStatic) {
+      mSubmeshData.reserve(node->mNumChildren);
+    }
     for (unsigned i{}; i < node->mNumChildren; ++i) {
       ProcessSubmeshes(node->mChildren[i], scene, node->mTransformation);
     }
@@ -128,14 +156,15 @@ namespace Graphics::AssetIO
     mStatus = false;
 
     std::vector<Submesh> submeshes;
-    submeshes.reserve(mSubmeshData.size());
-    for (auto const& data : mSubmeshData) {
-      auto beginIter{ mIndices.begin() + data.baseIdx };
-      submeshes.emplace_back(data.baseVtx, data.baseIdx, data.vtxCount, data.idxCount, data.materialIdx,
-        glm::mat4(1.f), std::vector<uint32_t>(beginIter, beginIter + data.idxCount));
+    if (!mIsStatic) {
+      submeshes.reserve(mSubmeshData.size());
+      for (auto const& data : mSubmeshData) {
+        submeshes.emplace_back(data.baseVtx, data.baseIdx, data.vtxCount, data.idxCount,
+          0, glm::identity<glm::mat4>(), std::vector<uint32_t>());
+      }
     }
 
-    return MeshSource{ vao, submeshes, mVertexBuffer, mIndices };
+    return MeshSource(std::move(vao), std::move(submeshes), std::move(mVertexBuffer), std::move(mIndices));
   }
 
   void IMSH::ReadFromBinFile(std::string const& file) {
@@ -233,7 +262,7 @@ namespace {
 
     if (mesh->HasVertexColors(0)) {
       for (unsigned i{}; i < mesh->mNumVertices; ++i) {
-        temp[i].texcoord = ToGLMVec4(mesh->mColors[0][i]);
+        temp[i].color = ToGLMVec4(mesh->mColors[0][i]);
       }
     }
 
@@ -260,7 +289,7 @@ namespace {
 
     if (mesh->HasVertexColors(0)) {
       for (unsigned i{}; i < mesh->mNumVertices; ++i) {
-        temp[i].texcoord = ToGLMVec4(mesh->mColors[0][i]);
+        temp[i].color = ToGLMVec4(mesh->mColors[0][i]);
       }
     }
 
@@ -277,4 +306,39 @@ namespace {
       }
     }
   }
+
+ /* Graphics::MeshMatValues GetMaterial(aiMaterial* material) {
+    if (!material) { return {}; }
+
+    Graphics::MeshMatValues ret;
+
+    {
+      aiColor3D col{};
+      if (material->Get(AI_MATKEY_COLOR_DIFFUSE, col) == aiReturn_SUCCESS) {
+        ret.diffuseCol = ToGLMVec3(col);
+      }
+      if (material->Get(AI_MATKEY_COLOR_AMBIENT, col) == aiReturn_SUCCESS) {
+        ret.ambientCol = ToGLMVec3(col);
+      }
+      if (material->Get(AI_MATKEY_COLOR_SPECULAR, col) == aiReturn_SUCCESS) {
+        ret.specularCol = ToGLMVec3(col);
+      }
+      if (material->Get(AI_MATKEY_COLOR_EMISSIVE, col) == aiReturn_SUCCESS) {
+        ret.emissiveCol = ToGLMVec3(col);
+      }
+    }
+
+    float val;
+    if (material->Get(AI_MATKEY_OPACITY, val) == aiReturn_SUCCESS) {
+      ret.opacity = val;
+    }
+    if (material->Get(AI_MATKEY_SHININESS, val) == aiReturn_SUCCESS) {
+      ret.shininess = val;
+    }
+    if (material->Get(AI_MATKEY_REFRACTI, val) == aiReturn_SUCCESS) {
+      ret.refractionIndex = val;
+    }
+
+    return ret;
+  }*/
 }

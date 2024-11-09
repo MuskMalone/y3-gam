@@ -3,6 +3,7 @@
 #include "Graphics/PostProcessing/PostProcessingManager.h"
 #include "FrameRateController/FrameRateController.h"
 #include "Input/InputManager.h"
+#include "Graphics/Renderer.h"
 namespace Graphics {
 	PostProcessingPass::PostProcessingPass(const RenderPassSpec& spec) : RenderPass{spec}{
 		Graphics::FramebufferSpec postprocessSpec;

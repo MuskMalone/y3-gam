@@ -15,7 +15,8 @@ project "ImaGE-Script"
       "System.Net.Http",
       "System.Threading",
       "System.Windows",
-      "System.Numerics"
+      "System.Numerics",
+      "System.Drawing"
   }
 
    targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")

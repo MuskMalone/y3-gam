@@ -13,8 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <memory>
 #include <string>
 #include <vector>
-#include <Graphics/MeshSource.h>
-#include <Graphics/Vertex.h>
+#include <Graphics/Mesh/MeshSource.h>
 
 // forward declarations
 struct aiScene; struct aiNode;
@@ -28,7 +27,7 @@ namespace Graphics::AssetIO
     MeshImportFlags() : boneWeights{ false }, animations{ false },
       lights{ false }, cameras{ false }, materials{ false } {}
 
-    inline bool IsDefault() const noexcept { return boneWeights || animations || lights || cameras || materials; }
+    inline bool IsDefault() const noexcept { return !(boneWeights || animations || lights || cameras || materials); }
     int GetFlags() const;
 
     bool boneWeights, animations, lights, cameras, materials;
@@ -67,7 +66,7 @@ namespace Graphics::AssetIO
     MeshSource ToMeshSource(std::shared_ptr<VertexArray> vao);
 
     // this is a workaround to not being able to pass extra flags during AssetManager import
-    static inline bool sStaticMeshConversion = true;
+    static inline bool sStaticMeshConversion = false;
     static inline bool sRecenterMesh = true;
     static inline bool sNormalizeScale = true;
 
@@ -85,22 +84,23 @@ namespace Graphics::AssetIO
     struct SubmeshData
     {
       SubmeshData() = default;
-      SubmeshData(uint32_t _baseVtx, uint32_t _baseIdx, uint32_t _vtxCount, uint32_t _idxCount, uint32_t _materialIdx)
-        : baseVtx{ _baseVtx }, baseIdx{ _baseIdx }, vtxCount{ _vtxCount }, idxCount{ _idxCount }, materialIdx{ _materialIdx } {}
+      SubmeshData(uint32_t _baseVtx, uint32_t _baseIdx, uint32_t _vtxCount, uint32_t _idxCount)
+        : baseVtx{ _baseVtx }, baseIdx{ _baseIdx }, vtxCount{ _vtxCount }, idxCount{ _idxCount } {}
 
-      uint32_t baseVtx, baseIdx, vtxCount, idxCount, materialIdx;
+      uint32_t baseVtx, baseIdx, vtxCount, idxCount;
     };
 
     std::vector<Graphics::Vertex> mVertexBuffer;
     std::vector<uint32_t> mIndices;
     std::vector<SubmeshData> mSubmeshData;
-    //std::vector<std::string> mMeshNames;
+    std::vector<std::string> mMeshNames;
     bool mStatus, mIsStatic;
 
     static const unsigned sAssimpImportFlags, sMinimalAssimpImportFlags;
 
     void RecenterMesh();
     void NormalizeScale();
+
     void ProcessSubmeshes(aiNode* node, aiScene const* scene, aiMatrix4x4 const& parentMtx);
     void ProcessMeshes(aiNode* node, aiScene const* scene);
   };

@@ -1,8 +1,8 @@
 /*!*********************************************************************
-\file   Material.h
+\file   MaterialData.h
 \author k.choa\@digipen.edu
 \date   22/09/2024
-\brief  The Material class allows for managing and applying material properties such as albedo color, metalness,
+\brief  The MaterialData class allows for managing and applying material properties such as albedo color, metalness,
         roughness, transparency, and emission. It also supports custom textures (albedo, normal, metalness, 
         and roughness) per instance, allowing for overrides of the default material source properties.
 
@@ -16,7 +16,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Graphics {
 
-    enum class MaterialFlag {
+    enum class MaterialDataFlag {
         NONE = 0,
         DEPTH_TEST = 1 << 0,
         BLEND = 1 << 1,
@@ -24,10 +24,12 @@ namespace Graphics {
         DISABLE_SHADOW_CASTING = 1 << 3
     };
 
-    class Material {
+    class MaterialData {
     public:
-        Material(std::shared_ptr<Shader> shader)
-            : mShader(std::move(shader)),       // Initialize the shader with the passed-in shared_ptr
+        MaterialData(std::shared_ptr<Shader> shader, std::string const& shaderName, std::string const& matName = "unknown")
+            : mShader(std::move(shader)),
+            mName(matName),
+            mShaderName(shaderName),// Initialize the shader with the passed-in shared_ptr
             mAlbedoColor(1.0f, 1.0f, 1.0f),   // Default white albedo color
             mMetalness(0.0f),                 // Default non-metallic
             mRoughness(0.5f),                 // Default roughness value
@@ -39,14 +41,24 @@ namespace Graphics {
             mOffset(0.0f, 0.0f)               // Default offset
         {}
 
-        static std::shared_ptr<Material> Create(std::shared_ptr<Shader> shader) {
-            return std::make_shared<Material>(shader);
+        static std::shared_ptr<MaterialData> Create(std::shared_ptr<Shader> shader, std::string const& shaderName, std::string const& matName ="unknown") {
+            return std::make_shared<MaterialData>(shader, shaderName, matName);
+        }
+
+        static std::shared_ptr<MaterialData> Create(std::string const& shaderName, std::string const& matName = "unknown") {
+            return Create(ShaderLibrary::Get(shaderName), shaderName, matName);
         }
 
         // Shader access
         inline std::shared_ptr<Shader> GetShader() const { return mShader; }
 
         // Property Getters and Setters
+        std::string const& GetName() { return mName; };
+        void SetName(std::string const& name) { mName = name; }
+
+        std::string const& GetShaderName() { return mShaderName; }
+        void SetShaderName(std::string const& name) {mShaderName = name ;}
+
         glm::vec3 GetAlbedoColor() const { return mAlbedoColor; }
         void SetAlbedoColor(const glm::vec3& color) { mAlbedoColor = color; }
 
@@ -88,15 +100,16 @@ namespace Graphics {
         void Apply(std::shared_ptr<Shader> shader) const;
 
         // Flags handling
-        bool GetFlag(MaterialFlag flag) const { return mFlags & static_cast<uint32_t>(flag); }
-        void SetFlag(MaterialFlag flag, bool value) {
+        bool GetFlag(MaterialDataFlag flag) const { return mFlags & static_cast<uint32_t>(flag); }
+        void SetFlag(MaterialDataFlag flag, bool value) {
             if (value) mFlags |= static_cast<uint32_t>(flag);
             else mFlags &= ~static_cast<uint32_t>(flag);
         }
 
     private:
         std::shared_ptr<Shader> mShader;
-
+        std::string mName;
+        std::string mShaderName;
         glm::vec3 mAlbedoColor;
         float mMetalness;
         float mRoughness;
