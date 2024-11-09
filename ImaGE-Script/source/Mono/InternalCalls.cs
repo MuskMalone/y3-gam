@@ -131,6 +131,8 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static bool IsGrounded(uint mEntityID);
 
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static Entity FindScript(string s);
 
   }
 }

@@ -26,4 +26,39 @@ using System.Drawing.Imaging;
 
 namespace IGE.Utils
 {
+  public class Sprite
+  {
+    public Bitmap Image { get; private set; }
+    public Point Position { get; set; }
+    public Size Size { get; set; }
+
+    // Constructor to load sprite from file
+    public Sprite(string imagePath, int x, int y)
+    {
+      Image = new Bitmap(imagePath);
+      Position = new Point(x, y);
+      Size = Image.Size;
+    }
+
+    // Draw method to render the sprite
+    public void Draw(Graphics graphics)
+    {
+      if (Image != null)
+      {
+        graphics.DrawImage(Image, Position.X, Position.Y, Size.Width, Size.Height);
+      }
+    }
+
+    // Optional method to change position
+    public void SetPosition(int x, int y)
+    {
+      Position = new Point(x, y);
+    }
+
+    // Clean up resources
+    public void Dispose()
+    {
+      Image?.Dispose();
+    }
+  }
 }

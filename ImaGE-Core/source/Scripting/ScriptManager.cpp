@@ -197,7 +197,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetDeltaTime);
   ADD_INTERNAL_CALL(MoveCharacter);
   ADD_INTERNAL_CALL(IsGrounded);
-  
+  ADD_INTERNAL_CALL(GetTag);
 
 
 
