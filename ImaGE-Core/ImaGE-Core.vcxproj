@@ -83,7 +83,9 @@
       <AdditionalIncludeDirectories>source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus /bigobj %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
@@ -116,6 +118,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus /bigobj %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
@@ -150,6 +153,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus /bigobj %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>

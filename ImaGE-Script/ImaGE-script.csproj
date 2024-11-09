@@ -60,6 +60,7 @@
     <Reference Include="System.Threading" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <Reference Include="System" />
@@ -72,6 +73,7 @@
     <Reference Include="System.Threading" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Distribution|x64' ">
     <Reference Include="System" />
@@ -84,6 +86,7 @@
     <Reference Include="System.Threading" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="source\InteractableObject\Cloth.cs" />
@@ -114,9 +117,6 @@
     <Compile Include="source\Mono\Vec2.cs" />
     <Compile Include="source\Mono\Vec3.cs" />
     <Compile Include="source\Mono\Vec4.cs" />
-    <Compile Include="source\other interactable\CleanWindows.cs" />
-    <Compile Include="source\other interactable\NoteInteraction.cs" />
-    <Compile Include="source\other interactable\watercloth.cs" />
     <Compile Include="source\Painting\AlignUI.cs" />
     <Compile Include="source\Painting\AlignUINight.cs" />
     <Compile Include="source\Painting\AudioManager.cs" />
@@ -142,9 +142,11 @@
     <Compile Include="source\ToolsPuzzle\RotationGuidanceToolsPainting.cs" />
     <Compile Include="source\Triggers\DeathtriggerPit.cs" />
     <Compile Include="source\Triggers\FinishLineTrigger.cs" />
+    <Compile Include="source\other interactable\CleanWindows.cs" />
+    <Compile Include="source\other interactable\NoteInteraction.cs" />
+    <Compile Include="source\other interactable\watercloth.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Drawing" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
