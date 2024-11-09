@@ -733,6 +733,35 @@ namespace Graphics {
 		mData.instanceBufferDataMap.clear();
 	}
 
+	void Renderer::RenderSubmeshInstances() {
+		for (auto& [meshSrc, instances] : mData.instanceBufferDataMap) {
+			if (instances.empty()) continue;
+
+			auto instanceBuffer = GetInstanceBuffer(meshSrc);
+
+			// Set instance data into the buffer
+			unsigned int dataSize = static_cast<unsigned int>(instances.size() * sizeof(InstanceData));
+			instanceBuffer->SetData(instances.data(), dataSize);
+
+			// Get the VAO for the entire mesh
+			auto& vao = IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource.GetVertexArray();
+
+			// Iterate over each submesh in the MeshSource
+			for (const auto& submesh : IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource.GetSubmeshes()) {
+				// Render each submesh individually
+				RenderAPI::DrawIndicesInstancedBaseVertex(
+					vao,
+					submesh.idxCount,                 // Number of indices in this submesh
+					static_cast<unsigned>(instances.size()),  // Instance count
+					submesh.baseIdx,                  // Index offset within the element buffer
+					submesh.baseVtx                   // Vertex offset within the vertex buffer
+				);
+			}
+		}
+
+		mData.instanceBufferDataMap.clear();
+	}
+
 	void Renderer::FlushBatch() {
 		if (mData.quadIdxCount) {
 			//ptrdiff_t difference{ reinterpret_cast<unsigned char*>(mData.quadBufferPtr)

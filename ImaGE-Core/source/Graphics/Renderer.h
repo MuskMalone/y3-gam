@@ -167,6 +167,8 @@ namespace Graphics {
 		static void SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int entityID = -1, int matID = 0);
 		static void RenderInstances();
 
+		static void RenderSubmeshInstances();
+
 		// Batching
 		static void BeginBatch();
 		static void FlushBatch();

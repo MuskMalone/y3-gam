@@ -122,7 +122,8 @@ namespace Graphics {
           }
           mSpec.pipeline->GetSpec().instanceLayout;
           // Flush all collected instances and render them in a single draw call
-          Renderer::RenderInstances();
+         // Renderer::RenderInstances();
+          Renderer::RenderSubmeshInstances();
           Texture::ResetTextureUnits(); // unbind texture units after each group
       }
 

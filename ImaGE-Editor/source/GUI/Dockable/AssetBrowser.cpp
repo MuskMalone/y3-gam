@@ -272,8 +272,7 @@ namespace GUI
         std::string pathStr = path.string();
         if (pathStr.find("..\\Assets\\Materials") != std::string::npos) {
             // Open Material Editor window
-            std::cout << "eat siht" << std::endl;
-            ImGui::OpenPopup("Material Editor");
+
         }
       }
     }
