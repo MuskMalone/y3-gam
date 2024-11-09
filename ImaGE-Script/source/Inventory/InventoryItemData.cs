@@ -12,7 +12,8 @@ using System.Drawing.Imaging;
 public interface IInventoryItem
 {
   string Name { get; }
-  //Sprite Image { get; }
+  
+  Sprite Image { get; }
   void OnPickup();
   void OnUsed();
 }

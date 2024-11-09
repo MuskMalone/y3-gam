@@ -73,7 +73,13 @@ using IGE.Utils;
       InternalCalls.SetActive(mEntityID, active);
     }
 
+    public T FindObjectOfType<T>() where T : Entity
+    {
+      return (T)InternalCalls.FindScript(typeof(T).Name) ;
+    }
 
-    
-  }
+
+
+
+}
 
