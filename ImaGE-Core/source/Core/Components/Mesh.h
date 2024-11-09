@@ -13,7 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Component {
 	struct Mesh{
-		Mesh() : meshName{ "None" }, meshSource{}, isCustomMesh{ false }, castShadows{ true }, receiveShadows{ true } {}
+		Mesh() : meshName{ "None" }, meshSource{}, submeshIdx{}, isCustomMesh{ false }, castShadows{ true }, receiveShadows{ true } {}
 		Mesh(IGE::Assets::GUID const& meshSrc, std::string name, bool custom = false) :
 			meshName{ std::move(name) }, meshSource { meshSrc }, isCustomMesh{ custom }, castShadows{ true }, receiveShadows{ true } {}
 
@@ -24,12 +24,14 @@ namespace Component {
 		inline void Clear() noexcept {
 			meshName = "None";
 			meshSource = {};
+			submeshIdx = {};
 			castShadows = receiveShadows = true;
 			isCustomMesh = false;
 		}
 
 		std::string meshName;
 		IGE::Assets::GUID meshSource;  // The blueprint (geometry and submeshes)
+		uint32_t submeshIdx;
 		bool isCustomMesh;
 		bool castShadows;
 		bool receiveShadows;	// not implemented yet
