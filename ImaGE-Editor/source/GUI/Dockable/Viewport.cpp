@@ -413,8 +413,6 @@ namespace GUI
           GUIVault::SetSelectedEntity(newEntity);
           break;
         }
-        case AssetPayload::SPRITE:
-        case AssetPayload::AUDIO:
         default:
           break;
         }

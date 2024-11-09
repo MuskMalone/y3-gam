@@ -26,7 +26,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Graphics/CameraSpec.h"
 
 #include <Graphics/Renderer.h>
-#include <Graphics/RenderPass/GeomPass.h>
+#include <Graphics/MaterialTable.h>
 #include <csignal>
 
 namespace IGE {
@@ -211,6 +211,7 @@ namespace IGE {
       IGE_ASSETMGR.SaveMetadata();
 
       IGE_DBGLOGGER.DestroyInstance();
+      Graphics::MaterialTable::SaveMaterials();
     };
 
     std::signal(SIGABRT, lambd);
@@ -230,6 +231,8 @@ namespace IGE {
 
   void EditorApplication::Shutdown()
   {
+    Graphics::MaterialTable::SaveMaterials();
+
     // shutdown editor-specific stuff
     mGUIManager.Shutdown();
 

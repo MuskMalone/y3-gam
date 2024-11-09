@@ -2,6 +2,7 @@
 #include "MeshSource.h"
 #include <Core/Entity.h>
 #include <Core/Components/Mesh.h>
+#include <Core/Components/Material.h>
 
 namespace Graphics {
   ECS::Entity MeshSource::ConstructEntity(IGE::Assets::GUID const& guid, std::string const& fileName) const {
@@ -10,6 +11,7 @@ namespace Graphics {
     if (mSubmeshes.empty()) {
       ECS::Entity entity{ em.CreateEntityWithTag(fileName) };
       entity.EmplaceComponent<Component::Mesh>(guid, fileName, true);
+      entity.EmplaceComponent<Component::Material>();
       return entity;
     }
 
@@ -19,6 +21,7 @@ namespace Graphics {
       std::string const& name{ mMeshNames[i] };
       ECS::Entity entity{ em.CreateEntityWithTag(name) };
       entity.EmplaceComponent<Component::Mesh>(guid, name, true, i);
+      entity.EmplaceComponent<Component::Material>();
       em.SetParentEntity(parent, entity);
     }
 

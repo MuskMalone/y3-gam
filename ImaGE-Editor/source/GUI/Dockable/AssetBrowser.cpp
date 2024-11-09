@@ -213,8 +213,6 @@ namespace GUI
       newPath.replace_extension(original.extension());
     }
 
-    std::filesystem::rename(original, newPath);
-
     // @TODO: REFACTOR - SHOULD KNOW ASSET TYPE FROM ASSETMGR SIDE
     IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
     std::string const ext{ newPath.extension().string() };
@@ -226,8 +224,9 @@ namespace GUI
     }
     else if (ext == gMaterialFileExt) {
       IGE::Assets::GUID const guid{ am.LoadRef<IGE::Assets::MaterialAsset>(original.string()) };
-      am.GetAsset<IGE::Assets::MaterialAsset>(guid)->mMaterial->SetName(newPath.stem().string());
       am.ChangeAssetPath<IGE::Assets::MaterialAsset>(guid, newPath.string());
+      auto const str{ am.GetAsset<IGE::Assets::MaterialAsset>(guid)->mMaterial };
+      am.GetAsset<IGE::Assets::MaterialAsset>(guid)->mMaterial->SetName(newPath.stem().string());
     }
     else if (ext == gSpriteFileExt) {
       am.ChangeAssetPath<IGE::Assets::TextureAsset>(am.LoadRef<IGE::Assets::TextureAsset>(original.string()), newPath.string());
@@ -238,6 +237,9 @@ namespace GUI
     else if (ext == gAudioFileExt) {
       am.ChangeAssetPath<IGE::Assets::AudioAsset>(am.LoadRef<IGE::Assets::AudioAsset>(original.string()), newPath.string());
     }
+
+    std::filesystem::rename(original, newPath);
+    GUIVault::SetSelectedFile(newPath);
   }
 
   void AssetBrowser::DisplayDirectory(float imgSize, unsigned maxChars)
@@ -337,10 +339,12 @@ namespace GUI
         AssetHelpers::OpenFileWithDefaultProgram(path.string());
       }
       else {
-        GUIVault::SetSelectedFile(path);
-
         draggedAsset = path;
       }
+    }
+    // @TODO: temp
+    else if (ImGui::IsItemClicked(ImGuiMouseButton_Middle)) {
+      GUIVault::SetSelectedFile(path);
     }
     else if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
       ImGui::SetTooltip(path.filename().string().c_str());
@@ -499,8 +503,9 @@ namespace GUI
         AssetHelpers::OpenFileInExplorer(mSelectedAsset);
       }
 
-      // only enabled for prefabs
-      if (mSelectedAsset.extension().string() == ".pfb")
+      std::string const ext{ mSelectedAsset.extension().string() };
+      // file specific options
+      if (ext == gPrefabFileExt)
       {
         ImGui::BeginDisabled(IGE_SCENEMGR.GetSceneState() & ~(Scenes::STOPPED | Scenes::NO_SCENE));
         if (ImGui::Selectable("Edit Prefab")) {
@@ -508,6 +513,11 @@ namespace GUI
             mSelectedAsset.relative_path().string());
         }
         ImGui::EndDisabled();
+      }
+      else if (ext == gMaterialFileExt) {
+        if (ImGui::Selectable("Edit Material")) {
+          GUIVault::SetSelectedFile(mSelectedAsset);
+        }
       }
 
       if (ImGui::Selectable("Delete##AssetMenu")) {

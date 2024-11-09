@@ -67,7 +67,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12253710587051033221
+                            "ID": 5636268146806327822
                         },
                         "isCustomMesh": false,
                         "castShadows": true,
@@ -79,9 +79,7 @@
         {
             "ID": 4,
             "Parent": null,
-            "Child Entities": [
-                9
-            ],
+            "Child Entities": [],
             "isActive": true,
             "Components": [
                 {
@@ -140,7 +138,7 @@
         },
         {
             "ID": 9,
-            "Parent": 4,
+            "Parent": null,
             "Child Entities": [],
             "isActive": true,
             "Components": [
@@ -216,7 +214,7 @@
         },
         {
             "ID": 12,
-            "Parent": 13,
+            "Parent": null,
             "Child Entities": [],
             "isActive": true,
             "Components": [
@@ -301,10 +299,7 @@
         {
             "ID": 13,
             "Parent": null,
-            "Child Entities": [
-                12,
-                14
-            ],
+            "Child Entities": [],
             "isActive": true,
             "Components": [
                 {
@@ -368,7 +363,7 @@
         },
         {
             "ID": 14,
-            "Parent": 13,
+            "Parent": null,
             "Child Entities": [],
             "isActive": true,
             "Components": [
@@ -423,19 +418,6 @@
                     "Layer": {
                         "layerName": "Default"
                     }
-                },
-                {
-                    "Image": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 0
-                        }
-                    }
                 }
             ]
         }
@@ -444,7 +426,7 @@
         "layerNames": [
             "Default",
             "Player",
-            "UI",
+            "",
             "",
             "",
             "",

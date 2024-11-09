@@ -37,7 +37,7 @@ namespace GUI {
     IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
     auto& selectedMaterial{ am.GetAsset<IGE::Assets::MaterialAsset>(am.LoadRef<IGE::Assets::MaterialAsset>(selectedFile.string()))->mMaterial };
 
-    if (!prevMaterial.empty() && prevMaterial != selectedFile) {
+    if (!prevMaterial.empty() && prevMaterial != selectedFile && std::filesystem::exists(prevMaterial)) {
       Graphics::MaterialTable::CreateAndImportMatFile(prevMaterial.stem().string());
     }
     prevMaterial = selectedFile;
@@ -131,12 +131,6 @@ namespace GUI {
       }
 
       ImGui::EndTable();
-    }
-  }
-
-  void Inspector::SaveFileInspectorData() const {
-    if (!prevMaterial.empty()) {
-      Graphics::MaterialTable::CreateAndImportMatFile(prevMaterial.stem().string());
     }
   }
 

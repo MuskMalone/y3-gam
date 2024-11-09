@@ -73,10 +73,6 @@ namespace GUI {
     }
   }
 
-  Inspector::~Inspector() {
-    SaveFileInspectorData();
-  }
-
   void Inspector::Run() {
     ImGuiStyle& style = ImGui::GetStyle();
     float oldItemSpacingX = style.ItemSpacing.x;
@@ -428,24 +424,32 @@ namespace GUI {
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
-      NextRowTable("Material Type");
-
-      static const std::vector<const char*> materialNames{
-        "Default", "1"
-      };
-
-      if (ImGui::BeginCombo("##MaterialSelection", materialNames[0])) {
-        for (unsigned i{}; i < materialNames.size(); ++i) {
-          if (ImGui::Selectable(materialNames[i])) {
-            if (i != material.matIdx) {
-              modified = true;
-              material.matIdx = i;
+      NextRowTable("Material");
+      ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 2.0f);
+      const char* name;
+      IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+      if (material.GetGUID().IsValid()) {
+        name = am.GetAsset<IGE::Assets::MaterialAsset>(material.GetGUID())->mMaterial->GetName().c_str();
+      }
+      else {
+        name = "Drag Material Here";
+      }
+      ImGui::Button(name, ImVec2(inputWidth, 30.f));
+      ImGui::PopStyleVar();
+      if (ImGui::BeginDragDropTarget()) {
+        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+        if (drop) {
+          AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+          if (assetPayload.mAssetType == AssetPayload::MATERIAL) {
+            try {
+              material.SetGUID(am.LoadRef<IGE::Assets::MaterialAsset>(assetPayload.GetFilePath()));
             }
-            break;
+            catch (Debug::ExceptionBase const&) {
+
+            }
           }
         }
-
-        ImGui::EndCombo();
+        ImGui::EndDragDropTarget();
       }
 
       ImGui::EndTable();
