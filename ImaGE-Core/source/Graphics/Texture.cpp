@@ -254,6 +254,42 @@ namespace Graphics {
 	//	GLCALL(glBindTextureUnit(texUnit, 0));
 	//}
 
+	void Texture::CreateTextureArray(uint32_t width, uint32_t height, uint32_t layers, bool isBindless){
+		mWidth = width;
+		mHeight = height;
+		mIsBindless = isBindless;
+
+		glCreateTextures(GL_TEXTURE_2D_ARRAY, 1, &mTexHdl);
+
+		// Allocate storage for the texture array
+		glTextureStorage3D(mTexHdl, 1, GL_RGBA8, width, height, layers);
+
+		// Set texture parameters for the 2D texture array
+		glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTextureParameteri(mTexHdl, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTextureParameteri(mTexHdl, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		if (mIsBindless) {
+			InitBindlessTexture();
+		}
+	}
+
+	void Texture::SetLayerData(void* data, uint32_t layer){
+		if (layer >= mHeight) {
+			Debug::DebugLogger::GetInstance().LogError("Error: Layer index out of bounds.\n");
+			return;
+		}
+
+		// Upload data to the specified layer of the 2D texture array
+		glTextureSubImage3D(mTexHdl, 0, 0, 0, layer, mWidth, mHeight, 1, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	}
+
+	void* Texture::GetData() const
+	{
+		return nullptr;
+	}
+
 	/*  _________________________________________________________________________ */
 	/*! operator==
 

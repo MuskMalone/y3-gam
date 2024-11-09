@@ -45,11 +45,15 @@ namespace Graphics {
 		uint32_t Bind() const;
 		/*void Unbind(unsigned int texUnit = 0) const;*/
 
+		// New functions for 2D texture arrays
+		void CreateTextureArray(uint32_t width, uint32_t height, uint32_t layers, bool isBindless = false);
+		void SetLayerData(void* data, uint32_t layer);
+		void* GetData() const;
+
 		bool operator==(Texture const& rhs) const;
 
 	private:
 		void InitBindlessTexture();
-
 		inline static uint32_t sNextAvailTextureUnit = 0;
 
 		std::string mPath;

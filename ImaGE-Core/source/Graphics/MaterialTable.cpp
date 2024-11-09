@@ -7,12 +7,36 @@
 #include "Asset/AssetManager.h"
 
 namespace Graphics {
+    std::shared_ptr<Texture> mTextureArray{};
     std::unordered_map<IGE::Assets::GUID, uint32_t> MaterialTable::mGUIDToIndexMap;
     std::vector<std::shared_ptr<MaterialData>> MaterialTable::mMaterials;
+    void MaterialTable::Init(uint32_t width, uint32_t height, uint32_t maxLayers){
+        mTextureArray = std::make_shared<Texture>();
+        mTextureArray->CreateTextureArray(width, height, maxLayers);
+    }
     // Add a material to the table and return its index
     uint32_t Graphics::MaterialTable::AddMaterial(std::shared_ptr<Graphics::MaterialData>& material) {
         mMaterials.push_back(material);
         return static_cast<uint32_t>(mMaterials.size() - 1);
+    }
+
+    bool MaterialTable::AddTextureToTextureArray(IGE::Assets::GUID guid, uint32_t layer) {
+        // Load texture data from the asset manager using the GUID
+        auto textureAsset = IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(guid);
+        if (!textureAsset) {
+            Debug::DebugLogger::GetInstance().LogError("Texture asset not found.");
+            return false;
+        }
+
+        const auto& textureData = textureAsset->mTexture;
+        if (textureData) {
+            mTextureArray->SetLayerData(textureData, layer);
+            return true;
+        }
+        else {
+            Debug::DebugLogger::GetInstance().LogError("Failed to load texture data for layer.");
+            return false;
+        }
     }
 
     uint32_t MaterialTable::AddMaterialByGUID(IGE::Assets::GUID const& guid){
