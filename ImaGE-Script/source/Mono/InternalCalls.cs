@@ -121,6 +121,10 @@ namespace IGE.Utils
 
     #endregion
 
+    #region Utility
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static uint Raycast(Vector3 start, Vector3 end);
+    #endregion
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static float GetDeltaTime();

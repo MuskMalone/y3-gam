@@ -185,7 +185,6 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetWorldScale);
   ADD_INTERNAL_CALL(MoveCharacter);
 
-
   //Debug Functions
   ADD_INTERNAL_CALL(Log);
   ADD_INTERNAL_CALL(LogWarning);
@@ -201,6 +200,9 @@ void ScriptManager::AddInternalCalls()
 
 
 
+
+  // Utility Functions
+  ADD_INTERNAL_CALL(Raycast);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -787,6 +789,14 @@ bool  Mono::IsGrounded(ECS::Entity::EntityID entity)
   }
     
   return false;
+}
+
+ECS::Entity::EntityID Mono::Raycast(glm::vec3 start, glm::vec3 end)
+{
+    IGE::Physics::RaycastHit hit{};
+    IGE::Physics::PhysicsSystem::GetInstance()->RayCastSingular(start, end, hit);
+    ECS::Entity::EntityID out {hit.entity.GetEntityID()};
+    return out;
 }
 
 float Mono::GetDeltaTime()
