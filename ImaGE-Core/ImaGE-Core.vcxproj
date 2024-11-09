@@ -183,6 +183,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Asset\Assetables\Assetables.h" />
     <ClInclude Include="source\Asset\Assetables\Audio\AudioAsset.h" />
     <ClInclude Include="source\Asset\Assetables\Font\FontAsset.h" />
+    <ClInclude Include="source\Asset\Assetables\Material\MaterialAsset.h" />
     <ClInclude Include="source\Asset\Assetables\Mesh\ModelAsset.h" />
     <ClInclude Include="source\Asset\Assetables\Prefab\PrefabAsset.h" />
     <ClInclude Include="source\Asset\Assetables\Shader\ShaderAsset.h" />
@@ -304,17 +305,19 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\External\stb\stb_image_write.h" />
     <ClInclude Include="source\FrameRateController\FrameRateController.h" />
     <ClInclude Include="source\Globals.h" />
-    <ClInclude Include="source\Graphics\AssetIO\IMSH.h" />
     <ClInclude Include="source\Graphics\CameraManager.h" />
     <ClInclude Include="source\Graphics\CameraSpec.h" />
     <ClInclude Include="source\Graphics\EditorCamera.h" />
     <ClInclude Include="source\Graphics\ElementBuffer.h" />
     <ClInclude Include="source\Graphics\Framebuffer.h" />
-    <ClInclude Include="source\Graphics\Material.h" />
+    <ClInclude Include="source\Graphics\MaterialData.h" />
     <ClInclude Include="source\Graphics\MaterialTable.h" />
-    <ClInclude Include="source\Graphics\Mesh.h" />
-    <ClInclude Include="source\Graphics\MeshFactory.h" />
-    <ClInclude Include="source\Graphics\MeshSource.h" />
+    <ClInclude Include="source\Graphics\Mesh\IMSH.h" />
+    <ClInclude Include="source\Graphics\Mesh\Mesh.h" />
+    <ClInclude Include="source\Graphics\Mesh\MeshFactory.h" />
+    <ClInclude Include="source\Graphics\Mesh\MeshMatValues.h" />
+    <ClInclude Include="source\Graphics\Mesh\MeshSource.h" />
+    <ClInclude Include="source\Graphics\Mesh\Submesh.h" />
     <ClInclude Include="source\Graphics\Pipeline.h" />
     <ClInclude Include="source\Graphics\PostProcessing\PostProcessingManager.h" />
     <ClInclude Include="source\Graphics\RenderAPI.h" />
@@ -329,7 +332,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Graphics\RenderTarget.h" />
     <ClInclude Include="source\Graphics\Renderer.h" />
     <ClInclude Include="source\Graphics\Shader.h" />
-    <ClInclude Include="source\Graphics\Submesh.h" />
     <ClInclude Include="source\Graphics\Texture.h" />
     <ClInclude Include="source\Graphics\Utils.h" />
     <ClInclude Include="source\Graphics\Vertex.h" />
@@ -374,6 +376,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Asset\AssetUtils.cpp" />
     <ClCompile Include="source\Asset\Assetables\Audio\AudioAsset.cpp" />
     <ClCompile Include="source\Asset\Assetables\Font\FontAsset.cpp" />
+    <ClCompile Include="source\Asset\Assetables\Material\MaterialAsset.cpp" />
     <ClCompile Include="source\Asset\Assetables\Mesh\ModelAsset.cpp" />
     <ClCompile Include="source\Asset\Assetables\Prefab\PrefabAsset.cpp" />
     <ClCompile Include="source\Asset\Assetables\Shader\ShaderAsset.cpp" />
@@ -450,16 +453,16 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="source\FrameRateController\FrameRateController.cpp" />
-    <ClCompile Include="source\Graphics\AssetIO\IMSH.cpp" />
     <ClCompile Include="source\Graphics\CameraManager.cpp" />
     <ClCompile Include="source\Graphics\EditorCamera.cpp" />
     <ClCompile Include="source\Graphics\ElementBuffer.cpp" />
     <ClCompile Include="source\Graphics\Framebuffer.cpp" />
-    <ClCompile Include="source\Graphics\Material.cpp" />
+    <ClCompile Include="source\Graphics\MaterialData.cpp" />
     <ClCompile Include="source\Graphics\MaterialTable.cpp" />
-    <ClCompile Include="source\Graphics\Mesh.cpp" />
-    <ClCompile Include="source\Graphics\MeshFactory.cpp" />
-    <ClCompile Include="source\Graphics\MeshSource.cpp" />
+    <ClCompile Include="source\Graphics\Mesh\IMSH.cpp" />
+    <ClCompile Include="source\Graphics\Mesh\Mesh.cpp" />
+    <ClCompile Include="source\Graphics\Mesh\MeshFactory.cpp" />
+    <ClCompile Include="source\Graphics\Mesh\MeshSource.cpp" />
     <ClCompile Include="source\Graphics\Pipeline.cpp" />
     <ClCompile Include="source\Graphics\PostProcessing\PostProcessingManager.cpp" />
     <ClCompile Include="source\Graphics\RenderAPI.cpp" />

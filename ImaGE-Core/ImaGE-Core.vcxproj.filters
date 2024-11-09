@@ -703,6 +703,9 @@
     <ClInclude Include="source\Reflection\ProxyScript.h">
       <Filter>Reflection</Filter>
     </ClInclude>
+    <ClInclude Include="source\Scenes\Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
     <ClInclude Include="source\Scenes\SceneManager.h">
       <Filter>Scenes</Filter>
     </ClInclude>
@@ -741,6 +744,9 @@
     </ClInclude>
     <ClInclude Include="source\Serialization\Serializer.h">
       <Filter>Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Singleton\Singleton.h">
+      <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\Singleton\ThreadSafeSingleton.h">
       <Filter>Singleton</Filter>
@@ -985,6 +991,9 @@
     </ClCompile>
     <ClCompile Include="source\Reflection\ObjectFactory.cpp">
       <Filter>Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scenes\Scene.cpp">
+      <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="source\Scenes\SceneManager.cpp">
       <Filter>Scenes</Filter>
