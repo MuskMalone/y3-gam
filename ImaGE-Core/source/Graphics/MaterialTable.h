@@ -1,5 +1,4 @@
 #pragma once
-#include "Asset/IGEAssets.h"
 #include "Shader.h"
 
 //TODO CHANGE TO GUID LATER
@@ -30,6 +29,8 @@ namespace Graphics {
         static uint32_t AddMaterial(std::shared_ptr<MaterialData>& material);
         static uint32_t AddMaterialByGUID(IGE::Assets::GUID const& guid);
 
+        static void DeleteMaterial(IGE::Assets::GUID const& guid);
+
         // Retrieve material by index
         static std::shared_ptr<MaterialData> GetMaterial(uint32_t index);
 
@@ -40,6 +41,8 @@ namespace Graphics {
         static void ApplyMaterialTextures(std::shared_ptr<Graphics::Shader>& shader, size_t batchStart, size_t batchEnd);
         static void ApplyMaterialTextures(std::shared_ptr<Graphics::Shader>& shader);
 
+
+        static IGE::Assets::GUID CreateAndImportMatFile(const std::string& name = "NewMaterial");
         static void SaveMaterials();
         static std::shared_ptr<MaterialData> LoadMaterial(std::string const& fp);
 

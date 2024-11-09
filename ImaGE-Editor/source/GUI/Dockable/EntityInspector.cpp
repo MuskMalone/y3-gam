@@ -1,5 +1,5 @@
 /*!*********************************************************************
-\file   Inspector.cpp
+\file   EntityInspector.cpp
 \author 
 \date   5-October-2024
 \brief  Class encapsulating functions to run the inspector / property
@@ -32,22 +32,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace {
   bool InputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled = false);
-
-  /*!*********************************************************************
-  \brief
-    Calculates the input width of the table row based on the current
-    content region after subtracting the label
-  \param padding
-    The extra space to subtract
-  \return
-    The remaining width of the row
-  ************************************************************************/
-  float CalcInputWidth(float padding);
 }
 
 namespace GUI {
   Inspector::Inspector(const char* name) : GUIWindow(name),
-    mComponentOpenStatusMap{}, mStyler{ GUIManager::GetStyler() }, 
+    mComponentOpenStatusMap{}, mStyler{ GUIVault::GetStyler() }, 
     mComponentIcons{
       { typeid(Component::AudioListener), ICON_FA_EAR_LISTEN ICON_PADDING},
       { typeid(Component::AudioSource), ICON_FA_VOLUME_HIGH ICON_PADDING},
@@ -93,10 +82,14 @@ namespace GUI {
 
     ImGui::Begin(mWindowName.c_str());
     ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
-    ECS::Entity currentEntity{ GUIManager::GetSelectedEntity() };
+    ECS::Entity currentEntity{ GUIVault::GetSelectedEntity() };
     
-    if (currentEntity) {
-
+    // run the inspector for the selected file
+    if (!currentEntity) {
+      RunFileInspector();
+    }
+    // run default inspector for selected entity
+    else {
       if (currentEntity != mPreviousEntity) {
         mPreviousEntity = currentEntity;
         mEntityChanged = true;
@@ -431,24 +424,32 @@ namespace GUI {
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
-      NextRowTable("Material Type");
-
-      static const std::vector<const char*> materialNames{
-        "Default"
-      };
-
-      if (ImGui::BeginCombo("##MaterialSelection", materialNames[0])) {
-        for (unsigned i{}; i < materialNames.size(); ++i) {
-          if (ImGui::Selectable(materialNames[i])) {
-            if (i != material.matIdx) {
-              modified = true;
-              material.matIdx = i;
+      NextRowTable("Material");
+      ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 2.0f);
+      const char* name;
+      IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+      if (material.GetGUID().IsValid()) {
+        name = am.GetAsset<IGE::Assets::MaterialAsset>(material.GetGUID())->mMaterial->GetName().c_str();
+      }
+      else {
+        name = "Drag Material Here";
+      }
+      ImGui::Button(name, ImVec2(inputWidth, 30.f));
+      ImGui::PopStyleVar();
+      if (ImGui::BeginDragDropTarget()) {
+        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+        if (drop) {
+          AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+          if (assetPayload.mAssetType == AssetPayload::MATERIAL) {
+            try {
+              material.SetGUID(am.LoadRef<IGE::Assets::MaterialAsset>(assetPayload.GetFilePath()));
             }
-            break;
+            catch (Debug::ExceptionBase const&) {
+
+            }
           }
         }
-
-        ImGui::EndCombo();
+        ImGui::EndDragDropTarget();
       }
 
       ImGui::EndTable();
@@ -757,7 +758,7 @@ namespace GUI {
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
-      NextRowTable("");
+      NextRowTable("##");
       ImVec2 boxSize = ImVec2(200.0f, 40.0f); // Width and height of the box
       ImVec2 cursorPos = ImGui::GetCursorScreenPos();
       ImVec2 boxEnd = ImVec2(cursorPos.x + boxSize.x, cursorPos.y + boxSize.y);
@@ -879,16 +880,36 @@ namespace GUI {
       BeginVec3Table("LocalTransformTable", inputWidth);
 
       // @TODO: Replace min and max with the world min and max
-      if (ImGuiHelpers::TableInputFloat3("Position", &transform.position[0], inputWidth, false, -1000.f, 1000.f, 0.1f)) {
+      if (ImGuiHelpers::TableInputFloat3("Position", &transform.position[0], inputWidth, false, -FLT_MAX, FLT_MAX, 0.1f)) {
         modified = true;
       }
-      glm::vec3 localRot{ transform.eulerAngles };
+      glm::vec3 localRot{ glm::eulerAngles(transform.rotation) };
       if (ImGuiHelpers::TableInputFloat3("Rotation", &localRot[0], inputWidth, false, -360.f, 360.f, 0.3f)) {
         transform.SetLocalRotWithEuler(localRot);
         modified = true;
       }
-      if (ImGuiHelpers::TableInputFloat3("Scale", &transform.scale[0], inputWidth, false, 0.001f, 200.f, 0.02f)) {
+      static bool constrainedScale{ true };
+      glm::vec3 scale{ transform.scale };
+      if (ImGuiHelpers::TableInputFloat3("Scale", &scale[0], inputWidth, false, 0.001f, FLT_MAX, 0.02f)) {
         modified = true;
+        if (constrainedScale) {
+          scale -= transform.scale;
+          float const offset{ scale.x != 0.f ? scale.x : scale.y != 0.f ? scale.y : scale.z };
+          transform.scale += offset;
+        }
+        else {
+          transform.scale = scale;
+        }
+      }
+      ImGui::TableSetColumnIndex(0);
+      ImGui::SetCursorPosX(ImGui::GetCursorPosX() + FIRST_COLUMN_LENGTH - 30.f);
+      ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.f, 0.f, 0.f));
+      if (ImGui::Button(constrainedScale ? ICON_FA_LOCK : ICON_FA_LOCK_OPEN)) {
+        constrainedScale = !constrainedScale;
+      }
+      ImGui::PopStyleColor();
+      if (ImGui::IsItemHovered()) {
+        ImGui::SetTooltip(((constrainedScale ? "Disable" : "Enable") + std::string(" constrained proportions")).c_str());
       }
 
       EndVec3Table();
@@ -1829,6 +1850,10 @@ namespace GUI {
     ImGui::SetNextItemWidth(INPUT_SIZE);
   }
  
+  float Inspector::CalcInputWidth(float padding) const {
+    static float const charSize = ImGui::CalcTextSize("012345678901234").x;
+    return ImGui::GetContentRegionAvail().x - charSize - padding;
+  }
 } // namespace GUI
 
 namespace {
@@ -1848,10 +1873,5 @@ namespace {
     ImGui::EndDisabled();
 
     return valChanged;
-  }  
-
-  float CalcInputWidth(float padding) {
-    static float const charSize = ImGui::CalcTextSize("012345678901234").x;
-    return ImGui::GetContentRegionAvail().x - charSize - padding;
-  }
+  } 
 }

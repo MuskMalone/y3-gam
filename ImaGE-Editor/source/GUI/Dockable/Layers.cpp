@@ -3,7 +3,7 @@
 #include <ImGui/imgui.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
-#include "GUI/GUIManager.h"
+#include "GUI/GUIVault.h"
 #include "GUI/Dockable/Inspector.h"
 #include "Scenes/SceneManager.h"
 #include <Events/EventManager.h>
@@ -51,7 +51,7 @@ namespace GUI {
   }
 
   void Layers::LayerNameNode() {
-    ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
+    ImGui::PushFont(GUIVault::GetStyler().GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
     if (ImGui::TreeNodeEx("Layer Names##Layers", ImGuiTreeNodeFlags_DefaultOpen)) {
       if (std::shared_ptr<Systems::LayerSystem> layerSys = mLayerSystem.lock()) {
 
@@ -70,7 +70,7 @@ namespace GUI {
           std::string layerNameText = (i < Systems::MAX_BUILTIN_LAYERS) ? "BI Layer " + std::to_string(i)
             : "Layer " + std::to_string(i);
           
-          ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_REGULAR));
+          ImGui::PushFont(GUIVault::GetStyler().GetCustomFont(GUI::MONTSERRAT_REGULAR));
           ImGui::Text(layerNameText.c_str());
           ImGui::PopFont();
           
@@ -79,7 +79,7 @@ namespace GUI {
             ImGui::BeginDisabled();
           }
   
-          ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_LIGHT));
+          ImGui::PushFont(GUIVault::GetStyler().GetCustomFont(GUI::MONTSERRAT_LIGHT));
           std::string inputTextString = "##inputTextReadOnly" + std::to_string(i);
           ImGui::SetNextItemWidth(INPUT_SIZE);
           if (ImGui::InputText(inputTextString.c_str(), &layerName, ImGuiInputTextFlags_EnterReturnsTrue)) {
@@ -105,7 +105,7 @@ namespace GUI {
   }
 
   void Layers::VisibilityToggleNode() {
-    ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
+    ImGui::PushFont(GUIVault::GetStyler().GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
 
     if (ImGui::TreeNodeEx("Visibility##Layers", ImGuiTreeNodeFlags_DefaultOpen)) {
       if (std::shared_ptr<Systems::LayerSystem> layerSys = mLayerSystem.lock()) {
@@ -115,7 +115,7 @@ namespace GUI {
         float charSize = ImGui::CalcTextSize("012345678901234").x;
         float inputWidth = (contentSize - charSize - 60);
 
-        ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_LIGHT));
+        ImGui::PushFont(GUIVault::GetStyler().GetCustomFont(GUI::MONTSERRAT_LIGHT));
         ImGui::BeginTable("VisibilityTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
         ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, contentSize / 2.f);
         ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
@@ -132,7 +132,7 @@ namespace GUI {
             ImGui::EndDisabled();
           }
           ImGui::SameLine();
-          ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_REGULAR));
+          ImGui::PushFont(GUIVault::GetStyler().GetCustomFont(GUI::MONTSERRAT_REGULAR));
           std::string nameText = "Layer " + std::to_string(i) + ": ";
           ImGui::Text(nameText.c_str());
           ImGui::PopFont();
@@ -143,7 +143,7 @@ namespace GUI {
           ImGui::Checkbox(("##readonly" + std::to_string(i + 1)).c_str(),
             reinterpret_cast<bool*>(&layerSys->GetLayerVisibility()[i + 1]));
           ImGui::SameLine();
-          ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_REGULAR));
+          ImGui::PushFont(GUIVault::GetStyler().GetCustomFont(GUI::MONTSERRAT_REGULAR));
           std::string secondNameText = "Layer " + std::to_string(i + 1) + ": ";
           ImGui::Text(secondNameText.c_str());
           ImGui::PopFont();
@@ -166,7 +166,7 @@ namespace GUI {
   }
 
   void Layers::CollisionMatrixNode() {
-    ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
+    ImGui::PushFont(GUIVault::GetStyler().GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
     if (ImGui::TreeNodeEx("Collision##Layers", ImGuiTreeNodeFlags_DefaultOpen)) {
       if (std::shared_ptr<Systems::LayerSystem> layerSys = mLayerSystem.lock()) {
 
@@ -175,8 +175,8 @@ namespace GUI {
         float charSize = ImGui::CalcTextSize("012345678901234").x;
         float inputWidth = (contentSize - charSize - 60);
 
-        ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_LIGHT));
-        ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_REGULAR));
+        ImGui::PushFont(GUIVault::GetStyler().GetCustomFont(GUI::MONTSERRAT_LIGHT));
+        ImGui::PushFont(GUIVault::GetStyler().GetCustomFont(GUI::MONTSERRAT_REGULAR));
         ImGui::Text("Layer Selection");
         ImGui::PopFont();
         ImGui::BeginTable("CollisionMatrixLayerSelectionTable", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
@@ -285,7 +285,7 @@ namespace GUI {
         std::string selectedLayerText{ "Selected Layer " + std::to_string(sSelectedLayer) + ": " + 
           layerSys->GetLayerNames()[sSelectedLayer] };
 
-        ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_REGULAR));
+        ImGui::PushFont(GUIVault::GetStyler().GetCustomFont(GUI::MONTSERRAT_REGULAR));
         ImGui::Text(selectedLayerText.c_str());
         ImGui::PopFont();
 
@@ -402,7 +402,7 @@ namespace GUI {
 
         ImGui::PopFont();
 
-        ImGui::PushFont(GUIManager::GetStyler().GetCustomFont(GUI::MONTSERRAT_REGULAR));
+        ImGui::PushFont(GUIVault::GetStyler().GetCustomFont(GUI::MONTSERRAT_REGULAR));
         if (ImGui::Button("Collide With All")) {
           for (int i{}; i < Systems::MAX_LAYERS; ++i) {
             layerSys->SetLayerCollisionList(sSelectedLayer, i, true);

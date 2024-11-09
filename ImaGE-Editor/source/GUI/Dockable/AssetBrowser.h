@@ -32,7 +32,10 @@ namespace GUI
     bool mDirMenuPopup, mAssetMenuPopup;
 
     static constexpr float sMaxAssetSize = 100.f;
-    static inline constexpr char sMeshPopupTitle[] = "Mesh Import Config";
+    static inline constexpr char sMeshPopupTitle[]          = "Mesh Import Config";
+    static inline constexpr char sDirMenuTitle[]            = "DirectoryMenu";
+    static inline constexpr char sAssetsMenuTitle[]         = "AssetsMenu";
+    static inline constexpr char sContentViewerMenuTitle[]  = "ContentViewerMenu";
 
     /*!*********************************************************************
     \brief
@@ -98,6 +101,13 @@ namespace GUI
       Parent directory i.e. current directory
     ************************************************************************/
     void RecurseDownDirectory(std::filesystem::path const& dirEntry);
+
+    /*!*********************************************************************
+    \brief
+      Creates the popup menu for when the content viewer is right-clicked
+      upon
+    ************************************************************************/
+    void ContentViewerPopup();
 
     /*!*********************************************************************
     \brief

@@ -31,6 +31,7 @@ namespace IGE {
 			std::string const filename { GetFileName(fp) };
 			std::string const fileext { GetFileExtension(fp) };
 			std::string const inputModelPath{ cModelDirectory + filename + fileext };
+
 			CreateDirectoryIfNotExists(cModelDirectory);
 
 			//copy the file over to the assets folder

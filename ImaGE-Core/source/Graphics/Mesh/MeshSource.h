@@ -14,6 +14,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/VertexArray.h>
 #include <Graphics/Mesh/Submesh.h>
 
+// forward declarations
+namespace ECS { class Entity; }
+namespace IGE::Core { template <typename T> class GUID; }
+namespace IGE::Assets { struct AssetGUIDTag; using GUID = IGE::Core::GUID<AssetGUIDTag>; }
+
 namespace Graphics {
 	class MeshSource {
     public:
@@ -21,12 +26,12 @@ namespace Graphics {
           const std::vector<Submesh>& submeshes,
           const std::vector<Vertex>& vertices,
           const std::vector<uint32_t>& indices)
-          : mVertexArray{ vao }, mSubmeshes{ submeshes }, mVertices{ vertices }, mIndices{ indices } {}
+          : mVertices{ vertices }, mMeshNames{}, mIndices{ indices }, mVertexArray{ vao }, mSubmeshes{ submeshes } {}
+
       MeshSource(std::shared_ptr<VertexArray>&& vao,
-        std::vector<Submesh>&& submeshes,
-        std::vector<Vertex>&& vertices,
-        std::vector<uint32_t>&& indices)
-        : mVertices{ std::move(vertices) }, mIndices{ std::move(indices) },
+        std::vector<Submesh>&& submeshes, std::vector<Vertex>&& vertices,
+        std::vector<uint32_t>&& indices, std::vector<std::string>&& names)
+        : mVertices{ std::move(vertices) }, mMeshNames{ names }, mIndices{ std::move(indices) },
           mVertexArray{ std::move(vao) }, mSubmeshes{ std::move(submeshes) } {}
 
       const std::vector<Vertex>& GetVertices() const { return mVertices; }
@@ -35,11 +40,25 @@ namespace Graphics {
       const std::shared_ptr<VertexArray>& GetVertexArray() const { return mVertexArray; }
       const std::vector<Submesh>& GetSubmeshes() const { return mSubmeshes; }
 
+      /*!*********************************************************************
+      \brief
+        Constructs an entity with the mesh source. All submeshes will be
+        a child of an empty parent
+      \param guid
+        GUID of the mesh
+      \param fileName
+        The name of the file
+      \return
+        The root entity
+      ************************************************************************/
+      ECS::Entity ConstructEntity(IGE::Assets::GUID const& guid, std::string const& fileName) const;
+
       //const AABB& GetBoundingBox() const { return mBoundingBox; } TO ADD IN THE FUTURE
       bool IsWireframe() { return mIsWireframe; }
       void ToggleWireframe() { mIsWireframe = !mIsWireframe; }
     private:
       std::vector<Vertex> mVertices;
+      std::vector<std::string> mMeshNames;
       std::vector<uint32_t> mIndices;
 
       std::shared_ptr<VertexArray> mVertexArray;
