@@ -682,7 +682,8 @@ namespace GUI
       }
       else {
         // send the relevant file path to the asset manager
-        IGE_ASSETMGR.ImportAsset<IGE::Assets::ModelAsset>(MeshPopup::sModelsToImport.back());
+        IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+        IGE::Assets::GUID const guid{ am.ImportAsset<IGE::Assets::ModelAsset>(MeshPopup::sModelsToImport.back()) };
 
         close = true;
       }

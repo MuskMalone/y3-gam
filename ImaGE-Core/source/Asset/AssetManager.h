@@ -143,6 +143,10 @@ namespace IGE {
                   return guid;
               }
               else {
+                  std::string newFp{};
+                  AssetMetadata::AssetProps metadata{};
+                  // this is to get the new FP
+                  T::Import(filepathstr, newFp, metadata);
                   Ref<T> ref { std::any_cast<Ref<T>>(mAssetRefs.at(key)) };
                   return ref.mInstance.partialRef.guid;
               }
