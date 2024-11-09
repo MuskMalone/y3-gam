@@ -1,0 +1,70 @@
+{
+    "Name": "Large Pillar",
+    "isActive": true,
+    "Components": [
+        {
+            "Tag": {
+                "tag": "Large Pillar",
+                "isActive": true
+            }
+        },
+        {
+            "Transform": {
+                "position": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 10.0,
+                    "y": 10.0,
+                    "z": 10.0
+                },
+                "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "eulerAngles": {
+                    "x": 0.0,
+                    "y": -0.0,
+                    "z": 0.0
+                },
+                "worldPos": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "worldScale": {
+                    "x": 10.0,
+                    "y": 10.0,
+                    "z": 10.0
+                },
+                "worldRot": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            }
+        },
+        {
+            "Layer": {
+                "layerName": "Props"
+            }
+        },
+        {
+            "Mesh": {
+                "meshName": "Props_Pillar",
+                "GUID": {
+                    "ID": 8441087174094492330
+                },
+                "isCustomMesh": true,
+                "castShadows": true,
+                "receiveShadows": true
+            }
+        }
+    ],
+    "SubData": []
+}
