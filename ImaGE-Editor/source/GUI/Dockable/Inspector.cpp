@@ -1428,7 +1428,7 @@ namespace GUI {
       BeginVec3Table("BoxColliderTable", inputWidth);
 
       // Modify the scale (vec3 input)
-      if (ImGuiHelpers::TableInputFloat3("Box Scale", &collider.scale.x, inputWidth, false, 0.1f, 10.0f, 0.1f)) {
+      if (ImGuiHelpers::TableInputFloat3("Box Scale", &collider.scale.x, inputWidth, false, 0.1f, 100.0f, 0.1f)) {
           IGE::Physics::PhysicsSystem::GetInstance()->ChangeBoxColliderVar(entity);
           modified = true;
       }
