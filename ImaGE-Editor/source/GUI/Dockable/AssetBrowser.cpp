@@ -268,6 +268,13 @@ namespace GUI
       }
       else {
         draggedAsset = path;
+
+        std::string pathStr = path.string();
+        if (pathStr.find("..\\Assets\\Materials") != std::string::npos) {
+            // Open Material Editor window
+            std::cout << "eat siht" << std::endl;
+            ImGui::OpenPopup("Material Editor");
+        }
       }
     }
     else if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
