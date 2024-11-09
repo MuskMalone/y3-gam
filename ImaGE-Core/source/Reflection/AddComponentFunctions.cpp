@@ -121,6 +121,7 @@ namespace Reflection::ComponentUtils {
   void AddImage(ECS::Entity entity, rttr::variant const& var) {
       EXTRACT_RAW_COMP(Image, comp);
 
+      IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(comp.textureAsset);
       entity.EmplaceOrReplaceComponent<Image>(comp);
   }
   void AddCamera(ECS::Entity entity, rttr::variant const& var){

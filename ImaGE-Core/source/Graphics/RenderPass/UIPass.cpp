@@ -21,11 +21,6 @@ namespace Graphics {
 		viewProj = cam.isEditor ? cam.viewProjMatrix : Renderer::mUICamera.GetViewProjMatrix();
 
 		// @TODO: TEMP, TO MERGE WITH XAVIER
-		shader->Unuse();
-		if (std::shared_ptr<Systems::TextSystem> textSys =
-			Systems::SystemManager::GetInstance().GetSystem<Systems::TextSystem>().lock()) {
-			textSys->RenderTextForAllEntities(viewProj);
-		}
 		shader->Use();
 		shader->SetUniform("u_ViewProjMtx", viewProj);
 
@@ -110,7 +105,14 @@ namespace Graphics {
 				//Graphics::Renderer::SubmitInstance(Renderer::GetQuadMeshSource(), uiXform.worldMtx, Color::COLOR_WHITE, uiEntity.GetEntityID());
 			}
 		}
+
 		Renderer::RenderSceneEnd();
+
+		if (std::shared_ptr<Systems::TextSystem> textSys =
+			Systems::SystemManager::GetInstance().GetSystem<Systems::TextSystem>().lock()) {
+			textSys->RenderTextForAllEntities(viewProj);
+		}
+
 		//Renderer::RenderInstances();
 
 		End();

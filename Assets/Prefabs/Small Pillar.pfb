@@ -1,0 +1,70 @@
+{
+    "Name": "Small Pillar",
+    "isActive": true,
+    "Components": [
+        {
+            "Tag": {
+                "tag": "Small Pillar",
+                "isActive": true
+            }
+        },
+        {
+            "Transform": {
+                "position": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 7.0,
+                    "y": 7.0,
+                    "z": 7.0
+                },
+                "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "eulerAngles": {
+                    "x": 0.0,
+                    "y": -0.0,
+                    "z": 0.0
+                },
+                "worldPos": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "worldScale": {
+                    "x": 7.0,
+                    "y": 7.0,
+                    "z": 7.0
+                },
+                "worldRot": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            }
+        },
+        {
+            "Layer": {
+                "layerName": "Props"
+            }
+        },
+        {
+            "Mesh": {
+                "meshName": "Props_Pillar2",
+                "GUID": {
+                    "ID": 2782215492784184878
+                },
+                "isCustomMesh": true,
+                "castShadows": true,
+                "receiveShadows": true
+            }
+        }
+    ],
+    "SubData": []
+}
