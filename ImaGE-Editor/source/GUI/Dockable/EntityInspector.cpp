@@ -888,8 +888,28 @@ namespace GUI {
         transform.SetLocalRotWithEuler(localRot);
         modified = true;
       }
-      if (ImGuiHelpers::TableInputFloat3("Scale", &transform.scale[0], inputWidth, false, 0.001f, FLT_MAX, 0.3f)) {
+      static bool constrainedScale{ true };
+      glm::vec3 scale{ transform.scale };
+      if (ImGuiHelpers::TableInputFloat3("Scale", &scale[0], inputWidth, false, 0.001f, FLT_MAX, 0.3f)) {
         modified = true;
+        if (constrainedScale) {
+          scale -= transform.scale;
+          float const offset{ scale.x != 0.f ? scale.x : scale.y != 0.f ? scale.y : scale.z };
+          transform.scale += offset;
+        }
+        else {
+          transform.scale = scale;
+        }
+      }
+      ImGui::TableSetColumnIndex(0);
+      ImGui::SetCursorPosX(ImGui::GetCursorPosX() + FIRST_COLUMN_LENGTH - 30.f);
+      ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.f, 0.f, 0.f));
+      if (ImGui::Button(constrainedScale ? ICON_FA_LOCK : ICON_FA_LOCK_OPEN)) {
+        constrainedScale = !constrainedScale;
+      }
+      ImGui::PopStyleColor();
+      if (ImGui::IsItemHovered()) {
+        ImGui::SetTooltip(((constrainedScale ? "Disable" : "Enable") + std::string(" constrained proportions")).c_str());
       }
 
       EndVec3Table();
