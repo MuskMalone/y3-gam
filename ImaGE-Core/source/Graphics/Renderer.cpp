@@ -771,12 +771,6 @@ namespace Graphics {
 	}
 
 	void Renderer::RenderSubmeshInstances() {
-		for (const auto& [meshSubmeshKey, instances] : mData.instanceSubmeshBufferDataMap) {
-			for (const auto& instance : instances) {
-				std::cout << "Instance material index: " << instance.materialIdx << std::endl;  // Check matIdx value
-			}
-		}
-
 		for (auto& [meshSubmeshKey, instances] : mData.instanceSubmeshBufferDataMap) {
 			if (instances.empty()) continue;
 

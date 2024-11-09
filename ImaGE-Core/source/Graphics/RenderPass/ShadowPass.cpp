@@ -18,22 +18,53 @@ namespace Graphics {
         StartRender();
 
         auto const& shader = mSpec.pipeline->GetShader();
-        // render the scene normally
+        //// render the scene normally
+        //for (ECS::Entity const& entity : entities) {
+        //    if (!entity.HasComponent<Component::Mesh>() || entity.HasComponent<Component::Light>()) { continue; }
+        //    Component::Mesh const& mesh{ entity.GetComponent<Component::Mesh>() };
+        //    // skip if no mesh or if it doesn't cast shadows
+        //    if (!mesh.meshSource.IsValid() || !mesh.castShadows) { continue; }
+
+        //    Graphics::Renderer::SubmitInstance(
+        //        entity.GetComponent<Component::Mesh>().meshSource,
+        //        entity.GetComponent<Component::Transform>().worldMtx,
+        //        Color::COLOR_WHITE,
+        //        entity.GetEntityID(),
+        //        1
+        //    );
+        //}
+        //Renderer::RenderInstances();
+
+            // Render each mesh with submeshes for shadow casting
         for (ECS::Entity const& entity : entities) {
             if (!entity.HasComponent<Component::Mesh>() || entity.HasComponent<Component::Light>()) { continue; }
-            Component::Mesh const& mesh{ entity.GetComponent<Component::Mesh>() };
-            // skip if no mesh or if it doesn't cast shadows
+
+            auto const& mesh = entity.GetComponent<Component::Mesh>();
+
+            // Skip if no valid mesh or if it doesn't cast shadows
             if (!mesh.meshSource.IsValid() || !mesh.castShadows) { continue; }
 
-            Graphics::Renderer::SubmitInstance(
-                entity.GetComponent<Component::Mesh>().meshSource,
-                entity.GetComponent<Component::Transform>().worldMtx,
-                Color::COLOR_WHITE,
-                entity.GetEntityID(),
-                0
-            );
+            // Retrieve the world matrix for the entity
+            auto const& worldMtx = entity.GetComponent<Component::Transform>().worldMtx;
+
+            // Submit each submesh within the mesh source
+            auto const& meshSource = mesh.meshSource;
+            auto const& submeshes = IGE_REF(IGE::Assets::ModelAsset, meshSource)->mMeshSource.GetSubmeshes();
+
+            for (size_t submeshIdx = 0; submeshIdx < submeshes.size(); ++submeshIdx) {
+                Graphics::Renderer::SubmitSubmeshInstance(
+                    mesh.meshSource,
+                    submeshIdx,
+                    worldMtx,
+                    Color::COLOR_WHITE,
+                    entity.GetEntityID(),
+                    0 // Use a default or shadow material index if needed
+                );
+            }
         }
-        Renderer::RenderInstances();
+
+        // Render all submitted submesh instances
+        Renderer::RenderSubmeshInstances();
 
         EndRender();
     }

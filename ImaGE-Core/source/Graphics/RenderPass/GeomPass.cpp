@@ -177,13 +177,15 @@ namespace Graphics {
           shader->SetUniform("u_Range", u_Range, maxLights);
 
           // Set shadow uniforms
-          auto const& shadowPass = Renderer::GetPass<ShadowPass>();
-          shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
-          if (shadowPass->IsActive()) {
-              shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
-              shader->SetUniform("u_ShadowMap", static_cast<int>(shadowPass->BindShadowMap()));
-              shader->SetUniform("u_ShadowBias", shadowPass->GetShadowBias());
-              shader->SetUniform("u_ShadowSoftness", shadowPass->GetShadowSoftness());
+          {
+              auto const& shadowPass = Renderer::GetPass<ShadowPass>();
+              shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
+              if (shadowPass->IsActive()) {
+                  shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
+                  shader->SetUniform("u_ShadowMap", static_cast<int>(shadowPass->BindShadowMap()));
+                  shader->SetUniform("u_ShadowBias", shadowPass->GetShadowBias());
+                  shader->SetUniform("u_ShadowSoftness", shadowPass->GetShadowSoftness());
+              }
           }
 
           material->Apply(shader);
@@ -193,12 +195,13 @@ namespace Graphics {
           for (const auto& [entity, worldMtx] : entityPairs) {
               auto const& mesh = entity.GetComponent<Component::Mesh>();
 
-              Graphics::Renderer::SubmitSubmeshInstance(mesh.meshSource, 0, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), 1);
+              Graphics::Renderer::SubmitSubmeshInstance(mesh.meshSource, 0, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
              //Graphics::Renderer::SubmitSubmeshInstance(mesh.meshSource, mesh.submeshIdx, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
           }
 
           mSpec.pipeline->GetSpec().instanceLayout;
           Renderer::RenderSubmeshInstances();  // Render all instances for the material group
+          //Renderer::RenderInstances();
           Texture::ResetTextureUnits(); // Unbind textures after each group
       }
       //=================================================SUBMESH VERSION END===========================================================
