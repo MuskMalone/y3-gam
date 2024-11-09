@@ -37,6 +37,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Events/EventManager.h>
 #include <FrameRateController/FrameRateController.h>
 #include <Application.h>
+#include <Scripting/ScriptManager.h>
 
 using namespace Input;
 using namespace Events;
@@ -53,6 +54,7 @@ KEY_MAP InputManager::mKeyHeld;
 KEY_MAP InputManager::mKeysTriggered;
 KEY_PRESS_ARRAY InputManager::mKeyFramesHeld;
 size_t InputManager::mCurrFramebuffer;
+std::vector<char> InputManager::mKeyVec(static_cast<int>(KEY_CODE::KEY_COUNTS));
 
 InputManager::InputManager(std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& window, int width, int height, double holdTime)
 {
@@ -69,6 +71,7 @@ InputManager::InputManager(std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& wi
 	glfwSetCursorPosCallback(window.get(), MousePosCallback);
 	glfwSetMouseButtonCallback(window.get(), MouseButtonCallback);
 	glfwSetScrollCallback(window.get(), MouseScrollCallback);
+	FillKeyVec();
 }
 
 void InputManager::SetDim(int width, int height)
@@ -247,6 +250,17 @@ bool InputManager::IsKeyPressed(KEY_CODE key)
 }
 
 
+MonoString* InputManager::GetInputString()
+{
+	std::string allInput{};
+	for (KEY_CODE i{ KEY_CODE::KEY_SPACE }; i <= KEY_CODE::KEY_Z; ++i )
+	{
+		if (IsKeyPressed(i))
+			allInput += mKeyVec[static_cast<int>(i)];
+	}
+
+	return Mono::STDToMonoString(allInput);
+}
 
 vec2  InputManager::GetMousePos()
 {
@@ -417,4 +431,51 @@ void InputManager::MouseScrollCallback(GLFWwindow* pwin, double xoffset, double 
 //		 << "Mouse Pos: " << im->GetMousePosWorld().x << "," << im->GetMousePosWorld().y << "\n";
 //	}
 //}
+
+void  InputManager::FillKeyVec() {
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_SPACE)] = ' ';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_APOSTROPHE)] = '\'';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_COMMA)] = ',';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_MINUS)] = '-';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_PERIOD)] = '.';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_SLASH)] = '/';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_0)] = '0';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_1)] = '1';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_2)] = '2';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_3)] = '3';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_4)] = '4';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_5)] = '5';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_6)] = '6';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_7)] = '7';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_8)] = '8';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_9)] = '9';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_SEMICOLON)] = ';';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_EQUAL)] = '=';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_A)] = 'a';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_B)] = 'b';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_C)] = 'c';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_D)] = 'd';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_E)] = 'e';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_F)] = 'f';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_G)] = 'g';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_H)] = 'h';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_I)] = 'i';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_J)] = 'j';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_K)] = 'k';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_L)] = 'l';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_M)] = 'm';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_N)] = 'n';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_O)] = 'o';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_P)] = 'p';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_Q)] = 'q';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_R)] = 'r';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_S)] = 's';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_T)] = 't';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_U)] = 'u';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_V)] = 'v';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_W)] = 'w';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_X)] = 'x';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_Y)] = 'y';
+	mKeyVec[static_cast<int>(KEY_CODE::KEY_Z)] = 'z';
+}
 

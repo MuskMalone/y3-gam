@@ -480,6 +480,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Graphics\VertexArray.cpp" />
     <ClCompile Include="source\Graphics\VertexBuffer.cpp" />
     <ClCompile Include="source\Input\InputManager.cpp" />
+    <ClCompile Include="source\Input\KeyCodecpp.cpp" />
     <ClCompile Include="source\Physics\PhysicsEvent.cpp" />
     <ClCompile Include="source\Physics\PhysicsEventManager.cpp" />
     <ClCompile Include="source\Physics\PhysicsSystem.cpp" />

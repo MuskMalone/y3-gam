@@ -17,17 +17,17 @@
 //  public event EventHandler<InventoryEventArgs> ItemRemoved;
 //  private watercloth waterCloth;
 
-//  public Image item1;
-//  public Image item2;     //NEED TO DO
-//  public Image item3;
-//  public Image item4;
-//  public Image item5;
-//  public Image item6;
+//  public IGEImage item1;
+//  public IGEImage item2;     //NEED TO DO
+//  public IGEImage item3;
+//  public IGEImage item4;
+//  public IGEImage item5;
+//  public IGEImage item6;
 
 //  public Color normalColor = Color.White;
 //  public Color highlightColor = Color.Yellow;
 
-//  private Image currentItem;
+//  private IGEImage currentItem;
 //  private bool highlighted = false;
 
 //  public Entity pitPaintingUI;
@@ -149,7 +149,7 @@
 
 //  }
 
-//  void HandleSlotInteraction(int index, Image slotImage)
+//  void HandleSlotInteraction(int index, IGEImage slotImage)
 //  {
 //    if (mItems[index] != null && slotImage != null)
 //    {
@@ -172,7 +172,7 @@
 //    }
 //  }
 
-//  void ToggleHighlight(Image selectedItem)
+//  void ToggleHighlight(IGEImage selectedItem)
 //  {
 //    if (currentItem != null && currentItem != selectedItem)
 //    {

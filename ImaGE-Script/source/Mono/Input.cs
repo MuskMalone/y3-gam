@@ -45,13 +45,22 @@ namespace IGE.Utils
       return InternalCalls.GetAxis(s);
     }
 
-      public static bool anyKeyDown
+    public static bool anyKeyDown // Checks if any key is triggered/held this frame and return the result
+    {
+      get
       {
-        get
-        {
-          return InternalCalls.anyKeyDown(); // Push update to C++ side
-        }
+        return InternalCalls.anyKeyDown(); 
       }
+    }
+
+    public static string inputString // Returns a string containing all the keys triggered/held this frame
+    {
+      get
+      {
+        return InternalCalls.GetInputString(); 
+      }
+    }
+
 
 
   }

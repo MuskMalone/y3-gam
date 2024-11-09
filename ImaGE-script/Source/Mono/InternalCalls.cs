@@ -87,6 +87,11 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetMouseDelta();
+
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static string GetInputString();
+
     #endregion
 
 
@@ -133,6 +138,7 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static Entity FindScript(string s);
+
 
   }
 }

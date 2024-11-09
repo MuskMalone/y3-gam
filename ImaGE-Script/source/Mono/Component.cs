@@ -129,4 +129,17 @@ using IGE.Utils;
     }
 
 
+public class Tag : Component
+{
+
+  public string tag
+  {
+    get
+    {
+      return InternalCalls.GetTag(entity.mEntityID); // Push update to C++ side
+    }
+  }
+}
+
+
 

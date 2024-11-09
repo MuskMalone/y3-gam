@@ -145,8 +145,8 @@
     <Compile Include="source\other interactable\CleanWindows.cs" />
     <Compile Include="source\other interactable\NoteInteraction.cs" />
     <Compile Include="source\other interactable\watercloth.cs" />
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="source\Yukitestscripts\SelectionManager.cs" />
+    <Compile Include="source\Yukitestscripts\skyboxcontroller1.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

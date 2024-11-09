@@ -46,6 +46,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <iostream>
 #include <memory>
 #include <External/GLFWwindowDestructor.h>
+#include <Scripting/ScriptUtils.h>
 
 	namespace Input
 	{
@@ -70,6 +71,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 			static size_t mCurrFramebuffer; //!< id of curr buffer (for mouse to WorldSpace)
 			// Store axis values
 			std::unordered_map<std::string, float> axes;
+			static std::vector<char> mKeyVec;
 
 		public:
 			/*!*********************************************************************
@@ -89,6 +91,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 				duration a key needs to be pressed to be recognized as a held
 			************************************************************************/
 			InputManager(std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& window, int width, int height, double holdTime = 0.5);
+
+			void  FillKeyVec();
 
 			/*!*********************************************************************
 			\brief
@@ -154,6 +158,13 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 			static double GetMouseScrollHor();
 
 
+			/*!*********************************************************************
+			\brief
+				.Function to check the xoffset of the mouse scroll for the current frame
+			\return
+				xoffset of  mouse scroll
+			************************************************************************/
+			static MonoString* GetInputString();
 
 			/*!*********************************************************************
 			\brief

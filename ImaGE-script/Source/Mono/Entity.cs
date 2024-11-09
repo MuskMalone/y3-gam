@@ -75,7 +75,28 @@ using IGE.Utils;
 
     public T FindObjectOfType<T>() where T : Entity
     {
-      return (T)InternalCalls.FindScript(typeof(T).Name) ;
+      string name = typeof(T).Name;
+   ////  string s = "huh";
+   //   InternalCalls.Log(name);
+      Entity e = InternalCalls.FindScript(name);
+      return (T)e;
+      return null;
+    }
+
+
+    void OnDestroy()
+    {
+
+    }
+
+    void Destroy(uint entityID)  //Function to destroy entities
+    {
+      OnDestroy();
+    }
+
+    void Destroy(Entity entity)  //Function to destroy script instances (these scripts must inherit from entity)
+  {
+
     }
 
 
