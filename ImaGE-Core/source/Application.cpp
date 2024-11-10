@@ -138,7 +138,8 @@ namespace IGE {
       throw std::runtime_error("Failed to initialize GLAD");
     }
     
-    glClearColor(0.f, 0.f, 0.f, 1.f);
+    //to change, just temp
+    glClearColor(.47055, .55289, .86785, 1.f);//f
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glEnable(GL_DEPTH_TEST);
 
