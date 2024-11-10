@@ -51,7 +51,6 @@ public class PlayerFootsteps : Entity
     }
     public void PlayRandomGrassSound()
     {
-        Debug.Log("grass sound");
         int soundNumber = random.Next(1, 7);
         string soundName = $"Grass{soundNumber}";
         InternalCalls.PlaySound(mEntityID, soundName);

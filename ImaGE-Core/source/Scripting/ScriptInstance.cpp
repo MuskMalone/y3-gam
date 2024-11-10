@@ -359,6 +359,17 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> const& scriptFieldP
         }
         break;
       }
+      else if (f.is_type<Mono::DataMemberInstance<unsigned>>() && i.get_type() == f.get_type())
+      {
+          Mono::DataMemberInstance<unsigned>& sfi = f.get_value<Mono::DataMemberInstance<unsigned>>();
+          const Mono::DataMemberInstance<unsigned>& psi = i.get_value<Mono::DataMemberInstance<unsigned>>();
+          if (sfi.mScriptField.mFieldName == psi.mScriptField.mFieldName)
+          {
+              sfi.mData = psi.mData;
+              SetFieldValue<unsigned>(sfi.mData, sfi.mScriptField.mClassField);
+          }
+          break;
+      }
       else if (f.is_type<Mono::DataMemberInstance<std::string>>() && i.get_type() == f.get_type())
       {
         Mono::DataMemberInstance<std::string>& sfi = f.get_value<Mono::DataMemberInstance<std::string>>();
