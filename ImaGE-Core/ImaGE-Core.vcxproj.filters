@@ -741,6 +741,7 @@
     </ClInclude>
     <ClInclude Include="source\pch.h" />
     <ClInclude Include="source\Graphics\MeshSubmeshKeyHash.h" />
+    <ClInclude Include="source\Graphics\ShaderStorageBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -1000,5 +1001,6 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
+    <ClCompile Include="source\Graphics\ShaderStorageBuffer.cpp" />
   </ItemGroup>
 </Project>

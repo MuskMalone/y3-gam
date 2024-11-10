@@ -13,10 +13,18 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <memory>
 #include <Asset/SmartPointer.h>
 
+#define ENABLE_BINDLESS_TEXTURES 1 //0 to disable bindless textures, 1 to enable
 namespace Graphics {
 
 	class Texture {
 	public:
+		struct TextureArrayUV {
+			float min_u;
+			float min_v;
+			float max_u;
+			float max_v;
+			int layer;
+		};
 
 		static IGE::Assets::GUID Create(std::string const& path, bool isBindless = true);
 		static uint32_t BindToNextAvailUnit(uint32_t texture);
@@ -26,6 +34,8 @@ namespace Graphics {
 		Texture();
 		Texture(std::string const& path, bool isBindless = false);
 		Texture(uint32_t width, uint32_t height, bool isBindless = false);
+		Texture(const std::vector<IGE::Assets::GUID>& guids, uint32_t maxWidth, uint32_t maxHeight, bool isRepeatable);
+
 
 		// For Font Glyphs
 		Texture(unsigned int width, unsigned int height, const void* data);
@@ -45,8 +55,12 @@ namespace Graphics {
 		uint32_t Bind() const;
 		/*void Unbind(unsigned int texUnit = 0) const;*/
 
+		static std::shared_ptr<Texture> CreateTextureArrayFromGUIDs(const std::vector<IGE::Assets::GUID>& guids, uint32_t maxWidth, uint32_t maxHeight, bool isRepeatable);
+
 		// New functions for 2D texture arrays
 		void CreateTextureArray(uint32_t width, uint32_t height, uint32_t layers, bool isBindless = false);
+
+
 		void SetLayerData(void* data, uint32_t layer);
 		void* GetData() const;
 
@@ -62,5 +76,6 @@ namespace Graphics {
 		uint32_t mTexHdl;
 		GLuint64 mBindlessHdl{};
 		bool mIsBindless{false};
+		TextureArrayUV mTexArrayUV;
 	};
 }	// namespace Graphics

@@ -26,11 +26,9 @@ namespace Graphics {
     class MaterialTable {
     public:
 
-        static void Init(uint32_t width, uint32_t height, uint32_t maxLayers);
-
         // Add a material to the table and return its index
         static uint32_t AddMaterial(std::shared_ptr<MaterialData>& material);
-        bool AddTextureToTextureArray(IGE::Assets::GUID guid, uint32_t layer);
+        //bool AddTextureToTextureArray(IGE::Assets::GUID guid, uint32_t layer);
         static uint32_t AddMaterialByGUID(IGE::Assets::GUID const& guid);
 
         // Retrieve material by index
@@ -40,7 +38,7 @@ namespace Graphics {
         static std::shared_ptr<MaterialData> GetMaterialByGUID(const IGE::Assets::GUID& guid);
 
         // Bind textures for all materials to the shader
-        static void ApplyMaterialTextures(std::shared_ptr<Graphics::Shader>& shader, size_t batchStart, size_t batchEnd);
+        //static void ApplyMaterialTextures(std::shared_ptr<Graphics::Shader>& shader, size_t batchStart, size_t batchEnd);
         static void ApplyMaterialTextures(std::shared_ptr<Graphics::Shader>& shader);
 
 
@@ -49,10 +47,12 @@ namespace Graphics {
         static std::shared_ptr<MaterialData> LoadMaterial(std::string const& fp);
 
         static void ClearMaterials();
+        static std::vector<IGE::Assets::GUID> GetAllTextureGUIDs();
 
     private:
-        static std::shared_ptr<Texture> mTextureArray;
+        //static std::shared_ptr<Texture> mTextureArray;
         static std::unordered_map<IGE::Assets::GUID, uint32_t> mGUIDToIndexMap;
         static std::vector<std::shared_ptr<MaterialData>> mMaterials;
     };
+
 }

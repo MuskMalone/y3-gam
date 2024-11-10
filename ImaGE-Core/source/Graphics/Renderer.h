@@ -20,7 +20,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/RenderPass/RenderPass.h>
 #include "Core/Components/Camera.h"
 #include "MeshSubmeshKeyHash.h"
-
+#include "ShaderStorageBuffer.h"
 
 namespace Component{
 	struct Camera;
@@ -141,8 +141,12 @@ namespace Graphics {
 		std::unordered_map<MeshSubmeshKey, std::shared_ptr<VertexBuffer>> instanceSubmeshBuffers;
 		//-------------------------------------------------------------------//
 
+		std::shared_ptr<ShaderStorageBuffer> ssbo;
+
 		IGE::Assets::GUID debugMeshSources[3];
 		IGE::Assets::GUID quadMeshSource;
+
+		std::shared_ptr<Texture> albedoTexArray;
 
 		FullscreenQuad screen;
 
@@ -192,6 +196,10 @@ namespace Graphics {
 		static IGE::Assets::GUID GetDebugMeshSource(size_t idx = 0);
 
 		static IGE::Assets::GUID GetQuadMeshSource();
+
+		static std::shared_ptr<Texture>GetTexArray();
+
+		static std::shared_ptr<ShaderStorageBuffer>GetSSBO();
 		
 
 		

@@ -208,7 +208,48 @@ namespace Graphics {
 		//	MaterialTable::AddMaterial(material);
 		//}
 
-		MaterialTable::SaveMaterials();
+		std::vector<IGE::Assets::GUID> textureGUIDs = MaterialTable::GetAllTextureGUIDs();
+
+		// Define maximum width, height, and repeatable as needed
+		uint32_t maxWidth = 1024;   // Example maximum width
+		uint32_t maxHeight = 1024;  // Example maximum height
+		bool isRepeatable = true;
+
+		mData.albedoTexArray = Texture::CreateTextureArrayFromGUIDs(textureGUIDs, maxWidth, maxHeight, isRepeatable);
+
+		struct TextureUV {
+			float min_u;
+			float min_v;
+			float max_u;
+			float max_v;
+			int layer;
+		};
+
+		std::vector<TextureUV> textureUVs;
+
+		// Populate with sample data
+		for (int i = 0; i < 10; ++i) { // Create 10 sample TextureUVs
+			TextureUV uv;
+			uv.min_u = 0.0f;                   // Start U coordinate
+			uv.min_v = 0.0f;                   // Start V coordinate
+			uv.max_u = 1.0f;                   // End U coordinate
+			uv.max_v = 1.0f;                   // End V coordinate
+			uv.layer = i;                      // Set the texture layer
+
+			textureUVs.push_back(uv);
+		}
+
+		GLuint ssbo;
+		glGenBuffers(1, &ssbo);
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo);
+		glBufferData(GL_SHADER_STORAGE_BUFFER, textureUVs.size() * sizeof(TextureUV), textureUVs.data(), GL_DYNAMIC_DRAW);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, ssbo); // Binding point 0
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo);
+		glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, textureUVs.size() * sizeof(TextureUV), textureUVs.data());
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+
 
 	}
 
@@ -396,6 +437,10 @@ namespace Graphics {
 			vtx.clr = clr;
 		}
 		++mData.quadBufferIndex;
+	}
+
+	std::shared_ptr<Texture> Renderer::GetTexArray(){
+		return std::shared_ptr<Texture>(mData.albedoTexArray);
 	}
 
 	void Renderer::SetTriangleBufferData(glm::vec3 const& pos, glm::vec4 const& clr) {

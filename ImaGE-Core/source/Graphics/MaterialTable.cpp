@@ -5,39 +5,40 @@
 #include "Serialization/Serializer.h"
 #include "Serialization/Deserializer.h"
 #include "Asset/AssetManager.h"
+#include "ShaderStorageBuffer.h"
 
 namespace Graphics {
-    std::shared_ptr<Texture> mTextureArray{};
+    //std::shared_ptr<Texture> mTextureArray{};
     std::unordered_map<IGE::Assets::GUID, uint32_t> MaterialTable::mGUIDToIndexMap;
     std::vector<std::shared_ptr<MaterialData>> MaterialTable::mMaterials;
-    void MaterialTable::Init(uint32_t width, uint32_t height, uint32_t maxLayers){
-        mTextureArray = std::make_shared<Texture>();
-        mTextureArray->CreateTextureArray(width, height, maxLayers);
-    }
+    //void MaterialTable::Init(uint32_t width, uint32_t height, uint32_t maxLayers){
+    //    mTextureArray = std::make_shared<Texture>();
+    //    mTextureArray->CreateTextureArray(width, height, maxLayers);
+    //}
     // Add a material to the table and return its index
     uint32_t Graphics::MaterialTable::AddMaterial(std::shared_ptr<Graphics::MaterialData>& material) {
         mMaterials.push_back(material);
         return static_cast<uint32_t>(mMaterials.size() - 1);
     }
 
-    bool MaterialTable::AddTextureToTextureArray(IGE::Assets::GUID guid, uint32_t layer) {
-        // Load texture data from the asset manager using the GUID
-        auto textureAsset = IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(guid);
-        if (!textureAsset) {
-            Debug::DebugLogger::GetInstance().LogError("Texture asset not found.");
-            return false;
-        }
+    //bool MaterialTable::AddTextureToTextureArray(IGE::Assets::GUID guid, uint32_t layer) {
+    //    // Load texture data from the asset manager using the GUID
+    //    auto textureAsset = IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(guid);
+    //    if (!textureAsset) {
+    //        Debug::DebugLogger::GetInstance().LogError("Texture asset not found.");
+    //        return false;
+    //    }
 
-        const auto& textureData = textureAsset->mTexture;
-        if (textureData) {
-            mTextureArray->SetLayerData(textureData, layer);
-            return true;
-        }
-        else {
-            Debug::DebugLogger::GetInstance().LogError("Failed to load texture data for layer.");
-            return false;
-        }
-    }
+    //    const auto& textureData = textureAsset->mTexture;
+    //    if (textureData) {
+    //        mTextureArray->SetLayerData(textureData, layer);
+    //        return true;
+    //    }
+    //    else {
+    //        Debug::DebugLogger::GetInstance().LogError("Failed to load texture data for layer.");
+    //        return false;
+    //    }
+    //}
 
     uint32_t MaterialTable::AddMaterialByGUID(IGE::Assets::GUID const& guid){
         // Check if the material already exists 
@@ -86,6 +87,14 @@ namespace Graphics {
     // Bind textures for all materials to the shader
 
     void Graphics::MaterialTable::ApplyMaterialTextures(std::shared_ptr<Shader>& shader) {
+#if ENABLE_BINDLESS_TEXTURES
+        //glActiveTexture(GL_TEXTURE0);
+        //glBindTexture(GL_TEXTURE_2D_ARRAY, Renderer::GetTexArray()->GetTexHdl());
+
+        // Set the texture array binding as a uniform
+        shader->SetUniform("u_AlbedoTextureArray", Renderer::GetTexArray()); // Texture unit 0
+
+#else
         size_t size = mMaterials.size();
         if (size <= 1) return;  // Exit if there's only the default material
 
@@ -125,6 +134,7 @@ namespace Graphics {
         // Set texture unit arrays in the shader; any unused slots will point to default textures
         shader->SetUniform("u_AlbedoMaps", albedoTextureUnits.data(), static_cast<unsigned>(albedoTextureUnits.size()));
         shader->SetUniform("u_NormalMaps", normalTextureUnits.data(), static_cast<unsigned>(normalTextureUnits.size()));
+#endif
     }
     IGE::Assets::GUID MaterialTable::CreateAndImportMatFile(const std::string& name){
         // Step 1: Create a new material with default properties
@@ -239,6 +249,27 @@ namespace Graphics {
         return material;
     }
 
+    std::vector<IGE::Assets::GUID> MaterialTable::GetAllTextureGUIDs() {
+        std::unordered_set<IGE::Assets::GUID> uniqueGUIDs;
+
+        for (const auto& material : mMaterials) {
+            if (material->GetAlbedoMap() != IGE::Assets::GUID{}) {
+                uniqueGUIDs.insert(material->GetAlbedoMap());
+            }
+            //if (material->GetNormalMap() != IGE::Assets::GUID{}) {
+            //    uniqueGUIDs.insert(material->GetNormalMap());
+            //}
+            //if (material->GetMetalnessMap() != IGE::Assets::GUID{}) {
+            //    uniqueGUIDs.insert(material->GetMetalnessMap());
+            //}
+            //if (material->GetRoughnessMap() != IGE::Assets::GUID{}) {
+            //    uniqueGUIDs.insert(material->GetRoughnessMap());
+            //}
+        }
+
+        // Convert set to vector and return
+        return std::vector<IGE::Assets::GUID>(uniqueGUIDs.begin(), uniqueGUIDs.end());
+    }
     void MaterialTable::ClearMaterials(){
         if (mMaterials.size() > 1) {
             mMaterials.erase(mMaterials.begin() + 1, mMaterials.end());

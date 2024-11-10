@@ -1,8 +1,20 @@
 #version 460 core
-//#extension GL_ARB_bindless_texture : require
+
+struct TextureUV {
+    float min_u;
+    float min_v;
+    float max_u;
+    float max_v;
+    int layer;
+};
+
+layout(std430, binding = 0) buffer TextureUVBuffer {
+    TextureUV textureUVs[]; // Array of TextureUV structs
+};
 
 layout(location = 0) out vec4 fragColor;
 layout(location = 1) out int entityID;
+
 
 in vec4 v_Color;
 in vec2 v_TexCoord;
@@ -36,6 +48,7 @@ uniform float u_AO;
 in flat int v_MaterialIdx;
 
 uniform sampler2D[16] u_AlbedoMaps;
+uniform sampler2DArray u_AlbedoTextureArray;
 //uniform sampler2D[16] u_NormalMaps;
 
 //lighting parameters
@@ -146,6 +159,7 @@ void main(){
     //change transparency here
     float alpha = u_Transparency;
 	fragColor = vec4(color, alpha) * v_Color;
+
 }
 
 vec3 fresnelSchlick(float cosTheta, vec3 F0)

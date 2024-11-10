@@ -3,6 +3,7 @@
 #include "Utils.h"
 #include <Asset/IGEAssets.h>
 #include <DirectXTex.h>
+
 //TEMP?? 
 
 namespace Graphics {
@@ -98,6 +99,58 @@ namespace Graphics {
 			InitBindlessTexture();
 		}
 
+	}
+
+	Texture::Texture(const std::vector<IGE::Assets::GUID>& guids, uint32_t maxWidth, uint32_t maxHeight, bool isRepeatable){
+		// Initialize the texture array with DSA
+		glCreateTextures(GL_TEXTURE_2D_ARRAY, 1, &mTexHdl);
+		glTextureStorage3D(mTexHdl, 1, GL_RGBA8, maxWidth, maxHeight, guids.size());
+
+		// Storage for transparent "clearing" data
+		std::vector<uint32_t> clearData(maxWidth * maxHeight, 0);
+
+		// Prepare vector for SSBO data
+		std::vector<TextureArrayUV> textureUVs(guids.size());
+
+		for (uint32_t i = 0; i < guids.size(); ++i) {
+			auto textureAsset = IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(guids[i]);
+			if (!textureAsset) continue;
+
+			auto& texture = textureAsset->mTexture;
+			uint32_t texWidth = texture.GetWidth();
+			uint32_t texHeight = texture.GetHeight();
+
+			assert(texWidth <= maxWidth && texHeight <= maxHeight);
+
+			// Clear the layer and load actual texture data
+			glTextureSubImage3D(mTexHdl, 0, 0, 0, i, maxWidth, maxHeight, 1, GL_RGBA, GL_UNSIGNED_BYTE, clearData.data());
+			glTextureSubImage3D(mTexHdl, 0, 0, 0, i, texWidth, texHeight, 1, GL_RGBA, GL_UNSIGNED_BYTE, texture.GetData());
+
+			// Store UV information
+			textureUVs[i] = {
+				0.0f,
+				0.0f,
+				texWidth / static_cast<float>(maxWidth),
+				texHeight / static_cast<float>(maxHeight),
+				static_cast<int>(i)
+			};
+
+			mTexArrayUV = textureUVs[i];
+		}
+
+		// Set wrapping and filtering parameters
+		glTextureParameteri(mTexHdl, GL_TEXTURE_WRAP_S, isRepeatable ? GL_REPEAT : GL_CLAMP_TO_EDGE);
+		glTextureParameteri(mTexHdl, GL_TEXTURE_WRAP_T, isRepeatable ? GL_REPEAT : GL_CLAMP_TO_EDGE);
+		glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		// Create and populate the SSBO with UV data
+		GLuint ssbo;
+		glGenBuffers(1, &ssbo);
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo);
+		glBufferData(GL_SHADER_STORAGE_BUFFER, textureUVs.size() * sizeof(TextureArrayUV), textureUVs.data(), GL_STATIC_DRAW);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, ssbo); // Binding point 0; adjust as needed
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 	}
 
 	/*  _________________________________________________________________________ */
@@ -253,6 +306,60 @@ namespace Graphics {
 	//	//if (mIsBindless) return;
 	//	GLCALL(glBindTextureUnit(texUnit, 0));
 	//}
+	std::shared_ptr<Texture> Texture::CreateTextureArrayFromGUIDs(const std::vector<IGE::Assets::GUID>& guids, uint32_t maxWidth, uint32_t maxHeight, bool isRepeatable) {
+		return make_shared<Texture>(guids, maxWidth, maxHeight, isRepeatable);
+		//// Initialize the texture array with DSA
+		//glCreateTextures(GL_TEXTURE_2D_ARRAY, 1, &mTexHdl);
+		//glTextureStorage3D(mTexHdl, 1, GL_RGBA8, maxWidth, maxHeight, guids.size());
+
+		//// Storage for transparent "clearing" data
+		//std::vector<uint32_t> clearData(maxWidth * maxHeight, 0);
+
+		//// Prepare vector for SSBO data
+		//std::vector<TextureArrayUV> textureUVs(guids.size());
+
+		//for (uint32_t i = 0; i < guids.size(); ++i) {
+		//	auto textureAsset = IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(guids[i]);
+		//	if (!textureAsset) continue;
+
+		//	auto& texture = textureAsset->mTexture;
+		//	uint32_t texWidth = texture.GetWidth();
+		//	uint32_t texHeight = texture.GetHeight();
+
+		//	assert(texWidth <= maxWidth && texHeight <= maxHeight);
+
+		//	// Clear the layer and load actual texture data
+		//	glTextureSubImage3D(mTexHdl, 0, 0, 0, i, maxWidth, maxHeight, 1, GL_RGBA, GL_UNSIGNED_BYTE, clearData.data());
+		//	glTextureSubImage3D(mTexHdl, 0, 0, 0, i, texWidth, texHeight, 1, GL_RGBA, GL_UNSIGNED_BYTE, texture.GetData());
+
+		//	// Store UV information
+		//	textureUVs[i] = {
+		//		0.0f,
+		//		0.0f,
+		//		texWidth / static_cast<float>(maxWidth),
+		//		texHeight / static_cast<float>(maxHeight),
+		//		static_cast<int>(i)
+		//	};
+
+		//	mTexArrayUV = textureUVs[i];
+		//}
+
+		//// Set wrapping and filtering parameters
+		//glTextureParameteri(mTexHdl, GL_TEXTURE_WRAP_S, isRepeatable ? GL_REPEAT : GL_CLAMP_TO_EDGE);
+		//glTextureParameteri(mTexHdl, GL_TEXTURE_WRAP_T, isRepeatable ? GL_REPEAT : GL_CLAMP_TO_EDGE);
+		//glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		//glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		//// Create and populate the SSBO with UV data
+		//GLuint ssbo;
+		//glGenBuffers(1, &ssbo);
+		//glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo);
+		//glBufferData(GL_SHADER_STORAGE_BUFFER, textureUVs.size() * sizeof(TextureArrayUV), textureUVs.data(), GL_STATIC_DRAW);
+		//glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, ssbo); // Binding point 0; adjust as needed
+		//glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+
+		//// Store or keep track of `ssbo` as needed in your class
+	}
 
 	void Texture::CreateTextureArray(uint32_t width, uint32_t height, uint32_t layers, bool isBindless){
 		mWidth = width;
@@ -307,20 +414,26 @@ namespace Graphics {
 	}
 
 	void Texture::InitBindlessTexture(){
+#if ENABLE_BINDLESS_TEXTURES
 		if (GLAD_GL_ARB_bindless_texture) {
 			mBindlessHdl = glGetTextureHandleARB(mTexHdl);
 			GLCALL(glMakeTextureHandleResidentARB(mBindlessHdl));
+			mIsBindless = true;
 		}
 		else {
 			Debug::DebugLogger::GetInstance().LogError("Bindless textures are not supported on this system.");
-			std::cout << "NOT SUPPORTED" << std::endl;
+			std::cout << "BINDLESS TEXTURES NOT SUPPORTED" << std::endl;
+			mIsBindless = false;
 		}
+#else
+		Debug::DebugLogger::GetInstance().LogInfo("Bindless textures disabled via macro.");
+#endif
 	}
 
 	IGE::Assets::GUID Texture::Create(std::string const& path, bool isBindless) {
 		//return std::make_shared<Texture>(path, isBindless);
 		return IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(path);
-	}
+	}	
 
 	uint32_t Texture::BindToNextAvailUnit(uint32_t texture) {
 		GLCALL(glBindTextureUnit(sNextAvailTextureUnit, texture));
