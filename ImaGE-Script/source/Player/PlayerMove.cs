@@ -47,6 +47,7 @@ public class  PlayerMove : Entity
 
   // New flag to control whether the player can look around
   public bool canLook = true;
+  public bool canMove = true;
 
   public Vector3 velocity = new Vector3();
   bool isGrounded = true;
@@ -68,11 +69,13 @@ public class  PlayerMove : Entity
   {
     if(InternalCalls.IsKeyTriggered(KeyCode.A))
     {
-      //SetActive(false);
+      //Console.WriteLine(GetComponent<Transform>().GetChild(0).GetChild(0).worldPosition);
     }
 
-    ProcessLook();
-    forPlayerMovement();
+    if(canLook) 
+      ProcessLook();
+    if(canMove)
+      forPlayerMovement();
 
 
   }

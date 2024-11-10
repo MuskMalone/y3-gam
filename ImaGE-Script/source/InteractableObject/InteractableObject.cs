@@ -5,12 +5,13 @@
 //using System.Threading.Tasks;
 //using System.Numerics;
 //using IGE.Utils;
-//using System.Drawing;      // For Bitmap (or use other graphics libraries)
+//
 //using System.Drawing.Imaging;
 
 //public class InteractableObject : Entity
 //{
 //  AudioManager audioManager;
+
 
 //  public bool playerInRange;
 

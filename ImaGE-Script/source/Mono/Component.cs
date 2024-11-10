@@ -6,12 +6,18 @@ using System.Threading.Tasks;
 using System.Numerics;
 using IGE.Utils;
 
+using System.Drawing.Imaging;
 
-  
-  public class Component
+
+public class Component
   {
     // Base class for all components
     public Entity entity { get; internal set; }
+
+    public bool CompareTag(string s)
+    {
+      return (InternalCalls.GetTag(entity.mEntityID) == s);
+    }
   }
 
 
@@ -32,7 +38,19 @@ using IGE.Utils;
       }
     }
 
-    public Quaternion rotation
+  public Vector3 worldPosition
+  {
+    get
+    {
+      return InternalCalls.GetWorldPosition(entity.mEntityID); // Push update to C++ side
+    }
+    set
+    {
+      InternalCalls.SetWorldPosition(entity.mEntityID, ref value); // Push update to C++ side
+    }
+  }
+
+  public Quaternion rotation
     {
       get
       {
@@ -87,6 +105,61 @@ using IGE.Utils;
     }
 
 
+  public Transform[] children
+  {
+    get
+    {
+      uint[] allChildren = InternalCalls.GetAllChildren(entity.mEntityID);
+      Transform[] transforms = new Transform[allChildren.Length];
+      for(int i=0;i<allChildren.Count();++i)
+      {
+        Entity temp = new Entity();
+        temp.mEntityID = allChildren[i];
+        transforms[i] = temp.GetComponent<Transform>();
+      }
+
+      return transforms;
+
+    }
+
+  }
+
+
+    public Transform GetChild(int pos)
+    {
+     Transform child =  null;
+      uint[] allChildren = InternalCalls.GetAllChildren(entity.mEntityID);
+      if (pos >= allChildren.Length)
+        Debug.LogError("You r trying to get a child transform at an invalid pos");
+      else
+        {
+          Entity temp = new Entity();
+          temp.mEntityID = allChildren[pos];
+         child = temp.GetComponent<Transform>();
+        }
+
+
+    return child;
+
+  }
+
+
+  public Transform Find(string s)
+    {
+        uint childID = uint.MaxValue;
+        childID = InternalCalls.FindChildByTag(entity.mEntityID, s); 
+        if (childID != uint.MaxValue)
+        {
+          Entity child = new Entity();
+          child.mEntityID = childID;
+          return (child.GetComponent<Transform>());
+        }
+        
+        Debug.LogError("Unable to find child: " + s + " inside parent: " + InternalCalls.GetTag(entity.mEntityID));
+        return null;
+
+    }
+
 
   public Vector3 TransformDirection(Vector3 direction)
     {
@@ -128,18 +201,53 @@ using IGE.Utils;
       }
     }
 
+  public class Text : Component
+  {
+    public string text
+    {
+      get
+      {
+        return InternalCalls.GetText(entity.mEntityID); // Push update to C++ side
+      }
+    }
+  }
 
-//public class Tag : Component
-//{
+public class Material : Component
+  {
 
-//  public string tag
-//  {
-//    get
-//    {
-//      return InternalCalls.GetTag(entity.mEntityID); // Push update to C++ side
-//    }
-//  }
-//}
+  }
+
+
+  public class Renderer : Component
+  {
+
+  }
+
+  public class Collider : Component
+  {
+
+  }
+
+
+  public class Image: Component
+  {
+  public Color color
+  {
+    get
+    {
+      Vector4 v = InternalCalls.GetImageColor(entity.mEntityID);
+      return new Color(v.W, v.X, v.Y, v.Z);
+    }
+    set
+    {
+       InternalCalls.SetImageColor(entity.mEntityID, new Vector4(value.r, value.g, value.b, value.a));
+    }
+  }
+}
+
+  
+
+
 
 
 

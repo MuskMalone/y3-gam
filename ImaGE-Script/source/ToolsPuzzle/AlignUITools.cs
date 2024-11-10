@@ -7,55 +7,55 @@
 //using IGE.Utils;
 //public class AlignUITools : Entity
 //{
-//    private PictureAlignTools alignScript;  
-//    private TextMeshProUGUI textComponent;  
-//    private bool isAlignScriptDestroyed = false;  
+//  private PictureAlignTools alignScript;
+//  private TextMeshProUGUI textComponent;
+//  private bool isAlignScriptDestroyed = false;
 
-//    void Start()
+//  void Start()
+//  {
+//    alignScript = FindObjectOfType<PictureAlignTools>();
+
+//    textComponent = GetComponent<TextMeshProUGUI>();
+
+//    textComponent.enabled = false;
+//  }
+
+//  void Update()
+//  {
+//    if (isAlignScriptDestroyed || alignScript == null)
 //    {
-//        alignScript = FindObjectOfType<PictureAlignTools>();
 
-//        textComponent = GetComponent<TextMeshProUGUI>();
-
-//        textComponent.enabled = false;
+//      textComponent.enabled = false;
+//      return;
 //    }
 
-//    void Update()
+//    if (alignScript != null)
 //    {
-//        if (isAlignScriptDestroyed || alignScript == null)
-//        {
 
-//            textComponent.enabled = false;
-//            return;
-//        }
+//      if (alignScript.isFrozen)
+//      {
+//        textComponent.enabled = false;
+//      }
+//      else
+//      {
 
-//        if (alignScript != null)
+//        if (alignScript.alignCheck)
 //        {
- 
-//            if (alignScript.isFrozen)
-//            {
-//                textComponent.enabled = false;
-//            }
-//            else
-//            {
- 
-//                if (alignScript.alignCheck)
-//                {
-//                    textComponent.enabled = true;
-//                }
-//                else
-//                {
-//                    textComponent.enabled = false;
-//                }
-//            }
+//          textComponent.enabled = true;
 //        }
 //        else
 //        {
-//            Debug.LogError("alignScript reference is missing.");
-
-//            isAlignScriptDestroyed = true;
-
-//            textComponent.enabled = false;
+//          textComponent.enabled = false;
 //        }
+//      }
 //    }
+//    else
+//    {
+//      Debug.LogError("alignScript reference is missing.");
+
+//      isAlignScriptDestroyed = true;
+
+//      textComponent.enabled = false;
+//    }
+//  }
 //}

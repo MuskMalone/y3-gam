@@ -16,14 +16,11 @@
 //  //TextMeshProUGUI interaction_text;
 //  public Vector3 textOffset = new Vector3(0, -80, 0);
 
-//  private CleanWindows cleanWindows;
 
 //  private void Start()
 //  {
 //    onTarget = false;
 //    //interaction_text = Cursor_text.GetComponent<TextMeshProUGUI>();
-//    cleanWindows = FindObjectOfType<CleanWindows>();
-//    if (cleanWindows == null) Debug.LogError("cleanWindows component not found!");
 //  }
 
 //  private void Awake()
@@ -53,9 +50,7 @@
 //      var selectionTransform = hit.transform;
 //      InteractableObject interactable = selectionTransform.GetComponent<InteractableObject>();
 //      NoteInteraction noteInteractable = selectionTransform.GetComponent<NoteInteraction>();
-//      watercloth waterClothInteractable = selectionTransform.GetComponent<watercloth>();
-//      CleanWindows cleanWindowsInteractable = selectionTransform.GetComponent<CleanWindows>();
-
+     
 //      if (interactable && interactable.playerInRange)
 //      {
 //        onTarget = true;

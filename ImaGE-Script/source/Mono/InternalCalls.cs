@@ -67,17 +67,13 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetVelocity(uint ID);
 
-    //[MethodImplAttribute(MethodImplOptions.InternalCall)]
-    //internal extern static void GetRotation(ref uint entityHandle, ref float rotation);
-
-    //[MethodImplAttribute(MethodImplOptions.InternalCall)]
-    //internal extern static void SetRotation(ref uint entityHandle, ref float rotation);
-
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static uint[] GetAllChildren(uint ID);
     #endregion
 
 
     #region Input
-        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static bool IsKeyTriggered(KeyCode key);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -126,7 +122,6 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static string GetTag(uint EntityID);
 
-
     // avoid using this, prefer SetPosition (local)
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetActive(uint entityHandle, bool active);
@@ -136,8 +131,24 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void DestroyScript(Entity obj, uint EntityID);
 
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static uint FindChildByTag(uint EntityID, string s);
+    #endregion
 
-        #endregion
+
+    #region Text Component
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static string GetText(uint EntityID);
+    #endregion
+
+    #region Color Component
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static Vector4 GetImageColor(uint EntityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetImageColor(uint EntityID, Vector4 val);
+    #endregion
 
     #region Utility
 
