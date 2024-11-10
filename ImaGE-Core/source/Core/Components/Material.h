@@ -18,7 +18,7 @@ namespace Component {
 
         Material(IGE::Assets::GUID guid)
             : materialGUID(guid),
-              matIdx(guid.IsValid() ? Graphics::MaterialTable::AddMaterialByGUID(guid) : 0)
+            matIdx(guid.IsValid() ? Graphics::MaterialTable::AddMaterialByGUID(guid) : 0)
         {}
 
         // Clear method to reset the component to a default material
