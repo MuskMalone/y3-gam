@@ -67,7 +67,13 @@ namespace Graphics {
         }
     }
 
-    // Retrieve material by index
+    uint32_t MaterialTable::GetMaterialIndexByGUID(const IGE::Assets::GUID& guid) {
+      auto it = mGUIDToIndexMap.find(guid);
+      if (it != mGUIDToIndexMap.end()) {
+        return it->second;
+      }
+      return static_cast<uint32_t>(0);
+    }
 
     std::shared_ptr<MaterialData> MaterialTable::GetMaterial(uint32_t index = 0) {
         return mMaterials[index];

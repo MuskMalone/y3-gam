@@ -83,6 +83,12 @@ namespace Graphics {
         void SetOffset(const glm::vec2& offset) { mOffset = offset; }
 
         // Texture Getters and Setters
+        bool IsDefaultAlbedoMap() const { return !mAlbedoMap.IsValid(); }
+        bool IsDefaultNormalMap() const { return !mNormalMap.IsValid(); }
+        bool IsDefaultMetalnessMap() const { return !mMetalnessMap.IsValid(); }
+        bool IsDefaultRoughnessMap() const { return !mRoughnessMap.IsValid(); }
+
+
         IGE::Assets::GUID GetAlbedoMap() const;
         void SetAlbedoMap(IGE::Assets::GUID const& texture);
 
