@@ -101,7 +101,7 @@ namespace Graphics {
         center /= 8.f;
 
         // get light view mtx
-        glm::mat4 const lightView{ glm::lookAt(center - lightDir, center, glm::vec3(0.f, 1.f, 0.f)) };
+        glm::mat4 const lightView{ glm::lookAt(-lightDir, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f)) };
 
         // find the min and max extents of the frustrum in light space
         glm::vec3 min{ FLT_MAX }, max{ -FLT_MAX };
