@@ -10,7 +10,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
 #include "GUI/GUIWindow.h"
-#include "GUI/GUIManager.h"
+#include "GUI/GUIVault.h"
+#include "GUI/Styles/Styler.h"
 
 #include <imgui/imgui.h>
 #include <ImGui/imgui_internal.h>
@@ -22,6 +23,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Events/EventCallback.h>
 #include <Core/Components/Components.h>
 #include <Physics/PhysicsSystem.h>
+
+namespace std::filesystem { class path; }
 
 namespace GUI {
   class Inspector : public GUIWindow {
@@ -108,6 +111,12 @@ namespace GUI {
     static inline constexpr float ITEM_SPACING{ 0 };
     static inline constexpr float CELL_PADDING{ 1 };
 
+#pragma region FileInspector
+    void RunFileInspector();
+
+    void MaterialInspector(std::filesystem::path const& selectedFile);
+#pragma endregion
+
     /*!*********************************************************************
     \brief
       This function handles the corresponding events the Inspector
@@ -179,6 +188,17 @@ namespace GUI {
       The name of the property
     ************************************************************************/
     void NextRowTable(const char* labelName) const;
+
+    /*!*********************************************************************
+    \brief
+      Calculates the input width of the table row based on the current
+      content region after subtracting the label
+    \param padding
+      The extra space to subtract
+    \return
+      The remaining width of the row
+    ************************************************************************/
+    float CalcInputWidth(float padding) const;
   };
 #include "Inspector.tpp"
 } // namespace GUI

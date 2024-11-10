@@ -19,6 +19,11 @@ namespace Graphics{
 		static void SetClearColor(const glm::vec4& color);
 		static void Clear();
 
+		static void DrawIndicesInstancedBaseVertex(std::shared_ptr<VertexArray> const& vao,
+												   uint32_t idxCount,
+												   uint32_t instanceCount,
+												   uint32_t indexOffset,
+												   int baseVertex);;
 		static void DrawIndicesInstanced(std::shared_ptr<VertexArray> const& vao, unsigned int idxCount, unsigned int instanceCount);
 		static void DrawIndices(std::shared_ptr<VertexArray> const& vao, unsigned int idxCount);
 		static void DrawTriangles(std::shared_ptr<VertexArray> const& vao, unsigned int vtxCount);

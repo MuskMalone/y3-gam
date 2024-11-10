@@ -307,8 +307,9 @@ namespace Mono
 
 		static void MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec);
 
-
 		static bool IsGrounded(ECS::Entity::EntityID entity);
+
+		static ECS::Entity::EntityID Raycast(glm::vec3 start, glm::vec3 end);
 
 		static float GetDeltaTime();
 

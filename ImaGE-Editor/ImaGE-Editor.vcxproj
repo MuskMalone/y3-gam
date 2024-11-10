@@ -91,6 +91,7 @@
       <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus /bigobj %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -125,6 +126,7 @@ copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Debug\bin\Debug\rttr_co
       <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus /bigobj %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -161,6 +163,7 @@ copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Release\bin\Release\rtt
       <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus /bigobj %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -193,6 +196,7 @@ copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Release\bin\Release\rtt
     <ClInclude Include="source\GUI\Dockable\SceneHierarchy.h" />
     <ClInclude Include="source\GUI\Dockable\Viewport.h" />
     <ClInclude Include="source\GUI\GUIManager.h" />
+    <ClInclude Include="source\GUI\GUIVault.h" />
     <ClInclude Include="source\GUI\GUIWindow.h" />
     <ClInclude Include="source\GUI\Helpers\AssetHelpers.h" />
     <ClInclude Include="source\GUI\Helpers\AssetPayload.h" />
@@ -211,8 +215,9 @@ copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Release\bin\Release\rtt
     <ClCompile Include="source\GUI\Dockable\Console.cpp" />
     <ClCompile Include="source\GUI\Dockable\Debugging\PerformanceWindow.cpp" />
     <ClCompile Include="source\GUI\Dockable\Debugging\RenderPassViewer.cpp" />
+    <ClCompile Include="source\GUI\Dockable\FileInspector.cpp" />
     <ClCompile Include="source\GUI\Dockable\GameViewport.cpp" />
-    <ClCompile Include="source\GUI\Dockable\Inspector.cpp" />
+    <ClCompile Include="source\GUI\Dockable\EntityInspector.cpp" />
     <ClCompile Include="source\GUI\Dockable\Layers.cpp" />
     <ClCompile Include="source\GUI\Dockable\PostProcessingSettings.cpp" />
     <ClCompile Include="source\GUI\Dockable\SceneHierarchy.cpp" />

@@ -13,7 +13,7 @@
 #include "SceneHierarchy.h"
 #include <imgui/imgui.h>
 #include <Core/Components/Tag.h>
-#include <GUI/GUIManager.h>
+#include <GUI/GUIVault.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
 #include <Events/EventManager.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
@@ -123,20 +123,20 @@ namespace GUI
       RecurseDownHierarchy(e);
     }
 
-    if (ImGui::IsKeyPressed(ImGuiKey_Delete) && GUIManager::GetSelectedEntity() && !mLockControls) {
+    if (ImGui::IsKeyPressed(ImGuiKey_Delete) && GUIVault::GetSelectedEntity() && !mLockControls) {
       ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
-      auto entities{ GUIManager::GetSelectedEntities() };
+      auto entities{ GUIVault::GetSelectedEntities() };
       if (!entities.empty()) {
         for (ECS::Entity e : entities) {
           em.RemoveEntity(e);
         }
-        GUIManager::ClearSelectedEntities();
+        GUIVault::ClearSelectedEntities();
       }
       else {
-        em.RemoveEntity(GUIManager::GetSelectedEntity());
+        em.RemoveEntity(GUIVault::GetSelectedEntity());
       }
 
-      GUIManager::SetSelectedEntity(ECS::Entity());
+      GUIVault::SetSelectedEntity(ECS::Entity());
       QUEUE_EVENT(Events::SceneModifiedEvent);
     }
 
@@ -210,7 +210,7 @@ namespace GUI
 
   void SceneHierarchy::RecurseDownHierarchy(ECS::Entity entity)
   {
-    bool const isCurrentEntity{ GUIManager::GetSelectedEntity() == entity || GUIManager::IsEntitySelected(entity) },
+    bool const isCurrentEntity{ GUIVault::GetSelectedEntity() == entity || GUIVault::IsEntitySelected(entity) },
       isEditMode{isCurrentEntity && sEditNameMode};
     // set the flag accordingly
     ImGuiTreeNodeFlags treeFlag{ ImGuiTreeNodeFlags_SpanFullWidth };
@@ -320,38 +320,38 @@ namespace GUI
       sFirstEnterEditMode = true;
     }
     else if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-      if (GUIManager::GetSelectedEntity() == entity && !sCtrlHeld) {
+      if (GUIVault::GetSelectedEntity() == entity && !sCtrlHeld) {
         sEntityDoubleClicked = true;
         sLMouseReleased = false;
       }
       else {
         if (sCtrlHeld) {
-          ECS::Entity const curr{ GUIManager::GetSelectedEntity() };
-          if (GUIManager::GetSelectedEntities().empty() && curr) {
-            GUIManager::AddSelectedEntity(curr);
+          ECS::Entity const curr{ GUIVault::GetSelectedEntity() };
+          if (GUIVault::GetSelectedEntities().empty() && curr) {
+            GUIVault::AddSelectedEntity(curr);
           }
           
-          if (GUIManager::IsEntitySelected(entity)) {
-            GUIManager::RemoveSelectedEntity(entity);
-            if (GUIManager::GetSelectedEntities().empty()) {
-              GUIManager::SetSelectedEntity({});
+          if (GUIVault::IsEntitySelected(entity)) {
+            GUIVault::RemoveSelectedEntity(entity);
+            if (GUIVault::GetSelectedEntities().empty()) {
+              GUIVault::SetSelectedEntity({});
             }
             else {
-              GUIManager::SetSelectedEntity(*GUIManager::GetSelectedEntities().begin());
+              GUIVault::SetSelectedEntity(*GUIVault::GetSelectedEntities().begin());
             }
           }
           else {
-            GUIManager::AddSelectedEntity(entity);
-            GUIManager::SetSelectedEntity(entity);
+            GUIVault::AddSelectedEntity(entity);
+            GUIVault::SetSelectedEntity(entity);
           }
         }
         else {
           if (sWasCtrlHeld) {
-            GUIManager::ClearSelectedEntities();
+            GUIVault::ClearSelectedEntities();
             sWasCtrlHeld = false;
           }
 
-          GUIManager::SetSelectedEntity(entity);
+          GUIVault::SetSelectedEntity(entity);
         }
       }
     }
@@ -369,7 +369,7 @@ namespace GUI
     {
       if (ImGui::Selectable("Create Entity")) {
         ECS::Entity const newEntity{ CreateNewEntity() };
-        GUIManager::SetSelectedEntity(newEntity);
+        GUIVault::SetSelectedEntity(newEntity);
         modified = true;
       }
 
@@ -394,7 +394,7 @@ namespace GUI
       if (ImGui::Selectable("Create Entity")) {
         ECS::Entity const newEntity{ CreateNewEntity() };
         mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
-        GUIManager::SetSelectedEntity(newEntity);
+        GUIVault::SetSelectedEntity(newEntity);
         modified = true;
       }
 
@@ -412,7 +412,7 @@ namespace GUI
         ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
         ECS::Entity newEntity{ Reflection::ObjectFactory::GetInstance().CloneObject(mRightClickedEntity,
           em.HasParent(mRightClickedEntity) ? em.GetParentEntity(mRightClickedEntity) : ECS::Entity()) };
-        GUIManager::SetSelectedEntity(newEntity);
+        GUIVault::SetSelectedEntity(newEntity);
       }
 
       if (mEditingPrefab) { ImGui::BeginDisabled(); }

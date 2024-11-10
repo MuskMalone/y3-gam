@@ -16,7 +16,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GUI/Helpers/AssetHelpers.h>
 #include <filesystem>
 #include <Prefabs/PrefabManager.h>
-#include "GUI/GUIManager.h"
+#include "GUI/GUIVault.h"
 
 namespace GUI
 {
@@ -95,7 +95,7 @@ namespace GUI
       if (ImGui::BeginMenu("Options"))
       {
         if (ImGui::BeginMenu("Theme")) {
-          GUI::Styler& styler{ GUIManager::GetStyler() };
+          GUI::Styler& styler{ GUIVault::GetStyler() };
           for (GUI::CustomTheme i{}; i < GUI::CustomTheme::NUM_ITEMS; ++i) {
             bool const currentlyActive{ (i == styler.GetCurrentTheme()) ? true : false };
 

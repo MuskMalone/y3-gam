@@ -39,7 +39,7 @@ namespace Graphics {
             }
 
             // If no "MainCamera" tag is found, default to the camera at activeCameraIndex
-            return cameras[activeCameraIndex];
+            return cameras.begin()[activeCameraIndex];
         }
 
         Component::Camera& GetActiveCameraComponent()  {
