@@ -67,7 +67,7 @@ public class PlayerFootsteps : Entity
         // Raycast downward to detect the ground surface
         Vector3 position = InternalCalls.GetPosition(player.mEntityID);
         Vector3 scale = InternalCalls.GetScale(player.mEntityID);
-        uint entityHit = InternalCalls.Raycast(position, position + (new Vector3(0, -2, 0)));
+        uint entityHit = InternalCalls.Raycast(position, position + (new Vector3(0, -200, 0)));
         Debug.Log($"position {position.X} {position.Y} {position.Z}");
         if (entityHit != 0)
         {

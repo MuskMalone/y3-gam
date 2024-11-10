@@ -15,8 +15,8 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
-                            "y": 0.5,
+                            "x": -0.0000057220458984375,
+                            "y": 0.4000000059604645,
                             "z": 0.0
                         },
                         "scale": {
@@ -36,13 +36,13 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 18.875669479370118,
-                            "y": 4.0,
+                            "x": 18.87566375732422,
+                            "y": 8.881999969482422,
                             "z": 13.442559242248536
                         },
                         "worldScale": {
                             "x": 1.0,
-                            "y": 1.0,
+                            "y": 6.599999904632568,
                             "z": 1.0
                         },
                         "worldRot": {
@@ -62,8 +62,8 @@
                     "Camera": {
                         "projType": "PERSP",
                         "position": {
-                            "x": 18.875669479370118,
-                            "y": 4.0,
+                            "x": 18.87566375732422,
+                            "y": 8.881999969482422,
                             "z": 13.442559242248536
                         },
                         "yaw": 0.0,
@@ -138,7 +138,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 6266963796104628627
+                            "ID": 15347101388309217167
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -197,96 +197,18 @@
             ]
         },
         {
-            "ID": 2,
-            "Parent": 60,
-            "Child Entities": [],
-            "isActive": true,
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Test Light",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -1.672358512878418,
-                            "y": 5.786128997802734,
-                            "z": -1.9028644561767579
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": -3.025454020644247e-8,
-                            "y": -0.7217601537704468,
-                            "z": -0.6921432018280029,
-                            "w": 3.154913841285634e-8
-                        },
-                        "eulerAngles": {
-                            "x": 92.39999389648438,
-                            "y": -0.000005008955668017734,
-                            "z": 180.0
-                        },
-                        "worldPos": {
-                            "x": -1.672358512878418,
-                            "y": 5.786128997802734,
-                            "z": -1.9028644561767579
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": -3.025454020644247e-8,
-                            "y": -0.7217601537704468,
-                            "z": -0.6921432018280029,
-                            "w": 3.154913841285634e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Light": {
-                        "lightType": "SPOTLIGHT",
-                        "color": {
-                            "x": 1.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "intensity": 2.0,
-                        "innerAngle": 15.0,
-                        "outerAngle": 360.0,
-                        "range": 33.5,
-                        "castShadows": false,
-                        "bias": 0.004999999888241291,
-                        "softness": 1,
-                        "nearPlaneMultiplier": 10.0
-                    }
-                }
-            ]
-        },
-        {
             "ID": 6,
             "Parent": null,
             "Child Entities": [
                 98,
                 116,
+                171,
                 1048580,
                 1048754,
                 2097375,
                 3145733,
                 3145784,
-                3145924,
-                5243048
+                3145924
             ],
             "isActive": false,
             "Components": [
@@ -486,6 +408,84 @@
                 {
                     "Layer": {
                         "layerName": "Puzzle"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 12,
+            "Parent": 60,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Garden Light Spot",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 68.80000305175781,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": -0.7071067690849304,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": -90.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 68.80000305175781,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": -0.7071067690849304,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "SPOTLIGHT",
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "intensity": 10.0,
+                        "innerAngle": 7.0,
+                        "outerAngle": 360.0,
+                        "range": 100.0,
+                        "castShadows": false,
+                        "bias": 0.004999999888241291,
+                        "softness": 1,
+                        "nearPlaneMultiplier": 10.0
                     }
                 }
             ]
@@ -734,6 +734,68 @@
             }
         },
         {
+            "ID": 30,
+            "Parent": 1048685,
+            "Child Entities": [
+                2097260
+            ],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Crowbar",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.5540132522583008,
+                            "y": 0.27500206232070925,
+                            "z": 0.1669977903366089
+                        },
+                        "scale": {
+                            "x": 0.11999999731779099,
+                            "y": 0.11999999731779099,
+                            "z": 0.11999999731779099
+                        },
+                        "rotation": {
+                            "x": 0.12896953523159028,
+                            "y": -0.7883487939834595,
+                            "z": 0.5949138402938843,
+                            "w": 0.08916673064231873
+                        },
+                        "eulerAngles": {
+                            "x": -106.7999496459961,
+                            "y": -17.10000991821289,
+                            "z": -174.1599884033203
+                        },
+                        "worldPos": {
+                            "x": -16.358131408691408,
+                            "y": 2.0830039978027345,
+                            "z": -16.185462951660158
+                        },
+                        "worldScale": {
+                            "x": 0.23999999463558198,
+                            "y": 0.23999999463558198,
+                            "z": 0.23999999463558198
+                        },
+                        "worldRot": {
+                            "x": 0.11021919548511505,
+                            "y": -0.7907605767250061,
+                            "z": 0.5986713171005249,
+                            "w": 0.06436009705066681
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
             "ID": 31,
             "Parent": 46,
             "Child Entities": [],
@@ -795,7 +857,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -915,7 +977,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -972,6 +1034,19 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 36,
+            "Parent": 2097375,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 13
+            }
         },
         {
             "ID": 37,
@@ -1035,7 +1110,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1155,7 +1230,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1217,10 +1292,67 @@
             "ID": 40,
             "Parent": null,
             "Child Entities": [
-                0
+                0,
+                51
             ],
             "isActive": true,
             "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "..\\Assets\\Audio\\Musical, Loop, Keyboard, Electric Piano, Sleepy, Calm, Soothing 01 SND94297.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 9062602701669316212
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 18.875669479370118,
+                                            "y": 6.242000102996826,
+                                            "z": 13.442559242248536
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": true,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "LINEAR"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\GardenAmbience_BGM.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 1367675903760881373
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 18.875669479370118,
+                                            "y": 6.242000102996826,
+                                            "z": 13.442559242248536
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": true,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "LINEAR"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
                 {
                     "Tag": {
                         "tag": "Player",
@@ -1231,12 +1363,12 @@
                     "Transform": {
                         "position": {
                             "x": 18.875669479370118,
-                            "y": 3.5,
+                            "y": 6.242000102996826,
                             "z": 13.442559242248536
                         },
                         "scale": {
                             "x": 1.0,
-                            "y": 1.0,
+                            "y": 6.599999904632568,
                             "z": 1.0
                         },
                         "rotation": {
@@ -1252,12 +1384,12 @@
                         },
                         "worldPos": {
                             "x": 18.875669479370118,
-                            "y": 3.5,
+                            "y": 6.242000102996826,
                             "z": 13.442559242248536
                         },
                         "worldScale": {
                             "x": 1.0,
-                            "y": 1.0,
+                            "y": 6.599999904632568,
                             "z": 1.0
                         },
                         "worldRot": {
@@ -1277,7 +1409,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1289,7 +1421,7 @@
                     "BoxCollider": {
                         "scale": {
                             "x": 0.5,
-                            "y": 0.5,
+                            "y": 3.299999952316284,
                             "z": 0.5
                         },
                         "positionOffset": {
@@ -1366,7 +1498,7 @@
                                         }
                                     },
                                     {
-                                        "data": 3.0,
+                                        "data": 20.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "jumpHeight"
@@ -1394,16 +1526,16 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Purple Light",
+                        "tag": "Garden Light",
                         "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": 39.90008544921875,
-                            "y": 57.17742156982422,
-                            "z": 6.104775428771973
+                            "x": 10.597578048706055,
+                            "y": 195.09100341796876,
+                            "z": -5.577361106872559
                         },
                         "scale": {
                             "x": 1.0,
@@ -1411,20 +1543,20 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 0.0,
+                            "x": -0.7126385569572449,
                             "y": 0.0,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7015314102172852
                         },
                         "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
+                            "x": -90.9000015258789,
+                            "y": 0.0,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 39.90008544921875,
-                            "y": 57.17742156982422,
-                            "z": 6.104775428771973
+                            "x": 10.597578048706055,
+                            "y": 195.09100341796876,
+                            "z": -5.577361106872559
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -1432,10 +1564,10 @@
                             "z": 1.0
                         },
                         "worldRot": {
-                            "x": 0.0,
+                            "x": -0.7126385569572449,
                             "y": 0.0,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7015314102172852
                         }
                     }
                 },
@@ -1446,95 +1578,17 @@
                 },
                 {
                     "Light": {
-                        "lightType": "SPOTLIGHT",
+                        "lightType": "DIRECTIONAL",
                         "color": {
-                            "x": 0.6994240880012512,
-                            "y": 0.07474187761545181,
-                            "z": 0.8595317602157593
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
                         },
-                        "intensity": 2.5,
-                        "innerAngle": 55.0,
-                        "outerAngle": 48.0,
-                        "range": 75.5,
-                        "castShadows": false,
-                        "bias": 0.004999999888241291,
-                        "softness": 1,
-                        "nearPlaneMultiplier": 10.0
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 43,
-            "Parent": 60,
-            "Child Entities": [],
-            "isActive": true,
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Green Light",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -15.778763771057129,
-                            "y": 45.91641616821289,
-                            "z": 87.3740234375
-                        },
-                        "scale": {
-                            "x": 0.0010000000474974514,
-                            "y": 0.0010000000474974514,
-                            "z": 0.0010000000474974514
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -15.778763771057129,
-                            "y": 45.91641616821289,
-                            "z": 87.3740234375
-                        },
-                        "worldScale": {
-                            "x": 0.0010000000474974514,
-                            "y": 0.0010000000474974514,
-                            "z": 0.0010000000474974514
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Light": {
-                        "lightType": "SPOTLIGHT",
-                        "color": {
-                            "x": 0.1560385525226593,
-                            "y": 0.9331103563308716,
-                            "z": 0.33276382088661196
-                        },
-                        "intensity": 2.0,
-                        "innerAngle": 12.0,
-                        "outerAngle": 200.0,
-                        "range": 96.0,
-                        "castShadows": false,
+                        "intensity": 183.5,
+                        "innerAngle": 48.0,
+                        "outerAngle": 360.0,
+                        "range": 237.5,
+                        "castShadows": true,
                         "bias": 0.004999999888241291,
                         "softness": 1,
                         "nearPlaneMultiplier": 10.0
@@ -1604,7 +1658,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1859,7 +1913,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1913,84 +1967,6 @@
                         "motionType": "KINEMATIC",
                         "axisLock": 7,
                         "angularAxisLock": 7
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 49,
-            "Parent": 60,
-            "Child Entities": [],
-            "isActive": true,
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Blue Light",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 49.788795471191409,
-                            "y": 24.55137825012207,
-                            "z": 56.32755661010742
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.02381270006299019,
-                            "y": -0.7076293230056763,
-                            "z": -0.023874884471297265,
-                            "w": -0.7057787775993347
-                        },
-                        "eulerAngles": {
-                            "x": 176.14306640625,
-                            "y": 89.85064697265625,
-                            "z": -179.9922637939453
-                        },
-                        "worldPos": {
-                            "x": 49.788795471191409,
-                            "y": 24.55137825012207,
-                            "z": 56.32755661010742
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.02381270006299019,
-                            "y": -0.7076293230056763,
-                            "z": -0.023874884471297265,
-                            "w": -0.7057787775993347
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Light": {
-                        "lightType": "SPOTLIGHT",
-                        "color": {
-                            "x": 0.036677002906799319,
-                            "y": 0.0033444762229919435,
-                            "z": 1.0
-                        },
-                        "intensity": 3.0,
-                        "innerAngle": 9.0,
-                        "outerAngle": 235.0,
-                        "range": 70.5,
-                        "castShadows": false,
-                        "bias": 0.004999999888241291,
-                        "softness": 1,
-                        "nearPlaneMultiplier": 10.0
                     }
                 }
             ]
@@ -2066,6 +2042,483 @@
             ]
         },
         {
+            "ID": 51,
+            "Parent": 40,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "Grass4",
+                                "value": {
+                                    "guid": {
+                                        "ID": 595166077166477397
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": -16.857995986938478,
+                                            "z": 0.00000286102294921875
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Pavement6",
+                                "value": {
+                                    "guid": {
+                                        "ID": 5348227824585655450
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": -16.857995986938478,
+                                            "z": 0.00000286102294921875
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "MetalPipe1",
+                                "value": {
+                                    "guid": {
+                                        "ID": 10093927524114237221
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": -16.857995986938478,
+                                            "z": 0.00000286102294921875
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Grass1",
+                                "value": {
+                                    "guid": {
+                                        "ID": 13859513197482970529
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": -16.857995986938478,
+                                            "z": 0.00000286102294921875
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Grass6",
+                                "value": {
+                                    "guid": {
+                                        "ID": 14485796434104070923
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": -16.857995986938478,
+                                            "z": 0.00000286102294921875
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Grass5",
+                                "value": {
+                                    "guid": {
+                                        "ID": 1978925084083853068
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": -16.857995986938478,
+                                            "z": 0.00000286102294921875
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Pavement1",
+                                "value": {
+                                    "guid": {
+                                        "ID": 17459441173899898824
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": -16.857995986938478,
+                                            "z": 0.00000286102294921875
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Grass2",
+                                "value": {
+                                    "guid": {
+                                        "ID": 11851167664082202496
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": -16.857995986938478,
+                                            "z": 0.00000286102294921875
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Grass3",
+                                "value": {
+                                    "guid": {
+                                        "ID": 18054344318569632301
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": -16.857995986938478,
+                                            "z": 0.00000286102294921875
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "MetalPipe2",
+                                "value": {
+                                    "guid": {
+                                        "ID": 7164462922016107407
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": -16.857995986938478,
+                                            "z": 0.00000286102294921875
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Pavement5",
+                                "value": {
+                                    "guid": {
+                                        "ID": 12729974832043865096
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": -16.857995986938478,
+                                            "z": 0.00000286102294921875
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "MetalPipe3",
+                                "value": {
+                                    "guid": {
+                                        "ID": 2149759332604770166
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": -16.857995986938478,
+                                            "z": 0.00000286102294921875
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Pavement4",
+                                "value": {
+                                    "guid": {
+                                        "ID": 10871485496724890079
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": -16.857995986938478,
+                                            "z": 0.00000286102294921875
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Pavement2",
+                                "value": {
+                                    "guid": {
+                                        "ID": 7663956586326383679
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": -16.857995986938478,
+                                            "z": 0.00000286102294921875
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Pavement3",
+                                "value": {
+                                    "guid": {
+                                        "ID": 12011731387334425923
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": -16.857995986938478,
+                                            "z": 0.00000286102294921875
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "SFX",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -18.875669479370118,
+                            "y": -3.499999523162842,
+                            "z": -13.442556381225586
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -16.857995986938478,
+                            "z": 0.00000286102294921875
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 6.599999904632568,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "scriptName": "PlayerFootsteps",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": 1.25,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "interval"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 40,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "player"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
             "ID": 52,
             "Parent": 46,
             "Child Entities": [],
@@ -2127,7 +2580,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2200,9 +2653,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 10.945965766906739,
-                            "y": 6.866704940795898,
-                            "z": -0.0370330810546875
+                            "x": 10.946019172668457,
+                            "y": 6.866703033447266,
+                            "z": -0.037006378173828128
                         },
                         "scale": {
                             "x": 1.136022686958313,
@@ -2221,9 +2674,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.56296157836914,
-                            "y": 17.232027053833009,
-                            "z": 47.06912612915039
+                            "x": 53.56298828125,
+                            "y": 17.232025146484376,
+                            "z": 47.069091796875
                         },
                         "worldScale": {
                             "x": 0.7384147047996521,
@@ -2247,7 +2700,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2320,9 +2773,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -10.845255851745606,
-                            "y": 6.863521575927734,
-                            "z": -0.0398101806640625
+                            "x": -10.845202445983887,
+                            "y": 6.863500595092773,
+                            "z": -0.039783477783203128
                         },
                         "scale": {
                             "x": 1.1353846788406373,
@@ -2341,9 +2794,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.560184478759769,
-                            "y": 17.22992515563965,
-                            "z": 61.233421325683597
+                            "x": 53.560211181640628,
+                            "y": 17.22991180419922,
+                            "z": 61.23338317871094
                         },
                         "worldScale": {
                             "x": 0.7380000352859497,
@@ -2367,7 +2820,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2440,9 +2893,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.03162108361721039,
+                            "x": 0.03167448937892914,
                             "y": 16.193504333496095,
-                            "z": -0.4668846130371094
+                            "z": -0.46685791015625
                         },
                         "scale": {
                             "x": 2.826664447784424,
@@ -2461,9 +2914,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.13311004638672,
+                            "x": 53.13313674926758,
                             "y": 23.387714385986329,
-                            "z": 54.163448333740237
+                            "z": 54.163414001464847
                         },
                         "worldScale": {
                             "x": 1.837331771850586,
@@ -2487,7 +2940,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2607,7 +3060,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2669,14 +3122,11 @@
             "ID": 60,
             "Parent": null,
             "Child Entities": [
-                2,
+                12,
                 42,
-                43,
-                49,
                 62,
                 70,
-                1048591,
-                1048642
+                1048591
             ],
             "isActive": false,
             "Components": [
@@ -2796,7 +3246,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3054,7 +3504,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3174,7 +3624,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3294,7 +3744,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3492,7 +3942,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3612,7 +4062,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3684,7 +4134,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -4103,7 +4553,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -4162,11 +4612,38 @@
             ]
         },
         {
+            "ID": 85,
+            "Parent": 2097375,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 9
+            }
+        },
+        {
+            "ID": 96,
+            "Parent": 3145733,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7160965812706139332
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 6
+            }
+        },
+        {
             "ID": 98,
             "Parent": 6,
             "Child Entities": [
                 99,
                 100,
+                104,
                 124,
                 125,
                 126,
@@ -4174,8 +4651,7 @@
                 128,
                 129,
                 130,
-                131,
-                1048627
+                131
             ],
             "Position": {
                 "x": -4.196673393249512,
@@ -4215,6 +4691,32 @@
                 "modifiedComponents": [],
                 "removedComponents": [],
                 "subDataId": 2
+            }
+        },
+        {
+            "ID": 104,
+            "Parent": 98,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 17113954348924672938
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 11
+            }
+        },
+        {
+            "ID": 105,
+            "Parent": 3145746,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13818176251542423782
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 4
             }
         },
         {
@@ -4886,6 +5388,141 @@
             }
         },
         {
+            "ID": 168,
+            "Parent": 171,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 2
+            }
+        },
+        {
+            "ID": 171,
+            "Parent": 6,
+            "Child Entities": [
+                168,
+                204,
+                257,
+                258,
+                2097371,
+                2097372,
+                3145930,
+                3145933,
+                3145934,
+                4194311,
+                4194470,
+                5242960,
+                5242982
+            ],
+            "Position": {
+                "x": -15.471391677856446,
+                "y": 19.746143341064454,
+                "z": -37.4109992980957
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "modifiedComponents": [
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 3.5,
+                                "y": 10.899999618530274,
+                                "z": 3.5
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    },
+                    {
+                        "key": "RigidBody",
+                        "value": {
+                            "velocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "angularVelocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "staticFriction": 0.0,
+                            "dynamicFriction": 0.0,
+                            "restitution": 0.0,
+                            "gravityFactor": 0.0,
+                            "linearDamping": 0.9800000190734863,
+                            "motionType": "KINEMATIC",
+                            "axisLock": 7,
+                            "angularAxisLock": 7
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 0
+            }
+        },
+        {
+            "ID": 193,
+            "Parent": 3145733,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7160965812706139332
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 7
+            }
+        },
+        {
+            "ID": 194,
+            "Parent": 2097375,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 3
+            }
+        },
+        {
+            "ID": 204,
+            "Parent": 171,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 3
+            }
+        },
+        {
             "ID": 225,
             "Parent": 50,
             "Child Entities": [
@@ -4965,9 +5602,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00014224420010577887,
-                            "y": -0.000034332275390625,
-                            "z": 0.000064849853515625
+                            "x": 0.00019564996182452887,
+                            "y": -0.0000476837158203125,
+                            "z": 0.000091552734375
                         },
                         "scale": {
                             "x": 1.0,
@@ -4986,9 +5623,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.600059509277347,
-                            "y": 12.699978828430176,
-                            "z": 54.18391036987305
+                            "x": 53.6000862121582,
+                            "y": 12.699969291687012,
+                            "z": 54.183876037597659
                         },
                         "worldScale": {
                             "x": 0.6499999761581421,
@@ -5054,6 +5691,32 @@
                 "modifiedComponents": [],
                 "removedComponents": [],
                 "subDataId": 1
+            }
+        },
+        {
+            "ID": 257,
+            "Parent": 171,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 11
+            }
+        },
+        {
+            "ID": 258,
+            "Parent": 171,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 6
             }
         },
         {
@@ -5372,7 +6035,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -5610,7 +6273,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -5730,7 +6393,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -5860,97 +6523,6 @@
             ]
         },
         {
-            "ID": 1048627,
-            "Parent": 98,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 17113954348924672938
-                },
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 11
-            }
-        },
-        {
-            "ID": 1048642,
-            "Parent": 60,
-            "Child Entities": [],
-            "isActive": true,
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Red Light",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 72.19999694824219,
-                            "y": 15.025712966918946,
-                            "z": -18.05489730834961
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 72.19999694824219,
-                            "y": 15.025712966918946,
-                            "z": -18.05489730834961
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Light": {
-                        "lightType": "SPOTLIGHT",
-                        "color": {
-                            "x": 1.0,
-                            "y": 0.17725753784179688,
-                            "z": 0.17725753784179688
-                        },
-                        "intensity": 2.5,
-                        "innerAngle": 360.0,
-                        "outerAngle": 360.0,
-                        "range": 63.5,
-                        "castShadows": false,
-                        "bias": 0.004999999888241291,
-                        "softness": 1,
-                        "nearPlaneMultiplier": 10.0
-                    }
-                }
-            ]
-        },
-        {
             "ID": 1048643,
             "Parent": 46,
             "Child Entities": [],
@@ -6012,7 +6584,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 6199175577092279536
+                            "ID": 11976855311426610546
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -6116,29 +6688,6 @@
                         }
                     },
                     {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 0.0,
-                            "dynamicFriction": 0.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "DYNAMIC",
-                            "axisLock": 0,
-                            "angularAxisLock": 0
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -6179,6 +6728,29 @@
                                 "w": 0.7100075483322144
                             }
                         }
+                    },
+                    {
+                        "key": "RigidBody",
+                        "value": {
+                            "velocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "angularVelocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "staticFriction": 0.0,
+                            "dynamicFriction": 0.0,
+                            "restitution": 0.0,
+                            "gravityFactor": 0.0,
+                            "linearDamping": 0.9800000190734863,
+                            "motionType": "DYNAMIC",
+                            "axisLock": 0,
+                            "angularAxisLock": 0
+                        }
                     }
                 ],
                 "removedComponents": [],
@@ -6189,11 +6761,11 @@
             "ID": 1048685,
             "Parent": 11,
             "Child Entities": [
+                30,
                 1048690,
                 2097272,
                 2097273,
                 2097274,
-                3145740,
                 3145786
             ],
             "isActive": true,
@@ -6267,9 +6839,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.000030517578125,
-                            "y": 0.000141143798828125,
-                            "z": -0.0000591278076171875
+                            "x": -0.00002288818359375,
+                            "y": 0.00013637542724609375,
+                            "z": -0.00006866455078125
                         },
                         "scale": {
                             "x": 1.0,
@@ -6277,20 +6849,20 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -3.8743019104003908e-7,
-                            "y": -3.210734575986862e-7,
-                            "z": -4.814937710762024e-7,
-                            "w": 0.9999999403953552
+                            "x": -4.6193599700927737e-7,
+                            "y": -3.19676473736763e-7,
+                            "z": -4.828907549381256e-7,
+                            "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": -0.000044396216253517198,
-                            "y": -0.000036792327591683718,
-                            "z": -0.00005517511090147309
+                            "x": -0.00005293394860927947,
+                            "y": -0.00003663225288619287,
+                            "z": -0.00005533518560696393
                         },
                         "worldPos": {
                             "x": -18.895832061767579,
-                            "y": 2.2551894187927248,
-                            "z": -17.179719924926759
+                            "y": 2.2551887035369875,
+                            "z": -17.17972183227539
                         },
                         "worldScale": {
                             "x": 0.4000000059604645,
@@ -6298,10 +6870,10 @@
                             "z": 0.4000000059604645
                         },
                         "worldRot": {
-                            "x": -0.00793667696416378,
-                            "y": 0.9746338129043579,
-                            "z": -0.14220310747623444,
-                            "w": -0.1726386398077011
+                            "x": -0.007936660200357437,
+                            "y": 0.9746338725090027,
+                            "z": -0.1422029286623001,
+                            "w": -0.17263875901699067
                         }
                     }
                 },
@@ -6352,7 +6924,7 @@
                         "position": {
                             "x": -0.743556022644043,
                             "y": 0.36106449365615847,
-                            "z": -0.24947816133499146
+                            "z": -0.24948102235794068
                         },
                         "scale": {
                             "x": 0.20000000298023225,
@@ -6360,20 +6932,20 @@
                             "z": 0.20000000298023225
                         },
                         "rotation": {
-                            "x": -0.012399033643305302,
+                            "x": -0.01239902712404728,
                             "y": 0.9687301516532898,
-                            "z": -0.14188413321971894,
-                            "w": -0.20316769182682038
+                            "z": -0.14188402891159059,
+                            "w": -0.20316779613494874
                         },
                         "eulerAngles": {
-                            "x": -162.90000915527345,
-                            "y": -23.399993896484376,
+                            "x": -162.9000244140625,
+                            "y": -23.400007247924806,
                             "z": 177.89999389648438
                         },
                         "worldPos": {
                             "x": -18.89584732055664,
                             "y": 2.255128860473633,
-                            "z": -17.17972183227539
+                            "z": -17.17972755432129
                         },
                         "worldScale": {
                             "x": 0.4000000059604645,
@@ -6381,10 +6953,10 @@
                             "z": 0.4000000059604645
                         },
                         "worldRot": {
-                            "x": -0.007936226204037667,
+                            "x": -0.007936223410069943,
                             "y": 0.9746337532997131,
-                            "z": -0.14220356941223145,
-                            "w": -0.1726388931274414
+                            "z": -0.1422034651041031,
+                            "w": -0.17263899743556977
                         }
                     }
                 },
@@ -6410,9 +6982,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.000030517578125,
-                            "y": 0.000141143798828125,
-                            "z": -0.0000591278076171875
+                            "x": -0.00002288818359375,
+                            "y": 0.00013637542724609375,
+                            "z": -0.00006866455078125
                         },
                         "scale": {
                             "x": 1.0,
@@ -6420,20 +6992,20 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -3.8743019104003908e-7,
-                            "y": -3.210734575986862e-7,
-                            "z": -4.814937710762024e-7,
-                            "w": 0.9999999403953552
+                            "x": -4.6193599700927737e-7,
+                            "y": -3.19676473736763e-7,
+                            "z": -4.828907549381256e-7,
+                            "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": -0.000044396216253517198,
-                            "y": -0.000036792327591683718,
-                            "z": -0.00005517511090147309
+                            "x": -0.00005293394860927947,
+                            "y": -0.00003663225288619287,
+                            "z": -0.00005533518560696393
                         },
                         "worldPos": {
                             "x": -18.895832061767579,
-                            "y": 2.2551894187927248,
-                            "z": -17.179719924926759
+                            "y": 2.2551887035369875,
+                            "z": -17.17972183227539
                         },
                         "worldScale": {
                             "x": 0.4000000059604645,
@@ -6441,10 +7013,10 @@
                             "z": 0.4000000059604645
                         },
                         "worldRot": {
-                            "x": -0.00793667696416378,
-                            "y": 0.9746338129043579,
-                            "z": -0.14220310747623444,
-                            "w": -0.1726386398077011
+                            "x": -0.007936660200357437,
+                            "y": 0.9746338725090027,
+                            "z": -0.1422029286623001,
+                            "w": -0.17263875901699067
                         }
                     }
                 },
@@ -6529,6 +7101,13 @@
                         }
                     },
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Outside Pit Painting",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -6553,13 +7132,6 @@
                                 "w": 0.9990482330322266
                             },
                             "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Outside Pit Painting",
-                            "isActive": true
                         }
                     },
                     {
@@ -7215,6 +7787,29 @@
                         }
                     },
                     {
+                        "key": "RigidBody",
+                        "value": {
+                            "velocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "angularVelocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "staticFriction": 0.0,
+                            "dynamicFriction": 0.0,
+                            "restitution": 0.0,
+                            "gravityFactor": 0.0,
+                            "linearDamping": 0.9800000190734863,
+                            "motionType": "KINEMATIC",
+                            "axisLock": 7,
+                            "angularAxisLock": 7
+                        }
+                    },
+                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -7239,29 +7834,6 @@
                                 "w": 0.8987940549850464
                             },
                             "sensor": false
-                        }
-                    },
-                    {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 0.0,
-                            "dynamicFriction": 0.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "KINEMATIC",
-                            "axisLock": 7,
-                            "angularAxisLock": 7
                         }
                     }
                 ],
@@ -7427,7 +7999,7 @@
         },
         {
             "ID": 2097260,
-            "Parent": 3145740,
+            "Parent": 30,
             "Child Entities": [],
             "isActive": true,
             "Components": [
@@ -7440,8 +8012,8 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.000091552734375,
-                            "y": -0.0000591278076171875,
+                            "x": -0.0000762939453125,
+                            "y": -0.00005340576171875,
                             "z": 0.0000457763671875
                         },
                         "scale": {
@@ -7450,20 +8022,20 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -2.980232238769531e-7,
-                            "y": -1.043081283569336e-7,
+                            "x": -3.2782554626464846e-7,
+                            "y": -1.1175870895385742e-7,
                             "z": -2.2351741790771486e-8,
-                            "w": 0.9999999403953552
+                            "w": 0.9999998807907105
                         },
                         "eulerAngles": {
-                            "x": -0.00003415094761294313,
-                            "y": -0.000011952831300732214,
-                            "z": -0.000002561317614890868
+                            "x": -0.00003756604564841837,
+                            "y": -0.00001280660399061162,
+                            "z": -0.0000025613169327698417
                         },
                         "worldPos": {
-                            "x": -16.35811996459961,
-                            "y": 2.0829923152923586,
-                            "z": -16.185457229614259
+                            "x": -16.358110427856447,
+                            "y": 2.0829920768737795,
+                            "z": -16.18545913696289
                         },
                         "worldScale": {
                             "x": 0.23999999463558198,
@@ -7471,10 +8043,10 @@
                             "z": 0.23999999463558198
                         },
                         "worldRot": {
-                            "x": 0.11021924763917923,
-                            "y": -0.7907607555389404,
-                            "z": 0.5986710786819458,
-                            "w": 0.06436006724834442
+                            "x": 0.11021924018859863,
+                            "y": -0.7907606959342957,
+                            "z": 0.598671019077301,
+                            "w": 0.06436005234718323
                         }
                     }
                 },
@@ -7521,7 +8093,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.0000023245811462402345,
+                            "y": 0.0000027418136596679689,
                             "z": 5.960464477539063e-8
                         },
                         "scale": {
@@ -7542,7 +8114,7 @@
                         },
                         "worldPos": {
                             "x": -17.44300079345703,
-                            "y": 1.533004641532898,
+                            "y": 1.5330054759979249,
                             "z": -16.5883731842041
                         },
                         "worldScale": {
@@ -7601,7 +8173,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.0000023245811462402345,
+                            "y": 0.0000027418136596679689,
                             "z": 5.960464477539063e-8
                         },
                         "scale": {
@@ -7622,7 +8194,7 @@
                         },
                         "worldPos": {
                             "x": -17.44300079345703,
-                            "y": 1.533004641532898,
+                            "y": 1.5330054759979249,
                             "z": -16.5883731842041
                         },
                         "worldScale": {
@@ -7681,7 +8253,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.0000023245811462402345,
+                            "y": 0.0000027418136596679689,
                             "z": 5.960464477539063e-8
                         },
                         "scale": {
@@ -7702,7 +8274,7 @@
                         },
                         "worldPos": {
                             "x": -17.44300079345703,
-                            "y": 1.533004641532898,
+                            "y": 1.5330054759979249,
                             "z": -16.5883731842041
                         },
                         "worldScale": {
@@ -7773,7 +8345,7 @@
         },
         {
             "ID": 2097371,
-            "Parent": 5243048,
+            "Parent": 171,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -7786,7 +8358,7 @@
         },
         {
             "ID": 2097372,
-            "Parent": 5243048,
+            "Parent": 171,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -7827,19 +8399,19 @@
             "ID": 2097375,
             "Parent": 6,
             "Child Entities": [
+                36,
+                85,
+                194,
                 2097370,
                 2097373,
                 2097374,
                 2097376,
                 3145845,
-                3145922,
                 3145935,
                 3145936,
                 4194469,
-                5243051,
                 6291549,
-                6291551,
-                6291552
+                6291551
             ],
             "Prefab": {
                 "GUID": {
@@ -7867,33 +8439,6 @@
                             "motionType": "KINEMATIC",
                             "axisLock": 7,
                             "angularAxisLock": 7
-                        }
-                    },
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 3.200000047683716,
-                                "y": 10.899999618530274,
-                                "z": 3.5
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
                         }
                     },
                     {
@@ -7936,6 +8481,33 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 3.200000047683716,
+                                "y": 10.899999618530274,
+                                "z": 3.5
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
                         }
                     }
                 ],
@@ -8025,6 +8597,8 @@
             "ID": 3145733,
             "Parent": 6,
             "Child Entities": [
+                96,
+                193,
                 256,
                 2097405,
                 3145841,
@@ -8032,8 +8606,6 @@
                 3145974,
                 4194405,
                 4194407,
-                4194408,
-                4194409,
                 4194410,
                 5242883,
                 5242894,
@@ -8055,74 +8627,12 @@
             }
         },
         {
-            "ID": 3145740,
-            "Parent": 1048685,
-            "Child Entities": [
-                2097260
-            ],
-            "isActive": true,
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Crowbar",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.5540065765380859,
-                            "y": 0.27500206232070925,
-                            "z": 0.16699916124343873
-                        },
-                        "scale": {
-                            "x": 0.11999999731779099,
-                            "y": 0.11999999731779099,
-                            "z": 0.11999999731779099
-                        },
-                        "rotation": {
-                            "x": 0.12896953523159028,
-                            "y": -0.7883487939834595,
-                            "z": 0.5949138402938843,
-                            "w": 0.08916673064231873
-                        },
-                        "eulerAngles": {
-                            "x": -106.7999496459961,
-                            "y": -17.10000991821289,
-                            "z": -174.1599884033203
-                        },
-                        "worldPos": {
-                            "x": -16.358144760131837,
-                            "y": 2.0830039978027345,
-                            "z": -16.185461044311525
-                        },
-                        "worldScale": {
-                            "x": 0.23999999463558198,
-                            "y": 0.23999999463558198,
-                            "z": 0.23999999463558198
-                        },
-                        "worldRot": {
-                            "x": 0.11021919548511505,
-                            "y": -0.7907605767250061,
-                            "z": 0.5986713171005249,
-                            "w": 0.06436009705066681
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
             "ID": 3145746,
             "Parent": 50,
             "Child Entities": [
                 16,
+                105,
                 3145914,
-                5242910,
                 5242969,
                 5242970
             ],
@@ -8228,7 +8738,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.0000023245811462402345,
+                            "y": 0.0000027418136596679689,
                             "z": 5.960464477539063e-8
                         },
                         "scale": {
@@ -8249,7 +8759,7 @@
                         },
                         "worldPos": {
                             "x": -17.44300079345703,
-                            "y": 1.533004641532898,
+                            "y": 1.5330054759979249,
                             "z": -16.5883731842041
                         },
                         "worldScale": {
@@ -8488,32 +8998,6 @@
             }
         },
         {
-            "ID": 3145921,
-            "Parent": 5243048,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 7212992046423042303
-                },
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 3
-            }
-        },
-        {
-            "ID": 3145922,
-            "Parent": 2097375,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 7212992046423042303
-                },
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 9
-            }
-        },
-        {
             "ID": 3145923,
             "Parent": 3145924,
             "Child Entities": [],
@@ -8568,33 +9052,6 @@
                         }
                     },
                     {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 5.0,
-                                "y": 15.5,
-                                "z": 5.0
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -8634,6 +9091,33 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 5.0,
+                                "y": 15.5,
+                                "z": 5.0
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
                         }
                     }
                 ],
@@ -8682,7 +9166,7 @@
         },
         {
             "ID": 3145930,
-            "Parent": 5243048,
+            "Parent": 171,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -8694,21 +9178,8 @@
             }
         },
         {
-            "ID": 3145932,
-            "Parent": 5243048,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 7212992046423042303
-                },
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 2
-            }
-        },
-        {
             "ID": 3145933,
-            "Parent": 5243048,
+            "Parent": 171,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -8721,7 +9192,7 @@
         },
         {
             "ID": 3145934,
-            "Parent": 5243048,
+            "Parent": 171,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -8825,7 +9296,7 @@
         },
         {
             "ID": 4194311,
-            "Parent": 5243048,
+            "Parent": 171,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -8928,32 +9399,6 @@
             }
         },
         {
-            "ID": 4194408,
-            "Parent": 3145733,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 7160965812706139332
-                },
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 7
-            }
-        },
-        {
-            "ID": 4194409,
-            "Parent": 3145733,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 7160965812706139332
-                },
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 6
-            }
-        },
-        {
             "ID": 4194410,
             "Parent": 3145733,
             "Child Entities": [],
@@ -8981,7 +9426,7 @@
         },
         {
             "ID": 4194470,
-            "Parent": 5243048,
+            "Parent": 171,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -9213,21 +9658,8 @@
             }
         },
         {
-            "ID": 5242910,
-            "Parent": 3145746,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 13818176251542423782
-                },
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 4
-            }
-        },
-        {
             "ID": 5242960,
-            "Parent": 5243048,
+            "Parent": 171,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -9344,7 +9776,7 @@
         },
         {
             "ID": 5242982,
-            "Parent": 5243048,
+            "Parent": 171,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -9369,89 +9801,6 @@
             }
         },
         {
-            "ID": 5243048,
-            "Parent": 6,
-            "Child Entities": [
-                2097371,
-                2097372,
-                3145921,
-                3145930,
-                3145932,
-                3145933,
-                3145934,
-                4194311,
-                4194470,
-                5242960,
-                5242982,
-                6291541,
-                8388644
-            ],
-            "Position": {
-                "x": -15.471391677856446,
-                "y": 19.746143341064454,
-                "z": -37.4109992980957
-            },
-            "Prefab": {
-                "GUID": {
-                    "ID": 7212992046423042303
-                },
-                "modifiedComponents": [
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 3.5,
-                                "y": 10.899999618530274,
-                                "z": 3.5
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 0.0,
-                            "dynamicFriction": 0.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "KINEMATIC",
-                            "axisLock": 7,
-                            "angularAxisLock": 7
-                        }
-                    }
-                ],
-                "removedComponents": [],
-                "subDataId": 0
-            }
-        },
-        {
             "ID": 5243049,
             "Parent": 1048754,
             "Child Entities": [],
@@ -9462,19 +9811,6 @@
                 "modifiedComponents": [],
                 "removedComponents": [],
                 "subDataId": 7
-            }
-        },
-        {
-            "ID": 5243051,
-            "Parent": 2097375,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 7212992046423042303
-                },
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 13
             }
         },
         {
@@ -9576,19 +9912,6 @@
             }
         },
         {
-            "ID": 6291541,
-            "Parent": 5243048,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 7212992046423042303
-                },
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 11
-            }
-        },
-        {
             "ID": 6291549,
             "Parent": 2097375,
             "Child Entities": [],
@@ -9612,19 +9935,6 @@
                 "modifiedComponents": [],
                 "removedComponents": [],
                 "subDataId": 2
-            }
-        },
-        {
-            "ID": 6291552,
-            "Parent": 2097375,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 7212992046423042303
-                },
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 3
             }
         },
         {
@@ -9664,19 +9974,6 @@
                 "modifiedComponents": [],
                 "removedComponents": [],
                 "subDataId": 4
-            }
-        },
-        {
-            "ID": 8388644,
-            "Parent": 5243048,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 7212992046423042303
-                },
-                "modifiedComponents": [],
-                "removedComponents": [],
-                "subDataId": 6
             }
         }
     ],
