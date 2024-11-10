@@ -61,4 +61,26 @@ namespace IGE.Utils
       Image?.Dispose();
     }
   }
+
+
+  public class IGEImage
+  {
+    public Sprite Sprite { get; set; }       // Holds the sprite (which contains the image)
+    public Color color { get; set; } = Color.White; // Default color is white
+    public bool PreserveAspect { get; set; } = true;
+    public ImageType Type { get; set; } = ImageType.Simple;
+    public float FillAmount { get; set; } = 1.0f; // Only used if Type is "Filled"
+
+    public enum ImageType
+    {
+      Simple,
+      Filled
+    }
+
+    // Constructor to initialize the Image with a Sprite
+    public IGEImage(Sprite sprite)
+    {
+      Sprite = sprite;
+    }
+  }
 }

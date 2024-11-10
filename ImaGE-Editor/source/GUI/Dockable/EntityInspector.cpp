@@ -604,6 +604,7 @@ namespace GUI {
                           sfi.mData = Mono::ScriptInstance(sfi.mData.mScriptName);
                           sfi.mData.SetEntityID(e.GetRawEnttEntityID());
                           s.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
+                          sfi.mData.GetAllUpdatedFields();
                         }
                         else
                         {

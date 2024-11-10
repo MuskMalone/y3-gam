@@ -31,7 +31,7 @@ public class  PlayerMove : Entity
 {
   public float speed = 8f;
   public float gravity = -9.81f * 2;
-  public float jumpHeight = 3f;
+  public float jumpHeight = 20f;
 
   public Entity cam;
 
@@ -67,8 +67,10 @@ public class  PlayerMove : Entity
   void Update()
   {
     //HandleBotSpawningAndSwitching();
+    Console.WriteLine(Input.mousePosition);
     ProcessLook();
     forPlayerMovement();
+
 
   }
     void forPlayerMovement()
@@ -85,27 +87,20 @@ public class  PlayerMove : Entity
 
       float x = Input.GetAxis("Horizontal");
       float z = Input.GetAxis("Vertical");
-      //Console.WriteLine(z);
-      //Console.WriteLine(isGrounded);
 
-    //right is the red Axis, foward is the blue axis
-    Vector3 move = GetComponent<Transform>().right * x *speed + GetComponent<Transform>().forward * z * speed;
-    //move *= speed;
+
+      Vector3 move = GetComponent<Transform>().right * x *speed + GetComponent<Transform>().forward * z * speed;
+
 
       
 
       //check if the player is on the ground so he can jump
       if (Input.GetKeyDown(KeyCode.SPACE) && isGrounded)
       {
-      //the equation for jumping
-      // velocity.Y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-      Console.WriteLine("JUmp");
-       move.Y = 20f;  
+       move.Y = jumpHeight;  
      }
-     // Console.WriteLine(GetComponent<Transform>().right.ToString());
-   // Console.WriteLine(GetComponent<Transform>().forward.ToString() + "\n");
-    InternalCalls.MoveCharacter(mEntityID, move);
-    // velocity.Y += gravity * Time.deltaTime;
+      InternalCalls.MoveCharacter(mEntityID, move);
+
 
 
 
@@ -121,7 +116,7 @@ public class  PlayerMove : Entity
       float mouseDeltaY = mouseDelt.Y;
       //Console.WriteLine(mouseDeltaX);
       yaw -= mouseDeltaX * sensitivity;
-      Console.WriteLine(yaw);
+      //Console.WriteLine(yaw);
 
       // Apply mouse delta to pitch (rotate camera around the X-axis)
       pitch -= mouseDeltaY * sensitivity;

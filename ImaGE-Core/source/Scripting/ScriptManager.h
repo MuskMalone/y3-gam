@@ -315,6 +315,13 @@ namespace Mono
 
 		static glm::vec3 GetMouseDelta();
 
+		static MonoObject* FindScript(MonoString* s);
+
+		void DestroyEntity(ECS::Entity::EntityID entity);
+
+		void DestroyScript(MonoObject* obj, ECS::Entity::EntityID entity);
+
+		
 
 		/*!**********************************************************************
 		*																																			  *

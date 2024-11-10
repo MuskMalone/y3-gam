@@ -1018,5 +1018,6 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
+    <ClCompile Include="source\Input\KeyCodecpp.cpp" />
   </ItemGroup>
 </Project>
