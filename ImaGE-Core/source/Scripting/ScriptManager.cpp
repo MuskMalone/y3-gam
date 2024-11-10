@@ -833,9 +833,10 @@ bool  Mono::IsGrounded(ECS::Entity::EntityID entity)
 ECS::Entity::EntityID Mono::Raycast(glm::vec3 start, glm::vec3 end)
 {
     IGE::Physics::RaycastHit hit{};
-    IGE::Physics::PhysicsSystem::GetInstance()->RayCastSingular(start, end, hit);
-    ECS::Entity::EntityID out {hit.entity.GetEntityID()};
-    return out;
+    if (IGE::Physics::PhysicsSystem::GetInstance()->RayCastSingular(start, end, hit)) {
+        ECS::Entity::EntityID out {hit.entity.GetEntityID()};
+        return out;
+    }return static_cast<ECS::Entity::EntityID>(0);
 }
 
 void Mono::PlaySound(ECS::Entity::EntityID e, MonoString* s)

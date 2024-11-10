@@ -178,17 +178,17 @@ namespace IGE {
 						rb.velocity = pxrigidbody->getLinearVelocity();
 						rb.angularVelocity = pxrigidbody->getAngularVelocity();
 
-						bool angmod{ false };
-						if (rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::X)) {
-							rb.angularVelocity.x = 0.f; angmod = true;
-						}
-						if (rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::Y)) {
-							rb.angularVelocity.y = 0.f; angmod = true;
-						}
-						if (rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::Z)) {
-							rb.angularVelocity.z = 0.f; angmod = true;
-						}
-						pxrigidbody->setAngularVelocity(rb.angularVelocity);
+						//bool angmod{ false };
+						//if (rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::X)) {
+						//	rb.angularVelocity.x = 0.f; angmod = true;
+						//}
+						//if (rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::Y)) {
+						//	rb.angularVelocity.y = 0.f; angmod = true;
+						//}
+						//if (rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::Z)) {
+						//	rb.angularVelocity.z = 0.f; angmod = true;
+						//}
+						//pxrigidbody->setAngularVelocity(rb.angularVelocity);
 						//pxrigidbody->setLinearVelocity(rb.velocity);
 					}
 					//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
@@ -243,8 +243,18 @@ namespace IGE {
 					physx::PxTransform(ToPxVec3(transform.worldPos), ToPxQuat(transform.worldRot)));
 				mScene->addActor(*rb);
 			}
-			rb->setLinearVelocity(rigidbody.velocity);
-			rb->setLinearDamping(rigidbody.linearDamping);
+			if (!(bool)rigidbody.motionType) {
+				rb->setLinearVelocity(rigidbody.velocity);
+				rb->setLinearDamping(rigidbody.linearDamping);
+				rb->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_LINEAR_X, rigidbody.IsAxisLocked((int)Component::RigidBody::Axis::X) ? true : false);
+				rb->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_LINEAR_Y, rigidbody.IsAxisLocked((int)Component::RigidBody::Axis::Y) ? true : false);
+				rb->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_LINEAR_Z, rigidbody.IsAxisLocked((int)Component::RigidBody::Axis::Z) ? true : false);
+
+				rb->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_X, rigidbody.IsAngleAxisLocked((int)Component::RigidBody::Axis::X) ? true : false);
+				rb->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y, rigidbody.IsAngleAxisLocked((int)Component::RigidBody::Axis::Y) ? true : false);
+				rb->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z, rigidbody.IsAngleAxisLocked((int)Component::RigidBody::Axis::Z) ? true : false);
+
+			}
 			rb->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, (bool)rigidbody.motionType);
 
 
