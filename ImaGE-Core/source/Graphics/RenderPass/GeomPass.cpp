@@ -197,10 +197,12 @@ namespace Graphics {
             Graphics::Renderer::SubmitSubmeshInstance(mesh.meshSource, mesh.submeshIdx, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
           }
 
-          mSpec.pipeline->GetSpec().instanceLayout;
+          //mSpec.pipeline->GetSpec().instanceLayout;
           Renderer::RenderSubmeshInstances();  // Render all instances for the material group
           Texture::ResetTextureUnits(); // Unbind textures after each group
       }
+
+
       //=================================================SUBMESH VERSION END===========================================================
 
       End();

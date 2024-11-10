@@ -483,6 +483,10 @@ namespace Graphics {
 
 		// Store and return the new instance buffer for this specific submesh
 		mData.instanceSubmeshBuffers[meshSubmeshKey] = instanceBuffer;
+
+		auto &vao= IGE_REF(IGE::Assets::ModelAsset, meshSubmeshKey.first)->mMeshSource.GetVertexArray();
+			
+		vao->AddVertexBuffer(instanceBuffer, true);
 		return instanceBuffer;
 	}
 
@@ -765,6 +769,7 @@ namespace Graphics {
 	}
 
 	void Renderer::RenderSubmeshInstances() {
+		
 		for (auto& [meshSubmeshKey, instances] : mData.instanceSubmeshBufferDataMap) {
 			if (instances.empty()) continue;
 
@@ -788,6 +793,7 @@ namespace Graphics {
 			}
 			else {
 				// Render individual submesh
+				
 				auto const& submesh = submeshes[submeshIndex];
 				unsigned int dataSize = static_cast<unsigned int>(instances.size() * sizeof(InstanceData));
 				auto instanceBuffer = GetSubmeshInstanceBuffer({ meshSourceGUID, submeshIndex });
@@ -801,8 +807,10 @@ namespace Graphics {
 					submesh.idxCount,
 					static_cast<unsigned>(instances.size()), // Instance count
 					submesh.baseIdx,
-					submesh.baseVtx
+					submesh.baseVtx,
+					submeshes.size() * static_cast<unsigned>(instances.size())
 				);
+				
 			}
 		}
 
