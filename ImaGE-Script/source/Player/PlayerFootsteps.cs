@@ -17,6 +17,7 @@ public class PlayerFootsteps : Entity
     public float interval = 0.5f;
     // Start is called before the first frame update
     private float timePassed;
+    private Random random = new Random();
     public PlayerFootsteps() : base()
     {
 
@@ -42,12 +43,33 @@ public class PlayerFootsteps : Entity
         }
     }
 
+    public void PlayRandomMetalSound()
+    {
+        int soundNumber = random.Next(1, 4);
+        string soundName = $"MetalPipe{soundNumber}";
+        InternalCalls.PlaySound(mEntityID, soundName);
+    }
+    public void PlayRandomGrassSound()
+    {
+        Debug.Log("grass sound");
+        int soundNumber = random.Next(1, 7);
+        string soundName = $"Grass{soundNumber}";
+        InternalCalls.PlaySound(mEntityID, soundName);
+    }
+
+    public void PlayRandomPavementSound()
+    {
+        int soundNumber = random.Next(1, 6);
+        string soundName = $"Pavement{soundNumber}";
+        InternalCalls.PlaySound(mEntityID, soundName);
+    }
     void PlayFootstepSound()
     {
         // Raycast downward to detect the ground surface
         Vector3 position = InternalCalls.GetPosition(player.mEntityID);
         Vector3 scale = InternalCalls.GetScale(player.mEntityID);
         uint entityHit = InternalCalls.Raycast(position, position + (new Vector3(0, -2, 0)));
+        Debug.Log($"position {position.X} {position.Y} {position.Z}");
         if (entityHit != 0)
         {
             // Check the layer name of the object hit by the raycast
@@ -56,10 +78,23 @@ public class PlayerFootsteps : Entity
             switch (tag)
             {
                 case "MainGround":
-                    Debug.Log("Stepping on metal Pipes");
-                    InternalCalls.PlaySound(mEntityID, "MetalPipe");
+                    PlayRandomGrassSound();
                     break;
-                
+                case "Second Level":
+                    PlayRandomPavementSound();
+                    break;
+                case "Pit Room Ground":
+                    PlayRandomPavementSound();
+                    break;
+                case "Pit Room Platform":
+                    PlayRandomPavementSound();
+                    break;
+                case "Stair Head":
+                    PlayRandomPavementSound();
+                    break;
+                case "Metal Pipes":
+                    PlayRandomMetalSound();
+                    break;
                 default:
                     Debug.Log("No Sound Case " + tag);
                     break;

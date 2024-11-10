@@ -337,11 +337,8 @@ namespace IGE {
                     temp->setMode(FMOD_3D_INVERSEROLLOFF);
                     break;
                 default:
-                    temp->setMode(FMOD_3D_CUSTOMROLLOFF);
-
-                    // Custom rolloff curve: a single point with constant volume
-                    FMOD_VECTOR points[2] = { {0.0f, 1.0f, 0.0f}, {1e6f, 1.0f, 0.0f} };  // (Distance, Volume, 0)
-                    temp->set3DCustomRolloff(points, 2);
+                    temp->setMode(FMOD_3D | FMOD_3D_INVERSEROLLOFF);
+                    temp->set3DMinMaxDistance(1e6f, 1e6f);  // Large min and max distance
                     break;
                 }
             }
