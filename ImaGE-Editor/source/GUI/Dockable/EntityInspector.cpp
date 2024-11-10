@@ -53,7 +53,8 @@ namespace GUI {
       { typeid(Component::Text), ICON_FA_FONT ICON_PADDING },
       { typeid(Component::Light), ICON_FA_LIGHTBULB ICON_PADDING },
       { typeid(Component::Canvas), ICON_FA_PAINTBRUSH ICON_PADDING },
-      { typeid(Component::Image), ICON_FA_IMAGE ICON_PADDING },
+      { typeid(Component::Image), ICON_FA_IMAGE_PORTRAIT ICON_PADDING },
+      { typeid(Component::Sprite2D), ICON_FA_IMAGE ICON_PADDING },
       { typeid(Component::Camera), ICON_FA_CAMERA ICON_PADDING }
     },
     mObjFactory{Reflection::ObjectFactory::GetInstance()},
@@ -434,8 +435,12 @@ namespace GUI {
       else {
         name = "Drag Material Here";
       }
-      ImGui::Button(name, ImVec2(inputWidth, 30.f));
+      if (ImGui::Button(name, ImVec2(inputWidth, 30.f))) {
+        material.Clear();
+      }
       ImGui::PopStyleVar();
+      if (ImGui::IsItemHovered()) { ImGui::SetTooltip("Remove Material"); }
+
       if (ImGui::BeginDragDropTarget()) {
         ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
         if (drop) {
@@ -444,8 +449,8 @@ namespace GUI {
             try {
               material.SetGUID(am.LoadRef<IGE::Assets::MaterialAsset>(assetPayload.GetFilePath()));
             }
-            catch (Debug::ExceptionBase const&) {
-
+            catch (Debug::ExceptionBase& e) {
+              e.LogSource();
             }
           }
         }
@@ -1544,6 +1549,74 @@ namespace GUI {
       return modified;
   }
 
+  bool Inspector::Sprite2DComponentWindow(ECS::Entity entity, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Sprite2D>("Sprite2D", highlight) };
+    bool modified{ false };
+
+    if (isOpen) {
+      Component::Sprite2D& sprite = entity.GetComponent<Component::Sprite2D>();
+
+      float const inputWidth{ CalcInputWidth(60.f) };
+
+      // Start a table for organizing the color and textureAsset inputs
+      ImGui::BeginTable("SpriteTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+      // Color input
+      NextRowTable("Color");
+      if (ImGui::ColorEdit4("##ImageColor", &sprite.color[0])) {
+        modified = true;
+      }
+
+      // Texture Asset input - assuming textureAsset is a GUID or string
+
+
+
+      NextRowTable("Texture Asset");
+      static std::string textureText;
+      try {
+        textureText = (sprite.textureAsset) ? IGE_ASSETMGR.GUIDToPath(sprite.textureAsset) : "[None]: Drag in a Texture";
+      }
+      catch (Debug::ExceptionBase& e) {
+        // If the GUID is not found, log the exception and set a default message
+        textureText = "[Invalid GUID]: Unable to load texture";
+        e.LogSource();
+        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), e.what());
+      }
+
+
+      //(image.textureAsset) ? IGE_ASSETMGR.GUIDToPath(image.textureAsset) : "[None]: Drag in a Texture";
+
+      //catch (const Debug::ExceptionBase& e) {
+
+      //}
+
+      ImGui::BeginDisabled();
+      ImGui::InputText("##TextureAsset", &textureText);
+      ImGui::EndDisabled();
+
+      if (ImGui::BeginDragDropTarget()) {
+        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+        if (drop) {
+          AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+          if (assetPayload.mAssetType == AssetPayload::SPRITE) {
+            sprite.textureAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
+            textureText = assetPayload.GetFileName();  // Display the file name in the UI
+            modified = true;
+          }
+        }
+        ImGui::EndDragDropTarget();
+      }
+
+      ImGui::EndTable();
+    }
+
+    WindowEnd(isOpen);
+    return modified;
+  }
+
   bool Inspector::CapsuleColliderComponentWindow(ECS::Entity entity, bool highlight)
   {
       bool const isOpen{ WindowBegin<Component::CapsuleCollider>("Capsule Collider", highlight) };
@@ -1793,6 +1866,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Light>("Light");
         DrawAddComponentButton<Component::Canvas>("Canvas");
         DrawAddComponentButton<Component::Image>("Image");
+        DrawAddComponentButton<Component::Sprite2D>("Sprite2D");
         DrawAddComponentButton<Component::Camera>("Camera");
 
         ImGui::EndTable();

@@ -58,6 +58,7 @@ namespace Reflection
       { GET_RTTR_TYPE(Light), ComponentUtils::AddLight },
       { GET_RTTR_TYPE(Canvas), ComponentUtils::AddCanvas },
       { GET_RTTR_TYPE(Image), ComponentUtils::AddImage },
+      { GET_RTTR_TYPE(Sprite2D), ComponentUtils::AddSprite2D },
       { GET_RTTR_TYPE(Camera), ComponentUtils::AddCamera }
     };
 
@@ -324,6 +325,7 @@ namespace Reflection
     else IF_GET_ENTITY_COMP(AudioSource)
     else IF_GET_ENTITY_COMP(Canvas)
     else IF_GET_ENTITY_COMP(Image)
+    else IF_GET_ENTITY_COMP(Sprite2D)
     else IF_GET_ENTITY_COMP(Camera)
     else
     {

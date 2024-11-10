@@ -207,6 +207,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Core\Components\PrefabOverrides.h" />
     <ClInclude Include="source\Core\Components\RigidBody.h" />
     <ClInclude Include="source\Core\Components\Script.h" />
+    <ClInclude Include="source\Core\Components\Sprite2D.h" />
     <ClInclude Include="source\Core\Components\Tag.h" />
     <ClInclude Include="source\Core\Components\Text.h" />
     <ClInclude Include="source\Core\Components\Transform.h" />

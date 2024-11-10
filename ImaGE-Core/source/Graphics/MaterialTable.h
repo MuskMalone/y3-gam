@@ -35,6 +35,7 @@ namespace Graphics {
         static std::shared_ptr<MaterialData> GetMaterial(uint32_t index);
 
         // Retrieve material by GUID
+        static uint32_t GetMaterialIndexByGUID(const IGE::Assets::GUID& guid);
         static std::shared_ptr<MaterialData> GetMaterialByGUID(const IGE::Assets::GUID& guid);
 
         // Bind textures for all materials to the shader

@@ -146,6 +146,10 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("color", &Image::color)
     .property("textureAssetGUID", &Image::textureAsset);
 
+  REGISTER_COMPONENT(Sprite2D, "Sprite2D")
+    .property("color", &Image::color)
+    .property("textureAssetGUID", &Image::textureAsset);
+
   REGISTER_COMPONENT(Camera, "Camera")
       .property("projType", &Component::Camera::projType)
       .property("position", &Component::Camera::position)

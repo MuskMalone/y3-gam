@@ -14,8 +14,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rttr/variant.h>
 
 namespace Reflection::ComponentUtils {
-    void AddAudioListener(ECS::Entity entity, rttr::variant const& var);  
-    void AddAudioSource(ECS::Entity entity, rttr::variant const& var);
+  void AddAudioListener(ECS::Entity entity, rttr::variant const& var);  
+  void AddAudioSource(ECS::Entity entity, rttr::variant const& var);
   void AddTag(ECS::Entity entity, rttr::variant const& var);
   void AddTransform(ECS::Entity entity, rttr::variant const& var);
   void AddLayer(ECS::Entity entity, rttr::variant const& var);
@@ -30,5 +30,6 @@ namespace Reflection::ComponentUtils {
   void AddLight(ECS::Entity entity, rttr::variant const& var);
   void AddCanvas(ECS::Entity entity, rttr::variant const& var);
   void AddImage(ECS::Entity entity, rttr::variant const& var);
+  void AddSprite2D(ECS::Entity entity, rttr::variant const& var);
   void AddCamera(ECS::Entity entity, rttr::variant const& var);
 } // namespace Reflection

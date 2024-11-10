@@ -741,6 +741,7 @@
     </ClInclude>
     <ClInclude Include="source\pch.h" />
     <ClInclude Include="source\Graphics\MeshSubmeshKeyHash.h" />
+    <ClInclude Include="source\Core\Components\Sprite2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />

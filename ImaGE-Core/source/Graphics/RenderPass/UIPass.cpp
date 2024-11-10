@@ -41,6 +41,14 @@ namespace Graphics {
 			//canvas found
 
 			ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
+			// if no children, early exit
+			if (!entityMan.HasChild(entity)) {
+				IGE_DBGLOGGER.LogWarning("Canvas entity requires a child");
+				Renderer::RenderSceneEnd();
+				End();
+				return;
+			}
+
 			auto children{ entityMan.GetChildEntity(entity) }; //vector of UI element entity
 			auto const& xform = entity.GetComponent<Component::Transform>(); //canvas xform
 

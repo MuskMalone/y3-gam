@@ -148,7 +148,7 @@ namespace Graphics {
           uint32_t matID = 0;
           if (entity.HasComponent<Component::Material>()) {
               auto const& matComponent = entity.GetComponent<Component::Material>();
-              matID = matComponent.matIdx;
+              matID = MaterialTable::GetMaterialIndexByGUID(matComponent.materialGUID);//matComponent.matIdx;
           }
 
           // Group entity pairs by material ID for rendering

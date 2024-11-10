@@ -78,6 +78,7 @@ namespace Reflection::ComponentUtils {
     EXTRACT_RAW_COMP(Material, comp);
 
     entity.EmplaceOrReplaceComponent<Material>(comp.materialGUID);
+    entity.GetComponent<Material>().SetGUID(comp.materialGUID);
   }
 
   void AddMesh(ECS::Entity entity, rttr::variant const& var) {
@@ -126,6 +127,14 @@ namespace Reflection::ComponentUtils {
       IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(comp.textureAsset);
       entity.EmplaceOrReplaceComponent<Image>(comp);
   }
+
+  void AddSprite2D(ECS::Entity entity, rttr::variant const& var) {
+    EXTRACT_RAW_COMP(Sprite2D, comp);
+
+    IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(comp.textureAsset);
+    entity.EmplaceOrReplaceComponent<Sprite2D>(comp);
+  }
+
   void AddCamera(ECS::Entity entity, rttr::variant const& var){
       EXTRACT_RAW_COMP(Camera, comp);
 

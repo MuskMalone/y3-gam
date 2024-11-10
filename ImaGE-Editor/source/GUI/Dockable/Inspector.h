@@ -52,7 +52,10 @@ namespace GUI {
     bool AudioListenerComponentWindow(ECS::Entity entity, bool highlight = false);
     bool AudioSourceComponentWindow(ECS::Entity entity, bool highlight = false);
     bool BoxColliderComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool CameraComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool CanvasComponentWindow(ECS::Entity entity, bool highlight = false);
     bool CapsuleColliderComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool ImageComponentWindow(ECS::Entity entity, bool highlight = false);
     bool LayerComponentWindow(ECS::Entity entity, bool highlight = false);
     bool LightComponentWindow(ECS::Entity entity, bool highlight = false);
     bool MaterialWindow(ECS::Entity entity, bool highlight = false);
@@ -60,12 +63,10 @@ namespace GUI {
     bool RigidBodyComponentWindow(ECS::Entity entity, bool highlight = false);
     bool ScriptComponentWindow(ECS::Entity entity, bool highlight = false);
     bool SphereColliderComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool Sprite2DComponentWindow(ECS::Entity entity, bool highlight = false);
     bool TagComponentWindow(ECS::Entity entity, bool highlight = false);
     bool TextComponentWindow(ECS::Entity entity, bool highlight = false);
     bool TransformComponentWindow(ECS::Entity entity, bool highlight = false);
-    bool CanvasComponentWindow(ECS::Entity entity, bool highlight = false);
-    bool ImageComponentWindow(ECS::Entity entity, bool highlight = false);
-    bool CameraComponentWindow(ECS::Entity entity, bool highlight = false);
     
     /*!*********************************************************************
     \brief
