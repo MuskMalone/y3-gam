@@ -87,7 +87,9 @@ namespace Reflection::ComponentUtils {
       : IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(comp.meshName) };
 
     try {
-      entity.EmplaceOrReplaceComponent<Mesh>(meshSrc, comp.meshName, comp.isCustomMesh, comp.submeshIdx);
+      Mesh copy{ comp };
+      copy.meshSource = meshSrc;
+      entity.EmplaceOrReplaceComponent<Mesh>(copy);
     }
     catch (Debug::ExceptionBase& e) {
       e.LogSource();
