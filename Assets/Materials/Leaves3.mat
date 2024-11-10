@@ -1,15 +1,15 @@
 {
-    "name": "MatNoLight",
-    "shader": "Unlit",
+    "name": "Leaves",
+    "shader": "PBR",
     "albedoColor": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
+        "x": 0.10922055691480637,
+        "y": 0.27090299129486086,
+        "z": 0.0597979836165905
     },
     "metalness": 0.0,
-    "roughness": 0.5,
+    "roughness": 1.0,
     "ao": 1.0,
-    "emission": 0.0,
+    "emission": 0.26100000739097597,
     "transparency": 1.0,
     "tiling": {
         "x": 1.0,
@@ -20,7 +20,7 @@
         "y": 0.0
     },
     "albedoMap": {
-        "ID": 11687943335358774051
+        "ID": 2203736300003804932
     },
     "normalMap": {
         "ID": 2203736300003804932

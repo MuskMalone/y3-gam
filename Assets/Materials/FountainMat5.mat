@@ -1,15 +1,15 @@
 {
-    "name": "MatNoLight",
-    "shader": "Unlit",
+    "name": "FountainMat",
+    "shader": "PBR",
     "albedoColor": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
+        "x": 0.695652186870575,
+        "y": 0.695652186870575,
+        "z": 0.695652186870575
     },
-    "metalness": 0.0,
-    "roughness": 0.5,
+    "metalness": 0.5,
+    "roughness": 0.0,
     "ao": 1.0,
-    "emission": 0.0,
+    "emission": 0.35499998927116396,
     "transparency": 1.0,
     "tiling": {
         "x": 1.0,
@@ -20,7 +20,7 @@
         "y": 0.0
     },
     "albedoMap": {
-        "ID": 11687943335358774051
+        "ID": 2203736300003804932
     },
     "normalMap": {
         "ID": 2203736300003804932
