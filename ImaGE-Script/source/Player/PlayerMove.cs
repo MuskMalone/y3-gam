@@ -48,7 +48,7 @@ public class  PlayerMove : Entity
   // New flag to control whether the player can look around
   public bool canLook = true;
 
-  Vector3 velocity = new Vector3();
+  public Vector3 velocity = new Vector3();
   bool isGrounded = true;
   public PlayerMove() : base()
   {

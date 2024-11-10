@@ -293,6 +293,7 @@ namespace IGE {
             FMOD_RESULT result;
 
             // Set the loop count for the sound based on the `loop` setting
+            result = mData[sound]->setMode(settings.loop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF);
             result = mData[sound]->setLoopCount(settings.loop ? -1 : 0);
             if (result != FMOD_OK)
             {
@@ -325,7 +326,8 @@ namespace IGE {
 
                 temp->setMode(FMOD_3D); // Set the channel to 3D mode
                 temp->set3DAttributes(&fmodPosition, nullptr); // Set the 3D position
-
+                temp->set3DMinMaxDistance(settings.minDistance, settings.maxDistance); // Set min/max distance
+                temp->set3DDopplerLevel(settings.dopplerLevel); // Set Doppler level
                 // Apply rolloff
                 switch (settings.rolloffType) {
                 case SoundInvokeSetting::RolloffType::LINEAR:
@@ -334,9 +336,11 @@ namespace IGE {
                 case SoundInvokeSetting::RolloffType::LOGARITHMIC:
                     temp->setMode(FMOD_3D_INVERSEROLLOFF);
                     break;
+                default:
+                    temp->setMode(FMOD_3D | FMOD_3D_INVERSEROLLOFF);
+                    temp->set3DMinMaxDistance(1e6f, 1e6f);  // Large min and max distance
+                    break;
                 }
-                temp->set3DMinMaxDistance(settings.minDistance, settings.maxDistance); // Set min/max distance
-                temp->set3DDopplerLevel(settings.dopplerLevel); // Set Doppler level
             }
 
             // Unpause the channel to start playback
@@ -463,9 +467,13 @@ namespace IGE {
         {
             // Retrieve the instance pointer from user data
             FMOD::Channel* channel = reinterpret_cast<FMOD::Channel*>(chanCtrl);
+            int loopCount{ };
+            channel->getLoopCount(&loopCount);
+            if (loopCount != 0) return FMOD_OK;
+            //if (channel->getLoopCount())
             void* userData = nullptr;
             channel->getUserData(&userData);
-
+            
             if (userData) {
                 try {
                     SoundInvokeSetting* settings = static_cast<SoundInvokeSetting*>(userData);

@@ -586,7 +586,7 @@ namespace GUI {
               if (sfi.mData.mClassInst && ECS::EntityManager::GetInstance().IsValidEntity(static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData)))
               {
                 msg = ECS::Entity(static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData)).GetTag();
-                ECS::Entity::EntityID currID = static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData);
+                currID = static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData);
               }
 
               if (ImGui::BeginCombo("##", msg.c_str()))
@@ -598,11 +598,13 @@ namespace GUI {
                     bool is_selected = (e.GetRawEnttEntityID() == currID);
                     if (ImGui::Selectable(e.GetTag().c_str(), is_selected))
                     {
+
                       if (e.GetRawEnttEntityID() != currID) {
                         if (!sfi.mData.mClassInst)
                         {
                           sfi.mData = Mono::ScriptInstance(sfi.mData.mScriptName);
                           sfi.mData.SetEntityID(e.GetRawEnttEntityID());
+                          std::cout << (uint32_t)e.GetRawEnttEntityID() << std::endl;
                           s.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
                           sfi.mData.GetAllUpdatedFields();
                         }
@@ -1344,70 +1346,90 @@ namespace GUI {
               }
               ImGui::EndDragDropTarget();
           }
-          // Iterate through each AudioInstance in the sounds map
-          static std::string editingKey = ""; // Track the current sound name being edited
-          static char renameBuffer[128] = "";
-          for (auto& [currentName, audioInstance] : audioSource.sounds) {
-              // Display Sound Name
-              ImGui::Text("%s", currentName.c_str());
 
-              // Begin a Tree Node for sound properties
-              if (ImGui::TreeNode("Sound Properties")) {
+          for (auto& [currentName, audioInstance] : audioSource.sounds) {
+              // Unique ID for this entry
+              std::string uniqueID = currentName;
+
+              // Display Sound Name
+              static char buffer[512];
+              if (std::strncmp(buffer, currentName.c_str(), 512) != 0) {
+                  std::snprintf(buffer, 512, "%s", currentName.c_str());
+              }
+
+              // Render the input text box with a unique ID
+              ImGui::InputText(("##" + uniqueID).c_str(), buffer, 512);
+
+              // Update the name when the input loses focus
+              if (ImGui::IsItemDeactivatedAfterEdit()) {
+                  audioSource.RenameSound(currentName, std::string(buffer));
+                  break;
+              }
+
+              ImGui::SameLine();
+              if (ImGui::Button(("Delete##" + uniqueID).c_str())) {
+                  audioSource.RemoveSound(currentName);
+                  break;
+              }
+
+              // Begin a Tree Node for sound properties with a unique ID
+              if (ImGui::TreeNode(("Sound Properties##" + uniqueID).c_str())) {
                   // Table for 3D position
-                  if (BeginVec3Table("PositionTable", inputWidth)) {
-                      if (ImGuiHelpers::TableInputFloat3("Position", &audioInstance.playSettings.position.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
+                  if (BeginVec3Table(("PositionTable##" + uniqueID).c_str(), inputWidth)) {
+                      if (ImGuiHelpers::TableInputFloat3(("Position##" + uniqueID).c_str(), &audioInstance.playSettings.position.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
                           modified = true;
                       }
                       EndVec3Table();
                   }
 
                   // Table for single properties
-                  if (ImGui::BeginTable("SoundPropertyTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+                  if (ImGui::BeginTable(("SoundPropertyTable##" + uniqueID).c_str(), 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
                       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
                       ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
 
                       NextRowTable("Volume");
-                      if (ImGui::DragFloat("##Volume", &audioInstance.playSettings.volume, 0.01f, 0.0f, 1.0f)) {
+                      if (ImGui::DragFloat(("##Volume" + uniqueID).c_str(), &audioInstance.playSettings.volume, 0.01f, 0.0f, 1.0f)) {
                           modified = true;
                       }
 
                       NextRowTable("Pitch");
-                      if (ImGui::DragFloat("##Pitch", &audioInstance.playSettings.pitch, 0.01f, 0.1f, 3.0f)) {
+                      if (ImGui::DragFloat(("##Pitch" + uniqueID).c_str(), &audioInstance.playSettings.pitch, 0.01f, 0.1f, 3.0f)) {
                           modified = true;
                       }
 
                       NextRowTable("Pan");
-                      if (ImGui::DragFloat("##Pan", &audioInstance.playSettings.pan, 0.01f, -1.0f, 1.0f)) {
+                      if (ImGui::DragFloat(("##Pan" + uniqueID).c_str(), &audioInstance.playSettings.pan, 0.01f, -1.0f, 1.0f)) {
                           modified = true;
                       }
 
                       NextRowTable("Doppler Level");
-                      if (ImGui::DragFloat("##DopplerLevel", &audioInstance.playSettings.dopplerLevel, 0.01f, 0.0f, 5.0f)) {
+                      if (ImGui::DragFloat(("##DopplerLevel" + uniqueID).c_str(), &audioInstance.playSettings.dopplerLevel, 0.01f, 0.0f, 5.0f)) {
                           modified = true;
                       }
 
                       NextRowTable("Min Distance");
-                      if (ImGui::DragFloat("##MinDistance", &audioInstance.playSettings.minDistance, 0.1f, 0.0f, 1000.0f)) {
+                      if (ImGui::DragFloat(("##MinDistance" + uniqueID).c_str(), &audioInstance.playSettings.minDistance, 0.1f, 0.0f, 1000.0f)) {
                           modified = true;
                       }
 
                       NextRowTable("Max Distance");
-                      if (ImGui::DragFloat("##MaxDistance", &audioInstance.playSettings.maxDistance, 0.1f, 0.0f, 1000.0f)) {
+                      if (ImGui::DragFloat(("##MaxDistance" + uniqueID).c_str(), &audioInstance.playSettings.maxDistance, 0.1f, 0.0f, 1000.0f)) {
                           modified = true;
                       }
+
                       // Checkboxes for Mute, Loop, and Play on Awake
                       NextRowTable("Mute");
-                      if (ImGui::Checkbox("##Mute", &audioInstance.playSettings.mute)) {
+                      if (ImGui::Checkbox(("##Mute" + uniqueID).c_str(), &audioInstance.playSettings.mute)) {
                           modified = true;
                       }
 
                       NextRowTable("Loop");
-                      if (ImGui::Checkbox("##Loop", &audioInstance.playSettings.loop)) {
+                      if (ImGui::Checkbox(("##Loop" + uniqueID).c_str(), &audioInstance.playSettings.loop)) {
                           modified = true;
                       }
 
                       NextRowTable("Play On Awake");
-                      if (ImGui::Checkbox("##PlayOnAwake", &audioInstance.playSettings.playOnAwake)) {
+                      if (ImGui::Checkbox(("##PlayOnAwake" + uniqueID).c_str(), &audioInstance.playSettings.playOnAwake)) {
                           modified = true;
                       }
 
@@ -1415,15 +1437,15 @@ namespace GUI {
                   }
 
                   // Table for Rolloff Type
-                  static const char* rolloffTypes[] = { "Linear", "Logarithmic" };
+                  static const char* rolloffTypes[] = { "Linear", "Logarithmic", "None" };
                   int currentRolloff = static_cast<int>(audioInstance.playSettings.rolloffType);
 
-                  ImGui::BeginTable("RolloffTypeTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+                  ImGui::BeginTable(("RolloffTypeTable##" + uniqueID).c_str(), 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
                   ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
                   ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
 
                   NextRowTable("Rolloff Type");
-                  if (ImGui::Combo("##RolloffType", &currentRolloff, rolloffTypes, IM_ARRAYSIZE(rolloffTypes))) {
+                  if (ImGui::Combo(("##RolloffType" + uniqueID).c_str(), &currentRolloff, rolloffTypes, IM_ARRAYSIZE(rolloffTypes))) {
                       audioInstance.playSettings.rolloffType = static_cast<IGE::Audio::SoundInvokeSetting::RolloffType>(currentRolloff);
                       modified = true;
                   }

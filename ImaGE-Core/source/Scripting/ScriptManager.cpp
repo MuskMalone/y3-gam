@@ -61,10 +61,10 @@ namespace Mono
     { "System.UInt32",  ScriptFieldType::UINT },
     { "System.UInt64",  ScriptFieldType::ULONG },
     { "System.String",  ScriptFieldType::STRING },
-    { "Image.Mono.Utils.Vec2<System.Single>", ScriptFieldType::VEC2 },
-    { "Image.Mono.Utils..Vec3<System.Single>", ScriptFieldType::VEC3 },
-    { "Image.Mono.Utils.Vec2<System.Double>", ScriptFieldType::DVEC2 },
-    { "Image.Mono.Utils.Vec3<System.Double>", ScriptFieldType::DVEC3 },
+    { "IGE.Utils.Vec2<System.Single>", ScriptFieldType::VEC2 },
+    { "IGE.Utils.Vec3<System.Single>", ScriptFieldType::VEC3 },
+    { "IGE.Utils.Vec2<System.Double>", ScriptFieldType::DVEC2 },
+    { "IGE.Utils.Vec3<System.Double>", ScriptFieldType::DVEC3 },
     { "System.Int32[]", ScriptFieldType::INT_ARR },
     { "System.String[]",ScriptFieldType::STRING_ARR},
     { "Entity",ScriptFieldType::ENTITY},
@@ -178,6 +178,9 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetWorldRotation);
   ADD_INTERNAL_CALL(GetRotation);
   ADD_INTERNAL_CALL(GetWorldScale);
+  ADD_INTERNAL_CALL(GetScale);
+  ADD_INTERNAL_CALL(GetColliderScale);
+  ADD_INTERNAL_CALL(GetVelocity);
 
   //// Set Functions
   ADD_INTERNAL_CALL(SetWorldPosition);
@@ -203,12 +206,10 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(DestroyEntity);
   ADD_INTERNAL_CALL(DestroyScript);
 
-
- 
-
-
   // Utility Functions
   ADD_INTERNAL_CALL(Raycast);
+  ADD_INTERNAL_CALL(PlaySound);
+  ADD_INTERNAL_CALL(GetLayerName);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -683,6 +684,22 @@ void Mono::SetWorldScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment
   TransformHelpers::UpdateWorldTransform(entity);
 }
 
+glm::vec3 Mono::GetScale(ECS::Entity::EntityID entity)
+{
+    Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+    return trans.scale;
+}
+
+glm::vec3 Mono::GetColliderScale(ECS::Entity::EntityID e)
+{
+    ECS::Entity entity(e);
+    if (entity.HasComponent<Component::BoxCollider>()) {
+        auto& collider{ entity.GetComponent<Component::BoxCollider>() };
+        return glm::vec3{ collider.scale.x, collider.scale.y, collider.scale.z };
+    }
+    return glm::vec3{};
+}
+
 glm::quat Mono::GetWorldRotation(ECS::Entity::EntityID entity)
 {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
@@ -803,6 +820,33 @@ ECS::Entity::EntityID Mono::Raycast(glm::vec3 start, glm::vec3 end)
     IGE::Physics::PhysicsSystem::GetInstance()->RayCastSingular(start, end, hit);
     ECS::Entity::EntityID out {hit.entity.GetEntityID()};
     return out;
+}
+
+void Mono::PlaySound(ECS::Entity::EntityID e, MonoString* s)
+{
+    std::string name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().PlaySound(name);
+}
+
+glm::vec3 Mono::GetVelocity(ECS::Entity::EntityID e)
+{
+    ECS::Entity entity{ e };
+    if (entity.HasComponent<Component::RigidBody>()) {
+        auto& rb{ entity.GetComponent<Component::RigidBody>() };
+        return glm::vec3{ rb.velocity.x, rb.velocity.y, rb.velocity.z };
+    }
+    return glm::vec3();
+}
+
+MonoString* Mono::GetLayerName(ECS::Entity::EntityID e)
+{
+    ECS::Entity entity{ e };
+    if (entity.HasComponent<Component::Layer>()) {
+        auto& layer{ entity.GetComponent<Component::Layer>() };
+        return STDToMonoString(layer.name);
+    }
+    return nullptr;
 }
 
 float Mono::GetDeltaTime()

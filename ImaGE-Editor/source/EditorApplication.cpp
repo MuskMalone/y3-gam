@@ -95,6 +95,7 @@ namespace IGE {
           }
           else {
             sysManager.UpdateSelectedSystems<Systems::TransformSystem, IGE::Physics::PhysicsSystem, IGE::Audio::AudioSystem>();
+            sceneManager.ExecuteMainThreadQueue();
           }
         }
         catch (Debug::ExceptionBase& e)

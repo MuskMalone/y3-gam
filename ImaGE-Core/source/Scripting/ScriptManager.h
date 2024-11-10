@@ -255,6 +255,8 @@ namespace Mono
 			Vector 3 of the new scale
 		************************************************************************/
 		static void SetWorldScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment);
+		static glm::vec3 GetScale(ECS::Entity::EntityID);
+		static glm::vec3 GetColliderScale(ECS::Entity::EntityID);
 
 		/*!*********************************************************************
 		\brief
@@ -311,6 +313,12 @@ namespace Mono
 
 		static ECS::Entity::EntityID Raycast(glm::vec3 start, glm::vec3 end);
 
+		static void PlaySound(ECS::Entity::EntityID, MonoString*);
+
+		static glm::vec3 GetVelocity(ECS::Entity::EntityID);
+
+		static MonoString* GetLayerName(ECS::Entity::EntityID);
+		
 		static float GetDeltaTime();
 
 		static glm::vec3 GetMouseDelta();
