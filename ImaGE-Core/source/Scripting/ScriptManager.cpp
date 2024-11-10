@@ -750,6 +750,14 @@ glm::vec3 Mono::GetWorldScale(ECS::Entity::EntityID entity)
 
 MonoString* Mono::GetTag(ECS::Entity::EntityID entity)
 {
+  /*
+  if (ECS::Entity(entity).HasComponent<Component::Tag>())
+    return STDToMonoString(ECS::Entity(entity).GetComponent<Component::Tag>().tag);
+  else
+    return STDToMonoString("");
+  */
+
+  // @TODO: TEMP
   return STDToMonoString(ECS::Entity(entity).GetComponent<Component::Tag>().tag);
 }
 
