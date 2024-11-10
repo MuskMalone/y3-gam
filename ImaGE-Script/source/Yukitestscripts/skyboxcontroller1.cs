@@ -84,7 +84,7 @@
 //////    private void OnDisable()
 //////    {
 //////        // Restore the initial blend value when the script is disabled or the game stops
-//////        Skybox_DualPanoramic.SetFloat("_Blend", initialBlendValue);
+////        Skybox_DualPanoramic.SetFloat("_Blend", initialBlendValue);
 //////    }
 //////}
 
@@ -285,152 +285,152 @@
 
 //public class SkyboxController : MonoBehaviour
 //{
-//    public GameObject unbloomCereus;
-//    public Material Skybox_DualPanoramic; // Reference to the skybox material
-//    public Light directionalLight; // Reference to the directional light
+//  public GameObject unbloomCereus;
+//  public Material Skybox_DualPanoramic; // Reference to the skybox material
+//  public Light directionalLight; // Reference to the directional light
 
-//    public float dayLightRotationX = 50f; // Rotation for day (morning)
-//    public float nightLightRotationX = -20f; // Rotation for night
+//  public float dayLightRotationX = 50f; // Rotation for day (morning)
+//  public float nightLightRotationX = -20f; // Rotation for night
 
-//    public float dayLightIntensity = 1f; // Intensity for day
-//    public float nightLightIntensity = 0.05f; // Reduced intensity for night
+//  public float dayLightIntensity = 1f; // Intensity for day
+//  public float nightLightIntensity = 0.05f; // Reduced intensity for night
 
-//    [Range(0, 1)] public float dayBlendValue = 0f; // Blend value for day
-//    [Range(0, 1)] public float nightBlendValue = 1f; // Blend value for night
+//  [Range(0, 1)] public float dayBlendValue = 0f; // Blend value for day
+//  [Range(0, 1)] public float nightBlendValue = 1f; // Blend value for night
 
-//    public float transitionSpeed = 1f; // Speed of the transition
+//  public float transitionSpeed = 1f; // Speed of the transition
 
-//    private float initialBlendValue; // Track initial blend value to restore during Play mode
+//  private float initialBlendValue; // Track initial blend value to restore during Play mode
 
-//    public static bool IsNight { get; private set; } = false; // Flag to check if it's night time
-//    public static bool SeedPlantedFlag { get; set; } = false; // Track if seed is planted
-//    private bool seedPlantedAtNight = false; // Track if the seed was planted at night
-//    private bool flowerBloomed = false; // Flag to check if the flower has bloomed
+//  public static bool IsNight { get; private set; } = false; // Flag to check if it's night time
+//  public static bool SeedPlantedFlag { get; set; } = false; // Track if seed is planted
+//  private bool seedPlantedAtNight = false; // Track if the seed was planted at night
+//  private bool flowerBloomed = false; // Flag to check if the flower has bloomed
 
-//    [Header("References")]
-//    public PictureAlignNight pictureAlign; // Public reference to PictureAlignNight
+//  [Header("References")]
+//  public PictureAlignNight pictureAlign; // Public reference to PictureAlignNight
 
-//    private Inventory inventoryScript;
+//  private Inventory inventoryScript;
 
-//    // Track the associated item to remove
-//    private IInventoryItem associatedItem;
+//  // Track the associated item to remove
+//  private IInventoryItem associatedItem;
 
-//    private void Awake()
+//  private void Awake()
+//  {
+//    // Save the initial blend value when the script is loaded
+//    initialBlendValue = Skybox_DualPanoramic.GetFloat("_Blend");
+
+//    if (unbloomCereus != null)
 //    {
-//        // Save the initial blend value when the script is loaded
-//        initialBlendValue = Skybox_DualPanoramic.GetFloat("_Blend");
+//      unbloomCereus.SetActive(false);
+//    }
+//  }
 
-//        if (unbloomCereus != null)
-//        {
-//            unbloomCereus.SetActive(false);
-//        }
+//  private void Start()
+//  {
+//    inventoryScript = FindObjectOfType<Inventory>();
+//    // Reset the blend value, light rotation, and intensity to the default day state
+//    SetDaylight();
+
+//    // Initialize the flower as hidden
+//    if (unbloomCereus != null)
+//    {
+//      unbloomCereus.SetActive(false);
+//    }
+//  }
+
+//  private void Update()
+//  {
+//    // Ensure pictureAlign is assigned before accessing alignCheck
+//    if (pictureAlign != null && pictureAlign.isFrozen && !IsNight)
+//    {
+//      StartCoroutine(SmoothTransition(nightBlendValue, nightLightRotationX, nightLightIntensity));
+//      IsNight = true;
+//      IInventoryItem itemToUse = inventoryScript.GetItemByName("NightPainting");
+//      Debug.Log("itemToUse" + itemToUse);
+//      if (itemToUse != null)
+//      {
+//        Debug.Log("name" + itemToUse.Name);
+//        inventoryScript.RemoveItem(itemToUse);
+//      }
+
+//      if (SeedPlantedFlag && !flowerBloomed)
+//      {
+//        Debug.Log("Seed was planted during the day. Blooming flower immediately at night.");
+//        BloomFlower();
+//      }
+//    }
+//  }
+
+//  private void BloomFlower()
+//  {
+//    // Make the flower appear and set the flag to true
+//    if (unbloomCereus != null)
+//    {
+//      unbloomCereus.SetActive(true);
+//      flowerBloomed = true; // Once bloomed, it should stay bloomed permanently
+//    }
+//  }
+
+//  public void HandleSeedPlanted()
+//  {
+//    SeedPlantedFlag = true;
+//    seedPlantedAtNight = IsNight; // Track if the seed was planted at night
+
+//    // If it's night, make the flower bloom immediately and keep it bloomed permanently
+//    if (seedPlantedAtNight && !flowerBloomed)
+//    {
+//      Debug.Log("Seed planted at night. Making flower appear immediately and keeping it bloomed.");
+//      BloomFlower();
+//    }
+//  }
+
+//  // Coroutine to smoothly transition between day and night states
+//  private IEnumerator SmoothTransition(float targetBlend, float targetLightRotationX, float targetLightIntensity)
+//  {
+//    float startBlend = Skybox_DualPanoramic.GetFloat("_Blend");
+//    float startRotationX = directionalLight.transform.rotation.eulerAngles.x;
+//    float startIntensity = directionalLight.intensity;
+//    float elapsedTime = 0f;
+
+//    while (elapsedTime < 1f)
+//    {
+//      elapsedTime += Time.deltaTime * transitionSpeed;
+
+//      // Lerp the skybox blend value
+//      Skybox_DualPanoramic.SetFloat("_Blend", Mathf.Lerp(startBlend, targetBlend, elapsedTime));
+
+//      // Lerp the directional light rotation
+//      float newRotationX = Mathf.Lerp(startRotationX, targetLightRotationX, elapsedTime);
+//      directionalLight.transform.rotation = Quaternion.Euler(newRotationX, directionalLight.transform.rotation.eulerAngles.y, directionalLight.transform.rotation.eulerAngles.z);
+
+//      // Lerp the directional light intensity
+//      directionalLight.intensity = Mathf.Lerp(startIntensity, targetLightIntensity, elapsedTime);
+
+//      yield return null;
 //    }
 
-//    private void Start()
-//    {
-//        inventoryScript = FindObjectOfType<Inventory>();
-//        // Reset the blend value, light rotation, and intensity to the default day state
-//        SetDaylight();
+//    // Ensure the final values are set precisely
+//    Skybox_DualPanoramic.SetFloat("_Blend", targetBlend);
+//    directionalLight.transform.rotation = Quaternion.Euler(targetLightRotationX, directionalLight.transform.rotation.eulerAngles.y, directionalLight.transform.rotation.eulerAngles.z);
+//    directionalLight.intensity = targetLightIntensity;
+//  }
 
-//        // Initialize the flower as hidden
-//        if (unbloomCereus != null)
-//        {
-//            unbloomCereus.SetActive(false);
-//        }
-//    }
+//  // Set the scene to the default daylight state when Play mode starts
+//  private void SetDaylight()
+//  {
+//    // Set the skybox blend value to the day state
+//    Skybox_DualPanoramic.SetFloat("_Blend", dayBlendValue);
 
-//    private void Update()
-//    {
-//        // Ensure pictureAlign is assigned before accessing alignCheck
-//        if (pictureAlign != null && pictureAlign.isFrozen && !IsNight)
-//        {
-//            StartCoroutine(SmoothTransition(nightBlendValue, nightLightRotationX, nightLightIntensity));
-//            IsNight = true;
-//            IInventoryItem itemToUse = inventoryScript.GetItemByName("NightPainting");
-//            Debug.Log("itemToUse" + itemToUse);
-//            if (itemToUse != null)
-//            {
-//                Debug.Log("name" + itemToUse.Name);
-//                inventoryScript.RemoveItem(itemToUse);
-//            }
+//    // Set the directional light to the day rotation and intensity
+//    directionalLight.transform.rotation = Quaternion.Euler(dayLightRotationX, directionalLight.transform.rotation.eulerAngles.y, directionalLight.transform.rotation.eulerAngles.z);
+//    directionalLight.intensity = dayLightIntensity;
+//    IsNight = false;
+//  }
 
-//            if (SeedPlantedFlag && !flowerBloomed)
-//            {
-//                Debug.Log("Seed was planted during the day. Blooming flower immediately at night.");
-//                BloomFlower();
-//            }
-//        }
-//    }
-
-//    private void BloomFlower()
-//    {
-//        // Make the flower appear and set the flag to true
-//        if (unbloomCereus != null)
-//        {
-//            unbloomCereus.SetActive(true);
-//            flowerBloomed = true; // Once bloomed, it should stay bloomed permanently
-//        }
-//    }
-
-//    public void HandleSeedPlanted()
-//    {
-//        SeedPlantedFlag = true;
-//        seedPlantedAtNight = IsNight; // Track if the seed was planted at night
-
-//        // If it's night, make the flower bloom immediately and keep it bloomed permanently
-//        if (seedPlantedAtNight && !flowerBloomed)
-//        {
-//            Debug.Log("Seed planted at night. Making flower appear immediately and keeping it bloomed.");
-//            BloomFlower();
-//        }
-//    }
-
-//    // Coroutine to smoothly transition between day and night states
-//    private IEnumerator SmoothTransition(float targetBlend, float targetLightRotationX, float targetLightIntensity)
-//    {
-//        float startBlend = Skybox_DualPanoramic.GetFloat("_Blend");
-//        float startRotationX = directionalLight.transform.rotation.eulerAngles.x;
-//        float startIntensity = directionalLight.intensity;
-//        float elapsedTime = 0f;
-
-//        while (elapsedTime < 1f)
-//        {
-//            elapsedTime += Time.deltaTime * transitionSpeed;
-
-//            // Lerp the skybox blend value
-//            Skybox_DualPanoramic.SetFloat("_Blend", Mathf.Lerp(startBlend, targetBlend, elapsedTime));
-
-//            // Lerp the directional light rotation
-//            float newRotationX = Mathf.Lerp(startRotationX, targetLightRotationX, elapsedTime);
-//            directionalLight.transform.rotation = Quaternion.Euler(newRotationX, directionalLight.transform.rotation.eulerAngles.y, directionalLight.transform.rotation.eulerAngles.z);
-
-//            // Lerp the directional light intensity
-//            directionalLight.intensity = Mathf.Lerp(startIntensity, targetLightIntensity, elapsedTime);
-
-//            yield return null;
-//        }
-
-//        // Ensure the final values are set precisely
-//        Skybox_DualPanoramic.SetFloat("_Blend", targetBlend);
-//        directionalLight.transform.rotation = Quaternion.Euler(targetLightRotationX, directionalLight.transform.rotation.eulerAngles.y, directionalLight.transform.rotation.eulerAngles.z);
-//        directionalLight.intensity = targetLightIntensity;
-//    }
-
-//    // Set the scene to the default daylight state when Play mode starts
-//    private void SetDaylight()
-//    {
-//        // Set the skybox blend value to the day state
-//        Skybox_DualPanoramic.SetFloat("_Blend", dayBlendValue);
-
-//        // Set the directional light to the day rotation and intensity
-//        directionalLight.transform.rotation = Quaternion.Euler(dayLightRotationX, directionalLight.transform.rotation.eulerAngles.y, directionalLight.transform.rotation.eulerAngles.z);
-//        directionalLight.intensity = dayLightIntensity;
-//        IsNight = false;
-//    }
-
-//    private void OnDisable()
-//    {
-//        // Restore the initial blend value when the script is disabled or the game stops
-//        Skybox_DualPanoramic.SetFloat("_Blend", initialBlendValue);
-//    }
+//  private void OnDisable()
+//  {
+//    // Restore the initial blend value when the script is disabled or the game stops
+//    Skybox_DualPanoramic.SetFloat("_Blend", initialBlendValue);
+//  }
 //}

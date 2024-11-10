@@ -170,6 +170,7 @@ void ScriptManager::AddInternalCalls()
   ADD_CLASS_INTERNAL_CALL(IsKeyHeld, Input::InputManager::GetInstance()); 
   ADD_CLASS_INTERNAL_CALL(GetInputString, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(AnyKeyDown, Input::InputManager::GetInstance());
+  ADD_INTERNAL_CALL(GetMousePos);
   ADD_INTERNAL_CALL(GetMouseDelta);
 
   //// Get Functions
@@ -205,6 +206,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(FindScript);
   ADD_INTERNAL_CALL(DestroyEntity);
   ADD_INTERNAL_CALL(DestroyScript);
+  ADD_INTERNAL_CALL(SetActive);
 
   // Utility Functions
   ADD_INTERNAL_CALL(Raycast);
@@ -803,6 +805,11 @@ glm::vec3 Mono::GetMouseDelta()
   return glm::vec3(Input::InputManager::GetInstance().GetMouseDelta(),0);
 }
 
+glm::vec3 Mono::GetMousePos()
+{
+  return glm::vec3(Input::InputManager::GetInstance().GetMousePos(), 0);
+}
+
 bool  Mono::IsGrounded(ECS::Entity::EntityID entity)
 {
   if (ECS::Entity(entity).HasComponent<Component::RigidBody>())
@@ -907,10 +914,20 @@ void Mono::DestroyScript(MonoObject* obj, ECS::Entity::EntityID entity)
 }
 
 
+void Mono::SetActive(ECS::Entity::EntityID entity, bool b)
+{
+  if (ECS::Entity(entity))
+  {
+    ECS::Entity(entity).SetIsActive(b);
+  }
+  else
+    Debug::DebugLogger::GetInstance().LogError("You r trying to set active on an invalid entity");
+}
+
 
 /*!**********************************************************************
 *																																			  *
-*								  Helper Functions to get data from C#			          	*
+*								  Helper Functions to get data from C#			           	*
 *																																			  *
 ************************************************************************/
 

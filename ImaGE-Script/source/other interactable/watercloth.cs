@@ -5,6 +5,8 @@
 //using System.Threading.Tasks;
 //using System.Numerics;
 //using IGE.Utils;
+
+
 //public class watercloth : Entity
 //{
 //  public bool playerInRange;
@@ -46,7 +48,7 @@
 
 
 
-//  private void OnTriggerEnter(Collider other)
+//  private void OnTriggerEnter(Entity other)
 //  {
 //    if (other.CompareTag("Player"))
 //    {
@@ -54,7 +56,7 @@
 //    }
 //  }
 
-//  private void OnTriggerExit(Collider other)
+//  private void OnTriggerExit(Entity other)
 //  {
 //    if (other.CompareTag("Player"))
 //    {

@@ -325,11 +325,14 @@ namespace Mono
 
 		static MonoObject* FindScript(MonoString* s);
 
-		void DestroyEntity(ECS::Entity::EntityID entity);
+		static void DestroyEntity(ECS::Entity::EntityID entity);
 
-		void DestroyScript(MonoObject* obj, ECS::Entity::EntityID entity);
+		static void DestroyScript(MonoObject* obj, ECS::Entity::EntityID entity);
 
-		
+		static void SetActive(ECS::Entity::EntityID entity,bool b);
+
+
+		static glm::vec3 GetMousePos();
 
 		/*!**********************************************************************
 		*																																			  *

@@ -1,73 +1,78 @@
-//using System.Collections;
+//using System;
 //using System.Collections.Generic;
-//using UnityEngine;
-////using static UnityEditor.Progress;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+//using System.Numerics;
+//using IGE.Utils;
+//using System.Drawing;      // For Bitmap (or use other graphics libraries)
+//using System.Drawing.Imaging;
 
 //public class InteractableObject : Entity
 //{
-//    AudioManager audioManager;
+//  AudioManager audioManager;
 
-//    public bool playerInRange;
+//  public bool playerInRange;
 
-//    public string ItemName;
+//  public string ItemName;
 
-//    private Inventory inventoryScript;
+//  private Inventory inventoryScript;
 
-//    private HoldupUI holdupUI;
-//    private SeedPlanter seedPlanter;
-//    //private IInventoryItem inventoryItem;
+//  private HoldupUI holdupUI;
+//  private SeedPlanter seedPlanter;
+//  //private IInventoryItem inventoryItem;
 
-//    /*public Sprite itemIcon;*/ // Add a reference to the item's icon
+//  /*public Sprite itemIcon;*/ // Add a reference to the item's icon
 
-//    private void Awake()
+//  private void Awake()
+//  {
+//    audioManager = Entity.FindEntityWithTag("Audio").GetComponent<AudioManager>();
+//  }
+
+//  public string GetItemName()
+//  {
+//    return ItemName;
+//  }
+
+//  private void Start()
+//  {
+//    seedPlanter = FindObjectOfType<SeedPlanter>();
+//    holdupUI = FindObjectOfType<HoldupUI>();
+//    inventoryScript = FindObjectOfType<Inventory>();
+//  }
+
+//  void Update()
+//  {
+//    if (Input.GetKeyDown(KeyCode.E) && playerInRange && SelectionManager.Instance.onTarget)
 //    {
-//        audioManager = Entity.FindEntityWithTag("Audio").GetComponent<AudioManager>();
+
+//      IInventoryItem item = Entity.GetComponent<IInventoryItem>();
+//      if (item != null)
+//      {
+//        audioManager.PlaySFX(audioManager.itemPickup);
+//        inventoryScript.Additem(item);
+
+//      }
+
+
 //    }
 
-//    public string GetItemName()
+//  }
+//  private void OnTriggerEnter(Collider other)
+//  {
+//    if (other.CompareTag("Player"))
 //    {
-//        return ItemName;
+//      playerInRange = true;
 //    }
+//  }
 
-//    private void Start()
+//  private void OnTriggerExit(Collider other)
+//  {
+//    if (other.CompareTag("Player"))
 //    {
-//        seedPlanter = FindObjectOfType<SeedPlanter>();
-//        holdupUI = FindObjectOfType<HoldupUI>();
-//        inventoryScript = FindObjectOfType<Inventory>();
+//      playerInRange = false;
 //    }
-
-//    void Update()
-//    {
-//        if (Input.GetKeyDown(KeyCode.E) && playerInRange && SelectionManager.Instance.onTarget)
-//        {
-
-//            IInventoryItem item = Entity.GetComponent<IInventoryItem>();
-//            if (item != null)
-//            {
-//                audioManager.PlaySFX(audioManager.itemPickup);
-//                inventoryScript.Additem(item);
-
-//            }
-
-
-//        }
-
-//    }
-//    private void OnTriggerEnter(Collider other)
-//    {
-//        if (other.CompareTag("Player"))
-//        {
-//            playerInRange = true;
-//        }
-//    }
-
-//    private void OnTriggerExit(Collider other)
-//    {
-//        if (other.CompareTag("Player"))
-//        {
-//            playerInRange = false;
-//        }
-//    }
+//  }
 //}
 
 

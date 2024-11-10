@@ -66,8 +66,11 @@ public class  PlayerMove : Entity
   // Update is called once per frame
   void Update()
   {
-    //HandleBotSpawningAndSwitching();
-    Console.WriteLine(Input.mousePosition);
+    if(InternalCalls.IsKeyTriggered(KeyCode.A))
+    {
+      //SetActive(false);
+    }
+
     ProcessLook();
     forPlayerMovement();
 
