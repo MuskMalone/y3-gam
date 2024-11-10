@@ -16,9 +16,9 @@
                     "z": 0.0
                 },
                 "scale": {
-                    "x": 0.06717788428068161,
-                    "y": 0.07400000095367432,
-                    "z": 0.03999999910593033
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
                 },
                 "rotation": {
                     "x": 0.0,
@@ -37,9 +37,9 @@
                     "z": 0.0
                 },
                 "worldScale": {
-                    "x": 0.06717788428068161,
-                    "y": 0.07400000095367432,
-                    "z": 0.03999999910593033
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
                 },
                 "worldRot": {
                     "x": 0.0,
@@ -52,17 +52,6 @@
         {
             "Layer": {
                 "layerName": "Default"
-            }
-        },
-        {
-            "Mesh": {
-                "meshName": "Puzzle_IndividualArcDoor",
-                "GUID": {
-                    "ID": 11778546065194458575
-                },
-                "isCustomMesh": true,
-                "castShadows": true,
-                "receiveShadows": true
             }
         }
     ],
@@ -81,9 +70,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.2570001482963562,
+                            "x": 0.2569999396800995,
                             "y": -185.44607543945313,
-                            "z": 2.249990463256836
+                            "z": 2.2499887943267824
                         },
                         "scale": {
                             "x": 280.0,
@@ -102,14 +91,14 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.08999960869550705,
-                            "y": -13.723010063171387,
-                            "z": -0.01726471818983555
+                            "x": 2.2499887943267824,
+                            "y": -185.44607543945313,
+                            "z": -0.25699982047080996
                         },
                         "worldScale": {
-                            "x": 18.80980682373047,
-                            "y": 8.510000228881836,
-                            "z": 1.5399999618530274
+                            "x": 280.0,
+                            "y": 115.0,
+                            "z": 38.5
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -128,9 +117,89 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 11714832159896089385
+                            "ID": 1098454540813022973
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Three_arc_pTorus4",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 42.0,
+                            "y": 42.0,
+                            "z": 42.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 42.0,
+                            "y": 42.0,
+                            "z": 42.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        },
+                        "matIdx": 0
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Three_arc_pTorus4",
+                        "GUID": {
+                            "ID": 913401465805215234
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
                     }
