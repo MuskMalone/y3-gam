@@ -19,7 +19,9 @@ namespace Component {
 		VELOCITY,
 		ANGULAR_VELOCITY,
 		MOTION,
-		LOCK
+		LOCK,
+		LINEAR_DAMPING,
+		ANGULAR_DAMPING
 	};
 
 	struct RigidBody {

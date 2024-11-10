@@ -759,6 +759,14 @@ glm::vec3 Mono::GetWorldScale(ECS::Entity::EntityID entity)
 
 MonoString* Mono::GetTag(ECS::Entity::EntityID entity)
 {
+  /*
+  if (ECS::Entity(entity).HasComponent<Component::Tag>())
+    return STDToMonoString(ECS::Entity(entity).GetComponent<Component::Tag>().tag);
+  else
+    return STDToMonoString("");
+  */
+
+  // @TODO: TEMP
   return STDToMonoString(ECS::Entity(entity).GetComponent<Component::Tag>().tag);
 }
 
@@ -797,10 +805,11 @@ void Mono::MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec)
   if (ECS::Entity(entity).HasComponent<Component::RigidBody>())
   {
     //std::cout << "Move: " << dVec.x << "," << dVec.y << "," << dVec.z << "\n";
-    ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.x = dVec.x;
+    Performance::FrameRateController::TimeType dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
+    ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.x = dVec.x * dt;
     if(dVec.y == 20.f)
-      ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y = dVec.y;
-    ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.z = dVec.z;
+      ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y = dVec.y * dt;
+    ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.z = dVec.z * dt;
      
     IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
 
@@ -833,9 +842,10 @@ bool  Mono::IsGrounded(ECS::Entity::EntityID entity)
 ECS::Entity::EntityID Mono::Raycast(glm::vec3 start, glm::vec3 end)
 {
     IGE::Physics::RaycastHit hit{};
-    IGE::Physics::PhysicsSystem::GetInstance()->RayCastSingular(start, end, hit);
-    ECS::Entity::EntityID out {hit.entity.GetEntityID()};
-    return out;
+    if (IGE::Physics::PhysicsSystem::GetInstance()->RayCastSingular(start, end, hit)) {
+        ECS::Entity::EntityID out {hit.entity.GetEntityID()};
+        return out;
+    }return static_cast<ECS::Entity::EntityID>(0);
 }
 
 void Mono::PlaySound(ECS::Entity::EntityID e, MonoString* s)

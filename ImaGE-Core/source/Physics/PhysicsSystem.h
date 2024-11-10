@@ -34,12 +34,15 @@ namespace IGE {
 			void Debug(); // to be called within rendersystems geom pass
 			void ClearSystem(); //clears all the rigidbodies. 
 			std::unordered_map<void*, physx::PxRigidDynamic*> const& GetRigidBodyIDs() const { return mRigidBodyIDs; }
-
+			
 			//returns the first object hit
 			bool RayCastSingular(
 				glm::vec3 const& origin, glm::vec3 const& end,
 				RaycastHit& result
 			);
+			bool OnTriggerEnter(ECS::Entity trigger, ECS::Entity other);
+			bool OnTriggerExit(ECS::Entity trigger, ECS::Entity other);
+
 
 		//private:
 		//	const uint32_t cMaxBodies = 65536;
@@ -68,6 +71,8 @@ namespace IGE {
 			// map is a way to get around the pesky casting
 			std::unordered_map<void*, physx::PxRigidDynamic*> mRigidBodyIDs; 
 			std::unordered_map<void*, ECS::Entity> mRigidBodyToEntity;
+
+			std::unordered_map<void*, std::unordered_map<void*, int>> mOnTriggerPairs;
 			static std::shared_ptr<IGE::Physics::PhysicsSystem> _mSelf;
 			static std::mutex _mMutex;
 			PhysicsSystem(PhysicsSystem& other) = delete;
@@ -94,12 +99,14 @@ namespace IGE {
 			physx::PxShape* CreateShape(_physx_type const& geom, _collider_component const& collider, ECS::Entity entity);
 			void RegisterRB(void* bodyID, physx::PxRigidDynamic* rbptr, ECS::Entity const& entity) noexcept;
 			void RemoveRB(void* bodyID) noexcept;
+			physx::PxRigidDynamic* GetRBIter(ECS::Entity entity);
 
 		private:
 			//for testing purposes only
 			PHYSICS_EVENT_LISTENER_DECL(OnContactSampleListener)
 			PHYSICS_EVENT_LISTENER_DECL(OnTriggerSampleListener)
 		private:
+			friend IGE::Physics::PhysicsEventManager;
 			friend Component::RigidBody;
 			friend Component::BoxCollider;
 			friend Component::SphereCollider;

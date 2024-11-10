@@ -57,9 +57,24 @@ namespace IGE {
 				if (actor1->getType() == physx::PxActorType::eRIGID_DYNAMIC && actor2->getType() == physx::PxActorType::eRIGID_DYNAMIC) {
 					auto triggeractor{ reinterpret_cast<physx::PxRigidDynamic*>(actor1) };
 					auto otheractor{ reinterpret_cast<physx::PxRigidDynamic*>(actor2) };
+					auto voidtrigger{ reinterpret_cast<void*>(triggeractor) };
+					auto voidother{ reinterpret_cast<void*>(otheractor) };
+					//determine the trigger result
+					TriggerResult result{TriggerResult::NONE};
+					switch (pairs[i].status) {
+					case physx::PxPairFlag::eNOTIFY_TOUCH_FOUND: 
+						result = TriggerResult::FOUND; 
+						break;
+					case physx::PxPairFlag::eNOTIFY_TOUCH_LOST:
+						result = TriggerResult::LOST; 
+						break;
+					}
+					//add to the trigger pair
+					mOnTriggerPairs[voidtrigger].emplace(voidother, (int)result);
+
 					PhysicsEvent e{ PhysicsEventID::TRIGGER };
-					e.SetParam(EventKey::EventTrigger::TRIGGER_ENTITY, mRigidBodyToEntity.at(reinterpret_cast<void*>(triggeractor)));
-					e.SetParam(EventKey::EventTrigger::OTHER_ENTITY, mRigidBodyToEntity.at(reinterpret_cast<void*>(otheractor)));
+					e.SetParam(EventKey::EventTrigger::TRIGGER_ENTITY, mRigidBodyToEntity.at(voidtrigger));
+					e.SetParam(EventKey::EventTrigger::OTHER_ENTITY, mRigidBodyToEntity.at(voidother));
 					SendEvent(e);
 				}
 			}

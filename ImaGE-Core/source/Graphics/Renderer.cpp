@@ -256,8 +256,8 @@ namespace Graphics {
 
 	void Renderer::InitShadowMapPass() {
 		Graphics::FramebufferSpec shadowSpec;
-		shadowSpec.width = WINDOW_WIDTH<int>;
-		shadowSpec.height = WINDOW_HEIGHT<int>;
+		shadowSpec.width = shadowSpec.height = 2048;
+
 		// @TODO: Allow for multiple shadow maps; need extend code
 		//				to use glTexImage3D and GL_TEXTURE_2D_ARRAY
 		shadowSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::SHADOW_MAP };	// temporarily max. 1 shadow-caster

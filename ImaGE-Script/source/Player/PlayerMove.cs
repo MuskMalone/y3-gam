@@ -29,7 +29,7 @@ using System.Numerics;
 
 public class  PlayerMove : Entity
 {
-  public float speed = 8f;
+  public float speed = 600f;
   public float gravity = -9.81f * 2;
   public float jumpHeight = 20f;
 
