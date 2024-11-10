@@ -33,18 +33,19 @@ public class Test : Entity
 
     private float speed = 20f;
 
-    // VARIABLES HERE SHOULD ONLY BE MODFIED THROUGH EDITOR
-
-    public int TestInt = 10;
-    public float TestFloat = 22f;
-    public double TestDouble = 30.0;
-    public Vec3<double> dVec3 = new Vec3<double>(336.318f, 100f, 0f);
+  // VARIABLES HERE SHOULD ONLY BE MODFIED THROUGH EDITOR
     public Entity testEnt;
 
+  public int TestInt = 10;
+  public float TestFloat = 22f;
+  public double TestDouble = 30.0;
+  public Vec3<double> dVec3 = new Vec3<double>(336.318f, 100f, 0f);
 
 
 
-    public Test() : base()
+
+
+  public Test() : base()
     {
       
       //AddComponent<Transform>(new Transform());
@@ -79,10 +80,10 @@ public class Test : Entity
     {
       //  Console.WriteLine(testEnt.mEntityID.ToString());
       // Console.WriteLine("Hit\n");
-      if (testEnt != null)
-      {
-        Console.WriteLine(testEnt.mEntityID + "::ID");
-      }
+      //if (testEnt != null)
+      //{
+      //  Console.WriteLine(testEnt.mEntityID + "::ID");
+      //}
       //Vec3<float> Position = GetComponent<Transform>().Position;
       //GetComponent<Transform>().Position = new Vec3<float>(1,1,2);
       //  Console.WriteLine(Position.X + "," + Position.Y + "," + Position.Z);

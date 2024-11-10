@@ -331,8 +331,17 @@ namespace Mono
 
 		static void SetActive(ECS::Entity::EntityID entity,bool b);
 
-
 		static glm::vec3 GetMousePos();
+
+		static ECS::Entity::EntityID FindChildByTag(ECS::Entity::EntityID entity, MonoString* s);
+
+		static MonoArray* GetAllChildren(ECS::Entity::EntityID entity);
+		
+		static MonoString* GetText(ECS::Entity::EntityID entity);
+
+		static glm::vec4 GetImageColor(ECS::Entity::EntityID entity);
+
+		static void SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val);
 
 		/*!**********************************************************************
 		*																																			  *

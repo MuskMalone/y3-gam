@@ -89,7 +89,6 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="source\InteractableObject\Cloth.cs" />
     <Compile Include="source\InteractableObject\Crowbar.cs" />
     <Compile Include="source\InteractableObject\Hammer.cs" />
     <Compile Include="source\InteractableObject\InteractableObject.cs" />
@@ -141,9 +140,7 @@
     <Compile Include="source\ToolsPuzzle\RotationGuidanceToolsPainting.cs" />
     <Compile Include="source\Triggers\DeathtriggerPit.cs" />
     <Compile Include="source\Triggers\FinishLineTrigger.cs" />
-    <Compile Include="source\other interactable\CleanWindows.cs" />
     <Compile Include="source\other interactable\NoteInteraction.cs" />
-    <Compile Include="source\other interactable\watercloth.cs" />
     <Compile Include="source\Yukitestscripts\SelectionManager.cs" />
     <Compile Include="source\Yukitestscripts\skyboxcontroller1.cs" />
   </ItemGroup>

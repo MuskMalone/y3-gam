@@ -19,6 +19,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Prefabs/PrefabManager.h>
 #include <Core/Systems/TransformSystem/TransformHelpers.h>
 #include <Scenes/SceneManager.h>
+#include <cstdint>
+#include <Scripting/ScriptUtils.h>
 
 #include <filesystem>
 #include <Core/Components/Components.h>
@@ -173,6 +175,8 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetMousePos);
   ADD_INTERNAL_CALL(GetMouseDelta);
 
+
+
   //// Get Functions
   ADD_INTERNAL_CALL(GetWorldPosition);
   ADD_INTERNAL_CALL(GetPosition);
@@ -197,7 +201,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(LogError);
   ADD_INTERNAL_CALL(LogCritical);
 
-  //ADD_INTERNAL_CALL(Anykeydow)
+  //Entity Functions
   ADD_INTERNAL_CALL(GetAxis);
   ADD_INTERNAL_CALL(GetDeltaTime);
   ADD_INTERNAL_CALL(MoveCharacter);
@@ -207,6 +211,11 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(DestroyEntity);
   ADD_INTERNAL_CALL(DestroyScript);
   ADD_INTERNAL_CALL(SetActive);
+  ADD_INTERNAL_CALL(FindChildByTag);
+  ADD_INTERNAL_CALL(GetAllChildren);
+  ADD_INTERNAL_CALL(GetText);
+  ADD_INTERNAL_CALL(GetImageColor);
+  ADD_INTERNAL_CALL(SetImageColor);
 
   // Utility Functions
   ADD_INTERNAL_CALL(Raycast);
@@ -884,6 +893,19 @@ MonoObject* Mono::FindScript(MonoString* s)
   return nullptr;
 }
 
+ECS::Entity::EntityID Mono::FindChildByTag(ECS::Entity::EntityID entity, MonoString* s)
+{
+  std::string msg{ MonoStringToSTD(s) };
+  if (ECS::Entity(entity))
+  {
+    for (ECS::Entity e : ECS::EntityManager::GetInstance().GetChildEntity(ECS::Entity(entity)))
+     {
+        if (e.GetTag() == msg)
+          return e.GetRawEnttEntityID();
+    }
+  }
+  return static_cast<ECS::Entity::EntityID>(std::numeric_limits<std::uint32_t>::max());
+}
 
 void Mono::DestroyEntity(ECS::Entity::EntityID entity)
 {
@@ -934,6 +956,73 @@ void Mono::SetActive(ECS::Entity::EntityID entity, bool b)
     Debug::DebugLogger::GetInstance().LogError("You r trying to set active on an invalid entity");
 }
 
+MonoArray* Mono::GetAllChildren(ECS::Entity::EntityID entity)
+{
+  std::vector<ECS::Entity::EntityID> allChildren{};
+  if (ECS::Entity(entity))
+  {
+    for (ECS::Entity e : ECS::EntityManager::GetInstance().GetChildEntity(ECS::Entity(entity)))
+    {
+      allChildren.push_back(e.GetRawEnttEntityID());
+    }
+  }
+  else
+    Debug::DebugLogger::GetInstance().LogError("You r trying to set active on an invalid entity");
+
+
+  MonoArray* newArray = Mono::GetMonoArray<unsigned>(ScriptManager::GetInstance().mAppDomain, allChildren.size());
+  for (int i = 0; i < mono_array_length(newArray); ++i) {
+    mono_array_set(newArray, ECS::Entity::EntityID, i, allChildren[i]);
+  }
+  return newArray;
+}
+
+
+MonoString* Mono::GetText(ECS::Entity::EntityID entity)
+{
+  std::string msg{};
+  if (ECS::Entity(entity))
+  {
+    if (ECS::Entity(entity).HasComponent<Component::Text>())
+      msg = ECS::Entity(entity).GetComponent<Component::Text>().textContent;
+    else
+      Debug::DebugLogger::GetInstance().LogError("You r trying to Get text from an entity that does not have text component");
+  }
+  else
+    Debug::DebugLogger::GetInstance().LogError("You r trying to Get text from an invalid entity");
+
+  return STDToMonoString(msg);
+}
+
+
+glm::vec4 Mono::GetImageColor(ECS::Entity::EntityID entity)
+{
+  glm::vec4 c{};
+  if (ECS::Entity(entity))
+  {
+    if (ECS::Entity(entity).HasComponent<Component::Image>())
+      c = ECS::Entity(entity).GetComponent<Component::Image>().color;
+    else
+      Debug::DebugLogger::GetInstance().LogError("You r trying to Get image color from an entity that does not have image component");
+  }
+  else
+    Debug::DebugLogger::GetInstance().LogError("You r trying to Get Image color from an invalid entity");
+
+  return c;
+}
+
+void Mono::SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val)
+{
+  if (ECS::Entity(entity))
+  {
+    if (ECS::Entity(entity).HasComponent<Component::Image>())
+       ECS::Entity(entity).GetComponent<Component::Image>().color = val;
+    else
+      Debug::DebugLogger::GetInstance().LogError("You r trying to set image color from an entity that does not have image component");
+  }
+  else
+    Debug::DebugLogger::GetInstance().LogError("You r trying to set Image color from an invalid entity");
+}
 
 /*!**********************************************************************
 *																																			  *
