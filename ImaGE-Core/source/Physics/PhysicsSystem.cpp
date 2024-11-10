@@ -177,6 +177,18 @@ namespace IGE {
 
 						rb.velocity = pxrigidbody->getLinearVelocity();
 						rb.angularVelocity = pxrigidbody->getAngularVelocity();
+
+						bool angmod{ false };
+						if (rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::X)) {
+							rb.angularVelocity.x = 0.f; angmod = true;
+						}
+						if (rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::Y)) {
+							rb.angularVelocity.y = 0.f; angmod = true;
+						}
+						if (rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::Z)) {
+							rb.angularVelocity.z = 0.f; angmod = true;
+						}
+						pxrigidbody->setAngularVelocity(rb.angularVelocity);
 						//pxrigidbody->setLinearVelocity(rb.velocity);
 					}
 					//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
@@ -408,6 +420,9 @@ namespace IGE {
 				case Component::RigidBodyVars::VELOCITY: {
 					rbptr->setLinearVelocity(rb.velocity);
 					return;
+				}break;
+				case Component::RigidBodyVars::LINEAR_DAMPING: {
+					rbptr->setLinearDamping(rb.linearDamping);
 				}break;
 				case Component::RigidBodyVars::ANGULAR_VELOCITY: {
 					rbptr->setAngularVelocity(rb.angularVelocity);
