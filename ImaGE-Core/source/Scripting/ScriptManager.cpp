@@ -796,10 +796,11 @@ void Mono::MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec)
   if (ECS::Entity(entity).HasComponent<Component::RigidBody>())
   {
     //std::cout << "Move: " << dVec.x << "," << dVec.y << "," << dVec.z << "\n";
-    ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.x = dVec.x;
+    Performance::FrameRateController::TimeType dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
+    ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.x = dVec.x * dt;
     if(dVec.y == 20.f)
-      ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y = dVec.y;
-    ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.z = dVec.z;
+      ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y = dVec.y * dt;
+    ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.z = dVec.z * dt;
      
     IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
 
