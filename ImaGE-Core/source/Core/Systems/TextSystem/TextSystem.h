@@ -61,7 +61,7 @@ namespace Systems {
 		void AddFont(Systems::Font& font);
 		std::unordered_map<uint32_t, std::shared_ptr<Systems::Font>> const& GetLoadedFontMap() const;
 
-		void RenderTextForAllEntities(glm::mat4 viewProj);
+		void RenderTextForAllEntities(glm::mat4 viewProj, std::vector<ECS::Entity> const& entities);
 
 		/*
 		void DrawTextFont(std::shared_ptr<Graphics::Shader> const& shader, uint32_t filePathHash, std::string const& textContent,

@@ -110,7 +110,7 @@ namespace Graphics {
 
 		if (std::shared_ptr<Systems::TextSystem> textSys =
 			Systems::SystemManager::GetInstance().GetSystem<Systems::TextSystem>().lock()) {
-			textSys->RenderTextForAllEntities(viewProj);
+			textSys->RenderTextForAllEntities(viewProj, entities);
 		}
 
 		//Renderer::RenderInstances();

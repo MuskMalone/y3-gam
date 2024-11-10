@@ -78,34 +78,32 @@ namespace Systems {
     return mFonts;
   }
 
-  void TextSystem::RenderTextForAllEntities(glm::mat4 viewProj) {
-    auto const& textEntities{
-      ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Text, Component::Transform>()
-    };
+  void TextSystem::RenderTextForAllEntities(glm::mat4 viewProj, std::vector<ECS::Entity> const& entities) {
+    for (auto const& entity : entities) {
+      if (entity.HasComponent<Component::Text, Component::Transform>()) {
+        auto& textComp{ ECS::Entity{entity}.GetComponent<Component::Text>() };
+        auto const& transComp{ ECS::Entity{entity}.GetComponent<Component::Transform>() };
 
-    for (auto const& entity : textEntities) {
-      auto& textComp{ ECS::Entity{entity}.GetComponent<Component::Text>() };
-      auto const& transComp{ ECS::Entity{entity}.GetComponent<Component::Transform>() };
+        if (!IGE_ASSETMGR.IsGUIDValid<IGE::Assets::FontAsset>(textComp.textAsset)) {
+          Debug::DebugLogger::GetInstance().LogWarning("[Text] Invalid Text Asset attached to Entity: "
+            + ECS::Entity{ entity }.GetTag());
+          continue;
+        }
 
-      if (!IGE_ASSETMGR.IsGUIDValid<IGE::Assets::FontAsset>(textComp.textAsset)) {
-        Debug::DebugLogger::GetInstance().LogWarning("[Text] Invalid Text Asset attached to Entity: "
-          + ECS::Entity{ entity }.GetTag());
-        continue;
+        Systems::Font const& fontAsset{ IGE_ASSETMGR.GetAsset<IGE::Assets::FontAsset>(textComp.textAsset)->mFont };
+        if (!IsValid(fontAsset)) {
+          Debug::DebugLogger::GetInstance().LogWarning("[Text] Invalid Font attached to Entity: "
+            + ECS::Entity{ entity }.GetTag());
+          continue;
+        }
+
+        TextSystem::CalculateNewLineIndices(textComp.textAsset, textComp.textContent,
+          textComp.newLineIndices, textComp.newLineIndicesUpdatedFlag, textComp.alignment);
+
+        TextSystem::RenderText(fontAsset.mFilePathHash, textComp.textContent,
+          transComp.position.x, transComp.position.y, textComp.scale, transComp.rotation,
+          textComp.color, textComp.newLineIndices, textComp.multiLineSpacingOffset, viewProj);
       }
-
-      Systems::Font const& fontAsset{ IGE_ASSETMGR.GetAsset<IGE::Assets::FontAsset>(textComp.textAsset)->mFont };
-      if (!IsValid(fontAsset)) {
-        Debug::DebugLogger::GetInstance().LogWarning("[Text] Invalid Font attached to Entity: "
-          + ECS::Entity{ entity }.GetTag());
-        continue;
-      }
-
-      TextSystem::CalculateNewLineIndices(textComp.textAsset, textComp.textContent,
-        textComp.newLineIndices, textComp.newLineIndicesUpdatedFlag, textComp.alignment);
-
-      TextSystem::RenderText(fontAsset.mFilePathHash, textComp.textContent,
-        transComp.position.x, transComp.position.y, textComp.scale, transComp.rotation,
-        textComp.color, textComp.newLineIndices, textComp.multiLineSpacingOffset, viewProj);
     }
   }
 
