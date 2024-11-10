@@ -30,47 +30,21 @@ namespace ImGuiHelpers
 
   /*!*********************************************************************
   \brief
-    Helper function to create a table input for vec3
-  \param propertyName
-    The name of the property
-  \param property
-    Pointer to the property
-  \param fieldWidth
-    The width of the field
-  \param disabled
-    Whether it is disabled
-  \param minVal
-    The minimum value
-  \param maxVal
-    The maximum value
-  \param step
-    The increment for the input
-  \return
-    True if the field was modified and false otherwise
+    Helper function to create a table input for vec2
   ************************************************************************/
-  bool TableInputFloat3(std::string propertyName, float* property, float fieldWidth, bool disabled, float minVal, float maxVal, float step);
+  bool TableInputFloat2(std::string const& propertyName, float* property, float fieldWidth, bool disabled, float minVal, float maxVal, float step, const char* fmt = "%.2f");
+
+  /*!*********************************************************************
+  \brief
+    Helper function to create a table input for vec3
+  ************************************************************************/
+  bool TableInputFloat3(std::string const& propertyName, float* property, float fieldWidth, bool disabled, float minVal, float maxVal, float step);
 
   /*!*********************************************************************
   \brief
     Helper function to create a table input for dvec3
-  \param propertyName
-    The name of the property
-  \param property
-    Reference to the dvec3
-  \param fieldWidth
-    The width of the field
-  \param disabled
-    Whether it is disabled
-  \param minVal
-    The minimum value
-  \param maxVal
-    The maximum value
-  \param step
-    The increment for the input
-  \return
-    True if the field was modified and false otherwise
   ************************************************************************/
-  bool TableInputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled, double minVal, double maxVal, float step);
+  bool TableInputDouble3(std::string const& propertyName, glm::dvec3& property, float fieldWidth, bool disabled, double minVal, double maxVal, float step);
 
   /*!*********************************************************************
   \brief
@@ -98,7 +72,7 @@ namespace ImGuiHelpers
   \param disabled
     Whether it is disabled
   ************************************************************************/
-  void InputDouble1(std::string propertyName, double& property, bool disabled);
+  void InputDouble1(std::string const& propertyName, double& property, bool disabled);
 
   /*!*********************************************************************
   \brief
@@ -110,7 +84,7 @@ namespace ImGuiHelpers
   \param disabled
     Whether it is disabled
   ************************************************************************/
-  bool InputCheckBox(std::string propertyName, bool& property, bool disabled);
+  bool InputCheckBox(std::string const& propertyName, bool& property, bool disabled);
 
 } // namespace ImGuiHelpers
 

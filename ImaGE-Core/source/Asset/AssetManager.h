@@ -143,6 +143,10 @@ namespace IGE {
                   return guid;
               }
               else {
+                  std::string newFp{};
+                  AssetMetadata::AssetProps metadata{};
+                  // this is to get the new FP
+                  T::Import(filepathstr, newFp, metadata);
                   Ref<T> ref { std::any_cast<Ref<T>>(mAssetRefs.at(key)) };
                   return ref.mInstance.partialRef.guid;
               }
@@ -171,6 +175,8 @@ namespace IGE {
               if (mGUID2PathRegistry.find(guid) != mGUID2PathRegistry.end()) {
                   mGUID2PathRegistry.erase(guid);
               }
+
+              SaveMetadata();
           }
 
           //-------------------------------------------------------------------------
@@ -348,7 +354,7 @@ namespace IGE {
 
                   metadata.at("path") = newPath;
               }
-              catch (Debug::Exception<AssetManager> const& e) {
+              catch ([[maybe_unused]] Debug::Exception<AssetManager> const& e) {
                   Debug::DebugLogger::GetInstance().LogWarning("guid " + std::to_string(guid) + " does not exist within metadata");
               }
               catch (...) {

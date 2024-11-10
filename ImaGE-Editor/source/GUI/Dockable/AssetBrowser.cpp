@@ -16,11 +16,12 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GUI/Helpers/AssetHelpers.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <GUI/Styles/FontAwesome6Icons.h>
-#include "GUI/GUIManager.h"
+#include "GUI/GUIVault.h"
 #include <Graphics/Mesh/IMSH.h>
 #include <GUI/Helpers/AssetPayload.h>
 #include <Scenes/SceneManager.h>
 #include "Asset/IGEAssets.h"
+#include <Graphics/MaterialTable.h>
 
 namespace MeshPopup {
   static constexpr float sTableCol1Width = 250.f;
@@ -31,7 +32,8 @@ namespace MeshPopup {
 
 namespace
 {
-  static std::string sSearchQuery, sLowerSearchQuery;  
+  static std::string sSearchQuery, sLowerSearchQuery;
+  static bool sRenameMode{ false }, sFirstTimeRename{ true };
 
   /*!*********************************************************************
   \brief
@@ -164,7 +166,7 @@ namespace GUI
     }
 
     if (mDirMenuPopup) {
-      ImGui::OpenPopup("DirectoryMenu");
+      ImGui::OpenPopup(sDirMenuTitle);
       mDirMenuPopup = false;
     }
     DirectoryMenuPopup();
@@ -173,30 +175,71 @@ namespace GUI
 
   void AssetBrowser::ContentViewer()
   {
-    if (mCurrentDir.empty()) { return; }
+    if (!mCurrentDir.empty()) {
+      float const regionAvailX{ 0.8f * ImGui::GetContentRegionAvail().x };
+      int const assetsPerRow{ regionAvailX > sMaxAssetSize * 10.f ? 10 : regionAvailX < sMaxAssetSize * 4.f ? 3 : 6 };
+      float const sizePerAsset{ regionAvailX / static_cast<float>(assetsPerRow) };
+      float const imgSize{ sizePerAsset > sMaxAssetSize ? sMaxAssetSize : sizePerAsset };
 
-    float const regionAvailX{ 0.8f * ImGui::GetContentRegionAvail().x };
-    int const assetsPerRow{ regionAvailX > sMaxAssetSize * 10.f ? 10 : regionAvailX < sMaxAssetSize * 4.f ? 3 : 6 };
-    float const sizePerAsset{ regionAvailX / static_cast<float>(assetsPerRow) };
-    float const imgSize{ sizePerAsset > sMaxAssetSize ? sMaxAssetSize : sizePerAsset };
-
-    unsigned const maxChars{ static_cast<unsigned>(imgSize * 0.9f / ImGui::CalcTextSize("L").x) };
-    if (ImGui::BeginTable("DirectoryTable", assetsPerRow, ImGuiTableFlags_Sortable | ImGuiTableFlags_ScrollY))
-    {
-      if (sSearchQuery.empty()) {
-        DisplayDirectory(imgSize, maxChars);
+      unsigned const maxChars{ static_cast<unsigned>(imgSize * 0.9f / ImGui::CalcTextSize("L").x) };
+      if (ImGui::BeginTable("DirectoryTable", assetsPerRow, ImGuiTableFlags_Sortable | ImGuiTableFlags_ScrollY))
+      {
+        if (sSearchQuery.empty()) {
+          DisplayDirectory(imgSize, maxChars);
+        }
+        else {
+          DisplaySearchResults(imgSize, maxChars);
+        }
+        ImGui::EndTable();
       }
-      else {
-        DisplaySearchResults(imgSize, maxChars);
-      }
-      ImGui::EndTable();
     }
 
     if (mAssetMenuPopup) {
-      ImGui::OpenPopup("AssetsMenu");
+      ImGui::OpenPopup(sAssetsMenuTitle);
       mAssetMenuPopup = false;
     }
+    else if (ImGui::IsMouseClicked(ImGuiMouseButton_Right) && ImGui::IsWindowHovered(ImGuiHoveredFlags_ChildWindows)) {
+      ImGui::OpenPopup(sContentViewerMenuTitle);
+    }
     AssetMenuPopup();
+    ContentViewerPopup();
+  }
+
+  void RenameFile(std::filesystem::path const& original, std::string const& newFile) {
+    std::filesystem::path newPath{ std::filesystem::path(original).replace_filename(newFile) };
+
+    // add extension if missing
+    if (!newPath.has_extension()) {
+      newPath.replace_extension(original.extension());
+    }
+
+    // @TODO: REFACTOR - SHOULD KNOW ASSET TYPE FROM ASSETMGR SIDE
+    IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+    std::string const ext{ newPath.extension().string() };
+    if (ext == gPrefabFileExt) {
+      am.ChangeAssetPath<IGE::Assets::PrefabAsset>(am.LoadRef<IGE::Assets::PrefabAsset>(original.string()), newPath.string());
+    }
+    else if (std::string(gMeshFileExt).find(ext) != std::string::npos) {
+      am.ChangeAssetPath<IGE::Assets::ModelAsset>(am.LoadRef<IGE::Assets::ModelAsset>(original.string()), newPath.string());
+    }
+    else if (ext == gMaterialFileExt) {
+      IGE::Assets::GUID const guid{ am.LoadRef<IGE::Assets::MaterialAsset>(original.string()) };
+      am.ChangeAssetPath<IGE::Assets::MaterialAsset>(guid, newPath.string());
+      auto const str{ am.GetAsset<IGE::Assets::MaterialAsset>(guid)->mMaterial };
+      am.GetAsset<IGE::Assets::MaterialAsset>(guid)->mMaterial->SetName(newPath.stem().string());
+    }
+    else if (ext == gSpriteFileExt) {
+      am.ChangeAssetPath<IGE::Assets::TextureAsset>(am.LoadRef<IGE::Assets::TextureAsset>(original.string()), newPath.string());
+    }
+    else if (ext == gFontFileExt) {
+      am.ChangeAssetPath<IGE::Assets::FontAsset>(am.LoadRef<IGE::Assets::FontAsset>(original.string()), newPath.string());
+    }
+    else if (ext == gAudioFileExt) {
+      am.ChangeAssetPath<IGE::Assets::AudioAsset>(am.LoadRef<IGE::Assets::AudioAsset>(original.string()), newPath.string());
+    }
+
+    std::filesystem::rename(original, newPath);
+    GUIVault::SetSelectedFile(newPath);
   }
 
   void AssetBrowser::DisplayDirectory(float imgSize, unsigned maxChars)
@@ -210,15 +253,44 @@ namespace GUI
 
       // asset icon + input
       ImGui::ImageButton(0, ImVec2(imgSize, imgSize));
-      CheckInput(file);
 
-      // display file name below
-      ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
-      ImGui::Text((exceed ? fileName.substr(0, maxChars) : fileName).c_str());
-      if (exceed) {
+      if (sRenameMode && file == mSelectedAsset) {
+        static std::string cpy;
+
+        if (sFirstTimeRename) {
+          sFirstTimeRename = false;
+          ImGui::SetKeyboardFocusHere();
+          cpy = fileName;
+        }
+
+        ImGui::InputText("##renameInput", &cpy, ImGuiInputTextFlags_AutoSelectAll);
+
+        if ((ImGui::IsMouseClicked(ImGuiMouseButton_Left) || ImGui::IsMouseClicked(ImGuiMouseButton_Right) && !ImGui::IsItemHovered())) {
+          if (file.path().filename() != cpy) {
+            RenameFile(file, cpy);
+          }
+
+          sRenameMode = false;
+          sFirstTimeRename = true;
+          ImGui::SetWindowFocus(NULL);
+        }
+
+        if (ImGui::IsKeyPressed(ImGuiKey_Escape)) {
+          ImGui::SetWindowFocus(NULL); sRenameMode = false;
+          sFirstTimeRename = true;
+        }
+      }
+      else {
+        CheckInput(file);
+
+        // display file name below
         ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
-        std::string const secondRow{ fileName.substr(maxChars) };
-        ImGui::Text((secondRow.size() > maxChars ? secondRow.substr(0, maxChars - 2) + "..." : secondRow).c_str());
+        ImGui::Text((exceed ? fileName.substr(0, maxChars) : fileName).c_str());
+        if (exceed) {
+          ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
+          std::string const secondRow{ fileName.substr(maxChars) };
+          ImGui::Text((secondRow.size() > maxChars ? secondRow.substr(0, maxChars - 2) + "..." : secondRow).c_str());
+        }
       }
       ImGui::NewLine();
     }
@@ -269,6 +341,10 @@ namespace GUI
       else {
         draggedAsset = path;
       }
+    }
+    // @TODO: temp
+    else if (ImGui::IsItemClicked(ImGuiMouseButton_Middle)) {
+      GUIVault::SetSelectedFile(path);
     }
     else if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
       ImGui::SetTooltip(path.filename().string().c_str());
@@ -360,15 +436,52 @@ namespace GUI
     }
   }
 
+  void AssetBrowser::ContentViewerPopup() {
+    if (!ImGui::BeginPopup(sContentViewerMenuTitle)) { return; }
+
+    if (ImGui::Selectable("New Material")) {
+      if (!std::filesystem::exists(gMaterialDirectory)) {
+        std::filesystem::create_directory(gMaterialDirectory);
+      }
+
+      std::string fileName{ "NewMaterial" };
+
+      if (std::filesystem::exists(std::string(gMaterialDirectory) + fileName + gMaterialFileExt)) {
+        int i{};
+        std::string newFileName{ fileName };
+        // loop until a valid name
+        do {
+          newFileName = fileName + " (" + std::to_string(i) + ")";
+          ++i;
+        } while (std::filesystem::exists(std::string(gMaterialDirectory) + newFileName + gMaterialFileExt));
+        fileName = std::move(newFileName);
+      }
+      
+      std::ofstream ofs{ fileName };
+      if (ofs) {
+        ofs.close();
+        mCurrentDir = gMaterialDirectory;
+        sRenameMode = true;
+        mSelectedAsset = gMaterialDirectory + fileName + gMaterialFileExt;
+        Graphics::MaterialTable::CreateAndImportMatFile(fileName);
+      }
+      else {
+        IGE_DBGLOGGER.LogError("Unable to create new material file " + fileName);
+      }
+    }
+
+    ImGui::EndPopup();
+  }
+
   void AssetBrowser::DirectoryMenuPopup() const
   {
     static bool deletePopup{ false };
-    if (ImGui::BeginPopup("DirectoryMenu"))
+    if (ImGui::BeginPopup(sDirMenuTitle))
     {
       if (ImGui::Selectable("Open in File Explorer")) {
         AssetHelpers::OpenDirectoryInExplorer(mRightClickedDir);
       }
-
+      
       ImGui::EndPopup();
     }
   }
@@ -376,18 +489,23 @@ namespace GUI
   void AssetBrowser::AssetMenuPopup()
   {
     static bool deletePopup{ false };
-    if (ImGui::BeginPopup("AssetsMenu"))
+    if (ImGui::BeginPopup(sAssetsMenuTitle))
     {
       if (ImGui::Selectable("Open##AssetMenu")) {
         AssetHelpers::OpenFileWithDefaultProgram(mSelectedAsset.string());
+      }
+
+      if (ImGui::Selectable("Rename##AssetMenu")) {
+        sRenameMode = true;
       }
 
       if (ImGui::Selectable("Open in File Explorer")) {
         AssetHelpers::OpenFileInExplorer(mSelectedAsset);
       }
 
-      // only enabled for prefabs
-      if (mSelectedAsset.extension().string() == ".pfb")
+      std::string const ext{ mSelectedAsset.extension().string() };
+      // file specific options
+      if (ext == gPrefabFileExt)
       {
         ImGui::BeginDisabled(IGE_SCENEMGR.GetSceneState() & ~(Scenes::STOPPED | Scenes::NO_SCENE));
         if (ImGui::Selectable("Edit Prefab")) {
@@ -395,6 +513,11 @@ namespace GUI
             mSelectedAsset.relative_path().string());
         }
         ImGui::EndDisabled();
+      }
+      else if (ext == gMaterialFileExt) {
+        if (ImGui::Selectable("Edit Material")) {
+          GUIVault::SetSelectedFile(mSelectedAsset);
+        }
       }
 
       if (ImGui::Selectable("Delete##AssetMenu")) {
@@ -434,31 +557,6 @@ namespace GUI
       ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.2f, 0.2f, 1.f));
       if (ImGui::Button("Yes##Confirm"))
       {
-        // @TODO: UPDATE ASSET MANAGER ACCORDINGLY
-        //Assets::AssetManager const& am{ Assets::AssetManager::GetInstance() };
-        //// if prefab deleted
-        //if (asset.extension() == am.PrefabFileExt)
-        //{
-        //  Events::EventManager::GetInstance().Dispatch(Events::DeletePrefabEvent(asset.stem().string()));
-        //}
-        //else
-        //{
-        //  Assets::AssetType type{ Assets::AssetType::NONE };
-        //  if (asset.extension() == am.SceneFileExt)
-        //    type = Assets::AssetType::SCENE;
-        //  else if (asset.extension() == am.ImageFileExt)
-        //    type = Assets::AssetType::IMAGES;
-        //  else if (asset.extension() == am.AudioFileExt)
-        //    type = Assets::AssetType::AUDIO;
-        //  else if (asset.extension() == am.FontFileExt)
-        //    type = Assets::AssetType::FONTS;
-        //  else if (asset.extension() == am.ShaderFileExt)
-        //    type = Assets::AssetType::SHADERS;
-
-        //  Events::EventManager::GetInstance().Dispatch(Events::DeleteAssetEvent(type, asset.stem().string()));
-        //}
-        // should be done w events i think
-
         auto path{ mSelectedAsset.relative_path().string() };
         try {
             auto guid{ IGE_ASSETMGR.PathToGUID(mSelectedAsset.relative_path().string()) };
@@ -466,6 +564,9 @@ namespace GUI
         }
         catch (...) {
             //do nothing
+        }
+        if (GUIVault::GetSelectedFile() == path) {
+          GUIVault::SetSelectedFile({});
         }
         std::remove(mSelectedAsset.relative_path().string().c_str());
 
@@ -581,7 +682,8 @@ namespace GUI
       }
       else {
         // send the relevant file path to the asset manager
-        IGE_ASSETMGR.ImportAsset<IGE::Assets::ModelAsset>(MeshPopup::sModelsToImport.back());
+        IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+        IGE::Assets::GUID const guid{ am.ImportAsset<IGE::Assets::ModelAsset>(MeshPopup::sModelsToImport.back()) };
 
         close = true;
       }

@@ -26,10 +26,10 @@ namespace GUI
     void SetCurrentTheme(CustomTheme theme);
 
   private:
-    friend class GUIManager;  // allow GUIManager full access
+    friend class GUIVault; friend class GUIManager;  // allow GUIVault and GUIManager full access
     using ThemeFunction = void (Styler::*)(); // maybe should use std::function to simplify invocation in SetCurrentTheme
 
-    Styler(); // only constructable by GUIManager
+    Styler(); // only constructable by GUIVault
 
     /*!*********************************************************************
     \brief

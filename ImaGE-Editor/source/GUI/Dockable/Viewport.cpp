@@ -22,7 +22,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Components/PrefabOverrides.h>
 #include <Core/Systems/TransformSystem/TransformHelpers.h>
 #include <Core/EntityManager.h>
-#include <GUI/GUIManager.h>
+#include <GUI/GUIVault.h>
 #include <Asset/IGEAssets.h>
 #include <Graphics/RenderPass/GeomPass.h>
 #include "Graphics/Renderer.h"
@@ -63,6 +63,8 @@ namespace {
 
     return GetRootEntity(em.GetParentEntity(entity));
   }
+
+  ECS::Entity ConstructEntity(IGE::Assets::GUID const& guid, Graphics::MeshSource const& meshSource);
 }
 
 namespace GUI
@@ -123,34 +125,34 @@ namespace GUI
               sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
 
               if (sCtrlHeld) {
-                ECS::Entity const curr{ GUIManager::GetSelectedEntity() };
-                if (GUIManager::GetSelectedEntities().empty() && curr) {
-                  GUIManager::AddSelectedEntity(curr);
+                ECS::Entity const curr{ GUIVault::GetSelectedEntity() };
+                if (GUIVault::GetSelectedEntities().empty() && curr) {
+                  GUIVault::AddSelectedEntity(curr);
                 }
 
-                if (GUIManager::IsEntitySelected(root)) {
-                  GUIManager::RemoveSelectedEntity(root);
-                  if (GUIManager::GetSelectedEntities().empty()) {
-                    GUIManager::SetSelectedEntity({});
+                if (GUIVault::IsEntitySelected(root)) {
+                  GUIVault::RemoveSelectedEntity(root);
+                  if (GUIVault::GetSelectedEntities().empty()) {
+                    GUIVault::SetSelectedEntity({});
                   }
                   else {
-                    GUIManager::SetSelectedEntity(*GUIManager::GetSelectedEntities().begin());
+                    GUIVault::SetSelectedEntity(*GUIVault::GetSelectedEntities().begin());
                   }
                 }
                 else {
-                  GUIManager::AddSelectedEntity(root);
-                  GUIManager::SetSelectedEntity(sPrevSelectedEntity);
+                  GUIVault::AddSelectedEntity(root);
+                  GUIVault::SetSelectedEntity(sPrevSelectedEntity);
                 }
               }
               else {
-                GUIManager::ClearSelectedEntities();
-                GUIManager::SetSelectedEntity(sPrevSelectedEntity);
+                GUIVault::ClearSelectedEntities();
+                GUIVault::SetSelectedEntity(sPrevSelectedEntity);
               }
             }
             else {
               sPrevSelectedEntity = {};
-              GUIManager::SetSelectedEntity({});
-              GUIManager::ClearSelectedEntities();
+              GUIVault::SetSelectedEntity({});
+              GUIVault::ClearSelectedEntities();
             }
           }
         }
@@ -267,7 +269,7 @@ namespace GUI
   }
 
   bool Viewport::UpdateGuizmos() const {
-    ECS::Entity selectedEntity{ GUIManager::GetSelectedEntity() };
+    ECS::Entity selectedEntity{ GUIVault::GetSelectedEntity() };
     if (!selectedEntity || !selectedEntity.HasComponent<Component::Transform>()) { return false; }
     static Component::PrefabOverrides* prefabOverrides{ nullptr };
     prefabOverrides = selectedEntity.HasComponent<Component::PrefabOverrides>() ? 
@@ -313,11 +315,11 @@ namespace GUI
         glm::value_ptr(t2), glm::value_ptr(r2), glm::value_ptr(s2));
 
       // for each operation, if multi-select active, update all their transforms
-      bool const multiSelectActive{ !GUIManager::GetSelectedEntities().empty() };
+      bool const multiSelectActive{ !GUIVault::GetSelectedEntities().empty() };
       if (currentOperation == ImGuizmo::TRANSLATE) {
         glm::vec3 const offset{ t - t2 };
         if (multiSelectActive) {
-          for (ECS::Entity e : GUIManager::GetSelectedEntities()) {
+          for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
             e.GetComponent<Component::Transform>().position += offset;
           }
         }
@@ -328,7 +330,7 @@ namespace GUI
       if (currentOperation == ImGuizmo::ROTATE) {
         glm::vec3 const offset{ r - r2 };
         if (multiSelectActive) {
-          for (ECS::Entity e : GUIManager::GetSelectedEntities()) {
+          for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
             Component::Transform& trans{ e.GetComponent<Component::Transform>() };
             trans.SetLocalRotWithEuler(trans.eulerAngles + offset);
           }
@@ -341,7 +343,7 @@ namespace GUI
       if (currentOperation == ImGuizmo::SCALE) {
         glm::vec3 const offset{ s - s2 };
         if (multiSelectActive) {
-          for (ECS::Entity e : GUIManager::GetSelectedEntities()) {
+          for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
             e.GetComponent<Component::Transform>().scale += offset;
           }
         }
@@ -353,7 +355,7 @@ namespace GUI
       // update all the world values based on the changes
       if (multiSelectActive) {
         ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
-        for (ECS::Entity e : GUIManager::GetSelectedEntities()) {
+        for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
           TransformHelpers::UpdateWorldTransform(e);
           if (!e.HasComponent<Component::PrefabOverrides>()) { continue; }
 
@@ -406,15 +408,11 @@ namespace GUI
           break;
         case AssetPayload::MODEL:
         {
-          ECS::Entity newEntity{ ECS::EntityManager::GetInstance().CreateEntityWithTag(assetPayload.GetFileName()) };
           IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
-          //auto const& mesh{ IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(meshSrc)->mMeshSource };
-          newEntity.EmplaceComponent<Component::Mesh>(meshSrc, assetPayload.GetFileName(), true);
-          GUIManager::SetSelectedEntity(newEntity);
+          ECS::Entity const newEntity{ IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(meshSrc)->mMeshSource.ConstructEntity(meshSrc, assetPayload.GetFileName()) };
+          GUIVault::SetSelectedEntity(newEntity);
           break;
         }
-        case AssetPayload::SPRITE:
-        case AssetPayload::AUDIO:
         default:
           break;
         }

@@ -38,7 +38,37 @@ namespace ImGuiHelpers
     return nullptr;
   }
 
-  bool TableInputFloat3(std::string propertyName, float* property, float fieldWidth, bool disabled, float minVal, float maxVal, float step) {
+  bool TableInputFloat2(std::string const& propertyName, float* property, float fieldWidth, bool disabled, float minVal, float maxVal, float step, const char* fmt) {
+    ImGui::BeginDisabled(disabled);
+
+    bool valChanged{ false };
+    float const elemSize{ ImGui::GetContentRegionAvail().x * 0.9f }, cursorOffset{ ImGui::GetContentRegionAvail().x * 0.05f };
+    ImGui::TableNextRow();
+    ImGui::TableSetColumnIndex(0);
+    ImGui::Text(propertyName.c_str());
+    ImGui::TableSetColumnIndex(1);
+    ImGui::SetNextItemWidth(elemSize);
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + cursorOffset);
+
+    std::string labelX{ "##X" + propertyName };
+    if (ImGui::DragFloat(labelX.c_str(), &property[0], step, minVal, maxVal, fmt)) {
+      valChanged = true;
+    }
+
+    ImGui::TableSetColumnIndex(2);
+    ImGui::SetNextItemWidth(elemSize);
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + cursorOffset);
+    std::string labelY{ "##Y" + propertyName };
+    if (ImGui::DragFloat(labelY.c_str(), &property[1], step, minVal, maxVal, fmt)) {
+      valChanged = true;
+    }
+
+    ImGui::EndDisabled();
+
+    return valChanged;
+  }
+
+  bool TableInputFloat3(std::string const& propertyName, float* property, float fieldWidth, bool disabled, float minVal, float maxVal, float step) {
     ImGui::BeginDisabled(disabled);
 
     // Convert IM_COL32 colors to ImVec4
@@ -93,7 +123,7 @@ namespace ImGuiHelpers
     return valChanged;
   }
 
-  bool TableInputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled, double minVal, double maxVal, float step) {
+  bool TableInputDouble3(std::string const& propertyName, glm::dvec3& property, float fieldWidth, bool disabled, double minVal, double maxVal, float step) {
     ImGui::BeginDisabled(disabled);
 
     // Convert IM_COL32 colors to ImVec4
@@ -191,7 +221,7 @@ namespace ImGuiHelpers
     return valChanged;
   }
 
-  void InputDouble1(std::string propertyName, double& property, bool disabled) {
+  void InputDouble1(std::string const& propertyName, double& property, bool disabled) {
     ImGui::BeginDisabled(disabled);
     ImGui::TableNextColumn();
     ImGui::Text(propertyName.c_str());
@@ -201,7 +231,7 @@ namespace ImGuiHelpers
     ImGui::EndDisabled();
   }
 
-  bool InputCheckBox(std::string propertyName, bool& property, bool disabled) {
+  bool InputCheckBox(std::string const& propertyName, bool& property, bool disabled) {
     ImGui::PushID(propertyName.c_str());
     bool valChanged{ false };
     ImGui::BeginDisabled(disabled);

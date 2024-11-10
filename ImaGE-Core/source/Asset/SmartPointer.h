@@ -257,7 +257,7 @@ namespace IGE {
 		private:
 			Details::InstanceInfo GetInfo() {
 				if (mInstance.partialRef) {
-					mInfo.refCount = mInstance.GetRefCount<T>();
+					mInfo.refCount = static_cast<int>(mInstance.GetRefCount<T>());
 					mInfo.isLive = RefUtils::IsLive(mInstance.partialRef.guid);
 				}
 				else {

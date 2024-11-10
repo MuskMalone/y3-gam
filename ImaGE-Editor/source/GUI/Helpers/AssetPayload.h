@@ -27,6 +27,7 @@ namespace GUI
       PREFAB,
       SCENE,
       MODEL,
+      MATERIAL,
       AUDIO,
       FONT,
       SHADER
@@ -45,6 +46,9 @@ namespace GUI
       else if (IGE::Assets::cMeshExtensions.find(fileExt) != IGE::Assets::cMeshExtensions.end()) {
         mAssetType = AssetType::MODEL;
       }
+      else if (fileExt == gMaterialFileExt) {
+        mAssetType = AssetType::MATERIAL;
+      }
       else if (IGE::Assets::cAudioExtensions.find(fileExt) != IGE::Assets::cAudioExtensions.end()) {
           mAssetType = AssetType::AUDIO;
       }
@@ -52,7 +56,7 @@ namespace GUI
         mAssetType = AssetType::FONT;
       }
       else if (IGE::Assets::cShaderExtensions.find(fileExt) != IGE::Assets::cShaderExtensions.end()){
-          mAssetType = AssetType::SHADER;
+        mAssetType = AssetType::SHADER;
       }
       else if (IGE::Assets::cImageExtensions.find(fileExt) != IGE::Assets::cImageExtensions.end()) {
         mAssetType = AssetType::SPRITE;

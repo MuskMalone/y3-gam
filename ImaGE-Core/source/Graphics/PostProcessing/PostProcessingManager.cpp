@@ -102,7 +102,7 @@ namespace Graphics {
 		if (name.empty() || mPpc.mConfigs.find(name) == mPpc.mConfigs.end()) {
 			return 0;
 		}
-		return mPpc.mConfigs.at(name).size();
+		return static_cast<unsigned>(mPpc.mConfigs.at(name).size());
 	}
 	void PostProcessingManager::ReloadShaders()
 	{

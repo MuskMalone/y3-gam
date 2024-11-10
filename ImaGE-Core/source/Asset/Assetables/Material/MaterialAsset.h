@@ -8,8 +8,8 @@ namespace IGE {
 
 		const std::string cMaterialDirectory{ std::string(gAssetsDirectory) + "Materials\\" };
 		struct MaterialAsset : public RefCounted {
-			Graphics::MaterialData mMaterial;
-			MaterialAsset(std::string const& fp) /*: mMaterial{ fp } {}*/;
+			std::shared_ptr<Graphics::MaterialData> mMaterial;
+			MaterialAsset(std::string const& fp);
 			static IGE::Assets::GUID Import(std::string const& fp, std::string& newFp,
 				AssetMetadata::AssetProps&);
 			static void* Load([[maybe_unused]] GUID guid);

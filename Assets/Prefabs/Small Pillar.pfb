@@ -16,9 +16,9 @@
                     "z": 0.0
                 },
                 "scale": {
-                    "x": 7.0,
-                    "y": 7.0,
-                    "z": 7.0
+                    "x": 50.0,
+                    "y": 50.0,
+                    "z": 50.0
                 },
                 "rotation": {
                     "x": 0.0,
@@ -37,9 +37,9 @@
                     "z": 0.0
                 },
                 "worldScale": {
-                    "x": 7.0,
-                    "y": 7.0,
-                    "z": 7.0
+                    "x": 50.0,
+                    "y": 50.0,
+                    "z": 50.0
                 },
                 "worldRot": {
                     "x": 0.0,
@@ -60,11 +60,1040 @@
                 "GUID": {
                     "ID": 2782215492784184878
                 },
+                "submeshIdx": 0,
                 "isCustomMesh": true,
                 "castShadows": true,
                 "receiveShadows": true
             }
         }
     ],
-    "SubData": []
+    "SubData": [
+        {
+            "ID": 1,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCube2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.1428571492433548,
+                            "y": 0.1428571492433548,
+                            "z": 0.1428571492433548
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 7.142857551574707,
+                            "y": 7.142857551574707,
+                            "z": 7.142857551574707
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        },
+                        "matIdx": 0
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCube2",
+                        "GUID": {
+                            "ID": 2782215492784184878
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCube1",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.1428571492433548,
+                            "y": 0.1428571492433548,
+                            "z": 0.1428571492433548
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 7.142857551574707,
+                            "y": 7.142857551574707,
+                            "z": 7.142857551574707
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        },
+                        "matIdx": 0
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCube1",
+                        "GUID": {
+                            "ID": 2782215492784184878
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "polySurface2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.1428571492433548,
+                            "y": 0.1428571492433548,
+                            "z": 0.1428571492433548
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 7.142857551574707,
+                            "y": 7.142857551574707,
+                            "z": 7.142857551574707
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        },
+                        "matIdx": 0
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "polySurface2",
+                        "GUID": {
+                            "ID": 2782215492784184878
+                        },
+                        "submeshIdx": 2,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 4,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "polySurface3",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.1428571492433548,
+                            "y": 0.1428571492433548,
+                            "z": 0.1428571492433548
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 7.142857551574707,
+                            "y": 7.142857551574707,
+                            "z": 7.142857551574707
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        },
+                        "matIdx": 0
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "polySurface3",
+                        "GUID": {
+                            "ID": 2782215492784184878
+                        },
+                        "submeshIdx": 3,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 5,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "polySurface4",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.1428571492433548,
+                            "y": 0.1428571492433548,
+                            "z": 0.1428571492433548
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 7.142857551574707,
+                            "y": 7.142857551574707,
+                            "z": 7.142857551574707
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        },
+                        "matIdx": 0
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "polySurface4",
+                        "GUID": {
+                            "ID": 2782215492784184878
+                        },
+                        "submeshIdx": 4,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 6,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "polySurface5",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.1428571492433548,
+                            "y": 0.1428571492433548,
+                            "z": 0.1428571492433548
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 7.142857551574707,
+                            "y": 7.142857551574707,
+                            "z": 7.142857551574707
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        },
+                        "matIdx": 0
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "polySurface5",
+                        "GUID": {
+                            "ID": 2782215492784184878
+                        },
+                        "submeshIdx": 5,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 7,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "polySurface6",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.1428571492433548,
+                            "y": 0.1428571492433548,
+                            "z": 0.1428571492433548
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 7.142857551574707,
+                            "y": 7.142857551574707,
+                            "z": 7.142857551574707
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        },
+                        "matIdx": 0
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "polySurface6",
+                        "GUID": {
+                            "ID": 2782215492784184878
+                        },
+                        "submeshIdx": 6,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 8,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCube5",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.1428571492433548,
+                            "y": 0.1428571492433548,
+                            "z": 0.1428571492433548
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 7.142857551574707,
+                            "y": 7.142857551574707,
+                            "z": 7.142857551574707
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        },
+                        "matIdx": 0
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCube5",
+                        "GUID": {
+                            "ID": 2782215492784184878
+                        },
+                        "submeshIdx": 7,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 9,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "polySurface1",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.1428571492433548,
+                            "y": 0.1428571492433548,
+                            "z": 0.1428571492433548
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 7.142857551574707,
+                            "y": 7.142857551574707,
+                            "z": 7.142857551574707
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        },
+                        "matIdx": 0
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "polySurface1",
+                        "GUID": {
+                            "ID": 2782215492784184878
+                        },
+                        "submeshIdx": 8,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 10,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCube3",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.1428571492433548,
+                            "y": 0.1428571492433548,
+                            "z": 0.1428571492433548
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 7.142857551574707,
+                            "y": 7.142857551574707,
+                            "z": 7.142857551574707
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        },
+                        "matIdx": 0
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCube3",
+                        "GUID": {
+                            "ID": 2782215492784184878
+                        },
+                        "submeshIdx": 9,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 11,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCube4",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.1428571492433548,
+                            "y": 0.1428571492433548,
+                            "z": 0.1428571492433548
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 7.142857551574707,
+                            "y": 7.142857551574707,
+                            "z": 7.142857551574707
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        },
+                        "matIdx": 0
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCube4",
+                        "GUID": {
+                            "ID": 2782215492784184878
+                        },
+                        "submeshIdx": 10,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 12,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCube6",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.1428571492433548,
+                            "y": 0.1428571492433548,
+                            "z": 0.1428571492433548
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 7.142857551574707,
+                            "y": 7.142857551574707,
+                            "z": 7.142857551574707
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        },
+                        "matIdx": 0
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCube6",
+                        "GUID": {
+                            "ID": 2782215492784184878
+                        },
+                        "submeshIdx": 11,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 13,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCube7",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.1428571492433548,
+                            "y": 0.1428571492433548,
+                            "z": 0.1428571492433548
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 7.142857551574707,
+                            "y": 7.142857551574707,
+                            "z": 7.142857551574707
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        },
+                        "matIdx": 0
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCube7",
+                        "GUID": {
+                            "ID": 2782215492784184878
+                        },
+                        "submeshIdx": 12,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        }
+    ]
 }

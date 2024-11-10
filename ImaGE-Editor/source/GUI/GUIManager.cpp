@@ -15,6 +15,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <ImGui/imgui.h>
 #include <Core/Entity.h>
 #include "Graphics/Texture.h"
+#include <GUI/GUIVault.h>
+
 #pragma region IndivWindowIncludes
 #include "Dockable/AssetBrowser.h"
 #include "Dockable/Console.h"
@@ -60,8 +62,9 @@ namespace GUI {
     mWindows.emplace_back(std::make_shared<RenderPassViewer>("Render Pass Viewer"));
     mWindows.emplace_back(std::make_shared<PostProcessingSettings>("Post Processing"));
 
-    mStyler.LoadFonts();
-    mStyler.SetCurrentTheme(static_cast<CustomTheme>(gEditorDefaultTheme)); // Default theme should be read from settings file
+    Styler& styler{ GUIVault::GetStyler() };
+    styler.LoadFonts();
+    styler.SetCurrentTheme(static_cast<CustomTheme>(gEditorDefaultTheme)); // Default theme should be read from settings file
   }
 
   void GUIManager::UpdateGUI(std::shared_ptr<Graphics::Framebuffer> const& framebuffer, std::shared_ptr<Graphics::Texture> const& tex) {
@@ -87,8 +90,7 @@ namespace GUI {
   }
 
   void GUIManager::Shutdown() {
-    mStyler.Shutdown();
-    sSelectedEntity = {};
+    GUIVault::GetStyler().Shutdown();
 
     mEditorViewport.reset();
     mPersistentElements.clear();
