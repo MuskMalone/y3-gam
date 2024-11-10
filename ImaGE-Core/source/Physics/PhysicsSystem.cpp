@@ -554,15 +554,18 @@ namespace IGE {
 		//assume direction is normalized
 		bool PhysicsSystem::RayCastSingular(glm::vec3 const& origin, glm::vec3 const& end, RaycastHit& result)
 		{
-			physx::PxRaycastBuffer hitBuffer{};
+			
+			physx::PxRaycastBufferN<2> hitBuffer{};
 			auto dir{ glm::normalize(end - origin) };
 			auto mag{ glm::distance(origin, end) };
 			bool hit{ mScene->raycast(ToPxVec3(origin), ToPxVec3(dir), mag, hitBuffer) };
 			if (hit) {
-				result.entity = mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.block.actor));
-				result.distance = hitBuffer.block.distance;
-				result.normal = ToGLMVec3(hitBuffer.block.normal);
-				result.position = ToGLMVec3(hitBuffer.block.position);
+				if (hitBuffer.nbTouches < 2) return false;
+
+				result.entity = mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[1].actor));
+				result.distance = hitBuffer.touches[1].distance;
+				result.normal = ToGLMVec3(hitBuffer.touches[1].normal);
+				result.position = ToGLMVec3(hitBuffer.touches[1].position);
 				return true;
 			}
 			return false;

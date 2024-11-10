@@ -176,6 +176,8 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetWorldRotation);
   ADD_INTERNAL_CALL(GetRotation);
   ADD_INTERNAL_CALL(GetWorldScale);
+  ADD_INTERNAL_CALL(GetScale);
+  ADD_INTERNAL_CALL(GetColliderScale);
   ADD_INTERNAL_CALL(GetVelocity);
 
   //// Set Functions
@@ -675,6 +677,22 @@ void Mono::SetWorldScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
   trans.scale = scaleAdjustment;
   TransformHelpers::UpdateWorldTransform(entity);
+}
+
+glm::vec3 Mono::GetScale(ECS::Entity::EntityID entity)
+{
+    Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+    return trans.scale;
+}
+
+glm::vec3 Mono::GetColliderScale(ECS::Entity::EntityID e)
+{
+    ECS::Entity entity(e);
+    if (entity.HasComponent<Component::BoxCollider>()) {
+        auto& collider{ entity.GetComponent<Component::BoxCollider>() };
+        return glm::vec3{ collider.scale.x, collider.scale.y, collider.scale.z };
+    }
+    return glm::vec3{};
 }
 
 glm::quat Mono::GetWorldRotation(ECS::Entity::EntityID entity)

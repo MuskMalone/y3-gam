@@ -14,7 +14,9 @@ public class PlayerFootsteps : Entity
 {
     //public Entity audioManager;
     public Entity player;
+    public float interval = 0.5f;
     // Start is called before the first frame update
+    private float timePassed;
     public PlayerFootsteps() : base()
     {
 
@@ -27,13 +29,16 @@ public class PlayerFootsteps : Entity
     // Update is called once per frame
     void Update()
     {
+        timePassed += InternalCalls.GetDeltaTime();
         bool isGrounded = InternalCalls.IsGrounded(player.mEntityID);
         Vector3 velocity = InternalCalls.GetVelocity(player.mEntityID);
         float magnitude = velocity.X * velocity.X + velocity.Y * velocity.Y + velocity.Z * velocity.Z;
-        Debug.Log("amagnitude " + magnitude.ToString());
         if (isGrounded && magnitude > 0.1f)
         {
-            PlayFootstepSound();
+            if (timePassed >= interval) {
+                PlayFootstepSound();
+                timePassed = 0;
+            }
         }
     }
 
@@ -41,7 +46,8 @@ public class PlayerFootsteps : Entity
     {
         // Raycast downward to detect the ground surface
         Vector3 position = InternalCalls.GetPosition(player.mEntityID);
-        uint entityHit = InternalCalls.Raycast(position, position + (new Vector3(0, -1, 0)));
+        Vector3 scale = InternalCalls.GetScale(player.mEntityID);
+        uint entityHit = InternalCalls.Raycast(position, position + (new Vector3(0, -2, 0)));
         if (entityHit != 0)
         {
             // Check the layer name of the object hit by the raycast
@@ -49,13 +55,13 @@ public class PlayerFootsteps : Entity
 
             switch (tag)
             {
-                case "Stair Head":
+                case "MainGround":
                     Debug.Log("Stepping on metal Pipes");
-                    InternalCalls.PlaySound(mEntityID, "Pavement");
+                    InternalCalls.PlaySound(mEntityID, "MetalPipe");
                     break;
                 
                 default:
-                    Debug.Log("No Sound");
+                    Debug.Log("No Sound Case " + tag);
                     break;
             }
         }
