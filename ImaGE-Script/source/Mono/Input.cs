@@ -45,11 +45,19 @@ namespace IGE.Utils
       return InternalCalls.GetAxis(s);
     }
 
+    public static Vector3 mousePosition // Checks if any key is triggered/held this frame and return the result
+    {
+      get
+      {
+        return InternalCalls.GetMousePos();
+      }
+    }
+
     public static bool anyKeyDown // Checks if any key is triggered/held this frame and return the result
     {
       get
       {
-        return InternalCalls.anyKeyDown(); 
+        return InternalCalls.AnyKeyDown(); 
       }
     }
 

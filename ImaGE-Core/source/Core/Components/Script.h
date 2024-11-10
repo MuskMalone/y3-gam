@@ -62,6 +62,8 @@ namespace Component {
 				double dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
 				for (Mono::ScriptInstance& cs : mScriptList)
 				{
+					if (mScriptList.size() == 0)
+						break;
 					cs.InvokeOnUpdate(dt);
 				}
 			}

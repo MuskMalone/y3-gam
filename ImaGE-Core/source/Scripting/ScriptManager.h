@@ -318,7 +318,9 @@ namespace Mono
 
 		void DestroyEntity(ECS::Entity::EntityID entity);
 
-		void DestroyScript(MonoObject obj, ECS::Entity::EntityID entity);
+		void DestroyScript(MonoObject* obj, ECS::Entity::EntityID entity);
+
+		
 
 		/*!**********************************************************************
 		*																																			  *

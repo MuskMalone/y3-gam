@@ -84,19 +84,20 @@ using IGE.Utils;
     }
 
 
-    void OnDestroy()
+    public void OnDestroy()
     {
 
     }
 
-    void Destroy(uint entityID)  //Function to destroy entities
+    public void Destroy(uint entityID)  //Function to destroy entities
     {
       OnDestroy();
+      InternalCalls.DestroyEntity(mEntityID);
     }
 
-    void Destroy(Entity entity)  //Function to destroy script instances (these scripts must inherit from entity)
-  {
-
+    public void Destroy(Entity entity)  //Function to destroy script instances (these scripts must inherit from entity)
+    {
+      InternalCalls.DestroyScript(entity, entity.mEntityID);
     }
 
 

@@ -249,6 +249,13 @@ bool InputManager::IsKeyPressed(KEY_CODE key)
 	return (mKeyFramesHeld[static_cast<int>(key)] > 0.f);
 }
 
+bool InputManager::AnyKeyDown()
+{
+	for (double d : mKeyFramesHeld)
+		if (d > 0.f)
+			return true;
+	return false;
+}
 
 MonoString* InputManager::GetInputString()
 {

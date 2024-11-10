@@ -140,6 +140,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 			static bool IsKeyPressed(KEY_CODE);
 
 
+			static bool AnyKeyDown();
+
+
 			/*!*********************************************************************
 			\brief
 				.Function to check the yoffset of the mouse scroll for the current frame

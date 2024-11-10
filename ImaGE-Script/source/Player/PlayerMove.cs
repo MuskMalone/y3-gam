@@ -67,9 +67,10 @@ public class  PlayerMove : Entity
   void Update()
   {
     //HandleBotSpawningAndSwitching();
-
+    Console.WriteLine(Input.mousePosition);
     ProcessLook();
     forPlayerMovement();
+
 
   }
     void forPlayerMovement()

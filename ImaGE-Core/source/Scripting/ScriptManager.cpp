@@ -169,6 +169,7 @@ void ScriptManager::AddInternalCalls()
   //ADD_CLASS_INTERNAL_CALL(IsKeyPressed, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(IsKeyHeld, Input::InputManager::GetInstance()); 
   ADD_CLASS_INTERNAL_CALL(GetInputString, Input::InputManager::GetInstance());
+  ADD_CLASS_INTERNAL_CALL(AnyKeyDown, Input::InputManager::GetInstance());
   ADD_INTERNAL_CALL(GetMouseDelta);
 
   //// Get Functions
@@ -200,6 +201,10 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(IsGrounded);
   ADD_INTERNAL_CALL(GetTag);
   ADD_INTERNAL_CALL(FindScript);
+  ADD_INTERNAL_CALL(DestroyEntity);
+  ADD_INTERNAL_CALL(DestroyScript);
+
+
  
 
 }
@@ -817,20 +822,36 @@ void Mono::DestroyEntity(ECS::Entity::EntityID entity)
     Debug::DebugLogger::GetInstance().LogWarning("Your r trying to delete an entity doesn't exist");
 }
 
-void Mono::DestroyScript(MonoObject obj, ECS::Entity::EntityID entity)
+void Mono::DestroyScript(MonoObject* obj, ECS::Entity::EntityID entity)
 {
-  //if (ECS::Entity(entity) && ECS::Entity(entity).HasComponent<Component::Script>())
-  //{
-  //  Component::Script& s = ECS::Entity(entity).GetComponent<Component::Script>();
-  //  for (scr)
-  //  {
-
-  //  }
-  //   Debug::DebugLogger::GetInstance().LogWarning("Your r trying to delete a script that doesn't exist or the entity itself doesnt have a script")
-  //}
-  //else
-  //  Debug::DebugLogger::GetInstance().LogWarning("Your r trying to delete a script that doesn't exist or the entity itself doesnt have a script")
+  if (ECS::Entity(entity) && ECS::Entity(entity).HasComponent<Component::Script>())
+  {
+    Component::Script& s = ECS::Entity(entity).GetComponent<Component::Script>();
+    int pos{ 0 };
+    bool hasScript{ false };
+    for (Mono::ScriptInstance& si : s.mScriptList)
+    {
+      if (si.mClassInst == obj)
+      {
+        hasScript = true;
+        break;
+      }
+        
+      ++pos;
+    }
+    if (hasScript)
+    {
+      s.mScriptList[pos].FreeScript();
+      s.mScriptList.erase(s.mScriptList.begin() + pos);
+    }
+      
+    else
+      Debug::DebugLogger::GetInstance().LogWarning("Your r trying to delete a script that doesn't exist ");
+  }
+  else
+    Debug::DebugLogger::GetInstance().LogWarning("The entity itself doesnt have a script, or the entity doesnt exist");
 }
+
 
 
 /*!**********************************************************************

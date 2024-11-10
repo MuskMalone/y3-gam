@@ -82,11 +82,14 @@ namespace IGE.Utils
     extern public static float GetAxis(string s);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static bool anyKeyDown();
+    extern public static bool AnyKeyDown();
 
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetMouseDelta();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static Vector3 GetMousePos();
 
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -123,6 +126,11 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetActive(uint entityHandle, bool active);
 
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void DestroyEntity(uint EntityID);
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void DestroyScript(Entity obj, uint EntityID);
+
 
     #endregion
 
@@ -138,6 +146,8 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static Entity FindScript(string s);
+
+
 
 
   }
