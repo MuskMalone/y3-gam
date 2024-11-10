@@ -18,7 +18,7 @@ namespace IGE {
 			return (... || entity.HasComponent<_component>());
 		}
 		std::unordered_set<physx::PxRigidDynamic*> PhysicsSystem::mInactiveActors{};
-
+		
 		const float gGravity{ -9.81f };
 		const float gTimeStep{ 1.f / 60.f };
 		std::shared_ptr<IGE::Physics::PhysicsSystem> PhysicsSystem::_mSelf;
@@ -37,7 +37,7 @@ namespace IGE {
 			mPvd{ PxCreatePvd(*mFoundation) },
 			mPhysics{ PxCreatePhysics(PX_PHYSICS_VERSION, *mFoundation, physx::PxTolerancesScale(), true, mPvd) },
 			mMaterial{ mPhysics->createMaterial(0.5f, 0.5f, 0.6f) },
-			mRigidBodyIDs{}, mRigidBodyToEntity{}, mEventManager{ new PhysicsEventManager{mRigidBodyIDs, mRigidBodyToEntity} }
+			mRigidBodyIDs{}, mRigidBodyToEntity{}, mEventManager{ new PhysicsEventManager{mRigidBodyIDs, mRigidBodyToEntity, mOnTriggerPairs} }
 			//mTempAllocator{ 10 * 1024 * 1024 },
 			//mJobSystem{ cMaxPhysicsJobs, cMaxPhysicsBarriers, static_cast<int>(thread::hardware_concurrency() - 1) }
 		{
@@ -71,8 +71,7 @@ namespace IGE {
 		}
 
 		void PhysicsSystem::Update() {
-
-
+			mOnTriggerPairs.clear();
 			if (Scenes::SceneManager::GetInstance().GetSceneState() != Scenes::SceneState::PLAYING) {
 				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Transform>() };
 				for (auto entity : rbsystem) {
@@ -185,7 +184,6 @@ namespace IGE {
 					//xfm.worldPos = ToGLMVec3(bodyInterface.(rb.bodyID));
 				}
 			}
-
 		}
 
 		Component::RigidBody& PhysicsSystem::AddRigidBody(ECS::Entity entity, Component::RigidBody rigidbody) {
@@ -570,7 +568,47 @@ namespace IGE {
 			}
 			return false;
 		}
+		
+		physx::PxRigidDynamic* PhysicsSystem::GetRBIter(ECS::Entity entity) {
+			auto rbiter{ mRigidBodyIDs.find(nullptr) };
+			if (HasAnyComponent<Component::RigidBody, Component::BoxCollider, Component::SphereCollider, Component::CapsuleCollider>(entity)) {	
+				if (entity.HasComponent<Component::RigidBody>())
+					rbiter = mRigidBodyIDs.find(entity.GetComponent<Component::RigidBody>().bodyID);
+				else if (entity.HasComponent<Component::BoxCollider>())
+					rbiter = mRigidBodyIDs.find(entity.GetComponent<Component::BoxCollider>().bodyID);
+				else if (entity.HasComponent<Component::SphereCollider>())
+					rbiter = mRigidBodyIDs.find(entity.GetComponent<Component::SphereCollider>().bodyID);
+				else if (entity.HasComponent<Component::CapsuleCollider>())
+					rbiter = mRigidBodyIDs.find(entity.GetComponent<Component::CapsuleCollider>().bodyID);
+				return rbiter->second;
+			}
+			return nullptr;
+		}
+		bool PhysicsSystem::OnTriggerEnter(ECS::Entity trigger, ECS::Entity other) {
+			auto triggerrb{ reinterpret_cast<void*>(GetRBIter(trigger)) };
+			auto otherrb{ reinterpret_cast<void*>(GetRBIter(other)) };
+			if (triggerrb && otherrb) {
+				return (
+					mOnTriggerPairs.find(triggerrb) != mOnTriggerPairs.end() &&
+					mOnTriggerPairs.at(triggerrb).find(otherrb) != mOnTriggerPairs.at(triggerrb).end() &&
+					mOnTriggerPairs.at(triggerrb).at(otherrb) == (int)TriggerResult::FOUND
+				);
+			}
+			return false;
+		}
 
+		bool PhysicsSystem::OnTriggerExit(ECS::Entity trigger, ECS::Entity other) {
+			auto triggerrb{ reinterpret_cast<void*>(GetRBIter(trigger)) };
+			auto otherrb{ reinterpret_cast<void*>(GetRBIter(other)) };
+			if (triggerrb && otherrb) {
+				return (
+					mOnTriggerPairs.find(triggerrb) != mOnTriggerPairs.end() &&
+					mOnTriggerPairs.at(triggerrb).find(otherrb) != mOnTriggerPairs.at(triggerrb).end() &&
+					mOnTriggerPairs.at(triggerrb).at(otherrb) == (int)TriggerResult::LOST
+					);
+			}
+			return false;
+		}
 
 		template<typename _physx_type, typename _collider_component>
 		void PhysicsSystem::RemoveCollider(ECS::Entity entity, physx::PxGeometryType::Enum typeenum)

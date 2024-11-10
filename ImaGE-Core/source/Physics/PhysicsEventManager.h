@@ -14,13 +14,16 @@
 #define PHYSICS_EVENT_LISTENER_IMPL(name) void name(IGE::Physics::PhysicsEvent const& e)
 namespace IGE {
 	namespace Physics {
-		
+		enum class TriggerResult : int {
+			LOST, FOUND, NONE
+		};
 		class PhysicsEventManager : public physx::PxSimulationEventCallback {
 		public:
 			PhysicsEventManager(
 				std::unordered_map<void*, physx::PxRigidDynamic*>& rbid,
-				std::unordered_map<void*, ECS::Entity>& rbToEntity
-				) : mRigidBodyIDs{ rbid }, mRigidBodyToEntity{ rbToEntity } {}
+				std::unordered_map<void*, ECS::Entity>& rbToEntity,
+				std::unordered_map<void*, std::unordered_map<void*, int>>& triggerpairs
+			) : mRigidBodyIDs{ rbid }, mRigidBodyToEntity{ rbToEntity }, mOnTriggerPairs{triggerpairs} {}
 		private:
 			PhysicsEventManager() = delete;
 
@@ -179,6 +182,7 @@ namespace IGE {
 			//cant mod, just observe
 			std::unordered_map<void*, physx::PxRigidDynamic*> const& mRigidBodyIDs;
 			std::unordered_map<void*, ECS::Entity> const& mRigidBodyToEntity;
+			std::unordered_map<void*, std::unordered_map<void*, int>>& mOnTriggerPairs;
 
 		};
 	}
