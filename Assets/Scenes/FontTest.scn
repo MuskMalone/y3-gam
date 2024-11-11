@@ -59,16 +59,13 @@
                     }
                 },
                 {
-                    "Material": {
-                        "matIdx": 0
-                    }
-                },
-                {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 5365423291267554267
+                            "ID": 9826787250628898509
                         },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
                     }
@@ -197,7 +194,7 @@
                 },
                 {
                     "Camera": {
-                        "projType": 0,
+                        "projType": "PERSP",
                         "position": {
                             "x": 0.0,
                             "y": 0.0,
@@ -238,10 +235,10 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 0.015707315877079965,
+                            "x": 0.015707317739725114,
                             "y": 0.0,
                             "z": 0.0,
-                            "w": 0.9998766183853149
+                            "w": 0.9998767375946045
                         },
                         "eulerAngles": {
                             "x": 1.7999999523162842,
@@ -422,19 +419,6 @@
                     "Layer": {
                         "layerName": "Default"
                     }
-                },
-                {
-                    "Image": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 0
-                        }
-                    }
                 }
             ]
         }
@@ -443,7 +427,7 @@
         "layerNames": [
             "Default",
             "Player",
-            "",
+            "UI",
             "",
             "",
             "",

@@ -179,9 +179,15 @@ namespace ECS {
 
     if (mChildren.find(parent.GetRawEnttEntityID()) != mChildren.end()) {
       for (EntityID id : mChildren[parent.GetRawEnttEntityID()]) {
-        if (Entity{ id }.HasComponent<Component::Layer>()) {
-          Entity{ id }.GetComponent<Component::Layer>().name =
-            parent.GetComponent<Component::Layer>().name;
+        ECS::Entity entity{ id };
+        if (!entity.HasComponent<Component::Layer>()) { continue; }
+
+        Component::Layer& layer{ entity.GetComponent<Component::Layer>() };
+        layer.name = parent.GetComponent<Component::Layer>().name;
+
+        // updated prefab instances with overrides
+        if (entity.HasComponent<Component::PrefabOverrides>()) {
+          entity.GetComponent<Component::PrefabOverrides>().AddComponentModification(layer);
         }
 
         // Recursively set the children of children
