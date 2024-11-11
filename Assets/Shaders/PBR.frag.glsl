@@ -88,7 +88,7 @@ void main(){
         if(u_type[i] == typeDir)
         {
             L = normalize(-u_LightDirection[i]); // Light direction (directional light)
-            lightColor = u_LightColor[i];
+            lightColor = u_LightColor[i] * u_LightIntensity[i];
         }
         if(u_type[i] == typeSpot)
         {
