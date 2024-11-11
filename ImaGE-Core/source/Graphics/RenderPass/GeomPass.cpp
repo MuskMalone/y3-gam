@@ -199,10 +199,24 @@ namespace Graphics {
             Graphics::Renderer::SubmitSubmeshInstance(mesh.meshSource, mesh.submeshIdx, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
           }
 
-          mSpec.pipeline->GetSpec().instanceLayout;
+          //mSpec.pipeline->GetSpec().instanceLayout;
           Renderer::RenderSubmeshInstances();  // Render all instances for the material group
           Texture::ResetTextureUnits(); // Unbind textures after each group
       }
+
+      Renderer::RenderSceneBegin(cam.viewProjMatrix);
+      for (ECS::Entity const& entity : entities) {
+        if (entity.HasComponent<Component::Sprite2D>()) {
+          auto const& sprite = entity.GetComponent<Component::Sprite2D>();
+          auto const& xform = entity.GetComponent<Component::Transform>();
+          if (sprite.textureAsset)
+              Renderer::DrawSprite(xform.worldPos, xform.worldScale, xform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(sprite.textureAsset)->mTexture, sprite.color);
+          else
+              Renderer::DrawQuad(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, sprite.color);
+
+        }
+      }
+      Renderer::RenderSceneEnd();
       //=================================================SUBMESH VERSION END===========================================================
 
       End();

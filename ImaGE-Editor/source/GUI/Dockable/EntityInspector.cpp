@@ -327,6 +327,18 @@ namespace GUI {
               }
           }
       }
+
+      if (currentEntity.HasComponent<Component::Sprite2D>()) {
+          rttr::type const sourceType{ rttr::type::get<Component::Sprite2D>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(sourceType);
+
+          if (Sprite2DComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Sprite2D>());
+              }
+          }
+      }
       if (prefabOverride) {
         for (rttr::type const& type : prefabOverride->removedComponents) {
           DisplayRemovedComponent(type);
