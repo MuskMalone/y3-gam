@@ -20,14 +20,14 @@ namespace Reflection::ComponentUtils {
 
 #define EXTRACT_RAW_COMP(T, variable) T const& variable{ var.get_type().is_wrapper() ? var.get_wrapped_value<T>() : var.get_value<T>() }
   void AddAudioListener(ECS::Entity entity, rttr::variant const& var) {
-      EXTRACT_RAW_COMP(AudioListener, comp);
+    EXTRACT_RAW_COMP(AudioListener, comp);
 
-      entity.EmplaceOrReplaceComponent<AudioListener>(comp);
-  }  
+    entity.EmplaceOrReplaceComponent<AudioListener>(comp);
+  }
   void AddAudioSource(ECS::Entity entity, rttr::variant const& var) {
-      EXTRACT_RAW_COMP(AudioSource, comp);
+    EXTRACT_RAW_COMP(AudioSource, comp);
 
-      entity.EmplaceOrReplaceComponent<AudioSource>(comp);
+    entity.EmplaceOrReplaceComponent<AudioSource>(comp);
   }
   void AddTag(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Tag, comp);
@@ -50,22 +50,19 @@ namespace Reflection::ComponentUtils {
   void AddBoxCollider(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(BoxCollider, comp);
 
-    //entity.EmplaceOrReplaceComponent<Collider>(comp);
     IGE::Physics::PhysicsSystem::GetInstance()->AddBoxCollider(entity, comp);
   }
 
-  void AddSphereCollider(ECS::Entity entity, rttr::variant const& var){
-      EXTRACT_RAW_COMP(SphereCollider, comp);
+  void AddSphereCollider(ECS::Entity entity, rttr::variant const& var) {
+    EXTRACT_RAW_COMP(SphereCollider, comp);
 
-      //entity.EmplaceOrReplaceComponent<Collider>(comp);
-      IGE::Physics::PhysicsSystem::GetInstance()->AddSphereCollider(entity, comp);
+    IGE::Physics::PhysicsSystem::GetInstance()->AddSphereCollider(entity, comp);
   }
 
-  void AddCapsuleCollider(ECS::Entity entity, rttr::variant const& var){
-      EXTRACT_RAW_COMP(CapsuleCollider, comp);
+  void AddCapsuleCollider(ECS::Entity entity, rttr::variant const& var) {
+    EXTRACT_RAW_COMP(CapsuleCollider, comp);
 
-      //entity.EmplaceOrReplaceComponent<Collider>(comp);
-      IGE::Physics::PhysicsSystem::GetInstance()->AddCapsuleCollider(entity, comp);
+    IGE::Physics::PhysicsSystem::GetInstance()->AddCapsuleCollider(entity, comp);
   }
 
   void AddRigidBody(ECS::Entity entity, rttr::variant const& var) {
@@ -77,8 +74,13 @@ namespace Reflection::ComponentUtils {
   void AddMaterial(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Material, comp);
 
-    entity.EmplaceOrReplaceComponent<Material>(comp.materialGUID);
-    entity.GetComponent<Material>().SetGUID(comp.materialGUID);
+    try {
+      entity.EmplaceOrReplaceComponent<Material>(comp.materialGUID);
+      entity.GetComponent<Material>().SetGUID(comp.materialGUID);
+    }
+    catch (Debug::ExceptionBase&) {
+      IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(comp.materialGUID)) + " of Material component invalid");
+    }
   }
 
   void AddMesh(ECS::Entity entity, rttr::variant const& var) {
@@ -92,8 +94,8 @@ namespace Reflection::ComponentUtils {
       copy.meshSource = meshSrc;
       entity.EmplaceOrReplaceComponent<Mesh>(copy);
     }
-    catch (Debug::ExceptionBase& e) {
-      e.LogSource();
+    catch (Debug::ExceptionBase&) {
+      IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(comp.meshSource)) + " of Mesh component invalid");
     }
   }
 
@@ -116,28 +118,38 @@ namespace Reflection::ComponentUtils {
   }
 
   void AddCanvas(ECS::Entity entity, rttr::variant const& var) {
-      EXTRACT_RAW_COMP(Canvas, comp);
+    EXTRACT_RAW_COMP(Canvas, comp);
 
-      entity.EmplaceOrReplaceComponent<Canvas>(comp);
+    entity.EmplaceOrReplaceComponent<Canvas>(comp);
   }
-    
-  void AddImage(ECS::Entity entity, rttr::variant const& var) {
-      EXTRACT_RAW_COMP(Image, comp);
 
+  void AddImage(ECS::Entity entity, rttr::variant const& var) {
+    EXTRACT_RAW_COMP(Image, comp);
+
+    try {
       IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(comp.textureAsset);
       entity.EmplaceOrReplaceComponent<Image>(comp);
+    }
+    catch (Debug::ExceptionBase&) {
+      IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(comp.textureAsset)) + " of Image component invalid");
+    }
   }
 
   void AddSprite2D(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Sprite2D, comp);
 
-    IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(comp.textureAsset);
-    entity.EmplaceOrReplaceComponent<Sprite2D>(comp);
+    try {
+      IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(comp.textureAsset);
+      entity.EmplaceOrReplaceComponent<Sprite2D>(comp);
+    }
+    catch (Debug::ExceptionBase const&) {
+      IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(comp.textureAsset)) + " of Sprite2D component invalid");
+    }
   }
 
-  void AddCamera(ECS::Entity entity, rttr::variant const& var){
-      EXTRACT_RAW_COMP(Camera, comp);
+  void AddCamera(ECS::Entity entity, rttr::variant const& var) {
+    EXTRACT_RAW_COMP(Camera, comp);
 
-      entity.EmplaceOrReplaceComponent<Camera>(comp);
+    entity.EmplaceOrReplaceComponent<Camera>(comp);
   }
 } // namespace Reflection

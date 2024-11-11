@@ -14,6 +14,9 @@ namespace Graphics {
     }
 
     void ShadowPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
+      // only do shadow pass for game view
+      if (cam.isEditor) { return; }
+
         mActive = LocateLightSource(cam, entities);
         StartRender();
 

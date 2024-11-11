@@ -893,7 +893,7 @@ namespace GUI {
         modified = true;
       }
       glm::vec3 localRot{ transform.eulerAngles };
-      if (ImGuiHelpers::TableInputFloat3("Rotation", &localRot[0], inputWidth, false, -360.f, 360.f, 0.3f)) {
+      if (ImGuiHelpers::TableInputFloat3("Rotation", &localRot[0], inputWidth, false, -FLT_MAX, FLT_MAX, 0.3f)) {
         transform.SetLocalRotWithEuler(localRot);
         modified = true;
       }

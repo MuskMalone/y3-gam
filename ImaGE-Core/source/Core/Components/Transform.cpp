@@ -14,6 +14,14 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Component {
 
+  glm::mat4 Transform::GetLocalMdlMatrix() const {
+    glm::mat4 t{ glm::translate(glm::mat4{ 1.f }, position) };
+    glm::mat4 r{ glm::toMat4(rotation) };
+    glm::mat4 s{ glm::scale(glm::mat4{ 1.f }, scale) };
+
+    return t * r * s;
+  }
+
   void Transform::SetLocalRotWithEuler(glm::vec3 const& degrees) {
     eulerAngles = degrees;
     rotation = glm::quat(glm::radians(degrees));

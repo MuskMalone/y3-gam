@@ -176,14 +176,16 @@ namespace Graphics {
           shader->SetUniform("u_LightIntensity", u_LightIntensity, maxLights);
           shader->SetUniform("u_Range", u_Range, maxLights);
 
-          // Set shadow uniforms
-          auto const& shadowPass = Renderer::GetPass<ShadowPass>();
-          shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
-          if (shadowPass->IsActive()) {
+          {
+            // Set shadow uniforms
+            auto const& shadowPass = Renderer::GetPass<ShadowPass>();
+            shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
+            if (shadowPass->IsActive()) {
               shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
               shader->SetUniform("u_ShadowMap", static_cast<int>(shadowPass->BindShadowMap()));
               shader->SetUniform("u_ShadowBias", shadowPass->GetShadowBias());
               shader->SetUniform("u_ShadowSoftness", shadowPass->GetShadowSoftness());
+            }
           }
 
           material->Apply(shader);

@@ -23,7 +23,7 @@ namespace TransformHelpers {
     Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
 
     if (em.HasParent(entity)) {
-      // update local with inverse of parent xform
+      // update world with parent xform
       Component::Transform& parentTrans{ em.GetParentEntity(entity).GetComponent<Component::Transform>() };
       trans.parentWorldMtx = parentTrans.worldMtx;
       trans.worldPos = parentTrans.worldMtx * glm::vec4(trans.position, 1.f);
@@ -68,11 +68,11 @@ namespace TransformHelpers {
       // if quat has been rounded < 1.f to prevent NaN euler values
       if (glm::abs(glm::length2(trans.worldRot) - 1.f) > glm::epsilon<float>()) {
         trans.rotation = glm::normalize(glm::inverse(parentTrans.worldRot) * trans.worldRot);
-        trans.eulerAngles = glm::degrees(glm::eulerAngles(trans.rotation));
+        //trans.eulerAngles = glm::degrees(glm::eulerAngles(trans.rotation));
       }
       else {
         trans.rotation = /*glm::normalize*/(glm::inverse(parentTrans.worldRot) * trans.worldRot);
-        trans.eulerAngles = glm::degrees(glm::eulerAngles(trans.rotation));
+        //trans.eulerAngles = glm::degrees(glm::eulerAngles(trans.rotation));
       }
       trans.scale = trans.worldScale / parentTrans.worldScale;
     }

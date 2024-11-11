@@ -1,28 +1,28 @@
 {
     "Scene": [
         {
-            "ID": 3,
+            "ID": 0,
             "Parent": null,
             "Child Entities": [],
             "isActive": true,
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Cube",
+                        "tag": "MainCamera",
                         "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": 5.757999897003174,
-                            "y": 4.521999835968018,
-                            "z": -38.24399948120117
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
                         },
                         "scale": {
-                            "x": 12.069835662841797,
-                            "y": 12.069835662841797,
-                            "z": 12.069835662841797
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
                         },
                         "rotation": {
                             "x": 0.0,
@@ -36,14 +36,14 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 5.757999897003174,
-                            "y": 4.521999835968018,
-                            "z": -38.24399948120117
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
                         },
                         "worldScale": {
-                            "x": 12.069835662841797,
-                            "y": 12.069835662841797,
-                            "z": 12.069835662841797
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -59,11 +59,165 @@
                     }
                 },
                 {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
+                    "Camera": {
+                        "projType": "PERSP",
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
                         },
-                        "matIdx": 0
+                        "yaw": 0.0,
+                        "pitch": 0.0,
+                        "fov": 60.0,
+                        "aspectRatio": 1.7777777910232545,
+                        "nearClip": 0.10000000149011612,
+                        "farClip": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1,
+            "Parent": null,
+            "Child Entities": [
+                2
+            ],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Entity 1",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 9483185130252760561
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2,
+            "Parent": 1,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Entity 2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -2.8681483268737795,
+                            "y": -1.374890652716676e-11,
+                            "z": 0.03003605268895626
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 3.2366997970711966e-10,
+                            "y": 0.7107994556427002,
+                            "z": 3.2366997970711966e-10,
+                            "w": 0.7033947110176086
+                        },
+                        "eulerAngles": {
+                            "x": 180.0,
+                            "y": 89.39997100830078,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": -2.8681483268737795,
+                            "y": -1.374890652716676e-11,
+                            "z": 0.03003605268895626
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 3.2366997970711966e-10,
+                            "y": 0.7107994556427002,
+                            "z": 3.2366997970711966e-10,
+                            "w": 0.7033947110176086
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 9483185130252760561
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
                     }
                 }
             ]
@@ -73,7 +227,7 @@
         "layerNames": [
             "Default",
             "Player",
-            "",
+            "UI",
             "",
             "",
             "",
