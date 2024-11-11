@@ -40,7 +40,8 @@ namespace Events
     SCENE_MODIFIED,
     SCENE_STATE_CHANGE,
     LAYER_MODIFIED,
-    PREFAB_GUID_REMAP
+    PREFAB_GUID_REMAP,
+    SIGNAL
   };
 
   class Event

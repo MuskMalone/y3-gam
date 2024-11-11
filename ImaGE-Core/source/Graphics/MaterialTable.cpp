@@ -151,17 +151,8 @@ namespace Graphics {
         ss << gMaterialDirectory << newMaterial->GetName() << ".mat"; // You can use a unique identifier if needed
         std::string filename = ss.str();
 
-        // Step 4: Prepare metadata struct
-        MatData data;
-        data.name = newMaterial->GetName();
-        data.shader = newMaterial->GetShaderName();
-        data.albedoColor = newMaterial->GetAlbedoColor();
-        data.metalness = newMaterial->GetMetalness();
-        data.roughness = newMaterial->GetRoughness();
-        // Set other material properties as needed...
-
         // Step 5: Serialize the material data to the file
-        Serialization::Serializer::SerializeAny(data, filename);
+        Serialization::Serializer::SerializeAny(*newMaterial, filename);
 
         ss << "New material created and saved at " << filename << std::endl;
         Debug::DebugLogger::GetInstance().LogInfo(ss.str());
@@ -172,6 +163,7 @@ namespace Graphics {
         return guid;
 
     }
+
     void MaterialTable::SaveMaterials() {
         for (size_t i = 1; i < mMaterials.size(); ++i) {  // Start from index 1 to skip the default material at index 0
             auto& material = mMaterials[i];
@@ -183,27 +175,24 @@ namespace Graphics {
            // std::string filename = "Materials/" + material->GetGUID().ToString() + ".mat";
             std::string filename = ss.str();
 
-            // Prepare the metadata struct with material properties
-            MatData data;
-            //metadata.guid = material->GetGUID();
-            data.name = material->GetName();
-            data.shader = material->GetShaderName();
-            data.albedoColor = material->GetAlbedoColor();
-            data.metalness = material->GetMetalness();
-            data.roughness = material->GetRoughness();
-            data.ao = material->GetAO();
-            data.emission = material->GetEmission();
-            data.transparency = material->GetTransparency();
-            data.tiling = material->GetTiling();
-            data.offset = material->GetOffset();
-            data.albedoMap = material->GetAlbedoMap();
-            data.normalMap = material->GetNormalMap();
-            data.metalnessMap = material->GetMetalnessMap();
-            data.roughnessMap = material->GetRoughnessMap();
-
             // Serialize the metadata into the file
-            Serialization::Serializer::SerializeAny(data, filename);
+            Serialization::Serializer::SerializeAny(*material, filename);
         }
+    }
+
+    void MaterialTable::SaveMaterial(IGE::Assets::GUID const& guid) {
+      IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+      std::string const output{ am.GUIDToPath(guid) };
+
+      // if material not in table, serialize from asset manager
+      if (!mGUIDToIndexMap.contains(guid)) {
+        am.LoadRef<IGE::Assets::MaterialAsset>(guid);
+        Serialization::Serializer::SerializeAny(*am.GetAsset<IGE::Assets::MaterialAsset>(guid)->mMaterial, output);
+        return;
+      }
+
+      // else retrieve it
+      Serialization::Serializer::SerializeAny(*mMaterials[mGUIDToIndexMap.at(guid)], output);
     }
 
 
@@ -216,31 +205,14 @@ namespace Graphics {
             return nullptr;
         }
 
+        std::shared_ptr<MaterialData> material{ std::make_shared<MaterialData>() };
         // Deserialize the material data from the specified file
-        MatData data;
-        Serialization::Deserializer::DeserializeAny(data, fp);
+        Serialization::Deserializer::DeserializeAny(*material, fp);
 
         // Retrieve the shader name from `data` (if it's stored there) or use a default
-        auto shaderName = data.shader.empty() ? "PBR" : data.shader;
+        std::string const shaderName = material->GetShaderName().empty() ? "PBR" : material->GetShaderName();
         
-        // Create a new MaterialData instance with the shader name
-        auto material = MaterialData::Create(shaderName, data.name);
-
-        // Populate MaterialData properties
-        material->SetName(data.name);
-        material->SetShaderName(data.shader);
-        material->SetAlbedoColor(data.albedoColor);
-        material->SetMetalness(data.metalness);
-        material->SetRoughness(data.roughness);
-        material->SetAO(data.ao);
-        material->SetEmission(data.emission);
-        material->SetTransparency(data.transparency);
-        material->SetTiling(data.tiling);
-        material->SetOffset(data.offset);
-        material->SetAlbedoMap(data.albedoMap);
-        material->SetNormalMap(data.normalMap);
-        material->SetMetalnessMap(data.metalnessMap);
-        material->SetRoughnessMap(data.roughnessMap);
+        material->SetShader(shaderName);
 
         // Return the loaded material
         return material;

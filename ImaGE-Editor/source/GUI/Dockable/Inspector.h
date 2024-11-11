@@ -30,6 +30,8 @@ namespace GUI {
   class Inspector : public GUIWindow {
   public:
     Inspector(const char* name);
+    ~Inspector();
+
     void Run() override;
 
     inline void SetIsComponentEdited(bool isComponentEdited) noexcept { mIsComponentEdited = isComponentEdited; }
@@ -116,6 +118,7 @@ namespace GUI {
     void RunFileInspector();
 
     void MaterialInspector(std::filesystem::path const& selectedFile);
+    void SaveLastEditedFile() const;
 #pragma endregion
 
     /*!*********************************************************************

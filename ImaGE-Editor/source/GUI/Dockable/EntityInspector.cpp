@@ -74,6 +74,10 @@ namespace GUI {
     }
   }
 
+  Inspector::~Inspector() {
+    SaveLastEditedFile();
+  }
+
   void Inspector::Run() {
     ImGuiStyle& style = ImGui::GetStyle();
     float oldItemSpacingX = style.ItemSpacing.x;

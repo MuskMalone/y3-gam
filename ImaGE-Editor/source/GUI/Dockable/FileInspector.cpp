@@ -17,6 +17,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GUI/Helpers/AssetPayload.h>
 
 namespace {
+  static IGE::Assets::GUID sPrevFile{};
+
   std::string DragDropComponent(GUI::AssetPayload::AssetType type);
 }
 
@@ -51,8 +53,21 @@ namespace GUI {
 
   void Inspector::MaterialInspector(std::filesystem::path const& selectedFile) {
     IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
-    auto& selectedMaterial{ am.GetAsset<IGE::Assets::MaterialAsset>(am.LoadRef<IGE::Assets::MaterialAsset>(selectedFile.string()))->mMaterial };
+    IGE::Assets::GUID guid{};
 
+    try {
+      guid = am.LoadRef<IGE::Assets::MaterialAsset>(selectedFile.string());
+    }
+    catch (Debug::ExceptionBase&) {
+      IGE_DBGLOGGER.LogError("Unable to load Material window for " + selectedFile.string());
+    }
+
+    auto& selectedMaterial{ am.GetAsset<IGE::Assets::MaterialAsset>(guid)->mMaterial };
+
+    if (sPrevFile != guid) {
+      SaveLastEditedFile();
+      sPrevFile = guid;
+    }
 
     /*{
       std::string name{ selectedMaterial->GetName() };
@@ -160,6 +175,12 @@ namespace GUI {
       TextureMapField("Roughness Map", Roughness);
 
       ImGui::EndTable();
+    }
+  }
+
+  void Inspector::SaveLastEditedFile() const {
+    if (sPrevFile) {
+      Graphics::MaterialTable::SaveMaterial(sPrevFile);
     }
   }
 

@@ -10,6 +10,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Application.h"
 #include "GUI/GUIManager.h"
 #include "Graphics/Texture.h"
+#include <Events/EventCallback.h>
 
 namespace IGE {
   class EditorApplication : public Application {
@@ -73,6 +74,8 @@ namespace IGE {
       Exception caught
   ************************************************************************/
     void PrintException(std::exception& e);
+
+    EVENT_CALLBACK_DECL(SignalCallback);
 
     /*!*********************************************************************
     \brief
