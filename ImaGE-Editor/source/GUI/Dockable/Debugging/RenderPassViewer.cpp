@@ -3,6 +3,7 @@
 #include <Graphics/Renderer.h>
 #include <Graphics/RenderPass/ShadowPass.h>
 #include <Core/Entity.h>
+#include <Graphics/RenderSystem.h>
 
 namespace GUI {
 
@@ -26,8 +27,11 @@ namespace GUI {
           ImVec2(1, 0)
         );
       }
-      else {
+      else if (Graphics::RenderSystem::mCameraManager.HasActiveCamera()) {
         ImGui::Text("Nothing to show. Add a light that casts shadows to the scene!");
+      }
+      else {
+        ImGui::Text("Shadows require a camera in the scene!");
       }
     }
 

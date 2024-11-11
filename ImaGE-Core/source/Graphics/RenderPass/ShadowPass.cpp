@@ -7,6 +7,7 @@
 #include <Core/Components/Light.h>
 #include <Core/Components/Transform.h>
 #include <Core/Components/Mesh.h>
+#include <Graphics/RenderSystem.h>
 
 namespace Graphics {
     ShadowPass::ShadowPass(const RenderPassSpec& spec) : RenderPass(spec), mLightSpaceMtx{}, mShadowSoftness{}, mShadowBias{}, mActive{ false } {
@@ -15,7 +16,10 @@ namespace Graphics {
 
     void ShadowPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
       // only do shadow pass for game view
-      //if (cam.isEditor) { mActive = false; return; }
+      if (cam.isEditor) {
+        mActive = Graphics::RenderSystem::mCameraManager.HasActiveCamera();
+        return;
+      }
 
         mActive = LocateLightSource(cam, entities);
         StartRender();

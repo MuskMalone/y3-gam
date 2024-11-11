@@ -86,16 +86,16 @@ namespace Reflection::ComponentUtils {
   void AddMesh(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Mesh, comp);
 
-    IGE::Assets::GUID const& meshSrc{ comp.isCustomMesh ? IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(comp.meshSource)
-      : IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(comp.meshName) };
-
     try {
+      IGE::Assets::GUID const& meshSrc{ comp.isCustomMesh ? IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(comp.meshSource)
+        : IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(comp.meshName) };
+
       Mesh copy{ comp };
       copy.meshSource = meshSrc;
       entity.EmplaceOrReplaceComponent<Mesh>(copy);
     }
     catch (Debug::ExceptionBase&) {
-      IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(comp.meshSource)) + " of Mesh component invalid");
+      IGE_DBGLOGGER.LogError("Unable to load mesh: " + comp.meshName + "[GUID " + std::to_string(static_cast<uint64_t>(comp.meshSource)) + "]");
     }
   }
 

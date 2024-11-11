@@ -1061,27 +1061,27 @@ namespace GUI {
           ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
           // Color input
-          NextRowTable("Projection Type");
+          //NextRowTable("Projection Type");
           //if (ImGui::ColorEdit4("##ProjType", &camera.projType)) {
           //    modified = true;
           //}
 
           NextRowTable("Yaw");
-          if (ImGui::DragFloat("##Yaw", &camera.yaw, 1.f, -180.f, 180.f)) {
+          if (ImGui::SliderFloat("##Yaw", &camera.yaw, -180.f, 180.f)) {
               modified = true;
           }
           NextRowTable("Pitch");
-          if (ImGui::DragFloat("##Pitch", &camera.pitch, 1.f, -180.f, 180.f)) {
+          if (ImGui::SliderFloat("##Pitch", &camera.pitch, -180.f, 180.f)) {
               modified = true;
           }
           NextRowTable("FOV");
-          if (ImGui::DragFloat("##FOV", &camera.fov, 1.f, 0.f, 180.f)) {
+          if (ImGui::SliderFloat("##FOV", &camera.fov, 0.f, 180.f)) {
               modified = true;
           }
-          NextRowTable("Aspect Ratio");
+          //NextRowTable("Aspect Ratio");
 
           NextRowTable("Near Clip");
-          if (ImGui::DragFloat("##Near", &camera.nearClip, 5.f, -100.f, 0.f)) {
+          if (ImGui::DragFloat("##Near", &camera.nearClip, 5.f, -100.f, FLT_MAX)) {
               modified = true;
           }
           NextRowTable("Far Clip");
@@ -1814,7 +1814,7 @@ namespace GUI {
             if (ImGui::IsItemHovered()) {
               ImGui::SetTooltip("How close the light is to the object (how much of the scene the light sees)");
             }
-            if (ImGui::SliderFloat("##NearPlane", &light.nearPlaneMultiplier, 0.1f, 2.f, "% .2f")) {
+            if (ImGui::SliderFloat("##NearPlane", &light.nearPlaneMultiplier, 0.1f, 20.f, "% .2f")) {
               modified = true;
             }
 
