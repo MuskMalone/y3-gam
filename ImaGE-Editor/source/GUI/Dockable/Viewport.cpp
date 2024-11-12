@@ -148,6 +148,8 @@ namespace GUI
                 GUIVault::ClearSelectedEntities();
                 GUIVault::SetSelectedEntity(sPrevSelectedEntity);
               }
+
+              QUEUE_EVENT(Events::EntityScreenPicked, sPrevSelectedEntity);
             }
             else {
               sPrevSelectedEntity = {};

@@ -41,7 +41,8 @@ namespace Events
     SCENE_STATE_CHANGE,
     LAYER_MODIFIED,
     PREFAB_GUID_REMAP,
-    SIGNAL
+    SIGNAL,
+    ENTITY_PICKED
   };
 
   class Event
