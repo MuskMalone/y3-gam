@@ -137,6 +137,7 @@ namespace Graphics {
 
       //=================================================SUBMESH VERSION===============================================================
           // Group entities by material ID and gather instances for submeshes
+      uint32_t matID = 0;
       for (ECS::Entity const& entity : entities) {
           if (!entity.HasComponent<Component::Mesh>()) continue;
 
@@ -145,10 +146,10 @@ namespace Graphics {
 
           if (!mesh.meshSource.IsValid()) continue;
 
-          uint32_t matID = 0;
           if (entity.HasComponent<Component::Material>()) {
               auto const& matComponent = entity.GetComponent<Component::Material>();
               matID = MaterialTable::GetMaterialIndexByGUID(matComponent.materialGUID);//matComponent.matIdx;
+
           }
 
           // Group entity pairs by material ID for rendering
@@ -194,6 +195,7 @@ namespace Graphics {
           // Submit all instances of each submesh for this material
           for (const auto& [entity, worldMtx] : entityPairs) {
             auto const& mesh = entity.GetComponent<Component::Mesh>();
+
 
             //Graphics::Renderer::SubmitSubmeshInstance(mesh.meshSource, 0, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
             Graphics::Renderer::SubmitSubmeshInstance(mesh.meshSource, mesh.submeshIdx, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
