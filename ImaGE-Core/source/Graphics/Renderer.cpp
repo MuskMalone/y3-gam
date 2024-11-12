@@ -167,20 +167,21 @@ namespace Graphics {
 		// Create a default material with a default shader and properties
 		std::shared_ptr<MaterialData> defaultMaterial = MaterialData::Create("PBR", "Default");
 		defaultMaterial->SetAlbedoColor(glm::vec3(1.0f));  // Set default white albedo
+		defaultMaterial->SetAlbedoMap(mData.whiteTex);
 		defaultMaterial->SetMetalness(0.0f);
 		defaultMaterial->SetRoughness(1.0f);
 
 		// Add default material to the table (e.g., at index 0)
 		MaterialTable::AddMaterial(defaultMaterial);
 
-		std::shared_ptr<MaterialData> mat1 = MaterialData::Create("PBR", "MatLighting");
-		mat1->SetAlbedoMap(texguid1);
-		mat1->SetAlbedoColor({ 0.7f,0.6f,0.9f });
-		MaterialTable::AddMaterial(mat1);
+		//std::shared_ptr<MaterialData> mat1 = MaterialData::Create("PBR", "MatLighting");
+		//mat1->SetAlbedoMap(texguid1);
+		//mat1->SetAlbedoColor({ 0.7f,0.6f,0.9f });
+		//MaterialTable::AddMaterial(mat1);
 
-		std::shared_ptr<MaterialData> mat2 = MaterialData::Create("Unlit", "MatNoLight"); //@TODO support other shaders like Unlit
-		mat2->SetAlbedoMap(texguid);
-		MaterialTable::AddMaterial(mat2);
+		//std::shared_ptr<MaterialData> mat2 = MaterialData::Create("Unlit", "MatNoLight"); //@TODO support other shaders like Unlit
+		//mat2->SetAlbedoMap(texguid);
+		//MaterialTable::AddMaterial(mat2);
 		//--Material Init End--//
 
 		//// Generate multiple materials for testing
