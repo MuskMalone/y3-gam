@@ -141,8 +141,4 @@ namespace AssetHelpers
     std::string const absolutePath{ std::filesystem::absolute(filePath).string() };
     ShellExecuteA(NULL, "open", absolutePath.c_str(), NULL, NULL, SW_SHOWDEFAULT);
   }
-
-  void CreateNewMaterial() {
-      Graphics::MaterialTable::CreateAndImportMatFile();
-  }
 } // namespace AssetHelpers

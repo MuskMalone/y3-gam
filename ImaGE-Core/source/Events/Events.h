@@ -134,4 +134,10 @@ namespace Events
     std::string const mPrefabName;
     ECS::Entity const mEntity;
   };
+
+  class SignalEvent : public Event {
+  public:
+    SignalEvent() : Event(EventType::SIGNAL) {}
+    inline std::string GetName() const noexcept override { return "Program terminated unexpectedly"; }
+  };
 }

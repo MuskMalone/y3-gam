@@ -58,6 +58,7 @@ namespace Reflection
       { GET_RTTR_TYPE(Light), ComponentUtils::AddLight },
       { GET_RTTR_TYPE(Canvas), ComponentUtils::AddCanvas },
       { GET_RTTR_TYPE(Image), ComponentUtils::AddImage },
+      { GET_RTTR_TYPE(Sprite2D), ComponentUtils::AddSprite2D },
       { GET_RTTR_TYPE(Camera), ComponentUtils::AddCamera }
     };
 
@@ -208,7 +209,7 @@ namespace Reflection
         PrefabInst const& inst{ data.cbegin()->second };
         IGE_DBGLOGGER.LogCritical("GUID of Prefab: " + inst.mName + " invalid!");
         IGE_DBGLOGGER.LogCritical("Say bye bye to Entity " + ECS::Entity(inst.mId).GetTag() + " until I implement GUI to allow remapping!");
-        //IGE_EVENT_MGR.DispatchImmediateEvent<Events::RemapPrefabGUID>(inst.mId, inst.mName);
+        //IGE_EVENTMGR.DispatchImmediateEvent<Events::RemapPrefabGUID>(inst.mId, inst.mName);
         continue;
       }
 
@@ -324,6 +325,7 @@ namespace Reflection
     else IF_GET_ENTITY_COMP(AudioSource)
     else IF_GET_ENTITY_COMP(Canvas)
     else IF_GET_ENTITY_COMP(Image)
+    else IF_GET_ENTITY_COMP(Sprite2D)
     else IF_GET_ENTITY_COMP(Camera)
     else
     {

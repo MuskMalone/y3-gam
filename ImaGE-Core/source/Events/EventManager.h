@@ -94,7 +94,7 @@ namespace Events
     }
   }
 
-#define IGE_EVENT_MGR Events::EventManager::GetInstance()
+#define IGE_EVENTMGR Events::EventManager::GetInstance()
 
   /*!*********************************************************************
     \brief

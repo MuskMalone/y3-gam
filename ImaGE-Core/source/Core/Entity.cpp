@@ -83,7 +83,7 @@ namespace ECS
 
   void Entity::DispatchRemoveComponentEvent(std::initializer_list<rttr::type> types) {
     for (rttr::type const& type : types) {
-      IGE_EVENT_MGR.DispatchImmediateEvent<Events::RemoveComponentEvent>(*this, type);
+      IGE_EVENTMGR.DispatchImmediateEvent<Events::RemoveComponentEvent>(*this, type);
     }
   }
 

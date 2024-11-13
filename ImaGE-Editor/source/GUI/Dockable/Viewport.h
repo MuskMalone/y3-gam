@@ -37,7 +37,7 @@ namespace GUI
     static inline constexpr float sEntityScaleFactor = 1.f; // for camera zooming
 
     Graphics::EditorCamera& mEditorCam;
-    bool mIsPanning, mIsDragging;
+    bool mIsPanning, mRightClickHeld;
 
     /*!*********************************************************************
     \brief

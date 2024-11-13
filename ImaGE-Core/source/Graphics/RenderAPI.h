@@ -23,7 +23,8 @@ namespace Graphics{
 												   uint32_t idxCount,
 												   uint32_t instanceCount,
 												   uint32_t indexOffset,
-												   int baseVertex);;
+												   int baseVertex,
+												   int baseInstance);;
 		static void DrawIndicesInstanced(std::shared_ptr<VertexArray> const& vao, unsigned int idxCount, unsigned int instanceCount);
 		static void DrawIndices(std::shared_ptr<VertexArray> const& vao, unsigned int idxCount);
 		static void DrawTriangles(std::shared_ptr<VertexArray> const& vao, unsigned int vtxCount);

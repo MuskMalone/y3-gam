@@ -14,9 +14,12 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/MaterialData.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
 #include <Graphics/MaterialTable.h>
+#include <GUI/Helpers/AssetPayload.h>
 
 namespace {
-  static std::filesystem::path prevMaterial;
+  static IGE::Assets::GUID sPrevFile{};
+
+  std::string DragDropComponent(GUI::AssetPayload::AssetType type);
 }
 
 namespace GUI {
@@ -33,14 +36,38 @@ namespace GUI {
     ImGui::PopFont();
   }
 
+  #define TextureMapField(Title, MapType) {NextRowTable(Title);\
+            if (selectedMaterial->IsDefault##MapType##Map()) {\
+              name = "Drag Texture Here##" Title;\
+            } else {\
+               IGE::Assets::GUID guid{ selectedMaterial->Get##MapType##Map() };\
+                am.LoadRef<IGE::Assets::TextureAsset>(guid);\
+                name = am.GUIDToPath(guid).c_str();\
+            }\
+            if (ImGui::Button(name.c_str(), ImVec2(inputWidth, 30.f))) { selectedMaterial->Set##MapType##Map({}); }\
+            if (ImGui::IsItemHovered()) { ImGui::SetTooltip("Remove Texture"); }\
+            std::string const path{ DragDropComponent(AssetPayload::SPRITE) };\
+            if (!path.empty()) { try {\
+              selectedMaterial->Set##MapType##Map(am.LoadRef<IGE::Assets::TextureAsset>(path));\
+            } catch (Debug::ExceptionBase& e) { e.LogSource(); } } }
+
   void Inspector::MaterialInspector(std::filesystem::path const& selectedFile) {
     IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
-    auto& selectedMaterial{ am.GetAsset<IGE::Assets::MaterialAsset>(am.LoadRef<IGE::Assets::MaterialAsset>(selectedFile.string()))->mMaterial };
+    IGE::Assets::GUID guid{};
 
-    if (!prevMaterial.empty() && prevMaterial != selectedFile && std::filesystem::exists(prevMaterial)) {
-      Graphics::MaterialTable::CreateAndImportMatFile(prevMaterial.stem().string());
+    try {
+      guid = am.LoadRef<IGE::Assets::MaterialAsset>(selectedFile.string());
     }
-    prevMaterial = selectedFile;
+    catch (Debug::ExceptionBase&) {
+      IGE_DBGLOGGER.LogError("Unable to load Material window for " + selectedFile.string());
+    }
+
+    auto& selectedMaterial{ am.GetAsset<IGE::Assets::MaterialAsset>(guid)->mMaterial };
+
+    if (sPrevFile != guid) {
+      SaveLastEditedFile();
+      sPrevFile = guid;
+    }
 
     /*{
       std::string name{ selectedMaterial->GetName() };
@@ -125,17 +152,53 @@ namespace GUI {
 
       {
         glm::vec2 offset{ selectedMaterial->GetOffset() };
-        if (ImGuiHelpers::TableInputFloat2("Tiling", &offset[0], vec2InputWidth, false, -FLT_MAX, FLT_MAX, -0.03f)) {
+        if (ImGuiHelpers::TableInputFloat2("Offset", &offset[0], vec2InputWidth, false, -FLT_MAX, FLT_MAX, -0.03f)) {
           selectedMaterial->SetOffset(offset);
         }
       }
 
       ImGui::EndTable();
     }
+
+    ImGui::NewLine();
+    ImGui::Text("Textures");
+    if (ImGui::BeginTable("MaterialTable2", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+      IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+      std::string name;
+
+      TextureMapField("Albedo Map", Albedo);
+      TextureMapField("Normal Map", Normal);
+      TextureMapField("Metalness Map", Metalness);
+      TextureMapField("Roughness Map", Roughness);
+
+      ImGui::EndTable();
+    }
+  }
+
+  void Inspector::SaveLastEditedFile() const {
+    if (sPrevFile) {
+      Graphics::MaterialTable::SaveMaterial(sPrevFile);
+    }
   }
 
 } // namespace GUI
 
 namespace {
-  
+  std::string DragDropComponent(GUI::AssetPayload::AssetType type) {
+    if (ImGui::BeginDragDropTarget()) {
+      ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(GUI::AssetPayload::sAssetDragDropPayload);
+      if (drop) {
+        GUI::AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+        if (assetPayload.mAssetType == type) {
+          return assetPayload.GetFilePath().c_str();
+        }
+      }
+      ImGui::EndDragDropTarget();
+    }
+
+    return {};
+  }
 }

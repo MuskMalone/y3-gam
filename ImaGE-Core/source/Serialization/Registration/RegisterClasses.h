@@ -20,7 +20,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Audio/AudioManager.h>
 #include <Core/Components/AudioSource.h>
 #include <Graphics/PostProcessing/PostProcessingManager.h>
-#include <Graphics/MaterialTable.h>
+#include <Graphics/MaterialData.h>
 
 #define REGISTER_DATA_MEMBER_INST(T, nameStr) rttr::registration::class_<T>(nameStr).constructor<>()(rttr::policy::ctor::as_object)\
   .property(JSON_SCRIPT_DMI_DATA_KEY, &T::mData)\
@@ -168,23 +168,23 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("configs", &Graphics::PostProcessingManager::PostProcessingConfigs::mConfigs);
   /* ------------------ Materials ---------------------*/
   {
-      using T = Graphics::MatData;
+      using T = Graphics::MaterialData;
       rttr::registration::class_<T>("MatData")
-          .property("name", &T::name)
-          .property("shader", &T::shader)
-          .property("albedoColor", &T::albedoColor)
-          .property("metalness", &T::metalness)
-          .property("roughness", &T::roughness)
-          .property("ao", &T::ao)
-          .property("emission", &T::emission)
-          .property("transparency", &T::transparency)
-          .property("tiling", &T::tiling)
-          .property("offset", &T::offset)
-          .property("albedoMap", &T::albedoMap)
-          .property("normalMap", &T::normalMap)
-          .property("metalnessMap", &T::metalnessMap)
-          .property("roughnessMap", &T::roughnessMap);
-  }
+        .property("name", &T::mName)
+        .property("shader", &T::mShaderName)
+        .property("albedoColor", &T::mAlbedoColor)
+        .property("metalness", &T::mMetalness)
+        .property("roughness", &T::mRoughness)
+        .property("ao", &T::mAO)
+        .property("emission", &T::mEmission)
+        .property("transparency", &T::mTransparency)
+        .property("tiling", &T::mTiling)
+        .property("offset", &T::mOffset)
+        .property("albedoMap", &T::mAlbedoMap)
+        .property("normalMap", &T::mNormalMap)
+        .property("metalnessMap", &T::mMetalnessMap)
+        .property("roughnessMap", &T::mRoughnessMap);
+}
   /* ------------------- Script ------------------- */
   {
     using T = Reflection::ProxyScript;

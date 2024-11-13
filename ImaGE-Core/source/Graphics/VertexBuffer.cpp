@@ -136,5 +136,6 @@ the buffer data storage with dynamic draw usage.
 
 		GLCALL(glBindBuffer(GL_ARRAY_BUFFER, mVboHdl));
 		GLCALL(glBufferSubData(GL_ARRAY_BUFFER, 0, size, data));
+		
 	}
 }

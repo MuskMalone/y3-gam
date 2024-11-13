@@ -40,6 +40,7 @@ namespace Events
     SCENE_MODIFIED,
     SCENE_STATE_CHANGE,
     LAYER_MODIFIED,
+    SIGNAL,
     PREFAB_GUID_REMAP,
     LOCK_MOUSE
   };
