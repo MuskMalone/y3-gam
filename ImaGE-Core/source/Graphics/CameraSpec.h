@@ -16,8 +16,7 @@ namespace Graphics {
         float fov{};
         float aspectRatio{};
         bool isEditor{};
-        CameraSpec() {}
-        // Main constructor to initialize all fields directly
+        // Main constructor to initialize all fields directly#i
         CameraSpec(const glm::mat4& vpMatrix, const glm::mat4& vMatrix, const glm::vec3& pos, float nearC, float farC, float fieldOfView, float ar, bool editorMode = false)
             : viewProjMatrix{ vpMatrix }, viewMatrix{ vMatrix }, position{ pos }, rotation{}, nearClip {
             nearC
