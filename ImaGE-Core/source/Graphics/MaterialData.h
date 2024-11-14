@@ -12,6 +12,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Asset/SmartPointer.h>
 #include <Graphics/Shader.h>
 #include <Graphics/Texture.h>
+#include <rttr/registration_friend>
 
 namespace Graphics {
 
@@ -25,6 +26,7 @@ namespace Graphics {
 
     class MaterialData {
     public:
+        MaterialData() = default;
         MaterialData(std::shared_ptr<Shader> shader, std::string const& shaderName, std::string const& matName = "unknown")
             : mShader(std::move(shader)),
             mName(matName),
@@ -50,6 +52,7 @@ namespace Graphics {
 
         // Shader access
         inline std::shared_ptr<Shader> GetShader() const { return mShader; }
+        inline void SetShader(std::string const& shaderName) { mShader = ShaderLibrary::Get(shaderName); }
 
         // Property Getters and Setters
         std::string const& GetName() { return mName; };
@@ -83,6 +86,11 @@ namespace Graphics {
         void SetOffset(const glm::vec2& offset) { mOffset = offset; }
 
         // Texture Getters and Setters
+        bool IsDefaultAlbedoMap() const { return !mAlbedoMap.IsValid(); }
+        bool IsDefaultNormalMap() const { return !mNormalMap.IsValid(); }
+        bool IsDefaultMetalnessMap() const { return !mMetalnessMap.IsValid(); }
+        bool IsDefaultRoughnessMap() const { return !mRoughnessMap.IsValid(); }
+
         IGE::Assets::GUID GetAlbedoMap() const;
         void SetAlbedoMap(IGE::Assets::GUID const& texture);
 
@@ -126,6 +134,8 @@ namespace Graphics {
         IGE::Assets::GUID mNormalMap{};
         IGE::Assets::GUID mMetalnessMap{};
         IGE::Assets::GUID mRoughnessMap{};
+
+        RTTR_REGISTRATION_FRIEND  // to allow rttr to read private members
     };
 
 }

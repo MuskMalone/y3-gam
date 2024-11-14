@@ -211,6 +211,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Core\Components\PrefabOverrides.h" />
     <ClInclude Include="source\Core\Components\RigidBody.h" />
     <ClInclude Include="source\Core\Components\Script.h" />
+    <ClInclude Include="source\Core\Components\Sprite2D.h" />
     <ClInclude Include="source\Core\Components\Tag.h" />
     <ClInclude Include="source\Core\Components\Text.h" />
     <ClInclude Include="source\Core\Components\Transform.h" />
@@ -223,7 +224,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Core\Systems\SystemManager\SystemManager.h" />
     <ClInclude Include="source\Core\Systems\Systems.h" />
     <ClInclude Include="source\Core\Systems\TextSystem\TextSystem.h" />
-    <ClInclude Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.h" />
     <ClInclude Include="source\Core\Systems\TransformSystem\TransformHelpers.h" />
     <ClInclude Include="source\Core\Systems\TransformSystem\TransformSystem.h" />
     <ClInclude Include="source\Debug.h" />
@@ -397,7 +397,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Core\Systems\PlayerControllerSystem\PlayerControllerSystem.cpp" />
     <ClCompile Include="source\Core\Systems\SystemManager\SystemManager.cpp" />
     <ClCompile Include="source\Core\Systems\TextSystem\TextSystem.cpp" />
-    <ClCompile Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.cpp" />
     <ClCompile Include="source\Core\Systems\TransformSystem\TransformHelpers.cpp" />
     <ClCompile Include="source\Core\Systems\TransformSystem\TransformSystem.cpp" />
     <ClCompile Include="source\DebugTools\DebugLogger\DebugLogger.cpp" />

@@ -240,6 +240,11 @@ namespace Systems {
   EVENT_CALLBACK_DEF(LayerSystem, OnPrefabEditor) {
     // we simply clear; no layers for prefabs
     mLayerEntities.clear();
+
+    mLayerData.layerNames[0] = std::string(BUILTIN_LAYER_0);
+
+    // The default layer should always be visible
+    mLayerData.layerVisibility[0] = true;
   }
 
   EVENT_CALLBACK_DEF(LayerSystem, OnEntityRemove) {

@@ -70,7 +70,7 @@ namespace {
 namespace GUI
 {
   Viewport::Viewport(const char* name, Graphics::EditorCamera& camera) : GUIWindow(name),
-    mEditorCam{ camera }, mIsPanning{ false }, mIsDragging{ false } {
+    mEditorCam{ camera }, mIsPanning{ false }, mRightClickHeld{ false } {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_ZOOM, &Viewport::HandleEvent, this);
   }
 
@@ -84,7 +84,7 @@ namespace GUI
       sCtrlHeld = ImGui::IsKeyDown(ImGuiKey_LeftCtrl) || ImGui::IsKeyDown(ImGuiKey_RightCtrl);
 
       // only register input if viewport is focused
-      bool const checkInput{ (ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) || mIsDragging || mIsPanning || sMovingToEntity };
+      bool const checkInput{ (ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) || mRightClickHeld || mIsPanning || sMovingToEntity };
       if (checkInput) {
         ProcessCameraInputs();
       }
@@ -148,6 +148,8 @@ namespace GUI
                 GUIVault::ClearSelectedEntities();
                 GUIVault::SetSelectedEntity(sPrevSelectedEntity);
               }
+
+              QUEUE_EVENT(Events::EntityScreenPicked, sPrevSelectedEntity);
             }
             else {
               sPrevSelectedEntity = {};
@@ -173,9 +175,9 @@ namespace GUI
     // only allow movement and panning if right-click held
     if (ImGui::IsMouseDown(ImGuiMouseButton_Right)) {
       sMovingToEntity = false;
-      if (!mIsPanning && !mIsDragging) {
+      if (!mIsPanning && !mRightClickHeld) {
         previousMousePos = ImGui::GetMousePos();
-        mIsDragging = true;
+        mRightClickHeld = true;
       }
       ImGui::SetMouseCursor(ImGuiMouseCursor_None); // hide cursor when looking
 
@@ -206,7 +208,7 @@ namespace GUI
       previousMousePos = currMousePos;
     }
     else {
-      mIsDragging = false;
+      mRightClickHeld = false;
 
       if (ImGui::IsMouseDown(ImGuiMouseButton_Middle)) {
         if (!mIsPanning) {
@@ -279,100 +281,99 @@ namespace GUI
     ImGuizmo::SetDrawlist();
     ImVec2 windowPos{ ImGui::GetWindowPos() };
 
-    float windowWidth{ ImGui::GetWindowWidth() };
-    float windowHeight{ ImGui::GetWindowHeight() };
+    float const windowWidth{ ImGui::GetWindowWidth() };
+    float const windowHeight{ ImGui::GetWindowHeight() };
     ImGuizmo::SetRect(windowPos.x, windowPos.y, windowWidth, windowHeight);
     Component::Transform& transform{ selectedEntity.GetComponent<Component::Transform>() };
-    glm::vec3 const oldPos{ transform.position };
-    auto modelMatrix{ transform.worldMtx };
-    auto modelMatrixPrev{ transform.worldMtx };
-    auto viewMatrix{ mEditorCam.GetViewMatrix() };
-    auto projMatrix{ mEditorCam.GetProjMatrix() };
+    glm::mat4 const viewMatrix{ mEditorCam.GetViewMatrix() };
+    glm::mat4 const projMatrix{ mEditorCam.GetProjMatrix() };
 
     static auto currentOperation = ImGuizmo::TRANSLATE;
     if (ImGui::IsWindowFocused() || ImGui::IsWindowHovered()) {
+      if (!mRightClickHeld) {
       if (ImGui::IsKeyPressed(ImGuiKey_T))
         currentOperation = ImGuizmo::TRANSLATE;
       if (ImGui::IsKeyPressed(ImGuiKey_R))
         currentOperation = ImGuizmo::ROTATE;
       else if (ImGui::IsKeyPressed(ImGuiKey_S))
         currentOperation = ImGuizmo::SCALE;
+      }
     }
+
     ImGuizmo::Manipulate(
       glm::value_ptr(viewMatrix),
       glm::value_ptr(projMatrix),
       currentOperation,
       ImGuizmo::LOCAL,
-      glm::value_ptr(modelMatrix)
+      glm::value_ptr(transform.worldMtx)
     );
+
+    // since ImGuizmo uses the worldMtx, we'll modify it directly and
+    // set the entitiy's world transform. This means we only need
+    // to set the "modified" flag to true and let the transform system
+    // handle the rest
     if (ImGuizmo::IsUsing()) {
       usingGuizmos = true;
       glm::vec3 s{}, r{}, t{};
-      ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(modelMatrix),
+      ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(transform.worldMtx),
         glm::value_ptr(t), glm::value_ptr(r), glm::value_ptr(s));
-      glm::vec3 s2{}, r2{}, t2{};
-      ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(modelMatrixPrev),
-        glm::value_ptr(t2), glm::value_ptr(r2), glm::value_ptr(s2));
 
       // for each operation, if multi-select active, update all their transforms
       bool const multiSelectActive{ !GUIVault::GetSelectedEntities().empty() };
       if (currentOperation == ImGuizmo::TRANSLATE) {
-        glm::vec3 const offset{ t - t2 };
         if (multiSelectActive) {
           for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
-            e.GetComponent<Component::Transform>().position += offset;
+            e.GetComponent<Component::Transform>().worldPos = t;
           }
         }
         else {
-          transform.position += offset;
+          transform.worldPos = t;
         }
       }
       if (currentOperation == ImGuizmo::ROTATE) {
-        glm::vec3 const offset{ r - r2 };
         if (multiSelectActive) {
           for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
             Component::Transform& trans{ e.GetComponent<Component::Transform>() };
-            trans.SetLocalRotWithEuler(trans.eulerAngles + offset);
+            trans.worldRot = glm::quat(glm::radians(r));
           }
         }
         else {
-          glm::vec3 const localRot{ transform.eulerAngles + offset };
-          transform.SetLocalRotWithEuler(localRot);
+          transform.worldRot = glm::quat(glm::radians(r));
         }
       }
       if (currentOperation == ImGuizmo::SCALE) {
-        glm::vec3 const offset{ s - s2 };
         if (multiSelectActive) {
           for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
-            e.GetComponent<Component::Transform>().scale += offset;
+            e.GetComponent<Component::Transform>().worldScale = s;
           }
         }
         else {
-          transform.scale += offset;
+          transform.worldScale = s;
         }
       }
 
-      // update all the world values based on the changes
+      // update all the PrefabOverrides if needed
       if (multiSelectActive) {
         ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
+
         for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
-          TransformHelpers::UpdateWorldTransform(e);
           if (!e.HasComponent<Component::PrefabOverrides>()) { continue; }
 
-          // at the same time, update prefab instances with the new overrides
           Component::Transform& trans{ e.GetComponent<Component::Transform>() };
           Component::PrefabOverrides& pfbOverrides{ e.GetComponent<Component::PrefabOverrides>() };
+
           if (pfbOverrides.IsComponentModified<Component::Transform>() || pfbOverrides.subDataId != Prefabs::PrefabSubData::BasePrefabId) {
             pfbOverrides.AddComponentModification(trans);
           }
           else if (currentOperation != ImGuizmo::TRANSLATE) {
             pfbOverrides.AddComponentModification(trans);
           }
+          trans.modified = true;
         }
       }
       else {
         // if single select, simply update that entity normally
-        TransformHelpers::UpdateWorldTransform(selectedEntity);
+        selectedEntity.GetComponent<Component::Transform>().modified = true;
         if (prefabOverrides) {
           if (prefabOverrides->IsComponentModified<Component::Transform>() || prefabOverrides->subDataId != Prefabs::PrefabSubData::BasePrefabId) {
             prefabOverrides->AddComponentModification(transform);
@@ -382,6 +383,8 @@ namespace GUI
           }
         }
       }
+
+      transform.modified = true;
       QUEUE_EVENT(Events::SceneModifiedEvent);
     }
 

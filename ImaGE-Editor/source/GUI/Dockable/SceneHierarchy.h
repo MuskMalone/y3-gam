@@ -112,6 +112,7 @@ namespace GUI
       The event to be handled
     ************************************************************************/
     EVENT_CALLBACK_DECL(HandleEvent);
+    EVENT_CALLBACK_DECL(OnEntityPicked);
   };
 
 } // namespace GUI

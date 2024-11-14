@@ -66,6 +66,8 @@ namespace IGE {
     // may just make SystemManager globally accesible in future
     // if more stuff requires it
     mGUIManager.Init(GetDefaultRenderTarget());
+
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SIGNAL, &EditorApplication::SignalCallback, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::LOCK_MOUSE, &EditorApplication::LockMouse, this);
   }
 
@@ -209,11 +211,7 @@ namespace IGE {
 
     auto lambd = [](int signal) { 
       std::cerr << ">>>>>>>>>>>>>>>>>>>>>> Crash detected! Scene and Metadata has been backed-up to \"./.backup/\" folder <<<<<<<<<<<<<<<<<<<\n";
-      Scenes::SceneManager::GetInstance().BackupSave();
-      IGE_ASSETMGR.SaveMetadata();
-
-      IGE_DBGLOGGER.DestroyInstance();
-      Graphics::MaterialTable::SaveMaterials();
+      IGE_EVENTMGR.DispatchImmediateEvent<Events::SignalEvent>();   // workaround to calling EditorApplication member function
     };
 
     std::signal(SIGABRT, lambd);
@@ -233,13 +231,19 @@ namespace IGE {
 
   void EditorApplication::Shutdown()
   {
-    Graphics::MaterialTable::SaveMaterials();
-
     // shutdown editor-specific stuff
     mGUIManager.Shutdown();
 
     // perform default shutdown
     Application::Shutdown();
+  }
+
+  // ensure proper shutdown in case of crash
+  EVENT_CALLBACK_DEF(EditorApplication, SignalCallback) {
+    IGE_SCENEMGR.BackupSave();
+    IGE_ASSETMGR.SaveMetadata();
+
+    EditorApplication::Shutdown();
   }
 
   void EditorApplication::WindowDropCallback(GLFWwindow*, int pathCount, const char* paths[]) {

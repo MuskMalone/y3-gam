@@ -1,0 +1,815 @@
+{
+    "Scene": [
+        {
+            "ID": 10,
+            "Parent": 1048580,
+            "Child Entities": [
+                11,
+                12
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 2
+            }
+        },
+        {
+            "ID": 11,
+            "Parent": 10,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 3
+            }
+        },
+        {
+            "ID": 12,
+            "Parent": 10,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 4
+            }
+        },
+        {
+            "ID": 13,
+            "Parent": null,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Light",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -17.299999237060548,
+                            "y": 15.255000114440918,
+                            "z": 4.513000011444092
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": -0.8608782291412354,
+                            "y": -0.013112485408782959,
+                            "z": 0.3421800136566162,
+                            "w": 0.37633711099624636
+                        },
+                        "eulerAngles": {
+                            "x": -126.30000305175781,
+                            "y": 35.400001525878909,
+                            "z": 20.100000381469728
+                        },
+                        "worldPos": {
+                            "x": -17.299999237060548,
+                            "y": 15.255000114440918,
+                            "z": 4.513000011444092
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": -0.8608782291412354,
+                            "y": -0.013112485408782959,
+                            "z": 0.3421800136566162,
+                            "w": 0.37633711099624636
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "DIRECTIONAL",
+                        "color": {
+                            "x": 0.872909665107727,
+                            "y": 0.872909665107727,
+                            "z": 0.872909665107727
+                        },
+                        "intensity": 0.0,
+                        "innerAngle": 5.0,
+                        "outerAngle": 12.5,
+                        "range": 10.0,
+                        "castShadows": true,
+                        "bias": 0.004999999888241291,
+                        "softness": 2,
+                        "nearPlaneMultiplier": 0.10000000149011612
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048576,
+            "Parent": 1048580,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 1
+            }
+        },
+        {
+            "ID": 1048577,
+            "Parent": null,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Ground",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 500.0,
+                            "y": 500.0,
+                            "z": 500.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 500.0,
+                            "y": 500.0,
+                            "z": 500.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 11019927242350685071
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048578,
+            "Parent": null,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Cube",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.9559999704360962,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 2.1999998092651369,
+                            "y": 2.1999998092651369,
+                            "z": 2.1999998092651369
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.9559999704360962,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 2.1999998092651369,
+                            "y": 2.1999998092651369,
+                            "z": 2.1999998092651369
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 2922692704928487141
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048579,
+            "Parent": null,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Cam",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 8.310626983642579
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 8.310626983642579
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Camera": {
+                        "projType": "PERSP",
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 8.310626983642579
+                        },
+                        "yaw": 0.0,
+                        "pitch": 0.0,
+                        "fov": 60.0,
+                        "aspectRatio": 1.7777777910232545,
+                        "nearClip": -100.0,
+                        "farClip": 115.0
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048580,
+            "Parent": null,
+            "Child Entities": [
+                10,
+                1048576,
+                1048581,
+                1048582
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
+                "modifiedComponents": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 0.0,
+                                "y": 5.419966697692871,
+                                "z": 0.0
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "rotation": {
+                                "x": 1.6939566194196232e-7,
+                                "y": 0.6989238262176514,
+                                "z": 1.7533147911308334e-7,
+                                "w": 0.7151961326599121
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": 0.0,
+                                "y": 5.419966697692871,
+                                "z": 0.0
+                            },
+                            "worldScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "worldRot": {
+                                "x": 1.6939566194196232e-7,
+                                "y": 0.6989238262176514,
+                                "z": 1.7533147911308334e-7,
+                                "w": 0.7151961326599121
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 0
+            }
+        },
+        {
+            "ID": 1048581,
+            "Parent": 1048580,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 5
+            }
+        },
+        {
+            "ID": 1048582,
+            "Parent": 1048580,
+            "Child Entities": [
+                1048583,
+                1048584,
+                1048585
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 6
+            }
+        },
+        {
+            "ID": 1048583,
+            "Parent": 1048582,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 9
+            }
+        },
+        {
+            "ID": 1048584,
+            "Parent": 1048582,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 8
+            }
+        },
+        {
+            "ID": 1048585,
+            "Parent": 1048582,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 2526453549540446464
+                },
+                "modifiedComponents": [],
+                "removedComponents": [],
+                "subDataId": 7
+            }
+        }
+    ],
+    "Layers": {
+        "layerNames": [
+            "Default",
+            "Player",
+            "UI",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "layerVisibility": [
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "collisionMatrix": [
+            [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+            ],
+            [
+                1,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+            ],
+            [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+            ],
+            [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ]
+    }
+}

@@ -53,7 +53,8 @@ namespace GUI {
       { typeid(Component::Text), ICON_FA_FONT ICON_PADDING },
       { typeid(Component::Light), ICON_FA_LIGHTBULB ICON_PADDING },
       { typeid(Component::Canvas), ICON_FA_PAINTBRUSH ICON_PADDING },
-      { typeid(Component::Image), ICON_FA_IMAGE ICON_PADDING },
+      { typeid(Component::Image), ICON_FA_IMAGE_PORTRAIT ICON_PADDING },
+      { typeid(Component::Sprite2D), ICON_FA_IMAGE ICON_PADDING },
       { typeid(Component::Camera), ICON_FA_CAMERA ICON_PADDING }
     },
     mObjFactory{Reflection::ObjectFactory::GetInstance()},
@@ -71,6 +72,10 @@ namespace GUI {
     if (Reflection::gComponentTypes.size() != mComponentIcons.size()) {
       throw Debug::Exception<Inspector>(Debug::LVL_CRITICAL, Msg("sComponentIcons and gComponentTypes size mismatch! Did you forget to add an icon?"));
     }
+  }
+
+  Inspector::~Inspector() {
+    SaveLastEditedFile();
   }
 
   void Inspector::Run() {
@@ -322,6 +327,18 @@ namespace GUI {
               }
           }
       }
+
+      if (currentEntity.HasComponent<Component::Sprite2D>()) {
+          rttr::type const sourceType{ rttr::type::get<Component::Sprite2D>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(sourceType);
+
+          if (Sprite2DComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Sprite2D>());
+              }
+          }
+      }
       if (prefabOverride) {
         for (rttr::type const& type : prefabOverride->removedComponents) {
           DisplayRemovedComponent(type);
@@ -434,8 +451,12 @@ namespace GUI {
       else {
         name = "Drag Material Here";
       }
-      ImGui::Button(name, ImVec2(inputWidth, 30.f));
+      if (ImGui::Button(name, ImVec2(inputWidth, 30.f))) {
+        material.Clear();
+      }
       ImGui::PopStyleVar();
+      if (ImGui::IsItemHovered()) { ImGui::SetTooltip("Remove Material"); }
+
       if (ImGui::BeginDragDropTarget()) {
         ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
         if (drop) {
@@ -444,8 +465,8 @@ namespace GUI {
             try {
               material.SetGUID(am.LoadRef<IGE::Assets::MaterialAsset>(assetPayload.GetFilePath()));
             }
-            catch (Debug::ExceptionBase const&) {
-
+            catch (Debug::ExceptionBase& e) {
+              e.LogSource();
             }
           }
         }
@@ -887,7 +908,7 @@ namespace GUI {
         modified = true;
       }
       glm::vec3 localRot{ transform.eulerAngles };
-      if (ImGuiHelpers::TableInputFloat3("Rotation", &localRot[0], inputWidth, false, -360.f, 360.f, 0.3f)) {
+      if (ImGuiHelpers::TableInputFloat3("Rotation", &localRot[0], inputWidth, false, -FLT_MAX, FLT_MAX, 0.3f)) {
         transform.SetLocalRotWithEuler(localRot);
         modified = true;
       }
@@ -1043,27 +1064,27 @@ namespace GUI {
           ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
           // Color input
-          NextRowTable("Projection Type");
+          //NextRowTable("Projection Type");
           //if (ImGui::ColorEdit4("##ProjType", &camera.projType)) {
           //    modified = true;
           //}
 
           NextRowTable("Yaw");
-          if (ImGui::DragFloat("##Yaw", &camera.yaw, 1.f, -180.f, 180.f)) {
+          if (ImGui::SliderFloat("##Yaw", &camera.yaw, -180.f, 180.f)) {
               modified = true;
           }
           NextRowTable("Pitch");
-          if (ImGui::DragFloat("##Pitch", &camera.pitch, 1.f, -180.f, 180.f)) {
+          if (ImGui::SliderFloat("##Pitch", &camera.pitch, -180.f, 180.f)) {
               modified = true;
           }
           NextRowTable("FOV");
-          if (ImGui::DragFloat("##FOV", &camera.fov, 1.f, 0.f, 180.f)) {
+          if (ImGui::SliderFloat("##FOV", &camera.fov, 0.f, 180.f)) {
               modified = true;
           }
-          NextRowTable("Aspect Ratio");
+          //NextRowTable("Aspect Ratio");
 
           NextRowTable("Near Clip");
-          if (ImGui::DragFloat("##Near", &camera.nearClip, 5.f, -100.f, 0.f)) {
+          if (ImGui::DragFloat("##Near", &camera.nearClip, 5.f, -100.f, FLT_MAX)) {
               modified = true;
           }
           NextRowTable("Far Clip");
@@ -1589,6 +1610,74 @@ namespace GUI {
       return modified;
   }
 
+  bool Inspector::Sprite2DComponentWindow(ECS::Entity entity, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Sprite2D>("Sprite2D", highlight) };
+    bool modified{ false };
+
+    if (isOpen) {
+      Component::Sprite2D& sprite = entity.GetComponent<Component::Sprite2D>();
+
+      float const inputWidth{ CalcInputWidth(60.f) };
+
+      // Start a table for organizing the color and textureAsset inputs
+      ImGui::BeginTable("SpriteTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+      // Color input
+      NextRowTable("Color");
+      if (ImGui::ColorEdit4("##ImageColor", &sprite.color[0])) {
+        modified = true;
+      }
+
+      // Texture Asset input - assuming textureAsset is a GUID or string
+
+
+
+      NextRowTable("Texture Asset");
+      static std::string textureText;
+      try {
+        textureText = (sprite.textureAsset) ? IGE_ASSETMGR.GUIDToPath(sprite.textureAsset) : "[None]: Drag in a Texture";
+      }
+      catch (Debug::ExceptionBase& e) {
+        // If the GUID is not found, log the exception and set a default message
+        textureText = "[Invalid GUID]: Unable to load texture";
+        e.LogSource();
+        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), e.what());
+      }
+
+
+      //(image.textureAsset) ? IGE_ASSETMGR.GUIDToPath(image.textureAsset) : "[None]: Drag in a Texture";
+
+      //catch (const Debug::ExceptionBase& e) {
+
+      //}
+
+      ImGui::BeginDisabled();
+      ImGui::InputText("##TextureAsset", &textureText);
+      ImGui::EndDisabled();
+
+      if (ImGui::BeginDragDropTarget()) {
+        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+        if (drop) {
+          AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+          if (assetPayload.mAssetType == AssetPayload::SPRITE) {
+            sprite.textureAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
+            textureText = assetPayload.GetFileName();  // Display the file name in the UI
+            modified = true;
+          }
+        }
+        ImGui::EndDragDropTarget();
+      }
+
+      ImGui::EndTable();
+    }
+
+    WindowEnd(isOpen);
+    return modified;
+  }
+
   bool Inspector::CapsuleColliderComponentWindow(ECS::Entity entity, bool highlight)
   {
       bool const isOpen{ WindowBegin<Component::CapsuleCollider>("Capsule Collider", highlight) };
@@ -1770,7 +1859,7 @@ namespace GUI {
             if (ImGui::IsItemHovered()) {
               ImGui::SetTooltip("How close the light is to the object (how much of the scene the light sees)");
             }
-            if (ImGui::SliderFloat("##NearPlane", &light.nearPlaneMultiplier, 0.1f, 2.f, "% .2f")) {
+            if (ImGui::SliderFloat("##NearPlane", &light.nearPlaneMultiplier, 0.1f, 20.f, "% .2f")) {
               modified = true;
             }
 
@@ -1838,6 +1927,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Light>("Light");
         DrawAddComponentButton<Component::Canvas>("Canvas");
         DrawAddComponentButton<Component::Image>("Image");
+        DrawAddComponentButton<Component::Sprite2D>("Sprite2D");
         DrawAddComponentButton<Component::Camera>("Camera");
 
         ImGui::EndTable();

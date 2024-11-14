@@ -483,6 +483,10 @@ namespace Graphics {
 
 		// Store and return the new instance buffer for this specific submesh
 		mData.instanceSubmeshBuffers[meshSubmeshKey] = instanceBuffer;
+
+		auto &vao= IGE_REF(IGE::Assets::ModelAsset, meshSubmeshKey.first)->mMeshSource.GetVertexArray();
+			
+		vao->AddVertexBuffer(instanceBuffer, true);
 		return instanceBuffer;
 	}
 
@@ -648,6 +652,127 @@ namespace Graphics {
 		}
 	}
 
+	void Renderer::DrawWireSphere(glm::vec3 const& pos, float radius, glm::vec4 const& clr) {
+		const int segments = 32; // Number of segments to approximate the circle
+		const float deltaAngle = glm::two_pi<float>() / segments;
+
+		glm::mat4 translateMtx = glm::translate(glm::mat4(1.0f), pos);
+		glm::mat4 scaleMtx = glm::scale(glm::mat4(1.0f), glm::vec3(radius));
+		glm::mat4 transformMtx = translateMtx * scaleMtx;
+
+		// Draw circle in the XY plane
+		for (int i = 0; i < segments; ++i) {
+			float angle1 = i * deltaAngle;
+			float angle2 = (i + 1) * deltaAngle;
+
+			glm::vec3 p1XY = glm::vec3(cos(angle1), sin(angle1), 0.0f);
+			glm::vec3 p2XY = glm::vec3(cos(angle2), sin(angle2), 0.0f);
+
+			glm::vec3 transformedP1 = transformMtx * glm::vec4(p1XY, 1.0f);
+			glm::vec3 transformedP2 = transformMtx * glm::vec4(p2XY, 1.0f);
+
+			DrawLine(transformedP1, transformedP2, clr);
+		}
+
+		// Draw circle in the XZ plane
+		for (int i = 0; i < segments; ++i) {
+			float angle1 = i * deltaAngle;
+			float angle2 = (i + 1) * deltaAngle;
+
+			glm::vec3 p1XZ = glm::vec3(cos(angle1), 0.0f, sin(angle1));
+			glm::vec3 p2XZ = glm::vec3(cos(angle2), 0.0f, sin(angle2));
+
+			glm::vec3 transformedP1 = transformMtx * glm::vec4(p1XZ, 1.0f);
+			glm::vec3 transformedP2 = transformMtx * glm::vec4(p2XZ, 1.0f);
+
+			DrawLine(transformedP1, transformedP2, clr);
+		}
+
+		// Draw circle in the YZ plane
+		for (int i = 0; i < segments; ++i) {
+			float angle1 = i * deltaAngle;
+			float angle2 = (i + 1) * deltaAngle;
+
+			glm::vec3 p1YZ = glm::vec3(0.0f, cos(angle1), sin(angle1));
+			glm::vec3 p2YZ = glm::vec3(0.0f, cos(angle2), sin(angle2));
+
+			glm::vec3 transformedP1 = transformMtx * glm::vec4(p1YZ, 1.0f);
+			glm::vec3 transformedP2 = transformMtx * glm::vec4(p2YZ, 1.0f);
+
+			DrawLine(transformedP1, transformedP2, clr);
+		}
+	}
+
+
+	void Renderer::DrawWireCapsule(glm::mat4 const& transformMtx, float radius, float height, glm::vec4 const& clr) {
+		const int segments = 16; // Number of segments for circular edges
+		const float deltaAngle = glm::two_pi<float>() / segments;
+		const float halfHeight = (height - 2.0f * radius) / 2.0f; // Half the cylindrical height
+
+		glm::mat4 radiusScale = glm::scale(glm::mat4(1.0f), glm::vec3(radius));
+
+		// Draw top and bottom circles of the cylinder
+		for (int i = 0; i < segments; ++i) {
+			float angle1 = i * deltaAngle;
+			float angle2 = (i + 1) * deltaAngle;
+
+			glm::vec3 p1Bottom = glm::vec3(cos(angle1), -halfHeight, sin(angle1));
+			glm::vec3 p2Bottom = glm::vec3(cos(angle2), -halfHeight, sin(angle2));
+
+			glm::vec3 p1Top = glm::vec3(cos(angle1), halfHeight, sin(angle1));
+			glm::vec3 p2Top = glm::vec3(cos(angle2), halfHeight, sin(angle2));
+
+			glm::vec3 transformedP1Bottom = transformMtx * radiusScale * glm::vec4(p1Bottom, 1.0f);
+			glm::vec3 transformedP2Bottom = transformMtx * radiusScale * glm::vec4(p2Bottom, 1.0f);
+
+			glm::vec3 transformedP1Top = transformMtx * radiusScale * glm::vec4(p1Top, 1.0f);
+			glm::vec3 transformedP2Top = transformMtx * radiusScale * glm::vec4(p2Top, 1.0f);
+
+			// Draw the circles at the top and bottom
+			DrawLine(transformedP1Bottom, transformedP2Bottom, clr);
+			DrawLine(transformedP1Top, transformedP2Top, clr);
+		}
+
+		// Draw vertical lines connecting top and bottom circles
+		for (int i = 0; i < segments; i += segments / 4) { // Four equally spaced vertical lines
+			float angle = i * deltaAngle;
+
+			glm::vec3 pBottom = glm::vec3(cos(angle), -halfHeight, sin(angle));
+			glm::vec3 pTop = glm::vec3(cos(angle), halfHeight, sin(angle));
+
+			glm::vec3 transformedPBottom = transformMtx * radiusScale * glm::vec4(pBottom, 1.0f);
+			glm::vec3 transformedPTop = transformMtx * radiusScale * glm::vec4(pTop, 1.0f);
+
+			DrawLine(transformedPBottom, transformedPTop, clr);
+		}
+
+		// Draw longitudinal arcs (curved vertical lines)
+		for (int i = 0; i < segments; i += segments / 4) { // Four vertical arcs around the capsule
+			float angle = i * deltaAngle;
+
+			for (int j = 0; j <= segments / 4; ++j) { // Split hemisphere into 4 vertical sections
+				float theta1 = j * glm::half_pi<float>() / (segments / 4);
+				float theta2 = (j + 1) * glm::half_pi<float>() / (segments / 4);
+
+				glm::vec3 p1Top = glm::vec3(sin(theta1) * cos(angle), halfHeight + radius * cos(theta1), sin(theta1) * sin(angle));
+				glm::vec3 p2Top = glm::vec3(sin(theta2) * cos(angle), halfHeight + radius * cos(theta2), sin(theta2) * sin(angle));
+
+				glm::vec3 p1Bottom = glm::vec3(sin(theta1) * cos(angle), -halfHeight - radius * cos(theta1), sin(theta1) * sin(angle));
+				glm::vec3 p2Bottom = glm::vec3(sin(theta2) * cos(angle), -halfHeight - radius * cos(theta2), sin(theta2) * sin(angle));
+
+				glm::vec3 transformedP1Top = transformMtx * radiusScale * glm::vec4(p1Top, 1.0f);
+				glm::vec3 transformedP2Top = transformMtx * radiusScale * glm::vec4(p2Top, 1.0f);
+
+				glm::vec3 transformedP1Bottom = transformMtx * radiusScale * glm::vec4(p1Bottom, 1.0f);
+				glm::vec3 transformedP2Bottom = transformMtx * radiusScale * glm::vec4(p2Bottom, 1.0f);
+
+				// Draw arcs for top and bottom hemispheres
+				DrawLine(transformedP1Top, transformedP2Top, clr);
+				DrawLine(transformedP1Bottom, transformedP2Bottom, clr);
+			}
+		}
+	}
+
 	void Renderer::RenderFullscreenTexture(){
 		RenderAPI::DrawTriangles(mData.screen.screenVertexArray, 6);
 	}
@@ -765,6 +890,7 @@ namespace Graphics {
 	}
 
 	void Renderer::RenderSubmeshInstances() {
+		
 		for (auto& [meshSubmeshKey, instances] : mData.instanceSubmeshBufferDataMap) {
 			if (instances.empty()) continue;
 
@@ -788,6 +914,7 @@ namespace Graphics {
 			}
 			else {
 				// Render individual submesh
+				
 				auto const& submesh = submeshes[submeshIndex];
 				unsigned int dataSize = static_cast<unsigned int>(instances.size() * sizeof(InstanceData));
 				auto instanceBuffer = GetSubmeshInstanceBuffer({ meshSourceGUID, submeshIndex });
@@ -801,8 +928,10 @@ namespace Graphics {
 					submesh.idxCount,
 					static_cast<unsigned>(instances.size()), // Instance count
 					submesh.baseIdx,
-					submesh.baseVtx
+					submesh.baseVtx,
+					submeshes.size() * static_cast<unsigned>(instances.size())
 				);
+				
 			}
 		}
 

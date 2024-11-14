@@ -4,24 +4,6 @@
 //TODO CHANGE TO GUID LATER
 namespace Graphics {
 
-    struct MatData {
-        std::string name;
-        std::string shader;
-        glm::vec3 albedoColor{ 1.0f, 1.0f, 1.0f };
-        float metalness{ 0.0f };
-        float roughness{ 0.5f };
-        float ao{ 1.0f };
-        float emission{ 0.0f };
-        float transparency{ 1.0f };
-        glm::vec2 tiling{ 1.0f, 1.0f };
-        glm::vec2 offset{ 0.0f, 0.0f };
-        IGE::Assets::GUID albedoMap{};
-        IGE::Assets::GUID normalMap{};
-        IGE::Assets::GUID metalnessMap{};
-        IGE::Assets::GUID roughnessMap{};
-    };
-
-
     class MaterialData;
     class MaterialTable {
     public:
@@ -35,6 +17,7 @@ namespace Graphics {
         static std::shared_ptr<MaterialData> GetMaterial(uint32_t index);
 
         // Retrieve material by GUID
+        static uint32_t GetMaterialIndexByGUID(const IGE::Assets::GUID& guid);
         static std::shared_ptr<MaterialData> GetMaterialByGUID(const IGE::Assets::GUID& guid);
 
         // Bind textures for all materials to the shader
@@ -43,6 +26,7 @@ namespace Graphics {
 
 
         static IGE::Assets::GUID CreateAndImportMatFile(const std::string& name = "NewMaterial");
+        static void SaveMaterial(IGE::Assets::GUID const& guid);
         static void SaveMaterials();
         static std::shared_ptr<MaterialData> LoadMaterial(std::string const& fp);
 

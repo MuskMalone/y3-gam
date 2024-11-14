@@ -26,6 +26,8 @@ namespace GUI
   static bool sEntityDoubleClicked{ false }, sEditNameMode{ false }, sFirstEnterEditMode{ true };
   static bool sLMouseReleased{ false }, sCtrlHeld{ false }, sWasCtrlHeld{ false };
   static float sTimeElapsed;  // for renaming entity
+  static bool sJumpToEntity;
+  static int sEntityCount;
 
   SceneHierarchy::SceneHierarchy(const char* name) : GUIWindow(name),
     mEntityManager{ ECS::EntityManager::GetInstance() },
@@ -36,6 +38,7 @@ namespace GUI
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &SceneHierarchy::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &SceneHierarchy::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_MODIFIED, &SceneHierarchy::HandleEvent, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_PICKED, &SceneHierarchy::OnEntityPicked, this);
   }
 
   void SceneHierarchy::Run()
@@ -116,6 +119,7 @@ namespace GUI
       sTimeElapsed = 0;
     }
 
+    sEntityCount = 0;
     for (auto const& e : mEntityManager.GetAllEntities())
     {
       if (mEntityManager.HasParent(e)) { continue; }
@@ -201,6 +205,10 @@ namespace GUI
     }
   }
 
+  EVENT_CALLBACK_DEF(SceneHierarchy, OnEntityPicked) {
+    sJumpToEntity = true;
+  }
+
   ECS::Entity SceneHierarchy::CreateNewEntity() const
   {
     auto newEntity{ mEntityManager.CreateEntity() };
@@ -262,6 +270,12 @@ namespace GUI
 
       ProcessInput(entity);
 
+      // if entity picked from viewport, set scroll position to it
+      if (sJumpToEntity && GUIVault::GetSelectedEntity() == entity) {
+        ImGui::SetScrollHereY(0.1f);
+        sJumpToEntity = false;
+      }
+
       if (hasChildren) {
         for (auto const& child : mEntityManager.GetChildEntity(entity)) {
           RecurseDownHierarchy(child);
@@ -277,6 +291,7 @@ namespace GUI
     if (isPrefabInstance) {
       ImGui::PopStyleColor();
     }
+    ++sEntityCount;
   }
 
   void SceneHierarchy::ProcessInput(ECS::Entity entity) {

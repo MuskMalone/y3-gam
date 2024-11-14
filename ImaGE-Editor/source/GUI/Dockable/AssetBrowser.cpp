@@ -560,6 +560,9 @@ namespace GUI
         auto path{ mSelectedAsset.relative_path().string() };
         try {
             auto guid{ IGE_ASSETMGR.PathToGUID(mSelectedAsset.relative_path().string()) };
+            if (mSelectedAsset.extension() == gMaterialFileExt) {
+              Graphics::MaterialTable::DeleteMaterial(guid);
+            }
             IGE_ASSETMGR.DeleteFunction(mSelectedAsset.parent_path().filename().string())(guid);
         }
         catch (...) {

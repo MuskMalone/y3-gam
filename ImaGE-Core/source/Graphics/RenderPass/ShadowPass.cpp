@@ -7,6 +7,7 @@
 #include <Core/Components/Light.h>
 #include <Core/Components/Transform.h>
 #include <Core/Components/Mesh.h>
+#include <Graphics/RenderSystem.h>
 
 namespace Graphics {
     ShadowPass::ShadowPass(const RenderPassSpec& spec) : RenderPass(spec), mLightSpaceMtx{}, mShadowSoftness{}, mShadowBias{}, mActive{ false } {
@@ -14,6 +15,12 @@ namespace Graphics {
     }
 
     void ShadowPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
+      // only do shadow pass for game view
+      if (cam.isEditor) {
+        mActive = Graphics::RenderSystem::mCameraManager.HasActiveCamera();
+        return;
+      }
+
         mActive = LocateLightSource(cam, entities);
         StartRender();
 
@@ -25,43 +32,43 @@ namespace Graphics {
             // skip if no mesh or if it doesn't cast shadows
             if (!mesh.meshSource.IsValid() || !mesh.castShadows) { continue; }
 
-            Graphics::Renderer::SubmitInstance(
-                entity.GetComponent<Component::Mesh>().meshSource,
+            Graphics::Renderer::SubmitSubmeshInstance(
+                entity.GetComponent<Component::Mesh>().meshSource,0,
                 entity.GetComponent<Component::Transform>().worldMtx,
                 Color::COLOR_WHITE,
                 entity.GetEntityID(),
                 0
             );
         }
-        Renderer::RenderInstances();
+        Renderer::RenderSubmeshInstances();
 
         EndRender();
     }
 
-    bool ShadowPass::LocateLightSource(CameraSpec const& cam, std::vector<ECS::Entity> const& entities){
-        bool found{ false };
+    bool ShadowPass::LocateLightSource(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
+      bool found{ false };
 
-        // iterate through entities to find the shadow-casting light
-        for (ECS::Entity const& entity : entities) {
-            if (!entity.HasComponent<Component::Light>()) { continue; }
+      // iterate through entities to find the shadow-casting light
+      for (ECS::Entity const& entity : entities) {
+        if (!entity.HasComponent<Component::Light>()) { continue; }
 
-            Component::Light const& light{ entity.GetComponent<Component::Light>() };
-            Component::Transform const& transform{ entity.GetComponent<Component::Transform>() };
+        Component::Light const& light{ entity.GetComponent<Component::Light>() };
+        Component::Transform const& transform{ entity.GetComponent<Component::Transform>() };
 
-      // only care about shadow casters
-      if (!light.castShadows || light.type != Component::LightType::DIRECTIONAL) {
-        continue;
-      }
-      found = true;
-
-            mShadowBias = light.bias;
-            mShadowSoftness = light.softness;
-            SetLightUniforms(cam, transform.worldRot * light.forwardVec, light.nearPlaneMultiplier, transform.worldPos);
-
-            break;
+        // only care about shadow casters
+        if (!light.castShadows || light.type != Component::LightType::DIRECTIONAL) {
+          continue;
         }
+        found = true;
 
-        return found;
+        mShadowBias = light.bias;
+        mShadowSoftness = light.softness;
+        SetLightUniforms(cam, transform.worldRot * light.forwardVec, light.nearPlaneMultiplier, transform.worldPos);
+
+        break;
+      }
+
+      return found;
     }
 
     void ShadowPass::StartRender() {

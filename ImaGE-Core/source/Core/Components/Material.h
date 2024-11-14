@@ -32,6 +32,8 @@ namespace Component {
 
         inline void SetGUID(const IGE::Assets::GUID& guid) {
             materialGUID = guid;
+            if (!guid) { return; }
+
             matIdx = Graphics::MaterialTable::AddMaterialByGUID(guid); // Update matIdx
         }
 

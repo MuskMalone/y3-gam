@@ -148,7 +148,7 @@ namespace Graphics {
           uint32_t matID = 0;
           if (entity.HasComponent<Component::Material>()) {
               auto const& matComponent = entity.GetComponent<Component::Material>();
-              matID = matComponent.matIdx;
+              matID = MaterialTable::GetMaterialIndexByGUID(matComponent.materialGUID);//matComponent.matIdx;
           }
 
           // Group entity pairs by material ID for rendering
@@ -176,14 +176,16 @@ namespace Graphics {
           shader->SetUniform("u_LightIntensity", u_LightIntensity, maxLights);
           shader->SetUniform("u_Range", u_Range, maxLights);
 
-          // Set shadow uniforms
-          auto const& shadowPass = Renderer::GetPass<ShadowPass>();
-          shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
-          if (shadowPass->IsActive()) {
+          {
+            // Set shadow uniforms
+            auto const& shadowPass = Renderer::GetPass<ShadowPass>();
+            shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
+            if (shadowPass->IsActive()) {
               shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
               shader->SetUniform("u_ShadowMap", static_cast<int>(shadowPass->BindShadowMap()));
               shader->SetUniform("u_ShadowBias", shadowPass->GetShadowBias());
               shader->SetUniform("u_ShadowSoftness", shadowPass->GetShadowSoftness());
+            }
           }
 
           material->Apply(shader);
@@ -197,10 +199,24 @@ namespace Graphics {
             Graphics::Renderer::SubmitSubmeshInstance(mesh.meshSource, mesh.submeshIdx, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
           }
 
-          mSpec.pipeline->GetSpec().instanceLayout;
+          //mSpec.pipeline->GetSpec().instanceLayout;
           Renderer::RenderSubmeshInstances();  // Render all instances for the material group
           Texture::ResetTextureUnits(); // Unbind textures after each group
       }
+
+      Renderer::RenderSceneBegin(cam.viewProjMatrix);
+      for (ECS::Entity const& entity : entities) {
+        if (entity.HasComponent<Component::Sprite2D>()) {
+          auto const& sprite = entity.GetComponent<Component::Sprite2D>();
+          auto const& xform = entity.GetComponent<Component::Transform>();
+          if (sprite.textureAsset)
+              Renderer::DrawSprite(xform.worldPos, xform.worldScale, xform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(sprite.textureAsset)->mTexture, sprite.color);
+          else
+              Renderer::DrawQuad(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, sprite.color);
+
+        }
+      }
+      Renderer::RenderSceneEnd();
       //=================================================SUBMESH VERSION END===========================================================
 
       End();
