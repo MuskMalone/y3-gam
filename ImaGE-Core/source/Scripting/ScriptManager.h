@@ -333,6 +333,8 @@ namespace Mono
 
 		static glm::vec3 GetMousePos();
 
+		static MonoString* GetTagFromEntityID(ECS::Entity::EntityID entity);
+
 		static ECS::Entity::EntityID FindChildByTag(ECS::Entity::EntityID entity, MonoString* s);
 
 		static ECS::Entity::EntityID FindParentByTag(MonoString* s);
@@ -344,6 +346,10 @@ namespace Mono
 		static glm::vec4 GetImageColor(ECS::Entity::EntityID entity);
 
 		static void SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val);
+		
+		static glm::vec3 GetMainCameraPosition(ECS::Entity::EntityID cameraEntity);
+
+		static glm::vec3 GetMainCameraDirection(ECS::Entity::EntityID cameraEntity);
 
 		/*!**********************************************************************
 		*																																			  *

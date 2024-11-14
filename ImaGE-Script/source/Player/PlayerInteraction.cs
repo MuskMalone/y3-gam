@@ -79,6 +79,8 @@ using IGE.Utils;
 public class PlayerInteraction : Entity
 {
   bool seedObtained = false;
+  float RayFromPlayerCameraLength = 50f;
+
   // Start is called before the first frame update
   void Start()
   {
@@ -88,7 +90,23 @@ public class PlayerInteraction : Entity
   // Update is called once per frame
   void Update()
   {
-    if(InternalCalls.IsKeyPressed(KeyCode.E))
+    Vector3 rayOrigin = InternalCalls.GetMainCameraPosition(FindEntityByTag("MainCamera").mEntityID);
+    Vector3 rayDirection = InternalCalls.GetMainCameraDirection(FindEntityByTag("MainCamera").mEntityID);
+    Vector3 rayEnd = rayOrigin + (rayDirection * RayFromPlayerCameraLength);
+
+    uint rayHitID = InternalCalls.Raycast(rayOrigin, rayEnd);
+    //Console.WriteLine(InternalCalls.GetTagFromEntityID(rayHitID));
+    
+    if (InternalCalls.GetTagFromEntityID(rayHitID) == "InteractSeedBag")
+    {
+      FindEntityByTag("PickUpSeedText").SetActive(true);
+    }
+    else
+    {
+      FindEntityByTag("PickUpSeedText").SetActive(false);
+    }
+
+    if (InternalCalls.IsKeyPressed(KeyCode.E))
     {
       FindEntityByTag("InteractPitPainting").SetActive(false);
       FindEntityByTag("InteractSeedBag").SetActive(false);

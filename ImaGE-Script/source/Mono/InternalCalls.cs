@@ -140,6 +140,15 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static uint FindParentByTag(string s);
 
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static string GetTagFromEntityID(uint EntityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static Vector3 GetMainCameraPosition(uint cameraEntityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static Vector3 GetMainCameraDirection(uint cameraEntityID);
+
     #endregion
 
 
@@ -147,6 +156,7 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static string GetText(uint EntityID);
     #endregion
+
 
     #region Color Component
 
@@ -156,6 +166,7 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetImageColor(uint EntityID, Vector4 val);
     #endregion
+
 
     #region Utility
 
@@ -168,9 +179,7 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void PlaySound(uint entity, string sound);
 
-    #endregion
-
-        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static float GetDeltaTime();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -182,8 +191,8 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static Entity FindScript(string s);
 
+    #endregion
 
 
-
-  }
+    }
 }

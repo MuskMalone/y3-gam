@@ -215,9 +215,12 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(FindChildByTag);
   ADD_INTERNAL_CALL(FindParentByTag);
   ADD_INTERNAL_CALL(GetAllChildren);
+  ADD_INTERNAL_CALL(GetTagFromEntityID);
   ADD_INTERNAL_CALL(GetText);
   ADD_INTERNAL_CALL(GetImageColor);
   ADD_INTERNAL_CALL(SetImageColor);
+  ADD_INTERNAL_CALL(GetMainCameraPosition);
+  ADD_INTERNAL_CALL(GetMainCameraDirection);
 
   // Utility Functions
   ADD_INTERNAL_CALL(Raycast);
@@ -830,6 +833,14 @@ glm::vec3 Mono::GetMousePos()
   return glm::vec3(Input::InputManager::GetInstance().GetMousePos(), 0);
 }
 
+MonoString* Mono::GetTagFromEntityID(ECS::Entity::EntityID entity) {
+  if (ECS::Entity{ entity }.HasComponent<Component::Tag>()) {
+    return STDToMonoString(ECS::Entity{ entity }.GetTag());
+  }
+
+  return STDToMonoString(std::string("No Entity has that Tag"));
+}
+
 bool  Mono::IsGrounded(ECS::Entity::EntityID entity)
 {
   if (ECS::Entity(entity).HasComponent<Component::RigidBody>())
@@ -1046,6 +1057,28 @@ void Mono::SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val)
   }
   else
     Debug::DebugLogger::GetInstance().LogError("You r trying to set Image color from an invalid entity");
+}
+
+glm::vec3 Mono::GetMainCameraPosition(ECS::Entity::EntityID cameraEntity) {
+  if (ECS::Entity(cameraEntity) && ECS::Entity{ cameraEntity }.HasComponent<Component::Camera>()) {
+    return ECS::Entity{ cameraEntity }.GetComponent<Component::Camera>().position;
+  }
+
+  else {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to get the camera position of a non-camera Entity!");
+  }
+  return glm::vec3();
+}
+
+glm::vec3 Mono::GetMainCameraDirection(ECS::Entity::EntityID cameraEntity) {
+  if (ECS::Entity(cameraEntity) && ECS::Entity{ cameraEntity }.HasComponent<Component::Camera>()) {
+    return glm::normalize(ECS::Entity{ cameraEntity }.GetComponent<Component::Camera>().rotation * glm::vec3(0.0f, 0.0f, -1.0f));
+  }
+
+  else {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to get the camera position of a non-camera Entity!");
+  }
+  return glm::vec3();
 }
 
 /*!**********************************************************************
