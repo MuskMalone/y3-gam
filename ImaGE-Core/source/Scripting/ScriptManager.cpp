@@ -213,6 +213,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(DestroyScript);
   ADD_INTERNAL_CALL(SetActive);
   ADD_INTERNAL_CALL(FindChildByTag);
+  ADD_INTERNAL_CALL(FindParentByTag);
   ADD_INTERNAL_CALL(GetAllChildren);
   ADD_INTERNAL_CALL(GetText);
   ADD_INTERNAL_CALL(GetImageColor);
