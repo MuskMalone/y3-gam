@@ -195,7 +195,7 @@ namespace IGE {
           gameTex = std::make_shared<Graphics::Texture>(fb0->GetFramebufferSpec().width, fb0->GetFramebufferSpec().height);
 
           if (gameTex) {
-              gameTex->CopyFrom(fb0->GetColorAttachmentID(), fb0->GetFramebufferSpec().width, fb0->GetFramebufferSpec().height);
+            gameTex->CopyFrom(fb0->GetColorAttachmentID(), fb0->GetFramebufferSpec().width, fb0->GetFramebufferSpec().height);
           }
 
       }
@@ -210,8 +210,8 @@ namespace IGE {
     glfwSetDropCallback(mWindow.get(), WindowDropCallback);
 
     auto lambd = [](int signal) { 
-      std::cerr << ">>>>>>>>>>>>>>>>>>>>>> Crash detected! Scene and Metadata has been backed-up to \"./.backup/\" folder <<<<<<<<<<<<<<<<<<<\n";
       IGE_EVENTMGR.DispatchImmediateEvent<Events::SignalEvent>();   // workaround to calling EditorApplication member function
+      std::cerr << ">>>>>>>>>>>>>>>>>>>>>> Crash detected! Scene and Metadata has been backed-up to \"./.backup/\" folder <<<<<<<<<<<<<<<<<<<\n";
     };
 
     std::signal(SIGABRT, lambd);

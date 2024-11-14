@@ -3,18 +3,24 @@
 #include <imgui/imgui.h>
 #include <Graphics/RenderPass/GeomPass.h>
 #include "Graphics/Renderer.h"
+#include <Events/EventManager.h>
 
 namespace GUI {
 
-    GameViewport::GameViewport(const char* name)
-        : GUIWindow(name) {}
-
-    void GameViewport::Run() {
+    GameViewport::GameViewport(const char* name) : GUIWindow(name),
+      mFocusWindow{ false } {
+      SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &GameViewport::OnScenePlay, this);
     }
 
     void GameViewport::Render(std::shared_ptr<Graphics::Texture> const& tex)
     {
         ImGui::Begin(mWindowName.c_str());
+
+        if (!tex) {
+          ImGui::Text("Scene has no Camera component");
+          ImGui::End();
+          return;
+        }
 
         ImVec2 const vpSize = ImGui::GetContentRegionAvail();
         auto const finalPass{ Graphics::Renderer::GetPass<Graphics::GeomPass>() };
@@ -27,8 +33,21 @@ namespace GUI {
             ImVec2(1, 0)
         );
 
+        // set focus to game vp if scene started for the first time
+        if (mFocusWindow) {
+          ImGui::SetWindowFocus();
+          mFocusWindow = false;
+        }
+
         ImGui::End();
         
+    }
+
+    EVENT_CALLBACK_DEF(GameViewport, OnScenePlay) {
+      // set flag if scene started
+      if (CAST_TO_EVENT(Events::SceneStateChange)->mNewState == Events::SceneStateChange::STARTED) {
+        mFocusWindow = true;
+      }
     }
 
 } // namespace GUI

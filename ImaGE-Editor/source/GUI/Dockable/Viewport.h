@@ -37,7 +37,7 @@ namespace GUI
     static inline constexpr float sEntityScaleFactor = 1.f; // for camera zooming
 
     Graphics::EditorCamera& mEditorCam;
-    bool mIsPanning, mRightClickHeld;
+    bool mIsPanning, mRightClickHeld, mFocusWindow;
 
     /*!*********************************************************************
     \brief
@@ -60,7 +60,8 @@ namespace GUI
     ************************************************************************/
     void ReceivePayload();
 
-    EVENT_CALLBACK_DECL(HandleEvent);
+    EVENT_CALLBACK_DECL(OnEntityDoubleClicked);
+    EVENT_CALLBACK_DECL(OnSceneStart);
   };
   
 } // namespace GUI

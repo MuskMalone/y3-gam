@@ -70,8 +70,9 @@ namespace {
 namespace GUI
 {
   Viewport::Viewport(const char* name, Graphics::EditorCamera& camera) : GUIWindow(name),
-    mEditorCam{ camera }, mIsPanning{ false }, mRightClickHeld{ false } {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_ZOOM, &Viewport::HandleEvent, this);
+    mEditorCam{ camera }, mIsPanning{ false }, mRightClickHeld{ false }, mFocusWindow{ false } {
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_ZOOM, &Viewport::OnEntityDoubleClicked, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &Viewport::OnSceneStart, this);
   }
 
   void Viewport::Render(std::shared_ptr<Graphics::Framebuffer> const& framebuffer)
@@ -100,6 +101,12 @@ namespace GUI
         ImVec2(0, 1),
         ImVec2(1, 0)
       );
+
+      // set focus to game vp if scene stopped
+      if (mFocusWindow) {
+        ImGui::SetWindowFocus();
+        mFocusWindow = false;
+      }
 
       if (!UpdateGuizmos() && checkInput) {
         // object picking
@@ -256,7 +263,7 @@ namespace GUI
     }
   }
 
-  EVENT_CALLBACK_DEF(Viewport, HandleEvent) {
+  EVENT_CALLBACK_DEF(Viewport, OnEntityDoubleClicked) {
     Component::Transform const& trans{ CAST_TO_EVENT(Events::ZoomInOnEntity)->mEntity.GetComponent<Component::Transform>() };
     // project the entity's scale onto the camera's view plane
     glm::vec2 const projectedEntityScale{ ProjVectorOnCamPlane(trans.worldScale, mEditorCam) };
@@ -268,6 +275,13 @@ namespace GUI
     sMoveDir = glm::normalize(totalDist);
     sDistToCover = glm::length(totalDist);
     sMovingToEntity = true;
+  }
+
+  EVENT_CALLBACK_DEF(Viewport, OnSceneStart) {
+    // set flag if scene stopped
+    if (CAST_TO_EVENT(Events::SceneStateChange)->mNewState == Events::SceneStateChange::STOPPED) {
+      mFocusWindow = true;
+    }
   }
 
   bool Viewport::UpdateGuizmos() const {

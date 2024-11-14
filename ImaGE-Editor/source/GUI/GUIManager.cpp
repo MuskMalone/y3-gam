@@ -44,15 +44,14 @@ namespace GUI {
     mPersistentElements.emplace_back(std::make_unique<SceneControls>("Scene Controls"));
     mPersistentElements.emplace_back(std::make_unique<PrefabEditor>("Prefab Editor"));
 
-    auto vp{ std::make_shared<Viewport>("Viewport", renderTarget.camera) };
-    mEditorViewport = vp; // hold a ptr to the viewport
-    auto gvp{ std::make_shared<GameViewport>("Game View")};
-    mGameViewport = gvp;
+    // hold ptrs to the viewports
+    mEditorViewport = std::make_shared<Viewport>("Viewport", renderTarget.camera);
+    mGameViewport = std::make_shared<GameViewport>("Game View");
 
-    mWindows.reserve(8);
-    mWindows.emplace_back(std::move(vp)); // viewport should always be first
+    mWindows.reserve(10);
+    mWindows.emplace_back(mEditorViewport); // viewports should always be first
+    mWindows.emplace_back(mGameViewport);
 
-    mWindows.emplace_back(std::move(gvp));
     mWindows.emplace_back(std::make_shared<Inspector>("Inspector"));
     mWindows.emplace_back(std::make_shared<SceneHierarchy>("Scene Hierarchy"));
     mWindows.emplace_back(std::make_shared<AssetBrowser>("Asset Browser"));
@@ -79,8 +78,8 @@ namespace GUI {
       mWindows[i]->Run();
     }
 
-    if (mGameViewport->IsActive() && tex) {
-        mGameViewport->Render(tex);
+    if (mGameViewport->IsActive()) {
+      mGameViewport->Render(tex);
     }
 
     // Update viewport if active
