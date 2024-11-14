@@ -118,7 +118,6 @@ namespace Graphics {
 
             // Only bind the albedo map if it’s unique (not the default texture)
             if (albedoMap != Renderer::GetWhiteTexture()) {
-              IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(albedoMap);
               int const texUnit{ static_cast<int>(IGE_REF(IGE::Assets::TextureAsset, albedoMap)->mTexture.Bind()) };
               albedoTextureUnits[i] = texUnit;  // Assign this unique texture unit to the shader array
             }

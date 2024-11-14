@@ -137,7 +137,7 @@ namespace Graphics {
 
       //=================================================SUBMESH VERSION===============================================================
           // Group entities by material ID and gather instances for submeshes
-
+      uint32_t matID = 0;
       for (ECS::Entity const& entity : entities) {
           if (!entity.HasComponent<Component::Mesh>()) continue;
 
@@ -146,7 +146,6 @@ namespace Graphics {
 
           if (!mesh.meshSource.IsValid()) continue;
 
-          uint32_t matID = 0;
           if (entity.HasComponent<Component::Material>()) {
               auto const& matComponent = entity.GetComponent<Component::Material>();
               matID = MaterialTable::GetMaterialIndexByGUID(matComponent.materialGUID);//matComponent.matIdx;

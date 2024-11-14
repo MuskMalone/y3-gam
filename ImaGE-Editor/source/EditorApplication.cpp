@@ -188,22 +188,13 @@ namespace IGE {
     //  target.framebuffer->Unbind();
     //}
       if (mGUIManager.IsGameViewActive() && Graphics::RenderSystem::mCameraManager.HasActiveCamera()) {
-          // Static flag to track if this is the first frame
-          static bool isFirstFrame = true;
+          Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() });
+          auto const& fb0 = Graphics::Renderer::GetFinalFramebuffer();
+          gameTex = std::make_shared<Graphics::Texture>(fb0->GetFramebufferSpec().width, fb0->GetFramebufferSpec().height);
 
-          // Skip the code block only for the first frame
-          if (!isFirstFrame) {
-              Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() });
-              auto const& fb0 = Graphics::Renderer::GetFinalFramebuffer();
-              gameTex = std::make_shared<Graphics::Texture>(fb0->GetFramebufferSpec().width, fb0->GetFramebufferSpec().height);
-
-              if (gameTex) {
-                  gameTex->CopyFrom(fb0->GetColorAttachmentID(), fb0->GetFramebufferSpec().width, fb0->GetFramebufferSpec().height);
-              }
+          if (gameTex) {
+              gameTex->CopyFrom(fb0->GetColorAttachmentID(), fb0->GetFramebufferSpec().width, fb0->GetFramebufferSpec().height);
           }
-
-          // Set the flag to false after the first frame
-          isFirstFrame = false;
 
       }
 
