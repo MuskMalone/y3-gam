@@ -12,6 +12,10 @@
 #include "Input/InputManager.h"
 namespace IGE {
 	namespace Physics {
+		namespace {
+			std::vector<std::tuple<glm::vec3, glm::vec3, bool>> debugRayCast;
+		}
+
 		void SetColliderAsSensor(physx::PxShape* shapeptr, bool sensor);
 		template <typename... _component>
 		bool HasAnyComponent(ECS::Entity entity) {
@@ -71,6 +75,7 @@ namespace IGE {
 		}
 
 		void PhysicsSystem::Update() {
+			debugRayCast.clear();
 			mOnTriggerPairs.clear();
 			if (Scenes::SceneManager::GetInstance().GetSceneState() != Scenes::SceneState::PLAYING) {
 				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Transform>() };
@@ -561,6 +566,15 @@ namespace IGE {
 				}
 				
 			}
+
+			for (auto const& ray : debugRayCast) {
+				if (std::get<2>(ray)) {
+					Graphics::Renderer::DrawLine(std::get<0>(ray), std::get<1>(ray), Color::COLOR_MAGENTA);
+				}
+				else {
+					Graphics::Renderer::DrawLine(std::get<0>(ray), std::get<1>(ray), Color::COLOR_GREEN);
+				}
+			}
 		}
 
 		void PhysicsSystem::ClearSystem()
@@ -577,20 +591,23 @@ namespace IGE {
 		//assume direction is normalized
 		bool PhysicsSystem::RayCastSingular(glm::vec3 const& origin, glm::vec3 const& end, RaycastHit& result)
 		{
-			
 			physx::PxRaycastBufferN<2> hitBuffer{};
 			auto dir{ glm::normalize(end - origin) };
 			auto mag{ glm::distance(origin, end) };
 			bool hit{ mScene->raycast(ToPxVec3(origin), ToPxVec3(dir), mag, hitBuffer) };
 			if (hit) {
+				debugRayCast.emplace_back(std::make_tuple(origin, end, true));
 				if (hitBuffer.nbTouches < 2) return false;
 
 				result.entity = mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[1].actor));
 				result.distance = hitBuffer.touches[1].distance;
 				result.normal = ToGLMVec3(hitBuffer.touches[1].normal);
 				result.position = ToGLMVec3(hitBuffer.touches[1].position);
+				
 				return true;
 			}
+
+			debugRayCast.emplace_back(std::make_tuple(origin, end, false));
 			return false;
 		}
 		

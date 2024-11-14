@@ -909,7 +909,7 @@ MonoObject* Mono::FindScript(MonoString* s)
 ECS::Entity::EntityID Mono::FindChildByTag(ECS::Entity::EntityID entity, MonoString* s)
 {
   std::string msg{ MonoStringToSTD(s) };
-  if (ECS::Entity(entity))
+  if (ECS::Entity(entity) && ECS::EntityManager::GetInstance().HasChild(entity))
   {
     for (ECS::Entity e : ECS::EntityManager::GetInstance().GetChildEntity(ECS::Entity(entity)))
      {

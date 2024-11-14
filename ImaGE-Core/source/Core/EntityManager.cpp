@@ -125,7 +125,8 @@ namespace ECS {
     auto iter{ mChildren.find(parent.GetRawEnttEntityID()) };
 
     if (iter == mChildren.end()) {
-      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity: " + parent.GetTag() + " does not have a Child!");
+      // TEMP
+      //Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity: " + parent.GetTag() + " does not have a Child!");
       return std::vector<Entity>();
     }
 

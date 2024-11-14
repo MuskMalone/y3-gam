@@ -79,7 +79,7 @@ using IGE.Utils;
 public class PlayerInteraction : Entity
 {
   bool seedObtained = false;
-  float RayFromPlayerCameraLength = 50f;
+  public float RayFromPlayerCameraLength;
 
   // Start is called before the first frame update
   void Start()
