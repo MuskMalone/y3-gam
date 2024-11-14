@@ -83,10 +83,16 @@ using IGE.Utils;
       return null;
     }
 
-    
 
+    public Entity FindEntityByTag(string tag)
+    {
+      uint e = InternalCalls.FindParentByTag(tag);
+      Entity newEnt = new Entity();
+      newEnt.mEntityID = e; 
+      return newEnt;
+    }
 
-    public void OnDestroy()
+  public void OnDestroy()
     {
 
     }

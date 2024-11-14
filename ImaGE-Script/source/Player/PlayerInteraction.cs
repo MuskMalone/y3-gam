@@ -67,3 +67,33 @@
 //        Debug.Log("Player movement and look unfrozen.");
 //    }
 //}
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Numerics;
+using IGE.Utils;
+
+public class PlayerInteraction : Entity
+{
+  bool seedObtained = false;
+  // Start is called before the first frame update
+  void Start()
+  {
+
+  }
+
+  // Update is called once per frame
+  void Update()
+  {
+    if(InternalCalls.IsKeyPressed(KeyCode.E))
+    {
+      FindEntityByTag("InteractPitPainting").SetActive(false);
+      FindEntityByTag("InteractSeedBag").SetActive(false);
+      seedObtained = true;
+      FindEntityByTag("InteractPot").SetActive(true); //If the InteractSeeds are children, they will be set active
+    }
+  }
+}

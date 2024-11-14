@@ -80,6 +80,9 @@ namespace IGE.Utils
     extern public static bool IsKeyHeld(KeyCode key);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool IsKeyPressed(KeyCode key);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static float GetAxis(string s);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -133,6 +136,10 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static uint FindChildByTag(uint EntityID, string s);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static uint FindParentByTag(string s);
+
     #endregion
 
 

@@ -170,6 +170,7 @@ void ScriptManager::AddInternalCalls()
   //ADD_CLASS_INTERNAL_CALL(IsKeyReleased, Input::InputManager::GetInstance());
   //ADD_CLASS_INTERNAL_CALL(IsKeyPressed, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(IsKeyHeld, Input::InputManager::GetInstance()); 
+  ADD_CLASS_INTERNAL_CALL(IsKeyPressed, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(GetInputString, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(AnyKeyDown, Input::InputManager::GetInstance());
   ADD_INTERNAL_CALL(GetMousePos);
@@ -904,8 +905,26 @@ ECS::Entity::EntityID Mono::FindChildByTag(ECS::Entity::EntityID entity, MonoStr
           return e.GetRawEnttEntityID();
     }
   }
+  Debug::DebugLogger::GetInstance().LogError("You are trying to find a child entity with an invalid name");
   return static_cast<ECS::Entity::EntityID>(std::numeric_limits<std::uint32_t>::max());
 }
+
+
+ECS::Entity::EntityID Mono::FindParentByTag(MonoString* s)
+{
+  std::string msg{ MonoStringToSTD(s) };
+  for (ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntities())
+  {
+    if (e.GetTag() == msg)
+      return e.GetRawEnttEntityID();
+  }
+  Debug::DebugLogger::GetInstance().LogError("You are trying to find a parent entity with an invalid name");
+  return static_cast<ECS::Entity::EntityID>(std::numeric_limits<std::uint32_t>::max());
+}
+
+
+
+
 
 void Mono::DestroyEntity(ECS::Entity::EntityID entity)
 {
@@ -951,6 +970,10 @@ void Mono::SetActive(ECS::Entity::EntityID entity, bool b)
   if (ECS::Entity(entity))
   {
     ECS::Entity(entity).SetIsActive(b);
+    for (ECS::Entity e : ECS::EntityManager::GetInstance().GetChildEntity(ECS::Entity(entity)))
+    {
+      SetActive(e.GetRawEnttEntityID(), b);
+    }
   }
   else
     Debug::DebugLogger::GetInstance().LogError("You r trying to set active on an invalid entity");
