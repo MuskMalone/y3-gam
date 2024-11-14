@@ -79,6 +79,7 @@ using IGE.Utils;
 public class PlayerInteraction : Entity
 {
   bool seedObtained = false;
+  bool gameComplete = false;
   public float RayFromPlayerCameraLength;
 
   // Start is called before the first frame update
@@ -97,21 +98,34 @@ public class PlayerInteraction : Entity
     uint rayHitID = InternalCalls.Raycast(rayOrigin, rayEnd);
     //Console.WriteLine(InternalCalls.GetTagFromEntityID(rayHitID));
     
-    if (InternalCalls.GetTagFromEntityID(rayHitID) == "InteractSeedBag")
+    if (InternalCalls.GetTagFromEntityID(rayHitID) == "InteractSeedBag" && !gameComplete)
     {
       FindEntityByTag("PickUpSeedText").SetActive(true);
+        if (InternalCalls.IsKeyPressed(KeyCode.E))
+        {
+            //FindEntityByTag("InteractPitPainting").SetActive(false);
+            FindEntityByTag("InteractSeedBag").SetActive(false);
+            seedObtained = true;
+
+        }
     }
     else
     {
       FindEntityByTag("PickUpSeedText").SetActive(false);
     }
 
-    if (InternalCalls.IsKeyPressed(KeyCode.E))
-    {
-      FindEntityByTag("InteractPitPainting").SetActive(false);
-      FindEntityByTag("InteractSeedBag").SetActive(false);
-      seedObtained = true;
-      FindEntityByTag("InteractPot").SetActive(true); //If the InteractSeeds are children, they will be set active
+    if (InternalCalls.GetTagFromEntityID(rayHitID) == "InteractPot" && seedObtained && !gameComplete) {
+        Debug.Log("Hello");
+        FindEntityByTag("PlantSeedText").SetActive(true);
+        if (InternalCalls.IsKeyPressed(KeyCode.E))
+        {
+            FindEntityByTag("InteractPot").SetActive(true); //If the InteractSeeds are children, they will be set active
+            gameComplete = true;
+        }
+    }
+    else 
+    { 
+        FindEntityByTag("PlantSeedText").SetActive(false);
     }
   }
 }

@@ -599,10 +599,11 @@ namespace IGE {
 				debugRayCast.emplace_back(std::make_tuple(origin, end, true));
 				if (hitBuffer.nbTouches < 2) return false;
 
-				result.entity = mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[1].actor));
-				result.distance = hitBuffer.touches[1].distance;
-				result.normal = ToGLMVec3(hitBuffer.touches[1].normal);
-				result.position = ToGLMVec3(hitBuffer.touches[1].position);
+				size_t idx{ 1 };
+				result.entity = mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[idx].actor));
+				result.distance = hitBuffer.touches[idx].distance;
+				result.normal = ToGLMVec3(hitBuffer.touches[idx].normal);
+				result.position = ToGLMVec3(hitBuffer.touches[idx].position);
 				
 				return true;
 			}
