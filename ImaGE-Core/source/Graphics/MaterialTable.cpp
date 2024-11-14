@@ -118,14 +118,16 @@ namespace Graphics {
 
             // Only bind the albedo map if it’s unique (not the default texture)
             if (albedoMap != Renderer::GetWhiteTexture()) {
-              int const texUnit{ static_cast<int>(IGE_REF(IGE::Assets::TextureAsset, albedoMap)->mTexture.Bind()) };
-              albedoTextureUnits[i] = texUnit;  // Assign this unique texture unit to the shader array
+                IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(albedoMap);
+                int const texUnit{ static_cast<int>(IGE_REF(IGE::Assets::TextureAsset, albedoMap)->mTexture.Bind()) };
+                albedoTextureUnits[i] = texUnit;  // Assign this unique texture unit to the shader array
             }
 
             // Only bind the normal map if it’s unique (not the default texture)
             if (normalMap != Renderer::GetWhiteTexture()) { // @TODO Change to normal Tex
-              int const texUnit{ static_cast<int>(IGE_REF(IGE::Assets::TextureAsset, normalMap)->mTexture.Bind()) };
-              normalTextureUnits[i] = texUnit; 
+                IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(normalMap);
+                int const texUnit{ static_cast<int>(IGE_REF(IGE::Assets::TextureAsset, normalMap)->mTexture.Bind()) };
+                normalTextureUnits[i] = texUnit; 
             }
         }
 
