@@ -31,7 +31,7 @@ namespace Graphics {
 		if (Scenes::SceneManager::GetInstance().GetSceneState() == Scenes::PREFAB_EDITOR) {
 			auto const& entities{ ECS::EntityManager::GetInstance().GetAllEntities() };
 			entityVector.reserve(entities.size());
-#ifdef INSERT_ACTIVE
+#ifdef INSERT_ACTIVEapp
 			std::copy_if(entities.begin(), entities.end(), std::back_inserter(entityVector),
 				[](ECS::Entity const& e) { return e.GetComponent<Component::Tag>().isActive; });
 #else
