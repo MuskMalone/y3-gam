@@ -1,0 +1,214 @@
+{
+    "Name": "Altar Stairs (3 Steps)",
+    "isActive": true,
+    "Components": [
+        {
+            "Tag": {
+                "tag": "Altar Stair Head",
+                "isActive": true
+            }
+        },
+        {
+            "Transform": {
+                "position": {
+                    "x": 5.934797286987305,
+                    "y": 9.291156768798829,
+                    "z": -32.802066802978519
+                },
+                "scale": {
+                    "x": 19.836265563964845,
+                    "y": 1.4900647401809693,
+                    "z": 1.0
+                },
+                "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "eulerAngles": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "worldPos": {
+                    "x": 5.934797286987305,
+                    "y": 9.291156768798829,
+                    "z": -32.802066802978519
+                },
+                "worldScale": {
+                    "x": 19.836265563964845,
+                    "y": 1.4900647401809693,
+                    "z": 1.0
+                },
+                "worldRot": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            }
+        },
+        {
+            "Layer": {
+                "layerName": "Default"
+            }
+        },
+        {
+            "Mesh": {
+                "meshName": "Cube",
+                "GUID": {
+                    "ID": 16789054977229740020
+                },
+                "submeshIdx": 0,
+                "isCustomMesh": false,
+                "castShadows": true,
+                "receiveShadows": true
+            }
+        }
+    ],
+    "SubData": [
+        {
+            "ID": 1,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Stair Part",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.3263969421386719,
+                            "z": 0.9773616790771484
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 5.934797286987305,
+                            "y": 8.804803848266602,
+                            "z": -31.824708938598634
+                        },
+                        "worldScale": {
+                            "x": 19.836265563964845,
+                            "y": 1.4900647401809693,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16789054977229740020
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Stair Part",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.6212692260742188,
+                            "z": 1.9742279052734376
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 5.934797286987305,
+                            "y": 8.365425109863282,
+                            "z": -30.827842712402345
+                        },
+                        "worldScale": {
+                            "x": 19.836265563964845,
+                            "y": 1.4900647401809693,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16789054977229740020
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        }
+    ]
+}
