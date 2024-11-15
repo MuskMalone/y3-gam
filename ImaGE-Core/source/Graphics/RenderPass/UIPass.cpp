@@ -20,7 +20,6 @@ namespace Graphics {
 		glm::mat4 viewProj{};
 		viewProj = cam.isEditor ? cam.viewProjMatrix : Renderer::mUICamera.GetViewProjMatrix();
 
-		// @TODO: TEMP, TO MERGE WITH XAVIER
 		shader->Use();
 		shader->SetUniform("u_ViewProjMtx", viewProj);
 
@@ -45,7 +44,7 @@ namespace Graphics {
 				return;
 			}
 
-			auto children{ entityMan.GetChildEntity(entity) }; //vector of UI element entity
+			std::vector<ECS::Entity> children{ entityMan.GetChildEntityRecursively(entity) };
 			auto const& xform = entity.GetComponent<Component::Transform>(); //canvas xform
 
 			// Calculate scale for the canvas based on the orthographic camera
@@ -122,6 +121,7 @@ namespace Graphics {
 
 		Renderer::RenderSceneEnd();
 
+		// @TODO: TEMP, TO MERGE WITH XAVIER
 		if (std::shared_ptr<Systems::TextSystem> textSys =
 			Systems::SystemManager::GetInstance().GetSystem<Systems::TextSystem>().lock()) {
 			textSys->RenderTextForAllEntities(viewProj, entities);
