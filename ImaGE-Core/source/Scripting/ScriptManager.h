@@ -118,6 +118,9 @@ namespace Mono
 		static bool IsMonoBehaviourclass(MonoClass* mc);
 
 
+		static void LinkAllScriptDataMember();
+
+
 		
 
 		/*!**********************************************************************

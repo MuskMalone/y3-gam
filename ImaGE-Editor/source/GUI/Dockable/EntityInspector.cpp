@@ -556,6 +556,15 @@ namespace GUI {
               modified = true;
             }
           }
+          else if (f.is_type<Mono::DataMemberInstance<std::string>>())
+          {
+            Mono::DataMemberInstance<std::string>& sfi = f.get_value<Mono::DataMemberInstance<std::string>>();
+            NextRowTable(sfi.mScriptField.mFieldName.c_str());
+            if (ImGui::InputText("##DataMemberString", &(sfi.mData), ImGuiInputTextFlags_EnterReturnsTrue)) {
+              mono_field_set_value(s.mClassInst, sfi.mScriptField.mClassField, Mono::STDToMonoString(sfi.mData));
+              modified = true;
+            }
+          }
           else if (f.is_type<Mono::DataMemberInstance<double>>())
           {
             Mono::DataMemberInstance<double>& sfi = f.get_value<Mono::DataMemberInstance<double>>();
@@ -596,7 +605,7 @@ namespace GUI {
           else if (f.is_type<Mono::DataMemberInstance<Mono::ScriptInstance>>())
           {
             Mono::DataMemberInstance<Mono::ScriptInstance>& sfi = f.get_value<Mono::DataMemberInstance<Mono::ScriptInstance>>();
-            if (sfi.mScriptField.mFieldType == Mono::ScriptFieldType::ENTITY || sfi.mScriptField.mFieldType == Mono::ScriptFieldType::INSIDE)
+            if (sfi.mScriptField.mFieldType == Mono::ScriptFieldType::ENTITY)  // Special case if the script is just the base entity Class
             {
               NextRowTable(sfi.mScriptField.mFieldName.c_str());
 
@@ -647,7 +656,57 @@ namespace GUI {
                 ImGui::EndCombo();
               }
             }
+            
+            else  //If the script inherits from the entity Class
+            {
+              NextRowTable(sfi.mScriptField.mFieldName.c_str());
 
+              //Set the default display value.
+              ECS::Entity::EntityID currID = entt::null;
+              std::string msg{ "No Entity Attached" };
+              if (sfi.mData.mClassInst && ECS::EntityManager::GetInstance().IsValidEntity(static_cast<ECS::Entity::EntityID>(sfi.mData.mEntityID)))
+              {
+                msg = ECS::Entity(sfi.mData.mEntityID).GetTag();
+                currID = sfi.mData.mEntityID;
+              }
+              std::vector<std::pair<ECS::Entity,Mono::ScriptInstance*>> allEntitesWithScript{};
+              for (ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Script>())
+              {
+                for (Mono::ScriptInstance& si : e.GetComponent<Component::Script>().mScriptList)
+                {
+                  if (si.mClassInst && si.mScriptName == Mono::ScriptManager::GetInstance().mRevClassMap[sfi.mScriptField.mFieldType])
+                    allEntitesWithScript.push_back(std::make_pair(e, &si));
+                }
+              }
+
+
+
+              if (ImGui::BeginCombo("##", msg.c_str()))
+              {
+                for (const std::pair<ECS::Entity, Mono::ScriptInstance*> e : allEntitesWithScript)
+                {
+                  if (e.first.GetRawEnttEntityID() != currID)
+                  {
+                    bool is_selected = (e.first.GetRawEnttEntityID() == currID);
+                    if (ImGui::Selectable(e.first.GetTag().c_str(), is_selected))
+                    {
+                      if (e.first.GetRawEnttEntityID() != currID) {
+                        sfi.mData = *(e.second);
+                        s.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
+                      }
+                      modified = true;
+                      break;
+                    }
+                    if (is_selected)
+                    {
+                      ImGui::SetItemDefaultFocus();
+                    }
+                  }
+
+                }
+                ImGui::EndCombo();
+              }
+            }
           }
 
           isPrevVec3 = f.is_type<Mono::DataMemberInstance<glm::dvec3>>()

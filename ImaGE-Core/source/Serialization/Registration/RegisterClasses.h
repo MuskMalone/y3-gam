@@ -197,6 +197,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   {
     using T = Mono::ScriptInstance;
     rttr::registration::class_<T>("ScriptInstance")
+      .property(JSON_SCRIPT_ENTITY_ID_KEY, &T::mEntityID)
       .property(JSON_SCRIPT_NAME_KEY, &T::mScriptName)
       .property(JSON_SCRIPT_FIELD_LIST_KEY, &T::mScriptFieldInstList);
   }

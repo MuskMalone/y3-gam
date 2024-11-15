@@ -23,20 +23,17 @@ namespace Mono {
 	enum ScriptFieldType
 	{
 		S_VOID = 0,
+		UINT,
 		BOOL,
-		CHAR,
 		SHORT,
 		INT,
 		FLOAT,
 		DOUBLE,
 		LONG,
 		USHORT,
-		UINT,
 		ULONG,
 		STRING,
-		VEC2,
 		VEC3,
-		DVEC2,
 		DVEC3,
 		INT_ARR,
 		FLOAT_ARR,
@@ -44,6 +41,7 @@ namespace Mono {
 		STRING_ARR,
 		UINT_ARR,
 		ENTITY,
+		TEST,
 		INSIDE,
 		INSIDEB
 	};

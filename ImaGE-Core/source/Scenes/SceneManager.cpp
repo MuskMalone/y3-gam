@@ -80,6 +80,7 @@ namespace Scenes
 
   void SceneManager::InitScene() {
     Reflection::ObjectFactory::GetInstance().InitScene();
+    Mono::ScriptManager::GetInstance().LinkAllScriptDataMember();
   }
 
   void SceneManager::ClearScene() {

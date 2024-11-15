@@ -53,7 +53,6 @@ namespace Mono
   std::unordered_map<std::string, ScriptFieldType> ScriptManager::mScriptFieldTypeMap
   {
     { "System.Boolean", ScriptFieldType::BOOL },
-    { "System.Char",    ScriptFieldType::CHAR },
     { "System.Int16",   ScriptFieldType::SHORT },
     { "System.Int32",   ScriptFieldType::INT },
     { "System.Single",  ScriptFieldType::FLOAT },
@@ -63,14 +62,13 @@ namespace Mono
     { "System.UInt32",  ScriptFieldType::UINT },
     { "System.UInt64",  ScriptFieldType::ULONG },
     { "System.String",  ScriptFieldType::STRING },
-    { "IGE.Utils.Vec2<System.Single>", ScriptFieldType::VEC2 },
-    { "IGE.Utils.Vec3<System.Single>", ScriptFieldType::VEC3 },
-    { "IGE.Utils.Vec2<System.Double>", ScriptFieldType::DVEC2 },
+    { "System.Numerics.Vector3", ScriptFieldType::VEC3 },
     { "IGE.Utils.Vec3<System.Double>", ScriptFieldType::DVEC3 },
     { "System.Int32[]", ScriptFieldType::INT_ARR },
     { "System.String[]",ScriptFieldType::STRING_ARR},
     { "Entity",ScriptFieldType::ENTITY},
     { "Inside",ScriptFieldType::INSIDE},
+    { "Test",ScriptFieldType::TEST},
     { "InsideB",ScriptFieldType::INSIDEB}
   };
 }
@@ -398,6 +396,36 @@ ScriptFieldType ScriptManager::MonoTypeToScriptFieldType(MonoType* monoType)
   }
 
   return it->second;
+}
+
+void ScriptManager::LinkAllScriptDataMember()
+{
+  for (ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Script>())
+  {
+    for (ScriptInstance& si : e.GetComponent<Component::Script>().mScriptList)
+    {
+      for (rttr::variant& i : si.mScriptFieldInstList)
+      {
+        if (i.is_type<Mono::DataMemberInstance<ScriptInstance>>())
+        {
+          Mono::DataMemberInstance<ScriptInstance>& sfi = i.get_value<Mono::DataMemberInstance<ScriptInstance>>();
+          if (sfi.mData.mClassInst && ECS::EntityManager::GetInstance().IsValidEntity(sfi.mData.mEntityID) && ECS::Entity(sfi.mData.mEntityID).HasComponent<Component::Script>())
+          {
+            for (ScriptInstance& sij : ECS::Entity(sfi.mData.mEntityID).GetComponent<Component::Script>().mScriptList)
+            {
+              if (sij.mScriptName == sfi.mData.mScriptName && sij.mClassInst)
+              {
+                sfi.mData = sij;
+                si.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
+                break;
+              }
+              
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 

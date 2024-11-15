@@ -19,6 +19,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -31,15 +32,15 @@ using IGE.Utils;
 public class Test : Entity
 {
 
-    private float speed = 20f;
+  //  private float speed = 20f;
 
-  // VARIABLES HERE SHOULD ONLY BE MODFIED THROUGH EDITOR
-    public Entity testEnt;
+  //// VARIABLES HERE SHOULD ONLY BE MODFIED THROUGH EDITOR
+  //  public Entity testEnt;
 
   public int TestInt = 10;
-  public float TestFloat = 22f;
-  public double TestDouble = 30.0;
-  public Vec3<double> dVec3 = new Vec3<double>(336.318f, 100f, 0f);
+  //public float TestFloat = 22f;
+  //public double TestDouble = 30.0;
+  //public Vector3 dVec3 = new Vector3(336.318f, 100f, 0f);
 
 
 
@@ -78,6 +79,8 @@ public class Test : Entity
     ************************************************************************/
     public void Update()
     {
+
+    Console.WriteLine("TEST INT:" + TestInt);
       //  Console.WriteLine(testEnt.mEntityID.ToString());
       // Console.WriteLine("Hit\n");
       //if (testEnt != null)
@@ -88,24 +91,24 @@ public class Test : Entity
       //GetComponent<Transform>().Position = new Vec3<float>(1,1,2);
       //  Console.WriteLine(Position.X + "," + Position.Y + "," + Position.Z);
 
-      //  bool isChanged = false;
+    //  bool isChanged = false;
 
-      //  currTrans.Y += (InternalCalls.IsKeyTriggered(KeyCode.W) || InternalCalls.IsKeyHeld(KeyCode.W)) ? (speed * (float)dt) : 0;
-      //  currTrans.X -= (InternalCalls.IsKeyTriggered(KeyCode.A) || InternalCalls.IsKeyHeld(KeyCode.A)) ? (speed * (float)dt) : 0;
-      //  currTrans.Y -= (InternalCalls.IsKeyTriggered(KeyCode.S) || InternalCalls.IsKeyHeld(KeyCode.S)) ? (speed * (float)dt) : 0;
-      //  currTrans.X += (InternalCalls.IsKeyTriggered(KeyCode.D) || InternalCalls.IsKeyHeld(KeyCode.D)) ? (speed * (float)dt) : 0;
+    //  currTrans.Y += (InternalCalls.IsKeyTriggered(KeyCode.W) || InternalCalls.IsKeyHeld(KeyCode.W)) ? (speed * (float)dt) : 0;
+    //  currTrans.X -= (InternalCalls.IsKeyTriggered(KeyCode.A) || InternalCalls.IsKeyHeld(KeyCode.A)) ? (speed * (float)dt) : 0;
+    //  currTrans.Y -= (InternalCalls.IsKeyTriggered(KeyCode.S) || InternalCalls.IsKeyHeld(KeyCode.S)) ? (speed * (float)dt) : 0;
+    //  currTrans.X += (InternalCalls.IsKeyTriggered(KeyCode.D) || InternalCalls.IsKeyHeld(KeyCode.D)) ? (speed * (float)dt) : 0;
 
 
-      //  isChanged =
-      //      (InternalCalls.IsKeyTriggered(KeyCode.W) || InternalCalls.IsKeyHeld(KeyCode.W)) ||
-      //      (InternalCalls.IsKeyTriggered(KeyCode.A) || InternalCalls.IsKeyHeld(KeyCode.A)) ||
-      //      (InternalCalls.IsKeyTriggered(KeyCode.S) || InternalCalls.IsKeyHeld(KeyCode.S)) ||
-      //      (InternalCalls.IsKeyTriggered(KeyCode.D) || InternalCalls.IsKeyHeld(KeyCode.D));
+    //  isChanged =
+    //      (InternalCalls.IsKeyTriggered(KeyCode.W) || InternalCalls.IsKeyHeld(KeyCode.W)) ||
+    //      (InternalCalls.IsKeyTriggered(KeyCode.A) || InternalCalls.IsKeyHeld(KeyCode.A)) ||
+    //      (InternalCalls.IsKeyTriggered(KeyCode.S) || InternalCalls.IsKeyHeld(KeyCode.S)) ||
+    //      (InternalCalls.IsKeyTriggered(KeyCode.D) || InternalCalls.IsKeyHeld(KeyCode.D));
 
-      //if(isChanged)
-      //  {
-      //    InternalCalls.SetPosition(mEntityID, ref currTrans);
-      //  }
+    //if(isChanged)
+    //  {
+    //    InternalCalls.SetPosition(mEntityID, ref currTrans);
+    //  }
 
 
 

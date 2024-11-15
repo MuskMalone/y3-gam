@@ -49,7 +49,7 @@ public class  PlayerMove : Entity
   public bool canLook = true;
   public bool canMove = true;
 
-  public Vector3 velocity = new Vector3();
+  //public Vector3 velocity = new Vector3();
   bool isGrounded = true;
   public PlayerMove() : base()
   {
@@ -72,6 +72,7 @@ public class  PlayerMove : Entity
       //Console.WriteLine(GetComponent<Transform>().GetChild(0).GetChild(0).worldPosition);
     }
 
+
     if(canLook) 
       ProcessLook();
     if(canMove)
@@ -85,10 +86,10 @@ public class  PlayerMove : Entity
 
       isGrounded = InternalCalls.IsGrounded(mEntityID);
 
-      if (isGrounded && velocity.Y < 0)
-      {
-        velocity.Y = -2f;
-      }
+      //if (isGrounded && velocity.Y < 0)
+      //{
+      //  velocity.Y = -2f;
+      //}
 
 
       float x = Input.GetAxis("Horizontal");

@@ -804,6 +804,7 @@ namespace Serialization
 
       sfInstList.emplace_back(std::move(scriptFIList));
     }
+    scriptInst.mEntityID = static_cast<ECS::Entity::EntityID>(jsonVal[JSON_SCRIPT_ENTITY_ID_KEY].GetUint());
     scriptInst.SetAllFields(sfInstList);
 
     return scriptInst;
