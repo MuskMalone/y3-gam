@@ -335,7 +335,13 @@ namespace Mono
 
 		static ECS::Entity::EntityID FindChildByTag(ECS::Entity::EntityID entity, MonoString* s);
 
+		static ECS::Entity::EntityID FindParentByTag(MonoString* s);
+
 		static MonoArray* GetAllChildren(ECS::Entity::EntityID entity);
+
+		static glm::vec3 GetMainCameraPosition(ECS::Entity::EntityID cameraEntity);
+
+		static glm::vec3 GetMainCameraDirection(ECS::Entity::EntityID cameraEntity);
 		
 		static MonoString* GetText(ECS::Entity::EntityID entity);
 

@@ -170,6 +170,7 @@ void ScriptManager::AddInternalCalls()
   //ADD_CLASS_INTERNAL_CALL(IsKeyReleased, Input::InputManager::GetInstance());
   //ADD_CLASS_INTERNAL_CALL(IsKeyPressed, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(IsKeyHeld, Input::InputManager::GetInstance()); 
+  ADD_CLASS_INTERNAL_CALL(IsKeyPressed, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(GetInputString, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(AnyKeyDown, Input::InputManager::GetInstance());
   ADD_INTERNAL_CALL(GetMousePos);
@@ -212,7 +213,10 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(DestroyScript);
   ADD_INTERNAL_CALL(SetActive);
   ADD_INTERNAL_CALL(FindChildByTag);
+  ADD_INTERNAL_CALL(FindParentByTag);
   ADD_INTERNAL_CALL(GetAllChildren);
+  ADD_INTERNAL_CALL(GetMainCameraPosition);
+  ADD_INTERNAL_CALL(GetMainCameraDirection);
   ADD_INTERNAL_CALL(GetText);
   ADD_INTERNAL_CALL(GetImageColor);
   ADD_INTERNAL_CALL(SetImageColor);
@@ -896,7 +900,7 @@ MonoObject* Mono::FindScript(MonoString* s)
 ECS::Entity::EntityID Mono::FindChildByTag(ECS::Entity::EntityID entity, MonoString* s)
 {
   std::string msg{ MonoStringToSTD(s) };
-  if (ECS::Entity(entity))
+  if (ECS::Entity(entity) && ECS::EntityManager::GetInstance().HasChild(entity))
   {
     for (ECS::Entity e : ECS::EntityManager::GetInstance().GetChildEntity(ECS::Entity(entity)))
      {
@@ -904,7 +908,12 @@ ECS::Entity::EntityID Mono::FindChildByTag(ECS::Entity::EntityID entity, MonoStr
           return e.GetRawEnttEntityID();
     }
   }
+  Debug::DebugLogger::GetInstance().LogError("You are trying to find a child entity with an invalid name");
   return static_cast<ECS::Entity::EntityID>(std::numeric_limits<std::uint32_t>::max());
+}
+
+ECS::Entity::EntityID Mono::FindParentByTag(MonoString* s) {
+  return ECS::Entity::EntityID();
 }
 
 void Mono::DestroyEntity(ECS::Entity::EntityID entity)
@@ -951,6 +960,12 @@ void Mono::SetActive(ECS::Entity::EntityID entity, bool b)
   if (ECS::Entity(entity))
   {
     ECS::Entity(entity).SetIsActive(b);
+
+    if (ECS::EntityManager::GetInstance().HasChild(entity)) {
+      for (ECS::Entity e : ECS::EntityManager::GetInstance().GetChildEntity(ECS::Entity(entity))) {
+        SetActive(e.GetRawEnttEntityID(), b);
+      }
+    }
   }
   else
     Debug::DebugLogger::GetInstance().LogError("You r trying to set active on an invalid entity");
@@ -975,6 +990,28 @@ MonoArray* Mono::GetAllChildren(ECS::Entity::EntityID entity)
     mono_array_set(newArray, ECS::Entity::EntityID, i, allChildren[i]);
   }
   return newArray;
+}
+
+glm::vec3 Mono::GetMainCameraPosition(ECS::Entity::EntityID cameraEntity) {
+  if (ECS::Entity(cameraEntity) && ECS::Entity{ cameraEntity }.HasComponent<Component::Camera>()) {
+    return ECS::Entity{ cameraEntity }.GetComponent<Component::Camera>().position;
+  }
+
+  else {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to get the camera position of a non-camera Entity!");
+  }
+  return glm::vec3();
+}
+
+glm::vec3 Mono::GetMainCameraDirection(ECS::Entity::EntityID cameraEntity) {
+  if (ECS::Entity(cameraEntity) && ECS::Entity{ cameraEntity }.HasComponent<Component::Camera>()) {
+    return glm::normalize(ECS::Entity{ cameraEntity }.GetComponent<Component::Camera>().rotation * glm::vec3(0.0f, 0.0f, -1.0f));
+  }
+
+  else {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to get the camera position of a non-camera Entity!");
+  }
+  return glm::vec3();
 }
 
 

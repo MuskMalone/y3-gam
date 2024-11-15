@@ -38,15 +38,14 @@ namespace Graphics {
         // skip if no mesh or if it doesn't cast shadows
         if (!mesh.meshSource.IsValid() || !mesh.castShadows) { continue; }
 
-        Graphics::Renderer::SubmitSubmeshInstance(
-          entity.GetComponent<Component::Mesh>().meshSource, 0,
-          entity.GetComponent<Component::Transform>().worldMtx,
-          Color::COLOR_WHITE,
-          entity.GetEntityID(),
-          0
-        );
-      }
-      Renderer::RenderSubmeshInstances();
+            Graphics::Renderer::SubmitInstance(
+                entity.GetComponent<Component::Mesh>().meshSource,
+                entity.GetComponent<Component::Transform>().worldMtx,
+                Color::COLOR_WHITE,
+                entity.GetEntityID()
+            );
+        }
+        Renderer::RenderSubmeshInstances();
 
       EndRender();
     }

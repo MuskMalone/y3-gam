@@ -856,16 +856,6 @@ namespace Graphics {
 		mData.instanceBufferDataMap[meshSource].push_back(instance);
 	}
 
-	void Renderer::SubmitSubmeshInstance(IGE::Assets::GUID meshSource, size_t submeshIndex, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, int matID) {
-		InstanceData instance{};
-		instance.modelMatrix = worldMtx;
-		instance.entityID = (id != INVALID_ENTITY_ID) ? id : -1;
-		instance.materialIdx = matID;
-
-		// Use the composite key (meshSource, submeshIndex) to store instance data
-		mData.instanceSubmeshBufferDataMap[{meshSource, submeshIndex}].push_back(instance);
-	}
-
 	void Renderer::RenderInstances() {
 		for (auto& [meshSrc, instances] : mData.instanceBufferDataMap) {
 			if (instances.empty()) continue;
@@ -891,83 +881,42 @@ namespace Graphics {
 
 	void Renderer::RenderSubmeshInstances() {
 		
-		for (auto& [meshSubmeshKey, instances] : mData.instanceSubmeshBufferDataMap) {
+		for (auto& [meshSrc, instances] : mData.instanceBufferDataMap) {
 			if (instances.empty()) continue;
 
-			auto const& [meshSourceGUID, submeshIndex] = meshSubmeshKey;
-			auto const& meshSource = IGE_REF(IGE::Assets::ModelAsset, meshSourceGUID)->mMeshSource;
-
+			auto const& meshSource = IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource;
 			auto const& submeshes = meshSource.GetSubmeshes();
 			auto& vao = meshSource.GetVertexArray();
 
-			// Check if submeshes are present
-			if (submeshes.empty()) {
-				// Render the entire meshSource as one big mesh
-				unsigned int dataSize = static_cast<unsigned int>(instances.size() * sizeof(InstanceData));
-				auto instanceBuffer = GetSubmeshInstanceBuffer({ meshSourceGUID, 0 }); // Use default submesh index 0
+			// Ensure the instance buffer exists for the mesh source
+			auto instanceBuffer = GetInstanceBuffer(meshSrc);
 
-				// Set instance data into the buffer
-				instanceBuffer->SetData(instances.data(), dataSize);
+			// Update the instance buffer with the latest data
+			instanceBuffer->SetData(instances.data(), instances.size() * sizeof(InstanceData));
 
-				// Draw the entire mesh using the total index count
-				RenderAPI::DrawIndicesInstanced(vao, meshSource.GetIndices().size(), static_cast<unsigned>(instances.size()));
-			}
-			else {
-				// Render individual submesh
-				
+			// Iterate through submeshes for rendering
+			//unsigned int baseInstance = 0;
+			for (size_t submeshIndex = 0; submeshIndex < submeshes.size(); ++submeshIndex) {
 				auto const& submesh = submeshes[submeshIndex];
-				unsigned int dataSize = static_cast<unsigned int>(instances.size() * sizeof(InstanceData));
-				auto instanceBuffer = GetSubmeshInstanceBuffer({ meshSourceGUID, submeshIndex });
 
-				// Set instance data into the buffer
-				instanceBuffer->SetData(instances.data(), dataSize);
-
-				// Draw the specific submesh
-				RenderAPI::DrawIndicesInstancedBaseVertex(
+				// Use glDrawElementsInstancedBaseVertexBaseInstance for rendering
+				RenderAPI::DrawIndicesInstancedBaseVertexBaseInstance(
 					vao,
-					submesh.idxCount,
-					static_cast<unsigned>(instances.size()), // Instance count
-					submesh.baseIdx,
-					submesh.baseVtx,
-					submeshes.size() * static_cast<unsigned>(instances.size())
+					submesh.idxCount,           // Index count for this submesh
+					static_cast<unsigned>(instances.size()), // Total instances
+					submesh.baseIdx,            // Index offset
+					submesh.baseVtx,            // Base vertex
+					0                // Offset in the instance buffer
 				);
-				
+
+				// Increment baseInstance for the next submesh
+				//baseInstance += instances.size();
 			}
 		}
 
 		// Clear instances after rendering
-		mData.instanceSubmeshBufferDataMap.clear();
+		mData.instanceBufferDataMap.clear();
 	}
-
-
-	//void Renderer::RenderSubmeshInstances() {
-	//	for (auto& [meshSrc, instances] : mData.instanceBufferDataMap) {
-	//		if (instances.empty()) continue;
-
-	//		auto instanceBuffer = GetInstanceBuffer(meshSrc);
-
-	//		// Set instance data into the buffer
-	//		unsigned int dataSize = static_cast<unsigned int>(instances.size() * sizeof(InstanceData));
-	//		instanceBuffer->SetData(instances.data(), dataSize);
-
-	//		// Get the VAO for the entire mesh
-	//		auto& vao = IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource.GetVertexArray();
-
-	//		// Iterate over each submesh in the MeshSource
-	//		for (const auto& submesh : IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource.GetSubmeshes()) {
-	//			// Render each submesh individually
-	//			RenderAPI::DrawIndicesInstancedBaseVertex(
-	//				vao,
-	//				submesh.idxCount,                 // Number of indices in this submesh
-	//				static_cast<unsigned>(instances.size()),  // Instance count
-	//				submesh.baseIdx,                  // Index offset within the element buffer
-	//				submesh.baseVtx                   // Vertex offset within the vertex buffer
-	//			);
-	//		}
-	//	}
-
-	//	mData.instanceBufferDataMap.clear();
-	//}
 
 	void Renderer::FlushBatch() {
 		if (mData.quadIdxCount) {

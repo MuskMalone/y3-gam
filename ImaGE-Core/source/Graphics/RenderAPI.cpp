@@ -25,28 +25,19 @@ namespace Graphics {
 		GLCALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 	}
 
-	void RenderAPI::DrawIndicesInstancedBaseVertex(std::shared_ptr<VertexArray> const& vao, uint32_t idxCount, uint32_t instanceCount, uint32_t indexOffset, int baseVertex, int baseInstance){
+	void RenderAPI::DrawIndicesInstancedBaseVertexBaseInstance(std::shared_ptr<VertexArray> const& vao, uint32_t idxCount, uint32_t instanceCount, uint32_t indexOffset, int baseVertex, int baseInstance){
 		vao->Bind();
 		int32_t count = idxCount ? idxCount : vao->GetElementBuffer()->GetCount();
-		//GLCALL(glDrawElementsInstancedBaseVertexBaseInstance(
-		//	GL_TRIANGLES,                    // mode: specifies what kind of primitives to render
-		//	count,                           // count: number of elements to render
-		//	GL_UNSIGNED_INT,                 // type: specifies the type of values in the indices array (unsigned int here)
-		//	reinterpret_cast<void*>(indexOffset * sizeof(uint32_t)),  // indices: offset to the first index of the submesh in EBO
-		//	instanceCount,                   // primcount: number of instances of geometry to render
-		//	baseVertex,
-		//	baseInstance// basevertex: constant added to each index before fetching vertex
-		//));
-
-		GLCALL(glDrawElementsInstancedBaseVertex(
+		GLCALL(glDrawElementsInstancedBaseVertexBaseInstance(
 			GL_TRIANGLES,                    // mode: specifies what kind of primitives to render
 			count,                           // count: number of elements to render
 			GL_UNSIGNED_INT,                 // type: specifies the type of values in the indices array (unsigned int here)
 			reinterpret_cast<void*>(indexOffset * sizeof(uint32_t)),  // indices: offset to the first index of the submesh in EBO
 			instanceCount,                   // primcount: number of instances of geometry to render
-			baseVertex
-			//baseInstance// basevertex: constant added to each index before fetching vertex
+			baseVertex,
+			baseInstance// basevertex: constant added to each index before fetching vertex
 		));
+
 	}
 
 

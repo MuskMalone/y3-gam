@@ -60,8 +60,14 @@ namespace Graphics {
 			for (ECS::Entity& uiEntity : children) {
 				auto& uiXform = uiEntity.GetComponent<Component::Transform>(); //ui element transform in screen space
 
+				// Since you are iterating through the child entities, you have to check this again
+				if (!uiEntity.IsActive()) {
+					continue;
+				}
+
 				if (uiEntity.HasComponent<Component::Text>()) {
 					continue;
+
 					/*
 					auto& textComp = uiEntity.GetComponent<Component::Text>();
 
