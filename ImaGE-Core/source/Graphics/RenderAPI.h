@@ -19,7 +19,7 @@ namespace Graphics{
 		static void SetClearColor(const glm::vec4& color);
 		static void Clear();
 
-		static void DrawIndicesInstancedBaseVertex(std::shared_ptr<VertexArray> const& vao,
+		static void DrawIndicesInstancedBaseVertexBaseInstance(std::shared_ptr<VertexArray> const& vao,
 												   uint32_t idxCount,
 												   uint32_t instanceCount,
 												   uint32_t indexOffset,
