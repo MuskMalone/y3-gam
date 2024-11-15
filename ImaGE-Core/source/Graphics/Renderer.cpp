@@ -373,6 +373,10 @@ namespace Graphics {
 		mUICamera.aspectRatio = 16.0f / 9.0f;              // Adjust based on screen dimensions
 		mUICamera.nearClip = -100.0f;
 		mUICamera.farClip = 100.0f;
+		mUICamera.left =  - mUICamera.aspectRatio * UI_SCALING_FACTOR<float>;
+		mUICamera.right = mUICamera.aspectRatio * UI_SCALING_FACTOR<float>;
+		mUICamera.bottom = -10.0f;
+		mUICamera.top = 10.0f;
 	}
 
 	void Renderer::Shutdown() {

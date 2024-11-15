@@ -33,7 +33,9 @@ namespace Graphics {
 
 		for (ECS::Entity const& entity : entities) {
 			if (!entity.HasComponent<Component::Canvas>()) { continue; } //if not canvas skip
-
+			auto const& canvas{ entity.GetComponent<Component::Canvas>() };
+			if (!entity.IsActive()) continue;
+			
 			//canvas found
 
 			ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
@@ -47,7 +49,7 @@ namespace Graphics {
 
 			auto children{ entityMan.GetChildEntity(entity) }; //vector of UI element entity
 			auto const& xform = entity.GetComponent<Component::Transform>(); //canvas xform
-
+			
 			// Sort children by Z index (pos.z of Transform component)
 			std::sort(children.begin(), children.end(), [](ECS::Entity const& a, ECS::Entity const& b) {
 				auto& xformA = a.GetComponent<Component::Transform>();
@@ -55,13 +57,16 @@ namespace Graphics {
 				return xformA.position.z < xformB.position.z; // Ascending order
 				});
 
-			// Calculate scale for the canvas based on the orthographic camera
-			float orthoWidth = 2.0f * cam.aspectRatio * UI_SCALING_FACTOR<float>;
-			float orthoHeight = 2.0f * cam.aspectRatio * UI_SCALING_FACTOR<float>;
+			// Calculate scale for the canvas based on ortho cam
+			glm::vec4 bounds = Renderer::mUICamera.GetOrthographicBounds();
+			float orthoWidth = bounds.y - bounds.x; // right - left
+			float orthoHeight = bounds.w - bounds.z; // top - bottom
+			//float orthoWidth = 2.0f * cam.aspectRatio * UI_SCALING_FACTOR<float>;
+			//float orthoHeight = 2.0f * cam.aspectRatio * UI_SCALING_FACTOR<float>;
 			glm::vec2 canvasScale = glm::vec2{ orthoWidth, orthoHeight };
 
 			if (cam.isEditor) {
-				Graphics::Renderer::DrawRect(xform.position, glm::vec2{ canvasScale }, xform.rotation, Color::COLOR_WHITE); //canvas drawn only in editor
+				Graphics::Renderer::DrawRect(xform.position, canvasScale, xform.rotation, Color::COLOR_WHITE); //canvas drawn only in editor
 			}
 
 			for (ECS::Entity& uiEntity : children) {
