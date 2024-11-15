@@ -20,19 +20,40 @@ namespace Graphics {
 		glm::mat4 viewProj{};
 		viewProj = cam.isEditor ? cam.viewProjMatrix : Renderer::mUICamera.GetViewProjMatrix();
 
-		shader->Use();
-		shader->SetUniform("u_ViewProjMtx", viewProj);
+		// @TODO: TEMP, TO MERGE WITH XAVIER
+		//shader->Use();
+		//shader->SetUniform("u_ViewProjMtx", viewProj);
 
 		Renderer::RenderSceneBegin(viewProj);
 
 		//temp physics debug hack
-		if(cam.isEditor)
+		if (cam.isEditor) 
 			IGE::Physics::PhysicsSystem::GetInstance()->Debug();
 
+		auto& ecsMan{ ECS::EntityManager::GetInstance() };
+		if (cam.isEditor) {
+			auto const& cameras = ecsMan.GetAllEntitiesWithComponents<Component::Camera>();
+			for (auto const& camera : cameras) {
+				if (!ECS::Entity{ camera }.IsActive()) continue;
+				auto const& camComp = ECS::Entity{ camera }.GetComponent<Component::Camera>();
+				auto const& xform = ECS::Entity{ camera }.GetComponent<Component::Transform>();
+				Renderer::DrawCameraFrustrum(camComp, Color::COLOR_CYAN);
+			}
+			//auto const& lights = ecsMan.GetAllEntitiesWithComponents<Component::Light, Component::Transform>();
+			//for (auto const& light : lights) {
+			//	if (!ECS::Entity{ light }.IsActive()) continue;
+			//	auto const& xform = ECS::Entity{ light }.GetComponent<Component::Transform>();
+			//	auto const& lightComp = ECS::Entity{ light }.GetComponent<Component::Light>();
+			//	Renderer::DrawLightGizmo(lightComp, xform);
+			//}
+		}
 
 		for (ECS::Entity const& entity : entities) {
-			if (!entity.HasComponent<Component::Canvas>()) { continue; } //if not canvas skip
 
+			if (!entity.HasComponent<Component::Canvas>()) { continue; } //if not canvas skip
+			auto const& canvas{ entity.GetComponent<Component::Canvas>() };
+			if (!entity.IsActive()) continue;
+			
 			//canvas found
 
 			ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
@@ -46,14 +67,26 @@ namespace Graphics {
 
 			std::vector<ECS::Entity> children{ entityMan.GetChildEntityRecursively(entity) };
 			auto const& xform = entity.GetComponent<Component::Transform>(); //canvas xform
+			
+			// Sort children by Z index (pos.z of Transform component)
+			std::sort(children.begin(), children.end(), [](ECS::Entity const& a, ECS::Entity const& b) {
+				auto& xformA = a.GetComponent<Component::Transform>();
+				auto& xformB = b.GetComponent<Component::Transform>();
+				return xformA.position.z < xformB.position.z; // Ascending order
+				});
 
-			// Calculate scale for the canvas based on the orthographic camera
-			float orthoWidth = 2.0f * cam.aspectRatio * UI_SCALING_FACTOR<float>;
-			float orthoHeight = 2.0f * cam.aspectRatio * UI_SCALING_FACTOR<float>;
+			// Calculate scale for the canvas based on ortho cam
+			glm::vec4 bounds = Renderer::mUICamera.GetOrthographicBounds();
+			float orthoWidth = bounds.y - bounds.x; // right - left
+			float orthoHeight = bounds.w - bounds.z; // top - bottom
+			//float orthoWidth = 2.0f * cam.aspectRatio * UI_SCALING_FACTOR<float>;
+			//float orthoHeight = 2.0f * cam.aspectRatio * UI_SCALING_FACTOR<float>;
 			glm::vec2 canvasScale = glm::vec2{ orthoWidth, orthoHeight };
 
 			if (cam.isEditor) {
-				Graphics::Renderer::DrawRect(xform.position, glm::vec2{ canvasScale }, xform.rotation, Color::COLOR_WHITE); //canvas drawn only in editor
+				Graphics::Renderer::DrawRect(xform.position, canvasScale, xform.rotation, Color::COLOR_WHITE); //canvas drawn only in editor
+
+
 			}
 
 			for (ECS::Entity& uiEntity : children) {
@@ -111,7 +144,7 @@ namespace Graphics {
 				}
 
 				else {
-					Renderer::DrawRect(uiXform.worldPos, glm::vec2{ uiXform.worldScale }, uiXform.worldRot, Color::COLOR_WHITE);
+					//Renderer::DrawRect(uiXform.worldPos, glm::vec2{ uiXform.worldScale }, uiXform.worldRot, Color::COLOR_WHITE);
 				}
 				
 

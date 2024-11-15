@@ -11,15 +11,15 @@ namespace Component
 {
     struct Canvas
     {
-        Canvas() : isActive(true)/*, anchor{ 0.5f, 0.5f }, renderOrder(0)*/ {}
+        Canvas() : isVisible(true)/*, anchor{ 0.5f, 0.5f }, renderOrder(0)*/ {}
 
         /*!*********************************************************************
         \brief
           Resets the component to default values.
         ************************************************************************/
-        inline void Clear() noexcept { isActive = true;/* anchor = { 0.5f, 0.5f }; renderOrder = 0;*/ }
+        inline void Clear() noexcept { isVisible = true;/* anchor = { 0.5f, 0.5f }; renderOrder = 0;*/ }
 
-        bool isActive;
+        bool isVisible;
         //glm::vec2 anchor; // Anchor point relative to the canvas (0.5, 0.5 is center)
         //int renderOrder;  // Rendering order, in case you need layering for UI
     };

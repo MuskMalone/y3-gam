@@ -296,6 +296,18 @@ namespace GUI {
           }
       }
 
+      if (currentEntity.HasComponent<Component::Canvas>()) {
+          rttr::type const canvasType{ rttr::type::get<Component::Canvas>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(canvasType);
+
+          if (CanvasComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Canvas>());
+              }
+          }
+      }
+
       if (currentEntity.HasComponent<Component::Camera>()) {
           rttr::type const cameraType{ rttr::type::get<Component::Camera>() };
           componentOverriden = prefabOverride && prefabOverride->IsComponentModified(cameraType);
@@ -963,21 +975,21 @@ namespace GUI {
       bool const isOpen{ WindowBegin<Component::Canvas>("Canvas", highlight) };
       bool modified{ false };
 
-      if (isOpen) {
-          Component::Canvas& canvas = entity.GetComponent<Component::Canvas>();
-          float const inputWidth{ CalcInputWidth(60.f) };
-          // Start a table for organizing the color and textureAsset inputs
-          ImGui::BeginTable("ImageTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+      //if (isOpen) {
+      //    Component::Canvas& canvas = entity.GetComponent<Component::Canvas>();
+      //    float const inputWidth{ CalcInputWidth(60.f) };
+      //    // Start a table for organizing the color and textureAsset inputs
+      //    ImGui::BeginTable("ImageTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
-          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      //    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      //    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
-          NextRowTable("Toggle Visiblity");
-          if (ImGui::Checkbox("##IsActive", &canvas.isActive)) {
-              modified = true;
-          }
-          ImGui::EndTable();
-      }
+      //    NextRowTable("Toggle Visiblity");
+      //    if (ImGui::Checkbox("##IsActive", &canvas.isActive)) {
+      //        modified = true;
+      //    }
+      //    ImGui::EndTable();
+      //}
 
       WindowEnd(isOpen);
       return modified;
