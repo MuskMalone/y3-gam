@@ -24,7 +24,7 @@ namespace Graphics {
   private:
     void Init();
     bool LocateLightEntity();
-    void ComputeLightSpaceMatrix(Component::Camera const& cam, Component::Light& light, glm::quat const& lightRot);
+    void ComputeLightSpaceMatrix(Component::Light& light, glm::quat const& lightRot);
 
     void StartRender();
     void EndRender();
@@ -33,7 +33,7 @@ namespace Graphics {
     
     // temp
     // @TODO: have to account for multiple lights in future
-    static inline bool sIsLightStatic = false;
+    static inline float sDefaultSceneBounds = 50.f;
 
     glm::mat4 mLightSpaceMtx;
     ECS::Entity mLightEntity;

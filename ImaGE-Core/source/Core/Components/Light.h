@@ -21,15 +21,15 @@ namespace Component {
 			LIGHT_COUNT
 		};
 
-	// @TODO: for organization of shadow members
+	// @TODO: optimize; shouldnt need all lights to hold an instance of this struct
 	struct ShadowConfig {
-		ShadowConfig() : centerPos{}, softness { 1 }, bias{ 0.005f }, nearPlane{ -100.f },
+		ShadowConfig() : centerPos{}, softness{ 1 }, bias{ 0.005f }, scenesBounds{ 1.f }, nearPlane{ -100.f }, farPlane{ 200.f },
 			isStatic{ true }, shadowModified{ true }, customCenter{ false } {}
 
 		glm::vec3 centerPos;
 		int softness;
-		float bias;
-		float nearPlane;
+		float bias, scenesBounds;
+		float nearPlane, farPlane;
 		bool isStatic;
 		bool shadowModified, customCenter;	// im using this flag to determine when to recompute the light space mtx
 
@@ -37,6 +37,7 @@ namespace Component {
 			centerPos = {};
 			isStatic = shadowModified = true;
 			customCenter = false;
+			scenesBounds = 1.f;
 			bias = 0.005f;
 			softness = 1;
 			nearPlane = -100.f;

@@ -1858,19 +1858,55 @@ namespace GUI {
               modified = lightShadow.shadowModified = true;
             }
 
-            NextRowTable("Bias");
+            ImGui::TableNextRow(); ImGui::TableSetColumnIndex(0);
+            ImGui::Text("Bias");
+            if (ImGui::IsItemHovered()) {
+              ImGui::BeginTooltip();
+              ImGui::Text("Adjust this higher if you see visual artifacts like holes in shadows");
+              ImGui::Text("Typically 0.005");
+              ImGui::EndTooltip();
+            }
+            ImGui::TableSetColumnIndex(1); ImGui::SetNextItemWidth(INPUT_SIZE);
             if (ImGui::SliderFloat("##BiasSlider", &lightShadow.bias, 0.f, 2.f, "% .3f")) {
               modified = lightShadow.shadowModified = true;
             }
 
-            NextRowTable("Near Plane");
+            ImGui::TableNextRow(); ImGui::TableSetColumnIndex(0);
+            ImGui::Text("Near Plane");
             if (ImGui::IsItemHovered()) {
-              ImGui::SetTooltip("How close the light is to the object (how much of the scene the light sees)");
+              ImGui::BeginTooltip();
+              ImGui::Text("How close the light is to the scene");
+              ImGui::Text("Adjust this if shadows near the camera are getting cut-off");
+              ImGui::EndTooltip();
             }
+            ImGui::TableSetColumnIndex(1); ImGui::SetNextItemWidth(INPUT_SIZE);
             if (ImGui::DragFloat("##NearPlane", &lightShadow.nearPlane, 0.1f, -FLT_MAX, FLT_MAX, "% .2f")) {
               modified = lightShadow.shadowModified = true;
             }
 
+            ImGui::TableNextRow(); ImGui::TableSetColumnIndex(0);
+            ImGui::Text("Far Plane");
+            if (ImGui::IsItemHovered()) {
+              ImGui::BeginTooltip();
+              ImGui::Text("How far the light can see)");
+              ImGui::Text("Adjust this if further shadows are getting cut-off");
+              ImGui::EndTooltip();
+            }
+            ImGui::TableSetColumnIndex(1); ImGui::SetNextItemWidth(INPUT_SIZE);
+            if (ImGui::DragFloat("##FarPlane", &lightShadow.farPlane, 0.1f, -FLT_MAX, FLT_MAX, "% .2f")) {
+              modified = lightShadow.shadowModified = true;
+            }
+
+            ImGui::TableNextRow(); ImGui::TableSetColumnIndex(0);
+            ImGui::Text("Scene's Bounds");
+            if (ImGui::IsItemHovered()) {
+              ImGui::SetTooltip("How much of the scene the light can see");
+            }
+            ImGui::TableSetColumnIndex(1); ImGui::SetNextItemWidth(INPUT_SIZE);
+            if (ImGui::DragFloat("##ScenesBounds", &lightShadow.scenesBounds, 0.1f, 0.01f, FLT_MAX, "%.2f")) {
+              modified = lightShadow.shadowModified = true;
+            }
+            
             bool tooltip{ false };
             NextRowTable("Custom Center");
             if (ImGui::IsItemHovered()) { tooltip = true; }
@@ -1889,12 +1925,12 @@ namespace GUI {
             ImGui::EndTable();
 
             if (lightShadow.customCenter) {
-              if (ImGui::BeginTable("MaterialVec2Table", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+              if (ImGui::BeginTable("ShadowVec3Table", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
                 float const vec3InputWidth{ inputWidth / 3.f };
                 ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-                ImGui::TableSetupColumn("  X", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
-                ImGui::TableSetupColumn("  Y", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
-                ImGui::TableSetupColumn("  Z", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
+                ImGui::TableSetupColumn(" X", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
+                ImGui::TableSetupColumn(" Y", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
+                ImGui::TableSetupColumn(" Z", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
                 ImGui::TableHeadersRow();
 
                 if (ImGuiHelpers::TableInputFloat3("Center", &lightShadow.centerPos[0], vec3InputWidth, false, -FLT_MAX, FLT_MAX, 0.3f)) {

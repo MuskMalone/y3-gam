@@ -151,6 +151,8 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("softness", &T::softness)
       .property("bias", &T::bias)
       .property("nearPlane", &T::nearPlane)
+      .property("nearPlane", &T::farPlane)
+      .property("scenesBounds", &T::scenesBounds)
       .property("isStatic", &T::isStatic)
       .property("shadowModified", &T::shadowModified)
       .property("customCenter", &T::customCenter);

@@ -52,13 +52,12 @@ namespace Graphics {
 
     void ShadowPass::Init() {
       Component::Transform const& transform{ mLightEntity.GetComponent<Component::Transform>() };
-      Component::Camera const& cam{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() };
       Component::Light& light{ mLightEntity.GetComponent<Component::Light>() };
 
       mShadowBias = light.shadowConfig.bias;
       mShadowSoftness = light.shadowConfig.softness;
 
-      ComputeLightSpaceMatrix(cam, light, transform.worldRot);
+      ComputeLightSpaceMatrix(light, transform.worldRot);
     }
 
     bool ShadowPass::LocateLightEntity() {
@@ -79,55 +78,14 @@ namespace Graphics {
       return false;
     }
 
-    void ShadowPass::ComputeLightSpaceMatrix(Component::Camera const& cam, Component::Light& light, glm::quat const& lightRot) {
-      // NDC frustrum corners
-      std::array<glm::vec4, 8> frustrumCorners = {
-        glm::vec4(-1.0f, -1.0f, -1.0f, 1.0f), // Near-btm-left
-        glm::vec4(1.0f, -1.0f, -1.0f, 1.0f),  // Near-btm-right
-        glm::vec4(1.0f, 1.0f, -1.0f, 1.0f),   // Near-top-right
-        glm::vec4(-1.0f, 1.0f, -1.0f, 1.0f),  // Near-top-left
-        glm::vec4(-1.0f, -1.0f, 1.0f, 1.0f),  // Far-btm-left
-        glm::vec4(1.0f, -1.0f, 1.0f, 1.0f),   // Far-btm-right
-        glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),    // Far-top-right
-        glm::vec4(-1.0f, 1.0f, 1.0f, 1.0f)    // Far-top-left
-      };
-
-      // transform NDC frustrum corners into world space
-      glm::mat4 const invViewProj{ glm::inverse(cam.GetViewProjMatrix()) };
-      glm::vec3 center{};
-
-      // get light view mtx
-      for (glm::vec4& corner : frustrumCorners) {
-        corner = invViewProj * corner;
-        corner /= corner.w;
-
-        center += glm::vec3(corner); // accumulate to compute the center at the same time
-      }
-      center /= 8.f;
-
-      if (light.shadowConfig.customCenter) {
-        glm::vec4 const offset{ light.shadowConfig.centerPos - center, 0.f };
-
-        for (glm::vec4& corner : frustrumCorners) {
-          corner += offset;
-        }
-
-        center = light.shadowConfig.centerPos;
-      }
-
-      mLightSpaceMtx = glm::lookAt(center - (lightRot * light.forwardVec), center, glm::vec3(0.f, 1.f, 0.f));
-
-      // find the min and max extents of the frustrum in light space
-      glm::vec3 min{ FLT_MAX }, max{ -FLT_MAX };
-      for (glm::vec4 const& corner : frustrumCorners) {
-        glm::vec3 const lightSpaceCorner{ mLightSpaceMtx * corner };
-        min = glm::min(min, lightSpaceCorner);
-        max = glm::max(max, lightSpaceCorner);
-      }
+    void ShadowPass::ComputeLightSpaceMatrix(Component::Light& light, glm::quat const& lightRot) {
+      glm::vec3 const center{ light.shadowConfig.customCenter ? light.shadowConfig.centerPos : glm::vec3() };
+      mLightSpaceMtx = glm::lookAt(center  - (lightRot * light.forwardVec), center, glm::vec3(0.f, 1.f, 0.f));
 
       // combine orthographic and view mtx to get light space mtx
-      mLightSpaceMtx = glm::ortho(min.x, max.x,
-        min.y, max.y, light.shadowConfig.nearPlane, max.z) * mLightSpaceMtx;
+      float const& bounds{ light.shadowConfig.scenesBounds * sDefaultSceneBounds };
+      mLightSpaceMtx = glm::ortho(-bounds, bounds,
+        -bounds, bounds, light.shadowConfig.nearPlane, light.shadowConfig.farPlane) * mLightSpaceMtx;
       light.shadowConfig.shadowModified = false;
     }
 
