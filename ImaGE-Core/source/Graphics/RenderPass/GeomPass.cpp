@@ -196,7 +196,7 @@ namespace Graphics {
             auto const& mesh = entity.GetComponent<Component::Mesh>();
 
             //Graphics::Renderer::SubmitSubmeshInstance(mesh.meshSource, 0, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
-            Graphics::Renderer::SubmitSubmeshInstance(mesh.meshSource, mesh.submeshIdx, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
+            Graphics::Renderer::SubmitInstance(mesh.meshSource, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
           }
 
           //mSpec.pipeline->GetSpec().instanceLayout;
