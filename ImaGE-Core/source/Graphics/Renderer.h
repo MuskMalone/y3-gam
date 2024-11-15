@@ -163,6 +163,9 @@ namespace Graphics {
 		static void DrawWireSphere(glm::vec3 const& pos, float radius, glm::vec4 const& clr);
 		static void DrawWireCapsule(glm::mat4 const& mtx, float radius, float height, glm::vec4 const& clr);
 		static void DrawCameraFrustrum(Component::Camera const& cam, glm::vec4 const& clr);
+		static void DrawArrow(glm::vec3 const& start, glm::vec3 const& end, glm::vec4 const& clr);
+		static void DrawDirectionalLight(glm::vec3 const& pos, glm::quat const& rot, glm::vec3 const& forwardVec, glm::vec4 const& clr, float radius);
+
 		static void RenderFullscreenTexture();
 
 		static void SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr = Color::COLOR_WHITE);

@@ -236,10 +236,12 @@ namespace Graphics {
 		PipelineSpec geomPipelineSpec;
 		geomPipelineSpec.shader = ShaderLibrary::Get("PBR");
 		geomPipelineSpec.targetFramebuffer = Framebuffer::Create(framebufferSpec);
+		geomPipelineSpec.lineWidth = 2.5f;
 
 		RenderPassSpec geomPassSpec;
 		geomPassSpec.pipeline = Pipeline::Create(geomPipelineSpec);
 		geomPassSpec.debugName = "Geometry Pass";
+
 
 		AddPass(RenderPass::Create<GeomPass>(geomPassSpec));
 	}
@@ -820,6 +822,47 @@ namespace Graphics {
 		DrawLine(nearTopRight, farTopRight, clr);
 		DrawLine(nearBottomLeft, farBottomLeft, clr);
 		DrawLine(nearBottomRight, farBottomRight, clr);
+	}
+
+	void Renderer::DrawArrow(glm::vec3 const& start, glm::vec3 const& end, glm::vec4 const& clr){
+		// Calculate direction vector
+		glm::vec3 direction = glm::normalize(end - start);
+
+		// Arrow length
+		float arrowLength = glm::length(end - start);
+
+		// Scale for the arrowhead
+		float headLength = arrowLength * 0.2f; // 20% of the arrow length
+		float headWidth = headLength * 0.5f;
+
+		// Calculate base of the arrowhead
+		glm::vec3 arrowBase = end - direction * headLength;
+
+		// Orthogonal vectors for arrowhead (perpendicular to direction)
+		glm::vec3 perp1 = glm::normalize(glm::cross(direction, { 0.f, 1.f, 0.f })) * headWidth;
+		glm::vec3 perp2 = glm::normalize(glm::cross(direction, perp1)) * headWidth;
+
+		// Arrowhead points
+		glm::vec3 left = arrowBase + perp1;
+		glm::vec3 right = arrowBase - perp1;
+
+		// Draw the arrow shaft
+		DrawLine(start, end, clr);
+
+		// Draw the arrowhead
+		DrawLine(end, left, clr);
+		DrawLine(end, right, clr);
+		DrawLine(left, right, clr); // Optional: Connect the arrowhead base
+	}
+
+	void Renderer::DrawDirectionalLight(glm::vec3 const& pos, glm::quat const& rot, glm::vec3 const& forwardVec, glm::vec4 const& clr, float radius){
+		// Draw a small arrow for the direction
+		glm::vec3 worldDir = glm::normalize(rot * forwardVec);
+		glm::vec3 arrowTip = pos + worldDir * 5.0f; // Scale the direction for visibility
+		Renderer::DrawArrow(pos, arrowTip, clr);
+		Renderer::DrawWireSphere(pos, radius, clr);
+		// Optionally, draw a small quad or icon at the position to indicate it's a light
+		//Renderer::DrawQuad(position, { 0.2f, 0.2f }, glm::quat{}, clr);
 	}
 
 	void Renderer::RenderFullscreenTexture(){
