@@ -48,6 +48,7 @@ namespace ECS {
     Entity GetEntityFromTag(std::string tag);
     Entity GetParentEntity(Entity const& child) const;
     std::vector<Entity> GetChildEntity(Entity const& parent);
+    std::vector<Entity> GetChildEntityRecursively(Entity const& parent);
     std::unordered_map<EntityID, std::set<EntityID>> const& GetChildrenMap() const;
     std::unordered_map<EntityID, EntityID> const& GetParentMap() const;
 

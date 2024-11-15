@@ -55,6 +55,9 @@ namespace ECS {
   // Use this function for new components (you know that the entity does not have the component)
   template<typename T, typename ...Args>
   inline T& Entity::EmplaceComponent(Args && ...args) {
+    // TEMP FIX: SOMEONE IS USING THE FUNCTION WRONGLY
+    //return EntityManager::GetInstance().GetRegistry().emplace_or_replace<T>(mId, std::forward<Args>(args)...);
+
     return EntityManager::GetInstance().GetRegistry().emplace<T>(mId, std::forward<Args>(args)...);
   }
 

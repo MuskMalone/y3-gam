@@ -136,6 +136,31 @@ namespace ECS {
     return ret;
   }
 
+  // Alternative to the GetChildEntity function that gets the children of children, and etcs
+  std::vector<Entity> EntityManager::GetChildEntityRecursively(Entity const& parent) {
+    if (!mRegistry.valid(parent.GetRawEnttEntityID())) {
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent is not valid!");
+      return std::vector<Entity>();
+    }
+
+    auto iter{ mChildren.find(parent.GetRawEnttEntityID()) };
+
+    if (iter == mChildren.end()) {
+      return std::vector<Entity>();
+    }
+
+    std::vector<Entity> totalChildren;
+    for (EntityID childID : iter->second) {
+      Entity childEntity(childID);
+      totalChildren.push_back(childEntity);
+
+      std::vector<Entity> childDescendants = GetChildEntityRecursively(childEntity);
+      totalChildren.insert(totalChildren.end(), childDescendants.begin(), childDescendants.end());
+    }
+
+    return totalChildren;
+  }
+
   std::unordered_map<EntityManager::EntityID, std::set<EntityManager::EntityID>> const& EntityManager::GetChildrenMap() const {
       return mChildren;
   }

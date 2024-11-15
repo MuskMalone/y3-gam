@@ -377,7 +377,7 @@ namespace IGE {
 				throw std::runtime_error{"cannot have no transform or rigidbody components!!"};
 			}
 			collider.bodyID = reinterpret_cast<void*>(rb);
-			return entity.EmplaceComponent<_collider_component>(collider);
+			return entity.EmplaceOrReplaceComponent<_collider_component>(collider);
 		}
 
 		template<typename _physx_type, typename _collider_component>
