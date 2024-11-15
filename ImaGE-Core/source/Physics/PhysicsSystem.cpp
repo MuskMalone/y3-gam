@@ -316,9 +316,9 @@ namespace IGE {
 		}
 		template <typename _physx_type, typename _collider_component>
 		void PhysicsSystem::AddNewCollider(physx::PxRigidDynamic*& rb, ECS::Entity const& entity, _collider_component& collider, bool newCollider) {
-			if (entity.GetComponent<Component::Tag>().tag == std::string{"MainGround"}) {
-				std::cout << "hello\n";
-			}
+			//if (entity.GetComponent<Component::Tag>().tag == std::string{"MainGround"}) {
+			//	std::cout << "hello\n";
+			//}
 			Component::Transform transform = entity.GetComponent<Component::Transform>();
 			if ((glm::abs(transform.worldScale.x) + glm::abs(transform.worldScale.y) + glm::abs(transform.worldScale.z)) <= glm::epsilon<float>()) {
 				transform.worldScale = { 1,1,1 }; //temp fix
