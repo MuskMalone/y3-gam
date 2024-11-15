@@ -137,7 +137,7 @@ static void rttr_auto_register_reflection_function2_(); namespace {
   REGISTER_COMPONENT(AudioListener, "AudioListener");
 
   REGISTER_COMPONENT(Canvas, "Canvas")
-    .property("isActive", &Component::Canvas::isActive);
+    .property("isVisible", &Component::Canvas::isVisible);
 
   REGISTER_COMPONENT(Image, "Image")
     .property("color", &Image::color)
