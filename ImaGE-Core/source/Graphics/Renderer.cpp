@@ -212,11 +212,11 @@ namespace Graphics {
 		//}
 		IGE::Assets::GUID sunIcon{ Texture::Create(gAssetsDirectory + std::string("Textures\\sun_icon.png")) };
 		IGE::Assets::GUID spotlightIcon{ Texture::Create(gAssetsDirectory + std::string("Textures\\spotlight_icon.png")) };
-		IGE::Assets::GUID cameraIcon{ Texture::Create(gAssetsDirectory + std::string("Textures\\cam_icon.png")) };
+		//IGE::Assets::GUID cameraIcon{ Texture::Create(gAssetsDirectory + std::string("Textures\\cam_icon.png")) };
 		
 		mIcons.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(sunIcon));
 		mIcons.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(spotlightIcon));
-		mIcons.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(cameraIcon));
+		//mIcons.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(cameraIcon));
 		
 	}
 
