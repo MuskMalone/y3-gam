@@ -20,7 +20,7 @@ namespace Graphics {
     for (unsigned i{}; i < mSubmeshes.size(); ++i) {
       std::string const& name{ mMeshNames[i] };
       ECS::Entity entity{ em.CreateEntityWithTag(name) };
-      entity.EmplaceComponent<Component::Mesh>(guid, name, true, i);
+      entity.EmplaceComponent<Component::Mesh>(guid, name, true);
       entity.EmplaceComponent<Component::Material>();
       em.SetParentEntity(parent, entity);
     }
