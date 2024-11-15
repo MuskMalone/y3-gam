@@ -22,6 +22,7 @@ namespace Graphics {
 	RendererData Renderer::mData;
 	MaterialTable Renderer::mMaterialTable;
 	ShaderLibrary Renderer::mShaderLibrary;
+	std::vector<IGE::Assets::GUID> Renderer::mIcons;
 	std::shared_ptr<Framebuffer> Renderer::mFinalFramebuffer;
 	std::unordered_map<std::type_index, std::shared_ptr<RenderPass>> Renderer::mTypeToRenderPass;
 	std::vector<std::shared_ptr<RenderPass>> Renderer::mRenderPasses;
@@ -38,7 +39,8 @@ namespace Graphics {
 			{AttributeType::VEC3, "a_Position"},
 			{AttributeType::VEC4, "a_Color"},
 			{AttributeType::VEC2, "a_TexCoord"},
-			{AttributeType::FLOAT, "a_TexIdx"}
+			{AttributeType::FLOAT, "a_TexIdx"},
+			{AttributeType::INT, "a_Entity"}
 		};
 
 		mData.quadVertexBuffer->SetLayout(quadLayout);
@@ -173,14 +175,14 @@ namespace Graphics {
 		// Add default material to the table (e.g., at index 0)
 		MaterialTable::AddMaterial(defaultMaterial);
 
-		std::shared_ptr<MaterialData> mat1 = MaterialData::Create("PBR", "MatLighting");
-		mat1->SetAlbedoMap(texguid1);
-		mat1->SetAlbedoColor({ 0.7f,0.6f,0.9f });
-		MaterialTable::AddMaterial(mat1);
+		//std::shared_ptr<MaterialData> mat1 = MaterialData::Create("PBR", "MatLighting");
+		//mat1->SetAlbedoMap(texguid1);
+		//mat1->SetAlbedoColor({ 0.7f,0.6f,0.9f });
+		//MaterialTable::AddMaterial(mat1);
 
-		std::shared_ptr<MaterialData> mat2 = MaterialData::Create("Unlit", "MatNoLight"); //@TODO support other shaders like Unlit
-		mat2->SetAlbedoMap(texguid);
-		MaterialTable::AddMaterial(mat2);
+		//std::shared_ptr<MaterialData> mat2 = MaterialData::Create("Unlit", "MatNoLight"); //@TODO support other shaders like Unlit
+		//mat2->SetAlbedoMap(texguid);
+		//MaterialTable::AddMaterial(mat2);
 		//--Material Init End--//
 
 		//// Generate multiple materials for testing
@@ -207,6 +209,11 @@ namespace Graphics {
 		//	// Add the new material to the material table
 		//	MaterialTable::AddMaterial(material);
 		//}
+		IGE::Assets::GUID sunIcon{ Texture::Create(gAssetsDirectory + std::string("Textures\\sun_icon.png")) };
+		
+		mIcons.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(sunIcon));
+		mIcons.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(366429001515961616));
+		
 	}
 
 	void Renderer::InitShaders() {
@@ -395,6 +402,7 @@ namespace Graphics {
 			vtx.texCoord = texCoord;
 			vtx.texIdx = texIdx;
 			vtx.clr = clr;
+			vtx.entityID = entity;
 		}
 		++mData.quadBufferIndex;
 	}
@@ -466,34 +474,6 @@ namespace Graphics {
 		return instanceBuffer;
 	}
 
-	std::shared_ptr<VertexBuffer> Renderer::GetSubmeshInstanceBuffer(MeshSubmeshKey const& meshSubmeshKey) {
-		// Check if an instance buffer for this specific submesh already exists
-		auto it = mData.instanceSubmeshBuffers.find(meshSubmeshKey);
-		if (it != mData.instanceSubmeshBuffers.end()) {
-			return it->second; // Return existing instance buffer
-		}
-
-		// Create a new instance buffer if not found
-		uint32_t instanceCap = 100; // Adjust capacity as needed
-		auto instanceBuffer = VertexBuffer::Create(instanceCap * sizeof(InstanceData));
-
-		// Set up the buffer layout for instance data
-		BufferLayout instanceLayout = {
-			{ AttributeType::MAT4, "a_ModelMatrix" },
-			{ AttributeType::INT, "a_MaterialIdx" },
-			{ AttributeType::INT, "a_EntityID" }
-		};
-		instanceBuffer->SetLayout(instanceLayout);
-
-		// Store and return the new instance buffer for this specific submesh
-		mData.instanceSubmeshBuffers[meshSubmeshKey] = instanceBuffer;
-
-		auto &vao= IGE_REF(IGE::Assets::ModelAsset, meshSubmeshKey.first)->mMeshSource.GetVertexArray();
-			
-		vao->AddVertexBuffer(instanceBuffer, true);
-		return instanceBuffer;
-	}
-
 	void Renderer::DrawLine(glm::vec3 const& p0, glm::vec3 const& p1, glm::vec4 const& clr) {
 		if (mData.lineVtxCount >= RendererData::cMaxVertices)
 			NextBatch();
@@ -542,7 +522,7 @@ namespace Graphics {
 		++mData.stats.quadCount;
 	}
 
-	void Renderer::DrawSprite(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, Texture const& tex, glm::vec4 const& tint, int entity){
+	void Renderer::DrawSprite(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, Texture const& tex, glm::vec4 const& tint, int entity, bool isBillboard, CameraSpec const& cam){
 
 		if (tex.GetTexHdl() == 0)
 			DrawQuad(pos, scale, rot, tint);
@@ -576,6 +556,15 @@ namespace Graphics {
 		glm::mat4 rotateMtx{ glm::toMat4(rot) };
 		glm::mat4 scaleMtx{ glm::scale(glm::mat4{ 1.f }, { scale.x, scale.y, 1.f }) };
 
+		if (isBillboard) {
+			rotateMtx = glm::mat4{ 1.f };
+			glm::mat4 viewMatrix = cam.viewMatrix; // Use the correct camera
+			glm::vec3 cameraRight{ viewMatrix[0][0], viewMatrix[1][0], viewMatrix[2][0] };
+			glm::vec3 cameraUp{ viewMatrix[0][1], viewMatrix[1][1], viewMatrix[2][1] };
+
+			rotateMtx[0] = glm::vec4(cameraRight, 0.0f);
+			rotateMtx[1] = glm::vec4(cameraUp, 0.0f);
+		}
 		glm::mat4 transformMtx{ translateMtx * rotateMtx * scaleMtx };
 
 		for (size_t i{}; i < 4; ++i)
@@ -1112,13 +1101,16 @@ namespace Graphics {
 
 	void Renderer::RenderSceneBegin(glm::mat4 const& viewProjMtx) {
 
+
+
 		auto const& lineShader = ShaderLibrary::Get("Line");
 		lineShader->Use();
 		lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
 
 		//mData.lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
-		//mData.texShader->Use();
-		//mData.texShader->SetUniform("u_ViewProjMtx", viewProjMtx);
+		auto const& texShader = ShaderLibrary::Get("Tex2D");
+		texShader->Use();
+		texShader->SetUniform("u_ViewProjMtx", viewProjMtx);
 
 		BeginBatch();
 	}

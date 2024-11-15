@@ -23,6 +23,8 @@ namespace Graphics {
       Renderer::Clear();
       //auto shader = mSpec.pipeline->GetShader();
 
+      Renderer::RenderSceneBegin(cam.viewProjMatrix);
+
       // Use a map to group entities by material ID
       MatGroupsMap matGroups;
 
@@ -204,7 +206,16 @@ namespace Graphics {
           Texture::ResetTextureUnits(); // Unbind textures after each group
       }
 
-      Renderer::RenderSceneBegin(cam.viewProjMatrix);
+
+      auto& ecsMan{ ECS::EntityManager::GetInstance() };
+      if (cam.isEditor) {
+          auto const& lights = ecsMan.GetAllEntitiesWithComponents<Component::Light, Component::Transform>();
+          for (auto const& light : lights) {
+              auto const& xform = ECS::Entity{ light }.GetComponent<Component::Transform>();
+              Renderer::DrawSprite(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(Renderer::mIcons[0])->mTexture, Color::COLOR_WHITE, ECS::Entity { light }.GetEntityID(), true, cam);
+          }
+      }
+
       for (ECS::Entity const& entity : entities) {
         if (entity.HasComponent<Component::Sprite2D>()) {
           auto const& sprite = entity.GetComponent<Component::Sprite2D>();
@@ -216,6 +227,7 @@ namespace Graphics {
 
         }
       }
+
       Renderer::RenderSceneEnd();
       //=================================================SUBMESH VERSION END===========================================================
 

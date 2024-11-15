@@ -21,8 +21,8 @@ namespace Graphics {
 		viewProj = cam.isEditor ? cam.viewProjMatrix : Renderer::mUICamera.GetViewProjMatrix();
 
 		// @TODO: TEMP, TO MERGE WITH XAVIER
-		shader->Use();
-		shader->SetUniform("u_ViewProjMtx", viewProj);
+		//shader->Use();
+		//shader->SetUniform("u_ViewProjMtx", viewProj);
 
 		Renderer::RenderSceneBegin(viewProj);
 
@@ -30,17 +30,17 @@ namespace Graphics {
 		if (cam.isEditor) 
 			IGE::Physics::PhysicsSystem::GetInstance()->Debug();
 
+		auto& ecsMan{ ECS::EntityManager::GetInstance() };
+		if (cam.isEditor) {
+			auto const& cameras = ecsMan.GetAllEntitiesWithComponents<Component::Camera>();
+			for (auto const& camera : cameras) {
+				auto const& camComp = ECS::Entity{ camera }.GetComponent<Component::Camera>();
+				if (!ECS::Entity{ camera }.IsActive())continue;
+				Renderer::DrawCameraFrustrum(camComp, Color::COLOR_CYAN);
+			}
+		}
 
 		for (ECS::Entity const& entity : entities) {
-
-			if (cam.isEditor) {
-				auto const& cameras = ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Camera>();
-				for (auto const& camera : cameras) {
-					auto const& camComp = ECS::Entity{ camera }.GetComponent<Component::Camera>();
-					if(!ECS::Entity{ camera }.IsActive())continue;
-					Renderer::DrawCameraFrustrum(camComp, Color::COLOR_CYAN);
-				}
-			}
 
 			if (!entity.HasComponent<Component::Canvas>()) { continue; } //if not canvas skip
 			auto const& canvas{ entity.GetComponent<Component::Canvas>() };
@@ -77,6 +77,8 @@ namespace Graphics {
 
 			if (cam.isEditor) {
 				Graphics::Renderer::DrawRect(xform.position, canvasScale, xform.rotation, Color::COLOR_WHITE); //canvas drawn only in editor
+
+
 			}
 
 			for (ECS::Entity& uiEntity : children) {
@@ -134,7 +136,7 @@ namespace Graphics {
 				}
 
 				else {
-					Renderer::DrawRect(uiXform.worldPos, glm::vec2{ uiXform.worldScale }, uiXform.worldRot, Color::COLOR_WHITE);
+					//Renderer::DrawRect(uiXform.worldPos, glm::vec2{ uiXform.worldScale }, uiXform.worldRot, Color::COLOR_WHITE);
 				}
 				
 

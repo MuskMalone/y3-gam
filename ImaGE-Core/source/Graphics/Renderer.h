@@ -57,7 +57,7 @@ namespace Graphics {
 		glm::vec4 clr;
 		glm::vec2 texCoord;
 		float texIdx; // float as it is passed to shader
-		//int entity{};
+		int entityID{ -1 };
 	};
 
 	struct LineVtx {
@@ -136,9 +136,6 @@ namespace Graphics {
 		//------------------------Instancing related-------------------------//
 		std::unordered_map<IGE::Assets::GUID, std::vector<InstanceData>> instanceBufferDataMap;
 		std::unordered_map<IGE::Assets::GUID, std::shared_ptr<VertexBuffer>> instanceBuffers;
-
-		std::unordered_map<MeshSubmeshKey, std::vector<InstanceData>> instanceSubmeshBufferDataMap;
-		std::unordered_map<MeshSubmeshKey, std::shared_ptr<VertexBuffer>> instanceSubmeshBuffers;
 		//-------------------------------------------------------------------//
 
 		IGE::Assets::GUID debugMeshSources[3];
@@ -160,7 +157,7 @@ namespace Graphics {
 		static void DrawLine(glm::vec3 const& p0, glm::vec3 const& p1, glm::vec4 const& clr);
 		static void DrawRect(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, glm::vec4 const& clr);
 		static void DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, glm::vec4 const& clr);
-		static void DrawSprite(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, Texture const& tex, glm::vec4 const& tint, int entity = -1);
+		static void DrawSprite(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, Texture const& tex, glm::vec4 const& tint, int entity = -1, bool isBillboard = false, CameraSpec const& cam = CameraSpec{});
 		static void DrawBox(glm::vec3 const& pos, glm::vec3 const& scale, glm::quat const& rot, glm::vec4 const& clr);
 		static void DrawBox(glm::mat4 const& mtx, glm::vec4 const& clr);
 		static void DrawWireSphere(glm::vec3 const& pos, float radius, glm::vec4 const& clr);
@@ -196,8 +193,7 @@ namespace Graphics {
 
 		static IGE::Assets::GUID GetQuadMeshSource();
 		
-
-		
+		static std::vector<IGE::Assets::GUID> mIcons;
 	private:
 		static void SetQuadBufferData(glm::vec3 const& pos, glm::vec4 const& clr,
 									  glm::vec2 const& texCoord, float texIdx, int entity);
