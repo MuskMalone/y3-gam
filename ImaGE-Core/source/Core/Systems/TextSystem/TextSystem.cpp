@@ -295,6 +295,15 @@ namespace Systems {
     flipY[1][1] = -1.0f;
     projection = projection * flipY;
 
+    // Calculate total text block height (For centering the Y of the text even if multi line)
+    float totalHeight = font->mMaxHeight * scale; // First line height
+    if (!newLineIndices.empty()) {
+      totalHeight += (newLineIndices.size() - 1) * (multiLineSpacingOffset + font->mMaxHeight * scale);
+    }
+
+    // Adjust initial yPos to vertically center the text block
+    yPos -= totalHeight / 2.0f;
+
     // update VBO for each character
     GLfloat const initialXPos = xPos;
     size_t currLineIdx{};

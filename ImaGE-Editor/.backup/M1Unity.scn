@@ -197,6 +197,79 @@
             ]
         },
         {
+            "ID": 2,
+            "Parent": 231,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "DialogueBox",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 3.5999999046325685,
+                            "y": -5.5,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 17.059999465942384,
+                            "y": 6.21999979019165,
+                            "z": 0.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0,
+                            "w": -4.371138828673793e-8
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": 3.5999999046325685,
+                            "y": -5.5,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 17.059999465942384,
+                            "y": 6.21999979019165,
+                            "z": 0.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0,
+                            "w": -4.371138828673793e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 18060467368391342928
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 6,
             "Parent": null,
             "Child Entities": [
@@ -4537,6 +4610,7 @@
             "Parent": null,
             "Child Entities": [
                 76,
+                231,
                 5243127
             ],
             "isActive": true,
@@ -6072,6 +6146,79 @@
             }
         },
         {
+            "ID": 187,
+            "Parent": 5243127,
+            "Child Entities": [],
+            "isActive": false,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Happy",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -8.899999618530274,
+                            "y": -7.400000095367432,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 6.71999979019165,
+                            "y": 6.71999979019165,
+                            "z": 6.71999979019165
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0,
+                            "w": -4.371138828673793e-8
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": -8.899999618530274,
+                            "y": -7.400000095367432,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 6.71999979019165,
+                            "y": 6.71999979019165,
+                            "z": 6.71999979019165
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0,
+                            "w": -4.371138828673793e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 11411763348412290564
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 189,
             "Parent": 3145784,
             "Child Entities": [],
@@ -6170,6 +6317,163 @@
                 "removedComponents": [],
                 "subDataId": 7
             }
+        },
+        {
+            "ID": 196,
+            "Parent": 5243127,
+            "Child Entities": [],
+            "isActive": false,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Disturbed",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -8.899999618530274,
+                            "y": -7.400000095367432,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 6.71999979019165,
+                            "y": 6.71999979019165,
+                            "z": 6.71999979019165
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0,
+                            "w": -4.371138828673793e-8
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": -8.899999618530274,
+                            "y": -7.400000095367432,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 6.71999979019165,
+                            "y": 6.71999979019165,
+                            "z": 6.71999979019165
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0,
+                            "w": -4.371138828673793e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 17618773469114924600
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 197,
+            "Parent": 231,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "DialogueText",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -4.300000190734863,
+                            "y": -6.699999809265137,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -4.300000190734863,
+                            "y": -6.699999809265137,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Text": {
+                        "textContent": "She left something on that table...",
+                        "color": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "scale": 0.005499999970197678,
+                        "textAssetGUID": {
+                            "ID": 11715672305158928427
+                        },
+                        "fontFamilyName": "Sniglet-Regular",
+                        "alignment": 0,
+                        "multiLineSpacingOffset": 0.0,
+                        "textBoxEnabledFlag": false,
+                        "textBoxDimensions": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
         },
         {
             "ID": 200,
@@ -6510,6 +6814,69 @@
             }
         },
         {
+            "ID": 231,
+            "Parent": 75,
+            "Child Entities": [
+                2,
+                197
+            ],
+            "isActive": false,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Dialogue",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                }
+            ]
+        },
+        {
             "ID": 233,
             "Parent": 176,
             "Child Entities": [],
@@ -6615,12 +6982,12 @@
             "ID": 238,
             "Parent": 5243127,
             "Child Entities": [],
-            "isActive": true,
+            "isActive": false,
             "Components": [
                 {
                     "Tag": {
                         "tag": "Neutral",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -11595,6 +11962,8 @@
             "Child Entities": [
                 49,
                 177,
+                187,
+                196,
                 227,
                 238,
                 1048654
