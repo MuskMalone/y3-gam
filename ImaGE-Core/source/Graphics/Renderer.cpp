@@ -420,6 +420,10 @@ namespace Graphics {
 	}
 	
 	void Renderer::SetLineBufferData(glm::vec3 const& pos, glm::vec4 const& clr) {
+		if (mData.lineBufferIndex >= mData.lineBuffer.size()) {
+			std::cerr << "Error: Line buffer index out of range! Index: " << mData.lineBufferIndex << ", Max: " << mData.lineBuffer.size() << std::endl;
+			return; // Prevent writing out of bounds
+		}
 		if (mData.lineVtxCount < mData.lineBuffer.size()) {
 			LineVtx& vtx = mData.lineBuffer[mData.lineBufferIndex];
 			vtx.pos = pos;
@@ -855,14 +859,80 @@ namespace Graphics {
 		DrawLine(left, right, clr); // Optional: Connect the arrowhead base
 	}
 
-	void Renderer::DrawDirectionalLight(glm::vec3 const& pos, glm::quat const& rot, glm::vec3 const& forwardVec, glm::vec4 const& clr, float radius){
-		// Draw a small arrow for the direction
-		glm::vec3 worldDir = glm::normalize(rot * forwardVec);
-		glm::vec3 arrowTip = pos + worldDir * 5.0f; // Scale the direction for visibility
-		Renderer::DrawArrow(pos, arrowTip, clr);
-		Renderer::DrawWireSphere(pos, radius, clr);
-		// Optionally, draw a small quad or icon at the position to indicate it's a light
-		//Renderer::DrawQuad(position, { 0.2f, 0.2f }, glm::quat{}, clr);
+	void Renderer::DrawCone(glm::vec3 const& position, glm::vec3 const& direction, float range, float angle, glm::vec4 const& color) {
+		// Normalize the direction to ensure it's a unit vector
+		glm::vec3 worldDirection = glm::normalize(direction);
+
+		// Calculate the radius of the base circle using the range and outer angle
+		float radius = range * glm::tan(glm::radians(angle));
+
+		// Determine the base center position
+		glm::vec3 baseCenter = position + worldDirection * range;
+
+		// Draw the base circle
+		DrawCircle(baseCenter, radius, color * glm::vec4(1.f, 1.f, 1.f, 0.5f), worldDirection);
+
+		// Calculate two edge points on the circle
+		// For simplicity, use a fixed perpendicular vector to the direction
+		glm::vec3 perpVec1 = glm::normalize(glm::cross(worldDirection, glm::vec3(0.f, 1.f, 0.f)));
+		if (glm::length(perpVec1) < 0.001f) // Handle edge case where direction is parallel to (0, 1, 0)
+			perpVec1 = glm::normalize(glm::cross(worldDirection, glm::vec3(1.f, 0.f, 0.f)));
+		glm::vec3 perpVec2 = glm::normalize(glm::cross(worldDirection, perpVec1));
+
+		// Edge points
+		glm::vec3 edge1 = baseCenter + perpVec1 * radius;
+		glm::vec3 edge2 = baseCenter - perpVec1 * radius;
+		glm::vec3 edge3 = baseCenter + perpVec2 * radius;
+		glm::vec3 edge4 = baseCenter - perpVec2 * radius;
+
+		// Draw edges connecting the cone tip to the base circle
+		DrawLine(position, edge1, color);
+		DrawLine(position, edge2, color);
+		DrawLine(position, edge3, color);
+		DrawLine(position, edge4, color);
+	}
+
+	void Renderer::DrawCircle(glm::vec3 const& center, float radius, glm::vec4 const& color, glm::vec3 const& normal) {
+		constexpr int segments = 32; // Number of segments for the circle
+		std::vector<glm::vec3> points(segments);
+
+		// Create a perpendicular vector to the normal
+		glm::vec3 tangent = glm::normalize(glm::cross(normal, glm::vec3(0.f, 1.f, 0.f)));
+		if (glm::length(tangent) < 0.001f) // Handle edge case where normal is parallel to (0, 1, 0)
+			tangent = glm::normalize(glm::cross(normal, glm::vec3(1.f, 0.f, 0.f)));
+		glm::vec3 bitangent = glm::normalize(glm::cross(normal, tangent));
+
+		// Calculate points on the circle
+		for (int i = 0; i < segments; ++i) {
+			float theta = glm::radians(360.f * i / segments);
+			glm::vec3 point = center + radius * (tangent * cos(theta) + bitangent * sin(theta));
+			points[i] = point;
+		}
+
+		// Draw lines connecting the points
+		for (int i = 0; i < segments; ++i) {
+			int next = (i + 1) % segments; // Ensure the last point connects back to the first
+			DrawLine(points[i], points[next], color);
+		}
+	}
+
+	void Renderer::DrawLightGizmo(Component::Light const& light, Component::Transform const& xform){
+		glm::vec3 worldDir = glm::normalize(xform.rotation * light.forwardVec);
+		switch (light.type) {
+			case Component::LightType::DIRECTIONAL:
+				glm::vec3 arrowTip = xform.worldPos + worldDir * 5.0f; // Scale the direction for visibility
+				Renderer::DrawArrow(xform.worldPos, arrowTip, glm::vec4{ light.color, 1.f });
+				Renderer::DrawWireSphere(xform.worldPos, light.mLightIntensity * 0.5f, glm::vec4{light.color, 1.f });
+				break;
+			case Component::LightType::SPOTLIGHT:
+
+				float angle = glm::radians(light.mOuterSpotAngle);
+
+				// Draw spotlight cone
+				DrawCone(xform.worldPos, worldDir, light.mRange, angle, glm::vec4(light.color, 0.5f));
+
+				break;
+		}
 	}
 
 	void Renderer::RenderFullscreenTexture(){
@@ -1011,6 +1081,11 @@ namespace Graphics {
 	}
 
 	void Renderer::FlushBatch() {
+		if (mData.lineVtxCount > RendererData::cMaxVertices) {
+			std::cerr << "Error: Line vertex count exceeds buffer capacity during FlushBatch!" << std::endl;
+			mData.lineVtxCount = RendererData::cMaxVertices; // Clamp to valid range
+		}
+
 		if (mData.quadIdxCount) {
 			//ptrdiff_t difference{ reinterpret_cast<unsigned char*>(mData.quadBufferPtr)
 			//					- reinterpret_cast<unsigned char*>(mData.quadBuffer.data()) };
@@ -1080,7 +1155,6 @@ namespace Graphics {
 			// Increment draw call stats
 			++mData.stats.drawCalls;
 		}
-
 	}
 
 	void Renderer::FlushBatch(std::shared_ptr<RenderPass> const& renderPass) {

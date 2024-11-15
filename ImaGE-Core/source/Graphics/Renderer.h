@@ -19,6 +19,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <typeindex>
 #include <Graphics/RenderPass/RenderPass.h>
 #include "Core/Components/Camera.h"
+#include "Core/Components/Transform.h"
+#include "Core/Components/Light.h"
 #include "MeshSubmeshKeyHash.h"
 
 
@@ -164,7 +166,9 @@ namespace Graphics {
 		static void DrawWireCapsule(glm::mat4 const& mtx, float radius, float height, glm::vec4 const& clr);
 		static void DrawCameraFrustrum(Component::Camera const& cam, glm::vec4 const& clr);
 		static void DrawArrow(glm::vec3 const& start, glm::vec3 const& end, glm::vec4 const& clr);
-		static void DrawDirectionalLight(glm::vec3 const& pos, glm::quat const& rot, glm::vec3 const& forwardVec, glm::vec4 const& clr, float radius);
+		static void DrawCone(glm::vec3 const& position, glm::vec3 const& direction, float range, float angle, glm::vec4 const& color);
+		static void DrawCircle(glm::vec3 const& center, float radius, glm::vec4 const& color, glm::vec3 const& normal);
+		static void DrawLightGizmo(Component::Light const& light, Component::Transform const& xform);
 
 		static void RenderFullscreenTexture();
 

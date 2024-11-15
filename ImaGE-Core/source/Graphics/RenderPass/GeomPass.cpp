@@ -206,19 +206,14 @@ namespace Graphics {
           Texture::ResetTextureUnits(); // Unbind textures after each group
       }
 
-
       auto& ecsMan{ ECS::EntityManager::GetInstance() };
       if (cam.isEditor) {
           auto const& lights = ecsMan.GetAllEntitiesWithComponents<Component::Light, Component::Transform>();
           for (auto const& light : lights) {
               auto const& xform = ECS::Entity{ light }.GetComponent<Component::Transform>();
               auto const& lightComp = ECS::Entity{ light }.GetComponent<Component::Light>();
-              Renderer::DrawSprite(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(Renderer::mIcons[0])->mTexture, Color::COLOR_WHITE, ECS::Entity { light }.GetEntityID(), true, cam);
-              switch (lightComp.type) {
-                  case Component::LightType::DIRECTIONAL:
-                      Renderer::DrawDirectionalLight(xform.worldPos, xform.rotation, lightComp.forwardVec, glm::vec4{ lightComp.color, 1.f }, lightComp.mLightIntensity * 0.5f);
-                  break;
-              }
+              Renderer::DrawSprite(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(Renderer::mIcons[0])->mTexture, glm::vec4 { lightComp.color, 1.f }, ECS::Entity{ light }.GetEntityID(), true, cam);
+              Renderer::DrawLightGizmo(lightComp, xform);
           }
       }
 

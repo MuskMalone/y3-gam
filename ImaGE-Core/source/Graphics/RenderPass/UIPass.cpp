@@ -34,10 +34,17 @@ namespace Graphics {
 		if (cam.isEditor) {
 			auto const& cameras = ecsMan.GetAllEntitiesWithComponents<Component::Camera>();
 			for (auto const& camera : cameras) {
+				if (!ECS::Entity{ camera }.IsActive()) continue;
 				auto const& camComp = ECS::Entity{ camera }.GetComponent<Component::Camera>();
-				if (!ECS::Entity{ camera }.IsActive())continue;
 				Renderer::DrawCameraFrustrum(camComp, Color::COLOR_CYAN);
 			}
+			//auto const& lights = ecsMan.GetAllEntitiesWithComponents<Component::Light, Component::Transform>();
+			//for (auto const& light : lights) {
+			//	if (!ECS::Entity{ light }.IsActive()) continue;
+			//	auto const& xform = ECS::Entity{ light }.GetComponent<Component::Transform>();
+			//	auto const& lightComp = ECS::Entity{ light }.GetComponent<Component::Light>();
+			//	Renderer::DrawLightGizmo(lightComp, xform);
+			//}
 		}
 
 		for (ECS::Entity const& entity : entities) {
