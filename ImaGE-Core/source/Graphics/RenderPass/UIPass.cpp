@@ -48,6 +48,13 @@ namespace Graphics {
 			auto children{ entityMan.GetChildEntity(entity) }; //vector of UI element entity
 			auto const& xform = entity.GetComponent<Component::Transform>(); //canvas xform
 
+			// Sort children by Z index (pos.z of Transform component)
+			std::sort(children.begin(), children.end(), [](ECS::Entity const& a, ECS::Entity const& b) {
+				auto& xformA = a.GetComponent<Component::Transform>();
+				auto& xformB = b.GetComponent<Component::Transform>();
+				return xformA.position.z < xformB.position.z; // Ascending order
+				});
+
 			// Calculate scale for the canvas based on the orthographic camera
 			float orthoWidth = 2.0f * cam.aspectRatio * UI_SCALING_FACTOR<float>;
 			float orthoHeight = 2.0f * cam.aspectRatio * UI_SCALING_FACTOR<float>;
