@@ -27,11 +27,21 @@ namespace Graphics {
 		Renderer::RenderSceneBegin(viewProj);
 
 		//temp physics debug hack
-		if(cam.isEditor)
+		if (cam.isEditor) 
 			IGE::Physics::PhysicsSystem::GetInstance()->Debug();
 
 
 		for (ECS::Entity const& entity : entities) {
+
+			if (cam.isEditor) {
+				auto const& cameras = ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Camera>();
+				for (auto const& camera : cameras) {
+					auto const& camComp = ECS::Entity{ camera }.GetComponent<Component::Camera>();
+					if(!ECS::Entity{ camera }.IsActive())continue;
+					Renderer::DrawCameraFrustrum(camComp, Color::COLOR_CYAN);
+				}
+			}
+
 			if (!entity.HasComponent<Component::Canvas>()) { continue; } //if not canvas skip
 			auto const& canvas{ entity.GetComponent<Component::Canvas>() };
 			if (!entity.IsActive()) continue;

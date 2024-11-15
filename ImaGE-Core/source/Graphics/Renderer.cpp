@@ -367,7 +367,7 @@ namespace Graphics {
 	}
 
 	void Renderer::InitUICamera(){
-		// Initialize the UI camera with an orthographic projection
+		// Initialize the UI cam with an orthographic projection
 		mUICamera.projType = Component::Camera::Type::ORTHO;
 		mUICamera.position = glm::vec3(0.0f, 0.0f, 0.0f);  // Centered for screen space
 		mUICamera.aspectRatio = 16.0f / 9.0f;              // Adjust based on screen dimensions
@@ -775,6 +775,62 @@ namespace Graphics {
 				DrawLine(transformedP1Bottom, transformedP2Bottom, clr);
 			}
 		}
+	}
+
+	void Renderer::DrawCameraFrustrum(Component::Camera const& cam, glm::vec4 const& clr){
+		float aspectRatio = cam.aspectRatio;
+		float tanHalfFOV = tan(glm::radians(cam.fov) / 2.0f);
+		float nearHeight = 2.0f * tanHalfFOV * cam.nearClip;
+		float nearWidth = nearHeight * aspectRatio;
+		float farHeight = 2.0f * tanHalfFOV * cam.farClip;
+		float farWidth = farHeight * aspectRatio;
+		
+		// Define frustum corners in view space
+		glm::vec3 nearCenter = glm::vec3(0.0f, 0.0f, -cam.nearClip);
+		glm::vec3 farCenter = glm::vec3(0.0f, 0.0f, -cam.farClip);
+		
+		glm::vec3 nearTopLeft = nearCenter + glm::vec3(-nearWidth / 2.0f, nearHeight / 2.0f, 0.0f);
+		glm::vec3 nearTopRight = nearCenter + glm::vec3(nearWidth / 2.0f, nearHeight / 2.0f, 0.0f);
+		glm::vec3 nearBottomLeft = nearCenter + glm::vec3(-nearWidth / 2.0f, -nearHeight / 2.0f, 0.0f);
+		glm::vec3 nearBottomRight = nearCenter + glm::vec3(nearWidth / 2.0f, -nearHeight / 2.0f, 0.0f);
+		
+		glm::vec3 farTopLeft = farCenter + glm::vec3(-farWidth / 2.0f, farHeight / 2.0f, 0.0f);
+		glm::vec3 farTopRight = farCenter + glm::vec3(farWidth / 2.0f, farHeight / 2.0f, 0.0f);
+		glm::vec3 farBottomLeft = farCenter + glm::vec3(-farWidth / 2.0f, -farHeight / 2.0f, 0.0f);
+		glm::vec3 farBottomRight = farCenter + glm::vec3(farWidth / 2.0f, -farHeight / 2.0f, 0.0f);
+		
+		// Transform frustum corners to world space
+		glm::mat4 viewMatrix = cam.GetViewMatrix();
+		glm::mat4 inverseViewMatrix = glm::inverse(viewMatrix);
+		
+		nearTopLeft = glm::vec3(inverseViewMatrix * glm::vec4(nearTopLeft, 1.0f));
+		nearTopRight = glm::vec3(inverseViewMatrix * glm::vec4(nearTopRight, 1.0f));
+		nearBottomLeft = glm::vec3(inverseViewMatrix * glm::vec4(nearBottomLeft, 1.0f));
+		nearBottomRight = glm::vec3(inverseViewMatrix * glm::vec4(nearBottomRight, 1.0f));
+		
+		farTopLeft = glm::vec3(inverseViewMatrix * glm::vec4(farTopLeft, 1.0f));
+		farTopRight = glm::vec3(inverseViewMatrix * glm::vec4(farTopRight, 1.0f));
+		farBottomLeft = glm::vec3(inverseViewMatrix * glm::vec4(farBottomLeft, 1.0f));
+		farBottomRight = glm::vec3(inverseViewMatrix * glm::vec4(farBottomRight, 1.0f));
+		
+		// Draw frustum edges
+		// Near plane
+		DrawLine(nearTopLeft, nearTopRight, clr);
+		DrawLine(nearTopRight, nearBottomRight, clr);
+		DrawLine(nearBottomRight, nearBottomLeft, clr);
+		DrawLine(nearBottomLeft, nearTopLeft, clr);
+		
+		// Far plane
+		DrawLine(farTopLeft, farTopRight, clr);
+		DrawLine(farTopRight, farBottomRight, clr);
+		DrawLine(farBottomRight, farBottomLeft, clr);
+		DrawLine(farBottomLeft, farTopLeft, clr);
+		
+		// Connecting edges
+		DrawLine(nearTopLeft, farTopLeft, clr);
+		DrawLine(nearTopRight, farTopRight, clr);
+		DrawLine(nearBottomLeft, farBottomLeft, clr);
+		DrawLine(nearBottomRight, farBottomRight, clr);
 	}
 
 	void Renderer::RenderFullscreenTexture(){
