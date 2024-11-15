@@ -1,5 +1,5 @@
 #include <pch.h>
-#include "LayerSystem.h"
+#include "LayerManager.h"
 
 #include "Core/EntityManager.h"
 #include "Core/Components/Components.h"
@@ -7,40 +7,33 @@
 #include "Physics/PhysicsSystem.h"
 #include <Core/Systems/SystemManager/SystemManager.h>
 
-namespace Systems {
+namespace {
+  // moved here so it wont be exposed
+  bool IsValidAndActiveEntity(const ECS::Entity& e);
+}
 
-  void LayerSystem::Start() {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &LayerSystem::OnSceneChange, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::LAYER_MODIFIED, &LayerSystem::OnLayerModification, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &LayerSystem::OnPrefabEditor, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::REMOVE_ENTITY, &LayerSystem::OnEntityRemove, this);
+namespace Layers {
+
+  LayerManager::LayerManager() : mLayerData{}, mLayerEntities{} {
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &LayerManager::OnSceneChange, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::LAYER_MODIFIED, &LayerManager::OnLayerModification, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &LayerManager::OnPrefabEditor, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::REMOVE_ENTITY, &LayerManager::OnEntityRemove, this);
   }
 
-  void LayerSystem::Update() {
-
+  void LayerManager::CopyValidEntities(std::vector<ECS::Entity>& entityVector, const std::pair<std::string, std::vector<ECS::Entity>>& mapPair) {
+    std::copy_if(mapPair.second.begin(), mapPair.second.end(), std::back_inserter(entityVector), &IsValidAndActiveEntity);
   }
 
-  bool LayerSystem::IsValidAndActiveEntity(const ECS::Entity& e) {
-    if (!ECS::EntityManager::GetInstance().IsValidEntity(e) || !e.HasComponent<Component::Tag>()) {
-      Debug::DebugLogger::GetInstance().LogCritical("[Render System] Trying to render entity that does not exist!");
-      return false; // This should never happen
-    }
-    return e.GetComponent<Component::Tag>().isActive;
-  }
-
-  void LayerSystem::CopyValidEntities(std::vector<ECS::Entity>& entityVector, const std::pair<std::string, std::vector<ECS::Entity>>& mapPair) {
-    std::copy_if(mapPair.second.begin(), mapPair.second.end(), std::back_inserter(entityVector), IsValidAndActiveEntity);
-  }
-
-  std::array<int, MAX_LAYERS> const& LayerSystem::GetLayerCollisionList(int layerNumber) const {
+  std::array<int, MAX_LAYERS> const& LayerManager::GetLayerCollisionList(int layerNumber) const {
     if (layerNumber >= MAX_LAYERS || layerNumber < 0) {
-      throw Debug::Exception<LayerSystem>(Debug::LVL_WARN, Msg("Invalid Layer Number Passed"));
+      throw Debug::Exception<LayerManager>(Debug::LVL_WARN, Msg("Invalid Layer Number Passed"));
     }
 
     return mLayerData.collisionMatrix[layerNumber];
   }
 
-  void LayerSystem::SetLayerCollisionList(int layerNumber, int layerIndex, bool collisionStatus) {
+  void LayerManager::SetLayerCollisionList(int layerNumber, int layerIndex, bool collisionStatus) {
     if (layerNumber >= MAX_LAYERS || layerNumber < 0) {
       Debug::DebugLogger::GetInstance().LogWarning("[Layers] Invalid Layer Number Passed");
       return;
@@ -56,7 +49,7 @@ namespace Systems {
     mLayerData.collisionMatrix[layerIndex][layerNumber] = static_cast<int>(collisionStatus);
   }
 
-  void LayerSystem::SetLayerName(int layerNumber, std::string layerName) {
+  void LayerManager::SetLayerName(int layerNumber, std::string layerName) {
     if (layerNumber >= MAX_LAYERS || layerNumber < 0) {
       Debug::DebugLogger::GetInstance().LogWarning("[Layers] Invalid Layer Number Passed");
       return;
@@ -65,7 +58,7 @@ namespace Systems {
     mLayerData.layerNames[layerNumber] = layerName;
   }
 
-  bool LayerSystem::IsLayerVisible(std::string layerName) {
+  bool LayerManager::IsLayerVisible(std::string layerName) {
     auto itr = std::find(mLayerData.layerNames.begin(), mLayerData.layerNames.end(), layerName);
 
     if (itr != mLayerData.layerNames.end()) {
@@ -80,7 +73,7 @@ namespace Systems {
     return false;
   }
 
-  void LayerSystem::UpdateEntityLayer(ECS::Entity entity, std::string oldLayer, std::string newLayer) {
+  void LayerManager::UpdateEntityLayer(ECS::Entity entity, std::string oldLayer, std::string newLayer) {
     if (oldLayer == newLayer) return;
 
     auto itr = mLayerEntities.find(oldLayer);
@@ -96,7 +89,7 @@ namespace Systems {
     mLayerEntities[newLayer].push_back(entity);
   }
 
-  physx::PxFilterFlags LayerSystem::LayerFilterShader(physx::PxFilterObjectAttributes attributes0, 
+  physx::PxFilterFlags LayerManager::LayerFilterShader(physx::PxFilterObjectAttributes attributes0, 
     physx::PxFilterData filterData0, physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1, 
     physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize) const {
 
@@ -111,7 +104,7 @@ namespace Systems {
     return physx::PxFilterFlag::eDEFAULT;
   }
 
-  void LayerSystem::SetupShapeFilterData(physx::PxShape** shape, ECS::Entity entity) {
+  void LayerManager::SetupShapeFilterData(physx::PxShape** shape, ECS::Entity entity) {
     auto itr = std::find(mLayerData.layerNames.begin(), mLayerData.layerNames.end(), 
       entity.GetComponent<Component::Layer>().name);
 
@@ -134,7 +127,7 @@ namespace Systems {
     (*shape)->setSimulationFilterData(filterData);
   }
 
-  EVENT_CALLBACK_DEF(LayerSystem, OnSceneChange) {
+  EVENT_CALLBACK_DEF(LayerManager, OnSceneChange) {
     auto const sceneChangeEvent{ CAST_TO_EVENT(Events::SceneStateChange) };
     if (sceneChangeEvent->mNewState == Events::SceneStateChange::STOPPED) {
       mLayerEntities.clear();
@@ -175,7 +168,7 @@ namespace Systems {
     }
   }
 
-  EVENT_CALLBACK_DEF(LayerSystem, OnLayerModification) {
+  EVENT_CALLBACK_DEF(LayerManager, OnLayerModification) {
     auto layerModifiedEvent{ std::static_pointer_cast<Events::EntityLayerModified>(event) };
     ECS::Entity entity = layerModifiedEvent->mEntity;
     std::string const& oldLayer = layerModifiedEvent->mOldLayer;
@@ -237,7 +230,7 @@ namespace Systems {
     }
   }
 
-  EVENT_CALLBACK_DEF(LayerSystem, OnPrefabEditor) {
+  EVENT_CALLBACK_DEF(LayerManager, OnPrefabEditor) {
     // we simply clear; no layers for prefabs
     mLayerEntities.clear();
 
@@ -247,7 +240,7 @@ namespace Systems {
     mLayerData.layerVisibility[0] = true;
   }
 
-  EVENT_CALLBACK_DEF(LayerSystem, OnEntityRemove) {
+  EVENT_CALLBACK_DEF(LayerManager, OnEntityRemove) {
     // Remove from mLayerEntities
     auto entityRemovedEvent{ std::static_pointer_cast<Events::RemoveEntityEvent>(event) };
     ECS::Entity entityToRemove = entityRemovedEvent->mEntity;
@@ -265,3 +258,13 @@ namespace Systems {
     }
   }
 } // namespace Systems
+
+namespace {
+  bool IsValidAndActiveEntity(const ECS::Entity& e) {
+    if (!ECS::EntityManager::GetInstance().IsValidEntity(e) || !e.HasComponent<Component::Tag>()) {
+      Debug::DebugLogger::GetInstance().LogCritical("[Render System] Trying to render entity that does not exist!");
+      return false; // This should never happen
+    }
+    return e.GetComponent<Component::Tag>().isActive;
+  }
+}

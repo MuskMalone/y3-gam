@@ -218,7 +218,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Core\Entity.h" />
     <ClInclude Include="source\Core\EntityManager.h" />
     <ClInclude Include="source\Core\GUID.h" />
-    <ClInclude Include="source\Core\Systems\LayerSystem\LayerSystem.h" />
+    <ClInclude Include="source\Core\LayerManager\LayerManager.h" />
     <ClInclude Include="source\Core\Systems\PlayerControllerSystem\PlayerControllerSystem.h" />
     <ClInclude Include="source\Core\Systems\System.h" />
     <ClInclude Include="source\Core\Systems\SystemManager\SystemManager.h" />
@@ -393,7 +393,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Core\Components\Transform.cpp" />
     <ClCompile Include="source\Core\Entity.cpp" />
     <ClCompile Include="source\Core\EntityManager.cpp" />
-    <ClCompile Include="source\Core\Systems\LayerSystem\LayerSystem.cpp" />
+    <ClCompile Include="source\Core\LayerManager\LayerManager.cpp" />
     <ClCompile Include="source\Core\Systems\PlayerControllerSystem\PlayerControllerSystem.cpp" />
     <ClCompile Include="source\Core\Systems\SystemManager\SystemManager.cpp" />
     <ClCompile Include="source\Core\Systems\TextSystem\TextSystem.cpp" />

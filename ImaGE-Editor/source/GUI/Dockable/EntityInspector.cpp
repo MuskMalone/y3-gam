@@ -25,7 +25,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/Mesh/MeshFactory.h>
 #include <Graphics/Mesh/Mesh.h>
 #include "Asset/IGEAssets.h"
-#include <Core/Systems/LayerSystem/LayerSystem.h>
+#include <Core/LayerManager/LayerManager.h>
 #include <Physics/PhysicsHelpers.h>
 
 #define ICON_PADDING "   "
@@ -405,13 +405,12 @@ namespace GUI {
       NextRowTable("Assigned Layer");
 
       if (ImGui::BeginCombo("##LayerName", layer.name.c_str())) {
-        std::shared_ptr<Systems::LayerSystem> layerSystemPtr = 
-          Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock();
+        Layers::LayerManager& layerManager{ IGE_LAYERMGR };
 
-        for (std::string const& layerName : layerSystemPtr->GetLayerNames()) {
+        for (std::string const& layerName : layerManager.GetLayerNames()) {
           if (layerName == "") continue;
           if (ImGui::Selectable(layerName.c_str())) {
-            layerSystemPtr->UpdateEntityLayer(entity, layer.name, layerName);
+            layerManager.UpdateEntityLayer(entity, layer.name, layerName);
             entity.SetLayer(layerName);
             //layer.name = layerName;     
             modified = true;

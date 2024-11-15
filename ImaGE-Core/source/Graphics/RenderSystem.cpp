@@ -1,6 +1,6 @@
 #include <pch.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
-#include <Core/Systems/LayerSystem/LayerSystem.h>
+#include <Core/LayerManager/LayerManager.h>
 #include "RenderSystem.h"
 #include "Core/EntityManager.h"
 #include "Core/Entity.h"
@@ -40,17 +40,15 @@ namespace Graphics {
 		}
 		// else call on the layer system
 		else {
-			if (std::shared_ptr<Systems::LayerSystem> layerSys =
-				Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
-				std::unordered_map<std::string, std::vector<ECS::Entity>> const& layerEntities{ layerSys->GetLayerEntities() };
-				for (std::pair<std::string, std::vector<ECS::Entity>> mapPair : layerEntities) {
-					if (layerSys->IsLayerVisible(mapPair.first)) {
+			Layers::LayerManager& layerManager{ IGE_LAYERMGR };
+			std::unordered_map<std::string, std::vector<ECS::Entity>> const& layerEntities{ layerManager.GetLayerEntities() };
+			for (std::pair<std::string, std::vector<ECS::Entity>> mapPair : layerEntities) {
+				if (layerManager.IsLayerVisible(mapPair.first)) {
 #ifdef INSERT_ACTIVE
-						layerSys->CopyValidEntities(entityVector, mapPair);
+					layerManager.CopyValidEntities(entityVector, mapPair);
 #else
-						entityVector.insert(entityVector.end(), mapPair.second.begin(), mapPair.second.end());
+					entityVector.insert(entityVector.end(), mapPair.second.begin(), mapPair.second.end());
 #endif
-					}
 				}
 			}
 		}

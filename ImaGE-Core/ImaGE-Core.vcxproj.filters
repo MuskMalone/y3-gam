@@ -293,7 +293,7 @@
     <ClInclude Include="source\Core\GUID.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="source\Core\Systems\LayerSystem\LayerSystem.h">
+    <ClInclude Include="source\Core\LayerManager\LayerManager.h">
       <Filter>Core\Systems\LayerSystem</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Systems\PlayerControllerSystem\PlayerControllerSystem.h">
@@ -805,7 +805,7 @@
     <ClCompile Include="source\Core\EntityManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="source\Core\Systems\LayerSystem\LayerSystem.cpp">
+    <ClCompile Include="source\Core\LayerManager\LayerManager.cpp">
       <Filter>Core\Systems\LayerSystem</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Systems\PlayerControllerSystem\PlayerControllerSystem.cpp">

@@ -1,11 +1,12 @@
 #pragma once
-#include <utility>
-#include <Core/Systems/System.h>
-#include <Core/Entity.h>
+#include <Singleton/ThreadSafeSingleton.h>
 #include "Events/EventCallback.h"
+#include <utility>
+#include <Core/Entity.h>
 
-namespace Systems {
+#define IGE_LAYERMGR Layers::LayerManager::GetInstance()
 
+namespace Layers {
   constexpr size_t MAX_USER_DEFINED_LAYERS{ 13 };
 
   constexpr size_t MAX_BUILTIN_LAYERS{ 3 };
@@ -15,7 +16,7 @@ namespace Systems {
 
   constexpr size_t MAX_LAYERS{ MAX_USER_DEFINED_LAYERS + MAX_BUILTIN_LAYERS };
 
-  class LayerSystem : public System {
+  class LayerManager : public ThreadSafeSingleton<LayerManager> {
   public:
     struct LayerData {
       std::array<std::string, MAX_LAYERS> layerNames;
@@ -24,12 +25,8 @@ namespace Systems {
     };
 
   public:
-    LayerSystem(const char* name) : System(name), mLayerData{} {}
+    LayerManager();
 
-    void Start() override;
-    void Update() override;
-
-    static bool IsValidAndActiveEntity(const ECS::Entity& e);
     void CopyValidEntities(std::vector<ECS::Entity>& entityVector, const std::pair<std::string, std::vector<ECS::Entity>>& mapPair);
 
     std::array<int, MAX_LAYERS>const& GetLayerCollisionList(int layerNumber) const;

@@ -30,10 +30,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Audio/AudioManager.h>
 #include <Core/Systems/TransformSystem/TransformSystem.h>
 #include <Scripting/ScriptingSystem.h>
-#include <Core/Systems/LayerSystem/LayerSystem.h>
+#include <Core/LayerManager/LayerManager.h>
 #include <Graphics/RenderSystem.h>
 #include <Core/Systems/Systems.h>
 #include <Audio/AudioSystem.h>
+#include <Core/LayerManager/LayerManager.h>
 #pragma endregion
 
 #include "Serialization/Serializer.h"
@@ -57,6 +58,7 @@ namespace IGE {
     Input::InputManager::CreateInstance(mWindow, mSpecification.WindowWidth, mSpecification.WindowHeight, 0.1);
     Mono::ScriptManager::CreateInstance();
     ECS::EntityManager::CreateInstance();
+    Layers::LayerManager::CreateInstance();
     Systems::SystemManager::CreateInstance();
     Graphics::PostProcessingManager::CreateInstance();
 
@@ -104,7 +106,6 @@ namespace IGE {
     Systems::SystemManager& systemManager{ Systems::SystemManager::GetInstance() };
 
     systemManager.RegisterSystem<Systems::TransformSystem>("Transform System");
-    systemManager.RegisterSystem<Systems::LayerSystem>("Layer System");
     systemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
     systemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
     systemManager.RegisterSystem<IGE::Audio::AudioSystem>("Audio System");
@@ -206,6 +207,7 @@ namespace IGE {
     Reflection::ObjectFactory::DestroyInstance();
     Performance::FrameRateController::DestroyInstance();
     Events::EventManager::DestroyInstance();
+    Layers::LayerManager::DestroyInstance();
     ECS::EntityManager::DestroyInstance();
     Input::InputManager::DestroyInstance();
     Assets::AssetManager::DestroyInstance();

@@ -1,7 +1,7 @@
 #include <pch.h>
 #include "Physics/PhysicsSystem.h"
 #include <Core/Components/Components.h>
-#include <Core/Systems/LayerSystem/LayerSystem.h>
+#include <Core/LayerManager/LayerManager.h>
 #include "Core/EntityManager.h"
 #include "Events/EventManager.h"
 #include "Core/Entity.h"
@@ -54,13 +54,7 @@ namespace IGE {
 			physx::PxDefaultCpuDispatcher* dispatcher = physx::PxDefaultCpuDispatcherCreate(2);
 			sceneDesc.cpuDispatcher = dispatcher;
 
-			if (std::shared_ptr<Systems::LayerSystem> layerSys =
-				Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
-				sceneDesc.filterShader = LayerFilterShaderWrapper;
-			}
-			else {
-				sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
-			}
+			sceneDesc.filterShader = LayerFilterShaderWrapper;
 			mScene = mPhysics->createScene(sceneDesc);
 
 			// register callbacks for events
@@ -391,10 +385,7 @@ namespace IGE {
 		{
 			physx::PxShape* shapeptr{ mPhysics->createShape(geom, *mMaterial, true) };
 
-			if (std::shared_ptr<Systems::LayerSystem> layerSys =
-				Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
-				layerSys->SetupShapeFilterData(&shapeptr, entity);
-			}
+			IGE_LAYERMGR.SetupShapeFilterData(&shapeptr, entity);
 			SetColliderAsSensor(shapeptr, collider.sensor);
 			return shapeptr;
 		}
@@ -774,11 +765,8 @@ namespace IGE {
 			physx::PxPairFlag::eNOTIFY_TOUCH_LOST |
 			physx::PxPairFlag::eNOTIFY_CONTACT_POINTS |
 			physx::PxPairFlag::eTRIGGER_DEFAULT;
-		if (auto layerSys = Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
-			return layerSys->LayerFilterShader(
-				attributes0, filterData0, attributes1, filterData1, pairFlags, constantBlock, constantBlockSize);
-		}
 
-		return physx::PxFilterFlag::eDEFAULT;
+		return IGE_LAYERMGR.LayerFilterShader(
+				attributes0, filterData0, attributes1, filterData1, pairFlags, constantBlock, constantBlockSize);
 	}
 }

@@ -15,7 +15,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Reflection/ProxyScript.h>
 #include <Asset/AssetMetadata.h>
 #include <Asset/Assetables/Assetables.h>
-#include <Core/Systems/LayerSystem/LayerSystem.h>
+#include <Core/LayerManager/LayerManager.h>
 #include <Core/GUID.h>
 #include <Audio/AudioManager.h>
 #include <Core/Components/AudioSource.h>
@@ -89,7 +89,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
     .property("z", &physx::PxVec3::z);
 
   {
-    using T = Systems::LayerSystem::LayerData;
+    using T = Layers::LayerManager::LayerData;
     rttr::registration::class_<T>("LayerData")
       .constructor<>()
       .property("layerNames", &T::layerNames)

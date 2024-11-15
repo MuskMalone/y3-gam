@@ -19,7 +19,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <cstdarg>
 #include <Prefabs/PrefabManager.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
-#include <Core/Systems/LayerSystem/LayerSystem.h>
+#include <Core/LayerManager/LayerManager.h>
 #include <Core/Components/Script.h>
 #include <Reflection/ProxyScript.h>
 
@@ -170,14 +170,9 @@ namespace Serialization
       return;
     }
 
-    Systems::LayerSystem::LayerData layerData;
+    Layers::LayerManager::LayerData layerData;
     DeserializeRecursive(layerData, document[JSON_LAYERS_KEY]);
-    if (auto layerSys = Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
-      layerSys->LoadLayerData(std::move(layerData));
-    }
-    else {
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to get Layer System!");
-    }
+    IGE_LAYERMGR.LoadLayerData(std::move(layerData));
   }
 
   Prefabs::Prefab Deserializer::DeserializePrefabToVariant(std::string const& json)

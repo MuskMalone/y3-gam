@@ -11,13 +11,15 @@
 
 namespace Graphics {
     ShadowPass::ShadowPass(const RenderPassSpec& spec) : RenderPass(spec), mLightSpaceMtx{}, mShadowSoftness{}, mShadowBias{}, mActive{ false } {
-
+      mActive = Graphics::RenderSystem::mCameraManager.HasActiveCamera();
+      if (mActive) {
+        ComputeLightSpaceMatrix();
+      }
     }
 
     void ShadowPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
       // only do shadow pass for game view
       if (cam.isEditor) {
-        mActive = Graphics::RenderSystem::mCameraManager.HasActiveCamera();
         return;
       }
 
@@ -43,6 +45,10 @@ namespace Graphics {
         Renderer::RenderSubmeshInstances();
 
         EndRender();
+    }
+
+    void ShadowPass::ComputeLightSpaceMatrix() {
+
     }
 
     bool ShadowPass::LocateLightSource(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
@@ -119,19 +125,17 @@ namespace Graphics {
         }
 
         // pull back near plane and push back far plane based on multiplier
-        //float const nearPlane{ min.z < 0.f ? min.z * nearPlaneMultiplier : min.z / nearPlaneMultiplier },
-        //  farPlane{ max.z < 0.f ? max.z / nearPlaneMultiplier : max.z * nearPlaneMultiplier };
-        min *= nearPlaneMultiplier;
-        max *= nearPlaneMultiplier;
+        float const nearPlane{ min.z < 0.f ? min.z * nearPlaneMultiplier : min.z / nearPlaneMultiplier },
+          farPlane{ max.z < 0.f ? max.z / nearPlaneMultiplier : max.z * nearPlaneMultiplier };
 
         auto const& shader = mSpec.pipeline->GetShader();
         shader->Use();
 
-        shader->SetUniform("u_Near", min.z);
-        shader->SetUniform("u_Far", max.z);
+        shader->SetUniform("u_Near", nearPlane);
+        shader->SetUniform("u_Far", farPlane);
 
         mLightSpaceMtx = glm::ortho(min.x, max.x,
-            min.y, max.y, min.z, max.z) * lightView;
+            min.y, max.y, nearPlane, farPlane) * lightView;
 
         shader->SetUniform("u_LightSpaceMtx", mLightSpaceMtx);
     }

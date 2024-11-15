@@ -19,7 +19,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Reflection/ObjectFactory.h>
 #include <Prefabs/PrefabManager.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
-#include <Core/Systems/LayerSystem/LayerSystem.h>
+#include <Core/LayerManager/LayerManager.h>
 
 namespace Helper {
   template <typename T>
@@ -123,12 +123,7 @@ namespace Serialization
 
     // serialize layer data
     writer.Key(JSON_LAYERS_KEY);
-    if (auto layerSys = Systems::SystemManager::GetInstance().GetSystem<Systems::LayerSystem>().lock()) {
-      SerializeClassTypes(layerSys->GetLayerData(), writer);
-    }
-    else {
-      Debug::DebugLogger::GetInstance().LogError("[Serializer] Unable to get Layer System!");
-    }
+    SerializeClassTypes(IGE_LAYERMGR.GetLayerData(), writer);
 
     writer.EndObject();
     // clean up

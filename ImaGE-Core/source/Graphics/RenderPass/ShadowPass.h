@@ -20,7 +20,7 @@ namespace Graphics {
     inline uint32_t GetShadowMapBuffer() const { return GetTargetFramebuffer()->GetDepthAttachmentID(); }
 
   private:
-
+    void ComputeLightSpaceMatrix();
     bool LocateLightSource(CameraSpec const& cam, std::vector<ECS::Entity> const& entities); //edit tmp redundamncy
     void StartRender();
     void EndRender();
@@ -29,7 +29,7 @@ namespace Graphics {
     
     // temp
     // @TODO: have to account for multiple lights in future
-    glm::mat4 mLightSpaceMtx;
+    glm::mat4 mLightViewMtx, mLightSpaceMtx;
     int mShadowSoftness;
     float mShadowBias;
 
