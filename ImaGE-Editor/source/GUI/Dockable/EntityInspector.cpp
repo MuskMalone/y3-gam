@@ -31,6 +31,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #define ICON_PADDING "   "
 
 namespace {
+  static bool entityRotModified{ false };
+
   bool InputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled = false);
 }
 
@@ -102,6 +104,7 @@ namespace GUI {
       else
         mEntityChanged = false;
 
+      entityRotModified = false;
       static Component::PrefabOverrides* prefabOverride{ nullptr };
       static bool componentOverriden{ false };
       if (!mEditingPrefab && currentEntity.HasComponent<Component::PrefabOverrides>()) {
@@ -910,6 +913,8 @@ namespace GUI {
       if (ImGuiHelpers::TableInputFloat3("Rotation", &localRot[0], inputWidth, false, -FLT_MAX, FLT_MAX, 0.3f)) {
         transform.SetLocalRotWithEuler(localRot);
         modified = true;
+
+        entityRotModified = true;
       }
       static bool constrainedScale{ true };
       glm::vec3 scale{ transform.scale };
@@ -1748,11 +1753,13 @@ namespace GUI {
   bool Inspector::LightComponentWindow(ECS::Entity entity, bool highlight) {
     bool const isOpen{ WindowBegin<Component::Light>("Light", highlight) };
     bool modified{ false };
+    Component::Light& light{ entity.GetComponent<Component::Light>() };
+
+    if (entityRotModified) { light.shadowConfig.shadowModified = true; }
 
     if (isOpen) {
       const std::vector<std::string> Lights{ "Directional","Spotlight" };
       //  // Assuming 'collider' is an instance of Collider
-      Component::Light& light{ entity.GetComponent<Component::Light>() };
       float const inputWidth{ CalcInputWidth(50.f) }, vec3InputWidth{ inputWidth / 3.f };
 
       ImGui::BeginTable("##LightTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
@@ -1826,7 +1833,7 @@ namespace GUI {
       else {
         NextRowTable("Cast Shadows");
         if (ImGui::Checkbox("##CastShadows", &light.castShadows)) {
-          modified = true;
+          modified = light.shadowConfig.shadowModified = true;
         }
         if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
           ImGui::SetTooltip("Note: Only 1 shadow-casting light is supported");
@@ -1835,6 +1842,8 @@ namespace GUI {
       ImGui::EndTable();
 
       if (light.castShadows && light.type == Component::LightType::DIRECTIONAL) {
+        Component::ShadowConfig& lightShadow{ light.shadowConfig };
+
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
         if (ImGui::TreeNodeEx("Shadows", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanFullWidth)) {
@@ -1845,24 +1854,56 @@ namespace GUI {
             ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
             NextRowTable("Softness");
-            if (ImGui::SliderInt("##SoftnessSlider", &light.softness, 0, 5)) {
-              modified = true;
+            if (ImGui::SliderInt("##SoftnessSlider", &lightShadow.softness, 0, 5)) {
+              modified = lightShadow.shadowModified = true;
             }
 
             NextRowTable("Bias");
-            if (ImGui::SliderFloat("##BiasSlider", &light.bias, 0.f, 2.f, "% .3f")) {
-              modified = true;
+            if (ImGui::SliderFloat("##BiasSlider", &lightShadow.bias, 0.f, 2.f, "% .3f")) {
+              modified = lightShadow.shadowModified = true;
             }
 
             NextRowTable("Near Plane");
             if (ImGui::IsItemHovered()) {
               ImGui::SetTooltip("How close the light is to the object (how much of the scene the light sees)");
             }
-            if (ImGui::SliderFloat("##NearPlane", &light.nearPlaneMultiplier, 0.1f, 20.f, "% .2f")) {
-              modified = true;
+            if (ImGui::DragFloat("##NearPlane", &lightShadow.nearPlane, 0.1f, -FLT_MAX, FLT_MAX, "% .2f")) {
+              modified = lightShadow.shadowModified = true;
+            }
+
+            bool tooltip{ false };
+            NextRowTable("Custom Center");
+            if (ImGui::IsItemHovered()) { tooltip = true; }
+            if (ImGui::Checkbox("##CustomCenter", &lightShadow.customCenter)) {
+              modified = lightShadow.shadowModified = true;
+            }
+            if (ImGui::IsItemHovered()) { tooltip = true; }
+
+            if (tooltip) {
+              ImGui::BeginTooltip();
+              ImGui::Text("Use this if the automatic centering for the scene is inaccurate");
+              ImGui::Text("Your scene should ideally be in the center of the Render Pass Viewer window");
+              ImGui::EndTooltip();
             }
 
             ImGui::EndTable();
+
+            if (lightShadow.customCenter) {
+              if (ImGui::BeginTable("MaterialVec2Table", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+                float const vec3InputWidth{ inputWidth / 3.f };
+                ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+                ImGui::TableSetupColumn("  X", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
+                ImGui::TableSetupColumn("  Y", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
+                ImGui::TableSetupColumn("  Z", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
+                ImGui::TableHeadersRow();
+
+                if (ImGuiHelpers::TableInputFloat3("Center", &lightShadow.centerPos[0], vec3InputWidth, false, -FLT_MAX, FLT_MAX, 0.3f)) {
+                  modified = lightShadow.shadowModified = true;
+                }
+
+                ImGui::EndTable();
+              }
+            }
           }
 
           ImGui::TreePop();

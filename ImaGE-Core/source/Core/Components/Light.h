@@ -21,17 +21,31 @@ namespace Component {
 			LIGHT_COUNT
 		};
 
-	// @TODO: for use when shadows are improved on
+	// @TODO: for organization of shadow members
 	struct ShadowConfig {
+		ShadowConfig() : centerPos{}, softness { 1 }, bias{ 0.005f }, nearPlane{ -100.f },
+			isStatic{ true }, shadowModified{ true }, customCenter{ false } {}
+
+		glm::vec3 centerPos;
+		int softness;
 		float bias;
-		float nearPlaneMultiplier;
-		// softness / shadow type
+		float nearPlane;
+		bool isStatic;
+		bool shadowModified, customCenter;	// im using this flag to determine when to recompute the light space mtx
+
+		void Clear() {
+			centerPos = {};
+			isStatic = shadowModified = true;
+			customCenter = false;
+			bias = 0.005f;
+			softness = 1;
+			nearPlane = -100.f;
+		}
 	};
 
 	struct Light {
 		Light() : forwardVec{ 0.f, 0.f, -1.f }, color{ 1.f, 1.f, 1.f }, type{ DIRECTIONAL }, mLightIntensity{ 1.f },
-			mInnerSpotAngle{ 5.f }, mOuterSpotAngle{ 12.5f }, mRange{ 10.f },
-			softness{ 1 }, bias{ 0.005f }, nearPlaneMultiplier{ 10.f }, castShadows{ false } {}
+			mInnerSpotAngle{ 5.f }, mOuterSpotAngle{ 12.5f }, mRange{ 10.f }, shadowConfig{}, castShadows{ false } {}
 
 		inline void Clear() noexcept {
 			forwardVec = { 0.f, 0.f, -1.f };
@@ -43,10 +57,8 @@ namespace Component {
 			mOuterSpotAngle = 12.5f;
 			mRange = 10.f;
 			
+			shadowConfig.Clear();
 			castShadows = false;
-			bias = 0.005f;
-			softness = 1;
-			nearPlaneMultiplier = 10.f;
 		}
 
 		glm::vec3 forwardVec;		// Set default forward vector to face the -z-axis
@@ -60,9 +72,8 @@ namespace Component {
 		float mRange;						// Maximum range of the spotlight
 		
 		// Shadows
-		int softness;
-		float bias;
-		float nearPlaneMultiplier;
+		ShadowConfig shadowConfig;
+
 		bool castShadows;
 	};
 

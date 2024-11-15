@@ -140,7 +140,7 @@ void main(){
     vec3 ambient = vec3(0.01) * albedo * u_AO;
 
     float shadow = u_ShadowsActive ? CheckShadow(v_LightSpaceFragPos) : 0.0;    // 1.0 if in shadow and 0.0 otherwise
-    vec3 color = ambient + Lo * 0.3 * (1.0 - shadow);
+    vec3 color = ambient + Lo * (1.0 - shadow);
     color = color / (color + vec3(1.0));
     color = pow(color, vec3(1.0/2.2)); //gamma correction
     //change transparency here
@@ -217,7 +217,7 @@ float CheckShadow(vec4 lightSpacePos) {
 
         // if current depth more than what is in the shadow map,
         // it means that it is in shadow
-        return projCoords.z - u_ShadowBias > closestDepth ? 0.5 : 0.0;
+        return projCoords.z - u_ShadowBias > closestDepth ? 1.0 : 0.0;
     }
 
     return SimplePCF(projCoords);

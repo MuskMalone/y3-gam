@@ -67,9 +67,7 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("outerAngle", &Light::mOuterSpotAngle)
     .property("range", &Light::mRange)
     .property("castShadows", &Light::castShadows)
-    .property("bias", &Light::bias)
-    .property("softness", &Light::softness)
-    .property("nearPlaneMultiplier", &Light::nearPlaneMultiplier);
+    .property("shadowConfig", &Light::shadowConfig);
 
   REGISTER_COMPONENT(Layer, "Layer")
     .property("layerName", &Layer::name);

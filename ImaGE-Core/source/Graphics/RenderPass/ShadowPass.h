@@ -1,11 +1,11 @@
 #pragma once
 #include "RenderPass.h"
 #include <glm/glm.hpp>
-namespace Component { struct Light; }
+#include <Core/Entity.h>
+
+namespace Component { struct Light; struct Camera; }
 
 namespace Graphics {
-  class EditorCam;
-
   class ShadowPass : public RenderPass {
   public:
     ShadowPass(const RenderPassSpec& spec);
@@ -14,22 +14,29 @@ namespace Graphics {
     void Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) override;
 
     uint32_t BindShadowMap();
+
+    // @TODO: find a better way to retrive uniforms instead of getter for each one
     inline glm::mat4 const& GetLightSpaceMatrix() const noexcept { return mLightSpaceMtx; }
     inline float GetShadowBias() const noexcept { return mShadowBias; }
     inline int GetShadowSoftness() const noexcept { return mShadowSoftness; }
     inline uint32_t GetShadowMapBuffer() const { return GetTargetFramebuffer()->GetDepthAttachmentID(); }
 
   private:
-    void ComputeLightSpaceMatrix();
-    bool LocateLightSource(CameraSpec const& cam, std::vector<ECS::Entity> const& entities); //edit tmp redundamncy
+    void Init();
+    bool LocateLightEntity();
+    void ComputeLightSpaceMatrix(Component::Camera const& cam, Component::Light& light, glm::quat const& lightRot);
+
     void StartRender();
     void EndRender();
 
-    void SetLightUniforms(CameraSpec const& cam, glm::vec3 const& lightDir, float nearPlaneMultiplier, glm::vec3 test);
+    void SetLightUniforms();
     
     // temp
     // @TODO: have to account for multiple lights in future
-    glm::mat4 mLightViewMtx, mLightSpaceMtx;
+    static inline bool sIsLightStatic = false;
+
+    glm::mat4 mLightSpaceMtx;
+    ECS::Entity mLightEntity;
     int mShadowSoftness;
     float mShadowBias;
 
