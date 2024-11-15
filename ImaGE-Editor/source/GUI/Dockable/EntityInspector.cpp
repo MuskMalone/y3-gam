@@ -537,7 +537,6 @@ namespace GUI {
             ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
             ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, inputWidth);
           }
-
           if (f.is_type<Mono::DataMemberInstance<int>>())
           {
             Mono::DataMemberInstance<int>& sfi = f.get_value<Mono::DataMemberInstance<int>>();
@@ -681,7 +680,7 @@ namespace GUI {
 
 
 
-              if (ImGui::BeginCombo("##", msg.c_str()))
+              if (ImGui::BeginCombo("##ScriptDataMemList", msg.c_str()))
               {
                 for (const std::pair<ECS::Entity, Mono::ScriptInstance*> e : allEntitesWithScript)
                 {

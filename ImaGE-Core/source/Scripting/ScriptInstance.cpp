@@ -99,7 +99,7 @@ void ScriptInstance::InvokeOnUpdate(double dt)
   glm::vec2 delt = Input::InputManager::GetInstance().GetMouseDelta();
   if ( mUpdateMethod)
   {
-    std::vector<void*> params = { &dt };
+    std::vector<void*> params = { };
     mono_runtime_invoke( mUpdateMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
   }
 }
@@ -273,7 +273,6 @@ void ScriptInstance::GetAllFieldsInst()
       default: // The rest of the data types will be public member of type c# scripts that inherits from entity
       {
         GetFieldCSClass(mScriptFieldInstList, field);
-        break;
       }
     }
   }
@@ -395,18 +394,39 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> const& scriptFieldP
   {
     for (rttr::variant& f : mScriptFieldInstList)
     {
-      // @TODO: QD to addif block for Mono::DataMemberInstance<unsigned>
-      if (f.is_type<Mono::DataMemberInstance<float>>() && i.get_type() == f.get_type())
-      {
-        Mono::DataMemberInstance<float>& sfi = f.get_value<Mono::DataMemberInstance<float>>();
-        const Mono::DataMemberInstance<float>& psi = i.get_value<Mono::DataMemberInstance<float>>();
-        if (sfi.mScriptField.mFieldName == psi.mScriptField.mFieldName)
-        {
-          sfi.mData = psi.mData;
-          SetFieldValue<float>(sfi.mData, sfi.mScriptField.mClassField);
-        }
-        break;
-      }
+       if (f.is_type<Mono::DataMemberInstance<unsigned>>() && i.get_type() == f.get_type())
+       {
+         Mono::DataMemberInstance<unsigned>& sfi = f.get_value<Mono::DataMemberInstance<unsigned>>();
+         const Mono::DataMemberInstance<unsigned>& psi = i.get_value<Mono::DataMemberInstance<unsigned>>();
+         if (sfi.mScriptField.mFieldName == psi.mScriptField.mFieldName)
+         {
+           sfi.mData = psi.mData;
+           SetFieldValue<unsigned>(sfi.mData, sfi.mScriptField.mClassField);
+         }
+         break;
+       }
+       else if (f.is_type<Mono::DataMemberInstance<bool>>() && i.get_type() == f.get_type())
+       {
+         Mono::DataMemberInstance<bool>& sfi = f.get_value<Mono::DataMemberInstance<bool>>();
+         const Mono::DataMemberInstance<bool>& psi = i.get_value<Mono::DataMemberInstance<bool>>();
+         if (sfi.mScriptField.mFieldName == psi.mScriptField.mFieldName)
+         {
+           sfi.mData = psi.mData;
+           SetFieldValue<bool>(sfi.mData, sfi.mScriptField.mClassField);
+         }
+         break;
+       }
+       else if (f.is_type<Mono::DataMemberInstance<short>>() && i.get_type() == f.get_type())
+       {
+         Mono::DataMemberInstance<short>& sfi = f.get_value<Mono::DataMemberInstance<short>>();
+         const Mono::DataMemberInstance<short>& psi = i.get_value<Mono::DataMemberInstance<short>>();
+         if (sfi.mScriptField.mFieldName == psi.mScriptField.mFieldName)
+         {
+           sfi.mData = psi.mData;
+           SetFieldValue<short>(sfi.mData, sfi.mScriptField.mClassField);
+         }
+         break;
+       }
       else if (f.is_type<Mono::DataMemberInstance<int>>() && i.get_type() == f.get_type())
       {
         Mono::DataMemberInstance<int>& sfi = f.get_value<Mono::DataMemberInstance<int>>();
@@ -418,6 +438,17 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> const& scriptFieldP
         }
         break;
       }
+      else if (f.is_type<Mono::DataMemberInstance<float>>() && i.get_type() == f.get_type())
+       {
+         Mono::DataMemberInstance<float>& sfi = f.get_value<Mono::DataMemberInstance<float>>();
+         const Mono::DataMemberInstance<float>& psi = i.get_value<Mono::DataMemberInstance<float>>();
+         if (sfi.mScriptField.mFieldName == psi.mScriptField.mFieldName)
+         {
+           sfi.mData = psi.mData;
+           SetFieldValue<float>(sfi.mData, sfi.mScriptField.mClassField);
+         }
+         break;
+       }
       else if (f.is_type<Mono::DataMemberInstance<double>>() && i.get_type() == f.get_type())
       {
         Mono::DataMemberInstance<double>& sfi = f.get_value<Mono::DataMemberInstance<double>>();
@@ -429,17 +460,39 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> const& scriptFieldP
         }
         break;
       }
-      else if (f.is_type<Mono::DataMemberInstance<unsigned>>() && i.get_type() == f.get_type())
-      {
-        Mono::DataMemberInstance<unsigned>& sfi = f.get_value<Mono::DataMemberInstance<unsigned>>();
-        const Mono::DataMemberInstance<unsigned>& psi = i.get_value<Mono::DataMemberInstance<unsigned>>();
-        if (sfi.mScriptField.mFieldName == psi.mScriptField.mFieldName)
-        {
-          sfi.mData = psi.mData;
-          SetFieldValue<unsigned>(sfi.mData, sfi.mScriptField.mClassField);
-        }
-        break;
-      }
+      else if (f.is_type<Mono::DataMemberInstance<int64_t>>() && i.get_type() == f.get_type())
+       {
+         Mono::DataMemberInstance<int64_t>& sfi = f.get_value<Mono::DataMemberInstance<int64_t>>();
+         const Mono::DataMemberInstance<int64_t>& psi = i.get_value<Mono::DataMemberInstance<int64_t>>();
+         if (sfi.mScriptField.mFieldName == psi.mScriptField.mFieldName)
+         {
+           sfi.mData = psi.mData;
+           SetFieldValue<int64_t>(sfi.mData, sfi.mScriptField.mClassField);
+         }
+         break;
+       }
+      else if (f.is_type<Mono::DataMemberInstance<uint16_t>>() && i.get_type() == f.get_type())
+       {
+         Mono::DataMemberInstance<uint16_t>& sfi = f.get_value<Mono::DataMemberInstance<uint16_t>>();
+         const Mono::DataMemberInstance<uint16_t>& psi = i.get_value<Mono::DataMemberInstance<uint16_t>>();
+         if (sfi.mScriptField.mFieldName == psi.mScriptField.mFieldName)
+         {
+           sfi.mData = psi.mData;
+           SetFieldValue<uint16_t>(sfi.mData, sfi.mScriptField.mClassField);
+         }
+         break;
+       }
+      else if (f.is_type<Mono::DataMemberInstance<uint64_t>>() && i.get_type() == f.get_type())
+       {
+         Mono::DataMemberInstance<uint64_t>& sfi = f.get_value<Mono::DataMemberInstance<uint64_t>>();
+         const Mono::DataMemberInstance<uint64_t>& psi = i.get_value<Mono::DataMemberInstance<uint64_t>>();
+         if (sfi.mScriptField.mFieldName == psi.mScriptField.mFieldName)
+         {
+           sfi.mData = psi.mData;
+           SetFieldValue<uint64_t>(sfi.mData, sfi.mScriptField.mClassField);
+         }
+         break;
+       }
       else if (f.is_type<Mono::DataMemberInstance<std::string>>() && i.get_type() == f.get_type())
       {
         Mono::DataMemberInstance<std::string>& sfi = f.get_value<Mono::DataMemberInstance<std::string>>();
@@ -451,6 +504,17 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> const& scriptFieldP
         }
         break;
       }
+      else if (f.is_type<Mono::DataMemberInstance<glm::vec3>>() && i.get_type() == f.get_type())
+      {
+        Mono::DataMemberInstance<glm::vec3>& sfi = f.get_value<Mono::DataMemberInstance<glm::vec3>>();
+        const Mono::DataMemberInstance<glm::vec3>& psi = i.get_value<Mono::DataMemberInstance<glm::vec3>>();
+        if (sfi.mScriptField.mFieldName == psi.mScriptField.mFieldName)
+        {
+          sfi.mData = psi.mData;
+          SetFieldValue<glm::vec3>(sfi.mData, sfi.mScriptField.mClassField);
+        }
+        break;
+        }
       else if (f.is_type<Mono::DataMemberInstance<glm::dvec3>>() && i.get_type() == f.get_type())
       {
         Mono::DataMemberInstance<glm::dvec3>& sfi = f.get_value<Mono::DataMemberInstance<glm::dvec3>>();
@@ -473,17 +537,28 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> const& scriptFieldP
         }
         break;
       }
-      else if (f.is_type<Mono::DataMemberInstance<std::vector<unsigned>>>() && i.get_type() == f.get_type())
+      else if (f.is_type<Mono::DataMemberInstance<std::vector<float>>>() && i.get_type() == f.get_type())
       {
-        Mono::DataMemberInstance<std::vector<unsigned>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<unsigned>>>();
-        const Mono::DataMemberInstance<std::vector<unsigned>>& psi = i.get_value<Mono::DataMemberInstance<std::vector<unsigned>>>();
+        Mono::DataMemberInstance<std::vector<float>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<float>>>();
+        const Mono::DataMemberInstance<std::vector<float>>& psi = i.get_value<Mono::DataMemberInstance<std::vector<float>>>();
         if (sfi.mScriptField.mFieldName == psi.mScriptField.mFieldName)
         {
           sfi.mData = psi.mData;
-          SetFieldValueArr<unsigned>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain);
+          SetFieldValueArr<float>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain);
         }
         break;
-      }
+        }
+      else if (f.is_type<Mono::DataMemberInstance<std::vector<double>>>() && i.get_type() == f.get_type())
+      {
+        Mono::DataMemberInstance<std::vector<double>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<double>>>();
+        const Mono::DataMemberInstance<std::vector<double>>& psi = i.get_value<Mono::DataMemberInstance<std::vector<double>>>();
+        if (sfi.mScriptField.mFieldName == psi.mScriptField.mFieldName)
+        {
+          sfi.mData = psi.mData;
+          SetFieldValueArr<double>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain);
+        }
+        break;
+        }
       else if (f.is_type<Mono::DataMemberInstance<std::vector<std::string>>>() && i.get_type() == f.get_type())
       {
         Mono::DataMemberInstance<std::vector<std::string>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<std::string>>>();
@@ -500,6 +575,17 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> const& scriptFieldP
         }
         break;
       }
+      else if (f.is_type<Mono::DataMemberInstance<std::vector<unsigned>>>() && i.get_type() == f.get_type())
+      {
+        Mono::DataMemberInstance<std::vector<unsigned>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<unsigned>>>();
+        const Mono::DataMemberInstance<std::vector<unsigned>>& psi = i.get_value<Mono::DataMemberInstance<std::vector<unsigned>>>();
+        if (sfi.mScriptField.mFieldName == psi.mScriptField.mFieldName)
+        {
+          sfi.mData = psi.mData;
+          SetFieldValueArr<unsigned>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain);
+        }
+        break;
+        }
       else if (f.is_type<Mono::DataMemberInstance<ScriptInstance>>() && i.get_type() == f.get_type())
       {
         Mono::DataMemberInstance<ScriptInstance>& sfi = f.get_value<Mono::DataMemberInstance<ScriptInstance>>();
@@ -510,9 +596,10 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> const& scriptFieldP
           {
             sfi.mData = psi.mData;
             SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
+            break;
           }
         }
-        break;
+       
       }
 
     }
@@ -530,30 +617,60 @@ void ScriptInstance::GetAllUpdatedFields()
 
   for (rttr::variant& f : mScriptFieldInstList)
   {
-    if (f.is_type<Mono::DataMemberInstance<float>>())
+    if (f.is_type<Mono::DataMemberInstance<unsigned>>())
     {
-      Mono::DataMemberInstance<float>& sfi = f.get_value<Mono::DataMemberInstance<float>>();
-      sfi.mData = GetFieldValue<float>(sfi.mScriptField.mClassField);
+       Mono::DataMemberInstance<unsigned>& sfi = f.get_value<Mono::DataMemberInstance<unsigned>>();
+       sfi.mData = GetFieldValue<unsigned>(sfi.mScriptField.mClassField);
+    }
+    else if (f.is_type<Mono::DataMemberInstance<bool>>())
+    {
+      Mono::DataMemberInstance<bool>& sfi = f.get_value<Mono::DataMemberInstance<bool>>();
+      sfi.mData = GetFieldValue<bool>(sfi.mScriptField.mClassField);
+    }
+    else if (f.is_type<Mono::DataMemberInstance<short>>())
+    {
+      Mono::DataMemberInstance<short>& sfi = f.get_value<Mono::DataMemberInstance<short>>();
+      sfi.mData = GetFieldValue<short>(sfi.mScriptField.mClassField);
     }
     else if (f.is_type<Mono::DataMemberInstance<int>>())
     {
       Mono::DataMemberInstance<int>& sfi = f.get_value<Mono::DataMemberInstance<int>>();
       sfi.mData = GetFieldValue<int>(sfi.mScriptField.mClassField);
     }
+    else if (f.is_type<Mono::DataMemberInstance<float>>())
+    {
+      Mono::DataMemberInstance<float>& sfi = f.get_value<Mono::DataMemberInstance<float>>();
+      sfi.mData = GetFieldValue<float>(sfi.mScriptField.mClassField);
+    }
     else if (f.is_type<Mono::DataMemberInstance<double>>())
     {
       Mono::DataMemberInstance<double>& sfi = f.get_value<Mono::DataMemberInstance<double>>();
       sfi.mData = GetFieldValue<double>(sfi.mScriptField.mClassField);
     }
-    else if (f.is_type<Mono::DataMemberInstance<unsigned>>())
+    else if (f.is_type<Mono::DataMemberInstance<int64_t>>())
     {
-      Mono::DataMemberInstance<unsigned>& sfi = f.get_value<Mono::DataMemberInstance<unsigned>>();
-      sfi.mData = GetFieldValue<unsigned>(sfi.mScriptField.mClassField);
+      Mono::DataMemberInstance<int64_t>& sfi = f.get_value<Mono::DataMemberInstance<int64_t>>();
+      sfi.mData = GetFieldValue<int64_t>(sfi.mScriptField.mClassField);
+    }
+    else if (f.is_type<Mono::DataMemberInstance<uint16_t>>())
+    {
+      Mono::DataMemberInstance<uint16_t>& sfi = f.get_value<Mono::DataMemberInstance<uint16_t>>();
+      sfi.mData = GetFieldValue<uint16_t>(sfi.mScriptField.mClassField);
+    }
+    else if (f.is_type<Mono::DataMemberInstance<uint64_t>>())
+    {
+      Mono::DataMemberInstance<uint64_t>& sfi = f.get_value<Mono::DataMemberInstance<uint64_t>>();
+      sfi.mData = GetFieldValue<uint64_t>(sfi.mScriptField.mClassField);
     }
     else if (f.is_type<Mono::DataMemberInstance<std::string>>())
     {
       Mono::DataMemberInstance<std::string>& sfi = f.get_value<Mono::DataMemberInstance<std::string>>();
       sfi.mData = MonoStringToSTD(GetFieldValue<MonoString*>(sfi.mScriptField.mClassField));
+    }
+    else if (f.is_type<Mono::DataMemberInstance<glm::vec3>>())
+    {
+      Mono::DataMemberInstance<glm::vec3>& sfi = f.get_value<Mono::DataMemberInstance<glm::vec3>>();
+      sfi.mData = GetFieldValue<glm::vec3>(sfi.mScriptField.mClassField);
     }
     else if (f.is_type<Mono::DataMemberInstance<glm::dvec3>>())
     {
@@ -565,10 +682,15 @@ void ScriptInstance::GetAllUpdatedFields()
       Mono::DataMemberInstance<std::vector<int>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<int>>>();
       sfi.mData = GetFieldValueArr<int>(sfi.mScriptField.mClassField);
     }
-    else if (f.is_type<Mono::DataMemberInstance<std::vector<unsigned>>>())
+    else if (f.is_type<Mono::DataMemberInstance<std::vector<float>>>())
     {
-      Mono::DataMemberInstance<std::vector<unsigned>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<unsigned>>>();
-      sfi.mData = GetFieldValueArr<unsigned>(sfi.mScriptField.mClassField);
+      Mono::DataMemberInstance<std::vector<float>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<float>>>();
+      sfi.mData = GetFieldValueArr<float>(sfi.mScriptField.mClassField);
+    }
+    else if (f.is_type<Mono::DataMemberInstance<std::vector<double>>>())
+    {
+      Mono::DataMemberInstance<std::vector<double>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<double>>>();
+      sfi.mData = GetFieldValueArr<double>(sfi.mScriptField.mClassField);
     }
     else if (f.is_type<Mono::DataMemberInstance<std::vector<std::string>>>())
     {
@@ -579,6 +701,11 @@ void ScriptInstance::GetAllUpdatedFields()
       {
         sfi.mData.push_back(MonoStringToSTD(s));
       }
+    }
+    else if (f.is_type<Mono::DataMemberInstance<std::vector<unsigned>>>())
+    {
+      Mono::DataMemberInstance<std::vector<unsigned>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<unsigned>>>();
+      sfi.mData = GetFieldValueArr<unsigned>(sfi.mScriptField.mClassField);
     }
     else if (f.is_type<Mono::DataMemberInstance<ScriptInstance>>())
     {

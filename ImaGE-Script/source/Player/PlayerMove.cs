@@ -34,6 +34,7 @@ public class  PlayerMove : Entity
   public float jumpHeight = 20f;
 
   public Entity cam;
+  public Test scrTest;
 
   private float yaw = 0f;  // Rotation around the Y-axis (horizontal, for player)
   private float pitch = 0f;  // Rotation around the X-axis (vertical, for camera)
@@ -51,6 +52,7 @@ public class  PlayerMove : Entity
 
   //public Vector3 velocity = new Vector3();
   bool isGrounded = true;
+  public string testStr = "NIGGA";
   public PlayerMove() : base()
   {
 
@@ -82,10 +84,11 @@ public class  PlayerMove : Entity
   }
     void forPlayerMovement()
     {
-        //for testing
-
+    //for testing
+    scrTest.TestInt = 369;
       isGrounded = InternalCalls.IsGrounded(mEntityID);
-
+   
+      
       //if (isGrounded && velocity.Y < 0)
       //{
       //  velocity.Y = -2f;

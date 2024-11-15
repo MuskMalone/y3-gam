@@ -65,6 +65,8 @@ namespace Mono
     { "System.Numerics.Vector3", ScriptFieldType::VEC3 },
     { "IGE.Utils.Vec3<System.Double>", ScriptFieldType::DVEC3 },
     { "System.Int32[]", ScriptFieldType::INT_ARR },
+    { "System.System.Single[]", ScriptFieldType::FLOAT_ARR },
+    { "System.System.Double[]", ScriptFieldType::DOUBLE_ARR },
     { "System.String[]",ScriptFieldType::STRING_ARR},
     { "Entity",ScriptFieldType::ENTITY},
     { "Inside",ScriptFieldType::INSIDE},
