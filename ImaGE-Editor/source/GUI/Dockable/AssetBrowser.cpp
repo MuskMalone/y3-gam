@@ -14,6 +14,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <imgui/imgui.h>
 #include <Events/EventManager.h>
 #include <GUI/Helpers/AssetHelpers.h>
+#include <GUI/Helpers/ImGuiHelpers.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <GUI/Styles/FontAwesome6Icons.h>
 #include "GUI/GUIVault.h"
@@ -32,6 +33,7 @@ namespace MeshPopup {
 
 namespace
 {
+  static constexpr ImVec4 sFileIconCol = { 0.3f, 0.3f, 0.3f, 1.f };
   static std::string sSearchQuery, sLowerSearchQuery;
   static bool sRenameMode{ false }, sFirstTimeRename{ true };
 
@@ -54,6 +56,8 @@ namespace
     The string in lower case
   ************************************************************************/
   std::string ToLower(std::string const& str);
+
+  void DisplayTempFileIcon(std::string const& ext);
 
   void NextRowTable(const char* label);
 }
@@ -184,11 +188,12 @@ namespace GUI
       unsigned const maxChars{ static_cast<unsigned>(imgSize * 0.9f / ImGui::CalcTextSize("L").x) };
       if (ImGui::BeginTable("DirectoryTable", assetsPerRow, ImGuiTableFlags_Sortable | ImGuiTableFlags_ScrollY))
       {
+        bool const showIcon{ sizePerAsset > 40.f };
         if (sSearchQuery.empty()) {
-          DisplayDirectory(imgSize, maxChars);
+          DisplayDirectory(imgSize, maxChars, showIcon);
         }
         else {
-          DisplaySearchResults(imgSize, maxChars);
+          DisplaySearchResults(imgSize, maxChars, showIcon);
         }
         ImGui::EndTable();
       }
@@ -234,7 +239,7 @@ namespace GUI
     else if (ext == gFontFileExt) {
       am.ChangeAssetPath<IGE::Assets::FontAsset>(am.LoadRef<IGE::Assets::FontAsset>(original.string()), newPath.string());
     }
-    else if (ext == gAudioFileExt) {
+    else if (std::string(gSupportedAudioFormats).find(ext) != std::string::npos) {
       am.ChangeAssetPath<IGE::Assets::AudioAsset>(am.LoadRef<IGE::Assets::AudioAsset>(original.string()), newPath.string());
     }
 
@@ -242,7 +247,7 @@ namespace GUI
     GUIVault::SetSelectedFile(newPath);
   }
 
-  void AssetBrowser::DisplayDirectory(float imgSize, unsigned maxChars)
+  void AssetBrowser::DisplayDirectory(float imgSize, unsigned maxChars, bool showIcon)
   {
     for (auto const& file : std::filesystem::directory_iterator(mCurrentDir)) {
       if (file.is_directory()) { continue; }
@@ -253,6 +258,7 @@ namespace GUI
 
       // asset icon + input
       ImGui::ImageButton(0, ImVec2(imgSize, imgSize));
+      ImVec2 const originalPos{ ImGui::GetCursorPos() };
 
       if (sRenameMode && file == mSelectedAsset) {
         static std::string cpy;
@@ -292,15 +298,24 @@ namespace GUI
           ImGui::Text((secondRow.size() > maxChars ? secondRow.substr(0, maxChars - 2) + "..." : secondRow).c_str());
         }
       }
+
+      if (showIcon) {
+        float const halfImgSize{ imgSize * 0.5f };
+        ImVec2 const offset{ ImVec2(halfImgSize - 7.f, -halfImgSize - 23.f) };
+        ImGui::SetCursorPos(originalPos + offset);
+        DisplayTempFileIcon(file.path().extension().string());
+        ImGui::SetCursorPos(originalPos);
+      }
+
       ImGui::NewLine();
     }
   }
 
-  void AssetBrowser::DisplaySearchResults(float imgSize, unsigned maxChars)
+  void AssetBrowser::DisplaySearchResults(float imgSize, unsigned maxChars, bool showIcon)
   {
     for (auto const& file : std::filesystem::recursive_directory_iterator(gAssetsDirectory))
     {
-      if (file.is_directory()) { continue; }
+      if (file.is_directory() || file.path().extension() == gMeshFileExt) { continue; }
 
       std::string const fileName{ file.path().filename().string() };
       if (ToLower(fileName).find(sLowerSearchQuery) == std::string::npos) { continue; }
@@ -310,6 +325,8 @@ namespace GUI
 
       // asset icon + input
       ImGui::ImageButton(0, ImVec2(imgSize, imgSize));
+      ImVec2 const originalPos{ ImGui::GetCursorPos() };
+
       CheckInput(file);
 
       // display file name below
@@ -320,6 +337,15 @@ namespace GUI
         std::string const secondRow{ fileName.substr(maxChars) };
         ImGui::Text((secondRow.size() > maxChars ? secondRow.substr(0, maxChars - 2) + "..." : secondRow).c_str());
       }
+
+      if (showIcon) {
+        float const halfImgSize{ imgSize * 0.5f };
+        ImVec2 const offset{ ImVec2(halfImgSize - 7.f, -halfImgSize - 23.f) };
+        ImGui::SetCursorPos(originalPos + offset);
+        DisplayTempFileIcon(file.path().extension().string());
+        ImGui::SetCursorPos(originalPos);
+      }
+
       ImGui::NewLine();
     }
   }
@@ -426,7 +452,7 @@ namespace GUI
       {
         for (auto const& file : std::filesystem::directory_iterator(path))
         {
-          if (!file.is_directory()) { continue; }
+          if (!file.is_directory() || file.path().filename() == "Compiled") { continue; }
 
           RecurseDownDirectory(file);
         }
@@ -720,6 +746,8 @@ namespace
   bool ContainsDirectories(std::filesystem::path const& dirEntry)
   {
     for (auto const& file : std::filesystem::directory_iterator(dirEntry)) {
+      if (file.path().filename() == "Compiled") { continue; }
+
       if (file.is_directory()) { return true; }
     }
 
@@ -733,6 +761,38 @@ namespace
     }
 
     return ret;
+  }
+
+  void DisplayTempFileIcon(std::string const& ext) {
+    ImGui::PushFont(GUI::GUIVault::GetStyler().GetCustomFont(GUI::CustomFonts::ROBOTO_BOLD));
+    if (std::string(gSupportedModelFormats).find(ext) != std::string::npos) {
+      ImGui::TextColored(sFileIconCol, ICON_FA_CUBES_STACKED);
+    }
+    else if (ext == gSceneFileExt) {
+      ImGui::TextColored(sFileIconCol, ICON_FA_FILM);
+    }
+    else if (ext == gPrefabFileExt) {
+      ImGui::TextColored(sFileIconCol, ICON_FA_PERSON);
+    }
+    else if (ext == gFontFileExt) {
+      ImGui::TextColored(sFileIconCol, ICON_FA_FONT);
+    }
+    else if (ext == gMaterialFileExt) {
+      ImGui::TextColored(sFileIconCol, ICON_FA_GEM);
+    }
+    else if (ext == gSpriteFileExt || ext == ".png") {
+      ImGui::TextColored(sFileIconCol, ICON_FA_IMAGE);
+    }
+    else if (std::string(gSupportedAudioFormats).find(ext) != std::string::npos) {
+      ImGui::TextColored(sFileIconCol, ICON_FA_MUSIC);
+    }
+    else if (ext == ".glsl") {
+      ImGui::TextColored(sFileIconCol, ICON_FA_WATER);
+    }
+    else {
+      ImGui::TextColored(sFileIconCol, ICON_FA_FILE);
+    }
+    ImGui::PopFont();
   }
 
   void NextRowTable(const char* label) {
