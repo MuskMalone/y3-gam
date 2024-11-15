@@ -168,7 +168,7 @@ namespace Graphics {
 		static void DrawArrow(glm::vec3 const& start, glm::vec3 const& end, glm::vec4 const& clr);
 		static void DrawCone(glm::vec3 const& position, glm::vec3 const& direction, float range, float angle, glm::vec4 const& color);
 		static void DrawCircle(glm::vec3 const& center, float radius, glm::vec4 const& color, glm::vec3 const& normal);
-		static void DrawLightGizmo(Component::Light const& light, Component::Transform const& xform);
+		static void DrawLightGizmo(Component::Light const& light, Component::Transform const& xform, CameraSpec const& cam, int lightID);
 
 		static void RenderFullscreenTexture();
 
@@ -177,7 +177,6 @@ namespace Graphics {
 
 		//Instancing
 		static void SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int entityID = -1, int matID = 0);
-		static void SubmitSubmeshInstance(IGE::Assets::GUID meshSource, size_t submeshIndex, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, int matID);
 		static void RenderInstances();
 
 		static void RenderSubmeshInstances();

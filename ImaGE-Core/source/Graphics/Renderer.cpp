@@ -15,6 +15,7 @@
 #include <Graphics/RenderPass/UIPass.h>
 #pragma endregion
 #include "Core/Components/Camera.h"
+#include "Core/Entity.h"
 
 namespace Graphics {
 	constexpr int INVALID_ENTITY_ID = -1;
@@ -210,9 +211,12 @@ namespace Graphics {
 		//	MaterialTable::AddMaterial(material);
 		//}
 		IGE::Assets::GUID sunIcon{ Texture::Create(gAssetsDirectory + std::string("Textures\\sun_icon.png")) };
+		IGE::Assets::GUID spotlightIcon{ Texture::Create(gAssetsDirectory + std::string("Textures\\spotlight_icon.png")) };
+		IGE::Assets::GUID cameraIcon{ Texture::Create(gAssetsDirectory + std::string("Textures\\cam_icon.png")) };
 		
 		mIcons.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(sunIcon));
-		mIcons.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(366429001515961616));
+		mIcons.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(spotlightIcon));
+		mIcons.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(cameraIcon));
 		
 	}
 
@@ -916,21 +920,21 @@ namespace Graphics {
 		}
 	}
 
-	void Renderer::DrawLightGizmo(Component::Light const& light, Component::Transform const& xform){
+	void Renderer::DrawLightGizmo(Component::Light const& light, Component::Transform const& xform, CameraSpec const& cam, int lightID){
 		glm::vec3 worldDir = glm::normalize(xform.rotation * light.forwardVec);
 		switch (light.type) {
 			case Component::LightType::DIRECTIONAL:
+				Renderer::DrawSprite(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(mIcons[0])->mTexture, glm::vec4 { light.color, 1.f }, lightID, true, cam);
 				glm::vec3 arrowTip = xform.worldPos + worldDir * 5.0f; // Scale the direction for visibility
 				Renderer::DrawArrow(xform.worldPos, arrowTip, glm::vec4{ light.color, 1.f });
 				Renderer::DrawWireSphere(xform.worldPos, light.mLightIntensity * 0.5f, glm::vec4{light.color, 1.f });
 				break;
 			case Component::LightType::SPOTLIGHT:
-
+				Renderer::DrawSprite(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(mIcons[1])->mTexture, glm::vec4 { light.color, 1.f }, lightID, true, cam);
 				float angle = glm::radians(light.mOuterSpotAngle);
 
 				// Draw spotlight cone
 				DrawCone(xform.worldPos, worldDir, light.mRange, angle, glm::vec4(light.color, 0.5f));
-
 				break;
 		}
 	}

@@ -212,9 +212,16 @@ namespace Graphics {
           for (auto const& light : lights) {
               auto const& xform = ECS::Entity{ light }.GetComponent<Component::Transform>();
               auto const& lightComp = ECS::Entity{ light }.GetComponent<Component::Light>();
-              Renderer::DrawSprite(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(Renderer::mIcons[0])->mTexture, glm::vec4 { lightComp.color, 1.f }, ECS::Entity{ light }.GetEntityID(), true, cam);
-              Renderer::DrawLightGizmo(lightComp, xform);
+              Renderer::DrawLightGizmo(lightComp, xform, cam, ECS::Entity{light}.GetEntityID());
           }
+          //auto const& cameras = ecsMan.GetAllEntitiesWithComponents<Component::Camera>();
+          //for (auto const& camera : cameras) {
+          //    if (!ECS::Entity{ camera }.IsActive()) continue;
+          //    auto const& camComp = ECS::Entity{ camera }.GetComponent<Component::Camera>();
+          //    auto const& xform = ECS::Entity{ camera }.GetComponent<Component::Transform>();
+          //    Renderer::DrawSprite(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(Renderer::mIcons[2])->mTexture, Color::COLOR_WHITE, ECS::Entity { camera }.GetEntityID(), true, cam);
+          //}
+
       }
 
       for (ECS::Entity const& entity : entities) {

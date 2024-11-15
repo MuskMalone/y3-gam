@@ -36,6 +36,7 @@ namespace Graphics {
 			for (auto const& camera : cameras) {
 				if (!ECS::Entity{ camera }.IsActive()) continue;
 				auto const& camComp = ECS::Entity{ camera }.GetComponent<Component::Camera>();
+				auto const& xform = ECS::Entity{ camera }.GetComponent<Component::Transform>();
 				Renderer::DrawCameraFrustrum(camComp, Color::COLOR_CYAN);
 			}
 			//auto const& lights = ecsMan.GetAllEntitiesWithComponents<Component::Light, Component::Transform>();
