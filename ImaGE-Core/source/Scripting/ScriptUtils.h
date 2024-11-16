@@ -100,6 +100,9 @@ namespace Mono {
 	MonoArray* GetMonoArray<int>(std::shared_ptr<MonoDomain> md, size_t sz);
 
 	template <>
+	MonoArray* GetMonoArray<std::string>(std::shared_ptr<MonoDomain> md, size_t sz);
+
+	template <>
 	MonoArray* GetMonoArray<unsigned>(std::shared_ptr<MonoDomain> md, size_t sz);
 
 	template <>

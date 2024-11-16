@@ -218,10 +218,14 @@ namespace Mono {
 
 			mono_field_get_value(mClassInst, field, &newArray);
 			std::vector<T> test{};
-			for (int i = 0; i < mono_array_length(newArray); ++i) {
-				T element = mono_array_get(newArray, T, i);
-				test.push_back(element);
+			if (newArray)
+			{
+				for (int i = 0; i < mono_array_length(newArray); ++i) {
+					T element = mono_array_get(newArray, T, i);
+					test.push_back(element);
+				}
 			}
+			
 
 			return test;
 		}
@@ -275,6 +279,15 @@ namespace Mono {
 			mono_field_set_value(mClassInst, field, newArray);
 		}
 
+
+		void SetFieldValueStrArr(std::vector<std::string> value, MonoClassField* field, std::shared_ptr<MonoDomain> md)
+		{
+			MonoArray* newArray = GetMonoArray<std::string>(md, value.size());
+			for (int i = 0; i < mono_array_length(newArray); ++i) {
+				mono_array_set(newArray, MonoString*, i, mono_string_new(md.get(), value[i].c_str()));
+			}
+			mono_field_set_value(mClassInst, field, newArray);
+		}
 
 		/*!*********************************************************************
 		\brief

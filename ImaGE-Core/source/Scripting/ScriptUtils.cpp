@@ -25,6 +25,12 @@ namespace Mono
 		return mono_array_new(md.get(), mono_get_int32_class(), sz);
 	}
 
+
+	template <>
+	MonoArray* GetMonoArray<std::string>(std::shared_ptr<MonoDomain> md, uintptr_t sz) {
+		return mono_array_new(md.get(), mono_get_string_class(), sz);
+	}
+
 	template <>
 	MonoArray* GetMonoArray<unsigned>(std::shared_ptr<MonoDomain> md, uintptr_t sz) {
 		return mono_array_new(md.get(), mono_get_uint32_class(), sz);

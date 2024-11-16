@@ -32,6 +32,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace {
   bool InputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled = false);
+  bool InputScriptList(std::string propertyName, std::vector<int>& list, float fieldWidth, bool disabled = false);
+  bool InputScriptList(std::string propertyName, std::vector<float>& list, float fieldWidth, bool disabled = false);
+  bool InputScriptList(std::string propertyName, std::vector<double>& list, float fieldWidth, bool disabled = false);
+  bool InputScriptList(std::string propertyName, std::vector<std::string>& list, float fieldWidth, bool disabled = false);
 }
 
 namespace GUI {
@@ -601,6 +605,30 @@ namespace GUI {
               modified = true;
             }
           }
+          else if (f.is_type<Mono::DataMemberInstance<std::vector<int>>>())
+          {
+            Mono::DataMemberInstance<std::vector<int>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<int>>>();
+            NextRowTable(sfi.mScriptField.mFieldName.c_str());
+            if (InputScriptList("##" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth)) { s.SetFieldValueArr<int>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain); };
+          }
+          else if (f.is_type<Mono::DataMemberInstance<std::vector<float>>>())
+          {
+            Mono::DataMemberInstance<std::vector<float>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<float>>>();
+            NextRowTable(sfi.mScriptField.mFieldName.c_str());
+            if (InputScriptList("##" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth)) { s.SetFieldValueArr<float>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain); };
+          }
+          else if (f.is_type<Mono::DataMemberInstance<std::vector<double>>>())
+          {
+            Mono::DataMemberInstance<std::vector<double>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<double>>>();
+            NextRowTable(sfi.mScriptField.mFieldName.c_str());
+            if (InputScriptList("##" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth)) { s.SetFieldValueArr<double>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain); };
+          }
+          else if (f.is_type<Mono::DataMemberInstance<std::vector<std::string>>>())
+          {
+            Mono::DataMemberInstance<std::vector<std::string>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<std::string>>>();
+            NextRowTable(sfi.mScriptField.mFieldName.c_str());
+            if (InputScriptList("##" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth)) { s.SetFieldValueStrArr(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain); };
+          }
           else if (f.is_type<Mono::DataMemberInstance<Mono::ScriptInstance>>())
           {
             Mono::DataMemberInstance<Mono::ScriptInstance>& sfi = f.get_value<Mono::DataMemberInstance<Mono::ScriptInstance>>();
@@ -677,9 +705,6 @@ namespace GUI {
                     allEntitesWithScript.push_back(std::make_pair(e, &si));
                 }
               }
-
-
-
               if (ImGui::BeginCombo("##ScriptDataMemList", msg.c_str()))
               {
                 for (const std::pair<ECS::Entity, Mono::ScriptInstance*> e : allEntitesWithScript)
@@ -713,10 +738,10 @@ namespace GUI {
         }
 
         // remember to end table if the last element was a vec3
-        if (isPrevVec3) { EndVec3Table(); }
+        //if (isPrevVec3) { EndVec3Table(); }
 
         // Check if the mouse is over the second table and the right mouse button is clicked
-        ImGui::EndTable();
+       ImGui::EndTable();
         ImGui::Separator();
 
       }
@@ -2050,4 +2075,288 @@ namespace {
 
     return valChanged;
   } 
+
+
+  bool InputScriptList(std::string propertyName, std::vector<int>& list, float fieldWidth, bool disabled)
+  {
+    // 12 characters for property name
+    float charSize = 150.f;
+    bool changed{ false };
+    if (ImGui::TreeNodeEx((propertyName + "s").c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+    {
+      std::vector<int> indices = { }; // Positions to remove
+      ImGui::Separator();
+      ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV);
+      ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, charSize);
+      ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, charSize);
+
+      ImGuiStyle& style = ImGui::GetStyle();
+      ImVec4 const boriginalColor = style.Colors[ImGuiCol_Button];
+      ImVec4 const boriginalHColor = style.Colors[ImGuiCol_ButtonHovered];
+      ImVec4 const boriginalAColor = style.Colors[ImGuiCol_ButtonActive];
+
+      style.Colors[ImGuiCol_Button] = ImVec4(0.5f, 0.196f, 0.196f, 1.0f);
+      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.796f, 0.296f, 0.296f, 1.0f);;
+      style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.596f, 0.096f, 0.096f, 1.0f);
+
+      for (int i{}; i < list.size(); ++i)
+      {
+        ImGui::TableNextColumn();
+        if (ImGui::DragInt(("##I" + (propertyName + std::to_string(i))).c_str(), &list[i], 1)) { changed = true; }
+        ImGui::TableNextColumn();
+        if (ImGui::Button(("Delete Item##"+ std::to_string(i)).c_str()))
+        {
+          indices.push_back(i);
+          changed = true;
+        }
+        ImGui::TableNextRow();
+      }
+
+
+
+      style.Colors[ImGuiCol_Button] = ImVec4(0.f, 0.5f, 0.34f, 1.0f);
+      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.796f, 0.296f, 0.296f, 1.0f);;
+      style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.596f, 0.096f, 0.096f, 1.0f);
+      ImGui::TableNextColumn();
+
+
+
+      if (ImGui::Button("Add Item")) {
+        
+        list.push_back(0);
+        changed = true;
+      }
+
+      style.Colors[ImGuiCol_Button] = boriginalColor;
+      style.Colors[ImGuiCol_ButtonHovered] = boriginalHColor;
+      style.Colors[ImGuiCol_ButtonActive] = boriginalAColor;
+
+      std::sort(indices.rbegin(), indices.rend());
+      for (int pos : indices) {
+        if (pos >= 0 && pos < list.size()) {
+          list.erase(list.begin() + pos);
+        }
+      }
+     
+      ImGui::TableNextRow();
+
+      ImGui::EndTable();
+      ImGui::Separator();
+      ImGui::TreePop();
+    }
+    return changed;
+  }
+
+
+  bool InputScriptList(std::string propertyName, std::vector<float>& list, float fieldWidth, bool disabled)
+  {
+    // 12 characters for property name
+    float charSize = 150.f;
+    bool changed{ false };
+    if (ImGui::TreeNodeEx((propertyName + "s").c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+    {
+      std::vector<int> indices = { }; // Positions to remove
+      ImGui::Separator();
+      ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV);
+      ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, charSize);
+      ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, charSize);
+
+      ImGuiStyle& style = ImGui::GetStyle();
+      ImVec4 const boriginalColor = style.Colors[ImGuiCol_Button];
+      ImVec4 const boriginalHColor = style.Colors[ImGuiCol_ButtonHovered];
+      ImVec4 const boriginalAColor = style.Colors[ImGuiCol_ButtonActive];
+
+      style.Colors[ImGuiCol_Button] = ImVec4(0.5f, 0.196f, 0.196f, 1.0f);
+      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.796f, 0.296f, 0.296f, 1.0f);;
+      style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.596f, 0.096f, 0.096f, 1.0f);
+
+      for (int i{}; i < list.size(); ++i)
+      {
+        ImGui::TableNextColumn();
+        if (ImGui::DragFloat(("##F" + (propertyName + std::to_string(i))).c_str(), &list[i], 1)) { changed = true; }
+        ImGui::TableNextColumn();
+        if (ImGui::Button(("Delete Item##" + std::to_string(i)).c_str()))
+        {
+          indices.push_back(i);
+          changed = true;
+        }
+        ImGui::TableNextRow();
+      }
+
+
+
+      style.Colors[ImGuiCol_Button] = ImVec4(0.f, 0.5f, 0.34f, 1.0f);
+      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.796f, 0.296f, 0.296f, 1.0f);;
+      style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.596f, 0.096f, 0.096f, 1.0f);
+      ImGui::TableNextColumn();
+
+
+
+      if (ImGui::Button("Add Item")) {
+
+        list.push_back(0.f);
+        changed = true;
+      }
+
+      style.Colors[ImGuiCol_Button] = boriginalColor;
+      style.Colors[ImGuiCol_ButtonHovered] = boriginalHColor;
+      style.Colors[ImGuiCol_ButtonActive] = boriginalAColor;
+
+      std::sort(indices.rbegin(), indices.rend());
+      for (int pos : indices) {
+        if (pos >= 0 && pos < list.size()) {
+          list.erase(list.begin() + pos);
+        }
+      }
+
+      ImGui::TableNextRow();
+
+      ImGui::EndTable();
+      ImGui::Separator();
+      ImGui::TreePop();
+    }
+    return changed;
+  }
+
+  bool InputScriptList(std::string propertyName, std::vector<double>& list, float fieldWidth, bool disabled)
+  {
+    // 12 characters for property name
+    float charSize = 150.f;
+    bool changed{ false };
+    if (ImGui::TreeNodeEx((propertyName + "s").c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+    {
+      std::vector<int> indices = { }; // Positions to remove
+      ImGui::Separator();
+      ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV);
+      ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, charSize);
+      ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, charSize);
+
+      ImGuiStyle& style = ImGui::GetStyle();
+      ImVec4 const boriginalColor = style.Colors[ImGuiCol_Button];
+      ImVec4 const boriginalHColor = style.Colors[ImGuiCol_ButtonHovered];
+      ImVec4 const boriginalAColor = style.Colors[ImGuiCol_ButtonActive];
+
+      style.Colors[ImGuiCol_Button] = ImVec4(0.5f, 0.196f, 0.196f, 1.0f);
+      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.796f, 0.296f, 0.296f, 1.0f);;
+      style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.596f, 0.096f, 0.096f, 1.0f);
+
+      for (int i{}; i < list.size(); ++i)
+      {
+        ImGui::TableNextColumn();
+        if (ImGui::InputDouble(("##D" + (propertyName + std::to_string(i))).c_str(), &list[i], 1)) { changed = true; }
+        ImGui::TableNextColumn();
+        if (ImGui::Button(("Delete Item##" + std::to_string(i)).c_str()))
+        {
+          indices.push_back(i);
+          changed = true;
+        }
+        ImGui::TableNextRow();
+      }
+
+
+
+      style.Colors[ImGuiCol_Button] = ImVec4(0.f, 0.5f, 0.34f, 1.0f);
+      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.796f, 0.296f, 0.296f, 1.0f);;
+      style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.596f, 0.096f, 0.096f, 1.0f);
+      ImGui::TableNextColumn();
+
+
+
+      if (ImGui::Button("Add Item")) {
+
+        list.push_back(0.0);
+        changed = true;
+      }
+
+      style.Colors[ImGuiCol_Button] = boriginalColor;
+      style.Colors[ImGuiCol_ButtonHovered] = boriginalHColor;
+      style.Colors[ImGuiCol_ButtonActive] = boriginalAColor;
+
+      std::sort(indices.rbegin(), indices.rend());
+      for (int pos : indices) {
+        if (pos >= 0 && pos < list.size()) {
+          list.erase(list.begin() + pos);
+        }
+      }
+
+      ImGui::TableNextRow();
+
+      ImGui::EndTable();
+      ImGui::Separator();
+      ImGui::TreePop();
+    }
+    return changed;
+  }
+
+  bool InputScriptList(std::string propertyName, std::vector<std::string>& list, float fieldWidth, bool disabled)
+  {
+    // 12 characters for property name
+    float charSize = 150.f;
+    bool changed{ false };
+    if (ImGui::TreeNodeEx((propertyName + "s").c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+    {
+      std::vector<int> indices = { }; // Positions to remove
+      ImGui::Separator();
+      ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV);
+      ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, charSize);
+      ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, charSize);
+
+      ImGuiStyle& style = ImGui::GetStyle();
+      ImVec4 const boriginalColor = style.Colors[ImGuiCol_Button];
+      ImVec4 const boriginalHColor = style.Colors[ImGuiCol_ButtonHovered];
+      ImVec4 const boriginalAColor = style.Colors[ImGuiCol_ButtonActive];
+
+      style.Colors[ImGuiCol_Button] = ImVec4(0.5f, 0.196f, 0.196f, 1.0f);
+      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.796f, 0.296f, 0.296f, 1.0f);;
+      style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.596f, 0.096f, 0.096f, 1.0f);
+
+      for (int i{}; i < list.size(); ++i)
+      {
+        ImGui::TableNextColumn();
+        if (ImGui::InputText(("##S" + std::to_string(i)).c_str(), &list[i], ImGuiInputTextFlags_EnterReturnsTrue)) {
+          changed = true;
+        }
+        ImGui::TableNextColumn();
+        if (ImGui::Button(("Delete Item##" + std::to_string(i)).c_str()))
+        {
+          indices.push_back(i);
+          changed = true;
+        }
+        ImGui::TableNextRow();
+      }
+
+
+
+      style.Colors[ImGuiCol_Button] = ImVec4(0.f, 0.5f, 0.34f, 1.0f);
+      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.796f, 0.296f, 0.296f, 1.0f);;
+      style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.596f, 0.096f, 0.096f, 1.0f);
+      ImGui::TableNextColumn();
+
+
+
+      if (ImGui::Button("Add Item")) {
+
+        list.push_back(std::string());
+        changed = true;
+      }
+
+      style.Colors[ImGuiCol_Button] = boriginalColor;
+      style.Colors[ImGuiCol_ButtonHovered] = boriginalHColor;
+      style.Colors[ImGuiCol_ButtonActive] = boriginalAColor;
+
+      std::sort(indices.rbegin(), indices.rend());
+      for (int pos : indices) {
+        if (pos >= 0 && pos < list.size()) {
+          list.erase(list.begin() + pos);
+        }
+      }
+
+      ImGui::TableNextRow();
+
+      ImGui::EndTable();
+      ImGui::Separator();
+      ImGui::TreePop();
+    }
+    return changed;
+  }
 }
