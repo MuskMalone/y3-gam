@@ -72,6 +72,9 @@ namespace Graphics {
 		int materialIdx;
 		int entityID = -1;
 		//glm::vec4 color;
+		InstanceData() = default;
+		InstanceData(const glm::mat4& mtx, int mat, int ent = -1)
+			: modelMatrix{ mtx }, materialIdx{ mat }, entityID{ ent } {}
 	};
 
 	struct RendererData {
@@ -180,6 +183,8 @@ namespace Graphics {
 		static void RenderInstances();
 
 		static void RenderSubmeshInstances();
+
+		static void RenderSubmeshInstances(std::vector<InstanceData> const& instances, IGE::Assets::GUID const& meshSource, size_t submeshIndex);
 
 		// Batching
 		static void BeginBatch();

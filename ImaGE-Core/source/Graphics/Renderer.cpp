@@ -1056,7 +1056,6 @@ namespace Graphics {
 
 			// Ensure the instance buffer exists for the mesh source
 			auto instanceBuffer = GetInstanceBuffer(meshSrc);
-
 			// Update the instance buffer with the latest data
 			instanceBuffer->SetData(instances.data(), instances.size() * sizeof(InstanceData));
 
@@ -1064,6 +1063,7 @@ namespace Graphics {
 			//unsigned int baseInstance = 0;
 			for (size_t submeshIndex = 0; submeshIndex < submeshes.size(); ++submeshIndex) {
 				auto const& submesh = submeshes[submeshIndex];
+
 
 				// Use glDrawElementsInstancedBaseVertexBaseInstance for rendering
 				RenderAPI::DrawIndicesInstancedBaseVertexBaseInstance(
@@ -1082,6 +1082,31 @@ namespace Graphics {
 
 		// Clear instances after rendering
 		mData.instanceBufferDataMap.clear();
+	}
+
+	void Renderer::RenderSubmeshInstances(std::vector<InstanceData> const& instances,
+		IGE::Assets::GUID const& meshSrc,
+		size_t submeshIndex) {
+		if (instances.empty()) return;
+
+		auto const& meshSource = IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource;
+		// Access the submesh and VAO
+		const auto& vao = meshSource.GetVertexArray();
+		const auto& submesh = meshSource.GetSubmeshes()[submeshIndex];
+
+		// Update instance buffer
+		auto instanceBuffer = GetInstanceBuffer(meshSrc);
+		instanceBuffer->SetData(instances.data(), instances.size() * sizeof(InstanceData));
+
+		// Issue the draw call
+		RenderAPI::DrawIndicesInstancedBaseVertexBaseInstance(
+			vao,
+			submesh.idxCount,               // Index count
+			static_cast<unsigned>(instances.size()), // Number of instances
+			submesh.baseIdx,                // Index offset
+			submesh.baseVtx,                // Base vertex offset
+			0                               // Instance offset
+		);
 	}
 
 	void Renderer::FlushBatch() {
