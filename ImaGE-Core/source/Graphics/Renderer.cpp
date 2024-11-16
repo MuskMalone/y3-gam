@@ -168,7 +168,7 @@ namespace Graphics {
 		//Init Materials
 
 		// Create a default material with a default shader and properties
-		std::shared_ptr<MaterialData> defaultMaterial = MaterialData::Create("Unlit", "Default");
+		std::shared_ptr<MaterialData> defaultMaterial = MaterialData::Create("PBR", "Default");
 		defaultMaterial->SetAlbedoColor(glm::vec3(1.0f));  // Set default white albedo
 		defaultMaterial->SetMetalness(0.0f);
 		defaultMaterial->SetRoughness(1.0f);
