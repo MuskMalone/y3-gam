@@ -161,6 +161,17 @@ namespace GUI {
     }
 
     ImGui::NewLine();
+    // Shader Dropdown
+    ImGui::Text("Shader");
+    static const char* shaderOptions[] = { "PBR", "Unlit" };
+    static int currentShaderIndex = (selectedMaterial->GetShaderName() == "Unlit") ? 1 : 0;
+
+    if (ImGui::Combo("##ShaderDropdown", &currentShaderIndex, shaderOptions, IM_ARRAYSIZE(shaderOptions))) {
+        selectedMaterial->SetShaderName(shaderOptions[currentShaderIndex]);
+    }
+
+
+    ImGui::NewLine();
     ImGui::Text("Textures");
     if (ImGui::BeginTable("MaterialTable2", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
