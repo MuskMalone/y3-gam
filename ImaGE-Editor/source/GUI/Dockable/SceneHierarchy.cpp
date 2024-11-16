@@ -11,15 +11,22 @@
   ************************************************************************/
 #include <pch.h>
 #include "SceneHierarchy.h"
-#include <imgui/imgui.h>
 #include <Core/Components/Tag.h>
 #include <GUI/GUIVault.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
 #include <Events/EventManager.h>
-#include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <Prefabs/PrefabManager.h>
 #include <GUI/Dockable/Inspector.h>
 #include <Core/Systems/TransformSystem/TransformHelpers.h>
+
+#include <ImGui/misc/cpp/imgui_stdlib.h>
+#include <imgui/imgui.h>
+#include <ImGui/imgui_internal.h>
+
+namespace {
+  void RemovePrefabOverrides(ECS::Entity root, IGE::Assets::GUID guid);
+  ECS::Entity GetPrefabRoot(ECS::Entity root);
+}
 
 namespace GUI
 {
@@ -88,8 +95,7 @@ namespace GUI
           Component::Transform& trans{ droppedEntity.GetComponent<Component::Transform>() };
           trans.SetLocalToWorld();
           trans.modified = true;
-
-          QUEUE_EVENT(Events::SceneModifiedEvent);
+          SceneModified();
         }
       }
 
@@ -141,7 +147,7 @@ namespace GUI
       }
 
       GUIVault::SetSelectedEntity(ECS::Entity());
-      QUEUE_EVENT(Events::SceneModifiedEvent);
+      SceneModified();
     }
 
     sCtrlHeld = ImGui::IsKeyDown(ImGuiKey_LeftCtrl) || ImGui::IsKeyDown(ImGuiKey_RightCtrl);
@@ -161,7 +167,7 @@ namespace GUI
       mFirstTimePfbPopup = true;
     }
     if (RunRightClickMenu() || RunEntityOptions()) {
-      QUEUE_EVENT(Events::SceneModifiedEvent);
+      SceneModified();
     }
     RunPrefabPopup();
 
@@ -243,6 +249,7 @@ namespace GUI
     }
     if (ImGui::TreeNodeEx((displayName + "##" + std::to_string(entity.GetEntityID())).c_str(), treeFlag))
     {
+      if (isPrefabInstance) { ImGui::PopStyleColor(); }
       if (!entity.IsActive()) { ImGui::PopStyleColor(); }
 
       // if renaming entity
@@ -257,11 +264,13 @@ namespace GUI
         }
         if (ImGui::InputText("##EntityRename", &entityName, ImGuiInputTextFlags_AutoSelectAll)) {
           entity.GetComponent<Component::Tag>().tag = entityName;
-          if (!mSceneModified) {
-            QUEUE_EVENT(Events::SceneModifiedEvent);
-          }
+          SceneModified();
         }
         ImGui::PopStyleVar();
+        if (ImGui::IsItemHovered() || (ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows)
+            && !ImGui::IsAnyItemActive() && !ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
+          ImGui::SetKeyboardFocusHere(-1); // Auto focus previous widget
+        }
 
         if (ImGui::IsKeyPressed(ImGuiKey_Escape) || ImGui::IsKeyPressed(ImGuiKey_Enter)) {
           ResetEditNameMode();
@@ -284,13 +293,11 @@ namespace GUI
 
       ImGui::TreePop();
     }
-    else if (!entity.IsActive()) {
-      ImGui::PopStyleColor();
+    else {
+      if (!entity.IsActive()) { ImGui::PopStyleColor(); }
+      if (isPrefabInstance) { ImGui::PopStyleColor(); }
     }
 
-    if (isPrefabInstance) {
-      ImGui::PopStyleColor();
-    }
     ++sEntityCount;
   }
 
@@ -317,7 +324,7 @@ namespace GUI
           droppedEntity.GetComponent<Component::Transform>().modified = true;
           // entity has new parent, traverse down hierarchy and update transforms
           TransformHelpers::UpdateTransformToNewParent(droppedEntity);
-          QUEUE_EVENT(Events::SceneModifiedEvent);
+          SceneModified();
         }
         ImGui::EndDragDropTarget();
       }
@@ -377,7 +384,7 @@ namespace GUI
     }
   }
 
-  bool SceneHierarchy::RunRightClickMenu() const
+  bool SceneHierarchy::RunRightClickMenu()
   {
     bool modified{ false };
     if (ImGui::BeginPopup("HierarchyOptions"))
@@ -385,7 +392,7 @@ namespace GUI
       if (ImGui::Selectable("Create Entity")) {
         ECS::Entity const newEntity{ CreateNewEntity() };
         GUIVault::SetSelectedEntity(newEntity);
-        modified = true;
+        modified = sEditNameMode = mLockControls = true;
       }
 
       if (ImGui::Selectable("Create Light")) {
@@ -410,7 +417,15 @@ namespace GUI
         ECS::Entity const newEntity{ CreateNewEntity() };
         mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
         GUIVault::SetSelectedEntity(newEntity);
-        modified = true;
+        modified = sEditNameMode = mLockControls = true;
+      }
+
+      if (ImGui::Selectable("Create Empty Parent")) {
+        ECS::Entity const newEntity{ CreateNewEntity() };
+        mEntityManager.SetParentEntity(newEntity, mRightClickedEntity);
+        TransformHelpers::UpdateTransformToNewParent(mRightClickedEntity);
+        GUIVault::SetSelectedEntity(newEntity);
+        modified = sEditNameMode = mLockControls = true;
       }
 
       if (mEntityManager.HasChild(mRightClickedEntity)) {
@@ -430,11 +445,35 @@ namespace GUI
         GUIVault::SetSelectedEntity(newEntity);
       }
 
-      if (mEditingPrefab) { ImGui::BeginDisabled(); }
-      if (ImGui::Selectable("Save as Prefab")) {
+      if (!mEditingPrefab && ImGui::Selectable("Save as Prefab")) {
         mPrefabPopup = true;
       }
-      if (mEditingPrefab) { ImGui::EndDisabled(); }
+
+      if (mRightClickedEntity.HasComponent<Component::PrefabOverrides>())
+      {
+        Component::PrefabOverrides& overrides{ mRightClickedEntity.GetComponent<Component::PrefabOverrides>() };
+        if (ImGui::BeginMenu("Prefab")) {
+         /* if (ImGui::MenuItem("Reset All Overrides")) {
+
+          }*/
+
+          if (overrides.IsRoot()) {
+            // only allow detaching from the root entity
+            if (ImGui::MenuItem("Detach Instance")) {
+              RemovePrefabOverrides(mRightClickedEntity, overrides.guid);
+              modified = true;
+            }
+          }
+          else {
+            // get root entity of prefab
+            if (ImGui::MenuItem("Select Root")) {
+              GUIVault::SetSelectedEntity(GetPrefabRoot(mRightClickedEntity));
+            }
+          }
+
+          ImGui::EndMenu();
+        }
+      }
 
       if (ImGui::Selectable("Delete")) {
         mEntityManager.RemoveEntity(mRightClickedEntity);
@@ -505,9 +544,48 @@ namespace GUI
   }
 
   void SceneHierarchy::ResetEditNameMode() {
-    ImGui::SetWindowFocus(NULL);
     sEditNameMode = mLockControls = false;
     sFirstEnterEditMode = true;
   }
 
+  void SceneHierarchy::SceneModified() {
+    if (mSceneModified) { return; }
+
+    QUEUE_EVENT(Events::SceneModifiedEvent);
+  }
+
 } // namespace GUI
+
+namespace {
+  void RemovePrefabOverrides(ECS::Entity root, IGE::Assets::GUID guid) {
+    if (!root.HasComponent<Component::PrefabOverrides>()
+      || root.GetComponent<Component::PrefabOverrides>().guid != guid) { return; }
+
+    // remove overrides component
+    root.RemoveComponent<Component::PrefabOverrides>();
+
+    // do the same for each child
+    ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
+    if (em.HasChild(root)) {
+      for (ECS::Entity child : em.GetChildEntity(root)) {
+        RemovePrefabOverrides(child, guid);
+      }
+    }
+  }
+
+  ECS::Entity GetPrefabRoot(ECS::Entity root) {
+    ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
+
+    IGE::Assets::GUID const guid{ root.GetComponent<Component::PrefabOverrides>().guid };
+    while (em.HasParent(root)) {
+      ECS::Entity const parent{ em.GetParentEntity(root) };
+      Component::PrefabOverrides const& overrides{ parent.GetComponent<Component::PrefabOverrides>() };
+      if (overrides.guid == guid && overrides.IsRoot()) { return parent; }
+
+      root = parent;
+    }
+    
+    IGE_DBGLOGGER.LogError("[SceneHirarchy] Unable to get prefab root!");
+    return {};
+  }
+}

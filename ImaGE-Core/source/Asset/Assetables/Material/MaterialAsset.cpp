@@ -27,10 +27,10 @@ namespace IGE {
             // Create directories if they do not exist
             CreateDirectoryIfNotExists(cMaterialDirectory);
 
-            // Copy the file to the assets folder
-            if (!CopyFileToAssets(fp, assetFilePath)) {
-                return GUID{}; // Return null GUID if the copy fails
-            }
+            //// Copy the file to the assets folder
+            //if (!CopyFileToAssets(fp, assetFilePath)) {
+            //    return GUID{}; // Return null GUID if the copy fails
+            //}
 
             // Populate metadata
             metadata.emplace("path", assetFilePath);

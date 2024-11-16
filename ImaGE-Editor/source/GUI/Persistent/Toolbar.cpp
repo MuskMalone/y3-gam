@@ -149,6 +149,19 @@ namespace GUI
             ImGui::TableSetColumnIndex(1); ImGui::Text("Rotate: ");
             ImGui::TableSetColumnIndex(2); ImGui::Text("R");
 
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0); ImGui::Text("Scene:");
+
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(1); ImGui::Text("Play/Stop Scene: ");
+            ImGui::TableSetColumnIndex(2); ImGui::Text("Ctrl + P");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(1); ImGui::Text("Free/Lock Cursor: ");
+            ImGui::TableSetColumnIndex(2); ImGui::Text("Ctrl + O");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(1); ImGui::Text("Debug Lines: ");
+            ImGui::TableSetColumnIndex(2); ImGui::Text("Ctrl + D");
+
             ImGui::EndTable();
           }
 

@@ -269,20 +269,28 @@ namespace GUI
           cpy = fileName;
         }
 
+        bool saved{ false };
         ImGui::InputText("##renameInput", &cpy, ImGuiInputTextFlags_AutoSelectAll);
 
-        if ((ImGui::IsMouseClicked(ImGuiMouseButton_Left) || ImGui::IsMouseClicked(ImGuiMouseButton_Right) && !ImGui::IsItemHovered())) {
+        if (ImGui::IsItemHovered() || (ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows)
+            && !ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
+          ImGui::SetKeyboardFocusHere(-1); // Auto focus previous widget
+        }
+        else {
           if (file.path().filename() != cpy) {
             RenameFile(file, cpy);
           }
 
           sRenameMode = false;
-          sFirstTimeRename = true;
-          ImGui::SetWindowFocus(NULL);
+          sFirstTimeRename = saved = true;
         }
 
-        if (ImGui::IsKeyPressed(ImGuiKey_Escape)) {
-          ImGui::SetWindowFocus(NULL); sRenameMode = false;
+        if (!saved && (ImGui::IsKeyPressed(ImGuiKey_Enter))) {
+          if (file.path().filename() != cpy) {
+            RenameFile(file, cpy);
+          }
+
+          sRenameMode = false;
           sFirstTimeRename = true;
         }
       }
@@ -483,12 +491,13 @@ namespace GUI
         fileName = std::move(newFileName);
       }
       
-      std::ofstream ofs{ fileName };
+      std::string const fullPath{ gMaterialDirectory + fileName + gMaterialFileExt };
+      std::ofstream ofs{ fullPath };
       if (ofs) {
         ofs.close();
         mCurrentDir = gMaterialDirectory;
         sRenameMode = true;
-        mSelectedAsset = gMaterialDirectory + fileName + gMaterialFileExt;
+        mSelectedAsset = fullPath;
         Graphics::MaterialTable::CreateAndImportMatFile(fileName);
       }
       else {
@@ -649,7 +658,7 @@ namespace GUI
         ImGui::SetTooltip("Rename feature coming soon!");
       }
 
-      NextRowTable("");
+      NextRowTable("##emptyline");
 
       bool elementHover{ false };
 

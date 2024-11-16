@@ -25,7 +25,8 @@ namespace Component {
       guid{ _guid }, modifiedComponents{}, removedComponents{}, subDataId{ id } {}
 
     inline bool IsDefault() const noexcept { return /*propOverrides.empty() &&*/ modifiedComponents.empty() && removedComponents.empty(); }
-    
+    inline bool IsRoot() const noexcept { return subDataId == Prefabs::PrefabSubData::BasePrefabId; }
+
     /*!*********************************************************************
     \brief
       Checks if a component exists in the list of modified/added components
@@ -90,6 +91,11 @@ namespace Component {
       rttr::type rawType{ type.is_wrapper() ? type.get_wrapped_type().get_raw_type() : type.is_pointer() ? type.get_raw_type() : type };
       modifiedComponents.erase(rawType);
       removedComponents.emplace(std::move(rawType));
+    }
+
+    void Reset() {
+      modifiedComponents.clear();
+      removedComponents.clear();
     }
 
     IGE::Assets::GUID guid;
