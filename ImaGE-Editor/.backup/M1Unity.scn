@@ -1681,9 +1681,17 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 3435973836,
+                                            "entityID": 51,
                                             "scriptName": "Test",
-                                            "scriptFieldInstList": []
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 10,
+                                                    "type": "System.Int32",
+                                                    "scriptField": {
+                                                        "fieldName": "TestInt"
+                                                    }
+                                                }
+                                            ]
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
