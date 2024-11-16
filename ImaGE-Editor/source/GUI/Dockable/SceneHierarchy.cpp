@@ -26,6 +26,7 @@
 namespace {
   void RemovePrefabOverrides(ECS::Entity root, IGE::Assets::GUID guid);
   ECS::Entity GetPrefabRoot(ECS::Entity root);
+  void CopyWorldTransform(Component::Transform const& source, Component::Transform& dest);
 }
 
 namespace GUI
@@ -414,16 +415,34 @@ namespace GUI
     if (ImGui::BeginPopup("EntityOptions"))
     {
       if (ImGui::Selectable("Create Entity")) {
-        ECS::Entity const newEntity{ CreateNewEntity() };
+        ECS::Entity newEntity{ CreateNewEntity() };
         mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
+        CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
         GUIVault::SetSelectedEntity(newEntity);
         modified = sEditNameMode = mLockControls = true;
       }
 
       if (ImGui::Selectable("Create Empty Parent")) {
-        ECS::Entity const newEntity{ CreateNewEntity() };
+        ECS::Entity newEntity{ CreateNewEntity() };
+
+        // if original entity has a parent, set this new entity as a child
+        if (mEntityManager.HasParent(mRightClickedEntity)) {
+          ECS::Entity const originalParent{ mEntityManager.GetParentEntity(mRightClickedEntity) };
+          mEntityManager.RemoveParent(mRightClickedEntity);
+          CopyWorldTransform(originalParent.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
+          mEntityManager.SetParentEntity(originalParent, newEntity);
+        }
+        else {
+          Component::Transform& newTrans{ newEntity.GetComponent<Component::Transform>() },
+            & rightClickedTrans{ mRightClickedEntity.GetComponent<Component::Transform>() };
+          newTrans = rightClickedTrans;
+          rightClickedTrans.ResetLocal();
+          newTrans.SetLocalToWorld();
+        }
+
         mEntityManager.SetParentEntity(newEntity, mRightClickedEntity);
-        TransformHelpers::UpdateTransformToNewParent(mRightClickedEntity);
+        /*mRightClickedEntity.GetComponent<Component::Transform>().ResetLocal();
+        TransformHelpers::UpdateTransformToNewParent(mRightClickedEntity);*/
         GUIVault::SetSelectedEntity(newEntity);
         modified = sEditNameMode = mLockControls = true;
       }
@@ -587,5 +606,12 @@ namespace {
     
     IGE_DBGLOGGER.LogError("[SceneHirarchy] Unable to get prefab root!");
     return {};
+  }
+
+  void CopyWorldTransform(Component::Transform const& source, Component::Transform& dest) {
+    dest.worldPos = source.worldPos;
+    dest.worldScale = source.worldScale;
+    dest.worldRot = source.worldRot;
+    dest.worldMtx = source.worldMtx;
   }
 }
