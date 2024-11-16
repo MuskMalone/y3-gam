@@ -19,16 +19,18 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace {
   void BeginDisabledBlock(bool flag);
   void EndDisabledBlock(bool flag);
+  bool isCursorLocked = false;
 }
 
 namespace GUI
 {
 
   SceneControls::SceneControls(const char* name)
-    : mSceneManager{ Scenes::SceneManager::GetInstance() }, GUIWindow(name) {}
+    : mSceneManager{ Scenes::SceneManager::GetInstance() },GUIWindow(name) {}
 
   void SceneControls::Run()
   {
+    bool wasRunning{ false };
     static int steps{ -1 };
     static constexpr ImVec4 defBtnBg{ 0.f, 0.f, 0.f, 0.5f }, greenBg{ 0.f, 0.6f, 0.f, 1.f };
     bool const sceneStopped{ !mSceneManager.IsSceneInProgress() },
@@ -66,8 +68,16 @@ namespace GUI
           }
 
           if (mSceneManager.GetSceneState() & Scenes::SceneState::PLAYING) {
+            if (ImGui::Button(ICON_FA_STOP) || (Input::InputManager::GetInstance().IsKeyPressed(KEY_CODE::KEY_LEFT_CONTROL) && Input::InputManager::GetInstance().IsKeyPressed(KEY_CODE::KEY_O)))
+            {
+              isCursorLocked = !isCursorLocked;
+              QUEUE_EVENT(Events::LockMouseEvent, isCursorLocked);
+            }
+
             if (ImGui::Button(ICON_FA_STOP) || (Input::InputManager::GetInstance().IsKeyPressed(KEY_CODE::KEY_LEFT_CONTROL) && Input::InputManager::GetInstance().IsKeyPressed(KEY_CODE::KEY_P))) {
-              QUEUE_EVENT(Events::LockMouseEvent, false);
+              wasRunning = true;
+              isCursorLocked = false;
+              QUEUE_EVENT(Events::LockMouseEvent, isCursorLocked);
               mSceneManager.StopScene();
             }
           }
@@ -99,9 +109,10 @@ namespace GUI
             if (sceneStopped) {
               ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.f, 0.5f, 0.f, 0.7f));
             }
-            if (mSceneManager.GetSceneState() != Scenes::SceneState::PLAYING) {
-              if (ImGui::Button(ICON_FA_PLAY) || (Input::InputManager::GetInstance().IsKeyPressed(KEY_CODE::KEY_LEFT_CONTROL) && Input::InputManager::GetInstance().IsKeyPressed(KEY_CODE::KEY_L))) {
-                QUEUE_EVENT(Events::LockMouseEvent, true);
+            if (mSceneManager.GetSceneState() != Scenes::SceneState::PLAYING && !wasRunning) {
+              if (ImGui::Button(ICON_FA_PLAY) || (Input::InputManager::GetInstance().IsKeyPressed(KEY_CODE::KEY_LEFT_CONTROL) && Input::InputManager::GetInstance().IsKeyPressed(KEY_CODE::KEY_P))) {
+                isCursorLocked = true;
+                QUEUE_EVENT(Events::LockMouseEvent, isCursorLocked);
                 mSceneManager.PlayScene();
               }
             }
