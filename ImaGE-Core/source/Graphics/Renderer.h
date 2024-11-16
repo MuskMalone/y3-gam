@@ -71,11 +71,15 @@ namespace Graphics {
 		glm::mat4 modelMatrix;
 		int materialIdx;
 		int entityID = -1;
-		int submeshIdx = 0;
 		//glm::vec4 color;
 		InstanceData() = default;
 		InstanceData(const glm::mat4& mtx, int mat, int ent = -1)
 			: modelMatrix{ mtx }, materialIdx{ mat }, entityID{ ent } {}
+	};
+
+	struct SubmeshInstanceData {
+		int submeshIdx;
+		InstanceData data;
 	};
 
 	struct RendererData {
@@ -140,7 +144,7 @@ namespace Graphics {
 		IGE::Assets::GUID whiteTex;
 
 		//------------------------Instancing related-------------------------//
-		std::unordered_map<IGE::Assets::GUID, std::vector<InstanceData>> instanceBufferDataMap;
+		std::unordered_map<IGE::Assets::GUID, std::vector<SubmeshInstanceData>> instanceBufferDataMap;
 		std::unordered_map<IGE::Assets::GUID, std::shared_ptr<VertexBuffer>> instanceBuffers;
 		//-------------------------------------------------------------------//
 

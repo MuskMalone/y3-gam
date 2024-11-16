@@ -168,7 +168,7 @@ namespace Graphics {
 		//Init Materials
 
 		// Create a default material with a default shader and properties
-		std::shared_ptr<MaterialData> defaultMaterial = MaterialData::Create("PBR", "Default");
+		std::shared_ptr<MaterialData> defaultMaterial = MaterialData::Create("Unlit", "Default");
 		defaultMaterial->SetAlbedoColor(glm::vec3(1.0f));  // Set default white albedo
 		defaultMaterial->SetMetalness(0.0f);
 		defaultMaterial->SetRoughness(1.0f);
@@ -467,8 +467,7 @@ namespace Graphics {
 		BufferLayout instanceLayout = {
 			{ AttributeType::MAT4, "a_ModelMatrix" },
 			{ AttributeType::INT, "a_MaterialIdx"},
-			{ AttributeType::INT, "a_EntityID"},
-			{ AttributeType::INT, "a_SubmeshIdx"}
+			{ AttributeType::INT, "a_EntityID"}
 			//{ AttributeType::VEC4, "a_Color" },
 
 		};
@@ -1019,8 +1018,11 @@ namespace Graphics {
 			instance.entityID = id;
 		}
 		instance.materialIdx = matID;
-		instance.submeshIdx = subID;
-		mData.instanceBufferDataMap[meshSource].push_back(instance);
+		
+		SubmeshInstanceData subData;
+		subData.submeshIdx = subID;
+		subData.data = instance;
+		mData.instanceBufferDataMap[meshSource].push_back(subData);
 	}
 
 	void Renderer::RenderInstances() {
@@ -1061,13 +1063,12 @@ namespace Graphics {
 			//instanceBuffer->SetData(instances.data(), instances.size() * sizeof(InstanceData));
 
 			// Iterate through submeshes for rendering
-			//unsigned int baseInstance = 0;
 			for (size_t submeshIndex = 0; submeshIndex < submeshes.size(); ++submeshIndex) {
 
 				std::vector<InstanceData> submeshInstances;
 				for (const auto& instance : instances) {
 					if (instance.submeshIdx == submeshIndex) { // Match submeshIdx
-						submeshInstances.push_back(instance);
+						submeshInstances.push_back(instance.data);
 					}
 				}
 				if (submeshInstances.empty()) continue;
@@ -1084,9 +1085,6 @@ namespace Graphics {
 					submesh.baseVtx,            // Base vertex
 					0                // Offset in the instance buffer
 				);
-
-				// Increment baseInstance for the next submesh
-				//baseInstance += instances.size();
 			}
 		}
 

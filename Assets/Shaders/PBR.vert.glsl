@@ -26,6 +26,7 @@ out vec3 v_Bitangent;        // Bitangent in world space
 out uvec2 v_AlbedoHandle;
 out int v_MaterialIdx;
 out int v_EntityID;
+out int v_SubmeshIdx;
 
 // shadows
 out vec4 v_LightSpaceFragPos;

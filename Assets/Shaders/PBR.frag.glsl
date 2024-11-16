@@ -9,6 +9,7 @@ in vec2 v_TexCoord;
 in flat float v_TexIdx; //not being used might delete
 
 in flat int v_EntityID;
+in flat int v_MaterialIdx;
            
 in vec3 v_FragPos;              // Fragment position in world space
 in vec3 v_Normal;               // Normal in world space
@@ -33,7 +34,6 @@ uniform float u_Roughness;
 uniform float u_Transparency;
 uniform float u_AO;
 
-in flat int v_MaterialIdx;
 
 uniform sampler2D[16] u_AlbedoMaps;
 //uniform sampler2D[16] u_NormalMaps;

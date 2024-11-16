@@ -66,75 +66,66 @@ namespace Graphics {
       //==========================LIGHTS END===================================================
       auto& ecsMan{ ECS::EntityManager::GetInstance() };
 
-      //auto const& entitiesMat = ecsMan.GetAllEntitiesWithComponents< Component::Transform, Component::Mesh>();
-      //for (auto const& e : entitiesMat) {
-      //    ECS::Entity entity{ e };     
-      //    auto const& mesh = entity.GetComponent<Component::Mesh>();auto const& mesh = entity.GetComponent<Component::Mesh>();
-      //    // Skip if mesh is null
-      //    if (!mesh.meshSource.IsValid()) { 
-      //        continue;
-      //    }
-      //    int matIdx = 0;
-      //    if (entity.HasComponent<Component::Material>()) {
-      //        auto const& material = entity.GetComponent<Component::Material>();
-      //        matIdx = material.matIdx;
-      //    }
-
-      //    auto const& xform = entity.GetComponent<Component::Transform>();
-
-      //    Renderer::SubmitInstance(mesh.meshSource, xform.worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matIdx );
-
       //=================================================SUBMESH VERSION===============================================================
-          // Group entities by material ID and gather instances for submeshes
-      for (ECS::Entity const& entity : entities) {
-          if (!entity.HasComponent<Component::Mesh>()) continue;
 
-          auto const& xform = entity.GetComponent<Component::Transform>();
-          auto const& mesh = entity.GetComponent<Component::Mesh>();
+      auto const& entitiesMat = ecsMan.GetAllEntitiesWithComponents< Component::Transform, Component::Mesh>();
+      for (auto const& e : entitiesMat) {
+          ECS::Entity entity{ e };
+          auto const& mesh = entity.GetComponent<Component::Mesh>(); 
 
           if (!mesh.meshSource.IsValid()) continue;
-
-          uint32_t matID = 0;
+          
+          int matID = 0;
           if (entity.HasComponent<Component::Material>()) {
-              auto const& matComponent = entity.GetComponent<Component::Material>();
-              matID = MaterialTable::GetMaterialIndexByGUID(matComponent.materialGUID);//matComponent.matIdx;
+              auto const& matComp = entity.GetComponent<Component::Material>();
+              matID = matComp.matIdx;
           }
 
-          // Group entity pairs by material ID for rendering
+          auto const& xform = entity.GetComponent<Component::Transform>();
           matGroups[matID].emplace_back(entity, xform.worldMtx);
       }
 
+      std::shared_ptr<Shader> currShader = nullptr;
       // Render each material group
       for (const auto& [matID, entityPairs] : matGroups) {
           // Get the shader associated with the material
           auto material = MaterialTable::GetMaterial(matID);
           auto shader = material->GetShader();
 
-          shader->Use();
-          shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);
-          shader->SetUniform("u_CamPos", cam.position);
+          if (shader != currShader) {
 
-          // Light Info
-          shader->SetUniform("numlights", numlights);
-          shader->SetUniform("u_type", u_type, maxLights);
-          shader->SetUniform("u_LightDirection", u_LightDirection, maxLights);
-          shader->SetUniform("u_LightColor", u_LightColor, maxLights);
-          shader->SetUniform("u_LightPos", u_LightPos, maxLights);
-          shader->SetUniform("u_InnerSpotAngle", u_InnerSpotAngle, maxLights);
-          shader->SetUniform("u_OuterSpotAngle", u_OuterSpotAngle, maxLights);
-          shader->SetUniform("u_LightIntensity", u_LightIntensity, maxLights);
-          shader->SetUniform("u_Range", u_Range, maxLights);
+              shader->Use();
+              currShader = shader;
 
-          {
-            // Set shadow uniforms
-            auto const& shadowPass = Renderer::GetPass<ShadowPass>();
-            shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
-            if (shadowPass->IsActive()) {
-              shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
-              shader->SetUniform("u_ShadowMap", static_cast<int>(shadowPass->BindShadowMap()));
-              shader->SetUniform("u_ShadowBias", shadowPass->GetShadowBias());
-              shader->SetUniform("u_ShadowSoftness", shadowPass->GetShadowSoftness());
-            }
+              bool isUnlitShader = (shader == ShaderLibrary::Get("Unlit"));
+              shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);
+
+              if (!isUnlitShader) {
+                  shader->SetUniform("u_CamPos", cam.position);
+
+                  // Light Info
+                  shader->SetUniform("numlights", numlights);
+                  shader->SetUniform("u_type", u_type, maxLights);
+                  shader->SetUniform("u_LightDirection", u_LightDirection, maxLights);
+                  shader->SetUniform("u_LightColor", u_LightColor, maxLights);
+                  shader->SetUniform("u_LightPos", u_LightPos, maxLights);
+                  shader->SetUniform("u_InnerSpotAngle", u_InnerSpotAngle, maxLights);
+                  shader->SetUniform("u_OuterSpotAngle", u_OuterSpotAngle, maxLights);
+                  shader->SetUniform("u_LightIntensity", u_LightIntensity, maxLights);
+                  shader->SetUniform("u_Range", u_Range, maxLights);
+
+                  
+                  // Set shadow uniforms
+                  auto const& shadowPass = Renderer::GetPass<ShadowPass>();
+                  shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
+                  if (shadowPass->IsActive()) {
+                      shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
+                      shader->SetUniform("u_ShadowMap", static_cast<int>(shadowPass->BindShadowMap()));
+                      shader->SetUniform("u_ShadowBias", shadowPass->GetShadowBias());
+                      shader->SetUniform("u_ShadowSoftness", shadowPass->GetShadowSoftness());
+                  }
+                  
+              }
           }
 
           material->Apply(shader);
