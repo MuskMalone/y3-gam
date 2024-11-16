@@ -1124,6 +1124,7 @@ namespace Graphics {
 		}
 
 		if (mData.quadIdxCount) {
+			RenderAPI::SetBackCulling(false);
 			//ptrdiff_t difference{ reinterpret_cast<unsigned char*>(mData.quadBufferPtr)
 			//					- reinterpret_cast<unsigned char*>(mData.quadBuffer.data()) };
 
@@ -1144,6 +1145,8 @@ namespace Graphics {
 
 			ShaderLibrary::Get("Tex2D")->Use();
 			RenderAPI::DrawIndices(mData.quadVertexArray, mData.quadIdxCount);
+
+			RenderAPI::SetBackCulling(true);
 
 			++mData.stats.drawCalls;
 		}
