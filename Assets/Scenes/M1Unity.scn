@@ -15,9 +15,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.0001614093780517578,
+                            "x": -0.00016117095947265625,
                             "y": 0.39998048543930056,
-                            "z": 0.00041866302490234375
+                            "z": 0.0004177093505859375
                         },
                         "scale": {
                             "x": 1.0,
@@ -25,10 +25,10 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -0.25628945231437685,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 0.9666001796722412
+                            "x": -0.25628939270973208,
+                            "y": -2.9802318834981635e-8,
+                            "z": 1.4901159417490817e-8,
+                            "w": 0.9666000604629517
                         },
                         "eulerAngles": {
                             "x": -5.999993324279785,
@@ -36,7 +36,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 8.298283576965332,
+                            "x": 8.298284530639649,
                             "y": 5.939835548400879,
                             "z": -12.329020500183106
                         },
@@ -46,10 +46,10 @@
                             "z": 1.0
                         },
                         "worldRot": {
-                            "x": -0.20015589892864228,
-                            "y": -0.6037006378173828,
-                            "z": -0.1600683629512787,
-                            "w": 0.7548915147781372
+                            "x": -0.20015592873096467,
+                            "y": -0.6037007570266724,
+                            "z": -0.16006837785243989,
+                            "w": 0.754891574382782
                         }
                     }
                 },
@@ -62,7 +62,7 @@
                     "Camera": {
                         "projType": "PERSP",
                         "position": {
-                            "x": 8.298283576965332,
+                            "x": 8.298284530639649,
                             "y": 5.939835548400879,
                             "z": -12.329020500183106
                         },
@@ -138,8 +138,9 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 3093113285732523076
+                            "ID": 2627989467146515512
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -915,7 +916,7 @@
                         "position": {
                             "x": 0.5540180206298828,
                             "y": 0.27500206232070925,
-                            "z": 0.16699743270874024
+                            "z": 0.16699755191802979
                         },
                         "scale": {
                             "x": 0.11999999731779099,
@@ -923,10 +924,10 @@
                             "z": 0.11999999731779099
                         },
                         "rotation": {
-                            "x": 0.12896941602230073,
+                            "x": 0.12896940112113954,
                             "y": -0.7883492708206177,
-                            "z": 0.5949131846427918,
-                            "w": 0.08916674554347992
+                            "z": 0.594913125038147,
+                            "w": 0.08916673809289932
                         },
                         "eulerAngles": {
                             "x": -106.7999496459961,
@@ -945,7 +946,7 @@
                         },
                         "worldRot": {
                             "x": 0.11021909862756729,
-                            "y": -0.7907610535621643,
+                            "y": -0.7907611727714539,
                             "z": 0.5986706614494324,
                             "w": 0.06436009705066681
                         }
@@ -1020,8 +1021,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -1139,8 +1141,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -1271,8 +1274,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -1390,8 +1394,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -1569,8 +1574,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -2012,8 +2018,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -2267,8 +2274,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -2478,31 +2486,6 @@
                     "AudioSource": {
                         "sounds": [
                             {
-                                "key": "Grass4",
-                                "value": {
-                                    "guid": {
-                                        "ID": 595166077166477397
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 17.26263427734375,
-                                            "y": -19.79947853088379,
-                                            "z": -33.698463439941409
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
-                                    }
-                                }
-                            },
-                            {
                                 "key": "Pavement6",
                                 "value": {
                                     "guid": {
@@ -2532,6 +2515,31 @@
                                 "value": {
                                     "guid": {
                                         "ID": 10093927524114237221
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 17.26263427734375,
+                                            "y": -19.79947853088379,
+                                            "z": -33.698463439941409
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Grass4",
+                                "value": {
+                                    "guid": {
+                                        "ID": 595166077166477397
                                     },
                                     "playSettings": {
                                         "position": {
@@ -2703,31 +2711,6 @@
                                 }
                             },
                             {
-                                "key": "MetalPipe2",
-                                "value": {
-                                    "guid": {
-                                        "ID": 7164462922016107407
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 17.26263427734375,
-                                            "y": -19.79947853088379,
-                                            "z": -33.698463439941409
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
-                                    }
-                                }
-                            },
-                            {
                                 "key": "Pavement5",
                                 "value": {
                                     "guid": {
@@ -2753,10 +2736,10 @@
                                 }
                             },
                             {
-                                "key": "MetalPipe3",
+                                "key": "MetalPipe2",
                                 "value": {
                                     "guid": {
-                                        "ID": 2149759332604770166
+                                        "ID": 7164462922016107407
                                     },
                                     "playSettings": {
                                         "position": {
@@ -2782,6 +2765,31 @@
                                 "value": {
                                     "guid": {
                                         "ID": 10871485496724890079
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 17.26263427734375,
+                                            "y": -19.79947853088379,
+                                            "z": -33.698463439941409
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "MetalPipe3",
+                                "value": {
+                                    "guid": {
+                                        "ID": 2149759332604770166
                                     },
                                     "playSettings": {
                                         "position": {
@@ -3007,8 +3015,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -3080,8 +3089,8 @@
                     "Transform": {
                         "position": {
                             "x": 10.946462631225586,
-                            "y": 6.866691589355469,
-                            "z": -0.03665924072265625
+                            "y": 6.866689682006836,
+                            "z": -0.036651611328125
                         },
                         "scale": {
                             "x": 1.136022686958313,
@@ -3100,8 +3109,8 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.563331604003909,
-                            "y": 17.23201560974121,
+                            "x": 53.56333923339844,
+                            "y": 17.232013702392579,
                             "z": 47.068790435791019
                         },
                         "worldScale": {
@@ -3126,8 +3135,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -3199,8 +3209,8 @@
                     "Transform": {
                         "position": {
                             "x": -10.844766616821289,
-                            "y": 6.8634490966796879,
-                            "z": -0.039554595947265628
+                            "y": 6.863447189331055,
+                            "z": -0.03955078125
                         },
                         "scale": {
                             "x": 1.1353846788406373,
@@ -3219,8 +3229,8 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.56044006347656,
-                            "y": 17.229875564575197,
+                            "x": 53.56044387817383,
+                            "y": 17.229873657226564,
                             "z": 61.233089447021487
                         },
                         "worldScale": {
@@ -3245,8 +3255,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -3319,7 +3330,7 @@
                         "position": {
                             "x": 0.032102376222610477,
                             "y": 16.193498611450197,
-                            "z": -0.4666290283203125
+                            "z": -0.4666252136230469
                         },
                         "scale": {
                             "x": 2.826664447784424,
@@ -3338,7 +3349,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.133365631103519,
+                            "x": 53.13336944580078,
                             "y": 23.387706756591798,
                             "z": 54.163124084472659
                         },
@@ -3364,8 +3375,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -3483,8 +3495,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -3673,8 +3686,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -3941,8 +3955,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -4080,8 +4095,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -4199,8 +4215,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -4407,8 +4424,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -4526,8 +4544,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -4597,8 +4616,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -4860,8 +4880,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -5178,6 +5199,7 @@
                         "GUID": {
                             "ID": 2836105024965489888
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
@@ -5257,6 +5279,7 @@
                         "GUID": {
                             "ID": 2836105024965489888
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
@@ -5398,6 +5421,7 @@
                         "GUID": {
                             "ID": 2836105024965489888
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
@@ -5657,6 +5681,7 @@
                         "GUID": {
                             "ID": 3934477582645125337
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
@@ -6572,8 +6597,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0006234095199033618,
-                            "y": -0.000164031982421875,
-                            "z": 0.0003204345703125
+                            "y": -0.0001678466796875,
+                            "z": 0.000324249267578125
                         },
                         "scale": {
                             "x": 1.0,
@@ -6592,8 +6617,8 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.60031509399414,
-                            "y": 12.69989013671875,
+                            "x": 53.600318908691409,
+                            "y": 12.699888229370118,
                             "z": 54.18358612060547
                         },
                         "worldScale": {
@@ -6628,6 +6653,7 @@
                         "GUID": {
                             "ID": 1364409987368051476
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
@@ -7271,9 +7297,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.004165351390838623,
+                            "x": -0.004165321588516235,
                             "y": -0.6449517011642456,
-                            "z": -0.0030875205993652345
+                            "z": -0.0030879974365234377
                         },
                         "scale": {
                             "x": 1.2005765438079835,
@@ -7292,9 +7318,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 6.002971172332764,
+                            "x": 6.002971649169922,
                             "y": 9.305135726928711,
-                            "z": -37.839866638183597
+                            "z": -37.83987045288086
                         },
                         "worldScale": {
                             "x": 17.409326553344728,
@@ -7318,8 +7344,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -9536,8 +9563,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -9785,8 +9813,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -9904,8 +9933,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -10094,8 +10124,9 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12907625294626922245
+                            "ID": 8854089711193298026
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
@@ -10270,6 +10301,29 @@
                         }
                     },
                     {
+                        "key": "RigidBody",
+                        "value": {
+                            "velocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "angularVelocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "staticFriction": 0.0,
+                            "dynamicFriction": 0.0,
+                            "restitution": 0.0,
+                            "gravityFactor": 0.0,
+                            "linearDamping": 0.9800000190734863,
+                            "motionType": "DYNAMIC",
+                            "axisLock": 0,
+                            "angularAxisLock": 0
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -10309,29 +10363,6 @@
                                 "z": 3.468784370852518e-9,
                                 "w": 0.7100075483322144
                             }
-                        }
-                    },
-                    {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 0.0,
-                            "dynamicFriction": 0.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "DYNAMIC",
-                            "axisLock": 0,
-                            "angularAxisLock": 0
                         }
                     },
                     {
@@ -10391,9 +10422,9 @@
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": -0.031410761177539828,
+                            "y": -0.03141075745224953,
                             "z": 0.0,
-                            "w": 0.9995066523551941
+                            "w": 0.9995065331459045
                         },
                         "eulerAngles": {
                             "x": 0.0,
@@ -10412,9 +10443,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.03141075745224953,
+                            "y": -0.031410761177539828,
                             "z": 0.0,
-                            "w": 0.9995065331459045
+                            "w": 0.9995066523551941
                         }
                     }
                 },
@@ -10440,9 +10471,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.000026702880859375,
-                            "y": 0.00013446807861328125,
-                            "z": -0.000232696533203125
+                            "x": -0.00002288818359375,
+                            "y": 0.00013637542724609375,
+                            "z": -0.0002288818359375
                         },
                         "scale": {
                             "x": 1.0,
@@ -10451,8 +10482,8 @@
                         },
                         "rotation": {
                             "x": -5.662441253662109e-7,
-                            "y": -4.1048042476177218e-7,
-                            "z": -4.931353032588959e-7,
+                            "y": -4.105968400835991e-7,
+                            "z": -4.922039806842804e-7,
                             "w": 1.0
                         },
                         "eulerAngles": {
@@ -10462,8 +10493,8 @@
                         },
                         "worldPos": {
                             "x": -18.895811080932618,
-                            "y": 2.255206346511841,
-                            "z": -17.179662704467775
+                            "y": 2.2552061080932619,
+                            "z": -17.17966079711914
                         },
                         "worldScale": {
                             "x": 0.4000000059604645,
@@ -10471,9 +10502,9 @@
                             "z": 0.4000000059604645
                         },
                         "worldRot": {
-                            "x": -0.007936625741422177,
+                            "x": -0.007936626672744751,
                             "y": 0.974634051322937,
-                            "z": -0.14220204949378968,
+                            "z": -0.14220206439495088,
                             "w": -0.1726388931274414
                         }
                     }
@@ -10497,6 +10528,7 @@
                         "GUID": {
                             "ID": 5309045186088192693
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
@@ -10522,9 +10554,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.743556022644043,
+                            "x": -0.7435550689697266,
                             "y": 0.36106449365615847,
-                            "z": -0.24948102235794068
+                            "z": -0.24948084354400636
                         },
                         "scale": {
                             "x": 0.20000000298023225,
@@ -10532,10 +10564,10 @@
                             "z": 0.20000000298023225
                         },
                         "rotation": {
-                            "x": -0.01239896472543478,
-                            "y": 0.9687302708625794,
-                            "z": -0.1418832540512085,
-                            "w": -0.20316803455352784
+                            "x": -0.012398962862789631,
+                            "y": 0.9687301516532898,
+                            "z": -0.1418832391500473,
+                            "w": -0.20316798985004426
                         },
                         "eulerAngles": {
                             "x": -162.9001007080078,
@@ -10545,7 +10577,7 @@
                         "worldPos": {
                             "x": -18.89584732055664,
                             "y": 2.255128860473633,
-                            "z": -17.17972755432129
+                            "z": -17.179725646972658
                         },
                         "worldScale": {
                             "x": 0.4000000059604645,
@@ -10555,7 +10587,7 @@
                         "worldRot": {
                             "x": -0.007936185225844384,
                             "y": 0.9746339321136475,
-                            "z": -0.142202690243721,
+                            "z": -0.1422027051448822,
                             "w": -0.17263922095298768
                         }
                     }
@@ -10582,9 +10614,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.000026702880859375,
-                            "y": 0.00013446807861328125,
-                            "z": -0.000232696533203125
+                            "x": -0.00002288818359375,
+                            "y": 0.00013637542724609375,
+                            "z": -0.0002288818359375
                         },
                         "scale": {
                             "x": 1.0,
@@ -10593,8 +10625,8 @@
                         },
                         "rotation": {
                             "x": -5.662441253662109e-7,
-                            "y": -4.1048042476177218e-7,
-                            "z": -4.931353032588959e-7,
+                            "y": -4.105968400835991e-7,
+                            "z": -4.922039806842804e-7,
                             "w": 1.0
                         },
                         "eulerAngles": {
@@ -10604,8 +10636,8 @@
                         },
                         "worldPos": {
                             "x": -18.895811080932618,
-                            "y": 2.255206346511841,
-                            "z": -17.179662704467775
+                            "y": 2.2552061080932619,
+                            "z": -17.17966079711914
                         },
                         "worldScale": {
                             "x": 0.4000000059604645,
@@ -10613,9 +10645,9 @@
                             "z": 0.4000000059604645
                         },
                         "worldRot": {
-                            "x": -0.007936625741422177,
+                            "x": -0.007936626672744751,
                             "y": 0.974634051322937,
-                            "z": -0.14220204949378968,
+                            "z": -0.14220206439495088,
                             "w": -0.1726388931274414
                         }
                     }
@@ -10639,6 +10671,7 @@
                         "GUID": {
                             "ID": 5309045186088192693
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
@@ -10742,6 +10775,13 @@
                         }
                     },
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Outside Pit Painting",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -10766,13 +10806,6 @@
                                 "w": 0.9990482330322266
                             },
                             "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Outside Pit Painting",
-                            "isActive": true
                         }
                     }
                 ],
@@ -12919,8 +12952,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.00020599365234375,
-                            "y": -0.0000209808349609375,
-                            "z": 0.00002574920654296875
+                            "y": -0.0000247955322265625,
+                            "z": 0.0000247955322265625
                         },
                         "scale": {
                             "x": 1.0,
@@ -12928,9 +12961,9 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -2.980231954552437e-7,
-                            "y": -1.2665985593685037e-7,
-                            "z": 1.4901159417490817e-8,
+                            "x": -3.2782554626464846e-7,
+                            "y": -1.2665987014770509e-7,
+                            "z": 1.4901161193847657e-8,
                             "w": 1.0
                         },
                         "eulerAngles": {
@@ -12950,7 +12983,7 @@
                         },
                         "worldRot": {
                             "x": 0.11021913588047028,
-                            "y": -0.7907612323760986,
+                            "y": -0.7907613515853882,
                             "z": 0.5986704230308533,
                             "w": 0.06436002254486084
                         }
@@ -12975,6 +13008,7 @@
                         "GUID": {
                             "ID": 634836298654960680
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
@@ -12998,8 +13032,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.000006318092346191406,
-                            "z": 5.960464477539063e-8
+                            "y": 0.000006377696990966797,
+                            "z": 1.7881393432617188e-7
                         },
                         "scale": {
                             "x": 1.0,
@@ -13019,7 +13053,7 @@
                         },
                         "worldPos": {
                             "x": -17.44300079345703,
-                            "y": 1.5330126285552979,
+                            "y": 1.5330127477645875,
                             "z": -16.5883731842041
                         },
                         "worldScale": {
@@ -13029,9 +13063,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.03141075745224953,
+                            "y": -0.031410761177539828,
                             "z": 0.0,
-                            "w": 0.9995065331459045
+                            "w": 0.9995066523551941
                         }
                     }
                 },
@@ -13054,6 +13088,7 @@
                         "GUID": {
                             "ID": 5707433909251145013
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
@@ -13077,8 +13112,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.000006318092346191406,
-                            "z": 5.960464477539063e-8
+                            "y": 0.000006377696990966797,
+                            "z": 1.7881393432617188e-7
                         },
                         "scale": {
                             "x": 1.0,
@@ -13098,7 +13133,7 @@
                         },
                         "worldPos": {
                             "x": -17.44300079345703,
-                            "y": 1.5330126285552979,
+                            "y": 1.5330127477645875,
                             "z": -16.5883731842041
                         },
                         "worldScale": {
@@ -13108,9 +13143,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.03141075745224953,
+                            "y": -0.031410761177539828,
                             "z": 0.0,
-                            "w": 0.9995065331459045
+                            "w": 0.9995066523551941
                         }
                     }
                 },
@@ -13133,6 +13168,7 @@
                         "GUID": {
                             "ID": 5707433909251145013
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
@@ -13156,8 +13192,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.000006318092346191406,
-                            "z": 5.960464477539063e-8
+                            "y": 0.000006377696990966797,
+                            "z": 1.7881393432617188e-7
                         },
                         "scale": {
                             "x": 1.0,
@@ -13177,7 +13213,7 @@
                         },
                         "worldPos": {
                             "x": -17.44300079345703,
-                            "y": 1.5330126285552979,
+                            "y": 1.5330127477645875,
                             "z": -16.5883731842041
                         },
                         "worldScale": {
@@ -13187,9 +13223,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.03141075745224953,
+                            "y": -0.031410761177539828,
                             "z": 0.0,
-                            "w": 0.9995065331459045
+                            "w": 0.9995066523551941
                         }
                     }
                 },
@@ -13212,6 +13248,7 @@
                         "GUID": {
                             "ID": 5707433909251145013
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
@@ -13884,8 +13921,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.000006318092346191406,
-                            "z": 5.960464477539063e-8
+                            "y": 0.000006377696990966797,
+                            "z": 1.7881393432617188e-7
                         },
                         "scale": {
                             "x": 1.0,
@@ -13905,7 +13942,7 @@
                         },
                         "worldPos": {
                             "x": -17.44300079345703,
-                            "y": 1.5330126285552979,
+                            "y": 1.5330127477645875,
                             "z": -16.5883731842041
                         },
                         "worldScale": {
@@ -13915,9 +13952,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.03141075745224953,
+                            "y": -0.031410761177539828,
                             "z": 0.0,
-                            "w": 0.9995065331459045
+                            "w": 0.9995066523551941
                         }
                     }
                 },
@@ -13940,6 +13977,7 @@
                         "GUID": {
                             "ID": 5707433909251145013
                         },
+                        "submeshIdx": 0,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true

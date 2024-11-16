@@ -467,7 +467,8 @@ namespace Graphics {
 		BufferLayout instanceLayout = {
 			{ AttributeType::MAT4, "a_ModelMatrix" },
 			{ AttributeType::INT, "a_MaterialIdx"},
-			{ AttributeType::INT, "a_EntityID"}
+			{ AttributeType::INT, "a_EntityID"},
+			{ AttributeType::INT, "a_SubmeshIdx"}
 			//{ AttributeType::VEC4, "a_Color" },
 
 		};
@@ -1009,7 +1010,7 @@ namespace Graphics {
 		SetTriangleBufferData(v3, clr);
 	}
 
-	void Renderer::SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, int matID) {
+	void Renderer::SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, int matID, int subID) {
 		InstanceData instance{};
 		instance.modelMatrix = worldMtx;
 		//instance.color = clr;
@@ -1018,7 +1019,7 @@ namespace Graphics {
 			instance.entityID = id;
 		}
 		instance.materialIdx = matID;
-
+		instance.submeshIdx = subID;
 		mData.instanceBufferDataMap[meshSource].push_back(instance);
 	}
 
@@ -1057,11 +1058,20 @@ namespace Graphics {
 			// Ensure the instance buffer exists for the mesh source
 			auto instanceBuffer = GetInstanceBuffer(meshSrc);
 			// Update the instance buffer with the latest data
-			instanceBuffer->SetData(instances.data(), instances.size() * sizeof(InstanceData));
+			//instanceBuffer->SetData(instances.data(), instances.size() * sizeof(InstanceData));
 
 			// Iterate through submeshes for rendering
 			//unsigned int baseInstance = 0;
 			for (size_t submeshIndex = 0; submeshIndex < submeshes.size(); ++submeshIndex) {
+
+				std::vector<InstanceData> submeshInstances;
+				for (const auto& instance : instances) {
+					if (instance.submeshIdx == submeshIndex) { // Match submeshIdx
+						submeshInstances.push_back(instance);
+					}
+				}
+				if (submeshInstances.empty()) continue;
+				instanceBuffer->SetData(submeshInstances.data(), submeshInstances.size() * sizeof(InstanceData));
 				auto const& submesh = submeshes[submeshIndex];
 
 
@@ -1069,7 +1079,7 @@ namespace Graphics {
 				RenderAPI::DrawIndicesInstancedBaseVertexBaseInstance(
 					vao,
 					submesh.idxCount,           // Index count for this submesh
-					static_cast<unsigned>(instances.size()), // Total instances
+					static_cast<unsigned>(submeshInstances.size()), // Total instances
 					submesh.baseIdx,            // Index offset
 					submesh.baseVtx,            // Base vertex
 					0                // Offset in the instance buffer

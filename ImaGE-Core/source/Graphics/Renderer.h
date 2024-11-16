@@ -71,6 +71,7 @@ namespace Graphics {
 		glm::mat4 modelMatrix;
 		int materialIdx;
 		int entityID = -1;
+		int submeshIdx = 0;
 		//glm::vec4 color;
 		InstanceData() = default;
 		InstanceData(const glm::mat4& mtx, int mat, int ent = -1)
@@ -179,7 +180,7 @@ namespace Graphics {
 		static void SubmitTriangle(glm::vec3 const& v1, glm::vec3 const& v2, glm::vec3 const& v3, glm::vec4 const& clr = Color::COLOR_WHITE);
 
 		//Instancing
-		static void SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int entityID = -1, int matID = 0);
+		static void SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int entityID = -1, int matID = 0, int subID = 0);
 		static void RenderInstances();
 
 		static void RenderSubmeshInstances();
