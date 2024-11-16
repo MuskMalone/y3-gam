@@ -52,7 +52,7 @@ public class  PlayerMove : Entity
 
   //public Vector3 velocity = new Vector3();
   bool isGrounded = true;
-  public string testStr = "NIGGA";
+  public string[] testStr;
   public PlayerMove() : base()
   {
 
@@ -73,7 +73,6 @@ public class  PlayerMove : Entity
     {
       //Console.WriteLine(GetComponent<Transform>().GetChild(0).GetChild(0).worldPosition);
     }
-
 
     if(canLook) 
       ProcessLook();
