@@ -19,7 +19,17 @@ public class Dialogue : Entity
 
   public string[] initialDialogue;
 
-  private PlayerMove playerMove;
+  public PlayerMove playerMove;
+  public Entity DialogueBox;
+  public Entity NeutralTara;
+  public Entity ThinkingTara;
+  public Entity ShockedTara;
+  public Entity SurprisedTara;
+  public Entity HappyTara;
+  public Entity DisturbedTara;
+  public Entity SadTara;
+
+  private Emotion[] emotions;
 
   public Dialogue() : base()
   {
@@ -28,12 +38,23 @@ public class Dialogue : Entity
 
   void Start()
   {
-
+    DeactivateAllEmotions();
   }
 
   void Update()
   {
+    FreezePlayer();
+  }
 
+  void DeactivateAllEmotions()
+  {
+    ThinkingTara.SetActive(false);
+    ShockedTara.SetActive(false);
+    SurprisedTara.SetActive(false);
+    HappyTara.SetActive(false);
+    DisturbedTara.SetActive(false);
+    SadTara.SetActive(false);
+    NeutralTara.SetActive(false);
   }
 
   public void FreezePlayer()

@@ -71,7 +71,8 @@ namespace Mono
     { "Entity",ScriptFieldType::ENTITY},
     { "Inside",ScriptFieldType::INSIDE},
     { "Test",ScriptFieldType::TEST},
-    { "InsideB",ScriptFieldType::INSIDEB}
+    { "InsideB",ScriptFieldType::INSIDEB},
+    { "PlayerMove",ScriptFieldType::PLAYERMOVE}
   };
 }
 

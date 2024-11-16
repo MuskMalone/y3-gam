@@ -223,7 +223,7 @@ namespace GUI
     // set the flag accordingly
     ImGuiTreeNodeFlags treeFlag{ ImGuiTreeNodeFlags_SpanFullWidth };
     bool const hasChildren{ mEntityManager.HasChild(entity) };
-    treeFlag |= hasChildren ? ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen
+    treeFlag |= hasChildren ? ImGuiTreeNodeFlags_OpenOnArrow
       : ImGuiTreeNodeFlags_Leaf;
 
     if (isCurrentEntity) { treeFlag |= ImGuiTreeNodeFlags_Selected; }

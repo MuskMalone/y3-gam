@@ -43,7 +43,8 @@ namespace Mono {
 		ENTITY,
 		TEST,
 		INSIDE,
-		INSIDEB
+		INSIDEB,
+		PLAYERMOVE,
 	};
 
 
