@@ -36,6 +36,7 @@ namespace Component {
     position = worldPos;
     scale = worldScale;
     rotation = worldRot;
+    eulerAngles = glm::degrees(glm::eulerAngles(rotation));
   }
 
   void Transform::ComputeWorldMtx() {
@@ -44,6 +45,12 @@ namespace Component {
     glm::mat4 scale{ glm::scale(glm::mat4{ 1.f }, worldScale) };
 
     worldMtx = trans * rot * scale;
+  }
+
+  void Transform::ResetLocal() {
+    position = eulerAngles = {};
+    rotation = { 1.f, 0.f, 0.f, 0.f };
+    scale = { 1.f, 1.f, 1.f };
   }
 
   void Transform::Clear() noexcept {

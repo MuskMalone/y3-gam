@@ -419,15 +419,30 @@ namespace GUI
           QUEUE_EVENT(Events::LoadSceneEvent, assetPayload.GetFileName(), assetPayload.GetFilePath());
           break;
         case AssetPayload::PREFAB:
+        {
           // @TODO: Convert screen to world pos when viewport is up
-          glm::vec3 const prefabPos{};
-          QUEUE_EVENT(Events::SpawnPrefabEvent, assetPayload.GetFileName(), assetPayload.GetFilePath(), prefabPos);
+          try {
+            IGE::Assets::AssetManager& assetMan{ IGE_ASSETMGR };
+            IGE::Assets::GUID guid{ assetMan.LoadRef<IGE::Assets::PrefabAsset>(assetPayload.GetFilePath()) };
+
+            ECS::Entity newEntity{ assetMan.GetAsset<IGE::Assets::PrefabAsset>(guid)->mPrefabData.Construct(guid, {}) };
+            GUIVault::SetSelectedEntity(newEntity);
+          }
+          catch (Debug::ExceptionBase&) {
+            IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
+          }
           break;
+        }
         case AssetPayload::MODEL:
         {
-          IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
-          ECS::Entity const newEntity{ IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(meshSrc)->mMeshSource.ConstructEntity(meshSrc, assetPayload.GetFileName()) };
-          GUIVault::SetSelectedEntity(newEntity);
+          try {
+            IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
+            ECS::Entity const newEntity{ IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(meshSrc)->mMeshSource.ConstructEntity(meshSrc, assetPayload.GetFileName()) };
+            GUIVault::SetSelectedEntity(newEntity);
+          }
+          catch (Debug::ExceptionBase&) {
+            IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
+          }
           break;
         }
         default:
