@@ -120,6 +120,8 @@ void ScriptInstance::GetFieldCSClass(std::vector<rttr::variant>& mScriptFieldIns
      //* sfi.mData.mScriptName = sfi.mData.mScriptName + '.' + mono_class_get_name(sfi.mData.mScriptClass);
       sfi.mData.GetAllFieldsInst();
     }
+    else
+      sfi.mData.mEntityID = static_cast<ECS::Entity::EntityID>(-1);
   }
 
   mScriptFieldInstList.emplace_back(sfi);
@@ -265,7 +267,7 @@ void ScriptInstance::GetAllFieldsInst()
       {
         GetFieldCSClass(mScriptFieldInstList, field);
         Mono::DataMemberInstance<ScriptInstance>& sfi = mScriptFieldInstList[mScriptFieldInstList.size() - 1].get_value<Mono::DataMemberInstance<ScriptInstance>>();
-        if(sfi.mData.mClassInst)
+        if (sfi.mData.mClassInst)
           sfi.mData.mEntityID = static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData);
         break;
       }

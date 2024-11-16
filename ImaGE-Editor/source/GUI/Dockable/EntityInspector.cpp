@@ -642,10 +642,10 @@ namespace GUI {
               //Set the default display value.
               ECS::Entity::EntityID currID = entt::null;
               std::string msg{ "No Entity Attached" };
-              if (sfi.mData.mClassInst && ECS::EntityManager::GetInstance().IsValidEntity(static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData)))
+              if (sfi.mData.mClassInst && ECS::EntityManager::GetInstance().IsValidEntity(static_cast<ECS::Entity::EntityID>(sfi.mData.mEntityID)))
               {
-                msg = ECS::Entity(static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData)).GetTag();
-                currID = static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData);
+                msg = ECS::Entity(sfi.mData.mEntityID).GetTag();
+                currID = sfi.mData.mEntityID;
               }
 
               if (ImGui::BeginCombo(("##EntitySelectionComboList" + sfi.mScriptField.mFieldName).c_str(), msg.c_str()))
@@ -676,6 +676,7 @@ namespace GUI {
                           }
                           else
                           {
+                            sfi.mData.mEntityID = e.GetRawEnttEntityID();
                             sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData = static_cast<unsigned>(e.GetRawEnttEntityID());
                             sfi.mData.SetAllFields();
                           }
