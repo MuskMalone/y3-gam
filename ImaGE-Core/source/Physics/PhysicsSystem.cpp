@@ -240,6 +240,7 @@ namespace IGE {
 				mScene->addActor(*rb);
 			}
 			if (!(bool)rigidbody.motionType) {
+				rb->setAngularVelocity(rigidbody.angularVelocity);
 				rb->setLinearVelocity(rigidbody.velocity);
 				rb->setLinearDamping(rigidbody.linearDamping);
 				rb->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_LINEAR_X, rigidbody.IsAxisLocked((int)Component::RigidBody::Axis::X) ? true : false);
@@ -523,37 +524,109 @@ namespace IGE {
 			if (Input::InputManager::GetInstance().IsKeyHeld(KEY_CODE::KEY_LEFT_CONTROL) &&
 				Input::InputManager::GetInstance().IsKeyTriggered(KEY_CODE::KEY_D)) mDrawDebug = !mDrawDebug;
 			if (!mDrawDebug) return;
+			{
+				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::BoxCollider>() };
+				for (auto entity : rbsystem) {
+					auto& collider{ rbsystem.get<Component::BoxCollider>(entity) };
+					ECS::Entity e{ entity };
+					auto rbiter{ mRigidBodyIDs.find(e.GetComponent<Component::BoxCollider>().bodyID) };
 
-			auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::BoxCollider>() };
-			for (auto entity : rbsystem) {
-				auto& collider{ rbsystem.get<Component::BoxCollider>(entity) };
-				ECS::Entity e{ entity };
-				auto rbiter{ mRigidBodyIDs.find(e.GetComponent<Component::BoxCollider>().bodyID) };
+					if (rbiter != mRigidBodyIDs.end()) {
+						physx::PxRigidDynamic* pxrb { rbiter->second };
+						physx::PxShape* shape[3];
+						physx::PxBoxGeometry geom{};
+						auto num{ pxrb->getNbShapes() };
+						if (collider.idx < num) {
+							pxrb->getShapes(shape, 3);
+							auto globPos{ pxrb->getGlobalPose() };
+							if (pxrb->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC))
+								pxrb->getKinematicTarget(globPos);
+							physx::PxTransform locPos{ shape[collider.idx]->getLocalPose() };
 
-				if (rbiter != mRigidBodyIDs.end()) {
-					physx::PxRigidDynamic* pxrb { rbiter->second };
-					physx::PxShape* shape[3];
-					physx::PxBoxGeometry geom{};
-					auto num{ pxrb->getNbShapes() };
-					if (collider.idx < num) {
-						pxrb->getShapes(shape, 3);
-						auto globPos{ pxrb->getGlobalPose() };
-						if (pxrb->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC))
-							pxrb->getKinematicTarget(globPos);
-						physx::PxTransform locPos{ shape[collider.idx]->getLocalPose() };
-
-						shape[collider.idx]->getBoxGeometry(geom);
-						auto scale{ geom.halfExtents };
-						auto drawpos{ ToGLMVec3(globPos.p + locPos.p) };
-						auto drawrot{ ToGLMQuat(globPos.q) * ToGLMQuat(locPos.q) };
-						auto meshrot{ e.GetComponent<Component::Transform>().worldRot };
-						auto shapeGlobPos(globPos * locPos);
-						Graphics::Renderer::DrawBox(ToGLMVec3(shapeGlobPos.p), ToGraphicUnits(ToGLMVec3(scale)), ToGLMQuat(shapeGlobPos.q), {0,1,0,1});
+							shape[collider.idx]->getBoxGeometry(geom);
+							auto scale{ geom.halfExtents };
+							auto shapeGlobPos(globPos * locPos);
+							Graphics::Renderer::DrawBox(ToGLMVec3(shapeGlobPos.p), ToGraphicUnits(ToGLMVec3(scale)), ToGLMQuat(shapeGlobPos.q), { 0,1,0,1 });
+						}
 					}
-				}
-				
-			}
 
+				}
+			}
+			{
+				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::SphereCollider>() };
+				for (auto entity : rbsystem) {
+					auto& collider{ rbsystem.get<Component::SphereCollider>(entity) };
+					ECS::Entity e{ entity };
+					auto rbiter{ mRigidBodyIDs.find(e.GetComponent<Component::SphereCollider>().bodyID) };
+
+					if (rbiter != mRigidBodyIDs.end()) {
+						physx::PxRigidDynamic* pxrb { rbiter->second };
+						physx::PxShape* shape[3];
+						physx::PxSphereGeometry geom{};
+						auto num{ pxrb->getNbShapes() };
+						if (collider.idx < num) {
+							pxrb->getShapes(shape, 3);
+							auto globPos{ pxrb->getGlobalPose() };
+							if (pxrb->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC))
+								pxrb->getKinematicTarget(globPos);
+							physx::PxTransform locPos{ shape[collider.idx]->getLocalPose() };
+
+							shape[collider.idx]->getSphereGeometry(geom);
+							auto radius{ geom.radius };
+							auto shapeGlobPos(globPos * locPos);
+							//i think the radius is actually the diameter here so im gonna divide by 2
+							Graphics::Renderer::DrawWireSphere(ToGLMVec3(shapeGlobPos.p), ToGraphicUnits(radius/2.f), { 0,1,0,1 }, 16);
+						}
+					}
+
+				}
+			}
+			{
+				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::CapsuleCollider>() };
+				for (auto entity : rbsystem) {
+					auto& collider{ rbsystem.get<Component::CapsuleCollider>(entity) };
+					ECS::Entity e{ entity };
+					auto rbiter{ mRigidBodyIDs.find(e.GetComponent<Component::CapsuleCollider>().bodyID) };
+
+					if (rbiter != mRigidBodyIDs.end()) {
+						physx::PxRigidDynamic* pxrb { rbiter->second };
+						physx::PxShape* shape[3];
+						physx::PxCapsuleGeometry geom{};
+						auto num{ pxrb->getNbShapes() };
+						if (collider.idx < num) {
+							pxrb->getShapes(shape, 3);
+							auto globPos{ pxrb->getGlobalPose() };
+							if (pxrb->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC))
+								pxrb->getKinematicTarget(globPos);
+							physx::PxTransform locPos{ shape[collider.idx]->getLocalPose() };
+
+							shape[collider.idx]->getCapsuleGeometry(geom);
+							auto shapeGlobPos(globPos * locPos);
+
+							glm::mat4 xfm{1};
+							{//get the capsule matrix
+								auto pos{ ToGLMVec3(shapeGlobPos.p) };
+
+								auto rot{ ToGLMQuat(shapeGlobPos.q) };
+								// create a 90 degree offset in the z axis
+								// cuz the draw is rotated -90 in the z axis
+								glm::quat zRot = glm::angleAxis(glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+								rot = rot * zRot; // Apply Z rotation first, then the original rotation
+
+								auto scale{ glm::vec3{1} }; // scale of 1 just to not modify stuff
+
+								xfm = glm::translate(xfm, pos);
+								xfm *= glm::toMat4(rot);
+								xfm = glm::scale(xfm, scale);
+							}
+							//same thing here i think the radius is actually diameter
+							//half height converted to height for the param
+							Graphics::Renderer::DrawWireCapsule(xfm, ToGraphicUnits(geom.radius/2.f), ToGraphicUnits(geom.halfHeight * 2.f), { 0,1,0,1 });
+						}
+					}
+
+				}
+			}
 			for (auto const& ray : mRays) {
 				if (ray.detected) {
 					//draw three lines

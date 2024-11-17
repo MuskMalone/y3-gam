@@ -170,8 +170,8 @@ namespace Graphics {
 		static void DrawSprite(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, Texture const& tex, glm::vec4 const& tint, int entity = -1, bool isBillboard = false, CameraSpec const& cam = CameraSpec{});
 		static void DrawBox(glm::vec3 const& pos, glm::vec3 const& scale, glm::quat const& rot, glm::vec4 const& clr);
 		static void DrawBox(glm::mat4 const& mtx, glm::vec4 const& clr);
-		static void DrawWireSphere(glm::vec3 const& pos, float radius, glm::vec4 const& clr);
-		static void DrawWireCapsule(glm::mat4 const& mtx, float radius, float height, glm::vec4 const& clr);
+		static void DrawWireSphere(glm::vec3 const& pos, float radius, glm::vec4 const& clr, int numCircles = 0);
+		static void DrawWireCapsule(glm::mat4 const& mtx, float radius, float height, glm::vec4 const& clr, int numLines = 16);
 		static void DrawCameraFrustrum(Component::Camera const& cam, glm::vec4 const& clr);
 		static void DrawArrow(glm::vec3 const& start, glm::vec3 const& end, glm::vec4 const& clr);
 		static void DrawCone(glm::vec3 const& position, glm::vec3 const& direction, float range, float angle, glm::vec4 const& color);
