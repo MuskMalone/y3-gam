@@ -49,6 +49,8 @@ namespace GUI {
     ************************************************************************/
     static inline Styler& GetStyler() noexcept { return mStyler; }
 
+    inline static bool sDevTools = false;
+
   private:
     inline static Styler mStyler; // handles editor's styles
 

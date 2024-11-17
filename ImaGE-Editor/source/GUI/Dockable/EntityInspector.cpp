@@ -1289,6 +1289,17 @@ namespace GUI {
         ImGui::EndCombo();
       }
 
+      if (GUIVault::sDevTools) {
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+        NextRowTable("Submesh Index");
+        int idx{ static_cast<int>(mesh.submeshIdx) };
+        if (ImGui::DragInt("##MeshIdx", &idx, 1.f, 0, INT_MAX)) {
+          mesh.submeshIdx = static_cast<uint32_t>(idx);
+          modified = true;
+        }
+        ImGui::PopStyleColor();
+      }
+
       NextRowTable("Cast Shadows");
       if (ImGui::Checkbox("##CastShadows", &mesh.castShadows)) {
         modified = true;

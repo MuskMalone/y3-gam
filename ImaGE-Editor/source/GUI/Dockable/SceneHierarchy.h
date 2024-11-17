@@ -67,8 +67,10 @@ namespace GUI
       Checks for input and handles them accordingly
     \param entity
       The current entity
+    \param collapsed
+      Whether the node is collapsed
     ************************************************************************/
-    void ProcessInput(ECS::Entity entity);
+    void ProcessInput(ECS::Entity entity, bool collapsed);
 
     /*!*********************************************************************
     \brief
@@ -88,6 +90,8 @@ namespace GUI
       entity
     ************************************************************************/
     void RunPrefabPopup();
+
+    void RenameEntity(ECS::Entity entity);
 
     /*!*********************************************************************
     \brief

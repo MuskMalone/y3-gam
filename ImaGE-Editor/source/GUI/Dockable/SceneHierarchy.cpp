@@ -1,14 +1,14 @@
-  /*!*********************************************************************
-  \file   SceneHierarchy.cpp
-  \author chengen.lau\@digipen.edu
-  \date   5-October-2024
-  \brief  Class encapsulating functions to run the scene hierarchy
-          window of the editor. Displays the list of entities currently
-          in the scene along with their position in the hierarchy.
-          Features right-click options as well as parenting of entities.
+/*!*********************************************************************
+\file   SceneHierarchy.cpp
+\author chengen.lau\@digipen.edu
+\date   5-October-2024
+\brief  Class encapsulating functions to run the scene hierarchy
+        window of the editor. Displays the list of entities currently
+        in the scene along with their position in the hierarchy.
+        Features right-click options as well as parenting of entities.
 
-  Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
-  ************************************************************************/
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #include <pch.h>
 #include "SceneHierarchy.h"
 #include <Core/Components/Tag.h>
@@ -27,6 +27,8 @@ namespace {
   void RemovePrefabOverrides(ECS::Entity root, IGE::Assets::GUID guid);
   ECS::Entity GetPrefabRoot(ECS::Entity root);
   void CopyWorldTransform(Component::Transform const& source, Component::Transform& dest);
+
+  void ReassignSubmeshIndices(ECS::Entity root);
 }
 
 namespace GUI
@@ -226,18 +228,17 @@ namespace GUI
   void SceneHierarchy::RecurseDownHierarchy(ECS::Entity entity)
   {
     bool const isCurrentEntity{ GUIVault::GetSelectedEntity() == entity || GUIVault::IsEntitySelected(entity) },
-      isEditMode{isCurrentEntity && sEditNameMode};
+      isEditMode{ isCurrentEntity && sEditNameMode };
     // set the flag accordingly
     ImGuiTreeNodeFlags treeFlag{ ImGuiTreeNodeFlags_SpanFullWidth };
     bool const hasChildren{ mEntityManager.HasChild(entity) };
-    treeFlag |= hasChildren ? ImGuiTreeNodeFlags_OpenOnArrow
+    treeFlag |= hasChildren ? ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen
       : ImGuiTreeNodeFlags_Leaf;
 
     if (isCurrentEntity) { treeFlag |= ImGuiTreeNodeFlags_Selected; }
 
     // create the tree nodes
-    std::string entityName{ entity.GetComponent<Component::Tag>().tag };
-    std::string const displayName{ isEditMode ? "##" : "" + entityName };
+    std::string const displayName{ isEditMode ? "##" : "" + entity.GetComponent<Component::Tag>().tag };
 
     // highlight if its a prefab instance
     bool const isPrefabInstance{ entity.HasComponent<Component::PrefabOverrides>() };
@@ -253,6 +254,17 @@ namespace GUI
       if (isPrefabInstance) { ImGui::PopStyleColor(); }
       if (!entity.IsActive()) { ImGui::PopStyleColor(); }
 
+      // if renaming entity
+      if (isEditMode) { RenameEntity(entity); }
+
+      ProcessInput(entity, false);
+
+      // if entity picked from viewport, set scroll position to it
+      if (sJumpToEntity && GUIVault::GetSelectedEntity() == entity) {
+        ImGui::SetScrollHereY(0.1f);
+        sJumpToEntity = false;
+      }
+
       if (hasChildren) {
         for (auto const& child : mEntityManager.GetChildEntity(entity)) {
           RecurseDownHierarchy(child);
@@ -264,45 +276,47 @@ namespace GUI
     else {
       if (!entity.IsActive()) { ImGui::PopStyleColor(); }
       if (isPrefabInstance) { ImGui::PopStyleColor(); }
-    }
 
-    ProcessInput(entity);
+      // if renaming entity
+      if (isEditMode) { RenameEntity(entity); }
 
-    // if renaming entity
-    if (isEditMode) {
-      ImGui::SetItemAllowOverlap();
-      ImGui::SameLine();
-      ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
-      ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 12.f);
-      if (sFirstEnterEditMode) {
-        ImGui::SetKeyboardFocusHere();
-        sFirstEnterEditMode = false;
-      }
-      if (ImGui::InputText("##EntityRename", &entityName, ImGuiInputTextFlags_AutoSelectAll)) {
-        entity.GetComponent<Component::Tag>().tag = entityName;
-        SceneModified();
-      }
-      ImGui::PopStyleVar();
-      if (ImGui::IsItemHovered() || (ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows)
-        && !ImGui::IsAnyItemActive() && !ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
-        ImGui::SetKeyboardFocusHere(-1); // Auto focus previous widget
-      }
+      ProcessInput(entity, true);
 
-      if (ImGui::IsKeyPressed(ImGuiKey_Escape) || ImGui::IsKeyPressed(ImGuiKey_Enter)) {
-        ResetEditNameMode();
+      // if entity picked from viewport, set scroll position to it
+      if (sJumpToEntity && GUIVault::GetSelectedEntity() == entity) {
+        ImGui::SetScrollHereY(0.1f);
+        sJumpToEntity = false;
       }
     }
-
-    // if entity picked from viewport, set scroll position to it
-    if (sJumpToEntity && GUIVault::GetSelectedEntity() == entity) {
-      ImGui::SetScrollHereY(0.1f);
-      sJumpToEntity = false;
-    }
-
-    ++sEntityCount;
   }
 
-  void SceneHierarchy::ProcessInput(ECS::Entity entity) {
+  void SceneHierarchy::RenameEntity(ECS::Entity entity) {
+    std::string entityName{ entity.GetComponent<Component::Tag>().tag };
+
+    ImGui::SetItemAllowOverlap();
+    ImGui::SameLine();
+    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 12.f);
+    if (sFirstEnterEditMode) {
+      ImGui::SetKeyboardFocusHere();
+      sFirstEnterEditMode = false;
+    }
+    if (ImGui::InputText("##EntityRename", &entityName, ImGuiInputTextFlags_AutoSelectAll)) {
+      entity.GetComponent<Component::Tag>().tag = entityName;
+      SceneModified();
+    }
+    ImGui::PopStyleVar();
+    if (ImGui::IsItemHovered() || (ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows)
+      && !ImGui::IsAnyItemActive() && !ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
+      ImGui::SetKeyboardFocusHere(-1); // Auto focus previous widget
+    }
+
+    if (ImGui::IsKeyPressed(ImGuiKey_Escape) || ImGui::IsKeyPressed(ImGuiKey_Enter)) {
+      ResetEditNameMode();
+    }
+  }
+
+  void SceneHierarchy::ProcessInput(ECS::Entity entity, bool collapsed) {
 
     if (!mLockControls) {
       if (ImGui::BeginDragDropSource())
@@ -330,9 +344,9 @@ namespace GUI
         ImGui::EndDragDropTarget();
       }
 
-      if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+      if (ImGui::IsItemClicked(ImGuiMouseButton_Right) && !collapsed) {
         mRightClickedEntity = entity;
-        mEntityOptionsMenu = sFirstEnterEditMode = true;
+        mEntityOptionsMenu = true;
       }
     }
 
@@ -340,10 +354,9 @@ namespace GUI
     if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left) && ImGui::IsItemHovered()) {
       QUEUE_EVENT(Events::ZoomInOnEntity, entity);
       sEntityDoubleClicked = false;
-      sFirstEnterEditMode = true;
     }
-    else if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-      if (GUIVault::GetSelectedEntity() == entity && !sCtrlHeld) {
+    else if (ImGui::IsItemClicked(ImGuiMouseButton_Left) && (ImGui::GetMousePos().x - ImGui::GetItemRectMin().x) > ImGui::GetTreeNodeToLabelSpacing()) {
+      if (GUIVault::GetSelectedEntity() == entity && !sCtrlHeld && !collapsed) {
         sEntityDoubleClicked = true;
         sLMouseReleased = false;
       }
@@ -353,7 +366,7 @@ namespace GUI
           if (GUIVault::GetSelectedEntities().empty() && curr) {
             GUIVault::AddSelectedEntity(curr);
           }
-          
+
           if (GUIVault::IsEntitySelected(entity)) {
             GUIVault::RemoveSelectedEntity(entity);
             if (GUIVault::GetSelectedEntities().empty()) {
@@ -379,7 +392,7 @@ namespace GUI
       }
     }
 
-    if (sEditNameMode && (ImGui::IsMouseClicked(ImGuiMouseButton_Left) 
+    if (sEditNameMode && (ImGui::IsMouseClicked(ImGuiMouseButton_Left)
       || ImGui::IsMouseClicked(ImGuiMouseButton_Right) || ImGui::IsMouseClicked(ImGuiMouseButton_Middle))) {
       ResetEditNameMode();
     }
@@ -472,9 +485,9 @@ namespace GUI
       {
         Component::PrefabOverrides& overrides{ mRightClickedEntity.GetComponent<Component::PrefabOverrides>() };
         if (ImGui::BeginMenu("Prefab")) {
-         /* if (ImGui::MenuItem("Reset All Overrides")) {
+          /* if (ImGui::MenuItem("Reset All Overrides")) {
 
-          }*/
+           }*/
 
           if (overrides.IsRoot()) {
             // only allow detaching from the root entity
@@ -578,7 +591,9 @@ namespace GUI
 namespace {
   void RemovePrefabOverrides(ECS::Entity root, IGE::Assets::GUID guid) {
     if (!root.HasComponent<Component::PrefabOverrides>()
-      || root.GetComponent<Component::PrefabOverrides>().guid != guid) { return; }
+      || root.GetComponent<Component::PrefabOverrides>().guid != guid) {
+      return;
+    }
 
     // remove overrides component
     root.RemoveComponent<Component::PrefabOverrides>();
@@ -603,7 +618,7 @@ namespace {
 
       root = parent;
     }
-    
+
     IGE_DBGLOGGER.LogError("[SceneHirarchy] Unable to get prefab root!");
     return {};
   }
@@ -613,5 +628,18 @@ namespace {
     dest.worldScale = source.worldScale;
     dest.worldRot = source.worldRot;
     dest.worldMtx = source.worldMtx;
+  }
+
+  void ReassignSubmeshIndices(ECS::Entity root) {
+    ECS::EntityManager& em{ IGE_ENTITYMGR };
+    if (!em.HasChild(root)) { return; }
+
+    unsigned idx{};
+    for (ECS::Entity child : em.GetChildEntity(root)) {
+      if (!child.HasComponent<Component::Mesh>()) { continue; }
+
+      child.GetComponent<Component::Mesh>().submeshIdx = idx;
+      ++idx;
+    }
   }
 }
