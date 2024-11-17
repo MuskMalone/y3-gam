@@ -655,63 +655,80 @@ namespace Graphics {
 		}
 	}
 
-	void Renderer::DrawWireSphere(glm::vec3 const& pos, float radius, glm::vec4 const& clr) {
+	void Renderer::DrawWireSphere(glm::vec3 const& pos, float radius, glm::vec4 const& clr, int numCircles) {
 		const int segments = 32; // Number of segments to approximate the circle
 		const float deltaAngle = glm::two_pi<float>() / segments;
-
 		glm::mat4 translateMtx = glm::translate(glm::mat4(1.0f), pos);
 		glm::mat4 scaleMtx = glm::scale(glm::mat4(1.0f), glm::vec3(radius));
 		glm::mat4 transformMtx = translateMtx * scaleMtx;
 
-		// Draw circle in the XY plane
-		for (int i = 0; i < segments; ++i) {
-			float angle1 = i * deltaAngle;
-			float angle2 = (i + 1) * deltaAngle;
+		// Draw base circles in the XY, XZ, and YZ planes
+		auto drawCircle = [&](glm::vec3 axis1, glm::vec3 axis2) {
+			for (int i = 0; i < segments; ++i) {
+				float angle1 = i * deltaAngle;
+				float angle2 = (i + 1) * deltaAngle;
 
-			glm::vec3 p1XY = glm::vec3(cos(angle1), sin(angle1), 0.0f);
-			glm::vec3 p2XY = glm::vec3(cos(angle2), sin(angle2), 0.0f);
+				glm::vec3 p1 = glm::vec3(axis1 * cos(angle1) + axis2 * sin(angle1));
+				glm::vec3 p2 = glm::vec3(axis1 * cos(angle2) + axis2 * sin(angle2));
 
-			glm::vec3 transformedP1 = transformMtx * glm::vec4(p1XY, 1.0f);
-			glm::vec3 transformedP2 = transformMtx * glm::vec4(p2XY, 1.0f);
+				glm::vec3 transformedP1 = transformMtx * glm::vec4(p1, 1.0f);
+				glm::vec3 transformedP2 = transformMtx * glm::vec4(p2, 1.0f);
 
-			DrawLine(transformedP1, transformedP2, clr);
+				DrawLine(transformedP1, transformedP2, clr);
+			}
+		};
+
+		// Base circles
+		drawCircle(glm::vec3(1, 0, 0), glm::vec3(0, 1, 0)); // XY plane
+		drawCircle(glm::vec3(1, 0, 0), glm::vec3(0, 0, 1)); // XZ plane
+		drawCircle(glm::vec3(0, 1, 0), glm::vec3(0, 0, 1)); // YZ plane
+
+		// Draw circles rotated around the X-axis
+		for (int i = 0; i < numCircles; ++i) {
+			float angle = glm::radians(360.0f * i / numCircles);
+			glm::mat4 rotX = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(1.0f, 0.0f, 0.0f));
+			glm::mat4 rotatedTransform = transformMtx * rotX;
+
+			for (int j = 0; j < segments; ++j) {
+				float angle1 = j * deltaAngle;
+				float angle2 = (j + 1) * deltaAngle;
+
+				glm::vec3 p1 = glm::vec3(cos(angle1), 0.0f, sin(angle1));
+				glm::vec3 p2 = glm::vec3(cos(angle2), 0.0f, sin(angle2));
+
+				glm::vec3 transformedP1 = rotatedTransform * glm::vec4(p1, 1.0f);
+				glm::vec3 transformedP2 = rotatedTransform * glm::vec4(p2, 1.0f);
+
+				DrawLine(transformedP1, transformedP2, clr);
+			}
 		}
 
-		// Draw circle in the XZ plane
-		for (int i = 0; i < segments; ++i) {
-			float angle1 = i * deltaAngle;
-			float angle2 = (i + 1) * deltaAngle;
+		// Draw circles rotated around the Y-axis
+		for (int i = 0; i < numCircles; ++i) {
+			float angle = glm::radians(360.0f * i / numCircles);
+			glm::mat4 rotY = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 1.0f, 0.0f));
+			glm::mat4 rotatedTransform = transformMtx * rotY;
 
-			glm::vec3 p1XZ = glm::vec3(cos(angle1), 0.0f, sin(angle1));
-			glm::vec3 p2XZ = glm::vec3(cos(angle2), 0.0f, sin(angle2));
+			for (int j = 0; j < segments; ++j) {
+				float angle1 = j * deltaAngle;
+				float angle2 = (j + 1) * deltaAngle;
 
-			glm::vec3 transformedP1 = transformMtx * glm::vec4(p1XZ, 1.0f);
-			glm::vec3 transformedP2 = transformMtx * glm::vec4(p2XZ, 1.0f);
+				glm::vec3 p1 = glm::vec3(0.0f, cos(angle1), sin(angle1));
+				glm::vec3 p2 = glm::vec3(0.0f, cos(angle2), sin(angle2));
 
-			DrawLine(transformedP1, transformedP2, clr);
-		}
+				glm::vec3 transformedP1 = rotatedTransform * glm::vec4(p1, 1.0f);
+				glm::vec3 transformedP2 = rotatedTransform * glm::vec4(p2, 1.0f);
 
-		// Draw circle in the YZ plane
-		for (int i = 0; i < segments; ++i) {
-			float angle1 = i * deltaAngle;
-			float angle2 = (i + 1) * deltaAngle;
-
-			glm::vec3 p1YZ = glm::vec3(0.0f, cos(angle1), sin(angle1));
-			glm::vec3 p2YZ = glm::vec3(0.0f, cos(angle2), sin(angle2));
-
-			glm::vec3 transformedP1 = transformMtx * glm::vec4(p1YZ, 1.0f);
-			glm::vec3 transformedP2 = transformMtx * glm::vec4(p2YZ, 1.0f);
-
-			DrawLine(transformedP1, transformedP2, clr);
+				DrawLine(transformedP1, transformedP2, clr);
+			}
 		}
 	}
 
 
-	void Renderer::DrawWireCapsule(glm::mat4 const& transformMtx, float radius, float height, glm::vec4 const& clr) {
+	void Renderer::DrawWireCapsule(glm::mat4 const& transformMtx, float radius, float height, glm::vec4 const& clr, int numLines) {
 		const int segments = 16; // Number of segments for circular edges
 		const float deltaAngle = glm::two_pi<float>() / segments;
 		const float halfHeight = (height - 2.0f * radius) / 2.0f; // Half the cylindrical height
-
 		glm::mat4 radiusScale = glm::scale(glm::mat4(1.0f), glm::vec3(radius));
 
 		// Draw top and bottom circles of the cylinder
@@ -736,8 +753,8 @@ namespace Graphics {
 			DrawLine(transformedP1Top, transformedP2Top, clr);
 		}
 
-		// Draw vertical lines connecting top and bottom circles
-		for (int i = 0; i < segments; i += segments / 4) { // Four equally spaced vertical lines
+		// Draw vertical lines connecting the top and bottom hemispheres
+		for (int i = 0; i < segments; ++i) {
 			float angle = i * deltaAngle;
 
 			glm::vec3 pBottom = glm::vec3(cos(angle), -halfHeight, sin(angle));
@@ -749,19 +766,21 @@ namespace Graphics {
 			DrawLine(transformedPBottom, transformedPTop, clr);
 		}
 
-		// Draw longitudinal arcs (curved vertical lines)
-		for (int i = 0; i < segments; i += segments / 4) { // Four vertical arcs around the capsule
-			float angle = i * deltaAngle;
+		// Draw longitudinal arcs (curved vertical lines) around the capsule
+		for (int i = 0; i < numLines; ++i) {
+			float angle = i * glm::two_pi<float>() / numLines;
 
 			for (int j = 0; j <= segments / 4; ++j) { // Split hemisphere into 4 vertical sections
 				float theta1 = j * glm::half_pi<float>() / (segments / 4);
 				float theta2 = (j + 1) * glm::half_pi<float>() / (segments / 4);
 
-				glm::vec3 p1Top = glm::vec3(sin(theta1) * cos(angle), halfHeight + radius * cos(theta1), sin(theta1) * sin(angle));
-				glm::vec3 p2Top = glm::vec3(sin(theta2) * cos(angle), halfHeight + radius * cos(theta2), sin(theta2) * sin(angle));
+				// Top hemisphere arcs
+				glm::vec3 p1Top = glm::vec3(cos(angle) * sin(theta1), halfHeight + radius * cos(theta1), sin(angle) * sin(theta1));
+				glm::vec3 p2Top = glm::vec3(cos(angle) * sin(theta2), halfHeight + radius * cos(theta2), sin(angle) * sin(theta2));
 
-				glm::vec3 p1Bottom = glm::vec3(sin(theta1) * cos(angle), -halfHeight - radius * cos(theta1), sin(theta1) * sin(angle));
-				glm::vec3 p2Bottom = glm::vec3(sin(theta2) * cos(angle), -halfHeight - radius * cos(theta2), sin(theta2) * sin(angle));
+				// Bottom hemisphere arcs
+				glm::vec3 p1Bottom = glm::vec3(cos(angle) * sin(theta1), -halfHeight - radius * cos(theta1), sin(angle) * sin(theta1));
+				glm::vec3 p2Bottom = glm::vec3(cos(angle) * sin(theta2), -halfHeight - radius * cos(theta2), sin(angle) * sin(theta2));
 
 				glm::vec3 transformedP1Top = transformMtx * radiusScale * glm::vec4(p1Top, 1.0f);
 				glm::vec3 transformedP2Top = transformMtx * radiusScale * glm::vec4(p2Top, 1.0f);
