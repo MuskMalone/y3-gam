@@ -127,8 +127,8 @@
     <Compile Include="source\Painting\RotatePainting.cs" />
     <Compile Include="source\Painting\RotationGuidance.cs" />
     <Compile Include="source\Painting\RotationGuidanceNightPainting.cs" />
-    <Compile Include="source\Player\Dialogue.cs" />
     <Compile Include="source\Player\CameraCapture.cs" />
+    <Compile Include="source\Player\Dialogue.cs" />
     <Compile Include="source\Player\InputManager.cs" />
     <Compile Include="source\Player\PlayerFootsteps.cs" />
     <Compile Include="source\Player\PlayerInteraction.cs" />
@@ -141,9 +141,11 @@
     <Compile Include="source\ToolsPuzzle\RotationGuidanceToolsPainting.cs" />
     <Compile Include="source\Triggers\DeathtriggerPit.cs" />
     <Compile Include="source\Triggers\FinishLineTrigger.cs" />
-    <Compile Include="source\other interactable\NoteInteraction.cs" />
     <Compile Include="source\Yukitestscripts\SelectionManager.cs" />
     <Compile Include="source\Yukitestscripts\skyboxcontroller1.cs" />
+    <Compile Include="source\other interactable\NoteInteraction.cs" />
+  </ItemGroup>
+  <ItemGroup>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

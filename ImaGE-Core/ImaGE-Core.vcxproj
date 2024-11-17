@@ -89,7 +89,6 @@
       <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus /bigobj %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -123,7 +122,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
       <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus /bigobj %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -159,7 +157,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
       <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus /bigobj %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -224,6 +221,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Core\Systems\SystemManager\SystemManager.h" />
     <ClInclude Include="source\Core\Systems\Systems.h" />
     <ClInclude Include="source\Core\Systems\TextSystem\TextSystem.h" />
+    <ClInclude Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.h" />
     <ClInclude Include="source\Core\Systems\TransformSystem\TransformHelpers.h" />
     <ClInclude Include="source\Core\Systems\TransformSystem\TransformSystem.h" />
     <ClInclude Include="source\Debug.h" />
@@ -315,13 +313,13 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClInclude Include="source\Graphics\Framebuffer.h" />
     <ClInclude Include="source\Graphics\MaterialData.h" />
     <ClInclude Include="source\Graphics\MaterialTable.h" />
-    <ClInclude Include="source\Graphics\MeshSubmeshKeyHash.h" />
     <ClInclude Include="source\Graphics\Mesh\IMSH.h" />
     <ClInclude Include="source\Graphics\Mesh\Mesh.h" />
     <ClInclude Include="source\Graphics\Mesh\MeshFactory.h" />
     <ClInclude Include="source\Graphics\Mesh\MeshMatValues.h" />
     <ClInclude Include="source\Graphics\Mesh\MeshSource.h" />
     <ClInclude Include="source\Graphics\Mesh\Submesh.h" />
+    <ClInclude Include="source\Graphics\MeshSubmeshKeyHash.h" />
     <ClInclude Include="source\Graphics\Pipeline.h" />
     <ClInclude Include="source\Graphics\PostProcessing\PostProcessingManager.h" />
     <ClInclude Include="source\Graphics\RenderAPI.h" />
@@ -397,6 +395,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     <ClCompile Include="source\Core\Systems\PlayerControllerSystem\PlayerControllerSystem.cpp" />
     <ClCompile Include="source\Core\Systems\SystemManager\SystemManager.cpp" />
     <ClCompile Include="source\Core\Systems\TextSystem\TextSystem.cpp" />
+    <ClCompile Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.cpp" />
     <ClCompile Include="source\Core\Systems\TransformSystem\TransformHelpers.cpp" />
     <ClCompile Include="source\Core\Systems\TransformSystem\TransformSystem.cpp" />
     <ClCompile Include="source\DebugTools\DebugLogger\DebugLogger.cpp" />
