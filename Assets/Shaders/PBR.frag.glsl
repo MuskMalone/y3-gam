@@ -9,6 +9,7 @@ in vec2 v_TexCoord;
 in flat float v_TexIdx; //not being used might delete
 
 in flat int v_EntityID;
+in flat int v_MaterialIdx;
            
 in vec3 v_FragPos;              // Fragment position in world space
 in vec3 v_Normal;               // Normal in world space
@@ -33,7 +34,6 @@ uniform float u_Roughness;
 uniform float u_Transparency;
 uniform float u_AO;
 
-in flat int v_MaterialIdx;
 
 uniform sampler2D[16] u_AlbedoMaps;
 //uniform sampler2D[16] u_NormalMaps;
@@ -140,7 +140,7 @@ void main(){
     vec3 ambient = vec3(0.01) * albedo * u_AO;
 
     float shadow = u_ShadowsActive ? CheckShadow(v_LightSpaceFragPos) : 0.0;    // 1.0 if in shadow and 0.0 otherwise
-    vec3 color = ambient + Lo * 0.3 * (1.0 - shadow);
+    vec3 color = ambient + Lo * (1.0 - shadow);
     color = color / (color + vec3(1.0));
     color = pow(color, vec3(1.0/2.2)); //gamma correction
     //change transparency here

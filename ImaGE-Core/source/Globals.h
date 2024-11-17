@@ -24,7 +24,7 @@ constexpr char gMeshFileExt[] = ".imsh";
 constexpr char gFontFileExt[] = ".ttf";
 constexpr char gSpriteFileExt[] = ".dds";
 constexpr char gMaterialFileExt[] = ".mat";
-constexpr char gAudioFileExt[] = ".mp3";
+constexpr char gSupportedAudioFormats[] = ".mp3.wav";
 constexpr char gMaterialDirectory[] = "..\\Assets\\Materials\\";
 //currently my Shaders are hard coded in ShaderLibrary in Shader.h* as cShaderDirectory
 

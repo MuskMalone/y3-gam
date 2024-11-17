@@ -73,7 +73,7 @@ namespace GUI
     \param maxChars
       The max characters each file name can display
     ************************************************************************/
-    void DisplayDirectory(float imgSize, unsigned maxChars);
+    void DisplayDirectory(float imgSize, unsigned maxChars, bool showIcon);
 
     /*!*********************************************************************
     \brief
@@ -83,7 +83,7 @@ namespace GUI
     \param maxChars
       The max characters each file name can display
     ************************************************************************/
-    void DisplaySearchResults(float imgSize, unsigned maxChars);
+    void DisplaySearchResults(float imgSize, unsigned maxChars, bool showIcon);
 
     /*!*********************************************************************
     \brief

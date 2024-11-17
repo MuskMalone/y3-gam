@@ -198,7 +198,7 @@ namespace Graphics{
 		BufferLayout const& GetLayout() const;
 		void SetLayout(BufferLayout& layout);
 
-		void SetData(void* const data, unsigned int size);
+		void SetData(void const* data, unsigned int size);
 
 	private:
 		unsigned int mVboHdl;

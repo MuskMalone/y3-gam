@@ -336,8 +336,9 @@ namespace GUI
       bool const multiSelectActive{ !GUIVault::GetSelectedEntities().empty() };
       if (currentOperation == ImGuizmo::TRANSLATE) {
         if (multiSelectActive) {
+          glm::vec3 const offset{ t - transform.worldPos };
           for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
-            e.GetComponent<Component::Transform>().worldPos = t;
+            e.GetComponent<Component::Transform>().worldPos += offset;
           }
         }
         else {
@@ -346,19 +347,25 @@ namespace GUI
       }
       if (currentOperation == ImGuizmo::ROTATE) {
         if (multiSelectActive) {
+          glm::quat const offset{ glm::quat(glm::radians(r)) * glm::inverse(transform.worldRot) };
+          glm::vec3 const eulerOffset{ r - transform.eulerAngles };
+
           for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
             Component::Transform& trans{ e.GetComponent<Component::Transform>() };
-            trans.worldRot = glm::quat(glm::radians(r));
+            trans.worldRot = offset * trans.worldRot;
+            trans.eulerAngles += eulerOffset;
           }
         }
         else {
           transform.worldRot = glm::quat(glm::radians(r));
+          transform.eulerAngles = r;
         }
       }
       if (currentOperation == ImGuizmo::SCALE) {
         if (multiSelectActive) {
+          glm::vec3 offset{ s - transform.worldScale };
           for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
-            e.GetComponent<Component::Transform>().worldScale = s;
+            e.GetComponent<Component::Transform>().worldScale += offset;
           }
         }
         else {
@@ -371,9 +378,11 @@ namespace GUI
         ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
 
         for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
+          Component::Transform& trans{ e.GetComponent<Component::Transform>() };
+          trans.modified = true;
+
           if (!e.HasComponent<Component::PrefabOverrides>()) { continue; }
 
-          Component::Transform& trans{ e.GetComponent<Component::Transform>() };
           Component::PrefabOverrides& pfbOverrides{ e.GetComponent<Component::PrefabOverrides>() };
 
           if (pfbOverrides.IsComponentModified<Component::Transform>() || pfbOverrides.subDataId != Prefabs::PrefabSubData::BasePrefabId) {
@@ -382,7 +391,6 @@ namespace GUI
           else if (currentOperation != ImGuizmo::TRANSLATE) {
             pfbOverrides.AddComponentModification(trans);
           }
-          trans.modified = true;
         }
       }
       else {
@@ -419,15 +427,30 @@ namespace GUI
           QUEUE_EVENT(Events::LoadSceneEvent, assetPayload.GetFileName(), assetPayload.GetFilePath());
           break;
         case AssetPayload::PREFAB:
+        {
           // @TODO: Convert screen to world pos when viewport is up
-          glm::vec3 const prefabPos{};
-          QUEUE_EVENT(Events::SpawnPrefabEvent, assetPayload.GetFileName(), assetPayload.GetFilePath(), prefabPos);
+          try {
+            IGE::Assets::AssetManager& assetMan{ IGE_ASSETMGR };
+            IGE::Assets::GUID guid{ assetMan.LoadRef<IGE::Assets::PrefabAsset>(assetPayload.GetFilePath()) };
+
+            ECS::Entity newEntity{ assetMan.GetAsset<IGE::Assets::PrefabAsset>(guid)->mPrefabData.Construct(guid, {}) };
+            GUIVault::SetSelectedEntity(newEntity);
+          }
+          catch (Debug::ExceptionBase&) {
+            IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
+          }
           break;
+        }
         case AssetPayload::MODEL:
         {
-          IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
-          ECS::Entity const newEntity{ IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(meshSrc)->mMeshSource.ConstructEntity(meshSrc, assetPayload.GetFileName()) };
-          GUIVault::SetSelectedEntity(newEntity);
+          try {
+            IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
+            ECS::Entity const newEntity{ IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(meshSrc)->mMeshSource.ConstructEntity(meshSrc, assetPayload.GetFileName()) };
+            GUIVault::SetSelectedEntity(newEntity);
+          }
+          catch (Debug::ExceptionBase&) {
+            IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
+          }
           break;
         }
         default:

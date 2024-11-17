@@ -19,6 +19,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <typeindex>
 #include <Graphics/RenderPass/RenderPass.h>
 #include "Core/Components/Camera.h"
+#include "Core/Components/Transform.h"
+#include "Core/Components/Light.h"
 #include "MeshSubmeshKeyHash.h"
 
 
@@ -57,7 +59,7 @@ namespace Graphics {
 		glm::vec4 clr;
 		glm::vec2 texCoord;
 		float texIdx; // float as it is passed to shader
-		//int entity{};
+		int entityID{ -1 };
 	};
 
 	struct LineVtx {
@@ -70,6 +72,14 @@ namespace Graphics {
 		int materialIdx;
 		int entityID = -1;
 		//glm::vec4 color;
+		InstanceData() = default;
+		InstanceData(const glm::mat4& mtx, int mat, int ent = -1)
+			: modelMatrix{ mtx }, materialIdx{ mat }, entityID{ ent } {}
+	};
+
+	struct SubmeshInstanceData {
+		int submeshIdx;
+		InstanceData data;
 	};
 
 	struct RendererData {
@@ -134,11 +144,8 @@ namespace Graphics {
 		IGE::Assets::GUID whiteTex;
 
 		//------------------------Instancing related-------------------------//
-		std::unordered_map<IGE::Assets::GUID, std::vector<InstanceData>> instanceBufferDataMap;
+		std::unordered_map<IGE::Assets::GUID, std::vector<SubmeshInstanceData>> instanceBufferDataMap;
 		std::unordered_map<IGE::Assets::GUID, std::shared_ptr<VertexBuffer>> instanceBuffers;
-
-		std::unordered_map<MeshSubmeshKey, std::vector<InstanceData>> instanceSubmeshBufferDataMap;
-		std::unordered_map<MeshSubmeshKey, std::shared_ptr<VertexBuffer>> instanceSubmeshBuffers;
 		//-------------------------------------------------------------------//
 
 		IGE::Assets::GUID debugMeshSources[3];
@@ -160,22 +167,29 @@ namespace Graphics {
 		static void DrawLine(glm::vec3 const& p0, glm::vec3 const& p1, glm::vec4 const& clr);
 		static void DrawRect(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, glm::vec4 const& clr);
 		static void DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, glm::vec4 const& clr);
-		static void DrawSprite(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, Texture const& tex, glm::vec4 const& tint, int entity = -1);
+		static void DrawSprite(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, Texture const& tex, glm::vec4 const& tint, int entity = -1, bool isBillboard = false, CameraSpec const& cam = CameraSpec{});
 		static void DrawBox(glm::vec3 const& pos, glm::vec3 const& scale, glm::quat const& rot, glm::vec4 const& clr);
 		static void DrawBox(glm::mat4 const& mtx, glm::vec4 const& clr);
 		static void DrawWireSphere(glm::vec3 const& pos, float radius, glm::vec4 const& clr);
 		static void DrawWireCapsule(glm::mat4 const& mtx, float radius, float height, glm::vec4 const& clr);
+		static void DrawCameraFrustrum(Component::Camera const& cam, glm::vec4 const& clr);
+		static void DrawArrow(glm::vec3 const& start, glm::vec3 const& end, glm::vec4 const& clr);
+		static void DrawCone(glm::vec3 const& position, glm::vec3 const& direction, float range, float angle, glm::vec4 const& color);
+		static void DrawCircle(glm::vec3 const& center, float radius, glm::vec4 const& color, glm::vec3 const& normal);
+		static void DrawLightGizmo(Component::Light const& light, Component::Transform const& xform, CameraSpec const& cam, int lightID);
+
 		static void RenderFullscreenTexture();
 
 		static void SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr = Color::COLOR_WHITE);
 		static void SubmitTriangle(glm::vec3 const& v1, glm::vec3 const& v2, glm::vec3 const& v3, glm::vec4 const& clr = Color::COLOR_WHITE);
 
 		//Instancing
-		static void SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int entityID = -1, int matID = 0);
-		static void SubmitSubmeshInstance(IGE::Assets::GUID meshSource, size_t submeshIndex, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, int matID);
+		static void SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int entityID = -1, int matID = 0, int subID = 0);
 		static void RenderInstances();
 
 		static void RenderSubmeshInstances();
+
+		static void RenderSubmeshInstances(std::vector<InstanceData> const& instances, IGE::Assets::GUID const& meshSource, size_t submeshIndex);
 
 		// Batching
 		static void BeginBatch();
@@ -195,8 +209,7 @@ namespace Graphics {
 
 		static IGE::Assets::GUID GetQuadMeshSource();
 		
-
-		
+		static std::vector<IGE::Assets::GUID> mIcons;
 	private:
 		static void SetQuadBufferData(glm::vec3 const& pos, glm::vec4 const& clr,
 									  glm::vec2 const& texCoord, float texIdx, int entity);

@@ -74,7 +74,7 @@ namespace GUI
     \brief
       Runs the right-click menu when it is triggered
     ************************************************************************/
-    bool RunRightClickMenu() const;
+    bool RunRightClickMenu();
 
     /*!*********************************************************************
     \brief
@@ -113,6 +113,8 @@ namespace GUI
     ************************************************************************/
     EVENT_CALLBACK_DECL(HandleEvent);
     EVENT_CALLBACK_DECL(OnEntityPicked);
+
+    void SceneModified();
   };
 
 } // namespace GUI

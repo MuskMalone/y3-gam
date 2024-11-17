@@ -42,7 +42,7 @@ namespace Graphics {
 		else {
 			Layers::LayerManager& layerManager{ IGE_LAYERMGR };
 			std::unordered_map<std::string, std::vector<ECS::Entity>> const& layerEntities{ layerManager.GetLayerEntities() };
-			for (std::pair<std::string, std::vector<ECS::Entity>> mapPair : layerEntities) {
+			for (std::pair<std::string, std::vector<ECS::Entity>> const& mapPair : layerEntities) {
 				if (layerManager.IsLayerVisible(mapPair.first)) {
 #ifdef INSERT_ACTIVE
 					layerManager.CopyValidEntities(entityVector, mapPair);

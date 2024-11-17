@@ -9,10 +9,18 @@
 #include <Graphics/RenderPass/ShadowPass.h>
 #include "Graphics/MaterialData.h"
 
+#include "Graphics/RenderAPI.h"
+
 namespace Graphics {
   using EntityXform = std::pair<ECS::Entity, glm::mat4>;
   using MatGroup = std::vector<EntityXform>;
   using MatGroupsMap = std::unordered_map<uint32_t, MatGroup>;
+
+  struct MaterialGroup {
+      int matID;                          // Material ID
+      std::shared_ptr<Shader> shader;     // Associated shader
+      std::vector<EntityXform> entityPairs; // Vector of entity-transform pairs
+  };
 
   GeomPass::GeomPass(const RenderPassSpec& spec) : RenderPass(spec) {
 
@@ -22,6 +30,8 @@ namespace Graphics {
       Begin();
       Renderer::Clear();
       //auto shader = mSpec.pipeline->GetShader();
+
+      Renderer::RenderSceneBegin(cam.viewProjMatrix);
 
       // Use a map to group entities by material ID
       MatGroupsMap matGroups;
@@ -60,151 +70,122 @@ namespace Graphics {
           ++numlights;
       }
       //==========================LIGHTS END===================================================
-
-      //==========================wokring version======================================================
-
-      //for (ECS::Entity const& entity : entities) {
-      //    if (!entity.HasComponent<Component::Mesh>()) { continue; }
-
-      //    auto const& xform = entity.GetComponent<Component::Transform>();
-      //    auto const& mesh = entity.GetComponent<Component::Mesh>();
-
-      //    // Skip if mesh is null
-      //    if (!mesh.meshSource.IsValid()) {
-      //        continue;
-      //    }
-
-      //    uint32_t matID = 0;
-      //    if (entity.HasComponent<Component::Material>()) {
-      //        auto const& matComponent = entity.GetComponent<Component::Material>();
-      //        matID = matComponent.matIdx;
-      //    }
-      //    matGroups[matID].emplace_back(entity, xform.worldMtx);
-      //}
-
-      //// Now render each material group
-      //for (const auto& [matID, entityPairs] : matGroups) {
-      //    // Get the shader associated with the material
-      //    auto material = MaterialTable::GetMaterial(matID);
-      //    auto shader = material->GetShader(); // Assuming Material has a method to retrieve its shader
-
-      //    shader->Use();  // Bind the shader
-
-      //    shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);
-      //    shader->SetUniform("u_CamPos", cam.position);
-
-      //    //Light Info
-      //    shader->SetUniform("numlights", numlights);
-      //    shader->SetUniform("u_type", u_type, maxLights);
-      //    shader->SetUniform("u_LightDirection", u_LightDirection, maxLights);
-      //    shader->SetUniform("u_LightColor", u_LightColor, maxLights);
-
-      //    shader->SetUniform("u_LightPos", u_LightPos, maxLights);
-      //    shader->SetUniform("u_InnerSpotAngle", u_InnerSpotAngle, maxLights);
-      //    shader->SetUniform("u_OuterSpotAngle", u_OuterSpotAngle, maxLights);
-      //    shader->SetUniform("u_LightIntensity", u_LightIntensity, maxLights);
-      //    shader->SetUniform("u_Range", u_Range, maxLights);
-
-      //    // set shadow uniforms
-      //    {
-      //        auto const& shadowPass{ Renderer::GetPass<ShadowPass>() };
-      //        shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
-      //        if (shadowPass->IsActive()) {
-      //            shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
-      //            shader->SetUniform("u_ShadowMap", static_cast<int>(shadowPass->BindShadowMap()));
-      //            shader->SetUniform("u_ShadowBias", shadowPass->GetShadowBias());
-      //            shader->SetUniform("u_ShadowSoftness", shadowPass->GetShadowSoftness());
-      //        }
-      //    }
-
-      //    material->Apply(shader);    // Apply material properties
-      //    MaterialTable::ApplyMaterialTextures(shader);   // Apply material textures
-
-      //    for (const auto& [entity, worldMtx] : entityPairs) {
-      //        auto const& mesh = entity.GetComponent<Component::Mesh>();
-      //        Graphics::Renderer::SubmitInstance(mesh.meshSource, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
-
-      //    }
-      //    mSpec.pipeline->GetSpec().instanceLayout;
-      //    // Flush all collected instances and render them in a single draw call
-
-      //    Renderer::RenderSubmeshInstances();
-
-      //    Texture::ResetTextureUnits(); // unbind texture units after each group
-      //}
-         // ============================working verison end============================================================
-
+      auto& ecsMan{ ECS::EntityManager::GetInstance() };
 
       //=================================================SUBMESH VERSION===============================================================
-          // Group entities by material ID and gather instances for submeshes
-      for (ECS::Entity const& entity : entities) {
-          if (!entity.HasComponent<Component::Mesh>()) continue;
 
-          auto const& xform = entity.GetComponent<Component::Transform>();
+      std::vector<MaterialGroup> materialGroups;
+
+      // STEP UNO: Collect entities into material groups!!!
+      auto const& entitiesMat = ecsMan.GetAllEntitiesWithComponents< Component::Transform, Component::Mesh>();
+      for (auto const& e : entitiesMat) {
+          ECS::Entity entity{ e };
           auto const& mesh = entity.GetComponent<Component::Mesh>();
 
           if (!mesh.meshSource.IsValid()) continue;
 
-          uint32_t matID = 0;
+          int matID = 0;
           if (entity.HasComponent<Component::Material>()) {
-              auto const& matComponent = entity.GetComponent<Component::Material>();
-              matID = MaterialTable::GetMaterialIndexByGUID(matComponent.materialGUID);//matComponent.matIdx;
+              auto const& matComp = entity.GetComponent<Component::Material>();
+              matID = matComp.matIdx;
           }
 
-          // Group entity pairs by material ID for rendering
-          matGroups[matID].emplace_back(entity, xform.worldMtx);
+          auto const& xform = entity.GetComponent<Component::Transform>();
+
+          // Find or create the MaterialGroup
+          auto it = std::find_if(materialGroups.begin(), materialGroups.end(), [&](const MaterialGroup& group) {
+              return group.matID == matID;
+              });
+
+          if (it == materialGroups.end()) {
+              // New MaterialGroup
+              auto material = MaterialTable::GetMaterial(matID);
+              materialGroups.push_back({ matID, material->GetShader(), {{entity, xform.worldMtx}} });
+          }
+          else {
+              // Add to existing group
+              it->entityPairs.emplace_back(EntityXform{ entity, xform.worldMtx });
+          }
       }
 
-      // Render each material group
-      for (const auto& [matID, entityPairs] : matGroups) {
-          // Get the shader associated with the material
-          auto material = MaterialTable::GetMaterial(matID);
-          auto shader = material->GetShader();
+      // STEP DOS: Prepare material groups for sorting based on shader used!!!
+      std::sort(materialGroups.begin(), materialGroups.end(),
+          [](const MaterialGroup& a, const MaterialGroup& b) {
+              return a.shader.get() < b.shader.get(); // Sort by shader pointer for grouping
+          });
 
-          shader->Use();
-          shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);
-          shader->SetUniform("u_CamPos", cam.position);
 
-          // Light Info
-          shader->SetUniform("numlights", numlights);
-          shader->SetUniform("u_type", u_type, maxLights);
-          shader->SetUniform("u_LightDirection", u_LightDirection, maxLights);
-          shader->SetUniform("u_LightColor", u_LightColor, maxLights);
-          shader->SetUniform("u_LightPos", u_LightPos, maxLights);
-          shader->SetUniform("u_InnerSpotAngle", u_InnerSpotAngle, maxLights);
-          shader->SetUniform("u_OuterSpotAngle", u_OuterSpotAngle, maxLights);
-          shader->SetUniform("u_LightIntensity", u_LightIntensity, maxLights);
-          shader->SetUniform("u_Range", u_Range, maxLights);
+      //STEP TRES: Render material groups
+      std::shared_ptr<Shader> currShader = nullptr;
+      for (const auto& group : materialGroups) {
+          auto shader = group.shader;
 
-          {
-            // Set shadow uniforms
-            auto const& shadowPass = Renderer::GetPass<ShadowPass>();
-            shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
-            if (shadowPass->IsActive()) {
-              shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
-              shader->SetUniform("u_ShadowMap", static_cast<int>(shadowPass->BindShadowMap()));
-              shader->SetUniform("u_ShadowBias", shadowPass->GetShadowBias());
-              shader->SetUniform("u_ShadowSoftness", shadowPass->GetShadowSoftness());
-            }
+          // Only bind the shader if it's different from the currently bound one
+          if (shader != currShader) {
+              shader->Use();
+              currShader = shader;
+
+              bool isUnlitShader = (shader == ShaderLibrary::Get("Unlit"));
+              shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);
+
+              if (!isUnlitShader) {
+                  shader->SetUniform("u_CamPos", cam.position);
+
+                  // Light Info
+                  shader->SetUniform("numlights", numlights);
+                  shader->SetUniform("u_type", u_type, maxLights);
+                  shader->SetUniform("u_LightDirection", u_LightDirection, maxLights);
+                  shader->SetUniform("u_LightColor", u_LightColor, maxLights);
+                  shader->SetUniform("u_LightPos", u_LightPos, maxLights);
+                  shader->SetUniform("u_InnerSpotAngle", u_InnerSpotAngle, maxLights);
+                  shader->SetUniform("u_OuterSpotAngle", u_OuterSpotAngle, maxLights);
+                  shader->SetUniform("u_LightIntensity", u_LightIntensity, maxLights);
+                  shader->SetUniform("u_Range", u_Range, maxLights);
+
+                  // Set shadow uniforms
+                  auto const& shadowPass = Renderer::GetPass<ShadowPass>();
+                  shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
+                  if (shadowPass->IsActive()) {
+                      shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
+                      shader->SetUniform("u_ShadowMap", static_cast<int>(shadowPass->BindShadowMap()));
+                      shader->SetUniform("u_ShadowBias", shadowPass->GetShadowBias());
+                      shader->SetUniform("u_ShadowSoftness", shadowPass->GetShadowSoftness());
+                  }
+              }
           }
 
+          // Apply material-specific properties
+          auto material = MaterialTable::GetMaterial(group.matID);
           material->Apply(shader);
           MaterialTable::ApplyMaterialTextures(shader);
 
-          // Submit all instances of each submesh for this material
-          for (const auto& [entity, worldMtx] : entityPairs) {
-            auto const& mesh = entity.GetComponent<Component::Mesh>();
-
-            //Graphics::Renderer::SubmitSubmeshInstance(mesh.meshSource, 0, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
-            Graphics::Renderer::SubmitInstance(mesh.meshSource, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), matID);
+          // Render all instances for this material
+          for (const auto& [entity, worldMtx] : group.entityPairs) {
+              auto const& mesh = entity.GetComponent<Component::Mesh>();
+              Graphics::Renderer::SubmitInstance(mesh.meshSource, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), group.matID, mesh.submeshIdx);
           }
 
-          //mSpec.pipeline->GetSpec().instanceLayout;
-          Renderer::RenderSubmeshInstances();  // Render all instances for the material group
-          Texture::ResetTextureUnits(); // Unbind textures after each group
+          Renderer::RenderSubmeshInstances();  // Flush all instances for this material group
+          Texture::ResetTextureUnits();
       }
 
-      Renderer::RenderSceneBegin(cam.viewProjMatrix);
+      if (cam.isEditor) {
+          auto const& lights = ecsMan.GetAllEntitiesWithComponents<Component::Light, Component::Transform>();
+          for (auto const& light : lights) {
+              auto const& xform = ECS::Entity{ light }.GetComponent<Component::Transform>();
+              auto const& lightComp = ECS::Entity{ light }.GetComponent<Component::Light>();
+              Renderer::DrawLightGizmo(lightComp, xform, cam, ECS::Entity{light}.GetEntityID());
+          }
+          //auto const& cameras = ecsMan.GetAllEntitiesWithComponents<Component::Camera>();
+          //for (auto const& camera : cameras) {
+          //    if (!ECS::Entity{ camera }.IsActive()) continue;
+          //    auto const& camComp = ECS::Entity{ camera }.GetComponent<Component::Camera>();
+          //    auto const& xform = ECS::Entity{ camera }.GetComponent<Component::Transform>();
+          //    Renderer::DrawSprite(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(Renderer::mIcons[2])->mTexture, Color::COLOR_WHITE, ECS::Entity { camera }.GetEntityID(), true, cam);
+          //}
+
+      }
+
       for (ECS::Entity const& entity : entities) {
         if (entity.HasComponent<Component::Sprite2D>()) {
           auto const& sprite = entity.GetComponent<Component::Sprite2D>();
@@ -216,6 +197,7 @@ namespace Graphics {
 
         }
       }
+
       Renderer::RenderSceneEnd();
       //=================================================SUBMESH VERSION END===========================================================
 

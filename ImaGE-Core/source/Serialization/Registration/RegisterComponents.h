@@ -67,9 +67,7 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("outerAngle", &Light::mOuterSpotAngle)
     .property("range", &Light::mRange)
     .property("castShadows", &Light::castShadows)
-    .property("bias", &Light::bias)
-    .property("softness", &Light::softness)
-    .property("nearPlaneMultiplier", &Light::nearPlaneMultiplier);
+    .property("shadowConfig", &Light::shadowConfig);
 
   REGISTER_COMPONENT(Layer, "Layer")
     .property("layerName", &Layer::name);
@@ -77,6 +75,7 @@ static void rttr_auto_register_reflection_function2_(); namespace {
   REGISTER_COMPONENT(Mesh, "Mesh")
     .property("meshName", &Mesh::meshName)
     .property("GUID", &Mesh::meshSource)
+    .property("submeshIdx", &Mesh::submeshIdx)
     .property("isCustomMesh", &Mesh::isCustomMesh)
     .property("castShadows", &Mesh::castShadows)
     .property("receiveShadows", &Mesh::receiveShadows);
@@ -139,7 +138,7 @@ static void rttr_auto_register_reflection_function2_(); namespace {
   REGISTER_COMPONENT(AudioListener, "AudioListener");
 
   REGISTER_COMPONENT(Canvas, "Canvas")
-    .property("isActive", &Component::Canvas::isActive);
+    .property("isVisible", &Component::Canvas::isVisible);
 
   REGISTER_COMPONENT(Image, "Image")
     .property("color", &Image::color)

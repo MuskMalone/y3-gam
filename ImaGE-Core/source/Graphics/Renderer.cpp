@@ -15,6 +15,7 @@
 #include <Graphics/RenderPass/UIPass.h>
 #pragma endregion
 #include "Core/Components/Camera.h"
+#include "Core/Entity.h"
 
 namespace Graphics {
 	constexpr int INVALID_ENTITY_ID = -1;
@@ -22,6 +23,7 @@ namespace Graphics {
 	RendererData Renderer::mData;
 	MaterialTable Renderer::mMaterialTable;
 	ShaderLibrary Renderer::mShaderLibrary;
+	std::vector<IGE::Assets::GUID> Renderer::mIcons;
 	std::shared_ptr<Framebuffer> Renderer::mFinalFramebuffer;
 	std::unordered_map<std::type_index, std::shared_ptr<RenderPass>> Renderer::mTypeToRenderPass;
 	std::vector<std::shared_ptr<RenderPass>> Renderer::mRenderPasses;
@@ -38,7 +40,8 @@ namespace Graphics {
 			{AttributeType::VEC3, "a_Position"},
 			{AttributeType::VEC4, "a_Color"},
 			{AttributeType::VEC2, "a_TexCoord"},
-			{AttributeType::FLOAT, "a_TexIdx"}
+			{AttributeType::FLOAT, "a_TexIdx"},
+			{AttributeType::INT, "a_Entity"}
 		};
 
 		mData.quadVertexBuffer->SetLayout(quadLayout);
@@ -173,14 +176,14 @@ namespace Graphics {
 		// Add default material to the table (e.g., at index 0)
 		MaterialTable::AddMaterial(defaultMaterial);
 
-		std::shared_ptr<MaterialData> mat1 = MaterialData::Create("PBR", "MatLighting");
-		mat1->SetAlbedoMap(texguid1);
-		mat1->SetAlbedoColor({ 0.7f,0.6f,0.9f });
-		MaterialTable::AddMaterial(mat1);
+		//std::shared_ptr<MaterialData> mat1 = MaterialData::Create("PBR", "MatLighting");
+		//mat1->SetAlbedoMap(texguid1);
+		//mat1->SetAlbedoColor({ 0.7f,0.6f,0.9f });
+		//MaterialTable::AddMaterial(mat1);
 
-		std::shared_ptr<MaterialData> mat2 = MaterialData::Create("Unlit", "MatNoLight"); //@TODO support other shaders like Unlit
-		mat2->SetAlbedoMap(texguid);
-		MaterialTable::AddMaterial(mat2);
+		//std::shared_ptr<MaterialData> mat2 = MaterialData::Create("Unlit", "MatNoLight"); //@TODO support other shaders like Unlit
+		//mat2->SetAlbedoMap(texguid);
+		//MaterialTable::AddMaterial(mat2);
 		//--Material Init End--//
 
 		//// Generate multiple materials for testing
@@ -207,6 +210,14 @@ namespace Graphics {
 		//	// Add the new material to the material table
 		//	MaterialTable::AddMaterial(material);
 		//}
+		IGE::Assets::GUID sunIcon{ Texture::Create(gAssetsDirectory + std::string("Textures\\sun_icon.png")) };
+		IGE::Assets::GUID spotlightIcon{ Texture::Create(gAssetsDirectory + std::string("Textures\\spotlight_icon.png")) };
+		//IGE::Assets::GUID cameraIcon{ Texture::Create(gAssetsDirectory + std::string("Textures\\cam_icon.png")) };
+		
+		mIcons.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(sunIcon));
+		mIcons.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(spotlightIcon));
+		//mIcons.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(cameraIcon));
+		
 	}
 
 	void Renderer::InitShaders() {
@@ -229,10 +240,12 @@ namespace Graphics {
 		PipelineSpec geomPipelineSpec;
 		geomPipelineSpec.shader = ShaderLibrary::Get("PBR");
 		geomPipelineSpec.targetFramebuffer = Framebuffer::Create(framebufferSpec);
+		geomPipelineSpec.lineWidth = 2.5f;
 
 		RenderPassSpec geomPassSpec;
 		geomPassSpec.pipeline = Pipeline::Create(geomPipelineSpec);
 		geomPassSpec.debugName = "Geometry Pass";
+
 
 		AddPass(RenderPass::Create<GeomPass>(geomPassSpec));
 	}
@@ -367,12 +380,16 @@ namespace Graphics {
 	}
 
 	void Renderer::InitUICamera(){
-		// Initialize the UI camera with an orthographic projection
+		// Initialize the UI cam with an orthographic projection
 		mUICamera.projType = Component::Camera::Type::ORTHO;
 		mUICamera.position = glm::vec3(0.0f, 0.0f, 0.0f);  // Centered for screen space
 		mUICamera.aspectRatio = 16.0f / 9.0f;              // Adjust based on screen dimensions
 		mUICamera.nearClip = -100.0f;
 		mUICamera.farClip = 100.0f;
+		mUICamera.left =  - mUICamera.aspectRatio * UI_SCALING_FACTOR<float>;
+		mUICamera.right = mUICamera.aspectRatio * UI_SCALING_FACTOR<float>;
+		mUICamera.bottom = -10.0f;
+		mUICamera.top = 10.0f;
 	}
 
 	void Renderer::Shutdown() {
@@ -391,6 +408,7 @@ namespace Graphics {
 			vtx.texCoord = texCoord;
 			vtx.texIdx = texIdx;
 			vtx.clr = clr;
+			vtx.entityID = entity;
 		}
 		++mData.quadBufferIndex;
 	}
@@ -406,6 +424,10 @@ namespace Graphics {
 	}
 	
 	void Renderer::SetLineBufferData(glm::vec3 const& pos, glm::vec4 const& clr) {
+		if (mData.lineBufferIndex >= mData.lineBuffer.size()) {
+			std::cerr << "Error: Line buffer index out of range! Index: " << mData.lineBufferIndex << ", Max: " << mData.lineBuffer.size() << std::endl;
+			return; // Prevent writing out of bounds
+		}
 		if (mData.lineVtxCount < mData.lineBuffer.size()) {
 			LineVtx& vtx = mData.lineBuffer[mData.lineBufferIndex];
 			vtx.pos = pos;
@@ -462,34 +484,6 @@ namespace Graphics {
 		return instanceBuffer;
 	}
 
-	std::shared_ptr<VertexBuffer> Renderer::GetSubmeshInstanceBuffer(MeshSubmeshKey const& meshSubmeshKey) {
-		// Check if an instance buffer for this specific submesh already exists
-		auto it = mData.instanceSubmeshBuffers.find(meshSubmeshKey);
-		if (it != mData.instanceSubmeshBuffers.end()) {
-			return it->second; // Return existing instance buffer
-		}
-
-		// Create a new instance buffer if not found
-		uint32_t instanceCap = 100; // Adjust capacity as needed
-		auto instanceBuffer = VertexBuffer::Create(instanceCap * sizeof(InstanceData));
-
-		// Set up the buffer layout for instance data
-		BufferLayout instanceLayout = {
-			{ AttributeType::MAT4, "a_ModelMatrix" },
-			{ AttributeType::INT, "a_MaterialIdx" },
-			{ AttributeType::INT, "a_EntityID" }
-		};
-		instanceBuffer->SetLayout(instanceLayout);
-
-		// Store and return the new instance buffer for this specific submesh
-		mData.instanceSubmeshBuffers[meshSubmeshKey] = instanceBuffer;
-
-		auto &vao= IGE_REF(IGE::Assets::ModelAsset, meshSubmeshKey.first)->mMeshSource.GetVertexArray();
-			
-		vao->AddVertexBuffer(instanceBuffer, true);
-		return instanceBuffer;
-	}
-
 	void Renderer::DrawLine(glm::vec3 const& p0, glm::vec3 const& p1, glm::vec4 const& clr) {
 		if (mData.lineVtxCount >= RendererData::cMaxVertices)
 			NextBatch();
@@ -538,7 +532,7 @@ namespace Graphics {
 		++mData.stats.quadCount;
 	}
 
-	void Renderer::DrawSprite(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, Texture const& tex, glm::vec4 const& tint, int entity){
+	void Renderer::DrawSprite(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, Texture const& tex, glm::vec4 const& tint, int entity, bool isBillboard, CameraSpec const& cam){
 
 		if (tex.GetTexHdl() == 0)
 			DrawQuad(pos, scale, rot, tint);
@@ -572,6 +566,15 @@ namespace Graphics {
 		glm::mat4 rotateMtx{ glm::toMat4(rot) };
 		glm::mat4 scaleMtx{ glm::scale(glm::mat4{ 1.f }, { scale.x, scale.y, 1.f }) };
 
+		if (isBillboard) {
+			rotateMtx = glm::mat4{ 1.f };
+			glm::mat4 viewMatrix = cam.viewMatrix; // Use the correct camera
+			glm::vec3 cameraRight{ viewMatrix[0][0], viewMatrix[1][0], viewMatrix[2][0] };
+			glm::vec3 cameraUp{ viewMatrix[0][1], viewMatrix[1][1], viewMatrix[2][1] };
+
+			rotateMtx[0] = glm::vec4(cameraRight, 0.0f);
+			rotateMtx[1] = glm::vec4(cameraUp, 0.0f);
+		}
 		glm::mat4 transformMtx{ translateMtx * rotateMtx * scaleMtx };
 
 		for (size_t i{}; i < 4; ++i)
@@ -773,6 +776,169 @@ namespace Graphics {
 		}
 	}
 
+	void Renderer::DrawCameraFrustrum(Component::Camera const& cam, glm::vec4 const& clr){
+		float aspectRatio = cam.aspectRatio;
+		float tanHalfFOV = tan(glm::radians(cam.fov) / 2.0f);
+		float nearHeight = 2.0f * tanHalfFOV * cam.nearClip;
+		float nearWidth = nearHeight * aspectRatio;
+		float farHeight = 2.0f * tanHalfFOV * cam.farClip;
+		float farWidth = farHeight * aspectRatio;
+		
+		// Define frustum corners in view space
+		glm::vec3 nearCenter = glm::vec3(0.0f, 0.0f, -cam.nearClip);
+		glm::vec3 farCenter = glm::vec3(0.0f, 0.0f, -cam.farClip);
+		
+		glm::vec3 nearTopLeft = nearCenter + glm::vec3(-nearWidth / 2.0f, nearHeight / 2.0f, 0.0f);
+		glm::vec3 nearTopRight = nearCenter + glm::vec3(nearWidth / 2.0f, nearHeight / 2.0f, 0.0f);
+		glm::vec3 nearBottomLeft = nearCenter + glm::vec3(-nearWidth / 2.0f, -nearHeight / 2.0f, 0.0f);
+		glm::vec3 nearBottomRight = nearCenter + glm::vec3(nearWidth / 2.0f, -nearHeight / 2.0f, 0.0f);
+		
+		glm::vec3 farTopLeft = farCenter + glm::vec3(-farWidth / 2.0f, farHeight / 2.0f, 0.0f);
+		glm::vec3 farTopRight = farCenter + glm::vec3(farWidth / 2.0f, farHeight / 2.0f, 0.0f);
+		glm::vec3 farBottomLeft = farCenter + glm::vec3(-farWidth / 2.0f, -farHeight / 2.0f, 0.0f);
+		glm::vec3 farBottomRight = farCenter + glm::vec3(farWidth / 2.0f, -farHeight / 2.0f, 0.0f);
+		
+		// Transform frustum corners to world space
+		glm::mat4 viewMatrix = cam.GetViewMatrix();
+		glm::mat4 inverseViewMatrix = glm::inverse(viewMatrix);
+		
+		nearTopLeft = glm::vec3(inverseViewMatrix * glm::vec4(nearTopLeft, 1.0f));
+		nearTopRight = glm::vec3(inverseViewMatrix * glm::vec4(nearTopRight, 1.0f));
+		nearBottomLeft = glm::vec3(inverseViewMatrix * glm::vec4(nearBottomLeft, 1.0f));
+		nearBottomRight = glm::vec3(inverseViewMatrix * glm::vec4(nearBottomRight, 1.0f));
+		
+		farTopLeft = glm::vec3(inverseViewMatrix * glm::vec4(farTopLeft, 1.0f));
+		farTopRight = glm::vec3(inverseViewMatrix * glm::vec4(farTopRight, 1.0f));
+		farBottomLeft = glm::vec3(inverseViewMatrix * glm::vec4(farBottomLeft, 1.0f));
+		farBottomRight = glm::vec3(inverseViewMatrix * glm::vec4(farBottomRight, 1.0f));
+		
+		// Draw frustum edges
+		// Near plane
+		DrawLine(nearTopLeft, nearTopRight, clr);
+		DrawLine(nearTopRight, nearBottomRight, clr);
+		DrawLine(nearBottomRight, nearBottomLeft, clr);
+		DrawLine(nearBottomLeft, nearTopLeft, clr);
+		
+		// Far plane
+		DrawLine(farTopLeft, farTopRight, clr);
+		DrawLine(farTopRight, farBottomRight, clr);
+		DrawLine(farBottomRight, farBottomLeft, clr);
+		DrawLine(farBottomLeft, farTopLeft, clr);
+		
+		// Connecting edges
+		DrawLine(nearTopLeft, farTopLeft, clr);
+		DrawLine(nearTopRight, farTopRight, clr);
+		DrawLine(nearBottomLeft, farBottomLeft, clr);
+		DrawLine(nearBottomRight, farBottomRight, clr);
+	}
+
+	void Renderer::DrawArrow(glm::vec3 const& start, glm::vec3 const& end, glm::vec4 const& clr){
+		// Calculate direction vector
+		glm::vec3 direction = glm::normalize(end - start);
+
+		// Arrow length
+		float arrowLength = glm::length(end - start);
+
+		// Scale for the arrowhead
+		float headLength = arrowLength * 0.2f; // 20% of the arrow length
+		float headWidth = headLength * 0.5f;
+
+		// Calculate base of the arrowhead
+		glm::vec3 arrowBase = end - direction * headLength;
+
+		// Orthogonal vectors for arrowhead (perpendicular to direction)
+		glm::vec3 perp1 = glm::normalize(glm::cross(direction, { 0.f, 1.f, 0.f })) * headWidth;
+		glm::vec3 perp2 = glm::normalize(glm::cross(direction, perp1)) * headWidth;
+
+		// Arrowhead points
+		glm::vec3 left = arrowBase + perp1;
+		glm::vec3 right = arrowBase - perp1;
+
+		// Draw the arrow shaft
+		DrawLine(start, end, clr);
+
+		// Draw the arrowhead
+		DrawLine(end, left, clr);
+		DrawLine(end, right, clr);
+		DrawLine(left, right, clr); // Optional: Connect the arrowhead base
+	}
+
+	void Renderer::DrawCone(glm::vec3 const& position, glm::vec3 const& direction, float range, float angle, glm::vec4 const& color) {
+		// Normalize the direction to ensure it's a unit vector
+		glm::vec3 worldDirection = glm::normalize(direction);
+
+		// Calculate the radius of the base circle using the range and outer angle
+		float radius = range * glm::tan(glm::radians(angle));
+
+		// Determine the base center position
+		glm::vec3 baseCenter = position + worldDirection * range;
+
+		// Draw the base circle
+		DrawCircle(baseCenter, radius, color * glm::vec4(1.f, 1.f, 1.f, 0.5f), worldDirection);
+
+		// Calculate two edge points on the circle
+		// For simplicity, use a fixed perpendicular vector to the direction
+		glm::vec3 perpVec1 = glm::normalize(glm::cross(worldDirection, glm::vec3(0.f, 1.f, 0.f)));
+		if (glm::length(perpVec1) < 0.001f) // Handle edge case where direction is parallel to (0, 1, 0)
+			perpVec1 = glm::normalize(glm::cross(worldDirection, glm::vec3(1.f, 0.f, 0.f)));
+		glm::vec3 perpVec2 = glm::normalize(glm::cross(worldDirection, perpVec1));
+
+		// Edge points
+		glm::vec3 edge1 = baseCenter + perpVec1 * radius;
+		glm::vec3 edge2 = baseCenter - perpVec1 * radius;
+		glm::vec3 edge3 = baseCenter + perpVec2 * radius;
+		glm::vec3 edge4 = baseCenter - perpVec2 * radius;
+
+		// Draw edges connecting the cone tip to the base circle
+		DrawLine(position, edge1, color);
+		DrawLine(position, edge2, color);
+		DrawLine(position, edge3, color);
+		DrawLine(position, edge4, color);
+	}
+
+	void Renderer::DrawCircle(glm::vec3 const& center, float radius, glm::vec4 const& color, glm::vec3 const& normal) {
+		constexpr int segments = 32; // Number of segments for the circle
+		std::vector<glm::vec3> points(segments);
+
+		// Create a perpendicular vector to the normal
+		glm::vec3 tangent = glm::normalize(glm::cross(normal, glm::vec3(0.f, 1.f, 0.f)));
+		if (glm::length(tangent) < 0.001f) // Handle edge case where normal is parallel to (0, 1, 0)
+			tangent = glm::normalize(glm::cross(normal, glm::vec3(1.f, 0.f, 0.f)));
+		glm::vec3 bitangent = glm::normalize(glm::cross(normal, tangent));
+
+		// Calculate points on the circle
+		for (int i = 0; i < segments; ++i) {
+			float theta = glm::radians(360.f * i / segments);
+			glm::vec3 point = center + radius * (tangent * cos(theta) + bitangent * sin(theta));
+			points[i] = point;
+		}
+
+		// Draw lines connecting the points
+		for (int i = 0; i < segments; ++i) {
+			int next = (i + 1) % segments; // Ensure the last point connects back to the first
+			DrawLine(points[i], points[next], color);
+		}
+	}
+
+	void Renderer::DrawLightGizmo(Component::Light const& light, Component::Transform const& xform, CameraSpec const& cam, int lightID){
+		glm::vec3 worldDir = glm::normalize(xform.rotation * light.forwardVec);
+		switch (light.type) {
+			case Component::LightType::DIRECTIONAL:
+				Renderer::DrawSprite(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(mIcons[0])->mTexture, glm::vec4 { light.color, 1.f }, lightID, true, cam);
+				glm::vec3 arrowTip = xform.worldPos + worldDir * 5.0f; // Scale the direction for visibility
+				Renderer::DrawArrow(xform.worldPos, arrowTip, glm::vec4{ light.color, 1.f });
+				Renderer::DrawWireSphere(xform.worldPos, light.mLightIntensity * 0.5f, glm::vec4{light.color, 1.f });
+				break;
+			case Component::LightType::SPOTLIGHT:
+				Renderer::DrawSprite(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(mIcons[1])->mTexture, glm::vec4 { light.color, 1.f }, lightID, true, cam);
+				float angle = glm::radians(light.mOuterSpotAngle);
+
+				// Draw spotlight cone
+				DrawCone(xform.worldPos, worldDir, light.mRange, angle, glm::vec4(light.color, 0.5f));
+				break;
+		}
+	}
+
 	void Renderer::RenderFullscreenTexture(){
 		RenderAPI::DrawTriangles(mData.screen.screenVertexArray, 6);
 	}
@@ -843,7 +1009,7 @@ namespace Graphics {
 		SetTriangleBufferData(v3, clr);
 	}
 
-	void Renderer::SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, int matID) {
+	void Renderer::SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, int matID, int subID) {
 		InstanceData instance{};
 		instance.modelMatrix = worldMtx;
 		//instance.color = clr;
@@ -852,8 +1018,11 @@ namespace Graphics {
 			instance.entityID = id;
 		}
 		instance.materialIdx = matID;
-
-		mData.instanceBufferDataMap[meshSource].push_back(instance);
+		
+		SubmeshInstanceData subData;
+		subData.submeshIdx = subID;
+		subData.data = instance;
+		mData.instanceBufferDataMap[meshSource].push_back(subData);
 	}
 
 	void Renderer::RenderInstances() {
@@ -890,27 +1059,32 @@ namespace Graphics {
 
 			// Ensure the instance buffer exists for the mesh source
 			auto instanceBuffer = GetInstanceBuffer(meshSrc);
-
 			// Update the instance buffer with the latest data
-			instanceBuffer->SetData(instances.data(), instances.size() * sizeof(InstanceData));
+			//instanceBuffer->SetData(instances.data(), instances.size() * sizeof(InstanceData));
 
 			// Iterate through submeshes for rendering
-			//unsigned int baseInstance = 0;
 			for (size_t submeshIndex = 0; submeshIndex < submeshes.size(); ++submeshIndex) {
+
+				std::vector<InstanceData> submeshInstances;
+				for (const auto& instance : instances) {
+					if (instance.submeshIdx == submeshIndex) { // Match submeshIdx
+						submeshInstances.push_back(instance.data);
+					}
+				}
+				if (submeshInstances.empty()) continue;
+				instanceBuffer->SetData(submeshInstances.data(), submeshInstances.size() * sizeof(InstanceData));
 				auto const& submesh = submeshes[submeshIndex];
+
 
 				// Use glDrawElementsInstancedBaseVertexBaseInstance for rendering
 				RenderAPI::DrawIndicesInstancedBaseVertexBaseInstance(
 					vao,
 					submesh.idxCount,           // Index count for this submesh
-					static_cast<unsigned>(instances.size()), // Total instances
+					static_cast<unsigned>(submeshInstances.size()), // Total instances
 					submesh.baseIdx,            // Index offset
 					submesh.baseVtx,            // Base vertex
 					0                // Offset in the instance buffer
 				);
-
-				// Increment baseInstance for the next submesh
-				//baseInstance += instances.size();
 			}
 		}
 
@@ -918,8 +1092,39 @@ namespace Graphics {
 		mData.instanceBufferDataMap.clear();
 	}
 
+	void Renderer::RenderSubmeshInstances(std::vector<InstanceData> const& instances,
+		IGE::Assets::GUID const& meshSrc,
+		size_t submeshIndex) {
+		if (instances.empty()) return;
+
+		auto const& meshSource = IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource;
+		// Access the submesh and VAO
+		const auto& vao = meshSource.GetVertexArray();
+		const auto& submesh = meshSource.GetSubmeshes()[submeshIndex];
+
+		// Update instance buffer
+		auto instanceBuffer = GetInstanceBuffer(meshSrc);
+		instanceBuffer->SetData(instances.data(), instances.size() * sizeof(InstanceData));
+
+		// Issue the draw call
+		RenderAPI::DrawIndicesInstancedBaseVertexBaseInstance(
+			vao,
+			submesh.idxCount,               // Index count
+			static_cast<unsigned>(instances.size()), // Number of instances
+			submesh.baseIdx,                // Index offset
+			submesh.baseVtx,                // Base vertex offset
+			0                               // Instance offset
+		);
+	}
+
 	void Renderer::FlushBatch() {
+		if (mData.lineVtxCount > RendererData::cMaxVertices) {
+			std::cerr << "Error: Line vertex count exceeds buffer capacity during FlushBatch!" << std::endl;
+			mData.lineVtxCount = RendererData::cMaxVertices; // Clamp to valid range
+		}
+
 		if (mData.quadIdxCount) {
+			RenderAPI::SetBackCulling(false);
 			//ptrdiff_t difference{ reinterpret_cast<unsigned char*>(mData.quadBufferPtr)
 			//					- reinterpret_cast<unsigned char*>(mData.quadBuffer.data()) };
 
@@ -940,6 +1145,8 @@ namespace Graphics {
 
 			ShaderLibrary::Get("Tex2D")->Use();
 			RenderAPI::DrawIndices(mData.quadVertexArray, mData.quadIdxCount);
+
+			RenderAPI::SetBackCulling(true);
 
 			++mData.stats.drawCalls;
 		}
@@ -988,7 +1195,6 @@ namespace Graphics {
 			// Increment draw call stats
 			++mData.stats.drawCalls;
 		}
-
 	}
 
 	void Renderer::FlushBatch(std::shared_ptr<RenderPass> const& renderPass) {
@@ -1052,13 +1258,16 @@ namespace Graphics {
 
 	void Renderer::RenderSceneBegin(glm::mat4 const& viewProjMtx) {
 
+
+
 		auto const& lineShader = ShaderLibrary::Get("Line");
 		lineShader->Use();
 		lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
 
 		//mData.lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
-		//mData.texShader->Use();
-		//mData.texShader->SetUniform("u_ViewProjMtx", viewProjMtx);
+		auto const& texShader = ShaderLibrary::Get("Tex2D");
+		texShader->Use();
+		texShader->SetUniform("u_ViewProjMtx", viewProjMtx);
 
 		BeginBatch();
 	}

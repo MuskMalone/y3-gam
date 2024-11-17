@@ -18,6 +18,12 @@ namespace Component {
         float nearClip{ 0.1f };
         float farClip{ 100.0f };
 
+        // Orthographic bounds
+        float left{ -aspectRatio * UI_SCALING_FACTOR<float> };
+        float right{ aspectRatio * UI_SCALING_FACTOR<float> };
+        float bottom{ -10.0f };
+        float top{ 10.0f };
+
         inline void Clear() noexcept {
             projType = Type::PERSP;
             position = { 0.f ,0.f , -10.f };
@@ -28,6 +34,12 @@ namespace Component {
             aspectRatio = 16.f/9.f;
             nearClip = .1f;
             farClip = 100.f;
+
+            // Reset orthographic bounds
+            left = -aspectRatio * UI_SCALING_FACTOR<float>;
+            right = aspectRatio * UI_SCALING_FACTOR<float>;
+            bottom = -10.0f;
+            top = 10.0f;
         }
 
         inline glm::mat4 GetViewMatrix() const {
@@ -59,10 +71,13 @@ namespace Component {
             }
         }
 
-
-
         inline glm::mat4 GetViewProjMatrix() const {
             return GetProjMatrix() * GetViewMatrix();
+        }
+
+        // Provide a utility function to get orthographic bounds
+        inline glm::vec4 GetOrthographicBounds() const {
+            return glm::vec4(left, right, bottom, top);
         }
     };
 }

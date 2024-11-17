@@ -31,6 +31,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #define ICON_PADDING "   "
 
 namespace {
+  static bool entityRotModified{ false };
+
   bool InputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled = false);
   bool InputScriptList(std::string propertyName, std::vector<int>& list, float fieldWidth, bool disabled = false);
   bool InputScriptList(std::string propertyName, std::vector<float>& list, float fieldWidth, bool disabled = false);
@@ -109,6 +111,7 @@ namespace GUI {
       else
         mEntityChanged = false;
 
+      entityRotModified = false;
       static Component::PrefabOverrides* prefabOverride{ nullptr };
       static bool componentOverriden{ false };
       if (!mEditingPrefab && currentEntity.HasComponent<Component::PrefabOverrides>()) {
@@ -296,6 +299,18 @@ namespace GUI {
               SetIsComponentEdited(true);
               if (prefabOverride) {
                   prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Image>());
+              }
+          }
+      }
+
+      if (currentEntity.HasComponent<Component::Canvas>()) {
+          rttr::type const canvasType{ rttr::type::get<Component::Canvas>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(canvasType);
+
+          if (CanvasComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Canvas>());
               }
           }
       }
@@ -1010,6 +1025,8 @@ namespace GUI {
       if (ImGuiHelpers::TableInputFloat3("Rotation", &localRot[0], inputWidth, false, -FLT_MAX, FLT_MAX, 0.3f)) {
         transform.SetLocalRotWithEuler(localRot);
         modified = true;
+
+        entityRotModified = true;
       }
       static bool constrainedScale{ true };
       glm::vec3 scale{ transform.scale };
@@ -1058,21 +1075,21 @@ namespace GUI {
       bool const isOpen{ WindowBegin<Component::Canvas>("Canvas", highlight) };
       bool modified{ false };
 
-      if (isOpen) {
-          Component::Canvas& canvas = entity.GetComponent<Component::Canvas>();
-          float const inputWidth{ CalcInputWidth(60.f) };
-          // Start a table for organizing the color and textureAsset inputs
-          ImGui::BeginTable("ImageTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+      //if (isOpen) {
+      //    Component::Canvas& canvas = entity.GetComponent<Component::Canvas>();
+      //    float const inputWidth{ CalcInputWidth(60.f) };
+      //    // Start a table for organizing the color and textureAsset inputs
+      //    ImGui::BeginTable("ImageTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
 
-          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+      //    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      //    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
-          NextRowTable("Toggle Visiblity");
-          if (ImGui::Checkbox("##IsActive", &canvas.isActive)) {
-              modified = true;
-          }
-          ImGui::EndTable();
-      }
+      //    NextRowTable("Toggle Visiblity");
+      //    if (ImGui::Checkbox("##IsActive", &canvas.isActive)) {
+      //        modified = true;
+      //    }
+      //    ImGui::EndTable();
+      //}
 
       WindowEnd(isOpen);
       return modified;
@@ -1848,11 +1865,13 @@ namespace GUI {
   bool Inspector::LightComponentWindow(ECS::Entity entity, bool highlight) {
     bool const isOpen{ WindowBegin<Component::Light>("Light", highlight) };
     bool modified{ false };
+    Component::Light& light{ entity.GetComponent<Component::Light>() };
+
+    if (entityRotModified) { light.shadowConfig.shadowModified = true; }
 
     if (isOpen) {
       const std::vector<std::string> Lights{ "Directional","Spotlight" };
       //  // Assuming 'collider' is an instance of Collider
-      Component::Light& light{ entity.GetComponent<Component::Light>() };
       float const inputWidth{ CalcInputWidth(50.f) }, vec3InputWidth{ inputWidth / 3.f };
 
       ImGui::BeginTable("##LightTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
@@ -1926,7 +1945,7 @@ namespace GUI {
       else {
         NextRowTable("Cast Shadows");
         if (ImGui::Checkbox("##CastShadows", &light.castShadows)) {
-          modified = true;
+          modified = light.shadowConfig.shadowModified = true;
         }
         if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
           ImGui::SetTooltip("Note: Only 1 shadow-casting light is supported");
@@ -1935,6 +1954,8 @@ namespace GUI {
       ImGui::EndTable();
 
       if (light.castShadows && light.type == Component::LightType::DIRECTIONAL) {
+        Component::ShadowConfig& lightShadow{ light.shadowConfig };
+
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
         if (ImGui::TreeNodeEx("Shadows", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanFullWidth)) {
@@ -1945,24 +1966,92 @@ namespace GUI {
             ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
             NextRowTable("Softness");
-            if (ImGui::SliderInt("##SoftnessSlider", &light.softness, 0, 5)) {
-              modified = true;
+            if (ImGui::SliderInt("##SoftnessSlider", &lightShadow.softness, 0, 5)) {
+              modified = lightShadow.shadowModified = true;
             }
 
-            NextRowTable("Bias");
-            if (ImGui::SliderFloat("##BiasSlider", &light.bias, 0.f, 2.f, "% .3f")) {
-              modified = true;
-            }
-
-            NextRowTable("Near Plane");
+            ImGui::TableNextRow(); ImGui::TableSetColumnIndex(0);
+            ImGui::Text("Bias");
             if (ImGui::IsItemHovered()) {
-              ImGui::SetTooltip("How close the light is to the object (how much of the scene the light sees)");
+              ImGui::BeginTooltip();
+              ImGui::Text("Adjust this higher if you see visual artifacts like holes in shadows");
+              ImGui::Text("Typically 0.005");
+              ImGui::EndTooltip();
             }
-            if (ImGui::SliderFloat("##NearPlane", &light.nearPlaneMultiplier, 0.1f, 20.f, "% .2f")) {
-              modified = true;
+            ImGui::TableSetColumnIndex(1); ImGui::SetNextItemWidth(INPUT_SIZE);
+            if (ImGui::SliderFloat("##BiasSlider", &lightShadow.bias, 0.f, 2.f, "% .3f")) {
+              modified = lightShadow.shadowModified = true;
+            }
+
+            ImGui::TableNextRow(); ImGui::TableSetColumnIndex(0);
+            ImGui::Text("Near Plane");
+            if (ImGui::IsItemHovered()) {
+              ImGui::BeginTooltip();
+              ImGui::Text("How close the light is to the scene");
+              ImGui::Text("Adjust this if shadows near the camera are getting cut-off");
+              ImGui::EndTooltip();
+            }
+            ImGui::TableSetColumnIndex(1); ImGui::SetNextItemWidth(INPUT_SIZE);
+            if (ImGui::DragFloat("##NearPlane", &lightShadow.nearPlane, 0.1f, -FLT_MAX, FLT_MAX, "% .2f")) {
+              modified = lightShadow.shadowModified = true;
+            }
+
+            ImGui::TableNextRow(); ImGui::TableSetColumnIndex(0);
+            ImGui::Text("Far Plane");
+            if (ImGui::IsItemHovered()) {
+              ImGui::BeginTooltip();
+              ImGui::Text("How far the light can see)");
+              ImGui::Text("Adjust this if further shadows are getting cut-off");
+              ImGui::EndTooltip();
+            }
+            ImGui::TableSetColumnIndex(1); ImGui::SetNextItemWidth(INPUT_SIZE);
+            if (ImGui::DragFloat("##FarPlane", &lightShadow.farPlane, 0.1f, -FLT_MAX, FLT_MAX, "% .2f")) {
+              modified = lightShadow.shadowModified = true;
+            }
+
+            ImGui::TableNextRow(); ImGui::TableSetColumnIndex(0);
+            ImGui::Text("Scene's Bounds");
+            if (ImGui::IsItemHovered()) {
+              ImGui::SetTooltip("How much of the scene the light can see");
+            }
+            ImGui::TableSetColumnIndex(1); ImGui::SetNextItemWidth(INPUT_SIZE);
+            if (ImGui::DragFloat("##ScenesBounds", &lightShadow.scenesBounds, 0.1f, 0.01f, FLT_MAX, "%.2f")) {
+              modified = lightShadow.shadowModified = true;
+            }
+            
+            bool tooltip{ false };
+            NextRowTable("Custom Center");
+            if (ImGui::IsItemHovered()) { tooltip = true; }
+            if (ImGui::Checkbox("##CustomCenter", &lightShadow.customCenter)) {
+              modified = lightShadow.shadowModified = true;
+            }
+            if (ImGui::IsItemHovered()) { tooltip = true; }
+
+            if (tooltip) {
+              ImGui::BeginTooltip();
+              ImGui::Text("Use this if the automatic centering for the scene is inaccurate");
+              ImGui::Text("Your scene should ideally be in the center of the Render Pass Viewer window");
+              ImGui::EndTooltip();
             }
 
             ImGui::EndTable();
+
+            if (lightShadow.customCenter) {
+              if (ImGui::BeginTable("ShadowVec3Table", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+                float const vec3InputWidth{ inputWidth / 3.f };
+                ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+                ImGui::TableSetupColumn(" X", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
+                ImGui::TableSetupColumn(" Y", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
+                ImGui::TableSetupColumn(" Z", ImGuiTableColumnFlags_WidthFixed, vec3InputWidth);
+                ImGui::TableHeadersRow();
+
+                if (ImGuiHelpers::TableInputFloat3("Center", &lightShadow.centerPos[0], vec3InputWidth, false, -FLT_MAX, FLT_MAX, 0.3f)) {
+                  modified = lightShadow.shadowModified = true;
+                }
+
+                ImGui::EndTable();
+              }
+            }
           }
 
           ImGui::TreePop();
