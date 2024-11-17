@@ -65,6 +65,8 @@ namespace IGE {
 		}
 
 		void PhysicsSystem::Update() {
+			if (mDrawDebug)
+				mRays.clear();
 			mOnTriggerPairs.clear();
 			if (Scenes::SceneManager::GetInstance().GetSceneState() != Scenes::SceneState::PLAYING) {
 				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Transform>() };
@@ -518,10 +520,9 @@ namespace IGE {
 		}
 
 		void PhysicsSystem::Debug() {
-			static bool drawDebug = false;
 			if (Input::InputManager::GetInstance().IsKeyHeld(KEY_CODE::KEY_LEFT_CONTROL) &&
-				Input::InputManager::GetInstance().IsKeyTriggered(KEY_CODE::KEY_D)) drawDebug = !drawDebug;
-			if (!drawDebug) return;
+				Input::InputManager::GetInstance().IsKeyTriggered(KEY_CODE::KEY_D)) mDrawDebug = !mDrawDebug;
+			if (!mDrawDebug) return;
 
 			auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::BoxCollider>() };
 			for (auto entity : rbsystem) {
@@ -552,6 +553,19 @@ namespace IGE {
 				}
 				
 			}
+
+			for (auto const& ray : mRays) {
+				if (ray.detected) {
+					//draw three lines
+					auto dir{ glm::normalize(ray.end - ray.origin) };
+					auto intersectPoint{ ray.origin + (dir * ray.hit.distance) };
+					Graphics::Renderer::DrawLine(ray.origin, intersectPoint, { 0, 1, 0, 1 });
+					Graphics::Renderer::DrawLine(intersectPoint, ray.end, { 1, 0, 0, 1 });
+				}
+				else {
+					Graphics::Renderer::DrawLine(ray.origin, ray.end, { 0, 1, 0, 1 });
+				}
+			}
 		}
 
 		void PhysicsSystem::ClearSystem()
@@ -565,23 +579,73 @@ namespace IGE {
 			mRigidBodyToEntity.clear();
 		}
 
-		//assume direction is normalized
 		bool PhysicsSystem::RayCastSingular(glm::vec3 const& origin, glm::vec3 const& end, RaycastHit& result)
 		{
-			
-			physx::PxRaycastBufferN<2> hitBuffer{};
+			physx::PxRaycastBuffer hitBuffer{};
 			auto dir{ glm::normalize(end - origin) };
 			auto mag{ glm::distance(origin, end) };
 			bool hit{ mScene->raycast(ToPxVec3(origin), ToPxVec3(dir), mag, hitBuffer) };
 			if (hit) {
-				if (hitBuffer.nbTouches < 2) return false;
-
-				result.entity = mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[1].actor));
-				result.distance = hitBuffer.touches[1].distance;
-				result.normal = ToGLMVec3(hitBuffer.touches[1].normal);
-				result.position = ToGLMVec3(hitBuffer.touches[1].position);
+				result.entity = mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.block.actor));
+				result.distance = hitBuffer.block.distance;
+				result.normal = ToGLMVec3(hitBuffer.block.normal);
+				result.position = ToGLMVec3(hitBuffer.block.position);
+				if (mDrawDebug)
+					mRays.emplace_back(RayCastResult{
+							origin, end, result, true
+						});
 				return true;
 			}
+			if (mDrawDebug)
+				mRays.emplace_back(RayCastResult{
+						origin, end, result, false
+					});
+			return false;
+		}
+
+		bool PhysicsSystem::RayCastFromEntity(ECS::Entity entity, glm::vec3 const& direction, float magnitude, RaycastHit& result)
+		{
+			physx::PxRigidDynamic* rb{ GetRBIter(entity)};
+			if (!rb) return false;
+			auto origin{ ToGLMVec3(rb->getGlobalPose().p) };
+			auto end{ origin + glm::normalize(direction) * magnitude };
+			return RayCastFromEntity(entity, origin, end, result);
+		}
+
+		bool PhysicsSystem::RayCastFromEntity(ECS::Entity entity, glm::vec3 const& origin, glm::vec3 const& end, RaycastHit& result)
+		{
+			//hit buffer is 2 to account for in case the ray hits the origin entity
+			physx::PxRaycastBufferN<2> hitBuffer{};
+			auto dir{ glm::normalize(end - origin) };
+			auto magnitude{ glm::distance(origin, end) };
+			bool hit{ mScene->raycast(ToPxVec3(origin), ToPxVec3(dir), magnitude, hitBuffer) };
+			if (hit) {
+				uint64_t idx{};
+				ECS::Entity entity1 { mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[0].actor)) };
+				ECS::Entity entity2 { mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[1].actor)) };
+				if (entity1 == entity) { // if entity1 is the original entity use the other
+					idx = 1;
+				}
+				else if (entity2 == entity) { // if entity2 is the original entity use the other
+					idx = 0;
+				}
+				else { // if none of the entity matches, 
+					idx = (hitBuffer.touches[0].distance < hitBuffer.touches[1].distance) ? 0 : 1;
+				}
+				result.entity = mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[idx].actor));
+				result.distance = hitBuffer.touches[idx].distance;
+				result.normal = ToGLMVec3(hitBuffer.touches[idx].normal);
+				result.position = ToGLMVec3(hitBuffer.touches[idx].position);
+				if (mDrawDebug)
+					mRays.emplace_back(RayCastResult{
+							origin, end, result, true
+						});
+				return true;
+			}
+			if (mDrawDebug)
+				mRays.emplace_back(RayCastResult{
+						origin, end, result, false
+					});
 			return false;
 		}
 		

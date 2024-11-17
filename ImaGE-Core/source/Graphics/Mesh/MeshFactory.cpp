@@ -1,4 +1,4 @@
-#include <pch.h>
+﻿#include <pch.h>
 #include "MeshFactory.h"
 #include <Graphics/Mesh/IMSH.h>
 
@@ -12,6 +12,12 @@ namespace Graphics {
     }
     else if (meshName == "Quad") {
         return CreateQuad();
+    }
+    else if (meshName == "Sphere") {
+        return CreateSphere(); //default 32 slices and stacks
+    }
+    else if (meshName == "Capsule") {
+        return CreateCapsule();
     }
     else if (meshName == "None") {
         return MeshSource{ {},{},{},{} };
@@ -230,108 +236,242 @@ namespace Graphics {
     return MeshSource(vao, submeshes, planeVertices, planeIndices);
   }
 
-  MeshSource MeshFactory::CreateCapsule() {
-      std::vector<Vertex> capsuleVertices;
+  MeshSource MeshFactory::CreateSphere(uint32_t stacks, uint32_t slices){
+      std::vector<Vertex> sphereVertices;
+      std::vector<uint32_t> sphereIndices;
 
-      const int radialSegments = 16; // Number of segments for the rounded ends
-      const int heightSegments = 8; // Number of segments along the height of the cylinder
-      const float radius = 1.0f; // Radius of the unit capsule
-      const float halfHeight = 0.5f; // Half of the total height (1 unit in total)
+      // Generate vertices
+      for (uint32_t stack = 0; stack <= stacks; ++stack) {
+          float phi = glm::pi<float>() * stack / stacks; // Latitude angle
+          float y = glm::cos(phi);                      // Y-coordinate
+          float radius = glm::sin(phi);                 // Radius of the current ring
 
-      // Generate the hemispherical caps
-      for (int i = 0; i <= radialSegments; ++i) {
-          float theta = i * glm::two_pi<float>() / radialSegments;
-          float x = radius * cos(theta);
-          float z = radius * sin(theta);
+          for (uint32_t slice = 0; slice <= slices; ++slice) {
+              float theta = glm::two_pi<float>() * slice / slices; // Longitude angle
+              float x = radius * glm::cos(theta);
+              float z = radius * glm::sin(theta);
 
-          // Top hemisphere vertices
-          capsuleVertices.push_back({ {x, halfHeight, z}, {0, 1, 0}, {0, 0}, {1, 0, 0}, {0, 1, 0} });
+              glm::vec3 position = { x, y, z };
+              glm::vec3 normal = glm::normalize(position);
+              glm::vec2 texCoord = { static_cast<float>(slice) / slices, static_cast<float>(stack) / stacks };
 
-          // Bottom hemisphere vertices
-          capsuleVertices.push_back({ {x, -halfHeight, z}, {0, -1, 0}, {0, 1}, {1, 0, 0}, {0, 1, 0} });
+              // Add vertex
+              sphereVertices.push_back({ position, normal, texCoord, {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f} });
+          }
       }
 
-      // Generate the cylinder sides
-      for (int j = 0; j <= heightSegments; ++j) {
-          float y = -halfHeight + (j * (1.0f / heightSegments)); // Height range from -0.5 to 0.5
-          for (int i = 0; i <= radialSegments; ++i) {
-              float theta = i * glm::two_pi<float>() / radialSegments;
+      // Generate indices
+      for (uint32_t stack = 0; stack < stacks; ++stack) {
+          for (uint32_t slice = 0; slice < slices; ++slice) {
+              uint32_t first = stack * (slices + 1) + slice;
+              uint32_t second = first + slices + 1;
+
+              // Triangle 1
+              sphereIndices.push_back(first + 1);
+              sphereIndices.push_back(second);
+              sphereIndices.push_back(first);
+
+              // Triangle 2
+              sphereIndices.push_back(first + 1);
+              sphereIndices.push_back(second + 1);
+              sphereIndices.push_back(second);
+
+          }
+      }
+
+      // Create VAO and VBO
+      auto vao = VertexArray::Create();
+      auto vbo = VertexBuffer::Create(static_cast<unsigned>(sphereVertices.size() * sizeof(Vertex)));
+
+      // Set vertex buffer data
+      vbo->SetData(sphereVertices.data(), static_cast<unsigned>(sphereVertices.size() * sizeof(Vertex)));
+
+      BufferLayout sphereLayout = {
+          {AttributeType::VEC3, "a_Position"},
+          {AttributeType::VEC3, "a_Normal"},
+          {AttributeType::VEC2, "a_TexCoord"},
+          {AttributeType::FLOAT, "a_TexIdx"},
+          {AttributeType::VEC3, "a_Tangent"},
+          {AttributeType::VEC3, "a_Bitangent"},
+          {AttributeType::VEC4, "a_Color"},
+      };
+
+      vbo->SetLayout(sphereLayout);
+      vao->AddVertexBuffer(vbo);
+
+      // Create and bind Element Buffer Object (EBO) for the indices
+      std::shared_ptr<ElementBuffer> ebo = ElementBuffer::Create(sphereIndices.data(), static_cast<uint32_t>(sphereIndices.size()));
+      vao->SetElementBuffer(ebo);
+
+      // Set up submesh
+      std::vector<Submesh> submeshes;
+      Submesh sphereSubmesh{
+          0,                                      // baseVtx
+          0,                                      // baseIdx
+          static_cast<uint32_t>(sphereVertices.size()), // vtxCount
+          static_cast<uint32_t>(sphereIndices.size()),  // idxCount
+          0,                                      // materialIdx
+          glm::mat4(1.0f),                        // Identity matrix for transform
+          sphereIndices                           // Indices for the submesh
+      };
+
+      submeshes.push_back(sphereSubmesh);
+      return MeshSource(vao, submeshes, sphereVertices, sphereIndices);
+  }
+
+  MeshSource MeshFactory::CreateCapsule(float radius, float height, int stacks, int slices) {
+      std::vector<Vertex> vertices;
+      std::vector<uint32_t> indices;
+
+      // Top hemisphere
+      for (int i = 0; i <= stacks; ++i) {
+          float phi = glm::pi<float>() / 2 * (1.0f - float(i) / stacks); // From π/2 to 0
+          float y = radius * sin(phi) + height / 2.0f; // Offset by half height
+          float r = radius * cos(phi); // Radius of the circle at this stack
+
+          for (int j = 0; j <= slices; ++j) {
+              float theta = glm::two_pi<float>() * j / slices; // Angle around the circle
+              float x = r * cos(theta);
+              float z = r * sin(theta);
+
+              vertices.push_back({
+                  {x, y, z},                                 // Position
+                  glm::normalize(glm::vec3(x, y - height / 2.0f, z)), // Normal (corrected reference point)
+                  {float(j) / slices, 1.0f - float(i) / stacks},      // UV (v-flipped for consistency)
+                  {1.0f, 0.0f, 0.0f},                        // Tangent
+                  {0.0f, 1.0f, 0.0f},                        // Bitangent
+                  {1.0f, 1.0f, 1.0f, 1.0f}                   // Color
+                  });
+          }
+      }
+
+      // Cylinder
+      for (int i = 0; i <= stacks; ++i) {
+          float y = height / 2.0f - float(i) / stacks * height; // Linear interpolation from top to bottom
+      
+          for (int j = 0; j <= slices; ++j) {
+              float theta = glm::two_pi<float>() * j / slices;
               float x = radius * cos(theta);
               float z = radius * sin(theta);
-              capsuleVertices.push_back({ {x, y, z}, {0, 0, 1}, {static_cast<float>(i) / radialSegments, static_cast<float>(j) / heightSegments}, {1, 0, 0}, {0, 1, 0} });
+      
+              vertices.push_back({
+                  {x, y, z},                        // Position
+                  glm::normalize(glm::vec3(x, 0.0f, z)), // Normal (aligned to the radius)
+                  {float(j) / slices, float(i) / stacks}, // UV (consistent with top/bottom)
+                  {1.0f, 0.0f, 0.0f},               // Tangent
+                  {0.0f, 1.0f, 0.0f},               // Bitangent
+                  {1.0f, 1.0f, 1.0f, 1.0f}          // Color
+              });
           }
-
-          // Create indices for the hemispherical caps
-          std::vector<uint32_t> capsuleIndices;
-
-          // Top hemisphere
-          for (int i = 0; i < radialSegments; ++i) {
-              capsuleIndices.push_back(i);
-              capsuleIndices.push_back(i + 1);
-              capsuleIndices.push_back(radialSegments + 1 + i);
-
-              capsuleIndices.push_back(i + 1);
-              capsuleIndices.push_back(radialSegments + 1 + i + 1);
-              capsuleIndices.push_back(radialSegments + 1 + i);
-          }
-
-          // Cylinder sides
-          for (int j = 0; j < heightSegments; ++j) {
-              for (int i = 0; i < radialSegments; ++i) {
-                  int first = (j * (radialSegments + 1)) + i;
-                  int second = first + radialSegments + 1;
-
-                  capsuleIndices.push_back(first);
-                  capsuleIndices.push_back(second);
-                  capsuleIndices.push_back(first + 1);
-
-                  capsuleIndices.push_back(second);
-                  capsuleIndices.push_back(second + 1);
-                  capsuleIndices.push_back(first + 1);
-              }
-          }
-
-          // Create VAO and VBO for the capsule
-          auto vao = VertexArray::Create();
-          auto vbo = VertexBuffer::Create(static_cast<unsigned>(capsuleVertices.size() * sizeof(Vertex)));
-
-          // Set vertex buffer data
-          vbo->SetData(capsuleVertices.data(), static_cast<unsigned>(capsuleVertices.size() * sizeof(Vertex)));
-
-          BufferLayout capsuleLayout = {
-              {AttributeType::VEC3, "a_Position"},
-              {AttributeType::VEC3, "a_Normal"},
-              {AttributeType::VEC2, "a_TexCoord"},
-              {AttributeType::FLOAT, "a_TexIdx"},
-              {AttributeType::VEC3, "a_Tangent"},
-              {AttributeType::VEC3, "a_Bitangent"},
-              {AttributeType::VEC4, "a_Color"},
-          };
-
-          vbo->SetLayout(capsuleLayout);
-          vao->AddVertexBuffer(vbo);
-
-          // Create and bind Element Buffer Object (EBO) for the indices
-          auto ebo = ElementBuffer::Create(capsuleIndices.data(), static_cast<uint32_t>(capsuleIndices.size()));
-          vao->SetElementBuffer(ebo);
-
-          // Set up submesh
-          std::vector<Submesh> submeshes;
-          Submesh capsuleSubmesh{
-              0,                                 // baseVtx
-              0,                                 // baseIdx
-              static_cast<uint32_t>(capsuleVertices.size()),   // vtxCount
-              static_cast<uint32_t>(capsuleIndices.size()),    // idxCount
-              0,                                 // materialIdx
-              glm::mat4(1.0f),                   // Identity matrix for transform
-              capsuleIndices                        // Indices for the submesh
-          };
-
-          submeshes.push_back(capsuleSubmesh);
-
-          // Create MeshSource with the generated data
-          return MeshSource(vao, submeshes, capsuleVertices, capsuleIndices);
       }
+
+      // Bottom hemisphere
+      for (int i = 0; i <= stacks; ++i) {
+          float phi = glm::pi<float>() / 2 * ((float)i / stacks - 1.0f); // From 0 to -π/2
+          float y = radius * sin(phi) - height / 2.0f; // Offset by half height
+          float r = radius * cos(phi);
+
+          for (int j = 0; j <= slices; ++j) {
+              float theta = glm::two_pi<float>() * j / slices;
+              float x = r * cos(theta);
+              float z = r * sin(theta);
+
+              vertices.push_back({
+                  {x, y, z},                 // Position
+                  glm::normalize(glm::vec3(x, y + height / 2.0f, z)), // Normal
+                  {float(j) / slices, float(i) / stacks}, // UV
+                  {1.0f, 0.0f, 0.0f},        // Tangent
+                  {0.0f, 1.0f, 0.0f},        // Bitangent
+                  {1.0f, 1.0f, 1.0f, 1.0f}   // Color
+                  });
+          }
+      }
+
+      // Generate indices for top hemisphere
+      for (int i = 0; i < stacks; ++i) {
+          for (int j = 0; j < slices; ++j) {
+              uint32_t curr = i * (slices + 1) + j;
+              uint32_t next = curr + slices + 1;
+
+              indices.push_back(curr);
+              indices.push_back(curr + 1);
+              indices.push_back(next);
+
+              indices.push_back(curr + 1);
+              indices.push_back(next + 1);
+              indices.push_back(next);
+          }
+      }
+
+      // Generate indices for cylinder
+      int offset = (stacks + 1) * (slices + 1);
+      for (int i = 0; i < stacks; ++i) {
+          for (int j = 0; j < slices; ++j) {
+              uint32_t curr = offset + i * (slices + 1) + j;
+              uint32_t next = curr + slices + 1;
+
+              indices.push_back(curr + 1);
+              indices.push_back(next);
+              indices.push_back(curr);
+
+              indices.push_back(next + 1);
+              indices.push_back(next);
+              indices.push_back(curr + 1);
+          }
+      }
+
+      // Generate indices for bottom hemisphere
+      offset += (stacks + 1) * (slices + 1);
+      for (int i = 0; i < stacks; ++i) {
+          for (int j = 0; j < slices; ++j) {
+              uint32_t curr = offset + i * (slices + 1) + j;
+              uint32_t next = curr + slices + 1;
+
+              indices.push_back(curr);
+              indices.push_back(next);
+              indices.push_back(curr + 1);
+
+              indices.push_back(curr + 1);
+              indices.push_back(next);
+              indices.push_back(next + 1);
+          }
+      }
+
+      // Create VAO and VBO
+      auto vao = VertexArray::Create();
+      auto vbo = VertexBuffer::Create(static_cast<unsigned>(vertices.size() * sizeof(Vertex)));
+      vbo->SetData(vertices.data(), static_cast<unsigned>(vertices.size() * sizeof(Vertex)));
+
+      BufferLayout layout = {
+          {AttributeType::VEC3, "a_Position"},
+          {AttributeType::VEC3, "a_Normal"},
+          {AttributeType::VEC2, "a_TexCoord"},
+          {AttributeType::FLOAT, "a_TexIdx"},
+          {AttributeType::VEC3, "a_Tangent"},
+          {AttributeType::VEC3, "a_Bitangent"},
+          {AttributeType::VEC4, "a_Color"},
+      };
+
+      vbo->SetLayout(layout);
+      vao->AddVertexBuffer(vbo);
+
+      auto ebo = ElementBuffer::Create(indices.data(), static_cast<uint32_t>(indices.size()));
+      vao->SetElementBuffer(ebo);
+
+      std::vector<Submesh> submeshes;
+      Submesh capsuleSubmesh{
+          0,                                 // baseVtx
+          0,                                 // baseIdx
+          static_cast<uint32_t>(vertices.size()),   // vtxCount
+          static_cast<uint32_t>(indices.size()),    // idxCount
+          0,                                 // materialIdx
+          glm::mat4(1.0f),                   // Identity matrix for transform
+          indices                            // Indices for the submesh
+      };
+
+      submeshes.push_back(capsuleSubmesh);
+
+      return MeshSource(vao, submeshes, vertices, indices);
   }
 
   MeshSource MeshFactory::CreateModelFromImport(std::string const& imshFile) {

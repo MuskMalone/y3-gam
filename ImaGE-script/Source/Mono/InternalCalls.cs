@@ -178,6 +178,9 @@ namespace IGE.Utils
     extern public static uint Raycast(Vector3 start, Vector3 end);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static uint RaycastFromEntity(uint entity, Vector3 start, Vector3 end);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void PlaySound(uint entity, string sound);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]

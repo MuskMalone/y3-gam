@@ -1224,7 +1224,7 @@ namespace GUI {
     if (isOpen) {
       Component::Mesh& mesh{ entity.GetComponent<Component::Mesh>() };
       static const std::vector<const char*> meshNames{
-        "None", "Cube", "Plane"
+        "None", "Cube", "Plane", "Sphere", "Capsule"
       };
 
       float const inputWidth{ CalcInputWidth(60.f) };

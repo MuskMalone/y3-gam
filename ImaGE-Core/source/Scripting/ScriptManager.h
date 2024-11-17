@@ -316,6 +316,8 @@ namespace Mono
 
 		static ECS::Entity::EntityID Raycast(glm::vec3 start, glm::vec3 end);
 
+		static ECS::Entity::EntityID RaycastFromEntity(ECS::Entity::EntityID e, glm::vec3 start, glm::vec3 end);
+
 		static void PlaySound(ECS::Entity::EntityID, MonoString*);
 
 		static glm::vec3 GetVelocity(ECS::Entity::EntityID);

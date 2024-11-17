@@ -34,6 +34,11 @@ public class PlayerFootsteps : Entity
         bool isGrounded = InternalCalls.IsGrounded(player.mEntityID);
         Vector3 velocity = InternalCalls.GetVelocity(player.mEntityID);
         float magnitude = velocity.X * velocity.X + velocity.Y * velocity.Y + velocity.Z * velocity.Z;
+
+        //for testing purposes to remove
+        Vector3 position = InternalCalls.GetPosition(player.mEntityID);
+        uint entityHit = InternalCalls.RaycastFromEntity(player.mEntityID, position, position + (new Vector3(0, -200, 0)));
+
         if (isGrounded && magnitude > 0.1f)
         {
             if (timePassed >= interval) {
@@ -67,7 +72,8 @@ public class PlayerFootsteps : Entity
         // Raycast downward to detect the ground surface
         Vector3 position = InternalCalls.GetPosition(player.mEntityID);
         Vector3 scale = InternalCalls.GetScale(player.mEntityID);
-        uint entityHit = InternalCalls.Raycast(position, position + (new Vector3(0, -200, 0)));
+        uint entityHit = InternalCalls.RaycastFromEntity(player.mEntityID, position, position + (new Vector3(0, -200, 0)));
+
         if (entityHit != 0)
         {
             // Check the layer name of the object hit by the raycast

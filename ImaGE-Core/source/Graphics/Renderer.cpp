@@ -513,7 +513,7 @@ namespace Graphics {
 
 	}
 
-	void Renderer::DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, glm::vec4 const& clr) {
+	void Renderer::DrawQuad(glm::vec3 const& pos, glm::vec2 const& scale, glm::quat const& rot, glm::vec4 const& clr, int entity) {
 		if (mData.quadIdxCount >= RendererData::cMaxIndices2D)
 			NextBatch();
 
@@ -526,7 +526,7 @@ namespace Graphics {
 		glm::mat4 transformMtx{ translateMtx * rotateMtx * scaleMtx };
 
 		for (size_t i{}; i < 4; ++i)
-			SetQuadBufferData(transformMtx * mData.quadVtxPos[i], clr, texCoords[i], texIdx, 0);
+			SetQuadBufferData(transformMtx * mData.quadVtxPos[i], clr, texCoords[i], texIdx, entity);
 
 		mData.quadIdxCount += 6;
 		++mData.stats.quadCount;
