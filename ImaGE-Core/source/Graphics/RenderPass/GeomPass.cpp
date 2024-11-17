@@ -191,9 +191,9 @@ namespace Graphics {
           auto const& sprite = entity.GetComponent<Component::Sprite2D>();
           auto const& xform = entity.GetComponent<Component::Transform>();
           if (sprite.textureAsset)
-              Renderer::DrawSprite(xform.worldPos, xform.worldScale, xform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(sprite.textureAsset)->mTexture, sprite.color);
+              Renderer::DrawSprite(xform.worldPos, xform.worldScale, xform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(sprite.textureAsset)->mTexture, sprite.color, entity.GetEntityID());
           else
-              Renderer::DrawQuad(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, sprite.color);
+              Renderer::DrawQuad(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, sprite.color, entity.GetEntityID());
 
         }
       }
