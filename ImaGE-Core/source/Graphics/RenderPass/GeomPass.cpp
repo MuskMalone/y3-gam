@@ -37,7 +37,7 @@ namespace Graphics {
       MatGroupsMap matGroups;
 
       //==========================LIGHTS==========================================================
-      const unsigned int maxLights = 10;
+      const unsigned int maxLights = 30;
       int numlights{ 0 };
 
       int u_type[maxLights];       // Camera position in world space
