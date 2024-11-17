@@ -43,7 +43,7 @@ public class Dialogue : Entity
 
   void Update()
   {
-    FreezePlayer();
+    //FreezePlayer();
   }
 
   void DeactivateAllEmotions()
