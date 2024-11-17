@@ -88,7 +88,6 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static bool AnyKeyDown();
 
-
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetMouseDelta();
 
@@ -130,6 +129,9 @@ namespace IGE.Utils
     extern public static void SetActive(uint entityHandle, bool active);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool IsActive(uint entityHandle);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void DestroyEntity(uint EntityID);
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void DestroyScript(Entity obj, uint EntityID);
@@ -151,6 +153,9 @@ namespace IGE.Utils
     #region Text Component
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static string GetText(uint EntityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetText(uint TextEntityID, string textContent);
     #endregion
 
 
@@ -177,6 +182,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static float GetDeltaTime();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetTime();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void MoveCharacter(uint mEntityID, Vector3 dVec);

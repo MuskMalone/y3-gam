@@ -206,6 +206,7 @@ void ScriptManager::AddInternalCalls()
   //Entity Functions
   ADD_INTERNAL_CALL(GetAxis);
   ADD_INTERNAL_CALL(GetDeltaTime);
+  ADD_INTERNAL_CALL(GetTime);
   ADD_INTERNAL_CALL(MoveCharacter);
   ADD_INTERNAL_CALL(IsGrounded);
   ADD_INTERNAL_CALL(GetTag);
@@ -213,12 +214,14 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(DestroyEntity);
   ADD_INTERNAL_CALL(DestroyScript);
   ADD_INTERNAL_CALL(SetActive);
+  ADD_INTERNAL_CALL(IsActive);
   ADD_INTERNAL_CALL(FindChildByTag);
   ADD_INTERNAL_CALL(FindParentByTag);
   ADD_INTERNAL_CALL(GetAllChildren);
   ADD_INTERNAL_CALL(GetMainCameraPosition);
   ADD_INTERNAL_CALL(GetMainCameraDirection);
   ADD_INTERNAL_CALL(GetText);
+  ADD_INTERNAL_CALL(SetText);
   ADD_INTERNAL_CALL(GetImageColor);
   ADD_INTERNAL_CALL(SetImageColor);
 
@@ -915,6 +918,10 @@ float Mono::GetDeltaTime()
   return Performance::FrameRateController::GetInstance().GetDeltaTime();
 }
 
+float Mono::GetTime() {
+  return Performance::FrameRateController::GetInstance().GetTime();
+}
+
 
 MonoObject* Mono::FindScript(MonoString* s)
 {
@@ -1002,6 +1009,16 @@ void Mono::SetActive(ECS::Entity::EntityID entity, bool b)
     Debug::DebugLogger::GetInstance().LogError("You r trying to set active on an invalid entity");
 }
 
+bool Mono::IsActive(ECS::Entity::EntityID entity) {
+  if (ECS::Entity{ entity } && ECS::Entity{ entity }.HasComponent<Component::Tag>()) {
+    return ECS::Entity{ entity }.GetComponent<Component::Tag>().isActive;
+  }
+  else {
+    Debug::DebugLogger::GetInstance().LogError("Entity does not have the tag component!");
+    return false;
+  }
+}
+
 MonoArray* Mono::GetAllChildren(ECS::Entity::EntityID entity)
 {
   std::vector<ECS::Entity::EntityID> allChildren{};
@@ -1060,6 +1077,17 @@ MonoString* Mono::GetText(ECS::Entity::EntityID entity)
     Debug::DebugLogger::GetInstance().LogError("You r trying to Get text from an invalid entity");
 
   return STDToMonoString(msg);
+}
+
+void Mono::SetText(ECS::Entity::EntityID textEntity, MonoString* textContent) {
+  std::string scriptTextContent{ MonoStringToSTD(textContent) };
+  
+  if (!ECS::Entity{ textEntity }.HasComponent<Component::Text>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to Set Text of an entity that does not have the Text Component");
+    return;
+  }
+
+  ECS::Entity{ textEntity }.GetComponent<Component::Text>().textContent = scriptTextContent;
 }
 
 

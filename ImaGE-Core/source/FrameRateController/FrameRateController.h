@@ -26,6 +26,7 @@ namespace Performance {
     TimeType GetFPS() const noexcept;
     bool GetVsyncFlag() const noexcept;
     unsigned int GetFrameCounter() const noexcept;
+    TimeType GetTime() const noexcept;
 
     // Setters
     void SetFPSCalculationInterval(float fpsCalculationInterval);
@@ -41,6 +42,7 @@ namespace Performance {
     std::map<std::string, TimeFormat> mSystemTimerMap;
 
     bool mVsyncEnabled{};
+    TimeType mTotalTime;
     TimeType mCurrFrameTime{}, mNewFrameTime{}, mDeltaTime{};
     TimeType mFPSTimer{}, mCurrFPS{};
     TimeType mTargetFPS{};

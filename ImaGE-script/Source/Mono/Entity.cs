@@ -73,6 +73,11 @@ using IGE.Utils;
       InternalCalls.SetActive(mEntityID, active);
     }
 
+    public bool IsActive()
+    {
+      return InternalCalls.IsActive(mEntityID);
+    }
+
     public T FindObjectOfType<T>() where T : Entity
     {
       string name = typeof(T).Name;

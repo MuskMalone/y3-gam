@@ -7,6 +7,7 @@ namespace Performance {
     mVsyncEnabled = vsyncEnabled;
     SetVsync(mVsyncEnabled);
 
+    mTotalTime = 0.f;
     mCurrFrameTime = 0.f, mNewFrameTime = 0.f, mDeltaTime = 0.f;
     mFPSTimer = 0.f, mCurrFPS = 0.f;
 
@@ -22,10 +23,12 @@ namespace Performance {
     mCurrFrameTime = mNewFrameTime;
 
     mFPSTimer += mDeltaTime;
+    mTotalTime += mDeltaTime;
 
     if (mFPSTimer >= mFPSCalculationInterval) {
       mCurrFPS = static_cast<TimeType>(mFrameCounter) / mFPSCalculationInterval;
       mFPSTimer = 0.f;
+      mFrameCounter = 0;
     }
   }
 
@@ -83,6 +86,10 @@ namespace Performance {
       return mFrameCounter;
   }
 
+  FrameRateController::TimeType FrameRateController::GetTime() const noexcept {
+    return mTotalTime;
+  }
+
   void FrameRateController::SetFPSCalculationInterval(float fpsCalculationInterval) {
     mFPSCalculationInterval = fpsCalculationInterval;
   }
@@ -97,8 +104,6 @@ namespace Performance {
     glfwSwapInterval((mVsyncEnabled) ? 1 : 0);
   }
 
-
-    
   void FrameRateController::Reset() {
     mCurrFrameTime = 0.f;
     mNewFrameTime = 0.f;

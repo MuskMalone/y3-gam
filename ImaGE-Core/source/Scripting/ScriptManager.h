@@ -324,6 +324,8 @@ namespace Mono
 		
 		static float GetDeltaTime();
 
+		static float GetTime();
+
 		static glm::vec3 GetMouseDelta();
 
 		static MonoObject* FindScript(MonoString* s);
@@ -333,6 +335,8 @@ namespace Mono
 		static void DestroyScript(MonoObject* obj, ECS::Entity::EntityID entity);
 
 		static void SetActive(ECS::Entity::EntityID entity,bool b);
+
+		static bool IsActive(ECS::Entity::EntityID entity);
 
 		static glm::vec3 GetMousePos();
 
@@ -347,6 +351,8 @@ namespace Mono
 		static glm::vec3 GetMainCameraDirection(ECS::Entity::EntityID cameraEntity);
 		
 		static MonoString* GetText(ECS::Entity::EntityID entity);
+
+		static void SetText(ECS::Entity::EntityID textEntity, MonoString* textContent);
 
 		static glm::vec4 GetImageColor(ECS::Entity::EntityID entity);
 

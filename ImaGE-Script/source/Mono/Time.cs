@@ -36,5 +36,13 @@ namespace IGE.Utils
       }
     }
 
+    public static float GameTime
+    {
+      get
+      {
+        return InternalCalls.GetTime();
+      }
+    }
+
   }
 }
