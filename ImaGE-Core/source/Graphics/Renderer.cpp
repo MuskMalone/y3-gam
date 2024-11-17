@@ -1009,7 +1009,7 @@ namespace Graphics {
 		SetTriangleBufferData(v3, clr);
 	}
 
-	void Renderer::SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, int matID) {
+	void Renderer::SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int id, int matID, int subID) {
 		InstanceData instance{};
 		instance.modelMatrix = worldMtx;
 		//instance.color = clr;
@@ -1018,8 +1018,11 @@ namespace Graphics {
 			instance.entityID = id;
 		}
 		instance.materialIdx = matID;
-
-		mData.instanceBufferDataMap[meshSource].push_back(instance);
+		
+		SubmeshInstanceData subData;
+		subData.submeshIdx = subID;
+		subData.data = instance;
+		mData.instanceBufferDataMap[meshSource].push_back(subData);
 	}
 
 	void Renderer::RenderInstances() {
@@ -1056,32 +1059,62 @@ namespace Graphics {
 
 			// Ensure the instance buffer exists for the mesh source
 			auto instanceBuffer = GetInstanceBuffer(meshSrc);
-
 			// Update the instance buffer with the latest data
-			instanceBuffer->SetData(instances.data(), instances.size() * sizeof(InstanceData));
+			//instanceBuffer->SetData(instances.data(), instances.size() * sizeof(InstanceData));
 
 			// Iterate through submeshes for rendering
-			//unsigned int baseInstance = 0;
 			for (size_t submeshIndex = 0; submeshIndex < submeshes.size(); ++submeshIndex) {
+
+				std::vector<InstanceData> submeshInstances;
+				for (const auto& instance : instances) {
+					if (instance.submeshIdx == submeshIndex) { // Match submeshIdx
+						submeshInstances.push_back(instance.data);
+					}
+				}
+				if (submeshInstances.empty()) continue;
+				instanceBuffer->SetData(submeshInstances.data(), submeshInstances.size() * sizeof(InstanceData));
 				auto const& submesh = submeshes[submeshIndex];
+
 
 				// Use glDrawElementsInstancedBaseVertexBaseInstance for rendering
 				RenderAPI::DrawIndicesInstancedBaseVertexBaseInstance(
 					vao,
 					submesh.idxCount,           // Index count for this submesh
-					static_cast<unsigned>(instances.size()), // Total instances
+					static_cast<unsigned>(submeshInstances.size()), // Total instances
 					submesh.baseIdx,            // Index offset
 					submesh.baseVtx,            // Base vertex
 					0                // Offset in the instance buffer
 				);
-
-				// Increment baseInstance for the next submesh
-				//baseInstance += instances.size();
 			}
 		}
 
 		// Clear instances after rendering
 		mData.instanceBufferDataMap.clear();
+	}
+
+	void Renderer::RenderSubmeshInstances(std::vector<InstanceData> const& instances,
+		IGE::Assets::GUID const& meshSrc,
+		size_t submeshIndex) {
+		if (instances.empty()) return;
+
+		auto const& meshSource = IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource;
+		// Access the submesh and VAO
+		const auto& vao = meshSource.GetVertexArray();
+		const auto& submesh = meshSource.GetSubmeshes()[submeshIndex];
+
+		// Update instance buffer
+		auto instanceBuffer = GetInstanceBuffer(meshSrc);
+		instanceBuffer->SetData(instances.data(), instances.size() * sizeof(InstanceData));
+
+		// Issue the draw call
+		RenderAPI::DrawIndicesInstancedBaseVertexBaseInstance(
+			vao,
+			submesh.idxCount,               // Index count
+			static_cast<unsigned>(instances.size()), // Number of instances
+			submesh.baseIdx,                // Index offset
+			submesh.baseVtx,                // Base vertex offset
+			0                               // Instance offset
+		);
 	}
 
 	void Renderer::FlushBatch() {
@@ -1091,6 +1124,7 @@ namespace Graphics {
 		}
 
 		if (mData.quadIdxCount) {
+			RenderAPI::SetBackCulling(false);
 			//ptrdiff_t difference{ reinterpret_cast<unsigned char*>(mData.quadBufferPtr)
 			//					- reinterpret_cast<unsigned char*>(mData.quadBuffer.data()) };
 
@@ -1111,6 +1145,8 @@ namespace Graphics {
 
 			ShaderLibrary::Get("Tex2D")->Use();
 			RenderAPI::DrawIndices(mData.quadVertexArray, mData.quadIdxCount);
+
+			RenderAPI::SetBackCulling(true);
 
 			++mData.stats.drawCalls;
 		}

@@ -93,6 +93,7 @@ ECS::Entity Prefab::Construct(IGE::Assets::GUID guid, glm::vec3 const& pos) cons
   entity.SetIsActive(mIsActive);
   Reflection::ObjectFactory::GetInstance().AddComponentsToEntity(entity, mComponents);
   Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
+  trans.SetLocalToWorld();
   trans.worldPos = trans.position = pos;
   entity.EmplaceComponent<Component::PrefabOverrides>(guid);
 

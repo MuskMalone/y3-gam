@@ -62,6 +62,8 @@ namespace Component
     ************************************************************************/
     void ComputeWorldMtx();
 
+    void ResetLocal();
+
     /*!*********************************************************************
     \brief
       Resets the component to default values

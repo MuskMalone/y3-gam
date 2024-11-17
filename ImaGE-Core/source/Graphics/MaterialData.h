@@ -59,7 +59,7 @@ namespace Graphics {
         void SetName(std::string const& name) { mName = name; }
 
         std::string const& GetShaderName() { return mShaderName; }
-        void SetShaderName(std::string const& name) {mShaderName = name ;}
+        void SetShaderName(std::string const& name) { mShaderName = name; SetShader(name); }
 
         glm::vec3 const& GetAlbedoColor() const { return mAlbedoColor; }
         void SetAlbedoColor(const glm::vec3& color) { mAlbedoColor = color; }

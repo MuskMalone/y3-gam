@@ -72,6 +72,14 @@ namespace Graphics {
 		int materialIdx;
 		int entityID = -1;
 		//glm::vec4 color;
+		InstanceData() = default;
+		InstanceData(const glm::mat4& mtx, int mat, int ent = -1)
+			: modelMatrix{ mtx }, materialIdx{ mat }, entityID{ ent } {}
+	};
+
+	struct SubmeshInstanceData {
+		int submeshIdx;
+		InstanceData data;
 	};
 
 	struct RendererData {
@@ -136,7 +144,7 @@ namespace Graphics {
 		IGE::Assets::GUID whiteTex;
 
 		//------------------------Instancing related-------------------------//
-		std::unordered_map<IGE::Assets::GUID, std::vector<InstanceData>> instanceBufferDataMap;
+		std::unordered_map<IGE::Assets::GUID, std::vector<SubmeshInstanceData>> instanceBufferDataMap;
 		std::unordered_map<IGE::Assets::GUID, std::shared_ptr<VertexBuffer>> instanceBuffers;
 		//-------------------------------------------------------------------//
 
@@ -176,10 +184,12 @@ namespace Graphics {
 		static void SubmitTriangle(glm::vec3 const& v1, glm::vec3 const& v2, glm::vec3 const& v3, glm::vec4 const& clr = Color::COLOR_WHITE);
 
 		//Instancing
-		static void SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int entityID = -1, int matID = 0);
+		static void SubmitInstance(IGE::Assets::GUID meshSource, glm::mat4 const& worldMtx, glm::vec4 const& clr, int entityID = -1, int matID = 0, int subID = 0);
 		static void RenderInstances();
 
 		static void RenderSubmeshInstances();
+
+		static void RenderSubmeshInstances(std::vector<InstanceData> const& instances, IGE::Assets::GUID const& meshSource, size_t submeshIndex);
 
 		// Batching
 		static void BeginBatch();

@@ -37,18 +37,104 @@ namespace Graphics {
 			throw std::runtime_error{ "failed to load dds tex"};
 		}
 
-		// Retrieve the image data
-		const DirectX::Image* img = image.GetImage(0, 0, 0);
-		if (!img) {
-			std::cerr << "Failed to retrieve image data." << std::endl;
-			throw std::runtime_error{ "failed to retrieve image data"};
+		// Flip the image vertically
+		DirectX::ScratchImage flippedImage;
+		hr = DirectX::FlipRotate(image.GetImages(), image.GetImageCount(), image.GetMetadata(), DirectX::TEX_FR_FLIP_VERTICAL, flippedImage);
+		if (FAILED(hr)) {
+			std::cerr << "Failed to flip DDS texture vertically." << std::endl;
+			throw std::runtime_error{ "Failed to flip DDS texture vertically" };
 		}
+
+		// Retrieve the flipped image data
+		const DirectX::Image* img = flippedImage.GetImage(0, 0, 0);
+		if (!img) {
+			std::cerr << "Failed to retrieve flipped image data." << std::endl;
+			throw std::runtime_error{ "Failed to retrieve flipped image data" };
+		}
+
 		mWidth = static_cast<uint32_t>(img->width);
 		mHeight = static_cast<uint32_t>(img->height);
 
+		GLint internalFormat;
+		GLenum format;
+		GLenum type;
+
+		switch (img->format) {
+		case DXGI_FORMAT_R8G8B8A8_UNORM:
+			internalFormat = GL_RGBA8;
+			format = GL_RGBA;
+			type = GL_UNSIGNED_BYTE;
+			break;
+
+		case DXGI_FORMAT_R8G8B8A8_UNORM_SRGB:
+			internalFormat = GL_SRGB8_ALPHA8;
+			format = GL_RGBA;
+			type = GL_UNSIGNED_BYTE;
+			break;
+
+		case DXGI_FORMAT_B8G8R8A8_UNORM:
+			internalFormat = GL_RGBA8;
+			format = GL_BGRA;
+			type = GL_UNSIGNED_BYTE;
+			break;
+
+		case DXGI_FORMAT_B8G8R8A8_UNORM_SRGB:
+			internalFormat = GL_RGBA8/*GL_SRGB8_ALPHA8*/;
+			format = GL_BGRA;
+			type = GL_UNSIGNED_BYTE;
+			break;
+
+		case DXGI_FORMAT_R32G32B32A32_FLOAT:
+			internalFormat = GL_RGBA32F;
+			format = GL_RGBA;
+			type = GL_FLOAT;
+			break;
+
+		case DXGI_FORMAT_R16G16B16A16_FLOAT:
+			internalFormat = GL_RGBA16F;
+			format = GL_RGBA;
+			type = GL_HALF_FLOAT;
+			break;
+
+		case DXGI_FORMAT_R11G11B10_FLOAT:
+			internalFormat = GL_R11F_G11F_B10F;
+			format = GL_RGB;
+			type = GL_FLOAT;
+			break;
+
+		case DXGI_FORMAT_R32G32_FLOAT:
+			internalFormat = GL_RG32F;
+			format = GL_RG;
+			type = GL_FLOAT;
+			break;
+
+		case DXGI_FORMAT_R32_FLOAT:
+			internalFormat = GL_R32F;
+			format = GL_RED;
+			type = GL_FLOAT;
+			break;
+
+		case DXGI_FORMAT_R8_UNORM:
+			internalFormat = GL_R8;
+			format = GL_RED;
+			type = GL_UNSIGNED_BYTE;
+			break;
+
+		case DXGI_FORMAT_R16_FLOAT:
+			internalFormat = GL_R16F;
+			format = GL_RED;
+			type = GL_HALF_FLOAT;
+			break;
+		default:
+			std::cerr << "Unsupported DXGI format! ENUM: (" << img->format <<") Using default parameters." << std::endl;
+			internalFormat = GL_RGBA8;
+			format = GL_RGBA;
+			type = GL_UNSIGNED_BYTE;
+		}
+
 		GLCALL(glCreateTextures(GL_TEXTURE_2D, 1, &mTexHdl));
 		// allocate GPU storage for texture image data loaded from file
-		GLCALL(glTextureStorage2D(mTexHdl, 1, GL_RGBA8, mWidth, mHeight));
+		GLCALL(glTextureStorage2D(mTexHdl, 1, internalFormat, mWidth, mHeight));
 
 
 		// Set texture parameters
@@ -56,10 +142,9 @@ namespace Graphics {
 		GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
 		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
 		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
-
 		// copy image data from client memory to GPU texture buffer memory
 		GLCALL(glTextureSubImage2D(mTexHdl, 0, 0, 0, mWidth, mHeight,
-			GL_RGBA, GL_UNSIGNED_BYTE, img->pixels));
+			format, type, img->pixels));
 
 		if (mIsBindless) {
 			InitBindlessTexture();

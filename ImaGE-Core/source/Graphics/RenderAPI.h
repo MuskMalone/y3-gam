@@ -15,6 +15,7 @@ namespace Graphics{
 	class RenderAPI{
 	public:
 		void Init();
+		static void SetBackCulling(bool b);
 		static void SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
 		static void SetClearColor(const glm::vec4& color);
 		static void Clear();
@@ -24,7 +25,7 @@ namespace Graphics{
 												   uint32_t instanceCount,
 												   uint32_t indexOffset,
 												   int baseVertex,
-												   int baseInstance);;
+												   int baseInstance);
 		static void DrawIndicesInstanced(std::shared_ptr<VertexArray> const& vao, unsigned int idxCount, unsigned int instanceCount);
 		static void DrawIndices(std::shared_ptr<VertexArray> const& vao, unsigned int idxCount);
 		static void DrawTriangles(std::shared_ptr<VertexArray> const& vao, unsigned int vtxCount);
