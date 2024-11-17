@@ -25,10 +25,10 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -0.05233602225780487,
-                            "y": -1.8041617977360148e-7,
-                            "z": -1.601874828338623e-7,
-                            "w": 0.9986295700073242
+                            "x": -0.05233601853251457,
+                            "y": -1.8041609450847319e-7,
+                            "z": -1.601874686230076e-7,
+                            "w": 0.9986295104026794
                         },
                         "eulerAngles": {
                             "x": -5.999993324279785,
@@ -46,10 +46,10 @@
                             "z": 1.0
                         },
                         "worldRot": {
-                            "x": -0.007470308803021908,
-                            "y": -0.988442599773407,
-                            "z": -0.051784414798021319,
-                            "w": 0.1422806978225708
+                            "x": -0.007470309268683195,
+                            "y": -0.9884426593780518,
+                            "z": -0.051784418523311618,
+                            "w": 0.142280712723732
                         }
                     }
                 },
@@ -137,16 +137,16 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 0
+                            "ID": 14137664646562134886
                         },
-                        "matIdx": 0
+                        "matIdx": 1
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 2588907926896659832
+                            "ID": 4537248185306290830
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -758,6 +758,33 @@
             }
         },
         {
+            "ID": 27,
+            "Parent": 167,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
+                },
+                "modifiedComponents": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "pSphere1",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Default"
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 2
+            }
+        },
+        {
             "ID": 30,
             "Parent": 1048685,
             "Child Entities": [
@@ -776,7 +803,7 @@
                         "position": {
                             "x": 0.5540180206298828,
                             "y": 0.27500206232070925,
-                            "z": 0.16699743270874024
+                            "z": 0.16699755191802979
                         },
                         "scale": {
                             "x": 0.11999999731779099,
@@ -784,10 +811,10 @@
                             "z": 0.11999999731779099
                         },
                         "rotation": {
-                            "x": 0.12896934151649476,
-                            "y": -0.7883496284484863,
-                            "z": 0.5949127674102783,
-                            "w": 0.08916676044464112
+                            "x": 0.12896928191184998,
+                            "y": -0.7883497476577759,
+                            "z": 0.5949125289916992,
+                            "w": 0.08916676789522171
                         },
                         "eulerAngles": {
                             "x": -106.7999496459961,
@@ -805,10 +832,10 @@
                             "z": 0.23999999463558198
                         },
                         "worldRot": {
-                            "x": 0.11021903902292252,
-                            "y": -0.790761411190033,
-                            "z": 0.598670244216919,
-                            "w": 0.06436009705066681
+                            "x": 0.11021900177001953,
+                            "y": -0.7907616496086121,
+                            "z": 0.5986700654029846,
+                            "w": 0.064360111951828
                         }
                     }
                 },
@@ -878,10 +905,18 @@
                     }
                 },
                 {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 11038878703019679360
+                        },
+                        "matIdx": 2
+                    }
+                },
+                {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -998,10 +1033,18 @@
                     }
                 },
                 {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        },
+                        "matIdx": 0
+                    }
+                },
+                {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1138,10 +1181,18 @@
                     }
                 },
                 {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 9472059093592539045
+                        },
+                        "matIdx": 3
+                    }
+                },
+                {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1258,10 +1309,18 @@
                     }
                 },
                 {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 9472059093592539045
+                        },
+                        "matIdx": 3
+                    }
+                },
+                {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1440,7 +1499,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1791,10 +1850,18 @@
                     }
                 },
                 {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        },
+                        "matIdx": 4
+                    }
+                },
+                {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2047,10 +2114,18 @@
                     }
                 },
                 {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        },
+                        "matIdx": 4
+                    }
+                },
+                {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2262,31 +2337,6 @@
                     "AudioSource": {
                         "sounds": [
                             {
-                                "key": "Grass4",
-                                "value": {
-                                    "guid": {
-                                        "ID": 595166077166477397
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 20.007789611816408,
-                                            "y": -16.754684448242189,
-                                            "z": 27.58743667602539
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
-                                    }
-                                }
-                            },
-                            {
                                 "key": "Pavement6",
                                 "value": {
                                     "guid": {
@@ -2316,6 +2366,31 @@
                                 "value": {
                                     "guid": {
                                         "ID": 10093927524114237221
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 20.007789611816408,
+                                            "y": -16.754684448242189,
+                                            "z": 27.58743667602539
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Grass4",
+                                "value": {
+                                    "guid": {
+                                        "ID": 595166077166477397
                                     },
                                     "playSettings": {
                                         "position": {
@@ -2487,31 +2562,6 @@
                                 }
                             },
                             {
-                                "key": "MetalPipe2",
-                                "value": {
-                                    "guid": {
-                                        "ID": 7164462922016107407
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 20.007789611816408,
-                                            "y": -16.754684448242189,
-                                            "z": 27.58743667602539
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
-                                    }
-                                }
-                            },
-                            {
                                 "key": "Pavement5",
                                 "value": {
                                     "guid": {
@@ -2537,10 +2587,10 @@
                                 }
                             },
                             {
-                                "key": "MetalPipe3",
+                                "key": "MetalPipe2",
                                 "value": {
                                     "guid": {
-                                        "ID": 2149759332604770166
+                                        "ID": 7164462922016107407
                                     },
                                     "playSettings": {
                                         "position": {
@@ -2566,6 +2616,31 @@
                                 "value": {
                                     "guid": {
                                         "ID": 10871485496724890079
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 20.007789611816408,
+                                            "y": -16.754684448242189,
+                                            "z": 27.58743667602539
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "MetalPipe3",
+                                "value": {
+                                    "guid": {
+                                        "ID": 2149759332604770166
                                     },
                                     "playSettings": {
                                         "position": {
@@ -2755,7 +2830,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2830,7 +2905,7 @@
                         "position": {
                             "x": 10.946462631225586,
                             "y": 6.866655349731445,
-                            "z": -0.0365142822265625
+                            "z": -0.03644561767578125
                         },
                         "scale": {
                             "x": 1.136022686958313,
@@ -2849,7 +2924,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.5634765625,
+                            "x": 53.56354522705078,
                             "y": 17.231990814208986,
                             "z": 47.068790435791019
                         },
@@ -2875,7 +2950,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2995,7 +3070,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3060,10 +3135,13 @@
                 12,
                 62,
                 70,
+                142,
+                167,
                 305,
                 395,
                 403,
                 410,
+                1048739,
                 1048867,
                 3145743
             ],
@@ -3185,7 +3263,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3451,10 +3529,18 @@
                     }
                 },
                 {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        },
+                        "matIdx": 4
+                    }
+                },
+                {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3594,7 +3680,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3714,7 +3800,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3923,7 +4009,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -4043,7 +4129,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -4114,16 +4200,16 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 0
+                            "ID": 2046570302303426118
                         },
-                        "matIdx": 0
+                        "matIdx": 5
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -4384,10 +4470,18 @@
                     }
                 },
                 {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 11128135777711506320
+                        },
+                        "matIdx": 6
+                    }
+                },
+                {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -5338,6 +5432,177 @@
             }
         },
         {
+            "ID": 140,
+            "Parent": 167,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
+                },
+                "modifiedComponents": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "pCylinder10",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Default"
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 1
+            }
+        },
+        {
+            "ID": 142,
+            "Parent": 60,
+            "Child Entities": [
+                152,
+                155,
+                156
+            ],
+            "Position": {
+                "x": 39.30054473876953,
+                "y": 25.78282928466797,
+                "z": 52.5131950378418
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
+                },
+                "modifiedComponents": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Props_CeilingLight",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Default"
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 0
+            }
+        },
+        {
+            "ID": 152,
+            "Parent": 142,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
+                },
+                "modifiedComponents": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "pSphere1",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Default"
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 2
+            }
+        },
+        {
+            "ID": 153,
+            "Parent": 167,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
+                },
+                "modifiedComponents": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Default"
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 3
+            }
+        },
+        {
+            "ID": 155,
+            "Parent": 142,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
+                },
+                "modifiedComponents": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Default"
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 3
+            }
+        },
+        {
+            "ID": 156,
+            "Parent": 142,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
+                },
+                "modifiedComponents": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "pCylinder10",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Default"
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 1
+            }
+        },
+        {
             "ID": 165,
             "Parent": 298,
             "Child Entities": [],
@@ -5375,6 +5640,42 @@
                 ],
                 "removedComponents": [],
                 "subDataId": 3
+            }
+        },
+        {
+            "ID": 167,
+            "Parent": 60,
+            "Child Entities": [
+                27,
+                140,
+                153
+            ],
+            "Position": {
+                "x": -8.324650764465332,
+                "y": 25.78282928466797,
+                "z": 52.5131950378418
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
+                },
+                "modifiedComponents": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Props_CeilingLight",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Default"
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 0
             }
         },
         {
@@ -5969,6 +6270,13 @@
                                         "type": "System.String[]",
                                         "scriptField": {
                                             "fieldName": "initialDialogue"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isInDialogueMode"
                                         }
                                     },
                                     {
@@ -6631,9 +6939,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0006234095199033618,
-                            "y": -0.000217437744140625,
-                            "z": 0.000392913818359375
+                            "x": 0.0006234094616957009,
+                            "y": -0.0002422332763671875,
+                            "z": 0.00042724609375
                         },
                         "scale": {
                             "x": 1.0,
@@ -6652,8 +6960,8 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.60038757324219,
-                            "y": 12.699854850769043,
+                            "x": 53.60042190551758,
+                            "y": 12.699838638305664,
                             "z": 54.18358612060547
                         },
                         "worldScale": {
@@ -7465,7 +7773,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.004159003496170044,
+                            "x": -0.004158705472946167,
                             "y": -0.7610733509063721,
                             "z": -0.0030803680419921877
                         },
@@ -7486,7 +7794,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 6.002981662750244,
+                            "x": 6.002985954284668,
                             "y": 9.305135726928711,
                             "z": -37.83987808227539
                         },
@@ -7509,10 +7817,18 @@
                     }
                 },
                 {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 11128135777711506320
+                        },
+                        "matIdx": 6
+                    }
+                },
+                {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -8756,16 +9072,16 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    },
+                    {
                         "key": "Tag",
                         "value": {
                             "tag": "Props_Vase2",
                             "isActive": true
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
                         }
                     }
                 ],
@@ -8787,12 +9103,6 @@
                         "value": {
                             "tag": "Vase2",
                             "isActive": true
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
                         }
                     },
                     {
@@ -8835,6 +9145,12 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
                         }
                     }
                 ],
@@ -9931,9 +10247,9 @@
                         "key": "Transform",
                         "value": {
                             "position": {
-                                "x": 29.063888549804689,
-                                "y": 13.165444374084473,
-                                "z": 63.18902587890625
+                                "x": 33.564537048339847,
+                                "y": 13.165528297424317,
+                                "z": 63.221988677978519
                             },
                             "scale": {
                                 "x": 1.0,
@@ -9941,10 +10257,10 @@
                                 "z": 1.0
                             },
                             "rotation": {
-                                "x": 0.000008933886419981718,
-                                "y": -0.9999932646751404,
-                                "z": -0.000010121603736479301,
-                                "w": -0.003663433250039816
+                                "x": 0.00000893388732947642,
+                                "y": -0.9999933838844299,
+                                "z": -0.000010121604645974003,
+                                "w": -0.003663433715701103
                             },
                             "eulerAngles": {
                                 "x": 0.0,
@@ -9952,9 +10268,9 @@
                                 "z": 0.0
                             },
                             "worldPos": {
-                                "x": 29.063888549804689,
-                                "y": 13.165444374084473,
-                                "z": 63.18902587890625
+                                "x": 33.564537048339847,
+                                "y": 13.165528297424317,
+                                "z": 63.221988677978519
                             },
                             "worldScale": {
                                 "x": 1.0,
@@ -10342,6 +10658,15 @@
                     "ID": 5891454519860803976
                 },
                 "modifiedComponents": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 0
+                            },
+                            "matIdx": 0
+                        }
+                    },
                     {
                         "key": "Transform",
                         "value": {
@@ -14052,7 +14377,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0008859634399414063,
+                            "x": 0.000896453857421875,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -14073,7 +14398,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.600311279296878,
+                            "x": -44.600276947021487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -14132,7 +14457,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0008859634399414063,
+                            "x": 0.000896453857421875,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -14153,7 +14478,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.600311279296878,
+                            "x": -44.600276947021487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -14212,7 +14537,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0008859634399414063,
+                            "x": 0.000896453857421875,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -14233,7 +14558,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.600311279296878,
+                            "x": -44.600276947021487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -14292,7 +14617,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0008859634399414063,
+                            "x": 0.000896453857421875,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -14313,7 +14638,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.600311279296878,
+                            "x": -44.600276947021487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -14372,7 +14697,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0008859634399414063,
+                            "x": 0.000896453857421875,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -14393,7 +14718,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.600311279296878,
+                            "x": -44.600276947021487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -14452,7 +14777,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0008859634399414063,
+                            "x": 0.000896453857421875,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -14473,7 +14798,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.600311279296878,
+                            "x": -44.600276947021487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -14532,7 +14857,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0008859634399414063,
+                            "x": 0.000896453857421875,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -14553,7 +14878,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.600311279296878,
+                            "x": -44.600276947021487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -14612,7 +14937,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0008859634399414063,
+                            "x": 0.000896453857421875,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -14633,7 +14958,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.600311279296878,
+                            "x": -44.600276947021487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -14692,7 +15017,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0008859634399414063,
+                            "x": 0.000896453857421875,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -14713,7 +15038,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.600311279296878,
+                            "x": -44.600276947021487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -14772,7 +15097,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0008859634399414063,
+                            "x": 0.000896453857421875,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -14793,7 +15118,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.600311279296878,
+                            "x": -44.600276947021487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -14852,7 +15177,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0008859634399414063,
+                            "x": 0.000896453857421875,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -14873,7 +15198,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.600311279296878,
+                            "x": -44.600276947021487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -14932,7 +15257,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0008859634399414063,
+                            "x": 0.000896453857421875,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -14953,7 +15278,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.600311279296878,
+                            "x": -44.600276947021487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15012,7 +15337,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0008859634399414063,
+                            "x": 0.000896453857421875,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15033,7 +15358,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.600311279296878,
+                            "x": -44.600276947021487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15092,7 +15417,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0008859634399414063,
+                            "x": 0.000896453857421875,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15113,7 +15438,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.600311279296878,
+                            "x": -44.600276947021487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15172,7 +15497,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0008859634399414063,
+                            "x": 0.000896453857421875,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15193,7 +15518,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.600311279296878,
+                            "x": -44.600276947021487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15252,7 +15577,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0008859634399414063,
+                            "x": 0.000896453857421875,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15273,7 +15598,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.600311279296878,
+                            "x": -44.600276947021487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15332,7 +15657,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0008859634399414063,
+                            "x": 0.000896453857421875,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15353,7 +15678,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.600311279296878,
+                            "x": -44.600276947021487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15412,7 +15737,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0008859634399414063,
+                            "x": 0.000896453857421875,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15433,7 +15758,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.600311279296878,
+                            "x": -44.600276947021487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15570,9 +15895,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017036497592926025,
+                            "x": 0.0001703202724456787,
                             "y": -0.000016927719116210939,
-                            "z": 0.0004253387451171875
+                            "z": 0.0004367828369140625
                         },
                         "scale": {
                             "x": 1.0,
@@ -15591,9 +15916,9 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81512451171875,
+                            "x": -51.8150749206543,
                             "y": 10.710047721862793,
-                            "z": 24.861997604370118
+                            "z": 24.86199951171875
                         },
                         "worldScale": {
                             "x": 4.461999893188477,
@@ -15650,9 +15975,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017036497592926025,
+                            "x": 0.0001703202724456787,
                             "y": -0.000016927719116210939,
-                            "z": 0.0004253387451171875
+                            "z": 0.0004367828369140625
                         },
                         "scale": {
                             "x": 1.0,
@@ -15671,9 +15996,9 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81512451171875,
+                            "x": -51.8150749206543,
                             "y": 10.710047721862793,
-                            "z": 24.861997604370118
+                            "z": 24.86199951171875
                         },
                         "worldScale": {
                             "x": 4.461999893188477,
@@ -15730,9 +16055,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017036497592926025,
+                            "x": 0.0001703202724456787,
                             "y": -0.000016927719116210939,
-                            "z": 0.0004253387451171875
+                            "z": 0.0004367828369140625
                         },
                         "scale": {
                             "x": 1.0,
@@ -15751,9 +16076,9 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81512451171875,
+                            "x": -51.8150749206543,
                             "y": 10.710047721862793,
-                            "z": 24.861997604370118
+                            "z": 24.86199951171875
                         },
                         "worldScale": {
                             "x": 4.461999893188477,
@@ -15810,9 +16135,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017036497592926025,
+                            "x": 0.0001703202724456787,
                             "y": -0.000016927719116210939,
-                            "z": 0.0004253387451171875
+                            "z": 0.0004367828369140625
                         },
                         "scale": {
                             "x": 1.0,
@@ -15831,9 +16156,9 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81512451171875,
+                            "x": -51.8150749206543,
                             "y": 10.710047721862793,
-                            "z": 24.861997604370118
+                            "z": 24.86199951171875
                         },
                         "worldScale": {
                             "x": 4.461999893188477,
@@ -15890,9 +16215,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017036497592926025,
+                            "x": 0.0001703202724456787,
                             "y": -0.000016927719116210939,
-                            "z": 0.0004253387451171875
+                            "z": 0.0004367828369140625
                         },
                         "scale": {
                             "x": 1.0,
@@ -15911,9 +16236,9 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81512451171875,
+                            "x": -51.8150749206543,
                             "y": 10.710047721862793,
-                            "z": 24.861997604370118
+                            "z": 24.86199951171875
                         },
                         "worldScale": {
                             "x": 4.461999893188477,
@@ -15970,9 +16295,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017036497592926025,
+                            "x": 0.0001703202724456787,
                             "y": -0.000016927719116210939,
-                            "z": 0.0004253387451171875
+                            "z": 0.0004367828369140625
                         },
                         "scale": {
                             "x": 1.0,
@@ -15991,9 +16316,9 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81512451171875,
+                            "x": -51.8150749206543,
                             "y": 10.710047721862793,
-                            "z": 24.861997604370118
+                            "z": 24.86199951171875
                         },
                         "worldScale": {
                             "x": 4.461999893188477,
@@ -16050,9 +16375,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017036497592926025,
+                            "x": 0.0001703202724456787,
                             "y": -0.000016927719116210939,
-                            "z": 0.0004253387451171875
+                            "z": 0.0004367828369140625
                         },
                         "scale": {
                             "x": 1.0,
@@ -16071,9 +16396,9 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81512451171875,
+                            "x": -51.8150749206543,
                             "y": 10.710047721862793,
-                            "z": 24.861997604370118
+                            "z": 24.86199951171875
                         },
                         "worldScale": {
                             "x": 4.461999893188477,
@@ -16130,9 +16455,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017036497592926025,
+                            "x": 0.0001703202724456787,
                             "y": -0.000016927719116210939,
-                            "z": 0.0004253387451171875
+                            "z": 0.0004367828369140625
                         },
                         "scale": {
                             "x": 1.0,
@@ -16151,9 +16476,9 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81512451171875,
+                            "x": -51.8150749206543,
                             "y": 10.710047721862793,
-                            "z": 24.861997604370118
+                            "z": 24.86199951171875
                         },
                         "worldScale": {
                             "x": 4.461999893188477,
@@ -16210,9 +16535,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017036497592926025,
+                            "x": 0.0001703202724456787,
                             "y": -0.000016927719116210939,
-                            "z": 0.0004253387451171875
+                            "z": 0.0004367828369140625
                         },
                         "scale": {
                             "x": 1.0,
@@ -16231,9 +16556,9 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81512451171875,
+                            "x": -51.8150749206543,
                             "y": 10.710047721862793,
-                            "z": 24.861997604370118
+                            "z": 24.86199951171875
                         },
                         "worldScale": {
                             "x": 4.461999893188477,
@@ -16290,9 +16615,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017036497592926025,
+                            "x": 0.0001703202724456787,
                             "y": -0.000016927719116210939,
-                            "z": 0.0004253387451171875
+                            "z": 0.0004367828369140625
                         },
                         "scale": {
                             "x": 1.0,
@@ -16311,9 +16636,9 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81512451171875,
+                            "x": -51.8150749206543,
                             "y": 10.710047721862793,
-                            "z": 24.861997604370118
+                            "z": 24.86199951171875
                         },
                         "worldScale": {
                             "x": 4.461999893188477,
@@ -16370,9 +16695,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017036497592926025,
+                            "x": 0.0001703202724456787,
                             "y": -0.000016927719116210939,
-                            "z": 0.0004253387451171875
+                            "z": 0.0004367828369140625
                         },
                         "scale": {
                             "x": 1.0,
@@ -16391,9 +16716,9 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81512451171875,
+                            "x": -51.8150749206543,
                             "y": 10.710047721862793,
-                            "z": 24.861997604370118
+                            "z": 24.86199951171875
                         },
                         "worldScale": {
                             "x": 4.461999893188477,
@@ -16450,9 +16775,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017036497592926025,
+                            "x": 0.0001703202724456787,
                             "y": -0.000016927719116210939,
-                            "z": 0.0004253387451171875
+                            "z": 0.0004367828369140625
                         },
                         "scale": {
                             "x": 1.0,
@@ -16471,9 +16796,9 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81512451171875,
+                            "x": -51.8150749206543,
                             "y": 10.710047721862793,
-                            "z": 24.861997604370118
+                            "z": 24.86199951171875
                         },
                         "worldScale": {
                             "x": 4.461999893188477,
@@ -16530,9 +16855,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017036497592926025,
+                            "x": 0.0001703202724456787,
                             "y": -0.000016927719116210939,
-                            "z": 0.0004253387451171875
+                            "z": 0.0004367828369140625
                         },
                         "scale": {
                             "x": 1.0,
@@ -16551,9 +16876,9 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81512451171875,
+                            "x": -51.8150749206543,
                             "y": 10.710047721862793,
-                            "z": 24.861997604370118
+                            "z": 24.86199951171875
                         },
                         "worldScale": {
                             "x": 4.461999893188477,
@@ -16610,9 +16935,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017036497592926025,
+                            "x": 0.0001703202724456787,
                             "y": -0.000016927719116210939,
-                            "z": 0.0004253387451171875
+                            "z": 0.0004367828369140625
                         },
                         "scale": {
                             "x": 1.0,
@@ -16631,9 +16956,9 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81512451171875,
+                            "x": -51.8150749206543,
                             "y": 10.710047721862793,
-                            "z": 24.861997604370118
+                            "z": 24.86199951171875
                         },
                         "worldScale": {
                             "x": 4.461999893188477,
@@ -16690,9 +17015,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017036497592926025,
+                            "x": 0.0001703202724456787,
                             "y": -0.000016927719116210939,
-                            "z": 0.0004253387451171875
+                            "z": 0.0004367828369140625
                         },
                         "scale": {
                             "x": 1.0,
@@ -16711,9 +17036,9 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81512451171875,
+                            "x": -51.8150749206543,
                             "y": 10.710047721862793,
-                            "z": 24.861997604370118
+                            "z": 24.86199951171875
                         },
                         "worldScale": {
                             "x": 4.461999893188477,
@@ -16770,9 +17095,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017036497592926025,
+                            "x": 0.0001703202724456787,
                             "y": -0.000016927719116210939,
-                            "z": 0.0004253387451171875
+                            "z": 0.0004367828369140625
                         },
                         "scale": {
                             "x": 1.0,
@@ -16791,9 +17116,9 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81512451171875,
+                            "x": -51.8150749206543,
                             "y": 10.710047721862793,
-                            "z": 24.861997604370118
+                            "z": 24.86199951171875
                         },
                         "worldScale": {
                             "x": 4.461999893188477,
@@ -16850,9 +17175,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017036497592926025,
+                            "x": 0.0001703202724456787,
                             "y": -0.000016927719116210939,
-                            "z": 0.0004253387451171875
+                            "z": 0.0004367828369140625
                         },
                         "scale": {
                             "x": 1.0,
@@ -16871,9 +17196,9 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81512451171875,
+                            "x": -51.8150749206543,
                             "y": 10.710047721862793,
-                            "z": 24.861997604370118
+                            "z": 24.86199951171875
                         },
                         "worldScale": {
                             "x": 4.461999893188477,
@@ -17008,9 +17333,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00004482269287109375,
-                            "y": -0.0000011920928955078126,
-                            "z": 0.0001403670758008957
+                            "x": 0.00004696846008300781,
+                            "y": -0.000003337860107421875,
+                            "z": 0.00013939663767814636
                         },
                         "scale": {
                             "x": 1.0,
@@ -17029,9 +17354,9 @@
                             "z": -2.605510425468527e-11
                         },
                         "worldPos": {
-                            "x": -9.890042304992676,
-                            "y": 11.647073745727539,
-                            "z": 61.907691955566409
+                            "x": -9.890050888061524,
+                            "y": 11.647065162658692,
+                            "z": 61.90769577026367
                         },
                         "worldScale": {
                             "x": 3.8999998569488527,
@@ -19080,6 +19405,33 @@
             }
         },
         {
+            "ID": 1048585,
+            "Parent": 1048739,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
+                },
+                "modifiedComponents": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Default"
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 3
+            }
+        },
+        {
             "ID": 1048592,
             "Parent": 4194322,
             "Child Entities": [],
@@ -19379,10 +19731,18 @@
                     }
                 },
                 {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 14122219685186109361
+                        },
+                        "matIdx": 7
+                    }
+                },
+                {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -19629,10 +19989,18 @@
                     }
                 },
                 {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 9472059093592539045
+                        },
+                        "matIdx": 3
+                    }
+                },
+                {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -19749,10 +20117,18 @@
                     }
                 },
                 {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        },
+                        "matIdx": 0
+                    }
+                },
+                {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -19898,7 +20274,7 @@
                         "position": {
                             "x": -10.739839553833008,
                             "y": 6.866655349731445,
-                            "z": -0.036525726318359378
+                            "z": -0.03649139404296875
                         },
                         "scale": {
                             "x": 1.136022686958313,
@@ -19917,7 +20293,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.56346893310547,
+                            "x": 53.56350326538086,
                             "y": 17.231990814208986,
                             "z": 61.164886474609378
                         },
@@ -19943,7 +20319,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -20016,9 +20392,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.000013028194189246279,
+                            "x": 0.000013028187822783366,
                             "y": 17.98689079284668,
-                            "z": 0.16254425048828126
+                            "z": 0.16257858276367188
                         },
                         "scale": {
                             "x": 13.5062837600708,
@@ -20037,7 +20413,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.76253890991211,
+                            "x": 53.7625732421875,
                             "y": 24.571346282958986,
                             "z": 54.183982849121097
                         },
@@ -20063,7 +20439,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -20135,7 +20511,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2371985753949233097
+                            "ID": 13767488463497978273
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -20347,6 +20723,19 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Puzzle"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Inside Pit Painting",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "RigidBody",
                         "value": {
                             "velocity": {
@@ -20367,19 +20756,6 @@
                             "motionType": "DYNAMIC",
                             "axisLock": 0,
                             "angularAxisLock": 0
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Inside Pit Painting",
-                            "isActive": true
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Puzzle"
                         }
                     }
                 ],
@@ -20467,9 +20843,9 @@
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": -0.031410761177539828,
+                            "y": -0.03141075745224953,
                             "z": 0.0,
-                            "w": 0.9995066523551941
+                            "w": 0.9995065331459045
                         },
                         "eulerAngles": {
                             "x": 0.0,
@@ -20488,9 +20864,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.03141075745224953,
+                            "y": -0.031410761177539828,
                             "z": 0.0,
-                            "w": 0.9995065331459045
+                            "w": 0.9995066523551941
                         }
                     }
                 },
@@ -20517,7 +20893,7 @@
                     "Transform": {
                         "position": {
                             "x": -0.00003814697265625,
-                            "y": 0.00013637542724609375,
+                            "y": 0.00013446807861328125,
                             "z": -0.00024318695068359375
                         },
                         "scale": {
@@ -20526,9 +20902,9 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -5.662441253662109e-7,
-                            "y": -3.206077963113785e-7,
-                            "z": -5.010515451431274e-7,
+                            "x": -5.364418029785156e-7,
+                            "y": -1.993030309677124e-7,
+                            "z": -5.024485290050507e-7,
                             "w": 1.0
                         },
                         "eulerAngles": {
@@ -20538,8 +20914,8 @@
                         },
                         "worldPos": {
                             "x": -18.895803451538087,
-                            "y": 2.255208730697632,
-                            "z": -17.17966079711914
+                            "y": 2.255206823348999,
+                            "z": -17.179656982421876
                         },
                         "worldScale": {
                             "x": 0.4000000059604645,
@@ -20547,10 +20923,10 @@
                             "z": 0.4000000059604645
                         },
                         "worldRot": {
-                            "x": -0.00793661642819643,
-                            "y": 0.9746339321136475,
+                            "x": -0.007936602458357811,
+                            "y": 0.9746341109275818,
                             "z": -0.14220188558101655,
-                            "w": -0.17263895273208619
+                            "w": -0.17263908684253694
                         }
                     }
                 },
@@ -20599,9 +20975,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.743556022644043,
+                            "x": -0.7435550689697266,
                             "y": 0.36106449365615847,
-                            "z": -0.24948102235794068
+                            "z": -0.24948084354400636
                         },
                         "scale": {
                             "x": 0.20000000298023225,
@@ -20609,10 +20985,10 @@
                             "z": 0.20000000298023225
                         },
                         "rotation": {
-                            "x": -0.012398953549563885,
+                            "x": -0.012398948892951012,
                             "y": 0.9687302112579346,
-                            "z": -0.14188309013843537,
-                            "w": -0.20316800475120545
+                            "z": -0.1418830305337906,
+                            "w": -0.20316798985004426
                         },
                         "eulerAngles": {
                             "x": -162.9001007080078,
@@ -20622,7 +20998,7 @@
                         "worldPos": {
                             "x": -18.89584732055664,
                             "y": 2.255128860473633,
-                            "z": -17.17972755432129
+                            "z": -17.179725646972658
                         },
                         "worldScale": {
                             "x": 0.4000000059604645,
@@ -20630,9 +21006,9 @@
                             "z": 0.4000000059604645
                         },
                         "worldRot": {
-                            "x": -0.007936179637908936,
-                            "y": 0.9746338129043579,
-                            "z": -0.14220252633094788,
+                            "x": -0.007936177775263787,
+                            "y": 0.9746339917182922,
+                            "z": -0.1422024965286255,
                             "w": -0.17263920605182649
                         }
                     }
@@ -20660,7 +21036,7 @@
                     "Transform": {
                         "position": {
                             "x": -0.00003814697265625,
-                            "y": 0.00013637542724609375,
+                            "y": 0.00013446807861328125,
                             "z": -0.00024318695068359375
                         },
                         "scale": {
@@ -20669,9 +21045,9 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -5.662441253662109e-7,
-                            "y": -3.206077963113785e-7,
-                            "z": -5.010515451431274e-7,
+                            "x": -5.364418029785156e-7,
+                            "y": -1.993030309677124e-7,
+                            "z": -5.024485290050507e-7,
                             "w": 1.0
                         },
                         "eulerAngles": {
@@ -20681,8 +21057,8 @@
                         },
                         "worldPos": {
                             "x": -18.895803451538087,
-                            "y": 2.255208730697632,
-                            "z": -17.17966079711914
+                            "y": 2.255206823348999,
+                            "z": -17.179656982421876
                         },
                         "worldScale": {
                             "x": 0.4000000059604645,
@@ -20690,10 +21066,10 @@
                             "z": 0.4000000059604645
                         },
                         "worldRot": {
-                            "x": -0.00793661642819643,
-                            "y": 0.9746339321136475,
+                            "x": -0.007936602458357811,
+                            "y": 0.9746341109275818,
                             "z": -0.14220188558101655,
-                            "w": -0.17263895273208619
+                            "w": -0.17263908684253694
                         }
                     }
                 },
@@ -20798,6 +21174,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Puzzle"
+                        }
+                    },
+                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -20853,16 +21235,37 @@
                             "axisLock": 0,
                             "angularAxisLock": 0
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Puzzle"
-                        }
                     }
                 ],
                 "removedComponents": [],
                 "subDataId": 0
+            }
+        },
+        {
+            "ID": 1048720,
+            "Parent": 1048739,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
+                },
+                "modifiedComponents": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "pCylinder10",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Default"
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 1
             }
         },
         {
@@ -20947,6 +21350,69 @@
                         "key": "Layer",
                         "value": {
                             "layerName": "Puzzle"
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 0
+            }
+        },
+        {
+            "ID": 1048738,
+            "Parent": 1048739,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
+                },
+                "modifiedComponents": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "pSphere1",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Default"
+                        }
+                    }
+                ],
+                "removedComponents": [],
+                "subDataId": 2
+            }
+        },
+        {
+            "ID": 1048739,
+            "Parent": 60,
+            "Child Entities": [
+                1048585,
+                1048720,
+                1048738
+            ],
+            "Position": {
+                "x": 20.665348052978517,
+                "y": 25.78282928466797,
+                "z": 52.5131950378418
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
+                },
+                "modifiedComponents": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Props_CeilingLight",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Default"
                         }
                     }
                 ],
@@ -21625,9 +22091,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00025177001953125,
-                            "y": -0.000030517578125,
-                            "z": 0.0000286102294921875
+                            "x": 0.00026702880859375,
+                            "y": -0.0000247955322265625,
+                            "z": 0.00002956390380859375
                         },
                         "scale": {
                             "x": 1.0,
@@ -21635,9 +22101,9 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -3.2782554626464846e-7,
-                            "y": -1.1920928955078126e-7,
-                            "z": 5.960464477539063e-8,
+                            "x": -2.980232238769531e-7,
+                            "y": -1.2665987014770509e-7,
+                            "z": 5.21540641784668e-8,
                             "w": 1.0
                         },
                         "eulerAngles": {
@@ -21646,9 +22112,9 @@
                             "z": -0.000002561317614890868
                         },
                         "worldPos": {
-                            "x": -16.358179092407228,
+                            "x": -16.35818099975586,
                             "y": 2.0829896926879885,
-                            "z": -16.185443878173829
+                            "z": -16.18544578552246
                         },
                         "worldScale": {
                             "x": 0.23999999463558198,
@@ -21656,10 +22122,10 @@
                             "z": 0.23999999463558198
                         },
                         "worldRot": {
-                            "x": 0.11021903902292252,
-                            "y": -0.7907615900039673,
-                            "z": 0.5986700057983398,
-                            "w": 0.06436000019311905
+                            "x": 0.11021900922060013,
+                            "y": -0.7907618284225464,
+                            "z": 0.5986698269844055,
+                            "w": 0.06436001509428024
                         }
                     }
                 },
@@ -21706,8 +22172,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.000007569789886474609,
-                            "z": -8.940696716308594e-7
+                            "y": 0.000008106231689453125,
+                            "z": -7.748603820800781e-7
                         },
                         "scale": {
                             "x": 1.0,
@@ -21727,7 +22193,7 @@
                         },
                         "worldPos": {
                             "x": -17.44300079345703,
-                            "y": 1.5330151319503785,
+                            "y": 1.5330162048339844,
                             "z": -16.588375091552736
                         },
                         "worldScale": {
@@ -21737,9 +22203,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.03141075745224953,
+                            "y": -0.031410761177539828,
                             "z": 0.0,
-                            "w": 0.9995065331459045
+                            "w": 0.9995066523551941
                         }
                     }
                 },
@@ -21753,7 +22219,7 @@
                         "materialGUID": {
                             "ID": 8930139538896017712
                         },
-                        "matIdx": 7
+                        "matIdx": 8
                     }
                 },
                 {
@@ -21786,8 +22252,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.000007569789886474609,
-                            "z": -8.940696716308594e-7
+                            "y": 0.000008106231689453125,
+                            "z": -7.748603820800781e-7
                         },
                         "scale": {
                             "x": 1.0,
@@ -21807,7 +22273,7 @@
                         },
                         "worldPos": {
                             "x": -17.44300079345703,
-                            "y": 1.5330151319503785,
+                            "y": 1.5330162048339844,
                             "z": -16.588375091552736
                         },
                         "worldScale": {
@@ -21817,9 +22283,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.03141075745224953,
+                            "y": -0.031410761177539828,
                             "z": 0.0,
-                            "w": 0.9995065331459045
+                            "w": 0.9995066523551941
                         }
                     }
                 },
@@ -21866,8 +22332,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.000007569789886474609,
-                            "z": 0.0000010132789611816407
+                            "y": 0.000008106231689453125,
+                            "z": 0.0000011324882507324219
                         },
                         "scale": {
                             "x": 1.0,
@@ -21887,7 +22353,7 @@
                         },
                         "worldPos": {
                             "x": -17.44300079345703,
-                            "y": 1.5330151319503785,
+                            "y": 1.5330162048339844,
                             "z": -16.58837127685547
                         },
                         "worldScale": {
@@ -21897,9 +22363,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.03141075745224953,
+                            "y": -0.031410761177539828,
                             "z": 0.0,
-                            "w": 0.9995065331459045
+                            "w": 0.9995066523551941
                         }
                     }
                 },
@@ -21913,7 +22379,7 @@
                         "materialGUID": {
                             "ID": 8930139538896017712
                         },
-                        "matIdx": 7
+                        "matIdx": 8
                     }
                 },
                 {
@@ -22031,16 +22497,16 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Tag",
                         "value": {
                             "tag": "Stair Head",
                             "isActive": true
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -22368,7 +22834,7 @@
                 315
             ],
             "Position": {
-                "x": -27.436832427978517,
+                "x": -25.761165618896486,
                 "y": 25.78282928466797,
                 "z": 52.5131950378418
             },
@@ -22504,8 +22970,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.000007510185241699219,
-                            "z": 5.960464477539063e-8
+                            "y": 0.000008046627044677735,
+                            "z": 1.7881393432617188e-7
                         },
                         "scale": {
                             "x": 1.0,
@@ -22525,7 +22991,7 @@
                         },
                         "worldPos": {
                             "x": -17.44300079345703,
-                            "y": 1.5330150127410889,
+                            "y": 1.5330160856246949,
                             "z": -16.5883731842041
                         },
                         "worldScale": {
@@ -22535,9 +23001,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.03141075745224953,
+                            "y": -0.031410761177539828,
                             "z": 0.0,
-                            "w": 0.9995065331459045
+                            "w": 0.9995066523551941
                         }
                     }
                 },
@@ -22551,7 +23017,7 @@
                         "materialGUID": {
                             "ID": 8930139538896017712
                         },
-                        "matIdx": 7
+                        "matIdx": 8
                     }
                 },
                 {
