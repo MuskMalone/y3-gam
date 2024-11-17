@@ -14,6 +14,14 @@ namespace IGE {
 			float distance;
 		};
 		class PhysicsSystem : public Systems::System {
+		private:
+			struct RayCastResult {
+				glm::vec3 origin;
+				glm::vec3 end;
+				RaycastHit hit;
+				bool detected;
+			};
+
 		public:
 			static std::shared_ptr<IGE::Physics::PhysicsSystem> GetInstance();
 			PhysicsSystem();
@@ -40,6 +48,18 @@ namespace IGE {
 				glm::vec3 const& origin, glm::vec3 const& end,
 				RaycastHit& result
 			);
+
+			//casts a ray(direction * magnitude) from the physics global position ( must have a rigidbody or collider)
+			bool RayCastFromEntity(
+				ECS::Entity entity, glm::vec3 const& direction, float magnitude,
+				RaycastHit& result
+			);
+			//casts a ray from origin to end, will ignore the entity provided
+			bool RayCastFromEntity(
+				ECS::Entity entity, glm::vec3 const& origin, glm::vec3 const& end,
+				RaycastHit& result
+			);
+
 			bool OnTriggerEnter(ECS::Entity trigger, ECS::Entity other);
 			bool OnTriggerExit(ECS::Entity trigger, ECS::Entity other);
 
@@ -78,6 +98,8 @@ namespace IGE {
 			PhysicsSystem(PhysicsSystem& other) = delete;
 			void operator=(const PhysicsSystem&) = delete;
 			static std::unordered_set<physx::PxRigidDynamic*> mInactiveActors;
+			std::vector<RayCastResult> mRays;
+			bool mDrawDebug{ false };
 
 		public:
 			PhysicsEventManager* mEventManager;

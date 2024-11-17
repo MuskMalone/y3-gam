@@ -223,6 +223,7 @@ void ScriptManager::AddInternalCalls()
 
   // Utility Functions
   ADD_INTERNAL_CALL(Raycast);
+  ADD_INTERNAL_CALL(RaycastFromEntity)
   ADD_INTERNAL_CALL(PlaySound);
   ADD_INTERNAL_CALL(GetLayerName);
 }
@@ -847,6 +848,14 @@ ECS::Entity::EntityID Mono::Raycast(glm::vec3 start, glm::vec3 end)
 {
     IGE::Physics::RaycastHit hit{};
     if (IGE::Physics::PhysicsSystem::GetInstance()->RayCastSingular(start, end, hit)) {
+        ECS::Entity::EntityID out {hit.entity.GetEntityID()};
+        return out;
+    }return static_cast<ECS::Entity::EntityID>(0);
+}
+
+ECS::Entity::EntityID Mono::RaycastFromEntity(ECS::Entity::EntityID e, glm::vec3 start, glm::vec3 end) {
+    IGE::Physics::RaycastHit hit{};
+    if (IGE::Physics::PhysicsSystem::GetInstance()->RayCastFromEntity(e, start, end, hit)) {
         ECS::Entity::EntityID out {hit.entity.GetEntityID()};
         return out;
     }return static_cast<ECS::Entity::EntityID>(0);
