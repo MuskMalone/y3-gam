@@ -427,6 +427,17 @@ namespace GUI
     bool modified{ false };
     if (ImGui::BeginPopup("EntityOptions"))
     {
+      if (GUIVault::sDevTools) {
+        if (!mRightClickedEntity.HasComponent<Component::Mesh>()) {
+          ImGui::PushStyleColor(ImGuiCol_HeaderHovered, IM_COL32(128, 0, 0, 255));
+          ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+          if (ImGui::Selectable("Reassign Submesh Indices")) {
+            ReassignSubmeshIndices(mRightClickedEntity);
+          }
+          ImGui::PopStyleColor(2);
+        }
+      }
+
       if (ImGui::Selectable("Create Entity")) {
         ECS::Entity newEntity{ CreateNewEntity() };
         mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
