@@ -74,6 +74,7 @@ namespace Mono
     { "InsideB", ScriptFieldType::INSIDEB},
     { "PlayerMove", ScriptFieldType::PLAYERMOVE},
     { "Dialogue", ScriptFieldType::DIALOGUE},
+    { "PlayerInteraction", ScriptFieldType::PLAYERINTERACTION },
   };
 }
 

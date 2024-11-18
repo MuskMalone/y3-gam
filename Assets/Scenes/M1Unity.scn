@@ -25,9 +25,9 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -0.05233592540025711,
-                            "y": 1.0071712353010298e-7,
-                            "z": -1.528533175587654e-7,
+                            "x": -0.0523359440267086,
+                            "y": 1.0071693878899169e-7,
+                            "z": -1.525040715932846e-7,
                             "w": 0.9986295104026794
                         },
                         "eulerAngles": {
@@ -46,9 +46,9 @@
                             "z": 1.0199999809265137
                         },
                         "worldRot": {
-                            "x": -0.052342284470796588,
+                            "x": -0.05234230309724808,
                             "y": 0.021645033732056619,
-                            "z": 0.0011250281240791083,
+                            "z": 0.0011250288225710393,
                             "w": 0.9983939528465271
                         }
                     }
@@ -146,7 +146,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 2443972196589541160
+                            "ID": 6304510470377923412
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -208,12 +208,12 @@
             "ID": 2,
             "Parent": 231,
             "Child Entities": [],
-            "isActive": true,
+            "isActive": false,
             "Components": [
                 {
                     "Tag": {
                         "tag": "DialogueBox",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -284,6 +284,7 @@
                 43,
                 98,
                 116,
+                151,
                 333,
                 345,
                 348,
@@ -803,7 +804,7 @@
                         "position": {
                             "x": 0.5540180206298828,
                             "y": 0.27500206232070925,
-                            "z": 0.16699743270874024
+                            "z": 0.16699755191802979
                         },
                         "scale": {
                             "x": 0.11999999731779099,
@@ -811,9 +812,9 @@
                             "z": 0.11999999731779099
                         },
                         "rotation": {
-                            "x": 0.12896902859210969,
-                            "y": -0.7883509397506714,
-                            "z": 0.5949110984802246,
+                            "x": 0.1289689987897873,
+                            "y": -0.7883510589599609,
+                            "z": 0.5949109792709351,
                             "w": 0.0891668051481247
                         },
                         "eulerAngles": {
@@ -832,10 +833,10 @@
                             "z": 0.23999999463558198
                         },
                         "worldRot": {
-                            "x": 0.11021877825260163,
-                            "y": -0.790762722492218,
-                            "z": 0.5986685752868652,
-                            "w": 0.0643601045012474
+                            "x": 0.11021876335144043,
+                            "y": -0.7907629609107971,
+                            "z": 0.5986685156822205,
+                            "w": 0.064360111951828
                         }
                     }
                 },
@@ -916,7 +917,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1044,7 +1045,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1192,7 +1193,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1320,7 +1321,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1499,7 +1500,7 @@
                     "Mesh": {
                         "meshName": "Capsule",
                         "GUID": {
-                            "ID": 9371925720350228766
+                            "ID": 6907330935584744567
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1611,6 +1612,26 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "speed"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "entityID": 40,
+                                "scriptName": "PlayerInteraction",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "RayFromPlayerCameraLength"
+                                        }
+                                    },
+                                    {
+                                        "data": "",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "RayHitString"
                                         }
                                     }
                                 ]
@@ -1884,7 +1905,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2148,7 +2169,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2360,31 +2381,6 @@
                     "AudioSource": {
                         "sounds": [
                             {
-                                "key": "Grass4",
-                                "value": {
-                                    "guid": {
-                                        "ID": 595166077166477397
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": -13.452823638916016,
-                                            "y": -1.5841245651245118,
-                                            "z": 42.00068664550781
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
-                                    }
-                                }
-                            },
-                            {
                                 "key": "Pavement6",
                                 "value": {
                                     "guid": {
@@ -2414,6 +2410,31 @@
                                 "value": {
                                     "guid": {
                                         "ID": 10093927524114237221
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -13.452823638916016,
+                                            "y": -1.5841245651245118,
+                                            "z": 42.00068664550781
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Grass4",
+                                "value": {
+                                    "guid": {
+                                        "ID": 595166077166477397
                                     },
                                     "playSettings": {
                                         "position": {
@@ -2585,31 +2606,6 @@
                                 }
                             },
                             {
-                                "key": "MetalPipe2",
-                                "value": {
-                                    "guid": {
-                                        "ID": 7164462922016107407
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": -13.452823638916016,
-                                            "y": -1.5841245651245118,
-                                            "z": 42.00068664550781
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
-                                    }
-                                }
-                            },
-                            {
                                 "key": "Pavement5",
                                 "value": {
                                     "guid": {
@@ -2635,10 +2631,10 @@
                                 }
                             },
                             {
-                                "key": "MetalPipe3",
+                                "key": "MetalPipe2",
                                 "value": {
                                     "guid": {
-                                        "ID": 2149759332604770166
+                                        "ID": 7164462922016107407
                                     },
                                     "playSettings": {
                                         "position": {
@@ -2664,6 +2660,31 @@
                                 "value": {
                                     "guid": {
                                         "ID": 10871485496724890079
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -13.452823638916016,
+                                            "y": -1.5841245651245118,
+                                            "z": 42.00068664550781
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "MetalPipe3",
+                                "value": {
+                                    "guid": {
+                                        "ID": 2149759332604770166
                                     },
                                     "playSettings": {
                                         "position": {
@@ -2756,9 +2777,9 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -1.1941381217184245e-10,
+                            "x": -1.2850875918957173e-10,
                             "y": -9.816139936447144e-7,
-                            "z": -5.476863407238852e-11,
+                            "z": -5.496758603840135e-11,
                             "w": 1.0
                         },
                         "eulerAngles": {
@@ -2777,7 +2798,7 @@
                             "z": 1.0199999809265137
                         },
                         "worldRot": {
-                            "x": -0.000018677937987376937,
+                            "x": -0.000018677947082323955,
                             "y": 0.0216731745749712,
                             "z": -0.000009168609722109978,
                             "w": 0.9997650980949402
@@ -2853,7 +2874,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2928,7 +2949,7 @@
                         "position": {
                             "x": 10.946462631225586,
                             "y": 6.866655349731445,
-                            "z": -0.0363006591796875
+                            "z": -0.0362701416015625
                         },
                         "scale": {
                             "x": 1.136022686958313,
@@ -2947,7 +2968,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.563690185546878,
+                            "x": 53.563720703125,
                             "y": 17.231990814208986,
                             "z": 47.068790435791019
                         },
@@ -2973,7 +2994,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3093,7 +3114,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3286,7 +3307,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3563,7 +3584,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3703,7 +3724,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3823,7 +3844,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -4032,7 +4053,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -4152,7 +4173,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -4232,7 +4253,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -4295,6 +4316,7 @@
             "Parent": null,
             "Child Entities": [
                 76,
+                199,
                 231,
                 5243127
             ],
@@ -4504,7 +4526,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -4978,6 +5000,54 @@
                     "Layer": {
                         "layerName": "Props"
                     }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.30000001192092898,
+                            "y": 0.30000001192092898,
+                            "z": 0.10000000149011612
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 11.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.09584575146436691,
+                            "z": 0.0,
+                            "w": 0.9953961968421936
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7
+                    }
                 }
             ]
         },
@@ -5266,15 +5336,15 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 1.862645149230957e-9,
-                            "y": -7.450580596923828e-9,
-                            "z": 1.6763806343078614e-8,
-                            "w": 1.0
+                            "x": 0.08173827826976776,
+                            "y": 0.017368707805871965,
+                            "z": 0.0038638077676296236,
+                            "w": 0.9964950084686279
                         },
                         "eulerAngles": {
-                            "x": 2.13443399843527e-7,
-                            "y": -8.537736562175269e-7,
-                            "z": 0.0000019209908259654186
+                            "x": 93.4972915649414,
+                            "y": 3.2007462978363039,
+                            "z": -9.996869087219239
                         },
                         "worldPos": {
                             "x": -5.178624629974365,
@@ -5287,10 +5357,10 @@
                             "z": 0.20000000298023225
                         },
                         "worldRot": {
-                            "x": 0.6675766706466675,
-                            "y": -0.0466938242316246,
-                            "z": -0.09854421019554138,
-                            "w": 0.7365121245384216
+                            "x": 0.7269692420959473,
+                            "y": -0.04437210410833359,
+                            "z": -0.07994146645069123,
+                            "w": 0.6805558800697327
                         }
                     }
                 },
@@ -5518,6 +5588,257 @@
             }
         },
         {
+            "ID": 151,
+            "Parent": 6,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Mom's Note",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -4.195587635040283,
+                            "y": 3.978663921356201,
+                            "z": -9.549566268920899
+                        },
+                        "scale": {
+                            "x": 1.2200000286102296,
+                            "y": 0.8999999761581421,
+                            "z": 0.8999999761581421
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -4.195587635040283,
+                            "y": 3.978663921356201,
+                            "z": -9.549566268920899
+                        },
+                        "worldScale": {
+                            "x": 1.2200000286102296,
+                            "y": 0.8999999761581421,
+                            "z": 0.8999999761581421
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        },
+                        "matIdx": 0
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 6304510470377923412
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.6100000143051148,
+                            "y": 0.10000000149011612,
+                            "z": 0.44999998807907107
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 151,
+                                "scriptName": "NoteInteraction",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 164,
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 164,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "noteUI"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerInteraction",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 0.5,
+                                                    "type": "System.Single",
+                                                    "scriptField": {
+                                                        "fieldName": "RayFromPlayerCameraLength"
+                                                    }
+                                                },
+                                                {
+                                                    "data": "",
+                                                    "type": "System.String",
+                                                    "scriptField": {
+                                                        "fieldName": "RayHitString"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerMove",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": {
+                                                        "entityID": 0,
+                                                        "scriptName": "Entity",
+                                                        "scriptFieldInstList": [
+                                                            {
+                                                                "data": 0,
+                                                                "type": "System.UInt32",
+                                                                "scriptField": {
+                                                                    "fieldName": "mEntityID"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    "type": "Image.Mono.ScriptInstance",
+                                                    "scriptField": {
+                                                        "fieldName": "cam"
+                                                    }
+                                                },
+                                                {
+                                                    "data": true,
+                                                    "type": "System.Boolean",
+                                                    "scriptField": {
+                                                        "fieldName": "canLook"
+                                                    }
+                                                },
+                                                {
+                                                    "data": true,
+                                                    "type": "System.Boolean",
+                                                    "scriptField": {
+                                                        "fieldName": "canMove"
+                                                    }
+                                                },
+                                                {
+                                                    "data": -19.6200008392334,
+                                                    "type": "System.Single",
+                                                    "scriptField": {
+                                                        "fieldName": "gravity"
+                                                    }
+                                                },
+                                                {
+                                                    "data": 20.0,
+                                                    "type": "System.Single",
+                                                    "scriptField": {
+                                                        "fieldName": "jumpHeight"
+                                                    }
+                                                },
+                                                {
+                                                    "data": 600.0,
+                                                    "type": "System.Single",
+                                                    "scriptField": {
+                                                        "fieldName": "speed"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
             "ID": 152,
             "Parent": 142,
             "Child Entities": [],
@@ -5624,6 +5945,79 @@
                 "removedComponents": [],
                 "subDataId": 1
             }
+        },
+        {
+            "ID": 164,
+            "Parent": 231,
+            "Child Entities": [],
+            "isActive": false,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "NoteUI",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 15.0600004196167,
+                            "y": 9.199999809265137,
+                            "z": 15.0600004196167
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 15.0600004196167,
+                            "y": 9.199999809265137,
+                            "z": 15.0600004196167
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 15437767492963197965
+                        }
+                    }
+                }
+            ]
         },
         {
             "ID": 165,
@@ -6051,12 +6445,12 @@
             "ID": 197,
             "Parent": 231,
             "Child Entities": [],
-            "isActive": true,
+            "isActive": false,
             "Components": [
                 {
                     "Tag": {
                         "tag": "DialogueText",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -6639,6 +7033,13 @@
                                         }
                                     },
                                     {
+                                        "data": "",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "introMessage"
+                                        }
+                                    },
+                                    {
                                         "data": 0.30000001192092898,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -6648,6 +7049,79 @@
                                 ]
                             }
                         ]
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 199,
+            "Parent": 75,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Center Dot",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -10.0
+                        },
+                        "scale": {
+                            "x": 0.05999999865889549,
+                            "y": 0.05999999865889549,
+                            "z": 0.05999999865889549
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -10.0
+                        },
+                        "worldScale": {
+                            "x": 0.05999999865889549,
+                            "y": 0.05999999865889549,
+                            "z": 0.05999999865889549
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 964562760922021332
+                        }
                     }
                 }
             ]
@@ -7233,8 +7707,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0006234094616957009,
-                            "y": -0.0002956390380859375,
-                            "z": 0.000499725341796875
+                            "y": -0.0003070831298828125,
+                            "z": 0.000514984130859375
                         },
                         "scale": {
                             "x": 1.0,
@@ -7253,8 +7727,8 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.600494384765628,
-                            "y": 12.699803352355957,
+                            "x": 53.60050964355469,
+                            "y": 12.699795722961426,
                             "z": 54.18358612060547
                         },
                         "worldScale": {
@@ -7375,6 +7849,7 @@
             "Parent": 75,
             "Child Entities": [
                 2,
+                164,
                 197
             ],
             "isActive": false,
@@ -8066,7 +8541,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.004156351089477539,
+                            "x": -0.004156142473220825,
                             "y": -0.7610733509063721,
                             "z": -0.0030803680419921877
                         },
@@ -8087,7 +8562,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 6.003020286560059,
+                            "x": 6.003023147583008,
                             "y": 9.305135726928711,
                             "z": -37.83987808227539
                         },
@@ -8121,7 +8596,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -9365,16 +9840,16 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
                         "key": "Tag",
                         "value": {
                             "tag": "Props_Vase2",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
                         }
                     }
                 ],
@@ -9396,12 +9871,6 @@
                         "value": {
                             "tag": "Vase2",
                             "isActive": true
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
                         }
                     },
                     {
@@ -9444,6 +9913,12 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
                         }
                     }
                 ],
@@ -14722,7 +15197,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0009975433349609376,
+                            "x": 0.001003265380859375,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -14743,7 +15218,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.599952697753909,
+                            "x": -44.59993362426758,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -14802,7 +15277,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0009975433349609376,
+                            "x": 0.001003265380859375,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -14823,7 +15298,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.599952697753909,
+                            "x": -44.59993362426758,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -14882,7 +15357,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0009975433349609376,
+                            "x": 0.001003265380859375,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -14903,7 +15378,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.599952697753909,
+                            "x": -44.59993362426758,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -14962,7 +15437,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0009975433349609376,
+                            "x": 0.001003265380859375,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -14983,7 +15458,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.599952697753909,
+                            "x": -44.59993362426758,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15042,7 +15517,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0009975433349609376,
+                            "x": 0.001003265380859375,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15063,7 +15538,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.599952697753909,
+                            "x": -44.59993362426758,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15122,7 +15597,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0009975433349609376,
+                            "x": 0.001003265380859375,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15143,7 +15618,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.599952697753909,
+                            "x": -44.59993362426758,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15202,7 +15677,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0009975433349609376,
+                            "x": 0.001003265380859375,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15223,7 +15698,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.599952697753909,
+                            "x": -44.59993362426758,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15282,7 +15757,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0009975433349609376,
+                            "x": 0.001003265380859375,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15303,7 +15778,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.599952697753909,
+                            "x": -44.59993362426758,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15362,7 +15837,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0009975433349609376,
+                            "x": 0.001003265380859375,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15383,7 +15858,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.599952697753909,
+                            "x": -44.59993362426758,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15442,7 +15917,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0009975433349609376,
+                            "x": 0.001003265380859375,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15463,7 +15938,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.599952697753909,
+                            "x": -44.59993362426758,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15522,7 +15997,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0009975433349609376,
+                            "x": 0.001003265380859375,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15543,7 +16018,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.599952697753909,
+                            "x": -44.59993362426758,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15602,7 +16077,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0009975433349609376,
+                            "x": 0.001003265380859375,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15623,7 +16098,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.599952697753909,
+                            "x": -44.59993362426758,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15682,7 +16157,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0009975433349609376,
+                            "x": 0.001003265380859375,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15703,7 +16178,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.599952697753909,
+                            "x": -44.59993362426758,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15762,7 +16237,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0009975433349609376,
+                            "x": 0.001003265380859375,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15783,7 +16258,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.599952697753909,
+                            "x": -44.59993362426758,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15842,7 +16317,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0009975433349609376,
+                            "x": 0.001003265380859375,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15863,7 +16338,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.599952697753909,
+                            "x": -44.59993362426758,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15922,7 +16397,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0009975433349609376,
+                            "x": 0.001003265380859375,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15943,7 +16418,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.599952697753909,
+                            "x": -44.59993362426758,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -16002,7 +16477,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0009975433349609376,
+                            "x": 0.001003265380859375,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -16023,7 +16498,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.599952697753909,
+                            "x": -44.59993362426758,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -16082,7 +16557,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0009975433349609376,
+                            "x": 0.001003265380859375,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -16103,7 +16578,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.599952697753909,
+                            "x": -44.59993362426758,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -16266,9 +16741,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017003342509269714,
+                            "x": 0.00017001107335090637,
                             "y": -0.000016927719116210939,
-                            "z": 0.0005140304565429688
+                            "z": 0.0005197525024414063
                         },
                         "scale": {
                             "x": 1.0,
@@ -16287,7 +16762,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81473159790039,
+                            "x": -51.81470489501953,
                             "y": 10.710047721862793,
                             "z": 24.861997604370118
                         },
@@ -16346,9 +16821,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017003342509269714,
+                            "x": 0.00017001107335090637,
                             "y": -0.000016927719116210939,
-                            "z": 0.0005140304565429688
+                            "z": 0.0005197525024414063
                         },
                         "scale": {
                             "x": 1.0,
@@ -16367,7 +16842,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81473159790039,
+                            "x": -51.81470489501953,
                             "y": 10.710047721862793,
                             "z": 24.861997604370118
                         },
@@ -16426,9 +16901,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017003342509269714,
+                            "x": 0.00017001107335090637,
                             "y": -0.000016927719116210939,
-                            "z": 0.0005140304565429688
+                            "z": 0.0005197525024414063
                         },
                         "scale": {
                             "x": 1.0,
@@ -16447,7 +16922,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81473159790039,
+                            "x": -51.81470489501953,
                             "y": 10.710047721862793,
                             "z": 24.861997604370118
                         },
@@ -16506,9 +16981,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017003342509269714,
+                            "x": 0.00017001107335090637,
                             "y": -0.000016927719116210939,
-                            "z": 0.0005140304565429688
+                            "z": 0.0005197525024414063
                         },
                         "scale": {
                             "x": 1.0,
@@ -16527,7 +17002,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81473159790039,
+                            "x": -51.81470489501953,
                             "y": 10.710047721862793,
                             "z": 24.861997604370118
                         },
@@ -16586,9 +17061,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017003342509269714,
+                            "x": 0.00017001107335090637,
                             "y": -0.000016927719116210939,
-                            "z": 0.0005140304565429688
+                            "z": 0.0005197525024414063
                         },
                         "scale": {
                             "x": 1.0,
@@ -16607,7 +17082,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81473159790039,
+                            "x": -51.81470489501953,
                             "y": 10.710047721862793,
                             "z": 24.861997604370118
                         },
@@ -16666,9 +17141,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017003342509269714,
+                            "x": 0.00017001107335090637,
                             "y": -0.000016927719116210939,
-                            "z": 0.0005140304565429688
+                            "z": 0.0005197525024414063
                         },
                         "scale": {
                             "x": 1.0,
@@ -16687,7 +17162,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81473159790039,
+                            "x": -51.81470489501953,
                             "y": 10.710047721862793,
                             "z": 24.861997604370118
                         },
@@ -16746,9 +17221,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017003342509269714,
+                            "x": 0.00017001107335090637,
                             "y": -0.000016927719116210939,
-                            "z": 0.0005140304565429688
+                            "z": 0.0005197525024414063
                         },
                         "scale": {
                             "x": 1.0,
@@ -16767,7 +17242,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81473159790039,
+                            "x": -51.81470489501953,
                             "y": 10.710047721862793,
                             "z": 24.861997604370118
                         },
@@ -16826,9 +17301,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017003342509269714,
+                            "x": 0.00017001107335090637,
                             "y": -0.000016927719116210939,
-                            "z": 0.0005140304565429688
+                            "z": 0.0005197525024414063
                         },
                         "scale": {
                             "x": 1.0,
@@ -16847,7 +17322,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81473159790039,
+                            "x": -51.81470489501953,
                             "y": 10.710047721862793,
                             "z": 24.861997604370118
                         },
@@ -16906,9 +17381,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017003342509269714,
+                            "x": 0.00017001107335090637,
                             "y": -0.000016927719116210939,
-                            "z": 0.0005140304565429688
+                            "z": 0.0005197525024414063
                         },
                         "scale": {
                             "x": 1.0,
@@ -16927,7 +17402,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81473159790039,
+                            "x": -51.81470489501953,
                             "y": 10.710047721862793,
                             "z": 24.861997604370118
                         },
@@ -16986,9 +17461,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017003342509269714,
+                            "x": 0.00017001107335090637,
                             "y": -0.000016927719116210939,
-                            "z": 0.0005140304565429688
+                            "z": 0.0005197525024414063
                         },
                         "scale": {
                             "x": 1.0,
@@ -17007,7 +17482,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81473159790039,
+                            "x": -51.81470489501953,
                             "y": 10.710047721862793,
                             "z": 24.861997604370118
                         },
@@ -17066,9 +17541,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017003342509269714,
+                            "x": 0.00017001107335090637,
                             "y": -0.000016927719116210939,
-                            "z": 0.0005140304565429688
+                            "z": 0.0005197525024414063
                         },
                         "scale": {
                             "x": 1.0,
@@ -17087,7 +17562,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81473159790039,
+                            "x": -51.81470489501953,
                             "y": 10.710047721862793,
                             "z": 24.861997604370118
                         },
@@ -17146,9 +17621,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017003342509269714,
+                            "x": 0.00017001107335090637,
                             "y": -0.000016927719116210939,
-                            "z": 0.0005140304565429688
+                            "z": 0.0005197525024414063
                         },
                         "scale": {
                             "x": 1.0,
@@ -17167,7 +17642,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81473159790039,
+                            "x": -51.81470489501953,
                             "y": 10.710047721862793,
                             "z": 24.861997604370118
                         },
@@ -17226,9 +17701,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017003342509269714,
+                            "x": 0.00017001107335090637,
                             "y": -0.000016927719116210939,
-                            "z": 0.0005140304565429688
+                            "z": 0.0005197525024414063
                         },
                         "scale": {
                             "x": 1.0,
@@ -17247,7 +17722,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81473159790039,
+                            "x": -51.81470489501953,
                             "y": 10.710047721862793,
                             "z": 24.861997604370118
                         },
@@ -17306,9 +17781,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017003342509269714,
+                            "x": 0.00017001107335090637,
                             "y": -0.000016927719116210939,
-                            "z": 0.0005140304565429688
+                            "z": 0.0005197525024414063
                         },
                         "scale": {
                             "x": 1.0,
@@ -17327,7 +17802,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81473159790039,
+                            "x": -51.81470489501953,
                             "y": 10.710047721862793,
                             "z": 24.861997604370118
                         },
@@ -17386,9 +17861,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017003342509269714,
+                            "x": 0.00017001107335090637,
                             "y": -0.000016927719116210939,
-                            "z": 0.0005140304565429688
+                            "z": 0.0005197525024414063
                         },
                         "scale": {
                             "x": 1.0,
@@ -17407,7 +17882,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81473159790039,
+                            "x": -51.81470489501953,
                             "y": 10.710047721862793,
                             "z": 24.861997604370118
                         },
@@ -17466,9 +17941,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017003342509269714,
+                            "x": 0.00017001107335090637,
                             "y": -0.000016927719116210939,
-                            "z": 0.0005140304565429688
+                            "z": 0.0005197525024414063
                         },
                         "scale": {
                             "x": 1.0,
@@ -17487,7 +17962,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81473159790039,
+                            "x": -51.81470489501953,
                             "y": 10.710047721862793,
                             "z": 24.861997604370118
                         },
@@ -17546,9 +18021,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00017003342509269714,
+                            "x": 0.00017001107335090637,
                             "y": -0.000016927719116210939,
-                            "z": 0.0005140304565429688
+                            "z": 0.0005197525024414063
                         },
                         "scale": {
                             "x": 1.0,
@@ -17567,7 +18042,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81473159790039,
+                            "x": -51.81470489501953,
                             "y": 10.710047721862793,
                             "z": 24.861997604370118
                         },
@@ -19964,16 +20439,16 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
                         "key": "Tag",
                         "value": {
                             "tag": "ArcDoor",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -20139,7 +20614,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -20397,7 +20872,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -20525,7 +21000,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -20671,7 +21146,7 @@
                         "position": {
                             "x": -10.739839553833008,
                             "y": 6.866655349731445,
-                            "z": -0.036418914794921878
+                            "z": -0.036403656005859378
                         },
                         "scale": {
                             "x": 1.136022686958313,
@@ -20690,7 +21165,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.563575744628909,
+                            "x": 53.56359100341797,
                             "y": 17.231990814208986,
                             "z": 61.164886474609378
                         },
@@ -20716,7 +21191,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -20789,9 +21264,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00001302817418036284,
+                            "x": 0.000013028171451878734,
                             "y": 17.98689079284668,
-                            "z": 0.16265106201171876
+                            "z": 0.16266632080078126
                         },
                         "scale": {
                             "x": 13.5062837600708,
@@ -20810,7 +21285,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.76264572143555,
+                            "x": 53.76266098022461,
                             "y": 24.571346282958986,
                             "z": 54.183982849121097
                         },
@@ -20836,7 +21311,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -20908,7 +21383,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2043722856852570517
+                            "ID": 11321837067225739074
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -21120,6 +21595,13 @@
                         }
                     },
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Inside Pit Painting",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "RigidBody",
                         "value": {
                             "velocity": {
@@ -21140,13 +21622,6 @@
                             "motionType": "DYNAMIC",
                             "axisLock": 0,
                             "angularAxisLock": 0
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Inside Pit Painting",
-                            "isActive": true
                         }
                     },
                     {
@@ -21240,9 +21715,9 @@
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": -0.031410761177539828,
+                            "y": -0.03141075745224953,
                             "z": 0.0,
-                            "w": 0.9995066523551941
+                            "w": 0.9995065331459045
                         },
                         "eulerAngles": {
                             "x": 0.0,
@@ -21261,9 +21736,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.03141075745224953,
+                            "y": -0.031410761177539828,
                             "z": 0.0,
-                            "w": 0.9995065331459045
+                            "w": 0.9995066523551941
                         }
                     }
                 },
@@ -21289,9 +21764,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.000019073486328125,
-                            "y": 0.0001220703125,
-                            "z": -0.0002536773681640625
+                            "x": -0.0000152587890625,
+                            "y": 0.00011730194091796875,
+                            "z": -0.00026607513427734375
                         },
                         "scale": {
                             "x": 1.0,
@@ -21299,9 +21774,9 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -6.109476657911728e-7,
-                            "y": -1.8370340626461258e-7,
-                            "z": -5.075708600088547e-7,
+                            "x": -6.705522537231445e-7,
+                            "y": -2.130400389432907e-7,
+                            "z": -5.075708031654358e-7,
                             "w": 1.0
                         },
                         "eulerAngles": {
@@ -21311,8 +21786,8 @@
                         },
                         "worldPos": {
                             "x": -18.895809173583986,
-                            "y": 2.255204200744629,
-                            "z": -17.17965316772461
+                            "y": 2.2552027702331545,
+                            "z": -17.179645538330079
                         },
                         "worldScale": {
                             "x": 0.4000000059604645,
@@ -21320,10 +21795,10 @@
                             "z": 0.4000000059604645
                         },
                         "worldRot": {
-                            "x": -0.007936586625874043,
-                            "y": 0.9746341705322266,
-                            "z": -0.1422012895345688,
-                            "w": -0.17263911664485932
+                            "x": -0.007936578243970871,
+                            "y": 0.9746342301368713,
+                            "z": -0.14220121502876283,
+                            "w": -0.17263908684253694
                         }
                     }
                 },
@@ -21372,9 +21847,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.743556022644043,
+                            "x": -0.7435550689697266,
                             "y": 0.36106449365615847,
-                            "z": -0.24948102235794068
+                            "z": -0.24948084354400636
                         },
                         "scale": {
                             "x": 0.20000000298023225,
@@ -21382,10 +21857,10 @@
                             "z": 0.20000000298023225
                         },
                         "rotation": {
-                            "x": -0.012398926541209221,
-                            "y": 0.9687303900718689,
-                            "z": -0.14188252389431,
-                            "w": -0.20316803455352784
+                            "x": -0.012398921884596348,
+                            "y": 0.9687302708625794,
+                            "z": -0.14188247919082642,
+                            "w": -0.20316798985004426
                         },
                         "eulerAngles": {
                             "x": -162.9001007080078,
@@ -21395,7 +21870,7 @@
                         "worldPos": {
                             "x": -18.89584732055664,
                             "y": 2.255128860473633,
-                            "z": -17.17972755432129
+                            "z": -17.179725646972658
                         },
                         "worldScale": {
                             "x": 0.4000000059604645,
@@ -21403,10 +21878,10 @@
                             "z": 0.4000000059604645
                         },
                         "worldRot": {
-                            "x": -0.00793617032468319,
+                            "x": -0.00793616846203804,
                             "y": 0.974634051322937,
-                            "z": -0.1422019600868225,
-                            "w": -0.17263922095298768
+                            "z": -0.14220194518566132,
+                            "w": -0.17263920605182649
                         }
                     }
                 },
@@ -21432,9 +21907,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.000019073486328125,
-                            "y": 0.0001220703125,
-                            "z": -0.0002536773681640625
+                            "x": -0.0000152587890625,
+                            "y": 0.00011730194091796875,
+                            "z": -0.00026607513427734375
                         },
                         "scale": {
                             "x": 1.0,
@@ -21442,9 +21917,9 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -6.109476657911728e-7,
-                            "y": -1.8370340626461258e-7,
-                            "z": -5.075708600088547e-7,
+                            "x": -6.705522537231445e-7,
+                            "y": -2.130400389432907e-7,
+                            "z": -5.075708031654358e-7,
                             "w": 1.0
                         },
                         "eulerAngles": {
@@ -21454,8 +21929,8 @@
                         },
                         "worldPos": {
                             "x": -18.895809173583986,
-                            "y": 2.255204200744629,
-                            "z": -17.17965316772461
+                            "y": 2.2552027702331545,
+                            "z": -17.179645538330079
                         },
                         "worldScale": {
                             "x": 0.4000000059604645,
@@ -21463,10 +21938,10 @@
                             "z": 0.4000000059604645
                         },
                         "worldRot": {
-                            "x": -0.007936586625874043,
-                            "y": 0.9746341705322266,
-                            "z": -0.1422012895345688,
-                            "w": -0.17263911664485932
+                            "x": -0.007936578243970871,
+                            "y": 0.9746342301368713,
+                            "z": -0.14220121502876283,
+                            "w": -0.17263908684253694
                         }
                     }
                 },
@@ -21598,6 +22073,13 @@
                         }
                     },
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Outside Pit Painting",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "RigidBody",
                         "value": {
                             "velocity": {
@@ -21618,13 +22100,6 @@
                             "motionType": "DYNAMIC",
                             "axisLock": 0,
                             "angularAxisLock": 0
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Outside Pit Painting",
-                            "isActive": true
                         }
                     },
                     {
@@ -22516,8 +22991,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.000244140625,
-                            "y": -0.0000457763671875,
-                            "z": 0.00003147125244140625
+                            "y": -0.00005340576171875,
+                            "z": 0.0000286102294921875
                         },
                         "scale": {
                             "x": 1.0,
@@ -22525,9 +23000,9 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -2.9802325229866258e-7,
-                            "y": -1.1920930376163597e-7,
-                            "z": 5.960465188081798e-8,
+                            "x": -2.6822092991096726e-7,
+                            "y": -1.3411046495548363e-7,
+                            "z": 7.450581307466564e-8,
                             "w": 1.0
                         },
                         "eulerAngles": {
@@ -22537,7 +23012,7 @@
                         },
                         "worldPos": {
                             "x": -16.35817527770996,
-                            "y": 2.0829877853393556,
+                            "y": 2.0829882621765138,
                             "z": -16.185440063476564
                         },
                         "worldScale": {
@@ -22546,10 +23021,10 @@
                             "z": 0.23999999463558198
                         },
                         "worldRot": {
-                            "x": 0.11021877080202103,
-                            "y": -0.7907629013061523,
-                            "z": 0.5986683368682861,
-                            "w": 0.06436000764369965
+                            "x": 0.11021876335144043,
+                            "y": -0.7907631397247315,
+                            "z": 0.5986682772636414,
+                            "w": 0.06435999274253845
                         }
                     }
                 },
@@ -22596,8 +23071,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.000012218952178955078,
-                            "z": -8.940696716308594e-7
+                            "y": 0.000012516975402832032,
+                            "z": -7.748603820800781e-7
                         },
                         "scale": {
                             "x": 1.0,
@@ -22617,7 +23092,7 @@
                         },
                         "worldPos": {
                             "x": -17.44300079345703,
-                            "y": 1.5330244302749634,
+                            "y": 1.5330250263214112,
                             "z": -16.588375091552736
                         },
                         "worldScale": {
@@ -22627,9 +23102,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.03141075745224953,
+                            "y": -0.031410761177539828,
                             "z": 0.0,
-                            "w": 0.9995065331459045
+                            "w": 0.9995066523551941
                         }
                     }
                 },
@@ -22676,8 +23151,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.000012218952178955078,
-                            "z": -8.940696716308594e-7
+                            "y": 0.000012516975402832032,
+                            "z": -7.748603820800781e-7
                         },
                         "scale": {
                             "x": 1.0,
@@ -22697,7 +23172,7 @@
                         },
                         "worldPos": {
                             "x": -17.44300079345703,
-                            "y": 1.5330244302749634,
+                            "y": 1.5330250263214112,
                             "z": -16.588375091552736
                         },
                         "worldScale": {
@@ -22707,9 +23182,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.03141075745224953,
+                            "y": -0.031410761177539828,
                             "z": 0.0,
-                            "w": 0.9995065331459045
+                            "w": 0.9995066523551941
                         }
                     }
                 },
@@ -22756,8 +23231,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.000012218952178955078,
-                            "z": 0.0000010132789611816407
+                            "y": 0.000012516975402832032,
+                            "z": 0.0000011324882507324219
                         },
                         "scale": {
                             "x": 1.0,
@@ -22777,7 +23252,7 @@
                         },
                         "worldPos": {
                             "x": -17.44300079345703,
-                            "y": 1.5330244302749634,
+                            "y": 1.5330250263214112,
                             "z": -16.58837127685547
                         },
                         "worldScale": {
@@ -22787,9 +23262,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.03141075745224953,
+                            "y": -0.031410761177539828,
                             "z": 0.0,
-                            "w": 0.9995065331459045
+                            "w": 0.9995066523551941
                         }
                     }
                 },
@@ -22921,16 +23396,16 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
                         "key": "Tag",
                         "value": {
                             "tag": "Stair Head",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -23394,8 +23869,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.000012159347534179688,
-                            "z": 5.960464477539063e-8
+                            "y": 0.00001245737075805664,
+                            "z": 1.7881393432617188e-7
                         },
                         "scale": {
                             "x": 1.0,
@@ -23415,7 +23890,7 @@
                         },
                         "worldPos": {
                             "x": -17.44300079345703,
-                            "y": 1.5330243110656739,
+                            "y": 1.5330249071121216,
                             "z": -16.5883731842041
                         },
                         "worldScale": {
@@ -23425,9 +23900,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.03141075745224953,
+                            "y": -0.031410761177539828,
                             "z": 0.0,
-                            "w": 0.9995065331459045
+                            "w": 0.9995066523551941
                         }
                     }
                 },
@@ -23917,16 +24392,16 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
                         "key": "Tag",
                         "value": {
                             "tag": "ArcDoor",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -24483,16 +24958,16 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
                         "key": "Tag",
                         "value": {
                             "tag": "ArcDoor Wall",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -24579,16 +25054,16 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
                         "key": "Tag",
                         "value": {
                             "tag": "ArcDoor Wall",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     }
                 ],

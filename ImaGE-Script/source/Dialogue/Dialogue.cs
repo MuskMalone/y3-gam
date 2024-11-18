@@ -43,7 +43,11 @@ public class Dialogue : Entity
 
   void Start()
   {
-    if (playerMove == null) Debug.LogError("[Dialogue.cs] PlayerMove Script Entity not found!");
+    if (playerMove == null)
+    {
+      Debug.LogError("[Dialogue.cs] PlayerMove Script Entity not found!");
+    }
+
     DeactivateAllEmotions();
     DialogueBox.SetActive(false);
     SetActive(false);

@@ -1,13 +1,13 @@
 ﻿using IGE.Utils;
 public class SpecialDialogue : Entity
 {
-
+  public string introMessage;
   public string[] initialDialogue;
-  public Dialogue dialogueSystem;
   public float fadeDuration = 0.5f;
   public float typewriterSpeed = 0.3f;
-
   private bool triggerInitialDialogue = true;
+
+  public Dialogue dialogueSystem;
 
   public SpecialDialogue() : base()
   {
