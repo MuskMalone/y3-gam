@@ -44,9 +44,9 @@ namespace Graphics {
 		void SetUniform(std::string const& name, glm::vec4 const& val);
 		void SetUniform(std::string const& name, glm::mat3 const& val);
 		void SetUniform(std::string const& name, glm::mat4 const& val);
-		void SetUniform(std::string const& name, int* val, unsigned int count);
-		void SetUniform(std::string const& name, float* val, unsigned int count);
-		void SetUniform(std::string const& name, glm::vec3* val, unsigned int count);
+		void SetUniform(std::string const& name, int const* val, unsigned int count);
+		void SetUniform(std::string const& name, float const* val, unsigned int count);
+		void SetUniform(std::string const& name, glm::vec3 const* val, unsigned int count);
 
 		void SetUniform(std::string const& name, GLuint64 bindlessHandle);
 

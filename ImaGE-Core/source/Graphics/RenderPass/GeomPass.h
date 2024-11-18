@@ -10,7 +10,7 @@ namespace Graphics {
     void Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) override;
 
   private:
-
+    static inline constexpr unsigned sMaxLights = 30;
   };
 
 } // namespace Graphics

@@ -8,8 +8,30 @@
 #include <Graphics/Renderer.h>
 #include <Graphics/RenderPass/ShadowPass.h>
 #include "Graphics/MaterialData.h"
-
 #include "Graphics/RenderAPI.h"
+
+namespace {
+  template <unsigned N>
+  struct LightUniforms {
+    glm::vec3 u_LightDirection[N]; // Directional light direction in world space
+    glm::vec3 u_LightColor[N];     // Directional light color
+    int u_type[N];       // Camera position in world space
+
+    // For spotlight
+    glm::vec3 u_LightPos[N]; // Position of the spotlight
+    float u_InnerSpotAngle[N]; // Inner spot angle in degrees
+    float u_OuterSpotAngle[N]; // Outer spot angle in degrees
+    float u_LightIntensity[N]; // Intensity of the light
+    float u_Range[N]; // Maximum range of the spotlight
+
+    int numLights;
+
+    void SetUniforms(std::shared_ptr<Graphics::Shader> const& shader) const;
+  };
+
+  template <unsigned N>
+  LightUniforms<N> GetLightData(std::vector<ECS::Entity> const& entities);
+}
 
 namespace Graphics {
   using EntityXform = std::pair<ECS::Entity, glm::mat4>;
@@ -33,51 +55,14 @@ namespace Graphics {
 
       Renderer::RenderSceneBegin(cam.viewProjMatrix);
 
-      // Use a map to group entities by material ID
-      MatGroupsMap matGroups;
-
-      //==========================LIGHTS==========================================================
-      const unsigned int maxLights = 30;
-      int numlights{ 0 };
-
-      int u_type[maxLights];       // Camera position in world space
-      glm::vec3 u_LightDirection[maxLights]; // Directional light direction in world space
-      glm::vec3 u_LightColor[maxLights];     // Directional light color
-
-      // For spotlight
-      glm::vec3 u_LightPos[maxLights]; // Position of the spotlight
-      float u_InnerSpotAngle[maxLights]; // Inner spot angle in degrees
-      float u_OuterSpotAngle[maxLights]; // Outer spot angle in degrees
-      float u_LightIntensity[maxLights]; // Intensity of the light
-      float u_Range[maxLights]; // Maximum range of the spotlight
-
-      //Get the list of light
-      std::vector<ECS::Entity> lights{};
-      for (ECS::Entity const& entity : entities) {
-          if (!entity.HasComponent<Component::Light>()) { continue; }
-
-          auto const& light = entity.GetComponent<Component::Light>();
-          u_type[numlights] = light.type;
-          u_LightDirection[numlights] = entity.GetComponent<Component::Transform>().worldRot * light.forwardVec; // Directional light direction in world space
-          u_LightColor[numlights] = light.color;     // Directional light color
-
-          //For spotlight
-          u_LightPos[numlights] = entity.GetComponent<Component::Transform>().worldPos; // Position of the spotlight
-          u_InnerSpotAngle[numlights] = light.mInnerSpotAngle; // Inner spot angle in degrees
-          u_OuterSpotAngle[numlights] = light.mOuterSpotAngle; // Outer spot angle in degrees
-          u_LightIntensity[numlights] = light.mLightIntensity; // Intensity of the light
-          u_Range[numlights] = light.mRange; // Maximum range of the spotlight
-          ++numlights;
-      }
-      //==========================LIGHTS END===================================================
       auto& ecsMan{ ECS::EntityManager::GetInstance() };
 
       //=================================================SUBMESH VERSION===============================================================
-
+      MatGroupsMap matGroups; // Use a map to group entities by material ID
       std::vector<MaterialGroup> materialGroups;
 
       // STEP UNO: Collect entities into material groups!!!
-      auto const& entitiesMat = ecsMan.GetAllEntitiesWithComponents< Component::Transform, Component::Mesh>();
+      auto const& entitiesMat = ecsMan.GetAllEntitiesWithComponents<Component::Transform, Component::Mesh>();
       for (auto const& e : entitiesMat) {
           ECS::Entity entity{ e };
           auto const& mesh = entity.GetComponent<Component::Mesh>();
@@ -114,6 +99,8 @@ namespace Graphics {
               return a.shader.get() < b.shader.get(); // Sort by shader pointer for grouping
           });
 
+      // get light data to pass into shader
+      LightUniforms<sMaxLights> const lightUniforms{ GetLightData<sMaxLights>(entities) };
 
       //STEP TRES: Render material groups
       std::shared_ptr<Shader> currShader = nullptr;
@@ -132,15 +119,7 @@ namespace Graphics {
                   shader->SetUniform("u_CamPos", cam.position);
 
                   // Light Info
-                  shader->SetUniform("numlights", numlights);
-                  shader->SetUniform("u_type", u_type, maxLights);
-                  shader->SetUniform("u_LightDirection", u_LightDirection, maxLights);
-                  shader->SetUniform("u_LightColor", u_LightColor, maxLights);
-                  shader->SetUniform("u_LightPos", u_LightPos, maxLights);
-                  shader->SetUniform("u_InnerSpotAngle", u_InnerSpotAngle, maxLights);
-                  shader->SetUniform("u_OuterSpotAngle", u_OuterSpotAngle, maxLights);
-                  shader->SetUniform("u_LightIntensity", u_LightIntensity, maxLights);
-                  shader->SetUniform("u_Range", u_Range, maxLights);
+                  lightUniforms.SetUniforms(shader);
 
                   // Set shadow uniforms
                   auto const& shadowPass = Renderer::GetPass<ShadowPass>();
@@ -218,3 +197,46 @@ namespace Graphics {
   }
 
 } // namespace Graphics
+
+namespace {
+  template <unsigned N>
+  LightUniforms<N> GetLightData(std::vector<ECS::Entity> const& entities) {
+    LightUniforms<N> lightUniforms{};
+    int numLights{};
+
+    //Get the list of light
+    std::vector<ECS::Entity> lights{};
+    for (ECS::Entity const& entity : entities) {
+      if (!entity.HasComponent<Component::Light>()) { continue; }
+
+      auto const& light = entity.GetComponent<Component::Light>();
+      lightUniforms.u_type[numLights] = light.type;
+      lightUniforms.u_LightDirection[numLights] = entity.GetComponent<Component::Transform>().worldRot * light.forwardVec; // Directional light direction in world space
+      lightUniforms.u_LightColor[numLights] = light.color;     // Directional light color
+
+      //For spotlight
+      lightUniforms.u_LightPos[numLights] = entity.GetComponent<Component::Transform>().worldPos; // Position of the spotlight
+      lightUniforms.u_InnerSpotAngle[numLights] = light.mInnerSpotAngle; // Inner spot angle in degrees
+      lightUniforms.u_OuterSpotAngle[numLights] = light.mOuterSpotAngle; // Outer spot angle in degrees
+      lightUniforms.u_LightIntensity[numLights] = light.mLightIntensity; // Intensity of the light
+      lightUniforms.u_Range[numLights] = light.mRange; // Maximum range of the spotlight
+      ++numLights;
+    }
+    lightUniforms.numLights = numLights;
+
+    return lightUniforms;
+  }
+
+  template <unsigned N>
+  void LightUniforms<N>::SetUniforms(std::shared_ptr<Graphics::Shader> const& shader) const {
+    shader->SetUniform("numlights", numLights);
+    shader->SetUniform("u_type", u_type, N);
+    shader->SetUniform("u_LightDirection", u_LightDirection, N);
+    shader->SetUniform("u_LightColor", u_LightColor, N);
+    shader->SetUniform("u_LightPos", u_LightPos, N);
+    shader->SetUniform("u_InnerSpotAngle", u_InnerSpotAngle, N);
+    shader->SetUniform("u_OuterSpotAngle", u_OuterSpotAngle, N);
+    shader->SetUniform("u_LightIntensity", u_LightIntensity, N);
+    shader->SetUniform("u_Range", u_Range, N);
+  }
+}
