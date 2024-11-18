@@ -100,11 +100,11 @@ namespace Graphics {
       int const defaultNormalUnit{ static_cast<int>(IGE_REF(IGE::Assets::TextureAsset, Renderer::GetWhiteTexture())->mTexture.Bind()) }; // cahnge to normal Tex
 
       // Initialize texture unit arrays to default values
-      std::vector<int> albedoTextureUnits(matCount, defaultAlbedoUnit);
-      std::vector<int> normalTextureUnits(matCount, defaultNormalUnit);
+      std::vector<int> albedoTextureUnits(matCount + 1, defaultAlbedoUnit);
+      std::vector<int> normalTextureUnits(matCount + 1, defaultNormalUnit);
 
-      for (size_t i{ batchStart }; i <= batchEnd; ++i) {
-        std::shared_ptr<MaterialData> const& material = mMaterials[i];
+      for (size_t matIdx{ batchStart + 1 }, i{ 1 }; i <= matCount; ++i, ++matIdx) {
+        std::shared_ptr<MaterialData> const& material = mMaterials[matIdx];
 
         IGE::Assets::GUID const albedoMap{ material->GetAlbedoMap() },
           normalMap{ material->GetNormalMap() };

@@ -185,6 +185,12 @@ namespace Serialization
     }
 
     Prefabs::Prefab prefab{};
+    if (document.HasMember(JSON_PFB_NAME_KEY)) {
+      prefab.mName = document[JSON_PFB_NAME_KEY].GetString();
+    }
+    else {
+      IGE_DBGLOGGER.LogError("Prefab " + json + " has no name, re-save from prefab editor!");
+    }
     prefab.mIsActive = (document.HasMember(JSON_PFB_ACTIVE_KEY) ? document[JSON_PFB_ACTIVE_KEY].GetBool() : true);
 
     // iterate through component objects in json array

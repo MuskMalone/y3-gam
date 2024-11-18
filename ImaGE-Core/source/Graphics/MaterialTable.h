@@ -30,7 +30,7 @@ namespace Graphics {
         static void SaveMaterials();
         static std::shared_ptr<MaterialData> LoadMaterial(std::string const& fp);
 
-        static size_t GetMaterialCount() noexcept { return mMaterials.size(); }
+        static size_t GetMaterialCount() noexcept { return mMaterials.empty() ? 0 : mMaterials.size() - 1; }
         static void ClearMaterials();
 
         inline static constexpr unsigned sMaterialsPerBatch = 16 - 1;

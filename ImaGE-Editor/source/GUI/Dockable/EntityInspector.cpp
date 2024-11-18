@@ -121,7 +121,7 @@ namespace GUI {
         am.LoadRef<IGE::Assets::PrefabAsset>(prefabOverride->guid);
         std::string const& pfbName{ am.GetAsset<IGE::Assets::PrefabAsset>(prefabOverride->guid)->mPrefabData.mName };
         ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
-        ImGui::Text("Prefab instance of");
+        ImGui::Text("Prefab instance of ");
         ImGui::SameLine();
         ImGui::PushStyleColor(ImGuiCol_Text, sComponentHighlightCol);
         ImGui::Text(pfbName.c_str());
