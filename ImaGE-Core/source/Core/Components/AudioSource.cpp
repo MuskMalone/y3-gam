@@ -12,8 +12,22 @@ namespace Component {
 	void AudioSource::PlaySound(std::string const& id) const
 	{
 		//play sound
-		auto const& sound{ sounds.at(id) };
-		IGE::Audio::AudioManager::GetInstance().PlaySound(sound.guid, sound.playSettings, channelGroup);
+		if (sounds.find(id) != sounds.end()) {
+			auto const& sound{ sounds.at(id) };
+			IGE::Audio::AudioManager::GetInstance().PlaySound(sound.guid, sound.playSettings, channelGroup);
+		}
+	}
+	void AudioSource::PauseSound(std::string const& id) const {
+		if (sounds.find(id) != sounds.end()) {
+			auto const& sound{ sounds.at(id) };
+			IGE::Audio::AudioManager::GetInstance().PauseSound(sound.guid, sound.playSettings);
+		}
+	}
+	void AudioSource::StopSound(std::string const& id) const {
+		if (sounds.find(id) != sounds.end()) {
+			auto const& sound{ sounds.at(id) };
+			IGE::Audio::AudioManager::GetInstance().StopSound(sound.guid, sound.playSettings);
+		}
 	}
 	void AudioSource::RemoveSound(std::string const& id)
 	{

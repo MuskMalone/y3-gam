@@ -233,6 +233,8 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(Raycast);
   ADD_INTERNAL_CALL(RaycastFromEntity)
   ADD_INTERNAL_CALL(PlaySound);
+  ADD_INTERNAL_CALL(PauseSound);
+  ADD_INTERNAL_CALL(StopSound);
   ADD_INTERNAL_CALL(GetLayerName);
 }
 
@@ -916,6 +918,20 @@ void Mono::PlaySound(ECS::Entity::EntityID e, MonoString* s)
     std::string name{ MonoStringToSTD(s) };
     ECS::Entity entity{ e };
     entity.GetComponent<Component::AudioSource>().PlaySound(name);
+}
+
+void Mono::PauseSound(ECS::Entity::EntityID e, MonoString* s)
+{
+    std::string name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().PauseSound(name);
+}
+
+void Mono::StopSound(ECS::Entity::EntityID e, MonoString* s)
+{
+    std::string name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().StopSound(name);
 }
 
 glm::vec3 Mono::GetVelocity(ECS::Entity::EntityID e)

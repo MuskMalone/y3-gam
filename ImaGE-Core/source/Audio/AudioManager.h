@@ -34,7 +34,6 @@ namespace IGE {
 			float dopplerLevel{ 1.0f };  // Doppler effect intensity
 			float minDistance{ 1.0f };   // Minimum distance for 3D attenuation
 			float maxDistance{ 500.0f }; // Maximum distance for 3D attenuation
-
 			// Custom rolloff curves for advanced sound properties
 			RolloffType rolloffType{ RolloffType::NONE };
 
@@ -43,6 +42,7 @@ namespace IGE {
 			static FMOD_RESULT FMODChannelCallback(FMOD_CHANNELCONTROL* chanCtrl, FMOD_CHANNELCONTROL_TYPE type,
 				FMOD_CHANNELCONTROL_CALLBACK_TYPE callbackType, void* commanddata1, void* commanddata2);
 			mutable std::unordered_set<FMOD::Channel*> channels; // not for imgui
+			mutable bool paused{ false }; // not fo rimgui
 		};
 
 		struct Sound {
@@ -87,8 +87,11 @@ namespace IGE {
 			 FMOD::Sound* AddSound(std::string const& path, uint32_t name);
 
 			 void PlaySound(uint32_t sound, SoundInvokeSetting const& settings, FMOD::ChannelGroup* group);
+
 			//Free a speciifc sound from FMOD and audio manager, free up memory when a sound is no longer needed
 			 void PlaySound(IGE::Assets::GUID const& guid, SoundInvokeSetting const&, uint64_t group);
+			 void PauseSound(IGE::Assets::GUID const& guid, SoundInvokeSetting const&);
+			 void StopSound(IGE::Assets::GUID const& guid, SoundInvokeSetting const&);
 			 void FreeSound(uint32_t sound);
 
 			//Gets the FMOD system instance
