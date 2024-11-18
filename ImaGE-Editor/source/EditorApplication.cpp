@@ -86,11 +86,14 @@ namespace IGE {
         }
 
         try {
+          frameRateController.StartSystemTimer();
           inputManager.UpdateInput();
+          frameRateController.EndSystemTimer("Input Manager");
 
           // dispatch all events in the queue at the start of game loop
+          frameRateController.StartSystemTimer();
           eventManager.DispatchAll();
-
+          frameRateController.EndSystemTimer("Event Manager");
           
           if (sceneManager.GetSceneState() == Scenes::PLAYING) {
             sysManager.UpdateSystems();
@@ -118,6 +121,7 @@ namespace IGE {
         try {
           if (GetApplicationSpecification().EnableImGui) {
 
+            frameRateController.StartSystemTimer();
             std::shared_ptr<Graphics::Texture> gameTex{ nullptr }; //texture to copy for game view
 
             UpdateFramebuffers(gameTex);
@@ -125,7 +129,9 @@ namespace IGE {
             auto& fb{ GetDefaultRenderTarget().framebuffer };
             fb = Graphics::Renderer::GetFinalFramebuffer();
             mGUIManager.UpdateGUI(fb, gameTex);
-
+            frameRateController.EndSystemTimer("Graphics System");
+            
+            frameRateController.StartSystemTimer();
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -137,6 +143,8 @@ namespace IGE {
               ImGui::RenderPlatformWindowsDefault();
               glfwMakeContextCurrent(backup_current_context);
             }
+
+            frameRateController.EndSystemTimer("ImGui");
           }
         }
 

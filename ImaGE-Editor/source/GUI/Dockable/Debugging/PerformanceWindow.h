@@ -31,6 +31,8 @@ namespace GUI {
     ************************************************************************/
     void UpdateFPS();
 
+    void UpdateSystemPerformance();
+
 
     static constexpr unsigned sResizeThreshold = 300; // optimization; size to hit before removing elements from the vector
 
@@ -38,5 +40,9 @@ namespace GUI {
     unsigned mContainerStartIdx;  // curr idx denoting where to start reading data from
     float mTimePerUpdate, mCurrentFPS;
     int mFPSMaxCount;
+
+    std::map<std::string, std::vector<float>> mSystemUpdateHistory;
+    std::map<std::string, int> mSystemContainerStartIdx;
+    std::map<std::string, float> mSystemPercentages;
   };
 } // namespace GUI

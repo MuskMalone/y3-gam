@@ -89,6 +89,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="source\Dialogue\SpecialDialogue.cs" />
     <Compile Include="source\InteractableObject\Crowbar.cs" />
     <Compile Include="source\InteractableObject\Hammer.cs" />
     <Compile Include="source\InteractableObject\InteractableObject.cs" />
@@ -128,7 +129,7 @@
     <Compile Include="source\Painting\RotationGuidance.cs" />
     <Compile Include="source\Painting\RotationGuidanceNightPainting.cs" />
     <Compile Include="source\Player\CameraCapture.cs" />
-    <Compile Include="source\Player\Dialogue.cs" />
+    <Compile Include="source\Dialogue\Dialogue.cs" />
     <Compile Include="source\Player\InputManager.cs" />
     <Compile Include="source\Player\PlayerFootsteps.cs" />
     <Compile Include="source\Player\PlayerInteraction.cs" />

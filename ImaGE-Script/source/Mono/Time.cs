@@ -36,7 +36,7 @@ namespace IGE.Utils
       }
     }
 
-    public static float GameTime
+    public static float gameTime
     {
       get
       {

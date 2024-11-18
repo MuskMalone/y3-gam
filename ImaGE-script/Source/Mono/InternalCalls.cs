@@ -156,6 +156,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetText(uint TextEntityID, string textContent);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void AppendText(uint TextEntityID, string textContent);
     #endregion
 
 
@@ -191,6 +194,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void MoveCharacter(uint mEntityID, Vector3 dVec);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetAngularVelocity(uint mEntityID, Vector3 angularVelocity);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static bool IsGrounded(uint mEntityID);

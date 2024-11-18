@@ -67,12 +67,13 @@ namespace Mono
     { "System.Int32[]", ScriptFieldType::INT_ARR },
     { "System.System.Single[]", ScriptFieldType::FLOAT_ARR },
     { "System.System.Double[]", ScriptFieldType::DOUBLE_ARR },
-    { "System.String[]",ScriptFieldType::STRING_ARR},
-    { "Entity",ScriptFieldType::ENTITY},
-    { "Inside",ScriptFieldType::INSIDE},
-    { "Test",ScriptFieldType::TEST},
-    { "InsideB",ScriptFieldType::INSIDEB},
-    { "PlayerMove",ScriptFieldType::PLAYERMOVE}
+    { "System.String[]", ScriptFieldType::STRING_ARR},
+    { "Entity", ScriptFieldType::ENTITY},
+    { "Inside", ScriptFieldType::INSIDE},
+    { "Test", ScriptFieldType::TEST},
+    { "InsideB", ScriptFieldType::INSIDEB},
+    { "PlayerMove", ScriptFieldType::PLAYERMOVE},
+    { "Dialogue", ScriptFieldType::DIALOGUE},
   };
 }
 
@@ -196,6 +197,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetWorldRotation);
   ADD_INTERNAL_CALL(SetWorldScale);
   ADD_INTERNAL_CALL(MoveCharacter);
+  ADD_INTERNAL_CALL(SetAngularVelocity);
 
   //Debug Functions
   ADD_INTERNAL_CALL(Log);
@@ -222,6 +224,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetMainCameraDirection);
   ADD_INTERNAL_CALL(GetText);
   ADD_INTERNAL_CALL(SetText);
+  ADD_INTERNAL_CALL(AppendText);
   ADD_INTERNAL_CALL(GetImageColor);
   ADD_INTERNAL_CALL(SetImageColor);
 
@@ -839,21 +842,33 @@ float  Mono::GetAxis(MonoString* s)
   return Input::InputManager::GetInstance().GetAxis(msg);
 }
 
-void Mono::MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec)
-{
-  if (ECS::Entity(entity).HasComponent<Component::RigidBody>())
-  {
-    //std::cout << "Move: " << dVec.x << "," << dVec.y << "," << dVec.z << "\n";
-    Performance::FrameRateController::TimeType dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
-    ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.x = dVec.x * dt;
-    if(dVec.y == 20.f)
-      ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y = dVec.y * dt;
-    ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.z = dVec.z * dt;
-     
-    IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
-
+void Mono::MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec) {
+  if (!ECS::Entity(entity).HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity does not have the RigidBody component");
+    return;
   }
-    
+
+  Performance::FrameRateController::TimeType dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.x = dVec.x * dt;
+  if(dVec.y == 20.f)
+    ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y = dVec.y * dt;
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.z = dVec.z * dt;
+     
+  IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
+}
+
+void Mono::SetAngularVelocity(ECS::Entity::EntityID entity, glm::vec3 angularVelocity) {
+  if (!ECS::Entity(entity).HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity does not have the RigidBody component");
+    return;
+  }
+
+  Performance::FrameRateController::TimeType dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().angularVelocity.x = angularVelocity.x * dt;
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().angularVelocity.y = angularVelocity.y * dt;
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().angularVelocity.z = angularVelocity.z * dt;
+
+  IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::ANGULAR_VELOCITY);
 }
 
 glm::vec3 Mono::GetMouseDelta()
@@ -1080,10 +1095,10 @@ MonoString* Mono::GetText(ECS::Entity::EntityID entity)
     if (ECS::Entity(entity).HasComponent<Component::Text>())
       msg = ECS::Entity(entity).GetComponent<Component::Text>().textContent;
     else
-      Debug::DebugLogger::GetInstance().LogError("You r trying to Get text from an entity that does not have text component");
+      Debug::DebugLogger::GetInstance().LogError("You are trying to Get text from an entity that does not have text component");
   }
   else
-    Debug::DebugLogger::GetInstance().LogError("You r trying to Get text from an invalid entity");
+    Debug::DebugLogger::GetInstance().LogError("You are trying to Get text from an invalid entity");
 
   return STDToMonoString(msg);
 }
@@ -1096,7 +1111,22 @@ void Mono::SetText(ECS::Entity::EntityID textEntity, MonoString* textContent) {
     return;
   }
 
-  ECS::Entity{ textEntity }.GetComponent<Component::Text>().textContent = scriptTextContent;
+  Component::Text& TextComponent{ ECS::Entity{ textEntity }.GetComponent<Component::Text>() };
+  TextComponent.textContent = scriptTextContent;
+  TextComponent.newLineIndicesUpdatedFlag = false;
+}
+
+void Mono::AppendText(ECS::Entity::EntityID textEntity, MonoString* textContent) {
+  std::string scriptTextContent{ MonoStringToSTD(textContent) };
+
+  if (!ECS::Entity{ textEntity }.HasComponent<Component::Text>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to Append Text of an entity that does not have the Text Component");
+    return;
+  }
+
+  Component::Text& TextComponent{ ECS::Entity{ textEntity }.GetComponent<Component::Text>() };
+  TextComponent.textContent += scriptTextContent;
+  TextComponent.newLineIndicesUpdatedFlag = false;
 }
 
 

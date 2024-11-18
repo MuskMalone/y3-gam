@@ -45,6 +45,7 @@ namespace Mono {
 		INSIDE,
 		INSIDEB,
 		PLAYERMOVE,
+		DIALOGUE,
 	};
 
 

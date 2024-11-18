@@ -312,6 +312,8 @@ namespace Mono
 
 		static void MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec);
 
+		static void SetAngularVelocity(ECS::Entity::EntityID entity, glm::vec3 angularVelocity);
+
 		static bool IsGrounded(ECS::Entity::EntityID entity);
 
 		static ECS::Entity::EntityID Raycast(glm::vec3 start, glm::vec3 end);
@@ -355,6 +357,8 @@ namespace Mono
 		static MonoString* GetText(ECS::Entity::EntityID entity);
 
 		static void SetText(ECS::Entity::EntityID textEntity, MonoString* textContent);
+
+		static void AppendText(ECS::Entity::EntityID textEntity, MonoString* textContent);
 
 		static glm::vec4 GetImageColor(ECS::Entity::EntityID entity);
 

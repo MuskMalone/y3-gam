@@ -35,9 +35,21 @@ namespace IGE.Utils
       return InternalCalls.IsKeyHeld((KeyCode) button) || InternalCalls.IsKeyTriggered((KeyCode)button);
     }
 
+    public static bool GetMouseButtonTriggered(int button)
+    {
+      if ((KeyCode)button > KeyCode.MOUSE_BUTTON_8 || (KeyCode)button < KeyCode.MOUSE_BUTTON_1)
+        return false;
+      return InternalCalls.IsKeyTriggered((KeyCode)button);
+    }
+
     public static bool GetKeyDown(KeyCode button)
     {
       return InternalCalls.IsKeyHeld(button) || InternalCalls.IsKeyTriggered(button);
+    }
+
+    public static bool GetKeyTriggered(KeyCode button)
+    {
+      return InternalCalls.IsKeyTriggered(button);
     }
 
     public static float GetAxis(string s)
