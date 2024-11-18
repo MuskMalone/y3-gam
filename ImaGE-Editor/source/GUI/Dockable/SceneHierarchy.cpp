@@ -413,6 +413,8 @@ namespace GUI
         ECS::Entity newEntity{ mEntityManager.CreateEntity() };
         newEntity.SetTag("Light");
         newEntity.EmplaceComponent<Component::Light>();
+        newEntity.GetComponent<Component::Transform>().ApplyWorldRotation(-90.f, glm::vec3(1.f, 0.f, 0.f));  // face down by default
+        GUIVault::SetSelectedEntity(newEntity);
         modified = true;
       }
 

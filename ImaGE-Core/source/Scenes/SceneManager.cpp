@@ -17,6 +17,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Physics/PhysicsSystem.h> //tch: this is to clear the physics rbs for now 
 #include <Reflection/ObjectFactory.h>
 #include "Graphics/RenderSystem.h"
+#include <Core/Components/Light.h>
 
 #ifdef _DEBUG
 //#define EVENTS_DEBUG
@@ -125,6 +126,13 @@ namespace Scenes
       }
       else {
         QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::NEW, mSceneName);
+
+        // add light to scene
+        ECS::Entity newEntity{ IGE_ENTITYMGR.CreateEntity() };
+        newEntity.SetTag("Directional Light");
+        newEntity.EmplaceComponent<Component::Light>();
+        newEntity.GetComponent<Component::Transform>().ApplyWorldRotation(-90.f, glm::vec3(1.f, 0.f, 0.f));  // face down by default
+        // add camera
         Graphics::RenderSystem::mCameraManager.AddMainCamera();
       }
       Debug::DebugLogger::GetInstance().LogInfo("Loading scene: " + mSceneName + "...");
