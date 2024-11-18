@@ -16,18 +16,19 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace GUI {
 
   PerformanceWindow::PerformanceWindow(const char* name) : GUIWindow(name),
-    mFPSHistory{}, mContainerStartIdx{}, mTimePerUpdate{ 0.5f }, mCurrentFPS{}, mFPSMaxCount{ 100 } {
+    mFPSHistory{}, mContainerStartIdx{}, mTimePerUpdate{ 0.01f }, mCurrentFPS{}, mFPSMaxCount{ 120 } {
     mFPSHistory.reserve(sResizeThreshold);
   }
 
   void PerformanceWindow::Run() {
     ImGui::Begin(mWindowName.c_str());
     UpdateFPS();
+    UpdateSystemPerformance();
 
     float const sum{ std::accumulate(mFPSHistory.begin(), mFPSHistory.end(), 0.f) };
     std::string const averageStr{ "Average: " + std::to_string(sum / static_cast<float>(mFPSHistory.size())) };
     ImVec2 chartSize{ ImGui::GetContentRegionAvail() };
-    chartSize.y /= 2; // take up half the height
+    chartSize.y /= 4; // take up half the height
 
     ImGui::Text("FPS Chart");
     ImGui::PlotLines("##FPSChart", mFPSHistory.data(), mFPSMaxCount,
@@ -35,9 +36,6 @@ namespace GUI {
       static_cast<float>(Performance::FrameRateController::GetInstance().GetTargetFPS()) + 10.f, chartSize);
 
     ImGui::Text(("Current: " + std::to_string(mCurrentFPS)).c_str());
-
-    ImGui::Text("Time per Update");
-    ImGui::SliderFloat("##TimePerUpdate", &mTimePerUpdate, 0.1f, 5.f);
 
     ImGui::Text("Width");
     if (ImGui::SliderInt("##FPSMaxCount", &mFPSMaxCount, 2, 100))
@@ -52,6 +50,37 @@ namespace GUI {
         mFPSHistory.erase(mFPSHistory.begin(), mFPSHistory.end() - mFPSMaxCount);
       }
     }
+
+    // System Performance Charts
+    chartSize.y = (chartSize.y / 4) * 3;
+
+    for (const auto& [systemName, history] : mSystemUpdateHistory) {
+      float avgTimeInSeconds = std::accumulate(history.begin(), history.end(), 0.f) / history.size();
+      float avgTimeInMilliseconds = avgTimeInSeconds * 1000.0f;
+
+      std::ostringstream avgStream;
+      if (avgTimeInMilliseconds > 0.001f) {
+        avgStream << "Avg: " << std::fixed << std::setprecision(3) << avgTimeInMilliseconds << " ms";
+      }
+      else {
+        avgStream << "Avg: <0.001 ms";
+      }
+
+      float systemPercentage = mSystemPercentages[systemName];
+      std::ostringstream percentStream;
+      percentStream << "Overall Percentage: " << std::fixed << std::setprecision(2) << systemPercentage << "%";
+
+      ImGui::Text((systemName + " Performance").c_str());
+      ImGui::PlotLines(("##" + systemName).c_str(), history.data(), static_cast<int>(history.size()),
+        mSystemContainerStartIdx[systemName], avgStream.str().c_str(), 0.f, *std::max_element(history.begin(), history.end()), chartSize);
+
+      ImGui::Text(percentStream.str().c_str());
+
+      ImGui::NewLine();
+    }
+
+    ImGui::Text("Time per Update");
+    ImGui::SliderFloat("##TimePerUpdate", &mTimePerUpdate, 0.001f, 5.f);
 
     ImGui::End();
   }
@@ -78,6 +107,41 @@ namespace GUI {
       timeElapsed = 0.f;
       ++mContainerStartIdx;
     }
+    timeElapsed += frc.GetDeltaTime();
+  }
+
+  void PerformanceWindow::UpdateSystemPerformance() {
+    static float timeElapsed{};
+    Performance::FrameRateController& frc{ Performance::FrameRateController::GetInstance() };
+
+    if (timeElapsed >= mTimePerUpdate) {
+      float totalSystemTime = 0.0f;
+
+      for (const auto& [systemName, systemTimeData] : frc.GetSystemTimerMap()) {
+        totalSystemTime += std::chrono::duration<float>(systemTimeData).count();
+      }
+
+      for (const auto& [systemName, systemTimeData] : frc.GetSystemTimerMap()) {
+        auto& history = mSystemUpdateHistory[systemName];
+        auto& startIdx = mSystemContainerStartIdx[systemName];
+
+        if (history.size() >= sResizeThreshold) {
+          history = { history.begin() + startIdx, history.end() };
+          history.reserve(sResizeThreshold);
+          startIdx = 0;
+        }
+
+        float systemDurationInSeconds = std::chrono::duration<float>(systemTimeData).count();
+        history.emplace_back(systemDurationInSeconds);
+        ++startIdx;
+
+        float systemPercentage = (systemDurationInSeconds / totalSystemTime) * 100.0f;
+        mSystemPercentages[systemName] = systemPercentage;
+      }
+
+      timeElapsed = 0.f;
+    }
+
     timeElapsed += frc.GetDeltaTime();
   }
 

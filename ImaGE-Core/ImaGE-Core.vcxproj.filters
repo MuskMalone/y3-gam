@@ -37,11 +37,11 @@
     <Filter Include="Core\Components">
       <UniqueIdentifier>{83E0320B-EF6B-A0CF-F87C-23C46487FCCF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\LayerManager">
+      <UniqueIdentifier>{15D5330F-81EB-31A5-CA62-BDC636B8022D}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Core\Systems">
       <UniqueIdentifier>{35582E35-21BB-BDD9-CA40-F68FB682895C}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Systems\LayerSystem">
-      <UniqueIdentifier>{2681F8F6-12A6-4777-3BF1-2C0727754695}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core\Systems\PlayerControllerSystem">
       <UniqueIdentifier>{FA988342-6652-EEEC-EFB1-08C75B6AA45C}</UniqueIdentifier>
@@ -275,6 +275,9 @@
     <ClInclude Include="source\Core\Components\Script.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
+    <ClInclude Include="source\Core\Components\Sprite2D.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
     <ClInclude Include="source\Core\Components\Tag.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
@@ -294,7 +297,7 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\LayerManager\LayerManager.h">
-      <Filter>Core\Systems\LayerSystem</Filter>
+      <Filter>Core\LayerManager</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Systems\PlayerControllerSystem\PlayerControllerSystem.h">
       <Filter>Core\Systems\PlayerControllerSystem</Filter>
@@ -310,6 +313,9 @@
     </ClInclude>
     <ClInclude Include="source\Core\Systems\TextSystem\TextSystem.h">
       <Filter>Core\Systems\TextSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.h">
+      <Filter>Core\Systems\TransformSystem</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Systems\TransformSystem\TransformHelpers.h">
       <Filter>Core\Systems\TransformSystem</Filter>
@@ -598,6 +604,9 @@
     <ClInclude Include="source\Graphics\Mesh\Submesh.h">
       <Filter>Graphics\Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="source\Graphics\MeshSubmeshKeyHash.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
     <ClInclude Include="source\Graphics\Pipeline.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -749,8 +758,6 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Graphics\MeshSubmeshKeyHash.h" />
-    <ClInclude Include="source\Core\Components\Sprite2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -806,7 +813,7 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\LayerManager\LayerManager.cpp">
-      <Filter>Core\Systems\LayerSystem</Filter>
+      <Filter>Core\LayerManager</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Systems\PlayerControllerSystem\PlayerControllerSystem.cpp">
       <Filter>Core\Systems\PlayerControllerSystem</Filter>
@@ -816,6 +823,9 @@
     </ClCompile>
     <ClCompile Include="source\Core\Systems\TextSystem\TextSystem.cpp">
       <Filter>Core\Systems\TextSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.cpp">
+      <Filter>Core\Systems\TransformSystem</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Systems\TransformSystem\TransformHelpers.cpp">
       <Filter>Core\Systems\TransformSystem</Filter>
@@ -967,6 +977,9 @@
     <ClCompile Include="source\Input\InputManager.cpp">
       <Filter>Input</Filter>
     </ClCompile>
+    <ClCompile Include="source\Input\KeyCodecpp.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
     <ClCompile Include="source\Physics\PhysicsEvent.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
@@ -1013,6 +1026,5 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\Input\KeyCodecpp.cpp" />
   </ItemGroup>
 </Project>

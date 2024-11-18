@@ -67,6 +67,12 @@ namespace GUI {
   }
 
   void GUIManager::UpdateGUI(std::shared_ptr<Graphics::Framebuffer> const& framebuffer, std::shared_ptr<Graphics::Texture> const& tex) {
+    // TOP SECRET MENU - Developer Tools
+    if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyDown(ImGuiKey_LeftShift)
+      && ImGui::IsKeyPressed(ImGuiKey_GraveAccent)) {
+      GUIVault::sDevTools = !GUIVault::sDevTools;
+    }
+
     // Always run persistent windows
     for (auto const& elem : mPersistentElements) {
       elem->Run();

@@ -30,6 +30,7 @@ namespace GUI
 
   private:
     Scenes::SceneManager& mSceneManager;
+
   };
 
 } // namespace GUI

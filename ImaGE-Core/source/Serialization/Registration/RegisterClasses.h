@@ -214,6 +214,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   {
     using T = Mono::ScriptInstance;
     rttr::registration::class_<T>("ScriptInstance")
+      .property(JSON_SCRIPT_ENTITY_ID_KEY, &T::mEntityID)
       .property(JSON_SCRIPT_NAME_KEY, &T::mScriptName)
       .property(JSON_SCRIPT_FIELD_LIST_KEY, &T::mScriptFieldInstList);
   }
@@ -222,15 +223,22 @@ static void rttr_auto_register_reflection_function_(); namespace {
     .property("fieldName", &Mono::ScriptFieldInfo::mFieldName);
 
   // yay more macros
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<int>, "System.Int32");
   REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<unsigned>, "System.UInt32");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<bool>, "System.Boolean");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<short>, "System.Int16");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<int>, "System.Int32");
   REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<float>, "System.Single");
   REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<double>, "System.Double");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<int64_t>, "System.Int64");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<uint16_t>, "System.UInt16");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<uint64_t>, "System.UInt64");
   REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<std::string>, "System.String");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<glm::vec3>, "System.Numerics.Vector3");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<glm::dvec3>, "IGE.Utils.Vec3<System.Double>");
   REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<std::vector<int>>, "System.Int32[]");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<std::vector<unsigned>>, "System.UInt32[]");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<std::vector<float>>, "System.System.Single[]");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<std::vector<double>>, "System.System.Double[]");
   REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<std::vector<std::string>>, "System.String[]");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<glm::vec3>, "ImaGE-Script.Mono.Vec3<System.float>");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<glm::dvec3>, "ImaGE-Script.Mono.Vec3<System.double>");
+  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<std::vector<unsigned>>, "System.UInt32[]");
   REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<Mono::ScriptInstance>, "Image.Mono.ScriptInstance");
 }

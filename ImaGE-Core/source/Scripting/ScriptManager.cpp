@@ -53,7 +53,6 @@ namespace Mono
   std::unordered_map<std::string, ScriptFieldType> ScriptManager::mScriptFieldTypeMap
   {
     { "System.Boolean", ScriptFieldType::BOOL },
-    { "System.Char",    ScriptFieldType::CHAR },
     { "System.Int16",   ScriptFieldType::SHORT },
     { "System.Int32",   ScriptFieldType::INT },
     { "System.Single",  ScriptFieldType::FLOAT },
@@ -63,15 +62,18 @@ namespace Mono
     { "System.UInt32",  ScriptFieldType::UINT },
     { "System.UInt64",  ScriptFieldType::ULONG },
     { "System.String",  ScriptFieldType::STRING },
-    { "IGE.Utils.Vec2<System.Single>", ScriptFieldType::VEC2 },
-    { "IGE.Utils.Vec3<System.Single>", ScriptFieldType::VEC3 },
-    { "IGE.Utils.Vec2<System.Double>", ScriptFieldType::DVEC2 },
+    { "System.Numerics.Vector3", ScriptFieldType::VEC3 },
     { "IGE.Utils.Vec3<System.Double>", ScriptFieldType::DVEC3 },
     { "System.Int32[]", ScriptFieldType::INT_ARR },
-    { "System.String[]",ScriptFieldType::STRING_ARR},
-    { "Entity",ScriptFieldType::ENTITY},
-    { "Inside",ScriptFieldType::INSIDE},
-    { "InsideB",ScriptFieldType::INSIDEB}
+    { "System.System.Single[]", ScriptFieldType::FLOAT_ARR },
+    { "System.System.Double[]", ScriptFieldType::DOUBLE_ARR },
+    { "System.String[]", ScriptFieldType::STRING_ARR},
+    { "Entity", ScriptFieldType::ENTITY},
+    { "Inside", ScriptFieldType::INSIDE},
+    { "Test", ScriptFieldType::TEST},
+    { "InsideB", ScriptFieldType::INSIDEB},
+    { "PlayerMove", ScriptFieldType::PLAYERMOVE},
+    { "Dialogue", ScriptFieldType::DIALOGUE},
   };
 }
 
@@ -195,6 +197,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetWorldRotation);
   ADD_INTERNAL_CALL(SetWorldScale);
   ADD_INTERNAL_CALL(MoveCharacter);
+  ADD_INTERNAL_CALL(SetAngularVelocity);
 
   //Debug Functions
   ADD_INTERNAL_CALL(Log);
@@ -205,6 +208,7 @@ void ScriptManager::AddInternalCalls()
   //Entity Functions
   ADD_INTERNAL_CALL(GetAxis);
   ADD_INTERNAL_CALL(GetDeltaTime);
+  ADD_INTERNAL_CALL(GetTime);
   ADD_INTERNAL_CALL(MoveCharacter);
   ADD_INTERNAL_CALL(IsGrounded);
   ADD_INTERNAL_CALL(GetTag);
@@ -212,12 +216,15 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(DestroyEntity);
   ADD_INTERNAL_CALL(DestroyScript);
   ADD_INTERNAL_CALL(SetActive);
+  ADD_INTERNAL_CALL(IsActive);
   ADD_INTERNAL_CALL(FindChildByTag);
   ADD_INTERNAL_CALL(FindParentByTag);
   ADD_INTERNAL_CALL(GetAllChildren);
   ADD_INTERNAL_CALL(GetMainCameraPosition);
   ADD_INTERNAL_CALL(GetMainCameraDirection);
   ADD_INTERNAL_CALL(GetText);
+  ADD_INTERNAL_CALL(SetText);
+  ADD_INTERNAL_CALL(AppendText);
   ADD_INTERNAL_CALL(GetImageColor);
   ADD_INTERNAL_CALL(SetImageColor);
 
@@ -399,6 +406,36 @@ ScriptFieldType ScriptManager::MonoTypeToScriptFieldType(MonoType* monoType)
   }
 
   return it->second;
+}
+
+void ScriptManager::LinkAllScriptDataMember()
+{
+  for (ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Script>())
+  {
+    for (ScriptInstance& si : e.GetComponent<Component::Script>().mScriptList)
+    {
+      for (rttr::variant& i : si.mScriptFieldInstList)
+      {
+        if (i.is_type<Mono::DataMemberInstance<ScriptInstance>>())
+        {
+          Mono::DataMemberInstance<ScriptInstance>& sfi = i.get_value<Mono::DataMemberInstance<ScriptInstance>>();
+          if (sfi.mData.mClassInst && ECS::EntityManager::GetInstance().IsValidEntity(sfi.mData.mEntityID) && ECS::Entity(sfi.mData.mEntityID).HasComponent<Component::Script>())
+          {
+            for (ScriptInstance& sij : ECS::Entity(sfi.mData.mEntityID).GetComponent<Component::Script>().mScriptList)
+            {
+              if (sij.mScriptName == sfi.mData.mScriptName && sij.mClassInst)
+              {
+                sfi.mData = sij;
+                si.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
+                break;
+              }
+              
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 
@@ -805,21 +842,33 @@ float  Mono::GetAxis(MonoString* s)
   return Input::InputManager::GetInstance().GetAxis(msg);
 }
 
-void Mono::MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec)
-{
-  if (ECS::Entity(entity).HasComponent<Component::RigidBody>())
-  {
-    //std::cout << "Move: " << dVec.x << "," << dVec.y << "," << dVec.z << "\n";
-    Performance::FrameRateController::TimeType dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
-    ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.x = dVec.x * dt;
-    if(dVec.y == 20.f)
-      ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y = dVec.y * dt;
-    ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.z = dVec.z * dt;
-     
-    IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
-
+void Mono::MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec) {
+  if (!ECS::Entity(entity).HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity does not have the RigidBody component");
+    return;
   }
-    
+
+  Performance::FrameRateController::TimeType dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.x = dVec.x * dt;
+  if(dVec.y == 20.f)
+    ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y = dVec.y * dt;
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.z = dVec.z * dt;
+     
+  IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
+}
+
+void Mono::SetAngularVelocity(ECS::Entity::EntityID entity, glm::vec3 angularVelocity) {
+  if (!ECS::Entity(entity).HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity does not have the RigidBody component");
+    return;
+  }
+
+  Performance::FrameRateController::TimeType dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().angularVelocity.x = angularVelocity.x * dt;
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().angularVelocity.y = angularVelocity.y * dt;
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().angularVelocity.z = angularVelocity.z * dt;
+
+  IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::ANGULAR_VELOCITY);
 }
 
 glm::vec3 Mono::GetMouseDelta()
@@ -891,6 +940,10 @@ MonoString* Mono::GetLayerName(ECS::Entity::EntityID e)
 float Mono::GetDeltaTime()
 {
   return Performance::FrameRateController::GetInstance().GetDeltaTime();
+}
+
+float Mono::GetTime() {
+  return Performance::FrameRateController::GetInstance().GetTime();
 }
 
 
@@ -980,6 +1033,16 @@ void Mono::SetActive(ECS::Entity::EntityID entity, bool b)
     Debug::DebugLogger::GetInstance().LogError("You r trying to set active on an invalid entity");
 }
 
+bool Mono::IsActive(ECS::Entity::EntityID entity) {
+  if (ECS::Entity{ entity } && ECS::Entity{ entity }.HasComponent<Component::Tag>()) {
+    return ECS::Entity{ entity }.GetComponent<Component::Tag>().isActive;
+  }
+  else {
+    Debug::DebugLogger::GetInstance().LogError("Entity does not have the tag component!");
+    return false;
+  }
+}
+
 MonoArray* Mono::GetAllChildren(ECS::Entity::EntityID entity)
 {
   std::vector<ECS::Entity::EntityID> allChildren{};
@@ -1032,12 +1095,38 @@ MonoString* Mono::GetText(ECS::Entity::EntityID entity)
     if (ECS::Entity(entity).HasComponent<Component::Text>())
       msg = ECS::Entity(entity).GetComponent<Component::Text>().textContent;
     else
-      Debug::DebugLogger::GetInstance().LogError("You r trying to Get text from an entity that does not have text component");
+      Debug::DebugLogger::GetInstance().LogError("You are trying to Get text from an entity that does not have text component");
   }
   else
-    Debug::DebugLogger::GetInstance().LogError("You r trying to Get text from an invalid entity");
+    Debug::DebugLogger::GetInstance().LogError("You are trying to Get text from an invalid entity");
 
   return STDToMonoString(msg);
+}
+
+void Mono::SetText(ECS::Entity::EntityID textEntity, MonoString* textContent) {
+  std::string scriptTextContent{ MonoStringToSTD(textContent) };
+  
+  if (!ECS::Entity{ textEntity }.HasComponent<Component::Text>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to Set Text of an entity that does not have the Text Component");
+    return;
+  }
+
+  Component::Text& TextComponent{ ECS::Entity{ textEntity }.GetComponent<Component::Text>() };
+  TextComponent.textContent = scriptTextContent;
+  TextComponent.newLineIndicesUpdatedFlag = false;
+}
+
+void Mono::AppendText(ECS::Entity::EntityID textEntity, MonoString* textContent) {
+  std::string scriptTextContent{ MonoStringToSTD(textContent) };
+
+  if (!ECS::Entity{ textEntity }.HasComponent<Component::Text>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to Append Text of an entity that does not have the Text Component");
+    return;
+  }
+
+  Component::Text& TextComponent{ ECS::Entity{ textEntity }.GetComponent<Component::Text>() };
+  TextComponent.textContent += scriptTextContent;
+  TextComponent.newLineIndicesUpdatedFlag = false;
 }
 
 

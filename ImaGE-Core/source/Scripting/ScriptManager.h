@@ -118,6 +118,9 @@ namespace Mono
 		static bool IsMonoBehaviourclass(MonoClass* mc);
 
 
+		static void LinkAllScriptDataMember();
+
+
 		
 
 		/*!**********************************************************************
@@ -309,6 +312,8 @@ namespace Mono
 
 		static void MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec);
 
+		static void SetAngularVelocity(ECS::Entity::EntityID entity, glm::vec3 angularVelocity);
+
 		static bool IsGrounded(ECS::Entity::EntityID entity);
 
 		static ECS::Entity::EntityID Raycast(glm::vec3 start, glm::vec3 end);
@@ -323,6 +328,8 @@ namespace Mono
 		
 		static float GetDeltaTime();
 
+		static float GetTime();
+
 		static glm::vec3 GetMouseDelta();
 
 		static MonoObject* FindScript(MonoString* s);
@@ -332,6 +339,8 @@ namespace Mono
 		static void DestroyScript(MonoObject* obj, ECS::Entity::EntityID entity);
 
 		static void SetActive(ECS::Entity::EntityID entity,bool b);
+
+		static bool IsActive(ECS::Entity::EntityID entity);
 
 		static glm::vec3 GetMousePos();
 
@@ -346,6 +355,10 @@ namespace Mono
 		static glm::vec3 GetMainCameraDirection(ECS::Entity::EntityID cameraEntity);
 		
 		static MonoString* GetText(ECS::Entity::EntityID entity);
+
+		static void SetText(ECS::Entity::EntityID textEntity, MonoString* textContent);
+
+		static void AppendText(ECS::Entity::EntityID textEntity, MonoString* textContent);
 
 		static glm::vec4 GetImageColor(ECS::Entity::EntityID entity);
 

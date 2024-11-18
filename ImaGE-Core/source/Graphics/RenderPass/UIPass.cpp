@@ -97,10 +97,11 @@ namespace Graphics {
 					continue;
 				}
 
+				/*
 				if (uiEntity.HasComponent<Component::Text>()) {
 					continue;
 
-					/*
+
 					auto& textComp = uiEntity.GetComponent<Component::Text>();
 
 					if (std::shared_ptr<Systems::TextSystem> textSys =
@@ -130,10 +131,10 @@ namespace Graphics {
 
 						shader->Unuse();
 					}
-					*/
 				}
+				*/
 
-				else if (uiEntity.HasComponent<Component::Image>()) {
+				if (uiEntity.HasComponent<Component::Image>()) {
 					auto const& imageComp = uiEntity.GetComponent<Component::Image>();
 
 					if (imageComp.textureAsset)

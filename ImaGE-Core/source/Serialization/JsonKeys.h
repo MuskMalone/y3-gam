@@ -31,6 +31,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #define JSON_SCENE_KEY              "Scene"
 #define JSON_LAYERS_KEY             "Layers"
 
+#define JSON_SCRIPT_ENTITY_ID_KEY   "entityID"
 #define JSON_SCRIPT_LIST_KEY        "scriptList"
 #define JSON_SCRIPT_NAME_KEY        "scriptName"
 #define JSON_SCRIPT_FIELD_LIST_KEY  "scriptFieldInstList"

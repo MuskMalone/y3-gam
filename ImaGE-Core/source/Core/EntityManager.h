@@ -3,6 +3,8 @@
 #include <Core/Components/Tag.h>
 #include <Singleton/ThreadSafeSingleton.h>
 
+#define IGE_ENTITYMGR ECS::EntityManager::GetInstance()
+
 // forward declaration
 namespace Reflection{ class ObjectFactory; }
 

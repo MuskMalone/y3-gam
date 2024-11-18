@@ -31,8 +31,11 @@ namespace GUI
 
   void Toolbar::Run()
   {
+
     if (ImGui::BeginMainMenuBar())
     {
+      float const contentRegionX{ ImGui::GetContentRegionAvail().x };
+
       if (ImGui::BeginMenu("File"))
       {
         const char* const sceneFilter{ "Scenes (*.scn)\0*.scn" }, * const initialDir{ "..\\Assets\\Scenes" };
@@ -182,6 +185,15 @@ namespace GUI
       }
       RunNewScenePopup();
       RunNewPrefabPopup();
+
+      if (GUI::GUIVault::sDevTools) {
+        float const originalCursorX{ ImGui::GetCursorPosX() };
+        ImGui::SetCursorPosX(contentRegionX * 0.5f - ImGui::CalcTextSize("DEVELOP").x);
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 200));
+        ImGui::Text("DEVELOPER MODE");
+        ImGui::PopStyleColor();
+        ImGui::SetCursorPosX(originalCursorX);
+      }
 
       ImGui::EndMainMenuBar();
     }

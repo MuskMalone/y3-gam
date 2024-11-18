@@ -25,6 +25,7 @@ namespace Graphics{
 		static MeshSource CreateQuad();
 		static MeshSource CreateCube();
 		static MeshSource CreatePlane();
-		static MeshSource CreateCapsule();
+		static MeshSource CreateSphere(uint32_t stacks = 32, uint32_t slices = 32);
+		static MeshSource CreateCapsule(float radius = 0.5f, float height = 1.0f, int stacks = 16, int slices = 16);
 	};
 }
