@@ -309,7 +309,7 @@ namespace Graphics {
 		Graphics::FramebufferSpec postprocessSpec;
 		postprocessSpec.width = WINDOW_WIDTH<int>;
 		postprocessSpec.height = WINDOW_HEIGHT<int>;
-		postprocessSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };	// temporarily max. 1 shadow-caster
+		postprocessSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH24STENCIL8 };	// temporarily max. 1 shadow-caster
 
 		PipelineSpec postprocessPSpec;
 
