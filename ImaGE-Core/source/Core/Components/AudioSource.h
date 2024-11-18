@@ -16,6 +16,8 @@ namespace Component{
 		AudioSource();
 		void Clear() noexcept;
 		void PlaySound(std::string const&) const;
+		void PauseSound(std::string const& id) const;
+		void StopSound(std::string const& id) const;
 		void RemoveSound(std::string const&);
 		void CreateSound(std::string const&);
 		void RenameSound(std::string const& currentName, std::string const& newName);

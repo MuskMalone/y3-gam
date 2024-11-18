@@ -77,9 +77,12 @@ namespace Graphics {
       std::vector<MaterialGroup> materialGroups;
 
       // STEP UNO: Collect entities into material groups!!!
-      auto const& entitiesMat = ecsMan.GetAllEntitiesWithComponents< Component::Transform, Component::Mesh>();
-      for (auto const& e : entitiesMat) {
-          ECS::Entity entity{ e };
+      
+      //auto const& entitiesMat = ecsMan.GetAllEntitiesWithComponents< Component::Transform, Component::Mesh>();
+      
+      for (ECS::Entity const& entity : entities) {
+          if (!entity.HasComponent<Component::Transform, Component::Mesh>()) continue;
+
           auto const& mesh = entity.GetComponent<Component::Mesh>();
 
           if (!mesh.meshSource.IsValid()) continue;
