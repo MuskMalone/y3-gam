@@ -2,14 +2,14 @@
     "name": "Painting Frame",
     "shader": "PBR",
     "albedoColor": {
-        "x": 0.026630302891135217,
-        "y": 0.040133774280548099,
-        "z": 0.022952759638428689
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
     },
-    "metalness": 0.0,
-    "roughness": 1.0,
+    "metalness": 0.5,
+    "roughness": 0.5,
     "ao": 1.0,
-    "emission": 0.4099999964237213,
+    "emission": 0.0,
     "transparency": 1.0,
     "tiling": {
         "x": 1.0,

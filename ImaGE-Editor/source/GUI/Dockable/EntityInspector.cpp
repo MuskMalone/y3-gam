@@ -114,6 +114,16 @@ namespace GUI {
       entityRotModified = false;
       static Component::PrefabOverrides* prefabOverride{ nullptr };
       static bool componentOverriden{ false };
+
+      // show the entity ID in dev mode
+      if (GUIVault::sDevTools) {
+        ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+        ImGui::Text(("Entity ID: " + std::to_string(currentEntity.GetEntityID())).c_str());
+        ImGui::PopStyleColor();
+        ImGui::PopFont();
+      }
+
       if (!mEditingPrefab && currentEntity.HasComponent<Component::PrefabOverrides>()) {
         prefabOverride = &currentEntity.GetComponent<Component::PrefabOverrides>();
         IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
