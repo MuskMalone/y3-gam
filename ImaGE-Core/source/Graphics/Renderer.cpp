@@ -8,6 +8,7 @@
 #include "MaterialData.h"
 #include <Graphics/Mesh/Mesh.h>
 #pragma region RenderPasses
+#include <Graphics/RenderPass/SkyboxPass.h>
 #include <Graphics/RenderPass/GeomPass.h>
 #include <Graphics/RenderPass/ShadowPass.h>
 #include <Graphics/RenderPass/ScreenPass.h>
@@ -267,6 +268,23 @@ namespace Graphics {
 		AddPass(RenderPass::Create<PickPass>(pickPassSpec));*/
 	}
 
+	void Renderer::InitSkyboxPass(std::shared_ptr<Framebuffer> const& fb){
+		Graphics::FramebufferSpec skyboxSpec;
+		skyboxSpec.width = WINDOW_WIDTH<int>;
+		skyboxSpec.height = WINDOW_HEIGHT<int>;
+		skyboxSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };
+
+		PipelineSpec skyboxPSpec;
+		skyboxPSpec.shader = ShaderLibrary::Get("Skybox");
+		skyboxPSpec.targetFramebuffer = Framebuffer::Create(skyboxSpec);
+
+		RenderPassSpec skyboxPassSpec;
+		skyboxPassSpec.pipeline = Pipeline::Create(skyboxPSpec);
+		skyboxPassSpec.debugName = "Skybox Pass";
+
+		AddPass(RenderPass::Create<SkyboxPass>(skyboxPassSpec));
+	}
+
 	void Renderer::InitShadowMapPass() {
 		Graphics::FramebufferSpec shadowSpec;
 		shadowSpec.width = shadowSpec.height = 2048;
@@ -287,15 +305,15 @@ namespace Graphics {
 		AddPass(RenderPass::Create<ShadowPass>(shadowPassSpec));
 	}
 
-	void Renderer::InitScreenPass() { //might remove
-		Graphics::FramebufferSpec screenSpec;
-		screenSpec.width = WINDOW_WIDTH<int>;
-		screenSpec.height = WINDOW_HEIGHT<int>;
-		screenSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };
+	void Renderer::InitScreenPass(std::shared_ptr<Framebuffer> const& fb) { //might remove
+		//Graphics::FramebufferSpec screenSpec;
+		//screenSpec.width = WINDOW_WIDTH<int>;
+		//screenSpec.height = WINDOW_HEIGHT<int>;
+		//screenSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };
 
 		PipelineSpec screenPSpec;
 		screenPSpec.shader = ShaderLibrary::Get("FullscreenQuad");
-		screenPSpec.targetFramebuffer = Framebuffer::Create(screenSpec);
+		screenPSpec.targetFramebuffer = fb;
 
 		RenderPassSpec screenPassSpec;
 		screenPassSpec.pipeline = Pipeline::Create(screenPSpec);
@@ -325,24 +343,26 @@ namespace Graphics {
 	}
 
 	void Renderer::InitUIPass() {
-		Graphics::FramebufferSpec screenSpec;
-		screenSpec.width = WINDOW_WIDTH<int>;
-		screenSpec.height = WINDOW_HEIGHT<int>;
-		screenSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };
+		Graphics::FramebufferSpec fbSpec;
+		fbSpec.width = WINDOW_WIDTH<int>;
+		fbSpec.height = WINDOW_HEIGHT<int>;
+		fbSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };
+		auto const& fb = Framebuffer::Create(fbSpec);
 
-		PipelineSpec screenPSpec;
-		screenPSpec.shader = ShaderLibrary::Get("FullscreenQuad");
-		screenPSpec.targetFramebuffer = Framebuffer::Create(screenSpec);
+		//PipelineSpec screenPSpec;
+		//screenPSpec.shader = ShaderLibrary::Get("FullscreenQuad");
+		//screenPSpec.targetFramebuffer = fb;
 
-		RenderPassSpec screenPassSpec;
-		screenPassSpec.pipeline = Pipeline::Create(screenPSpec);
-		screenPassSpec.debugName = "Screen Pass";
+		//RenderPassSpec screenPassSpec;
+		//screenPassSpec.pipeline = Pipeline::Create(screenPSpec);
+		//screenPassSpec.debugName = "Screen Pass";
 
-		AddPass(RenderPass::Create<ScreenPass>(screenPassSpec));
+		//AddPass(RenderPass::Create<ScreenPass>(screenPassSpec));
+		InitScreenPass(fb);
 
 		PipelineSpec uiPSpec;
 		uiPSpec.shader = ShaderLibrary::Get("Tex2D");
-		uiPSpec.targetFramebuffer = screenPSpec.targetFramebuffer;
+		uiPSpec.targetFramebuffer = fb;
 		uiPSpec.lineWidth = 2.5f;
 
 		RenderPassSpec uiPassSpec;

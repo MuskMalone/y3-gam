@@ -751,6 +751,7 @@
     <ClInclude Include="source\pch.h" />
     <ClInclude Include="source\Graphics\MeshSubmeshKeyHash.h" />
     <ClInclude Include="source\Core\Components\Sprite2D.h" />
+    <ClInclude Include="source\Graphics\RenderPass\SkyboxPass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -1014,5 +1015,6 @@
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
     <ClCompile Include="source\Input\KeyCodecpp.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\SkyboxPass.cpp" />
   </ItemGroup>
 </Project>

@@ -237,9 +237,10 @@ namespace Graphics {
 
 		static void InitShaders();
 		static void InitPickPass();
+		static void InitSkyboxPass(std::shared_ptr<Framebuffer> const& fb);
 		static void InitGeomPass();
 		static void InitShadowMapPass();
-		static void InitScreenPass();
+		static void InitScreenPass(std::shared_ptr<Framebuffer> const& fb);
 		static void InitPostProcessPass();
 		static void InitUIPass();
 		static void InitMeshSources();
