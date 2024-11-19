@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "Application.h"
+#include <Serialization/Registration/RegisterClasses.h>
+#include <Serialization/Registration/RegisterComponents.h>
+#include <Serialization/Registration/RegisterEnumsAndFuncs.h>
 //#include <GameApplication.h>
 
 int Main(int argc, char** argv) {
