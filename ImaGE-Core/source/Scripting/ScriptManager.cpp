@@ -420,6 +420,7 @@ std::vector<ScriptInstance> ScriptManager::SerialMonoObjectVec(std::vector<MonoO
     toSer.emplace_back(obj, false, true);
   }
 
+  return toSer;
 }
 
 void ScriptManager::LinkAllScriptDataMember()
