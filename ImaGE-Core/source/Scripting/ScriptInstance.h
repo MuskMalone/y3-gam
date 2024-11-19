@@ -86,7 +86,7 @@ namespace Mono {
 		************************************************************************/
 		ScriptInstance(const std::string& scriptName);
 
-		ScriptInstance(MonoObject* mo, bool setEntityID = false);
+		ScriptInstance(MonoObject* mo, bool setEntityID = false, bool forSerialization = false);
 
 		/*!*********************************************************************
 		\brief

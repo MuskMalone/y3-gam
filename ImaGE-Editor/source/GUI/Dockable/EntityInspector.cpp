@@ -2501,7 +2501,7 @@ namespace {
 
         std::string scriptName = Mono::ScriptManager::GetInstance().mRevClassMap[Mono::ScriptFieldType::ENTITY];
         MonoObject* newObj = Mono::ScriptManager::GetInstance().InstantiateClass(scriptName.c_str());
-        Mono::ScriptInstance si = Mono::ScriptInstance(newObj,true); //We are not using the SI, we just pass this into the ctor so that we can set the EntityID of this Obj to an invalidID
+        Mono::ScriptInstance si = Mono::ScriptInstance(newObj,true,false); //We are not using the SI, we just pass this into the ctor so that we can set the EntityID of this Obj to an invalidID
         list.push_back(newObj);
         changed = true;
       }

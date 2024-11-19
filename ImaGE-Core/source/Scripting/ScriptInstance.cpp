@@ -39,7 +39,7 @@ ScriptInstance::ScriptInstance(const std::string& scriptName) : mScriptName{scri
   GetAllFieldsInst();
 }
 
-ScriptInstance::ScriptInstance(MonoObject* mo, bool setEntityID)  //ctor to create temp scriptinstance (only for displaying std::vector<MonoObject*> in inspector)
+ScriptInstance::ScriptInstance(MonoObject* mo, bool setEntityID, bool forSerialization)  //ctor to create temp scriptinstance (only for displaying std::vector<MonoObject*> in inspector)
 {
   Mono::ScriptManager* sm = &Mono::ScriptManager::GetInstance();
   mScriptClass = mono_object_get_class(mo);
@@ -54,6 +54,9 @@ ScriptInstance::ScriptInstance(MonoObject* mo, bool setEntityID)  //ctor to crea
     SetEntityID(static_cast<ECS::Entity::EntityID>(std::numeric_limits<unsigned>().max()));
     mono_gchandle_free(mGcHandle);
   }
+  if(forSerialization)
+    mEntityID = static_cast<ECS::Entity::EntityID>(mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData);
+  
     
 }
 
