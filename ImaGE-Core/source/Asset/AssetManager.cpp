@@ -38,7 +38,7 @@ namespace IGE {
 				for (std::pair<AssetMetadata::AssetPropsKey, AssetMetadata::AssetProps> const& entry : category.second) {
 					//if the attribute path doesnt exist :(
 					if (entry.second.find("path") == entry.second.end())
-						throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("asset doesnt have a path!"));
+						throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("asset " + std::to_string(entry.first) + " doesnt have a path!"));
 					mGUID2PathRegistry.emplace(GUID{ entry.first }, entry.second.at("path"));
 					mPath2GUIDRegistry.emplace(entry.second.at("path"), GUID(entry.first));
 				}
@@ -88,6 +88,33 @@ namespace IGE {
 			////to delete
 			//auto fp{ CreateProjectFile() };
 			//Serialization::Serializer::SerializeAny(mMetadata, fp);
+
+			// erase all files that no longer exist from metadata
+			bool removed{ false };
+			for (auto& entry : mMetadata.mAssetProperties) {
+				for (auto iter{ entry.second.begin() }; iter != entry.second.end();) {
+					if (!iter->second.contains("path")) {
+#ifdef _DEBUG
+						std::cout << "[AssetManager] Removed invalid metadata for asset " << iter->first << "\n";
+#endif
+					}
+
+					if (!std::filesystem::exists(iter->second["path"])) {
+#ifdef _DEBUG
+						std::cout << "[AssetManager] Removed " << iter->second["path"] << " from asset metadata as it no longer exists\n";
+#endif
+						removed = true;
+						iter = entry.second.erase(iter);
+					}
+					else {
+						++iter;
+					}
+				}
+			}
+
+			if (removed) {
+				SaveMetadata();
+			}
 		}
 
 		AssetManager::~AssetManager()

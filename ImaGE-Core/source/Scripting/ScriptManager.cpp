@@ -29,7 +29,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Input/InputManager.h"
 #include "Asset/AssetManager.h"
 #include "Physics/PhysicsSystem.h"
-#define DEBUG_MONO
+//#define DEBUG_MONO
 namespace Mono
 {
   std::map<std::string, ScriptClassInfo> ScriptManager::mMonoClassMap{};
