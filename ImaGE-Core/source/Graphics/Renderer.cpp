@@ -25,6 +25,7 @@ namespace Graphics {
 	MaterialTable Renderer::mMaterialTable;
 	ShaderLibrary Renderer::mShaderLibrary;
 	std::vector<IGE::Assets::GUID> Renderer::mIcons;
+	std::vector<IGE::Assets::GUID> Renderer::mSkyboxTextures;
 	std::shared_ptr<Framebuffer> Renderer::mFinalFramebuffer;
 	std::unordered_map<std::type_index, std::shared_ptr<RenderPass>> Renderer::mTypeToRenderPass;
 	std::vector<std::shared_ptr<RenderPass>> Renderer::mRenderPasses;
@@ -219,6 +220,14 @@ namespace Graphics {
 		mIcons.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(spotlightIcon));
 		//mIcons.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(cameraIcon));
 		
+		//TEMP
+		IGE::Assets::GUID sunrise{ Texture::Create(gAssetsDirectory + std::string("Textures\\sunrise.png")) };
+		IGE::Assets::GUID night{ Texture::Create(gAssetsDirectory + std::string("Textures\\night.png")) };
+		mSkyboxTextures.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(sunrise));
+		mSkyboxTextures.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(night));
+
+		
+		//IGE::Assets::GUID nightHDR{};
 	}
 
 	void Renderer::InitShaders() {
@@ -229,6 +238,8 @@ namespace Graphics {
 		ShaderLibrary::Add("ShadowMap", Shader::Create("ShadowMap.vert.glsl", "ShadowMap.frag.glsl"));
 		ShaderLibrary::Add("FullscreenQuad", Shader::Create("FullscreenQuad.vert.glsl", "FullscreenQuad.frag.glsl"));
 		ShaderLibrary::Add("Tex2D", Shader::Create("Tex2D.vert.glsl", "Tex2D.frag.glsl"));
+		ShaderLibrary::Add("SkyboxProc", Shader::Create("Skybox\\Procedural.vert.glsl", "Skybox\\Procedural.frag.glsl"));
+		ShaderLibrary::Add("SkyboxPano", Shader::Create("Skybox\\Panoramic.vert.glsl", "Skybox\\Panoramic.frag.glsl"));
 	}
 
 	void Renderer::InitGeomPass() {
@@ -237,10 +248,13 @@ namespace Graphics {
 		framebufferSpec.width = WINDOW_WIDTH<int>;
 		framebufferSpec.height = WINDOW_HEIGHT<int>;
 		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
+		std::shared_ptr<Framebuffer> fb = Framebuffer::Create(framebufferSpec);
+
+		InitSkyboxPass(fb);
 
 		PipelineSpec geomPipelineSpec;
 		geomPipelineSpec.shader = ShaderLibrary::Get("PBR");
-		geomPipelineSpec.targetFramebuffer = Framebuffer::Create(framebufferSpec);
+		geomPipelineSpec.targetFramebuffer = fb;
 		geomPipelineSpec.lineWidth = 2.5f;
 
 		RenderPassSpec geomPassSpec;
@@ -269,14 +283,10 @@ namespace Graphics {
 	}
 
 	void Renderer::InitSkyboxPass(std::shared_ptr<Framebuffer> const& fb){
-		Graphics::FramebufferSpec skyboxSpec;
-		skyboxSpec.width = WINDOW_WIDTH<int>;
-		skyboxSpec.height = WINDOW_HEIGHT<int>;
-		skyboxSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };
-
 		PipelineSpec skyboxPSpec;
-		skyboxPSpec.shader = ShaderLibrary::Get("Skybox");
-		skyboxPSpec.targetFramebuffer = Framebuffer::Create(skyboxSpec);
+		skyboxPSpec.shader = ShaderLibrary::Get("SkyboxProc");
+		//skyboxPSpec.shader = ShaderLibrary::Get("SkyboxPano");
+		skyboxPSpec.targetFramebuffer = fb;
 
 		RenderPassSpec skyboxPassSpec;
 		skyboxPassSpec.pipeline = Pipeline::Create(skyboxPSpec);
@@ -349,15 +359,6 @@ namespace Graphics {
 		fbSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };
 		auto const& fb = Framebuffer::Create(fbSpec);
 
-		//PipelineSpec screenPSpec;
-		//screenPSpec.shader = ShaderLibrary::Get("FullscreenQuad");
-		//screenPSpec.targetFramebuffer = fb;
-
-		//RenderPassSpec screenPassSpec;
-		//screenPassSpec.pipeline = Pipeline::Create(screenPSpec);
-		//screenPassSpec.debugName = "Screen Pass";
-
-		//AddPass(RenderPass::Create<ScreenPass>(screenPassSpec));
 		InitScreenPass(fb);
 
 		PipelineSpec uiPSpec;

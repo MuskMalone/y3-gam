@@ -208,8 +208,6 @@ namespace Graphics {
 		static IGE::Assets::GUID GetDebugMeshSource(size_t idx = 0);
 
 		static IGE::Assets::GUID GetQuadMeshSource();
-		
-		static std::vector<IGE::Assets::GUID> mIcons;
 	private:
 		static void SetQuadBufferData(glm::vec3 const& pos, glm::vec4 const& clr,
 									  glm::vec2 const& texCoord, float texIdx, int entity);
@@ -264,6 +262,9 @@ namespace Graphics {
 	public: // TEMP
 		template <typename T>
 		static std::shared_ptr<T> GetPass() { return std::static_pointer_cast<T>(mTypeToRenderPass[typeid(T)]); }
+
+		static std::vector<IGE::Assets::GUID> mIcons;
+		static std::vector<IGE::Assets::GUID> mSkyboxTextures;
 
 		static std::unordered_map<std::type_index, std::shared_ptr<RenderPass>> mTypeToRenderPass;
 		static std::vector<std::shared_ptr<RenderPass>> mRenderPasses;

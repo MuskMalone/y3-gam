@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "SkyboxPass.h"
 #include "Graphics/Renderer.h"
-
+#include "Asset/IGEAssets.h"
 namespace Graphics {
 	SkyboxPass::SkyboxPass(const RenderPassSpec& spec) : RenderPass{ spec } {
 
@@ -12,23 +12,17 @@ namespace Graphics {
 		Renderer::Clear();
 
 		auto const& shader = mSpec.pipeline->GetShader();
-		shader->SetUniform("u_ScreenTex", mInputTexture);
-		Renderer::RenderFullscreenTexture();
 
+		glm::mat4 invViewProjMatrix = glm::inverse(cam.viewProjMatrix);
+
+		shader->SetUniform("u_InvViewProj", invViewProjMatrix);
+		shader->SetUniform("u_Panoramic", IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(Renderer::mSkyboxTextures[0])->mTexture);
+		shader->SetUniform("u_Exposure", 1.f);
+		glDepthMask(GL_FALSE); // Disable depth writes for background
+		Renderer::RenderFullscreenTexture();
+		glDepthMask(GL_TRUE);
 		End();
 
-		auto const& fb = mSpec.pipeline->GetSpec().targetFramebuffer;
-
-		// Check if mOutputTexture is null or if dimensions don’t match
-		if (!mOutputTexture || mOutputTexture->GetWidth() != fb->GetFramebufferSpec().width || mOutputTexture->GetHeight() != fb->GetFramebufferSpec().height) {
-			// Create or resize mOutputTexture based on the framebuffer's specs
-			mOutputTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
-		}
-
-		// Perform the copy operation
-		if (mOutputTexture) {
-			mOutputTexture->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
-		}
 	}
 }
 
