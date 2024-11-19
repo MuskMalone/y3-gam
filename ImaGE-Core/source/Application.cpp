@@ -54,7 +54,7 @@ namespace IGE {
     Reflection::ObjectFactory::CreateInstance();
     Scenes::SceneManager::CreateInstance();
     Prefabs::PrefabManager::CreateInstance();
-    Performance::FrameRateController::CreateInstance(90.f, 0.2f, false);
+    Performance::FrameRateController::CreateInstance(120.f, 0.2f, false);
     Input::InputManager::CreateInstance(mWindow, mSpecification.WindowWidth, mSpecification.WindowHeight, 0.1);
     Mono::ScriptManager::CreateInstance();
     ECS::EntityManager::CreateInstance();

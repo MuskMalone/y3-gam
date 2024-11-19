@@ -65,7 +65,6 @@ namespace IGE {
 		}
 
 		void PhysicsSystem::Update() {
-			if (mDrawDebug)
 				mRays.clear();
 			mOnTriggerPairs.clear();
 			if (Scenes::SceneManager::GetInstance().GetSceneState() != Scenes::SceneState::PLAYING) {
@@ -688,11 +687,31 @@ namespace IGE {
 		bool PhysicsSystem::RayCastFromEntity(ECS::Entity entity, glm::vec3 const& origin, glm::vec3 const& end, RaycastHit& result)
 		{
 			//hit buffer is 2 to account for in case the ray hits the origin entity
-			physx::PxRaycastBufferN<2> hitBuffer{};
+			const int sz{ 8 };
+			physx::PxRaycastBufferN<sz> hitBuffer{};
 			auto dir{ glm::normalize(end - origin) };
 			auto magnitude{ glm::distance(origin, end) };
 			bool hit{ mScene->raycast(ToPxVec3(origin), ToPxVec3(dir), magnitude, hitBuffer) };
 			if (hit) {
+				if (hitBuffer.nbTouches == 1){
+					if (mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[0].actor)) == entity) {
+						mRays.emplace_back(RayCastResult{
+							origin, end, result, false
+							});
+						return false;
+					}
+					else {
+						result.entity = mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[0].actor));
+						result.distance = hitBuffer.touches[0].distance;
+						result.normal = ToGLMVec3(hitBuffer.touches[0].normal);
+						result.position = ToGLMVec3(hitBuffer.touches[0].position);
+						return true;
+					}
+				}
+				//sort the distance of the objects
+				std::sort(hitBuffer.touches, hitBuffer.touches + hitBuffer.getNbTouches(), [](const physx::PxRaycastHit& a, const physx::PxRaycastHit& b) {
+					return a.distance < b.distance;
+				});
 				uint64_t idx{};
 				ECS::Entity entity1 { mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[0].actor)) };
 				ECS::Entity entity2 { mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[1].actor)) };

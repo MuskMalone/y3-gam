@@ -362,6 +362,13 @@ namespace IGE {
 
         void AudioManager::PlaySound(IGE::Assets::GUID const& guid, SoundInvokeSetting const& settings, uint64_t group)
         {
+            if (settings.paused) {
+                for (auto& channel : settings.channels) {
+                    channel->setPaused(false);
+                }
+                settings.paused = false;
+                return; // dont run rest of function
+            }
             //gets the SoundAsset ref
             if (!IGE::Assets::AssetManager::GetInstance().IsGUIDValid<IGE::Assets::AudioAsset>(guid)) {
                 IGE_ASSETMGR.LoadRef<IGE::Assets::AudioAsset>(guid);
@@ -372,9 +379,28 @@ namespace IGE {
                 sound.PlaySound(settings, mGroup.at(group));
             }
             else {
-
                 Debug::DebugLogger::GetInstance().LogError("sound " + std::to_string(guid) + " does not exist");
             }
+            settings.paused = false;
+        }
+
+        void AudioManager::PauseSound(IGE::Assets::GUID const& guid, SoundInvokeSetting const& setting)
+        {
+            //gets the SoundAsset ref
+            if (!setting.paused) {
+                for (auto& channel : setting.channels) {
+                    channel->setPaused(true);
+                }
+                setting.paused = true;
+            }
+        }
+
+        void AudioManager::StopSound(IGE::Assets::GUID const& guid, SoundInvokeSetting const& setting)
+        {
+            for (auto& channel : setting.channels) {
+                channel->stop();
+            }
+            setting.paused = false;
         }
 
         void AudioManager::FreeSound(uint32_t sound)
@@ -459,7 +485,7 @@ namespace IGE {
             }
         }
         void Sound::PlaySound(SoundInvokeSetting const& settings, FMOD::ChannelGroup* group) {
-            AudioManager::GetInstance().    PlaySound(mKeyhash, settings, group);
+            AudioManager::GetInstance().PlaySound(mKeyhash, settings, group);
         }
         FMOD_RESULT SoundInvokeSetting::FMODChannelCallback(
             FMOD_CHANNELCONTROL* chanCtrl, FMOD_CHANNELCONTROL_TYPE type, 

@@ -142,9 +142,8 @@
     <Compile Include="source\ToolsPuzzle\RotationGuidanceToolsPainting.cs" />
     <Compile Include="source\Triggers\DeathtriggerPit.cs" />
     <Compile Include="source\Triggers\FinishLineTrigger.cs" />
-    <Compile Include="source\Yukitestscripts\SelectionManager.cs" />
-    <Compile Include="source\Yukitestscripts\skyboxcontroller1.cs" />
-    <Compile Include="source\other interactable\NoteInteraction.cs" />
+    <Compile Include="source\SelectionManager.cs" />
+    <Compile Include="source\InteractableObject\NoteInteraction.cs" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

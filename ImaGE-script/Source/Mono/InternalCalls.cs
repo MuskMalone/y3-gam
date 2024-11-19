@@ -187,6 +187,11 @@ namespace IGE.Utils
     extern public static void PlaySound(uint entity, string sound);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void PauseSound(uint entity, string sound);
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void StopSound(uint entity, string sound);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static float GetDeltaTime();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]

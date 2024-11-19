@@ -46,6 +46,7 @@ namespace Mono {
 		INSIDEB,
 		PLAYERMOVE,
 		DIALOGUE,
+		PLAYERINTERACTION,
 	};
 
 

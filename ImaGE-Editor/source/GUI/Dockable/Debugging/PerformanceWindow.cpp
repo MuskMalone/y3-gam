@@ -12,11 +12,12 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "PerformanceWindow.h"
 #include <ImGui/imgui.h>
 #include <numeric>
+#include "GUI/GUIVault.h"
 
 namespace GUI {
 
   PerformanceWindow::PerformanceWindow(const char* name) : GUIWindow(name),
-    mFPSHistory{}, mContainerStartIdx{}, mTimePerUpdate{ 0.01f }, mCurrentFPS{}, mFPSMaxCount{ 120 } {
+    mFPSHistory{}, mContainerStartIdx{}, mTimePerUpdate{ 0.05f }, mCurrentFPS{}, mFPSMaxCount{ 120 } {
     mFPSHistory.reserve(sResizeThreshold);
   }
 
@@ -30,7 +31,10 @@ namespace GUI {
     ImVec2 chartSize{ ImGui::GetContentRegionAvail() };
     chartSize.y /= 4; // take up half the height
 
+    ImGui::PushFont(GUI::GUIVault::GetStyler().GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
     ImGui::Text("FPS Chart");
+    ImGui::PopFont();
+
     ImGui::PlotLines("##FPSChart", mFPSHistory.data(), mFPSMaxCount,
       mContainerStartIdx, averageStr.c_str(), 0.f,
       static_cast<float>(Performance::FrameRateController::GetInstance().GetTargetFPS()) + 10.f, chartSize);
@@ -51,7 +55,23 @@ namespace GUI {
       }
     }
 
+    // Overall Performance
+    ImGui::NewLine();
+    ImGui::PushFont(GUI::GUIVault::GetStyler().GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
+    ImGui::Text("Overall System Performance (In Percentage)");
+    ImGui::PopFont();
+    for (const auto& [systemName, systemPercentage] : mSystemPercentages) {
+      std::ostringstream percentStream;
+      percentStream << systemName << ": " << std::fixed << std::setprecision(2) << systemPercentage << "%";
+      ImGui::Text(percentStream.str().c_str());
+    }
+    ImGui::NewLine();
+
     // System Performance Charts
+    ImGui::PushFont(GUI::GUIVault::GetStyler().GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
+    ImGui::Text("Individual System Charts");
+    ImGui::PopFont();
+ 
     chartSize.y = (chartSize.y / 4) * 3;
 
     for (const auto& [systemName, history] : mSystemUpdateHistory) {
