@@ -35,7 +35,8 @@ namespace Mono
 	class ScriptManager : public ThreadSafeSingleton<ScriptManager>
 	{
 		static std::map<std::string, ScriptClassInfo> mMonoClassMap;  //Map of Scripts 
-
+	private:
+		ScriptInstance mEntityBaseTemplate;
 		
 	public:
 		static std::unordered_map<std::string, ScriptFieldType> mScriptFieldTypeMap;
@@ -53,6 +54,7 @@ namespace Mono
 		static std::string mScnfilePath;
 		static std::string mCsprojPath;
 		static std::string mBatfilePath;
+
 
 		/*!*********************************************************************
 		\brief

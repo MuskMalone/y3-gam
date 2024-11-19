@@ -68,6 +68,7 @@ namespace Mono
     { "System.System.Single[]", ScriptFieldType::FLOAT_ARR },
     { "System.System.Double[]", ScriptFieldType::DOUBLE_ARR },
     { "System.String[]", ScriptFieldType::STRING_ARR},
+    { "Entity[]", ScriptFieldType::ENTITY_ARR },
     { "Entity", ScriptFieldType::ENTITY},
     { "Inside", ScriptFieldType::INSIDE},
     { "Test", ScriptFieldType::TEST},

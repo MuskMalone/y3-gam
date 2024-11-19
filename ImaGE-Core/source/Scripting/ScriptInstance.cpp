@@ -18,7 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "mono/metadata/threads.h"
 #include "Reflection/ProxyScript.h"
 #include "Input/InputManager.h"
-
+#include <algorithm>
 
 using namespace Mono;
 
@@ -39,7 +39,31 @@ ScriptInstance::ScriptInstance(const std::string& scriptName) : mScriptName{scri
   GetAllFieldsInst();
 }
 
+ScriptInstance::ScriptInstance(MonoObject* mo, bool setEntityID)  //ctor to create temp scriptinstance (only for displaying std::vector<MonoObject*> in inspector)
+{
+  Mono::ScriptManager* sm = &Mono::ScriptManager::GetInstance();
+  mScriptClass = mono_object_get_class(mo);
+  mScriptName = mono_class_get_name(mScriptClass);
+  if (!mScriptClass)
+    throw Debug::Exception<ScriptInstance>(Debug::LVL_WARN, Msg("Trying to create a script instance using an invalid MonoObject"));
+  mClassInst = mo;   // All C# script with Monobehaviour will be default constructed
+  GetAllFieldsInst();
+  if (setEntityID)
+  {
+    mGcHandle = mono_gchandle_new(mClassInst, true);
+    SetEntityID(static_cast<ECS::Entity::EntityID>(std::numeric_limits<unsigned>().max()));
+    mono_gchandle_free(mGcHandle);
+  }
+    
+}
 
+void ScriptInstance::ReplaceEntity(MonoObject* mo)
+{
+  mClassInst = mo;
+  if (mGcHandle)
+    mono_gchandle_free(mGcHandle);
+  mGcHandle = mono_gchandle_new(mClassInst, true);
+}
 
 void ScriptInstance::FreeScript()
 {
@@ -50,9 +74,9 @@ void ScriptInstance::FreeScript()
   mClassInst = nullptr;
   mScriptClass = nullptr;
   mUpdateMethod = nullptr;
-
   mScriptFieldInstList.clear();
-  mono_gchandle_free(mGcHandle);
+  if(mGcHandle)
+    mono_gchandle_free(mGcHandle);
 }
 
 void ScriptInstance::SetEntityID(ECS::Entity::EntityID entityID)
@@ -69,10 +93,13 @@ void ScriptInstance::SetEntityID(ECS::Entity::EntityID entityID)
     MonoMethod* InitMethod = mono_class_get_method_from_name(mScriptClass, "Init", 1);
     if (InitMethod)
     {
-      mono_runtime_invoke(InitMethod, mono_gchandle_get_target(mGcHandle), arg.data(), nullptr);  // We will call an init function to pass in the entityID
+      if(mGcHandle)
+       mono_runtime_invoke(InitMethod, mono_gchandle_get_target(mGcHandle), arg.data(), nullptr);  // We will call an init function to pass in the entityID
+      else
+        mono_runtime_invoke(InitMethod, mClassInst, arg.data(), nullptr);  // We will call an init function to pass in the entityID
     }
     else
-      Debug::DebugLogger::GetInstance().LogError("you are trying to pass an entityID to a script that doesnt inherit from entity");
+      Debug::DebugLogger::GetInstance().LogError("you are trying to pass an entityID to a script that doesn't inherit from entity");
   }
 }
 
@@ -263,6 +290,13 @@ void ScriptInstance::GetAllFieldsInst()
         mScriptFieldInstList.emplace_back(test);
         break;
       }
+       case (ScriptFieldType::ENTITY_ARR):
+       {
+         std::vector<MonoObject*> value = GetFieldValueArr<MonoObject*>(field.mClassField);
+         DataMemberInstance<std::vector<MonoObject*>> test{ field,value };
+         mScriptFieldInstList.emplace_back(test);
+         break;
+       }
       case (ScriptFieldType::ENTITY):
       {
         GetFieldCSClass(mScriptFieldInstList, field);
@@ -271,6 +305,7 @@ void ScriptInstance::GetAllFieldsInst()
           sfi.mData.mEntityID = static_cast<ECS::Entity::EntityID>(sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData);
         break;
       }
+   
 
       default: // The rest of the data types will be public member of type c# scripts that inherits from entity
       {
@@ -361,6 +396,11 @@ void ScriptInstance::SetAllFields()
     {
       Mono::DataMemberInstance<std::vector<double>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<double>>>();
       SetFieldValueArr<double>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain);
+    }
+    else if (f.is_type<Mono::DataMemberInstance<std::vector<MonoObject*>>>())
+    {
+      Mono::DataMemberInstance<std::vector<MonoObject*>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<MonoObject*>>>();
+      SetFieldValueArr<MonoObject*>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain);
     }
     else if (f.is_type<Mono::DataMemberInstance<std::vector<std::string>>>())
     {
@@ -587,6 +627,21 @@ void ScriptInstance::SetAllFields(std::vector<rttr::variant> const& scriptFieldP
           SetFieldValueArr<unsigned>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain);
         }
         break;
+      }
+      else if (f.is_type<Mono::DataMemberInstance<std::vector<MonoObject*>>>() && i.is_type<Mono::DataMemberInstance<std::vector<ScriptInstance>>>())
+      {
+        Mono::DataMemberInstance<std::vector<MonoObject*>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<MonoObject*>>>();
+        const Mono::DataMemberInstance<std::vector<ScriptInstance>>& psi = i.get_value<Mono::DataMemberInstance<std::vector<ScriptInstance>>>();
+        if (sfi.mScriptField.mFieldName == psi.mScriptField.mFieldName)
+        {
+          sfi.mData.clear();
+          for (int i{ static_cast<int>(psi.mData.size()) - 1 }; i >= 0; --i)
+          {
+            sfi.mData.push_back(psi.mData[i].mClassInst);
+          }
+          SetFieldValueArr<MonoObject*>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain);
+        }
+        break;
         }
       else if (f.is_type<Mono::DataMemberInstance<ScriptInstance>>() && i.get_type() == f.get_type())
       {
@@ -693,6 +748,11 @@ void ScriptInstance::GetAllUpdatedFields()
     {
       Mono::DataMemberInstance<std::vector<double>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<double>>>();
       sfi.mData = GetFieldValueArr<double>(sfi.mScriptField.mClassField);
+    }
+    else if (f.is_type<Mono::DataMemberInstance<std::vector<MonoObject*>>>())
+    {
+      Mono::DataMemberInstance<std::vector<MonoObject*>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<MonoObject*>>>();
+      sfi.mData = GetFieldValueArr<MonoObject*>(sfi.mScriptField.mClassField);
     }
     else if (f.is_type<Mono::DataMemberInstance<std::vector<std::string>>>())
     {

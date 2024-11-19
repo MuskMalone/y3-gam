@@ -50,4 +50,10 @@ namespace Mono
 	MonoArray* GetMonoArray<MonoString*>(std::shared_ptr<MonoDomain> md, size_t sz) {
 		return mono_array_new(md.get(), mono_get_string_class(), sz);
 	}
+
+	template <>
+	MonoArray* GetMonoArray<MonoObject*>(std::shared_ptr<MonoDomain> md, size_t sz) {
+		return mono_array_new(md.get(), mono_get_object_class(), sz);
+	}
+
 }
