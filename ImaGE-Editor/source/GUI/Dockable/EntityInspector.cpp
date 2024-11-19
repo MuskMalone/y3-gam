@@ -484,22 +484,57 @@ namespace GUI {
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
+      ImGui::AlignTextToFramePadding();
       NextRowTable("Material");
       ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 2.0f);
       const char* name;
       IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
       bool const hasMaterial{ material.GetGUID().IsValid() };
+
       if (hasMaterial) {
-        name = am.GetAsset<IGE::Assets::MaterialAsset>(material.GetGUID())->mMaterial->GetName().c_str();
+        try {
+          name = am.GetAsset<IGE::Assets::MaterialAsset>(material.GetGUID())->mMaterial->GetName().c_str();
+        }
+        catch (Debug::ExceptionBase&) {
+          IGE_DBGLOGGER.LogError("Unable to get material of GUID " + std::to_string(static_cast<uint64_t>(material.GetGUID())));
+          material.SetGUID({});
+          name = "Error reading material";
+        }
       }
       else {
         name = "Default";
       }
-      if (ImGui::Button(name, ImVec2(inputWidth, 30.f))) {
-        material.Clear();
+      if (ImGui::Button(name, ImVec2(INPUT_SIZE, 30.f)) && hasMaterial) {
+        try {
+          GUIVault::SetSelectedFile(am.GUIDToPath(material.GetGUID()));
+        }
+        catch (Debug::ExceptionBase&) {
+          IGE_DBGLOGGER.LogError("Unable to get path of material: " + std::to_string(static_cast<uint64_t>(material.GetGUID())));
+        }
       }
       ImGui::PopStyleVar();
-      if (ImGui::IsItemHovered() && hasMaterial) { ImGui::SetTooltip("Remove Material"); }
+      if (ImGui::IsItemHovered() && hasMaterial) { ImGui::SetTooltip("Edit Material"); }
+
+      if (hasMaterial) {
+        ImGui::SameLine();
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 5.f);
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.2f, 0.2f, 1.f));
+        if (ImGui::Button("X", ImVec2(22.f, 30.f))) {
+          material.SetGUID({});
+        }
+        if (ImGui::IsItemHovered()) { ImGui::SetTooltip("Remove"); }
+        ImGui::PopStyleColor();
+      }
+
+      // show the matIdx in dev mode
+      if (GUIVault::sDevTools) {
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+        NextRowTable("Material Index");
+        ImGui::BeginDisabled();
+        ImGui::DragInt("##MatIdx", reinterpret_cast<int*>(&material.matIdx));
+        ImGui::EndDisabled();
+        ImGui::PopStyleColor();
+      }
 
       ImGui::EndTable();
     }
@@ -1230,6 +1265,8 @@ namespace GUI {
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
+      // dont think we need this anymore
+#ifdef MESH_DRAG_DROP
       NextRowTable("");
       ImVec2 boxSize = ImVec2(200.0f, 40.0f);
       ImVec2 cursorPos = ImGui::GetCursorScreenPos();
@@ -1260,23 +1297,26 @@ namespace GUI {
         }
         ImGui::EndDragDropTarget();
       }
+#endif
 
       NextRowTable("Mesh Type");
-
       if (ImGui::BeginCombo("##MeshSelection", mesh.meshName.c_str())) {
         for (unsigned i{}; i < meshNames.size(); ++i) {
           const char* selected{ meshNames[i] };
           if (ImGui::Selectable(selected)) {
-            if (i != 0) {
-
-              //mesh.mesh = std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromString(selected));
+            try {
+              if (i != 0) {
                 mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(selected);
-            }
+              }
 
-            if (selected != mesh.meshName) {
-              modified = true;
-              mesh.isCustomMesh = false;
-              mesh.meshName = selected;
+              if (selected != mesh.meshName) {
+                modified = true;
+                mesh.isCustomMesh = false;
+                mesh.meshName = selected;
+              }
+            }
+            catch (Debug::ExceptionBase&) {
+              IGE_DBGLOGGER.LogError(std::string("Unable to load Mesh: ") + selected);
             }
             break;
           }
