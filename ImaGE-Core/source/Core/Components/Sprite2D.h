@@ -6,6 +6,7 @@ namespace Component
   {
     // Default constructor to initialize color to white and texture to an invalid GUID
     Sprite2D() : color{ Color::COLOR_WHITE }, textureAsset{} {}
+    Sprite2D(IGE::Assets::GUID guid) : color{ Color::COLOR_WHITE }, textureAsset{ guid } {}
 
     /*!*********************************************************************
     \brief

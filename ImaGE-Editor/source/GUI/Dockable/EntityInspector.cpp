@@ -1123,10 +1123,6 @@ namespace GUI {
               modified = true;
           }
 
-          // Texture Asset input - assuming textureAsset is a GUID or string
-          
-
-
           NextRowTable("Texture Asset");
           static std::string textureText;
           try {
@@ -1139,29 +1135,22 @@ namespace GUI {
              ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), e.what());
           }
 
-          
-          //(image.textureAsset) ? IGE_ASSETMGR.GUIDToPath(image.textureAsset) : "[None]: Drag in a Texture";
-
-          //catch (const Debug::ExceptionBase& e) {
-
-          //}
-
           ImGui::BeginDisabled();
           ImGui::InputText("##TextureAsset", &textureText);
           ImGui::EndDisabled();
 
-          if (ImGui::BeginDragDropTarget()) {
-              ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
-              if (drop) {
-                  AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
-                  if (assetPayload.mAssetType == AssetPayload::SPRITE) {
-                      image.textureAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
-                      textureText = assetPayload.GetFileName();  // Display the file name in the UI
-                      modified = true;
-                  }
-              }
-              ImGui::EndDragDropTarget();
-          }
+          //if (ImGui::BeginDragDropTarget()) {
+          //    ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+          //    if (drop) {
+          //        AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+          //        if (assetPayload.mAssetType == AssetPayload::SPRITE) {
+          //            image.textureAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
+          //            textureText = assetPayload.GetFileName();  // Display the file name in the UI
+          //            modified = true;
+          //        }
+          //    }
+          //    ImGui::EndDragDropTarget();
+          //}
 
           ImGui::EndTable();
       }
@@ -1765,10 +1754,6 @@ namespace GUI {
         modified = true;
       }
 
-      // Texture Asset input - assuming textureAsset is a GUID or string
-
-
-
       NextRowTable("Texture Asset");
       static std::string textureText;
       try {
@@ -1781,29 +1766,22 @@ namespace GUI {
         ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), e.what());
       }
 
-
-      //(image.textureAsset) ? IGE_ASSETMGR.GUIDToPath(image.textureAsset) : "[None]: Drag in a Texture";
-
-      //catch (const Debug::ExceptionBase& e) {
-
-      //}
-
       ImGui::BeginDisabled();
       ImGui::InputText("##TextureAsset", &textureText);
       ImGui::EndDisabled();
 
-      if (ImGui::BeginDragDropTarget()) {
-        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
-        if (drop) {
-          AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
-          if (assetPayload.mAssetType == AssetPayload::SPRITE) {
-            sprite.textureAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
-            textureText = assetPayload.GetFileName();  // Display the file name in the UI
-            modified = true;
-          }
-        }
-        ImGui::EndDragDropTarget();
-      }
+      //if (ImGui::BeginDragDropTarget()) {
+      //  ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+      //  if (drop) {
+      //    AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+      //    if (assetPayload.mAssetType == AssetPayload::SPRITE) {
+      //      sprite.textureAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
+      //      textureText = assetPayload.GetFileName();  // Display the file name in the UI
+      //      modified = true;
+      //    }
+      //  }
+      //  ImGui::EndDragDropTarget();
+      //}
 
       ImGui::EndTable();
     }

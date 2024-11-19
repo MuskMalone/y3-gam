@@ -14,7 +14,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Entity.h>
 #include <GUI/Helpers/AssetPayload.h>
 #include <Asset/IGEAssets.h>
-#include <Core/Components/Material.h>
+#include <Core/Components/Components.h>
+
+namespace {
+  bool IsUnderCanvasEntity(ECS::Entity entity);
+}
 
 namespace ImGuiHelpers
 {
@@ -52,14 +56,51 @@ namespace ImGuiHelpers
     case GUI::AssetPayload::MATERIAL:
     {
       try {
-        // if entity has material component, simply set the material
         IGE::Assets::GUID const matGUID{ IGE_ASSETMGR.LoadRef<IGE::Assets::MaterialAsset>(assetPayload.GetFilePath()) };
+
+        // if entity has material component, simply set the material
         if (entity.HasComponent<Component::Material>()) {
           entity.GetComponent<Component::Material>().SetGUID(matGUID);
         }
         // else add the component and set the material
         else {
-          entity.EmplaceComponent<Component::Material>().SetGUID(matGUID);
+          entity.EmplaceComponent<Component::Material>(matGUID);
+        }
+      }
+      catch (Debug::ExceptionBase&) {
+        IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
+      }
+      break;
+    }
+    case GUI::AssetPayload::SPRITE:
+    {
+      // because we have Sprite2D and Image components, we will
+      // climb up the hierarchy to check if it is a child of a canvas entity
+      bool const hasCanvasParent{ IsUnderCanvasEntity(entity) };
+      try {
+        IGE::Assets::GUID const texGUID{ IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath()) };
+        
+        // under Canvas so we use the Image component
+        if (hasCanvasParent) {
+          // add Image component if it doesn't exist
+          if (entity.HasComponent<Component::Image>()) {
+            entity.GetComponent<Component::Image>().textureAsset = texGUID;
+          }
+          // else add the component and set the guid
+          else {
+            entity.EmplaceComponent<Component::Image>(texGUID);
+          }
+        }
+        // not under Canvas, handle Sprite2D case
+        else {
+          // add Sprite2D component if it doesn't exist
+          if (entity.HasComponent<Component::Sprite2D>()) {
+            entity.GetComponent<Component::Sprite2D>().textureAsset = texGUID;
+          }
+          // else add the component and set the guid
+          else {
+            entity.EmplaceComponent<Component::Sprite2D>(texGUID);
+          }
         }
       }
       catch (Debug::ExceptionBase&) {
@@ -326,4 +367,18 @@ ImVec4 operator-(ImVec4 const& lhs, ImVec4 const& rhs) {
 
 ImVec4 operator-(ImVec4 const& lhs, float rhs) {
   return { lhs.x - rhs, lhs.y - rhs, lhs.z - rhs, lhs.w - rhs };
+}
+
+namespace {
+  bool IsUnderCanvasEntity(ECS::Entity entity) {
+    ECS::EntityManager& em{ IGE_ENTITYMGR };
+
+    // keep checking if next parent has Canvas component
+    while (em.HasParent(entity)) {
+      entity = em.GetParentEntity(entity);
+      if (entity.HasComponent<Component::Canvas>()) { return true; }
+    }
+
+    return false;
+  }
 }
