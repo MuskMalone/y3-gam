@@ -10,6 +10,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #ifndef IMGUI_DISABLE
 #include <ImGui/imgui_internal.h>
 
+namespace ECS { class Entity; }
+
 namespace ImGuiHelpers
 {
   /*!*********************************************************************
@@ -27,6 +29,13 @@ namespace ImGuiHelpers
     The ImGui payload and nullptr otherwise
   ************************************************************************/
   ImGuiPayload const* BeginDrapDropTargetWindow(const char* payloadName);
+
+  // should be called within a ImGui::BeginDragDropTarget block
+  // if (ImGui::BeginDragDropTarget()) {
+  //   ImGuiHelpers::AssetDragDropBehavior(entity);
+  // }
+  // im using this for both inspector and hierarchy
+  bool AssetDragDropBehavior(ECS::Entity entity);
 
   /*!*********************************************************************
   \brief

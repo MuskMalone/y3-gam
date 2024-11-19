@@ -11,6 +11,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <ImGui/imgui.h>
 #include <string>
 #include "Color.h"
+#include <Core/Entity.h>
+#include <GUI/Helpers/AssetPayload.h>
+#include <Asset/IGEAssets.h>
+#include <Core/Components/Material.h>
 
 namespace ImGuiHelpers
 {
@@ -36,6 +40,38 @@ namespace ImGuiHelpers
     }
 
     return nullptr;
+  }
+
+  bool AssetDragDropBehavior(ECS::Entity entity) {
+    ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(GUI::AssetPayload::sAssetDragDropPayload);
+    if (!drop) { return false; }
+
+    GUI::AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+    switch (assetPayload.mAssetType)
+    {
+    case GUI::AssetPayload::MATERIAL:
+    {
+      try {
+        // if entity has material component, simply set the material
+        IGE::Assets::GUID const matGUID{ IGE_ASSETMGR.LoadRef<IGE::Assets::MaterialAsset>(assetPayload.GetFilePath()) };
+        if (entity.HasComponent<Component::Material>()) {
+          entity.GetComponent<Component::Material>().SetGUID(matGUID);
+        }
+        // else add the component and set the material
+        else {
+          entity.EmplaceComponent<Component::Material>().SetGUID(matGUID);
+        }
+      }
+      catch (Debug::ExceptionBase&) {
+        IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
+      }
+      break;
+    }
+    default:
+      break;
+    }
+
+    return true;
   }
 
   bool TableInputFloat2(std::string const& propertyName, float* property, float fieldWidth, bool disabled, float minVal, float maxVal, float step, const char* fmt) {

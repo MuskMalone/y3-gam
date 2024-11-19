@@ -87,6 +87,15 @@ namespace GUI {
     SaveLastEditedFile();
   }
 
+  void Inspector::RunDragDropInspector(ECS::Entity entity) {
+    if (!entity) { return; }
+
+    if (ImGuiHelpers::BeginDrapDropTargetWindow(AssetPayload::sAssetDragDropPayload)) {
+      ImGuiHelpers::AssetDragDropBehavior(entity);
+    }
+    ImGui::EndDragDropTarget();
+  }
+
   void Inspector::Run() {
     ImGuiStyle& style = ImGui::GetStyle();
     float oldItemSpacingX = style.ItemSpacing.x;
@@ -380,6 +389,9 @@ namespace GUI {
     ImGui::PopFont();
     style.ItemSpacing.x = oldItemSpacingX;
     style.CellPadding.x = oldCellPaddingX;
+
+    RunDragDropInspector(currentEntity);
+
     ImGui::End();
 
     // if edit is the first of this session, dispatch a SceneModifiedEvent
@@ -476,33 +488,18 @@ namespace GUI {
       ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 2.0f);
       const char* name;
       IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
-      if (material.GetGUID().IsValid()) {
+      bool const hasMaterial{ material.GetGUID().IsValid() };
+      if (hasMaterial) {
         name = am.GetAsset<IGE::Assets::MaterialAsset>(material.GetGUID())->mMaterial->GetName().c_str();
       }
       else {
-        name = "Drag Material Here";
+        name = "Default";
       }
       if (ImGui::Button(name, ImVec2(inputWidth, 30.f))) {
         material.Clear();
       }
       ImGui::PopStyleVar();
-      if (ImGui::IsItemHovered()) { ImGui::SetTooltip("Remove Material"); }
-
-      if (ImGui::BeginDragDropTarget()) {
-        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
-        if (drop) {
-          AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
-          if (assetPayload.mAssetType == AssetPayload::MATERIAL) {
-            try {
-              material.SetGUID(am.LoadRef<IGE::Assets::MaterialAsset>(assetPayload.GetFilePath()));
-            }
-            catch (Debug::ExceptionBase& e) {
-              e.LogSource();
-            }
-          }
-        }
-        ImGui::EndDragDropTarget();
-      }
+      if (ImGui::IsItemHovered() && hasMaterial) { ImGui::SetTooltip("Remove Material"); }
 
       ImGui::EndTable();
     }
