@@ -194,6 +194,9 @@ namespace Mono
 		static ScriptFieldType MonoTypeToScriptFieldType(MonoType* monoType);
 
 
+		std::vector<ScriptInstance> SerialMonoObjectVec(std::vector < MonoObject*>);
+
+
 
 		/*!**********************************************************************
 		*																																			  *

@@ -412,6 +412,16 @@ ScriptFieldType ScriptManager::MonoTypeToScriptFieldType(MonoType* monoType)
   return it->second;
 }
 
+std::vector<ScriptInstance> ScriptManager::SerialMonoObjectVec(std::vector<MonoObject*> vec)
+{
+  std::vector<ScriptInstance> toSer{};
+  for (MonoObject* obj : vec)
+  {
+    toSer.emplace_back(obj, false, true);
+  }
+
+}
+
 void ScriptManager::LinkAllScriptDataMember()
 {
   for (ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Script>())
