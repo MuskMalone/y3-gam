@@ -88,18 +88,21 @@ public class  PlayerMove : Entity
 
   void ProcessLook()
   {
-    if (!canLook) return;  // Skip look processing if the player is frozen
-    Vector3 mouseDelt = InternalCalls.GetMouseDelta();
-    float mouseDeltaX = mouseDelt.X;
-    float mouseDeltaY = mouseDelt.Y;
+    // Skip look processing if the player is frozen
+    if (canLook)
+    {
+      Vector3 mouseDelt = InternalCalls.GetMouseDelta();
+      float mouseDeltaX = mouseDelt.X;
+      float mouseDeltaY = mouseDelt.Y;
 
-    yaw -= mouseDeltaX * sensitivity;
+      yaw -= mouseDeltaX * sensitivity;
 
-    // Apply mouse delta to pitch (rotate camera around the X-axis)
-    pitch -= mouseDeltaY * sensitivity;
+      // Apply mouse delta to pitch (rotate camera around the X-axis)
+      pitch -= mouseDeltaY * sensitivity;
 
-    // Clamp pitch to prevent camera from flipping upside down
-    pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
+      // Clamp pitch to prevent camera from flipping upside down
+      pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
+    }
 
     // Update the camera's rotation (pitch)
     cam.GetComponent<Transform>().rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(pitch));
