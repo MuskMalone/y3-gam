@@ -171,7 +171,8 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_6
     </Lib>
     <PostBuildEvent>
       <Command>IF NOT EXIST "$(SolutionDir)\Binaries\windows-x86_64\Distribution\Assets" (mkdir "$(SolutionDir)\Binaries\windows-x86_64\Distribution\Assets")
-xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_64\Distribution\Assets"</Command>
+xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_64\Distribution\Assets"
+xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTORY\Assets"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

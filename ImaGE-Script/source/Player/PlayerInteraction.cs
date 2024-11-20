@@ -17,15 +17,11 @@ public class PlayerInteraction : Entity
     Vector3 rayDirection = InternalCalls.GetMainCameraDirection(FindEntityByTag("MainCamera").mEntityID);
     Vector3 rayEnd = rayOrigin + (rayDirection * RayFromPlayerCameraLength);
 
-    /*
     uint rayHitID = InternalCalls.RaycastFromEntity(mEntityID, rayOrigin, rayEnd);
 
     if (rayHitID != 0)
       RayHitString = InternalCalls.GetTag(rayHitID);
     else
       RayHitString = "None";
-
-    Debug.Log("RayHitString: " + RayHitString);
-    */
   }
 }

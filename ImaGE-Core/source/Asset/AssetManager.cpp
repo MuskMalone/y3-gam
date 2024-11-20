@@ -48,6 +48,12 @@ namespace IGE {
 		{
 			std::string const out{ cAssetProjectSettingsPath + cSettingsFileName };
 
+			// Add these conditionals so that the installer will work (unable to write to log
+			// file as app does not have permission to do so
+			// @TODO: Write backup files to a writable location such as {userdata}
+			
+			// No files should be copied/created in the distribution build
+#ifndef DISTRIBUTION
 			// make a copy of the file as backup before overwriting it
 			// create backup directory if it doesn't already exist
 			if (!std::filesystem::exists(gBackupDirectory))
@@ -59,16 +65,21 @@ namespace IGE {
 					Debug::DebugLogger::GetInstance().LogWarning("Unable to create temp directory at: " + std::string(gBackupDirectory) + ". Scene reloading features may be unavailable!");
 				}
 			}
-
+#endif
 			// now copy the file over
 			if (IsValidFilePath(out)) {
+				// No files should be copied/created in the distribution build
+#ifndef DISTRIBUTION
 				std::filesystem::copy(out, gBackupDirectory, std::filesystem::copy_options::overwrite_existing);
+#endif
 				return out;
 			}
 
+			/* This was causing issues
 			std::ofstream file(out);
 			file.close();
 			return out;
+			*/
 		}
 		AssetManager::AssetManager() {
 			SUBSCRIBE_CLASS_FUNC(Events::EventType::REGISTER_FILES, &AssetManager::HandleAddFiles, this);

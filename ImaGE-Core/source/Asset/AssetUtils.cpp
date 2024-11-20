@@ -8,7 +8,10 @@ namespace IGE {
         bool CopyFileToAssets(const std::string& sourcePath, const std::string& destinationPath) {
             if (IsDirectoriesEqual(sourcePath, destinationPath)) return true;
             try {
+              // No files should be copied/created in the distribution build
+#ifndef DISTRIBUTION
                 fs::copy(sourcePath, destinationPath, fs::copy_options::overwrite_existing);
+#endif
                 return true;
             }
             catch (const std::filesystem::filesystem_error& e) {

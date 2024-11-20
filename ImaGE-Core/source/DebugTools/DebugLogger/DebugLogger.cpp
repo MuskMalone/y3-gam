@@ -27,6 +27,11 @@ using namespace Debug;
 
 DebugLogger::DebugLogger()
 {
+// Add these conditionals so that the installer will work (unable to write to log
+// file as app does not have permission to do so
+// @TODO: Write log files to a writable location such as {userdata}
+
+#if LOG_TO_FILE
 	// Get curret system time
 	std::chrono::system_clock::time_point currTime = std::chrono::system_clock::now();
 	std::time_t currTime_t = std::chrono::system_clock::to_time_t(currTime);
@@ -42,16 +47,22 @@ DebugLogger::DebugLogger()
 	// 5mb file sinks
 	auto filesink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(mFileName, 1048576 * 5, 1);
 
-	// Default logger will log only to ostream
-	mLogger = std::make_unique<spdlog::logger>("");
 	// File logger will log into ostream and file
+	mLogger = std::make_unique<spdlog::logger>("");
 	mFileLogger = std::make_unique<spdlog::logger>("", filesink);
+
+#else
+	mLogger = std::make_unique<spdlog::logger>("");
+	mFileLogger = std::make_unique<spdlog::logger>("");
+#endif
 }
 
 DebugLogger::~DebugLogger()
 {
 	// Flush logs
 	mLogger->flush();
+
+#if LOG_TO_FILE
 	mFileLogger.reset();
 
 	if (std::filesystem::file_size(mFileName) == 0)
@@ -77,6 +88,7 @@ DebugLogger::~DebugLogger()
 
 		std::rename(mFileName.c_str(), ss.str().c_str());
 	}
+#endif
 }
 
 void DebugLogger::AddDest(spdlog::sink_ptr sink)

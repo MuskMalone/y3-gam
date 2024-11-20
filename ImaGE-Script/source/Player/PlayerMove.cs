@@ -102,16 +102,16 @@ public class  PlayerMove : Entity
     Vector3 mouseDelt = InternalCalls.GetMouseDelta();
     float mouseDeltaX = mouseDelt.X;
     float mouseDeltaY = mouseDelt.Y;
-    //Console.WriteLine(mouseDeltaX);
+
     yaw -= mouseDeltaX * sensitivity;
-    //Console.WriteLine(yaw);
+
 
     // Apply mouse delta to pitch (rotate camera around the X-axis)
     pitch -= mouseDeltaY * sensitivity;
 
     // Clamp pitch to prevent camera from flipping upside down
     pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
-    //Console.WriteLine(pitch);
+
 
     // Update the camera's rotation (pitch)
     cam.GetComponent<Transform>().rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(pitch));

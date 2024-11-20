@@ -177,7 +177,8 @@ copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Release\bin\Release\rtt
 copy /B /Y "$(SolutionDir)ImaGE-Core\source\External\fmod\lib\fmod.dll" "..\Binaries\windows-x86_64\Distribution\ImaGE-Game"
 copy /B /Y "$(ProjectDir)imgui.ini" "..\Binaries\windows-x86_64\Distribution\ImaGE-Game"
 xcopy /Q /E /Y /I "$(SolutionDir)ImaGE-Core\source\External\mono\4.5" "..\Binaries\windows-x86_64\Distribution\ImaGE-Game\4.5"
-copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Release\bin\Release\rttr_core.dll" "..\Binaries\windows-x86_64\Distribution\ImaGE-Game"</Command>
+copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Release\bin\Release\rttr_core.dll" "..\Binaries\windows-x86_64\Distribution\ImaGE-Game"
+xcopy /Q /E /Y /I "..\Binaries\windows-x86_64\Distribution\ImaGE-Game" "$(SolutionDir)\Installer\GAMEDIRECTORY\ImaGE-Game"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -172,6 +172,8 @@ namespace Scenes
   }
 
   void SceneManager::BackupCopy(std::string const& path) const {
+    // No files should be copied/created in the distribution build
+#ifndef DISTRIBUTION
     // create backup directory if it doesn't already exist
     if (!std::filesystem::exists(gBackupDirectory))
     {
@@ -187,6 +189,7 @@ namespace Scenes
     if (std::filesystem::exists(path)) {
       std::filesystem::copy(path, gBackupDirectory, std::filesystem::copy_options::overwrite_existing);
     }
+#endif
   }
 
   void SceneManager::SaveScene() const

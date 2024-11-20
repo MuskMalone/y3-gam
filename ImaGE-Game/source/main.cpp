@@ -3,7 +3,7 @@
 #include <Serialization/Registration/RegisterClasses.h>
 #include <Serialization/Registration/RegisterComponents.h>
 #include <Serialization/Registration/RegisterEnumsAndFuncs.h>
-//#include <GameApplication.h>
+#include <Events/EventManager.h>
 
 int Main(int argc, char** argv) {
   // To be read from settings file
@@ -17,11 +17,14 @@ int Main(int argc, char** argv) {
   spec.WindowHeight = 1080;
   spec.WindowWidth = 1920;
 
-  //GameApplication myApp{ spec };
   IGE::Application myApp{ spec };
   try
   {
     myApp.Init();
+
+    // Temp code to test the installer
+    std::string const initialScenePath = "..\\Assets\\Scenes\\M1Unity.scn";
+    QUEUE_EVENT(Events::LoadSceneEvent, std::filesystem::path(initialScenePath).stem().string(), initialScenePath);
 
     myApp.Run();
   }
