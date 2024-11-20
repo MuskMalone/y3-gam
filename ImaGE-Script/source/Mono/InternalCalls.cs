@@ -198,6 +198,9 @@ namespace IGE.Utils
     extern public static float GetTime();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetFPS();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void MoveCharacter(uint mEntityID, Vector3 dVec);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -209,5 +212,5 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static Entity FindScript(string s);
     #endregion
-    }
+  }
 }

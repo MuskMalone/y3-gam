@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="source\Dialogue\Dialogue.cs" />
     <Compile Include="source\Dialogue\SpecialDialogue.cs" />
+    <Compile Include="source\Engine Tools\FPS.cs" />
     <Compile Include="source\InteractableObject\Crowbar.cs" />
     <Compile Include="source\InteractableObject\Hammer.cs" />
     <Compile Include="source\InteractableObject\InteractableObject.cs" />

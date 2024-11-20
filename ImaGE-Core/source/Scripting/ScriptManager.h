@@ -337,6 +337,8 @@ namespace Mono
 
 		static float GetTime();
 
+		static float GetFPS();
+
 		static glm::vec3 GetMouseDelta();
 
 		static MonoObject* FindScript(MonoString* s);

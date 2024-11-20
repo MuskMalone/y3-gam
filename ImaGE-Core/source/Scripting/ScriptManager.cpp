@@ -211,6 +211,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetAxis);
   ADD_INTERNAL_CALL(GetDeltaTime);
   ADD_INTERNAL_CALL(GetTime);
+  ADD_INTERNAL_CALL(GetFPS);
   ADD_INTERNAL_CALL(MoveCharacter);
   ADD_INTERNAL_CALL(IsGrounded);
   ADD_INTERNAL_CALL(GetTag);
@@ -975,6 +976,9 @@ float Mono::GetTime() {
   return Performance::FrameRateController::GetInstance().GetTime();
 }
 
+float Mono::GetFPS() {
+  return Performance::FrameRateController::GetInstance().GetFPS();
+}
 
 MonoObject* Mono::FindScript(MonoString* s)
 {
