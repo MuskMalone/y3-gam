@@ -68,6 +68,7 @@ namespace Mono
     { "System.System.Single[]", ScriptFieldType::FLOAT_ARR },
     { "System.System.Double[]", ScriptFieldType::DOUBLE_ARR },
     { "System.String[]", ScriptFieldType::STRING_ARR},
+    { "Entity[]", ScriptFieldType::ENTITY_ARR },
     { "Entity", ScriptFieldType::ENTITY},
     { "Inside", ScriptFieldType::INSIDE},
     { "Test", ScriptFieldType::TEST},
@@ -409,6 +410,17 @@ ScriptFieldType ScriptManager::MonoTypeToScriptFieldType(MonoType* monoType)
   }
 
   return it->second;
+}
+
+std::vector<ScriptInstance> ScriptManager::SerialMonoObjectVec(std::vector<MonoObject*> vec)
+{
+  std::vector<ScriptInstance> toSer{};
+  for (MonoObject* obj : vec)
+  {
+    toSer.emplace_back(obj, false, true);
+  }
+
+  return toSer;
 }
 
 void ScriptManager::LinkAllScriptDataMember()

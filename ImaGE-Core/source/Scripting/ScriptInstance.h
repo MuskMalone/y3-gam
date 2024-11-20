@@ -86,12 +86,16 @@ namespace Mono {
 		************************************************************************/
 		ScriptInstance(const std::string& scriptName);
 
+		ScriptInstance(MonoObject* mo, bool setEntityID = false, bool forSerialization = false);
 
 		/*!*********************************************************************
 		\brief
 			Function to set the entity ID for any monobehaviour script
 		************************************************************************/
 		void SetEntityID(ECS::Entity::EntityID entityID);
+
+
+		void ReplaceEntity(MonoObject* mo);
 
 
 		/*!*********************************************************************

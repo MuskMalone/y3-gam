@@ -38,6 +38,7 @@ namespace {
   bool InputScriptList(std::string propertyName, std::vector<float>& list, float fieldWidth, bool disabled = false);
   bool InputScriptList(std::string propertyName, std::vector<double>& list, float fieldWidth, bool disabled = false);
   bool InputScriptList(std::string propertyName, std::vector<std::string>& list, float fieldWidth, bool disabled = false);
+  bool InputScriptList(std::string propertyName, std::vector<MonoObject*>& list, float fieldWidth, bool disabled = false);
 }
 
 namespace GUI {
@@ -646,6 +647,12 @@ namespace GUI {
             Mono::DataMemberInstance<std::vector<std::string>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<std::string>>>();
             NextRowTable(sfi.mScriptField.mFieldName.c_str());
             if (InputScriptList("##InputScriptListString" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth / 3.f)) { s.SetFieldValueStrArr(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain); };
+          }
+          else if (f.is_type<Mono::DataMemberInstance<std::vector<MonoObject*>>>())
+          {
+            Mono::DataMemberInstance<std::vector<MonoObject*>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<MonoObject*>>>();
+            NextRowTable(sfi.mScriptField.mFieldName.c_str());
+            if (InputScriptList("##InputScriptListMonoObject*" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth / 3.f)) { s.SetFieldValueArr<MonoObject*>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain); };
           }
           else if (f.is_type<Mono::DataMemberInstance<Mono::ScriptInstance>>())
           {
@@ -2405,6 +2412,121 @@ namespace {
     return changed;
   }
 
+  bool InputScriptList(std::string propertyName, std::vector<MonoObject*>& list, float fieldWidth, bool disabled)
+  {
+    // 12 characters for property name
+    float charSize = 250.f;
+    bool changed{ false };
+    if (ImGui::TreeNodeEx((propertyName + "s").c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+    {
+      std::vector<int> indices = { }; // Positions to remove
+      ImGui::Separator();
+      ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV);
+      ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, charSize);
+      ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, charSize);
+
+      ImGuiStyle& style = ImGui::GetStyle();
+      ImVec4 const boriginalColor = style.Colors[ImGuiCol_Button];
+      ImVec4 const boriginalHColor = style.Colors[ImGuiCol_ButtonHovered];
+      ImVec4 const boriginalAColor = style.Colors[ImGuiCol_ButtonActive];
+
+      style.Colors[ImGuiCol_Button] = ImVec4(0.5f, 0.196f, 0.196f, 1.0f);
+      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.796f, 0.296f, 0.296f, 1.0f);;
+      style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.596f, 0.096f, 0.096f, 1.0f);
+      for (int i{}; i < list.size(); ++i)
+      {
+        Mono::ScriptInstance si = Mono::ScriptInstance(list[i]);
+        ECS::Entity::EntityID currID = entt::null;
+        std::string msg{ "No Entity Attached" };
+        if (ECS::EntityManager::GetInstance().IsValidEntity(ECS::Entity(static_cast<ECS::Entity::EntityID>(si.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData))))
+        {
+          currID = static_cast<ECS::Entity::EntityID>(si.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData);
+          msg = ECS::Entity(static_cast<ECS::Entity::EntityID>(si.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData)).GetTag();
+        }
+        ImGui::TableNextColumn();
+        ImGui::SetNextItemWidth(fieldWidth);
+        if (ImGui::BeginCombo(("##EntitySelectionComboList"+ msg + "##" + std::to_string(i)).c_str(), msg.c_str()))
+        {
+          static char searchBuffer[128] = "";
+          ImGui::InputTextWithHint("##SearchBoxEntitySelection", "Search...", searchBuffer, sizeof(searchBuffer));
+          int count{ 0 };
+          for (const ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntities())
+          {
+            // Check if the current entity matches the search query
+            std::string entityTag = e.GetTag();
+            if (entityTag.find(searchBuffer) != std::string::npos) // Match substring
+            {
+              if (e.GetRawEnttEntityID() != currID)
+              {
+                bool is_selected = (e.GetRawEnttEntityID() == currID);
+                if (ImGui::Selectable((entityTag+ "##" + std::to_string(count)).c_str(), is_selected))
+                {
+                  if (e.GetRawEnttEntityID() != currID)
+                  {
+                    si.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData = static_cast<unsigned>(e.GetRawEnttEntityID());
+                    si.SetAllFields();
+                  }
+                  changed = true;
+                  break;
+                }
+                if (is_selected)
+                {
+                  ImGui::SetItemDefaultFocus();
+                }
+              }
+            }
+            ++count;
+          }
+          ImGui::EndCombo();
+        }
+        ImGui::TableNextColumn();
+        if (ImGui::Button(("Delete Item##" + std::to_string(i)).c_str()))
+        {
+          indices.push_back(i);
+          changed = true;
+        }
+        ImGui::TableNextRow();
+      }
+
+
+
+      style.Colors[ImGuiCol_Button] = ImVec4(0.f, 0.5f, 0.34f, 1.0f);
+      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.796f, 0.296f, 0.296f, 1.0f);;
+      style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.596f, 0.096f, 0.096f, 1.0f);
+      ImGui::TableNextColumn();
+
+
+
+      if (ImGui::Button("Add Item")) {
+
+        std::string scriptName = Mono::ScriptManager::GetInstance().mRevClassMap[Mono::ScriptFieldType::ENTITY];
+        MonoObject* newObj = Mono::ScriptManager::GetInstance().InstantiateClass(scriptName.c_str());
+        Mono::ScriptInstance si = Mono::ScriptInstance(newObj,true,false); //We are not using the SI, we just pass this into the ctor so that we can set the EntityID of this Obj to an invalidID
+        list.push_back(newObj);
+        changed = true;
+      }
+
+      style.Colors[ImGuiCol_Button] = boriginalColor;
+      style.Colors[ImGuiCol_ButtonHovered] = boriginalHColor;
+      style.Colors[ImGuiCol_ButtonActive] = boriginalAColor;
+
+      std::sort(indices.rbegin(), indices.rend());
+      for (int pos : indices) {
+        if (pos >= 0 && pos < list.size()) {
+          list.erase(list.begin() + pos);
+        }
+      }
+
+      ImGui::TableNextRow();
+
+      ImGui::EndTable();
+      ImGui::Separator();
+      ImGui::TreePop();
+    }
+    return changed;
+  }
+
+
   bool InputScriptList(std::string propertyName, std::vector<std::string>& list, float fieldWidth, bool disabled)
   {
     // 12 characters for property name
@@ -2430,10 +2552,7 @@ namespace {
       for (int i{}; i < list.size(); ++i)
       {
         ImGui::TableNextColumn();
-        ImGui::SetNextItemWidth(fieldWidth);
-        if (ImGui::InputTextMultiline(("##S" + std::to_string(i)).c_str(), &list[i])) {
-          changed = true;
-        }
+        if (ImGui::InputTextMultiline(("##S" + std::to_string(i)).c_str(), &list[i])) { changed = true; }
         ImGui::TableNextColumn();
         if (ImGui::Button(("Delete Item##" + std::to_string(i)).c_str()))
         {
