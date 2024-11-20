@@ -8,23 +8,33 @@
 #include <Graphics/Renderer.h>
 #include <Graphics/RenderPass/ShadowPass.h>
 #include "Graphics/MaterialData.h"
-
 #include "Graphics/RenderAPI.h"
 
-namespace Graphics {
-  using EntityXform = std::pair<ECS::Entity, glm::mat4>;
-  using MatGroup = std::vector<EntityXform>;
-  using MatGroupsMap = std::unordered_map<uint32_t, MatGroup>;
+namespace {
+  template <unsigned N>
+  struct LightUniforms {
+    glm::vec3 u_LightDirection[N]; // Directional light direction in world space
+    glm::vec3 u_LightColor[N];     // Directional light color
+    int u_type[N];       // Camera position in world space
 
-  struct MaterialGroup {
-      int matID;                          // Material ID
-      std::shared_ptr<Shader> shader;     // Associated shader
-      std::vector<EntityXform> entityPairs; // Vector of entity-transform pairs
+    // For spotlight
+    glm::vec3 u_LightPos[N]; // Position of the spotlight
+    float u_InnerSpotAngle[N]; // Inner spot angle in degrees
+    float u_OuterSpotAngle[N]; // Outer spot angle in degrees
+    float u_LightIntensity[N]; // Intensity of the light
+    float u_Range[N]; // Maximum range of the spotlight
+
+    int numLights;
+
+    void SetUniforms(std::shared_ptr<Graphics::Shader> const& shader) const;
   };
 
-  GeomPass::GeomPass(const RenderPassSpec& spec) : RenderPass(spec) {
+  template <unsigned N>
+  LightUniforms<N> GetLightData(std::vector<ECS::Entity> const& entities);
+}
 
-  }
+namespace Graphics {
+  GeomPass::GeomPass(const RenderPassSpec& spec) : RenderPass(spec) {}
 
   void GeomPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
       Begin();
@@ -33,147 +43,85 @@ namespace Graphics {
 
       Renderer::RenderSceneBegin(cam.viewProjMatrix);
 
-      // Use a map to group entities by material ID
-      MatGroupsMap matGroups;
-
-      //==========================LIGHTS==========================================================
-      const unsigned int maxLights = 30;
-      int numlights{ 0 };
-
-      int u_type[maxLights];       // Camera position in world space
-      glm::vec3 u_LightDirection[maxLights]; // Directional light direction in world space
-      glm::vec3 u_LightColor[maxLights];     // Directional light color
-
-      // For spotlight
-      glm::vec3 u_LightPos[maxLights]; // Position of the spotlight
-      float u_InnerSpotAngle[maxLights]; // Inner spot angle in degrees
-      float u_OuterSpotAngle[maxLights]; // Outer spot angle in degrees
-      float u_LightIntensity[maxLights]; // Intensity of the light
-      float u_Range[maxLights]; // Maximum range of the spotlight
-
-      //Get the list of light
-      std::vector<ECS::Entity> lights{};
-      for (ECS::Entity const& entity : entities) {
-          if (!entity.HasComponent<Component::Light>()) { continue; }
-
-          auto const& light = entity.GetComponent<Component::Light>();
-          u_type[numlights] = light.type;
-          u_LightDirection[numlights] = entity.GetComponent<Component::Transform>().worldRot * light.forwardVec; // Directional light direction in world space
-          u_LightColor[numlights] = light.color;     // Directional light color
-
-          //For spotlight
-          u_LightPos[numlights] = entity.GetComponent<Component::Transform>().worldPos; // Position of the spotlight
-          u_InnerSpotAngle[numlights] = light.mInnerSpotAngle; // Inner spot angle in degrees
-          u_OuterSpotAngle[numlights] = light.mOuterSpotAngle; // Outer spot angle in degrees
-          u_LightIntensity[numlights] = light.mLightIntensity; // Intensity of the light
-          u_Range[numlights] = light.mRange; // Maximum range of the spotlight
-          ++numlights;
-      }
-      //==========================LIGHTS END===================================================
-      auto& ecsMan{ ECS::EntityManager::GetInstance() };
-
       //=================================================SUBMESH VERSION===============================================================
-
-      std::vector<MaterialGroup> materialGroups;
+      //MatGroupsMap matGroups; // Use a map to group entities by material ID
 
       // STEP UNO: Collect entities into material groups!!!
+      //    *i moved it into a function
+      std::vector<MaterialGroup> materialGroups{ CreateMaterialGroups(entities) };
       
-      //auto const& entitiesMat = ecsMan.GetAllEntitiesWithComponents< Component::Transform, Component::Mesh>();
-      
-      for (ECS::Entity const& entity : entities) {
-          if (!entity.HasComponent<Component::Transform, Component::Mesh>()) continue;
-
-          auto const& mesh = entity.GetComponent<Component::Mesh>();
-
-          if (!mesh.meshSource.IsValid()) continue;
-
-          int matID = 0;
-          if (entity.HasComponent<Component::Material>()) {
-              auto const& matComp = entity.GetComponent<Component::Material>();
-              matID = matComp.matIdx;
-          }
-
-          auto const& xform = entity.GetComponent<Component::Transform>();
-
-          // Find or create the MaterialGroup
-          auto it = std::find_if(materialGroups.begin(), materialGroups.end(), [&](const MaterialGroup& group) {
-              return group.matID == matID;
-              });
-
-          if (it == materialGroups.end()) {
-              // New MaterialGroup
-              auto material = MaterialTable::GetMaterial(matID);
-              materialGroups.push_back({ matID, material->GetShader(), {{entity, xform.worldMtx}} });
-          }
-          else {
-              // Add to existing group
-              it->entityPairs.emplace_back(EntityXform{ entity, xform.worldMtx });
-          }
-      }
-
       // STEP DOS: Prepare material groups for sorting based on shader used!!!
       std::sort(materialGroups.begin(), materialGroups.end(),
           [](const MaterialGroup& a, const MaterialGroup& b) {
               return a.shader.get() < b.shader.get(); // Sort by shader pointer for grouping
           });
 
+      // get light data to pass into shader
+      //    *moved light stuff into a function too
+      LightUniforms<sMaxLights> const lightUniforms{ GetLightData<sMaxLights>(entities) };
 
-      //STEP TRES: Render material groups
-      std::shared_ptr<Shader> currShader = nullptr;
-      for (const auto& group : materialGroups) {
+      // STEP TRES POINT UNO: Render material groups
+      
+      // STEP TRES POINT DOS: Render in batches based on material count
+      size_t const matCount{ MaterialTable::GetMaterialCount() };
+      // perform a render call for each batch of materials based on sMaterialsPerBatch
+      // until all materials are accounted for
+      for (size_t matIdx{}; matIdx < matCount; matIdx += MaterialTable::sMaterialsPerBatch) {
+        std::shared_ptr<Shader> currShader = nullptr;
+        for (const auto& group : materialGroups) {
           auto shader = group.shader;
 
           // Only bind the shader if it's different from the currently bound one
           if (shader != currShader) {
-              shader->Use();
-              currShader = shader;
+            shader->Use();
+            currShader = shader;
 
-              bool isUnlitShader = (shader == ShaderLibrary::Get("Unlit"));
-              shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);
+            bool isUnlitShader = (shader == ShaderLibrary::Get("Unlit"));
+            shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);
 
-              if (!isUnlitShader) {
-                  shader->SetUniform("u_CamPos", cam.position);
+            if (!isUnlitShader) {
+              shader->SetUniform("u_CamPos", cam.position);
 
-                  // Light Info
-                  shader->SetUniform("numlights", numlights);
-                  shader->SetUniform("u_type", u_type, maxLights);
-                  shader->SetUniform("u_LightDirection", u_LightDirection, maxLights);
-                  shader->SetUniform("u_LightColor", u_LightColor, maxLights);
-                  shader->SetUniform("u_LightPos", u_LightPos, maxLights);
-                  shader->SetUniform("u_InnerSpotAngle", u_InnerSpotAngle, maxLights);
-                  shader->SetUniform("u_OuterSpotAngle", u_OuterSpotAngle, maxLights);
-                  shader->SetUniform("u_LightIntensity", u_LightIntensity, maxLights);
-                  shader->SetUniform("u_Range", u_Range, maxLights);
+              // Light Info
+              lightUniforms.SetUniforms(shader);
 
-                  // Set shadow uniforms
-                  auto const& shadowPass = Renderer::GetPass<ShadowPass>();
-                  shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
-                  if (shadowPass->IsActive()) {
-                      shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
-                      shader->SetUniform("u_ShadowMap", static_cast<int>(shadowPass->BindShadowMap()));
-                      shader->SetUniform("u_ShadowBias", shadowPass->GetShadowBias());
-                      shader->SetUniform("u_ShadowSoftness", shadowPass->GetShadowSoftness());
-                  }
+              // Set shadow uniforms
+              auto const& shadowPass = Renderer::GetPass<ShadowPass>();
+              shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
+              if (shadowPass->IsActive()) {
+                shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
+                shader->SetUniform("u_ShadowMap", static_cast<int>(shadowPass->BindShadowMap()));
+                shader->SetUniform("u_ShadowBias", shadowPass->GetShadowBias());
+                shader->SetUniform("u_ShadowSoftness", shadowPass->GetShadowSoftness());
               }
+            }
           }
 
           // Apply material-specific properties
-          auto material = MaterialTable::GetMaterial(group.matID);
+          auto const& material = MaterialTable::GetMaterial(group.matID);
           material->Apply(shader);
-          MaterialTable::ApplyMaterialTextures(shader);
+
+          // clamp the end of batch to matCount - 1
+          size_t const endBatch{ matCount - matIdx >= MaterialTable::sMaterialsPerBatch ? matIdx + MaterialTable::sMaterialsPerBatch - 1 : matCount - 1 };
+
+          MaterialTable::ApplyMaterialTextures(shader, matIdx, endBatch);
 
           // Render all instances for this material
           for (const auto& [entity, worldMtx] : group.entityPairs) {
-              auto const& mesh = entity.GetComponent<Component::Mesh>();
-              Graphics::Renderer::SubmitInstance(mesh.meshSource, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), group.matID, mesh.submeshIdx);
+            auto const& mesh = entity.GetComponent<Component::Mesh>();
+            Graphics::Renderer::SubmitInstance(mesh.meshSource, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), (group.matID % (MaterialTable::sMaterialsPerBatch + 1)), mesh.submeshIdx);
           }
 
           Renderer::RenderSubmeshInstances();  // Flush all instances for this material group
           Texture::ResetTextureUnits();
+        }
+        //Renderer::RenderSubmeshInstances();
+        //Texture::ResetTextureUnits();
+      
       }
 
       if (cam.isEditor) {
-          auto const& lights = ecsMan.GetAllEntitiesWithComponents<Component::Light, Component::Transform>();
+          auto const& lights{ IGE_ENTITYMGR.GetAllEntitiesWithComponents<Component::Light, Component::Transform>() };
           for (auto const& light : lights) {
               auto const& xform = ECS::Entity{ light }.GetComponent<Component::Transform>();
               auto const& lightComp = ECS::Entity{ light }.GetComponent<Component::Light>();
@@ -220,4 +168,84 @@ namespace Graphics {
       }
   }
 
+  std::vector<GeomPass::MaterialGroup> GeomPass::CreateMaterialGroups(std::vector<ECS::Entity> const& entities) {
+    std::vector<MaterialGroup> materialGroups;
+    std::unordered_map<int, unsigned> existingGroups; // matID, index
+
+    for (ECS::Entity const& entity : entities) {
+      if (!entity.HasComponent<Component::Mesh>()) { continue; }
+
+      auto const& mesh = entity.GetComponent<Component::Mesh>();
+
+      if (!mesh.meshSource.IsValid()) continue;
+
+      int matID = 0;
+      if (entity.HasComponent<Component::Material>()) {
+        auto const& matComp = entity.GetComponent<Component::Material>();
+        matID = matComp.matIdx;
+      }
+
+      auto const& xform = entity.GetComponent<Component::Transform>();
+
+      // Find or create the MaterialGroup
+      if (!existingGroups.contains(matID)) {
+        // Create an entry in the map
+        existingGroups.emplace(matID, materialGroups.size());
+
+        // Add the new MaterialGroup
+        auto material = MaterialTable::GetMaterial(matID);
+        materialGroups.push_back({ matID, material->GetShader(), {{entity, xform.worldMtx}} });
+      }
+      else {
+        // Add to existing group
+        materialGroups[existingGroups[matID]].entityPairs.emplace_back(EntityXform{ entity, xform.worldMtx });
+      }
+    }
+
+    return materialGroups;
+  }
+
 } // namespace Graphics
+
+namespace {
+  template <unsigned N>
+  LightUniforms<N> GetLightData(std::vector<ECS::Entity> const& entities) {
+    LightUniforms<N> lightUniforms{};
+    int numLights{};
+
+    //Get the list of light
+    std::vector<ECS::Entity> lights{};
+    for (ECS::Entity const& entity : entities) {
+      if (!entity.HasComponent<Component::Light>()) { continue; }
+
+      auto const& light = entity.GetComponent<Component::Light>();
+      lightUniforms.u_type[numLights] = light.type;
+      lightUniforms.u_LightDirection[numLights] = entity.GetComponent<Component::Transform>().worldRot * light.forwardVec; // Directional light direction in world space
+      lightUniforms.u_LightColor[numLights] = light.color;     // Directional light color
+
+      //For spotlight
+      lightUniforms.u_LightPos[numLights] = entity.GetComponent<Component::Transform>().worldPos; // Position of the spotlight
+      lightUniforms.u_InnerSpotAngle[numLights] = light.mInnerSpotAngle; // Inner spot angle in degrees
+      lightUniforms.u_OuterSpotAngle[numLights] = light.mOuterSpotAngle; // Outer spot angle in degrees
+      lightUniforms.u_LightIntensity[numLights] = light.mLightIntensity; // Intensity of the light
+      lightUniforms.u_Range[numLights] = light.mRange; // Maximum range of the spotlight
+      ++numLights;
+    }
+    lightUniforms.numLights = numLights;
+
+    return lightUniforms;
+  }
+
+  template <unsigned N>
+  void LightUniforms<N>::SetUniforms(std::shared_ptr<Graphics::Shader> const& shader) const {
+    shader->SetUniform("numlights", numLights);
+    shader->SetUniform("u_type", u_type, N);
+    shader->SetUniform("u_LightDirection", u_LightDirection, N);
+    shader->SetUniform("u_LightColor", u_LightColor, N);
+    shader->SetUniform("u_LightPos", u_LightPos, N);
+    shader->SetUniform("u_InnerSpotAngle", u_InnerSpotAngle, N);
+    shader->SetUniform("u_OuterSpotAngle", u_OuterSpotAngle, N);
+    shader->SetUniform("u_LightIntensity", u_LightIntensity, N);
+    shader->SetUniform("u_Range", u_Range, N);
+  }
+}

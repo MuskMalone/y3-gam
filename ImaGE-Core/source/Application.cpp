@@ -140,7 +140,7 @@ namespace IGE {
     }
     
     //to change, just temp
-    glClearColor(.47055, .55289, .86785, 1.f);//f
+    glClearColor(.47055f, .55289f, .86785f, 1.f);//f
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glEnable(GL_DEPTH_TEST);
 

@@ -27,6 +27,7 @@ namespace Systems {
           transform.position = transform.worldPos;
           transform.scale = transform.worldScale;
           transform.rotation = transform.worldRot;
+          transform.eulerAngles = glm::degrees(glm::eulerAngles(transform.rotation));
 
           transform.ComputeWorldMtx();
           transform.modified = false;

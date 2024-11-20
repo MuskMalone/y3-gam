@@ -60,6 +60,8 @@ namespace GUI {
     }
     catch (Debug::ExceptionBase&) {
       IGE_DBGLOGGER.LogError("Unable to load Material window for " + selectedFile.string());
+      GUIVault::SetSelectedFile({});
+      return;
     }
 
     auto& selectedMaterial{ am.GetAsset<IGE::Assets::MaterialAsset>(guid)->mMaterial };

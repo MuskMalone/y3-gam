@@ -135,6 +135,8 @@ namespace GUI {
     ************************************************************************/
     EVENT_CALLBACK_DECL(HandleEvent);
 
+    void RunDragDropInspector(ECS::Entity entity);
+
     /*!*********************************************************************
     \brief
       Displays the removed components of a prefab instance
