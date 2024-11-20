@@ -32,4 +32,5 @@ namespace Reflection::ComponentUtils {
   void AddImage(ECS::Entity entity, rttr::variant const& var);
   void AddSprite2D(ECS::Entity entity, rttr::variant const& var);
   void AddCamera(ECS::Entity entity, rttr::variant const& var);
+  void AddSkybox(ECS::Entity entity, rttr::variant const& var);
 } // namespace Reflection

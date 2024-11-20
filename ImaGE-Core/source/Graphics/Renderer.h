@@ -21,7 +21,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Core/Components/Camera.h"
 #include "Core/Components/Transform.h"
 #include "Core/Components/Light.h"
-#include "MeshSubmeshKeyHash.h"
 
 
 namespace Component{
@@ -201,6 +200,7 @@ namespace Graphics {
 
 		static unsigned int GetMaxTextureUnits();
 		static std::shared_ptr<Graphics::Framebuffer> GetFinalFramebuffer();
+		static void ResizeFinalFramebuffer(int width, int height);
 		static void SetFinalFramebuffer(std::shared_ptr<Graphics::Framebuffer> const& framebuffer);
 		static IGE::Assets::GUID GetDefaultTexture();
 		static IGE::Assets::GUID GetWhiteTexture();
@@ -208,8 +208,6 @@ namespace Graphics {
 		static IGE::Assets::GUID GetDebugMeshSource(size_t idx = 0);
 
 		static IGE::Assets::GUID GetQuadMeshSource();
-		
-		static std::vector<IGE::Assets::GUID> mIcons;
 	private:
 		static void SetQuadBufferData(glm::vec3 const& pos, glm::vec4 const& clr,
 									  glm::vec2 const& texCoord, float texIdx, int entity);
@@ -237,9 +235,10 @@ namespace Graphics {
 
 		static void InitShaders();
 		static void InitPickPass();
+		static void InitSkyboxPass(std::shared_ptr<Framebuffer> const& fb);
 		static void InitGeomPass();
 		static void InitShadowMapPass();
-		static void InitScreenPass();
+		static void InitScreenPass(std::shared_ptr<Framebuffer> const& fb);
 		static void InitPostProcessPass();
 		static void InitUIPass();
 		static void InitMeshSources();
@@ -263,6 +262,8 @@ namespace Graphics {
 	public: // TEMP
 		template <typename T>
 		static std::shared_ptr<T> GetPass() { return std::static_pointer_cast<T>(mTypeToRenderPass[typeid(T)]); }
+
+		static std::vector<IGE::Assets::GUID> mIcons;
 
 		static std::unordered_map<std::type_index, std::shared_ptr<RenderPass>> mTypeToRenderPass;
 		static std::vector<std::shared_ptr<RenderPass>> mRenderPasses;

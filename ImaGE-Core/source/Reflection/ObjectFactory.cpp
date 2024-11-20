@@ -59,7 +59,8 @@ namespace Reflection
       { GET_RTTR_TYPE(Canvas), ComponentUtils::AddCanvas },
       { GET_RTTR_TYPE(Image), ComponentUtils::AddImage },
       { GET_RTTR_TYPE(Sprite2D), ComponentUtils::AddSprite2D },
-      { GET_RTTR_TYPE(Camera), ComponentUtils::AddCamera }
+      { GET_RTTR_TYPE(Camera), ComponentUtils::AddCamera },
+      { GET_RTTR_TYPE(Skybox), ComponentUtils::AddSkybox }
     };
 
     if (mAddComponentFuncs.size() != gComponentTypes.size()) {
@@ -327,6 +328,7 @@ namespace Reflection
     else IF_GET_ENTITY_COMP(Image)
     else IF_GET_ENTITY_COMP(Sprite2D)
     else IF_GET_ENTITY_COMP(Camera)
+    else IF_GET_ENTITY_COMP(Skybox)
     else
     {
       std::ostringstream oss{};

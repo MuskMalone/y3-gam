@@ -604,9 +604,6 @@
     <ClInclude Include="source\Graphics\Mesh\Submesh.h">
       <Filter>Graphics\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="source\Graphics\MeshSubmeshKeyHash.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="source\Graphics\Pipeline.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -758,6 +755,10 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
+    <ClInclude Include="source\Graphics\MeshSubmeshKeyHash.h" />
+    <ClInclude Include="source\Core\Components\Sprite2D.h" />
+    <ClInclude Include="source\Graphics\RenderPass\SkyboxPass.h" />
+    <ClInclude Include="source\Core\Components\Skybox.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -1026,5 +1027,7 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
+    <ClCompile Include="source\Input\KeyCodecpp.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\SkyboxPass.cpp" />
   </ItemGroup>
 </Project>

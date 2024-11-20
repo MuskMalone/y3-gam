@@ -38,7 +38,7 @@ namespace Graphics {
 
   void GeomPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
       Begin();
-      Renderer::Clear();
+     // Renderer::Clear();
       //auto shader = mSpec.pipeline->GetShader();
 
       Renderer::RenderSceneBegin(cam.viewProjMatrix);
@@ -112,11 +112,11 @@ namespace Graphics {
             Graphics::Renderer::SubmitInstance(mesh.meshSource, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), (group.matID % (MaterialTable::sMaterialsPerBatch + 1)), mesh.submeshIdx);
           }
 
-          Renderer::RenderSubmeshInstances();  // Flush all instances for this material group
-          Texture::ResetTextureUnits();
+          //Renderer::RenderSubmeshInstances();  // Flush all instances for this material group
+          //Texture::ResetTextureUnits();
         }
-        //Renderer::RenderSubmeshInstances();
-        //Texture::ResetTextureUnits();
+        Renderer::RenderSubmeshInstances();
+        Texture::ResetTextureUnits();
       
       }
 
