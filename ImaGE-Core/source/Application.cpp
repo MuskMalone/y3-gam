@@ -23,6 +23,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Entity.h>
 #include <Core/Components/Components.h>
 #include "Asset/IGEAssets.h"
+#include "Graphics/Renderer.h"
 
 #pragma region SYSTEM_INCLUDES
 #include <Core/Systems/SystemManager/SystemManager.h>
@@ -93,11 +94,20 @@ namespace IGE {
 
       systemManager.UpdateSystems();
 
-      glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
+      //=======================================================================
+      Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() });
+      auto const& fb = Graphics::Renderer::GetFinalFramebuffer();
+      std::shared_ptr<Graphics::Texture> gameTex = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
 
-      auto const& cam = GetDefaultRenderTarget().camera;
-      Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ cam.GetViewProjMatrix(), cam.GetViewMatrix(), cam.GetPosition(), cam.GetNearPlane(), cam.GetFarPlane(), cam.GetFOV(), cam.GetAspectRatio()});
+      if (gameTex) {
+          gameTex->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+      }
 
+      Graphics::Texture::BindToNextAvailUnit(gameTex->GetTexHdl());
+      auto const& shader = Graphics::ShaderLibrary::Get("FullscreenQuad");
+      shader->Use();
+      Graphics::Renderer::RenderFullscreenTexture();
+      //===========================================================================
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
       // check and call events, swap buffers
@@ -252,9 +262,10 @@ namespace IGE {
       int width, height;
       glfwGetFramebufferSize(mWindow.get(), &width, &height);
       glViewport(0, 0, width, height);
-      for (auto& target : mRenderTargets) {
-          target.framebuffer->Resize(width, height);
-      }
+      //for (auto& target : mRenderTargets) {
+      //    target.framebuffer->Resize(width, height);
+      //}
+      Graphics::Renderer::ResizeFinalFramebuffer(width, height);
   }
 
   Application::~Application()

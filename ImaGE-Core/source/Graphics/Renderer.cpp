@@ -1349,6 +1349,10 @@ namespace Graphics {
 	IGE::Assets::GUID Renderer::GetWhiteTexture() {
 		return mData.whiteTex;
 	}
+	void Renderer::ResizeFinalFramebuffer(int width, int height){
+		mFinalFramebuffer->Resize(width, height);
+
+	}
 	IGE::Assets::GUID Renderer::GetDebugMeshSource(size_t idx){
 		return mData.debugMeshSources[idx];
 	}
