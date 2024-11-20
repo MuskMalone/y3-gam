@@ -94,7 +94,6 @@ namespace GUI {
     if (ImGuiHelpers::BeginDrapDropTargetWindow(AssetPayload::sAssetDragDropPayload)) {
       ImGuiHelpers::AssetDragDropBehavior(entity);
     }
-    ImGui::EndDragDropTarget();
   }
 
   void Inspector::Run() {
