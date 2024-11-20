@@ -66,8 +66,14 @@ namespace IGE {
 
     //inline std::vector<std::pair<std::shared_ptr<Graphics::Framebuffer>, SceneDrawCall>>& GetFrameBuffer() { return mFramebuffers; }
     //inline std::vector<std::pair<std::shared_ptr<Graphics::Framebuffer>, SceneDrawCall>> const& GetFrameBuffer() const { return mFramebuffers; }
+    void ToggleFullscreen();
     inline static bool GetImGuiEnabled() { return mSpecification.EnableImGui; }
-
+  protected:
+      struct WindowState {
+          int windowedPosX = {}, windowedPosY = {}; // Previous window position
+          int windowedWidth = {}, windowedHeight = {}; // Previous window size
+          bool isFullscreen = { false }; // Current fullscreen state
+      } mWindowState;
   protected:
     inline Graphics::RenderTarget& GetDefaultRenderTarget() noexcept { return mRenderTargets.front(); }
 

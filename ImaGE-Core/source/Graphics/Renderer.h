@@ -21,7 +21,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Core/Components/Camera.h"
 #include "Core/Components/Transform.h"
 #include "Core/Components/Light.h"
-#include "MeshSubmeshKeyHash.h"
 
 
 namespace Component{

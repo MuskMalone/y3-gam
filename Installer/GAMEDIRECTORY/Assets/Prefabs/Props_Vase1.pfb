@@ -1,0 +1,266 @@
+{
+    "Name": "Props_Vase1",
+    "isActive": true,
+    "Components": [
+        {
+            "Tag": {
+                "tag": "Props_Vase1",
+                "isActive": true
+            }
+        },
+        {
+            "Transform": {
+                "position": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 4.354997158050537,
+                    "y": 4.354997158050537,
+                    "z": 4.354997158050537
+                },
+                "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "eulerAngles": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "worldPos": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "worldScale": {
+                    "x": 4.354997158050537,
+                    "y": 4.354997158050537,
+                    "z": 4.354997158050537
+                },
+                "worldRot": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            }
+        },
+        {
+            "Layer": {
+                "layerName": "Default"
+            }
+        },
+        {
+            "BoxCollider": {
+                "scale": {
+                    "x": 2.1774985790252687,
+                    "y": 2.1774985790252687,
+                    "z": 2.1774985790252687
+                },
+                "positionOffset": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "degreeRotationOffsetEuler": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "rotationOffset": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "sensor": false
+            }
+        },
+        {
+            "RigidBody": {
+                "velocity": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "angularVelocity": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "staticFriction": 0.0,
+                "dynamicFriction": 0.0,
+                "restitution": 0.0,
+                "gravityFactor": 0.0,
+                "linearDamping": 0.9800000190734863,
+                "motionType": "KINEMATIC",
+                "axisLock": 7,
+                "angularAxisLock": 7
+            }
+        }
+    ],
+    "SubData": [
+        {
+            "ID": 1,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Vase4",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.000006079672857595142,
+                            "y": -0.00020384785602800548,
+                            "z": -0.0008630751399323344
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0000264769605564652,
+                            "y": -0.0008877568761818111,
+                            "z": -0.0037586900871247055
+                        },
+                        "worldScale": {
+                            "x": 4.354997158050537,
+                            "y": 4.354997158050537,
+                            "z": 4.354997158050537
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 1108074372994351687
+                        },
+                        "matIdx": 6
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Vase4",
+                        "GUID": {
+                            "ID": 18142119185854277997
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Vase1",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.000006079672857595142,
+                            "y": -0.00020384785602800548,
+                            "z": -0.0008630751399323344
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0000264769605564652,
+                            "y": -0.0008877568761818111,
+                            "z": -0.0037586900871247055
+                        },
+                        "worldScale": {
+                            "x": 4.354997158050537,
+                            "y": 4.354997158050537,
+                            "z": 4.354997158050537
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 1108074372994351687
+                        },
+                        "matIdx": 6
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Vase1",
+                        "GUID": {
+                            "ID": 18142119185854277997
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        }
+    ]
+}

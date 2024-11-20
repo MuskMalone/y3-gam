@@ -80,10 +80,16 @@ namespace IGE {
 
     while (!glfwWindowShouldClose(mWindow.get())) { 
       frameRateController.Start();
+
+      if(inputManager.IsKeyTriggered(IK_F11)) //TODO Change to Event based
+          Application::ToggleFullscreen();
+
       inputManager.UpdateInput();
 
       // dispatch all events in the queue at the start of game loop
       eventManager.DispatchAll();
+
+
 
       systemManager.UpdateSystems();
 
@@ -122,6 +128,17 @@ namespace IGE {
     glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
     glfwWindowHint(GLFW_RED_BITS, 8); glfwWindowHint(GLFW_GREEN_BITS, 8);
     glfwWindowHint(GLFW_BLUE_BITS, 8); glfwWindowHint(GLFW_ALPHA_BITS, 8);
+
+    glfwWindowHint(GLFW_RESIZABLE, mSpecification.Resizable ? GLFW_TRUE : GLFW_FALSE);
+    glfwWindowHint(GLFW_MAXIMIZED, mSpecification.StartMaximized ? GLFW_TRUE : GLFW_FALSE);
+
+    GLFWmonitor* monitor = nullptr; // Default to windowed mode
+    if (mSpecification.Fullscreen) {
+        monitor = glfwGetPrimaryMonitor();
+        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+        mSpecification.WindowWidth = mode->width;
+        mSpecification.WindowHeight = mode->height;
+    }
 
     // initialize window ptr
     // have to do this because i can't make_unique with custom dtor
@@ -214,6 +231,30 @@ namespace IGE {
     Debug::DebugLogger::DestroyInstance();
 
     // @TODO: Shutdown physics and audio singletons
+  }
+
+  void Application::ToggleFullscreen(){
+      if (mWindowState.isFullscreen) {
+          glfwSetWindowMonitor(mWindow.get(), nullptr, mWindowState.windowedPosX, mWindowState.windowedPosY, mWindowState.windowedWidth, mWindowState.windowedHeight, 0);
+          mWindowState.isFullscreen = false;
+      }
+      else {
+          glfwGetWindowPos(mWindow.get(), &mWindowState.windowedPosX, &mWindowState.windowedPosY);
+          glfwGetWindowSize(mWindow.get(), &mWindowState.windowedWidth, &mWindowState.windowedHeight);
+
+          GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+          const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+          glfwSetWindowMonitor(mWindow.get(), monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+          mWindowState.isFullscreen = true;
+      }
+
+      // Update framebuffers
+      int width, height;
+      glfwGetFramebufferSize(mWindow.get(), &width, &height);
+      glViewport(0, 0, width, height);
+      for (auto& target : mRenderTargets) {
+          target.framebuffer->Resize(width, height);
+      }
   }
 
   Application::~Application()
