@@ -26,20 +26,25 @@ namespace Performance {
     mFPSTimer += mDeltaTime;
     mTotalTime += mDeltaTime;
 
+    /*
     // More accurate FPS
     if (mDeltaTime > 0) {
       // Accumulate instantaneous FPS and frame count
       mAccumulatedFPS += 1.0f / mDeltaTime;
       mFrameCounter++;
     }
+    */
 
     if (mFPSTimer >= mFPSCalculationInterval) {
+      /*
       if (mFrameCounter > 0) {
         mCurrFPS = mAccumulatedFPS / mFrameCounter; // Average FPS over the interval
       }
+      */
+      mCurrFPS = static_cast<TimeType>(mFrameCounter) / mFPSCalculationInterval;
 
       mFPSTimer = 0.f;
-      mAccumulatedFPS = 0.f;
+      //mAccumulatedFPS = 0.f;
       mFrameCounter = 0;
     }
   }

@@ -11,6 +11,7 @@ public class FPS : Entity
 
   void Update()
   {
-    InternalCalls.SetText(mEntityID, "FPS: " + InternalCalls.GetFPS().ToString());
+    if (IsActive())
+      InternalCalls.SetText(mEntityID, "FPS: " + InternalCalls.GetFPS().ToString());
   }
 }
