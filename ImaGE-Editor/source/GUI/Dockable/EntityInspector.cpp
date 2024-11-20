@@ -62,7 +62,8 @@ namespace GUI {
       { typeid(Component::Canvas), ICON_FA_PAINTBRUSH ICON_PADDING },
       { typeid(Component::Image), ICON_FA_IMAGE_PORTRAIT ICON_PADDING },
       { typeid(Component::Sprite2D), ICON_FA_IMAGE ICON_PADDING },
-      { typeid(Component::Camera), ICON_FA_CAMERA ICON_PADDING }
+      { typeid(Component::Camera), ICON_FA_CAMERA ICON_PADDING },
+      { typeid(Component::Skybox), ICON_FA_EARTH_ASIA ICON_PADDING }
     },
     mObjFactory{Reflection::ObjectFactory::GetInstance()},
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
@@ -377,6 +378,18 @@ namespace GUI {
               SetIsComponentEdited(true);
               if (prefabOverride) {
                   prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Sprite2D>());
+              }
+          }
+      }
+
+      if (currentEntity.HasComponent<Component::Skybox>()) {
+          rttr::type const sourceType{ rttr::type::get<Component::Skybox>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(sourceType);
+
+          if (SkyboxComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Skybox>());
               }
           }
       }
@@ -1836,6 +1849,143 @@ namespace GUI {
     return modified;
   }
 
+  bool Inspector::SkyboxComponentWindow(ECS::Entity entity, bool highlight) {
+      //bool const isOpen{ WindowBegin<Component::Skybox>("Skybox", highlight) };
+      //bool modified{ false };
+
+      //if (isOpen) {
+      //    Component::Skybox& skybox = entity.GetComponent<Component::Skybox>();
+
+      //    float const inputWidth{ CalcInputWidth(60.f) };
+
+      //    ImGui::BeginTable("SkyboxTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      //    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      //    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+      //    NextRowTable("Material");
+      //    ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 2.0f);
+      //    const char* name;
+      //    IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+      //    if (skybox.materialAsset.IsValid()) {
+      //        name = am.GetAsset<IGE::Assets::MaterialAsset>(skybox.materialAsset)->mMaterial->GetName().c_str();
+      //    }
+      //    else {
+      //        name = "Drag Material Here";
+      //    }
+      //    if (ImGui::Button(name, ImVec2(inputWidth, 30.f))) {
+      //        skybox.Clear();
+      //    }
+      //    ImGui::PopStyleVar();
+      //    if (ImGui::IsItemHovered()) { ImGui::SetTooltip("Remove Material"); }
+
+      //    if (ImGui::BeginDragDropTarget()) {
+      //        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+      //        if (drop) {
+      //            AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+      //            if (assetPayload.mAssetType == AssetPayload::MATERIAL) {
+      //                try {
+
+      //                    skybox.SetGUID(am.LoadRef<IGE::Assets::MaterialAsset>(assetPayload.GetFilePath()));
+      //                }
+      //                catch (Debug::ExceptionBase& e) {
+      //                    e.LogSource();
+      //                }
+      //            }
+      //        }
+      //        ImGui::EndDragDropTarget();
+      //    }
+
+      //    ImGui::EndTable();
+      //}
+
+      //WindowEnd(isOpen);
+      //return modified;
+      bool const isOpen{ WindowBegin<Component::Skybox>("Skybox", highlight) };
+      bool modified{ false };
+
+      if (isOpen) {
+          Component::Skybox& skybox = entity.GetComponent<Component::Skybox>();
+
+          float const inputWidth{ CalcInputWidth(60.f) };
+
+          // Start a table for organizing the properties
+          ImGui::BeginTable("SkyboxTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+          // Texture 1 input
+          NextRowTable("Texture 1");
+          static std::string texture1Text;
+          try {
+              texture1Text = (skybox.tex1) ? IGE_ASSETMGR.GUIDToPath(skybox.tex1) : "[None]: Drag in a Texture";
+          }
+          catch (Debug::ExceptionBase& e) {
+              texture1Text = "[Invalid GUID]: Unable to load texture";
+              e.LogSource();
+              ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), e.what());
+          }
+
+          ImGui::BeginDisabled();
+          ImGui::InputText("##Texture1", &texture1Text);
+          ImGui::EndDisabled();
+
+          if (ImGui::BeginDragDropTarget()) {
+              ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+              if (drop) {
+                  AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+                  if (assetPayload.mAssetType == AssetPayload::SPRITE) {
+                      skybox.tex1 = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
+                      texture1Text = assetPayload.GetFileName();
+                      modified = true;
+                  }
+              }
+              ImGui::EndDragDropTarget();
+          }
+
+          // Texture 2 input
+          NextRowTable("Texture 2");
+          static std::string texture2Text;
+          try {
+              texture2Text = (skybox.tex2) ? IGE_ASSETMGR.GUIDToPath(skybox.tex2) : "[None]: Drag in a Texture";
+          }
+          catch (Debug::ExceptionBase& e) {
+              texture2Text = "[Invalid GUID]: Unable to load texture";
+              e.LogSource();
+              ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), e.what());
+          }
+
+          ImGui::BeginDisabled();
+          ImGui::InputText("##Texture2", &texture2Text);
+          ImGui::EndDisabled();
+
+          if (ImGui::BeginDragDropTarget()) {
+              ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+              if (drop) {
+                  AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+                  if (assetPayload.mAssetType == AssetPayload::SPRITE) {
+                      skybox.tex2 = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
+                      texture2Text = assetPayload.GetFileName();
+                      modified = true;
+                  }
+              }
+              ImGui::EndDragDropTarget();
+          }
+
+          // Blend input
+          NextRowTable("Blend");
+          if (ImGui::SliderFloat("##Blend", &skybox.blend, 0.0f, 1.0f)) {
+              modified = true;
+          }
+
+          ImGui::EndTable();
+      }
+
+      WindowEnd(isOpen);
+      return modified;
+  }
+
   bool Inspector::CapsuleColliderComponentWindow(ECS::Entity entity, bool highlight)
   {
       bool const isOpen{ WindowBegin<Component::CapsuleCollider>("Capsule Collider", highlight) };
@@ -2159,6 +2309,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Image>("Image");
         DrawAddComponentButton<Component::Sprite2D>("Sprite2D");
         DrawAddComponentButton<Component::Camera>("Camera");
+        DrawAddComponentButton<Component::Skybox>("Skybox");
 
         ImGui::EndTable();
       }

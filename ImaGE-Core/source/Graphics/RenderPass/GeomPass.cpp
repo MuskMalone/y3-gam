@@ -38,7 +38,7 @@ namespace Graphics {
 
   void GeomPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
       Begin();
-      Renderer::Clear();
+     // Renderer::Clear();
       //auto shader = mSpec.pipeline->GetShader();
 
       Renderer::RenderSceneBegin(cam.viewProjMatrix);

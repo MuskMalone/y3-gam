@@ -152,4 +152,18 @@ namespace Reflection::ComponentUtils {
 
     entity.EmplaceOrReplaceComponent<Camera>(comp);
   }
+
+  void AddSkybox(ECS::Entity entity, rttr::variant const& var) {
+      EXTRACT_RAW_COMP(Skybox, comp);
+
+      try {
+          IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(comp.tex1);
+          IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(comp.tex2);
+          entity.EmplaceOrReplaceComponent<Skybox>(comp);
+      }
+      catch (Debug::ExceptionBase const&) {
+          IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(comp.tex1)) + " of Skybox component invalid");
+      }
+
+  }
 } // namespace Reflection
