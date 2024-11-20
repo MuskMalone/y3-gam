@@ -200,6 +200,9 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetWorldScale);
   ADD_INTERNAL_CALL(MoveCharacter);
   ADD_INTERNAL_CALL(SetAngularVelocity);
+  ADD_INTERNAL_CALL(SetVelocity);
+  ADD_INTERNAL_CALL(GetGravityFactor);
+  ADD_INTERNAL_CALL(SetGravityFactor);
 
   //Debug Functions
   ADD_INTERNAL_CALL(Log);
@@ -213,7 +216,6 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetTime);
   ADD_INTERNAL_CALL(GetFPS);
   ADD_INTERNAL_CALL(MoveCharacter);
-  ADD_INTERNAL_CALL(IsGrounded);
   ADD_INTERNAL_CALL(GetTag);
   ADD_INTERNAL_CALL(FindScript);
   ADD_INTERNAL_CALL(DestroyEntity);
@@ -866,8 +868,7 @@ void Mono::MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec) {
 
   Performance::FrameRateController::TimeType dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
   ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.x = dVec.x * dt;
-  if(dVec.y == 20.f)
-    ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y = dVec.y * dt;
+  //ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y = dVec.y * dt;
   ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.z = dVec.z * dt;
      
   IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
@@ -887,6 +888,38 @@ void Mono::SetAngularVelocity(ECS::Entity::EntityID entity, glm::vec3 angularVel
   IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::ANGULAR_VELOCITY);
 }
 
+void Mono::SetVelocity(ECS::Entity::EntityID entity, glm::vec3 velocity) {
+  if (!ECS::Entity(entity).HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity does not have the RigidBody component");
+    return;
+  }
+
+  Performance::FrameRateController::TimeType dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.x = velocity.x * dt;
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y = velocity.y * dt;
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.z = velocity.z * dt;
+
+  IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
+}
+
+float Mono::GetGravityFactor(ECS::Entity::EntityID entity) {
+  if (!ECS::Entity(entity).HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity does not have the RigidBody component");
+    return 0.f;
+  }
+
+  return ECS::Entity(entity).GetComponent<Component::RigidBody>().gravityFactor;
+}
+
+void Mono::SetGravityFactor(ECS::Entity::EntityID entity, float gravity) {
+  if (!ECS::Entity(entity).HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity does not have the RigidBody component");
+    return;
+  }
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().gravityFactor = gravity;
+  IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::GRAVITY_FACTOR);
+}
+
 glm::vec3 Mono::GetMouseDelta()
 {
   //std::cout << Input::InputManager::GetInstance().GetMousePos() << "\n";
@@ -896,17 +929,6 @@ glm::vec3 Mono::GetMouseDelta()
 glm::vec3 Mono::GetMousePos()
 {
   return glm::vec3(Input::InputManager::GetInstance().GetMousePos(), 0);
-}
-
-bool  Mono::IsGrounded(ECS::Entity::EntityID entity)
-{
-  if (ECS::Entity(entity).HasComponent<Component::RigidBody>())
-  {
-    //std::cout << ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y << "\n";
-    return(ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y <= 0 && ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y >= -0.005);
-  }
-    
-  return false;
 }
 
 ECS::Entity::EntityID Mono::Raycast(glm::vec3 start, glm::vec3 end)

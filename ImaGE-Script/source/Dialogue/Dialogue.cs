@@ -62,6 +62,12 @@ public class Dialogue : Entity
       charIndex++;
       nextCharTime = Time.gameTime + textSpeed;
     }
+
+    if (isInDialogueMode && IsActive() && DialogueBox.IsActive() && charIndex >= lines[lineIndex].Length)
+    {
+      // Line has ended, stop sound
+      InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
+    }
     
     if (isInDialogueMode && IsActive() && DialogueBox.IsActive() && 
       Input.GetMouseButtonTriggered(0))
@@ -119,6 +125,7 @@ public class Dialogue : Entity
 
   void EndDialogue()
   {
+    InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
     playerMove.UnfreezePlayer();
     DialogueBox.SetActive(false);
     SetActive(false);
@@ -127,6 +134,7 @@ public class Dialogue : Entity
 
   private void SkipTyping()
   {
+    InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
     InternalCalls.SetText(mEntityID, lines[lineIndex]);
     charIndex = lines[lineIndex].Length;
   }
@@ -134,6 +142,7 @@ public class Dialogue : Entity
   private void NextLine()
   {
     DeactivateAllEmotions();
+    InternalCalls.PlaySound(mEntityID, "DefaultDialogueSound");
 
     if (lineIndex < lines.Length - 1)
     {

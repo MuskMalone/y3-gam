@@ -207,7 +207,13 @@ namespace IGE.Utils
     extern public static void SetAngularVelocity(uint mEntityID, Vector3 angularVelocity);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static bool IsGrounded(uint mEntityID);
+    extern public static void SetVelocity(uint mEntityID, Vector3 velocity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetGravityFactor(uint mEntityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetGravityFactor(uint mEntityID, float gravityFactor);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static Entity FindScript(string s);

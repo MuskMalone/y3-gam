@@ -1,12 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 using IGE.Utils;
 using System.Numerics;
 
@@ -14,6 +6,7 @@ public class PlayerFootsteps : Entity
 {
     //public Entity audioManager;
     public Entity player;
+    public PlayerMove playerMoveScript;
     public float interval = 0.5f;
     // Start is called before the first frame update
     private float timePassed;
@@ -31,7 +24,7 @@ public class PlayerFootsteps : Entity
     void Update()
     {
         timePassed += InternalCalls.GetDeltaTime();
-        bool isGrounded = InternalCalls.IsGrounded(player.mEntityID);
+        bool isGrounded = playerMoveScript.IsGrounded();
         Vector3 velocity = InternalCalls.GetVelocity(player.mEntityID);
         float magnitude = velocity.X * velocity.X + velocity.Y * velocity.Y + velocity.Z * velocity.Z;
 
@@ -83,6 +76,7 @@ public class PlayerFootsteps : Entity
             {
                 case "MainGround":
                     PlayRandomGrassSound();
+                    Debug.Log("GrassSound");
                     break;
                 case "Second Level":
                     PlayRandomPavementSound();

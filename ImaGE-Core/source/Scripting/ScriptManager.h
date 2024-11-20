@@ -319,7 +319,10 @@ namespace Mono
 
 		static void SetAngularVelocity(ECS::Entity::EntityID entity, glm::vec3 angularVelocity);
 
-		static bool IsGrounded(ECS::Entity::EntityID entity);
+		static void SetVelocity(ECS::Entity::EntityID entity, glm::vec3 velocity);
+
+		static float GetGravityFactor(ECS::Entity::EntityID entity);
+		static void SetGravityFactor(ECS::Entity::EntityID entity, float gravity);
 
 		static ECS::Entity::EntityID Raycast(glm::vec3 start, glm::vec3 end);
 
