@@ -152,4 +152,10 @@ namespace Reflection::ComponentUtils {
 
     entity.EmplaceOrReplaceComponent<Camera>(comp);
   }
+
+  void AddSkybox(ECS::Entity entity, rttr::variant const& var) {
+      EXTRACT_RAW_COMP(Skybox, comp);
+
+      entity.EmplaceOrReplaceComponent<Skybox>(comp);
+  }
 } // namespace Reflection
