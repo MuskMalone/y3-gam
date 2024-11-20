@@ -62,7 +62,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 17748932414576488211
+                            "ID": 3179415639664878146
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -88,9 +88,13 @@
                 },
                 {
                     "Skybox": {
-                        "materialAssetGUID": {
-                            "ID": 6047153977749223718
-                        }
+                        "textureAssetGUID1": {
+                            "ID": 10047813639139926775
+                        },
+                        "textureAssetGUID2": {
+                            "ID": 584268140086393045
+                        },
+                        "blend": 0.4399999976158142
                     }
                 }
             ]
@@ -157,7 +161,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 17748932414576488211
+                            "ID": 3179415639664878146
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,

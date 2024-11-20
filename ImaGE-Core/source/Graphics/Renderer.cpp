@@ -25,7 +25,6 @@ namespace Graphics {
 	MaterialTable Renderer::mMaterialTable;
 	ShaderLibrary Renderer::mShaderLibrary;
 	std::vector<IGE::Assets::GUID> Renderer::mIcons;
-	std::vector<IGE::Assets::GUID> Renderer::mSkyboxTextures;
 	std::shared_ptr<Framebuffer> Renderer::mFinalFramebuffer;
 	std::unordered_map<std::type_index, std::shared_ptr<RenderPass>> Renderer::mTypeToRenderPass;
 	std::vector<std::shared_ptr<RenderPass>> Renderer::mRenderPasses;
@@ -219,15 +218,8 @@ namespace Graphics {
 		mIcons.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(sunIcon));
 		mIcons.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(spotlightIcon));
 		//mIcons.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(cameraIcon));
-		
-		//TEMP
-		IGE::Assets::GUID sunrise{ Texture::Create(gAssetsDirectory + std::string("Textures\\sunrise.png")) };
-		IGE::Assets::GUID night{ Texture::Create(gAssetsDirectory + std::string("Textures\\night.png")) };
-		mSkyboxTextures.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(sunrise));
-		mSkyboxTextures.push_back(IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(night));
 
-		
-		//IGE::Assets::GUID nightHDR{};
+
 	}
 
 	void Renderer::InitShaders() {

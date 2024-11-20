@@ -159,7 +159,10 @@ static void rttr_auto_register_reflection_function2_(); namespace {
       .property("farClip", &Component::Camera::farClip);
 
   REGISTER_COMPONENT(Skybox, "Skybox")
-      .property("materialAssetGUID", &Skybox::materialAsset);
+      //.property("materialAssetGUID", &Skybox::materialAsset);
+      .property("textureAssetGUID1", &Skybox::tex1)
+      .property("textureAssetGUID2", &Skybox::tex2)
+      .property("blend", &Skybox::blend);
 
   // stuff below are not actual "Components", hence we skip the REGISTER_COMPONENT checks
   rttr::registration::class_<PrefabOverrides>("PrefabOverrides")

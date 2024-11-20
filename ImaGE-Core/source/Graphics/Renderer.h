@@ -264,7 +264,6 @@ namespace Graphics {
 		static std::shared_ptr<T> GetPass() { return std::static_pointer_cast<T>(mTypeToRenderPass[typeid(T)]); }
 
 		static std::vector<IGE::Assets::GUID> mIcons;
-		static std::vector<IGE::Assets::GUID> mSkyboxTextures;
 
 		static std::unordered_map<std::type_index, std::shared_ptr<RenderPass>> mTypeToRenderPass;
 		static std::vector<std::shared_ptr<RenderPass>> mRenderPasses;
