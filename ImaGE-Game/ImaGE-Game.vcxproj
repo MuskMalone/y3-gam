@@ -182,10 +182,6 @@ xcopy /Q /E /Y /I "..\Binaries\windows-x86_64\Distribution\ImaGE-Game" "$(Soluti
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="source\GameApplication.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="source\GameApplication.cpp" />
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -71,6 +71,11 @@ namespace IGE {
     RegisterSystems();
     Systems::SystemManager::GetInstance().InitSystems();
     Graphics::RenderSystem::Init();
+
+    int width, height;
+    glfwGetFramebufferSize(mWindow.get(), &width, &height);
+    glViewport(0, 0, width, height);
+    Graphics::Renderer::ResizeFinalFramebuffer(width, height);
   }
 
   void Application::Run() {
@@ -142,14 +147,6 @@ namespace IGE {
     glfwWindowHint(GLFW_RESIZABLE, mSpecification.Resizable ? GLFW_TRUE : GLFW_FALSE);
     glfwWindowHint(GLFW_MAXIMIZED, mSpecification.StartMaximized ? GLFW_TRUE : GLFW_FALSE);
 
-    GLFWmonitor* monitor = nullptr; // Default to windowed mode
-    if (mSpecification.Fullscreen) {
-        monitor = glfwGetPrimaryMonitor();
-        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-        mSpecification.WindowWidth = mode->width;
-        mSpecification.WindowHeight = mode->height;
-    }
-
     // initialize window ptr
     // have to do this because i can't make_unique with custom dtor
     {
@@ -160,6 +157,24 @@ namespace IGE {
     if (!mWindow) {
       throw std::runtime_error("Unable to create window for application");
     }
+
+    GLFWmonitor* monitor = nullptr; // Default to windowed mode
+    if (mSpecification.Fullscreen) {
+      /*
+      monitor = glfwGetPrimaryMonitor();
+      const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+      mSpecification.WindowWidth = mode->width;
+      mSpecification.WindowHeight = mode->height;
+      */
+    }
+
+    glfwGetWindowPos(mWindow.get(), &mWindowState.windowedPosX, &mWindowState.windowedPosY);
+    glfwGetWindowSize(mWindow.get(), &mWindowState.windowedWidth, &mWindowState.windowedHeight);
+
+    monitor = glfwGetPrimaryMonitor();
+    const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+    glfwSetWindowMonitor(mWindow.get(), monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+    mWindowState.isFullscreen = true;
 
     glfwMakeContextCurrent(mWindow.get());
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {

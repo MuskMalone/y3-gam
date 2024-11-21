@@ -9,10 +9,10 @@ int Main(int argc, char** argv) {
   // To be read from settings file
   IGE::Application::ApplicationSpecification spec;
   spec.EnableImGui = false;
-  spec.Fullscreen = false;
+  spec.Fullscreen = true;
   spec.Name = "ImaGE Game";
   spec.Resizable = true;
-  spec.StartMaximized = false;
+  spec.StartMaximized = true;
   spec.VSync = true;
   spec.WindowHeight = 1080;
   spec.WindowWidth = 1920;
