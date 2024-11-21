@@ -158,31 +158,23 @@ namespace IGE {
       throw std::runtime_error("Unable to create window for application");
     }
 
-    GLFWmonitor* monitor = nullptr; // Default to windowed mode
+    GLFWmonitor* monitor = nullptr;
     if (mSpecification.Fullscreen) {
-      /*
+      glfwGetWindowPos(mWindow.get(), &mWindowState.windowedPosX, &mWindowState.windowedPosY);
+      glfwGetWindowSize(mWindow.get(), &mWindowState.windowedWidth, &mWindowState.windowedHeight);
+
       monitor = glfwGetPrimaryMonitor();
       const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-      mSpecification.WindowWidth = mode->width;
-      mSpecification.WindowHeight = mode->height;
-      */
+      glfwSetWindowMonitor(mWindow.get(), monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+      mWindowState.isFullscreen = true;
     }
-
-    glfwGetWindowPos(mWindow.get(), &mWindowState.windowedPosX, &mWindowState.windowedPosY);
-    glfwGetWindowSize(mWindow.get(), &mWindowState.windowedWidth, &mWindowState.windowedHeight);
-
-    monitor = glfwGetPrimaryMonitor();
-    const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-    glfwSetWindowMonitor(mWindow.get(), monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
-    mWindowState.isFullscreen = true;
 
     glfwMakeContextCurrent(mWindow.get());
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
       throw std::runtime_error("Failed to initialize GLAD");
     }
     
-    //to change, just temp
-    glClearColor(.47055f, .55289f, .86785f, 1.f);//f
+    glClearColor(0.f, 0.f, 0.f, 1.f);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glEnable(GL_DEPTH_TEST);
 
