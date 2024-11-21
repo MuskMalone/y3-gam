@@ -12,8 +12,8 @@ using System.Drawing.Imaging;
 public interface IInventoryItem
 {
   string Name { get; }
-  
-  Sprite Image { get; }
+  Entity Image { get; } // This should be a UI (Canvas) child entity that
+                        // has the UI Image component
   void OnPickup();
   void OnUsed();
 }

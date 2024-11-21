@@ -17,9 +17,9 @@ public class Hammer : Entity, IInventoryItem
     }
   }
 
-  public Sprite _Image = null;
+  public Entity _Image = null;
 
-  public Sprite Image
+  public Entity Image
   {
     get
     {

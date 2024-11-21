@@ -17,9 +17,9 @@ public class Crowbar : Entity, IInventoryItem
     }
   }
 
-  public Sprite _Image = null;
+  public Entity _Image;
 
-  public Sprite Image
+  public Entity Image
   {
     get
     {

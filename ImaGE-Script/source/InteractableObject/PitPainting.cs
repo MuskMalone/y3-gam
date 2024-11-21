@@ -18,9 +18,9 @@ public class PitPainting : Entity, IInventoryItem
     }
   }
 
-  public Sprite _Image = null;
+  public Entity _Image;
 
-  public Sprite Image
+  public Entity Image
   {
     get
     {
@@ -30,9 +30,7 @@ public class PitPainting : Entity, IInventoryItem
 
   public void OnPickup()
   {
-    //Destroy(Entity); 
     SetActive(false);
-
   }
 
   public void OnUsed()
