@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Numerics;
 using IGE.Utils;
+using System.Numerics;
+
 public class HUD : Entity
 {
   public Inventory inventory;
 
-  // Start is called before the first frame update
+  bool firstRun = true;
+
   void Start()
   {
     inventory.ItemAdded += InventoryScript_ItemAdded;
@@ -19,6 +16,10 @@ public class HUD : Entity
   private void InventoryScript_ItemAdded(object sender, InventoryEventArgs e)
   {
     Transform inventoryPanel = GetComponent<Transform>().Find("Inventory");
+    Vector3 vec3 = new Vector3(e.InventoryPosition.X, e.InventoryPosition.Y, 1f);
+    InternalCalls.SetPosition(e.Item.Image.mEntityID, ref vec3);
+  }
+
     //foreach (Transform slot in inventoryPanel.children)   
     //{
     //  Image image = slot.GetChild(0).GetChild(0).entity.GetComponent<Image>();            // NEED TO DO
@@ -30,7 +31,6 @@ public class HUD : Entity
     //    break;
     //  }
     //}
-  }
 
   // Existing method to handle item removal in the UI
   private void InventoryScript_ItemRemoved(object sender, InventoryEventArgs e)
@@ -54,6 +54,12 @@ public class HUD : Entity
   // Update is called once per frame
   void Update()
   {
-
+    // Workaround for Start() not working
+    if (firstRun)
+    {
+      inventory.ItemAdded += InventoryScript_ItemAdded;
+      inventory.ItemRemoved += InventoryScript_ItemRemoved;
+      firstRun = false;
+    }
   }
 }

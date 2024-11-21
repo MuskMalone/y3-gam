@@ -1,12 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Numerics;
 using IGE.Utils;
 
-using System.Drawing.Imaging;
 public class Inventory : Entity
 {
   private const int SLOTS = 7;
@@ -18,9 +14,10 @@ public class Inventory : Entity
   private Color normalColor = Color.White;
   private Color highlightColor = Color.Yellow;
 
-  private Image currentItem;
+  private Entity currentItem;
   private bool highlighted = false;
 
+  // Inventory Item UI (Image at the bottom right)
   public Entity pitPaintingUI;
   public Entity seedUI;
   public Entity nightPaintingUI;
@@ -30,6 +27,7 @@ public class Inventory : Entity
   public Entity transitionPaintingUI;
   public Entity keyUI;
 
+  // Inventory Item Selection (Image in the inventory bar)
   public Entity pitPaintingSelection;
   public Entity seedSelection;
   public Entity nightPaintingSelection;
@@ -38,12 +36,25 @@ public class Inventory : Entity
   public Entity crowbarSelection;
   public Entity transitionPaintingSelection;
   public Entity keySelection;
-
+  
+  // Inventory Tools
   public Entity inventorySelectSquare;
   public Entity selectionHand;
   public Entity inventoryImage;
 
   //public Vec3<float>[] SlotPositionList;
+  // Workaround for lack of Vec3<float>[]
+  private List<Vec2<float>> iconPosition = new List<Vec2<float>>
+  {
+      new Vec2<float>(-15.9f, 7.2f),
+      new Vec2<float>(-15.9f, 4.7f),
+      new Vec2<float>(-15.9f, 2.4f),
+      new Vec2<float>(-15.9f, 0.1f),
+      new Vec2<float>(-15.9f, -2.3f),
+      new Vec2<float>(-15.9f, -4.6f),
+      new Vec2<float>(-15.9f, -7.0f)
+  };
+  private float selectionHandXOffset = 5f;
 
   public bool keyEquipped;
   public bool crowbarEquipped;
@@ -57,6 +68,7 @@ public class Inventory : Entity
   private bool isSliding = false;
   private bool initialization = true;
   public float slideDuration = 0.5f;
+  private bool isVisible = false;
 
   void Start()
   {
@@ -96,7 +108,8 @@ public class Inventory : Entity
 
         if (ItemAdded != null)
         {
-          ItemAdded(this, new InventoryEventArgs(item));
+          Debug.Log("Item has been added to inventory");
+          ItemAdded(this, new InventoryEventArgs(item, iconPosition[i]));
         }
         return;
       }
@@ -116,7 +129,7 @@ public class Inventory : Entity
 
       if (ItemRemoved != null)
       {
-        ItemRemoved(this, new InventoryEventArgs(item));
+        ItemRemoved(this, new InventoryEventArgs(item, iconPosition[index]));
       }
     }
   }
@@ -129,10 +142,22 @@ public class Inventory : Entity
   private void ToggleInventoryVisibility()
   {
     if (isSliding) return;
-
+    isVisible = !isVisible;
     isSliding = true;
     currentSlideTime = 0;
     inventoryImage.SetActive(true);
+
+    if (!isVisible)
+    {
+      // Set Inventory Icons Inactive
+      for (int i = 0; i < SLOTS; i++)
+      {
+        if (mItems[i] != null)
+        {
+          mItems[i].Image.SetActive(false);
+        }
+      }
+    }
 
     if (!initialization)
     {
@@ -164,17 +189,57 @@ public class Inventory : Entity
       if (progress >= 1.0f)
       {
         isSliding = false;
+
+        // Set Inventory Icons Active
+        if (isVisible)
+        {
+          for (int i = 0; i < SLOTS; i++)
+          {
+            if (mItems[i] != null)
+            {
+              mItems[i].Image.SetActive(true);
+            }
+          }
+        }
+      }
+    }
+
+    if (Input.anyKeyDown)
+    {
+      switch (Input.inputString)
+      {
+        case "1":
+          HandleSlotInteraction(0, iconPosition[0], mItems[0]);
+          break;
+        case "2":
+          HandleSlotInteraction(1, iconPosition[1], mItems[1]);
+          break;
+        case "3":
+          HandleSlotInteraction(2, iconPosition[2], mItems[2]);
+          break;
+        case "4":
+          HandleSlotInteraction(3, iconPosition[3], mItems[3]);
+          break;
+        case "5":
+          HandleSlotInteraction(4, iconPosition[4], mItems[4]);
+          break;
+        case "6":
+          HandleSlotInteraction(5, iconPosition[5], mItems[5]);
+          break;
+        case "7":
+          HandleSlotInteraction(6, iconPosition[6], mItems[6]);
+          break;
       }
     }
   }
 
-  void HandleSlotInteraction(int index, Image slotImage)
+  private void HandleSlotInteraction(int index, Vec2<float> iconPosition, IInventoryItem selectedItem)
   {
-    if (mItems[index] != null && slotImage != null)
+    //audioManager.PlaySFX(audioManager.moveSlotsInventory, audioManager.MoveSlotsInventoryVolume);
+    ToggleHighlight(index, iconPosition, selectedItem);
+    if (mItems[index] != null)
     {
-      ToggleHighlight(slotImage);
-
-      if (highlighted)
+      if (highlighted) // i.e. Item is selected
       {
         string itemName = mItems[index].Name;
         Debug.Log($"Item in slot {index + 1}: {itemName}");
@@ -187,33 +252,48 @@ public class Inventory : Entity
     }
     else
     {
-      DisableAllUI();  // No item in this slot or image is null, so disable UI
+      DisableAllUI();
     }
   }
 
-  void ToggleHighlight(Image selectedItem)
+  private void ToggleHighlight(int index, Vec2<float> iconPosition, IInventoryItem selectedItem)
   {
+    /*
     if (currentItem != null && currentItem != selectedItem)
     {
-      currentItem.color = normalColor;
+      inventoryImage.sprite = defaultSprite;
+      selectionHand.SetActive(false);
       highlighted = false;
     }
 
     if (!highlighted || currentItem != selectedItem)
     {
-      selectedItem.color = highlightColor;
+      inventoryImage.sprite = selectedSprite;
+
+      if (isVisible)
+      {
+        selectionHand.SetActive(true);
+        InternalCalls.SetPosition(selectionHand.mEntityID, 
+          new Vector3())
+        selectionHand.transform.position = new Vector3(paw.transform.position.x, selectedItem.transform.position.y, paw.transform.position.z);
+      }
+
+
+
       currentItem = selectedItem;
       highlighted = true;
     }
     else
     {
-      selectedItem.color = normalColor;
+      inventoryImage.sprite = defaultSprite;
+      paw.SetActive(false);
       currentItem = null;
       highlighted = false;
     }
+    */
   }
 
-  void ShowUIForItem(string itemName)
+  private void ShowUIForItem(string itemName)
   {
     DisableAllUI();
 
@@ -223,6 +303,7 @@ public class Inventory : Entity
         pitPaintingUI?.SetActive(true);
         break;
       case "Seed":
+        Debug.Log("Seed Equipped");
         seedUI?.SetActive(true);
         seedEquipped = true;
         break;
@@ -251,7 +332,7 @@ public class Inventory : Entity
     }
   }
 
-  void DisableAllUI()
+  private void DisableAllUI()
   {
     pitPaintingUI?.SetActive(false);
     seedUI?.SetActive(false);

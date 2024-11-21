@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Numerics;
 using IGE.Utils;
-
-using System.Drawing.Imaging;
 
 public class Seed : Entity, IInventoryItem
 {
+  public Entity _Image;
+  public Inventory inventoryScript;
+  public PlayerInteraction playerInteraction;
+  public Entity EToPickUpUI;
+
   public string Name
   {
     get
@@ -17,8 +14,6 @@ public class Seed : Entity, IInventoryItem
       return "Seed";
     }
   }
-
-  public Entity _Image;
 
   public Entity Image
   {
@@ -36,5 +31,24 @@ public class Seed : Entity, IInventoryItem
   public void OnUsed()
   {
     Destroy(mEntityID);
+  }
+
+  void Start()
+  {
+    _Image?.SetActive(false);
+    EToPickUpUI?.SetActive(false);
+  }
+
+  void Update()
+  {
+    bool isClicked = Input.GetKeyTriggered(KeyCode.E);
+    bool isNoteHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
+
+    if (isClicked && isNoteHit)
+    {
+      inventoryScript.Additem(this);
+    }
+
+    EToPickUpUI.SetActive(isNoteHit);
   }
 }

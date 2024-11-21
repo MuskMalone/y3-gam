@@ -76,6 +76,7 @@ namespace Mono
     { "PlayerMove", ScriptFieldType::PLAYERMOVE},
     { "Dialogue", ScriptFieldType::DIALOGUE},
     { "PlayerInteraction", ScriptFieldType::PLAYERINTERACTION },
+    { "Inventory", ScriptFieldType::INVENTORY },
   };
 }
 

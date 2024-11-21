@@ -1,13 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Numerics;
 using IGE.Utils;
-
-using System.Drawing.Imaging;
-
+using System;
 
 public interface IInventoryItem
 {
@@ -20,10 +12,12 @@ public interface IInventoryItem
 
 public class InventoryEventArgs : EventArgs
 {
-  public InventoryEventArgs(IInventoryItem item)
+  public InventoryEventArgs(IInventoryItem item, Vec2<float> inventoryPosition)
   {
     Item = item;
+    InventoryPosition = inventoryPosition;
   }
 
   public IInventoryItem Item;
+  public Vec2<float> InventoryPosition;
 }
