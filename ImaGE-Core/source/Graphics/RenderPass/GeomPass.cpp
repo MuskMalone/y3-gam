@@ -90,7 +90,8 @@ namespace Graphics {
               shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
               if (shadowPass->IsActive()) {
                 shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
-                shader->SetUniform("u_ShadowMap", static_cast<int>(shadowPass->BindShadowMap()));
+                shadowPass->BindShadowMap(Texture::sShadowMapTexUnit);
+                shader->SetUniform("u_ShadowMap", static_cast<int>(Texture::sShadowMapTexUnit));
                 shader->SetUniform("u_ShadowBias", shadowPass->GetShadowBias());
                 shader->SetUniform("u_ShadowSoftness", shadowPass->GetShadowSoftness());
               }
@@ -109,15 +110,13 @@ namespace Graphics {
           // Render all instances for this material
           for (const auto& [entity, worldMtx] : group.entityPairs) {
             auto const& mesh = entity.GetComponent<Component::Mesh>();
-            Graphics::Renderer::SubmitInstance(mesh.meshSource, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(), (group.matID % (MaterialTable::sMaterialsPerBatch + 1)), mesh.submeshIdx);
+            Graphics::Renderer::SubmitInstance(mesh.meshSource, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(),
+              group.matID < MaterialTable::sMaterialsPerBatch ? group.matID : group.matID % MaterialTable::sMaterialsPerBatch + 1, mesh.submeshIdx);
           }
 
           //Renderer::RenderSubmeshInstances();  // Flush all instances for this material group
-          //Texture::ResetTextureUnits();
         }
         Renderer::RenderSubmeshInstances();
-        Texture::ResetTextureUnits();
-      
       }
 
       if (cam.isEditor) {

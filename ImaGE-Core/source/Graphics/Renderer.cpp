@@ -1106,7 +1106,7 @@ namespace Graphics {
 					}
 				}
 				if (submeshInstances.empty()) continue;
-				instanceBuffer->SetData(submeshInstances.data(), submeshInstances.size() * sizeof(InstanceData));
+				instanceBuffer->SetData(submeshInstances.data(), static_cast<unsigned>(submeshInstances.size() * sizeof(InstanceData)));
 				auto const& submesh = submeshes[submeshIndex];
 
 
@@ -1138,7 +1138,7 @@ namespace Graphics {
 
 		// Update instance buffer
 		auto instanceBuffer = GetInstanceBuffer(meshSrc);
-		instanceBuffer->SetData(instances.data(), instances.size() * sizeof(InstanceData));
+		instanceBuffer->SetData(instances.data(), static_cast<unsigned>(instances.size() * sizeof(InstanceData)));
 
 		// Issue the draw call
 		RenderAPI::DrawIndicesInstancedBaseVertexBaseInstance(
@@ -1219,7 +1219,7 @@ namespace Graphics {
 			mData.meshVertexArray->Unbind();
 			// Bind the textures for the meshes
 			for (unsigned int i{}; i < mData.texUnitIdx; ++i) {
-				mData.texUnits[i].Bind();
+				mData.texUnits[i].Bind(i);
 			}
 
 			// Use the appropriate shader and draw the indexed meshes
@@ -1257,7 +1257,7 @@ namespace Graphics {
 			//mData.meshVertexArray->Unbind();
 			// Bind the textures for the meshes
 			for (unsigned int i{}; i < mData.texUnitIdx; ++i) {
-				mData.texUnits[i].Bind();
+				mData.texUnits[i].Bind(i);
 			}
 
 			RenderAPI::DrawIndices(mData.meshVertexArray, mData.meshIdxCount);

@@ -20,6 +20,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Prefabs/PrefabManager.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
 #include <Core/LayerManager/LayerManager.h>
+#include <Scripting/ScriptManager.h>
 
 namespace Helper {
   template <typename T>

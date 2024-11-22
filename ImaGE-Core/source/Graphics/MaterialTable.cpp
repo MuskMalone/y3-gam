@@ -95,13 +95,15 @@ namespace Graphics {
     void MaterialTable::ApplyMaterialTextures(std::shared_ptr<Graphics::Shader> const& shader, size_t batchStart, size_t batchEnd) {
       if (mMaterials.size() == 1) { return; } // Exit if there's only the default material
 
+      IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
       size_t const matCount{ batchEnd - batchStart + 1 };
-      int const defaultAlbedoUnit{ static_cast<int>(IGE_REF(IGE::Assets::TextureAsset, Renderer::GetWhiteTexture())->mTexture.Bind()) };
-      int const defaultNormalUnit{ static_cast<int>(IGE_REF(IGE::Assets::TextureAsset, Renderer::GetWhiteTexture())->mTexture.Bind()) }; // cahnge to normal Tex
+
+      am.GetAsset<IGE::Assets::TextureAsset>(Renderer::GetWhiteTexture())->mTexture.Bind(Texture::sDefaultAlbedoUnit);
+      am.GetAsset<IGE::Assets::TextureAsset>(Renderer::GetWhiteTexture())->mTexture.Bind(Texture::sDefaultNormalUnit); // change to normal Tex
 
       // Initialize texture unit arrays to default values
-      std::vector<int> albedoTextureUnits(matCount + 1, defaultAlbedoUnit);
-      std::vector<int> normalTextureUnits(matCount + 1, defaultNormalUnit);
+      std::vector<int> albedoTextureUnits(sMaterialsPerBatch + 1, Texture::sDefaultAlbedoUnit);
+      std::vector<int> normalTextureUnits(sMaterialsPerBatch + 1, Texture::sDefaultNormalUnit);
 
       for (size_t matIdx{ batchStart + 1 }, i{ 1 }; i <= matCount; ++i, ++matIdx) {
         std::shared_ptr<MaterialData> const& material = mMaterials[matIdx];
@@ -111,16 +113,16 @@ namespace Graphics {
 
         // Only bind the albedo map if it’s unique (not the default texture)
         if (albedoMap != Renderer::GetWhiteTexture()) {
-          IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(albedoMap);
-          int const texUnit{ static_cast<int>(IGE_REF(IGE::Assets::TextureAsset, albedoMap)->mTexture.Bind()) };
-          albedoTextureUnits[i] = texUnit;  // Assign this unique texture unit to the shader array
+          am.LoadRef<IGE::Assets::TextureAsset>(albedoMap);
+          am.GetAsset<IGE::Assets::TextureAsset>(albedoMap)->mTexture.Bind(i);
+          albedoTextureUnits[i] = static_cast<int>(i);  // Assign this unique texture unit to the shader array
         }
 
         // Only bind the normal map if it’s unique (not the default texture)
         if (normalMap != Renderer::GetWhiteTexture()) { // @TODO Change to normal Tex
-          IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(normalMap);
-          int const texUnit{ static_cast<int>(IGE_REF(IGE::Assets::TextureAsset, normalMap)->mTexture.Bind()) };
-          normalTextureUnits[i] = texUnit;
+          am.LoadRef<IGE::Assets::TextureAsset>(normalMap);
+          am.GetAsset<IGE::Assets::TextureAsset>(normalMap)->mTexture.Bind(Texture::sDefaultNormalUnit + i);
+          normalTextureUnits[i] = static_cast<int>(Texture::sDefaultNormalUnit + i);
         }
       }
 
@@ -135,13 +137,14 @@ namespace Graphics {
         size_t size = mMaterials.size();
         if (size <= 1) return;  // Exit if there's only the default material
 
+        IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
         // Bind the default textures only once @TODO CHANGE THIS TO SOMEWHERE ELSE
-        int const defaultAlbedoUnit{ static_cast<int>(IGE_REF(IGE::Assets::TextureAsset, Renderer::GetWhiteTexture())->mTexture.Bind()) };
-        int const defaultNormalUnit{ static_cast<int>(IGE_REF(IGE::Assets::TextureAsset, Renderer::GetWhiteTexture())->mTexture.Bind()) }; // cahnge to normal Tex
+        am.GetAsset<IGE::Assets::TextureAsset>(Renderer::GetWhiteTexture())->mTexture.Bind(Texture::sDefaultAlbedoUnit);
+        am.GetAsset<IGE::Assets::TextureAsset>(Renderer::GetWhiteTexture())->mTexture.Bind(Texture::sDefaultNormalUnit); // change to normal Tex
 
         // Initialize texture unit arrays to default values
-        std::vector<int> albedoTextureUnits(size, defaultAlbedoUnit);
-        std::vector<int> normalTextureUnits(size, defaultNormalUnit);
+        std::vector<int> albedoTextureUnits(sMaterialsPerBatch + 1, Texture::sDefaultAlbedoUnit);
+        std::vector<int> normalTextureUnits(sMaterialsPerBatch + 1, Texture::sDefaultNormalUnit);
 
         // Start from index 1 to skip the default material
         for (uint32_t i = 1; i < mMaterials.size() && i < 16; ++i) {  // Up to 16 unique textures
@@ -153,16 +156,16 @@ namespace Graphics {
 
             // Only bind the albedo map if it’s unique (not the default texture)
             if (albedoMap != Renderer::GetWhiteTexture()) {
-                IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(albedoMap);
-                int const texUnit{ static_cast<int>(IGE_REF(IGE::Assets::TextureAsset, albedoMap)->mTexture.Bind()) };
-                albedoTextureUnits[i] = texUnit;  // Assign this unique texture unit to the shader array
+              am.LoadRef<IGE::Assets::TextureAsset>(albedoMap);
+              am.GetAsset<IGE::Assets::TextureAsset>(albedoMap)->mTexture.Bind(i);
+              albedoTextureUnits[i] = static_cast<int>(i);  // Assign this unique texture unit to the shader array
             }
 
             // Only bind the normal map if it’s unique (not the default texture)
             if (normalMap != Renderer::GetWhiteTexture()) { // @TODO Change to normal Tex
-                IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(normalMap);
-                int const texUnit{ static_cast<int>(IGE_REF(IGE::Assets::TextureAsset, normalMap)->mTexture.Bind()) };
-                normalTextureUnits[i] = texUnit; 
+              am.LoadRef<IGE::Assets::TextureAsset>(normalMap);
+              am.GetAsset<IGE::Assets::TextureAsset>(normalMap)->mTexture.Bind(Texture::sDefaultNormalUnit + i);
+              normalTextureUnits[i] = static_cast<int>(Texture::sDefaultNormalUnit + i);
             }
         }
 

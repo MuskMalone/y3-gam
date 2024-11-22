@@ -12,7 +12,7 @@ namespace Graphics {
 		Renderer::Clear();
 
 		auto const& shader = mSpec.pipeline->GetShader();
-		shader->SetUniform("u_ScreenTex", mInputTexture);
+		shader->SetUniform("u_ScreenTex", mInputTexture, 0);
 		Renderer::RenderFullscreenTexture();
 
 		End();

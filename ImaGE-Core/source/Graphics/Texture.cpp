@@ -305,27 +305,23 @@ namespace Graphics {
 		}
 	}
 
-
-	void Texture::Bind(uint32_t texUnit) const {
-		GLCALL(glBindTextureUnit(texUnit, mTexHdl));
-	}
-
-
 	/*  _________________________________________________________________________ */
 	/*! Bind
 
 	@param texUnit
-	The texture unit to bind to (default is 0).
+	The texture unit to bind to
 
 	This function binds the texture to the specified texture unit.
 	*/
-	uint32_t Texture::Bind() const {
+	void Texture::Bind(uint32_t texUnit) const {
 		//if (mIsBindless) {
 		//	Debug::DebugLogger::GetInstance().LogWarning("Bind() called on a bindless texture. This operation is not applicable.");
 		//	return;
 		//}
-		return BindToNextAvailUnit(mTexHdl);
+
+		GLCALL(glBindTextureUnit(texUnit, mTexHdl));
 	}
+
 	/*  _________________________________________________________________________ */
 	/*! Unbind
 
@@ -334,10 +330,10 @@ namespace Graphics {
 
 	This function unbinds the texture from the specified texture unit.
 	*/
-	//void Texture::Unbind(unsigned int texUnit) const {
-	//	//if (mIsBindless) return;
-	//	GLCALL(glBindTextureUnit(texUnit, 0));
-	//}
+	void Texture::Unbind(unsigned int texUnit) const {
+		//if (mIsBindless) return;
+		GLCALL(glBindTextureUnit(texUnit, 0));
+	}
 
 	/*  _________________________________________________________________________ */
 	/*! operator==
@@ -369,17 +365,5 @@ namespace Graphics {
 	IGE::Assets::GUID Texture::Create(std::string const& path, bool isBindless) {
 		//return std::make_shared<Texture>(path, isBindless);
 		return IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(path);
-	}
-
-	uint32_t Texture::BindToNextAvailUnit(uint32_t texture) {
-		GLCALL(glBindTextureUnit(sNextAvailTextureUnit, texture));
-		return sNextAvailTextureUnit++;
-	}
-
-	void Texture::ResetTextureUnits() {
-		for (uint32_t i{}; i < sNextAvailTextureUnit; ++i) {
-			GLCALL(glBindTextureUnit(i, 0));
-		}
-		sNextAvailTextureUnit = 0;
 	}
 }

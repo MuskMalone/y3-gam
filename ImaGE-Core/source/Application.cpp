@@ -108,7 +108,7 @@ namespace IGE {
           gameTex->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
       }
 
-      Graphics::Texture::BindToNextAvailUnit(gameTex->GetTexHdl());
+      gameTex->Bind(0);
       auto const& shader = Graphics::ShaderLibrary::Get("FullscreenQuad");
       shader->Use();
       Graphics::Renderer::RenderFullscreenTexture();

@@ -26,6 +26,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <unordered_map>
 #include <vector>
 
+#define IGE_SCRIPTMGR Mono::ScriptManager::GetInstance()
 
 namespace Mono
 {

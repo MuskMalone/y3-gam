@@ -23,10 +23,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/MaterialData.h>
 #include <Core/Components/Light.h>
 
-#define REGISTER_DATA_MEMBER_INST(T, nameStr) rttr::registration::class_<T>(nameStr).constructor<>()(rttr::policy::ctor::as_object)\
-  .property(JSON_SCRIPT_DMI_DATA_KEY, &T::mData)\
-  .property(JSON_SCRIPT_DMI_TYPE_KEY, &T::mType)\
-  .property(JSON_SCRIPT_DMI_SF_KEY, &T::mScriptField)
+#define REGISTER_DATA_MEMBER_INST(T, nameStr) rttr::registration::class_<Mono::DataMemberInstance<T>>(nameStr).constructor<>()(rttr::policy::ctor::as_object)\
+  .property(JSON_SCRIPT_DMI_DATA_KEY, &Mono::DataMemberInstance<T>::mData)\
+  .property(JSON_SCRIPT_DMI_TYPE_KEY, &Mono::DataMemberInstance<T>::mType)\
+  .property(JSON_SCRIPT_DMI_SF_KEY, &Mono::DataMemberInstance<T>::mScriptField)
 
 static void rttr_auto_register_reflection_function_(); namespace {
   struct rttr__auto__register__ {
@@ -222,23 +222,27 @@ static void rttr_auto_register_reflection_function_(); namespace {
   rttr::registration::class_<Mono::ScriptFieldInfo>("ScriptFieldInfo")
     .property("fieldName", &Mono::ScriptFieldInfo::mFieldName);
 
+  rttr::registration::class_<std::vector<MonoObject*>>("ScriptFieldInfo")
+    .property("fieldName", &Mono::ScriptFieldInfo::mFieldName);
+
   // yay more macros
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<unsigned>, "System.UInt32");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<bool>, "System.Boolean");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<short>, "System.Int16");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<int>, "System.Int32");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<float>, "System.Single");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<double>, "System.Double");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<int64_t>, "System.Int64");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<uint16_t>, "System.UInt16");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<uint64_t>, "System.UInt64");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<std::string>, "System.String");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<glm::vec3>, "System.Numerics.Vector3");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<glm::dvec3>, "IGE.Utils.Vec3<System.Double>");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<std::vector<int>>, "System.Int32[]");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<std::vector<float>>, "System.System.Single[]");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<std::vector<double>>, "System.System.Double[]");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<std::vector<std::string>>, "System.String[]");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<std::vector<unsigned>>, "System.UInt32[]");
-  REGISTER_DATA_MEMBER_INST(Mono::DataMemberInstance<Mono::ScriptInstance>, "Image.Mono.ScriptInstance");
+  REGISTER_DATA_MEMBER_INST(unsigned, "System.UInt32");
+  REGISTER_DATA_MEMBER_INST(bool, "System.Boolean");
+  REGISTER_DATA_MEMBER_INST(short, "System.Int16");
+  REGISTER_DATA_MEMBER_INST(int, "System.Int32");
+  REGISTER_DATA_MEMBER_INST(float, "System.Single");
+  REGISTER_DATA_MEMBER_INST(double, "System.Double");
+  REGISTER_DATA_MEMBER_INST(int64_t, "System.Int64");
+  REGISTER_DATA_MEMBER_INST(uint16_t, "System.UInt16");
+  REGISTER_DATA_MEMBER_INST(uint64_t, "System.UInt64");
+  REGISTER_DATA_MEMBER_INST(std::string, "System.String");
+  REGISTER_DATA_MEMBER_INST(glm::vec3, "System.Numerics.Vector3");
+  REGISTER_DATA_MEMBER_INST(glm::dvec3, "IGE.Utils.Vec3<System.Double>");
+  REGISTER_DATA_MEMBER_INST(std::vector<int>, "System.Int32[]");
+  REGISTER_DATA_MEMBER_INST(std::vector<float>, "System.System.Single[]");
+  REGISTER_DATA_MEMBER_INST(std::vector<double>, "System.System.Double[]");
+  REGISTER_DATA_MEMBER_INST(std::vector<std::string>, "System.String[]");
+  REGISTER_DATA_MEMBER_INST(std::vector<unsigned>, "System.UInt32[]");
+  REGISTER_DATA_MEMBER_INST(Mono::ScriptInstance, "Image.Mono.ScriptInstance");
+  REGISTER_DATA_MEMBER_INST(std::vector<Mono::ScriptInstance>, "Entity[]");
 }
