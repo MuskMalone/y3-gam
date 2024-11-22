@@ -37,6 +37,7 @@ ScriptInstance::ScriptInstance(const std::string& scriptName) : mScriptName{scri
   //mOnCreateMethod = mono_class_get_method_from_name(mScriptClass, "Create", 0);
   mGcHandle = mono_gchandle_new(mClassInst, true);
   GetAllFieldsInst();
+  ScriptManager::GetInstance().mTriggerStart = true;
 }
 
 ScriptInstance::ScriptInstance(MonoObject* mo, bool setEntityID, bool forSerialization)  //ctor to create temp scriptinstance (only for displaying std::vector<MonoObject*> in inspector)
@@ -124,10 +125,18 @@ void ScriptInstance::ReloadScript()
   SetAllFields();
 }
 
-void ScriptInstance::InvokeOnUpdate(double dt)
+void ScriptInstance::InvokeOnUpdate()
 {
   glm::vec2 delt = Input::InputManager::GetInstance().GetMouseDelta();
+  if ( mUpdateMethod)
+  {
+    std::vector<void*> params = { };
+    mono_runtime_invoke( mUpdateMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+  }
+}
 
+void ScriptInstance::InvokeStart()
+{
   if (!mHasStarted) // We have not call the start() func, so we wil trigger it once
   {
     mHasStarted = true;
@@ -137,12 +146,6 @@ void ScriptInstance::InvokeOnUpdate(double dt)
       std::vector<void*> params = { };
       mono_runtime_invoke(startMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
     }
-  }
-
-  if ( mUpdateMethod)
-  {
-    std::vector<void*> params = { };
-    mono_runtime_invoke( mUpdateMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
   }
 }
 

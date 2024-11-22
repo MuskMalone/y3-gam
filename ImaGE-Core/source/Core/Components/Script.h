@@ -59,12 +59,21 @@ namespace Component {
 
 			void UpdateAllScripts()
 			{
-				double dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
 				for (Mono::ScriptInstance& cs : mScriptList)
 				{
-					if (mScriptList.size() == 0)
+					if (mScriptList.size() == 0) //This is in case a script is deleted while being updated
 						break;
-					cs.InvokeOnUpdate(dt);
+					cs.InvokeOnUpdate();
+				}
+			}
+
+			void TriggerScriptsStart()
+			{
+				for (Mono::ScriptInstance& cs : mScriptList)
+				{
+					if (mScriptList.size() == 0) //This is in case a script is deleted while being updated
+						break;
+					cs.InvokeStart();
 				}
 			}
 
