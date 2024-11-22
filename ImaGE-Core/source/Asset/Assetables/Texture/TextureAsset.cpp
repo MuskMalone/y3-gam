@@ -65,8 +65,16 @@ namespace IGE {
 
             if (fileext != ".dds" && cImageExtensions.find(fileext) != cImageExtensions.end()) {
                 // Convert the copied image to DDS format
-                if (!ConvertToDDS(std::wstring(fp.begin(), fp.end()), std::wstring(ddsImagePath.begin(), ddsImagePath.end()))) {
-                    throw Debug::Exception<TextureAsset>(Debug::LVL_ERROR, Msg("compilation failed to convert " + fileext + " to .dds"));
+                try {
+                    if (!ConvertToDDS(std::wstring(fp.begin(), fp.end()), std::wstring(ddsImagePath.begin(), ddsImagePath.end()))) {
+                        throw Debug::Exception<TextureAsset>(Debug::LVL_ERROR, Msg("compilation failed to convert " + fileext + " to .dds"));
+                        Debug::DebugLogger::GetInstance().LogError("compilation failed to convert " + fileext + " to .dds");
+                    }
+                    
+                }
+                catch (Debug::ExceptionBase& e)
+                {
+                    e.LogSource();
                 }
             }
             else if (fileext == ".dds") {

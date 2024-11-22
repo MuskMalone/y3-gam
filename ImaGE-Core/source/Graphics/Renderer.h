@@ -83,7 +83,7 @@ namespace Graphics {
 
 	struct RendererData {
 		uint32_t maxTexUnits{};
-		uint32_t cMaxMaterials{128};
+		uint32_t cMaxMaterials{64};
 
 		//------------------Mesh Batching-----------------------------------//
 		static const uint32_t cMaxVertices = 0;

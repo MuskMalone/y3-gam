@@ -14,19 +14,29 @@ namespace Graphics {
     std::vector<MaterialProperties> MaterialTable::mMaterialPropsBuffer;
 
 
-    void MaterialTable::Init(uint32_t maxMaterials) {
- //test................................
-        std::vector<MaterialProperties> materials(16);
-
-        // Fill with test data
-        for (size_t i = 0; i < 16; ++i) {
-            materials[i].AlbedoColor = glm::vec4(i * 0.1f, 0.5f, 1.0f - i * 0.1f, 1.0f); // Gradient color
-            materials[i].Metalness = i * 0.1f;
-            materials[i].Roughness = 1.0f - i * 0.1f;
-            materials[i].Transparency = 1.0f;
-            materials[i].AO = 1.0f;
+    void MaterialTable::UpdateMaterialPropsBuffer(){
+        for (size_t i = 0; i < mMaterials.size(); ++i) {
+            if (mMaterials[i]) {
+                MaterialProperties& props = mMaterialPropsBuffer[i];
+                props.AlbedoColor = glm::vec4(mMaterials[i]->GetAlbedoColor(),1.f);
+                props.Metalness = mMaterials[i]->GetMetalness();
+                props.Roughness = mMaterials[i]->GetRoughness();
+                props.Transparency = mMaterials[i]->GetTransparency();
+                props.AO = mMaterials[i]->GetAO();
+            }
         }
-        //...........................................................
+    }
+
+    void MaterialTable::UploadMaterialProps(){
+        GLCALL(glNamedBufferSubData(
+            mMaterialSSBO,
+            0, // Offset
+            sizeof(MaterialProperties) * mMaterialPropsBuffer.size(),
+            mMaterialPropsBuffer.data() // Pointer to the CPU-side buffer
+        ));
+    }
+
+    void MaterialTable::Init(uint32_t maxMaterials) {
 
         mMaterialPropsBuffer.resize(maxMaterials); // Reserve CPU-side buffer space
 
@@ -35,20 +45,16 @@ namespace Graphics {
         // Allocate GPU memory for the SSBO
         glNamedBufferStorage(
             mMaterialSSBO,
-            sizeof(MaterialProperties) * 32,
-            materials.data(),//nullptr, // No initial data
+            sizeof(MaterialProperties) * maxMaterials,
+            nullptr, // No initial data
             GL_DYNAMIC_STORAGE_BIT // Allow dynamic updates to the buffer
         );
-        GLint maxSSBOSize;
-        glGetIntegerv(GL_MAX_SHADER_STORAGE_BLOCK_SIZE, &maxSSBOSize);
 
-        std::cout << "Max SSBO size: " << maxSSBOSize << " bytes" << std::endl;
+         // Bind the SSBO to binding point 0
+        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, mMaterialSSBO);
 
-        if (sizeof(MaterialProperties) * maxMaterials > maxSSBOSize) {
-            std::cout << "ERROR: TOO MANY MAX MATERIALS" << std::endl;
-        }
-            // Bind the SSBO to binding point 0
-        //glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, mMaterialSSBO);
+        UpdateMaterialPropsBuffer();
+        UploadMaterialProps();
     }
     void MaterialTable::Shutdown() {
         if (mMaterialSSBO) {

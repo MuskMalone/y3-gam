@@ -36,6 +36,8 @@ namespace Graphics {
 
         inline static constexpr unsigned sMaterialsPerBatch = 16 - 1;
 
+        static void UpdateMaterialPropsBuffer();
+        static void UploadMaterialProps();
         static void Init(uint32_t maxMaterials);
         static void Shutdown();
 

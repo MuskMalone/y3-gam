@@ -158,10 +158,10 @@ void main(){
     //change transparency here
     float alpha = u_Transparency;
 
-    //MaterialProperties mat = materials[15]; // Access material by index
+   // MaterialProperties mat = materials[0]; // Access material by index
 
     // For testing, output the AlbedoColor
-    //fragColor = mat.AlbedoColor;
+    //fragColor = vec4(mat.AlbedoColor.rgb, 1.f);
 	fragColor = vec4(color, alpha) * v_Color;
 }
 
