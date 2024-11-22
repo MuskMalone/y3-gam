@@ -100,7 +100,7 @@ public class Inventory : Entity
     crowbarUI?.SetActive(false);
     transitionPaintingUI?.SetActive(false);
     keyUI?.SetActive(false);
-    selectionHand.SetActive(false);
+    selectionHand?.SetActive(false);
   }
 
   public void Additem(IInventoryItem item)

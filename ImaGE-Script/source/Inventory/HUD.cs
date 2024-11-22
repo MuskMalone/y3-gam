@@ -5,9 +5,6 @@ public class HUD : Entity
 {
   public Inventory inventory;
 
-  // Workaround for Start() not working
-  bool firstRun = true;
-
   void Start()
   {
     inventory.ItemAdded += InventoryScript_ItemAdded;
@@ -29,12 +26,6 @@ public class HUD : Entity
 
   void Update()
   {
-    // Workaround for Start() not working
-    if (firstRun)
-    {
-      inventory.ItemAdded += InventoryScript_ItemAdded;
-      inventory.ItemRemoved += InventoryScript_ItemRemoved;
-      firstRun = false;
-    }
+
   }
 }
