@@ -35,6 +35,7 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void SetScale(uint entityHandle, ref Vector3 scale);
+
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetColliderScale(uint ID);
 

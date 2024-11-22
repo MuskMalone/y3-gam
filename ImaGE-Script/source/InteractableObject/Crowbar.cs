@@ -25,6 +25,11 @@ public class Crowbar : Entity, IInventoryItem
     {
       return _Image;
     }
+
+    set
+    {
+      _Image = value;
+    }
   }
 
 

@@ -26,6 +26,11 @@ public class PitPainting : Entity, IInventoryItem
     {
       return _Image;
     }
+
+    set
+    {
+      _Image = value;
+    }
   }
 
   public void OnPickup()

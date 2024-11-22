@@ -1,4 +1,6 @@
-﻿public static class Easing
+﻿using System.Numerics;
+
+public static class Easing
 {
     public static float EaseInQuart(float start, float end, float value)
     {
@@ -77,7 +79,14 @@
         return a + b;
     }
 
-    public static float EaseInQuint(float start, float end, float value)
+    public static Vector2 Linear(Vector2 start, Vector2 end, float t)
+    {
+      float x = start.X + (end.X - start.X) * t;
+      float y = start.Y + (end.Y - start.Y) * t;
+      return new Vector2(x, y);
+    }
+
+  public static float EaseInQuint(float start, float end, float value)
     {
         end -= start;
         return end * value * value * value * value * value + start;

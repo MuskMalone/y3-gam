@@ -25,8 +25,12 @@ public class Tools : Entity, IInventoryItem
     {
       return _Image;
     }
-  }
 
+    set
+    {
+      _Image = value;
+    }
+  }
 
   public void OnPickup()
   {

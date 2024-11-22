@@ -200,6 +200,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetRotation);
   ADD_INTERNAL_CALL(SetWorldRotation);
   ADD_INTERNAL_CALL(SetWorldScale);
+  ADD_INTERNAL_CALL(SetScale);
   ADD_INTERNAL_CALL(MoveCharacter);
   ADD_INTERNAL_CALL(SetAngularVelocity);
   ADD_INTERNAL_CALL(SetVelocity);
@@ -759,8 +760,14 @@ void Mono::SetWorldScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment
 
 glm::vec3 Mono::GetScale(ECS::Entity::EntityID entity)
 {
-    Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
-    return trans.scale;
+  Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+  return trans.scale;
+}
+
+void Mono::SetScale(ECS::Entity::EntityID entity, glm::vec3 scale) {
+  Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+  trans.scale = scale;
+  TransformHelpers::UpdateWorldTransform(entity);
 }
 
 glm::vec3 Mono::GetColliderScale(ECS::Entity::EntityID e)
@@ -821,15 +828,13 @@ glm::vec3 Mono::GetWorldScale(ECS::Entity::EntityID entity)
 
 MonoString* Mono::GetTag(ECS::Entity::EntityID entity)
 {
-  /*
   if (ECS::Entity(entity).HasComponent<Component::Tag>())
     return STDToMonoString(ECS::Entity(entity).GetComponent<Component::Tag>().tag);
   else
     return STDToMonoString("");
-  */
 
   // @TODO: TEMP
-  return STDToMonoString(ECS::Entity(entity).GetComponent<Component::Tag>().tag);
+  //return STDToMonoString(ECS::Entity(entity).GetComponent<Component::Tag>().tag);
 }
 
 void  Mono::Log(MonoString*s)

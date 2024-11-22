@@ -261,6 +261,7 @@ namespace Mono
 		************************************************************************/
 		static void SetWorldScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment);
 		static glm::vec3 GetScale(ECS::Entity::EntityID);
+		static void SetScale(ECS::Entity::EntityID entity, glm::vec3 scale);
 		static glm::vec3 GetColliderScale(ECS::Entity::EntityID);
 
 		/*!*********************************************************************

@@ -23,6 +23,11 @@ public class Seed : Entity, IInventoryItem
     {
       return _Image;
     }
+
+    set
+    {
+      _Image = value;
+    }
   }
 
   public void OnPickup()
@@ -45,10 +50,8 @@ public class Seed : Entity, IInventoryItem
   void Update()
   {
     // For Seed Picking Up
-    bool isClicked = Input.GetKeyTriggered(KeyCode.E);
     bool isSeedHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
-    
-    if (isClicked && isSeedHit)
+    if (Input.GetKeyTriggered(KeyCode.E) && isSeedHit)
     {
       inventoryScript.Additem(this);
     }
@@ -56,6 +59,7 @@ public class Seed : Entity, IInventoryItem
 
     // For Seed Planting
     bool isPotHit = playerInteraction.RayHitString == InternalCalls.GetTag(Pot.mEntityID);
+
     if (inventoryScript.seedEquipped)
     {
       EToPlantSeedUI.SetActive(isPotHit);
@@ -65,9 +69,11 @@ public class Seed : Entity, IInventoryItem
       EToPlantSeedUI.SetActive(false);
     }
 
-    if (EToPlantSeedUI.IsActive() && isClicked)
+    if (EToPlantSeedUI.IsActive() && Input.GetMouseButtonTriggered(0))
     {
+      EToPlantSeedUI.SetActive(false);
       inventoryScript.RemoveItem(this);
+      Pot.SetActive(true); // Sets the child seeds active as well
     }
   }
 }

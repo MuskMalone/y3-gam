@@ -4,8 +4,8 @@ using System;
 public interface IInventoryItem
 {
   string Name { get; }
-  Entity Image { get; } // This should be a UI (Canvas) child entity that
-                        // has the UI Image component
+  Entity Image { get; set; } // This should be a UI (Canvas) child entity that
+                             // has the UI Image component
   void OnPickup();
   void OnUsed();
 }

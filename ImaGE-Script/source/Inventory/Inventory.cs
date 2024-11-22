@@ -11,11 +11,9 @@ public class Inventory : Entity
   public event EventHandler<InventoryEventArgs> ItemAdded;
   public event EventHandler<InventoryEventArgs> ItemRemoved;
 
-  private Color normalColor = Color.White;
-  private Color highlightColor = Color.Yellow;
-
   private IInventoryItem currentItem;
   private bool highlighted = false;
+  private bool isVisible = false;
 
   // Inventory Item UI (Image at the bottom right)
   public Entity pitPaintingUI;
@@ -54,13 +52,14 @@ public class Inventory : Entity
       new Vec2<float>(-15.9f, -4.6f),
       new Vec2<float>(-15.9f, -7.0f)
   };
-  private float selectionHandXOffset = 1.2f;
 
+  // Equipped Flags
   public bool keyEquipped;
   public bool crowbarEquipped;
   public bool hammerEquipped;
   public bool seedEquipped;
 
+  // Sliding Inventory
   public float startScreenPosX = -20f;
   public float endScreenPosX = -15.85f;
   private float currentPositionX;
@@ -68,7 +67,14 @@ public class Inventory : Entity
   private bool isSliding = false;
   private bool initialization = true;
   public float slideDuration = 0.3f;
-  private bool isVisible = false;
+
+  // Selection Hand (Paw)
+  private float selectionHandXOffset = 1.2f;
+  private float currentHandTime = 0;
+  public float handExpandDuration = 0.4f;
+  public Vector2 startHandScale = new Vector2(1.0f, 1.2f);
+  public Vector2 endHandScale = new Vector2(1.4f, 1.8f);
+  private Vector2 currentHandScale;
 
   void Start()
   {
@@ -120,6 +126,18 @@ public class Inventory : Entity
 
   public void RemoveItem(IInventoryItem item)
   {
+    // Unequip all
+    crowbarEquipped = false;
+    hammerEquipped = false;
+    keyEquipped = false;
+    seedEquipped = false;
+
+    currentItem = null;
+    highlighted = false;
+    selectionHand.SetActive(false);
+    inventorySelectSquare.SetActive(false);
+    DisableAllUI();
+
     int index = mItems.IndexOf(item);
     if (index >= 0)
     {
@@ -179,6 +197,52 @@ public class Inventory : Entity
       ToggleInventoryVisibility();
     }
 
+    if (Input.anyKeyTriggered)
+    {
+      switch (Input.inputString)
+      {
+        case "1":
+          HandleSlotInteraction(0, iconPosition[0], mItems[0]);
+          break;
+        case "2":
+          HandleSlotInteraction(1, iconPosition[1], mItems[1]);
+          break;
+        case "3":
+          HandleSlotInteraction(2, iconPosition[2], mItems[2]);
+          break;
+        case "4":
+          HandleSlotInteraction(3, iconPosition[3], mItems[3]);
+          break;
+        case "5":
+          HandleSlotInteraction(4, iconPosition[4], mItems[4]);
+          break;
+        case "6":
+          HandleSlotInteraction(5, iconPosition[5], mItems[5]);
+          break;
+        case "7":
+          HandleSlotInteraction(6, iconPosition[6], mItems[6]);
+          break;
+      }
+    }
+
+    if (selectionHand.IsActive())
+    {
+      currentHandTime += Time.deltaTime;
+
+      float progress = Math.Min(currentHandTime / handExpandDuration, 1.0f);
+      currentHandScale = Easing.Linear(startHandScale, endHandScale, progress);
+
+      Vector3 originalScale = InternalCalls.GetScale(selectionHand.mEntityID);
+      Vector3 newScale = new Vector3(currentHandScale.X, currentHandScale.Y, originalScale.Z);
+      InternalCalls.SetScale(selectionHand.mEntityID, ref newScale);
+
+      if (progress >= 1.0f)
+      {
+        (startHandScale, endHandScale) = (endHandScale, startHandScale);
+        currentHandTime = 0f;
+      }
+    }
+
     if (isSliding)
     {
       currentSlideTime += Time.deltaTime;
@@ -211,34 +275,6 @@ public class Inventory : Entity
             inventorySelectSquare.SetActive(true);
           }
         }
-      }
-    }
-
-    if (Input.anyKeyTriggered)
-    {
-      switch (Input.inputString)
-      {
-        case "1":
-          HandleSlotInteraction(0, iconPosition[0], mItems[0]);
-          break;
-        case "2":
-          HandleSlotInteraction(1, iconPosition[1], mItems[1]);
-          break;
-        case "3":
-          HandleSlotInteraction(2, iconPosition[2], mItems[2]);
-          break;
-        case "4":
-          HandleSlotInteraction(3, iconPosition[3], mItems[3]);
-          break;
-        case "5":
-          HandleSlotInteraction(4, iconPosition[4], mItems[4]);
-          break;
-        case "6":
-          HandleSlotInteraction(5, iconPosition[5], mItems[5]);
-          break;
-        case "7":
-          HandleSlotInteraction(6, iconPosition[6], mItems[6]);
-          break;
       }
     }
   }
