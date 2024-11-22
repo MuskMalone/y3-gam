@@ -51,6 +51,7 @@ namespace Mono
 		static std::string mScnfilePath;
 		static std::string mCsprojPath;
 		static std::string mBatfilePath;
+		static bool mTriggerStart;
 
 
 		/*!*********************************************************************
@@ -193,6 +194,8 @@ namespace Mono
 
 		std::vector<ScriptInstance> SerialMonoObjectVec(std::vector < MonoObject*>);
 
+
+		static void TriggerStart();
 
 
 		/*!**********************************************************************

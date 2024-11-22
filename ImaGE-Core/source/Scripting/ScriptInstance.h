@@ -143,7 +143,17 @@ namespace Mono {
 		\param dt
 			Delta time
 		************************************************************************/
-		void InvokeOnUpdate(double dt);
+		void InvokeOnUpdate();
+
+		/*!*********************************************************************
+			\brief
+				Function to invoke the OnUpdate method of the c# script class
+			\param dt
+				Delta time
+			************************************************************************/
+		void InvokeStart();
+
+
 
 		/*!*********************************************************************
 			\brief

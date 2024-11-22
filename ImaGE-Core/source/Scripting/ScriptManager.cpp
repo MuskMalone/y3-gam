@@ -48,6 +48,7 @@ namespace Mono
   bool ScriptManager::mAssemblyReloadPending{};
   bool ScriptManager::mCSReloadPending{};
   bool ScriptManager::mRebuildCS{};
+  bool ScriptManager::mTriggerStart{};
 
   std::unordered_map<ScriptFieldType,std::string> ScriptManager::mRevClassMap{};
   std::unordered_map<std::string, ScriptFieldType> ScriptManager::mScriptFieldTypeMap
