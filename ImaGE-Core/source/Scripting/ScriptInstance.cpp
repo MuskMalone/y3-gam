@@ -127,6 +127,18 @@ void ScriptInstance::ReloadScript()
 void ScriptInstance::InvokeOnUpdate(double dt)
 {
   glm::vec2 delt = Input::InputManager::GetInstance().GetMouseDelta();
+
+  if (!mHasStarted) // We have not call the start() func, so we wil trigger it once
+  {
+    mHasStarted = true;
+    MonoMethod* startMethod = mono_class_get_method_from_name(mScriptClass, "Start", 0);
+    if (startMethod)
+    {
+      std::vector<void*> params = { };
+      mono_runtime_invoke(startMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+    }
+  }
+
   if ( mUpdateMethod)
   {
     std::vector<void*> params = { };
