@@ -178,6 +178,7 @@ void ScriptManager::AddInternalCalls()
   ADD_CLASS_INTERNAL_CALL(IsKeyPressed, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(GetInputString, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(AnyKeyDown, Input::InputManager::GetInstance());
+  ADD_CLASS_INTERNAL_CALL(AnyKeyTriggered, Input::InputManager::GetInstance());
   ADD_INTERNAL_CALL(GetMousePos);
   ADD_INTERNAL_CALL(GetMouseDelta);
 

@@ -89,11 +89,13 @@ namespace IGE.Utils
     extern public static bool AnyKeyDown();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool AnyKeyTriggered();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetMouseDelta();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetMousePos();
-
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static string GetInputString();

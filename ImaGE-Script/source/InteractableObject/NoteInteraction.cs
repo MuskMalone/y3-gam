@@ -54,6 +54,7 @@ public class NoteInteraction : Entity
 
   private void ShowNoteUI()
   {
+    InternalCalls.PlaySound(mEntityID, "ViewNote");
     if (noteUI != null && playerMove != null)
     {
       noteUI.SetActive(true);
@@ -64,6 +65,7 @@ public class NoteInteraction : Entity
 
   private void HideNoteUI()
   {
+    InternalCalls.PlaySound(mEntityID, "ViewNote");
     if (noteUI != null && playerMove != null)
     {
       noteUI.SetActive(false);

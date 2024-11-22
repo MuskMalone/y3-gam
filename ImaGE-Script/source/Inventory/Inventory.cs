@@ -14,7 +14,7 @@ public class Inventory : Entity
   private Color normalColor = Color.White;
   private Color highlightColor = Color.Yellow;
 
-  private Entity currentItem;
+  private IInventoryItem currentItem;
   private bool highlighted = false;
 
   // Inventory Item UI (Image at the bottom right)
@@ -54,7 +54,7 @@ public class Inventory : Entity
       new Vec2<float>(-15.9f, -4.6f),
       new Vec2<float>(-15.9f, -7.0f)
   };
-  private float selectionHandXOffset = 5f;
+  private float selectionHandXOffset = 1.2f;
 
   public bool keyEquipped;
   public bool crowbarEquipped;
@@ -62,12 +62,12 @@ public class Inventory : Entity
   public bool seedEquipped;
 
   public float startScreenPosX = -20f;
-  public float endScreenPosX = -15.8f;
+  public float endScreenPosX = -15.85f;
   private float currentPositionX;
   private float currentSlideTime = 0;
   private bool isSliding = false;
   private bool initialization = true;
-  public float slideDuration = 0.5f;
+  public float slideDuration = 0.3f;
   private bool isVisible = false;
 
   void Start()
@@ -146,6 +146,7 @@ public class Inventory : Entity
     isSliding = true;
     currentSlideTime = 0;
     inventoryImage.SetActive(true);
+    InternalCalls.PlaySound(mEntityID, "InventoryPopUp");
 
     if (!isVisible)
     {
@@ -157,6 +158,9 @@ public class Inventory : Entity
           mItems[i].Image.SetActive(false);
         }
       }
+
+      selectionHand.SetActive(false);
+      inventorySelectSquare.SetActive(false);
     }
 
     if (!initialization)
@@ -200,11 +204,17 @@ public class Inventory : Entity
               mItems[i].Image.SetActive(true);
             }
           }
+
+          if (highlighted && currentItem != null)
+          {
+            selectionHand.SetActive(true);
+            inventorySelectSquare.SetActive(true);
+          }
         }
       }
     }
 
-    if (Input.anyKeyDown)
+    if (Input.anyKeyTriggered)
     {
       switch (Input.inputString)
       {
@@ -235,62 +245,56 @@ public class Inventory : Entity
 
   private void HandleSlotInteraction(int index, Vec2<float> iconPosition, IInventoryItem selectedItem)
   {
-    //audioManager.PlaySFX(audioManager.moveSlotsInventory, audioManager.MoveSlotsInventoryVolume);
-    ToggleHighlight(index, iconPosition, selectedItem);
+    InternalCalls.PlaySound(mEntityID, "MoveSlots");
+    ToggleHighlight(iconPosition, selectedItem);
     if (mItems[index] != null)
     {
       if (highlighted) // i.e. Item is selected
       {
         string itemName = mItems[index].Name;
         Debug.Log($"Item in slot {index + 1}: {itemName}");
+        Debug.Log("Item selected");
         ShowUIForItem(itemName);
       }
       else
-      {
         DisableAllUI();
-      }
     }
     else
-    {
       DisableAllUI();
-    }
   }
 
-  private void ToggleHighlight(int index, Vec2<float> iconPosition, IInventoryItem selectedItem)
+  private void ToggleHighlight(Vec2<float> iconPosition, IInventoryItem selectedItem)
   {
-    /*
     if (currentItem != null && currentItem != selectedItem)
     {
-      inventoryImage.sprite = defaultSprite;
+      inventorySelectSquare.SetActive(false);
       selectionHand.SetActive(false);
       highlighted = false;
     }
 
     if (!highlighted || currentItem != selectedItem)
     {
-      inventoryImage.sprite = selectedSprite;
-
       if (isVisible)
       {
+        Vector3 handPosition = new Vector3(iconPosition.X + selectionHandXOffset, iconPosition.Y, 1f);
+        InternalCalls.SetPosition(selectionHand.mEntityID, ref handPosition);
         selectionHand.SetActive(true);
-        InternalCalls.SetPosition(selectionHand.mEntityID, 
-          new Vector3())
-        selectionHand.transform.position = new Vector3(paw.transform.position.x, selectedItem.transform.position.y, paw.transform.position.z);
+
+        Vector3 inventorySelectPosition = new Vector3(iconPosition.X, iconPosition.Y, 0.5f);
+        InternalCalls.SetPosition(inventorySelectSquare.mEntityID, ref inventorySelectPosition);
+        inventorySelectSquare.SetActive(true);
       }
-
-
 
       currentItem = selectedItem;
       highlighted = true;
     }
     else
     {
-      inventoryImage.sprite = defaultSprite;
-      paw.SetActive(false);
-      currentItem = null;
+      inventorySelectSquare.SetActive(false);
+      selectionHand.SetActive(false);
       highlighted = false;
+      currentItem = null;
     }
-    */
   }
 
   private void ShowUIForItem(string itemName)

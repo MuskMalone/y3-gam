@@ -6,6 +6,8 @@ public class Seed : Entity, IInventoryItem
   public Inventory inventoryScript;
   public PlayerInteraction playerInteraction;
   public Entity EToPickUpUI;
+  public Entity EToPlantSeedUI;
+  public Entity Pot;
 
   public string Name
   {
@@ -37,18 +39,35 @@ public class Seed : Entity, IInventoryItem
   {
     _Image?.SetActive(false);
     EToPickUpUI?.SetActive(false);
+    EToPlantSeedUI?.SetActive(false);
   }
 
   void Update()
   {
+    // For Seed Picking Up
     bool isClicked = Input.GetKeyTriggered(KeyCode.E);
-    bool isNoteHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
-
-    if (isClicked && isNoteHit)
+    bool isSeedHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
+    
+    if (isClicked && isSeedHit)
     {
       inventoryScript.Additem(this);
     }
+    EToPickUpUI.SetActive(isSeedHit);
 
-    EToPickUpUI.SetActive(isNoteHit);
+    // For Seed Planting
+    bool isPotHit = playerInteraction.RayHitString == InternalCalls.GetTag(Pot.mEntityID);
+    if (inventoryScript.seedEquipped)
+    {
+      EToPlantSeedUI.SetActive(isPotHit);
+    }
+    else
+    {
+      EToPlantSeedUI.SetActive(false);
+    }
+
+    if (EToPlantSeedUI.IsActive() && isClicked)
+    {
+      inventoryScript.RemoveItem(this);
+    }
   }
 }

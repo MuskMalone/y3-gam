@@ -29,9 +29,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Mono
 {
-
-
-
 	class ScriptManager : public ThreadSafeSingleton<ScriptManager>
 	{
 		static std::map<std::string, ScriptClassInfo> mMonoClassMap;  //Map of Scripts 

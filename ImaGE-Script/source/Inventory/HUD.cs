@@ -5,6 +5,7 @@ public class HUD : Entity
 {
   public Inventory inventory;
 
+  // Workaround for Start() not working
   bool firstRun = true;
 
   void Start()
@@ -20,38 +21,12 @@ public class HUD : Entity
     InternalCalls.SetPosition(e.Item.Image.mEntityID, ref vec3);
   }
 
-    //foreach (Transform slot in inventoryPanel.children)   
-    //{
-    //  Image image = slot.GetChild(0).GetChild(0).entity.GetComponent<Image>();            // NEED TO DO
-
-    //  if (!image.enabled)
-    //  {
-    //    image.enabled = true;
-    //    image.sprite = e.Item.Image;
-    //    break;
-    //  }
-    //}
-
-  // Existing method to handle item removal in the UI
   private void InventoryScript_ItemRemoved(object sender, InventoryEventArgs e)
   {
-    Transform inventoryPanel = GetComponent<Transform>().Find("Inventory");
-
-    //foreach (Transform slot in inventoryPanel.children)
-    //{
-    //  Image image = slot.GetChild(0).GetChild(0).GetComponent<Image>();
-
-    //  // We compare the sprite or any unique identifier of the item to find it            // NEED TO DO
-    //  if (image.enabled && image.sprite == e.Item.Image)
-    //  {
-    //    image.enabled = false;
-    //    image.sprite = null;
-    //    break;
-    //  }
-    //}
+    e.Item.Image.SetActive(false);
+    e.Item = null;
   }
 
-  // Update is called once per frame
   void Update()
   {
     // Workaround for Start() not working
