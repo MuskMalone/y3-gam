@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Runtime.InteropServices;
 using IGE.Utils;
 
 public class Inventory : Entity
@@ -92,6 +93,8 @@ public class Inventory : Entity
     currentItem = null;
 
     inventoryImage?.SetActive(false);
+    selectionHand?.SetActive(false);
+
     pitPaintingUI?.SetActive(false);
     seedUI?.SetActive(false);
     nightPaintingUI?.SetActive(false);
@@ -100,7 +103,16 @@ public class Inventory : Entity
     crowbarUI?.SetActive(false);
     transitionPaintingUI?.SetActive(false);
     keyUI?.SetActive(false);
-    selectionHand?.SetActive(false);
+
+    Vector3 startPosition = new Vector3(16.6f, -8.9f, 0f);
+    InternalCalls.SetPosition(pitPaintingUI.mEntityID, ref startPosition);
+    InternalCalls.SetPosition(seedUI.mEntityID, ref startPosition);
+    InternalCalls.SetPosition(nightPaintingUI.mEntityID, ref startPosition);
+    InternalCalls.SetPosition(toolsPaintingUI.mEntityID, ref startPosition);
+    InternalCalls.SetPosition(hammerUI.mEntityID, ref startPosition);
+    InternalCalls.SetPosition(crowbarUI.mEntityID, ref startPosition);
+    InternalCalls.SetPosition(transitionPaintingUI.mEntityID, ref startPosition);
+    InternalCalls.SetPosition(keyUI.mEntityID, ref startPosition);
   }
 
   public void Additem(IInventoryItem item)

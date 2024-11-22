@@ -52,6 +52,7 @@ public class Crowbar : Entity, IInventoryItem
     bool isCrowbarHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
     if (Input.GetKeyTriggered(KeyCode.E) && isCrowbarHit)
     {
+      InternalCalls.PlaySound(mEntityID, "PickupObjects");
       inventoryScript.Additem(this);
     }
     EToPickUpUI.SetActive(isCrowbarHit);
