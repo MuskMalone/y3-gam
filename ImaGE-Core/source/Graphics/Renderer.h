@@ -83,9 +83,10 @@ namespace Graphics {
 
 	struct RendererData {
 		uint32_t maxTexUnits{};
+		uint32_t cMaxMaterials{128};
 
 		//------------------Mesh Batching-----------------------------------//
-		static const uint32_t cMaxVertices = 500000;
+		static const uint32_t cMaxVertices = 0;
 		static const uint32_t cMaxIndices = cMaxVertices * 3;
 
 		std::shared_ptr<VertexArray> meshVertexArray;
@@ -158,6 +159,7 @@ namespace Graphics {
 	class Renderer {
 	public:
 
+		~Renderer();
 		static void Init();
 		static void Shutdown();
 		static void Clear();

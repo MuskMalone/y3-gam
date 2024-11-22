@@ -1,6 +1,18 @@
 #version 460 core
 //#extension GL_ARB_bindless_texture : require
 
+struct MaterialProperties {
+    vec4 AlbedoColor;  // Base color
+    float Metalness;   // Metalness factor
+    float Roughness;   // Roughness factor
+    float Transparency; // Transparency (alpha)
+    float AO;          // Ambient occlusion
+};
+
+layout(std430, binding = 0) buffer MaterialPropsBuffer {
+    MaterialProperties materials[];
+};
+
 layout(location = 0) out vec4 fragColor;
 layout(location = 1) out int entityID;
 
@@ -145,6 +157,11 @@ void main(){
     color = pow(color, vec3(1.0/2.2)); //gamma correction
     //change transparency here
     float alpha = u_Transparency;
+
+    //MaterialProperties mat = materials[15]; // Access material by index
+
+    // For testing, output the AlbedoColor
+    //fragColor = mat.AlbedoColor;
 	fragColor = vec4(color, alpha) * v_Color;
 }
 

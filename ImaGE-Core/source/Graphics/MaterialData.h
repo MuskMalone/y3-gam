@@ -24,6 +24,14 @@ namespace Graphics {
         DISABLE_SHADOW_CASTING = 1 << 3
     };
 
+    struct MaterialProperties {
+        glm::vec4 AlbedoColor;  // Base color
+        float Metalness;        // Metalness factor
+        float Roughness;        // Roughness factor
+        float Transparency;     // Transparency (alpha)
+        float AO;               // Ambient occlusion
+    };
+
     class MaterialData {
     public:
         MaterialData() = default;

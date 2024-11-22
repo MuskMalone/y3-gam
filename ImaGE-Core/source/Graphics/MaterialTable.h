@@ -5,6 +5,7 @@
 namespace Graphics {
 
     class MaterialData;
+    struct MaterialProperties;
     class MaterialTable {
     public:
         // Add a material to the table and return its index
@@ -35,8 +36,13 @@ namespace Graphics {
 
         inline static constexpr unsigned sMaterialsPerBatch = 16 - 1;
 
+        static void Init(uint32_t maxMaterials);
+        static void Shutdown();
+
     private:
         static std::unordered_map<IGE::Assets::GUID, uint32_t> mGUIDToIndexMap;
         static std::vector<std::shared_ptr<MaterialData>> mMaterials;
+        static GLuint mMaterialSSBO;
+        static std::vector<Graphics::MaterialProperties> mMaterialPropsBuffer;
     };
 }

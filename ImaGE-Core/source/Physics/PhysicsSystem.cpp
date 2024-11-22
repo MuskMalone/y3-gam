@@ -10,7 +10,7 @@
 #include "Physics/PhysicsEventData.h"
 #include "Graphics/Renderer.h"
 #include "Input/InputManager.h"
-#define IMAGE_GAME_APP
+//#define IMAGE_GAME_APP
 namespace IGE {
 	namespace Physics {
 		void SetColliderAsSensor(physx::PxShape* shapeptr, bool sensor);

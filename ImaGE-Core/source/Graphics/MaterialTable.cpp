@@ -10,6 +10,53 @@
 namespace Graphics {
     std::unordered_map<IGE::Assets::GUID, uint32_t> MaterialTable::mGUIDToIndexMap;
     std::vector<std::shared_ptr<MaterialData>> MaterialTable::mMaterials;
+    GLuint MaterialTable::mMaterialSSBO;
+    std::vector<MaterialProperties> MaterialTable::mMaterialPropsBuffer;
+
+
+    void MaterialTable::Init(uint32_t maxMaterials) {
+ //test................................
+        std::vector<MaterialProperties> materials(16);
+
+        // Fill with test data
+        for (size_t i = 0; i < 16; ++i) {
+            materials[i].AlbedoColor = glm::vec4(i * 0.1f, 0.5f, 1.0f - i * 0.1f, 1.0f); // Gradient color
+            materials[i].Metalness = i * 0.1f;
+            materials[i].Roughness = 1.0f - i * 0.1f;
+            materials[i].Transparency = 1.0f;
+            materials[i].AO = 1.0f;
+        }
+        //...........................................................
+
+        mMaterialPropsBuffer.resize(maxMaterials); // Reserve CPU-side buffer space
+
+        // Generate and bind the SSBO
+        GLCALL(glCreateBuffers(1, &mMaterialSSBO));
+        // Allocate GPU memory for the SSBO
+        glNamedBufferStorage(
+            mMaterialSSBO,
+            sizeof(MaterialProperties) * 32,
+            materials.data(),//nullptr, // No initial data
+            GL_DYNAMIC_STORAGE_BIT // Allow dynamic updates to the buffer
+        );
+        GLint maxSSBOSize;
+        glGetIntegerv(GL_MAX_SHADER_STORAGE_BLOCK_SIZE, &maxSSBOSize);
+
+        std::cout << "Max SSBO size: " << maxSSBOSize << " bytes" << std::endl;
+
+        if (sizeof(MaterialProperties) * maxMaterials > maxSSBOSize) {
+            std::cout << "ERROR: TOO MANY MAX MATERIALS" << std::endl;
+        }
+            // Bind the SSBO to binding point 0
+        //glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, mMaterialSSBO);
+    }
+    void MaterialTable::Shutdown() {
+        if (mMaterialSSBO) {
+            glDeleteBuffers(1, &mMaterialSSBO); // Delete the buffer
+            mMaterialSSBO = 0;
+        }
+        mMaterialPropsBuffer.clear(); // Clear the CPU-side buffer
+    }
     // Add a material to the table and return its index
     uint32_t Graphics::MaterialTable::AddMaterial(std::shared_ptr<Graphics::MaterialData>& material) {
         mMaterials.push_back(material);
@@ -100,8 +147,8 @@ namespace Graphics {
       int const defaultNormalUnit{ static_cast<int>(IGE_REF(IGE::Assets::TextureAsset, Renderer::GetWhiteTexture())->mTexture.Bind()) }; // cahnge to normal Tex
 
       // Initialize texture unit arrays to default values
-      std::vector<int> albedoTextureUnits(matCount + 1, defaultAlbedoUnit);
-      std::vector<int> normalTextureUnits(matCount + 1, defaultNormalUnit);
+      std::vector<int> albedoTextureUnits(16, defaultAlbedoUnit);
+      std::vector<int> normalTextureUnits(16, defaultNormalUnit);
 
       for (size_t matIdx{ batchStart + 1 }, i{ 1 }; i <= matCount; ++i, ++matIdx) {
         std::shared_ptr<MaterialData> const& material = mMaterials[matIdx];
