@@ -21,8 +21,8 @@ std::weak_ptr<T> SystemManager::GetSystem() const {
 }
 
 template <typename... Systems>
-void SystemManager::UpdateSelectedSystems() {
-  UpdateSystems({ typeid(Systems).name()... });
+void SystemManager::PausedUpdate() {
+  PausedUpdateSystems({ typeid(Systems).name()... });
 
-  //LateUpdateSystems({ typeid(Systems).name()... });
+  //UpdateSystems({ typeid(Systems).name()... });
 }

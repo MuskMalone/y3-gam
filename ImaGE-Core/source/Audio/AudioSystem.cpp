@@ -16,7 +16,7 @@ namespace IGE {
             //track updates to position
             //track whether guids are valid
             {
-                auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
+                auto rbsystem{ mEntityManager.GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
                 for (auto entity : rbsystem) {
                     auto& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
                     auto& xfm{ rbsystem.get<Component::Transform>(entity) };
@@ -38,7 +38,7 @@ namespace IGE {
                 }
             }
             {
-                auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioListener, Component::Transform>() };
+                auto rbsystem{ mEntityManager.GetAllEntitiesWithComponents<Component::AudioListener, Component::Transform>() };
                 for (auto entity : rbsystem) {
                     auto& audiolistener{ rbsystem.get<Component::AudioListener>(entity) };
                 }
@@ -50,7 +50,7 @@ namespace IGE {
             //    
             //}
             if (Scenes::SceneManager::GetInstance().GetSceneState() == Scenes::SceneState::PLAYING) {
-                auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
+                auto rbsystem{ mEntityManager.GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
                 for (auto entity : rbsystem) {
                     auto& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
                     auto& xfm{ rbsystem.get<Component::Transform>(entity) };
@@ -73,7 +73,7 @@ namespace IGE {
                 mgr.mSceneStopped = false;
             }
             else if (mgr.mScenePaused == true) {
-                auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
+                auto rbsystem{ mEntityManager.GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
                 for (auto entity : rbsystem) {
                     auto& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
                     auto& xfm{ rbsystem.get<Component::Transform>(entity) };
@@ -84,7 +84,7 @@ namespace IGE {
                 mgr.mSceneStopped = true;
                 static bool firsttime{ true };
                 if (firsttime) {
-                    auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
+                    auto rbsystem{ mEntityManager.GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
                     FMOD::ChannelGroup* master{};
                     
                     FMOD_RESULT result{ mgr.mSystem->getMasterChannelGroup(&master) };
