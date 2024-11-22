@@ -26,9 +26,15 @@ namespace Systems {
 
     /*!*********************************************************************
     \brief
-      Updates the system
+      Default update function. Runs when the scene is running
     ************************************************************************/
     virtual void Update() {}
+
+    /*!*********************************************************************
+    \brief
+      Updates the system when the scene is not running
+    ************************************************************************/
+    virtual void PausedUpdate() { Update(); }
 
     /*!*********************************************************************
     \brief

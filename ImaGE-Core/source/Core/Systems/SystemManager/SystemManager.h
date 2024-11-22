@@ -55,7 +55,7 @@ namespace Systems {
       Updates all systems specified as template arguments
     ************************************************************************/
     template <typename... Systems>
-    void UpdateSelectedSystems();
+    void PausedUpdate();
 
     /*!*********************************************************************
     \brief
@@ -83,7 +83,7 @@ namespace Systems {
     \param names
       The typeid names of the systems
     ************************************************************************/
-    void UpdateSystems(std::initializer_list<const char*> const& names);
+    void PausedUpdateSystems(std::initializer_list<const char*> const& names);
   };
 #include "SystemManager.tpp"
 } // namespace Systems

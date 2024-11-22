@@ -13,6 +13,7 @@ namespace IGE {
 			glm::vec3 normal;
 			float distance;
 		};
+
 		class PhysicsSystem : public Systems::System {
 		private:
 			struct RayCastResult {
@@ -26,7 +27,9 @@ namespace IGE {
 			static std::shared_ptr<IGE::Physics::PhysicsSystem> GetInstance();
 			PhysicsSystem();
 			~PhysicsSystem();
+
 			void Update() override;
+			void PausedUpdate() override;
 
 			// temporarily using this to deserialize a copy of the rb from file
 			Component::RigidBody& AddRigidBody(ECS::Entity entity, Component::RigidBody rb = {}); // should const ref this when the functions r consted

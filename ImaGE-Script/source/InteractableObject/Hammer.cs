@@ -51,6 +51,7 @@ public class Hammer : Entity, IInventoryItem
     bool isHammerHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
     if (Input.GetKeyTriggered(KeyCode.E) && isHammerHit)
     {
+      InternalCalls.PlaySound(mEntityID, "PickupObjects");
       inventoryScript.Additem(this);
     }
     EToPickUpUI.SetActive(isHammerHit);

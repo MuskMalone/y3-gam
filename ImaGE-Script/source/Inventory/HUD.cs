@@ -13,6 +13,8 @@ public class HUD : Entity
 
   private void InventoryScript_ItemAdded(object sender, InventoryEventArgs e)
   {
+    //InternalCalls.PlaySound(mEntityID, "ItemPickup"); // Unfortunately 3D sound so HUD distance from player matters
+                                                        // Have to put in individual object scripts
     Transform inventoryPanel = GetComponent<Transform>().Find("Inventory");
     Vector3 vec3 = new Vector3(e.InventoryPosition.X, e.InventoryPosition.Y, 1f);
     InternalCalls.SetPosition(e.Item.Image.mEntityID, ref vec3);

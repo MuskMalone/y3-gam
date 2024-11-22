@@ -53,6 +53,7 @@ public class Seed : Entity, IInventoryItem
     bool isSeedHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
     if (Input.GetKeyTriggered(KeyCode.E) && isSeedHit)
     {
+      InternalCalls.PlaySound(mEntityID, "PickupObjects");
       inventoryScript.Additem(this);
     }
     EToPickUpUI.SetActive(isSeedHit);
@@ -71,6 +72,7 @@ public class Seed : Entity, IInventoryItem
 
     if (EToPlantSeedUI.IsActive() && Input.GetMouseButtonTriggered(0))
     {
+      InternalCalls.PlaySound(mEntityID, "PlantSeed");
       EToPlantSeedUI.SetActive(false);
       inventoryScript.RemoveItem(this);
       Pot.SetActive(true); // Sets the child seeds active as well
