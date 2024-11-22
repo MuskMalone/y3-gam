@@ -397,8 +397,8 @@ namespace IGE {
 
         void AudioManager::StopSound(IGE::Assets::GUID const& guid, SoundInvokeSetting const& setting)
         {
-            for (auto& channel : setting.channels) {
-                channel->stop();
+            while (setting.channels.size()) {
+                (*setting.channels.begin())->stop();
             }
             setting.paused = false;
         }

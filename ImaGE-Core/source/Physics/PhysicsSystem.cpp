@@ -10,6 +10,7 @@
 #include "Physics/PhysicsEventData.h"
 #include "Graphics/Renderer.h"
 #include "Input/InputManager.h"
+#define IMAGE_GAME_APP
 namespace IGE {
 	namespace Physics {
 		void SetColliderAsSensor(physx::PxShape* shapeptr, bool sensor);
@@ -67,6 +68,8 @@ namespace IGE {
 		void PhysicsSystem::Update() {
 				mRays.clear();
 			mOnTriggerPairs.clear();
+
+#ifndef IMAGE_GAME_APP
 			if (Scenes::SceneManager::GetInstance().GetSceneState() != Scenes::SceneState::PLAYING) {
 				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Transform>() };
 				for (auto entity : rbsystem) {
@@ -116,7 +119,7 @@ namespace IGE {
 				}
 			}
 			else {
-
+#endif
 				//mPhysicsSystem.Update(gDeltaTime, 1, &mTempAllocator, &mJobSystem);
 					// Simulate one time step (1/60 second)
 				mScene->simulate(gTimeStep);
@@ -190,7 +193,9 @@ namespace IGE {
 					//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));
 					//xfm.worldPos = ToGLMVec3(bodyInterface.(rb.bodyID));
 				}
+#ifndef IMAGE_GAME_APP
 			}
+#endif
 		}
 
 		Component::RigidBody& PhysicsSystem::AddRigidBody(ECS::Entity entity, Component::RigidBody rigidbody) {
