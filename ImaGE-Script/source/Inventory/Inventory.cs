@@ -72,8 +72,8 @@ public class Inventory : Entity
   private float selectionHandXOffset = 1.2f;
   private float currentHandTime = 0;
   public float handExpandDuration = 0.4f;
-  public Vector2 startHandScale = new Vector2(1.0f, 1.2f);
-  public Vector2 endHandScale = new Vector2(1.4f, 1.8f);
+  private Vector2 startHandScale = new Vector2(1.0f, 1.2f);
+  private Vector2 endHandScale = new Vector2(1.4f, 1.8f);
   private Vector2 currentHandScale;
 
   void Start()
