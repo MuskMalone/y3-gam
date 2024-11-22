@@ -13,7 +13,7 @@ public class Inventory : Entity
 
   private IInventoryItem currentItem;
   private bool highlighted = false;
-  private bool isVisible = false;
+  public bool isVisible = false;
 
   // Inventory Item UI (Image at the bottom right)
   public Entity pitPaintingUI;
