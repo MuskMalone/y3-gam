@@ -46,6 +46,23 @@ namespace GUI {
 	{
         ImGui::Begin(mWindowName.c_str());
         {
+            // Text label for the fog settings
+            ImGui::Text("Fog Settings");
+
+            auto& mindist {Graphics::PostProcessingManager::GetInstance().GetFogMinDist() };
+            // Slider for mMinDist
+            ImGui::SliderFloat("Min Distance", &mindist, 0.0f, 1000.f, "Min: %.1f");
+            auto& maxdist{ Graphics::PostProcessingManager::GetInstance().GetFogMaxDist() };
+            // Slider for mMaxDist
+            ImGui::SliderFloat("Max Distance", &maxdist, mindist, 1000.f, "Max: %.1f");
+            auto& color{ Graphics::PostProcessingManager::GetInstance().GetFogColor() };
+            // Color picker for mFogColor
+            ImGui::ColorEdit3("Fog Color", &color.r); // RGB picker
+
+            // Add a partition line (separator)
+            ImGui::Separator();
+        }
+        {
             // Set the size of the drop box
             ImVec2 boxSize(200.0f, 50.0f);
             ImVec2 cursorPos = ImGui::GetCursorScreenPos();

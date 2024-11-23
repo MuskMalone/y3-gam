@@ -220,17 +220,17 @@ namespace Graphics {
           mOutputTexture->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
       }
 
-      //auto const& pass{ Renderer::GetPass<PostProcessingPass>() };
-      //auto& positionTexture{ pass->mPositionGBuffer };
-      //if (!positionTexture || positionTexture->GetWidth() != fb->GetFramebufferSpec().width || positionTexture->GetHeight() != fb->GetFramebufferSpec().height) {
-      //    // Create or resize mOutputTexture based on the framebuffer's specs
-      //    positionTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
-      //}
+      auto const& pass{ Renderer::GetPass<PostProcessingPass>() };
+      auto& positionTexture{ pass->mPositionGBuffer };
+      if (!positionTexture || positionTexture->GetWidth() != fb->GetFramebufferSpec().width || positionTexture->GetHeight() != fb->GetFramebufferSpec().height) {
+          // Create or resize mOutputTexture based on the framebuffer's specs
+          positionTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height, false, GL_RGBA32F);
+      }
 
-      //// Perform the copy operation
-      //if (positionTexture) {
-      //    positionTexture->CopyFrom(fb->GetColorAttachmentID(2), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
-      //}
+      // Perform the copy operation
+      if (positionTexture) {
+          positionTexture->CopyFrom(fb->GetColorAttachmentID(2), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+      }
   }
 
 } // namespace Graphics

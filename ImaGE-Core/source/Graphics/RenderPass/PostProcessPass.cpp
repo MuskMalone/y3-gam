@@ -5,7 +5,7 @@
 #include "Input/InputManager.h"
 #include "Graphics/Renderer.h"
 namespace Graphics {
-	PostProcessingPass::PostProcessingPass(const RenderPassSpec& spec) : RenderPass{spec}{
+	PostProcessingPass::PostProcessingPass(const RenderPassSpec& spec) : RenderPass{ spec } {
 		Graphics::FramebufferSpec postprocessSpec;
 		postprocessSpec.width = WINDOW_WIDTH<int>;
 		postprocessSpec.height = WINDOW_HEIGHT<int>;
@@ -16,18 +16,31 @@ namespace Graphics {
 
 	void PostProcessingPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities)
 	{
-		//{//fog/visibility shader
-		//	//copy the color buffer to inputTexture
-		//	glMemoryBarrier(GL_ALL_BARRIER_BITS);
-		//	auto shader{ ShaderLibrary::Get("Fog") };
-		//	mSpec.pipeline->GetSpec().shader = shader;
-		//	Begin();
-		//	shader->SetUniform("u_TexViewPosition", mPositionGBuffer);
-		//	shader->SetUniform("u_TexFragColor", mInputTexture);
-		//	Renderer::RenderFullscreenTexture();
-		//	//swap back the shader
-		//	End();
-		//}
+		{//fog/visibility shader
+			//copy the color buffer to inputTexture
+			glMemoryBarrier(GL_ALL_BARRIER_BITS);
+			auto shader{ ShaderLibrary::Get("Fog") };
+			mSpec.pipeline->GetSpec().shader = shader;
+			Begin();
+			shader->SetUniform("u_TexViewPosition", mPositionGBuffer);
+			shader->SetUniform("u_TexFragColor", mInputTexture);
+			
+			shader->SetUniform("u_MinDist", Graphics::PostProcessingManager::GetInstance().GetFogMinDist());
+			shader->SetUniform("u_MaxDist", Graphics::PostProcessingManager::GetInstance().GetFogMaxDist());
+			shader->SetUniform("u_FogColor", Graphics::PostProcessingManager::GetInstance().GetFogColor());
+			Renderer::RenderFullscreenTexture();
+			//swap back the shader
+			End();
+
+			auto const& fb = mSpec.pipeline->GetSpec().targetFramebuffer;
+
+			// Check if mOutputTexture is null or if dimensions don’t match
+			if (mInputTexture) {
+				mInputTexture->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+			}
+			std::swap(mSpec.pipeline->GetSpec().targetFramebuffer, mPingPongBuffer);
+			glMemoryBarrier(GL_ALL_BARRIER_BITS);
+		}
 		auto numShaders{ Graphics::PostProcessingManager::GetInstance().GetShaderNum() };
 		numShaders = (numShaders) ? numShaders : 1;
 		for (unsigned i{}; i < numShaders; ++i) {

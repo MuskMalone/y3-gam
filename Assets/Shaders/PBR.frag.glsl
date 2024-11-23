@@ -3,7 +3,7 @@
 
 layout(location = 0) out vec4 fragColor;
 layout(location = 1) out int entityID;
-layout(location = 2) out vec3 viewPosition;
+layout(location = 2) out vec4 viewPosition;
 
 in vec4 v_Color;
 in vec2 v_TexCoord;
@@ -74,7 +74,7 @@ float CheckShadow(vec4 lightSpacePos);
 void main(){
     entityID = v_EntityID;
     // //pls add this line for subsequent custom shaders
-    viewPosition = vec3(1);//v_ViewPosition;
+    viewPosition = vec4(v_ViewPosition, 1);
     
     vec2 texCoord = v_TexCoord * u_Tiling + u_Offset;
     
@@ -152,6 +152,15 @@ void main(){
     //change transparency here
     float alpha = u_Transparency;
 	fragColor = vec4(color, alpha) * v_Color;
+
+    // float u_MinDist = 1.f;
+    // float u_MaxDist = 5.f;
+    // vec3 u_FogColor = vec3(1,1,1);
+    // float dist = length(v_ViewPosition);
+    // float fogFactor = clamp((dist - u_MinDist) / (u_MaxDist - u_MinDist), 0.0f, 1.0f);
+    // color = fragColor.xyz;//texture(u_TexFragColor, v_TexCoord).xyz;
+    // fragColor = vec4(mix(color, u_FogColor, fogFactor), 1.0f);
+    // fragColor = vec4(v_ViewPosition, 1);
 }
 
 vec3 fresnelSchlick(float cosTheta, vec3 F0)

@@ -180,6 +180,12 @@ static void rttr_auto_register_reflection_function_(); namespace {
           .property("playSettings", &Component::AudioSource::AudioInstance::playSettings);
   }
   /* ------------------ Shaders ---------------------*/
+  rttr::registration::class_<Graphics::PostProcessingManager::PostProcessingConfigs::ShaderOrder>("ShaderOrder")
+      .constructor<>()(rttr::policy::ctor::as_object)
+      .property("shaders", &Graphics::PostProcessingManager::PostProcessingConfigs::ShaderOrder::shaders)
+      .property("fogMinDist", &Graphics::PostProcessingManager::PostProcessingConfigs::ShaderOrder::fogMinDist)
+      .property("fogMaxDist", &Graphics::PostProcessingManager::PostProcessingConfigs::ShaderOrder::fogMaxDist)
+      .property("fogColor", &Graphics::PostProcessingManager::PostProcessingConfigs::ShaderOrder::fogColor);
   rttr::registration::class_<Graphics::PostProcessingManager::PostProcessingConfigs>("PostProcessingConfigs")
       .constructor<>()(rttr::policy::ctor::as_object)
       .property("configs", &Graphics::PostProcessingManager::PostProcessingConfigs::mConfigs);

@@ -36,7 +36,7 @@ namespace Graphics {
 				if (mPpc.mConfigs.find(name) == mPpc.mConfigs.end()) {
 					mPpc.mConfigs.emplace(name, PostProcessingConfigs::ShaderOrder{});
 				}
-				mPpc.mConfigs.at(name).push_back(guid);
+				mPpc.mConfigs.at(name).shaders.push_back(guid);
 			}
 			catch (...) {
 				Debug::DebugLogger::GetInstance().LogError("failed to load post processing shader");
@@ -49,8 +49,8 @@ namespace Graphics {
 		auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
 		if (mPpc.mConfigs.find(name) != mPpc.mConfigs.end()) {
 			//should unload shdr here
-			if (idx > 0 && idx < mPpc.mConfigs.at(name).size()) {
-				std::swap(mPpc.mConfigs.at(name)[idx], mPpc.mConfigs.at(name)[idx - 1]);
+			if (idx > 0 && idx < mPpc.mConfigs.at(name).shaders.size()) {
+				std::swap(mPpc.mConfigs.at(name).shaders[idx], mPpc.mConfigs.at(name).shaders[idx - 1]);
 			}
 		}
 	}
@@ -59,8 +59,8 @@ namespace Graphics {
 		auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
 		if (mPpc.mConfigs.find(name) != mPpc.mConfigs.end()) {
 			//should unload shdr here
-			if (mPpc.mConfigs.at(name).size() > 1 && idx < mPpc.mConfigs.at(name).size() - 1) {
-				std::swap(mPpc.mConfigs.at(name)[idx], mPpc.mConfigs.at(name)[idx + 1]);
+			if (mPpc.mConfigs.at(name).shaders.size() > 1 && idx < mPpc.mConfigs.at(name).shaders.size() - 1) {
+				std::swap(mPpc.mConfigs.at(name).shaders[idx], mPpc.mConfigs.at(name).shaders[idx + 1]);
 			}
 		}
 	}
@@ -68,12 +68,12 @@ namespace Graphics {
 	{
 		auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
 		if (mPpc.mConfigs.find(name) != mPpc.mConfigs.end()) {
-			if (idx < mPpc.mConfigs.at(name).size()) {
+			if (idx < mPpc.mConfigs.at(name).shaders.size()) {
 				//delete the element at idx
 				//should unload shdr here
-				mPpc.mConfigs.at(name).erase(mPpc.mConfigs.at(name).begin() + idx);
+				mPpc.mConfigs.at(name).shaders.erase(mPpc.mConfigs.at(name).shaders.begin() + idx);
 			}
-			if (mPpc.mConfigs.at(name).empty()) {
+			if (mPpc.mConfigs.at(name).shaders.empty()) {
 				mPpc.mConfigs.erase(name);
 			}
 		}
@@ -84,8 +84,8 @@ namespace Graphics {
 		if (name.empty() || mPpc.mConfigs.find(name) == mPpc.mConfigs.end()) {
 			return mDefaultShader;
 		}
-		if (idx >= mPpc.mConfigs.at(name).size()) return mDefaultShader;
-		return IGE_ASSETMGR.GetAsset<IGE::Assets::ShaderAsset>(mPpc.mConfigs.at(name)[idx])->mShader;
+		if (idx >= mPpc.mConfigs.at(name).shaders.size()) return mDefaultShader;
+		return IGE_ASSETMGR.GetAsset<IGE::Assets::ShaderAsset>(mPpc.mConfigs.at(name).shaders[idx])->mShader;
 	}
 	std::string PostProcessingManager::GetShaderName(unsigned idx)
 	{
@@ -93,8 +93,8 @@ namespace Graphics {
 		if (name.empty() || mPpc.mConfigs.find(name) == mPpc.mConfigs.end()) {
 			return "";
 		}
-		if (idx >= mPpc.mConfigs.at(name).size()) return "";
-		return IGE_ASSETMGR.GUIDToPath(mPpc.mConfigs.at(name)[idx]);
+		if (idx >= mPpc.mConfigs.at(name).shaders.size()) return "";
+		return IGE_ASSETMGR.GUIDToPath(mPpc.mConfigs.at(name).shaders[idx]);
 	}
 	unsigned PostProcessingManager::GetShaderNum()
 	{
@@ -102,13 +102,13 @@ namespace Graphics {
 		if (name.empty() || mPpc.mConfigs.find(name) == mPpc.mConfigs.end()) {
 			return 0;
 		}
-		return static_cast<unsigned>(mPpc.mConfigs.at(name).size());
+		return static_cast<unsigned>(mPpc.mConfigs.at(name).shaders.size());
 	}
 	void PostProcessingManager::ReloadShaders()
 	{
 		auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
 		if (mPpc.mConfigs.find(name) != mPpc.mConfigs.end()) {
-			for (auto guid : mPpc.mConfigs.at(name)) {
+			for (auto guid : mPpc.mConfigs.at(name).shaders) {
 				IGE_ASSETMGR.ReloadRef<IGE::Assets::ShaderAsset>(guid);
 			}
 		}
@@ -118,10 +118,34 @@ namespace Graphics {
 	{
 		auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
 		if (mPpc.mConfigs.find(name) != mPpc.mConfigs.end()) {
-			if (idx < mPpc.mConfigs.at(name).size()) {
-				IGE_ASSETMGR.ReloadRef<IGE::Assets::ShaderAsset>(mPpc.mConfigs.at(name)[idx]);
+			if (idx < mPpc.mConfigs.at(name).shaders.size()) {
+				IGE_ASSETMGR.ReloadRef<IGE::Assets::ShaderAsset>(mPpc.mConfigs.at(name).shaders[idx]);
 			}
 		}
+	}
+	float& PostProcessingManager::GetFogMinDist()
+	{
+		auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
+		if (mPpc.mConfigs.find(name) == mPpc.mConfigs.end()) {
+			mPpc.mConfigs.emplace(name, PostProcessingConfigs::ShaderOrder{});
+		}
+		return mPpc.mConfigs.at(name).fogMinDist;
+	}
+	float& PostProcessingManager::GetFogMaxDist()
+	{
+		auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
+		if (mPpc.mConfigs.find(name) == mPpc.mConfigs.end()) {
+			mPpc.mConfigs.emplace(name, PostProcessingConfigs::ShaderOrder{});
+		}
+		return mPpc.mConfigs.at(name).fogMaxDist;
+	}
+	glm::vec3& PostProcessingManager::GetFogColor()
+	{
+		auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
+		if (mPpc.mConfigs.find(name) == mPpc.mConfigs.end()) {
+			mPpc.mConfigs.emplace(name, PostProcessingConfigs::ShaderOrder{});
+		}
+		return mPpc.mConfigs.at(name).fogColor;
 	}
 	void PostProcessingManager::CreateConfigFile()
 	{
@@ -138,7 +162,7 @@ namespace Graphics {
 		if (state == Events::SceneStateChange::CHANGED) {
 			auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
 			if (mPpc.mConfigs.find(name) != mPpc.mConfigs.end()) {
-				for (auto guid : mPpc.mConfigs.at(name)) {
+				for (auto guid : mPpc.mConfigs.at(name).shaders) {
 					LoadShader(guid);
 				}
 			}
