@@ -7,6 +7,7 @@
 #include "Asset/IGEAssets.h"
 #include <Graphics/Renderer.h>
 #include <Graphics/RenderPass/ShadowPass.h>
+#include <Graphics/Renderpass/PostProcessPass.h>
 #include "Graphics/MaterialData.h"
 
 #include "Graphics/RenderAPI.h"
@@ -21,12 +22,13 @@ namespace Graphics {
       std::shared_ptr<Shader> shader;     // Associated shader
       std::vector<EntityXform> entityPairs; // Vector of entity-transform pairs
   };
-
+  
   GeomPass::GeomPass(const RenderPassSpec& spec) : RenderPass(spec) {
 
   }
 
   void GeomPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
+
       Begin();
       Renderer::Clear();
       //auto shader = mSpec.pipeline->GetShader();
@@ -127,10 +129,10 @@ namespace Graphics {
           if (shader != currShader) {
               shader->Use();
               currShader = shader;
-
+              
               bool isUnlitShader = (shader == ShaderLibrary::Get("Unlit"));
               shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);
-
+              shader->SetUniform("u_ViewMtx", cam.viewMatrix);
               if (!isUnlitShader) {
                   shader->SetUniform("u_CamPos", cam.position);
 
@@ -177,7 +179,7 @@ namespace Graphics {
           for (auto const& light : lights) {
               auto const& xform = ECS::Entity{ light }.GetComponent<Component::Transform>();
               auto const& lightComp = ECS::Entity{ light }.GetComponent<Component::Light>();
-              Renderer::DrawLightGizmo(lightComp, xform, cam, ECS::Entity{light}.GetEntityID());
+              Renderer::DrawLightGizmo(lightComp, xform, cam, ECS::Entity{ light }.GetEntityID());
           }
           //auto const& cameras = ecsMan.GetAllEntitiesWithComponents<Component::Camera>();
           //for (auto const& camera : cameras) {
@@ -203,11 +205,10 @@ namespace Graphics {
 
       Renderer::RenderSceneEnd();
       //=================================================SUBMESH VERSION END===========================================================
-
       End();
 
       auto const& fb = mSpec.pipeline->GetSpec().targetFramebuffer;
-
+      
       // Check if mOutputTexture is null or if dimensions don’t match
       if (!mOutputTexture || mOutputTexture->GetWidth() != fb->GetFramebufferSpec().width || mOutputTexture->GetHeight() != fb->GetFramebufferSpec().height) {
           // Create or resize mOutputTexture based on the framebuffer's specs
@@ -218,6 +219,18 @@ namespace Graphics {
       if (mOutputTexture) {
           mOutputTexture->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
       }
+
+      //auto const& pass{ Renderer::GetPass<PostProcessingPass>() };
+      //auto& positionTexture{ pass->mPositionGBuffer };
+      //if (!positionTexture || positionTexture->GetWidth() != fb->GetFramebufferSpec().width || positionTexture->GetHeight() != fb->GetFramebufferSpec().height) {
+      //    // Create or resize mOutputTexture based on the framebuffer's specs
+      //    positionTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+      //}
+
+      //// Perform the copy operation
+      //if (positionTexture) {
+      //    positionTexture->CopyFrom(fb->GetColorAttachmentID(2), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+      //}
   }
 
 } // namespace Graphics

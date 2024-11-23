@@ -228,6 +228,7 @@ namespace Graphics {
 		ShaderLibrary::Add("ShadowMap", Shader::Create("ShadowMap.vert.glsl", "ShadowMap.frag.glsl"));
 		ShaderLibrary::Add("FullscreenQuad", Shader::Create("FullscreenQuad.vert.glsl", "FullscreenQuad.frag.glsl"));
 		ShaderLibrary::Add("Tex2D", Shader::Create("Tex2D.vert.glsl", "Tex2D.frag.glsl"));
+		ShaderLibrary::Add("Fog", Shader::Create("Fog.vert.glsl", "Fog.frag.glsl"));
 	}
 
 	void Renderer::InitGeomPass() {
@@ -235,7 +236,7 @@ namespace Graphics {
 		Graphics::FramebufferSpec framebufferSpec;
 		framebufferSpec.width = WINDOW_WIDTH<int>;
 		framebufferSpec.height = WINDOW_HEIGHT<int>;
-		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
+		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::RGB32F, Graphics::FramebufferTextureFormat::DEPTH };
 
 		PipelineSpec geomPipelineSpec;
 		geomPipelineSpec.shader = ShaderLibrary::Get("PBR");
@@ -309,7 +310,7 @@ namespace Graphics {
 		Graphics::FramebufferSpec postprocessSpec;
 		postprocessSpec.width = WINDOW_WIDTH<int>;
 		postprocessSpec.height = WINDOW_HEIGHT<int>;
-		postprocessSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH24STENCIL8 };	// temporarily max. 1 shadow-caster
+		postprocessSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };	// temporarily max. 1 shadow-caster
 
 		PipelineSpec postprocessPSpec;
 

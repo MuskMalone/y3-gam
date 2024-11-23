@@ -31,7 +31,10 @@ out int v_SubmeshIdx;
 // shadows
 out vec4 v_LightSpaceFragPos;
 
+out vec3 v_ViewPosition;
+
 uniform bool u_ShadowsActive;
+uniform mat4 u_ViewMtx;
 uniform mat4 u_ViewProjMtx;
 uniform mat4 u_LightSpaceMtx;
 
@@ -51,6 +54,7 @@ void main(){
     v_Color =  a_Color;
     v_TexCoord = a_TexCoord;
     v_TexIdx = a_TexIdx;
+    v_ViewPosition = vec3(u_ViewMtx * worldPosition);
     gl_Position = u_ViewProjMtx * worldPosition;
 
     // calculate the frag pos in light space

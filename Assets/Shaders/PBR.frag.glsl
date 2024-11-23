@@ -3,6 +3,7 @@
 
 layout(location = 0) out vec4 fragColor;
 layout(location = 1) out int entityID;
+layout(location = 2) out vec3 viewPosition;
 
 in vec4 v_Color;
 in vec2 v_TexCoord;
@@ -18,6 +19,9 @@ in vec3 v_Bitangent;            // Bitangent in world space
 
 // shadows
 in vec4 v_LightSpaceFragPos;
+
+in vec3 v_ViewPosition;
+
 uniform bool u_ShadowsActive;
 uniform float u_ShadowBias;
 uniform int u_ShadowSoftness;
@@ -69,7 +73,9 @@ float CheckShadow(vec4 lightSpacePos);
 
 void main(){
     entityID = v_EntityID;
-
+    // //pls add this line for subsequent custom shaders
+    viewPosition = vec3(1);//v_ViewPosition;
+    
     vec2 texCoord = v_TexCoord * u_Tiling + u_Offset;
     
 	//vec4 texColor = texture2D(u_NormalMaps[int(v_MaterialIdx)], texCoord); //currently unused

@@ -41,6 +41,10 @@ namespace Graphics
             for (int i{}; i < mColorAttachments.size(); ++i) {
                 Utils::Framebuffer::BindTexture(mColorAttachments[i]);
                 switch (mColorAttachmentSpecs[i].textureFormat) {
+                case FramebufferTextureFormat::RGB32F:
+                    Utils::Framebuffer::AttachColorTexture(mColorAttachments[i], GL_RGB32F, GL_RGB, mSpec.width, mSpec.height, static_cast<int>(i), GL_FLOAT);
+                    //Utils::Framebuffer::AttachColorTexture(mColorAttachments[i], GL_RGBA8, GL_RGBA, mSpec.width, mSpec.height, static_cast<int>(i));
+                    break;
                 case FramebufferTextureFormat::RGBA8:
                     Utils::Framebuffer::AttachColorTexture(mColorAttachments[i], GL_RGBA8, GL_RGBA, mSpec.width, mSpec.height, static_cast<int>(i));
                     break;

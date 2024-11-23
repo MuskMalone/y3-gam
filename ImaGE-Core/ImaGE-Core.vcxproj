@@ -100,8 +100,8 @@
       <AdditionalOptions>/ignore:4099 /ignore:4006 /ignore:4005 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
     <PostBuildEvent>
-      <Command>IF NOT EXIST "$(SolutionDir)\Binaries\windows-x86_64\Debug\Assets" (mkdir "$(SolutionDir)\Binaries\windows-x86_64\Debug\Assets")
-xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Binaries\windows-x86_64\Debug\Assets"</Command>
+      <Command>IF NOT EXIST "$(SolutionDir)Binaries\windows-x86_64\Debug\Assets" (mkdir "$(SolutionDir)Binaries\windows-x86_64\Debug\Assets")
+xcopy /Q /E /Y /I "$(SolutionDir)Assets" "$(SolutionDir)Binaries\windows-x86_64\Debug\Assets"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

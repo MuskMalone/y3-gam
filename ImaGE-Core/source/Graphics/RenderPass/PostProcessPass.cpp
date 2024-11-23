@@ -9,13 +9,25 @@ namespace Graphics {
 		Graphics::FramebufferSpec postprocessSpec;
 		postprocessSpec.width = WINDOW_WIDTH<int>;
 		postprocessSpec.height = WINDOW_HEIGHT<int>;
-		postprocessSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH24STENCIL8 };	// temporarily max. 1 shadow-caster
+		postprocessSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };	// temporarily max. 1 shadow-caster
 
 		mPingPongBuffer = Framebuffer::Create(postprocessSpec);
 	}
 
 	void PostProcessingPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities)
 	{
+		//{//fog/visibility shader
+		//	//copy the color buffer to inputTexture
+		//	glMemoryBarrier(GL_ALL_BARRIER_BITS);
+		//	auto shader{ ShaderLibrary::Get("Fog") };
+		//	mSpec.pipeline->GetSpec().shader = shader;
+		//	Begin();
+		//	shader->SetUniform("u_TexViewPosition", mPositionGBuffer);
+		//	shader->SetUniform("u_TexFragColor", mInputTexture);
+		//	Renderer::RenderFullscreenTexture();
+		//	//swap back the shader
+		//	End();
+		//}
 		auto numShaders{ Graphics::PostProcessingManager::GetInstance().GetShaderNum() };
 		numShaders = (numShaders) ? numShaders : 1;
 		for (unsigned i{}; i < numShaders; ++i) {
@@ -23,7 +35,6 @@ namespace Graphics {
 			Begin();
 
 			auto const& shader = mSpec.pipeline->GetShader();
-			shader->SetUniform("u_DepthBuffer", 1);
 			shader->SetUniform("u_Resolution", glm::vec2(
 				mSpec.pipeline->GetSpec().targetFramebuffer->GetFramebufferSpec().width, 
 				mSpec.pipeline->GetSpec().targetFramebuffer->GetFramebufferSpec().height
