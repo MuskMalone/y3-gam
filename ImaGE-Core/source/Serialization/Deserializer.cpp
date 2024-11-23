@@ -27,7 +27,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Serialization
 {
-  using DMIEntityList = Mono::DataMemberInstance<std::vector<Mono::ScriptInstance>>;
+  using MonoObjectVec = Mono::DataMemberInstance<std::vector<MonoObject*>>;
 
   void Deserializer::DeserializeAny(rttr::instance inst, std::string const& filename)
   {
@@ -780,12 +780,12 @@ namespace Serialization
 #endif
       }
     }
-    else if (scriptFIType == rttr::type::get<DMIEntityList>()) {
-      DMIEntityList dmi{};
+    else if (scriptFIType == rttr::type::get<MonoObjectVec>()) {
+      Mono::DataMemberInstance<std::vector<Mono::ScriptInstance>> dmi{};
       // set script field property
       DeserializeRecursive(dmi.mScriptField, jsonVal[JSON_SCRIPT_DMI_SF_KEY]);
       
-      if (jsonVal.IsArray()) {
+      if (jsonVal[JSON_SCRIPT_DMI_DATA_KEY].IsArray()) {
         auto const& jsonArr{ jsonVal[JSON_SCRIPT_DMI_DATA_KEY].GetArray() };
         dmi.mData.reserve(jsonArr.Size());
         for (rapidjson::Value const& elem : jsonArr) {
@@ -793,7 +793,7 @@ namespace Serialization
         }
       }
       else {
-        IGE_DBGLOGGER.LogError("Json data of " + rttr::type::get<DMIEntityList>().get_name().to_string() + " corrupted");
+        IGE_DBGLOGGER.LogError("Json data of " + rttr::type::get<MonoObjectVec>().get_name().to_string() + " corrupted");
       }
 
       scriptFIList = std::move(dmi);

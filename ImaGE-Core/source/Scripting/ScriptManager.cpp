@@ -419,18 +419,16 @@ ScriptFieldType ScriptManager::MonoTypeToScriptFieldType(MonoType* monoType)
   return it->second;
 }
 
-DataMemberInstance<std::vector<ScriptInstance>> ScriptManager::SerialMonoObjectVec(DataMemberInstance<std::vector<MonoObject*>> dataMemberInst)
+std::vector<ScriptInstance> ScriptManager::SerialMonoObjectVec(std::vector<MonoObject*> const& vec)
 {
-  // create a data member inst with the same scriptField
-  DataMemberInstance<std::vector<ScriptInstance>> dmi{ dataMemberInst.mScriptField };
+  std::vector<ScriptInstance> toSer{};
+  toSer.reserve(vec.size());
 
-  dmi.mData.reserve(dataMemberInst.mData.size());
-  for (MonoObject* obj : dataMemberInst.mData)
-  {
-    dmi.mData.emplace_back(obj, false, true);
+  for (MonoObject* obj : vec) {
+    toSer.emplace_back(obj, false, true);
   }
 
-  return dmi;
+  return toSer;
 }
 
 void ScriptManager::LinkAllScriptDataMember()

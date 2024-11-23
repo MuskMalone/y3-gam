@@ -31,8 +31,8 @@ namespace Helper {
 namespace Serialization
 {
   rttr::type const Serializer::sScriptCompType = rttr::type::get<Component::Script>();
-  using DMIEntityList = Mono::DataMemberInstance<std::vector<MonoObject*>>;
-  rttr::type const Serializer::sDMIEntityListType = rttr::type::get<DMIEntityList>();
+  using MonoObjectVector = std::vector<MonoObject*>;
+  rttr::type const Serializer::sMonoObjectVecType = rttr::type::get<MonoObjectVector>();
 
 //#ifndef IMGUI_DISABLE
   void Serializer::SerializePrefab(Prefabs::Prefab const& prefab, std::string const& filePath)
@@ -244,6 +244,10 @@ namespace Serialization
         continue;
       }
 
+      if (propVal.is_type<MonoObjectVector>()) {
+        propVal = IGE_SCRIPTMGR.SerialMonoObjectVec(propVal.get_value<MonoObjectVector>());
+      }
+
       std::string const name{ property.get_name().to_string() };
       writer.String(name.c_str(), static_cast<rapidjson::SizeType>(name.length()), false);
       if (!SerializeRecursive(propVal, writer))
@@ -424,10 +428,7 @@ namespace Serialization
         continue;
       }
 
-      // for vector of MonoObject*, convert it before passing it down
-      if (property.get_type() == sDMIEntityListType) {
-        propVal = IGE_SCRIPTMGR.SerialMonoObjectVec(propVal.get_value<DMIEntityList>());
-      }
+      std::cout << "  Prop " << property.get_type() << "\n";
 
       std::string const name{ property.get_name().to_string() };
       writer.String(name.c_str(), static_cast<rapidjson::SizeType>(name.length()), false);
@@ -496,7 +497,7 @@ namespace Serialization
     {
       // if elem is another sequential container, call this function again
       if (elem.is_sequential_container()) {
-        WriteSequentialContainer(elem.create_sequential_view(), writer);
+        WriteScriptSequentialContainer(elem.create_sequential_view(), writer);
       }
       else
       {

@@ -223,7 +223,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   rttr::registration::class_<Mono::ScriptFieldInfo>("ScriptFieldInfo")
     .property("fieldName", &Mono::ScriptFieldInfo::mFieldName);
 
-  rttr::registration::class_<std::vector<MonoObject*>>("ScriptFieldInfo")
+  rttr::registration::class_<std::vector<MonoObject*>>("MonoObjectVector")
     .property("fieldName", &Mono::ScriptFieldInfo::mFieldName);
 
   // yay more macros
@@ -246,4 +246,6 @@ static void rttr_auto_register_reflection_function_(); namespace {
   REGISTER_DATA_MEMBER_INST(std::vector<unsigned>, "System.UInt32[]");
   REGISTER_DATA_MEMBER_INST(Mono::ScriptInstance, "Image.Mono.ScriptInstance");
   REGISTER_DATA_MEMBER_INST(std::vector<Mono::ScriptInstance>, "Entity[]");
+  REGISTER_DATA_MEMBER_INST(std::vector<MonoObject*>, "MonoObjectVec");
+
 }

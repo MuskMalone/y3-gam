@@ -72,7 +72,7 @@ namespace Serialization
     using EntityList = std::priority_queue < ECS::Entity, std::vector<ECS::Entity>,
       decltype([](ECS::Entity const& lhs, ECS::Entity const& rhs) { return lhs.GetRawEnttEntityID() > rhs.GetRawEnttEntityID(); }) > ;
 
-    static const rttr::type sScriptCompType, sDMIEntityListType;
+    static const rttr::type sScriptCompType, sMonoObjectVecType;
 
     /*!*********************************************************************
     \brief

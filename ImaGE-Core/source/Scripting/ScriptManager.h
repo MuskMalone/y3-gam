@@ -193,7 +193,7 @@ namespace Mono
 		static ScriptFieldType MonoTypeToScriptFieldType(MonoType* monoType);
 
 
-		DataMemberInstance<std::vector<ScriptInstance>> SerialMonoObjectVec(DataMemberInstance<std::vector<MonoObject*>> dataMemberInst);
+		std::vector<ScriptInstance> SerialMonoObjectVec(std::vector<MonoObject*> const& vec);
 
 
 		static void TriggerStart();
