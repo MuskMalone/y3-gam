@@ -68,6 +68,7 @@ namespace Serialization
 
   private:
     using EntityID = ECS::EntityManager::EntityID;
+    static rttr::type const sDMIEntityListType;
 
     /*!*********************************************************************
     \brief
