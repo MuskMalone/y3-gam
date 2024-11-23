@@ -52,9 +52,6 @@ namespace Graphics {
 
          // Bind the SSBO to binding point 0
         glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, mMaterialSSBO);
-
-        UpdateMaterialPropsBuffer();
-        UploadMaterialProps();
     }
     void MaterialTable::Shutdown() {
         if (mMaterialSSBO) {
@@ -92,6 +89,9 @@ namespace Graphics {
         uint32_t newIndex = static_cast<uint32_t>(mMaterials.size());
         mMaterials.push_back(materialData);
         mGUIDToIndexMap[guid] = newIndex;
+
+        UpdateMaterialPropsBuffer();
+        UploadMaterialProps();
 
         return newIndex;
     }
