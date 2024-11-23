@@ -8,6 +8,7 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <rttr/registration>
+#include <policy.h>
 #include <Prefabs/Prefab.h>
 #include <PxPhysicsAPI.h>
 #include <Scripting/ScriptInstance.h>
@@ -206,7 +207,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   {
     using T = Reflection::ProxyScript;
     rttr::registration::class_<T>("Script")
-      .constructor<>()
+      .constructor<>()(rttr::policy::ctor::as_object)
       .property("scriptName", &T::scriptName)
       .property("scriptFieldProxyList", &T::scriptFieldProxyList);
   }

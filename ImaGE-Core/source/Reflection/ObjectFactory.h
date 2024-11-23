@@ -102,7 +102,7 @@ namespace Reflection
     \param compType
       The type of the component
     ************************************************************************/
-    void RemoveComponentFromEntity(ECS::Entity entity, rttr::type compType) const;
+    void RemoveComponentFromEntity(ECS::Entity entity, rttr::type const& compType) const;
 
     /*!*********************************************************************
     \brief
