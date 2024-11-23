@@ -34,12 +34,46 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace {
   static bool entityRotModified{ false };
 
+  /*!*********************************************************************
+   \brief
+     Helper function to set up the column for the next row
+   \param labelName
+     The name of the property
+   ************************************************************************/
+  void NextRowTable(const char* labelName);
+}
+
+namespace ScriptInputs {
+  using ScriptInputFunc = std::function<bool(Mono::ScriptInstance&, rttr::variant&, float)>;
+  std::unordered_map<rttr::type, ScriptInputFunc> sScriptInputFuncs;
+
+  void InitScriptInputMap();
+
   bool InputDouble3(std::string const& propertyName, glm::dvec3& property, float fieldWidth, bool disabled);
   bool InputScriptList(std::string const& propertyName, std::vector<int>& list, float fieldWidth);
   bool InputScriptList(std::string const& propertyName, std::vector<float>& list, float fieldWidth);
   bool InputScriptList(std::string const& propertyName, std::vector<double>& list, float fieldWidth);
   bool InputScriptList(std::string const& propertyName, std::vector<std::string>& list, float fieldWidth);
   bool InputScriptList(std::string const& propertyName, std::vector<MonoObject*>& list, float fieldWidth);
+
+  // macro for template specialization declaration
+#define SCRIPT_INPUT_FUNC_DECL(T) template <> bool ScriptInputField<T>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth)
+
+  template <typename T>
+  bool ScriptInputField(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth);
+
+  SCRIPT_INPUT_FUNC_DECL(int);
+  SCRIPT_INPUT_FUNC_DECL(float);
+  SCRIPT_INPUT_FUNC_DECL(double);
+  SCRIPT_INPUT_FUNC_DECL(std::string);
+  SCRIPT_INPUT_FUNC_DECL(glm::vec3);
+  SCRIPT_INPUT_FUNC_DECL(glm::dvec3);
+  SCRIPT_INPUT_FUNC_DECL(std::vector<int>);
+  SCRIPT_INPUT_FUNC_DECL(std::vector<float>);
+  SCRIPT_INPUT_FUNC_DECL(std::vector<double>);
+  SCRIPT_INPUT_FUNC_DECL(std::vector<std::string>);
+  SCRIPT_INPUT_FUNC_DECL(std::vector<MonoObject*>);
+  SCRIPT_INPUT_FUNC_DECL(Mono::ScriptInstance);
 }
 
 namespace GUI {
@@ -84,6 +118,8 @@ namespace GUI {
     if (Reflection::gComponentTypes.size() != mComponentIcons.size()) {
       throw Debug::Exception<Inspector>(Debug::LVL_CRITICAL, Msg("sComponentIcons and gComponentTypes size mismatch! Did you forget to add an icon?"));
     }
+
+    ScriptInputs::InitScriptInputMap();
   }
 
   Inspector::~Inspector() {
@@ -606,8 +642,9 @@ namespace GUI {
         bool isPrevVec3{ false };
         for (rttr::variant& f : s.mScriptFieldInstList)
         {
-          bool const isCurrVec3{ f.is_type<Mono::DataMemberInstance<Mono::DataMemberInstance<glm::dvec3>>>()
-            || f.is_type<Mono::DataMemberInstance<Mono::DataMemberInstance<glm::vec3>>>() };
+          rttr::type const dmiType{ f.get_type() };
+          bool const isCurrVec3{ dmiType == rttr::type::get<Mono::DataMemberInstance<glm::dvec3>>()
+            || dmiType == rttr::type::get<Mono::DataMemberInstance<glm::vec3>>() };
           // if there is a current vec3 table and we don't need it, end it
           if (isPrevVec3 && !isCurrVec3) {
             EndVec3Table();
@@ -615,227 +652,28 @@ namespace GUI {
             ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
             ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, inputWidth);
           }
-          if (f.is_type<Mono::DataMemberInstance<int>>())
-          {
-            Mono::DataMemberInstance<int>& sfi = f.get_value<Mono::DataMemberInstance<int>>();
-            NextRowTable(sfi.mScriptField.mFieldName.c_str());
-            if (ImGui::DragInt(("##DataMemberInt" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 1)) {
-              s.SetFieldValue<int>(sfi.mData, sfi.mScriptField.mClassField);
-              modified = true;
-            }
-          }
-          else if (f.is_type<Mono::DataMemberInstance<float>>())
-          {
-            Mono::DataMemberInstance<float>& sfi = f.get_value<Mono::DataMemberInstance<float>>();
-            NextRowTable(sfi.mScriptField.mFieldName.c_str());
-            if (ImGui::DragFloat(("##DataMemberFloat" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0.1f)) {
-              s.SetFieldValue<float>(sfi.mData, sfi.mScriptField.mClassField);
-              modified = true;
-            }
-          }
-          else if (f.is_type<Mono::DataMemberInstance<std::string>>())
-          {
-            Mono::DataMemberInstance<std::string>& sfi = f.get_value<Mono::DataMemberInstance<std::string>>();
-            NextRowTable(sfi.mScriptField.mFieldName.c_str());
-            if (ImGui::InputTextMultiline(("##DataMemberString" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData))) {
-              mono_field_set_value(s.mClassInst, sfi.mScriptField.mClassField, Mono::STDToMonoString(sfi.mData));
-              modified = true;
-            }
-          }
-          else if (f.is_type<Mono::DataMemberInstance<double>>())
-          {
-            Mono::DataMemberInstance<double>& sfi = f.get_value<Mono::DataMemberInstance<double>>();
-            NextRowTable(sfi.mScriptField.mFieldName.c_str());
-            if (ImGui::DragScalar(("##DataMemberDouble" + sfi.mScriptField.mFieldName).c_str(), ImGuiDataType_Double, &sfi.mData, 0.1f, "%.3f")) {
-              s.SetFieldValue<double>(sfi.mData, sfi.mScriptField.mClassField);
-              modified = true;
-            }
-          }
-          else if (f.is_type<Mono::DataMemberInstance<glm::vec3>>())
-          {
+          else if (isCurrVec3 && !isPrevVec3) {
             // if prev element wasnt a vec3, end it and start a new table
-            if (!isPrevVec3) {
-              ImGui::EndTable();
-              BeginVec3Table("ScriptVec3Table", inputWidth / 3.f);
-            }
+            ImGui::EndTable();
+            BeginVec3Table("ScriptdVec3Table", inputWidth / 3.f);
+          }
 
-            Mono::DataMemberInstance<glm::vec3>& sfi = f.get_value<Mono::DataMemberInstance<glm::vec3>>();
-            if (ImGuiHelpers::TableInputFloat3(sfi.mScriptField.mFieldName, &sfi.mData[0], inputWidth, false, -FLT_MAX, FLT_MAX, 0.1f)) {
-              s.SetFieldValue<glm::dvec3>(sfi.mData, sfi.mScriptField.mClassField);
+          // invoke the relevant function in the map based on type
+          if (ScriptInputs::sScriptInputFuncs.contains(dmiType)) {
+            if (ScriptInputs::sScriptInputFuncs[dmiType](s, f, INPUT_SIZE)) {
               modified = true;
             }
           }
-          else if (f.is_type<Mono::DataMemberInstance<glm::dvec3>>())
-          {
-            // if prev element wasnt a vec3, end it and start a new table
-            if (!isPrevVec3) {
-              ImGui::EndTable();
-              BeginVec3Table("ScriptdVec3Table", inputWidth / 3.f);
-            }
-
-            Mono::DataMemberInstance<glm::dvec3>& sfi = f.get_value<Mono::DataMemberInstance<glm::dvec3>>();
-            if (ImGuiHelpers::TableInputDouble3(sfi.mScriptField.mFieldName, sfi.mData, inputWidth, false, -DBL_MAX, DBL_MAX, 0.1f)) {
-              s.SetFieldValue<glm::dvec3>(sfi.mData, sfi.mScriptField.mClassField);
-              modified = true;
-            }
-          }
-          else if (f.is_type<Mono::DataMemberInstance<std::vector<int>>>())
-          {
-            Mono::DataMemberInstance<std::vector<int>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<int>>>();
-            NextRowTable(sfi.mScriptField.mFieldName.c_str());
-            if (InputScriptList("##InputScriptListInt" + sfi.mScriptField.mFieldName, sfi.mData, INPUT_SIZE)) { s.SetFieldValueArr<int>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain); };
-          }
-          else if (f.is_type<Mono::DataMemberInstance<std::vector<float>>>())
-          {
-            Mono::DataMemberInstance<std::vector<float>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<float>>>();
-            NextRowTable(sfi.mScriptField.mFieldName.c_str());
-            if (InputScriptList("##InputScriptListFloat" + sfi.mScriptField.mFieldName, sfi.mData, INPUT_SIZE)) { s.SetFieldValueArr<float>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain); };
-          }
-          else if (f.is_type<Mono::DataMemberInstance<std::vector<double>>>())
-          {
-            Mono::DataMemberInstance<std::vector<double>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<double>>>();
-            NextRowTable(sfi.mScriptField.mFieldName.c_str());
-            if (InputScriptList("##InputScriptListDouble" + sfi.mScriptField.mFieldName, sfi.mData, INPUT_SIZE)) { s.SetFieldValueArr<double>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain); };
-          }
-          else if (f.is_type<Mono::DataMemberInstance<std::vector<std::string>>>())
-          {
-            Mono::DataMemberInstance<std::vector<std::string>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<std::string>>>();
-            NextRowTable(sfi.mScriptField.mFieldName.c_str());
-            if (InputScriptList("##InputScriptListString" + sfi.mScriptField.mFieldName, sfi.mData, INPUT_SIZE)) { s.SetFieldValueStrArr(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain); };
-          }
-          else if (f.is_type<Mono::DataMemberInstance<std::vector<MonoObject*>>>())
-          {
-            Mono::DataMemberInstance<std::vector<MonoObject*>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<MonoObject*>>>();
-            NextRowTable(sfi.mScriptField.mFieldName.c_str());
-            if (InputScriptList("##InputScriptListMonoObject*" + sfi.mScriptField.mFieldName, sfi.mData, INPUT_SIZE)) { s.SetFieldValueArr<MonoObject*>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain); };
-          }
-          else if (f.is_type<Mono::DataMemberInstance<Mono::ScriptInstance>>())
-          {
-            Mono::DataMemberInstance<Mono::ScriptInstance>& sfi = f.get_value<Mono::DataMemberInstance<Mono::ScriptInstance>>();
-            if (sfi.mScriptField.mFieldType == Mono::ScriptFieldType::ENTITY)  // Special case if the script is just the base entity Class
-            {
-              NextRowTable(sfi.mScriptField.mFieldName.c_str());
-
-              //Set the default display value.
-              ECS::Entity::EntityID currID = entt::null;
-              std::string msg{ "No Entity Attached" };
-              if (sfi.mData.mClassInst && ECS::EntityManager::GetInstance().IsValidEntity(static_cast<ECS::Entity::EntityID>(sfi.mData.mEntityID)))
-              {
-                msg = ECS::Entity(sfi.mData.mEntityID).GetTag();
-                currID = sfi.mData.mEntityID;
-              }
-
-              if (ImGui::BeginCombo(("##EntitySelectionComboList" + sfi.mScriptField.mFieldName).c_str(), msg.c_str()))
-              {
-                static char searchBuffer[128] = "";
-                ImGui::InputTextWithHint("##SearchBoxEntitySelection", "Search...", searchBuffer, sizeof(searchBuffer));
-
-                for (const ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntities())
-                {
-                  // Check if the current entity matches the search query
-                  std::string entityTag = e.GetTag();
-                  if (entityTag.find(searchBuffer) != std::string::npos) // Match substring
-                  {
-                    if (e.GetRawEnttEntityID() != currID)
-                    {
-                      bool is_selected = (e.GetRawEnttEntityID() == currID);
-                      if (ImGui::Selectable(entityTag.c_str(), is_selected))
-                      {
-                        if (e.GetRawEnttEntityID() != currID)
-                        {
-                          if (!sfi.mData.mClassInst)
-                          {
-                            sfi.mData = Mono::ScriptInstance(sfi.mData.mScriptName);
-                            sfi.mData.SetEntityID(e.GetRawEnttEntityID());
-                            std::cout << (uint32_t)e.GetRawEnttEntityID() << std::endl;
-                            s.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
-                            sfi.mData.GetAllUpdatedFields();
-                          }
-                          else
-                          {
-                            sfi.mData.mEntityID = e.GetRawEnttEntityID();
-                            sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData = static_cast<unsigned>(e.GetRawEnttEntityID());
-                            sfi.mData.SetAllFields();
-                          }
-                        }
-                        modified = true;
-                        break;
-                      }
-                      if (is_selected)
-                      {
-                        ImGui::SetItemDefaultFocus();
-                      }
-                    }
-                  }
-                }
-                ImGui::EndCombo();
-              }
-            }
-            
-            else  //If the script inherits from the entity Class
-            {
-              NextRowTable(sfi.mScriptField.mFieldName.c_str());
-
-              //Set the default display value.
-              ECS::Entity::EntityID currID = entt::null;
-              std::string msg{ "No Entity Attached" };
-              if (sfi.mData.mClassInst && ECS::EntityManager::GetInstance().IsValidEntity(static_cast<ECS::Entity::EntityID>(sfi.mData.mEntityID)))
-              {
-                msg = ECS::Entity(sfi.mData.mEntityID).GetTag();
-                currID = sfi.mData.mEntityID;
-              }
-              std::vector<std::pair<ECS::Entity,Mono::ScriptInstance*>> allEntitesWithScript{};
-              for (ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Script>())
-              {
-                for (Mono::ScriptInstance& si : e.GetComponent<Component::Script>().mScriptList)
-                {
-                  if (si.mClassInst && si.mScriptName == Mono::ScriptManager::GetInstance().mRevClassMap[sfi.mScriptField.mFieldType])
-                    allEntitesWithScript.push_back(std::make_pair(e, &si));
-                }
-              }
-              if (ImGui::BeginCombo(("##ScriptDataMemList" + sfi.mScriptField.mFieldName).c_str(), msg.c_str()))
-              {
-                static char searchBuffer[128] = "";
-                ImGui::InputTextWithHint("##SearchBox", "Search...", searchBuffer, sizeof(searchBuffer));
-                for (const std::pair<ECS::Entity, Mono::ScriptInstance*> e : allEntitesWithScript)
-                {
-                  std::string entityTag = e.first.GetTag();
-                  if (entityTag.find(searchBuffer) != std::string::npos)
-                  {
-                    if (e.first.GetRawEnttEntityID() != currID)
-                    {
-                      bool is_selected = (e.first.GetRawEnttEntityID() == currID);
-                      if (ImGui::Selectable(entityTag.c_str(), is_selected))
-                      {
-                        if (e.first.GetRawEnttEntityID() != currID)
-                        {
-                          sfi.mData = *(e.second);
-                          s.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
-                        }
-                        modified = true;
-                        break;
-                      }
-                      if (is_selected)
-                      {
-                        ImGui::SetItemDefaultFocus();
-                      }
-                    }
-                  }
-                }
-                ImGui::EndCombo();
-              }
-            }
+          else {
+            IGE_DBGLOGGER.LogError("[Inspector] Entity contains unsupported public variable: " + f.get_type().get_name().to_string());
           }
 
-          isPrevVec3 = f.is_type<Mono::DataMemberInstance<glm::dvec3>>()
-            || f.is_type<Mono::DataMemberInstance<glm::vec3>>();
+          isPrevVec3 = dmiType == rttr::type::get<Mono::DataMemberInstance<glm::dvec3>>()
+            || dmiType == rttr::type::get<Mono::DataMemberInstance<glm::vec3>>();
         }
 
-        // remember to end table if the last element was a vec3
-        //if (isPrevVec3) { EndVec3Table(); }
-
         // Check if the mouse is over the second table and the right mouse button is clicked
-       ImGui::EndTable();
+        ImGui::EndTable();
         ImGui::Separator();
 
       }
@@ -2342,14 +2180,6 @@ namespace GUI {
     return true;
   }
   void Inspector::EndVec3Table() { ImGui::EndTable(); }
-
-  void Inspector::NextRowTable(const char* labelName) const {
-    ImGui::TableNextRow();
-    ImGui::TableSetColumnIndex(0);
-    ImGui::Text(labelName);
-    ImGui::TableSetColumnIndex(1);
-    ImGui::SetNextItemWidth(INPUT_SIZE);
-  }
  
   float Inspector::CalcInputWidth(float padding) const {
     static float const charSize = ImGui::CalcTextSize("012345678901234").x;
@@ -2358,6 +2188,14 @@ namespace GUI {
 } // namespace GUI
 
 namespace {
+  void NextRowTable(const char* labelName) {
+    ImGui::TableNextRow();
+    ImGui::TableSetColumnIndex(0);
+    ImGui::Text(labelName);
+    ImGui::TableSetColumnIndex(1);
+    ImGui::SetNextItemWidth(GUI::Inspector::INPUT_SIZE);
+  }
+
   bool InputDouble3(std::string const& propertyName, glm::dvec3& property, float fieldWidth, bool disabled)
   {
     bool valChanged{ false };
@@ -2375,6 +2213,281 @@ namespace {
 
     return valChanged;
   } 
+}
+
+namespace ScriptInputs {
+  void InitScriptInputMap() {
+    sScriptInputFuncs = {
+      { rttr::type::get<Mono::DataMemberInstance<int>>(), ScriptInputField<int> },
+      { rttr::type::get<Mono::DataMemberInstance<float>>(), ScriptInputField<float> },
+      { rttr::type::get<Mono::DataMemberInstance<double>>(), ScriptInputField<double> },
+      { rttr::type::get<Mono::DataMemberInstance<std::string>>(), ScriptInputField<std::string> },
+      { rttr::type::get<Mono::DataMemberInstance<glm::vec3>>(), ScriptInputField<glm::vec3> },
+      { rttr::type::get<Mono::DataMemberInstance<glm::dvec3>>(), ScriptInputField<glm::dvec3> },
+      { rttr::type::get<Mono::DataMemberInstance<std::vector<int>>>(), ScriptInputField<std::vector<int>> },
+      { rttr::type::get<Mono::DataMemberInstance<std::vector<float>>>(), ScriptInputField<std::vector<float>> },
+      { rttr::type::get<Mono::DataMemberInstance<std::vector<double>>>(), ScriptInputField<std::vector<double>> },
+      { rttr::type::get<Mono::DataMemberInstance<std::vector<std::string>>>(), ScriptInputField<std::vector<std::string>> },
+      { rttr::type::get<Mono::DataMemberInstance<std::vector<MonoObject*>>>(), ScriptInputField<std::vector<MonoObject*>> },
+      { rttr::type::get<Mono::DataMemberInstance<Mono::ScriptInstance>>(), ScriptInputField<Mono::ScriptInstance> }
+    };
+  }
+
+  template <typename T>
+  bool ScriptInputField(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) { return false; }
+
+  template <>
+  bool ScriptInputField<int>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<int>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<int>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (ImGui::DragInt(("##DataMemberInt" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 1)) {
+      scriptInst.SetFieldValue<int>(sfi.mData, sfi.mScriptField.mClassField);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<float>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<float>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<float>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (ImGui::DragFloat(("##DataMemberFloat" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0.1f)) {
+      scriptInst.SetFieldValue<float>(sfi.mData, sfi.mScriptField.mClassField);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<double>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<double>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<double>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (ImGui::DragScalar(("##DataMemberDouble" + sfi.mScriptField.mFieldName).c_str(), ImGuiDataType_Double, &sfi.mData, 0.1f, "%.3f")) {
+      scriptInst.SetFieldValue<double>(sfi.mData, sfi.mScriptField.mClassField);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<std::string>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<std::string>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<std::string>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (ImGui::InputTextMultiline(("##DataMemberString" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData))) {
+      mono_field_set_value(scriptInst.mClassInst, sfi.mScriptField.mClassField, Mono::STDToMonoString(sfi.mData));
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<glm::vec3>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<glm::vec3>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<glm::vec3>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (ImGuiHelpers::TableInputFloat3(sfi.mScriptField.mFieldName, &sfi.mData[0], inputWidth, false, -FLT_MAX, FLT_MAX, 0.1f)) {
+      scriptInst.SetFieldValue<glm::vec3>(sfi.mData, sfi.mScriptField.mClassField);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<glm::dvec3>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<glm::dvec3>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<glm::dvec3>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (ImGuiHelpers::TableInputDouble3(sfi.mScriptField.mFieldName, sfi.mData, inputWidth, false, -DBL_MAX, DBL_MAX, 0.1f)) {
+      scriptInst.SetFieldValue<glm::dvec3>(sfi.mData, sfi.mScriptField.mClassField);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<std::vector<int>>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<std::vector<int>>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<std::vector<int>>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (InputScriptList("##InputScriptListInt" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth)) {
+      scriptInst.SetFieldValueArr<int>(sfi.mData, sfi.mScriptField.mClassField, IGE_SCRIPTMGR.mAppDomain);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<std::vector<float>>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<std::vector<float>>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<std::vector<float>>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (InputScriptList("##InputScriptListFloat" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth)) {
+      scriptInst.SetFieldValueArr<float>(sfi.mData, sfi.mScriptField.mClassField, IGE_SCRIPTMGR.mAppDomain);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<std::vector<double>>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<std::vector<double>>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<std::vector<double>>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (InputScriptList("##InputScriptListDouble" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth)) {
+      scriptInst.SetFieldValueArr<double>(sfi.mData, sfi.mScriptField.mClassField, IGE_SCRIPTMGR.mAppDomain);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<std::vector<std::string>>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<std::vector<std::string>>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<std::vector<std::string>>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (InputScriptList("##InputScriptListString" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth)) {
+      scriptInst.SetFieldValueStrArr(sfi.mData, sfi.mScriptField.mClassField, IGE_SCRIPTMGR.mAppDomain);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<std::vector<MonoObject*>>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<std::vector<MonoObject*>>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<std::vector<MonoObject*>>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (InputScriptList("##InputScriptListMonoObject" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth)) {
+      scriptInst.SetFieldValueArr<MonoObject*>(sfi.mData, sfi.mScriptField.mClassField, IGE_SCRIPTMGR.mAppDomain);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<Mono::ScriptInstance>(Mono::ScriptInstance& s, rttr::variant& dataMemberInst, float inputWidth) {
+    bool modified{ false };
+    Mono::DataMemberInstance<Mono::ScriptInstance>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<Mono::ScriptInstance>>();
+
+    if (sfi.mScriptField.mFieldType == Mono::ScriptFieldType::ENTITY)  // Special case if the script is just the base entity Class
+    {
+      NextRowTable(sfi.mScriptField.mFieldName.c_str());
+
+      //Set the default display value.
+      ECS::Entity::EntityID currID = entt::null;
+      std::string msg{ "No Entity Attached" };
+      if (sfi.mData.mClassInst && ECS::EntityManager::GetInstance().IsValidEntity(static_cast<ECS::Entity::EntityID>(sfi.mData.mEntityID)))
+      {
+        msg = ECS::Entity(sfi.mData.mEntityID).GetTag();
+        currID = sfi.mData.mEntityID;
+      }
+
+      if (ImGui::BeginCombo(("##EntitySelectionComboList" + sfi.mScriptField.mFieldName).c_str(), msg.c_str()))
+      {
+        static char searchBuffer[128] = "";
+        ImGui::InputTextWithHint("##SearchBoxEntitySelection", "Search...", searchBuffer, sizeof(searchBuffer));
+
+        for (const ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntities())
+        {
+          // Check if the current entity matches the search query
+          std::string entityTag = e.GetTag();
+          if (entityTag.find(searchBuffer) != std::string::npos) // Match substring
+          {
+            if (e.GetRawEnttEntityID() != currID)
+            {
+              bool is_selected = (e.GetRawEnttEntityID() == currID);
+              if (ImGui::Selectable(entityTag.c_str(), is_selected))
+              {
+                if (e.GetRawEnttEntityID() != currID)
+                {
+                  if (!sfi.mData.mClassInst)
+                  {
+                    sfi.mData = Mono::ScriptInstance(sfi.mData.mScriptName);
+                    sfi.mData.SetEntityID(e.GetRawEnttEntityID());
+                    std::cout << (uint32_t)e.GetRawEnttEntityID() << std::endl;
+                    s.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
+                    sfi.mData.GetAllUpdatedFields();
+                  }
+                  else
+                  {
+                    sfi.mData.mEntityID = e.GetRawEnttEntityID();
+                    sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData = static_cast<unsigned>(e.GetRawEnttEntityID());
+                    sfi.mData.SetAllFields();
+                  }
+                }
+                modified = true;
+                break;
+              }
+              if (is_selected)
+              {
+                ImGui::SetItemDefaultFocus();
+              }
+            }
+          }
+        }
+        ImGui::EndCombo();
+      }
+    }
+    else  //If the script inherits from the entity Class
+    {
+      NextRowTable(sfi.mScriptField.mFieldName.c_str());
+
+      //Set the default display value.
+      ECS::Entity::EntityID currID = entt::null;
+      std::string msg{ "No Entity Attached" };
+      if (sfi.mData.mClassInst && ECS::EntityManager::GetInstance().IsValidEntity(static_cast<ECS::Entity::EntityID>(sfi.mData.mEntityID)))
+      {
+        msg = ECS::Entity(sfi.mData.mEntityID).GetTag();
+        currID = sfi.mData.mEntityID;
+      }
+      std::vector<std::pair<ECS::Entity, Mono::ScriptInstance*>> allEntitesWithScript{};
+      for (ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Script>())
+      {
+        for (Mono::ScriptInstance& si : e.GetComponent<Component::Script>().mScriptList)
+        {
+          if (si.mClassInst && si.mScriptName == Mono::ScriptManager::GetInstance().mRevClassMap[sfi.mScriptField.mFieldType])
+            allEntitesWithScript.push_back(std::make_pair(e, &si));
+        }
+      }
+      if (ImGui::BeginCombo(("##ScriptDataMemList" + sfi.mScriptField.mFieldName).c_str(), msg.c_str()))
+      {
+        static char searchBuffer[128] = "";
+        ImGui::InputTextWithHint("##SearchBox", "Search...", searchBuffer, sizeof(searchBuffer));
+        for (const std::pair<ECS::Entity, Mono::ScriptInstance*> e : allEntitesWithScript)
+        {
+          std::string entityTag = e.first.GetTag();
+          if (entityTag.find(searchBuffer) != std::string::npos)
+          {
+            if (e.first.GetRawEnttEntityID() != currID)
+            {
+              bool is_selected = (e.first.GetRawEnttEntityID() == currID);
+              if (ImGui::Selectable(entityTag.c_str(), is_selected))
+              {
+                if (e.first.GetRawEnttEntityID() != currID)
+                {
+                  sfi.mData = *(e.second);
+                  s.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
+                }
+                modified = true;
+                break;
+              }
+              if (is_selected)
+              {
+                ImGui::SetItemDefaultFocus();
+              }
+            }
+          }
+        }
+        ImGui::EndCombo();
+      }
+    }
+
+    return modified;
+  }
 
   bool ScriptAddItemBtn(const char* label, ImVec2 const& size = {}) {
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.5f, 0.34f, 1.0f));
@@ -2519,7 +2632,7 @@ namespace {
         {
           ImGui::TableNextColumn();
           ImGui::SetNextItemWidth(fieldWidth);
-          if (ImGui::DragScalar(("##D" + (propertyName + std::to_string(i))).c_str(), ImGuiDataType_Double, &list[i], 1.f)) { changed = true; }
+          if (ImGui::DragScalar(("##D" + (propertyName + std::to_string(i))).c_str(), ImGuiDataType_Double, &list[i], 1.f, 0, 0, "%.3f")) { changed = true; }
 
           ImGui::TableNextColumn();
           if (ScriptDelItemBtn(("Delete##" + std::to_string(i)).c_str()))
@@ -2689,4 +2802,4 @@ namespace {
     }
     return changed;
   }
-}
+} // namespace ScriptInputs
