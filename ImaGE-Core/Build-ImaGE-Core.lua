@@ -239,5 +239,6 @@ project "ImaGE-Core"
 
        postbuildcommands {
          "{MKDIR} %[%{wks.location}/Binaries/" .. OutputDir .. "/Assets]",
-         "{COPYDIR} %[%{wks.location}/Assets] %[%{wks.location}/Binaries/" .. OutputDir .. "/Assets]"
+         "{COPYDIR} %[%{wks.location}/Assets] %[%{wks.location}/Binaries/" .. OutputDir .. "/Assets]",
+         "{COPYDIR} %[%{wks.location}/Assets] %[%{wks.location}/Installer/GAMEDIRECTORY/Assets]"
       }   

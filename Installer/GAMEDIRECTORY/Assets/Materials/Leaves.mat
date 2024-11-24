@@ -1,0 +1,34 @@
+{
+    "name": "Leaves",
+    "shader": "PBR",
+    "albedoColor": {
+        "x": 0.1538461446762085,
+        "y": 1.0,
+        "z": 0.0
+    },
+    "metalness": 0.5,
+    "roughness": 0.5,
+    "ao": 1.0,
+    "emission": 0.0,
+    "transparency": 0.8930000066757202,
+    "tiling": {
+        "x": 1.0,
+        "y": 1.0
+    },
+    "offset": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "albedoMap": {
+        "ID": 0
+    },
+    "normalMap": {
+        "ID": 0
+    },
+    "metalnessMap": {
+        "ID": 0
+    },
+    "roughnessMap": {
+        "ID": 0
+    }
+}

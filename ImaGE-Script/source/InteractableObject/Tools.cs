@@ -17,16 +17,20 @@ public class Tools : Entity, IInventoryItem
     }
   }
 
-  public Sprite _Image = null;
+  public Entity _Image;
 
-  public Sprite Image
+  public Entity Image
   {
     get
     {
       return _Image;
     }
-  }
 
+    set
+    {
+      _Image = value;
+    }
+  }
 
   public void OnPickup()
   {

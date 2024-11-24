@@ -90,11 +90,15 @@ void main(){
         vec3 V = normalize(u_CamPos - v_FragPos);    // View direction
         vec3 L = vec3(0);
         vec3 lightColor = vec3(0); 
+        float shadow = 0.0; // Shadow factor default (0.0 = no shadow)
 
         if(u_type[i] == typeDir)
         {
             L = normalize(-u_LightDirection[i]); // Light direction (directional light)
             lightColor = u_LightColor[i] * u_LightIntensity[i];
+            if (u_ShadowsActive) {
+                shadow = CheckShadow(v_LightSpaceFragPos);  // 1.0 if in shadow and 0.0 otherwise
+            }
         }
         if(u_type[i] == typeSpot)
         {
@@ -140,13 +144,12 @@ void main(){
                 
         float NdotL = max(dot(N, L), 0.0);
 
-        Lo += (kD * albedo / PI + specular) * lightColor * NdotL;
+        Lo += (kD * albedo / PI + specular) * lightColor * NdotL * (1.0 - shadow);
     }
 
     vec3 ambient = vec3(0.01) * albedo * u_AO;
 
-    float shadow = u_ShadowsActive ? CheckShadow(v_LightSpaceFragPos) : 0.0;    // 1.0 if in shadow and 0.0 otherwise
-    vec3 color = ambient + Lo * (1.0 - shadow);
+    vec3 color = ambient + Lo;
     color = color / (color + vec3(1.0));
     color = pow(color, vec3(1.0/2.2)); //gamma correction
     //change transparency here

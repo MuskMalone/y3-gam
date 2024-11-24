@@ -68,13 +68,13 @@ namespace GUI
           }
 
           if (mSceneManager.GetSceneState() & Scenes::SceneState::PLAYING) {
-            if (ImGui::Button(ICON_FA_STOP) || (Input::InputManager::GetInstance().IsKeyPressed(KEY_CODE::KEY_LEFT_CONTROL) && Input::InputManager::GetInstance().IsKeyPressed(KEY_CODE::KEY_O)))
+            if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyPressed(ImGuiKey_O))
             {
               isCursorLocked = !isCursorLocked;
               QUEUE_EVENT(Events::LockMouseEvent, isCursorLocked);
             }
 
-            if (ImGui::Button(ICON_FA_STOP) || (Input::InputManager::GetInstance().IsKeyPressed(KEY_CODE::KEY_LEFT_CONTROL) && Input::InputManager::GetInstance().IsKeyPressed(KEY_CODE::KEY_P))) {
+            if (ImGui::Button(ICON_FA_STOP) || (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyPressed(ImGuiKey_P))) {
               wasRunning = true;
               isCursorLocked = false;
               QUEUE_EVENT(Events::LockMouseEvent, isCursorLocked);
@@ -110,7 +110,7 @@ namespace GUI
               ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.f, 0.5f, 0.f, 0.7f));
             }
             if (mSceneManager.GetSceneState() != Scenes::SceneState::PLAYING && !wasRunning) {
-              if (ImGui::Button(ICON_FA_PLAY) || (Input::InputManager::GetInstance().IsKeyPressed(KEY_CODE::KEY_LEFT_CONTROL) && Input::InputManager::GetInstance().IsKeyPressed(KEY_CODE::KEY_P))) {
+              if (ImGui::Button(ICON_FA_PLAY) || (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyPressed(ImGuiKey_P))) {
                 isCursorLocked = true;
                 QUEUE_EVENT(Events::LockMouseEvent, isCursorLocked);
                 mSceneManager.PlayScene();

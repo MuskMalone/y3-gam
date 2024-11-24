@@ -329,6 +329,7 @@ namespace GUI
       if (ImGui::BeginDragDropTarget())
       {
         ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(sDragDropPayload);
+        // check for entity dragdrop
         if (drop)
         {
           ECS::Entity droppedEntity{ *reinterpret_cast<ECS::EntityManager::EntityID*>(drop->Data) };
@@ -340,6 +341,11 @@ namespace GUI
           // entity has new parent, traverse down hierarchy and update transforms
           TransformHelpers::UpdateTransformToNewParent(droppedEntity);
           SceneModified();
+        }
+        // else check for asset dragdrop
+        else if (ImGuiHelpers::AssetDragDropBehavior(entity)) {
+          // if successful, set target to selected
+          GUIVault::SetSelectedEntity(entity);
         }
         ImGui::EndDragDropTarget();
       }
@@ -413,6 +419,8 @@ namespace GUI
         ECS::Entity newEntity{ mEntityManager.CreateEntity() };
         newEntity.SetTag("Light");
         newEntity.EmplaceComponent<Component::Light>();
+        newEntity.GetComponent<Component::Transform>().ApplyWorldRotation(-90.f, glm::vec3(1.f, 0.f, 0.f));  // face down by default
+        GUIVault::SetSelectedEntity(newEntity);
         modified = true;
       }
 

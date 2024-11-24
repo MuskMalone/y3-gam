@@ -9,7 +9,7 @@ namespace Performance {
     using TimeType = float;
     using TimeFormat = std::chrono::microseconds;
 
-    FrameRateController(float targetFPS = 120.f, float fpsCalculationInterval = 1.f, bool vsyncEnabled = false);
+    FrameRateController(float targetFPS = 120.f, float fpsCalculationInterval = 0.05f, bool vsyncEnabled = false);
 
     void Start();
     void End();
@@ -42,7 +42,8 @@ namespace Performance {
     std::map<std::string, TimeFormat> mSystemTimerMap;
 
     bool mVsyncEnabled{};
-    TimeType mTotalTime;
+    TimeType mAccumulatedFPS{};
+    TimeType mTotalTime{};
     TimeType mCurrFrameTime{}, mNewFrameTime{}, mDeltaTime{};
     TimeType mFPSTimer{}, mCurrFPS{};
     TimeType mTargetFPS{};

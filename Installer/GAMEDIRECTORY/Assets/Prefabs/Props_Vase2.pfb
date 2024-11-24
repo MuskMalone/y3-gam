@@ -1,0 +1,244 @@
+{
+    "Name": "Props_Vase2",
+    "isActive": true,
+    "Components": [
+        {
+            "Tag": {
+                "tag": "Props_Vase2",
+                "isActive": true
+            }
+        },
+        {
+            "Transform": {
+                "position": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "scale": {
+                    "x": 3.5859999656677248,
+                    "y": 3.5859999656677248,
+                    "z": 3.5859999656677248
+                },
+                "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "eulerAngles": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "worldPos": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "worldScale": {
+                    "x": 3.5859999656677248,
+                    "y": 3.5859999656677248,
+                    "z": 3.5859999656677248
+                },
+                "worldRot": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            }
+        },
+        {
+            "Layer": {
+                "layerName": "Default"
+            }
+        },
+        {
+            "BoxCollider": {
+                "scale": {
+                    "x": 1.7429479360580445,
+                    "y": 3.6429998874664308,
+                    "z": 1.7429479360580445
+                },
+                "positionOffset": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "degreeRotationOffsetEuler": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "rotationOffset": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "sensor": false
+            }
+        }
+    ],
+    "SubData": [
+        {
+            "ID": 1,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Vase2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.00002193450927734375,
+                            "y": 0.000006854534149169922,
+                            "z": -0.000003337860107421875
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.00007865714724175632,
+                            "y": 0.00002458035851304885,
+                            "z": -0.000011969566003244836
+                        },
+                        "worldScale": {
+                            "x": 3.5859999656677248,
+                            "y": 3.5859999656677248,
+                            "z": 3.5859999656677248
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        },
+                        "matIdx": 0
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Vase2",
+                        "GUID": {
+                            "ID": 6775390441707815989
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2,
+            "isActive": true,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Vase3",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.00002193450927734375,
+                            "y": 0.000006854534149169922,
+                            "z": -0.000003337860107421875
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.00007865714724175632,
+                            "y": 0.00002458035851304885,
+                            "z": -0.000011969566003244836
+                        },
+                        "worldScale": {
+                            "x": 3.5859999656677248,
+                            "y": 3.5859999656677248,
+                            "z": 3.5859999656677248
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        },
+                        "matIdx": 0
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Vase3",
+                        "GUID": {
+                            "ID": 6775390441707815989
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        }
+    ]
+}

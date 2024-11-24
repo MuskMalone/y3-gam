@@ -27,17 +27,53 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Asset/IGEAssets.h"
 #include <Core/LayerManager/LayerManager.h>
 #include <Physics/PhysicsHelpers.h>
+#include <malloc.h>
 
 #define ICON_PADDING "   "
 
 namespace {
   static bool entityRotModified{ false };
 
-  bool InputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled = false);
-  bool InputScriptList(std::string propertyName, std::vector<int>& list, float fieldWidth, bool disabled = false);
-  bool InputScriptList(std::string propertyName, std::vector<float>& list, float fieldWidth, bool disabled = false);
-  bool InputScriptList(std::string propertyName, std::vector<double>& list, float fieldWidth, bool disabled = false);
-  bool InputScriptList(std::string propertyName, std::vector<std::string>& list, float fieldWidth, bool disabled = false);
+  /*!*********************************************************************
+   \brief
+     Helper function to set up the column for the next row
+   \param labelName
+     The name of the property
+   ************************************************************************/
+  void NextRowTable(const char* labelName);
+}
+
+namespace ScriptInputs {
+  using ScriptInputFunc = std::function<bool(Mono::ScriptInstance&, rttr::variant&, float)>;
+  std::unordered_map<rttr::type, ScriptInputFunc> sScriptInputFuncs;
+
+  void InitScriptInputMap();
+
+  bool InputDouble3(std::string const& propertyName, glm::dvec3& property, float fieldWidth, bool disabled);
+  bool InputScriptList(std::string const& propertyName, std::vector<int>& list, float fieldWidth);
+  bool InputScriptList(std::string const& propertyName, std::vector<float>& list, float fieldWidth);
+  bool InputScriptList(std::string const& propertyName, std::vector<double>& list, float fieldWidth);
+  bool InputScriptList(std::string const& propertyName, std::vector<std::string>& list, float fieldWidth);
+  bool InputScriptList(std::string const& propertyName, std::vector<MonoObject*>& list, float fieldWidth);
+
+  // macro for template specialization declaration
+#define SCRIPT_INPUT_FUNC_DECL(T) template <> bool ScriptInputField<T>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth)
+
+  template <typename T>
+  bool ScriptInputField(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth);
+
+  SCRIPT_INPUT_FUNC_DECL(int);
+  SCRIPT_INPUT_FUNC_DECL(float);
+  SCRIPT_INPUT_FUNC_DECL(double);
+  SCRIPT_INPUT_FUNC_DECL(std::string);
+  SCRIPT_INPUT_FUNC_DECL(glm::vec3);
+  SCRIPT_INPUT_FUNC_DECL(glm::dvec3);
+  SCRIPT_INPUT_FUNC_DECL(std::vector<int>);
+  SCRIPT_INPUT_FUNC_DECL(std::vector<float>);
+  SCRIPT_INPUT_FUNC_DECL(std::vector<double>);
+  SCRIPT_INPUT_FUNC_DECL(std::vector<std::string>);
+  SCRIPT_INPUT_FUNC_DECL(std::vector<MonoObject*>);
+  SCRIPT_INPUT_FUNC_DECL(Mono::ScriptInstance);
 }
 
 namespace GUI {
@@ -61,7 +97,8 @@ namespace GUI {
       { typeid(Component::Canvas), ICON_FA_PAINTBRUSH ICON_PADDING },
       { typeid(Component::Image), ICON_FA_IMAGE_PORTRAIT ICON_PADDING },
       { typeid(Component::Sprite2D), ICON_FA_IMAGE ICON_PADDING },
-      { typeid(Component::Camera), ICON_FA_CAMERA ICON_PADDING }
+      { typeid(Component::Camera), ICON_FA_CAMERA ICON_PADDING },
+      { typeid(Component::Skybox), ICON_FA_EARTH_ASIA ICON_PADDING }
     },
     mObjFactory{Reflection::ObjectFactory::GetInstance()},
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
@@ -81,10 +118,20 @@ namespace GUI {
     if (Reflection::gComponentTypes.size() != mComponentIcons.size()) {
       throw Debug::Exception<Inspector>(Debug::LVL_CRITICAL, Msg("sComponentIcons and gComponentTypes size mismatch! Did you forget to add an icon?"));
     }
+
+    ScriptInputs::InitScriptInputMap();
   }
 
   Inspector::~Inspector() {
     SaveLastEditedFile();
+  }
+
+  void Inspector::RunDragDropInspector(ECS::Entity entity) {
+    if (!entity) { return; }
+
+    if (ImGuiHelpers::BeginDrapDropTargetWindow(AssetPayload::sAssetDragDropPayload)) {
+      ImGuiHelpers::AssetDragDropBehavior(entity);
+    }
   }
 
   void Inspector::Run() {
@@ -114,6 +161,16 @@ namespace GUI {
       entityRotModified = false;
       static Component::PrefabOverrides* prefabOverride{ nullptr };
       static bool componentOverriden{ false };
+
+      // show the entity ID in dev mode
+      if (GUIVault::sDevTools) {
+        ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+        ImGui::Text(("Entity ID: " + std::to_string(currentEntity.GetEntityID())).c_str());
+        ImGui::PopStyleColor();
+        ImGui::PopFont();
+      }
+
       if (!mEditingPrefab && currentEntity.HasComponent<Component::PrefabOverrides>()) {
         prefabOverride = &currentEntity.GetComponent<Component::PrefabOverrides>();
         IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
@@ -121,7 +178,7 @@ namespace GUI {
         am.LoadRef<IGE::Assets::PrefabAsset>(prefabOverride->guid);
         std::string const& pfbName{ am.GetAsset<IGE::Assets::PrefabAsset>(prefabOverride->guid)->mPrefabData.mName };
         ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
-        ImGui::Text("Prefab instance of");
+        ImGui::Text("Prefab instance of ");
         ImGui::SameLine();
         ImGui::PushStyleColor(ImGuiCol_Text, sComponentHighlightCol);
         ImGui::Text(pfbName.c_str());
@@ -361,6 +418,18 @@ namespace GUI {
               }
           }
       }
+
+      if (currentEntity.HasComponent<Component::Skybox>()) {
+          rttr::type const sourceType{ rttr::type::get<Component::Skybox>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(sourceType);
+
+          if (SkyboxComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Skybox>());
+              }
+          }
+      }
       if (prefabOverride) {
         for (rttr::type const& type : prefabOverride->removedComponents) {
           DisplayRemovedComponent(type);
@@ -370,6 +439,9 @@ namespace GUI {
     ImGui::PopFont();
     style.ItemSpacing.x = oldItemSpacingX;
     style.CellPadding.x = oldCellPaddingX;
+
+    RunDragDropInspector(currentEntity);
+
     ImGui::End();
 
     // if edit is the first of this session, dispatch a SceneModifiedEvent
@@ -462,36 +534,56 @@ namespace GUI {
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
+      ImGui::AlignTextToFramePadding();
       NextRowTable("Material");
       ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 2.0f);
       const char* name;
       IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
-      if (material.GetGUID().IsValid()) {
-        name = am.GetAsset<IGE::Assets::MaterialAsset>(material.GetGUID())->mMaterial->GetName().c_str();
+      bool const hasMaterial{ material.GetGUID().IsValid() };
+
+      if (hasMaterial) {
+        try {
+          name = am.GetAsset<IGE::Assets::MaterialAsset>(material.GetGUID())->mMaterial->GetName().c_str();
+        }
+        catch (Debug::ExceptionBase&) {
+          IGE_DBGLOGGER.LogError("Unable to get material of GUID " + std::to_string(static_cast<uint64_t>(material.GetGUID())));
+          material.SetGUID({});
+          name = "Error reading material";
+        }
       }
       else {
-        name = "Drag Material Here";
+        name = "Default";
       }
-      if (ImGui::Button(name, ImVec2(inputWidth, 30.f))) {
-        material.Clear();
+      if (ImGui::Button(name, ImVec2(INPUT_SIZE, 30.f)) && hasMaterial) {
+        try {
+          GUIVault::SetSelectedFile(am.GUIDToPath(material.GetGUID()));
+        }
+        catch (Debug::ExceptionBase&) {
+          IGE_DBGLOGGER.LogError("Unable to get path of material: " + std::to_string(static_cast<uint64_t>(material.GetGUID())));
+        }
       }
       ImGui::PopStyleVar();
-      if (ImGui::IsItemHovered()) { ImGui::SetTooltip("Remove Material"); }
+      if (ImGui::IsItemHovered() && hasMaterial) { ImGui::SetTooltip("Edit Material"); }
 
-      if (ImGui::BeginDragDropTarget()) {
-        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
-        if (drop) {
-          AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
-          if (assetPayload.mAssetType == AssetPayload::MATERIAL) {
-            try {
-              material.SetGUID(am.LoadRef<IGE::Assets::MaterialAsset>(assetPayload.GetFilePath()));
-            }
-            catch (Debug::ExceptionBase& e) {
-              e.LogSource();
-            }
-          }
+      if (hasMaterial) {
+        ImGui::SameLine();
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 5.f);
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.2f, 0.2f, 1.f));
+        if (ImGui::Button("X", ImVec2(22.f, 30.f))) {
+          material.SetGUID({});
         }
-        ImGui::EndDragDropTarget();
+        if (ImGui::IsItemHovered()) { ImGui::SetTooltip("Remove"); }
+        ImGui::PopStyleColor();
+      }
+
+      // show the matIdx in dev mode
+      if (GUIVault::sDevTools) {
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+        NextRowTable("Material Index");
+        ImGui::BeginDisabled();
+        ImGui::DragInt("##MatIdx", reinterpret_cast<int*>(&material.matIdx));
+        ImGui::EndDisabled();
+        ImGui::PopStyleColor();
       }
 
       ImGui::EndTable();
@@ -550,8 +642,9 @@ namespace GUI {
         bool isPrevVec3{ false };
         for (rttr::variant& f : s.mScriptFieldInstList)
         {
-          bool const isCurrVec3{ f.is_type<Mono::DataMemberInstance<Mono::DataMemberInstance<glm::dvec3>>>()
-            || f.is_type<Mono::DataMemberInstance<Mono::DataMemberInstance<glm::vec3>>>() };
+          rttr::type const dmiType{ f.get_type() };
+          bool const isCurrVec3{ dmiType == rttr::type::get<Mono::DataMemberInstance<glm::dvec3>>()
+            || dmiType == rttr::type::get<Mono::DataMemberInstance<glm::vec3>>() };
           // if there is a current vec3 table and we don't need it, end it
           if (isPrevVec3 && !isCurrVec3) {
             EndVec3Table();
@@ -559,221 +652,28 @@ namespace GUI {
             ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
             ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, inputWidth);
           }
-          if (f.is_type<Mono::DataMemberInstance<int>>())
-          {
-            Mono::DataMemberInstance<int>& sfi = f.get_value<Mono::DataMemberInstance<int>>();
-            NextRowTable(sfi.mScriptField.mFieldName.c_str());
-            if (ImGui::DragInt(("##DataMemberInt" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 1)) {
-              s.SetFieldValue<int>(sfi.mData, sfi.mScriptField.mClassField);
-              modified = true;
-            }
-          }
-          else if (f.is_type<Mono::DataMemberInstance<float>>())
-          {
-            Mono::DataMemberInstance<float>& sfi = f.get_value<Mono::DataMemberInstance<float>>();
-            NextRowTable(sfi.mScriptField.mFieldName.c_str());
-            if (ImGui::DragFloat(("##DataMemberFloat" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0.1f)) {
-              s.SetFieldValue<float>(sfi.mData, sfi.mScriptField.mClassField);
-              modified = true;
-            }
-          }
-          else if (f.is_type<Mono::DataMemberInstance<std::string>>())
-          {
-            Mono::DataMemberInstance<std::string>& sfi = f.get_value<Mono::DataMemberInstance<std::string>>();
-            NextRowTable(sfi.mScriptField.mFieldName.c_str());
-            if (ImGui::InputTextMultiline(("##DataMemberString" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData))) {
-              mono_field_set_value(s.mClassInst, sfi.mScriptField.mClassField, Mono::STDToMonoString(sfi.mData));
-              modified = true;
-            }
-          }
-          else if (f.is_type<Mono::DataMemberInstance<double>>())
-          {
-            Mono::DataMemberInstance<double>& sfi = f.get_value<Mono::DataMemberInstance<double>>();
-            NextRowTable(sfi.mScriptField.mFieldName.c_str());
-            if (ImGui::DragScalar(("##DataMemberDouble" + sfi.mScriptField.mFieldName).c_str(), ImGuiDataType_Double, &sfi.mData, 0.1f, "%.3f")) {
-              s.SetFieldValue<double>(sfi.mData, sfi.mScriptField.mClassField);
-              modified = true;
-            }
-          }
-          else if (f.is_type<Mono::DataMemberInstance<glm::vec3>>())
-          {
+          else if (isCurrVec3 && !isPrevVec3) {
             // if prev element wasnt a vec3, end it and start a new table
-            if (!isPrevVec3) {
-              ImGui::EndTable();
-              BeginVec3Table("ScriptVec3Table", inputWidth / 3.f);
-            }
+            ImGui::EndTable();
+            BeginVec3Table("ScriptdVec3Table", inputWidth / 3.f);
+          }
 
-            Mono::DataMemberInstance<glm::vec3>& sfi = f.get_value<Mono::DataMemberInstance<glm::vec3>>();
-            if (ImGuiHelpers::TableInputFloat3(sfi.mScriptField.mFieldName, &sfi.mData[0], inputWidth, false, -FLT_MAX, FLT_MAX, 0.1f)) {
-              s.SetFieldValue<glm::dvec3>(sfi.mData, sfi.mScriptField.mClassField);
+          // invoke the relevant function in the map based on type
+          if (ScriptInputs::sScriptInputFuncs.contains(dmiType)) {
+            if (ScriptInputs::sScriptInputFuncs[dmiType](s, f, INPUT_SIZE)) {
               modified = true;
             }
           }
-          else if (f.is_type<Mono::DataMemberInstance<glm::dvec3>>())
-          {
-            // if prev element wasnt a vec3, end it and start a new table
-            if (!isPrevVec3) {
-              ImGui::EndTable();
-              BeginVec3Table("ScriptdVec3Table", inputWidth / 3.f);
-            }
-
-            Mono::DataMemberInstance<glm::dvec3>& sfi = f.get_value<Mono::DataMemberInstance<glm::dvec3>>();
-            if (ImGuiHelpers::TableInputDouble3(sfi.mScriptField.mFieldName, sfi.mData, inputWidth, false, -DBL_MAX, DBL_MAX, 0.1f)) {
-              s.SetFieldValue<glm::dvec3>(sfi.mData, sfi.mScriptField.mClassField);
-              modified = true;
-            }
-          }
-          else if (f.is_type<Mono::DataMemberInstance<std::vector<int>>>())
-          {
-            Mono::DataMemberInstance<std::vector<int>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<int>>>();
-            NextRowTable(sfi.mScriptField.mFieldName.c_str());
-            if (InputScriptList("##InputScriptListInt" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth / 3.f)) { s.SetFieldValueArr<int>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain); };
-          }
-          else if (f.is_type<Mono::DataMemberInstance<std::vector<float>>>())
-          {
-            Mono::DataMemberInstance<std::vector<float>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<float>>>();
-            NextRowTable(sfi.mScriptField.mFieldName.c_str());
-            if (InputScriptList("##InputScriptListFloat" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth / 3.f)) { s.SetFieldValueArr<float>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain); };
-          }
-          else if (f.is_type<Mono::DataMemberInstance<std::vector<double>>>())
-          {
-            Mono::DataMemberInstance<std::vector<double>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<double>>>();
-            NextRowTable(sfi.mScriptField.mFieldName.c_str());
-            if (InputScriptList("##InputScriptListDouble" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth / 3.f)) { s.SetFieldValueArr<double>(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain); };
-          }
-          else if (f.is_type<Mono::DataMemberInstance<std::vector<std::string>>>())
-          {
-            Mono::DataMemberInstance<std::vector<std::string>>& sfi = f.get_value<Mono::DataMemberInstance<std::vector<std::string>>>();
-            NextRowTable(sfi.mScriptField.mFieldName.c_str());
-            if (InputScriptList("##InputScriptListString" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth / 3.f)) { s.SetFieldValueStrArr(sfi.mData, sfi.mScriptField.mClassField, sm->mAppDomain); };
-          }
-          else if (f.is_type<Mono::DataMemberInstance<Mono::ScriptInstance>>())
-          {
-            Mono::DataMemberInstance<Mono::ScriptInstance>& sfi = f.get_value<Mono::DataMemberInstance<Mono::ScriptInstance>>();
-            if (sfi.mScriptField.mFieldType == Mono::ScriptFieldType::ENTITY)  // Special case if the script is just the base entity Class
-            {
-              NextRowTable(sfi.mScriptField.mFieldName.c_str());
-
-              //Set the default display value.
-              ECS::Entity::EntityID currID = entt::null;
-              std::string msg{ "No Entity Attached" };
-              if (sfi.mData.mClassInst && ECS::EntityManager::GetInstance().IsValidEntity(static_cast<ECS::Entity::EntityID>(sfi.mData.mEntityID)))
-              {
-                msg = ECS::Entity(sfi.mData.mEntityID).GetTag();
-                currID = sfi.mData.mEntityID;
-              }
-
-              if (ImGui::BeginCombo(("##EntitySelectionComboList" + sfi.mScriptField.mFieldName).c_str(), msg.c_str()))
-              {
-                static char searchBuffer[128] = "";
-                ImGui::InputTextWithHint("##SearchBoxEntitySelection", "Search...", searchBuffer, sizeof(searchBuffer));
-
-                for (const ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntities())
-                {
-                  // Check if the current entity matches the search query
-                  std::string entityTag = e.GetTag();
-                  if (entityTag.find(searchBuffer) != std::string::npos) // Match substring
-                  {
-                    if (e.GetRawEnttEntityID() != currID)
-                    {
-                      bool is_selected = (e.GetRawEnttEntityID() == currID);
-                      if (ImGui::Selectable(entityTag.c_str(), is_selected))
-                      {
-                        if (e.GetRawEnttEntityID() != currID)
-                        {
-                          if (!sfi.mData.mClassInst)
-                          {
-                            sfi.mData = Mono::ScriptInstance(sfi.mData.mScriptName);
-                            sfi.mData.SetEntityID(e.GetRawEnttEntityID());
-                            std::cout << (uint32_t)e.GetRawEnttEntityID() << std::endl;
-                            s.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
-                            sfi.mData.GetAllUpdatedFields();
-                          }
-                          else
-                          {
-                            sfi.mData.mEntityID = e.GetRawEnttEntityID();
-                            sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData = static_cast<unsigned>(e.GetRawEnttEntityID());
-                            sfi.mData.SetAllFields();
-                          }
-                        }
-                        modified = true;
-                        break;
-                      }
-                      if (is_selected)
-                      {
-                        ImGui::SetItemDefaultFocus();
-                      }
-                    }
-                  }
-                }
-                ImGui::EndCombo();
-              }
-            }
-            
-            else  //If the script inherits from the entity Class
-            {
-              NextRowTable(sfi.mScriptField.mFieldName.c_str());
-
-              //Set the default display value.
-              ECS::Entity::EntityID currID = entt::null;
-              std::string msg{ "No Entity Attached" };
-              if (sfi.mData.mClassInst && ECS::EntityManager::GetInstance().IsValidEntity(static_cast<ECS::Entity::EntityID>(sfi.mData.mEntityID)))
-              {
-                msg = ECS::Entity(sfi.mData.mEntityID).GetTag();
-                currID = sfi.mData.mEntityID;
-              }
-              std::vector<std::pair<ECS::Entity,Mono::ScriptInstance*>> allEntitesWithScript{};
-              for (ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Script>())
-              {
-                for (Mono::ScriptInstance& si : e.GetComponent<Component::Script>().mScriptList)
-                {
-                  if (si.mClassInst && si.mScriptName == Mono::ScriptManager::GetInstance().mRevClassMap[sfi.mScriptField.mFieldType])
-                    allEntitesWithScript.push_back(std::make_pair(e, &si));
-                }
-              }
-              if (ImGui::BeginCombo(("##ScriptDataMemList" + sfi.mScriptField.mFieldName).c_str(), msg.c_str()))
-              {
-                static char searchBuffer[128] = "";
-                ImGui::InputTextWithHint("##SearchBox", "Search...", searchBuffer, sizeof(searchBuffer));
-                for (const std::pair<ECS::Entity, Mono::ScriptInstance*> e : allEntitesWithScript)
-                {
-                  std::string entityTag = e.first.GetTag();
-                  if (entityTag.find(searchBuffer) != std::string::npos)
-                  {
-                    if (e.first.GetRawEnttEntityID() != currID)
-                    {
-                      bool is_selected = (e.first.GetRawEnttEntityID() == currID);
-                      if (ImGui::Selectable(entityTag.c_str(), is_selected))
-                      {
-                        if (e.first.GetRawEnttEntityID() != currID)
-                        {
-                          sfi.mData = *(e.second);
-                          s.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
-                        }
-                        modified = true;
-                        break;
-                      }
-                      if (is_selected)
-                      {
-                        ImGui::SetItemDefaultFocus();
-                      }
-                    }
-                  }
-                }
-                ImGui::EndCombo();
-              }
-            }
+          else {
+            IGE_DBGLOGGER.LogError("[Inspector] Entity contains unsupported public variable: " + f.get_type().get_name().to_string());
           }
 
-          isPrevVec3 = f.is_type<Mono::DataMemberInstance<glm::dvec3>>()
-            || f.is_type<Mono::DataMemberInstance<glm::vec3>>();
+          isPrevVec3 = dmiType == rttr::type::get<Mono::DataMemberInstance<glm::dvec3>>()
+            || dmiType == rttr::type::get<Mono::DataMemberInstance<glm::vec3>>();
         }
 
-        // remember to end table if the last element was a vec3
-        //if (isPrevVec3) { EndVec3Table(); }
-
         // Check if the mouse is over the second table and the right mouse button is clicked
-       ImGui::EndTable();
+        ImGui::EndTable();
         ImGui::Separator();
 
       }
@@ -1116,10 +1016,6 @@ namespace GUI {
               modified = true;
           }
 
-          // Texture Asset input - assuming textureAsset is a GUID or string
-          
-
-
           NextRowTable("Texture Asset");
           static std::string textureText;
           try {
@@ -1132,29 +1028,22 @@ namespace GUI {
              ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), e.what());
           }
 
-          
-          //(image.textureAsset) ? IGE_ASSETMGR.GUIDToPath(image.textureAsset) : "[None]: Drag in a Texture";
-
-          //catch (const Debug::ExceptionBase& e) {
-
-          //}
-
           ImGui::BeginDisabled();
           ImGui::InputText("##TextureAsset", &textureText);
           ImGui::EndDisabled();
 
-          if (ImGui::BeginDragDropTarget()) {
-              ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
-              if (drop) {
-                  AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
-                  if (assetPayload.mAssetType == AssetPayload::SPRITE) {
-                      image.textureAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
-                      textureText = assetPayload.GetFileName();  // Display the file name in the UI
-                      modified = true;
-                  }
-              }
-              ImGui::EndDragDropTarget();
-          }
+          //if (ImGui::BeginDragDropTarget()) {
+          //    ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+          //    if (drop) {
+          //        AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+          //        if (assetPayload.mAssetType == AssetPayload::SPRITE) {
+          //            image.textureAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
+          //            textureText = assetPayload.GetFileName();  // Display the file name in the UI
+          //            modified = true;
+          //        }
+          //    }
+          //    ImGui::EndDragDropTarget();
+          //}
 
           ImGui::EndTable();
       }
@@ -1234,6 +1123,8 @@ namespace GUI {
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
+      // dont think we need this anymore
+#ifdef MESH_DRAG_DROP
       NextRowTable("");
       ImVec2 boxSize = ImVec2(200.0f, 40.0f);
       ImVec2 cursorPos = ImGui::GetCursorScreenPos();
@@ -1264,23 +1155,26 @@ namespace GUI {
         }
         ImGui::EndDragDropTarget();
       }
+#endif
 
       NextRowTable("Mesh Type");
-
       if (ImGui::BeginCombo("##MeshSelection", mesh.meshName.c_str())) {
         for (unsigned i{}; i < meshNames.size(); ++i) {
           const char* selected{ meshNames[i] };
           if (ImGui::Selectable(selected)) {
-            if (i != 0) {
-
-              //mesh.mesh = std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromString(selected));
+            try {
+              if (i != 0) {
                 mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(selected);
-            }
+              }
 
-            if (selected != mesh.meshName) {
-              modified = true;
-              mesh.isCustomMesh = false;
-              mesh.meshName = selected;
+              if (selected != mesh.meshName) {
+                modified = true;
+                mesh.isCustomMesh = false;
+                mesh.meshName = selected;
+              }
+            }
+            catch (Debug::ExceptionBase&) {
+              IGE_DBGLOGGER.LogError(std::string("Unable to load Mesh: ") + selected);
             }
             break;
           }
@@ -1758,10 +1652,6 @@ namespace GUI {
         modified = true;
       }
 
-      // Texture Asset input - assuming textureAsset is a GUID or string
-
-
-
       NextRowTable("Texture Asset");
       static std::string textureText;
       try {
@@ -1774,35 +1664,165 @@ namespace GUI {
         ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), e.what());
       }
 
-
-      //(image.textureAsset) ? IGE_ASSETMGR.GUIDToPath(image.textureAsset) : "[None]: Drag in a Texture";
-
-      //catch (const Debug::ExceptionBase& e) {
-
-      //}
-
       ImGui::BeginDisabled();
       ImGui::InputText("##TextureAsset", &textureText);
       ImGui::EndDisabled();
 
-      if (ImGui::BeginDragDropTarget()) {
-        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
-        if (drop) {
-          AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
-          if (assetPayload.mAssetType == AssetPayload::SPRITE) {
-            sprite.textureAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
-            textureText = assetPayload.GetFileName();  // Display the file name in the UI
-            modified = true;
-          }
-        }
-        ImGui::EndDragDropTarget();
-      }
+      //if (ImGui::BeginDragDropTarget()) {
+      //  ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+      //  if (drop) {
+      //    AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+      //    if (assetPayload.mAssetType == AssetPayload::SPRITE) {
+      //      sprite.textureAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
+      //      textureText = assetPayload.GetFileName();  // Display the file name in the UI
+      //      modified = true;
+      //    }
+      //  }
+      //  ImGui::EndDragDropTarget();
+      //}
 
       ImGui::EndTable();
     }
 
     WindowEnd(isOpen);
     return modified;
+  }
+
+  bool Inspector::SkyboxComponentWindow(ECS::Entity entity, bool highlight) {
+      //bool const isOpen{ WindowBegin<Component::Skybox>("Skybox", highlight) };
+      //bool modified{ false };
+
+      //if (isOpen) {
+      //    Component::Skybox& skybox = entity.GetComponent<Component::Skybox>();
+
+      //    float const inputWidth{ CalcInputWidth(60.f) };
+
+      //    ImGui::BeginTable("SkyboxTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+      //    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+      //    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+      //    NextRowTable("Material");
+      //    ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 2.0f);
+      //    const char* name;
+      //    IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+      //    if (skybox.materialAsset.IsValid()) {
+      //        name = am.GetAsset<IGE::Assets::MaterialAsset>(skybox.materialAsset)->mMaterial->GetName().c_str();
+      //    }
+      //    else {
+      //        name = "Drag Material Here";
+      //    }
+      //    if (ImGui::Button(name, ImVec2(inputWidth, 30.f))) {
+      //        skybox.Clear();
+      //    }
+      //    ImGui::PopStyleVar();
+      //    if (ImGui::IsItemHovered()) { ImGui::SetTooltip("Remove Material"); }
+
+      //    if (ImGui::BeginDragDropTarget()) {
+      //        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+      //        if (drop) {
+      //            AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+      //            if (assetPayload.mAssetType == AssetPayload::MATERIAL) {
+      //                try {
+
+      //                    skybox.SetGUID(am.LoadRef<IGE::Assets::MaterialAsset>(assetPayload.GetFilePath()));
+      //                }
+      //                catch (Debug::ExceptionBase& e) {
+      //                    e.LogSource();
+      //                }
+      //            }
+      //        }
+      //        ImGui::EndDragDropTarget();
+      //    }
+
+      //    ImGui::EndTable();
+      //}
+
+      //WindowEnd(isOpen);
+      //return modified;
+      bool const isOpen{ WindowBegin<Component::Skybox>("Skybox", highlight) };
+      bool modified{ false };
+
+      if (isOpen) {
+          Component::Skybox& skybox = entity.GetComponent<Component::Skybox>();
+
+          float const inputWidth{ CalcInputWidth(60.f) };
+
+          // Start a table for organizing the properties
+          ImGui::BeginTable("SkyboxTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+          // Texture 1 input
+          NextRowTable("Texture 1");
+          static std::string texture1Text;
+          try {
+              texture1Text = (skybox.tex1) ? IGE_ASSETMGR.GUIDToPath(skybox.tex1) : "[None]: Drag in a Texture";
+          }
+          catch (Debug::ExceptionBase& e) {
+              texture1Text = "[Invalid GUID]: Unable to load texture";
+              e.LogSource();
+              ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), e.what());
+          }
+
+          ImGui::BeginDisabled();
+          ImGui::InputText("##Texture1", &texture1Text);
+          ImGui::EndDisabled();
+
+          if (ImGui::BeginDragDropTarget()) {
+              ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+              if (drop) {
+                  AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+                  if (assetPayload.mAssetType == AssetPayload::SPRITE) {
+                      skybox.tex1 = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
+                      texture1Text = assetPayload.GetFileName();
+                      modified = true;
+                  }
+              }
+              ImGui::EndDragDropTarget();
+          }
+
+          // Texture 2 input
+          NextRowTable("Texture 2");
+          static std::string texture2Text;
+          try {
+              texture2Text = (skybox.tex2) ? IGE_ASSETMGR.GUIDToPath(skybox.tex2) : "[None]: Drag in a Texture";
+          }
+          catch (Debug::ExceptionBase& e) {
+              texture2Text = "[Invalid GUID]: Unable to load texture";
+              e.LogSource();
+              ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), e.what());
+          }
+
+          ImGui::BeginDisabled();
+          ImGui::InputText("##Texture2", &texture2Text);
+          ImGui::EndDisabled();
+
+          if (ImGui::BeginDragDropTarget()) {
+              ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+              if (drop) {
+                  AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+                  if (assetPayload.mAssetType == AssetPayload::SPRITE) {
+                      skybox.tex2 = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
+                      texture2Text = assetPayload.GetFileName();
+                      modified = true;
+                  }
+              }
+              ImGui::EndDragDropTarget();
+          }
+
+          // Blend input
+          NextRowTable("Blend");
+          if (ImGui::SliderFloat("##Blend", &skybox.blend, 0.0f, 1.0f)) {
+              modified = true;
+          }
+
+          ImGui::EndTable();
+      }
+
+      WindowEnd(isOpen);
+      return modified;
   }
 
   bool Inspector::CapsuleColliderComponentWindow(ECS::Entity entity, bool highlight)
@@ -2128,6 +2148,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Image>("Image");
         DrawAddComponentButton<Component::Sprite2D>("Sprite2D");
         DrawAddComponentButton<Component::Camera>("Camera");
+        DrawAddComponentButton<Component::Skybox>("Skybox");
 
         ImGui::EndTable();
       }
@@ -2159,14 +2180,6 @@ namespace GUI {
     return true;
   }
   void Inspector::EndVec3Table() { ImGui::EndTable(); }
-
-  void Inspector::NextRowTable(const char* labelName) const {
-    ImGui::TableNextRow();
-    ImGui::TableSetColumnIndex(0);
-    ImGui::Text(labelName);
-    ImGui::TableSetColumnIndex(1);
-    ImGui::SetNextItemWidth(INPUT_SIZE);
-  }
  
   float Inspector::CalcInputWidth(float padding) const {
     static float const charSize = ImGui::CalcTextSize("012345678901234").x;
@@ -2175,7 +2188,15 @@ namespace GUI {
 } // namespace GUI
 
 namespace {
-  bool InputDouble3(std::string propertyName, glm::dvec3& property, float fieldWidth, bool disabled)
+  void NextRowTable(const char* labelName) {
+    ImGui::TableNextRow();
+    ImGui::TableSetColumnIndex(0);
+    ImGui::Text(labelName);
+    ImGui::TableSetColumnIndex(1);
+    ImGui::SetNextItemWidth(GUI::Inspector::INPUT_SIZE);
+  }
+
+  bool InputDouble3(std::string const& propertyName, glm::dvec3& property, float fieldWidth, bool disabled)
   {
     bool valChanged{ false };
 
@@ -2192,289 +2213,593 @@ namespace {
 
     return valChanged;
   } 
-
-
-  bool InputScriptList(std::string propertyName, std::vector<int>& list, float fieldWidth, bool disabled)
-  {
-    // 12 characters for property name
-    float charSize = 150.f;
-    bool changed{ false };
-    if (ImGui::TreeNodeEx((propertyName + "s").c_str(), ImGuiTreeNodeFlags_DefaultOpen))
-    {
-      std::vector<int> indices = { }; // Positions to remove
-      ImGui::Separator();
-      ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV);
-      ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, charSize);
-      ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, charSize);
-
-      ImGuiStyle& style = ImGui::GetStyle();
-      ImVec4 const boriginalColor = style.Colors[ImGuiCol_Button];
-      ImVec4 const boriginalHColor = style.Colors[ImGuiCol_ButtonHovered];
-      ImVec4 const boriginalAColor = style.Colors[ImGuiCol_ButtonActive];
-
-      style.Colors[ImGuiCol_Button] = ImVec4(0.5f, 0.196f, 0.196f, 1.0f);
-      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.796f, 0.296f, 0.296f, 1.0f);;
-      style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.596f, 0.096f, 0.096f, 1.0f);
-
-      for (int i{}; i < list.size(); ++i)
-      {
-        ImGui::TableNextColumn();
-        if (ImGui::DragInt(("##I" + (propertyName + std::to_string(i))).c_str(), &list[i], 1)) { changed = true; }
-        ImGui::TableNextColumn();
-        if (ImGui::Button(("Delete Item##"+ std::to_string(i)).c_str()))
-        {
-          indices.push_back(i);
-          changed = true;
-        }
-        ImGui::TableNextRow();
-      }
-
-
-
-      style.Colors[ImGuiCol_Button] = ImVec4(0.f, 0.5f, 0.34f, 1.0f);
-      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.796f, 0.296f, 0.296f, 1.0f);;
-      style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.596f, 0.096f, 0.096f, 1.0f);
-      ImGui::TableNextColumn();
-
-
-
-      if (ImGui::Button("Add Item")) {
-        
-        list.push_back(0);
-        changed = true;
-      }
-
-      style.Colors[ImGuiCol_Button] = boriginalColor;
-      style.Colors[ImGuiCol_ButtonHovered] = boriginalHColor;
-      style.Colors[ImGuiCol_ButtonActive] = boriginalAColor;
-
-      std::sort(indices.rbegin(), indices.rend());
-      for (int pos : indices) {
-        if (pos >= 0 && pos < list.size()) {
-          list.erase(list.begin() + pos);
-        }
-      }
-     
-      ImGui::TableNextRow();
-
-      ImGui::EndTable();
-      ImGui::Separator();
-      ImGui::TreePop();
-    }
-    return changed;
-  }
-
-
-  bool InputScriptList(std::string propertyName, std::vector<float>& list, float fieldWidth, bool disabled)
-  {
-    // 12 characters for property name
-    float charSize = 150.f;
-    bool changed{ false };
-    if (ImGui::TreeNodeEx((propertyName + "s").c_str(), ImGuiTreeNodeFlags_DefaultOpen))
-    {
-      std::vector<int> indices = { }; // Positions to remove
-      ImGui::Separator();
-      ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV);
-      ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, charSize);
-      ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, charSize);
-
-      ImGuiStyle& style = ImGui::GetStyle();
-      ImVec4 const boriginalColor = style.Colors[ImGuiCol_Button];
-      ImVec4 const boriginalHColor = style.Colors[ImGuiCol_ButtonHovered];
-      ImVec4 const boriginalAColor = style.Colors[ImGuiCol_ButtonActive];
-
-      style.Colors[ImGuiCol_Button] = ImVec4(0.5f, 0.196f, 0.196f, 1.0f);
-      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.796f, 0.296f, 0.296f, 1.0f);;
-      style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.596f, 0.096f, 0.096f, 1.0f);
-
-      for (int i{}; i < list.size(); ++i)
-      {
-        ImGui::TableNextColumn();
-        if (ImGui::DragFloat(("##F" + (propertyName + std::to_string(i))).c_str(), &list[i], 1)) { changed = true; }
-        ImGui::TableNextColumn();
-        if (ImGui::Button(("Delete Item##" + std::to_string(i)).c_str()))
-        {
-          indices.push_back(i);
-          changed = true;
-        }
-        ImGui::TableNextRow();
-      }
-
-
-
-      style.Colors[ImGuiCol_Button] = ImVec4(0.f, 0.5f, 0.34f, 1.0f);
-      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.796f, 0.296f, 0.296f, 1.0f);;
-      style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.596f, 0.096f, 0.096f, 1.0f);
-      ImGui::TableNextColumn();
-
-
-
-      if (ImGui::Button("Add Item")) {
-
-        list.push_back(0.f);
-        changed = true;
-      }
-
-      style.Colors[ImGuiCol_Button] = boriginalColor;
-      style.Colors[ImGuiCol_ButtonHovered] = boriginalHColor;
-      style.Colors[ImGuiCol_ButtonActive] = boriginalAColor;
-
-      std::sort(indices.rbegin(), indices.rend());
-      for (int pos : indices) {
-        if (pos >= 0 && pos < list.size()) {
-          list.erase(list.begin() + pos);
-        }
-      }
-
-      ImGui::TableNextRow();
-
-      ImGui::EndTable();
-      ImGui::Separator();
-      ImGui::TreePop();
-    }
-    return changed;
-  }
-
-  bool InputScriptList(std::string propertyName, std::vector<double>& list, float fieldWidth, bool disabled)
-  {
-    // 12 characters for property name
-    float charSize = 150.f;
-    bool changed{ false };
-    if (ImGui::TreeNodeEx((propertyName + "s").c_str(), ImGuiTreeNodeFlags_DefaultOpen))
-    {
-      std::vector<int> indices = { }; // Positions to remove
-      ImGui::Separator();
-      ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV);
-      ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, charSize);
-      ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, charSize);
-
-      ImGuiStyle& style = ImGui::GetStyle();
-      ImVec4 const boriginalColor = style.Colors[ImGuiCol_Button];
-      ImVec4 const boriginalHColor = style.Colors[ImGuiCol_ButtonHovered];
-      ImVec4 const boriginalAColor = style.Colors[ImGuiCol_ButtonActive];
-
-      style.Colors[ImGuiCol_Button] = ImVec4(0.5f, 0.196f, 0.196f, 1.0f);
-      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.796f, 0.296f, 0.296f, 1.0f);;
-      style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.596f, 0.096f, 0.096f, 1.0f);
-
-      for (int i{}; i < list.size(); ++i)
-      {
-        ImGui::TableNextColumn();
-        if (ImGui::InputDouble(("##D" + (propertyName + std::to_string(i))).c_str(), &list[i], 1)) { changed = true; }
-        ImGui::TableNextColumn();
-        if (ImGui::Button(("Delete Item##" + std::to_string(i)).c_str()))
-        {
-          indices.push_back(i);
-          changed = true;
-        }
-        ImGui::TableNextRow();
-      }
-
-
-
-      style.Colors[ImGuiCol_Button] = ImVec4(0.f, 0.5f, 0.34f, 1.0f);
-      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.796f, 0.296f, 0.296f, 1.0f);;
-      style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.596f, 0.096f, 0.096f, 1.0f);
-      ImGui::TableNextColumn();
-
-
-
-      if (ImGui::Button("Add Item")) {
-
-        list.push_back(0.0);
-        changed = true;
-      }
-
-      style.Colors[ImGuiCol_Button] = boriginalColor;
-      style.Colors[ImGuiCol_ButtonHovered] = boriginalHColor;
-      style.Colors[ImGuiCol_ButtonActive] = boriginalAColor;
-
-      std::sort(indices.rbegin(), indices.rend());
-      for (int pos : indices) {
-        if (pos >= 0 && pos < list.size()) {
-          list.erase(list.begin() + pos);
-        }
-      }
-
-      ImGui::TableNextRow();
-
-      ImGui::EndTable();
-      ImGui::Separator();
-      ImGui::TreePop();
-    }
-    return changed;
-  }
-
-  bool InputScriptList(std::string propertyName, std::vector<std::string>& list, float fieldWidth, bool disabled)
-  {
-    // 12 characters for property name
-    float charSize = 150.f;
-    bool changed{ false };
-    if (ImGui::TreeNodeEx((propertyName + "s").c_str(), ImGuiTreeNodeFlags_DefaultOpen))
-    {
-      std::vector<int> indices = { }; // Positions to remove
-      ImGui::Separator();
-      ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV);
-      ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, charSize);
-      ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, charSize);
-
-      ImGuiStyle& style = ImGui::GetStyle();
-      ImVec4 const boriginalColor = style.Colors[ImGuiCol_Button];
-      ImVec4 const boriginalHColor = style.Colors[ImGuiCol_ButtonHovered];
-      ImVec4 const boriginalAColor = style.Colors[ImGuiCol_ButtonActive];
-
-      style.Colors[ImGuiCol_Button] = ImVec4(0.5f, 0.196f, 0.196f, 1.0f);
-      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.796f, 0.296f, 0.296f, 1.0f);;
-      style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.596f, 0.096f, 0.096f, 1.0f);
-
-      for (int i{}; i < list.size(); ++i)
-      {
-        ImGui::TableNextColumn();
-        ImGui::SetNextItemWidth(fieldWidth);
-        if (ImGui::InputTextMultiline(("##S" + std::to_string(i)).c_str(), &list[i])) {
-          changed = true;
-        }
-        ImGui::TableNextColumn();
-        if (ImGui::Button(("Delete Item##" + std::to_string(i)).c_str()))
-        {
-          indices.push_back(i);
-          changed = true;
-        }
-        ImGui::TableNextRow();
-      }
-
-
-
-      style.Colors[ImGuiCol_Button] = ImVec4(0.f, 0.5f, 0.34f, 1.0f);
-      style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.796f, 0.296f, 0.296f, 1.0f);;
-      style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.596f, 0.096f, 0.096f, 1.0f);
-      ImGui::TableNextColumn();
-
-
-
-      if (ImGui::Button("Add Item")) {
-
-        list.push_back(std::string());
-        changed = true;
-      }
-
-      style.Colors[ImGuiCol_Button] = boriginalColor;
-      style.Colors[ImGuiCol_ButtonHovered] = boriginalHColor;
-      style.Colors[ImGuiCol_ButtonActive] = boriginalAColor;
-
-      std::sort(indices.rbegin(), indices.rend());
-      for (int pos : indices) {
-        if (pos >= 0 && pos < list.size()) {
-          list.erase(list.begin() + pos);
-        }
-      }
-
-      ImGui::TableNextRow();
-
-      ImGui::EndTable();
-      ImGui::Separator();
-      ImGui::TreePop();
-    }
-    return changed;
-  }
 }
+
+namespace ScriptInputs {
+  void InitScriptInputMap() {
+    sScriptInputFuncs = {
+      { rttr::type::get<Mono::DataMemberInstance<int>>(), ScriptInputField<int> },
+      { rttr::type::get<Mono::DataMemberInstance<float>>(), ScriptInputField<float> },
+      { rttr::type::get<Mono::DataMemberInstance<double>>(), ScriptInputField<double> },
+      { rttr::type::get<Mono::DataMemberInstance<std::string>>(), ScriptInputField<std::string> },
+      { rttr::type::get<Mono::DataMemberInstance<glm::vec3>>(), ScriptInputField<glm::vec3> },
+      { rttr::type::get<Mono::DataMemberInstance<glm::dvec3>>(), ScriptInputField<glm::dvec3> },
+      { rttr::type::get<Mono::DataMemberInstance<std::vector<int>>>(), ScriptInputField<std::vector<int>> },
+      { rttr::type::get<Mono::DataMemberInstance<std::vector<float>>>(), ScriptInputField<std::vector<float>> },
+      { rttr::type::get<Mono::DataMemberInstance<std::vector<double>>>(), ScriptInputField<std::vector<double>> },
+      { rttr::type::get<Mono::DataMemberInstance<std::vector<std::string>>>(), ScriptInputField<std::vector<std::string>> },
+      { rttr::type::get<Mono::DataMemberInstance<std::vector<MonoObject*>>>(), ScriptInputField<std::vector<MonoObject*>> },
+      { rttr::type::get<Mono::DataMemberInstance<Mono::ScriptInstance>>(), ScriptInputField<Mono::ScriptInstance> }
+    };
+  }
+
+  template <typename T>
+  bool ScriptInputField(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) { return false; }
+
+  template <>
+  bool ScriptInputField<int>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<int>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<int>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (ImGui::DragInt(("##DataMemberInt" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 1)) {
+      scriptInst.SetFieldValue<int>(sfi.mData, sfi.mScriptField.mClassField);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<float>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<float>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<float>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (ImGui::DragFloat(("##DataMemberFloat" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData), 0.1f)) {
+      scriptInst.SetFieldValue<float>(sfi.mData, sfi.mScriptField.mClassField);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<double>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<double>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<double>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (ImGui::DragScalar(("##DataMemberDouble" + sfi.mScriptField.mFieldName).c_str(), ImGuiDataType_Double, &sfi.mData, 0.1f, "%.3f")) {
+      scriptInst.SetFieldValue<double>(sfi.mData, sfi.mScriptField.mClassField);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<std::string>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<std::string>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<std::string>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (ImGui::InputTextMultiline(("##DataMemberString" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData))) {
+      mono_field_set_value(scriptInst.mClassInst, sfi.mScriptField.mClassField, Mono::STDToMonoString(sfi.mData));
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<glm::vec3>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<glm::vec3>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<glm::vec3>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (ImGuiHelpers::TableInputFloat3(sfi.mScriptField.mFieldName, &sfi.mData[0], inputWidth, false, -FLT_MAX, FLT_MAX, 0.1f)) {
+      scriptInst.SetFieldValue<glm::vec3>(sfi.mData, sfi.mScriptField.mClassField);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<glm::dvec3>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<glm::dvec3>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<glm::dvec3>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (ImGuiHelpers::TableInputDouble3(sfi.mScriptField.mFieldName, sfi.mData, inputWidth, false, -DBL_MAX, DBL_MAX, 0.1f)) {
+      scriptInst.SetFieldValue<glm::dvec3>(sfi.mData, sfi.mScriptField.mClassField);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<std::vector<int>>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<std::vector<int>>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<std::vector<int>>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (InputScriptList("##InputScriptListInt" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth)) {
+      scriptInst.SetFieldValueArr<int>(sfi.mData, sfi.mScriptField.mClassField, IGE_SCRIPTMGR.mAppDomain);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<std::vector<float>>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<std::vector<float>>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<std::vector<float>>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (InputScriptList("##InputScriptListFloat" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth)) {
+      scriptInst.SetFieldValueArr<float>(sfi.mData, sfi.mScriptField.mClassField, IGE_SCRIPTMGR.mAppDomain);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<std::vector<double>>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<std::vector<double>>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<std::vector<double>>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (InputScriptList("##InputScriptListDouble" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth)) {
+      scriptInst.SetFieldValueArr<double>(sfi.mData, sfi.mScriptField.mClassField, IGE_SCRIPTMGR.mAppDomain);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<std::vector<std::string>>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<std::vector<std::string>>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<std::vector<std::string>>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (InputScriptList("##InputScriptListString" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth)) {
+      scriptInst.SetFieldValueStrArr(sfi.mData, sfi.mScriptField.mClassField, IGE_SCRIPTMGR.mAppDomain);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<std::vector<MonoObject*>>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<std::vector<MonoObject*>>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<std::vector<MonoObject*>>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (InputScriptList("##InputScriptListMonoObject" + sfi.mScriptField.mFieldName, sfi.mData, inputWidth)) {
+      scriptInst.SetFieldValueArr<MonoObject*>(sfi.mData, sfi.mScriptField.mClassField, IGE_SCRIPTMGR.mAppDomain);
+      return true;
+    }
+
+    return false;
+  }
+
+  template <>
+  bool ScriptInputField<Mono::ScriptInstance>(Mono::ScriptInstance& s, rttr::variant& dataMemberInst, float inputWidth) {
+    bool modified{ false };
+    Mono::DataMemberInstance<Mono::ScriptInstance>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<Mono::ScriptInstance>>();
+
+    if (sfi.mScriptField.mFieldType == Mono::ScriptFieldType::ENTITY)  // Special case if the script is just the base entity Class
+    {
+      NextRowTable(sfi.mScriptField.mFieldName.c_str());
+
+      //Set the default display value.
+      ECS::Entity::EntityID currID = entt::null;
+      std::string msg{ "No Entity Attached" };
+      if (sfi.mData.mClassInst && ECS::EntityManager::GetInstance().IsValidEntity(static_cast<ECS::Entity::EntityID>(sfi.mData.mEntityID)))
+      {
+        msg = ECS::Entity(sfi.mData.mEntityID).GetTag();
+        currID = sfi.mData.mEntityID;
+      }
+
+      if (ImGui::BeginCombo(("##EntitySelectionComboList" + sfi.mScriptField.mFieldName).c_str(), msg.c_str()))
+      {
+        static char searchBuffer[128] = "";
+        ImGui::InputTextWithHint("##SearchBoxEntitySelection", "Search...", searchBuffer, sizeof(searchBuffer));
+
+        for (const ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntities())
+        {
+          // Check if the current entity matches the search query
+          std::string entityTag = e.GetTag();
+          if (entityTag.find(searchBuffer) != std::string::npos) // Match substring
+          {
+            if (e.GetRawEnttEntityID() != currID)
+            {
+              bool is_selected = (e.GetRawEnttEntityID() == currID);
+              if (ImGui::Selectable(entityTag.c_str(), is_selected))
+              {
+                if (e.GetRawEnttEntityID() != currID)
+                {
+                  if (!sfi.mData.mClassInst)
+                  {
+                    sfi.mData = Mono::ScriptInstance(sfi.mData.mScriptName);
+                    sfi.mData.SetEntityID(e.GetRawEnttEntityID());
+                    std::cout << (uint32_t)e.GetRawEnttEntityID() << std::endl;
+                    s.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
+                    sfi.mData.GetAllUpdatedFields();
+                  }
+                  else
+                  {
+                    sfi.mData.mEntityID = e.GetRawEnttEntityID();
+                    sfi.mData.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData = static_cast<unsigned>(e.GetRawEnttEntityID());
+                    sfi.mData.SetAllFields();
+                  }
+                }
+                modified = true;
+                break;
+              }
+              if (is_selected)
+              {
+                ImGui::SetItemDefaultFocus();
+              }
+            }
+          }
+        }
+        ImGui::EndCombo();
+      }
+    }
+    else  //If the script inherits from the entity Class
+    {
+      NextRowTable(sfi.mScriptField.mFieldName.c_str());
+
+      //Set the default display value.
+      ECS::Entity::EntityID currID = entt::null;
+      std::string msg{ "No Entity Attached" };
+      if (sfi.mData.mClassInst && ECS::EntityManager::GetInstance().IsValidEntity(static_cast<ECS::Entity::EntityID>(sfi.mData.mEntityID)))
+      {
+        msg = ECS::Entity(sfi.mData.mEntityID).GetTag();
+        currID = sfi.mData.mEntityID;
+      }
+      std::vector<std::pair<ECS::Entity, Mono::ScriptInstance*>> allEntitesWithScript{};
+      for (ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Script>())
+      {
+        for (Mono::ScriptInstance& si : e.GetComponent<Component::Script>().mScriptList)
+        {
+          if (si.mClassInst && si.mScriptName == Mono::ScriptManager::GetInstance().mRevClassMap[sfi.mScriptField.mFieldType])
+            allEntitesWithScript.push_back(std::make_pair(e, &si));
+        }
+      }
+      if (ImGui::BeginCombo(("##ScriptDataMemList" + sfi.mScriptField.mFieldName).c_str(), msg.c_str()))
+      {
+        static char searchBuffer[128] = "";
+        ImGui::InputTextWithHint("##SearchBox", "Search...", searchBuffer, sizeof(searchBuffer));
+        for (const std::pair<ECS::Entity, Mono::ScriptInstance*> e : allEntitesWithScript)
+        {
+          std::string entityTag = e.first.GetTag();
+          if (entityTag.find(searchBuffer) != std::string::npos)
+          {
+            if (e.first.GetRawEnttEntityID() != currID)
+            {
+              bool is_selected = (e.first.GetRawEnttEntityID() == currID);
+              if (ImGui::Selectable(entityTag.c_str(), is_selected))
+              {
+                if (e.first.GetRawEnttEntityID() != currID)
+                {
+                  sfi.mData = *(e.second);
+                  s.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
+                }
+                modified = true;
+                break;
+              }
+              if (is_selected)
+              {
+                ImGui::SetItemDefaultFocus();
+              }
+            }
+          }
+        }
+        ImGui::EndCombo();
+      }
+    }
+
+    return modified;
+  }
+
+  bool ScriptAddItemBtn(const char* label, ImVec2 const& size = {}) {
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.5f, 0.34f, 1.0f));
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.796f, 0.296f, 0.296f, 1.0f));
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.596f, 0.096f, 0.096f, 1.0f));
+
+    bool const ret{ ImGui::Button(label, size) };
+
+    ImGui::PopStyleColor(3);
+    return ret;
+  }
+
+  bool ScriptDelItemBtn(const char* label, ImVec2 const& size = {}) {
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.5f, 0.196f, 0.196f, 1.0f));
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.796f, 0.296f, 0.296f, 1.0f));
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.596f, 0.096f, 0.096f, 1.0f));
+
+    bool const ret{ ImGui::Button(label, size) };
+
+    ImGui::PopStyleColor(3);
+    return ret;
+  }
+
+  bool InputScriptList(std::string const& propertyName, std::vector<int>& list, float fieldWidth)
+  {
+    bool changed{ false };
+    if (ImGui::TreeNodeEx((propertyName + "s").c_str(), ImGuiTreeNodeFlags_DefaultOpen |
+      ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_SpanAvailWidth))
+    {
+      int idxToRemove{ -1 }; // storing single int since you can only remove max. 1 per frame
+
+      ImGui::Separator();
+      if (ImGui::BeginTable("##", 2, ImGuiTableFlags_None)) {
+        ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, fieldWidth + 10.f);
+        ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed);
+
+        for (int i{}; i < list.size(); ++i)
+        {
+          ImGui::TableNextColumn();
+          ImGui::SetNextItemWidth(fieldWidth);
+          if (ImGui::DragInt(("##I" + (propertyName + std::to_string(i))).c_str(), &list[i], 1)) { changed = true; }
+
+          ImGui::TableNextColumn();
+          if (ScriptDelItemBtn(("Delete##" + std::to_string(i)).c_str()))
+          {
+            idxToRemove = i;
+            changed = true;
+          }
+          ImGui::TableNextRow();
+        }
+        ImGui::TableNextColumn();
+
+
+        if (ScriptAddItemBtn("Add Item")) {
+          list.emplace_back();
+          changed = true;
+        }
+
+        /*std::sort(indices.rbegin(), indices.rend());
+        for (int pos : indices) {
+          if (pos >= 0 && pos < list.size()) {
+            list.erase(list.begin() + pos);
+          }
+        }*/
+        if (idxToRemove >= 0) {
+          list.erase(list.begin() + idxToRemove);
+        }
+
+        ImGui::TableNextRow();
+
+        ImGui::EndTable();
+      }
+      ImGui::Separator();
+    }
+
+    return changed;
+  }
+
+
+  bool InputScriptList(std::string const& propertyName, std::vector<float>& list, float fieldWidth)
+  {
+    bool changed{ false };
+    if (ImGui::TreeNodeEx((propertyName + "s").c_str(), ImGuiTreeNodeFlags_DefaultOpen |
+      ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_SpanAvailWidth))
+    {
+      int idxToRemove{ -1 }; // storing single int since you can only remove max. 1 per frame
+
+      ImGui::Separator();
+      if (ImGui::BeginTable("##", 2, ImGuiTableFlags_None)) {
+        ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, fieldWidth + 10.f);
+        ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed);
+
+        for (int i{}; i < list.size(); ++i)
+        {
+          ImGui::TableNextColumn();
+          ImGui::SetNextItemWidth(fieldWidth);
+          if (ImGui::DragFloat(("##F" + (propertyName + std::to_string(i))).c_str(), &list[i], 1)) { changed = true; }
+
+          ImGui::TableNextColumn();
+          if (ScriptDelItemBtn(("Delete##" + std::to_string(i)).c_str()))
+          {
+            idxToRemove = i;
+            changed = true;
+          }
+          ImGui::TableNextRow();
+        }
+
+        ImGui::TableNextColumn();
+
+        if (ImGui::Button("Add Item")) {
+          list.emplace_back();
+          changed = true;
+        }
+
+        if (idxToRemove >= 0) {
+          list.erase(list.begin() + idxToRemove);
+        }
+
+        ImGui::TableNextRow();
+
+        ImGui::EndTable();
+      }
+      ImGui::Separator();
+    }
+    return changed;
+  }
+
+  bool InputScriptList(std::string const& propertyName, std::vector<double>& list, float fieldWidth)
+  {
+    bool changed{ false };
+    if (ImGui::TreeNodeEx((propertyName + "s").c_str(), ImGuiTreeNodeFlags_DefaultOpen |
+      ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_SpanAvailWidth))
+    {
+      int idxToRemove{ -1 }; // storing single int since you can only remove max. 1 per frame
+
+      ImGui::Separator();
+      if (ImGui::BeginTable("##", 2, ImGuiTableFlags_None)) {
+        ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, fieldWidth + 10.f);
+        ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed);
+
+        for (int i{}; i < list.size(); ++i)
+        {
+          ImGui::TableNextColumn();
+          ImGui::SetNextItemWidth(fieldWidth);
+          if (ImGui::DragScalar(("##D" + (propertyName + std::to_string(i))).c_str(), ImGuiDataType_Double, &list[i], 1.f, 0, 0, "%.3f")) { changed = true; }
+
+          ImGui::TableNextColumn();
+          if (ScriptDelItemBtn(("Delete##" + std::to_string(i)).c_str()))
+          {
+            idxToRemove = i;
+            changed = true;
+          }
+          ImGui::TableNextRow();
+        }
+
+        ImGui::TableNextColumn();
+        if (ImGui::Button("Add Item")) {
+          list.emplace_back();
+          changed = true;
+        }
+
+        if (idxToRemove >= 0) {
+          list.erase(list.begin() + idxToRemove);
+        }
+
+        ImGui::TableNextRow();
+
+        ImGui::EndTable();
+      }
+      ImGui::Separator();
+    }
+    return changed;
+  }
+
+  bool InputScriptList(std::string const& propertyName, std::vector<MonoObject*>& list, float fieldWidth)
+  {
+    bool changed{ false };
+    if (ImGui::TreeNodeEx((propertyName + "s").c_str(), ImGuiTreeNodeFlags_DefaultOpen |
+      ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_SpanAvailWidth))
+    {
+      int idxToRemove{ -1 }; // storing single int since you can only remove max. 1 per frame
+
+      ImGui::Separator();
+      if (ImGui::BeginTable("##", 2, ImGuiTableFlags_None)) {
+        ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, fieldWidth + 10.f);
+        ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed);
+
+        for (int i{}; i < list.size(); ++i)
+        {
+          Mono::ScriptInstance si = Mono::ScriptInstance(list[i]);
+          ECS::Entity::EntityID currID = entt::null;
+          std::string msg{ "No Entity Attached" };
+          if (ECS::EntityManager::GetInstance().IsValidEntity(ECS::Entity(static_cast<ECS::Entity::EntityID>(si.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData))))
+          {
+            currID = static_cast<ECS::Entity::EntityID>(si.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData);
+            msg = ECS::Entity(static_cast<ECS::Entity::EntityID>(si.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData)).GetTag();
+          }
+          ImGui::TableNextColumn();
+          ImGui::SetNextItemWidth(fieldWidth);
+          if (ImGui::BeginCombo(("##EntitySelectionComboList" + msg + "##" + std::to_string(i)).c_str(), msg.c_str()))
+          {
+            static char searchBuffer[128] = "";
+            ImGui::InputTextWithHint("##SearchBoxEntitySelection", "Search...", searchBuffer, sizeof(searchBuffer));
+            int count{ 0 };
+            for (const ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntities())
+            {
+              // Check if the current entity matches the search query
+              std::string entityTag = e.GetTag();
+              if (entityTag.find(searchBuffer) != std::string::npos) // Match substring
+              {
+                if (e.GetRawEnttEntityID() != currID)
+                {
+                  bool is_selected = (e.GetRawEnttEntityID() == currID);
+                  if (ImGui::Selectable((entityTag + "##" + std::to_string(count)).c_str(), is_selected))
+                  {
+                    if (e.GetRawEnttEntityID() != currID)
+                    {
+                      si.mScriptFieldInstList[0].get_value<Mono::DataMemberInstance<unsigned>>().mData = static_cast<unsigned>(e.GetRawEnttEntityID());
+                      si.SetAllFields();
+                    }
+                    changed = true;
+                    break;
+                  }
+                  if (is_selected)
+                  {
+                    ImGui::SetItemDefaultFocus();
+                  }
+                }
+              }
+              ++count;
+            }
+            ImGui::EndCombo();
+          }
+          ImGui::TableNextColumn();
+          if (ScriptDelItemBtn(("Delete##" + std::to_string(i)).c_str()))
+          {
+            idxToRemove = i;
+            changed = true;
+          }
+          ImGui::TableNextRow();
+        }
+
+        ImGui::TableNextColumn();
+
+        if (ScriptAddItemBtn("Add Item")) {
+
+          std::string scriptName = Mono::ScriptManager::GetInstance().mRevClassMap[Mono::ScriptFieldType::ENTITY];
+          MonoObject* newObj = Mono::ScriptManager::GetInstance().InstantiateClass(scriptName.c_str());
+          Mono::ScriptInstance si = Mono::ScriptInstance(newObj, true, false); //We are not using the SI, we just pass this into the ctor so that we can set the EntityID of this Obj to an invalidID
+          list.push_back(newObj);
+          changed = true;
+        }
+
+        if (idxToRemove >= 0) {
+          list.erase(list.begin() + idxToRemove);
+        }
+
+        ImGui::TableNextRow();
+
+        ImGui::EndTable();
+      }
+      ImGui::Separator();
+    }
+    return changed;
+  }
+
+
+  bool InputScriptList(std::string const& propertyName, std::vector<std::string>& list, float fieldWidth)
+  {
+    bool changed{ false };
+
+    if (ImGui::TreeNodeEx((propertyName + "s").c_str(), ImGuiTreeNodeFlags_DefaultOpen |
+      ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_SpanAvailWidth))
+    {
+      int idxToRemove{ -1 }; // storing single int since you can only remove max. 1 per frame
+
+      ImGui::Separator();
+      if (ImGui::BeginTable("##", 2, ImGuiTableFlags_None)) {
+        ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, fieldWidth + 10.f);
+        ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed);
+
+        for (int i{}; i < list.size(); ++i)
+        {
+          ImGui::TableNextColumn();
+          ImGui::SetNextItemWidth(fieldWidth);
+          if (ImGui::InputTextMultiline(("##S" + std::to_string(i)).c_str(), &list[i])) { changed = true; }
+
+          ImGui::TableNextColumn();
+          if (ScriptDelItemBtn(("Delete##" + std::to_string(i)).c_str()))
+          {
+            idxToRemove = i;
+            changed = true;
+          }
+          ImGui::TableNextRow();
+        }
+
+        ImGui::TableNextColumn();
+        if (ImGui::Button("Add Item")) {
+          list.emplace_back();
+          changed = true;
+        }
+
+        if (idxToRemove >= 0) {
+          list.erase(list.begin() + idxToRemove);
+        }
+
+        ImGui::TableNextRow();
+
+        ImGui::EndTable();
+      }
+      ImGui::Separator();
+    }
+    return changed;
+  }
+} // namespace ScriptInputs

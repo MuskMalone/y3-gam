@@ -24,13 +24,16 @@ namespace IGE {
                 }
 
                 // Save the image as a DDS file
+
+    // No files should be copied/created in the distribution build
+#ifndef DISTRIBUTION
                 hr = DirectX::SaveToDDSFile(image.GetImages(), image.GetImageCount(), metadata, DirectX::DDS_FLAGS_NONE, outputPath.c_str());
 
                 if (FAILED(hr)) {
                     std::cerr << "Failed to save as DDS: " << std::hex << hr << std::endl;
                     return false;
                 }
-                
+#endif           
                 std::cout << "Image successfully converted to DDS: ";
                 std::wcout <<  outputPath << std::endl;
                 return true;

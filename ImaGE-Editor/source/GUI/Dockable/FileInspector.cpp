@@ -19,6 +19,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace {
   static IGE::Assets::GUID sPrevFile{};
 
+  void NextRowTable(const char* labelName);
   std::string DragDropComponent(GUI::AssetPayload::AssetType type);
 }
 
@@ -60,6 +61,8 @@ namespace GUI {
     }
     catch (Debug::ExceptionBase&) {
       IGE_DBGLOGGER.LogError("Unable to load Material window for " + selectedFile.string());
+      GUIVault::SetSelectedFile({});
+      return;
     }
 
     auto& selectedMaterial{ am.GetAsset<IGE::Assets::MaterialAsset>(guid)->mMaterial };
@@ -198,6 +201,14 @@ namespace GUI {
 } // namespace GUI
 
 namespace {
+  void NextRowTable(const char* labelName) {
+    ImGui::TableNextRow();
+    ImGui::TableSetColumnIndex(0);
+    ImGui::Text(labelName);
+    ImGui::TableSetColumnIndex(1);
+    ImGui::SetNextItemWidth(GUI::Inspector::INPUT_SIZE);
+  }
+
   std::string DragDropComponent(GUI::AssetPayload::AssetType type) {
     if (ImGui::BeginDragDropTarget()) {
       ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(GUI::AssetPayload::sAssetDragDropPayload);

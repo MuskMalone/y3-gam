@@ -6,6 +6,7 @@ public class NoteInteraction : Entity
   public PlayerMove playerMove;
   public Entity noteUI;
   public PlayerInteraction playerInteraction;
+  public Entity viewNoteUI;
 
   public NoteInteraction() : base()
   {
@@ -21,6 +22,7 @@ public class NoteInteraction : Entity
     }
 
     noteUI?.SetActive(false);
+    viewNoteUI?.SetActive(false);
 
     if (playerMove == null)
     {
@@ -31,28 +33,39 @@ public class NoteInteraction : Entity
 
   void Update()
   {
-    if (Input.GetMouseButtonTriggered(0) && playerInteraction.RayHitString == "Mom's Note" && !noteUI.IsActive())
+    bool mouseClicked = Input.GetMouseButtonTriggered(0);
+    bool isNoteHit = playerInteraction.RayHitString == "Mom's Note";
+    bool noteIsActive = noteUI.IsActive();
+
+    if (mouseClicked)
     {
-      ShowNoteUI();
+      if (isNoteHit && !noteIsActive)
+      {
+        ShowNoteUI();
+      }
+      else if (noteIsActive)
+      {
+        HideNoteUI();
+      }
     }
 
-    else if (noteUI.IsActive() && Input.GetMouseButtonTriggered(0))
-    {
-      HideNoteUI();
-    }
+    viewNoteUI.SetActive(isNoteHit);
   }
 
   private void ShowNoteUI()
   {
+    InternalCalls.PlaySound(mEntityID, "ViewNote");
     if (noteUI != null && playerMove != null)
     {
       noteUI.SetActive(true);
       playerMove.FreezePlayer();
+      viewNoteUI.SetActive(false);
     }
   }
 
   private void HideNoteUI()
   {
+    InternalCalls.PlaySound(mEntityID, "ViewNote");
     if (noteUI != null && playerMove != null)
     {
       noteUI.SetActive(false);

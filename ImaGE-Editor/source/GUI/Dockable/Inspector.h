@@ -34,6 +34,9 @@ namespace GUI {
 
     void Run() override;
 
+    static inline constexpr int INPUT_SIZE{ 210 };
+    static inline constexpr float FIRST_COLUMN_LENGTH{ 175 };
+
     inline void SetIsComponentEdited(bool isComponentEdited) noexcept { mIsComponentEdited = isComponentEdited; }
 
   private:
@@ -66,6 +69,7 @@ namespace GUI {
     bool ScriptComponentWindow(ECS::Entity entity, bool highlight = false);
     bool SphereColliderComponentWindow(ECS::Entity entity, bool highlight = false);
     bool Sprite2DComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool SkyboxComponentWindow(ECS::Entity entity, bool highlight);
     bool TagComponentWindow(ECS::Entity entity, bool highlight = false);
     bool TextComponentWindow(ECS::Entity entity, bool highlight = false);
     bool TransformComponentWindow(ECS::Entity entity, bool highlight = false);
@@ -108,8 +112,6 @@ namespace GUI {
     bool mIsComponentEdited, mFirstEdit, mEditingPrefab;
     bool mEntityChanged;
 
-    static inline constexpr int INPUT_SIZE{ 210 };
-    static inline constexpr float FIRST_COLUMN_LENGTH{ 175 };
     static inline constexpr ImU32 sComponentHighlightCol{ IM_COL32(253, 208, 23, 255) };
     static inline constexpr float ITEM_SPACING{ 0 };
     static inline constexpr float CELL_PADDING{ 1 };
@@ -134,6 +136,8 @@ namespace GUI {
       The event to be handled
     ************************************************************************/
     EVENT_CALLBACK_DECL(HandleEvent);
+
+    void RunDragDropInspector(ECS::Entity entity);
 
     /*!*********************************************************************
     \brief
@@ -184,14 +188,6 @@ namespace GUI {
     ************************************************************************/
     bool BeginVec3Table(const char* fieldName, float inputWidth);
     void EndVec3Table();
-
-    /*!*********************************************************************
-    \brief
-      Helper function to set up the column for the next row
-    \param labelName
-      The name of the property
-    ************************************************************************/
-    void NextRowTable(const char* labelName) const;
 
     /*!*********************************************************************
     \brief

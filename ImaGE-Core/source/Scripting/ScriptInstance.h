@@ -86,12 +86,16 @@ namespace Mono {
 		************************************************************************/
 		ScriptInstance(const std::string& scriptName);
 
+		ScriptInstance(MonoObject* mo, bool setEntityID = false, bool forSerialization = false);
 
 		/*!*********************************************************************
 		\brief
 			Function to set the entity ID for any monobehaviour script
 		************************************************************************/
 		void SetEntityID(ECS::Entity::EntityID entityID);
+
+
+		void ReplaceEntity(MonoObject* mo);
 
 
 		/*!*********************************************************************
@@ -139,7 +143,17 @@ namespace Mono {
 		\param dt
 			Delta time
 		************************************************************************/
-		void InvokeOnUpdate(double dt);
+		void InvokeOnUpdate();
+
+		/*!*********************************************************************
+			\brief
+				Function to invoke the OnUpdate method of the c# script class
+			\param dt
+				Delta time
+			************************************************************************/
+		void InvokeStart();
+
+
 
 		/*!*********************************************************************
 			\brief

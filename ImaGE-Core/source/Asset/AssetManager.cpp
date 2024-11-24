@@ -38,7 +38,7 @@ namespace IGE {
 				for (std::pair<AssetMetadata::AssetPropsKey, AssetMetadata::AssetProps> const& entry : category.second) {
 					//if the attribute path doesnt exist :(
 					if (entry.second.find("path") == entry.second.end())
-						throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("asset doesnt have a path!"));
+						throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("asset " + std::to_string(entry.first) + " doesnt have a path!"));
 					mGUID2PathRegistry.emplace(GUID{ entry.first }, entry.second.at("path"));
 					mPath2GUIDRegistry.emplace(entry.second.at("path"), GUID(entry.first));
 				}
@@ -48,6 +48,12 @@ namespace IGE {
 		{
 			std::string const out{ cAssetProjectSettingsPath + cSettingsFileName };
 
+			// Add these conditionals so that the installer will work (unable to write to log
+			// file as app does not have permission to do so
+			// @TODO: Write backup files to a writable location such as {userdata}
+			
+			// No files should be copied/created in the distribution build
+#ifndef DISTRIBUTION
 			// make a copy of the file as backup before overwriting it
 			// create backup directory if it doesn't already exist
 			if (!std::filesystem::exists(gBackupDirectory))
@@ -59,16 +65,21 @@ namespace IGE {
 					Debug::DebugLogger::GetInstance().LogWarning("Unable to create temp directory at: " + std::string(gBackupDirectory) + ". Scene reloading features may be unavailable!");
 				}
 			}
-
+#endif
 			// now copy the file over
 			if (IsValidFilePath(out)) {
+				// No files should be copied/created in the distribution build
+#ifndef DISTRIBUTION
 				std::filesystem::copy(out, gBackupDirectory, std::filesystem::copy_options::overwrite_existing);
+#endif
 				return out;
 			}
 
+			/* This was causing issues
 			std::ofstream file(out);
 			file.close();
 			return out;
+			*/
 		}
 		AssetManager::AssetManager() {
 			SUBSCRIBE_CLASS_FUNC(Events::EventType::REGISTER_FILES, &AssetManager::HandleAddFiles, this);
@@ -88,6 +99,33 @@ namespace IGE {
 			////to delete
 			//auto fp{ CreateProjectFile() };
 			//Serialization::Serializer::SerializeAny(mMetadata, fp);
+
+			// erase all files that no longer exist from metadata
+			bool removed{ false };
+			for (auto& entry : mMetadata.mAssetProperties) {
+				for (auto iter{ entry.second.begin() }; iter != entry.second.end();) {
+					if (!iter->second.contains("path")) {
+#ifdef _DEBUG
+						std::cout << "[AssetManager] Removed invalid metadata for asset " << iter->first << "\n";
+#endif
+					}
+
+					if (!std::filesystem::exists(iter->second["path"])) {
+#ifdef _DEBUG
+						std::cout << "[AssetManager] Removed " << iter->second["path"] << " from asset metadata as it no longer exists\n";
+#endif
+						removed = true;
+						iter = entry.second.erase(iter);
+					}
+					else {
+						++iter;
+					}
+				}
+			}
+
+			if (removed) {
+				SaveMetadata();
+			}
 		}
 
 		AssetManager::~AssetManager()

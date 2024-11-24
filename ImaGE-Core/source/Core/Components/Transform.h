@@ -42,6 +42,12 @@ namespace Component
 
     /*!*********************************************************************
     \brief
+      Rotates the transform by a specified amount on a given axis
+    ************************************************************************/
+    void ApplyWorldRotation(float angle, glm::vec3 const& axis);
+
+    /*!*********************************************************************
+    \brief
       Gets the world euler angles
     \return
       The world euler angles in the form of a vec3

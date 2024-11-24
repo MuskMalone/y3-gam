@@ -70,7 +70,9 @@ namespace Serialization
     using WriterType = rapidjson::PrettyWriter<rapidjson::OStreamWrapper>;
     // had to decltype a lambda LOL
     using EntityList = std::priority_queue < ECS::Entity, std::vector<ECS::Entity>,
-      decltype([](ECS::Entity const& lhs, ECS::Entity const& rhs) {return lhs.GetRawEnttEntityID() > rhs.GetRawEnttEntityID(); }) > ;
+      decltype([](ECS::Entity const& lhs, ECS::Entity const& rhs) { return lhs.GetRawEnttEntityID() > rhs.GetRawEnttEntityID(); }) > ;
+
+    static const rttr::type sScriptCompType, sMonoObjectVecType;
 
     /*!*********************************************************************
     \brief
@@ -101,6 +103,10 @@ namespace Serialization
       The writer to write to
     ************************************************************************/
     static void SerializeClassTypes(rttr::instance const& obj, WriterType& writer);
+
+    static void SerializeScriptClassTypes(rttr::instance const& obj, WriterType& writer);
+    static bool SerializeScriptRecursive(rttr::variant const& var, WriterType& writer);
+    static void WriteScriptSequentialContainer(rttr::variant_sequential_view const& seqView, WriterType& writer);
 
     /*!*********************************************************************
     \brief

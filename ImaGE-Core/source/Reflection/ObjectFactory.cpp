@@ -59,7 +59,8 @@ namespace Reflection
       { GET_RTTR_TYPE(Canvas), ComponentUtils::AddCanvas },
       { GET_RTTR_TYPE(Image), ComponentUtils::AddImage },
       { GET_RTTR_TYPE(Sprite2D), ComponentUtils::AddSprite2D },
-      { GET_RTTR_TYPE(Camera), ComponentUtils::AddCamera }
+      { GET_RTTR_TYPE(Camera), ComponentUtils::AddCamera },
+      { GET_RTTR_TYPE(Skybox), ComponentUtils::AddSkybox }
     };
 
     if (mAddComponentFuncs.size() != gComponentTypes.size()) {
@@ -290,9 +291,8 @@ namespace Reflection
 
   void ObjectFactory::AddComponentToEntity(ECS::Entity entity, rttr::variant const& compVar) const
   {
-    rttr::type compType{ compVar.get_type() };
+    rttr::type const compType{ compVar.get_type() };
     // get underlying type if it's wrapped in a pointer
-    compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
 
     if (!mAddComponentFuncs.contains(compType)) {
       std::ostringstream oss{};
@@ -305,7 +305,7 @@ namespace Reflection
   }
 
   #define IF_GET_ENTITY_COMP(ComponentClass) if (compType == rttr::type::get<Component::ComponentClass>()) {\
-    return entity.HasComponent<Component::ComponentClass>() ? std::make_shared<Component::ComponentClass>(entity.GetComponent<Component::ComponentClass>()) : rttr::variant(); }
+    return entity.HasComponent<Component::ComponentClass>() ? entity.GetComponent<Component::ComponentClass>() : rttr::variant(); }
 
   rttr::variant ObjectFactory::GetEntityComponent(ECS::Entity const& entity, rttr::type const& compType) const
   {
@@ -327,6 +327,7 @@ namespace Reflection
     else IF_GET_ENTITY_COMP(Image)
     else IF_GET_ENTITY_COMP(Sprite2D)
     else IF_GET_ENTITY_COMP(Camera)
+    else IF_GET_ENTITY_COMP(Skybox)
     else
     {
       std::ostringstream oss{};
@@ -340,11 +341,10 @@ namespace Reflection
 #define IF_REMOVE_COMP(ComponentClass) if (compType == rttr::type::get<Component::ComponentClass>()) { entity.RemoveComponent<Component::ComponentClass>(); }
 
   // not in use for now
-  void ObjectFactory::RemoveComponentFromEntity(ECS::Entity entity, rttr::type compType) const
+  void ObjectFactory::RemoveComponentFromEntity(ECS::Entity entity, rttr::type const& compType) const
   {
     UNREFERENCED_PARAMETER(entity); UNREFERENCED_PARAMETER(compType);
     ////// get underlying type if it's wrapped in a pointer
-    ////compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
 
     //IF_REMOVE_COMP(Transform)
     //else IF_REMOVE_COMP(Tag)

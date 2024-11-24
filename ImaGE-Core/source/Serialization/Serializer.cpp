@@ -20,6 +20,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Prefabs/PrefabManager.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
 #include <Core/LayerManager/LayerManager.h>
+#include <Scripting/ScriptManager.h>
+#include <Scripting/ScriptInstance.h>
 
 namespace Helper {
   template <typename T>
@@ -28,6 +30,9 @@ namespace Helper {
 
 namespace Serialization
 {
+  rttr::type const Serializer::sScriptCompType = rttr::type::get<Component::Script>();
+  using MonoObjectVector = std::vector<MonoObject*>;
+  rttr::type const Serializer::sMonoObjectVecType = rttr::type::get<MonoObjectVector>();
 
 //#ifndef IMGUI_DISABLE
   void Serializer::SerializePrefab(Prefabs::Prefab const& prefab, std::string const& filePath)
@@ -199,9 +204,15 @@ namespace Serialization
       compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
 
       writer.Key(compType.get_name().to_string().c_str());
-      //if (!SerializeSpecialCases(comp, compType, writer)) {
+      
+      // handle scripts separately
+      if (compType == sScriptCompType) {
+        SerializeScriptClassTypes(comp, writer);
+      }
+      else {
         SerializeClassTypes(comp, writer);
-      //}
+      }
+      
       writer.EndObject();
     }
     writer.EndArray();
@@ -233,6 +244,10 @@ namespace Serialization
         continue;
       }
 
+      if (propVal.is_type<MonoObjectVector>()) {
+        propVal = IGE_SCRIPTMGR.SerialMonoObjectVec(propVal.get_value<MonoObjectVector>());
+      }
+
       std::string const name{ property.get_name().to_string() };
       writer.String(name.c_str(), static_cast<rapidjson::SizeType>(name.length()), false);
       if (!SerializeRecursive(propVal, writer))
@@ -247,7 +262,7 @@ namespace Serialization
     }
 
     writer.EndObject();
-  }
+  }  
 
   bool Serializer::WriteBasicTypes(rttr::type const& type, rttr::variant const& var, WriterType& writer)
   {
@@ -263,7 +278,7 @@ namespace Serialization
       else if (Helper::IsType<int8_t>(type)) { writer.Int(var.to_int8()); }
       else if (Helper::IsType<int16_t>(type)) { writer.Int(var.to_int16()); }
       else if (Helper::IsType<int32_t>(type)) { writer.Int(var.to_int32()); }
-      else if (Helper::IsType<uint16_t>(type)) { writer.Uint(var.to_uint8()); }
+      else if (Helper::IsType<uint8_t>(type)) { writer.Uint(var.to_uint8()); }
       else if (Helper::IsType<uint16_t>(type)) { writer.Uint(var.to_uint16()); }
       else if (Helper::IsType<uint32_t>(type)) { writer.Uint(var.to_uint32()); }
 
@@ -391,6 +406,113 @@ namespace Serialization
 
     writer.EndArray();
   }
+
+#pragma region ScriptsSpecific
+  void Serializer::SerializeScriptClassTypes(rttr::instance const& obj, WriterType& writer)
+  {
+    writer.StartObject();
+
+    rttr::instance wrappedObj{ obj.get_type().get_raw_type().is_wrapper() ? obj.get_wrapped_instance() : obj };
+
+    auto const properties{ wrappedObj.get_type().get_properties() };
+    for (auto const& property : properties)
+    {
+      rttr::variant propVal{ property.get_value(wrappedObj) };
+      if (!propVal) {
+        std::ostringstream oss{};
+        oss << "Unable to serialize property " << property.get_name().to_string() << " of type " << property.get_type().get_name().to_string();
+        Debug::DebugLogger::GetInstance().LogError("[Serializer] " + oss.str());
+#ifdef _DEBUG
+        std::cout << oss.str() << "\n";
+#endif
+        continue;
+      }
+
+      std::cout << "  Prop " << property.get_type() << "\n";
+
+      std::string const name{ property.get_name().to_string() };
+      writer.String(name.c_str(), static_cast<rapidjson::SizeType>(name.length()), false);
+      if (!SerializeScriptRecursive(propVal, writer))
+      {
+        std::ostringstream oss{};
+        oss << "Unable to serialize property " << name << " of type " << property.get_type().get_name().to_string();
+        Debug::DebugLogger::GetInstance().LogError("[Serializer] " + oss.str());
+#ifdef _DEBUG
+        std::cout << oss.str() << "\n";
+#endif
+      }
+    }
+
+    writer.EndObject();
+  }
+
+  bool Serializer::SerializeScriptRecursive(rttr::variant const& var, WriterType& writer)
+  {
+    bool const isWrapper{ var.get_type().is_wrapper() };
+    rttr::type const type{ isWrapper ? var.get_type().get_wrapped_type().get_raw_type() :
+          var.get_type().is_pointer() ? var.get_type().get_raw_type() : var.get_type() };
+
+    if (WriteBasicTypes(type, isWrapper ? var.extract_wrapped_value() : var, writer)) {
+
+    }
+    else if (var.is_sequential_container())
+    {
+      WriteSequentialContainer(var.create_sequential_view(), writer);
+    }
+    else if (var.is_associative_container())
+    {
+      WriteAssociativeContainer(var.create_associative_view(), writer);
+    }
+    else
+    {
+      auto properties{ type.get_properties() };
+      if (!properties.empty())
+      {
+        SerializeScriptClassTypes(var, writer);
+      }
+      else if (type == rttr::type::get<rttr::type>()) {
+        bool ok;
+        writer.String(var.convert<std::string>(&ok).c_str());
+        return true;
+      }
+      else {
+        std::string const msg{ "Unable to write variant of type " + (isWrapper ? type.get_name().to_string() : type.get_name().to_string()) };
+        Debug::DebugLogger::GetInstance().LogError("[Serializer] " + msg);
+#ifdef _DEBUG
+        std::cout << msg << "\n";
+#endif
+
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  void Serializer::WriteScriptSequentialContainer(rttr::variant_sequential_view const& seqView, WriterType& writer)
+  {
+    writer.StartArray();
+
+    for (auto const& elem : seqView)
+    {
+      // if elem is another sequential container, call this function again
+      if (elem.is_sequential_container()) {
+        WriteScriptSequentialContainer(elem.create_sequential_view(), writer);
+      }
+      else
+      {
+        rttr::variant wrappedVar{ elem.extract_wrapped_value() };
+        rttr::type const valType{ wrappedVar.get_type() };
+        if (!WriteBasicTypes(valType, wrappedVar, writer))
+        {
+          SerializeScriptClassTypes(wrappedVar, writer);
+        }
+      }
+    }
+
+    writer.EndArray();
+  }
+#pragma endregion
 
   Serializer::EntityList Serializer::GetSortedEntities() {
     auto const& entityList{ ECS::EntityManager::GetInstance().GetAllEntities() };

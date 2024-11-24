@@ -16,6 +16,15 @@ using namespace Mono;
 
 void ScriptingSystem::Update()
 {
+  if (Mono::ScriptManager::GetInstance().mTriggerStart)
+  {
+    Mono::ScriptManager::GetInstance().mTriggerStart = false;
+    for (ECS::Entity entity : mEntityManager.GetAllEntitiesWithComponents<Component::Script>()) {
+      Component::Script& scriptComp = entity.GetComponent<Component::Script>();
+      scriptComp.TriggerScriptsStart();
+    }
+
+  }
   for (ECS::Entity entity : mEntityManager.GetAllEntitiesWithComponents<Component::Script>()) {
     Component::Script& scriptComp = entity.GetComponent<Component::Script>();
     scriptComp.UpdateAllScripts();

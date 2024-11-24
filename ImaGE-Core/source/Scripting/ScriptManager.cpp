@@ -29,7 +29,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Input/InputManager.h"
 #include "Asset/AssetManager.h"
 #include "Physics/PhysicsSystem.h"
-#define DEBUG_MONO
+//#define DEBUG_MONO
 namespace Mono
 {
   std::map<std::string, ScriptClassInfo> ScriptManager::mMonoClassMap{};
@@ -48,6 +48,7 @@ namespace Mono
   bool ScriptManager::mAssemblyReloadPending{};
   bool ScriptManager::mCSReloadPending{};
   bool ScriptManager::mRebuildCS{};
+  bool ScriptManager::mTriggerStart{};
 
   std::unordered_map<ScriptFieldType,std::string> ScriptManager::mRevClassMap{};
   std::unordered_map<std::string, ScriptFieldType> ScriptManager::mScriptFieldTypeMap
@@ -65,9 +66,10 @@ namespace Mono
     { "System.Numerics.Vector3", ScriptFieldType::VEC3 },
     { "IGE.Utils.Vec3<System.Double>", ScriptFieldType::DVEC3 },
     { "System.Int32[]", ScriptFieldType::INT_ARR },
-    { "System.System.Single[]", ScriptFieldType::FLOAT_ARR },
-    { "System.System.Double[]", ScriptFieldType::DOUBLE_ARR },
+    { "System.Single[]", ScriptFieldType::FLOAT_ARR },
+    { "System.Double[]", ScriptFieldType::DOUBLE_ARR },
     { "System.String[]", ScriptFieldType::STRING_ARR},
+    { "Entity[]", ScriptFieldType::ENTITY_ARR },
     { "Entity", ScriptFieldType::ENTITY},
     { "Inside", ScriptFieldType::INSIDE},
     { "Test", ScriptFieldType::TEST},
@@ -75,6 +77,7 @@ namespace Mono
     { "PlayerMove", ScriptFieldType::PLAYERMOVE},
     { "Dialogue", ScriptFieldType::DIALOGUE},
     { "PlayerInteraction", ScriptFieldType::PLAYERINTERACTION },
+    { "Inventory", ScriptFieldType::INVENTORY },
   };
 }
 
@@ -176,6 +179,7 @@ void ScriptManager::AddInternalCalls()
   ADD_CLASS_INTERNAL_CALL(IsKeyPressed, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(GetInputString, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(AnyKeyDown, Input::InputManager::GetInstance());
+  ADD_CLASS_INTERNAL_CALL(AnyKeyTriggered, Input::InputManager::GetInstance());
   ADD_INTERNAL_CALL(GetMousePos);
   ADD_INTERNAL_CALL(GetMouseDelta);
 
@@ -197,8 +201,12 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetRotation);
   ADD_INTERNAL_CALL(SetWorldRotation);
   ADD_INTERNAL_CALL(SetWorldScale);
+  ADD_INTERNAL_CALL(SetScale);
   ADD_INTERNAL_CALL(MoveCharacter);
   ADD_INTERNAL_CALL(SetAngularVelocity);
+  ADD_INTERNAL_CALL(SetVelocity);
+  ADD_INTERNAL_CALL(GetGravityFactor);
+  ADD_INTERNAL_CALL(SetGravityFactor);
 
   //Debug Functions
   ADD_INTERNAL_CALL(Log);
@@ -210,8 +218,8 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetAxis);
   ADD_INTERNAL_CALL(GetDeltaTime);
   ADD_INTERNAL_CALL(GetTime);
+  ADD_INTERNAL_CALL(GetFPS);
   ADD_INTERNAL_CALL(MoveCharacter);
-  ADD_INTERNAL_CALL(IsGrounded);
   ADD_INTERNAL_CALL(GetTag);
   ADD_INTERNAL_CALL(FindScript);
   ADD_INTERNAL_CALL(DestroyEntity);
@@ -409,6 +417,18 @@ ScriptFieldType ScriptManager::MonoTypeToScriptFieldType(MonoType* monoType)
   }
 
   return it->second;
+}
+
+std::vector<ScriptInstance> ScriptManager::SerialMonoObjectVec(std::vector<MonoObject*> const& vec)
+{
+  std::vector<ScriptInstance> toSer{};
+  toSer.reserve(vec.size());
+
+  for (MonoObject* obj : vec) {
+    toSer.emplace_back(obj, false, true);
+  }
+
+  return toSer;
 }
 
 void ScriptManager::LinkAllScriptDataMember()
@@ -742,8 +762,14 @@ void Mono::SetWorldScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment
 
 glm::vec3 Mono::GetScale(ECS::Entity::EntityID entity)
 {
-    Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
-    return trans.scale;
+  Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+  return trans.scale;
+}
+
+void Mono::SetScale(ECS::Entity::EntityID entity, glm::vec3 scale) {
+  Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+  trans.scale = scale;
+  TransformHelpers::UpdateWorldTransform(entity);
 }
 
 glm::vec3 Mono::GetColliderScale(ECS::Entity::EntityID e)
@@ -804,15 +830,13 @@ glm::vec3 Mono::GetWorldScale(ECS::Entity::EntityID entity)
 
 MonoString* Mono::GetTag(ECS::Entity::EntityID entity)
 {
-  /*
   if (ECS::Entity(entity).HasComponent<Component::Tag>())
     return STDToMonoString(ECS::Entity(entity).GetComponent<Component::Tag>().tag);
   else
     return STDToMonoString("");
-  */
 
   // @TODO: TEMP
-  return STDToMonoString(ECS::Entity(entity).GetComponent<Component::Tag>().tag);
+  //return STDToMonoString(ECS::Entity(entity).GetComponent<Component::Tag>().tag);
 }
 
 void  Mono::Log(MonoString*s)
@@ -853,8 +877,7 @@ void Mono::MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec) {
 
   Performance::FrameRateController::TimeType dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
   ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.x = dVec.x * dt;
-  if(dVec.y == 20.f)
-    ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y = dVec.y * dt;
+  //ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y = dVec.y * dt;
   ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.z = dVec.z * dt;
      
   IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
@@ -874,6 +897,38 @@ void Mono::SetAngularVelocity(ECS::Entity::EntityID entity, glm::vec3 angularVel
   IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::ANGULAR_VELOCITY);
 }
 
+void Mono::SetVelocity(ECS::Entity::EntityID entity, glm::vec3 velocity) {
+  if (!ECS::Entity(entity).HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity does not have the RigidBody component");
+    return;
+  }
+
+  Performance::FrameRateController::TimeType dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.x = velocity.x * dt;
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y = velocity.y * dt;
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.z = velocity.z * dt;
+
+  IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
+}
+
+float Mono::GetGravityFactor(ECS::Entity::EntityID entity) {
+  if (!ECS::Entity(entity).HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity does not have the RigidBody component");
+    return 0.f;
+  }
+
+  return ECS::Entity(entity).GetComponent<Component::RigidBody>().gravityFactor;
+}
+
+void Mono::SetGravityFactor(ECS::Entity::EntityID entity, float gravity) {
+  if (!ECS::Entity(entity).HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity does not have the RigidBody component");
+    return;
+  }
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().gravityFactor = gravity;
+  IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::GRAVITY_FACTOR);
+}
+
 glm::vec3 Mono::GetMouseDelta()
 {
   //std::cout << Input::InputManager::GetInstance().GetMousePos() << "\n";
@@ -883,17 +938,6 @@ glm::vec3 Mono::GetMouseDelta()
 glm::vec3 Mono::GetMousePos()
 {
   return glm::vec3(Input::InputManager::GetInstance().GetMousePos(), 0);
-}
-
-bool  Mono::IsGrounded(ECS::Entity::EntityID entity)
-{
-  if (ECS::Entity(entity).HasComponent<Component::RigidBody>())
-  {
-    //std::cout << ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y << "\n";
-    return(ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y <= 0 && ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y >= -0.005);
-  }
-    
-  return false;
 }
 
 ECS::Entity::EntityID Mono::Raycast(glm::vec3 start, glm::vec3 end)
@@ -963,6 +1007,9 @@ float Mono::GetTime() {
   return Performance::FrameRateController::GetInstance().GetTime();
 }
 
+float Mono::GetFPS() {
+  return Performance::FrameRateController::GetInstance().GetFPS();
+}
 
 MonoObject* Mono::FindScript(MonoString* s)
 {

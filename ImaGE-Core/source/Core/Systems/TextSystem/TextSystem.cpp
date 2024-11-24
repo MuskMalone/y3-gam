@@ -361,7 +361,7 @@ namespace Systems {
 
     // bind the bitmap font texture
     currFace.vbo->SetData(nullptr, 0);
-    currTex->Bind();
+    currTex->Bind(0);
 
     mShader->Use();
     mShader->SetUniform("uTextColor", color.x, color.y, color.z);

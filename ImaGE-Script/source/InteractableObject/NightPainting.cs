@@ -18,26 +18,24 @@ public class NightPainting : Entity, IInventoryItem
     }
   }
 
-  public Sprite _Image = null;
+  public Entity _Image = null;
 
-  public Sprite Image
+  public Entity Image
   {
     get
     {
       return _Image;
     }
-  }
 
-  //public void OnPickup()
-  //{
-  //    Destroy(Entity);
-  //}
+    set
+    {
+      _Image = value;
+    }
+  }
 
   public void OnPickup()
   {
-    //Destroy(Entity); 
     SetActive(false);
-
   }
 
   public void OnUsed()

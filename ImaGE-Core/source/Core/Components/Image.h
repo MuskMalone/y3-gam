@@ -18,6 +18,7 @@ namespace Component
     {
         // Default constructor to initialize color to white and texture to an invalid GUID
         Image() : color{ Color::COLOR_WHITE }, textureAsset{} {}
+        Image(IGE::Assets::GUID guid) : color{ Color::COLOR_WHITE }, textureAsset{ guid } {}
 
         /*!*********************************************************************
         \brief

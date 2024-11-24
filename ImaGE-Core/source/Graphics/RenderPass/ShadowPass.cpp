@@ -106,8 +106,8 @@ namespace Graphics {
         shader->SetUniform("u_LightSpaceMtx", mLightSpaceMtx);
     }
 
-    uint32_t ShadowPass::BindShadowMap() {
-        return Texture::BindToNextAvailUnit(GetShadowMapBuffer());
+    void ShadowPass::BindShadowMap(uint32_t texUnit) const {
+      GLCALL(glBindTextureUnit(texUnit, GetShadowMapBuffer()));
     }
 
 } // namespace Graphics

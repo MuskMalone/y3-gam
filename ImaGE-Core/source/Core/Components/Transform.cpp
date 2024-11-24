@@ -25,6 +25,10 @@ namespace Component {
   void Transform::SetLocalRotWithEuler(glm::vec3 const& degrees) {
     eulerAngles = degrees;
     rotation = glm::quat(glm::radians(degrees));
+  }
+
+  void Transform::ApplyWorldRotation(float degrees, glm::vec3 const& axis) {
+    worldRot = glm::angleAxis(glm::radians(degrees), axis) * worldRot;
     modified = true;
   }
 

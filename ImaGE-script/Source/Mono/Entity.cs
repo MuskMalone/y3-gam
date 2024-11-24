@@ -49,7 +49,7 @@ using IGE.Utils;
     public void Init(uint entityID)
     {
       mEntityID = entityID;
-      Console.WriteLine("Init ID: " + mEntityID);
+      //Console.WriteLine("Init ID: " + mEntityID);
     }
 
 

@@ -30,7 +30,7 @@ namespace Systems {
     }
   }
 
-  void SystemManager::UpdateSystems(std::initializer_list<const char*> const& names) {
+  void SystemManager::PausedUpdateSystems(std::initializer_list<const char*> const& names) {
     Performance::FrameRateController& frc{ Performance::FrameRateController::GetInstance() };
 
     for (const char* name : names) {
@@ -41,7 +41,7 @@ namespace Systems {
 #endif
 
       frc.StartSystemTimer();
-      mNameToSystem[name]->Update();
+      mNameToSystem[name]->PausedUpdate();
       frc.EndSystemTimer(name);
     }
   }

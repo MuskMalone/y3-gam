@@ -26,16 +26,15 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <unordered_map>
 #include <vector>
 
+#define IGE_SCRIPTMGR Mono::ScriptManager::GetInstance()
 
 namespace Mono
 {
-
-
-
 	class ScriptManager : public ThreadSafeSingleton<ScriptManager>
 	{
 		static std::map<std::string, ScriptClassInfo> mMonoClassMap;  //Map of Scripts 
-
+	private:
+		ScriptInstance mEntityBaseTemplate;
 		
 	public:
 		static std::unordered_map<std::string, ScriptFieldType> mScriptFieldTypeMap;
@@ -53,6 +52,8 @@ namespace Mono
 		static std::string mScnfilePath;
 		static std::string mCsprojPath;
 		static std::string mBatfilePath;
+		static bool mTriggerStart;
+
 
 		/*!*********************************************************************
 		\brief
@@ -192,6 +193,11 @@ namespace Mono
 		static ScriptFieldType MonoTypeToScriptFieldType(MonoType* monoType);
 
 
+		std::vector<ScriptInstance> SerialMonoObjectVec(std::vector<MonoObject*> const& vec);
+
+
+		static void TriggerStart();
+
 
 		/*!**********************************************************************
 		*																																			  *
@@ -259,6 +265,7 @@ namespace Mono
 		************************************************************************/
 		static void SetWorldScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment);
 		static glm::vec3 GetScale(ECS::Entity::EntityID);
+		static void SetScale(ECS::Entity::EntityID entity, glm::vec3 scale);
 		static glm::vec3 GetColliderScale(ECS::Entity::EntityID);
 
 		/*!*********************************************************************
@@ -314,7 +321,10 @@ namespace Mono
 
 		static void SetAngularVelocity(ECS::Entity::EntityID entity, glm::vec3 angularVelocity);
 
-		static bool IsGrounded(ECS::Entity::EntityID entity);
+		static void SetVelocity(ECS::Entity::EntityID entity, glm::vec3 velocity);
+
+		static float GetGravityFactor(ECS::Entity::EntityID entity);
+		static void SetGravityFactor(ECS::Entity::EntityID entity, float gravity);
 
 		static ECS::Entity::EntityID Raycast(glm::vec3 start, glm::vec3 end);
 
@@ -331,6 +341,8 @@ namespace Mono
 		static float GetDeltaTime();
 
 		static float GetTime();
+
+		static float GetFPS();
 
 		static glm::vec3 GetMouseDelta();
 

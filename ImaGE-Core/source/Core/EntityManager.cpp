@@ -172,7 +172,8 @@ namespace ECS {
   void EntityManager::SetParentEntity(Entity const& parent, Entity const& child) {
     if (!mRegistry.valid(parent.GetRawEnttEntityID()) || 
       !mRegistry.valid(child.GetRawEnttEntityID())) {
-      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent/Child is not valid!");
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent(" + std::to_string(parent.GetEntityID())
+        + ")/Child(" + std::to_string(child.GetEntityID()) + ") is not valid!");
       return;
     }
 
@@ -183,7 +184,8 @@ namespace ECS {
   void EntityManager::SetChildEntity(Entity const& parent, Entity const& child) {
     if (!mRegistry.valid(parent.GetRawEnttEntityID()) || 
       !mRegistry.valid(child.GetRawEnttEntityID())) {
-      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent/Child is not valid!");
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent(" + std::to_string(parent.GetEntityID())
+        + ")/Child(" + std::to_string(child.GetEntityID()) + ") is not valid!");
       return;
     }
 
@@ -193,12 +195,12 @@ namespace ECS {
 
   void EntityManager::SetChildLayersToFollowParent(Entity const& parent) {
     if (!mRegistry.valid(parent.GetRawEnttEntityID())) {
-      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent is not valid!");
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent(" + std::to_string(parent.GetEntityID()) + ") is not valid!");
       return;
     }
 
     if (!parent.HasComponent<Component::Layer>()) {
-      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent does not have a Layer!");
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent(" + parent.GetTag() + ") does not have a Layer!");
       return;
     }
 
@@ -225,12 +227,12 @@ namespace ECS {
 
   void EntityManager::SetChildActiveToFollowParent(Entity const& parent) {
     if (!mRegistry.valid(parent.GetRawEnttEntityID())) {
-      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent is not valid!");
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent(" + std::to_string(parent.GetEntityID()) + ") is not valid!");
       return;
     }
 
     if (!parent.HasComponent<Component::Tag>()) {
-      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent does not have a Tag!");
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent(" + std::to_string(parent.GetEntityID()) + ") does not have a Tag!");
       return;
     }
 
@@ -251,7 +253,7 @@ namespace ECS {
 
   bool EntityManager::RemoveParent(Entity const& child) {
     if (!mRegistry.valid(child.GetRawEnttEntityID())) {
-      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity is not valid!");
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity " + std::to_string(child.GetEntityID()) + ") is not valid!");
       return false;
     }
 
@@ -272,7 +274,7 @@ namespace ECS {
 
   void EntityManager::RemoveEntity(Entity const& entity) {
     if (!mRegistry.valid(entity.GetRawEnttEntityID())) {
-      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity is not valid!");
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity " + std::to_string(entity.GetEntityID()) + ") is not valid!");
       return;
     }
 
@@ -314,7 +316,7 @@ namespace ECS {
 
   void EntityManager::DeleteEntity(Entity entity) {
     if (!mRegistry.valid(entity.GetRawEnttEntityID())) {
-      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity is not valid!");
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity " + std::to_string(entity.GetEntityID()) + ") is not valid!");
       return;
     }
     mRegistry.destroy(entity.GetRawEnttEntityID());

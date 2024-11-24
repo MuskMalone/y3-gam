@@ -40,6 +40,7 @@ namespace Mono {
 		DOUBLE_ARR,
 		STRING_ARR,
 		UINT_ARR,
+		ENTITY_ARR,
 		ENTITY,
 		TEST,
 		INSIDE,
@@ -47,6 +48,7 @@ namespace Mono {
 		PLAYERMOVE,
 		DIALOGUE,
 		PLAYERINTERACTION,
+		INVENTORY,
 	};
 
 
@@ -116,5 +118,8 @@ namespace Mono {
 
 	template <>
 	MonoArray* GetMonoArray<double>(std::shared_ptr<MonoDomain> md, size_t sz);
+
+	template <>
+	MonoArray* GetMonoArray<MonoObject*>(std::shared_ptr<MonoDomain> md, size_t sz);
 
 }

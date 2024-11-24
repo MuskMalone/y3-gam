@@ -275,6 +275,9 @@
     <ClInclude Include="source\Core\Components\Script.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
+    <ClInclude Include="source\Core\Components\Skybox.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
     <ClInclude Include="source\Core\Components\Sprite2D.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
@@ -604,9 +607,6 @@
     <ClInclude Include="source\Graphics\Mesh\Submesh.h">
       <Filter>Graphics\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="source\Graphics\MeshSubmeshKeyHash.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="source\Graphics\Pipeline.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -632,6 +632,9 @@
       <Filter>Graphics\RenderPass</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderPass\ShadowPass.h">
+      <Filter>Graphics\RenderPass</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Graphics\RenderPass\SkyboxPass.h">
       <Filter>Graphics\RenderPass</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderPass\UIPass.h">
@@ -948,6 +951,9 @@
       <Filter>Graphics\RenderPass</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\RenderPass\ShadowPass.cpp">
+      <Filter>Graphics\RenderPass</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Graphics\RenderPass\SkyboxPass.cpp">
       <Filter>Graphics\RenderPass</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\RenderPass\UIPass.cpp">

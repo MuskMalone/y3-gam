@@ -55,7 +55,7 @@ namespace Graphics {
 			shader->SetUniform("u_Time", static_cast<float>(glfwGetTime()));
 			shader->SetUniform("u_Frame", static_cast<int>(Performance::FrameRateController::GetInstance().GetFrameCounter()));
 			shader->SetUniform("u_Mouse", Input::InputManager::GetInstance().GetMousePos());
-			shader->SetUniform("u_ScreenTex", mInputTexture);
+			shader->SetUniform("u_ScreenTex", mInputTexture, 0);
 
 			Renderer::RenderFullscreenTexture();
 			End();

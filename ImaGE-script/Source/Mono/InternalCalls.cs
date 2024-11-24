@@ -35,6 +35,7 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void SetScale(uint entityHandle, ref Vector3 scale);
+
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetColliderScale(uint ID);
 
@@ -89,11 +90,13 @@ namespace IGE.Utils
     extern public static bool AnyKeyDown();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool AnyKeyTriggered();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetMouseDelta();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetMousePos();
-
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static string GetInputString();
@@ -198,16 +201,25 @@ namespace IGE.Utils
     extern public static float GetTime();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetFPS();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void MoveCharacter(uint mEntityID, Vector3 dVec);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetAngularVelocity(uint mEntityID, Vector3 angularVelocity);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static bool IsGrounded(uint mEntityID);
+    extern public static void SetVelocity(uint mEntityID, Vector3 velocity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetGravityFactor(uint mEntityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetGravityFactor(uint mEntityID, float gravityFactor);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static Entity FindScript(string s);
     #endregion
-    }
+  }
 }

@@ -23,6 +23,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Entity.h>
 #include <Core/Components/Components.h>
 #include "Asset/IGEAssets.h"
+#include "Graphics/Renderer.h"
 
 #pragma region SYSTEM_INCLUDES
 #include <Core/Systems/SystemManager/SystemManager.h>
@@ -54,7 +55,7 @@ namespace IGE {
     Reflection::ObjectFactory::CreateInstance();
     Scenes::SceneManager::CreateInstance();
     Prefabs::PrefabManager::CreateInstance();
-    Performance::FrameRateController::CreateInstance(120.f, 0.2f, false);
+    Performance::FrameRateController::CreateInstance(120.f, 0.05f, false);
     Input::InputManager::CreateInstance(mWindow, mSpecification.WindowWidth, mSpecification.WindowHeight, 0.1);
     Mono::ScriptManager::CreateInstance();
     ECS::EntityManager::CreateInstance();
@@ -70,6 +71,11 @@ namespace IGE {
     RegisterSystems();
     Systems::SystemManager::GetInstance().InitSystems();
     Graphics::RenderSystem::Init();
+
+    int width, height;
+    glfwGetFramebufferSize(mWindow.get(), &width, &height);
+    glViewport(0, 0, width, height);
+    Graphics::Renderer::ResizeFinalFramebuffer(width, height);
   }
 
   void Application::Run() {
@@ -80,18 +86,33 @@ namespace IGE {
 
     while (!glfwWindowShouldClose(mWindow.get())) { 
       frameRateController.Start();
+
+      if(inputManager.IsKeyTriggered(IK_F11)) //TODO Change to Event based
+          Application::ToggleFullscreen();
+
       inputManager.UpdateInput();
 
       // dispatch all events in the queue at the start of game loop
       eventManager.DispatchAll();
 
+
+
       systemManager.UpdateSystems();
 
-      glBindFramebuffer(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT);
+      //=======================================================================
+      Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() });
+      auto const& fb = Graphics::Renderer::GetFinalFramebuffer();
+      std::shared_ptr<Graphics::Texture> gameTex = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
 
-      auto const& cam = GetDefaultRenderTarget().camera;
-      Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ cam.GetViewProjMatrix(), cam.GetViewMatrix(), cam.GetPosition(), cam.GetNearPlane(), cam.GetFarPlane(), cam.GetFOV(), cam.GetAspectRatio()});
+      if (gameTex) {
+          gameTex->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+      }
 
+      gameTex->Bind(0);
+      auto const& shader = Graphics::ShaderLibrary::Get("FullscreenQuad");
+      shader->Use();
+      Graphics::Renderer::RenderFullscreenTexture();
+      //===========================================================================
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
       // check and call events, swap buffers
@@ -123,6 +144,9 @@ namespace IGE {
     glfwWindowHint(GLFW_RED_BITS, 8); glfwWindowHint(GLFW_GREEN_BITS, 8);
     glfwWindowHint(GLFW_BLUE_BITS, 8); glfwWindowHint(GLFW_ALPHA_BITS, 8);
 
+    glfwWindowHint(GLFW_RESIZABLE, mSpecification.Resizable ? GLFW_TRUE : GLFW_FALSE);
+    glfwWindowHint(GLFW_MAXIMIZED, mSpecification.StartMaximized ? GLFW_TRUE : GLFW_FALSE);
+
     // initialize window ptr
     // have to do this because i can't make_unique with custom dtor
     {
@@ -134,13 +158,23 @@ namespace IGE {
       throw std::runtime_error("Unable to create window for application");
     }
 
+    GLFWmonitor* monitor = nullptr;
+    if (mSpecification.Fullscreen) {
+      glfwGetWindowPos(mWindow.get(), &mWindowState.windowedPosX, &mWindowState.windowedPosY);
+      glfwGetWindowSize(mWindow.get(), &mWindowState.windowedWidth, &mWindowState.windowedHeight);
+
+      monitor = glfwGetPrimaryMonitor();
+      const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+      glfwSetWindowMonitor(mWindow.get(), monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+      mWindowState.isFullscreen = true;
+    }
+
     glfwMakeContextCurrent(mWindow.get());
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
       throw std::runtime_error("Failed to initialize GLAD");
     }
     
-    //to change, just temp
-    glClearColor(.47055, .55289, .86785, 1.f);//f
+    glClearColor(0.f, 0.f, 0.f, 1.f);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glEnable(GL_DEPTH_TEST);
 
@@ -214,6 +248,31 @@ namespace IGE {
     Debug::DebugLogger::DestroyInstance();
 
     // @TODO: Shutdown physics and audio singletons
+  }
+
+  void Application::ToggleFullscreen(){
+      if (mWindowState.isFullscreen) {
+          glfwSetWindowMonitor(mWindow.get(), nullptr, mWindowState.windowedPosX, mWindowState.windowedPosY, mWindowState.windowedWidth, mWindowState.windowedHeight, 0);
+          mWindowState.isFullscreen = false;
+      }
+      else {
+          glfwGetWindowPos(mWindow.get(), &mWindowState.windowedPosX, &mWindowState.windowedPosY);
+          glfwGetWindowSize(mWindow.get(), &mWindowState.windowedWidth, &mWindowState.windowedHeight);
+
+          GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+          const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+          glfwSetWindowMonitor(mWindow.get(), monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+          mWindowState.isFullscreen = true;
+      }
+
+      // Update framebuffers
+      int width, height;
+      glfwGetFramebufferSize(mWindow.get(), &width, &height);
+      glViewport(0, 0, width, height);
+      //for (auto& target : mRenderTargets) {
+      //    target.framebuffer->Resize(width, height);
+      //}
+      Graphics::Renderer::ResizeFinalFramebuffer(width, height);
   }
 
   Application::~Application()

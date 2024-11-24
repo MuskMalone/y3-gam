@@ -257,6 +257,18 @@ bool InputManager::AnyKeyDown()
 	return false;
 }
 
+bool InputManager::AnyKeyTriggered()
+{
+	for (int i = 0; i < static_cast<int>(KEY_CODE::KEY_COUNTS); ++i)
+	{
+		if (IsKeyTriggered(static_cast<KEY_CODE>(i)))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 MonoString* InputManager::GetInputString()
 {
 	std::string allInput{};
