@@ -54,7 +54,7 @@ namespace GUI {
             ImGui::SliderFloat("Min Distance", &mindist, 0.0f, 1000.f, "Min: %.1f");
             auto& maxdist{ Graphics::PostProcessingManager::GetInstance().GetFogMaxDist() };
             // Slider for mMaxDist
-            ImGui::SliderFloat("Max Distance", &maxdist, mindist, 1000.f, "Max: %.1f");
+            ImGui::SliderFloat("Max Distance", &maxdist, 0.0f, 1000.f, "Max: %.1f");
             auto& color{ Graphics::PostProcessingManager::GetInstance().GetFogColor() };
             // Color picker for mFogColor
             ImGui::ColorEdit3("Fog Color", &color.r); // RGB picker

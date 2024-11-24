@@ -27,6 +27,7 @@ namespace Graphics {
 		void MovePriorityDown(unsigned idx);
 		void RemoveShader(unsigned idx);
 		std::shared_ptr<Graphics::Shader> GetShader(unsigned idx);
+		std::shared_ptr<Graphics::Shader> GetDefaultShader();
 		std::string GetShaderName(unsigned idx);
 		unsigned GetShaderNum();
 		void ReloadShaders();

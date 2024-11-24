@@ -87,6 +87,10 @@ namespace Graphics {
 		if (idx >= mPpc.mConfigs.at(name).shaders.size()) return mDefaultShader;
 		return IGE_ASSETMGR.GetAsset<IGE::Assets::ShaderAsset>(mPpc.mConfigs.at(name).shaders[idx])->mShader;
 	}
+	std::shared_ptr<Graphics::Shader> PostProcessingManager::GetDefaultShader()
+	{
+		return mDefaultShader;
+	}
 	std::string PostProcessingManager::GetShaderName(unsigned idx)
 	{
 		auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
