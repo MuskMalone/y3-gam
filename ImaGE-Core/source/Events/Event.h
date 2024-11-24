@@ -43,7 +43,9 @@ namespace Events
     PREFAB_GUID_REMAP,
     SIGNAL,
     ENTITY_PICKED,
-    LOCK_MOUSE
+    LOCK_MOUSE,
+    POINTER_ENTER,
+    POINTER_EXIT
   };
 
   class Event

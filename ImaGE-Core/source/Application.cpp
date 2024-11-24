@@ -100,7 +100,9 @@ namespace IGE {
       systemManager.UpdateSystems();
 
       //=======================================================================
-      Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() });
+      if (Graphics::RenderSystem::mCameraManager.HasActiveCamera()) {
+          Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() });
+      }
       auto const& fb = Graphics::Renderer::GetFinalFramebuffer();
       std::shared_ptr<Graphics::Texture> gameTex = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
 
@@ -166,7 +168,7 @@ namespace IGE {
       monitor = glfwGetPrimaryMonitor();
       const GLFWvidmode* mode = glfwGetVideoMode(monitor);
       glfwSetWindowMonitor(mWindow.get(), monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
-      mWindowState.isFullscreen = true;
+      mWindowState.isFullscreen = false;
     }
 
     glfwMakeContextCurrent(mWindow.get());

@@ -148,4 +148,23 @@ namespace Events
     SignalEvent() : Event(EventType::SIGNAL) {}
     inline std::string GetName() const noexcept override { return "Program terminated unexpectedly"; }
   };
+
+  class PointerEnterEvent : public Event {
+  public:
+      PointerEnterEvent(ECS::Entity entity)
+          : Event(EventType::POINTER_ENTER), mEntity{ entity } {}
+
+      inline std::string GetName() const noexcept override { return "Pointer Entered Entity: " + mEntity.GetTag(); }
+      ECS::Entity const mEntity;
+  };
+
+  class PointerExitEvent : public Event
+  {
+  public:
+      PointerExitEvent(ECS::Entity entity)
+          : Event(EventType::POINTER_EXIT), mEntity{ entity } {}
+
+      inline std::string GetName() const noexcept override { return "Pointer Exit Entity: " + mEntity.GetTag(); }
+      ECS::Entity const mEntity;
+  };
 }

@@ -165,6 +165,10 @@ static void rttr_auto_register_reflection_function2_(); namespace {
       .property("textureAssetGUID2", &Skybox::tex2)
       .property("blend", &Skybox::blend);
 
+
+  REGISTER_COMPONENT(Interactive, "Interactive")
+      .property("isHovered", &Interactive::isHovered);
+
   // stuff below are not actual "Components", hence we skip the REGISTER_COMPONENT checks
   rttr::registration::class_<PrefabOverrides>("PrefabOverrides")
     .constructor<>()(rttr::policy::ctor::as_object)

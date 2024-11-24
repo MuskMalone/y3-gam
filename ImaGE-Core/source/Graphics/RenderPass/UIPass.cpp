@@ -6,6 +6,7 @@
 #include "Core/Components/Text.h"
 #include "Core/Components/Image.h"
 #include <Physics/PhysicsSystem.h>
+#include <Input/InputManager.h>
 
 namespace Graphics {
 	UIPass::UIPass(const RenderPassSpec& spec) : RenderPass{ spec } {
@@ -19,6 +20,11 @@ namespace Graphics {
 
 		glm::mat4 viewProj{};
 		viewProj = cam.isEditor ? cam.viewProjMatrix : Renderer::mUICamera.GetViewProjMatrix();
+
+		auto const& fb = mSpec.pipeline->GetSpec().targetFramebuffer;
+		float viewportHeight = fb->GetFramebufferSpec().height;
+		float viewportWidth = fb->GetFramebufferSpec().width;
+		auto const& inputMan = Input::InputManager::GetInstance();
 
 		// @TODO: TEMP, TO MERGE WITH XAVIER
 		//shader->Use();
@@ -133,6 +139,34 @@ namespace Graphics {
 					}
 				}
 				*/
+
+				// Handle interactive components
+				if (uiEntity.HasComponent<Component::Interactive>()) {
+					auto& interactiveComp = uiEntity.GetComponent<Component::Interactive>();
+					// Get mouse position in screen coordinates
+					glm::vec2 mousePos = inputMan.GetMousePos(); // x and y in pixels
+					// Convert mouse position to world coordinates (assuming orthographic projection)
+					float worldX = bounds.x + (mousePos.x / viewportWidth) * (bounds.y - bounds.x);
+					float worldY = bounds.w - (mousePos.y / viewportHeight) * (bounds.w - bounds.z); // Flip y-axis
+					glm::vec2 mouseWorldPos = glm::vec2(worldX, worldY);
+					// Compute the bounds of the UI element
+					glm::vec2 position = uiXform.worldPos; // Center position
+					glm::vec2 size = uiXform.worldScale;   // Width and height
+
+					// Compute bounds: left, top, width, height
+					glm::vec4 uiBounds{};
+					uiBounds.x = position.x - size.x * 0.5f; // left
+					uiBounds.y = position.y - size.y * 0.5f; // top
+					uiBounds.z = size.x;                     // width
+					uiBounds.w = size.y;                     // height
+
+					// Call isMouseOver
+					bool isHovered = interactiveComp.IsMouseOver(mouseWorldPos, uiBounds);
+
+					// Update the isHovered state
+					interactiveComp.isHovered = isHovered;
+
+				}
 
 				if (uiEntity.HasComponent<Component::Image>()) {
 					auto const& imageComp = uiEntity.GetComponent<Component::Image>();

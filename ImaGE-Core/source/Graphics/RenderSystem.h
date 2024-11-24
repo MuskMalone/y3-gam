@@ -24,5 +24,17 @@ namespace Graphics {
 		static void Release();
 		static void RenderScene(CameraSpec const& cam);
 		static CameraManager mCameraManager; // Add CameraManager as a static member
+
+	private:
+		class EventHandler {
+		public:
+			EventHandler();
+			~EventHandler();
+
+			void HandleUIInteractions(const std::vector<ECS::Entity>& uiEntities);
+			EVENT_CALLBACK_DECL(OnPointerEnter);
+			EVENT_CALLBACK_DECL(OnPointerExit);
+		};
+		static std::unique_ptr<EventHandler> mEventHandler;
 	};
 }

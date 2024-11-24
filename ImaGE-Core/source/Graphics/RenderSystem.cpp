@@ -1,4 +1,5 @@
 #include <pch.h>
+#include "Events/EventManager.h"
 #include <Core/Systems/SystemManager/SystemManager.h>
 #include <Core/LayerManager/LayerManager.h>
 #include "RenderSystem.h"
@@ -9,15 +10,47 @@
 #include "EditorCamera.h"
 #include <Scenes/SceneManager.h>
 
+
 #define INSERT_ACTIVE
 
 namespace Graphics {
 	CameraManager RenderSystem::mCameraManager;
+	std::unique_ptr<Graphics::RenderSystem::EventHandler> Graphics::RenderSystem::mEventHandler = nullptr;
+
 	void RenderSystem::Init() {
 		Renderer::Init();
+
+		mEventHandler = std::make_unique<EventHandler>();
 	}
 
 	void RenderSystem::Release() {
+
+	}
+
+	// Implement EventHandler constructor and destructor
+	Graphics::RenderSystem::EventHandler::EventHandler() {
+		// Subscribe to pointer events
+		SUBSCRIBE_CLASS_FUNC(Events::EventType::POINTER_ENTER, &EventHandler::OnPointerEnter, this);
+		SUBSCRIBE_CLASS_FUNC(Events::EventType::POINTER_EXIT, &EventHandler::OnPointerExit, this);
+	}
+
+	Graphics::RenderSystem::EventHandler::~EventHandler() {
+
+	}
+	 
+	void RenderSystem::EventHandler::HandleUIInteractions(const std::vector<ECS::Entity>& uiEntities) {
+	}
+
+	EVENT_CALLBACK_DEF(RenderSystem::EventHandler, OnPointerEnter) {
+		auto const& entity = CAST_TO_EVENT(Events::PointerEnterEvent)->mEntity;
+
+		if (entity.HasComponent<Component::Script>()) {
+			auto& script = entity.GetComponent<Component::Script>();
+			
+		}
+	}
+
+	EVENT_CALLBACK_DEF(RenderSystem::EventHandler, OnPointerExit) {
 
 	}
 
@@ -64,5 +97,4 @@ namespace Graphics {
 		}
 
 	}
-
 }

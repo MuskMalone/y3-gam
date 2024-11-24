@@ -1,6 +1,146 @@
 {
     "Scene": [
         {
+            "ID": 4,
+            "Parent": 7,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Entity 4",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -8.5472412109375,
+                            "y": 1.6442869901657105,
+                            "z": -0.9493407607078552
+                        },
+                        "scale": {
+                            "x": 4.28000020980835,
+                            "y": 4.28000020980835,
+                            "z": 4.28000020980835
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -5.414050579071045,
+                            "y": 1.6793214082717896,
+                            "z": -0.9693604111671448
+                        },
+                        "worldScale": {
+                            "x": 4.28000020980835,
+                            "y": 4.28000020980835,
+                            "z": 4.28000020980835
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 17269113376626660411
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 7,
+            "Parent": null,
+            "Child Entities": [
+                4
+            ],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Canvas",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 3.133190631866455,
+                            "y": 0.035034388303756717,
+                            "z": -0.0200196523219347
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 3.133190631866455,
+                            "y": 0.035034388303756717,
+                            "z": -0.0200196523219347
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Canvas": {
+                        "isVisible": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048576,
             "Parent": null,
             "Child Entities": [],
@@ -62,7 +202,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 17699972936341798334
+                            "ID": 16058881587096472934
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -150,7 +290,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 17699972936341798334
+                            "ID": 16058881587096472934
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -222,7 +362,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 7898024027134611564
+                            "ID": 12585172712448639133
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -383,7 +523,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 17699972936341798334
+                            "ID": 16058881587096472934
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -518,7 +658,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 17699972936341798334
+                            "ID": 16058881587096472934
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,

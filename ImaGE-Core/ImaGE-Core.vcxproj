@@ -202,6 +202,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClInclude Include="source\Core\Components\Collider.h" />
     <ClInclude Include="source\Core\Components\Components.h" />
     <ClInclude Include="source\Core\Components\Image.h" />
+    <ClInclude Include="source\Core\Components\Interactive.h" />
     <ClInclude Include="source\Core\Components\Layer.h" />
     <ClInclude Include="source\Core\Components\Light.h" />
     <ClInclude Include="source\Core\Components\Material.h" />
