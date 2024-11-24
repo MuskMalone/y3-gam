@@ -35,7 +35,7 @@ uniform float u_Roughness;
 uniform float u_Transparency;
 uniform float u_AO;
 
-
+uniform int u_MatIdxOffset;
 uniform sampler2D[16] u_AlbedoMaps;
 //uniform sampler2D[16] u_NormalMaps;
 
@@ -43,10 +43,10 @@ void main(){
     entityID = v_EntityID;
 
     vec2 texCoord = v_TexCoord * u_Tiling + u_Offset;
-    
+
 	//vec4 texColor = texture2D(u_NormalMaps[int(v_MaterialIdx)], texCoord); //currently unused
     
-    vec4 albedoTexture = texture2D(u_AlbedoMaps[int(v_MaterialIdx)], texCoord);
+    vec4 albedoTexture = texture2D(u_AlbedoMaps[int(v_MaterialIdx) - u_MatIdxOffset], texCoord);
     vec3 albedo = albedoTexture.rgb * u_Albedo; // Mixing texture and uniform
 	// Normalize inputs
     

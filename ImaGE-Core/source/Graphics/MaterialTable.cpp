@@ -92,11 +92,11 @@ namespace Graphics {
         return nullptr;
     }
 
-    void MaterialTable::ApplyMaterialTextures(std::shared_ptr<Graphics::Shader> const& shader, size_t batchStart, size_t batchEnd) {
+    void MaterialTable::ApplyMaterialTextures(std::shared_ptr<Graphics::Shader> const& shader, unsigned batchStart, unsigned batchEnd) {
       if (mMaterials.size() == 1) { return; } // Exit if there's only the default material
 
       IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
-      size_t const matCount{ batchEnd - batchStart + 1 };
+      unsigned const matCount{ batchEnd - batchStart + 1 };
 
       am.GetAsset<IGE::Assets::TextureAsset>(Renderer::GetWhiteTexture())->mTexture.Bind(Texture::sDefaultAlbedoUnit);
       am.GetAsset<IGE::Assets::TextureAsset>(Renderer::GetWhiteTexture())->mTexture.Bind(Texture::sDefaultNormalUnit); // change to normal Tex
@@ -105,7 +105,7 @@ namespace Graphics {
       std::vector<int> albedoTextureUnits(sMaterialsPerBatch + 1, Texture::sDefaultAlbedoUnit);
       std::vector<int> normalTextureUnits(sMaterialsPerBatch + 1, Texture::sDefaultNormalUnit);
 
-      for (size_t matIdx{ batchStart + 1 }, i{ 1 }; i <= matCount; ++i, ++matIdx) {
+      for (unsigned matIdx{ batchStart + 1 }, i{ 1 }; i <= matCount; ++i, ++matIdx) {
         std::shared_ptr<MaterialData> const& material = mMaterials[matIdx];
 
         IGE::Assets::GUID const albedoMap{ material->GetAlbedoMap() },
