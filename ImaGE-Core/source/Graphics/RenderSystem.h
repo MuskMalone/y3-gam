@@ -13,6 +13,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma once
 #include <Graphics/Camera/CameraManager.h>
 #include <Graphics/Camera/CameraSpec.h>
+#include <vector>
+
+namespace ECS { class Entity; }
 
 namespace Graphics {
 	class EditorCamera;
@@ -21,7 +24,9 @@ namespace Graphics {
 	public:
 		static void Init();
 		static void Release();
-		static void RenderScene(CameraSpec const& cam);
+		static std::vector<ECS::Entity> RenderScene(CameraSpec const& cam);
+		static void RenderScene(CameraSpec const& cam, std::vector<ECS::Entity> const& entities);
+
 		static void PrepareFrame();
 		static CameraManager mCameraManager; // Add CameraManager as a static member
 
@@ -31,5 +36,7 @@ namespace Graphics {
 	private:
 		// can move into struct if needed
 		static inline uint32_t mEditorCullCount = 0, mGameCullCount = 0;
+
+		static std::vector<ECS::Entity> GetEntitiesToRender(CameraSpec const& cam);
 	};
 }

@@ -20,15 +20,30 @@ namespace Graphics {
 		Renderer::Init();
 	}
 
-	void RenderSystem::RenderScene(CameraSpec const& cam) {
+	std::vector<ECS::Entity> RenderSystem::RenderScene(CameraSpec const& cam) {
 		PrepareFrame();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		
+		std::vector<ECS::Entity> entityVector{ GetEntitiesToRender(cam) };
 
-		//Frustum Culling should be here
+		std::shared_ptr<Texture> prevOutputTex{ nullptr };
+		for (auto const& pass : Renderer::mRenderPasses) {
+			if (prevOutputTex) {
+				pass->SetInputTexture(prevOutputTex);
+			}
+			pass->Render(cam, entityVector);
+			prevOutputTex = pass->GetOutputTexture();
+		}
+
+		return entityVector;
+	}
+
+	std::vector<ECS::Entity> RenderSystem::GetEntitiesToRender(CameraSpec const& cam) {
 		IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
 		BV::Frustum const& camFrustum{ cam.GetFrustum() };
-		
 		unsigned cullCount{};
+
+		/* ========== Frustum Culling ========== */
 		auto shouldRender = [&am, &camFrustum, &cullCount](ECS::Entity entity) {
 			if (!entity.IsActive()) { return false; }
 			// directional lights shouldnt be culled
@@ -59,7 +74,7 @@ namespace Graphics {
 		else {
 			Layers::LayerManager& layerManager{ IGE_LAYERMGR };
 			std::unordered_map<std::string, std::vector<ECS::Entity>> const& layerEntities{ layerManager.GetLayerEntities() };
-			for (auto const&[layerName, entities] : layerEntities) {
+			for (auto const& [layerName, entities] : layerEntities) {
 				if (layerManager.IsLayerVisible(layerName)) {
 					std::copy_if(entities.begin(), entities.end(), std::back_inserter(entityVector),
 						shouldRender);
@@ -74,15 +89,21 @@ namespace Graphics {
 			mGameCullCount = cullCount;
 		}
 
+		return entityVector;
+	}
+
+	void RenderSystem::RenderScene(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
+		PrepareFrame();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 		std::shared_ptr<Texture> prevOutputTex{ nullptr };
 		for (auto const& pass : Renderer::mRenderPasses) {
 			if (prevOutputTex) {
 				pass->SetInputTexture(prevOutputTex);
 			}
-			pass->Render(cam, entityVector);
+			pass->Render(cam, entities);
 			prevOutputTex = pass->GetOutputTexture();
 		}
-
 	}
 
 	void RenderSystem::Release() {
