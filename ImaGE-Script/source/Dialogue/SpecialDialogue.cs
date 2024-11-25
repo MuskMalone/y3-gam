@@ -8,7 +8,7 @@ public class SpecialDialogue : Entity
   public string introMessage;
   public string[] initialDialogue;
   public float fadeDuration = 1f;
-  public float typewriterSpeed = 0.08f;
+  public float typewriterSpeed = 0.04f;
 
   public Dialogue dialogueSystem;
   public Entity[] BeginningSilhouetteSequence;
@@ -97,6 +97,7 @@ public class SpecialDialogue : Entity
       return;
     }
 
+    InternalCalls.PlaySound(mEntityID, "BootUploadingText");
     playerMove.FreezePlayer();
     InternalCalls.SetText(mEntityID, string.Empty);
     isInSpecialDialogueMode = true;
@@ -115,6 +116,8 @@ public class SpecialDialogue : Entity
 
   private void SpecialLineFadeout()
   {
+    // Stop sound before the fadeout
+    InternalCalls.StopSound(mEntityID, "BootUploadingText");
     Vector4 originalColor = InternalCalls.GetTextColor(mEntityID);
     if (fadeTime < fadeDuration)
     {
