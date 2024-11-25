@@ -67,7 +67,8 @@ namespace Graphics {
 			prevOutputTex = pass->GetOutputTexture();
 		}
 
-		HandleGameViewInput();
+		//if(!cam.isEditor)
+		//	HandleGameViewInput();
 	}
 
 	void RenderSystem::PrepareFrame(){

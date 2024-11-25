@@ -1163,7 +1163,13 @@ namespace Graphics {
 
 	ECS::Entity Renderer::PickEntity(const glm::vec2& mousePos){
 		auto const& geomPass { Renderer::GetPass<GeomPass>() };
+
 		auto const& pickFb{ geomPass->GetGameViewFramebuffer() };
+
+		if (!pickFb) {
+			std::cout << "ERROR: PICK FRAMEBUFFER IS NULL!" << std::endl;
+			return ECS::Entity{};
+		}
 		Graphics::FramebufferSpec const& fbSpec{ pickFb->GetFramebufferSpec() };
 
 		pickFb->Bind();
