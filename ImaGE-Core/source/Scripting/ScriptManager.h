@@ -378,6 +378,9 @@ namespace Mono
 
 		static void SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val);
 
+		static MonoString* GetCurrentScene();
+		static void SetCurrentScene(MonoString* sceneName);
+
 		/*!**********************************************************************
 		*																																			  *
 		*								            Helper Function			          						  *

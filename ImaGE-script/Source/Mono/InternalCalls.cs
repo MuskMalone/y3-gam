@@ -220,6 +220,12 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static Entity FindScript(string s);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static string GetCurrentScene();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetCurrentScene(string sceneName);
     #endregion
   }
 }

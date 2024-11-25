@@ -22,6 +22,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <cstdint>
 #include <Scripting/ScriptUtils.h>
 
+#include <Events/EventManager.h>
+#include <Scenes/SceneManager.h>
 #include <filesystem>
 #include <Core/Components/Components.h>
 #include <Serialization/Deserializer.h>
@@ -244,6 +246,8 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(PauseSound);
   ADD_INTERNAL_CALL(StopSound);
   ADD_INTERNAL_CALL(GetLayerName);
+  ADD_INTERNAL_CALL(GetCurrentScene);
+  ADD_INTERNAL_CALL(SetCurrentScene);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -1221,6 +1225,24 @@ void Mono::SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val)
   }
   else
     Debug::DebugLogger::GetInstance().LogError("You r trying to set Image color from an invalid entity");
+}
+
+MonoString* Mono::GetCurrentScene() {
+  return STDToMonoString(IGE_SCENEMGR.GetSceneName());
+}
+
+void Mono::SetCurrentScene(MonoString* sceneName) {
+  std::string sceneNameSTD{ MonoStringToSTD(sceneName) };
+
+  if (!sceneNameSTD.empty()) {
+    QUEUE_EVENT(Events::LoadSceneEvent, std::filesystem::path(sceneNameSTD).stem().string(),
+      sceneNameSTD);
+
+    // Play the scene (Most common use case is to set scene and immediately want it playing)
+    if (IGE_SCENEMGR.GetSceneState() != Scenes::SceneState::PLAYING) {
+      IGE_SCENEMGR.PlayScene();
+    }
+  }
 }
 
 /*!**********************************************************************

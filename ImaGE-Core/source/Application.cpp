@@ -76,6 +76,11 @@ namespace IGE {
     glfwGetFramebufferSize(mWindow.get(), &width, &height);
     glViewport(0, 0, width, height);
     Graphics::Renderer::ResizeFinalFramebuffer(width, height);
+    
+    if (mSpecification.StartFromScene.first) {
+      QUEUE_EVENT(Events::LoadSceneEvent, std::filesystem::path(mSpecification.StartFromScene.second).stem().string(), 
+        mSpecification.StartFromScene.second);
+    }
   }
 
   void Application::Run() {
