@@ -36,14 +36,8 @@ namespace Graphics {
       max = glm::max(max, vtx.position);
     }
 
-#ifdef BOUNDING_SPHERE
-    mBV.center = (min + max) * 0.5f;
-    glm::vec3 extents{ mBV.center - min };
-    // set radius as largest of xyz extents
-    mBV.radius = std::max(extents.x, std::max(extents.y, extents.z));
-#else
-    
-#endif
+    mBoundingBox.center = (min + max) * 0.5f;
+    mBoundingBox.halfExtents = mBoundingBox.center - min;
   }
 }
 

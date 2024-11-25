@@ -100,15 +100,17 @@ namespace Graphics {
 
 namespace {
 	bool EntityInViewFrustum(BV::Frustum const& frustum, Component::Transform const& transform, Graphics::MeshSource const* meshSource) {
-		BV::BoundingSphere bs{ meshSource ?
-			meshSource->GetBoundingVol() : BV::BoundingSphere() };
-		bs.center = transform.worldPos;
-		bs.radius *= std::max(transform.worldScale.x, std::max(transform.worldScale.y, transform.worldScale.z));
+		BV::AABB aabb{ transform.worldPos, transform.worldScale };
 
-		if (!meshSource) {
-			bs.radius *= 0.5f;
+		// if mesh exists, apply scale to halfExtents of mesh
+		if (meshSource) {
+			aabb.halfExtents *= meshSource->GetBoundingBox().halfExtents;
+		}
+		// else halve the worldScale
+		else {
+			aabb.halfExtents *= 0.5f;
 		}
 
-		return BV::FrustumSphereIntersection(frustum, bs);
+		return BV::FrustumAABBIntersection(frustum, aabb);
 	}
 }

@@ -10,16 +10,11 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#define BOUNDING_SPHERE
 
 #include <Graphics/Vertex.h>
 #include <Graphics/VertexArray.h>
 #include <Graphics/Mesh/Submesh.h>
-#ifdef BOUNDING_SPHERE
-#include <BoundingVolumes/BoundingSphere.h>
-#else
 #include <BoundingVolumes/AABB.h>
-#endif
 
 // forward declarations
 namespace ECS { class Entity; }
@@ -31,7 +26,7 @@ namespace Graphics {
     public:
       MeshSource(const std::shared_ptr<VertexArray>& vao, const std::vector<Submesh>& submeshes,
           const std::vector<Vertex>& vertices, const std::vector<uint32_t>& indices)
-          : mVertices{ vertices }, mMeshNames{}, mIndices{ indices }, mVertexArray{ vao }, mSubmeshes{ submeshes }, mBV{} {
+          : mVertices{ vertices }, mMeshNames{}, mIndices{ indices }, mVertexArray{ vao }, mSubmeshes{ submeshes }, mBoundingBox{} {
         ComputeBV();
       }
 
@@ -39,7 +34,7 @@ namespace Graphics {
         std::vector<Submesh>&& submeshes, std::vector<Vertex>&& vertices,
         std::vector<uint32_t>&& indices, std::vector<std::string>&& names)
         : mVertices{ std::move(vertices) }, mMeshNames{ names }, mIndices{ std::move(indices) },
-        mVertexArray{ std::move(vao) }, mSubmeshes{ std::move(submeshes) }, mBV{} {
+        mVertexArray{ std::move(vao) }, mSubmeshes{ std::move(submeshes) }, mBoundingBox{} {
         ComputeBV();
       }
 
@@ -62,11 +57,7 @@ namespace Graphics {
       ************************************************************************/
       ECS::Entity ConstructEntity(IGE::Assets::GUID const& guid, std::string const& fileName) const;
 
-#ifdef BOUNDING_SPHERE
-      BV::BoundingSphere const& GetBoundingVol() const { return mBV; }
-#else
-      BV::AABB const& GetBoundingBox() const { return mBoundingBox; } TO ADD IN THE FUTURE
-#endif
+      BV::AABB const& GetBoundingBox() const { return mBoundingBox; }
 
       bool IsWireframe() { return mIsWireframe; }
       void ToggleWireframe() { mIsWireframe = !mIsWireframe; }
@@ -78,14 +69,11 @@ namespace Graphics {
       std::shared_ptr<VertexArray> mVertexArray;
       std::vector<Submesh> mSubmeshes;
 
-#ifdef BOUNDING_SPHERE
-      BV::BoundingSphere mBV; // @TODO: change to AABB
-#else
-      BV::AABB mBoundingBox; add in the future
-#endif
+      BV::AABB mBoundingBox;
       
       bool mIsWireframe{ false };
 
+      // @TODO: should be computed and read from IMSH file
       void ComputeBV();
 
       //MATERIALS VECTOR TO ADD

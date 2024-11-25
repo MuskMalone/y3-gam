@@ -3,20 +3,22 @@
 
 namespace BV {
   bool PlaneSphereIntersection(Plane const& plane, BoundingSphere const& sphere) {
-    return plane.GetPlaneSignedDist(sphere.center) > -sphere.radius;
+    return plane.GetPlaneSignedDist(sphere.center) > -sphere.radius - glm::epsilon<float>();
   }
 
   bool PlaneAABBIntersection(Plane const& plane, AABB const& aabb) {
-    float const r{ aabb.halfExtents.x * std::abs(plane.normal.x)
-      + aabb.halfExtents.y * std::abs(plane.normal.y)
-      + aabb.halfExtents.z * std::abs(plane.normal.z) };
+    glm::vec3 const extents{ aabb.halfExtents * 2.f };
+
+    float const r{ extents.x * std::abs(plane.normal.x)
+      + extents.y * std::abs(plane.normal.y)
+      + extents.z * std::abs(plane.normal.z) };
 
     return -r - glm::epsilon<float>() <= plane.GetPlaneSignedDist(aabb.center);
   }
 
   bool FrustumSphereIntersection(Frustum const& frustum, BoundingSphere const& sphere) {
     for (int i{}; i < 6; ++i) {
-      if (frustum[i].normal.x * sphere.center.x + frustum[i].normal.y * sphere.center.y + frustum[i].normal.z * sphere.center.z + frustum[i].dist <= -sphere.radius) {
+      if (!PlaneSphereIntersection(frustum[i], sphere)) {
         return false;
       }
     }
