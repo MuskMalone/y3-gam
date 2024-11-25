@@ -23,6 +23,8 @@ namespace Graphics {
 		static void Init();
 		static void Release();
 		static void RenderScene(CameraSpec const& cam);
+		static void PrepareFrame();
 		static CameraManager mCameraManager; // Add CameraManager as a static member
+
 	};
 }

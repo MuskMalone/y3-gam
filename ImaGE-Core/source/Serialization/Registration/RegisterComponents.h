@@ -7,8 +7,8 @@
 
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
-#include <rttr/registration>
 #include <policy.h>
+#include <rttr/registration>
 #include <Core/Components/Components.h>
 #include <Reflection/ProxyScript.h>
 #include <Serialization/JsonKeys.h>
@@ -82,8 +82,7 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("receiveShadows", &Mesh::receiveShadows);
 
   REGISTER_COMPONENT(Material, "Material")
-    .property("materialGUID", &Material::materialGUID)
-    .property("matIdx", &Material::matIdx);
+    .property("materialGUID", &Material::materialGUID);
 
   REGISTER_COMPONENT(Text, "Text")
     .property("textContent", &Text::textContent)

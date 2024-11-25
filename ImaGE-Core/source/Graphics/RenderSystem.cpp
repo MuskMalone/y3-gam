@@ -22,6 +22,7 @@ namespace Graphics {
 	}
 
 	void RenderSystem::RenderScene(CameraSpec const& cam) {
+		PrepareFrame();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//Frustum Culling should be here
@@ -63,6 +64,14 @@ namespace Graphics {
 			prevOutputTex = pass->GetOutputTexture();
 		}
 
+	}
+
+	void RenderSystem::PrepareFrame(){
+		// Update material properties and check if any changes were made
+		if (MaterialTable::UpdateMaterialPropsBuffer()) {
+			// Only upload to the GPU if materials were updated
+			MaterialTable::UploadMaterialProps();
+		}
 	}
 
 }

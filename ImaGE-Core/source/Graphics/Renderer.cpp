@@ -111,11 +111,11 @@ namespace Graphics {
 
 		//----------------------------------Line Batching-------------------------------------------------------//
 		mData.lineVertexArray = VertexArray::Create();
-		mData.lineVertexBuffer = VertexBuffer::Create(mData.cMaxVertices * sizeof(LineVtx));
+		mData.lineVertexBuffer = VertexBuffer::Create(mData.cMaxVertices2D * sizeof(LineVtx));
 
 		mData.lineVertexBuffer->SetLayout(lineLayout);
 		mData.lineVertexArray->AddVertexBuffer(mData.lineVertexBuffer);
-		mData.lineBuffer = std::vector<LineVtx>(mData.cMaxVertices);
+		mData.lineBuffer = std::vector<LineVtx>(mData.cMaxVertices2D);
 
 		//----------------------------------------------------------------------------------------------------------//
 		
@@ -169,9 +169,9 @@ namespace Graphics {
 		IGE::Assets::GUID texguid1{ Texture::Create(gAssetsDirectory + std::string("Textures\\default.dds")) };
 		IGE::Assets::GUID texguid{ Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
 		//Init Materials
-
+		MaterialTable::Init(mData.cMaxMaterials);
 		// Create a default material with a default shader and properties
-		std::shared_ptr<MaterialData> defaultMaterial = MaterialData::Create("PBR", "Default");
+		std::shared_ptr<MaterialData> defaultMaterial = MaterialData::Create("PBR", "Default"); //should probably shift all this in MaterialTable Init
 		defaultMaterial->SetAlbedoColor(glm::vec3(1.0f));  // Set default white albedo
 		defaultMaterial->SetMetalness(0.0f);
 		defaultMaterial->SetRoughness(1.0f);
@@ -412,7 +412,7 @@ namespace Graphics {
 	}
 
 	void Renderer::Shutdown() {
-		// Add shutdown logic if necessary
+		MaterialTable::Shutdown();
 	}
 
 	void Renderer::Clear(){
@@ -503,8 +503,12 @@ namespace Graphics {
 		return instanceBuffer;
 	}
 
+	Renderer::~Renderer(){
+		Renderer::Shutdown();
+	}
+
 	void Renderer::DrawLine(glm::vec3 const& p0, glm::vec3 const& p1, glm::vec4 const& clr) {
-		if (mData.lineVtxCount >= RendererData::cMaxVertices)
+		if (mData.lineVtxCount >= RendererData::cMaxVertices2D)
 			NextBatch();
 
 		SetLineBufferData(p0, clr);
@@ -1156,9 +1160,9 @@ namespace Graphics {
 	}
 
 	void Renderer::FlushBatch() {
-		if (mData.lineVtxCount > RendererData::cMaxVertices) {
+		if (mData.lineVtxCount > RendererData::cMaxVertices2D) {
 			std::cerr << "Error: Line vertex count exceeds buffer capacity during FlushBatch!" << std::endl;
-			mData.lineVtxCount = RendererData::cMaxVertices; // Clamp to valid range
+			mData.lineVtxCount = RendererData::cMaxVertices2D; // Clamp to valid range
 		}
 
 		if (mData.quadIdxCount) {
