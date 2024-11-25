@@ -277,7 +277,7 @@ namespace Systems {
   }
 
   void TextSystem::RenderText(uint32_t filePathHash, std::string const& textContent,
-    float xPos, float yPos, float scale, glm::quat rotation, glm::vec3 color,
+    float xPos, float yPos, float scale, glm::quat rotation, glm::vec4 color,
     std::vector<std::pair<size_t, float>> const& newLineIndices, float multiLineSpacingOffset, glm::mat4 viewProj) {
     if (mFonts.find(filePathHash) == mFonts.end()) {
       Debug::DebugLogger::GetInstance().LogWarning("[Text] Trying to Render Invalid Font");
@@ -364,7 +364,7 @@ namespace Systems {
     currTex->Bind(0);
 
     mShader->Use();
-    mShader->SetUniform("uTextColor", color.x, color.y, color.z);
+    mShader->SetUniform("uTextColor", color.x, color.y, color.z, color.w);
     mShader->SetUniform("uProjection", projection);
     currFace.vao->Bind();
 

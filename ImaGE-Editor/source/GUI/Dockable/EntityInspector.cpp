@@ -786,7 +786,7 @@ namespace GUI {
     bool modified{ false };
 
     if (isOpen) {
-      ImGui::Text("Usage: Must be child of an Entity with the \"Canvas\" Component");
+      ImGui::Text("Usage: Must be child of an Entity with a \"Canvas\" Component");
 
       auto& text = entity.GetComponent<Component::Text>();
       float inputWidth{ CalcInputWidth(60.f) };
@@ -838,7 +838,7 @@ namespace GUI {
       ImGui::EndDisabled();
       
       NextRowTable("Color");
-      if (ImGui::ColorEdit4("##TextColor", &text.color[0], ImGuiColorEditFlags_NoAlpha)) {
+      if (ImGui::ColorEdit4("##TextColor", &text.color[0])) {
         modified = true;
       }
 

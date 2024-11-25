@@ -154,6 +154,19 @@ namespace IGE.Utils
 
 
     #region Text Component
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static Vector4 GetTextColor(uint EntityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetTextColor(uint TextEntityID, Vector4 textColor);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetTextScale(uint EntityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetTextScale(uint TextEntityID, float textScale);
+
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static string GetText(uint EntityID);
 
