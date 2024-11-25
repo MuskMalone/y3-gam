@@ -60,7 +60,7 @@ namespace Graphics {
 
         // Shader access
         inline std::shared_ptr<Shader> GetShader() const { return mShader; }
-        inline void SetShader(std::string const& shaderName) { mShader = ShaderLibrary::Get(shaderName); }
+        inline void SetShader(std::string const& shaderName) { mShader = ShaderLibrary::Get(shaderName); mModified = true; }
 
         // Property Getters and Setters
         std::string const& GetName() { return mName; };
@@ -70,28 +70,28 @@ namespace Graphics {
         void SetShaderName(std::string const& name) { mShaderName = name; SetShader(name); }
 
         glm::vec3 const& GetAlbedoColor() const { return mAlbedoColor; }
-        void SetAlbedoColor(const glm::vec3& color) { mAlbedoColor = color; }
+        void SetAlbedoColor(const glm::vec3& color) { mAlbedoColor = color; mModified = true;}
 
         float GetMetalness() const { return mMetalness; }
-        void SetMetalness(float value) { mMetalness = value; }
+        void SetMetalness(float value) { mMetalness = value; mModified = true;}
 
         float GetRoughness() const { return mRoughness; }
-        void SetRoughness(float value) { mRoughness = value; }
+        void SetRoughness(float value) { mRoughness = value; mModified = true;}
 
         float GetAO() const { return mAO; }
-        void SetAO(float ao) { mAO = ao; }
+        void SetAO(float ao) { mAO = ao; mModified = true; }
 
         float GetEmission() const { return mEmission; }
-        void SetEmission(float value) { mEmission = value; }
+        void SetEmission(float value) { mEmission = value; mModified = true; }
 
         float GetTransparency() const { return mTransparency; }
-        void SetTransparency(float value) { mTransparency = value; }
+        void SetTransparency(float value) { mTransparency = value; mModified = true; }
 
         glm::vec2 const& GetTiling() const { return mTiling; }
-        void SetTiling(const glm::vec2& tiling) { mTiling = tiling; }
+        void SetTiling(const glm::vec2& tiling) { mTiling = tiling; mModified = true;}
 
         glm::vec2 const& GetOffset() const { return mOffset; }
-        void SetOffset(const glm::vec2& offset) { mOffset = offset; }
+        void SetOffset(const glm::vec2& offset) { mOffset = offset; mModified = true; }
 
         // Texture Getters and Setters
         bool IsDefaultAlbedoMap() const { return !mAlbedoMap.IsValid(); }
@@ -113,13 +113,16 @@ namespace Graphics {
 
         // Apply material to shader
         void Apply(std::shared_ptr<Shader> shader) const;
-
+        
         // Flags handling
         bool GetFlag(MaterialDataFlag flag) const { return mFlags & static_cast<uint32_t>(flag); }
         void SetFlag(MaterialDataFlag flag, bool value) {
             if (value) mFlags |= static_cast<uint32_t>(flag);
             else mFlags &= ~static_cast<uint32_t>(flag);
         }
+
+        bool IsModified() const { return mModified; }
+        void ClearModifiedFlag() { mModified = false; }
 
     private:
         std::shared_ptr<Shader> mShader;
@@ -131,6 +134,8 @@ namespace Graphics {
         float mAO;
         float mEmission;
         float mTransparency;
+
+        bool mModified;
 
         uint32_t mFlags;
 

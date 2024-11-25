@@ -10,19 +10,19 @@ namespace Graphics {
 
     IGE::Assets::GUID MaterialData::GetAlbedoMap() const { return mAlbedoMap ? mAlbedoMap : Renderer::GetWhiteTexture(); }
 
-    void MaterialData::SetAlbedoMap(IGE::Assets::GUID const& texture) { mAlbedoMap = texture; }
+    void MaterialData::SetAlbedoMap(IGE::Assets::GUID const& texture) { mAlbedoMap = texture; mModified = true;}
 
     IGE::Assets::GUID MaterialData::GetNormalMap() const { return mNormalMap ? mNormalMap : Renderer::GetWhiteTexture(); }
 
-    void MaterialData::SetNormalMap(IGE::Assets::GUID const& texture) { mNormalMap = texture; }
+    void MaterialData::SetNormalMap(IGE::Assets::GUID const& texture) { mNormalMap = texture; mModified = true;}
 
     IGE::Assets::GUID MaterialData::GetMetalnessMap() const { return mMetalnessMap; }
 
-    void MaterialData::SetMetalnessMap(IGE::Assets::GUID const& texture) { mMetalnessMap = texture; }
+    void MaterialData::SetMetalnessMap(IGE::Assets::GUID const& texture) { mMetalnessMap = texture; mModified = true; }
 
     IGE::Assets::GUID MaterialData::GetRoughnessMap() const { return mRoughnessMap; }
 
-    void MaterialData::SetRoughnessMap(IGE::Assets::GUID const& texture) { mRoughnessMap = texture; }
+    void MaterialData::SetRoughnessMap(IGE::Assets::GUID const& texture) { mRoughnessMap = texture; mModified = true;}
  
     void MaterialData::Apply(std::shared_ptr<Shader> shader) const {
         shader->SetUniform("u_Tiling", mTiling);

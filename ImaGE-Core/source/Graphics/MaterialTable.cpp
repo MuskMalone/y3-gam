@@ -14,17 +14,23 @@ namespace Graphics {
     std::vector<MaterialProperties> MaterialTable::mMaterialPropsBuffer;
 
 
-    void MaterialTable::UpdateMaterialPropsBuffer(){
+    bool MaterialTable::UpdateMaterialPropsBuffer(){
+        bool anyUpdated{ false };
         for (size_t i = 0; i < mMaterials.size(); ++i) {
-            if (mMaterials[i]) {
+            if (mMaterials[i] && mMaterials[i]->IsModified()) {
                 MaterialProperties& props = mMaterialPropsBuffer[i];
                 props.AlbedoColor = glm::vec4(mMaterials[i]->GetAlbedoColor(),1.f);
                 props.Metalness = mMaterials[i]->GetMetalness();
                 props.Roughness = mMaterials[i]->GetRoughness();
                 props.Transparency = mMaterials[i]->GetTransparency();
                 props.AO = mMaterials[i]->GetAO();
+
+                mMaterials[i]->ClearModifiedFlag();
+                anyUpdated = true;
             }
         }
+
+        return anyUpdated;
     }
 
     void MaterialTable::UploadMaterialProps(){
@@ -288,7 +294,6 @@ namespace Graphics {
       // else retrieve it
       Serialization::Serializer::SerializeAny(*mMaterials[mGUIDToIndexMap.at(guid)], output);
     }
-
 
     std::shared_ptr<MaterialData> MaterialTable::LoadMaterial(std::string const& fp) {
         // Ensure the file exists
