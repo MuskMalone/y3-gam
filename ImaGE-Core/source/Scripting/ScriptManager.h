@@ -39,6 +39,7 @@ namespace Mono
 	public:
 		static std::unordered_map<std::string, ScriptFieldType> mScriptFieldTypeMap;
 		static std::unordered_map<ScriptFieldType, std::string> mRevClassMap;			//Rev Map of Scripts, for getting the name of script based on type 
+		static std::vector < std::tuple<std::string, int, int>>mScreenShotInfo;
 		static std::vector<std::string> mAllScriptNames;
 		static std::shared_ptr<MonoDomain> mRootDomain;
 		static std::shared_ptr<MonoDomain> mAppDomain;
@@ -367,6 +368,8 @@ namespace Mono
 		static glm::vec3 GetMainCameraPosition(ECS::Entity::EntityID cameraEntity);
 
 		static glm::vec3 GetMainCameraDirection(ECS::Entity::EntityID cameraEntity);
+
+		static glm::quat GetMainCameraRotation(ECS::Entity::EntityID cameraEntity);
 		
 		static glm::vec4 GetTextColor(ECS::Entity::EntityID textEntity);
 
@@ -388,6 +391,9 @@ namespace Mono
 
 		static MonoString* GetCurrentScene();
 		static void SetCurrentScene(MonoString* scenePath);
+
+		static void TakeScreenShot(MonoString* name, int width, int height);
+		void SaveScreenShot(std::string name, int width, int height);
 
 		/*!**********************************************************************
 		*																																			  *
