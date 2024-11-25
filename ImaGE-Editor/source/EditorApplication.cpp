@@ -211,6 +211,16 @@ namespace IGE {
             gameTex->CopyFrom(fb0->GetColorAttachmentID(), fb0->GetFramebufferSpec().width, fb0->GetFramebufferSpec().height);
           }
 
+          if (Mono::ScriptManager::GetInstance().mScreenShotInfo.size() > 0)
+          {
+
+            fb0->Bind();
+            for (const auto& ss : Mono::ScriptManager::GetInstance().mScreenShotInfo)
+              Mono::SaveScreenShot(std::get<0>(ss), std::get<1>(ss), std::get<2>(ss));
+            Mono::ScriptManager::GetInstance().mScreenShotInfo.clear();
+            fb0->Unbind();
+          }
+
           // if ShowCulledEntities is on, only render with the entities returned from game view's render
           if (GUI::GUIVault::sShowCulledEntities) {
             Graphics::RenderSystem::RenderScene(editorCam, entities);

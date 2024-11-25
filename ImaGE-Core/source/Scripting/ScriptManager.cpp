@@ -10,6 +10,9 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
+
+#define STBI_MSC_SECURE_CRT
+#include "stb/stb_image_write.h"
 #include "ScriptManager.h"
 #include "mono/metadata/assembly.h"
 #include "mono/metadata/object.h"
@@ -44,6 +47,7 @@ namespace Mono
   // Hot reload
   std::unique_ptr<filewatch::FileWatch<std::string>> ScriptManager::mCsProjWatcher{};
   std::unique_ptr<filewatch::FileWatch<std::string>> ScriptManager::mFileWatcher{};
+  std::vector<std::tuple<std::string, int, int>>ScriptManager::mScreenShotInfo{};
   std::string ScriptManager::mScnfilePath{};
   std::string ScriptManager::mCsprojPath{};
   std::string ScriptManager::mBatfilePath{};
@@ -233,6 +237,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetAllChildren);
   ADD_INTERNAL_CALL(GetMainCameraPosition);
   ADD_INTERNAL_CALL(GetMainCameraDirection);
+  ADD_INTERNAL_CALL(GetMainCameraRotation);
   ADD_INTERNAL_CALL(GetTextColor);
   ADD_INTERNAL_CALL(SetTextColor);
   ADD_INTERNAL_CALL(GetTextScale);
@@ -252,6 +257,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetLayerName);
   ADD_INTERNAL_CALL(GetCurrentScene);
   ADD_INTERNAL_CALL(SetCurrentScene);
+  ADD_INTERNAL_CALL(TakeScreenShot);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -1158,6 +1164,16 @@ glm::vec3 Mono::GetMainCameraDirection(ECS::Entity::EntityID cameraEntity) {
   return glm::vec3();
 }
 
+glm::quat Mono::GetMainCameraRotation(ECS::Entity::EntityID cameraEntity) {
+  if (ECS::Entity(cameraEntity) && ECS::Entity{ cameraEntity }.HasComponent<Component::Camera>()) {
+    return ECS::Entity{ cameraEntity }.GetComponent<Component::Transform>().worldRot;
+  }
+  else {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to get the camera position of a non-camera Entity!");
+  }
+  return glm::quat();
+}
+
 glm::vec4 Mono::GetTextColor(ECS::Entity::EntityID textEntity) {
   if (!ECS::Entity{ textEntity }.HasComponent<Component::Text>()) {
     Debug::DebugLogger::GetInstance().LogError("You are trying to Get Text Color of an entity that does not have the Text Component");
@@ -1287,6 +1303,55 @@ void Mono::SetCurrentScene(MonoString* scenePath) {
       IGE_SCENEMGR.PlayScene();
     }
     */
+  }
+}
+
+void Mono::TakeScreenShot(MonoString* name, int width, int height)
+{
+  Mono::ScriptManager::GetInstance().mScreenShotInfo.push_back({ MonoStringToSTD(name) ,width,height });
+}
+
+void Mono::SaveScreenShot(std::string name, int width, int height)
+{
+  // Get the primary monitor and its video mode
+  GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+  const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+  // Window's full width and height
+  int windowWidth = mode->width;
+  int windowHeight = mode->height;
+
+  // Calculate the starting coordinates for capturing the center
+  int startX = (windowWidth - width) / 2;
+  int startY = (windowHeight - height) / 2;
+
+  // Ensure the capture area is within bounds
+  if (startX < 0 || startY < 0 || startX + width > windowWidth || startY + height > windowHeight) {
+    std::cerr << "Invalid dimensions for screenshot. Check width and height." << std::endl;
+    return;
+  }
+
+  // Allocate memory for pixel data
+  std::vector<unsigned char> pixels(width * height * 3);
+
+  // Read pixels from the specified region
+  glReadPixels(startX, startY, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels.data());
+
+  // Flip rows (OpenGL's origin is bottom-left, PNG expects top-left)
+  std::vector<unsigned char> flippedPixels(width * height * 3);
+  for (int y = 0; y < height; ++y)
+  {
+    memcpy(&flippedPixels[y * width * 3], &pixels[(height - 1 - y) * width * 3], width * 3);
+  }
+
+  // Save as PNG
+  if (stbi_write_png(("../Assets/GameImg/" + name + ".png").c_str(), width, height, 3, flippedPixels.data(), width * 3))
+  {
+    std::cout << "Screenshot saved to " << (name + ".png") << std::endl;
+  }
+  else
+  {
+    std::cerr << "Failed to save screenshot!" << std::endl;
   }
 }
 

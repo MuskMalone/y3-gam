@@ -150,6 +150,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetMainCameraDirection(uint cameraEntityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static Quaternion GetMainCameraRotation(uint cameraEntityID);
     #endregion
 
 
@@ -239,6 +242,10 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetCurrentScene(string sceneName);
+
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void TakeScreenShot(string s, int width, int height);
     #endregion
   }
 }
