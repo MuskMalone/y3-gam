@@ -18,13 +18,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "MaterialTable.h"
 #include <typeindex>
 #include <Graphics/RenderPass/RenderPass.h>
-#include "Core/Components/Camera.h"
-#include "Core/Components/Transform.h"
-#include "Core/Components/Light.h"
-
 
 namespace Component{
-	struct Camera;
+	struct Camera; struct Transform; struct Light;
 }
 
 namespace Graphics {
@@ -34,9 +30,9 @@ namespace Graphics {
 	class Mesh;
 
 	struct Statistics {
-		uint32_t drawCalls{};
-		uint32_t quadCount{};
-		uint32_t lineCount{};
+		uint32_t drawCalls;
+		uint32_t quadCount;
+		uint32_t lineCount;
 
 		uint32_t GetTotalVtxCount() { return quadCount * 4; }
 		uint32_t GetTotalIdxCount() { return quadCount * 6; }
@@ -232,7 +228,7 @@ namespace Graphics {
 		static void NextBatch();
 
 		// Stats
-		static Statistics GetStats();
+		static Statistics const& GetStats();
 		static void ResetStats();
 
 		static void InitShaders();

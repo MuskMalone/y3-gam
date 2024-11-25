@@ -13,6 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <ImGui/imgui.h>
 #include <numeric>
 #include "GUI/GUIVault.h"
+#include <Graphics/RenderSystem.h>
 
 namespace GUI {
 
@@ -41,19 +42,50 @@ namespace GUI {
 
     ImGui::Text(("Current: " + std::to_string(mCurrentFPS)).c_str());
 
-    ImGui::Text("Width");
-    if (ImGui::SliderInt("##FPSMaxCount", &mFPSMaxCount, 2, 100))
     {
-      if (mFPSMaxCount > mFPSHistory.size())
-      {
-        mFPSHistory.resize(mFPSMaxCount);
-        mFPSHistory.reserve(sResizeThreshold);
-      }
-      else if (mFPSMaxCount < mFPSHistory.size())
-      {
-        mFPSHistory.erase(mFPSHistory.begin(), mFPSHistory.end() - mFPSMaxCount);
+      float const colWidth{ ImGui::GetContentRegionAvail().x * 0.5f };
+      if (ImGui::BeginTable("SettingsTable", 2, ImGuiTableFlags_None)) {
+        ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, colWidth);
+        ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed);
+        float const elemSize{ colWidth * 0.8f };
+
+        ImGui::TableNextColumn(); ImGui::Text("Width");
+        ImGui::TableNextColumn(); ImGui::Text("Time per Update");
+
+        ImGui::TableNextColumn();
+        ImGui::SetNextItemWidth(elemSize);
+        if (ImGui::SliderInt("##FPSMaxCount", &mFPSMaxCount, 2, 100))
+        {
+          if (mFPSMaxCount > mFPSHistory.size())
+          {
+            mFPSHistory.resize(mFPSMaxCount);
+            mFPSHistory.reserve(sResizeThreshold);
+          }
+          else if (mFPSMaxCount < mFPSHistory.size())
+          {
+            mFPSHistory.erase(mFPSHistory.begin(), mFPSHistory.end() - mFPSMaxCount);
+          }
+        }
+
+        ImGui::TableNextColumn();
+        ImGui::SetNextItemWidth(elemSize);
+        ImGui::SliderFloat("##TimePerUpdate", &mTimePerUpdate, 0.001f, 5.f);
+
+        ImGui::EndTable();
       }
     }
+
+    // Graphics Stats
+    ImGui::NewLine();
+    ImGui::PushFont(GUI::GUIVault::GetStyler().GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
+    ImGui::Text("Graphics Stats");
+    ImGui::PopFont();
+
+    ImGui::Text("Objects Culled (Editor): "); ImGui::SameLine();
+    ImGui::Text(std::to_string(Graphics::RenderSystem::GetEditorCullCount()).c_str());
+
+    ImGui::Text("Objects Culled (Game): "); ImGui::SameLine();
+    ImGui::Text(std::to_string(Graphics::RenderSystem::GetGameCullCount()).c_str());
 
     // Overall Performance
     ImGui::NewLine();
@@ -98,9 +130,6 @@ namespace GUI {
 
       ImGui::NewLine();
     }
-
-    ImGui::Text("Time per Update");
-    ImGui::SliderFloat("##TimePerUpdate", &mTimePerUpdate, 0.001f, 5.f);
 
     ImGui::End();
   }

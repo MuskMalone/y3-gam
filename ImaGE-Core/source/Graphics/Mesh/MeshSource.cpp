@@ -27,5 +27,23 @@ namespace Graphics {
 
     return parent;
   }
+
+  void MeshSource::ComputeBV() {
+    glm::vec3 min{ FLT_MAX }, max{ -FLT_MAX };
+
+    for (Vertex const& vtx : mVertices) {
+      min = glm::min(min, vtx.position);
+      max = glm::max(max, vtx.position);
+    }
+
+#ifdef BOUNDING_SPHERE
+    mBV.center = (min + max) * 0.5f;
+    glm::vec3 extents{ mBV.center - min };
+    // set radius as largest of xyz extents
+    mBV.radius = std::max(extents.x, std::max(extents.y, extents.z));
+#else
+    
+#endif
+  }
 }
 

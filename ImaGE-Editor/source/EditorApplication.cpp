@@ -23,7 +23,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <imgui/backends/imgui_impl_opengl3.h>
 
 #include <Core/Systems/Systems.h>
-#include "Graphics/CameraSpec.h"
+#include <Graphics/Camera/CameraSpec.h>
 
 #include <Graphics/Renderer.h>
 #include <Graphics/MaterialTable.h>
@@ -220,7 +220,8 @@ namespace IGE {
 
       Graphics::RenderTarget const& target = mRenderTargets[0];
       auto const& cam = target.camera;
-      Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ cam.GetViewProjMatrix(), cam.GetViewMatrix(), cam.GetPosition(), cam.GetNearPlane(), cam.GetFarPlane(), cam.GetFOV(), cam.GetAspectRatio(), true});
+      Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ cam.GetViewProjMatrix(), cam.GetViewMatrix(), 
+        cam.GetPosition(), cam.GetNearPlane(), cam.GetFarPlane(), cam.GetFOV(), cam.GetAspectRatio(), true});
 
   }
 
