@@ -34,9 +34,9 @@ namespace Graphics {
 	class Mesh;
 
 	struct Statistics {
-		uint32_t drawCalls{};
-		uint32_t quadCount{};
-		uint32_t lineCount{};
+		uint32_t drawCalls;
+		uint32_t quadCount;
+		uint32_t lineCount;
 
 		uint32_t GetTotalVtxCount() { return quadCount * 4; }
 		uint32_t GetTotalIdxCount() { return quadCount * 6; }
@@ -230,7 +230,7 @@ namespace Graphics {
 		static void NextBatch();
 
 		// Stats
-		static Statistics GetStats();
+		static Statistics const& GetStats();
 		static void ResetStats();
 
 		static void InitShaders();

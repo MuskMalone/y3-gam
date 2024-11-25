@@ -12,7 +12,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <memory>
 #include <vector>
 #include <Graphics/Pipeline.h>
-#include "Graphics/CameraSpec.h"
+#include <Graphics/Camera/CameraSpec.h>
 
 namespace ECS { class Entity; }
 

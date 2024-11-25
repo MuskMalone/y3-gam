@@ -1323,7 +1323,7 @@ namespace Graphics {
 		FlushBatch();
 	}
 
-	Statistics Renderer::GetStats() {
+	Statistics const& Renderer::GetStats() {
 		return mData.stats;
 	}
 

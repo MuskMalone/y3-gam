@@ -11,18 +11,24 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#include "CameraManager.h"
-#include "CameraSpec.h"
+#include <Graphics/Camera/CameraManager.h>
+#include <Graphics/Camera/CameraSpec.h>
 
 namespace Graphics {
 	class EditorCamera;
 
 	class RenderSystem {
-
 	public:
 		static void Init();
 		static void Release();
 		static void RenderScene(CameraSpec const& cam);
 		static CameraManager mCameraManager; // Add CameraManager as a static member
+
+		static uint32_t GetEditorCullCount() { return mEditorCullCount; }
+		static uint32_t GetGameCullCount() { return mGameCullCount; }
+
+	private:
+		// can move into struct if needed
+		static inline uint32_t mEditorCullCount = 0, mGameCullCount = 0;
 	};
 }
