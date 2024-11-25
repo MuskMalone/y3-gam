@@ -10,7 +10,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 
 #pragma once
-#include "Utils.h"
+#include <Graphics/Utils.h>
 
 namespace Graphics {
 	class EditorCamera {

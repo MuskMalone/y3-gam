@@ -27,5 +27,17 @@ namespace Graphics {
 
     return parent;
   }
+
+  void MeshSource::ComputeBV() {
+    glm::vec3 min{ FLT_MAX }, max{ -FLT_MAX };
+
+    for (Vertex const& vtx : mVertices) {
+      min = glm::min(min, vtx.position);
+      max = glm::max(max, vtx.position);
+    }
+
+    mBoundingBox.center = (min + max) * 0.5f;
+    mBoundingBox.halfExtents = mBoundingBox.center - min;
+  }
 }
 

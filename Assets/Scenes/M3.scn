@@ -138,15 +138,14 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 14137664646562134886
-                        },
-                        "matIdx": 1
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 10001465260758671892
+                            "ID": 11536421179331424970
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -892,7 +891,7 @@
                                         "position": {
                                             "x": -18.422761917114259,
                                             "y": 2.0830039978027345,
-                                            "z": -16.31536865234375
+                                            "z": -16.315364837646486
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -921,7 +920,7 @@
                         "position": {
                             "x": 0.5542259216308594,
                             "y": 0.27500206232070925,
-                            "z": 0.16699320077896119
+                            "z": 0.166995108127594
                         },
                         "scale": {
                             "x": 0.11999999731779099,
@@ -942,7 +941,7 @@
                         "worldPos": {
                             "x": -18.422761917114259,
                             "y": 2.0830039978027345,
-                            "z": -16.31536865234375
+                            "z": -16.315364837646486
                         },
                         "worldScale": {
                             "x": 0.23999999463558198,
@@ -1586,15 +1585,14 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 11038878703019679360
-                        },
-                        "matIdx": 2
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1714,15 +1712,14 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 4816241010772822885
-                        },
-                        "matIdx": 3
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1862,15 +1859,14 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 4816241010772822885
-                        },
-                        "matIdx": 3
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1990,15 +1986,14 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 9472059093592539045
-                        },
-                        "matIdx": 4
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2177,7 +2172,7 @@
                     "Mesh": {
                         "meshName": "Capsule",
                         "GUID": {
-                            "ID": 1023849895532132972
+                            "ID": 16474796606330437532
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2323,6 +2318,176 @@
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "RayHitString"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "entityID": 40,
+                                "scriptName": "CameraCapture",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "imageCaptured"
+                                        }
+                                    },
+                                    {
+                                        "data": 256,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "imageHeight"
+                                        }
+                                    },
+                                    {
+                                        "data": 256,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "imageWidth"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 40,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "player"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "entityID": 40,
+                                "scriptName": "PictureAlign",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 4194648,
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 4194648,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "FinalObject"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "alignCheck"
+                                        }
+                                    },
+                                    {
+                                        "data": "CapturedData.txt",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "dataFileName"
+                                        }
+                                    },
+                                    {
+                                        "data": "CapturedData.txt",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "dataFilePath"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4194648,
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 4194648,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "initialObject"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isFrozen"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 0,
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 0,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "mainCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 40,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "player"
+                                        }
+                                    },
+                                    {
+                                        "data": 1.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "positionThreshold"
+                                        }
+                                    },
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "rotationThreshold"
                                         }
                                     }
                                 ]
@@ -2588,15 +2753,14 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 8297051694531430861
-                        },
-                        "matIdx": 5
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2858,15 +3022,14 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 8297051694531430861
-                        },
-                        "matIdx": 5
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3688,7 +3851,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3763,7 +3926,7 @@
                         "position": {
                             "x": 10.946462631225586,
                             "y": 6.866655349731445,
-                            "z": -0.03449249267578125
+                            "z": -0.03446197509765625
                         },
                         "scale": {
                             "x": 1.136022686958313,
@@ -3782,7 +3945,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.56549835205078,
+                            "x": 53.565528869628909,
                             "y": 17.231990814208986,
                             "z": 47.068790435791019
                         },
@@ -3808,7 +3971,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3928,7 +4091,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -4125,7 +4288,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -4394,15 +4557,14 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 8297051694531430861
-                        },
-                        "matIdx": 5
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -4542,7 +4704,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -4662,7 +4824,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -4871,7 +5033,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -4991,7 +5153,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -5063,15 +5225,14 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 2046570302303426118
-                        },
-                        "matIdx": 6
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -6273,15 +6434,14 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 11128135777711506320
-                        },
-                        "matIdx": 7
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -7449,8 +7609,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -8094,15 +8253,14 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 10001465260758671892
+                            "ID": 11536421179331424970
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -10041,8 +10199,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0006234092870727181,
-                            "y": -0.0009613037109375,
-                            "z": 0.00140380859375
+                            "y": -0.000972747802734375,
+                            "z": 0.0014190673828125
                         },
                         "scale": {
                             "x": 1.0,
@@ -10061,8 +10219,8 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.60139846801758,
-                            "y": 12.69936466217041,
+                            "x": 53.60141372680664,
+                            "y": 12.699357032775879,
                             "z": 54.18358612060547
                         },
                         "worldScale": {
@@ -10087,8 +10245,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -10729,7 +10886,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.004147827625274658,
+                            "x": -0.004147708415985107,
                             "y": -0.7610733509063721,
                             "z": -0.0030803680419921877
                         },
@@ -10750,7 +10907,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 6.003143787384033,
+                            "x": 6.003145694732666,
                             "y": 9.305135726928711,
                             "z": -37.83987808227539
                         },
@@ -10776,15 +10933,14 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 11128135777711506320
-                        },
-                        "matIdx": 7
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -11542,12 +11698,6 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -11575,6 +11725,12 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -11790,8 +11946,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -11870,8 +12025,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -11950,8 +12104,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -12030,8 +12183,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -12110,8 +12262,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -12190,8 +12341,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -12270,8 +12420,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -12350,8 +12499,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -12430,8 +12578,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -12510,8 +12657,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -12590,8 +12736,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -12670,8 +12815,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -12750,8 +12894,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -12830,8 +12973,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -12910,8 +13052,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -12990,8 +13131,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -13070,8 +13210,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -13150,8 +13289,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -13334,8 +13472,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -13414,8 +13551,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -13494,8 +13630,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -13574,8 +13709,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -13654,8 +13788,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -13734,8 +13867,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -13814,8 +13946,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -13894,8 +14025,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -13974,8 +14104,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -14054,8 +14183,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -14134,8 +14262,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -14214,8 +14341,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -14294,8 +14420,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -14374,8 +14499,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -14454,8 +14578,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -14534,8 +14657,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -14614,8 +14736,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -14752,7 +14873,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0013446807861328126,
+                            "x": 0.0013513565063476563,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -14773,7 +14894,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.59883499145508,
+                            "x": -44.598812103271487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -14799,8 +14920,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -14832,7 +14952,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0013446807861328126,
+                            "x": 0.0013513565063476563,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -14853,7 +14973,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.59883499145508,
+                            "x": -44.598812103271487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -14879,8 +14999,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -14912,7 +15031,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0013446807861328126,
+                            "x": 0.0013513565063476563,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -14933,7 +15052,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.59883499145508,
+                            "x": -44.598812103271487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -14959,8 +15078,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -14992,7 +15110,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0013446807861328126,
+                            "x": 0.0013513565063476563,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15013,7 +15131,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.59883499145508,
+                            "x": -44.598812103271487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15039,8 +15157,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -15072,7 +15189,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0013446807861328126,
+                            "x": 0.0013513565063476563,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15093,7 +15210,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.59883499145508,
+                            "x": -44.598812103271487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15119,8 +15236,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -15152,7 +15268,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0013446807861328126,
+                            "x": 0.0013513565063476563,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15173,7 +15289,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.59883499145508,
+                            "x": -44.598812103271487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15199,8 +15315,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -15232,7 +15347,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0013446807861328126,
+                            "x": 0.0013513565063476563,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15253,7 +15368,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.59883499145508,
+                            "x": -44.598812103271487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15279,8 +15394,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -15312,7 +15426,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0013446807861328126,
+                            "x": 0.0013513565063476563,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15333,7 +15447,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.59883499145508,
+                            "x": -44.598812103271487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15359,8 +15473,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -15392,7 +15505,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0013446807861328126,
+                            "x": 0.0013513565063476563,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15413,7 +15526,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.59883499145508,
+                            "x": -44.598812103271487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15439,8 +15552,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -15472,7 +15584,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0013446807861328126,
+                            "x": 0.0013513565063476563,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15493,7 +15605,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.59883499145508,
+                            "x": -44.598812103271487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15519,8 +15631,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -15552,7 +15663,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0013446807861328126,
+                            "x": 0.0013513565063476563,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15573,7 +15684,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.59883499145508,
+                            "x": -44.598812103271487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15599,8 +15710,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -15632,7 +15742,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0013446807861328126,
+                            "x": 0.0013513565063476563,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15653,7 +15763,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.59883499145508,
+                            "x": -44.598812103271487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15679,8 +15789,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -15712,7 +15821,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0013446807861328126,
+                            "x": 0.0013513565063476563,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15733,7 +15842,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.59883499145508,
+                            "x": -44.598812103271487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15759,8 +15868,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -15792,7 +15900,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0013446807861328126,
+                            "x": 0.0013513565063476563,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15813,7 +15921,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.59883499145508,
+                            "x": -44.598812103271487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15839,8 +15947,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -15872,7 +15979,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0013446807861328126,
+                            "x": 0.0013513565063476563,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15893,7 +16000,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.59883499145508,
+                            "x": -44.598812103271487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15919,8 +16026,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -15952,7 +16058,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0013446807861328126,
+                            "x": 0.0013513565063476563,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -15973,7 +16079,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.59883499145508,
+                            "x": -44.598812103271487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -15999,8 +16105,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -16032,7 +16137,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0013446807861328126,
+                            "x": 0.0013513565063476563,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -16053,7 +16158,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.59883499145508,
+                            "x": -44.598812103271487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -16079,8 +16184,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -16112,7 +16216,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0013446807861328126,
+                            "x": 0.0013513565063476563,
                             "y": -0.0003001689910888672,
                             "z": 0.0012788772583007813
                         },
@@ -16133,7 +16237,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.59883499145508,
+                            "x": -44.598812103271487,
                             "y": 10.716773986816407,
                             "z": -49.37342071533203
                         },
@@ -16159,8 +16263,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -16296,9 +16399,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00016899406909942627,
+                            "x": 0.00016897544264793396,
                             "y": -0.000016927719116210939,
-                            "z": 0.0007905960083007813
+                            "z": 0.0007953643798828125
                         },
                         "scale": {
                             "x": 1.0,
@@ -16317,7 +16420,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81349563598633,
+                            "x": -51.8134765625,
                             "y": 10.710047721862793,
                             "z": 24.86199951171875
                         },
@@ -16343,8 +16446,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -16376,9 +16478,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00016899406909942627,
+                            "x": 0.00016897544264793396,
                             "y": -0.000016927719116210939,
-                            "z": 0.0007905960083007813
+                            "z": 0.0007953643798828125
                         },
                         "scale": {
                             "x": 1.0,
@@ -16397,7 +16499,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81349563598633,
+                            "x": -51.8134765625,
                             "y": 10.710047721862793,
                             "z": 24.86199951171875
                         },
@@ -16423,8 +16525,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -16456,9 +16557,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00016899406909942627,
+                            "x": 0.00016897544264793396,
                             "y": -0.000016927719116210939,
-                            "z": 0.0007905960083007813
+                            "z": 0.0007953643798828125
                         },
                         "scale": {
                             "x": 1.0,
@@ -16477,7 +16578,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81349563598633,
+                            "x": -51.8134765625,
                             "y": 10.710047721862793,
                             "z": 24.86199951171875
                         },
@@ -16503,8 +16604,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -16536,9 +16636,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00016899406909942627,
+                            "x": 0.00016897544264793396,
                             "y": -0.000016927719116210939,
-                            "z": 0.0007905960083007813
+                            "z": 0.0007953643798828125
                         },
                         "scale": {
                             "x": 1.0,
@@ -16557,7 +16657,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81349563598633,
+                            "x": -51.8134765625,
                             "y": 10.710047721862793,
                             "z": 24.86199951171875
                         },
@@ -16583,8 +16683,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -16616,9 +16715,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00016899406909942627,
+                            "x": 0.00016897544264793396,
                             "y": -0.000016927719116210939,
-                            "z": 0.0007905960083007813
+                            "z": 0.0007953643798828125
                         },
                         "scale": {
                             "x": 1.0,
@@ -16637,7 +16736,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81349563598633,
+                            "x": -51.8134765625,
                             "y": 10.710047721862793,
                             "z": 24.86199951171875
                         },
@@ -16663,8 +16762,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -16696,9 +16794,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00016899406909942627,
+                            "x": 0.00016897544264793396,
                             "y": -0.000016927719116210939,
-                            "z": 0.0007905960083007813
+                            "z": 0.0007953643798828125
                         },
                         "scale": {
                             "x": 1.0,
@@ -16717,7 +16815,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81349563598633,
+                            "x": -51.8134765625,
                             "y": 10.710047721862793,
                             "z": 24.86199951171875
                         },
@@ -16743,8 +16841,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -16776,9 +16873,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00016899406909942627,
+                            "x": 0.00016897544264793396,
                             "y": -0.000016927719116210939,
-                            "z": 0.0007905960083007813
+                            "z": 0.0007953643798828125
                         },
                         "scale": {
                             "x": 1.0,
@@ -16797,7 +16894,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81349563598633,
+                            "x": -51.8134765625,
                             "y": 10.710047721862793,
                             "z": 24.86199951171875
                         },
@@ -16823,8 +16920,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -16856,9 +16952,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00016899406909942627,
+                            "x": 0.00016897544264793396,
                             "y": -0.000016927719116210939,
-                            "z": 0.0007905960083007813
+                            "z": 0.0007953643798828125
                         },
                         "scale": {
                             "x": 1.0,
@@ -16877,7 +16973,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81349563598633,
+                            "x": -51.8134765625,
                             "y": 10.710047721862793,
                             "z": 24.86199951171875
                         },
@@ -16903,8 +16999,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -16936,9 +17031,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00016899406909942627,
+                            "x": 0.00016897544264793396,
                             "y": -0.000016927719116210939,
-                            "z": 0.0007905960083007813
+                            "z": 0.0007953643798828125
                         },
                         "scale": {
                             "x": 1.0,
@@ -16957,7 +17052,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81349563598633,
+                            "x": -51.8134765625,
                             "y": 10.710047721862793,
                             "z": 24.86199951171875
                         },
@@ -16983,8 +17078,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -17016,9 +17110,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00016899406909942627,
+                            "x": 0.00016897544264793396,
                             "y": -0.000016927719116210939,
-                            "z": 0.0007905960083007813
+                            "z": 0.0007953643798828125
                         },
                         "scale": {
                             "x": 1.0,
@@ -17037,7 +17131,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81349563598633,
+                            "x": -51.8134765625,
                             "y": 10.710047721862793,
                             "z": 24.86199951171875
                         },
@@ -17063,8 +17157,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -17096,9 +17189,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00016899406909942627,
+                            "x": 0.00016897544264793396,
                             "y": -0.000016927719116210939,
-                            "z": 0.0007905960083007813
+                            "z": 0.0007953643798828125
                         },
                         "scale": {
                             "x": 1.0,
@@ -17117,7 +17210,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81349563598633,
+                            "x": -51.8134765625,
                             "y": 10.710047721862793,
                             "z": 24.86199951171875
                         },
@@ -17143,8 +17236,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -17176,9 +17268,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00016899406909942627,
+                            "x": 0.00016897544264793396,
                             "y": -0.000016927719116210939,
-                            "z": 0.0007905960083007813
+                            "z": 0.0007953643798828125
                         },
                         "scale": {
                             "x": 1.0,
@@ -17197,7 +17289,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81349563598633,
+                            "x": -51.8134765625,
                             "y": 10.710047721862793,
                             "z": 24.86199951171875
                         },
@@ -17223,8 +17315,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -17256,9 +17347,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00016899406909942627,
+                            "x": 0.00016897544264793396,
                             "y": -0.000016927719116210939,
-                            "z": 0.0007905960083007813
+                            "z": 0.0007953643798828125
                         },
                         "scale": {
                             "x": 1.0,
@@ -17277,7 +17368,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81349563598633,
+                            "x": -51.8134765625,
                             "y": 10.710047721862793,
                             "z": 24.86199951171875
                         },
@@ -17303,8 +17394,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -17336,9 +17426,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00016899406909942627,
+                            "x": 0.00016897544264793396,
                             "y": -0.000016927719116210939,
-                            "z": 0.0007905960083007813
+                            "z": 0.0007953643798828125
                         },
                         "scale": {
                             "x": 1.0,
@@ -17357,7 +17447,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81349563598633,
+                            "x": -51.8134765625,
                             "y": 10.710047721862793,
                             "z": 24.86199951171875
                         },
@@ -17383,8 +17473,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -17416,9 +17505,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00016899406909942627,
+                            "x": 0.00016897544264793396,
                             "y": -0.000016927719116210939,
-                            "z": 0.0007905960083007813
+                            "z": 0.0007953643798828125
                         },
                         "scale": {
                             "x": 1.0,
@@ -17437,7 +17526,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81349563598633,
+                            "x": -51.8134765625,
                             "y": 10.710047721862793,
                             "z": 24.86199951171875
                         },
@@ -17463,8 +17552,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -17496,9 +17584,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00016899406909942627,
+                            "x": 0.00016897544264793396,
                             "y": -0.000016927719116210939,
-                            "z": 0.0007905960083007813
+                            "z": 0.0007953643798828125
                         },
                         "scale": {
                             "x": 1.0,
@@ -17517,7 +17605,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81349563598633,
+                            "x": -51.8134765625,
                             "y": 10.710047721862793,
                             "z": 24.86199951171875
                         },
@@ -17543,8 +17631,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -17576,9 +17663,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00016899406909942627,
+                            "x": 0.00016897544264793396,
                             "y": -0.000016927719116210939,
-                            "z": 0.0007905960083007813
+                            "z": 0.0007953643798828125
                         },
                         "scale": {
                             "x": 1.0,
@@ -17597,7 +17684,7 @@
                             "z": -3.2568880318356586e-12
                         },
                         "worldPos": {
-                            "x": -51.81349563598633,
+                            "x": -51.8134765625,
                             "y": 10.710047721862793,
                             "z": 24.86199951171875
                         },
@@ -17623,8 +17710,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -17807,8 +17893,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -17887,8 +17972,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -17967,8 +18051,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -18047,8 +18130,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -18127,8 +18209,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -18207,8 +18288,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -18287,8 +18367,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -18367,8 +18446,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -18447,8 +18525,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -18527,8 +18604,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -18607,8 +18683,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -18687,8 +18762,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -18767,8 +18841,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -18847,8 +18920,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -18927,8 +18999,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -19007,8 +19078,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -19087,8 +19157,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 7398324319315129017
-                        },
-                        "matIdx": 8
+                        }
                     }
                 },
                 {
@@ -19167,15 +19236,14 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 14927164490337076809
-                        },
-                        "matIdx": 9
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 10001465260758671892
+                            "ID": 11536421179331424970
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -19247,15 +19315,14 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 14927164490337076809
-                        },
-                        "matIdx": 9
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 10001465260758671892
+                            "ID": 11536421179331424970
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -21362,7 +21429,7 @@
                     "Transform": {
                         "position": {
                             "x": -0.000019073486328125,
-                            "y": 0.00005626678466796875,
+                            "y": 0.000058650970458984378,
                             "z": -0.0001125335693359375
                         },
                         "scale": {
@@ -21383,7 +21450,7 @@
                         },
                         "worldPos": {
                             "x": 21.639694213867189,
-                            "y": 4.965085506439209,
+                            "y": 4.965087413787842,
                             "z": -9.152000427246094
                         },
                         "worldScale": {
@@ -21516,8 +21583,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -21596,8 +21662,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -21676,8 +21741,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -21756,8 +21820,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -21836,8 +21899,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -21916,8 +21978,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -21996,8 +22057,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -22076,8 +22136,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -22156,8 +22215,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -22236,8 +22294,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -22316,8 +22373,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -22396,8 +22452,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -22476,8 +22531,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -22556,8 +22610,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -22636,8 +22689,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -22716,8 +22768,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -22796,8 +22847,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -22876,8 +22926,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -22956,8 +23005,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -23036,8 +23084,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -23116,8 +23163,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -24167,15 +24213,14 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 14122219685186109361
-                        },
-                        "matIdx": 10
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -24425,15 +24470,14 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 9472059093592539045
-                        },
-                        "matIdx": 4
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -24553,15 +24597,14 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -24707,7 +24750,7 @@
                         "position": {
                             "x": -10.739839553833008,
                             "y": 6.866655349731445,
-                            "z": -0.03551483154296875
+                            "z": -0.03549957275390625
                         },
                         "scale": {
                             "x": 1.136022686958313,
@@ -24726,7 +24769,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.56447982788086,
+                            "x": 53.56449508666992,
                             "y": 17.231990814208986,
                             "z": 61.164886474609378
                         },
@@ -24752,7 +24795,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -24825,9 +24868,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.000013028008652327117,
+                            "x": 0.000013028005923843012,
                             "y": 17.98689079284668,
-                            "z": 0.16355514526367188
+                            "z": 0.16357040405273438
                         },
                         "scale": {
                             "x": 13.5062837600708,
@@ -24846,7 +24889,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.7635498046875,
+                            "x": 53.76356506347656,
                             "y": 24.571346282958986,
                             "z": 54.183982849121097
                         },
@@ -24872,7 +24915,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -24944,7 +24987,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 18445838971325679376
+                            "ID": 17935804088512499757
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -25121,29 +25164,6 @@
                         }
                     },
                     {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 0.0,
-                            "dynamicFriction": 0.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "DYNAMIC",
-                            "axisLock": 0,
-                            "angularAxisLock": 0
-                        }
-                    },
-                    {
                         "key": "Layer",
                         "value": {
                             "layerName": "Puzzle"
@@ -25189,6 +25209,29 @@
                                 "z": 3.468784370852518e-9,
                                 "w": 0.7100075483322144
                             }
+                        }
+                    },
+                    {
+                        "key": "RigidBody",
+                        "value": {
+                            "velocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "angularVelocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "staticFriction": 0.0,
+                            "dynamicFriction": 0.0,
+                            "restitution": 0.0,
+                            "gravityFactor": 0.0,
+                            "linearDamping": 0.9800000190734863,
+                            "motionType": "DYNAMIC",
+                            "axisLock": 0,
+                            "angularAxisLock": 0
                         }
                     }
                 ],
@@ -25325,8 +25368,8 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.000164031982421875,
-                            "y": 0.00013828277587890625,
+                            "x": -0.00016021728515625,
+                            "y": 0.0001373291015625,
                             "z": -0.000003814697265625
                         },
                         "scale": {
@@ -25335,9 +25378,9 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -8.940697853176971e-7,
-                            "y": -6.303890245362709e-7,
-                            "z": -4.749745698973129e-7,
+                            "x": -8.791686241238494e-7,
+                            "y": -6.299233632489631e-7,
+                            "z": -4.703179570242355e-7,
                             "w": 1.0
                         },
                         "eulerAngles": {
@@ -25347,8 +25390,8 @@
                         },
                         "worldPos": {
                             "x": -20.960845947265626,
-                            "y": 2.255181312561035,
-                            "z": -17.309494018554689
+                            "y": 2.2551794052124025,
+                            "z": -17.30949592590332
                         },
                         "worldScale": {
                             "x": 0.4000000059604645,
@@ -25356,10 +25399,10 @@
                             "z": 0.4000000059604645
                         },
                         "worldRot": {
-                            "x": -0.007936508394777775,
+                            "x": -0.007936503738164902,
                             "y": 0.97463458776474,
-                            "z": -0.14219892024993897,
-                            "w": -0.17263872921466828
+                            "z": -0.14219889044761659,
+                            "w": -0.1726386994123459
                         }
                     }
                 },
@@ -25372,8 +25415,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -25452,8 +25494,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -25532,8 +25573,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -25609,10 +25649,10 @@
                             "z": 0.20000000298023225
                         },
                         "rotation": {
-                            "x": -0.012398801743984223,
+                            "x": -0.012398798950016499,
                             "y": 0.9687306880950928,
-                            "z": -0.14188043773174287,
-                            "w": -0.2031680792570114
+                            "z": -0.14188039302825929,
+                            "w": -0.20316804945468903
                         },
                         "eulerAngles": {
                             "x": -162.9001007080078,
@@ -25630,10 +25670,10 @@
                             "z": 0.4000000059604645
                         },
                         "worldRot": {
-                            "x": -0.007936110720038414,
+                            "x": -0.007936108857393265,
                             "y": 0.9746343493461609,
-                            "z": -0.14219987392425538,
-                            "w": -0.17263926565647126
+                            "z": -0.1421998292207718,
+                            "w": -0.17263923585414887
                         }
                     }
                 },
@@ -26219,8 +26259,8 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.000164031982421875,
-                            "y": 0.00013828277587890625,
+                            "x": -0.00016021728515625,
+                            "y": 0.0001373291015625,
                             "z": -0.000003814697265625
                         },
                         "scale": {
@@ -26229,9 +26269,9 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -8.940697853176971e-7,
-                            "y": -6.303890245362709e-7,
-                            "z": -4.749745698973129e-7,
+                            "x": -8.791686241238494e-7,
+                            "y": -6.299233632489631e-7,
+                            "z": -4.703179570242355e-7,
                             "w": 1.0
                         },
                         "eulerAngles": {
@@ -26241,8 +26281,8 @@
                         },
                         "worldPos": {
                             "x": -20.960845947265626,
-                            "y": 2.255181312561035,
-                            "z": -17.309494018554689
+                            "y": 2.2551794052124025,
+                            "z": -17.30949592590332
                         },
                         "worldScale": {
                             "x": 0.4000000059604645,
@@ -26250,10 +26290,10 @@
                             "z": 0.4000000059604645
                         },
                         "worldRot": {
-                            "x": -0.007936508394777775,
+                            "x": -0.007936503738164902,
                             "y": 0.97463458776474,
-                            "z": -0.14219892024993897,
-                            "w": -0.17263872921466828
+                            "z": -0.14219889044761659,
+                            "w": -0.1726386994123459
                         }
                     }
                 },
@@ -26266,8 +26306,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -26366,8 +26405,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -26451,6 +26489,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Puzzle"
+                        }
+                    },
+                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -26505,12 +26549,6 @@
                             "motionType": "DYNAMIC",
                             "axisLock": 0,
                             "angularAxisLock": 0
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Puzzle"
                         }
                     }
                 ],
@@ -26843,6 +26881,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Puzzle"
+                        }
+                    },
+                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -26867,12 +26911,6 @@
                                 "w": 1.0
                             },
                             "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Puzzle"
                         }
                     }
                 ],
@@ -29436,7 +29474,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.000009372830390930176,
+                            "x": -0.000009551644325256348,
                             "y": 0.026029586791992189,
                             "z": -0.14915847778320313
                         },
@@ -29459,7 +29497,7 @@
                         "worldPos": {
                             "x": 44.030967712402347,
                             "y": 10.066245079040528,
-                            "z": 0.8688715696334839
+                            "z": 0.8688711524009705
                         },
                         "worldScale": {
                             "x": 12.735749244689942,
@@ -29483,15 +29521,14 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 11197163193892362498
-                        },
-                        "matIdx": 11
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 10001465260758671892
+                            "ID": 11536421179331424970
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -30229,7 +30266,7 @@
                         "rotation": {
                             "x": -0.6730912923812866,
                             "y": 5.488800525199622e-10,
-                            "z": -1.0291114449501038e-7,
+                            "z": -1.0477378964424133e-7,
                             "w": -0.7395594716072083
                         },
                         "eulerAngles": {
@@ -30248,7 +30285,7 @@
                             "z": 5.575841903686523
                         },
                         "worldRot": {
-                            "x": 0.0024593211710453035,
+                            "x": 0.0024593230336904527,
                             "y": 0.7395613789558411,
                             "z": -0.6730793118476868,
                             "w": 0.0027153408154845239
@@ -30264,15 +30301,14 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 16989319502986944823
-                        },
-                        "matIdx": 12
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 10001465260758671892
+                            "ID": 11536421179331424970
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -31762,9 +31798,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.0023339944891631605,
-                            "y": -0.000053882598876953128,
-                            "z": 0.001827239990234375
+                            "x": -0.0023416238836944105,
+                            "y": -0.000055789947509765628,
+                            "z": 0.001834869384765625
                         },
                         "scale": {
                             "x": 1.0,
@@ -31772,8 +31808,8 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 3.410605131648481e-13,
-                            "y": -4.336808689942018e-19,
+                            "x": 1.0231815394945443e-12,
+                            "y": -2.168404344971009e-19,
                             "z": -1.1368683772161604e-13,
                             "w": 1.0
                         },
@@ -31783,9 +31819,9 @@
                             "z": -1.3027552127342635e-11
                         },
                         "worldPos": {
-                            "x": 53.93061447143555,
-                            "y": 13.758892059326172,
-                            "z": 54.09547805786133
+                            "x": 53.930599212646487,
+                            "y": 13.758888244628907,
+                            "z": 54.095462799072269
                         },
                         "worldScale": {
                             "x": 2.0,
@@ -31793,9 +31829,9 @@
                             "z": 2.0
                         },
                         "worldRot": {
-                            "x": 0.0000015646197653040873,
+                            "x": 0.000001564620220051438,
                             "y": -0.7071068286895752,
-                            "z": 0.0000015646195379304118,
+                            "z": 0.0000015646199926777627,
                             "w": 0.7071068286895752
                         }
                     }
@@ -31809,8 +31845,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -31842,9 +31877,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.0023339944891631605,
-                            "y": -0.000053882598876953128,
-                            "z": 0.001827239990234375
+                            "x": -0.0023416238836944105,
+                            "y": -0.000055789947509765628,
+                            "z": 0.001834869384765625
                         },
                         "scale": {
                             "x": 1.0,
@@ -31852,8 +31887,8 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 3.410605131648481e-13,
-                            "y": -4.336808689942018e-19,
+                            "x": 1.0231815394945443e-12,
+                            "y": -2.168404344971009e-19,
                             "z": -1.1368683772161604e-13,
                             "w": 1.0
                         },
@@ -31863,9 +31898,9 @@
                             "z": -1.3027552127342635e-11
                         },
                         "worldPos": {
-                            "x": 53.93061447143555,
-                            "y": 13.758892059326172,
-                            "z": 54.09547805786133
+                            "x": 53.930599212646487,
+                            "y": 13.758888244628907,
+                            "z": 54.095462799072269
                         },
                         "worldScale": {
                             "x": 2.0,
@@ -31873,9 +31908,9 @@
                             "z": 2.0
                         },
                         "worldRot": {
-                            "x": 0.0000015646197653040873,
+                            "x": 0.000001564620220051438,
                             "y": -0.7071068286895752,
-                            "z": 0.0000015646195379304118,
+                            "z": 0.0000015646199926777627,
                             "w": 0.7071068286895752
                         }
                     }
@@ -31889,8 +31924,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -32108,9 +32142,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00104522705078125,
-                            "y": 0.0000858306884765625,
-                            "z": 0.00002956390380859375
+                            "x": 0.001068115234375,
+                            "y": 0.0000820159912109375,
+                            "z": 0.00002574920654296875
                         },
                         "scale": {
                             "x": 1.0,
@@ -32129,9 +32163,9 @@
                             "z": -0.000002561317614890868
                         },
                         "worldPos": {
-                            "x": -18.423009872436525,
-                            "y": 2.082977056503296,
-                            "z": -16.31532859802246
+                            "x": -18.42301368713379,
+                            "y": 2.0829780101776125,
+                            "z": -16.315324783325197
                         },
                         "worldScale": {
                             "x": 0.23999999463558198,
@@ -32155,8 +32189,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -32189,7 +32222,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.00002676248550415039,
+                            "y": 0.000027000904083251954,
                             "z": -7.152557373046875e-7
                         },
                         "scale": {
@@ -32210,7 +32243,7 @@
                         },
                         "worldPos": {
                             "x": -19.508054733276368,
-                            "y": 1.5330535173416138,
+                            "y": 1.533053994178772,
                             "z": -16.718299865722658
                         },
                         "worldScale": {
@@ -32235,8 +32268,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 8930139538896017712
-                        },
-                        "matIdx": 13
+                        }
                     }
                 },
                 {
@@ -32269,7 +32301,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.00002676248550415039,
+                            "y": 0.000027000904083251954,
                             "z": -7.152557373046875e-7
                         },
                         "scale": {
@@ -32290,7 +32322,7 @@
                         },
                         "worldPos": {
                             "x": -19.508054733276368,
-                            "y": 1.5330535173416138,
+                            "y": 1.533053994178772,
                             "z": -16.718299865722658
                         },
                         "worldScale": {
@@ -32315,8 +32347,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -32349,7 +32380,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.00000667572021484375,
-                            "y": 0.00002676248550415039,
+                            "y": 0.000027000904083251954,
                             "z": -1.7881393432617188e-7
                         },
                         "scale": {
@@ -32370,7 +32401,7 @@
                         },
                         "worldPos": {
                             "x": -19.508041381835939,
-                            "y": 1.5330535173416138,
+                            "y": 1.533053994178772,
                             "z": -16.718297958374025
                         },
                         "worldScale": {
@@ -32395,8 +32426,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 8930139538896017712
-                        },
-                        "matIdx": 13
+                        }
                     }
                 },
                 {
@@ -32852,9 +32882,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.0023339944891631605,
-                            "y": -0.000053882598876953128,
-                            "z": 0.001827239990234375
+                            "x": -0.0023416238836944105,
+                            "y": -0.000055789947509765628,
+                            "z": 0.001834869384765625
                         },
                         "scale": {
                             "x": 1.0,
@@ -32862,8 +32892,8 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 3.410605131648481e-13,
-                            "y": -4.336808689942018e-19,
+                            "x": 1.0231815394945443e-12,
+                            "y": -2.168404344971009e-19,
                             "z": -1.1368683772161604e-13,
                             "w": 1.0
                         },
@@ -32873,9 +32903,9 @@
                             "z": -1.3027552127342635e-11
                         },
                         "worldPos": {
-                            "x": 53.93061447143555,
-                            "y": 13.758892059326172,
-                            "z": 54.09547805786133
+                            "x": 53.930599212646487,
+                            "y": 13.758888244628907,
+                            "z": 54.095462799072269
                         },
                         "worldScale": {
                             "x": 2.0,
@@ -32883,9 +32913,9 @@
                             "z": 2.0
                         },
                         "worldRot": {
-                            "x": 0.0000015646197653040873,
+                            "x": 0.000001564620220051438,
                             "y": -0.7071068286895752,
-                            "z": 0.0000015646195379304118,
+                            "z": 0.0000015646199926777627,
                             "w": 0.7071068286895752
                         }
                     }
@@ -32899,8 +32929,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -32932,9 +32961,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.0023339944891631605,
-                            "y": -0.000053882598876953128,
-                            "z": 0.001827239990234375
+                            "x": -0.0023416238836944105,
+                            "y": -0.000055789947509765628,
+                            "z": 0.001834869384765625
                         },
                         "scale": {
                             "x": 1.0,
@@ -32942,8 +32971,8 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 3.410605131648481e-13,
-                            "y": -4.336808689942018e-19,
+                            "x": 1.0231815394945443e-12,
+                            "y": -2.168404344971009e-19,
                             "z": -1.1368683772161604e-13,
                             "w": 1.0
                         },
@@ -32953,9 +32982,9 @@
                             "z": -1.3027552127342635e-11
                         },
                         "worldPos": {
-                            "x": 53.93061447143555,
-                            "y": 13.758892059326172,
-                            "z": 54.09547805786133
+                            "x": 53.930599212646487,
+                            "y": 13.758888244628907,
+                            "z": 54.095462799072269
                         },
                         "worldScale": {
                             "x": 2.0,
@@ -32963,9 +32992,9 @@
                             "z": 2.0
                         },
                         "worldRot": {
-                            "x": 0.0000015646197653040873,
+                            "x": 0.000001564620220051438,
                             "y": -0.7071068286895752,
-                            "z": 0.0000015646195379304118,
+                            "z": 0.0000015646199926777627,
                             "w": 0.7071068286895752
                         }
                     }
@@ -32979,8 +33008,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -33577,7 +33605,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.000026702880859375,
+                            "y": 0.000026941299438476564,
                             "z": 2.384185791015625e-7
                         },
                         "scale": {
@@ -33598,7 +33626,7 @@
                         },
                         "worldPos": {
                             "x": -19.508054733276368,
-                            "y": 1.5330533981323243,
+                            "y": 1.5330538749694825,
                             "z": -16.718297958374025
                         },
                         "worldScale": {
@@ -33623,8 +33651,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 8930139538896017712
-                        },
-                        "matIdx": 13
+                        }
                     }
                 },
                 {
@@ -34293,9 +34320,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.0023339944891631605,
-                            "y": -0.000053882598876953128,
-                            "z": 0.001827239990234375
+                            "x": -0.0023416238836944105,
+                            "y": -0.000055789947509765628,
+                            "z": 0.001834869384765625
                         },
                         "scale": {
                             "x": 1.0,
@@ -34303,8 +34330,8 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 3.410605131648481e-13,
-                            "y": -4.336808689942018e-19,
+                            "x": 1.0231815394945443e-12,
+                            "y": -2.168404344971009e-19,
                             "z": -1.1368683772161604e-13,
                             "w": 1.0
                         },
@@ -34314,9 +34341,9 @@
                             "z": -1.3027552127342635e-11
                         },
                         "worldPos": {
-                            "x": 53.93061447143555,
-                            "y": 13.758892059326172,
-                            "z": 54.09547805786133
+                            "x": 53.930599212646487,
+                            "y": 13.758888244628907,
+                            "z": 54.095462799072269
                         },
                         "worldScale": {
                             "x": 2.0,
@@ -34324,9 +34351,9 @@
                             "z": 2.0
                         },
                         "worldRot": {
-                            "x": 0.0000015646197653040873,
+                            "x": 0.000001564620220051438,
                             "y": -0.7071068286895752,
-                            "z": 0.0000015646195379304118,
+                            "z": 0.0000015646199926777627,
                             "w": 0.7071068286895752
                         }
                     }
@@ -34340,8 +34367,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -35282,9 +35308,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.0023339944891631605,
-                            "y": -0.000053882598876953128,
-                            "z": 0.001827239990234375
+                            "x": -0.0023416238836944105,
+                            "y": -0.000055789947509765628,
+                            "z": 0.001834869384765625
                         },
                         "scale": {
                             "x": 1.0,
@@ -35292,8 +35318,8 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 3.410605131648481e-13,
-                            "y": -4.336808689942018e-19,
+                            "x": 1.0231815394945443e-12,
+                            "y": -2.168404344971009e-19,
                             "z": -1.1368683772161604e-13,
                             "w": 1.0
                         },
@@ -35303,9 +35329,9 @@
                             "z": -1.3027552127342635e-11
                         },
                         "worldPos": {
-                            "x": 53.93061447143555,
-                            "y": 13.758892059326172,
-                            "z": 54.09547805786133
+                            "x": 53.930599212646487,
+                            "y": 13.758888244628907,
+                            "z": 54.095462799072269
                         },
                         "worldScale": {
                             "x": 2.0,
@@ -35313,9 +35339,9 @@
                             "z": 2.0
                         },
                         "worldRot": {
-                            "x": 0.0000015646197653040873,
+                            "x": 0.000001564620220051438,
                             "y": -0.7071068286895752,
-                            "z": 0.0000015646195379304118,
+                            "z": 0.0000015646199926777627,
                             "w": 0.7071068286895752
                         }
                     }
@@ -35329,8 +35355,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -35472,9 +35497,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.0023339944891631605,
-                            "y": -0.000053882598876953128,
-                            "z": 0.001827239990234375
+                            "x": -0.0023416238836944105,
+                            "y": -0.000055789947509765628,
+                            "z": 0.001834869384765625
                         },
                         "scale": {
                             "x": 1.0,
@@ -35482,8 +35507,8 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 3.410605131648481e-13,
-                            "y": -4.336808689942018e-19,
+                            "x": 1.0231815394945443e-12,
+                            "y": -2.168404344971009e-19,
                             "z": -1.1368683772161604e-13,
                             "w": 1.0
                         },
@@ -35493,9 +35518,9 @@
                             "z": -1.3027552127342635e-11
                         },
                         "worldPos": {
-                            "x": 53.93061447143555,
-                            "y": 13.758892059326172,
-                            "z": 54.09547805786133
+                            "x": 53.930599212646487,
+                            "y": 13.758888244628907,
+                            "z": 54.095462799072269
                         },
                         "worldScale": {
                             "x": 2.0,
@@ -35503,9 +35528,9 @@
                             "z": 2.0
                         },
                         "worldRot": {
-                            "x": 0.0000015646197653040873,
+                            "x": 0.000001564620220051438,
                             "y": -0.7071068286895752,
-                            "z": 0.0000015646195379304118,
+                            "z": 0.0000015646199926777627,
                             "w": 0.7071068286895752
                         }
                     }
@@ -35519,8 +35544,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -35552,9 +35576,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.0023339944891631605,
-                            "y": -0.000053882598876953128,
-                            "z": 0.001827239990234375
+                            "x": -0.0023416238836944105,
+                            "y": -0.000055789947509765628,
+                            "z": 0.001834869384765625
                         },
                         "scale": {
                             "x": 1.0,
@@ -35562,8 +35586,8 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 3.410605131648481e-13,
-                            "y": -4.336808689942018e-19,
+                            "x": 1.0231815394945443e-12,
+                            "y": -2.168404344971009e-19,
                             "z": -1.1368683772161604e-13,
                             "w": 1.0
                         },
@@ -35573,9 +35597,9 @@
                             "z": -1.3027552127342635e-11
                         },
                         "worldPos": {
-                            "x": 53.93061447143555,
-                            "y": 13.758892059326172,
-                            "z": 54.09547805786133
+                            "x": 53.930599212646487,
+                            "y": 13.758888244628907,
+                            "z": 54.095462799072269
                         },
                         "worldScale": {
                             "x": 2.0,
@@ -35583,9 +35607,9 @@
                             "z": 2.0
                         },
                         "worldRot": {
-                            "x": 0.0000015646197653040873,
+                            "x": 0.000001564620220051438,
                             "y": -0.7071068286895752,
-                            "z": 0.0000015646195379304118,
+                            "z": 0.0000015646199926777627,
                             "w": 0.7071068286895752
                         }
                     }
@@ -35599,8 +35623,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -36170,9 +36193,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.0023339944891631605,
-                            "y": -0.000053882598876953128,
-                            "z": 0.001827239990234375
+                            "x": -0.0023416238836944105,
+                            "y": -0.000055789947509765628,
+                            "z": 0.001834869384765625
                         },
                         "scale": {
                             "x": 1.0,
@@ -36180,8 +36203,8 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 3.410605131648481e-13,
-                            "y": -4.336808689942018e-19,
+                            "x": 1.0231815394945443e-12,
+                            "y": -2.168404344971009e-19,
                             "z": -1.1368683772161604e-13,
                             "w": 1.0
                         },
@@ -36191,9 +36214,9 @@
                             "z": -1.3027552127342635e-11
                         },
                         "worldPos": {
-                            "x": 53.93061447143555,
-                            "y": 13.758892059326172,
-                            "z": 54.09547805786133
+                            "x": 53.930599212646487,
+                            "y": 13.758888244628907,
+                            "z": 54.095462799072269
                         },
                         "worldScale": {
                             "x": 2.0,
@@ -36201,9 +36224,9 @@
                             "z": 2.0
                         },
                         "worldRot": {
-                            "x": 0.0000015646197653040873,
+                            "x": 0.000001564620220051438,
                             "y": -0.7071068286895752,
-                            "z": 0.0000015646195379304118,
+                            "z": 0.0000015646199926777627,
                             "w": 0.7071068286895752
                         }
                     }
@@ -36217,8 +36240,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {

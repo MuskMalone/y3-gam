@@ -1,7 +1,7 @@
 #include <pch.h>
 #include "GeomPass.h"
 #include "Core/Entity.h"
-#include <Graphics/EditorCamera.h>
+#include <Graphics/Camera/EditorCamera.h>
 #include <Core/Components/Components.h>
 #include "Color.h"
 #include "Asset/IGEAssets.h"

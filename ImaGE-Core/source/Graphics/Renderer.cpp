@@ -18,6 +18,8 @@
 #pragma endregion
 
 #include "Core/Components/Camera.h"
+#include "Core/Components/Transform.h"
+#include "Core/Components/Light.h"
 #include "Core/Entity.h"
 
 namespace Graphics {
@@ -1361,7 +1363,7 @@ namespace Graphics {
 		FlushBatch();
 	}
 
-	Statistics Renderer::GetStats() {
+	Statistics const& Renderer::GetStats() {
 		return mData.stats;
 	}
 

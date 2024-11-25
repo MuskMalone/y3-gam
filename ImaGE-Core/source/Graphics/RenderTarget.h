@@ -1,7 +1,7 @@
 #pragma once
 #include <Scenes/Scene.h>
 #include <Graphics/Framebuffer.h>
-#include <Graphics/EditorCamera.h>
+#include <Graphics/Camera/EditorCamera.h>
 
 namespace Graphics {
   struct RenderTarget {

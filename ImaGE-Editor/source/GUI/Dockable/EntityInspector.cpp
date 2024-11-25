@@ -62,6 +62,7 @@ namespace ScriptInputs {
   template <typename T>
   bool ScriptInputField(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth);
 
+  SCRIPT_INPUT_FUNC_DECL(bool);
   SCRIPT_INPUT_FUNC_DECL(int);
   SCRIPT_INPUT_FUNC_DECL(float);
   SCRIPT_INPUT_FUNC_DECL(double);
@@ -2235,6 +2236,19 @@ namespace ScriptInputs {
 
   template <typename T>
   bool ScriptInputField(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) { return false; }
+
+
+  template <>
+  bool ScriptInputField<bool>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<bool>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<bool>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (ImGui::Checkbox(("##DataMemberBool" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData))) {
+      scriptInst.SetFieldValue<bool>(sfi.mData, sfi.mScriptField.mClassField);
+      return true;
+    }
+
+    return false;
+  }
 
   template <>
   bool ScriptInputField<int>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
