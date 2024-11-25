@@ -143,6 +143,38 @@ namespace Events
     ECS::Entity mEntity;
   };
 
+  class EntityMouseEnter : public Event {
+  public:
+      EntityMouseEnter(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_ENTER), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On mouse enter entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
+  };
+
+  class EntityMouseExit : public Event {
+  public:
+      EntityMouseExit(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_ENTER), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On mouse exit entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
+  };
+
+  class EntityMouseDown : public Event {
+  public:
+      EntityMouseDown(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_ENTER), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On mouse down entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
+  };
+
+  class EntityMouseUp : public Event {
+  public:
+      EntityMouseUp(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_ENTER), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On mouse up entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
+  };
+
   class SignalEvent : public Event {
   public:
     SignalEvent() : Event(EventType::SIGNAL) {}

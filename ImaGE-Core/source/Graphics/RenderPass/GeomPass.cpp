@@ -146,6 +146,10 @@ namespace Graphics {
       }
   }
 
+  std::shared_ptr<Framebuffer> GeomPass::GetGameViewFramebuffer() const {
+      return mPickFramebuffer;
+  }
+
   GeomPass::ShaderGroupMap GeomPass::GroupEntities(std::vector<ECS::Entity> const& entities) {
     ShaderGroupMap shaderToMatGrp; // group by shader, then by material batch
 

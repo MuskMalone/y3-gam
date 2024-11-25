@@ -8,6 +8,9 @@
 #include "Utils.h"
 #include "EditorCamera.h"
 #include <Scenes/SceneManager.h>
+#include "Events/Event.h"
+#include "Events/EventManager.h"
+#include <Input/InputManager.h>
 
 #define INSERT_ACTIVE
 
@@ -64,6 +67,7 @@ namespace Graphics {
 			prevOutputTex = pass->GetOutputTexture();
 		}
 
+		HandleGameViewInput();
 	}
 
 	void RenderSystem::PrepareFrame(){
@@ -72,6 +76,33 @@ namespace Graphics {
 			// Only upload to the GPU if materials were updated
 			MaterialTable::UploadMaterialProps();
 		}
+	}
+
+	void RenderSystem::HandleGameViewInput(){
+		static ECS::Entity prevHoveredEntity;
+
+		glm::vec2 mousePos = Input::InputManager::GetInstance().GetMousePos();
+		ECS::Entity hoveredEntity = Renderer::PickEntity(mousePos);
+		
+		if (hoveredEntity != prevHoveredEntity) {
+			if (IGE_ENTITYMGR.IsValidEntity(prevHoveredEntity)) {
+				QUEUE_EVENT(Events::EntityMouseExit, prevHoveredEntity);
+			}
+			if (IGE_ENTITYMGR.IsValidEntity(hoveredEntity)) {
+				QUEUE_EVENT(Events::EntityMouseEnter, prevHoveredEntity);
+			}
+		}
+
+		prevHoveredEntity = hoveredEntity;
+		if (IGE_ENTITYMGR.IsValidEntity(hoveredEntity)) {
+			if (Input::InputManager::GetInstance().IsKeyTriggered(IK_MOUSE_LEFT)) {
+				QUEUE_EVENT(Events::EntityMouseDown, hoveredEntity);
+			}
+			if (Input::InputManager::GetInstance().IsKeyReleased(IK_MOUSE_LEFT)) {
+				QUEUE_EVENT(Events::EntityMouseUp, hoveredEntity);
+			}
+		}
+
 	}
 
 }

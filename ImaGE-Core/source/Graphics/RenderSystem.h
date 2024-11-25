@@ -24,6 +24,7 @@ namespace Graphics {
 		static void Release();
 		static void RenderScene(CameraSpec const& cam);
 		static void PrepareFrame();
+		static void HandleGameViewInput(glm::vec2 const& mousePos);
 		static CameraManager mCameraManager; // Add CameraManager as a static member
 
 	};
