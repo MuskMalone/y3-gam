@@ -25,7 +25,7 @@ public class SpecialDialogue : Entity
   private float nextCharTime = 0f;      // Tracks the time for the next character
 
   // Font Scales
-  private readonly float mainDialogueFontScale = 0.007f;
+  private readonly float mainDialogueFontScale = 0.006f;
   private readonly float specialDialogueFontScale = 0.003f;
 
   public SpecialDialogue() : base()

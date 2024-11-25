@@ -36,6 +36,7 @@ public class Dialogue : Entity
   private string[] lines;               // The lines from the caller
   private int charIndex = 0;            // Tracks the current character index
   private float nextCharTime = 0f;      // Tracks the time for the next character
+  private const float defaultFontSize = 0.006f;
 
   public Dialogue() : base()
   {
@@ -85,7 +86,7 @@ public class Dialogue : Entity
   }
 
   // To be called by other scripts before starting the dialogue
-  public void SetDialogue(string[] newLines, Emotion[] newEmotions, float textScale)
+  public void SetDialogue(string[] newLines, Emotion[] newEmotions, float textScale = defaultFontSize)
   {
     InternalCalls.SetTextScale(mEntityID, textScale);
     if (newLines.Length != newEmotions.Length)
