@@ -19,6 +19,8 @@ namespace Graphics {
         for (size_t i = 0; i < mMaterials.size(); ++i) {
             if (mMaterials[i] && mMaterials[i]->IsModified()) {
                 MaterialProperties& props = mMaterialPropsBuffer[i];
+                props.Tiling = mMaterials[i]->GetTiling();
+                props.Offset = mMaterials[i]->GetOffset();
                 props.AlbedoColor = glm::vec4(mMaterials[i]->GetAlbedoColor(),1.f);
                 props.Metalness = mMaterials[i]->GetMetalness();
                 props.Roughness = mMaterials[i]->GetRoughness();

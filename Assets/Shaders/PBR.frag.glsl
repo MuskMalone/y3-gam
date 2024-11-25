@@ -2,6 +2,8 @@
 //#extension GL_ARB_bindless_texture : require
 
 struct MaterialProperties {
+    vec2 Tiling;
+    vec2 Offset;
     vec4 AlbedoColor;  // Base color
     float Metalness;   // Metalness factor
     float Roughness;   // Roughness factor
@@ -36,10 +38,6 @@ uniform bool u_ShadowsActive;
 uniform float u_ShadowBias;
 uniform int u_ShadowSoftness;
 uniform sampler2D u_ShadowMap;
-
-// Tiling and offset uniforms
-uniform vec2 u_Tiling; // Tiling factor (x, y)
-uniform vec2 u_Offset; // Offset (x, y)
 
 uniform int u_MatIdxOffset;
 uniform sampler2D[16] u_AlbedoMaps;
@@ -76,12 +74,10 @@ float CheckShadow(vec4 lightSpacePos);
 
 void main(){
     entityID = v_EntityID;
-
-    //vec2 texCoord = v_TexCoord * u_Tiling + u_Offset;
-    vec2 texCoord = v_TexCoord;
     
 	//vec4 texColor = texture2D(u_NormalMaps[int(v_MaterialIdx)], texCoord); //currently unused
     MaterialProperties mat = materials[v_MaterialIdx];
+    vec2 texCoord = v_TexCoord * mat.Tiling + mat.Offset;
     vec4 albedoTexture = texture2D(u_AlbedoMaps[int(v_MaterialIdx) + u_MatIdxOffset], texCoord);
     vec3 albedo = albedoTexture.rgb * mat.AlbedoColor.rgb; // Mixing texture and uniform
 	// Normalize inputs

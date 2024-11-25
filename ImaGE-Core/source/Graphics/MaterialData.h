@@ -25,6 +25,8 @@ namespace Graphics {
     };
 
     struct MaterialProperties {
+        glm::vec2 Tiling;
+        glm::vec2 Offset;
         glm::vec4 AlbedoColor;  // Base color
         float Metalness;        // Metalness factor
         float Roughness;        // Roughness factor
