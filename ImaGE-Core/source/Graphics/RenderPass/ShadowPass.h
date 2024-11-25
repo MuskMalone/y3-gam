@@ -13,7 +13,7 @@ namespace Graphics {
     bool IsActive() const noexcept { return mActive; }
     void Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) override;
 
-    uint32_t BindShadowMap();
+    void BindShadowMap(uint32_t texUnit) const;
 
     // @TODO: find a better way to retrive uniforms instead of getter for each one
     inline glm::mat4 const& GetLightSpaceMatrix() const noexcept { return mLightSpaceMtx; }

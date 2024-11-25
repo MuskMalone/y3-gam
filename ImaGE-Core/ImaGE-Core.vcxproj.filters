@@ -275,6 +275,9 @@
     <ClInclude Include="source\Core\Components\Script.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
+    <ClInclude Include="source\Core\Components\Skybox.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
     <ClInclude Include="source\Core\Components\Sprite2D.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
@@ -631,6 +634,9 @@
     <ClInclude Include="source\Graphics\RenderPass\ShadowPass.h">
       <Filter>Graphics\RenderPass</Filter>
     </ClInclude>
+    <ClInclude Include="source\Graphics\RenderPass\SkyboxPass.h">
+      <Filter>Graphics\RenderPass</Filter>
+    </ClInclude>
     <ClInclude Include="source\Graphics\RenderPass\UIPass.h">
       <Filter>Graphics\RenderPass</Filter>
     </ClInclude>
@@ -755,10 +761,6 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Graphics\MeshSubmeshKeyHash.h" />
-    <ClInclude Include="source\Core\Components\Sprite2D.h" />
-    <ClInclude Include="source\Graphics\RenderPass\SkyboxPass.h" />
-    <ClInclude Include="source\Core\Components\Skybox.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -951,6 +953,9 @@
     <ClCompile Include="source\Graphics\RenderPass\ShadowPass.cpp">
       <Filter>Graphics\RenderPass</Filter>
     </ClCompile>
+    <ClCompile Include="source\Graphics\RenderPass\SkyboxPass.cpp">
+      <Filter>Graphics\RenderPass</Filter>
+    </ClCompile>
     <ClCompile Include="source\Graphics\RenderPass\UIPass.cpp">
       <Filter>Graphics\RenderPass</Filter>
     </ClCompile>
@@ -1027,7 +1032,5 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\Input\KeyCodecpp.cpp" />
-    <ClCompile Include="source\Graphics\RenderPass\SkyboxPass.cpp" />
   </ItemGroup>
 </Project>

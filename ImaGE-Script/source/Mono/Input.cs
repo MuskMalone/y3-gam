@@ -73,6 +73,14 @@ namespace IGE.Utils
       }
     }
 
+    public static bool anyKeyTriggered
+    {
+      get
+      {
+        return InternalCalls.AnyKeyTriggered();
+      }
+    }
+
     public static string inputString // Returns a string containing all the keys triggered/held this frame
     {
       get

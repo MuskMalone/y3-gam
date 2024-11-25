@@ -5,12 +5,11 @@
 #include "Core/EntityManager.h"
 #include "Events/EventManager.h"
 #include "Core/Entity.h"
-#include "Scenes/SceneManager.h"
 #include "Physics/PhysicsHelpers.h"
 #include "Physics/PhysicsEventData.h"
 #include "Graphics/Renderer.h"
 #include "Input/InputManager.h"
-//#define IMAGE_GAME_APP
+
 namespace IGE {
 	namespace Physics {
 		void SetColliderAsSensor(physx::PxShape* shapeptr, bool sensor);
@@ -66,136 +65,132 @@ namespace IGE {
 		}
 
 		void PhysicsSystem::Update() {
-				mRays.clear();
+			mRays.clear();
 			mOnTriggerPairs.clear();
 
-#ifndef IMAGE_GAME_APP
-			if (Scenes::SceneManager::GetInstance().GetSceneState() != Scenes::SceneState::PLAYING) {
-				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Transform>() };
-				for (auto entity : rbsystem) {
-					auto& xfm{ rbsystem.get<Component::Transform>(entity) };
-					ECS::Entity e{entity};
-					if (HasAnyComponent<Component::RigidBody, Component::BoxCollider, Component::SphereCollider, Component::CapsuleCollider>(e)) {
-						physx::PxRigidDynamic* pxrb{};
-						auto rbiter{ mRigidBodyIDs.find(nullptr) };
-						if (e.HasComponent<Component::RigidBody>())
-							rbiter = mRigidBodyIDs.find(e.GetComponent<Component::RigidBody>().bodyID);
-						else if (e.HasComponent<Component::BoxCollider>())
-							rbiter = mRigidBodyIDs.find(e.GetComponent<Component::BoxCollider>().bodyID);
-						else if (e.HasComponent<Component::SphereCollider>())
-							rbiter = mRigidBodyIDs.find(e.GetComponent<Component::SphereCollider>().bodyID);
-						else if (e.HasComponent<Component::CapsuleCollider>())
-							rbiter = mRigidBodyIDs.find(e.GetComponent<Component::CapsuleCollider>().bodyID);
+			//mPhysicsSystem.Update(gDeltaTime, 1, &mTempAllocator, &mJobSystem);
+				// Simulate one time step (1/60 second)
+			mScene->simulate(gTimeStep);
 
-						if (rbiter != mRigidBodyIDs.end()) {
-							pxrb = rbiter->second;
+			// Wait for the simulation to complete
+			mScene->fetchResults(true);
+			//i only need to fetch rigidbodies as they are the only ones that can move
+			auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::RigidBody, Component::Transform>() };
+			for (auto entity : rbsystem) {
+				auto& xfm{ rbsystem.get<Component::Transform>(entity) };
+				auto& rb{ rbsystem.get<Component::RigidBody>(entity) };
+				auto rbiter{ mRigidBodyIDs.find(rb.bodyID) };
+				if (rbiter != mRigidBodyIDs.end()) {
+					physx::PxRigidDynamic* pxrigidbody{ mRigidBodyIDs.at(rb.bodyID) };
 
-							if (!ECS::Entity{ entity }.IsActive()) {
-								if (mInactiveActors.find(pxrb) == mInactiveActors.end()) {
-									mScene->removeActor(*pxrb);
-									mInactiveActors.insert(pxrb);
-								}
-								continue;
-							}
-							else {
-								if (mInactiveActors.find(pxrb) != mInactiveActors.end()) {
-									mScene->addActor(*pxrb);
-									mInactiveActors.erase(pxrb);
-								}
-							}
+					if (!ECS::Entity{ entity }.IsActive()) {
+						if (mInactiveActors.find(pxrigidbody) == mInactiveActors.end()) {
+							mScene->removeActor(*pxrigidbody);
+							mInactiveActors.insert(pxrigidbody);
 						}
-						else throw std::runtime_error{ std::string("there is no rigidbody ") };
-
-						//getting from graphics
-						if (pxrb->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC))
-							pxrb->setKinematicTarget(physx::PxTransform{ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot)});
-						else
-							pxrb->setGlobalPose(physx::PxTransform{ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot)});
+						continue;
 					}
 
-					//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
-					//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));
-					//xfm.worldPos = ToGLMVec3(bodyInterface.(rb.bodyID));
-				}
-			}
-			else {
-#endif
-				//mPhysicsSystem.Update(gDeltaTime, 1, &mTempAllocator, &mJobSystem);
-					// Simulate one time step (1/60 second)
-				mScene->simulate(gTimeStep);
+					else {
+						if (mInactiveActors.find(pxrigidbody) != mInactiveActors.end()) {
+							mScene->addActor(*pxrigidbody);
+							mInactiveActors.erase(pxrigidbody);
+						}
+					}
 
-				// Wait for the simulation to complete
-				mScene->fetchResults(true);
-				//i only need to fetch rigidbodies as they are the only ones that can move
-				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::RigidBody, Component::Transform>() };
-				for (auto entity : rbsystem) {
-					auto& xfm{ rbsystem.get<Component::Transform>(entity) };
-					auto& rb{ rbsystem.get<Component::RigidBody>(entity) };
-					auto rbiter{ mRigidBodyIDs.find(rb.bodyID) };
+					//apply gravity
+					if (rb.motionType == Component::RigidBody::MotionType::DYNAMIC) {
+						float grav{ gGravity * rb.gravityFactor * rb.mass };
+						pxrigidbody->addForce(ToPxVec3(glm::vec3(0.f, grav, 0.f)));
+					}
+					auto pose{ pxrigidbody->getGlobalPose() };
+					xfm.worldPos = ToGLMVec3(pose.p);
+
+					//getting from physics
+					xfm.worldRot = ToGLMQuat(pose.q);
+					//xfm.worldPos += ToGLMVec3(pxrigidbody->getLinearVelocity() * gTimeStep);
+					//{
+					//	auto angularVelocity = pxrigidbody->getAngularVelocity();
+					//	float angle = angularVelocity.magnitude() * gTimeStep;
+					//	if (glm::abs(angle) > glm::epsilon<float>()) {
+					//		auto axis = angularVelocity;
+					//		physx::PxQuat deltaRotation(angle, axis);
+					//		// to add rotations, multiply 2 quats tgt
+					//		xfm.worldRot *= ToGLMQuat(deltaRotation);
+					//	}
+					//}
+					xfm.modified = true; // include this 
+
+					rb.velocity = pxrigidbody->getLinearVelocity();
+					rb.angularVelocity = pxrigidbody->getAngularVelocity();
+
+					//bool angmod{ false };
+					//if (rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::X)) {
+					//	rb.angularVelocity.x = 0.f; angmod = true;
+					//}
+					//if (rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::Y)) {
+					//	rb.angularVelocity.y = 0.f; angmod = true;
+					//}
+					//if (rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::Z)) {
+					//	rb.angularVelocity.z = 0.f; angmod = true;
+					//}
+					//pxrigidbody->setAngularVelocity(rb.angularVelocity);
+					//pxrigidbody->setLinearVelocity(rb.velocity);
+				}
+				//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
+				//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));
+				//xfm.worldPos = ToGLMVec3(bodyInterface.(rb.bodyID));
+			}
+
+		}
+
+		void PhysicsSystem::PausedUpdate() {
+			auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Transform>() };
+			for (auto entity : rbsystem) {
+				auto& xfm{ rbsystem.get<Component::Transform>(entity) };
+				ECS::Entity e{ entity };
+				if (HasAnyComponent<Component::RigidBody, Component::BoxCollider, Component::SphereCollider, Component::CapsuleCollider>(e)) {
+					physx::PxRigidDynamic* pxrb{};
+					auto rbiter{ mRigidBodyIDs.find(nullptr) };
+					if (e.HasComponent<Component::RigidBody>())
+						rbiter = mRigidBodyIDs.find(e.GetComponent<Component::RigidBody>().bodyID);
+					else if (e.HasComponent<Component::BoxCollider>())
+						rbiter = mRigidBodyIDs.find(e.GetComponent<Component::BoxCollider>().bodyID);
+					else if (e.HasComponent<Component::SphereCollider>())
+						rbiter = mRigidBodyIDs.find(e.GetComponent<Component::SphereCollider>().bodyID);
+					else if (e.HasComponent<Component::CapsuleCollider>())
+						rbiter = mRigidBodyIDs.find(e.GetComponent<Component::CapsuleCollider>().bodyID);
+
 					if (rbiter != mRigidBodyIDs.end()) {
-						physx::PxRigidDynamic* pxrigidbody{ mRigidBodyIDs.at(rb.bodyID) };
-						
+						pxrb = rbiter->second;
+
 						if (!ECS::Entity{ entity }.IsActive()) {
-							if (mInactiveActors.find(pxrigidbody) == mInactiveActors.end()) {
-								mScene->removeActor(*pxrigidbody);
-								mInactiveActors.insert(pxrigidbody);
+							if (mInactiveActors.find(pxrb) == mInactiveActors.end()) {
+								mScene->removeActor(*pxrb);
+								mInactiveActors.insert(pxrb);
 							}
 							continue;
 						}
-
 						else {
-							if (mInactiveActors.find(pxrigidbody) != mInactiveActors.end()) {
-								mScene->addActor(*pxrigidbody);
-								mInactiveActors.erase(pxrigidbody);
+							if (mInactiveActors.find(pxrb) != mInactiveActors.end()) {
+								mScene->addActor(*pxrb);
+								mInactiveActors.erase(pxrb);
 							}
 						}
-						
-						//apply gravity
-						if (rb.motionType == Component::RigidBody::MotionType::DYNAMIC) {
-							float grav{ gGravity * rb.gravityFactor * rb.mass };
-							pxrigidbody->addForce(ToPxVec3(glm::vec3(0.f, grav, 0.f)));
-						}
-						auto pose{ pxrigidbody->getGlobalPose() };
-						xfm.worldPos = ToGLMVec3(pose.p);
-
-						//getting from physics
-						xfm.worldRot = ToGLMQuat(pose.q);
-						//xfm.worldPos += ToGLMVec3(pxrigidbody->getLinearVelocity() * gTimeStep);
-						//{
-						//	auto angularVelocity = pxrigidbody->getAngularVelocity();
-						//	float angle = angularVelocity.magnitude() * gTimeStep;
-						//	if (glm::abs(angle) > glm::epsilon<float>()) {
-						//		auto axis = angularVelocity;
-						//		physx::PxQuat deltaRotation(angle, axis);
-						//		// to add rotations, multiply 2 quats tgt
-						//		xfm.worldRot *= ToGLMQuat(deltaRotation);
-						//	}
-						//}
-						xfm.modified = true; // include this 
-
-						rb.velocity = pxrigidbody->getLinearVelocity();
-						rb.angularVelocity = pxrigidbody->getAngularVelocity();
-
-						//bool angmod{ false };
-						//if (rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::X)) {
-						//	rb.angularVelocity.x = 0.f; angmod = true;
-						//}
-						//if (rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::Y)) {
-						//	rb.angularVelocity.y = 0.f; angmod = true;
-						//}
-						//if (rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::Z)) {
-						//	rb.angularVelocity.z = 0.f; angmod = true;
-						//}
-						//pxrigidbody->setAngularVelocity(rb.angularVelocity);
-						//pxrigidbody->setLinearVelocity(rb.velocity);
 					}
-					//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
-					//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));
-					//xfm.worldPos = ToGLMVec3(bodyInterface.(rb.bodyID));
+					else throw std::runtime_error{ std::string("there is no rigidbody ") };
+
+					//getting from graphics
+					if (pxrb->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC))
+						pxrb->setKinematicTarget(physx::PxTransform{ ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot) });
+					else
+						pxrb->setGlobalPose(physx::PxTransform{ ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot) });
 				}
-#ifndef IMAGE_GAME_APP
+
+				//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
+				//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));
+				//xfm.worldPos = ToGLMVec3(bodyInterface.(rb.bodyID));
 			}
-#endif
 		}
 
 		Component::RigidBody& PhysicsSystem::AddRigidBody(ECS::Entity entity, Component::RigidBody rigidbody) {

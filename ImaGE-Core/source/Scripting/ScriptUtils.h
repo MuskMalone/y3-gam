@@ -48,7 +48,7 @@ namespace Mono {
 		PLAYERMOVE,
 		DIALOGUE,
 		PLAYERINTERACTION,
-	
+		INVENTORY,
 	};
 
 

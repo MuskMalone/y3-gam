@@ -22,7 +22,7 @@ namespace GUI {
                             IGE_ASSETMGR.PathToGUID(fp)
                         );
                     }
-                    catch (Debug::Exception<IGE::Assets::AssetManager> const& e) {
+                    catch ([[maybe_unused]] Debug::Exception<IGE::Assets::AssetManager> const& e) {
                         //do nothing
                         Debug::DebugLogger::GetInstance().LogWarning("shader asset doesnt exist");
                     }

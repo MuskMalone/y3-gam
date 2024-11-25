@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Numerics;
 using IGE.Utils;
+using System.Numerics;
+
 public class HUD : Entity
 {
   public Inventory inventory;
 
-  // Start is called before the first frame update
   void Start()
   {
     inventory.ItemAdded += InventoryScript_ItemAdded;
@@ -18,40 +13,25 @@ public class HUD : Entity
 
   private void InventoryScript_ItemAdded(object sender, InventoryEventArgs e)
   {
+    //InternalCalls.PlaySound(mEntityID, "ItemPickup"); // Unfortunately 3D sound so HUD distance from player matters
+                                                        // Have to put in individual object scripts
     Transform inventoryPanel = GetComponent<Transform>().Find("Inventory");
-    //foreach (Transform slot in inventoryPanel.children)   
-    //{
-    //  Image image = slot.GetChild(0).GetChild(0).entity.GetComponent<Image>();            // NEED TO DO
+    Vector3 vec3 = new Vector3(e.InventoryPosition.X, e.InventoryPosition.Y, 1f);
+    InternalCalls.SetPosition(e.Item.Image.mEntityID, ref vec3);
 
-    //  if (!image.enabled)
-    //  {
-    //    image.enabled = true;
-    //    image.sprite = e.Item.Image;
-    //    break;
-    //  }
-    //}
+    // If the inventory is already open, set to visible
+    if (inventory.isVisible)
+    {
+      e.Item.Image.SetActive(true);
+    }
   }
 
-  // Existing method to handle item removal in the UI
   private void InventoryScript_ItemRemoved(object sender, InventoryEventArgs e)
   {
-    Transform inventoryPanel = GetComponent<Transform>().Find("Inventory");
-
-    //foreach (Transform slot in inventoryPanel.children)
-    //{
-    //  Image image = slot.GetChild(0).GetChild(0).GetComponent<Image>();
-
-    //  // We compare the sprite or any unique identifier of the item to find it            // NEED TO DO
-    //  if (image.enabled && image.sprite == e.Item.Image)
-    //  {
-    //    image.enabled = false;
-    //    image.sprite = null;
-    //    break;
-    //  }
-    //}
+    e.Item.Image.SetActive(false);
+    e.Item = null;
   }
 
-  // Update is called once per frame
   void Update()
   {
 

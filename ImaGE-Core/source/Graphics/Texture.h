@@ -19,8 +19,6 @@ namespace Graphics {
 	public:
 
 		static IGE::Assets::GUID Create(std::string const& path, bool isBindless = true);
-		static uint32_t BindToNextAvailUnit(uint32_t texture);
-		static void ResetTextureUnits();
 
 		//Temp default constructor
 		Texture();
@@ -42,15 +40,16 @@ namespace Graphics {
 		void CopyFrom(GLuint srcTexHdl, GLsizei width, GLsizei height);
 
 		void Bind(uint32_t texUnit) const;
-		uint32_t Bind() const;
-		/*void Unbind(unsigned int texUnit = 0) const;*/
+		void Unbind(unsigned int texUnit) const;
 
 		bool operator==(Texture const& rhs) const;
 
+		static inline constexpr uint32_t sDefaultAlbedoUnit = 0;
+		static inline constexpr uint32_t sDefaultNormalUnit = 16;
+		static inline constexpr uint32_t sShadowMapTexUnit = 31;
+
 	private:
 		void InitBindlessTexture();
-
-		inline static uint32_t sNextAvailTextureUnit = 0;
 
 		std::string mPath;
 		uint32_t mWidth;

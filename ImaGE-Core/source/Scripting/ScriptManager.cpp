@@ -48,6 +48,7 @@ namespace Mono
   bool ScriptManager::mAssemblyReloadPending{};
   bool ScriptManager::mCSReloadPending{};
   bool ScriptManager::mRebuildCS{};
+  bool ScriptManager::mTriggerStart{};
 
   std::unordered_map<ScriptFieldType,std::string> ScriptManager::mRevClassMap{};
   std::unordered_map<std::string, ScriptFieldType> ScriptManager::mScriptFieldTypeMap
@@ -65,8 +66,8 @@ namespace Mono
     { "System.Numerics.Vector3", ScriptFieldType::VEC3 },
     { "IGE.Utils.Vec3<System.Double>", ScriptFieldType::DVEC3 },
     { "System.Int32[]", ScriptFieldType::INT_ARR },
-    { "System.System.Single[]", ScriptFieldType::FLOAT_ARR },
-    { "System.System.Double[]", ScriptFieldType::DOUBLE_ARR },
+    { "System.Single[]", ScriptFieldType::FLOAT_ARR },
+    { "System.Double[]", ScriptFieldType::DOUBLE_ARR },
     { "System.String[]", ScriptFieldType::STRING_ARR},
     { "Entity[]", ScriptFieldType::ENTITY_ARR },
     { "Entity", ScriptFieldType::ENTITY},
@@ -76,6 +77,7 @@ namespace Mono
     { "PlayerMove", ScriptFieldType::PLAYERMOVE},
     { "Dialogue", ScriptFieldType::DIALOGUE},
     { "PlayerInteraction", ScriptFieldType::PLAYERINTERACTION },
+    { "Inventory", ScriptFieldType::INVENTORY },
   };
 }
 
@@ -177,6 +179,7 @@ void ScriptManager::AddInternalCalls()
   ADD_CLASS_INTERNAL_CALL(IsKeyPressed, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(GetInputString, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(AnyKeyDown, Input::InputManager::GetInstance());
+  ADD_CLASS_INTERNAL_CALL(AnyKeyTriggered, Input::InputManager::GetInstance());
   ADD_INTERNAL_CALL(GetMousePos);
   ADD_INTERNAL_CALL(GetMouseDelta);
 
@@ -198,6 +201,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetRotation);
   ADD_INTERNAL_CALL(SetWorldRotation);
   ADD_INTERNAL_CALL(SetWorldScale);
+  ADD_INTERNAL_CALL(SetScale);
   ADD_INTERNAL_CALL(MoveCharacter);
   ADD_INTERNAL_CALL(SetAngularVelocity);
   ADD_INTERNAL_CALL(SetVelocity);
@@ -415,11 +419,12 @@ ScriptFieldType ScriptManager::MonoTypeToScriptFieldType(MonoType* monoType)
   return it->second;
 }
 
-std::vector<ScriptInstance> ScriptManager::SerialMonoObjectVec(std::vector<MonoObject*> vec)
+std::vector<ScriptInstance> ScriptManager::SerialMonoObjectVec(std::vector<MonoObject*> const& vec)
 {
   std::vector<ScriptInstance> toSer{};
-  for (MonoObject* obj : vec)
-  {
+  toSer.reserve(vec.size());
+
+  for (MonoObject* obj : vec) {
     toSer.emplace_back(obj, false, true);
   }
 
@@ -757,8 +762,14 @@ void Mono::SetWorldScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment
 
 glm::vec3 Mono::GetScale(ECS::Entity::EntityID entity)
 {
-    Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
-    return trans.scale;
+  Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+  return trans.scale;
+}
+
+void Mono::SetScale(ECS::Entity::EntityID entity, glm::vec3 scale) {
+  Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+  trans.scale = scale;
+  TransformHelpers::UpdateWorldTransform(entity);
 }
 
 glm::vec3 Mono::GetColliderScale(ECS::Entity::EntityID e)
@@ -819,15 +830,13 @@ glm::vec3 Mono::GetWorldScale(ECS::Entity::EntityID entity)
 
 MonoString* Mono::GetTag(ECS::Entity::EntityID entity)
 {
-  /*
   if (ECS::Entity(entity).HasComponent<Component::Tag>())
     return STDToMonoString(ECS::Entity(entity).GetComponent<Component::Tag>().tag);
   else
     return STDToMonoString("");
-  */
 
   // @TODO: TEMP
-  return STDToMonoString(ECS::Entity(entity).GetComponent<Component::Tag>().tag);
+  //return STDToMonoString(ECS::Entity(entity).GetComponent<Component::Tag>().tag);
 }
 
 void  Mono::Log(MonoString*s)

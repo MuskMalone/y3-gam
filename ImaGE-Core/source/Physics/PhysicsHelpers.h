@@ -2,6 +2,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <Core/Entity.h>
+
 namespace IGE {
 	namespace Physics {
 		inline glm::vec3 ToGLMVec3(physx::PxVec3 const& v) {

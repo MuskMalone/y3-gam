@@ -7,6 +7,7 @@
 
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
+#include <policy.h>
 #include <rttr/registration>
 #include <Core/Components/Components.h>
 #include <Reflection/ProxyScript.h>
@@ -28,7 +29,7 @@ namespace AssertStuff {
   static_assert(AssertStuff::HasClear<ClassType>, "Component " name " needs to define a function Clear()!!"); \
   static_assert(std::is_same<decltype(&ClassType::Clear), void(ClassType::*)() noexcept>::value, \
     "Clear function of Component " name " does not have signature of \"void Clear() noexcept\"");\
-  rttr::registration::class_<ClassType>(name).constructor<>().method("Clear", &ClassType::Clear)
+  rttr::registration::class_<ClassType>(name).constructor<>()(rttr::policy::ctor::as_object).method("Clear", &ClassType::Clear)
 
 static void rttr_auto_register_reflection_function2_(); namespace {
   struct rttr__auto__register2__ {
@@ -81,8 +82,7 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("receiveShadows", &Mesh::receiveShadows);
 
   REGISTER_COMPONENT(Material, "Material")
-    .property("materialGUID", &Material::materialGUID)
-    .property("matIdx", &Material::matIdx);
+    .property("materialGUID", &Material::materialGUID);
 
   REGISTER_COMPONENT(Text, "Text")
     .property("textContent", &Text::textContent)
@@ -166,13 +166,13 @@ static void rttr_auto_register_reflection_function2_(); namespace {
 
   // stuff below are not actual "Components", hence we skip the REGISTER_COMPONENT checks
   rttr::registration::class_<PrefabOverrides>("PrefabOverrides")
-    .constructor<>()
+    .constructor<>()(rttr::policy::ctor::as_object)
     .property(JSON_GUID_KEY, &PrefabOverrides::guid)
     .property("modifiedComponents", &PrefabOverrides::modifiedComponents)
     .property("removedComponents", &PrefabOverrides::removedComponents)
     .property("subDataId", &PrefabOverrides::subDataId);
 
   rttr::registration::class_<Reflection::ProxyScriptComponent>("ProxyScriptComponent")
-    .constructor<>()
+    .constructor<>()(rttr::policy::ctor::as_object)
     .property(JSON_SCRIPT_LIST_KEY, &Reflection::ProxyScriptComponent::proxyScriptList);
 }

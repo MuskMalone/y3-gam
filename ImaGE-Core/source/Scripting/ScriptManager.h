@@ -26,12 +26,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <unordered_map>
 #include <vector>
 
+#define IGE_SCRIPTMGR Mono::ScriptManager::GetInstance()
 
 namespace Mono
 {
-
-
-
 	class ScriptManager : public ThreadSafeSingleton<ScriptManager>
 	{
 		static std::map<std::string, ScriptClassInfo> mMonoClassMap;  //Map of Scripts 
@@ -54,6 +52,7 @@ namespace Mono
 		static std::string mScnfilePath;
 		static std::string mCsprojPath;
 		static std::string mBatfilePath;
+		static bool mTriggerStart;
 
 
 		/*!*********************************************************************
@@ -194,8 +193,10 @@ namespace Mono
 		static ScriptFieldType MonoTypeToScriptFieldType(MonoType* monoType);
 
 
-		std::vector<ScriptInstance> SerialMonoObjectVec(std::vector < MonoObject*>);
+		std::vector<ScriptInstance> SerialMonoObjectVec(std::vector<MonoObject*> const& vec);
 
+
+		static void TriggerStart();
 
 
 		/*!**********************************************************************
@@ -264,6 +265,7 @@ namespace Mono
 		************************************************************************/
 		static void SetWorldScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment);
 		static glm::vec3 GetScale(ECS::Entity::EntityID);
+		static void SetScale(ECS::Entity::EntityID entity, glm::vec3 scale);
 		static glm::vec3 GetColliderScale(ECS::Entity::EntityID);
 
 		/*!*********************************************************************

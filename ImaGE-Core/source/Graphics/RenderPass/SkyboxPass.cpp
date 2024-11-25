@@ -29,9 +29,9 @@ namespace Graphics {
 			shader->Use();
 
 			if (skybox.tex1.IsValid())
-				shader->SetUniform("u_Panoramic1", IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(skybox.tex1)->mTexture);
+				shader->SetUniform("u_Panoramic1", IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(skybox.tex1)->mTexture, 0);
 			if(skybox.tex2.IsValid())
-				shader->SetUniform("u_Panoramic2", IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(skybox.tex2)->mTexture);
+				shader->SetUniform("u_Panoramic2", IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(skybox.tex2)->mTexture, 1);
 			shader->SetUniform("u_Blend", skybox.blend);
 		}
 

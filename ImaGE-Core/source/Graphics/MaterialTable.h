@@ -22,7 +22,7 @@ namespace Graphics {
         static std::shared_ptr<MaterialData> const& GetMaterialByGUID(const IGE::Assets::GUID& guid);
 
         // Bind textures for all materials to the shader
-        static void ApplyMaterialTextures(std::shared_ptr<Graphics::Shader> const& shader, size_t batchStart, size_t batchEnd);
+        static void ApplyMaterialTextures(std::shared_ptr<Graphics::Shader> const& shader, unsigned batchStart, unsigned batchEnd);
         static void ApplyMaterialTextures(std::shared_ptr<Graphics::Shader> const& shader);
 
 

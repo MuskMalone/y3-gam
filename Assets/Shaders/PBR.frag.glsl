@@ -1,18 +1,6 @@
 #version 460 core
 //#extension GL_ARB_bindless_texture : require
 
-struct MaterialProperties {
-    vec4 AlbedoColor;  // Base color
-    float Metalness;   // Metalness factor
-    float Roughness;   // Roughness factor
-    float Transparency; // Transparency (alpha)
-    float AO;          // Ambient occlusion
-};
-
-layout(std430, binding = 0) buffer MaterialPropsBuffer {
-    MaterialProperties materials[];
-};
-
 layout(location = 0) out vec4 fragColor;
 layout(location = 1) out int entityID;
 
@@ -46,7 +34,7 @@ uniform float u_Roughness;
 uniform float u_Transparency;
 uniform float u_AO;
 
-
+uniform int u_MatIdxOffset;
 uniform sampler2D[16] u_AlbedoMaps;
 //uniform sampler2D[16] u_NormalMaps;
 
@@ -85,11 +73,9 @@ void main(){
     vec2 texCoord = v_TexCoord * u_Tiling + u_Offset;
     
 	//vec4 texColor = texture2D(u_NormalMaps[int(v_MaterialIdx)], texCoord); //currently unused
-
-    MaterialProperties mat = materials[v_MaterialIdx];
-    vec4 albedoTexture = texture2D(u_AlbedoMaps[int(v_MaterialIdx)], texCoord);
-    vec3 albedo = albedoTexture.rgb * mat.AlbedoColor.rgb; // Mixing texture and uniform
-
+    
+    vec4 albedoTexture = texture2D(u_AlbedoMaps[int(v_MaterialIdx) - u_MatIdxOffset], texCoord);
+    vec3 albedo = albedoTexture.rgb * u_Albedo; // Mixing texture and uniform
 	// Normalize inputs
     vec3 N = normalize(v_Normal);
     vec3 Lo = vec3(0); 
@@ -98,11 +84,15 @@ void main(){
         vec3 V = normalize(u_CamPos - v_FragPos);    // View direction
         vec3 L = vec3(0);
         vec3 lightColor = vec3(0); 
+        float shadow = 0.0; // Shadow factor default (0.0 = no shadow)
 
         if(u_type[i] == typeDir)
         {
             L = normalize(-u_LightDirection[i]); // Light direction (directional light)
             lightColor = u_LightColor[i] * u_LightIntensity[i];
+            if (u_ShadowsActive) {
+                shadow = CheckShadow(v_LightSpaceFragPos);  // 1.0 if in shadow and 0.0 otherwise
+            }
         }
         if(u_type[i] == typeSpot)
         {
@@ -131,16 +121,16 @@ void main(){
         vec3 H = normalize(V + L);                   // Halfway vector
 
         vec3 F0 = vec3(0.04); 
-            F0 = mix(F0, albedo, mat.Metalness);
+            F0 = mix(F0, albedo, u_Metalness);
 
         // cook-torrance brdf
-        float NDF = DistributionGGX(N, H, mat.Roughness);        
-        float G   = GeometrySmith(N, V, L, mat.Roughness);      
+        float NDF = DistributionGGX(N, H, u_Roughness);        
+        float G   = GeometrySmith(N, V, L, u_Roughness);      
         vec3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0); 
 
         vec3 kS = F;
         vec3 kD = vec3(1.0) - kS;
-        kD *= 1.0 - mat.Metalness;	
+        kD *= 1.0 - u_Metalness;	
 
         vec3 numerator    = NDF * G * F;
         float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
@@ -148,20 +138,16 @@ void main(){
                 
         float NdotL = max(dot(N, L), 0.0);
 
-        Lo += (kD * albedo / PI + specular) * lightColor * NdotL;
+        Lo += (kD * albedo / PI + specular) * lightColor * NdotL * (1.0 - shadow);
     }
 
-    vec3 ambient = vec3(0.01) * albedo * mat.AO;
+    vec3 ambient = vec3(0.01) * albedo * u_AO;
 
-    float shadow = u_ShadowsActive ? CheckShadow(v_LightSpaceFragPos) : 0.0;    // 1.0 if in shadow and 0.0 otherwise
-    vec3 color = ambient + Lo * (1.0 - shadow);
+    vec3 color = ambient + Lo;
     color = color / (color + vec3(1.0));
     color = pow(color, vec3(1.0/2.2)); //gamma correction
     //change transparency here
-    float alpha = mat.Transparency;
-
-    // For testing, output the AlbedoColor
-    //fragColor = vec4(mat.AlbedoColor.rgb, 1.f);
+    float alpha = u_Transparency;
 	fragColor = vec4(color, alpha) * v_Color;
 }
 

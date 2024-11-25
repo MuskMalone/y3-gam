@@ -797,14 +797,14 @@ namespace Graphics {
 		}
 	}
 
-	void Shader::SetUniform(std::string const& name, Texture const& texture/*, unsigned int texUnit*/) {
+	void Shader::SetUniform(std::string const& name, Texture const& texture, unsigned int texUnit) {
 		//if (texture->IsBindless()) {
 		//	SetUniform(name, texture->GetBindlessHandle());
 		//	return;
 		//}
 	
 		// Activate and bind the texture to that unit
-		int const texUnit{ static_cast<int>(texture.Bind()) };
+		texture.Bind(texUnit);
 
 		// Set the uniform in the shader to the correct texture unit
 		GLint loc = GetUniformLocation(name);
@@ -813,14 +813,14 @@ namespace Graphics {
 		}
 	}
 
-	void Shader::SetUniform(std::string const& name, std::shared_ptr<Texture> texture/*, unsigned int texUnit*/) {
+	void Shader::SetUniform(std::string const& name, std::shared_ptr<Texture> texture, unsigned int texUnit) {
 		//if (texture->IsBindless()) {
 		//	SetUniform(name, texture->GetBindlessHandle());
 		//	return;
 		//}
 
 		// Activate and bind the texture to that unit
-		int const texUnit{ static_cast<int>(texture->Bind()) };
+		texture->Bind(texUnit);
 
 		// Set the uniform in the shader to the correct texture unit
 		GLint loc = GetUniformLocation(name);

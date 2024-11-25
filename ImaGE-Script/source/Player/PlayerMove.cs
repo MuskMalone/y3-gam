@@ -22,6 +22,8 @@ using System.Numerics;
 public class  PlayerMove : Entity
 {
   public float speed = 650f;
+  public float walkingSpeed = 650f;
+  public float runSpeed = 1200f;
   public float jumpForce = 2500f;
   private float extraGravityFactorDuringDescent = 15f;
   public float isGroundedRayHeight = 3f;
@@ -65,6 +67,16 @@ public class  PlayerMove : Entity
   {
     float x = Input.GetAxis("Horizontal");
     float z = Input.GetAxis("Vertical");
+
+    if (Input.GetKeyDown(KeyCode.Q))
+    {
+      speed = runSpeed;
+    }
+
+    else
+    {
+      speed = walkingSpeed;
+    }
 
     Vector3 move = GetComponent<Transform>().right * x * speed + GetComponent<Transform>().forward * z * speed;
 
