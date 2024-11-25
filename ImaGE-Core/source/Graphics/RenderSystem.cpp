@@ -53,8 +53,13 @@ namespace Graphics {
 			}
 
 			// for objects without mesh, use transform as the bounding vol
-			Graphics::MeshSource const* meshPtr{ entity.HasComponent<Component::Mesh>() ?
-				&am.GetAsset<IGE::Assets::ModelAsset>(entity.GetComponent<Component::Mesh>().meshSource)->mMeshSource : nullptr };
+			Graphics::MeshSource const* meshPtr{ nullptr };
+			if (entity.HasComponent<Component::Mesh>()) {
+				Component::Mesh& mesh{ entity.GetComponent<Component::Mesh>() };
+				if (mesh.meshSource) {
+					meshPtr = &am.GetAsset<IGE::Assets::ModelAsset>(mesh.meshSource)->mMeshSource;
+				}
+			};
 
 			bool const ret{ EntityInViewFrustum(camFrustum, entity.GetComponent<Component::Transform>(), meshPtr) };
 			if (!ret) { ++cullCount; }
