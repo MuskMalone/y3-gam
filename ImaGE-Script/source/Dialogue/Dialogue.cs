@@ -1,4 +1,5 @@
 using IGE.Utils;
+using System.Numerics;
 
 public class Dialogue : Entity
 {
@@ -35,6 +36,7 @@ public class Dialogue : Entity
   private string[] lines;               // The lines from the caller
   private int charIndex = 0;            // Tracks the current character index
   private float nextCharTime = 0f;      // Tracks the time for the next character
+  private const float defaultFontSize = 0.006f;
 
   public Dialogue() : base()
   {
@@ -84,8 +86,9 @@ public class Dialogue : Entity
   }
 
   // To be called by other scripts before starting the dialogue
-  public void SetDialogue(string[] newLines, Emotion[] newEmotions)
+  public void SetDialogue(string[] newLines, Emotion[] newEmotions, float textScale = defaultFontSize)
   {
+    InternalCalls.SetTextScale(mEntityID, textScale);
     if (newLines.Length != newEmotions.Length)
     {
       Debug.LogError("Lines and emotions arrays must be the same length. " +
@@ -123,7 +126,7 @@ public class Dialogue : Entity
     nextCharTime = Time.gameTime;       // Start typing immediately
   }
 
-  void EndDialogue()
+  private void EndDialogue()
   {
     InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
     playerMove.UnfreezePlayer();

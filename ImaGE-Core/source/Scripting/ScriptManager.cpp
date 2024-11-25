@@ -22,6 +22,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <cstdint>
 #include <Scripting/ScriptUtils.h>
 
+#include <Events/EventManager.h>
+#include <Scenes/SceneManager.h>
 #include <filesystem>
 #include <Core/Components/Components.h>
 #include <Serialization/Deserializer.h>
@@ -231,6 +233,10 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetAllChildren);
   ADD_INTERNAL_CALL(GetMainCameraPosition);
   ADD_INTERNAL_CALL(GetMainCameraDirection);
+  ADD_INTERNAL_CALL(GetTextColor);
+  ADD_INTERNAL_CALL(SetTextColor);
+  ADD_INTERNAL_CALL(GetTextScale);
+  ADD_INTERNAL_CALL(SetTextScale);
   ADD_INTERNAL_CALL(GetText);
   ADD_INTERNAL_CALL(SetText);
   ADD_INTERNAL_CALL(AppendText);
@@ -244,6 +250,8 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(PauseSound);
   ADD_INTERNAL_CALL(StopSound);
   ADD_INTERNAL_CALL(GetLayerName);
+  ADD_INTERNAL_CALL(GetCurrentScene);
+  ADD_INTERNAL_CALL(SetCurrentScene);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -1150,6 +1158,41 @@ glm::vec3 Mono::GetMainCameraDirection(ECS::Entity::EntityID cameraEntity) {
   return glm::vec3();
 }
 
+glm::vec4 Mono::GetTextColor(ECS::Entity::EntityID textEntity) {
+  if (!ECS::Entity{ textEntity }.HasComponent<Component::Text>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to Get Text Color of an entity that does not have the Text Component");
+    return glm::vec4();
+  }
+
+  return ECS::Entity{ textEntity }.GetComponent<Component::Text>().color;
+}
+
+void Mono::SetTextColor(ECS::Entity::EntityID textEntity, glm::vec4 textColor) {
+  if (!ECS::Entity{ textEntity }.HasComponent<Component::Text>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to Set Text Color of an entity that does not have the Text Component");
+    return;
+  }
+
+  ECS::Entity{ textEntity }.GetComponent<Component::Text>().color = textColor;
+}
+
+float Mono::GetTextScale(ECS::Entity::EntityID textEntity) {
+  if (!ECS::Entity{ textEntity }.HasComponent<Component::Text>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to Get Text Scale of an entity that does not have the Text Component");
+    return 0;
+  }
+
+  return ECS::Entity{ textEntity }.GetComponent<Component::Text>().scale;
+}
+
+void Mono::SetTextScale(ECS::Entity::EntityID textEntity, float textScale) {
+  if (!ECS::Entity{ textEntity }.HasComponent<Component::Text>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to Get Text Scale of an entity that does not have the Text Component");
+    return;
+  }
+
+  ECS::Entity{ textEntity }.GetComponent<Component::Text>().scale = textScale;
+}
 
 MonoString* Mono::GetText(ECS::Entity::EntityID entity)
 {
@@ -1221,6 +1264,30 @@ void Mono::SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val)
   }
   else
     Debug::DebugLogger::GetInstance().LogError("You r trying to set Image color from an invalid entity");
+}
+
+MonoString* Mono::GetCurrentScene() {
+  return STDToMonoString(IGE_SCENEMGR.GetSceneName());
+}
+
+// Note: For now this function works in ImaGE-Game, but not exactly in ImaGE-Editor (Scene is unable to play automatically
+// after changing scenes, but scene still changes). Just assume that the scene changes and plays in the game application
+void Mono::SetCurrentScene(MonoString* scenePath) {
+  std::string scenePathSTD{ MonoStringToSTD(scenePath) };
+
+  if (!scenePathSTD.empty()) {
+    //IGE_EVENTMGR.DispatchImmediateEvent<Events::LoadSceneEvent>(std::filesystem::path(scenePathSTD).stem().string(),
+      //scenePathSTD);
+    QUEUE_EVENT(Events::LoadSceneEvent, std::filesystem::path(scenePathSTD).stem().string(),
+      scenePathSTD);
+
+    // Play the scene (Most common use case is to set scene and immediately want it playing)
+    /*
+    if (IGE_SCENEMGR.GetSceneState() != Scenes::SceneState::PLAYING) {
+      IGE_SCENEMGR.PlayScene();
+    }
+    */
+  }
 }
 
 /*!**********************************************************************

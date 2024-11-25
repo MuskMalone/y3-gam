@@ -21,6 +21,7 @@ namespace Graphics {
 	}
 
 	void RenderSystem::RenderScene(CameraSpec const& cam) {
+		PrepareFrame();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//Frustum Culling should be here
@@ -41,9 +42,8 @@ namespace Graphics {
 				&am.GetAsset<IGE::Assets::ModelAsset>(entity.GetComponent<Component::Mesh>().meshSource)->mMeshSource : nullptr };
 
 			bool const ret{ EntityInViewFrustum(camFrustum, entity.GetComponent<Component::Transform>(), meshPtr) };
-			if (!ret) {
-				++cullCount;
-			}
+			if (!ret) { ++cullCount; }
+
 			return ret;
 		};
 
@@ -87,6 +87,14 @@ namespace Graphics {
 
 	void RenderSystem::Release() {
 
+	}
+
+	void RenderSystem::PrepareFrame() {
+		// Update material properties and check if any changes were made
+		if (MaterialTable::UpdateMaterialPropsBuffer()) {
+			// Only upload to the GPU if materials were updated
+			MaterialTable::UploadMaterialProps();
+		}
 	}
 }
 

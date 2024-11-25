@@ -58,10 +58,15 @@ public class  PlayerMove : Entity
   // Update is called once per frame
   void Update()
   {
-    if(canLook) 
+    if (canLook) 
       ProcessLook();
-    if(canMove)
+    if (canMove)
       PlayerMovement();
+
+    if (Input.GetKeyTriggered(KeyCode.SPACE))
+    {
+      InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
+    }
   }
   void PlayerMovement()
   {

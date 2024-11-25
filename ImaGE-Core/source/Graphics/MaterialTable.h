@@ -5,6 +5,7 @@
 namespace Graphics {
 
     class MaterialData;
+    struct MaterialProperties;
     class MaterialTable {
     public:
         // Add a material to the table and return its index
@@ -21,7 +22,7 @@ namespace Graphics {
         static std::shared_ptr<MaterialData> const& GetMaterialByGUID(const IGE::Assets::GUID& guid);
 
         // Bind textures for all materials to the shader
-        static void ApplyMaterialTextures(std::shared_ptr<Graphics::Shader> const& shader, size_t batchStart, size_t batchEnd);
+        static void ApplyMaterialTextures(std::shared_ptr<Graphics::Shader> const& shader, unsigned batchStart, unsigned batchEnd);
         static void ApplyMaterialTextures(std::shared_ptr<Graphics::Shader> const& shader);
 
 
@@ -35,8 +36,15 @@ namespace Graphics {
 
         inline static constexpr unsigned sMaterialsPerBatch = 16 - 1;
 
+        static bool UpdateMaterialPropsBuffer();
+        static void UploadMaterialProps();
+        static void Init(uint32_t maxMaterials);
+        static void Shutdown();
+
     private:
         static std::unordered_map<IGE::Assets::GUID, uint32_t> mGUIDToIndexMap;
         static std::vector<std::shared_ptr<MaterialData>> mMaterials;
+        static GLuint mMaterialSSBO;
+        static std::vector<Graphics::MaterialProperties> mMaterialPropsBuffer;
     };
 }

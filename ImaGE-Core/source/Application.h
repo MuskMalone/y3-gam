@@ -26,6 +26,7 @@ namespace IGE {
       bool StartMaximized = true;
       bool Resizable = true;
       bool EnableImGui = true;
+      std::pair<bool, std::string> StartFromScene = std::pair<bool, std::string>(false, ""); // First: StartFromScene Flag, Second: Path to Scene
     };
 
   public:

@@ -44,79 +44,58 @@ namespace Graphics {
       Renderer::RenderSceneBegin(cam.viewProjMatrix);
 
       //=================================================SUBMESH VERSION===============================================================
-      //MatGroupsMap matGroups; // Use a map to group entities by material ID
-
-      // STEP UNO: Collect entities into material groups!!!
-      //    *i moved it into a function
-      std::vector<MaterialGroup> materialGroups{ CreateMaterialGroups(entities) };
-      
-      // STEP DOS: Prepare material groups for sorting based on shader used!!!
-      std::sort(materialGroups.begin(), materialGroups.end(),
-          [](const MaterialGroup& a, const MaterialGroup& b) {
-              return a.shader.get() < b.shader.get(); // Sort by shader pointer for grouping
-          });
+      // STEP UNO: Collect entities into shader groups!!!
+      ShaderGroupMap const shaderGroups{ GroupEntities(entities) };
 
       // get light data to pass into shader
-      //    *moved light stuff into a function too
       LightUniforms<sMaxLights> const lightUniforms{ GetLightData<sMaxLights>(entities) };
 
-      // STEP TRES POINT UNO: Render material groups
-      
-      // STEP TRES POINT DOS: Render in batches based on material count
-      size_t const matCount{ MaterialTable::GetMaterialCount() };
-      // perform a render call for each batch of materials based on sMaterialsPerBatch
-      // until all materials are accounted for
-      for (size_t matIdx{}; matIdx < matCount; matIdx += MaterialTable::sMaterialsPerBatch) {
-        std::shared_ptr<Shader> currShader = nullptr;
-        for (const auto& group : materialGroups) {
-          auto shader = group.shader;
+      unsigned matCount{ static_cast<unsigned>(MaterialTable::GetMaterialCount()) };
+      // STEP TRES: Render shader groups
+      for (auto const&[shader, matGrp] : shaderGroups) {
 
-          // Only bind the shader if it's different from the currently bound one
-          if (shader != currShader) {
-            shader->Use();
-            currShader = shader;
+        // Only bind the shader if it's different from the currently bound one
+        shader->Use();
 
-            bool isUnlitShader = (shader == ShaderLibrary::Get("Unlit"));
-            shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);
+        bool isUnlitShader = (shader == ShaderLibrary::Get("Unlit"));
+        shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);
 
-            if (!isUnlitShader) {
-              shader->SetUniform("u_CamPos", cam.position);
+        if (!isUnlitShader) {
+          shader->SetUniform("u_CamPos", cam.position);
 
-              // Light Info
-              lightUniforms.SetUniforms(shader);
+          // Light Info
+          lightUniforms.SetUniforms(shader);
 
-              // Set shadow uniforms
-              auto const& shadowPass = Renderer::GetPass<ShadowPass>();
-              shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
-              if (shadowPass->IsActive()) {
-                shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
-                shadowPass->BindShadowMap(Texture::sShadowMapTexUnit);
-                shader->SetUniform("u_ShadowMap", static_cast<int>(Texture::sShadowMapTexUnit));
-                shader->SetUniform("u_ShadowBias", shadowPass->GetShadowBias());
-                shader->SetUniform("u_ShadowSoftness", shadowPass->GetShadowSoftness());
-              }
-            }
+          // Set shadow uniforms
+          auto const& shadowPass = Renderer::GetPass<ShadowPass>();
+          shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
+          if (shadowPass->IsActive()) {
+            shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
+            shadowPass->BindShadowMap(Texture::sShadowMapTexUnit);
+            shader->SetUniform("u_ShadowMap", static_cast<int>(Texture::sShadowMapTexUnit));
+            shader->SetUniform("u_ShadowBias", shadowPass->GetShadowBias());
+            shader->SetUniform("u_ShadowSoftness", shadowPass->GetShadowSoftness());
           }
-
-          // Apply material-specific properties
-          auto const& material = MaterialTable::GetMaterial(group.matID);
-          material->Apply(shader);
-
-          // clamp the end of batch to matCount - 1
-          size_t const endBatch{ matCount - matIdx >= MaterialTable::sMaterialsPerBatch ? matIdx + MaterialTable::sMaterialsPerBatch - 1 : matCount - 1 };
-
-          MaterialTable::ApplyMaterialTextures(shader, matIdx, endBatch);
-
-          // Render all instances for this material
-          for (const auto& [entity, worldMtx] : group.entityPairs) {
-            auto const& mesh = entity.GetComponent<Component::Mesh>();
-            Graphics::Renderer::SubmitInstance(mesh.meshSource, worldMtx, Color::COLOR_WHITE, entity.GetEntityID(),
-              group.matID < MaterialTable::sMaterialsPerBatch ? group.matID : group.matID % MaterialTable::sMaterialsPerBatch + 1, mesh.submeshIdx);
-          }
-
-          //Renderer::RenderSubmeshInstances();  // Flush all instances for this material group
         }
-        Renderer::RenderSubmeshInstances();
+
+        for (auto const& [matGrp, entityData] : matGrp) {
+          // set the offset to subtract from the index
+          unsigned const batchStart{ static_cast<unsigned>(matGrp) * MaterialTable::sMaterialsPerBatch },
+            batchEnd{ matCount - batchStart >= MaterialTable::sMaterialsPerBatch
+            ? batchStart + MaterialTable::sMaterialsPerBatch - 1 : matCount - 1 };
+
+          MaterialTable::ApplyMaterialTextures(shader, batchStart, batchEnd);
+
+          shader->SetUniform("u_MatIdxOffset", matGrp == 0 ? 0 : -static_cast<int>(batchStart));
+          // Render all instances for this material
+          for (const auto&[worldMtx, entity, matIdx] : entityData) {
+            auto const& mesh = entity.GetComponent<Component::Mesh>();
+            Graphics::Renderer::SubmitInstance(mesh.meshSource, worldMtx, Color::COLOR_WHITE,
+              entity.GetEntityID(), matIdx, mesh.submeshIdx);
+          }
+
+          Renderer::RenderSubmeshInstances();  // Flush all instances for this material group
+        }
       }
 
       if (cam.isEditor) {
@@ -167,16 +146,12 @@ namespace Graphics {
       }
   }
 
-  std::vector<GeomPass::MaterialGroup> GeomPass::CreateMaterialGroups(std::vector<ECS::Entity> const& entities) {
-    std::vector<MaterialGroup> materialGroups;
-    std::unordered_map<int, unsigned> existingGroups; // matID, index
+  GeomPass::ShaderGroupMap GeomPass::GroupEntities(std::vector<ECS::Entity> const& entities) {
+    ShaderGroupMap shaderToMatGrp; // group by shader, then by material batch
 
     for (ECS::Entity const& entity : entities) {
-      if (!entity.HasComponent<Component::Mesh>()) { continue; }
-
-      auto const& mesh = entity.GetComponent<Component::Mesh>();
-
-      if (!mesh.meshSource.IsValid()) continue;
+      if (!entity.HasComponent<Component::Mesh>() || 
+        !entity.GetComponent<Component::Mesh>().meshSource.IsValid()) { continue; }
 
       int matID = 0;
       if (entity.HasComponent<Component::Material>()) {
@@ -184,24 +159,16 @@ namespace Graphics {
         matID = matComp.matIdx;
       }
 
+      // use corresponding shader to index mat grp
+      MatGroupMap& matGroups{ shaderToMatGrp[MaterialTable::GetMaterial(matID)->GetShader()] };
       auto const& xform = entity.GetComponent<Component::Transform>();
-
-      // Find or create the MaterialGroup
-      if (!existingGroups.contains(matID)) {
-        // Create an entry in the map
-        existingGroups.emplace(matID, materialGroups.size());
-
-        // Add the new MaterialGroup
-        auto material = MaterialTable::GetMaterial(matID);
-        materialGroups.push_back({ matID, material->GetShader(), {{entity, xform.worldMtx}} });
-      }
-      else {
-        // Add to existing group
-        materialGroups[existingGroups[matID]].entityPairs.emplace_back(EntityXform{ entity, xform.worldMtx });
-      }
+      
+      // add entity based on material batch number
+      int const matBatch{ matID / static_cast<int>(MaterialTable::sMaterialsPerBatch + 1) };
+      matGroups[matBatch].emplace_back(xform.worldMtx, entity, matID);
     }
 
-    return materialGroups;
+    return shaderToMatGrp;
   }
 
 } // namespace Graphics

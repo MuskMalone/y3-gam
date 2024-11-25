@@ -368,6 +368,14 @@ namespace Mono
 
 		static glm::vec3 GetMainCameraDirection(ECS::Entity::EntityID cameraEntity);
 		
+		static glm::vec4 GetTextColor(ECS::Entity::EntityID textEntity);
+
+		static void SetTextColor(ECS::Entity::EntityID textEntity, glm::vec4 textColor);
+
+		static float GetTextScale(ECS::Entity::EntityID textEntity);
+
+		static void SetTextScale(ECS::Entity::EntityID textEntity, float textScale);
+
 		static MonoString* GetText(ECS::Entity::EntityID entity);
 
 		static void SetText(ECS::Entity::EntityID textEntity, MonoString* textContent);
@@ -377,6 +385,9 @@ namespace Mono
 		static glm::vec4 GetImageColor(ECS::Entity::EntityID entity);
 
 		static void SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val);
+
+		static MonoString* GetCurrentScene();
+		static void SetCurrentScene(MonoString* scenePath);
 
 		/*!**********************************************************************
 		*																																			  *
