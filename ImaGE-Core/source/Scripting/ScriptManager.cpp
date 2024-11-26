@@ -1179,6 +1179,8 @@ glm::vec3 Mono::GetMainCameraDirection(ECS::Entity::EntityID cameraEntity) {
 
 glm::quat Mono::GetMainCameraRotation(ECS::Entity::EntityID cameraEntity) {
   if (ECS::Entity(cameraEntity) && ECS::Entity{ cameraEntity }.HasComponent<Component::Camera>()) {
+    const auto rot = glm::eulerAngles(ECS::Entity(cameraEntity).GetComponent<Component::Transform>().worldRot);
+    std::cout << "CPP: " << rot.x << "," << rot.y  << "," << rot.z << "\n";
     return ECS::Entity{ cameraEntity }.GetComponent<Component::Transform>().worldRot;
   }
   else {

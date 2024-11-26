@@ -18,6 +18,7 @@ public class CameraCapture : Entity
   // Variables to store the player's position, rotation, and main camera's rotation
   private Vector3 savedPlayerPosition;
   private Quaternion savedCameraRotation;
+  private Vector3 savedCameraEuler;
 
   public bool imageCaptured = false;  // Check if the image and data have been captured
 
@@ -41,9 +42,11 @@ public class CameraCapture : Entity
     // Store the player's position, rotation, and the main camera's rotation
     savedPlayerPosition = player.GetComponent<Transform>().worldPosition;
     savedCameraRotation = InternalCalls.GetMainCameraRotation(FindEntityByTag("MainCamera").mEntityID);
+    savedCameraEuler = Mathf.QuaternionToEuler(savedCameraRotation);
 
     Debug.Log("Player Position: " + savedPlayerPosition);
     Debug.Log("Camera Rotation: " + savedCameraRotation);
+    Debug.Log("Camera Euler: " + savedCameraEuler);
 
     // Set imageCaptured to true, indicating that the data is stored
     imageCaptured = true;
@@ -62,6 +65,7 @@ public class CameraCapture : Entity
     string content = "Captured Data:\n";
     content += $"Player Position: {savedPlayerPosition}\n";
     content += $"Camera Rotation: {savedCameraRotation}\n";
+    content += $"Camera Euler:    {savedCameraEuler}\n";
 
     // Write the content to the text file
     File.WriteAllText(dataPath, content);
