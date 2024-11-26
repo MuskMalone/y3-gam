@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Numerics;
 using IGE.Utils;
 using System.Text.RegularExpressions;
+using System.Security;
 
 public class PictureAlign : Entity
 {
@@ -18,6 +19,7 @@ public class PictureAlign : Entity
   public Entity UpArrow;
   public Entity DownArrow;
   private bool isBigPic;
+  private bool toStop = true;
 
 
   public float positionThreshold = 0.5f;  // Threshold for position alignment
@@ -34,9 +36,13 @@ public class PictureAlign : Entity
 
   //For setting the borderSize
   private Vector3 smallBorderScale = new Vector3(12.320f, 12.820f, 12.820f);
-  private Vector3 bigBorderScale = new Vector3(26.120f, 26.620f, 26.820f);
+  private Vector3 bigBorderScale = new Vector3(25.980f, 27.4f, 0.38f);
   private Vector3 smallBorderPos = new Vector3(10.200f, -0.100f, -0.010f);
-  private Vector3 bigBorderPos = new Vector3(0.360f, -0.200f, -0.010f);
+  private Vector3 bigBorderPos = new Vector3(0.360f, 0.4f, -0.010f);
+  private Entity currentImg;
+  private string picture;
+
+  delegate void PictureInteration();
 
   void Start()
   {
@@ -51,21 +57,38 @@ public class PictureAlign : Entity
 
   void Update()
   {
+    if (!toStop)
+    {
+      // Perform alignment checks and freeze the player if aligned
+      if (isBigPic && IsAligned())
+      {
+        alignCheck = true;
+        Debug.Log("Player is aligned.");
+        FreezePlayer();
 
-    // Perform alignment checks and freeze the player if aligned
-    if (isBigPic && IsAligned())
-    {
-      alignCheck = true;
-      Debug.Log("Player is aligned.");
-      //FreezePlayer();
-    }
-    else
-    {
-      alignCheck = false;
+        currentImg.SetActive(false);
+        if (picture == "NightPainting")
+        {
+          ChangeSkyBox();
+        }
+
+        RightArrow.SetActive(false);
+        LeftArrow.SetActive(false);
+        UpArrow.SetActive(false);
+        DownArrow.SetActive(false);
+        SetActive(false);
+        toStop = true;
+        playerMove.SetUnfreeTimer();
+      }
+      else
+      {
+        alignCheck = false;
+      }
     }
   }
 
-  bool IsAligned()
+
+    bool IsAligned()
   {
     
     float positionDistance = Vector3.Distance(player.GetComponent<Transform>().worldPosition, savedPosition);
@@ -182,16 +205,19 @@ public class PictureAlign : Entity
   }
 
 
-  public void SetTarget(Vector3 position, Quaternion rot, Vector3 euler)
+  public void SetTarget(Vector3 position, Quaternion rot, Vector3 euler, string s, Entity UI)
   {
      savedPosition = position;
      savedCameraRotation = rot;
      savedCameraEuler = euler;
+    currentImg = UI;
+    picture = s;
     DownArrow.SetActive(true);
     UpArrow.SetActive(true);
     RightArrow.SetActive(true);
     LeftArrow.SetActive(true);
     border.SetActive(true);
+    toStop = false;
   }
 
   public void SetBorder(bool BigPic)
@@ -212,4 +238,14 @@ public class PictureAlign : Entity
       border.GetComponent<Transform>().scale = bigBorderScale;
     }
   }
+
+  public void ChangeSkyBox()
+  {
+    InternalCalls.SetDaySkyBox(mainCamera.mEntityID);
+  }
+
+
+
+
+
 }
