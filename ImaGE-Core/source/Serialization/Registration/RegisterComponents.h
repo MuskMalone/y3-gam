@@ -50,15 +50,9 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("scale", &Transform::scale)
     .property("rotation", &Transform::rotation)
     .property("eulerAngles", &Transform::eulerAngles)
-    .property("worldPos", &Transform::worldPos)(
-        rttr::metadata(Reflection::InspectorMetadata::DISABLED, true)
-      )
-    .property("worldScale", &Transform::worldScale)(
-      rttr::metadata(Reflection::InspectorMetadata::DISABLED, true)
-      )
-    .property("worldRot", &Transform::worldRot)(
-      rttr::metadata(Reflection::InspectorMetadata::DISABLED, true)
-      );
+    .property("worldPos", &Transform::worldPos)
+    .property("worldScale", &Transform::worldScale)
+    .property("worldRot", &Transform::worldRot);
 
   REGISTER_COMPONENT(Light, "Light")
     .property("lightType", &Light::type)
