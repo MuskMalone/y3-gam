@@ -14,7 +14,7 @@
 #include <BoundingVolumes/IntersectionTests.h>
 
 namespace {
-	bool EntityInViewFrustum(BV::Frustum const& frustum, Component::Transform const& transform, Graphics::MeshSource const* meshSource);
+	bool EntityInViewFrustum(BV::Frustum const& frustum, Component::Transform const& transform, Graphics::MeshSource const& meshSource);
 }
 
 namespace Graphics {
@@ -51,22 +51,16 @@ namespace Graphics {
 		/* ========== Frustum Culling ========== */
 		auto shouldRender = [&am, &camFrustum, &cullCount](ECS::Entity entity) {
 			if (!entity.IsActive()) { return false; }
-			// directional lights shouldnt be culled
-			else if (entity.HasComponent<Component::Light>()
-				&& entity.GetComponent<Component::Light>().type == Component::DIRECTIONAL) {
+			// lights and entities without mesh shouldnt be culled
+			else if (entity.HasComponent<Component::Light>() || !entity.HasComponent<Component::Mesh>()) {
 				return true;
 			}
 
-			// for objects without mesh, use transform as the bounding vol
-			Graphics::MeshSource const* meshPtr{ nullptr };
-			if (entity.HasComponent<Component::Mesh>()) {
-				Component::Mesh& mesh{ entity.GetComponent<Component::Mesh>() };
-				if (mesh.meshSource) {
-					meshPtr = &am.GetAsset<IGE::Assets::ModelAsset>(mesh.meshSource)->mMeshSource;
-				}
-			};
+			Component::Mesh& mesh{ entity.GetComponent<Component::Mesh>() };
+			if (!mesh.meshSource) { return true; }
 
-			bool const ret{ EntityInViewFrustum(camFrustum, entity.GetComponent<Component::Transform>(), meshPtr) };
+			bool const ret{ EntityInViewFrustum(camFrustum, entity.GetComponent<Component::Transform>(),
+				am.GetAsset<IGE::Assets::ModelAsset>(mesh.meshSource)->mMeshSource) };
 			if (!ret) { ++cullCount; }
 
 			return ret;
@@ -157,17 +151,9 @@ namespace Graphics {
 }
 
 namespace {
-	bool EntityInViewFrustum(BV::Frustum const& frustum, Component::Transform const& transform, Graphics::MeshSource const* meshSource) {
-		BV::AABB aabb{ transform.worldPos, transform.worldScale };
-
-		// if mesh exists, apply scale to halfExtents of mesh
-		if (meshSource) {
-			aabb.halfExtents *= meshSource->GetBoundingBox().halfExtents;
-		}
-		// else halve the worldScale
-		else {
-			aabb.halfExtents *= 0.5f;
-		}
+	bool EntityInViewFrustum(BV::Frustum const& frustum, Component::Transform const& transform, Graphics::MeshSource const& meshSource) {
+		// apply scale to halfExtents of mesh
+		BV::AABB aabb{ transform.worldPos, transform.worldScale * meshSource.GetBoundingBox().halfExtents };
 
 		return BV::FrustumAABBIntersection(frustum, aabb);
 	}
