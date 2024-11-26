@@ -40,6 +40,7 @@ namespace Graphics {
       Begin();
      // Renderer::Clear();
       //auto shader = mSpec.pipeline->GetShader();
+      GetTargetFramebuffer()->ClearAttachmentInt(1, -1);
 
       Renderer::RenderSceneBegin(cam.viewProjMatrix);
 
@@ -116,6 +117,52 @@ namespace Graphics {
 
       }
 
+      //========================================2D Sprite Rendering=========================================================================================
+
+      std::vector<ECS::Entity> opaqueSprites;
+      std::vector<ECS::Entity> transparentSprites;
+
+      // Group entities into opaque and transparent sprites
+      for (ECS::Entity const& entity : entities) {
+          if (!entity.HasComponent<Component::Sprite2D>()) continue;
+
+          auto const& sprite = entity.GetComponent<Component::Sprite2D>();
+          if (sprite.isTransparent) {
+              transparentSprites.push_back(entity);
+          }
+          else {
+              opaqueSprites.push_back(entity);
+          }
+      }
+
+      // Sort transparent sprites by Z-depth (back-to-front)
+      std::sort(transparentSprites.begin(), transparentSprites.end(),
+          [](auto const& a, auto const& b) {
+              auto const& aTransform = a.GetComponent<Component::Transform>();
+              auto const& bTransform = b.GetComponent<Component::Transform>();
+              return aTransform.worldPos.z < bTransform.worldPos.z; // Descending z-order
+          });
+      // Render opaque sprites
+      for (ECS::Entity const& entity : opaqueSprites) {
+          auto const& sprite = entity.GetComponent<Component::Sprite2D>();
+          auto const& xform = entity.GetComponent<Component::Transform>();
+
+          if (sprite.textureAsset) {
+              Renderer::DrawSprite(xform.worldPos, xform.worldScale, xform.worldRot,
+                  IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(sprite.textureAsset)->mTexture,
+                  sprite.color, entity.GetEntityID());
+          }
+          else {
+              Renderer::DrawQuad(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, sprite.color, entity.GetEntityID());
+          }
+      }
+
+      Renderer::FlushBatch();
+      // Render transparent sprites
+      glEnable(GL_BLEND);
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+      glDepthMask(GL_FALSE);  // Disable depth writing
+
       for (ECS::Entity const& entity : entities) {
         if (!entity.HasComponent<Component::Transform>()) continue;
         if (entity.HasComponent<Component::Sprite2D>()) {
@@ -128,8 +175,9 @@ namespace Graphics {
 
         }
       }
-
-      Renderer::RenderSceneEnd();
+      Renderer::FlushBatch();
+      glDepthMask(GL_TRUE);
+      //Renderer::RenderSceneEnd();
       //=================================================SUBMESH VERSION END===========================================================
 
       End();

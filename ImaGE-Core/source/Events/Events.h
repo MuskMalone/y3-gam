@@ -36,6 +36,15 @@ namespace Events
     inline std::string GetName() const noexcept override { return "Window Minimized"; }
   };
 
+  class WindowResized : public Event
+  {
+  public:
+      WindowResized(int width, int height) : Event(EventType::WINDOW_RESIZED), mWidth{width}, mHeight{height} {}
+      inline std::string GetName() const noexcept override { return "Window Resized"; }
+      int const mWidth;
+      int const mHeight;
+  };
+
   class ToggleFullscreen : public Event
   {
   public:
