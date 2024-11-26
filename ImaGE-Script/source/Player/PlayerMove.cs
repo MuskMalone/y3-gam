@@ -24,8 +24,8 @@ public class  PlayerMove : Entity
   public float speed = 650f;
   public float walkingSpeed = 650f;
   public float runSpeed = 1200f;
-  public float jumpForce = 2500f;
-  private float extraGravityFactorDuringDescent = 15f;
+  public float jumpForce = 3500f;
+  private readonly float extraGravityFactorDuringDescent = 15f;
   public float isGroundedRayHeight = 3f;
   public Entity cam;
 
@@ -63,10 +63,12 @@ public class  PlayerMove : Entity
     if (canMove)
       PlayerMovement();
 
+    /*
     if (Input.GetKeyTriggered(KeyCode.SPACE))
     {
       InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
     }
+    */
   }
   void PlayerMovement()
   {
@@ -119,13 +121,14 @@ public class  PlayerMove : Entity
 
       // Clamp pitch to prevent camera from flipping upside down
       pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
-    }
+    
 
     // Update the camera's rotation (pitch)
     cam.GetComponent<Transform>().rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(pitch));
 
     // Update the player's rotation (yaw)
     GetComponent<Transform>().worldRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, Mathf.DegToRad(yaw));
+    }
   }
 
   private void ResetPlayerVelocity()
@@ -149,6 +152,7 @@ public class  PlayerMove : Entity
     Vector3 rayEnd = entityPosition + new Vector3(0, 0 - isGroundedRayHeight, 0);
     uint entityIDHit = InternalCalls.RaycastFromEntity(mEntityID, rayStart, rayEnd);
     return entityIDHit != 0;
+
   }
 
   // Called by other scripts to Freeze/Unfreeze Player
