@@ -38,8 +38,8 @@ namespace Graphics {
 			prevOutputTex = pass->GetOutputTexture();
 		}
 
-		//if(!cam.isEditor)
-		//	HandleGameViewInput();
+		if(!cam.isEditor)
+			HandleGameViewInput();
 		return entityVector;
 	}
 
@@ -123,22 +123,24 @@ namespace Graphics {
 	}
 
 	void RenderSystem::HandleGameViewInput() {
-		static ECS::Entity prevHoveredEntity;
+		static ECS::Entity prevHoveredEntity{};
 
 		glm::vec2 mousePos = Input::InputManager::GetInstance().GetMousePos();
-		ECS::Entity hoveredEntity = Renderer::PickEntity(mousePos);
+		const int entId = Renderer::PickEntity(mousePos, glm::vec2{}, glm::vec2{});
+	
+		ECS::Entity const hoveredEntity{ static_cast<ECS::Entity::EntityID>(entId) };
 
 		if (hoveredEntity != prevHoveredEntity) {
-			if (IGE_ENTITYMGR.IsValidEntity(prevHoveredEntity)) {
+			if (prevHoveredEntity) {
 				QUEUE_EVENT(Events::EntityMouseExit, prevHoveredEntity);
 			}
-			if (IGE_ENTITYMGR.IsValidEntity(hoveredEntity)) {
-				QUEUE_EVENT(Events::EntityMouseEnter, prevHoveredEntity);
+			if (hoveredEntity) {
+				QUEUE_EVENT(Events::EntityMouseEnter, hoveredEntity);
 			}
 		}
 
 		prevHoveredEntity = hoveredEntity;
-		if (IGE_ENTITYMGR.IsValidEntity(hoveredEntity)) {
+		if (hoveredEntity) {
 			if (Input::InputManager::GetInstance().IsKeyTriggered(IK_MOUSE_LEFT)) {
 				QUEUE_EVENT(Events::EntityMouseDown, hoveredEntity);
 			}
@@ -146,7 +148,6 @@ namespace Graphics {
 				QUEUE_EVENT(Events::EntityMouseUp, hoveredEntity);
 			}
 		}
-
 	}
 }
 

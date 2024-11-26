@@ -81,7 +81,7 @@ namespace IGE {
 
     while (!glfwWindowShouldClose(mWindow.get())) {
         if (inputManager.IsKeyTriggered(IK_K)) {
-            ToggleImGuiEnabled();
+            ToggleImGuiEnabled(); //TODO CHANGE TO EVENT SYSTEM
         }
       frameRateController.Start();
       try {
