@@ -12,6 +12,13 @@ public class PictureAlign : Entity
 {
   public Entity player;            // Assign the player object
   public Entity mainCamera;           // Assign the main camera for rotation checking
+  public Entity border;
+  public Entity RightArrow;
+  public Entity LeftArrow;
+  public Entity UpArrow;
+  public Entity DownArrow;
+  private bool isBigPic;
+
 
   public float positionThreshold = 0.5f;  // Threshold for position alignment
   public float rotationThreshold = 2f;    // Threshold for rotation alignment (in degrees)
@@ -21,28 +28,15 @@ public class PictureAlign : Entity
   public bool alignCheck = false;
 
   private Vector3 savedPosition;
+  private Vector3 savedCameraEuler;
   private Quaternion savedCameraRotation;
 
-  static void TestQuaternionAngle(Quaternion q1, Quaternion q2, float expectedAngle)
-  {
-    // Call your function to calculate the angle
-    float calculatedAngle = Mathf.QuaternionAngle(q1, q2);
 
-    // Print results
-    Console.WriteLine($"Expected: {expectedAngle}�, Calculated: {calculatedAngle}�");
-
-    // Validate the result (considering floating-point precision issues)
-    if (Mathf.Abs(calculatedAngle - expectedAngle) < 0.01f)
-    {
-      Console.WriteLine("Test Passed!");
-    }
-    else
-    {
-      Console.WriteLine("Test Failed!");
-    }
-
-    Console.WriteLine();
-  }
+  //For setting the borderSize
+  private Vector3 smallBorderScale = new Vector3(12.320f, 12.820f, 12.820f);
+  private Vector3 bigBorderScale = new Vector3(26.120f, 26.620f, 26.820f);
+  private Vector3 smallBorderPos = new Vector3(10.200f, -0.100f, -0.010f);
+  private Vector3 bigBorderPos = new Vector3(0.360f, -0.200f, -0.010f);
 
   void Start()
   {
@@ -51,20 +45,15 @@ public class PictureAlign : Entity
 
     if (playerMove == null) Debug.LogError("PlayerMove component not found!");
 
-    // Load the saved data from the text file
-    //LoadDataFromTxt();
-
-    //initialObject.SetActive(true);
-    //FinalObject.SetActive(false);
-
   }
 
 
 
   void Update()
   {
+
     // Perform alignment checks and freeze the player if aligned
-    if (IsAligned())
+    if (isBigPic && IsAligned())
     {
       alignCheck = true;
       Debug.Log("Player is aligned.");
@@ -74,41 +63,81 @@ public class PictureAlign : Entity
     {
       alignCheck = false;
     }
-
-    // Handle object states when the player is frozen
-    if (isFrozen)
-    {
-      //initialObject.SetActive(false);
-      //FinalObject.SetActive(true);
-    }
   }
 
   bool IsAligned()
   {
-
+    
     float positionDistance = Vector3.Distance(player.GetComponent<Transform>().worldPosition, savedPosition);
+    Quaternion currRot = mainCamera.GetComponent<Transform>().worldRotation;
+    bool aligned = true;
+    //Console.WriteLine(Mathf.QuaternionAngle(currRot, savedCameraRotation));
 
+    // Check if the main camera's rotation is within the threshold of the saved camera rotation
+    if (Mathf.QuaternionAngle(currRot, savedCameraRotation) > rotationThreshold)
+    {
+      aligned = false;
+      Vector3 curEulerAngles = Mathf.QuaternionToEuler(currRot);
+      curEulerAngles.X = Mathf.RadToDeg(curEulerAngles.X);
+      curEulerAngles.Y = Mathf.RadToDeg(curEulerAngles.Y);
+      curEulerAngles.Z = Mathf.RadToDeg(curEulerAngles.Z);
+      float pitchDifference =  Mathf.DeltaAngle(curEulerAngles.X, savedCameraEuler.X); // Up/Down
+      float yawDifference = Mathf.DeltaAngle(curEulerAngles.Y, savedCameraEuler.Y);   // Left/Right
+      if (Math.Abs(pitchDifference) > rotationThreshold) // Ignore small differences (optional threshold)
+      {
+        //Console.WriteLine($"Pitch difference: {pitchDifference}");
+        if (pitchDifference > 0)
+        {
+          //Console.WriteLine("Look up");
+          DownArrow.SetActive(false);
+          UpArrow.SetActive(true);
+        }
+        else
+        {
+          //Console.WriteLine("Look Down");
+          DownArrow.SetActive(true);
+          UpArrow.SetActive(false);
+
+        }
+      }
+      else
+      {
+        DownArrow.SetActive(false);
+        UpArrow.SetActive(false);
+      }
+
+      // Determine yaw (left/right) adjustment
+      if (Math.Abs(yawDifference) > rotationThreshold) // Ignore small differences (optional threshold)
+      {
+        if (yawDifference > 0)
+        {
+          //Console.WriteLine("Look left");
+          RightArrow.SetActive(false);
+          LeftArrow.SetActive(true);
+        }
+        else
+        {
+          //Console.WriteLine("Look right");
+          RightArrow.SetActive(true);
+          LeftArrow.SetActive(false);
+        }
+      }
+      else
+      {
+        RightArrow.SetActive(false);
+        LeftArrow.SetActive(false);
+      }
+    }
 
     if (positionDistance > positionThreshold)
     {
-      //Debug.Log(positionDistance.ToString());
-      //Debug.Log("Player position not aligned.");
-      //Debug.Log("Distance from saved position: " + positionDistance);
-      return false;
-    }
-
-    // Check if the main camera's rotation is within the threshold of the saved camera rotation
-    if (Mathf.QuaternionAngle(mainCamera.GetComponent<Transform>().worldRotation, savedCameraRotation) > rotationThreshold)
-    {
-      //Debug.Log("Camera rotation not aligned." + Mathf.QuaternionAngle(mainCamera.GetComponent<Transform>().rotation, savedCameraRotation));
-      return false;
+      aligned = false;
     }
 
 
-
-
-    Debug.Log("Player is aligned.");
-    return true; // All checks passed, the player is aligned
+    if (aligned)
+      Console.WriteLine("Player is aligned.");
+    return aligned; // All checks passed, the player is aligned
   }
 
   public void FreezePlayer()
@@ -153,9 +182,34 @@ public class PictureAlign : Entity
   }
 
 
-  public void SetTarget(Vector3 position, Quaternion rot)
+  public void SetTarget(Vector3 position, Quaternion rot, Vector3 euler)
   {
      savedPosition = position;
      savedCameraRotation = rot;
+     savedCameraEuler = euler;
+    DownArrow.SetActive(true);
+    UpArrow.SetActive(true);
+    RightArrow.SetActive(true);
+    LeftArrow.SetActive(true);
+    border.SetActive(true);
+  }
+
+  public void SetBorder(bool BigPic)
+  {
+    isBigPic = BigPic;
+    if (!BigPic)
+    {
+      DownArrow.SetActive(false);
+      UpArrow.SetActive(false);
+      RightArrow.SetActive(false);
+      LeftArrow.SetActive(false);
+      border.GetComponent<Transform>().position = smallBorderPos;
+      border.GetComponent<Transform>().scale = smallBorderScale;
+    }
+    else
+    {
+      border.GetComponent<Transform>().position = bigBorderPos;
+      border.GetComponent<Transform>().scale = bigBorderScale;
+    }
   }
 }

@@ -36,6 +36,15 @@ namespace Events
     inline std::string GetName() const noexcept override { return "Window Minimized"; }
   };
 
+  class WindowResized : public Event
+  {
+  public:
+      WindowResized(int width, int height) : Event(EventType::WINDOW_RESIZED), mWidth{width}, mHeight{height} {}
+      inline std::string GetName() const noexcept override { return "Window Resized"; }
+      int const mWidth;
+      int const mHeight;
+  };
+
   class ToggleFullscreen : public Event
   {
   public:
@@ -153,7 +162,7 @@ namespace Events
 
   class EntityMouseExit : public Event {
   public:
-      EntityMouseExit(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_ENTER), mEntity{ entity } {}
+      EntityMouseExit(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_EXIT), mEntity{ entity } {}
       inline std::string GetName() const noexcept override { return "On mouse exit entity " + mEntity.GetTag(); }
 
       ECS::Entity mEntity;
@@ -161,7 +170,7 @@ namespace Events
 
   class EntityMouseDown : public Event {
   public:
-      EntityMouseDown(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_ENTER), mEntity{ entity } {}
+      EntityMouseDown(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_DOWN), mEntity{ entity } {}
       inline std::string GetName() const noexcept override { return "On mouse down entity " + mEntity.GetTag(); }
 
       ECS::Entity mEntity;
@@ -169,7 +178,7 @@ namespace Events
 
   class EntityMouseUp : public Event {
   public:
-      EntityMouseUp(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_ENTER), mEntity{ entity } {}
+      EntityMouseUp(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_UP), mEntity{ entity } {}
       inline std::string GetName() const noexcept override { return "On mouse up entity " + mEntity.GetTag(); }
 
       ECS::Entity mEntity;

@@ -109,7 +109,7 @@ public class Inventory : Entity
     Vector3 startPosition = new Vector3(16.6f, -8.9f, 0f);
     InternalCalls.SetPosition(pitPaintingUI.mEntityID, ref startPosition);
     InternalCalls.SetPosition(seedUI.mEntityID, ref startPosition);
-    InternalCalls.SetPosition(nightPaintingUI.mEntityID, ref startPosition);
+    //InternalCalls.SetPosition(nightPaintingUI.mEntityID, ref startPosition);
     InternalCalls.SetPosition(toolsPaintingUI.mEntityID, ref startPosition);
     InternalCalls.SetPosition(hammerUI.mEntityID, ref startPosition);
     InternalCalls.SetPosition(crowbarUI.mEntityID, ref startPosition);
@@ -397,6 +397,7 @@ public class Inventory : Entity
     pitPaintingUI?.SetActive(false);
     seedUI?.SetActive(false);
     seedEquipped = false;
+    pictureAlignscript.SetActive(false);
     nightPaintingUI?.SetActive(false);
     toolsPaintingUI?.SetActive(false);
     hammerUI?.SetActive(false);

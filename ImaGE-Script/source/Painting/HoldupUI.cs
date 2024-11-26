@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
 using IGE.Utils;
+using System.Data;
 public class HoldupUI : Entity
 {
   //Data on how to display the Image on the screen
   private bool isBigPaintingActive = false;
   public Vector3 bigPicPos = new Vector3(0, 0, 0);
-  public Vector3 bigPicScale = new Vector3(16.646f, 16.646f, 16.646f);
+  public Vector3 bigPicScale = new Vector3(12.980f, 12.980f, 12.980f);
   public Vector3 smallPicPos = new Vector3(10,0, 0);
   public Vector3 smallPicScale = new Vector3(6, 6, 6);
 
@@ -25,6 +26,7 @@ public class HoldupUI : Entity
   private TextAsset dataFile;
   private Vector3 savedPosition;
   private Quaternion savedCameraRotation;
+  private Vector3 saveCamEuler;
   private PictureAlign pictureAlignscript;  
 
   private void Awake()
@@ -73,16 +75,13 @@ public class HoldupUI : Entity
     //  Destroy(Entity);
     //}
 
-    if(InternalCalls.IsKeyTriggered(KeyCode.Y))
-      SetActive(true);
-
     if (!pictureAlignscript.isFrozen && Input.GetMouseButtonTriggered(1))
     {
       isBigPaintingActive = !isBigPaintingActive;
+      pictureAlignscript.SetBorder(isBigPaintingActive);
   
       if (isBigPaintingActive)
       {
-        Console.WriteLine("Switch to Big Pic");
         GetComponent<Transform>().position = bigPicPos;
         GetComponent<Transform>().scale = bigPicScale;
       }
@@ -107,14 +106,9 @@ public class HoldupUI : Entity
   {
     if (pictureAlignscript != null)
     {
-      if (isBigPaintingActive)
-      {
-        pictureAlignscript.SetActive(true);
-        //pictureAlignscript.
-      }
-        
-      else
-        pictureAlignscript.SetActive(false);
+      pictureAlignscript.SetActive(true);
+      pictureAlignscript.SetTarget(savedPosition, savedCameraRotation, saveCamEuler);
+      pictureAlignscript.SetBorder(isBigPaintingActive);
     }
     else
       Debug.Log("Picture Align is null");
@@ -145,6 +139,10 @@ public class HoldupUI : Entity
         else if (line.StartsWith("Camera Rotation:"))
         {
           savedCameraRotation = ParseQuaternion(line.Replace("Camera Rotation:", "").Trim());
+        }
+        else if (line.StartsWith("Camera Euler:"))
+        {
+          saveCamEuler = ParseVector3(line.Replace("Camera Euler:", "").Trim());
         }
       }
       //Debug.Log("Data loaded from text asset:");

@@ -1668,6 +1668,11 @@ namespace GUI {
       ImGui::InputText("##TextureAsset", &textureText);
       ImGui::EndDisabled();
 
+      NextRowTable("Has Transparent Pixels");
+      if (ImGui::Checkbox("##TransparentPixels", &sprite.isTransparent)) {
+          modified = true;
+      }
+
       //if (ImGui::BeginDragDropTarget()) {
       //  ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
       //  if (drop) {
