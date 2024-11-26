@@ -10,6 +10,64 @@
 namespace Graphics {
     std::unordered_map<IGE::Assets::GUID, uint32_t> MaterialTable::mGUIDToIndexMap;
     std::vector<std::shared_ptr<MaterialData>> MaterialTable::mMaterials;
+    GLuint MaterialTable::mMaterialSSBO;
+    std::vector<MaterialProperties> MaterialTable::mMaterialPropsBuffer;
+
+
+    bool MaterialTable::UpdateMaterialPropsBuffer(){
+        bool anyUpdated{ false };
+        for (size_t i = 0; i < mMaterials.size(); ++i) {
+            if (mMaterials[i] && mMaterials[i]->IsModified()) {
+                MaterialProperties& props = mMaterialPropsBuffer[i];
+                props.Tiling = mMaterials[i]->GetTiling();
+                props.Offset = mMaterials[i]->GetOffset();
+                props.AlbedoColor = glm::vec4(mMaterials[i]->GetAlbedoColor(),1.f);
+                props.Metalness = mMaterials[i]->GetMetalness();
+                props.Roughness = mMaterials[i]->GetRoughness();
+                props.Transparency = mMaterials[i]->GetTransparency();
+                props.AO = mMaterials[i]->GetAO();
+
+                mMaterials[i]->ClearModifiedFlag();
+                anyUpdated = true;
+            }
+        }
+
+        return anyUpdated;
+    }
+
+    void MaterialTable::UploadMaterialProps(){
+        GLCALL(glNamedBufferSubData(
+            mMaterialSSBO,
+            0, // Offset
+            sizeof(MaterialProperties) * mMaterialPropsBuffer.size(),
+            mMaterialPropsBuffer.data() // Pointer to the CPU-side buffer
+        ));
+    }
+
+    void MaterialTable::Init(uint32_t maxMaterials) {
+
+        mMaterialPropsBuffer.resize(maxMaterials); // Reserve CPU-side buffer space
+
+        // Generate and bind the SSBO
+        GLCALL(glCreateBuffers(1, &mMaterialSSBO));
+        // Allocate GPU memory for the SSBO
+        glNamedBufferStorage(
+            mMaterialSSBO,
+            sizeof(MaterialProperties) * maxMaterials,
+            nullptr, // No initial data
+            GL_DYNAMIC_STORAGE_BIT // Allow dynamic updates to the buffer
+        );
+
+         // Bind the SSBO to binding point 0
+        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, mMaterialSSBO);
+    }
+    void MaterialTable::Shutdown() {
+        if (mMaterialSSBO) {
+            glDeleteBuffers(1, &mMaterialSSBO); // Delete the buffer
+            mMaterialSSBO = 0;
+        }
+        mMaterialPropsBuffer.clear(); // Clear the CPU-side buffer
+    }
     // Add a material to the table and return its index
     uint32_t Graphics::MaterialTable::AddMaterial(std::shared_ptr<Graphics::MaterialData>& material) {
         mMaterials.push_back(material);
@@ -39,6 +97,9 @@ namespace Graphics {
         uint32_t newIndex = static_cast<uint32_t>(mMaterials.size());
         mMaterials.push_back(materialData);
         mGUIDToIndexMap[guid] = newIndex;
+
+        UpdateMaterialPropsBuffer();
+        UploadMaterialProps();
 
         return newIndex;
     }
@@ -92,11 +153,9 @@ namespace Graphics {
         return nullptr;
     }
 
-    void MaterialTable::ApplyMaterialTextures(std::shared_ptr<Graphics::Shader> const& shader, size_t batchStart, size_t batchEnd) {
-      if (mMaterials.size() == 1) { return; } // Exit if there's only the default material
-
+    void MaterialTable::ApplyMaterialTextures(std::shared_ptr<Graphics::Shader> const& shader, unsigned batchStart, unsigned batchEnd) {
       IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
-      size_t const matCount{ batchEnd - batchStart + 1 };
+      unsigned const matCount{ batchEnd - batchStart + 1 };
 
       am.GetAsset<IGE::Assets::TextureAsset>(Renderer::GetWhiteTexture())->mTexture.Bind(Texture::sDefaultAlbedoUnit);
       am.GetAsset<IGE::Assets::TextureAsset>(Renderer::GetWhiteTexture())->mTexture.Bind(Texture::sDefaultNormalUnit); // change to normal Tex
@@ -105,20 +164,20 @@ namespace Graphics {
       std::vector<int> albedoTextureUnits(sMaterialsPerBatch + 1, Texture::sDefaultAlbedoUnit);
       std::vector<int> normalTextureUnits(sMaterialsPerBatch + 1, Texture::sDefaultNormalUnit);
 
-      for (size_t matIdx{ batchStart + 1 }, i{ 1 }; i <= matCount; ++i, ++matIdx) {
+      for (unsigned matIdx{ batchStart + 1 }, i{ 1 }; i <= matCount; ++i, ++matIdx) {
         std::shared_ptr<MaterialData> const& material = mMaterials[matIdx];
 
         IGE::Assets::GUID const albedoMap{ material->GetAlbedoMap() },
           normalMap{ material->GetNormalMap() };
 
-        // Only bind the albedo map if it’s unique (not the default texture)
+        // Only bind the albedo map if itï¿½s unique (not the default texture)
         if (albedoMap != Renderer::GetWhiteTexture()) {
           am.LoadRef<IGE::Assets::TextureAsset>(albedoMap);
           am.GetAsset<IGE::Assets::TextureAsset>(albedoMap)->mTexture.Bind(i);
           albedoTextureUnits[i] = static_cast<int>(i);  // Assign this unique texture unit to the shader array
         }
 
-        // Only bind the normal map if it’s unique (not the default texture)
+        // Only bind the normal map if itï¿½s unique (not the default texture)
         if (normalMap != Renderer::GetWhiteTexture()) { // @TODO Change to normal Tex
           am.LoadRef<IGE::Assets::TextureAsset>(normalMap);
           am.GetAsset<IGE::Assets::TextureAsset>(normalMap)->mTexture.Bind(Texture::sDefaultNormalUnit + i);
@@ -150,18 +209,18 @@ namespace Graphics {
         for (uint32_t i = 1; i < mMaterials.size() && i < 16; ++i) {  // Up to 16 unique textures
             std::shared_ptr<MaterialData> const& material = mMaterials[i];
 
-            // Get the material’s textures
+            // Get the materialï¿½s textures
             auto albedoMap = material->GetAlbedoMap();
             auto normalMap = material->GetNormalMap();
 
-            // Only bind the albedo map if it’s unique (not the default texture)
+            // Only bind the albedo map if itï¿½s unique (not the default texture)
             if (albedoMap != Renderer::GetWhiteTexture()) {
               am.LoadRef<IGE::Assets::TextureAsset>(albedoMap);
               am.GetAsset<IGE::Assets::TextureAsset>(albedoMap)->mTexture.Bind(i);
               albedoTextureUnits[i] = static_cast<int>(i);  // Assign this unique texture unit to the shader array
             }
 
-            // Only bind the normal map if it’s unique (not the default texture)
+            // Only bind the normal map if itï¿½s unique (not the default texture)
             if (normalMap != Renderer::GetWhiteTexture()) { // @TODO Change to normal Tex
               am.LoadRef<IGE::Assets::TextureAsset>(normalMap);
               am.GetAsset<IGE::Assets::TextureAsset>(normalMap)->mTexture.Bind(Texture::sDefaultNormalUnit + i);
@@ -235,7 +294,6 @@ namespace Graphics {
       // else retrieve it
       Serialization::Serializer::SerializeAny(*mMaterials[mGUIDToIndexMap.at(guid)], output);
     }
-
 
     std::shared_ptr<MaterialData> MaterialTable::LoadMaterial(std::string const& fp) {
         // Ensure the file exists

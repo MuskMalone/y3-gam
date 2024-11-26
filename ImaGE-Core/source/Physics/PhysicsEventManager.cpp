@@ -39,7 +39,7 @@ namespace IGE {
 						cp.emplace_back(contactPoints[cpidx]);
 					}
 				}
-				std::cout << "contact\n";
+				//std::cout << "contact\n";
 
 				PhysicsEvent e{ PhysicsEventID::CONTACT };
 				e.SetParam(EventKey::EventContact::ENTITY_PAIR, entitypair);

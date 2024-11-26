@@ -10,6 +10,9 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
+
+#define STBI_MSC_SECURE_CRT
+#include "stb/stb_image_write.h"
 #include "ScriptManager.h"
 #include "mono/metadata/assembly.h"
 #include "mono/metadata/object.h"
@@ -22,6 +25,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <cstdint>
 #include <Scripting/ScriptUtils.h>
 
+#include <Events/EventManager.h>
+#include <Scenes/SceneManager.h>
 #include <filesystem>
 #include <Core/Components/Components.h>
 #include <Serialization/Deserializer.h>
@@ -42,6 +47,7 @@ namespace Mono
   // Hot reload
   std::unique_ptr<filewatch::FileWatch<std::string>> ScriptManager::mCsProjWatcher{};
   std::unique_ptr<filewatch::FileWatch<std::string>> ScriptManager::mFileWatcher{};
+  std::vector<std::tuple<std::string, int, int>>ScriptManager::mScreenShotInfo{};
   std::string ScriptManager::mScnfilePath{};
   std::string ScriptManager::mCsprojPath{};
   std::string ScriptManager::mBatfilePath{};
@@ -66,8 +72,8 @@ namespace Mono
     { "System.Numerics.Vector3", ScriptFieldType::VEC3 },
     { "IGE.Utils.Vec3<System.Double>", ScriptFieldType::DVEC3 },
     { "System.Int32[]", ScriptFieldType::INT_ARR },
-    { "System.System.Single[]", ScriptFieldType::FLOAT_ARR },
-    { "System.System.Double[]", ScriptFieldType::DOUBLE_ARR },
+    { "System.Single[]", ScriptFieldType::FLOAT_ARR },
+    { "System.Double[]", ScriptFieldType::DOUBLE_ARR },
     { "System.String[]", ScriptFieldType::STRING_ARR},
     { "Entity[]", ScriptFieldType::ENTITY_ARR },
     { "Entity", ScriptFieldType::ENTITY},
@@ -222,6 +228,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(MoveCharacter);
   ADD_INTERNAL_CALL(GetTag);
   ADD_INTERNAL_CALL(FindScript);
+  ADD_INTERNAL_CALL(FindScriptInEntity);
   ADD_INTERNAL_CALL(DestroyEntity);
   ADD_INTERNAL_CALL(DestroyScript);
   ADD_INTERNAL_CALL(SetActive);
@@ -231,6 +238,11 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetAllChildren);
   ADD_INTERNAL_CALL(GetMainCameraPosition);
   ADD_INTERNAL_CALL(GetMainCameraDirection);
+  ADD_INTERNAL_CALL(GetMainCameraRotation);
+  ADD_INTERNAL_CALL(GetTextColor);
+  ADD_INTERNAL_CALL(SetTextColor);
+  ADD_INTERNAL_CALL(GetTextScale);
+  ADD_INTERNAL_CALL(SetTextScale);
   ADD_INTERNAL_CALL(GetText);
   ADD_INTERNAL_CALL(SetText);
   ADD_INTERNAL_CALL(AppendText);
@@ -244,6 +256,9 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(PauseSound);
   ADD_INTERNAL_CALL(StopSound);
   ADD_INTERNAL_CALL(GetLayerName);
+  ADD_INTERNAL_CALL(GetCurrentScene);
+  ADD_INTERNAL_CALL(SetCurrentScene);
+  ADD_INTERNAL_CALL(TakeScreenShot);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -419,11 +434,12 @@ ScriptFieldType ScriptManager::MonoTypeToScriptFieldType(MonoType* monoType)
   return it->second;
 }
 
-std::vector<ScriptInstance> ScriptManager::SerialMonoObjectVec(std::vector<MonoObject*> vec)
+std::vector<ScriptInstance> ScriptManager::SerialMonoObjectVec(std::vector<MonoObject*> const& vec)
 {
   std::vector<ScriptInstance> toSer{};
-  for (MonoObject* obj : vec)
-  {
+  toSer.reserve(vec.size());
+
+  for (MonoObject* obj : vec) {
     toSer.emplace_back(obj, false, true);
   }
 
@@ -1022,6 +1038,18 @@ MonoObject* Mono::FindScript(MonoString* s)
   return nullptr;
 }
 
+
+MonoObject* Mono::FindScriptInEntity(ECS::Entity::EntityID entity, MonoString* s)
+{
+  std::string msg{ MonoStringToSTD(s) };
+  if(ECS::Entity(entity).HasComponent<Component::Script>())
+    for (Mono::ScriptInstance& SI : ECS::Entity(entity).GetComponent<Component::Script>().mScriptList)
+      if (SI.mScriptName == msg)
+        return SI.mClassInst;
+  
+  return nullptr;
+}
+
 ECS::Entity::EntityID Mono::FindChildByTag(ECS::Entity::EntityID entity, MonoString* s)
 {
   std::string msg{ MonoStringToSTD(s) };
@@ -1149,6 +1177,51 @@ glm::vec3 Mono::GetMainCameraDirection(ECS::Entity::EntityID cameraEntity) {
   return glm::vec3();
 }
 
+glm::quat Mono::GetMainCameraRotation(ECS::Entity::EntityID cameraEntity) {
+  if (ECS::Entity(cameraEntity) && ECS::Entity{ cameraEntity }.HasComponent<Component::Camera>()) {
+    return ECS::Entity{ cameraEntity }.GetComponent<Component::Transform>().worldRot;
+  }
+  else {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to get the camera position of a non-camera Entity!");
+  }
+  return glm::quat();
+}
+
+glm::vec4 Mono::GetTextColor(ECS::Entity::EntityID textEntity) {
+  if (!ECS::Entity{ textEntity }.HasComponent<Component::Text>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to Get Text Color of an entity that does not have the Text Component");
+    return glm::vec4();
+  }
+
+  return ECS::Entity{ textEntity }.GetComponent<Component::Text>().color;
+}
+
+void Mono::SetTextColor(ECS::Entity::EntityID textEntity, glm::vec4 textColor) {
+  if (!ECS::Entity{ textEntity }.HasComponent<Component::Text>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to Set Text Color of an entity that does not have the Text Component");
+    return;
+  }
+
+  ECS::Entity{ textEntity }.GetComponent<Component::Text>().color = textColor;
+}
+
+float Mono::GetTextScale(ECS::Entity::EntityID textEntity) {
+  if (!ECS::Entity{ textEntity }.HasComponent<Component::Text>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to Get Text Scale of an entity that does not have the Text Component");
+    return 0;
+  }
+
+  return ECS::Entity{ textEntity }.GetComponent<Component::Text>().scale;
+}
+
+void Mono::SetTextScale(ECS::Entity::EntityID textEntity, float textScale) {
+  if (!ECS::Entity{ textEntity }.HasComponent<Component::Text>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to Get Text Scale of an entity that does not have the Text Component");
+    return;
+  }
+
+  ECS::Entity{ textEntity }.GetComponent<Component::Text>().scale = textScale;
+}
 
 MonoString* Mono::GetText(ECS::Entity::EntityID entity)
 {
@@ -1220,6 +1293,80 @@ void Mono::SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val)
   }
   else
     Debug::DebugLogger::GetInstance().LogError("You r trying to set Image color from an invalid entity");
+}
+
+MonoString* Mono::GetCurrentScene() {
+  return STDToMonoString(IGE_SCENEMGR.GetSceneName());
+}
+
+// Note: For now this function works in ImaGE-Game, but not exactly in ImaGE-Editor (Scene is unable to play automatically
+// after changing scenes, but scene still changes). Just assume that the scene changes and plays in the game application
+void Mono::SetCurrentScene(MonoString* scenePath) {
+  std::string scenePathSTD{ MonoStringToSTD(scenePath) };
+
+  if (!scenePathSTD.empty()) {
+    //IGE_EVENTMGR.DispatchImmediateEvent<Events::LoadSceneEvent>(std::filesystem::path(scenePathSTD).stem().string(),
+      //scenePathSTD);
+    QUEUE_EVENT(Events::LoadSceneEvent, std::filesystem::path(scenePathSTD).stem().string(),
+      scenePathSTD);
+
+    // Play the scene (Most common use case is to set scene and immediately want it playing)
+    /*
+    if (IGE_SCENEMGR.GetSceneState() != Scenes::SceneState::PLAYING) {
+      IGE_SCENEMGR.PlayScene();
+    }
+    */
+  }
+}
+
+void Mono::TakeScreenShot(MonoString* name, int width, int height)
+{
+  Mono::ScriptManager::GetInstance().mScreenShotInfo.push_back({ MonoStringToSTD(name) ,width,height });
+}
+
+void Mono::SaveScreenShot(std::string name, int width, int height)
+{
+  // Get the primary monitor and its video mode
+  GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+  const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+  // Window's full width and height
+  int windowWidth = mode->width;
+  int windowHeight = mode->height;
+  std::cout << "Width: " << windowWidth << "  Height:" << windowHeight << "\n";
+
+  // Calculate the starting coordinates for capturing the center
+  int startX = (windowWidth - width) / 2;
+  int startY = (windowHeight - height) / 2;
+
+  // Ensure the capture area is within bounds
+  if (startX < 0 || startY < 0 || startX + width > windowWidth || startY + height > windowHeight) {
+    std::cerr << "Invalid dimensions for screenshot. Check width and height." << std::endl;
+    return;
+  }
+
+  // Allocate memory for pixel data
+  std::vector<unsigned char> pixels(width * height * 3);
+
+  // Read pixels from the specified region
+  glReadPixels(startX, startY, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels.data());
+
+  // Flip rows (OpenGL's origin is bottom-left, PNG expects top-left)
+  std::vector<unsigned char> flippedPixels(width * height * 3);
+  for (int y = 0; y < height; ++y)
+  {
+    memcpy(&flippedPixels[y * width * 3], &pixels[(height - 1 - y) * width * 3], width * 3);
+  }
+
+  // Save as PNG
+  if (stbi_write_png(("../Assets/GameImg/" + name + ".png").c_str(), width, height, 3, flippedPixels.data(), width * 3))
+  {
+    std::cout << "Screenshot saved to " << (name + ".png") << std::endl;
+  }
+  else
+  {
+    std::cerr << "Failed to save screenshot!" << std::endl;
+  }
 }
 
 /*!**********************************************************************

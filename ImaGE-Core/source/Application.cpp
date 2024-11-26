@@ -75,7 +75,14 @@ namespace IGE {
     int width, height;
     glfwGetFramebufferSize(mWindow.get(), &width, &height);
     glViewport(0, 0, width, height);
-    Graphics::Renderer::ResizeFinalFramebuffer(width, height);
+    //Graphics::Renderer::ResizeFinalFramebuffer(width, height);
+    QUEUE_EVENT(Events::WindowResized, width, height);
+
+    
+    if (mSpecification.StartFromScene.first) {
+      QUEUE_EVENT(Events::LoadSceneEvent, std::filesystem::path(mSpecification.StartFromScene.second).stem().string(), 
+        mSpecification.StartFromScene.second);
+    }
   }
 
   void Application::Run() {
@@ -94,8 +101,6 @@ namespace IGE {
 
       // dispatch all events in the queue at the start of game loop
       eventManager.DispatchAll();
-
-
 
       systemManager.UpdateSystems();
 
@@ -220,6 +225,8 @@ namespace IGE {
     for (auto& target : app->mRenderTargets) {
       target.framebuffer->Resize(width, height);
     }
+
+    QUEUE_EVENT(Events::WindowResized, width, height);
   }
 
   void Application::ErrorCallback(int err, const char* desc) {

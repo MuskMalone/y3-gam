@@ -7,6 +7,8 @@
 #include "MaterialTable.h"
 #include "MaterialData.h"
 #include <Graphics/Mesh/Mesh.h>
+#include "Events/EventManager.h"
+#include "Events/Event.h"
 
 #pragma region RenderPasses
 #include <Graphics/RenderPass/SkyboxPass.h>
@@ -18,6 +20,8 @@
 #pragma endregion
 
 #include "Core/Components/Camera.h"
+#include "Core/Components/Transform.h"
+#include "Core/Components/Light.h"
 #include "Core/Entity.h"
 
 namespace Graphics {
@@ -32,7 +36,11 @@ namespace Graphics {
 	std::vector<std::shared_ptr<RenderPass>> Renderer::mRenderPasses;
 	Component::Camera Renderer::mUICamera;
 
+	Renderer::Renderer() {
+
+	}
 	void Renderer::Init() {
+		SUBSCRIBE_STATIC_FUNC(Events::EventType::WINDOW_RESIZED, OnResize);
 		InitUICamera();
 
 		//----------------------Init Batching Quads------------------------------------------------------------//
@@ -111,11 +119,11 @@ namespace Graphics {
 
 		//----------------------------------Line Batching-------------------------------------------------------//
 		mData.lineVertexArray = VertexArray::Create();
-		mData.lineVertexBuffer = VertexBuffer::Create(mData.cMaxVertices * sizeof(LineVtx));
+		mData.lineVertexBuffer = VertexBuffer::Create(mData.cMaxVertices2D * sizeof(LineVtx));
 
 		mData.lineVertexBuffer->SetLayout(lineLayout);
 		mData.lineVertexArray->AddVertexBuffer(mData.lineVertexBuffer);
-		mData.lineBuffer = std::vector<LineVtx>(mData.cMaxVertices);
+		mData.lineBuffer = std::vector<LineVtx>(mData.cMaxVertices2D);
 
 		//----------------------------------------------------------------------------------------------------------//
 		
@@ -161,7 +169,7 @@ namespace Graphics {
 		InitGeomPass();
 		InitPostProcessPass();
 		InitUIPass();
-
+	
 		InitFullscreenQuad();
 
 		mFinalFramebuffer = mRenderPasses.back()->GetTargetFramebuffer();
@@ -169,9 +177,9 @@ namespace Graphics {
 		IGE::Assets::GUID texguid1{ Texture::Create(gAssetsDirectory + std::string("Textures\\default.dds")) };
 		IGE::Assets::GUID texguid{ Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
 		//Init Materials
-
+		MaterialTable::Init(mData.cMaxMaterials);
 		// Create a default material with a default shader and properties
-		std::shared_ptr<MaterialData> defaultMaterial = MaterialData::Create("PBR", "Default");
+		std::shared_ptr<MaterialData> defaultMaterial = MaterialData::Create("PBR", "Default"); //should probably shift all this in MaterialTable Init
 		defaultMaterial->SetAlbedoColor(glm::vec3(1.0f));  // Set default white albedo
 		defaultMaterial->SetMetalness(0.0f);
 		defaultMaterial->SetRoughness(1.0f);
@@ -229,7 +237,11 @@ namespace Graphics {
 		ShaderLibrary::Add("Tex", Shader::Create("Default.vert.glsl", "Default.frag.glsl"));
 		ShaderLibrary::Add("PBR", Shader::Create("PBR.vert.glsl", "PBR.frag.glsl"));
 		ShaderLibrary::Add("Unlit", Shader::Create("Unlit.vert.glsl", "Unlit.frag.glsl"));
+#ifdef DISTRIBUTION
 		ShaderLibrary::Add("ShadowMap", Shader::Create("ShadowMap.vert.glsl", "ShadowMap.frag.glsl"));
+#else
+		ShaderLibrary::Add("ShadowMap", Shader::Create("ShadowMap.vert.glsl", "ShadowMapRender.frag.glsl"));
+#endif
 		ShaderLibrary::Add("FullscreenQuad", Shader::Create("FullscreenQuad.vert.glsl", "FullscreenQuad.frag.glsl"));
 		ShaderLibrary::Add("Tex2D", Shader::Create("Tex2D.vert.glsl", "Tex2D.frag.glsl"));
 		ShaderLibrary::Add("SkyboxProc", Shader::Create("Skybox\\Procedural.vert.glsl", "Skybox\\Procedural.frag.glsl"));
@@ -407,8 +419,16 @@ namespace Graphics {
 		mUICamera.top = 10.0f;
 	}
 
+	EVENT_CALLBACK_DEF(Renderer, OnResize) {
+		auto const& e { CAST_TO_EVENT(Events::WindowResized)};
+
+		for (auto const& pass : mRenderPasses) {
+			pass->GetTargetFramebuffer()->Resize(e->mWidth, e->mHeight);
+		}
+	}
+
 	void Renderer::Shutdown() {
-		// Add shutdown logic if necessary
+		MaterialTable::Shutdown();
 	}
 
 	void Renderer::Clear(){
@@ -499,8 +519,12 @@ namespace Graphics {
 		return instanceBuffer;
 	}
 
+	Renderer::~Renderer(){
+		Renderer::Shutdown();
+	}
+
 	void Renderer::DrawLine(glm::vec3 const& p0, glm::vec3 const& p1, glm::vec4 const& clr) {
-		if (mData.lineVtxCount >= RendererData::cMaxVertices)
+		if (mData.lineVtxCount >= RendererData::cMaxVertices2D)
 			NextBatch();
 
 		SetLineBufferData(p0, clr);
@@ -1149,12 +1173,59 @@ namespace Graphics {
 			submesh.baseVtx,                // Base vertex offset
 			0                               // Instance offset
 		);
+
+		++mData.stats.drawCalls;
+	}
+
+	int Renderer::PickEntity(glm::vec2 const& mousePos, glm::vec2 const& vpStart = {}, glm::vec2 const& vpSize = {}) {
+		auto const& geomPass { Renderer::GetPass<GeomPass>() };
+
+		auto const& pickFb{ geomPass->GetGameViewFramebuffer() };
+
+		if (!pickFb) {
+			std::cout << "ERROR: PICK FRAMEBUFFER IS NULL!" << std::endl;
+			return INVALID_ENTITY_ID;
+		}
+
+		auto const& fbSpec {pickFb->GetFramebufferSpec() };
+
+		glm::vec2 viewportStart(0.0f, 0.0f); // Game view typically starts at (0, 0)
+		glm::vec2 viewportSize(static_cast<float>(fbSpec.width), static_cast<float>(fbSpec.height));
+
+		// Ensure the mouse position is within the viewport bounds
+		if (mousePos.x < viewportStart.x || mousePos.x >(viewportStart.x + viewportSize.x) ||
+			mousePos.y < viewportStart.y || mousePos.y >(viewportStart.y + viewportSize.y)) {
+			// Return an invalid entity if mouse is outside the viewport
+			return INVALID_ENTITY_ID;
+		}
+
+		// Calculate the mouse offset relative to the viewport's top-left corner
+		glm::vec2 offset = mousePos - viewportStart;
+
+		// Normalize the offset to a [0, 1] range based on the viewport size
+		float normalizedX = offset.x / viewportSize.x; // X-coordinate in [0, 1]
+		float normalizedY = offset.y / viewportSize.y; // Y-coordinate in [0, 1]
+
+		// Map normalized coordinates to framebuffer pixel coordinates
+		int framebufferX = static_cast<int>(normalizedX * fbSpec.width);
+		int framebufferY = static_cast<int>((1.0f - normalizedY) * fbSpec.height); // Flip Y-axis for framebuffer space
+
+		// Bind the picking framebuffer and read the pixel under the mouse position
+		pickFb->Bind();
+		int entityId = pickFb->ReadPixel(1, framebufferX, framebufferY); // Read from color attachment 1
+		pickFb->Unbind();
+
+		if (entityId > 0) {
+			return entityId;
+		}
+
+		return INVALID_ENTITY_ID;
 	}
 
 	void Renderer::FlushBatch() {
-		if (mData.lineVtxCount > RendererData::cMaxVertices) {
+		if (mData.lineVtxCount > RendererData::cMaxVertices2D) {
 			std::cerr << "Error: Line vertex count exceeds buffer capacity during FlushBatch!" << std::endl;
-			mData.lineVtxCount = RendererData::cMaxVertices; // Clamp to valid range
+			mData.lineVtxCount = RendererData::cMaxVertices2D; // Clamp to valid range
 		}
 
 		if (mData.quadIdxCount) {
@@ -1319,7 +1390,7 @@ namespace Graphics {
 		FlushBatch();
 	}
 
-	Statistics Renderer::GetStats() {
+	Statistics const& Renderer::GetStats() {
 		return mData.stats;
 	}
 

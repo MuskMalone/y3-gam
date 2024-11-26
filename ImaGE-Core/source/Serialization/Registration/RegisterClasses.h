@@ -8,6 +8,7 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <rttr/registration>
+#include <policy.h>
 #include <Prefabs/Prefab.h>
 #include <PxPhysicsAPI.h>
 #include <Scripting/ScriptInstance.h>
@@ -206,7 +207,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   {
     using T = Reflection::ProxyScript;
     rttr::registration::class_<T>("Script")
-      .constructor<>()
+      .constructor<>()(rttr::policy::ctor::as_object)
       .property("scriptName", &T::scriptName)
       .property("scriptFieldProxyList", &T::scriptFieldProxyList);
   }
@@ -222,7 +223,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   rttr::registration::class_<Mono::ScriptFieldInfo>("ScriptFieldInfo")
     .property("fieldName", &Mono::ScriptFieldInfo::mFieldName);
 
-  rttr::registration::class_<std::vector<MonoObject*>>("ScriptFieldInfo")
+  rttr::registration::class_<std::vector<MonoObject*>>("MonoObjectVector")
     .property("fieldName", &Mono::ScriptFieldInfo::mFieldName);
 
   // yay more macros
@@ -245,4 +246,6 @@ static void rttr_auto_register_reflection_function_(); namespace {
   REGISTER_DATA_MEMBER_INST(std::vector<unsigned>, "System.UInt32[]");
   REGISTER_DATA_MEMBER_INST(Mono::ScriptInstance, "Image.Mono.ScriptInstance");
   REGISTER_DATA_MEMBER_INST(std::vector<Mono::ScriptInstance>, "Entity[]");
+  REGISTER_DATA_MEMBER_INST(std::vector<MonoObject*>, "MonoObjectVec");
+
 }

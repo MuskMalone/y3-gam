@@ -1,24 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Numerics;
 using IGE.Utils;
-
-using System.Drawing.Imaging;
 
 public class PitPainting : Entity, IInventoryItem
 {
+  public Entity _Image;
+  public Inventory inventoryScript;
+  public PlayerInteraction playerInteraction;
+  public Entity EToPickUpUI;
+
   public string Name
   {
     get
     {
-      return "Pit Painting";
+      return "PitPainting";
     }
   }
-
-  public Entity _Image;
 
   public Entity Image
   {
@@ -43,4 +38,21 @@ public class PitPainting : Entity, IInventoryItem
     Destroy(mEntityID);
   }
 
+  void Start()
+  {
+    _Image?.SetActive(false);
+    EToPickUpUI?.SetActive(false);
+  }
+
+  void Update()
+  {
+    // For Painting Picking Up
+    bool isPaintHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
+    if (isPaintHit && Input.GetKeyTriggered(KeyCode.E))
+    {
+      InternalCalls.PlaySound(mEntityID, "PickupObjects");
+      inventoryScript.Additem(this);
+    }
+    EToPickUpUI.SetActive(isPaintHit);
+  }
 }

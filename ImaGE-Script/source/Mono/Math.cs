@@ -150,26 +150,31 @@ namespace IGE.Utils
     }
 
     #region Quaternion
-    
+
     public static Vector3 QuatToEuler(Quaternion q)
     {
-      Vector3 eulerAngles = new Vector3() ;
+      Vector3 euler;
 
-      // Calculate the Euler angles from the quaternion
-      // Note: This method assumes YZX rotation order.
-      float sinr_cosp = 2 * (q.W * q.X + q.Y * q.X);
-      float cosr_cosp = 1 - 2 * (q.X * q.X + q.Y * q.Y);
-      eulerAngles.X = Atan2(sinr_cosp, cosr_cosp) * Rad2Deg;
+      // Pitch (X-axis rotation)
+      float sinp = 2 * (q.W * q.X - q.Z * q.Y);
+      if (Mathf.Abs(sinp) >= 1)
+        euler.X = Mathf.RadToDeg(sinp > 0 ? Mathf.PI / 2 : -Mathf.PI / 2); // Clamp to 90 or -90 degrees
+      else
+        euler.X = Mathf.RadToDeg(Mathf.Asin(sinp));
 
-      float sinp = 2 * (q.W * q.Y - q.Z * q.X);
-      eulerAngles.Y = Abs(sinp) >= 1 ? CopySign(PI / 2, sinp) * Rad2Deg : Asin(sinp) * Rad2Deg;
+      // Yaw (Y-axis rotation)
+      float siny_cosp = 2 * (q.W * q.Y + q.Z * q.X);
+      float cosy_cosp = 1 - 2 * (q.X * q.X + q.Y * q.Y);
+      euler.Y = Mathf.RadToDeg(Mathf.Atan2(siny_cosp, cosy_cosp));
 
-      float siny_cosp = 2 * (q.W * q.Z + q.X * q.Y);
-      float cosy_cosp = 1 - 2 * (q.Y * q.Y + q.Z * q.Z);
-      eulerAngles.Z = Atan2(siny_cosp, cosy_cosp) * Rad2Deg;
+      // Roll (Z-axis rotation)
+      float sinr_cosp = 2 * (q.W * q.Z + q.X * q.Y);
+      float cosr_cosp = 1 - 2 * (q.Y * q.Y + q.Z * q.Z);
+      euler.Z = Mathf.RadToDeg(Mathf.Atan2(sinr_cosp, cosr_cosp));
 
-      return eulerAngles;
+      return euler;
     }
+
 
     public static Quaternion EulertoQuat(Vector3 euler)
     {
@@ -196,21 +201,29 @@ namespace IGE.Utils
     }
 
 
-    public static float QuaternionAngle(Quaternion a, Quaternion b)
+    public static float QuaternionAngle(Quaternion q1, Quaternion q2)
     {
-      // Calculate the dot product of the two quaternions
-      float dot = Quaternion.Dot(a, b);
+      // Normalize quaternions to ensure they are unit quaternions
+      q1 = Quaternion.Normalize(q1);
+      q2 = Quaternion.Normalize(q2);
 
-      // The angle can be found using the arc cosine of the dot product
-      return Mathf.Acos(Mathf.Clamp(dot, -1f, 1f)) * 2f * Mathf.Rad2Deg;
+      // Calculate the dot product between the two quaternions
+      float dot = Quaternion.Dot(q1, q2);
+
+      // Clamp the dot product to avoid any precision issues with Mathf.Acos
+      dot = Mathf.Clamp(dot, -1f, 1f);
+
+      // Calculate the angle in radians and convert to degrees
+      float angle = Mathf.Acos(dot) * 2f * Mathf.Rad2Deg;
+
+      return angle;
     }
-
 
     #endregion
 
     public static int RandRange(int min, int max)
     {
-    
+
       return random.Next(min, max);  // Exclusive of max
     }
 

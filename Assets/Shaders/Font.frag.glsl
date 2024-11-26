@@ -4,10 +4,13 @@ in vec2 TexCoords;
 layout(location = 0) out vec4 color;
 
 uniform sampler2D uText;
-uniform vec3 uTextColor;
+uniform vec4 uTextColor;
 
 void main()
 {    
-    vec4 sampled = vec4(1.0, 1.0, 1.0, texture(uText, TexCoords).r);
-    color = vec4(uTextColor, 1.0) * sampled;
+    // Sample the texture's red channel for alpha masking
+    float alpha = texture(uText, TexCoords).r;
+
+    // Combine the text color (with alpha) and the sampled alpha
+    color = vec4(uTextColor.rgb, uTextColor.a * alpha);
 }

@@ -18,13 +18,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "MaterialTable.h"
 #include <typeindex>
 #include <Graphics/RenderPass/RenderPass.h>
-#include "Core/Components/Camera.h"
-#include "Core/Components/Transform.h"
-#include "Core/Components/Light.h"
-
+#include <Events/EventCallback.h>
 
 namespace Component{
-	struct Camera;
+	struct Camera; struct Transform; struct Light;
 }
 
 namespace Graphics {
@@ -34,9 +31,9 @@ namespace Graphics {
 	class Mesh;
 
 	struct Statistics {
-		uint32_t drawCalls{};
-		uint32_t quadCount{};
-		uint32_t lineCount{};
+		uint32_t drawCalls;
+		uint32_t quadCount;
+		uint32_t lineCount;
 
 		uint32_t GetTotalVtxCount() { return quadCount * 4; }
 		uint32_t GetTotalIdxCount() { return quadCount * 6; }
@@ -83,9 +80,10 @@ namespace Graphics {
 
 	struct RendererData {
 		uint32_t maxTexUnits{};
+		uint32_t cMaxMaterials{64};
 
 		//------------------Mesh Batching-----------------------------------//
-		static const uint32_t cMaxVertices = 500000;
+		static const uint32_t cMaxVertices = 0;
 		static const uint32_t cMaxIndices = cMaxVertices * 3;
 
 		std::shared_ptr<VertexArray> meshVertexArray;
@@ -157,7 +155,8 @@ namespace Graphics {
 
 	class Renderer {
 	public:
-
+		Renderer();
+		~Renderer();
 		static void Init();
 		static void Shutdown();
 		static void Clear();
@@ -190,6 +189,7 @@ namespace Graphics {
 
 		static void RenderSubmeshInstances(std::vector<InstanceData> const& instances, IGE::Assets::GUID const& meshSource, size_t submeshIndex);
 
+		static int PickEntity(glm::vec2 const& mousePos, glm::vec2 const& viewportStart, glm::vec2 const& viewportSize);
 		// Batching
 		static void BeginBatch();
 		static void FlushBatch();
@@ -230,7 +230,7 @@ namespace Graphics {
 		static void NextBatch();
 
 		// Stats
-		static Statistics GetStats();
+		static Statistics const& GetStats();
 		static void ResetStats();
 
 		static void InitShaders();
@@ -246,6 +246,7 @@ namespace Graphics {
 		static void InitFullscreenQuad();
 
 		static void InitUICamera();
+		static EVENT_CALLBACK_DECL(OnResize);
 
 		template <typename T>
 		static void AddPass(std::shared_ptr<T>&& pass) {

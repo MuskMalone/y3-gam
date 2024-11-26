@@ -21,6 +21,7 @@ int Main(int argc, char** argv) {
   spec.VSync = true;
   spec.WindowHeight = 1080;
   spec.WindowWidth = 1920;
+  spec.StartFromScene = { false, "" };
 
   IGE::EditorApplication myApp{ spec };
   try

@@ -10,9 +10,11 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
+
 #include <Graphics/Vertex.h>
 #include <Graphics/VertexArray.h>
 #include <Graphics/Mesh/Submesh.h>
+#include <BoundingVolumes/AABB.h>
 
 // forward declarations
 namespace ECS { class Entity; }
@@ -22,17 +24,19 @@ namespace IGE::Assets { struct AssetGUIDTag; using GUID = IGE::Core::GUID<AssetG
 namespace Graphics {
 	class MeshSource {
     public:
-      MeshSource(const std::shared_ptr<VertexArray>& vao,
-          const std::vector<Submesh>& submeshes,
-          const std::vector<Vertex>& vertices,
-          const std::vector<uint32_t>& indices)
-          : mVertices{ vertices }, mMeshNames{}, mIndices{ indices }, mVertexArray{ vao }, mSubmeshes{ submeshes } {}
+      MeshSource(const std::shared_ptr<VertexArray>& vao, const std::vector<Submesh>& submeshes,
+          const std::vector<Vertex>& vertices, const std::vector<uint32_t>& indices)
+          : mVertices{ vertices }, mMeshNames{}, mIndices{ indices }, mVertexArray{ vao }, mSubmeshes{ submeshes }, mBoundingBox{} {
+        ComputeBV();
+      }
 
       MeshSource(std::shared_ptr<VertexArray>&& vao,
         std::vector<Submesh>&& submeshes, std::vector<Vertex>&& vertices,
         std::vector<uint32_t>&& indices, std::vector<std::string>&& names)
         : mVertices{ std::move(vertices) }, mMeshNames{ names }, mIndices{ std::move(indices) },
-          mVertexArray{ std::move(vao) }, mSubmeshes{ std::move(submeshes) } {}
+        mVertexArray{ std::move(vao) }, mSubmeshes{ std::move(submeshes) }, mBoundingBox{} {
+        ComputeBV();
+      }
 
       const std::vector<Vertex>& GetVertices() const { return mVertices; }
       const std::vector<uint32_t>& GetIndices() const { return mIndices; }
@@ -53,7 +57,8 @@ namespace Graphics {
       ************************************************************************/
       ECS::Entity ConstructEntity(IGE::Assets::GUID const& guid, std::string const& fileName) const;
 
-      //const AABB& GetBoundingBox() const { return mBoundingBox; } TO ADD IN THE FUTURE
+      BV::AABB const& GetBoundingBox() const { return mBoundingBox; }
+
       bool IsWireframe() { return mIsWireframe; }
       void ToggleWireframe() { mIsWireframe = !mIsWireframe; }
     private:
@@ -63,10 +68,15 @@ namespace Graphics {
 
       std::shared_ptr<VertexArray> mVertexArray;
       std::vector<Submesh> mSubmeshes;
+
+      BV::AABB mBoundingBox;
+      
       bool mIsWireframe{ false };
 
+      // @TODO: should be computed and read from IMSH file
+      void ComputeBV();
+
       //MATERIALS VECTOR TO ADD
-      //AABB mBoundingBox add in the future
 	};
 }
 

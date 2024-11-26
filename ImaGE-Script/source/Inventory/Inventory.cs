@@ -40,6 +40,7 @@ public class Inventory : Entity
   public Entity inventorySelectSquare;
   public Entity selectionHand;
   public Entity inventoryImage;
+  private PictureAlign pictureAlignscript;
 
   //public Vec3<float>[] SlotPositionList;
   // Workaround for lack of Vec3<float>[]
@@ -97,7 +98,7 @@ public class Inventory : Entity
 
     pitPaintingUI?.SetActive(false);
     seedUI?.SetActive(false);
-    nightPaintingUI?.SetActive(false);
+    //nightPaintingUI?.SetActive(false);
     toolsPaintingUI?.SetActive(false);
     hammerUI?.SetActive(false);
     crowbarUI?.SetActive(false);
@@ -113,6 +114,7 @@ public class Inventory : Entity
     InternalCalls.SetPosition(crowbarUI.mEntityID, ref startPosition);
     InternalCalls.SetPosition(transitionPaintingUI.mEntityID, ref startPosition);
     InternalCalls.SetPosition(keyUI.mEntityID, ref startPosition);
+    pictureAlignscript = FindObjectOfType<PictureAlign>();
   }
 
   public void Additem(IInventoryItem item)
@@ -361,9 +363,11 @@ public class Inventory : Entity
         break;
       case "NightPainting":
         nightPaintingUI?.SetActive(true);
+        toolsPaintingUI?.FindScript<HoldupUI>().SetAlginUI();
         break;
       case "Tools Painting":
         toolsPaintingUI?.SetActive(true);
+        toolsPaintingUI?.FindScript<HoldupUI>().SetAlginUI();
         break;
       case "Hammer":
         hammerUI?.SetActive(true);
@@ -375,6 +379,7 @@ public class Inventory : Entity
         break;
       case "Transition Painting":
         transitionPaintingUI?.SetActive(true);
+        transitionPaintingUI?.FindScript<HoldupUI>().SetAlginUI();
         break;
       case "Key":
         keyUI?.SetActive(true);
@@ -386,6 +391,7 @@ public class Inventory : Entity
 
   private void DisableAllUI()
   {
+    pictureAlignscript.SetActive(false);
     pitPaintingUI?.SetActive(false);
     seedUI?.SetActive(false);
     seedEquipped = false;
