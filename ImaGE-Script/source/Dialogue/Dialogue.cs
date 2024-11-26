@@ -29,6 +29,7 @@ public class Dialogue : Entity
   public Entity HappyTara;
   public Entity DisturbedTara;
   public Entity SadTara;
+  public SpecialDialogue specialDialogue;
 
   // Private Variables
   private Emotion[] emotions;           // The emotions from the caller
@@ -37,6 +38,7 @@ public class Dialogue : Entity
   private int charIndex = 0;            // Tracks the current character index
   private float nextCharTime = 0f;      // Tracks the time for the next character
   private const float defaultFontSize = 0.006f;
+  private bool specialSequence = true;
 
   public Dialogue() : base()
   {
@@ -133,6 +135,13 @@ public class Dialogue : Entity
     DialogueBox.SetActive(false);
     SetActive(false);
     isInDialogueMode = false;
+
+    // The first sequence
+    if (specialSequence)
+    {
+      specialDialogue.StartSilhouetteSequence();
+      specialSequence = false;
+    }
   }
 
   private void SkipTyping()

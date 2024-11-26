@@ -49,6 +49,7 @@ namespace Mono {
 		DIALOGUE,
 		PLAYERINTERACTION,
 		INVENTORY,
+		SPECIALDIALOGUE
 	};
 
 

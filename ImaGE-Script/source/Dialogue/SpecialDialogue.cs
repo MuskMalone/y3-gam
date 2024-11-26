@@ -21,6 +21,11 @@ public class SpecialDialogue : Entity
   private bool specialLineFadeout = false;
   private float fadeTime = 0f;
 
+  private bool isInSillouetteSequence = false;
+  private int currentSillouetteIndex = -1;
+  private float sillouetteElapsedTime = 0f;
+  private const float activationInterval = 2.0f;
+
   private int charIndex = 0;            // Tracks the current character index
   private float nextCharTime = 0f;      // Tracks the time for the next character
 
@@ -62,6 +67,31 @@ public class SpecialDialogue : Entity
       {
         // Line has ended, fadeout
         SpecialLineFadeout();
+      }
+    }
+
+    if (isInSillouetteSequence)
+    {
+      sillouetteElapsedTime += Time.deltaTime;
+      if (sillouetteElapsedTime >= activationInterval)
+      {
+        sillouetteElapsedTime = 0f;
+
+        if (currentSillouetteIndex >= 0 && currentSillouetteIndex < BeginningSilhouetteSequence.Length)
+        {
+          BeginningSilhouetteSequence[currentSillouetteIndex].SetActive(false);
+        }
+
+        currentSillouetteIndex++;
+
+        if (currentSillouetteIndex < BeginningSilhouetteSequence.Length)
+        {
+          BeginningSilhouetteSequence[currentSillouetteIndex].SetActive(true);
+        }
+        else
+        {
+          EndSiloutetteSequence();
+        }
       }
     }
 
@@ -129,5 +159,21 @@ public class SpecialDialogue : Entity
 
     InternalCalls.SetTextColor(mEntityID, new Vector4(originalColor.X, originalColor.Y, originalColor.Z, 0));
     EndSpecialDialogue();
+  }
+
+  public void StartSilhouetteSequence()
+  {
+    isInSillouetteSequence = true;
+    playerMove.FreezePlayer();
+  }
+
+  private void EndSiloutetteSequence()
+  {
+    playerMove.UnfreezePlayer();
+    isInSillouetteSequence = false;
+
+    dialogueSystem.SetDialogue(new string[] { "She left something on that table..."},
+        new Dialogue.Emotion[] { Dialogue.Emotion.Surprised },
+        mainDialogueFontScale);
   }
 }

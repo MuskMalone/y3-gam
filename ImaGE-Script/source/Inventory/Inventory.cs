@@ -25,6 +25,7 @@ public class Inventory : Entity
   public Entity crowbarUI;
   public Entity transitionPaintingUI;
   public Entity keyUI;
+  public Entity pickupHandUI;
 
   // Inventory Item Selection (Image in the inventory bar)
   public Entity pitPaintingSelection;
@@ -391,7 +392,8 @@ public class Inventory : Entity
 
   private void DisableAllUI()
   {
-    pictureAlignscript.SetActive(false);
+    // COMMENTED THIS OUT BECAUSE IT MAKES THE PLAYER INACTIVE ON INVENTORY OPEN AND SELECT SLOT
+    //pictureAlignscript.SetActive(false);
     pitPaintingUI?.SetActive(false);
     seedUI?.SetActive(false);
     seedEquipped = false;

@@ -57,6 +57,7 @@ public class Seed : Entity, IInventoryItem
       inventoryScript.Additem(this);
     }
     EToPickUpUI.SetActive(isSeedHit);
+    inventoryScript.pickupHandUI.SetActive(isSeedHit);
 
     // For Seed Planting
     bool isPotHit = playerInteraction.RayHitString == InternalCalls.GetTag(Pot.mEntityID);
