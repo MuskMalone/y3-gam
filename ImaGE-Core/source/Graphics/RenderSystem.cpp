@@ -133,20 +133,22 @@ namespace Graphics {
 
 		glm::vec2 mousePos = Input::InputManager::GetInstance().GetMousePos();
 		const int entId = Renderer::PickEntity(mousePos, glm::vec2{}, glm::vec2{});
+	
+
 		if (entId < 0) return;
 		ECS::Entity const hoveredEntity{ static_cast<ECS::Entity::EntityID>(entId) };
 
 		if (hoveredEntity != prevHoveredEntity) {
-			if (IGE_ENTITYMGR.IsValidEntity(prevHoveredEntity)) {
+			if (prevHoveredEntity) {
 				QUEUE_EVENT(Events::EntityMouseExit, prevHoveredEntity);
 			}
-			if (IGE_ENTITYMGR.IsValidEntity(ECS::Entity{ hoveredEntity })) {
-				QUEUE_EVENT(Events::EntityMouseEnter, prevHoveredEntity);
+			if (hoveredEntity) {
+				QUEUE_EVENT(Events::EntityMouseEnter, hoveredEntity);
 			}
 		}
 
 		prevHoveredEntity = hoveredEntity;
-		if (IGE_ENTITYMGR.IsValidEntity(hoveredEntity)) {
+		if (hoveredEntity) {
 			if (Input::InputManager::GetInstance().IsKeyTriggered(IK_MOUSE_LEFT)) {
 				QUEUE_EVENT(Events::EntityMouseDown, hoveredEntity);
 			}
@@ -154,7 +156,6 @@ namespace Graphics {
 				QUEUE_EVENT(Events::EntityMouseUp, hoveredEntity);
 			}
 		}
-
 	}
 }
 
