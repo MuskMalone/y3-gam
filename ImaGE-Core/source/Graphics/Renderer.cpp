@@ -1213,7 +1213,6 @@ namespace Graphics {
 		// Bind the picking framebuffer and read the pixel under the mouse position
 		pickFb->Bind();
 		int entityId = pickFb->ReadPixel(1, framebufferX, framebufferY); // Read from color attachment 1
-		std::cout << entityId << std::endl;
 		pickFb->Unbind();
 
 		if (entityId > 0) {

@@ -155,7 +155,7 @@ namespace Events
   class EntityMouseEnter : public Event {
   public:
       EntityMouseEnter(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_ENTER), mEntity{ entity } {}
-      inline std::string GetName() const noexcept override { return "On mouse enter entity "; }
+      inline std::string GetName() const noexcept override { return "On mouse enter entity " + mEntity.GetTag(); }
 
       ECS::Entity mEntity;
   };
@@ -163,7 +163,7 @@ namespace Events
   class EntityMouseExit : public Event {
   public:
       EntityMouseExit(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_ENTER), mEntity{ entity } {}
-      inline std::string GetName() const noexcept override { return "On mouse exit entity "; }
+      inline std::string GetName() const noexcept override { return "On mouse exit entity " + mEntity.GetTag(); }
 
       ECS::Entity mEntity;
   };
