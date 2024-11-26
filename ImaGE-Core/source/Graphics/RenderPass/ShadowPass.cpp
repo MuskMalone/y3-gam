@@ -15,7 +15,7 @@ namespace Graphics {
     ShadowPass::ShadowPass(const RenderPassSpec& spec) : RenderPass(spec),
       mLightSpaceMtx{}, mLightEntity{}, mShadowSoftness {}, mShadowBias{}, mActive{ false } {}
 
-    void ShadowPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
+    void ShadowPass::Render(CameraSpec const& cam, [[maybe_unused]] std::vector<ECS::Entity> const& entities) {
       // only do shadow pass for game view
       if (cam.isEditor) {
         return;
@@ -32,9 +32,13 @@ namespace Graphics {
       StartRender();
       SetLightUniforms();
 
-      // filter out entities and render the scene
-      for (ECS::Entity const& entity : entities) {
-        if (!entity.HasComponent<Component::Mesh>() || entity.HasComponent<Component::Light>()) { continue; }
+      Layers::LayerManager& layerMan{ IGE_LAYERMGR };
+      // iterate all entities in the ECS since this is from the light's perspective
+      for (ECS::Entity entity : IGE_ENTITYMGR.GetAllEntitiesWithComponents<Component::Mesh>()) {
+        // skip lights and layers that arent visible
+        if (entity.HasComponent<Component::Light>()
+          || !layerMan.IsLayerVisible(entity.GetComponent<Component::Layer>().name)) { continue; }
+
         Component::Mesh const& mesh{ entity.GetComponent<Component::Mesh>() };
         // skip if no mesh or if it doesn't cast shadows
         if (!mesh.meshSource.IsValid() || !mesh.castShadows) { continue; }
