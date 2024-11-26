@@ -16,6 +16,11 @@ namespace Graphics {
 
 	void PostProcessingPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities)
 	{
+		if (cam.isEditor) {
+			mOutputTexture = mInputTexture;
+			return; 
+		}
+
 		auto numShaders{ Graphics::PostProcessingManager::GetInstance().GetShaderNum() };
 		numShaders = (numShaders) ? numShaders : 1;
 		for (unsigned i{}; i < numShaders; ++i) {
