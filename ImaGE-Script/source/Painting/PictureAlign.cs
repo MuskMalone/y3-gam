@@ -18,6 +18,7 @@ public class PictureAlign : Entity
   public Entity LeftArrow;
   public Entity UpArrow;
   public Entity DownArrow;
+  public Entity LeftClickText;
   private bool isBigPic;
   private bool toStop = true;
 
@@ -62,26 +63,38 @@ public class PictureAlign : Entity
       // Perform alignment checks and freeze the player if aligned
       if (isBigPic && IsAligned())
       {
-        alignCheck = true;
-        Debug.Log("Player is aligned.");
-        FreezePlayer();
-
-        currentImg.SetActive(false);
-        if (picture == "NightPainting")
+        if(LeftClickText != null)
+          LeftClickText.SetActive(true);
+        if (Input.GetMouseButtonDown(0))
         {
-          ChangeSkyBox();
-        }
+          alignCheck = true;
+          Debug.Log("Player is aligned.");
+          FreezePlayer();
 
-        RightArrow.SetActive(false);
-        LeftArrow.SetActive(false);
-        UpArrow.SetActive(false);
-        DownArrow.SetActive(false);
-        SetActive(false);
-        toStop = true;
-        playerMove.SetUnfreeTimer();
+          currentImg.SetActive(false);
+          if (picture == "NightPainting")
+          {
+            ChangeSkyBox();
+          }
+          if (LeftClickText != null)
+            LeftClickText.SetActive(false);
+          RightArrow.SetActive(false);
+          LeftArrow.SetActive(false);
+          UpArrow.SetActive(false);
+          DownArrow.SetActive(false);
+          SetActive(false);
+          toStop = true;
+          playerMove.SetUnfreeTimer();
+        }
+        else
+        {
+          alignCheck = false;
+        }
       }
       else
       {
+        if (LeftClickText != null)
+          LeftClickText.SetActive(false);
         alignCheck = false;
       }
     }
