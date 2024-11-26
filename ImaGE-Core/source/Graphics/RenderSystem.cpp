@@ -8,6 +8,9 @@
 #include "Utils.h"
 #include <Graphics/Camera/EditorCamera.h>
 #include <Scenes/SceneManager.h>
+#include "Events/Event.h"
+#include "Events/EventManager.h"
+#include <Input/InputManager.h>
 #include <BoundingVolumes/IntersectionTests.h>
 
 namespace {
@@ -35,6 +38,8 @@ namespace Graphics {
 			prevOutputTex = pass->GetOutputTexture();
 		}
 
+		//if(!cam.isEditor)
+		//	HandleGameViewInput();
 		return entityVector;
 	}
 
@@ -123,6 +128,33 @@ namespace Graphics {
 		}
 	}
 }
+
+	void RenderSystem::HandleGameViewInput(){
+		static ECS::Entity prevHoveredEntity;
+
+		glm::vec2 mousePos = Input::InputManager::GetInstance().GetMousePos();
+		ECS::Entity hoveredEntity = Renderer::PickEntity(mousePos);
+		
+		if (hoveredEntity != prevHoveredEntity) {
+			if (IGE_ENTITYMGR.IsValidEntity(prevHoveredEntity)) {
+				QUEUE_EVENT(Events::EntityMouseExit, prevHoveredEntity);
+			}
+			if (IGE_ENTITYMGR.IsValidEntity(hoveredEntity)) {
+				QUEUE_EVENT(Events::EntityMouseEnter, prevHoveredEntity);
+			}
+		}
+
+		prevHoveredEntity = hoveredEntity;
+		if (IGE_ENTITYMGR.IsValidEntity(hoveredEntity)) {
+			if (Input::InputManager::GetInstance().IsKeyTriggered(IK_MOUSE_LEFT)) {
+				QUEUE_EVENT(Events::EntityMouseDown, hoveredEntity);
+			}
+			if (Input::InputManager::GetInstance().IsKeyReleased(IK_MOUSE_LEFT)) {
+				QUEUE_EVENT(Events::EntityMouseUp, hoveredEntity);
+			}
+		}
+
+	}
 
 namespace {
 	bool EntityInViewFrustum(BV::Frustum const& frustum, Component::Transform const& transform, Graphics::MeshSource const* meshSource) {

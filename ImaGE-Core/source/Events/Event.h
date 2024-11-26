@@ -43,6 +43,8 @@ namespace Events
     PREFAB_GUID_REMAP,
     SIGNAL,
     ENTITY_PICKED,
+    ENTITY_MOUSE_ENTER,
+    ENTITY_MOUSE_EXIT,
     LOCK_MOUSE
   };
 

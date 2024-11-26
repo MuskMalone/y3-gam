@@ -188,6 +188,7 @@ namespace Graphics {
 
 		static void RenderSubmeshInstances(std::vector<InstanceData> const& instances, IGE::Assets::GUID const& meshSource, size_t submeshIndex);
 
+		static ECS::Entity PickEntity(glm::vec2 const& mousePos);
 		// Batching
 		static void BeginBatch();
 		static void FlushBatch();

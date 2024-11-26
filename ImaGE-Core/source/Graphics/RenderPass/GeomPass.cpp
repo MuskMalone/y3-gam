@@ -99,8 +99,9 @@ namespace Graphics {
       }
 
       if (cam.isEditor) {
-          auto const& lights{ IGE_ENTITYMGR.GetAllEntitiesWithComponents<Component::Light, Component::Transform>() };
-          for (auto const& light : lights) {
+          for(auto const& light : entities){
+              if (!light.HasComponent<Component::Transform>()) continue;
+              if (!light.HasComponent<Component::Light>()) continue;
               auto const& xform = ECS::Entity{ light }.GetComponent<Component::Transform>();
               auto const& lightComp = ECS::Entity{ light }.GetComponent<Component::Light>();
               Renderer::DrawLightGizmo(lightComp, xform, cam, ECS::Entity{light}.GetEntityID());
@@ -116,6 +117,7 @@ namespace Graphics {
       }
 
       for (ECS::Entity const& entity : entities) {
+        if (!entity.HasComponent<Component::Transform>()) continue;
         if (entity.HasComponent<Component::Sprite2D>()) {
           auto const& sprite = entity.GetComponent<Component::Sprite2D>();
           auto const& xform = entity.GetComponent<Component::Transform>();
@@ -134,6 +136,9 @@ namespace Graphics {
 
       auto const& fb = mSpec.pipeline->GetSpec().targetFramebuffer;
 
+      if (!cam.isEditor)
+          mPickFramebuffer = fb; // for game view only
+
       // Check if mOutputTexture is null or if dimensions don’t match
       if (!mOutputTexture || mOutputTexture->GetWidth() != fb->GetFramebufferSpec().width || mOutputTexture->GetHeight() != fb->GetFramebufferSpec().height) {
           // Create or resize mOutputTexture based on the framebuffer's specs
@@ -144,6 +149,10 @@ namespace Graphics {
       if (mOutputTexture) {
           mOutputTexture->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
       }
+  }
+
+  std::shared_ptr<Framebuffer> GeomPass::GetGameViewFramebuffer() const {
+      return mPickFramebuffer;
   }
 
   GeomPass::ShaderGroupMap GeomPass::GroupEntities(std::vector<ECS::Entity> const& entities) {
