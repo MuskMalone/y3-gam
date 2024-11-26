@@ -58,8 +58,7 @@ public class  PlayerMove : Entity
   // Update is called once per frame
   void Update()
   {
-    if (canLook) 
-      ProcessLook();
+    ProcessLook();
     if (canMove)
       PlayerMovement();
 
@@ -121,14 +120,14 @@ public class  PlayerMove : Entity
 
       // Clamp pitch to prevent camera from flipping upside down
       pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
-    
+    }
 
     // Update the camera's rotation (pitch)
     cam.GetComponent<Transform>().rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(pitch));
 
     // Update the player's rotation (yaw)
     GetComponent<Transform>().worldRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, Mathf.DegToRad(yaw));
-    }
+    
   }
 
   private void ResetPlayerVelocity()
