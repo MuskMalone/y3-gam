@@ -8,6 +8,7 @@ public class KeyDoor : Entity
   public Entity unlockDoorUI;
   public string[] lockedDialogue;
   public Dialogue dialogueSystem;
+  private bool doorFlag = false;
 
   void Start()
   {
@@ -17,14 +18,20 @@ public class KeyDoor : Entity
   void Update()
   {
     bool isDoorHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
-    if (Input.GetMouseButtonTriggered(0) && isDoorHit)
+    if (Input.GetMouseButtonTriggered(0) && isDoorHit && !doorFlag)
     {
       if (!inventoryScript.keyEquipped)
       {
         InternalCalls.PlaySound(mEntityID, "LockedDoor");
         dialogueSystem.SetDialogue(lockedDialogue, new Dialogue.Emotion[] { Dialogue.Emotion.Sad });
+        doorFlag = true;
       }
     }
     unlockDoorUI.SetActive(isDoorHit);
+
+    if (!isDoorHit)
+    {
+      doorFlag = false;
+    }
   }
 }
