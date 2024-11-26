@@ -23,7 +23,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Components/Script.h>
 #include <Reflection/ProxyScript.h>
 
-//#define DESERIALIZER_DEBUG
+#define DESERIALIZER_DEBUG
 
 namespace Serialization
 {
@@ -317,7 +317,9 @@ namespace Serialization
       }
 
       rttr::variant compVar{};
-      DeserializeComponent(compVar, compType, valIter->value);
+      if (!DeserializeSpecialCases(compVar, compType, valIter->value)) {
+        DeserializeComponent(compVar, compType, valIter->value);
+      }
       prefabOverride.modifiedComponents.emplace(std::move(compType), std::move(compVar));
     }
   }
