@@ -761,6 +761,9 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
+    <ClInclude Include="source\Graphics\PostProcessing\ParticleManager.h" />
+    <ClInclude Include="source\Graphics\RenderPass\ParticlePass.h" />
+    <ClInclude Include="source\Core\Systems\ParticleSystem\ParticleSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -1032,5 +1035,8 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
+    <ClCompile Include="source\Graphics\PostProcessing\ParticleManager.cpp" />
+    <ClCompile Include="source\Graphics\RenderPass\ParticlePass.cpp" />
+    <ClCompile Include="source\Core\Systems\ParticleSystem\ParticleSystem.cpp" />
   </ItemGroup>
 </Project>

@@ -35,8 +35,26 @@ namespace Graphics {
 		CreateShaderFromFile(geomFile, vertFile, fragFile);
 	}
 
+	std::shared_ptr<Shader> Shader::Create(std::string const& shdrFile) {
+		return std::make_shared<Shader>(ShaderLibrary::cShaderDirectory + shdrFile);
+	}
 	std::shared_ptr<Shader> Shader::Create(std::string const& vertFile, std::string const& fragFile) {
 		return std::make_shared<Shader>(ShaderLibrary::cShaderDirectory + vertFile, ShaderLibrary::cShaderDirectory + fragFile);
+	}
+	std::shared_ptr<Shader> Shader::Create(std::string const& geomFile, std::string const& vertFile, std::string const& fragFile) {
+		return std::make_shared<Shader>(ShaderLibrary::cShaderDirectory + geomFile, ShaderLibrary::cShaderDirectory + vertFile, ShaderLibrary::cShaderDirectory + fragFile);
+	}
+
+	// Function to read a file into a string
+
+	inline std::string Shader::ReadFile(const std::string& filePath) {
+		std::ifstream file(filePath);
+		if (!file.is_open()) {
+			throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to open Shader File: (" + filePath + "). Check the directory"));
+		}
+		std::stringstream buffer;
+		buffer << file.rdbuf();
+		return buffer.str();
 	}
 
 	/*  _________________________________________________________________________ */
@@ -49,6 +67,39 @@ namespace Graphics {
 		GLCALL(glDeleteProgram(pgmHdl));
 	}
 
+
+	// Preprocessor to handle #include directives
+
+	inline std::string Shader::PreprocessShader(const std::string& filePath, std::unordered_map<std::string, std::string>& cache) {
+		if (cache.find(filePath) != cache.end()) {
+			return cache[filePath]; // Use cached content
+		}
+
+		std::string source = ReadFile(filePath);
+		std::stringstream processedSource;
+		std::istringstream sourceStream(source);
+
+		std::string line;
+		while (std::getline(sourceStream, line)) {
+			if (line.find("#include") == 0) {
+				// Extract the include file path
+				size_t start = line.find_first_of("\"") + 1;
+				size_t end = line.find_last_of("\"");
+				std::string includePath = line.substr(start, end - start);
+
+				// Recursively preprocess the included file
+				std::string includeContent = PreprocessShader(includePath, cache);
+				processedSource << includeContent << "\n";
+			}
+			else {
+				processedSource << line << "\n";
+			}
+		}
+
+		cache[filePath] = processedSource.str(); // Cache the processed source
+		return processedSource.str();
+	}
+
 	void Shader::CreateComputeShader(std::string const& compute_file_path)
 	{
 		// On the C++ side, creating a compute shader works exactly like other shaders
@@ -56,21 +107,22 @@ namespace Graphics {
 		GLuint ComputeShaderID = glCreateShader(GL_COMPUTE_SHADER);
 
 		// Parse shader string
-		std::string ComputeShaderCode;
-		std::ifstream ComputeShaderStream(compute_file_path, std::ios::in);
-		if (ComputeShaderStream.is_open())
-		{
-			std::stringstream sstr;
-			sstr << ComputeShaderStream.rdbuf();
-			ComputeShaderCode = sstr.str();
-			ComputeShaderStream.close();
-		}
-		else
-		{
-			printf("Impossible to open %s. Are you in the right directory!\n", compute_file_path.c_str());
-			int d = getchar();
-			return;
-		}
+		std::unordered_map < std::string, std::string > umap{};
+		std::string ComputeShaderCode{ PreprocessShader(compute_file_path, umap) };
+		//std::ifstream ComputeShaderStream(compute_file_path, std::ios::in);
+		//if (ComputeShaderStream.is_open())
+		//{
+		//	std::stringstream sstr;
+		//	sstr << ComputeShaderStream.rdbuf();
+		//	ComputeShaderCode = sstr.str();
+		//	ComputeShaderStream.close();
+		//}
+		//else
+		//{
+		//	printf("Impossible to open %s. Are you in the right directory!\n", compute_file_path.c_str());
+		//	int d = getchar();
+		//	return;
+		//}
 
 		// Init result variables to check return values
 		GLint Result = GL_FALSE;
@@ -132,7 +184,9 @@ namespace Graphics {
 	shader source strings.
 
 	*/
-	void Shader::CreateGeomShaderFromString(std::string const& geomSrc, std::string const& vertSrc, std::string const& fragSrc, std::string const& geomName, std::string const& vertName, std::string const& fragName) {
+	void Shader::CreateGeomShaderFromString(
+		std::string const& geomSrc, std::string const& vertSrc, std::string const& fragSrc, 
+		std::string const& geomName, std::string const& vertName, std::string const& fragName) {
 		// Create an empty vertex shader handle
 		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
@@ -439,33 +493,41 @@ namespace Graphics {
 
 	*/
 	void Shader::CreateShaderFromFile(std::string const& geomFile, std::string const& vertFile, std::string const& fragFile) {
-		std::ifstream inVertFile{ vertFile };
-		if (!inVertFile) {
-			throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to open Vertex File: (" + vertFile + "). Check the directory"));
-		}
-		std::stringstream vertSrc;
-		vertSrc << inVertFile.rdbuf();
-		inVertFile.close();
+		//std::ifstream inVertFile{ vertFile };
+		//if (!inVertFile) {
+		//	throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to open Vertex File: (" + vertFile + "). Check the directory"));
+		//}
+		//std::stringstream vertSrc;
+		//vertSrc << inVertFile.rdbuf();
+		//inVertFile.close();
 
-		std::ifstream inFragFile{ fragFile };
-		if (!inFragFile) {
-			throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to open Fragment File: (" + fragFile + "). Check the directory"));
-		}
+		//std::ifstream inFragFile{ fragFile };
+		//if (!inFragFile) {
+		//	throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to open Fragment File: (" + fragFile + "). Check the directory"));
+		//}
 
-		std::stringstream fragSrc;
-		fragSrc << inFragFile.rdbuf();
-		inFragFile.close();
+		//std::stringstream fragSrc;
+		//fragSrc << inFragFile.rdbuf();
+		//inFragFile.close();
 
-		std::ifstream inGeomFile{ geomFile };
-		if (!inGeomFile) {
-			throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to open Geom File: (" + geomFile + "). Check the directory"));
-		}
+		//std::ifstream inGeomFile{ geomFile };
+		//if (!inGeomFile) {
+		//	throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to open Geom File: (" + geomFile + "). Check the directory"));
+		//}
 
-		std::stringstream geomSrc;
-		geomSrc << inGeomFile.rdbuf();
-		inGeomFile.close();
+		//std::stringstream geomSrc;
+		//geomSrc << inGeomFile.rdbuf();
+		//inGeomFile.close();
 
-		CreateGeomShaderFromString(geomSrc.str(), vertSrc.str(), fragSrc.str(), geomFile, vertFile, fragFile);
+			// Cache to avoid redundant file reads
+		std::unordered_map<std::string, std::string> shaderCache;
+
+		// Preprocess shaders
+		std::string geomSrc{ PreprocessShader(geomFile, shaderCache) };
+		std::string vertSrc{ PreprocessShader(vertFile, shaderCache) };
+		std::string fragSrc{ PreprocessShader(fragFile, shaderCache) };
+
+		CreateGeomShaderFromString(geomSrc, vertSrc, fragSrc, geomFile, vertFile, fragFile);
 	}
 	/*  _________________________________________________________________________ */
 	/*! Use

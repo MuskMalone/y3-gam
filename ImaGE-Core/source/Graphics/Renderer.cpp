@@ -239,6 +239,12 @@ namespace Graphics {
 		ShaderLibrary::Add("SkyboxProc", Shader::Create("Skybox\\Procedural.vert.glsl", "Skybox\\Procedural.frag.glsl"));
 		ShaderLibrary::Add("SkyboxPano", Shader::Create("Skybox\\Panoramic.vert.glsl", "Skybox\\Panoramic.frag.glsl"));
 		ShaderLibrary::Add("Fog", Shader::Create("Fog.vert.glsl", "Fog.frag.glsl"));
+		ShaderLibrary::Add("Particle", Shader::Create("Particle\\Particle.geom.glsl", "Particle\\Particle.vert.glsl", "Particle\\Particle.frag.glsl"));
+		
+		////compute shaders
+		ShaderLibrary::Add("EmitterStep", Shader::Create("Particle\\EmitterStep.glsl"));
+		ShaderLibrary::Add("Emitter", Shader::Create("Particle\\Emitter.glsl"));
+		ShaderLibrary::Add("ParticleStep", Shader::Create("Particle\\ParticleStep.glsl"));
 	}
 
 	void Renderer::InitGeomPass() {
