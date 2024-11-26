@@ -134,8 +134,6 @@ namespace Graphics {
 		glm::vec2 mousePos = Input::InputManager::GetInstance().GetMousePos();
 		const int entId = Renderer::PickEntity(mousePos, glm::vec2{}, glm::vec2{});
 	
-
-		if (entId < 0) return;
 		ECS::Entity const hoveredEntity{ static_cast<ECS::Entity::EntityID>(entId) };
 
 		if (hoveredEntity != prevHoveredEntity) {
