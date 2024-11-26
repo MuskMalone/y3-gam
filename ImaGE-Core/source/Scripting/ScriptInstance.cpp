@@ -34,6 +34,11 @@ ScriptInstance::ScriptInstance(const std::string& scriptName) : mScriptName{scri
   
   mUpdateMethod = mono_class_get_method_from_name(mScriptClass, "Update", 0);
 
+  mMouseEnterMethod = mono_class_get_method_from_name(mScriptClass, "OnMouseEnter", 0);
+  mMouseExitMethod = mono_class_get_method_from_name(mScriptClass, "OnMouseExit", 0);
+  mMouseDownMethod = mono_class_get_method_from_name(mScriptClass, "OnMouseDown", 0);
+  mMouseUpMethod = mono_class_get_method_from_name(mScriptClass, "OnMouseUp", 0);
+
   //mOnCreateMethod = mono_class_get_method_from_name(mScriptClass, "Create", 0);
   mGcHandle = mono_gchandle_new(mClassInst, true);
   GetAllFieldsInst();
@@ -133,6 +138,31 @@ void ScriptInstance::InvokeOnUpdate()
     std::vector<void*> params = { };
     mono_runtime_invoke( mUpdateMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
   }
+}
+
+void ScriptInstance::InvokeOnMouseEnter() {
+    if (mMouseEnterMethod) {
+        std::vector<void*> params = {  };
+        mono_runtime_invoke(mMouseEnterMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+    }
+}
+void ScriptInstance::InvokeOnMouseExit() {
+    if (mMouseExitMethod) {
+        std::vector<void*> params = { };
+        mono_runtime_invoke(mMouseExitMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+    }
+}
+void ScriptInstance::InvokeOnMouseDown() {
+    if (mMouseDownMethod) {
+        std::vector<void*> params = { };
+        mono_runtime_invoke(mMouseDownMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+    }
+}
+void ScriptInstance::InvokeOnMouseUp() {
+    if (mMouseUpMethod) {
+        std::vector<void*> params = { };
+        mono_runtime_invoke(mMouseUpMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+    }
 }
 
 void ScriptInstance::InvokeStart()
