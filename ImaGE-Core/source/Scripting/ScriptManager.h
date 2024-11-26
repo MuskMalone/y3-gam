@@ -398,7 +398,7 @@ namespace Mono
 		static void TakeScreenShot(MonoString* name, int width, int height);
 		void SaveScreenShot(std::string name, int width, int height);
 
-		static void SetDaySkyBox(ECS::Entity::EntityID cameraEntity);
+		static bool SetDaySkyBox(ECS::Entity::EntityID cameraEntity);
 
 		/*!**********************************************************************
 		*																																			  *

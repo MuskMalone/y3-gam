@@ -1374,13 +1374,17 @@ void Mono::SaveScreenShot(std::string name, int width, int height)
   }
 }
 
-void Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity) {
+bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity) {
   if (ECS::Entity(cameraEntity) && ECS::Entity{ cameraEntity }.HasComponent<Component::Skybox>()) {
-    ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend = 0.f;
+    ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend -= Performance::FrameRateController::GetInstance().GetDeltaTime();
+    if (ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend <= 0.f)
+      ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend = 0.f;
+    return(ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend <= 0.f);
   }
   else {
     Debug::DebugLogger::GetInstance().LogError("You are trying to change skybox using an entity that does not hav skybox!");
   }
+  return true;
 }
 /*!**********************************************************************
 *																																			  *
