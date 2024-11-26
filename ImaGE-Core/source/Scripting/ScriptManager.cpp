@@ -85,6 +85,7 @@ namespace Mono
     { "PlayerInteraction", ScriptFieldType::PLAYERINTERACTION },
     { "Inventory", ScriptFieldType::INVENTORY },
     { "SpecialDialogue", ScriptFieldType::SPECIALDIALOGUE },
+    { "KeyDoor", ScriptFieldType::KEYDOOR },
   };
 }
 
