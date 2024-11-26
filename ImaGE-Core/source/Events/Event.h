@@ -46,6 +46,8 @@ namespace Events
     ENTITY_PICKED,
     ENTITY_MOUSE_ENTER,
     ENTITY_MOUSE_EXIT,
+    ENTITY_MOUSE_DOWN,
+    ENTITY_MOUSE_UP,
     LOCK_MOUSE
   };
 

@@ -114,8 +114,29 @@ public class Test : Entity
 
     }
 
+    public void OnMouseEnter() {
+        string tag = InternalCalls.GetTag(mEntityID);
+        Console.WriteLine("From MONO Enter" + tag);
+    }
 
-   
-  }
+    public void OnMouseExit()
+    {
+        string tag = InternalCalls.GetTag(mEntityID);
+        Console.WriteLine("From MONO Exit" + tag);
+    }
+
+    public void OnMouseDown()
+    {
+        string tag = InternalCalls.GetTag(mEntityID);
+        Console.WriteLine("From MONO Down" + tag);
+    }
+
+    public void OnMouseUp()
+    {
+        string tag = InternalCalls.GetTag(mEntityID);
+        Console.WriteLine("From MONO Up" + tag);
+    }
+
+}
 
 
