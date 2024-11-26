@@ -10,7 +10,7 @@ namespace BV {
     Plane(float a, float b, float c, float d) : normal{ a, b, c }, dist{ d } {}
 
     float GetPlaneSignedDist(glm::vec3 const& point) const {
-      return glm::dot(normal, point) - dist;
+      return glm::dot(normal, point) + dist;
     }
       
     void Normalize() {

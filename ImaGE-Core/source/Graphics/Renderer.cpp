@@ -1159,6 +1159,40 @@ namespace Graphics {
 			submesh.baseVtx,                // Base vertex offset
 			0                               // Instance offset
 		);
+
+		++mData.stats.drawCalls;
+	}
+
+	ECS::Entity Renderer::PickEntity(const glm::vec2& mousePos){
+		auto const& geomPass { Renderer::GetPass<GeomPass>() };
+
+		auto const& pickFb{ geomPass->GetGameViewFramebuffer() };
+
+		if (!pickFb) {
+			std::cout << "ERROR: PICK FRAMEBUFFER IS NULL!" << std::endl;
+			return ECS::Entity{};
+		}
+		Graphics::FramebufferSpec const& fbSpec{ pickFb->GetFramebufferSpec() };
+
+		pickFb->Bind();
+
+		// Viewport dimensions (game view)
+		int viewportWidth = fbSpec.width;
+		int viewportHeight = fbSpec.height;
+
+		int framebufferX = static_cast<int>(mousePos.x * viewportWidth);
+		int framebufferY = static_cast<int>((1.0f - mousePos.y) * viewportHeight); // Flip Y-axis
+
+		// Read the pixel at the mouse position
+		int const entityId = pickFb->ReadPixel(1, framebufferX, framebufferY);
+
+		pickFb->Unbind();
+
+		if (entityId > 0) {
+			return ECS::Entity(static_cast<ECS::Entity::EntityID>(entityId));
+		}
+
+		return ECS::Entity{};
 	}
 
 	void Renderer::FlushBatch() {

@@ -59,7 +59,7 @@ namespace GUI
           ImGui::BeginDisabled();
         }
 
-        if (ImGui::MenuItem("Save Scene (Ctrl+S)")) {
+        if (ImGui::MenuItem("Save Scene", "Ctrl+S")) {
           QUEUE_EVENT(Events::SaveSceneEvent);
         }
 
@@ -108,6 +108,15 @@ namespace GUI
           }
 
           ImGui::EndMenu();
+        }
+
+        ImGui::EndMenu();
+      }
+
+      if (ImGui::BeginMenu("Debug")) {
+        ImGui::MenuItem("Cull out-of-frustum Entities", nullptr, &GUIVault::sShowCulledEntities);
+        if (ImGui::IsItemHovered()) {
+          ImGui::SetTooltip("Cull all entities outside the frustum in the editor view");
         }
 
         ImGui::EndMenu();

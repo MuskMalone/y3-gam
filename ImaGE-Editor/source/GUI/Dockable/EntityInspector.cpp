@@ -600,7 +600,7 @@ namespace GUI {
 
     if (isOpen) {
       Mono::ScriptManager* sm = &Mono::ScriptManager::GetInstance();
-      std::vector <std::string> toDeleteList{};
+      std::string toDelete{};
       static std::string selectedScript{};
       float const inputWidth{ CalcInputWidth(60.f) };
       Component::Script* allScripts = &entity.GetComponent<Component::Script>();
@@ -625,7 +625,8 @@ namespace GUI {
           ImGui::SetCursorPosX(deleteBtnPos);
           if (ImGui::Button(("Delete##DeleteButton" + s.mScriptName).c_str()))
           {
-            toDeleteList.push_back(s.mScriptName);
+            modified = true;
+            toDelete = s.mScriptName;
 
             // if selection is empty, set it to the deleted script
             if (selectedScript.empty()) {
@@ -693,6 +694,7 @@ namespace GUI {
         style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.28f, 0.48f, 0.86f, 1.0f);
         if (ImGui::Button("Add Script", buttonSize)) {
           if (!selectedScript.empty()) {
+            modified = true;
             allScripts->mScriptList.emplace_back(selectedScript);
             allScripts->mScriptList[allScripts->mScriptList.size() - 1].SetEntityID(entity.GetRawEnttEntityID());
 
@@ -739,12 +741,9 @@ namespace GUI {
         style.Colors[ImGuiCol_ButtonHovered] = originalBHColor;
       }
 
-      if (!toDeleteList.empty()) {
-        for (const std::string& tds : toDeleteList)
-        {
-          auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [tds](const Mono::ScriptInstance pair) { return pair.mScriptName == tds; });
-          allScripts->mScriptList.erase(it);
-        }
+      if (!toDelete.empty()) {
+        auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [&toDelete](const Mono::ScriptInstance pair) { return pair.mScriptName == toDelete; });
+        allScripts->mScriptList.erase(it);
       }
     }
 

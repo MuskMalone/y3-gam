@@ -13,6 +13,7 @@ namespace Graphics {
 
     void Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) override;
 
+    std::shared_ptr<Framebuffer> GetGameViewFramebuffer() const;
   private:
     struct EntityRenderData {
       EntityRenderData() = default;
@@ -30,6 +31,8 @@ namespace Graphics {
     static inline constexpr unsigned sMaxLights = 30;
 
     ShaderGroupMap GroupEntities(std::vector<ECS::Entity> const& entities);
+
+    std::shared_ptr<Framebuffer> mPickFramebuffer{ nullptr };
   };
 
 } // namespace Graphics
