@@ -38,8 +38,8 @@ namespace Graphics {
 			prevOutputTex = pass->GetOutputTexture();
 		}
 
-		//if(!cam.isEditor)
-		//	HandleGameViewInput();
+		if(!cam.isEditor)
+			HandleGameViewInput();
 		return entityVector;
 	}
 
@@ -129,21 +129,21 @@ namespace Graphics {
 	}
 
 	void RenderSystem::HandleGameViewInput() {
-		static ECS::Entity prevHoveredEntity;
+		static ECS::Entity prevHoveredEntity{};
 
 		glm::vec2 mousePos = Input::InputManager::GetInstance().GetMousePos();
-		ECS::Entity hoveredEntity = Renderer::PickEntity(mousePos);
-
+		const int hoveredEntity = Renderer::PickEntity(mousePos, glm::vec2{}, glm::vec2{});
 		if (hoveredEntity != prevHoveredEntity) {
 			if (IGE_ENTITYMGR.IsValidEntity(prevHoveredEntity)) {
+
 				QUEUE_EVENT(Events::EntityMouseExit, prevHoveredEntity);
 			}
-			if (IGE_ENTITYMGR.IsValidEntity(hoveredEntity)) {
+			//if (IGE_ENTITYMGR.IsValidEntity(hoveredEntity)) {
 				QUEUE_EVENT(Events::EntityMouseEnter, prevHoveredEntity);
-			}
+			//}
 		}
 
-		prevHoveredEntity = hoveredEntity;
+		/*prevHoveredEntity = hoveredEntity;
 		if (IGE_ENTITYMGR.IsValidEntity(hoveredEntity)) {
 			if (Input::InputManager::GetInstance().IsKeyTriggered(IK_MOUSE_LEFT)) {
 				QUEUE_EVENT(Events::EntityMouseDown, hoveredEntity);
@@ -151,7 +151,7 @@ namespace Graphics {
 			if (Input::InputManager::GetInstance().IsKeyReleased(IK_MOUSE_LEFT)) {
 				QUEUE_EVENT(Events::EntityMouseUp, hoveredEntity);
 			}
-		}
+		}*/
 
 	}
 }

@@ -36,6 +36,15 @@ namespace Events
     inline std::string GetName() const noexcept override { return "Window Minimized"; }
   };
 
+  class WindowResized : public Event
+  {
+  public:
+      WindowResized(int width, int height) : Event(EventType::WINDOW_RESIZED), mWidth{width}, mHeight{height} {}
+      inline std::string GetName() const noexcept override { return "Window Resized"; }
+      int const mWidth;
+      int const mHeight;
+  };
+
   class ToggleFullscreen : public Event
   {
   public:
@@ -146,7 +155,7 @@ namespace Events
   class EntityMouseEnter : public Event {
   public:
       EntityMouseEnter(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_ENTER), mEntity{ entity } {}
-      inline std::string GetName() const noexcept override { return "On mouse enter entity " + mEntity.GetTag(); }
+      inline std::string GetName() const noexcept override { return "On mouse enter entity "; }
 
       ECS::Entity mEntity;
   };
@@ -154,7 +163,7 @@ namespace Events
   class EntityMouseExit : public Event {
   public:
       EntityMouseExit(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_ENTER), mEntity{ entity } {}
-      inline std::string GetName() const noexcept override { return "On mouse exit entity " + mEntity.GetTag(); }
+      inline std::string GetName() const noexcept override { return "On mouse exit entity "; }
 
       ECS::Entity mEntity;
   };

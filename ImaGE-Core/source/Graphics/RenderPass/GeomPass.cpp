@@ -40,6 +40,7 @@ namespace Graphics {
       Begin();
      // Renderer::Clear();
       //auto shader = mSpec.pipeline->GetShader();
+      GetTargetFramebuffer()->ClearAttachmentInt(1, -1);
 
       Renderer::RenderSceneBegin(cam.viewProjMatrix);
 

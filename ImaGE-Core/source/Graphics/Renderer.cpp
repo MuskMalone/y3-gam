@@ -7,6 +7,8 @@
 #include "MaterialTable.h"
 #include "MaterialData.h"
 #include <Graphics/Mesh/Mesh.h>
+#include "Events/EventManager.h"
+#include "Events/Event.h"
 
 #pragma region RenderPasses
 #include <Graphics/RenderPass/SkyboxPass.h>
@@ -34,7 +36,11 @@ namespace Graphics {
 	std::vector<std::shared_ptr<RenderPass>> Renderer::mRenderPasses;
 	Component::Camera Renderer::mUICamera;
 
+	Renderer::Renderer() {
+
+	}
 	void Renderer::Init() {
+		SUBSCRIBE_STATIC_FUNC(Events::EventType::WINDOW_RESIZED, OnResize);
 		InitUICamera();
 
 		//----------------------Init Batching Quads------------------------------------------------------------//
@@ -163,7 +169,7 @@ namespace Graphics {
 		InitGeomPass();
 		InitPostProcessPass();
 		InitUIPass();
-
+	
 		InitFullscreenQuad();
 
 		mFinalFramebuffer = mRenderPasses.back()->GetTargetFramebuffer();
@@ -411,6 +417,14 @@ namespace Graphics {
 		mUICamera.right = mUICamera.aspectRatio * UI_SCALING_FACTOR<float>;
 		mUICamera.bottom = -10.0f;
 		mUICamera.top = 10.0f;
+	}
+
+	EVENT_CALLBACK_DEF(Renderer, OnResize) {
+		auto const& e { CAST_TO_EVENT(Events::WindowResized)};
+
+		for (auto const& pass : mRenderPasses) {
+			pass->GetTargetFramebuffer()->Resize(e->mWidth, e->mHeight);
+		}
 	}
 
 	void Renderer::Shutdown() {
@@ -1163,36 +1177,50 @@ namespace Graphics {
 		++mData.stats.drawCalls;
 	}
 
-	ECS::Entity Renderer::PickEntity(const glm::vec2& mousePos){
+	int Renderer::PickEntity(glm::vec2 const& mousePos, glm::vec2 const& vpStart = {}, glm::vec2 const& vpSize = {}) {
 		auto const& geomPass { Renderer::GetPass<GeomPass>() };
 
 		auto const& pickFb{ geomPass->GetGameViewFramebuffer() };
 
 		if (!pickFb) {
 			std::cout << "ERROR: PICK FRAMEBUFFER IS NULL!" << std::endl;
-			return ECS::Entity{};
+			return INVALID_ENTITY_ID;
 		}
-		Graphics::FramebufferSpec const& fbSpec{ pickFb->GetFramebufferSpec() };
 
+		auto const& fbSpec {pickFb->GetFramebufferSpec() };
+
+		glm::vec2 viewportStart(0.0f, 0.0f); // Game view typically starts at (0, 0)
+		glm::vec2 viewportSize(static_cast<float>(fbSpec.width), static_cast<float>(fbSpec.height));
+
+		// Ensure the mouse position is within the viewport bounds
+		if (mousePos.x < viewportStart.x || mousePos.x >(viewportStart.x + viewportSize.x) ||
+			mousePos.y < viewportStart.y || mousePos.y >(viewportStart.y + viewportSize.y)) {
+			// Return an invalid entity if mouse is outside the viewport
+			return INVALID_ENTITY_ID;
+		}
+
+		// Calculate the mouse offset relative to the viewport's top-left corner
+		glm::vec2 offset = mousePos - viewportStart;
+
+		// Normalize the offset to a [0, 1] range based on the viewport size
+		float normalizedX = offset.x / viewportSize.x; // X-coordinate in [0, 1]
+		float normalizedY = offset.y / viewportSize.y; // Y-coordinate in [0, 1]
+
+		// Map normalized coordinates to framebuffer pixel coordinates
+		int framebufferX = static_cast<int>(normalizedX * fbSpec.width);
+		int framebufferY = static_cast<int>((1.0f - normalizedY) * fbSpec.height); // Flip Y-axis for framebuffer space
+
+		// Bind the picking framebuffer and read the pixel under the mouse position
 		pickFb->Bind();
-
-		// Viewport dimensions (game view)
-		int viewportWidth = fbSpec.width;
-		int viewportHeight = fbSpec.height;
-
-		int framebufferX = static_cast<int>(mousePos.x * viewportWidth);
-		int framebufferY = static_cast<int>((1.0f - mousePos.y) * viewportHeight); // Flip Y-axis
-
-		// Read the pixel at the mouse position
-		int const entityId = pickFb->ReadPixel(1, framebufferX, framebufferY);
-
+		int entityId = pickFb->ReadPixel(1, framebufferX, framebufferY); // Read from color attachment 1
+		std::cout << entityId << std::endl;
 		pickFb->Unbind();
 
 		if (entityId > 0) {
-			return ECS::Entity(static_cast<ECS::Entity::EntityID>(entityId));
+			return entityId;
 		}
 
-		return ECS::Entity{};
+		return INVALID_ENTITY_ID;
 	}
 
 	void Renderer::FlushBatch() {
