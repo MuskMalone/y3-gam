@@ -21,6 +21,8 @@ public class PictureAlign : Entity
   public Entity LeftClickText;
   private bool isBigPic;
   private bool toStop = true;
+  private bool isTransitioning = false;
+  private bool FinishedTransition = false;
 
 
   public float positionThreshold = 0.5f;  // Threshold for position alignment
@@ -67,15 +69,13 @@ public class PictureAlign : Entity
           LeftClickText.SetActive(true);
         if (Input.GetMouseButtonDown(0))
         {
+          toStop = true;
           alignCheck = true;
           Debug.Log("Player is aligned.");
           FreezePlayer();
-
           currentImg.SetActive(false);
-          if (picture == "NightPainting")
-          {
-            ChangeSkyBox();
-          }
+          isTransitioning = true;
+ 
           if (LeftClickText != null)
             LeftClickText.SetActive(false);
           RightArrow.SetActive(false);
@@ -83,8 +83,7 @@ public class PictureAlign : Entity
           UpArrow.SetActive(false);
           DownArrow.SetActive(false);
           SetActive(false);
-          toStop = true;
-          playerMove.SetUnfreeTimer();
+          
         }
         else
         {
@@ -96,6 +95,22 @@ public class PictureAlign : Entity
         if (LeftClickText != null)
           LeftClickText.SetActive(false);
         alignCheck = false;
+      }
+    }
+
+    else
+    {
+      if(isTransitioning)
+      {
+        if (picture == "NightPainting")
+        {
+          if(ChangeSkyBox())
+          {
+            playerMove.UnfreezePlayer();
+            isTransitioning = false;
+          }
+        }
+
       }
     }
   }
@@ -252,9 +267,9 @@ public class PictureAlign : Entity
     }
   }
 
-  public void ChangeSkyBox()
+  public bool ChangeSkyBox()
   {
-    InternalCalls.SetDaySkyBox(mainCamera.mEntityID);
+    return InternalCalls.SetDaySkyBox(mainCamera.mEntityID);
   }
 
 
