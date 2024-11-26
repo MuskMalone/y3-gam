@@ -392,8 +392,6 @@ public class Inventory : Entity
 
   private void DisableAllUI()
   {
-    // COMMENTED THIS OUT BECAUSE IT MAKES THE PLAYER INACTIVE ON INVENTORY OPEN AND SELECT SLOT
-    //pictureAlignscript.SetActive(false);
     pitPaintingUI?.SetActive(false);
     seedUI?.SetActive(false);
     seedEquipped = false;
