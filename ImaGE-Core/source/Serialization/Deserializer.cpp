@@ -317,7 +317,9 @@ namespace Serialization
       }
 
       rttr::variant compVar{};
-      DeserializeComponent(compVar, compType, valIter->value);
+      if (!DeserializeSpecialCases(compVar, compType, valIter->value)) {
+        DeserializeComponent(compVar, compType, valIter->value);
+      }
       prefabOverride.modifiedComponents.emplace(std::move(compType), std::move(compVar));
     }
   }

@@ -66,7 +66,7 @@ namespace IGE.Utils
     public static float DeltaAngle(float current, float target)
     {
       float difference = target - current;
-      return (difference + 180f) % 360f - 180f;
+      return ((difference + 180f) % 360f + 360f) % 360f - 180f;
     }
 
     // Converts degrees to radians.
@@ -149,31 +149,42 @@ namespace IGE.Utils
       return (float)Math.Asin(value);
     }
 
+    public static double CopySign(double magnitude, double sign)
+    {
+      return Math.Abs(magnitude) * (sign >= 0 ? 1 : -1);
+    }
+
     #region Quaternion
 
-    public static Vector3 QuatToEuler(Quaternion q)
+
+    public static Vector3 QuaternionToEuler(Quaternion q)
     {
-      Vector3 euler;
+      Vector3 angles = new Vector3();
 
-      // Pitch (X-axis rotation)
-      float sinp = 2 * (q.W * q.X - q.Z * q.Y);
-      if (Mathf.Abs(sinp) >= 1)
-        euler.X = Mathf.RadToDeg(sinp > 0 ? Mathf.PI / 2 : -Mathf.PI / 2); // Clamp to 90 or -90 degrees
+      // roll / x
+      double sinr_cosp = 2 * (q.W * q.X + q.Y * q.Z);
+      double cosr_cosp = 1 - 2 * (q.X * q.X + q.Y * q.Y);
+      angles.X = (float)Math.Atan2(sinr_cosp, cosr_cosp);
+
+      // pitch / y
+      double sinp = 2 * (q.W * q.Y - q.Z * q.X);
+      if (Math.Abs(sinp) >= 1)
+      {
+        angles.Y = (float)Mathf.CopySign(Math.PI / 2, sinp);
+      }
       else
-        euler.X = Mathf.RadToDeg(Mathf.Asin(sinp));
+      {
+        angles.Y = (float)Math.Asin(sinp);
+      }
 
-      // Yaw (Y-axis rotation)
-      float siny_cosp = 2 * (q.W * q.Y + q.Z * q.X);
-      float cosy_cosp = 1 - 2 * (q.X * q.X + q.Y * q.Y);
-      euler.Y = Mathf.RadToDeg(Mathf.Atan2(siny_cosp, cosy_cosp));
+      // yaw / z
+      double siny_cosp = 2 * (q.W * q.Z + q.X * q.Y);
+      double cosy_cosp = 1 - 2 * (q.Y * q.Y + q.Z * q.Z);
+      angles.Z = (float)Math.Atan2(siny_cosp, cosy_cosp);
 
-      // Roll (Z-axis rotation)
-      float sinr_cosp = 2 * (q.W * q.Z + q.X * q.Y);
-      float cosr_cosp = 1 - 2 * (q.Y * q.Y + q.Z * q.Z);
-      euler.Z = Mathf.RadToDeg(Mathf.Atan2(sinr_cosp, cosr_cosp));
-
-      return euler;
+      return angles;
     }
+
 
 
     public static Quaternion EulertoQuat(Vector3 euler)

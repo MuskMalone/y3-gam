@@ -139,6 +139,10 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void DestroyScript(Entity obj, uint EntityID);
 
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static Entity FindScriptInEntity(uint entity,string s);
+
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static uint FindChildByTag(uint EntityID, string s);
 

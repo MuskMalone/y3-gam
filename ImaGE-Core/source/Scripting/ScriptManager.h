@@ -347,7 +347,9 @@ namespace Mono
 
 		static glm::vec3 GetMouseDelta();
 
-		static MonoObject* FindScript(MonoString* s);
+		static MonoObject* FindScript(MonoString* s);   //Returns the first script it can find from all the entities
+
+		static MonoObject* FindScriptInEntity(ECS::Entity::EntityID entity, MonoString* s); //Return a script that belongs to an entity
 
 		static void DestroyEntity(ECS::Entity::EntityID entity);
 
@@ -362,6 +364,7 @@ namespace Mono
 		static ECS::Entity::EntityID FindChildByTag(ECS::Entity::EntityID entity, MonoString* s);
 
 		static ECS::Entity::EntityID FindParentByTag(MonoString* s);
+
 
 		static MonoArray* GetAllChildren(ECS::Entity::EntityID entity);
 

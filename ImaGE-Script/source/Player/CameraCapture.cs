@@ -10,13 +10,15 @@ public class CameraCapture : Entity
 {
   //public Camera mainCamera;          // Assign the main camera
   public Entity player;           // Assign the player object
-  public int imageWidth = 256;       // Width of the capture
-  public int imageHeight = 256;      // Height of the capture
-  KeyCode captureKey = KeyCode.O;  // Key to capture the image
+  public int imageWidth = 900;       // Width of the capture
+  public int imageHeight = 900;      // Height of the capture
+  KeyCode captureKey = KeyCode.L;  // Key to capture the image
+  public string PictureName = "CapturedImage";
 
   // Variables to store the player's position, rotation, and main camera's rotation
   private Vector3 savedPlayerPosition;
   private Quaternion savedCameraRotation;
+  private Vector3 savedCameraEuler;
 
   public bool imageCaptured = false;  // Check if the image and data have been captured
 
@@ -35,15 +37,16 @@ public class CameraCapture : Entity
 
   void CaptureImageAndStoreData()
   {
-
-    InternalCalls.TakeScreenShot("CapturedImage", imageWidth, imageHeight);
+     InternalCalls.TakeScreenShot(PictureName, imageWidth, imageHeight);
 
     // Store the player's position, rotation, and the main camera's rotation
     savedPlayerPosition = player.GetComponent<Transform>().worldPosition;
     savedCameraRotation = InternalCalls.GetMainCameraRotation(FindEntityByTag("MainCamera").mEntityID);
+    savedCameraEuler = Mathf.QuaternionToEuler(savedCameraRotation);
 
     Debug.Log("Player Position: " + savedPlayerPosition);
     Debug.Log("Camera Rotation: " + savedCameraRotation);
+    Debug.Log("Camera Euler: " + savedCameraEuler);
 
     // Set imageCaptured to true, indicating that the data is stored
     imageCaptured = true;
@@ -56,12 +59,13 @@ public class CameraCapture : Entity
   void ExportDataToTxt()
   {
     // Create the path for the text file in the assets folder
-    string dataPath = ("../Assets/GameImg/CapturedData.txt");
+    string dataPath = ("../Assets/GameImg/" + PictureName + ".txt");
 
     // Create the content to be written to the file
     string content = "Captured Data:\n";
     content += $"Player Position: {savedPlayerPosition}\n";
     content += $"Camera Rotation: {savedCameraRotation}\n";
+    content += $"Camera Euler:    {savedCameraEuler}\n";
 
     // Write the content to the text file
     File.WriteAllText(dataPath, content);

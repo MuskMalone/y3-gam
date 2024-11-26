@@ -154,8 +154,6 @@ namespace Graphics {
     }
 
     void MaterialTable::ApplyMaterialTextures(std::shared_ptr<Graphics::Shader> const& shader, unsigned batchStart, unsigned batchEnd) {
-      if (mMaterials.size() == 1) { return; } // Exit if there's only the default material
-
       IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
       unsigned const matCount{ batchEnd - batchStart + 1 };
 

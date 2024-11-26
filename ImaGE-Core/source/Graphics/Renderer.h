@@ -18,6 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "MaterialTable.h"
 #include <typeindex>
 #include <Graphics/RenderPass/RenderPass.h>
+#include <Events/EventCallback.h>
 
 namespace Component{
 	struct Camera; struct Transform; struct Light;
@@ -154,7 +155,7 @@ namespace Graphics {
 
 	class Renderer {
 	public:
-
+		Renderer();
 		~Renderer();
 		static void Init();
 		static void Shutdown();
@@ -188,6 +189,7 @@ namespace Graphics {
 
 		static void RenderSubmeshInstances(std::vector<InstanceData> const& instances, IGE::Assets::GUID const& meshSource, size_t submeshIndex);
 
+		static int PickEntity(glm::vec2 const& mousePos, glm::vec2 const& viewportStart, glm::vec2 const& viewportSize);
 		// Batching
 		static void BeginBatch();
 		static void FlushBatch();
@@ -244,6 +246,7 @@ namespace Graphics {
 		static void InitFullscreenQuad();
 
 		static void InitUICamera();
+		static EVENT_CALLBACK_DECL(OnResize);
 
 		template <typename T>
 		static void AddPass(std::shared_ptr<T>&& pass) {

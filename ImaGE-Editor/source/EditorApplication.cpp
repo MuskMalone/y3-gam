@@ -80,6 +80,9 @@ namespace IGE {
     static auto& sysManager{ Systems::SystemManager::GetInstance() };
 
     while (!glfwWindowShouldClose(mWindow.get())) {
+        if (inputManager.IsKeyTriggered(IK_K)) {
+            ToggleImGuiEnabled(); //TODO CHANGE TO EVENT SYSTEM
+        }
       frameRateController.Start();
       try {
         if (GetApplicationSpecification().EnableImGui) {
@@ -146,6 +149,32 @@ namespace IGE {
             }
 
             frameRateController.EndSystemTimer("ImGui");
+          }
+          else {
+              glBindFramebuffer(GL_FRAMEBUFFER, 0);
+              int width, height;
+              glfwGetFramebufferSize(mWindow.get(), &width, &height);
+
+              // Set the viewport
+              glViewport(0, 0, width, height);
+
+              // Clear the screen
+              glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+              if (Graphics::RenderSystem::mCameraManager.HasActiveCamera()) {
+                  Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() });
+              }
+              auto const& fb = Graphics::Renderer::GetFinalFramebuffer();
+              std::shared_ptr<Graphics::Texture> gameTex = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+
+              if (gameTex) {
+                  gameTex->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+              }
+
+              gameTex->Bind(0);
+              auto const& shader = Graphics::ShaderLibrary::Get("FullscreenQuad");
+              shader->Use();
+              Graphics::Renderer::RenderFullscreenTexture();
           }
         }
 

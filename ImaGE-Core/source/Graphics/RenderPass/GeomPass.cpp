@@ -40,6 +40,7 @@ namespace Graphics {
       Begin();
      // Renderer::Clear();
       //auto shader = mSpec.pipeline->GetShader();
+      GetTargetFramebuffer()->ClearAttachmentInt(1, -1);
 
       Renderer::RenderSceneBegin(cam.viewProjMatrix);
 
@@ -99,8 +100,9 @@ namespace Graphics {
       }
 
       if (cam.isEditor) {
-          auto const& lights{ IGE_ENTITYMGR.GetAllEntitiesWithComponents<Component::Light, Component::Transform>() };
-          for (auto const& light : lights) {
+          for(auto const& light : entities){
+              if (!light.HasComponent<Component::Transform>()) continue;
+              if (!light.HasComponent<Component::Light>()) continue;
               auto const& xform = ECS::Entity{ light }.GetComponent<Component::Transform>();
               auto const& lightComp = ECS::Entity{ light }.GetComponent<Component::Light>();
               Renderer::DrawLightGizmo(lightComp, xform, cam, ECS::Entity{light}.GetEntityID());
@@ -115,7 +117,54 @@ namespace Graphics {
 
       }
 
+      //========================================2D Sprite Rendering=========================================================================================
+
+      std::vector<ECS::Entity> opaqueSprites;
+      std::vector<ECS::Entity> transparentSprites;
+
+      // Group entities into opaque and transparent sprites
       for (ECS::Entity const& entity : entities) {
+          if (!entity.HasComponent<Component::Sprite2D>()) continue;
+
+          auto const& sprite = entity.GetComponent<Component::Sprite2D>();
+          if (sprite.isTransparent) {
+              transparentSprites.push_back(entity);
+          }
+          else {
+              opaqueSprites.push_back(entity);
+          }
+      }
+
+      // Sort transparent sprites by Z-depth (back-to-front)
+      std::sort(transparentSprites.begin(), transparentSprites.end(),
+          [](auto const& a, auto const& b) {
+              auto const& aTransform = a.GetComponent<Component::Transform>();
+              auto const& bTransform = b.GetComponent<Component::Transform>();
+              return aTransform.worldPos.z < bTransform.worldPos.z; // Descending z-order
+          });
+      // Render opaque sprites
+      for (ECS::Entity const& entity : opaqueSprites) {
+          auto const& sprite = entity.GetComponent<Component::Sprite2D>();
+          auto const& xform = entity.GetComponent<Component::Transform>();
+
+          if (sprite.textureAsset) {
+              Renderer::DrawSprite(xform.worldPos, xform.worldScale, xform.worldRot,
+                  IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(sprite.textureAsset)->mTexture,
+                  sprite.color, entity.GetEntityID());
+          }
+          else {
+              Renderer::DrawQuad(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, sprite.color, entity.GetEntityID());
+          }
+      }
+
+      Renderer::FlushBatch();
+      // Render transparent sprites
+      glEnable(GL_BLEND);
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+      glDepthMask(GL_FALSE);  // Disable depth writing
+
+      for (ECS::Entity const& entity : entities) {
+        if (!entity.HasComponent<Component::Transform>()) continue;
         if (entity.HasComponent<Component::Sprite2D>()) {
           auto const& sprite = entity.GetComponent<Component::Sprite2D>();
           auto const& xform = entity.GetComponent<Component::Transform>();
@@ -126,13 +175,17 @@ namespace Graphics {
 
         }
       }
-
-      Renderer::RenderSceneEnd();
+      Renderer::FlushBatch();
+      glDepthMask(GL_TRUE);
+      //Renderer::RenderSceneEnd();
       //=================================================SUBMESH VERSION END===========================================================
 
       End();
 
       auto const& fb = mSpec.pipeline->GetSpec().targetFramebuffer;
+
+      if (!cam.isEditor)
+          mPickFramebuffer = fb; // for game view only
 
       // Check if mOutputTexture is null or if dimensions don’t match
       if (!mOutputTexture || mOutputTexture->GetWidth() != fb->GetFramebufferSpec().width || mOutputTexture->GetHeight() != fb->GetFramebufferSpec().height) {
@@ -144,6 +197,10 @@ namespace Graphics {
       if (mOutputTexture) {
           mOutputTexture->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
       }
+  }
+
+  std::shared_ptr<Framebuffer> GeomPass::GetGameViewFramebuffer() const {
+      return mPickFramebuffer;
   }
 
   GeomPass::ShaderGroupMap GeomPass::GroupEntities(std::vector<ECS::Entity> const& entities) {

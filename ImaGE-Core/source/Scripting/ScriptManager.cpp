@@ -228,6 +228,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(MoveCharacter);
   ADD_INTERNAL_CALL(GetTag);
   ADD_INTERNAL_CALL(FindScript);
+  ADD_INTERNAL_CALL(FindScriptInEntity);
   ADD_INTERNAL_CALL(DestroyEntity);
   ADD_INTERNAL_CALL(DestroyScript);
   ADD_INTERNAL_CALL(SetActive);
@@ -1037,6 +1038,18 @@ MonoObject* Mono::FindScript(MonoString* s)
   return nullptr;
 }
 
+
+MonoObject* Mono::FindScriptInEntity(ECS::Entity::EntityID entity, MonoString* s)
+{
+  std::string msg{ MonoStringToSTD(s) };
+  if(ECS::Entity(entity).HasComponent<Component::Script>())
+    for (Mono::ScriptInstance& SI : ECS::Entity(entity).GetComponent<Component::Script>().mScriptList)
+      if (SI.mScriptName == msg)
+        return SI.mClassInst;
+  
+  return nullptr;
+}
+
 ECS::Entity::EntityID Mono::FindChildByTag(ECS::Entity::EntityID entity, MonoString* s)
 {
   std::string msg{ MonoStringToSTD(s) };
@@ -1166,6 +1179,8 @@ glm::vec3 Mono::GetMainCameraDirection(ECS::Entity::EntityID cameraEntity) {
 
 glm::quat Mono::GetMainCameraRotation(ECS::Entity::EntityID cameraEntity) {
   if (ECS::Entity(cameraEntity) && ECS::Entity{ cameraEntity }.HasComponent<Component::Camera>()) {
+    const auto rot = glm::eulerAngles(ECS::Entity(cameraEntity).GetComponent<Component::Transform>().worldRot);
+    std::cout << "CPP: " << rot.x << "," << rot.y  << "," << rot.z << "\n";
     return ECS::Entity{ cameraEntity }.GetComponent<Component::Transform>().worldRot;
   }
   else {
@@ -1320,6 +1335,7 @@ void Mono::SaveScreenShot(std::string name, int width, int height)
   // Window's full width and height
   int windowWidth = mode->width;
   int windowHeight = mode->height;
+  std::cout << "Width: " << windowWidth << "  Height:" << windowHeight << "\n";
 
   // Calculate the starting coordinates for capturing the center
   int startX = (windowWidth - width) / 2;
