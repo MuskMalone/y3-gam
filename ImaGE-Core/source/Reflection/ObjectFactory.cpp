@@ -27,6 +27,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Events/EventManager.h>
 #include "AddComponentFunctions.h"
 #include <Core/Components/Components.h>
+#include <Physics/PhysicsSystem.h>
 
 #define GET_RTTR_TYPE(T) rttr::type::get<T>()
 #ifdef _DEBUG
@@ -245,6 +246,8 @@ namespace Reflection
 
     // override each entity's components
     OverrideInstanceComponents();
+    // re-align colliders with entitiies' transforms
+    IGE::Physics::PhysicsSystem::GetInstance()->PausedUpdate();
   }
 
   void ObjectFactory::InitScene()
