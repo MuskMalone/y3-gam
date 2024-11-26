@@ -127,14 +127,13 @@ namespace Graphics {
 			MaterialTable::UploadMaterialProps();
 		}
 	}
-}
 
-	void RenderSystem::HandleGameViewInput(){
+	void RenderSystem::HandleGameViewInput() {
 		static ECS::Entity prevHoveredEntity;
 
 		glm::vec2 mousePos = Input::InputManager::GetInstance().GetMousePos();
 		ECS::Entity hoveredEntity = Renderer::PickEntity(mousePos);
-		
+
 		if (hoveredEntity != prevHoveredEntity) {
 			if (IGE_ENTITYMGR.IsValidEntity(prevHoveredEntity)) {
 				QUEUE_EVENT(Events::EntityMouseExit, prevHoveredEntity);
@@ -155,6 +154,7 @@ namespace Graphics {
 		}
 
 	}
+}
 
 namespace {
 	bool EntityInViewFrustum(BV::Frustum const& frustum, Component::Transform const& transform, Graphics::MeshSource const* meshSource) {
