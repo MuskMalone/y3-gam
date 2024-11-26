@@ -10,8 +10,8 @@ public class HoldupUI : Entity
 {
   //Data on how to display the Image on the screen
   private bool isBigPaintingActive = false;
-  public Vector3 bigPicPos = new Vector3(0, 0, 0);
-  public Vector3 bigPicScale = new Vector3(12.980f, 12.980f, 12.980f);
+  public Vector3 bigPicPos = new Vector3(0, 0.6f, 0);
+  public Vector3 bigPicScale = new Vector3(12.980f, 13.8f, 12.980f);
   public Vector3 smallPicPos = new Vector3(10,0, 0);
   public Vector3 smallPicScale = new Vector3(6, 6, 6);
 
@@ -75,6 +75,10 @@ public class HoldupUI : Entity
     //  Destroy(Entity);
     //}
 
+    if (InternalCalls.IsKeyTriggered(KeyCode.G))
+      SetActive(true);
+      
+
     if (!pictureAlignscript.isFrozen && Input.GetMouseButtonTriggered(1))
     {
       isBigPaintingActive = !isBigPaintingActive;
@@ -102,12 +106,13 @@ public class HoldupUI : Entity
     //}
   }
 
-  public void SetAlginUI()
+  public void SetAlginUI(string s)
   {
+    Console.WriteLine("SETALIGNUI");
     if (pictureAlignscript != null)
     {
       pictureAlignscript.SetActive(true);
-      pictureAlignscript.SetTarget(savedPosition, savedCameraRotation, saveCamEuler);
+      pictureAlignscript.SetTarget(savedPosition, savedCameraRotation, saveCamEuler,s,this);
       pictureAlignscript.SetBorder(isBigPaintingActive);
     }
     else

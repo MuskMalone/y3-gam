@@ -42,6 +42,9 @@ public class  PlayerMove : Entity
 
   public bool canLook = true;
   public bool canMove = true;
+  private double currTime = 0.0;
+  private double targetTime = 1.0;
+  private bool startTimer = false;
 
   public PlayerMove() : base()
   {
@@ -58,6 +61,16 @@ public class  PlayerMove : Entity
   // Update is called once per frame
   void Update()
   {
+    if(startTimer)
+    {
+      currTime += InternalCalls.GetDeltaTime();
+      if (currTime > targetTime)
+      {
+        UnfreezePlayer();
+        startTimer = false;
+      }
+    }
+
     ProcessLook();
     if (canMove)
       PlayerMovement();
@@ -167,5 +180,12 @@ public class  PlayerMove : Entity
     ResetPlayerVelocity();
     canMove = true;
     canLook = true;
+  }
+
+
+  public void SetUnfreeTimer()
+  {
+    currTime = 0.0;
+    startTimer = true;
   }
 }
