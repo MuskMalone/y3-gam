@@ -108,7 +108,7 @@ public class HoldupUI : Entity
 
   public void SetAlginUI(string s)
   {
-    Console.WriteLine("SETALIGNUI");
+    //Console.WriteLine("SETALIGNUI");
     if (pictureAlignscript != null)
     {
       pictureAlignscript.SetActive(true);

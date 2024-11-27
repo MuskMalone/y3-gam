@@ -189,4 +189,10 @@ namespace Events
     SignalEvent() : Event(EventType::SIGNAL) {}
     inline std::string GetName() const noexcept override { return "Program terminated unexpectedly"; }
   };
+
+  class TriggerPausedUpdate : public Event {
+  public:
+    TriggerPausedUpdate() : Event(EventType::TRIGGER_PAUSED_UPDATE) {}
+    inline std::string GetName() const noexcept override { return "Triggering paused update"; }
+  };
 }
