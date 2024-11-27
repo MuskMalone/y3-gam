@@ -26,108 +26,147 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Numerics;
 
 public class CDDragAndDrop : Entity
 {
-    //private Vec3<float> offset;         // Offset between mouse and CD position
-    //private bool isBeingDragged = false; // Whether the CD is being dragged
-    //private Vec3<float> initialPosition; // Initial position of the CD
+    //    private Vector3 offset;         // Offset between mouse and CD position
+    //    private bool isBeingDragged = false; // Whether the CD is being dragged
+    //    private Vector3 initialPosition; // Initial position of the CD
+    //    public Entity mainCamera;
 
-    //void Start()
-    //{
-    //    initialPosition = InternalCalls.GetPosition(mEntityID); // Save the initial position
-    //}
-
-    //void Update()
-    //{
-    //    if (isBeingDragged)
+    //    void Start()
     //    {
-    //        FollowMouseWithRay();
-    //    }
-    //}
+    //        // Save the initial position as System.Numerics.Vector3
+    //        initialPosition = InternalCalls.GetPosition(mEntityID);
 
-    //public void OnMouseDown()
-    //{
-    //    isBeingDragged = true;
-
-    //    // Calculate the offset between the mouse ray and the CD's position
-    //    Vec3<float> rayOrigin = InternalCalls.GetMainCameraPosition(FindEntityByTag("MainCamera").mEntityID);
-    //    Vec3<float> rayDirection = InternalCalls.GetMainCameraDirection(FindEntityByTag("MainCamera").mEntityID);
-
-    //    Vec3<float> cdPosition = InternalCalls.GetPosition(mEntityID);
-    //    Vec3<float> intersection = RayPlaneIntersection(rayOrigin, rayDirection, cdPosition.Y);
-
-    //    offset = new Vec3<float>(
-    //        cdPosition.X - intersection.X,
-    //        cdPosition.Y - intersection.Y,
-    //        cdPosition.Z - intersection.Z
-    //    );
-    //}
-
-    //public void OnMouseUp()
-    //{
-    //    isBeingDragged = false;
-    //}
-
-    //private void FollowMouseWithRay()
-    //{
-    //    // Get the camera's ray
-    //    Vec3<float> rayOrigin = InternalCalls.GetMainCameraPosition(FindEntityByTag("MainCamera").mEntityID);
-    //    Vec3<float> rayDirection = InternalCalls.GetMainCameraDirection(FindEntityByTag("MainCamera").mEntityID);
-
-    //    // Find where the ray intersects with the plane
-    //    Vec3<float> intersection = RayPlaneIntersection(rayOrigin, rayDirection, initialPosition.Y);
-
-    //    // Apply the offset and update the CD's position
-    //    Vec3<float> newPosition = new Vec3<float>(
-    //        intersection.X + offset.X,
-    //        intersection.Y + offset.Y,
-    //        intersection.Z + offset.Z
-    //    );
-    //    InternalCalls.SetPosition(mEntityID, ref newPosition);
-    //}
-
-    //private Vec3<float> RayPlaneIntersection(Vec3<float> rayOrigin, Vec3<float> rayDirection, float planeY)
-    //{
-    //    // Assume the plane is parallel to the XZ plane at height planeY
-    //    Vec3<float> planeNormal = new Vec3<float>(0.0f, 1.0f, 0.0f); // Normal pointing up
-
-    //    // Calculate the dot product manually
-    //    float denominator = rayDirection.X * planeNormal.X +
-    //                        rayDirection.Y * planeNormal.Y +
-    //                        rayDirection.Z * planeNormal.Z;
-
-    //    if (Math.Abs(denominator) > 0.0001f) // Ensure the ray is not parallel to the plane
-    //    {
-    //        float t = (planeY - rayOrigin.Y) / rayDirection.Y;
-    //        return new Vec3<float>(
-    //            rayOrigin.X + rayDirection.X * t,
-    //            rayOrigin.Y + rayDirection.Y * t,
-    //            rayOrigin.Z + rayDirection.Z * t
-    //        );
     //    }
 
-    //    // Return the ray's origin if it doesn't intersect (fallback)
-    //    return rayOrigin;
+    //    void Update()
+    //    {
+    //        if (isBeingDragged)
+    //        {
+    //            FollowMouseWithRay();
+    //        }
+    //    }
+
+    //    public void OnMouseDown()
+    //    {
+    //        isBeingDragged = true;
+
+    //        // Get the camera's position and direction using its entity ID
+    //        uint mainCameraID = mainCamera.mEntityID; // Assuming mainCamera has a property `mEntityID`
+    //        Vector3 cameraPosition = InternalCalls.GetMainCameraPosition(mainCameraID);
+    //        Vector3 cameraDirection = InternalCalls.GetMainCameraDirection(mainCameraID);
+
+    //        // Estimate the ray's end point
+    //        Vector3 rayStart = cameraPosition;
+    //        Vector3 rayEnd = rayStart + cameraDirection * 100.0f;
+
+    //        // Perform the raycast from the CD entity
+    //        uint hitEntity = InternalCalls.RaycastFromEntity(mEntityID, rayStart, rayEnd);
+
+    //        if (hitEntity != 0)
+    //        {
+    //            // Get the CD's current position
+    //            Vector3 cdPosition = InternalCalls.GetPosition(mEntityID);
+
+    //            // Use the intersection point to calculate the offset
+    //            Vector3 intersection = rayStart + cameraDirection * 10.0f; // Adjust as needed
+    //            offset = cdPosition - intersection;
+    //        }
+    //    }
+
+    //    public void OnMouseUp()
+    //    {
+    //        isBeingDragged = false;
+    //    }
+
+    //    private void FollowMouseWithRay()
+    //    {
+    //        // Get the camera's position and forward direction using its entity ID
+    //        uint mainCameraID = mainCamera.mEntityID; // Assuming mainCamera has a property `mEntityID`
+    //        Vector3 rayOrigin = InternalCalls.GetMainCameraPosition(mainCameraID);
+    //        Vector3 rayDirection = InternalCalls.GetMainCameraDirection(mainCameraID);
+
+    //        // Use these for raycasting or plane intersection
+    //        Vector3 intersection = RayPlaneIntersection(rayOrigin, rayDirection, initialPosition.Y);
+
+    //        // Calculate the new position for the CD
+    //        Vector3 newPosition = intersection + offset;
+
+    //        // Update the CD's position
+    //        InternalCalls.SetPosition(mEntityID, ref newPosition);
+    //    }
+
+    //    private Vector3 RayPlaneIntersection(Vector3 rayOrigin, Vector3 rayDirection, float planeY)
+    //    {
+    //        // Assume the plane is parallel to the XZ plane at height planeY
+    //        Vector3 planeNormal = new Vector3(0.0f, 1.0f, 0.0f); // Normal pointing up
+
+    //        // Calculate the dot product
+    //        float denominator = Vector3.Dot(rayDirection, planeNormal);
+
+    //        if (Math.Abs(denominator) > 0.0001f) // Ensure the ray is not parallel to the plane
+    //        {
+    //            float t = (planeY - rayOrigin.Y) / rayDirection.Y;
+    //            return rayOrigin + rayDirection * t;
+    //        }
+
+    //        // If the ray doesn't intersect the plane, return the ray's origin
+    //        return rayOrigin;
+    //    }
     //}
 
     //TEMPORARY
     public Entity CDinCase;
     public Entity CDCurr;
+    private Vec3<float> originalScale;
+    private Vec3<float> hoverScale;
+
+    private bool isHovered = false;
     void Start()
     {
         CDinCase.SetActive(false);
+        Vector3 scaleVector = InternalCalls.GetScale(mEntityID);
+        originalScale = new Vec3<float>(scaleVector.X, scaleVector.Y, scaleVector.Z);
+        hoverScale = new Vec3<float>(
+            originalScale.X * 1.1f,
+            originalScale.Y * 1.1f,
+            originalScale.Z * 1.1f
+        );
+
     }
 
     void Update()
     {
-
+        if (isHovered)
+        {
+            Vector3 hoverVector = new Vector3(hoverScale.X, hoverScale.Y, hoverScale.Z);
+            InternalCalls.SetScale(mEntityID, ref hoverVector);
+        }
+        else
+        {
+            Vector3 originalVector = new Vector3(originalScale.X, originalScale.Y, originalScale.Z);
+            InternalCalls.SetScale(mEntityID, ref originalVector);
+        }
     }
 
     public void OnMouseDown()
     {
         CDinCase.SetActive(true);
         CDCurr.SetActive(false);
+        //InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
+    }
+
+    public void OnMouseEnter()
+    {
+        isHovered = true;
+    }
+
+    public void OnMouseExit()
+    {
+        isHovered = false;
     }
 }
 
