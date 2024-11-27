@@ -247,7 +247,7 @@ namespace Reflection
     // override each entity's components
     OverrideInstanceComponents();
     // re-align colliders with entitiies' transforms
-    IGE::Physics::PhysicsSystem::GetInstance()->PausedUpdate();
+    //IGE::Physics::PhysicsSystem::GetInstance()->PausedUpdate();
   }
 
   void ObjectFactory::InitScene()

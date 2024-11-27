@@ -80,8 +80,9 @@ namespace IGE {
 
     
     if (mSpecification.StartFromScene.first) {
-      QUEUE_EVENT(Events::LoadSceneEvent, std::filesystem::path(mSpecification.StartFromScene.second).stem().string(), 
-        mSpecification.StartFromScene.second);
+        IGE_EVENTMGR.DispatchImmediateEvent<Events::LoadSceneEvent>(std::filesystem::path(mSpecification.StartFromScene.second).stem().string(),
+            mSpecification.StartFromScene.second);
+        Systems::SystemManager::GetInstance().PausedUpdate<Systems::TransformSystem, IGE::Physics::PhysicsSystem, IGE::Audio::AudioSystem>();
     }
   }
 
