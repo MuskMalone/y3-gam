@@ -311,7 +311,7 @@ public class TutorialLevelInventory : Entity
 
         switch (itemName)
         {
-            case "Tutorial Painting":
+            case "TutorialPainting":
                 tutorialPaintingUI?.SetActive(true);
                 break;
 

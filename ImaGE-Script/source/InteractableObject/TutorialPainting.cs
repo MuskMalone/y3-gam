@@ -12,7 +12,7 @@ public class TutorialPainting : Entity, IInventoryItem
     {
         get
         {
-            return "Tutorial Painting";
+            return "TutorialPainting";
         }
     }
 
