@@ -123,6 +123,11 @@ public class CDDragAndDrop : Entity
     public Entity CDCurr;
     private Vec3<float> originalScale;
     private Vec3<float> hoverScale;
+    public Vector3 outOfTheWay = new Vector3(10.0f, 10.0f, 10.0f);
+
+    private bool isFading = false;
+    private float fadeDuration = 3f;
+    private float fadeElapsed = 0f;
 
     private bool isHovered = false;
     void Start()
@@ -150,15 +155,37 @@ public class CDDragAndDrop : Entity
             Vector3 originalVector = new Vector3(originalScale.X, originalScale.Y, originalScale.Z);
             InternalCalls.SetScale(mEntityID, ref originalVector);
         }
+
+        if (isFading)
+        {
+            fadeElapsed += Time.deltaTime;
+            if(fadeElapsed >= fadeDuration)
+            {
+                isFading = false;
+                InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
+            }
+        }
     }
 
+    private void Startfade()
+    {
+        isFading = true;
+        fadeElapsed = 0f;
+    }
     public void OnMouseDown()
     {
         CDinCase.SetActive(true);
-        CDCurr.SetActive(false);
-        //InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
+        //CDCurr.SetActive(false);
+        InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
+        NextScene();
+        
     }
 
+    private void NextScene()
+    {
+        Startfade();
+        
+    }
     public void OnMouseEnter()
     {
         isHovered = true;
