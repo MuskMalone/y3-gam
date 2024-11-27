@@ -28,11 +28,11 @@ using System.Threading.Tasks;
 using System.Xml;
 using IGE.Utils;
 
-public class WASDTutorial : Entity
+public class InventoryTutorial : Entity
 {
     // Start is called before the first frame update
     private Image tutorialImage;
-    private TutorialCutscene tutorialCutscene;
+    private WASDTutorial wasdTutorial;
 
     public float fadeSpeed = 2f;
     private float currentAlpha = 0f;
@@ -40,7 +40,7 @@ public class WASDTutorial : Entity
     private bool isFadingIn = false;
     private bool isFadingOut = false;
     private bool isVisible = false;
-    public bool finish = false;
+    private bool finish = false;
 
     private float timer = 0f;
     private float duration = 4f;
@@ -48,7 +48,7 @@ public class WASDTutorial : Entity
     void Start()
     {
         tutorialImage = GetComponent<Image>();
-        tutorialCutscene = FindObjectOfType<TutorialCutscene>();
+        wasdTutorial = FindObjectOfType<WASDTutorial>();
 
         if (tutorialImage != null)
         {
@@ -66,7 +66,7 @@ public class WASDTutorial : Entity
     // Update is called once per frame
     void Update()
     {
-        if (tutorialCutscene.cutsceneFinish && !isFadingIn && !isVisible && !isFadingOut && !finish)
+        if (wasdTutorial.finish && !isFadingIn && !isVisible && !isFadingOut && !finish)
         {
             isFadingIn = true;
         }
@@ -105,9 +105,9 @@ public class WASDTutorial : Entity
             if (Mathf.Abs(currentAlpha - 1f) < 0.01f)
             {
                 currentAlpha = 1f;
-                isFadingIn = false; 
-                isVisible = true;  
-                timer = 0f;       
+                isFadingIn = false;
+                isVisible = true;
+                timer = 0f;
             }
         }
 
@@ -125,7 +125,7 @@ public class WASDTutorial : Entity
 
             if (Mathf.Abs(currentAlpha - 0f) < 0.01f)
             {
-                currentAlpha = 0f; 
+                currentAlpha = 0f;
                 isFadingOut = false;
                 finish = true;
             }
