@@ -137,7 +137,12 @@ namespace Scenes
       }
       Debug::DebugLogger::GetInstance().LogInfo("Loading scene: " + mSceneName + "...");
        
-      mSceneState = SceneState::STOPPED;
+      if (mSceneState != SceneState::PLAYING) {
+        mSceneState = SceneState::STOPPED;
+      }
+      else {
+        IGE_EVENTMGR.DispatchImmediateEvent<Events::TriggerPausedUpdate>();
+      }
       break;
     }
     case Events::EventType::SAVE_SCENE:

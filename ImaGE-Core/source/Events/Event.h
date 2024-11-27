@@ -48,7 +48,8 @@ namespace Events
     ENTITY_MOUSE_EXIT,
     ENTITY_MOUSE_DOWN,
     ENTITY_MOUSE_UP,
-    LOCK_MOUSE
+    LOCK_MOUSE,
+    TRIGGER_PAUSED_UPDATE
   };
 
   class Event
