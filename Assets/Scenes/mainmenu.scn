@@ -447,48 +447,15 @@
                     }
                 },
                 {
-                    "BoxCollider": {
-                        "scale": {
-                            "x": 0.11999999731779099,
-                            "y": 0.10000000149011612,
-                            "z": 0.11999999731779099
+                    "Mesh": {
+                        "meshName": "None",
+                        "GUID": {
+                            "ID": 0
                         },
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 1048606,
-                                "scriptName": "CDRotation",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": 100.0,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "rotationSpeed"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
                     }
                 }
             ]
@@ -509,7 +476,7 @@
                     "Transform": {
                         "position": {
                             "x": -0.003021240234375,
-                            "y": 0.0009255360928364098,
+                            "y": 0.0012917470885440708,
                             "z": -0.0033111572265625
                         },
                         "scale": {
@@ -531,7 +498,7 @@
                         "worldPos": {
                             "x": 0.910732090473175,
                             "y": -0.4404035210609436,
-                            "z": -0.7515819072723389
+                            "z": -0.7515800595283508
                         },
                         "worldScale": {
                             "x": 0.004999999888241291,
@@ -568,6 +535,25 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048607,
+                                "scriptName": "CDRotation",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": 10.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "rotationSpeed"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
@@ -791,8 +777,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.00000858306884765625,
-                            "z": -0.0001049041748046875
+                            "y": 0.000014066696166992188,
+                            "z": -0.000171661376953125
                         },
                         "scale": {
                             "x": 1.0,
@@ -812,8 +798,8 @@
                         },
                         "worldPos": {
                             "x": 1.3216056823730469,
-                            "y": 0.09598932415246964,
-                            "z": -1.2558050155639649
+                            "y": 0.09598954021930695,
+                            "z": -1.2558077573776246
                         },
                         "worldScale": {
                             "x": 0.03999999910593033,
@@ -923,7 +909,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 10309430944221620572
+                            "ID": 2727167643116196583
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1002,7 +988,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 5816057759781780550
+                            "ID": 15535945650202661564
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,

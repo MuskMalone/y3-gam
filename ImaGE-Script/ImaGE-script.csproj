@@ -104,7 +104,7 @@
     <Compile Include="source\Inventory\HUD.cs" />
     <Compile Include="source\Inventory\Inventory.cs" />
     <Compile Include="source\Inventory\InventoryItemData.cs" />
-    <Compile Include="source\MainMenu\CDRotation.cs" />
+    <Compile Include="source\Mono\CDRotation.cs" />
     <Compile Include="source\Mono\Color.cs" />
     <Compile Include="source\Mono\Component.cs" />
     <Compile Include="source\Mono\Debug.cs" />
@@ -149,6 +149,7 @@
     <Compile Include="source\Triggers\FinishLineTrigger.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="source\MainMenu\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

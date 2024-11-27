@@ -43,19 +43,21 @@ public class CDRotation : Entity
     // Update is called once per frame
     void Update()
     {
-        if(isHovered)
+        if (isHovered)
         {
-            RotateEntity(10f); 
+            RotateEntity(10f);
         }
     }
 
-    private void OnMouseEnter()
+    public void OnMouseEnter()
     {
-        Debug.Log("MouseEntered");
+        //Debug.Log("MouseEntered");
+        //string tag = InternalCalls.GetTag(mEntityID);
+        //Debug.Log("From MONO Enter" + tag);
         isHovered = true;
     }
 
-    private void OnMouseExit()
+    public void OnMouseExit()
     {
         isHovered = false;
         InternalCalls.SetRotation(mEntityID, ref originalRotation);
@@ -63,19 +65,25 @@ public class CDRotation : Entity
 
     void RotateEntity(float rotationSpeed)
     {
-        //Debug.Log("did it get in here");
-        // Get the current rotation as a Quaternion
-        Quaternion currentRotation = InternalCalls.GetRotation(mEntityID);
+        Debug.Log("RotateEntity");
+        //// Get the current rotation as a Quaternion
+        //Quaternion currentRotation = InternalCalls.GetRotation(mEntityID);
 
-        // Create the desired rotation based on Vector3.up and rotationSpeed
-        Quaternion rotationChange = Quaternion.CreateFromAxisAngle(Vector3.UnitY, Mathf.DegToRad(rotationSpeed * Time.deltaTime));
+        //// Create the desired rotation based on Vector3.up and rotationSpeed
+        //Quaternion rotationChange = Quaternion.CreateFromAxisAngle(Vector3.UnitY, Mathf.DegToRad(rotationSpeed * Time.deltaTime));
 
-        // Combine the current rotation with the new rotation
-        Quaternion newRotation = Quaternion.Multiply(currentRotation, rotationChange);
+        ////Debug.Log("time" + Time.deltaTime);
+        //// Combine the current rotation with the new rotation
+        //Quaternion newRotation = Quaternion.Multiply(currentRotation, rotationChange);
 
-        // Apply the new rotation
+        //// Apply the new rotation
+        //InternalCalls.SetRotation(mEntityID, ref newRotation);
+
+        Quaternion newRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, Mathf.DegToRad(45)); // Rotate by 45 degrees
         InternalCalls.SetRotation(mEntityID, ref newRotation);
     }
 }
+
+
 
 
