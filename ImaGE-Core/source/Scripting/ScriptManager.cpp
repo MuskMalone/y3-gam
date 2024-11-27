@@ -1067,6 +1067,12 @@ ECS::Entity::EntityID Mono::FindChildByTag(ECS::Entity::EntityID entity, MonoStr
 }
 
 ECS::Entity::EntityID Mono::FindParentByTag(MonoString* s) {
+  std::string msg{ MonoStringToSTD(s) };
+  for (ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntities()) {
+      if (e.GetTag() == msg) {
+          return e.GetRawEnttEntityID();
+      }
+  }
   return ECS::Entity::EntityID();
 }
 
