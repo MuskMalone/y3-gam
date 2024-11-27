@@ -1,4 +1,5 @@
 using IGE.Utils;
+using static Dialogue;
 
 public class NightPainting : Entity, IInventoryItem
 {
@@ -6,6 +7,8 @@ public class NightPainting : Entity, IInventoryItem
   public Inventory inventoryScript;
   public PlayerInteraction playerInteraction;
   public Entity EToPickUpUI;
+  public Dialogue dialogueSystem;
+  public string[] pitPaintingDialogue;
 
   public string Name
   {
@@ -52,6 +55,7 @@ public class NightPainting : Entity, IInventoryItem
     {
       InternalCalls.PlaySound(mEntityID, "PickupObjects");
       inventoryScript.Additem(this);
+      dialogueSystem.SetDialogue(pitPaintingDialogue, new Dialogue.Emotion[] { Emotion.Surprised, Emotion.Shocked });
     }
     EToPickUpUI.SetActive(isPaintHit);
   }

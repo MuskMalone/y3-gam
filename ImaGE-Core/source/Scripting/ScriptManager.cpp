@@ -84,6 +84,8 @@ namespace Mono
     { "Dialogue", ScriptFieldType::DIALOGUE},
     { "PlayerInteraction", ScriptFieldType::PLAYERINTERACTION },
     { "Inventory", ScriptFieldType::INVENTORY },
+    { "SpecialDialogue", ScriptFieldType::SPECIALDIALOGUE },
+    { "KeyDoor", ScriptFieldType::KEYDOOR },
   };
 }
 
@@ -248,6 +250,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(AppendText);
   ADD_INTERNAL_CALL(GetImageColor);
   ADD_INTERNAL_CALL(SetImageColor);
+  ADD_INTERNAL_CALL(SetDaySkyBox);
 
   // Utility Functions
   ADD_INTERNAL_CALL(Raycast);
@@ -1371,6 +1374,18 @@ void Mono::SaveScreenShot(std::string name, int width, int height)
   }
 }
 
+bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity) {
+  if (ECS::Entity(cameraEntity) && ECS::Entity{ cameraEntity }.HasComponent<Component::Skybox>()) {
+    ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend -= Performance::FrameRateController::GetInstance().GetDeltaTime();
+    if (ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend <= 0.f)
+      ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend = 0.f;
+    return(ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend <= 0.f);
+  }
+  else {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to change skybox using an entity that does not hav skybox!");
+  }
+  return true;
+}
 /*!**********************************************************************
 *																																			  *
 *								  Helper Functions to get data from C#			           	*

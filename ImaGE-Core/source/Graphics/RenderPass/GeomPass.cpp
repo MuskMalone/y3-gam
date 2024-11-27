@@ -119,6 +119,7 @@ namespace Graphics {
 
       //========================================2D Sprite Rendering=========================================================================================
 
+//========================================2D Sprite Rendering=========================================================================================
       std::vector<ECS::Entity> opaqueSprites;
       std::vector<ECS::Entity> transparentSprites;
 
@@ -135,13 +136,19 @@ namespace Graphics {
           }
       }
 
-      // Sort transparent sprites by Z-depth (back-to-front)
+      // Sort transparent sprites by distance to the camera (back-to-front)
       std::sort(transparentSprites.begin(), transparentSprites.end(),
-          [](auto const& a, auto const& b) {
+          [&cam](auto const& a, auto const& b) {
               auto const& aTransform = a.GetComponent<Component::Transform>();
               auto const& bTransform = b.GetComponent<Component::Transform>();
-              return aTransform.worldPos.z < bTransform.worldPos.z; // Descending z-order
+
+              // Compute distance from the camera to each sprite
+              float distanceA = glm::length2(cam.position - aTransform.worldPos); // Squared distance
+              float distanceB = glm::length2(cam.position - bTransform.worldPos); // Squared distance
+
+              return distanceA > distanceB; // Sort back-to-front
           });
+
       // Render opaque sprites
       for (ECS::Entity const& entity : opaqueSprites) {
           auto const& sprite = entity.GetComponent<Component::Sprite2D>();
@@ -157,26 +164,30 @@ namespace Graphics {
           }
       }
 
-      Renderer::FlushBatch();
+      Renderer::FlushBatch(); // Flush opaque sprites
+
       // Render transparent sprites
       glEnable(GL_BLEND);
       glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-      glDepthMask(GL_FALSE);  // Disable depth writing
+      glDepthMask(GL_FALSE); // Disable depth writing
 
-      for (ECS::Entity const& entity : entities) {
-        if (!entity.HasComponent<Component::Transform>()) continue;
-        if (entity.HasComponent<Component::Sprite2D>()) {
+      for (ECS::Entity const& entity : transparentSprites) {
           auto const& sprite = entity.GetComponent<Component::Sprite2D>();
           auto const& xform = entity.GetComponent<Component::Transform>();
-          if (sprite.textureAsset)
-              Renderer::DrawSprite(xform.worldPos, xform.worldScale, xform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(sprite.textureAsset)->mTexture, sprite.color, entity.GetEntityID());
-          else
-              Renderer::DrawQuad(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, sprite.color, entity.GetEntityID());
 
-        }
+          if (sprite.textureAsset) {
+              Renderer::DrawSprite(xform.worldPos, xform.worldScale, xform.worldRot,
+                  IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(sprite.textureAsset)->mTexture,
+                  sprite.color, entity.GetEntityID());
+          }
+          else {
+              Renderer::DrawQuad(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, sprite.color, entity.GetEntityID());
+          }
       }
-      Renderer::FlushBatch();
-      glDepthMask(GL_TRUE);
+
+      Renderer::FlushBatch(); // Flush transparent sprites
+      glDepthMask(GL_TRUE); // Re-enable depth writing
+
       //Renderer::RenderSceneEnd();
       //=================================================SUBMESH VERSION END===========================================================
 

@@ -93,6 +93,8 @@
     <Compile Include="source\Dialogue\SpecialDialogue.cs" />
     <Compile Include="source\Engine Tools\Easing.cs" />
     <Compile Include="source\Engine Tools\FPS.cs" />
+    <Compile Include="source\InteractableObject\Key.cs" />
+    <Compile Include="source\InteractableObject\Safe.cs" />
     <Compile Include="source\InteractableObject\KeyDoor.cs" />
     <Compile Include="source\InteractableObject\Crowbar.cs" />
     <Compile Include="source\InteractableObject\Hammer.cs" />

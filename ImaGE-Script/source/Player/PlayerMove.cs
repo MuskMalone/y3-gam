@@ -24,8 +24,8 @@ public class  PlayerMove : Entity
   public float speed = 650f;
   public float walkingSpeed = 650f;
   public float runSpeed = 1200f;
-  public float jumpForce = 2500f;
-  private float extraGravityFactorDuringDescent = 15f;
+  public float jumpForce = 3500f;
+  private readonly float extraGravityFactorDuringDescent = 15f;
   public float isGroundedRayHeight = 3f;
   public Entity cam;
 
@@ -42,6 +42,9 @@ public class  PlayerMove : Entity
 
   public bool canLook = true;
   public bool canMove = true;
+  private double currTime = 0.0;
+  private double targetTime = 1.0;
+  private bool startTimer = false;
 
   public PlayerMove() : base()
   {
@@ -58,15 +61,26 @@ public class  PlayerMove : Entity
   // Update is called once per frame
   void Update()
   {
-    if (canLook) 
-      ProcessLook();
+    if(startTimer)
+    {
+      currTime += InternalCalls.GetDeltaTime();
+      if (currTime > targetTime)
+      {
+        UnfreezePlayer();
+        startTimer = false;
+      }
+    }
+
+    ProcessLook();
     if (canMove)
       PlayerMovement();
 
+    /*
     if (Input.GetKeyTriggered(KeyCode.SPACE))
     {
       InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
     }
+    */
   }
   void PlayerMovement()
   {
@@ -126,6 +140,7 @@ public class  PlayerMove : Entity
 
     // Update the player's rotation (yaw)
     GetComponent<Transform>().worldRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, Mathf.DegToRad(yaw));
+    
   }
 
   private void ResetPlayerVelocity()
@@ -149,6 +164,7 @@ public class  PlayerMove : Entity
     Vector3 rayEnd = entityPosition + new Vector3(0, 0 - isGroundedRayHeight, 0);
     uint entityIDHit = InternalCalls.RaycastFromEntity(mEntityID, rayStart, rayEnd);
     return entityIDHit != 0;
+
   }
 
   // Called by other scripts to Freeze/Unfreeze Player
@@ -164,5 +180,12 @@ public class  PlayerMove : Entity
     ResetPlayerVelocity();
     canMove = true;
     canLook = true;
+  }
+
+
+  public void SetUnfreeTimer()
+  {
+    currTime = 0.0;
+    startTimer = true;
   }
 }

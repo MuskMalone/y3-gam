@@ -2223,6 +2223,7 @@ namespace {
 namespace ScriptInputs {
   void InitScriptInputMap() {
     sScriptInputFuncs = {
+          { rttr::type::get<Mono::DataMemberInstance<bool>>(), ScriptInputField<bool> },
       { rttr::type::get<Mono::DataMemberInstance<int>>(), ScriptInputField<int> },
       { rttr::type::get<Mono::DataMemberInstance<float>>(), ScriptInputField<float> },
       { rttr::type::get<Mono::DataMemberInstance<double>>(), ScriptInputField<double> },

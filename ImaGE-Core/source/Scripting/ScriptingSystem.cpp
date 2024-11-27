@@ -27,15 +27,18 @@ void ScriptingSystem::Update()
   {
     Mono::ScriptManager::GetInstance().mTriggerStart = false;
     for (ECS::Entity entity : mEntityManager.GetAllEntitiesWithComponents<Component::Script>()) {
-      Component::Script& scriptComp = entity.GetComponent<Component::Script>();
-      scriptComp.TriggerScriptsStart();
+        Component::Script& scriptComp = entity.GetComponent<Component::Script>();
+        scriptComp.TriggerScriptsStart();
+      
+
     }
 
   }
   for (ECS::Entity entity : mEntityManager.GetAllEntitiesWithComponents<Component::Script>()) {
-    Component::Script& scriptComp = entity.GetComponent<Component::Script>();
-   // std::cout << entity.GetTag() << ":SUPdate\n";
-    scriptComp.UpdateAllScripts();
+      Component::Script& scriptComp = entity.GetComponent<Component::Script>();
+      // std::cout << entity.GetTag() << ":SUPdate\n";
+      scriptComp.UpdateAllScripts();
+    
   }
 }
 

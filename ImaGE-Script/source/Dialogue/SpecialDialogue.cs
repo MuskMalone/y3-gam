@@ -12,14 +12,25 @@ public class SpecialDialogue : Entity
 
   public Dialogue dialogueSystem;
   public Entity[] BeginningSilhouetteSequence;
+  public Entity fadeImage;
 
   // Private Variables
-  private bool triggerInitialSpecialDialogue = true;
+  private bool triggerFadeTransition = true;
+  private bool isInFadeTransition = false;
+  private float fadeTransitionTimer = 0f; 
+  private float fadeStartTime;
+
+  private bool triggerInitialSpecialDialogue = false; // set this to true later
   private string specialLine;
   private bool triggerInitialDialogue = false;
-  private bool isInSpecialDialogueMode = true;
+  private bool isInSpecialDialogueMode = false;
   private bool specialLineFadeout = false;
   private float fadeTime = 0f;
+
+  private bool isInSillouetteSequence = false;
+  private int currentSillouetteIndex = -1;
+  private float sillouetteElapsedTime = 0f;
+  private const float activationInterval = 2.0f;
 
   private int charIndex = 0;            // Tracks the current character index
   private float nextCharTime = 0f;      // Tracks the time for the next character
@@ -43,6 +54,27 @@ public class SpecialDialogue : Entity
 
   void Update()
   {
+    if (triggerFadeTransition)
+    {
+      StartFade();
+    }
+
+    if (isInFadeTransition)
+    {
+      float elapsed = Time.gameTime - fadeStartTime;
+      fadeTransitionTimer = elapsed;
+
+      float alpha = Mathf.Lerp(1f, 0f, fadeTransitionTimer / fadeDuration);
+      InternalCalls.SetImageColor(fadeImage.mEntityID, new Vector4(1, 1, 1, alpha));
+
+      if (fadeTransitionTimer >= fadeDuration)
+      {
+        isInFadeTransition = false;
+        fadeImage.SetActive(false);
+        triggerInitialSpecialDialogue = true;
+      }
+    }
+
     if (triggerInitialSpecialDialogue)
     {
       SetSpecialDialogue(introMessage, specialDialogueFontScale);
@@ -65,6 +97,31 @@ public class SpecialDialogue : Entity
       }
     }
 
+    if (isInSillouetteSequence)
+    {
+      sillouetteElapsedTime += Time.deltaTime;
+      if (sillouetteElapsedTime >= activationInterval)
+      {
+        sillouetteElapsedTime = 0f;
+
+        if (currentSillouetteIndex >= 0 && currentSillouetteIndex < BeginningSilhouetteSequence.Length)
+        {
+          BeginningSilhouetteSequence[currentSillouetteIndex].SetActive(false);
+        }
+
+        currentSillouetteIndex++;
+
+        if (currentSillouetteIndex < BeginningSilhouetteSequence.Length)
+        {
+          BeginningSilhouetteSequence[currentSillouetteIndex].SetActive(true);
+        }
+        else
+        {
+          EndSiloutetteSequence();
+        }
+      }
+    }
+
     if (triggerInitialDialogue)
     {
       dialogueSystem.SetDialogue(initialDialogue, 
@@ -73,6 +130,16 @@ public class SpecialDialogue : Entity
         mainDialogueFontScale);
       triggerInitialDialogue = false;
     }
+  }
+
+  private void StartFade()
+  {
+    triggerFadeTransition = false;
+    isInFadeTransition = true;
+    fadeImage.SetActive(true);
+
+    isInFadeTransition = true;
+    fadeStartTime = Time.gameTime;
   }
 
   private void SetSpecialDialogue(string line, float textScale)
@@ -129,5 +196,21 @@ public class SpecialDialogue : Entity
 
     InternalCalls.SetTextColor(mEntityID, new Vector4(originalColor.X, originalColor.Y, originalColor.Z, 0));
     EndSpecialDialogue();
+  }
+
+  public void StartSilhouetteSequence()
+  {
+    isInSillouetteSequence = true;
+    playerMove.FreezePlayer();
+  }
+
+  private void EndSiloutetteSequence()
+  {
+    playerMove.UnfreezePlayer();
+    isInSillouetteSequence = false;
+
+    dialogueSystem.SetDialogue(new string[] { "She left something on that table..."},
+        new Dialogue.Emotion[] { Dialogue.Emotion.Surprised },
+        mainDialogueFontScale);
   }
 }
