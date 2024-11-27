@@ -289,7 +289,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 0
+                            "ID": 5193884273289677601
                         }
                     }
                 },
@@ -333,7 +333,7 @@
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": -2.9802322387695315e-8,
+                            "y": 0.0,
                             "z": 0.0,
                             "w": 1.0
                         },
@@ -354,7 +354,7 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.4999999701976776,
+                            "y": 0.5,
                             "z": 0.0,
                             "w": 0.8660253882408142
                         }
@@ -379,6 +379,85 @@
                             "ID": 631313942861110887
                         },
                         "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048589,
+            "Parent": 2097156,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Props_PS1CD",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.00028228759765625,
+                            "y": -0.000885009765625,
+                            "z": -0.0006561279296875
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.4109915792942047,
+                            "y": -0.48736241459846499,
+                            "z": -0.655648410320282
+                        },
+                        "worldScale": {
+                            "x": 0.004999999888241291,
+                            "y": 0.004999999888241291,
+                            "z": 0.004999999888241291
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8893670667570807355
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Props_PS1CD",
+                        "GUID": {
+                            "ID": 3244419131253938194
+                        },
+                        "submeshIdx": 0,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
@@ -450,7 +529,7 @@
                     "Mesh": {
                         "meshName": "None",
                         "GUID": {
-                            "ID": 0
+                            "ID": 14538184764074168529
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -475,9 +554,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.003021240234375,
-                            "y": 0.0012917470885440708,
-                            "z": -0.0033111572265625
+                            "x": -0.0045928955078125,
+                            "y": 0.0011239004088565708,
+                            "z": -0.004302978515625
                         },
                         "scale": {
                             "x": 1.0,
@@ -485,9 +564,9 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
+                            "x": -7.748603820800781e-7,
+                            "y": 3.585591912269592e-8,
+                            "z": -3.585591912269592e-8,
                             "w": 1.0
                         },
                         "eulerAngles": {
@@ -496,9 +575,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.910732090473175,
-                            "y": -0.4404035210609436,
-                            "z": -0.7515800595283508
+                            "x": 0.9107242226600647,
+                            "y": -0.44039857387542727,
+                            "z": -0.7515808939933777
                         },
                         "worldScale": {
                             "x": 0.004999999888241291,
@@ -506,10 +585,10 @@
                             "z": 0.004999999888241291
                         },
                         "worldRot": {
-                            "x": 0.7071067690849304,
-                            "y": 0.0,
+                            "x": 0.7071062326431274,
+                            "y": 5.0707924970083698e-8,
                             "z": 0.0,
-                            "w": 0.7071067690849304
+                            "w": 0.7071073055267334
                         }
                     }
                 },
@@ -542,13 +621,44 @@
                         "scriptList": [
                             {
                                 "entityID": 1048607,
-                                "scriptName": "CDRotation",
+                                "scriptName": "CDDragAndDrop",
                                 "scriptFieldInstList": [
                                     {
-                                        "data": 10.0,
-                                        "type": "System.Single",
+                                        "data": {
+                                            "entityID": 1048606,
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 1048606,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
-                                            "fieldName": "rotationSpeed"
+                                            "fieldName": "CDCurr"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2097156,
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 2097156,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "CDinCase"
                                         }
                                     }
                                 ]
@@ -777,8 +887,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.000014066696166992188,
-                            "z": -0.000171661376953125
+                            "y": 0.000015735626220703126,
+                            "z": -0.0001926422119140625
                         },
                         "scale": {
                             "x": 1.0,
@@ -798,8 +908,8 @@
                         },
                         "worldPos": {
                             "x": 1.3216056823730469,
-                            "y": 0.09598954021930695,
-                            "z": -1.2558077573776246
+                            "y": 0.09598960727453232,
+                            "z": -1.2558085918426514
                         },
                         "worldScale": {
                             "x": 0.03999999910593033,
@@ -909,12 +1019,74 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 2727167643116196583
+                            "ID": 4317525281721165458
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2097156,
+            "Parent": null,
+            "Child Entities": [
+                1048589
+            ],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "CDinCase",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.4109901785850525,
+                            "y": -0.4873580038547516,
+                            "z": -0.6556451320648193
+                        },
+                        "scale": {
+                            "x": 0.004999999888241291,
+                            "y": 0.004999999888241291,
+                            "z": 0.004999999888241291
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.4109901785850525,
+                            "y": -0.4873580038547516,
+                            "z": -0.6556451320648193
+                        },
+                        "worldScale": {
+                            "x": 0.004999999888241291,
+                            "y": 0.004999999888241291,
+                            "z": 0.004999999888241291
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
                     }
                 }
             ]
@@ -988,7 +1160,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 15535945650202661564
+                            "ID": 13731612977409340368
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,

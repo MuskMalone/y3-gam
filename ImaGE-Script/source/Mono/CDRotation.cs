@@ -36,17 +36,17 @@ public class CDRotation : Entity
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Start");
-        originalRotation = InternalCalls.GetRotation(mEntityID);
+        //Debug.Log("Start");
+        //originalRotation = InternalCalls.GetRotation(mEntityID);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isHovered)
-        {
-            RotateEntity(10f);
-        }
+        //if (isHovered)
+        //{
+        //    RotateEntity(10f);
+        //}
     }
 
     public void OnMouseEnter()
@@ -54,18 +54,18 @@ public class CDRotation : Entity
         //Debug.Log("MouseEntered");
         //string tag = InternalCalls.GetTag(mEntityID);
         //Debug.Log("From MONO Enter" + tag);
-        isHovered = true;
+        //isHovered = true;
     }
 
     public void OnMouseExit()
     {
-        isHovered = false;
-        InternalCalls.SetRotation(mEntityID, ref originalRotation);
+        //isHovered = false;
+        //InternalCalls.SetRotation(mEntityID, ref originalRotation);
     }
 
     void RotateEntity(float rotationSpeed)
     {
-        Debug.Log("RotateEntity");
+        //Debug.Log("RotateEntity");
         //// Get the current rotation as a Quaternion
         //Quaternion currentRotation = InternalCalls.GetRotation(mEntityID);
 
@@ -79,8 +79,17 @@ public class CDRotation : Entity
         //// Apply the new rotation
         //InternalCalls.SetRotation(mEntityID, ref newRotation);
 
-        Quaternion newRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, Mathf.DegToRad(45)); // Rotate by 45 degrees
-        InternalCalls.SetRotation(mEntityID, ref newRotation);
+        //Quaternion newRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, Mathf.DegToRad(45)); // Rotate by 45 degrees
+        //InternalCalls.SetWorldRotation(mEntityID, ref newRotation);
+
+        //Quaternion newRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, Mathf.DegToRad(45)); // 45 degrees
+
+        //// Apply the rotation
+        //InternalCalls.SetWorldRotation(mEntityID, ref newRotation);
+
+        //// Retrieve the rotation back to confirm it was set
+        //Quaternion currentRotation = InternalCalls.GetRotation(mEntityID);
+        //Debug.Log($"Expected Rotation: {newRotation}, Current Rotation: {currentRotation}");
     }
 }
 
