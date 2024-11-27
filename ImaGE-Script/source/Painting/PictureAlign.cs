@@ -19,6 +19,8 @@ public class PictureAlign : Entity
   public Entity UpArrow;
   public Entity DownArrow;
   public Entity LeftClickText;
+  public Entity Flower;
+  public Entity GardenLightSpot;
   private bool isBigPic;
   private bool toStop = true;
   private bool isTransitioning = false;
@@ -53,7 +55,8 @@ public class PictureAlign : Entity
     playerMove = player.FindObjectOfType<PlayerMove>();
 
     if (playerMove == null) Debug.LogError("PlayerMove component not found!");
-
+    Flower.SetActive(false);
+    GardenLightSpot.SetActive(true);
   }
 
 
@@ -83,7 +86,9 @@ public class PictureAlign : Entity
           UpArrow.SetActive(false);
           DownArrow.SetActive(false);
           SetActive(false);
-          
+          InternalCalls.PlaySound(player.mEntityID, "PaintingMatchObject");
+          Flower.SetActive(true);
+          GardenLightSpot.SetActive(false);
         }
         else
         {
