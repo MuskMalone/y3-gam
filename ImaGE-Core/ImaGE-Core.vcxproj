@@ -506,6 +506,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClCompile Include="source\Scripting\ScriptUtils.cpp" />
     <ClCompile Include="source\Scripting\ScriptingSystem.cpp" />
     <ClCompile Include="source\Serialization\Deserializer.cpp" />
+    <ClInclude Include="source\Serialization\FILEWrapper.h" />
     <ClCompile Include="source\Serialization\Serializer.cpp" />
     <ClCompile Include="source\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

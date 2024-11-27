@@ -22,6 +22,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/LayerManager/LayerManager.h>
 #include <Scripting/ScriptManager.h>
 #include <Scripting/ScriptInstance.h>
+#include <Serialization/FILEWrapper.h>
 
 namespace Helper {
   template <typename T>
@@ -37,8 +38,8 @@ namespace Serialization
 //#ifndef IMGUI_DISABLE
   void Serializer::SerializePrefab(Prefabs::Prefab const& prefab, std::string const& filePath)
   {
-    std::ofstream ofs{ filePath };
-    if (!ofs) {
+    FILEWrapper fileWrapper{ filePath.c_str() };
+    if (!fileWrapper) {
       Debug::DebugLogger::GetInstance().LogCritical("Unable to serialize prefab into " + filePath);
 #ifdef _DEBUG
       std::cout << "Unable to serialize prefab into " + filePath << "\n";
@@ -46,8 +47,9 @@ namespace Serialization
       return;
     }
 
-    rapidjson::OStreamWrapper osw{ ofs };
-    WriterType writer{ osw };
+    char buffer[4096];
+    StreamType outStream{ fileWrapper.GetFILE(), buffer, 4096 };
+    WriterType writer{ outStream };
     writer.StartObject();
 
     // serialize the base layer of the prefab
@@ -82,36 +84,36 @@ namespace Serialization
     writer.EndArray();
 
     writer.EndObject();
-    ofs.close();
   }
 //#endif
 
-  void Serializer::SerializeAny(rttr::instance const& obj, std::string const& filename)
+  void Serializer::SerializeAny(rttr::instance const& obj, std::string const& filePath)
   {
-    std::ofstream ofs{ filename };
-    if (!ofs)
-    {
-      Debug::DebugLogger::GetInstance().LogError("[Serializer] Unable to create file: " + filename);
+    FILEWrapper fileWrapper{ filePath.c_str() };
+    if (!fileWrapper) {
+      Debug::DebugLogger::GetInstance().LogError("[Serializer] Unable to create file: " + filePath);
 #ifdef _DEBUG
-      std::cout << "Unable to open file " << filename << "\n";
+      std::cout << "Unable to open file " << filePath << "\n";
 #endif
       return;
     }
 
-    rapidjson::OStreamWrapper osw{ ofs };
-    WriterType writer{ osw };
+    char buffer[sBufferSize];
+    StreamType outStream{ fileWrapper.GetFILE(), buffer, sBufferSize };
+    WriterType writer{ outStream };
     SerializeClassTypes(obj, writer);
-    ofs.close();
   }
 
   void Serializer::SerializeScene(std::string const& filePath)
   {
-    std::ofstream ofs{ filePath };
-    if (!ofs) {
+    FILEWrapper fileWrapper{ filePath.c_str() };
+    if (!fileWrapper) {
       Debug::DebugLogger::GetInstance().LogError("[Serializer] Unable to create scene file: " + filePath);
     }
-    rapidjson::OStreamWrapper osw{ ofs };
-    WriterType writer{ osw };
+
+    char buffer[sBufferSize];
+    StreamType outStream{ fileWrapper.GetFILE(), buffer, sBufferSize};
+    WriterType writer{ outStream };
 
     EntityList entityList{ GetSortedEntities() };
 
@@ -131,8 +133,6 @@ namespace Serialization
     SerializeClassTypes(IGE_LAYERMGR.GetLayerData(), writer);
 
     writer.EndObject();
-    // clean up
-    ofs.close();
   }
 
   void Serializer::SerializeEntity(ECS::Entity const& entity, WriterType& writer)
@@ -242,10 +242,6 @@ namespace Serialization
         std::cout << oss.str() << "\n";
 #endif
         continue;
-      }
-
-      if (propVal.is_type<MonoObjectVector>()) {
-        propVal = IGE_SCRIPTMGR.SerialMonoObjectVec(propVal.get_value<MonoObjectVector>());
       }
 
       std::string const name{ property.get_name().to_string() };
@@ -428,9 +424,9 @@ namespace Serialization
         continue;
       }
 
-#ifdef _DEBUG
-      std::cout << "  Prop " << property.get_type() << "\n";
-#endif
+      if (propVal.is_type<MonoObjectVector>()) {
+        propVal = IGE_SCRIPTMGR.SerialMonoObjectVec(propVal.get_value<MonoObjectVector>());
+      }
 
       std::string const name{ property.get_name().to_string() };
       writer.String(name.c_str(), static_cast<rapidjson::SizeType>(name.length()), false);
@@ -459,7 +455,7 @@ namespace Serialization
     }
     else if (var.is_sequential_container())
     {
-      WriteSequentialContainer(var.create_sequential_view(), writer);
+      WriteScriptSequentialContainer(var.create_sequential_view(), writer);
     }
     else if (var.is_associative_container())
     {
