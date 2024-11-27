@@ -223,7 +223,7 @@ public class CDDragAndDrop : Entity
     }
     public void OnMouseDown()
     {
-        //InternalCalls.PlaySound(mEntityID, "PickupCD_SFX");
+        InternalCalls.PlaySound(mEntityID, "PickupCD_SFX");
         CDinCase.SetActive(true);
         //CDCurr.SetActive(false);
         InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
