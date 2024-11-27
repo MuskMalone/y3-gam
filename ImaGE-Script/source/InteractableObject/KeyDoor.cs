@@ -51,7 +51,9 @@ public class KeyDoor : Entity
     InternalCalls.PlaySound(mEntityID, "UnlockDoor");
     InternalCalls.SetPosition(mEntityID, ref UnlockedPosition);
     InternalCalls.SetRotation(mEntityID, ref UnlockedQuaternion);
+    InternalCalls.SetWorldRotation(mEntityID, ref UnlockedQuaternion);
     unlockDoorUI.SetActive(false);
+    SetActive(false);
     doorInteraction = false;
   }
 }

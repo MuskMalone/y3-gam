@@ -14,6 +14,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <DebugTools/Exception/Exception.h>
 #include <Graphics/Framebuffer.h>
 #include <Graphics/RenderTarget.h>
+#include <Events/EventCallback.h>
 
 namespace IGE {
   class Application {
@@ -100,5 +101,7 @@ namespace IGE {
       Registers all systems to the SystemManager
     ************************************************************************/
     void RegisterSystems();
+
+    EVENT_CALLBACK_DECL(OnPausedUpdateTrigger);
   };
 } // namespace IGE
