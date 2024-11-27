@@ -12,12 +12,18 @@ public class SpecialDialogue : Entity
 
   public Dialogue dialogueSystem;
   public Entity[] BeginningSilhouetteSequence;
+  public Entity fadeImage;
 
   // Private Variables
-  private bool triggerInitialSpecialDialogue = true;
+  private bool triggerFadeTransition = true;
+  private bool isInFadeTransition = false;
+  private float fadeTransitionTimer = 0f; 
+  private float fadeStartTime;
+
+  private bool triggerInitialSpecialDialogue = false; // set this to true later
   private string specialLine;
   private bool triggerInitialDialogue = false;
-  private bool isInSpecialDialogueMode = true;
+  private bool isInSpecialDialogueMode = false;
   private bool specialLineFadeout = false;
   private float fadeTime = 0f;
 
@@ -48,6 +54,27 @@ public class SpecialDialogue : Entity
 
   void Update()
   {
+    if (triggerFadeTransition)
+    {
+      StartFade();
+    }
+
+    if (isInFadeTransition)
+    {
+      float elapsed = Time.gameTime - fadeStartTime;
+      fadeTransitionTimer = elapsed;
+
+      float alpha = Mathf.Lerp(1f, 0f, fadeTransitionTimer / fadeDuration);
+      InternalCalls.SetImageColor(fadeImage.mEntityID, new Vector4(1, 1, 1, alpha));
+
+      if (fadeTransitionTimer >= fadeDuration)
+      {
+        isInFadeTransition = false;
+        fadeImage.SetActive(false);
+        triggerInitialSpecialDialogue = true;
+      }
+    }
+
     if (triggerInitialSpecialDialogue)
     {
       SetSpecialDialogue(introMessage, specialDialogueFontScale);
@@ -103,6 +130,16 @@ public class SpecialDialogue : Entity
         mainDialogueFontScale);
       triggerInitialDialogue = false;
     }
+  }
+
+  private void StartFade()
+  {
+    triggerFadeTransition = false;
+    isInFadeTransition = true;
+    fadeImage.SetActive(true);
+
+    isInFadeTransition = true;
+    fadeStartTime = Time.gameTime;
   }
 
   private void SetSpecialDialogue(string line, float textScale)
