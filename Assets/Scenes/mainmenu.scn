@@ -90,6 +90,146 @@
             ]
         },
         {
+            "ID": 19,
+            "Parent": 20,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "BlackImage",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 37.0,
+                            "y": 20.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 37.0,
+                            "y": 20.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 11422530766509655204
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 20,
+            "Parent": null,
+            "Child Entities": [
+                19
+            ],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Canvasofblackimage",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Canvas": {
+                        "isVisible": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048576,
             "Parent": null,
             "Child Entities": [],
@@ -900,7 +1040,7 @@
                     "Mesh": {
                         "meshName": "None",
                         "GUID": {
-                            "ID": 2594059210300621463
+                            "ID": 3096164563922890518
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -926,7 +1066,7 @@
                     "Transform": {
                         "position": {
                             "x": -0.0045928955078125,
-                            "y": 0.0018410634947940708,
+                            "y": 0.0019936515018343927,
                             "z": -0.004302978515625
                         },
                         "scale": {
@@ -948,7 +1088,7 @@
                         "worldPos": {
                             "x": 0.9107242226600647,
                             "y": -0.44039857387542727,
-                            "z": -0.7515773177146912
+                            "z": -0.7515765428543091
                         },
                         "worldScale": {
                             "x": 0.004999999888241291,
@@ -1030,6 +1170,25 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "CDinCase"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 19,
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 19,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fadeImageEntity"
                                         }
                                     },
                                     {
@@ -1269,8 +1428,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.000026464462280273439,
-                            "z": -0.00032806396484375
+                            "y": 0.000028848648071289064,
+                            "z": -0.0003566741943359375
                         },
                         "scale": {
                             "x": 1.0,
@@ -1290,8 +1449,8 @@
                         },
                         "worldPos": {
                             "x": 1.3216056823730469,
-                            "y": 0.09599003940820694,
-                            "z": -1.2558139562606812
+                            "y": 0.0959901362657547,
+                            "z": -1.2558151483535767
                         },
                         "worldScale": {
                             "x": 0.03999999910593033,
@@ -1401,7 +1560,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 6817790556025226931
+                            "ID": 6787808862807662485
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1542,7 +1701,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2031829782470287562
+                            "ID": 15597098455501606368
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,

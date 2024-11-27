@@ -121,6 +121,10 @@ public class CDDragAndDrop : Entity
     //TEMPORARY
     public Entity CDinCase;
     public Entity CDCurr;
+
+    public Entity fadeImageEntity; // Entity containing the fade Image
+    private Image fadeImage; // Image used for the fade effect
+
     private Vec3<float> originalScale;
     private Vec3<float> hoverScale;
     public Vector3 outOfTheWay = new Vector3(10.0f, 10.0f, 10.0f);
@@ -128,6 +132,9 @@ public class CDDragAndDrop : Entity
     private bool isFading = false;
     private float fadeDuration = 3f;
     private float fadeElapsed = 0f;
+
+    private float startAlpha = 0f; // Initial alpha
+    private float targetAlpha = 1f; // Target alpha
 
     private bool isHovered = false;
     void Start()
@@ -141,7 +148,37 @@ public class CDDragAndDrop : Entity
             originalScale.Z * 1.1f
         );
 
+        if (fadeImageEntity != null)
+        {
+            fadeImage = fadeImageEntity.GetComponent<Image>();
+            //fadeImage = FindImageInChildren(fadeImageEntity.mEntityID);
+        }
+
+        if (fadeImage != null)
+        {
+            Debug.Log("fadeimage is here");
+            fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, startAlpha);
+        }
+
     }
+
+    //private Image FindImageInChildren(uint parentEntityID)
+    //{
+    //    // Get all children of the parent entity
+    //    uint[] childEntities = InternalCalls.GetAllChildren(parentEntityID);
+
+    //    foreach (uint childID in childEntities)
+    //    {
+    //        // Check if the child has the Image script/component
+    //        Entity childEntity = InternalCalls.FindScriptInEntity(childID, "Image") as Entity;
+    //        if (childEntity != null)
+    //        {
+    //            return childEntity.GetComponent<Image>();
+    //        }
+    //    }
+
+    //    return null; // Return null if no Image component is found
+    //}
 
     void Update()
     {
@@ -159,7 +196,13 @@ public class CDDragAndDrop : Entity
         if (isFading)
         {
             fadeElapsed += Time.deltaTime;
-            if(fadeElapsed >= fadeDuration)
+            float alpha = Mathf.Lerp(startAlpha, targetAlpha, fadeElapsed / fadeDuration);
+
+            if (fadeImage != null)
+            {
+                fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, alpha);
+            }
+            if (fadeElapsed >= fadeDuration)
             {
                 isFading = false;
                 InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
@@ -167,22 +210,30 @@ public class CDDragAndDrop : Entity
         }
     }
 
+
+
     private void Startfade()
     {
         isFading = true;
         fadeElapsed = 0f;
+        //startAlpha = fadeImage != null ? fadeImage.color.a : 0f;
+        //targetAlpha = 1f;
+        //fadeDuration = 2.5f;
+        //FadeManager.Instance.FadeToBlack(2.5f);
     }
     public void OnMouseDown()
     {
         CDinCase.SetActive(true);
         //CDCurr.SetActive(false);
         InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
+        //Startfade();
         NextScene();
         
     }
 
     private void NextScene()
     {
+
         Startfade();
         
     }
