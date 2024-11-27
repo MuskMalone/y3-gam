@@ -4,7 +4,7 @@ public class TutorialPainting : Entity, IInventoryItem
 {
     // Script to be placed in the Crowbar Entity (Parent)
     public Entity _Image;
-    public Inventory inventoryScript;
+    public TutorialLevelInventory inventoryScript;
     public PlayerInteraction playerInteraction;
     public Entity EToPickUpUI;
 
@@ -49,12 +49,12 @@ public class TutorialPainting : Entity, IInventoryItem
 
     void Update()
     {
-        bool isCrowbarHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
-        if (Input.GetKeyTriggered(KeyCode.E) && isCrowbarHit)
+        bool isTutorialPaintingHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
+        if (Input.GetKeyTriggered(KeyCode.E) && isTutorialPaintingHit)
         {
             InternalCalls.PlaySound(mEntityID, "PickupObjects");
             inventoryScript.Additem(this);
         }
-        EToPickUpUI.SetActive(isCrowbarHit);
+        EToPickUpUI.SetActive(isTutorialPaintingHit);
     }
 }

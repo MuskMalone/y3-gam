@@ -84,6 +84,7 @@ namespace Mono
     { "Dialogue", ScriptFieldType::DIALOGUE},
     { "PlayerInteraction", ScriptFieldType::PLAYERINTERACTION },
     { "Inventory", ScriptFieldType::INVENTORY },
+    { "TutorialLevelInventory", ScriptFieldType::TUTORIALLEVELINVENTORY },
   };
 }
 
