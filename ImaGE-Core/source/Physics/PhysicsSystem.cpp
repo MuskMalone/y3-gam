@@ -654,6 +654,8 @@ namespace IGE {
 			}
 			mRigidBodyIDs.clear();
 			mRigidBodyToEntity.clear();
+			mInactiveActors.clear();
+			mOnTriggerPairs.clear();
 		}
 
 		bool PhysicsSystem::RayCastSingular(glm::vec3 const& origin, glm::vec3 const& end, RaycastHit& result)

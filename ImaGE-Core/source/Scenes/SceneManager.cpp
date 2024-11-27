@@ -18,6 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Reflection/ObjectFactory.h>
 #include "Graphics/RenderSystem.h"
 #include <Core/Components/Light.h>
+#include <Physics/PhysicsSystem.h>
 
 #ifdef _DEBUG
 //#define EVENTS_DEBUG
@@ -113,10 +114,9 @@ namespace Scenes
     {
     case Events::EventType::LOAD_SCENE:
     {
-      if (!mSceneName.empty()) {
-        ClearScene();
-        UnloadScene();
-      }
+      ClearScene();
+      UnloadScene();
+
       auto loadSceneEvent{ std::static_pointer_cast<Events::LoadSceneEvent>(event) };
       mSceneName = loadSceneEvent->mSceneName;
       if (!loadSceneEvent->mPath.empty()) {
