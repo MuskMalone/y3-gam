@@ -1,0 +1,60 @@
+﻿using IGE.Utils;
+
+public class TutorialPainting : Entity, IInventoryItem
+{
+    // Script to be placed in the Crowbar Entity (Parent)
+    public Entity _Image;
+    public Inventory inventoryScript;
+    public PlayerInteraction playerInteraction;
+    public Entity EToPickUpUI;
+
+    public string Name
+    {
+        get
+        {
+            return "Tutorial Painting";
+        }
+    }
+
+    public Entity Image
+    {
+        get
+        {
+            return _Image;
+        }
+
+        set
+        {
+            _Image = value;
+        }
+    }
+
+
+    public void OnPickup()
+    {
+        SetActive(false);
+
+    }
+
+    public void OnUsed()
+    {
+        Destroy(mEntityID);
+    }
+
+    void Start()
+    {
+        _Image?.SetActive(false);
+        EToPickUpUI?.SetActive(false);
+    }
+
+    void Update()
+    {
+        bool isCrowbarHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
+        if (Input.GetKeyTriggered(KeyCode.E) && isCrowbarHit)
+        {
+            InternalCalls.PlaySound(mEntityID, "PickupObjects");
+            inventoryScript.Additem(this);
+        }
+        EToPickUpUI.SetActive(isCrowbarHit);
+    }
+}
