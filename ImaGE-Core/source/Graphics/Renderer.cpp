@@ -27,6 +27,7 @@
 namespace Graphics {
 	constexpr int INVALID_ENTITY_ID = -1;
 
+	ECS::Entity Renderer::mHighlightedEntity;
 	RendererData Renderer::mData;
 	MaterialTable Renderer::mMaterialTable;
 	ShaderLibrary Renderer::mShaderLibrary;
@@ -41,6 +42,7 @@ namespace Graphics {
 	}
 	void Renderer::Init() {
 		SUBSCRIBE_STATIC_FUNC(Events::EventType::WINDOW_RESIZED, OnResize);
+		SUBSCRIBE_STATIC_FUNC(Events::EventType::ENTITY_PICKED, OnEntityPicked );
 		InitUICamera();
 
 		//----------------------Init Batching Quads------------------------------------------------------------//
@@ -246,6 +248,7 @@ namespace Graphics {
 		ShaderLibrary::Add("Tex2D", Shader::Create("Tex2D.vert.glsl", "Tex2D.frag.glsl"));
 		ShaderLibrary::Add("SkyboxProc", Shader::Create("Skybox\\Procedural.vert.glsl", "Skybox\\Procedural.frag.glsl"));
 		ShaderLibrary::Add("SkyboxPano", Shader::Create("Skybox\\Panoramic.vert.glsl", "Skybox\\Panoramic.frag.glsl"));
+		ShaderLibrary::Add("Highlight", Shader::Create("Highlight.vert.glsl", "Highlight.frag.glsl"));
 	}
 
 	void Renderer::InitGeomPass() {
@@ -423,12 +426,25 @@ namespace Graphics {
 		mUICamera.top = 10.0f;
 	}
 
+	void Renderer::SetHighlightedEntity(ECS::Entity const& entity) {
+		mHighlightedEntity = entity;
+	}
+
+	ECS::Entity Renderer::GetHighlightedEntity(){
+		return mHighlightedEntity;
+	}
+
 	EVENT_CALLBACK_DEF(Renderer, OnResize) {
 		auto const& e { CAST_TO_EVENT(Events::WindowResized)};
 
 		for (auto const& pass : mRenderPasses) {
 			pass->GetTargetFramebuffer()->Resize(e->mWidth, e->mHeight);
 		}
+	}
+
+	EVENT_CALLBACK_DEF(Renderer, OnEntityPicked) {
+		auto const& entity { CAST_TO_EVENT(Events::EntityScreenPicked)->mEntity };
+		SetHighlightedEntity(entity);
 	}
 
 	void Renderer::Shutdown() {

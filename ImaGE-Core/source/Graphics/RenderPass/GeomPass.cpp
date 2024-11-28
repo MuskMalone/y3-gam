@@ -183,17 +183,23 @@ namespace Graphics {
           // Create or resize mOutputTexture based on the framebuffer's specs
           mOutputTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
           mDepthTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height, GL_DEPTH24_STENCIL8);
+          mRedTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height, GL_R32I);
       }
 
       // Perform the copy operation
       if (mOutputTexture) {
           mOutputTexture->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
           mDepthTexture->CopyFrom(fb->GetDepthAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+          mRedTexture->CopyFrom(fb->GetColorAttachmentID(1), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
       }
   }
 
   std::shared_ptr<Texture> GeomPass::GetDepthTexture() {
       return mDepthTexture;
+  }
+
+  std::shared_ptr<Texture> GeomPass::GetEntityTexture(){
+      return mRedTexture;
   }
 
   std::shared_ptr<Framebuffer> GeomPass::GetGameViewFramebuffer() const {

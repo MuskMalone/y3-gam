@@ -15,6 +15,10 @@ namespace Graphics {
 	*/
 	Texture::Texture() : mWidth{ 0 }, mHeight{ 0 }, mTexHdl{ 0 } {}
 
+	Texture::Texture(uint32_t texHdl) : mWidth{}, mHeight{}, mTexHdl{ texHdl } {
+
+	}
+
 	/*  _________________________________________________________________________ */
 	/*! Texture
 
@@ -176,7 +180,7 @@ namespace Graphics {
 		//GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
 		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_WRAP_S, GL_REPEAT));
 		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_WRAP_T, GL_REPEAT));
-		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
 		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
 
 		if (mIsBindless) {
