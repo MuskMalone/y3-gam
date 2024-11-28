@@ -530,8 +530,6 @@ namespace Graphics {
 		SetLineBufferData(p0, clr);
 		SetLineBufferData(p1, clr);
 
-		mData.lineVtxCount += 2;
-
 		++mData.stats.lineCount;
 	}
 
