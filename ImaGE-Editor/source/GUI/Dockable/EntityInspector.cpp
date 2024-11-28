@@ -189,6 +189,7 @@ namespace GUI {
         prefabOverride = nullptr;
       }
 
+      SetIsComponentEdited(false);
       // @TODO: EDIT WHEN NEW COMPONENTS (ALSO ITS OWN WINDOW FUNCTION)
       if (currentEntity.HasComponent<Component::Tag>()) {
         rttr::type const tagType{ rttr::type::get<Component::Tag>() };
@@ -448,6 +449,11 @@ namespace GUI {
     if (!mFirstEdit && mIsComponentEdited) {
       QUEUE_EVENT(Events::SceneModifiedEvent);
       mFirstEdit = true;
+    }
+
+    // wrap cursor when an input field is used
+    if (ImGui::IsKeyDown(ImGuiKey_MouseLeft) && mIsComponentEdited) {
+      ImGuiHelpers::WrapMousePos(1 << ImGuiAxis_X);
     }
   }
 

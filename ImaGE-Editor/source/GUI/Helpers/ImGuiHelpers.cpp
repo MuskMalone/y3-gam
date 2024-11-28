@@ -321,6 +321,8 @@ namespace ImGuiHelpers
     return valChanged;
   }
 
+  void WrapMousePos(int axises_mask);
+  void WrapMousePosEx(int axises_mask, const ImRect& wrap_rect);
 } // namespace ImGuiHelpers
 
 
