@@ -150,6 +150,7 @@ public class CDDragAndDrop : Entity
 
     //rotation
     private Quaternion originalRotation;
+    private float zRotAngle = 0f;
     void Start()
     {
         originalRotation = InternalCalls.GetRotation(mEntityID);
@@ -200,29 +201,38 @@ public class CDDragAndDrop : Entity
     void Update()
     {
         //string tag = InternalCalls.GetTag(mEntityID);
-        
-        
-            if (isHovered && !isBeingDragged)
-            {
-                //Console.WriteLine("Entered isHovered");
-                Vector3 hoverVector = new Vector3(hoverScale.X, hoverScale.Y, hoverScale.Z);
-                InternalCalls.SetScale(mEntityID, ref hoverVector);
 
-                //rotation
-                Quaternion newRot = Quaternion.CreateFromAxisAngle(Vector3.UnitZ, Mathf.DegToRad(10));
-                originalRotation = InternalCalls.GetRotation(mEntityID);
-                Console.WriteLine("originalrotation " + originalRotation);
-                InternalCalls.SetWorldRotation(mEntityID, ref newRot);
-                Console.WriteLine("Newrotation " + originalRotation);
 
-            }
-            else
-            {
-                Vector3 originalVector = new Vector3(originalScale.X, originalScale.Y, originalScale.Z);
-                InternalCalls.SetScale(mEntityID, ref originalVector);
-            }
-        
-        if(isBeingDragged)
+        if (isHovered && !isBeingDragged)
+        {
+            Console.WriteLine("Entered isHovered");
+            Vector3 hoverVector = new Vector3(hoverScale.X, hoverScale.Y, hoverScale.Z);
+            InternalCalls.SetScale(mEntityID, ref hoverVector);
+
+            //rotation
+            zRotAngle += -1f * Time.deltaTime;
+            Quaternion zRot = Quaternion.CreateFromAxisAngle(Vector3.UnitZ, zRotAngle);
+            Quaternion xRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(90));
+            
+            // Combine the rotations
+            Quaternion combinedRotation = zRot * xRotation; // Order matters!
+            
+            // Apply the combined rotation
+            InternalCalls.SetWorldRotation(mEntityID, ref combinedRotation);
+          
+
+
+
+
+        }
+        else if(!isHovered)
+        {
+            Vector3 originalVector = new Vector3(originalScale.X, originalScale.Y, originalScale.Z);
+            InternalCalls.SetScale(mEntityID, ref originalVector);
+            
+        }
+
+        if (isBeingDragged)
         {
             FollowMouse();
         }
@@ -297,6 +307,7 @@ public class CDDragAndDrop : Entity
             ShakeCD(0.5f, 0.005f);
             return;
         }
+
         isBeingDragged = true;
         //play sound
         InternalCalls.PlaySound(mEntityID, "PickupCD_SFX");
@@ -353,6 +364,7 @@ public class CDDragAndDrop : Entity
     public void OnMouseExit()
     {
         isHovered = false;
+        InternalCalls.SetWorldRotation(mEntityID, ref originalRotation);
     }
 }
 
