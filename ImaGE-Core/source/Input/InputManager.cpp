@@ -38,6 +38,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <FrameRateController/FrameRateController.h>
 #include <Application.h>
 #include <Scripting/ScriptManager.h>
+#include <Graphics/Camera/CameraManager.h>
+#include <Graphics/Renderer.h>
+#include <Graphics/RenderSystem.h>
+#include <Graphics/RenderPass/GeomPass.h>
 
 using namespace Input;
 using namespace Events;
@@ -290,13 +294,26 @@ void Input::InputManager::SetCurrFramebuffer(size_t framebufferID)
 	mCurrFramebuffer = framebufferID;
 }
 
-vec2 InputManager::GetMousePosWorld()
+vec3 InputManager::GetMousePosWorld()
 {
+	auto const& geomPass{ Graphics::Renderer::GetPass<Graphics::GeomPass>() };
+	auto const& gameView{ geomPass->GetGameViewFramebuffer()->GetFramebufferSpec() };
+	auto const& activeCamera{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() };
+
+	vec2 fbDims{ gameView.width, gameView.height };
+	glm::vec4 ndc{ 2.f * mCurrMousePos / fbDims - 1.f, -1.f, 1 };
+
+	glm::vec4 eyeCoords{ glm::inverse(activeCamera.GetProjMatrix()) * ndc };
+	eyeCoords /= eyeCoords.w;
+
+	glm::vec4 out{ glm::inverse(activeCamera.GetViewMatrix()) * eyeCoords };
+	out *= glm::vec4{1.f, -1.f, 1.f, 1.f}; // for some reason y coord is inverted
+	return vec3{ out };
 	//auto& gEngine{ Graphics::GraphicsEngine::GetInstance() };
 	//// TODO: change to current framebuffer
 	//Graphics::gVec2 worldPosF32{ gEngine.ScreenToWS({ static_cast<GLfloat>(mMousePos.x), static_cast<GLfloat>(mHeight - mMousePos.y) }, m_currFramebuffer) };
 	//return  {worldPosF32.x, worldPosF32.y};
-	return { 0,0 };
+	/*return { 0,0 };*/
 }
 
 void InputManager::UpdateAllAxis()

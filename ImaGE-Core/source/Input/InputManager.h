@@ -53,6 +53,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 		using KEY_MAP = std::bitset<static_cast<size_t>(IK_KEY_COUNT)>;
 		using KEY_PRESS_ARRAY = std::array<double, static_cast<size_t>(IK_KEY_COUNT)>;
 		using vec2 = glm::vec2;
+		using vec3 = glm::vec3;
 		#define InputSensitivity 10.f
 
 		class InputManager : public ThreadSafeSingleton<InputManager>
@@ -237,7 +238,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 		\return
 			returns the mouse's pos as dvec2
 		************************************************************************/
-			static vec2 GetMousePosWorld();
+			static vec3 GetMousePosWorld();
 
 			/*!*********************************************************************
 		\brief

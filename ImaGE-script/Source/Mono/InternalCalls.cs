@@ -99,6 +99,12 @@ namespace IGE.Utils
     internal extern static Vector3 GetMousePos();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static Vector3 GetMousePosWorld();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static Vector3 GetCameraForward();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static string GetInputString();
 
     #endregion
