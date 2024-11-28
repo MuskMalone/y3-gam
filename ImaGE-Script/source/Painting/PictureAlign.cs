@@ -75,7 +75,9 @@ public class PictureAlign : Entity
           FreezePlayer();
           currentImg.SetActive(false);
           isTransitioning = true;
- 
+          
+
+
           if (LeftClickText != null)
             LeftClickText.SetActive(false);
           RightArrow.SetActive(false);
