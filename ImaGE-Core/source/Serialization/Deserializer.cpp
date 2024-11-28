@@ -13,15 +13,14 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <pch.h>
 #include "Deserializer.h"
 #include "JsonKeys.h"
-#include <fstream>
-#include <rapidjson/istreamwrapper.h>
-#include <sstream>
+#include <Serialization/FILEWrapper.h>
 #include <cstdarg>
 #include <Prefabs/PrefabManager.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
 #include <Core/LayerManager/LayerManager.h>
 #include <Core/Components/Script.h>
 #include <Reflection/ProxyScript.h>
+#include <rapidjson/filereadstream.h>
 
 //#define DESERIALIZER_DEBUG
 
@@ -29,20 +28,20 @@ namespace Serialization
 {
   using MonoObjectVec = Mono::DataMemberInstance<std::vector<MonoObject*>>;
 
-  void Deserializer::DeserializeAny(rttr::instance inst, std::string const& filename)
+  void Deserializer::DeserializeAny(rttr::instance inst, std::string const& filePath)
   {
-    std::ifstream ifs{ filename };
-    if (!ifs) {
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to read " + filename);
+    FILEWrapper fileWrapper{ filePath.c_str(), "r" };
+    if (!fileWrapper) {
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to read " + filePath);
       return;
     }
 
-    rapidjson::Document document{};
-    rapidjson::IStreamWrapper isw{ ifs };
-    if (document.ParseStream(isw).HasParseError())
-    {
-      ifs.close();
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to parse " + filename);
+    std::vector<char> buffer(sBufferSize);
+    rapidjson::FileReadStream iStream{ fileWrapper.GetFILE(), buffer.data(), sBufferSize };
+
+    rapidjson::Document document;
+    if (document.ParseStream(iStream).HasParseError()) {
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to parse " + filePath);
       return;
     }
 
@@ -838,30 +837,25 @@ namespace Serialization
   }
 #pragma endregion
 
-  bool Deserializer::ParseJsonIntoDocument(rapidjson::Document& document, std::string const& filepath)
+  bool Deserializer::ParseJsonIntoDocument(rapidjson::Document& document, std::string const& filePath)
   {
-    std::ifstream ifs{ filepath };
-    if (!ifs) {
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to read " + filepath);
+    FILEWrapper fileWrapper{ filePath.c_str(), "r" };
+    if (!fileWrapper) {
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to read " + filePath);
 #ifdef _DEBUG
-      std::cout << "Unable to read " << filepath << "\n";
+      std::cout << "Unable to read " << filePath << "\n";
 #endif
       return false;
     }
-    // parse into document object
-    rapidjson::IStreamWrapper isw{ ifs };
-    if (ifs.peek() == std::ifstream::traits_type::eof())
-    {
-      ifs.close(); //log ("Empty scene file read. Ignoring checks");
-      return false;
-    }
+    // if empty, ignore this file
 
-    if (document.ParseStream(isw).HasParseError())
-    {
-      ifs.close();
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to parse " + filepath);
+    std::vector<char> buffer(sBufferSize);
+    rapidjson::FileReadStream iStream{ fileWrapper.GetFILE(), buffer.data(), sBufferSize };
+
+    if (document.ParseStream(iStream).HasParseError()) {
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to parse " + filePath);
 #ifdef _DEBUG
-      std::cout << "Unable to parse " + filepath << "\n";
+      std::cout << "Unable to parse " + filePath << "\n";
 #endif
       return false;
     }

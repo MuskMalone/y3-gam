@@ -14,7 +14,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma once
 #include <rapidjson/document.h>
 #include <rttr/variant.h>
-#include <rapidjson/Writer.h>
+#include <rapidjson/PrettyWriter.h>
 #include <rapidjson/filewritestream.h>
 #include <string>
 #include <Prefabs/Prefab.h>
@@ -68,7 +68,7 @@ namespace Serialization
 
   private:
     using StreamType = rapidjson::FileWriteStream;
-    using WriterType = rapidjson::Writer<StreamType>;
+    using WriterType = rapidjson::PrettyWriter<StreamType>;
     // had to decltype a lambda LOL
     using EntityList = std::priority_queue < ECS::Entity, std::vector<ECS::Entity>,
       decltype([](ECS::Entity const& lhs, ECS::Entity const& rhs) { return lhs.GetRawEnttEntityID() > rhs.GetRawEnttEntityID(); }) > ;

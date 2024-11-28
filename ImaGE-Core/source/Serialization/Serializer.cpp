@@ -38,7 +38,7 @@ namespace Serialization
 //#ifndef IMGUI_DISABLE
   void Serializer::SerializePrefab(Prefabs::Prefab const& prefab, std::string const& filePath)
   {
-    FILEWrapper fileWrapper{ filePath.c_str() };
+    FILEWrapper fileWrapper{ filePath.c_str(), "w" };
     if (!fileWrapper) {
       Debug::DebugLogger::GetInstance().LogCritical("Unable to serialize prefab into " + filePath);
 #ifdef _DEBUG
@@ -47,8 +47,8 @@ namespace Serialization
       return;
     }
 
-    char buffer[4096];
-    StreamType outStream{ fileWrapper.GetFILE(), buffer, 4096 };
+    std::vector<char> buffer(sBufferSize);
+    StreamType outStream{ fileWrapper.GetFILE(), buffer.data(), sBufferSize };
     WriterType writer{ outStream };
     writer.StartObject();
 
@@ -89,7 +89,7 @@ namespace Serialization
 
   void Serializer::SerializeAny(rttr::instance const& obj, std::string const& filePath)
   {
-    FILEWrapper fileWrapper{ filePath.c_str() };
+    FILEWrapper fileWrapper{ filePath.c_str(), "w" };
     if (!fileWrapper) {
       Debug::DebugLogger::GetInstance().LogError("[Serializer] Unable to create file: " + filePath);
 #ifdef _DEBUG
@@ -98,21 +98,21 @@ namespace Serialization
       return;
     }
 
-    char buffer[sBufferSize];
-    StreamType outStream{ fileWrapper.GetFILE(), buffer, sBufferSize };
+    std::vector<char> buffer(sBufferSize);
+    StreamType outStream{ fileWrapper.GetFILE(), buffer.data(), sBufferSize };
     WriterType writer{ outStream };
     SerializeClassTypes(obj, writer);
   }
 
   void Serializer::SerializeScene(std::string const& filePath)
   {
-    FILEWrapper fileWrapper{ filePath.c_str() };
+    FILEWrapper fileWrapper{ filePath.c_str(), "w" };
     if (!fileWrapper) {
       Debug::DebugLogger::GetInstance().LogError("[Serializer] Unable to create scene file: " + filePath);
     }
 
-    char buffer[sBufferSize];
-    StreamType outStream{ fileWrapper.GetFILE(), buffer, sBufferSize};
+    std::vector<char> buffer(sBufferSize);
+    StreamType outStream{ fileWrapper.GetFILE(), buffer.data(), sBufferSize };
     WriterType writer{ outStream };
 
     EntityList entityList{ GetSortedEntities() };
