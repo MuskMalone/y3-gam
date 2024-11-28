@@ -58,7 +58,7 @@ namespace GUI {
     mWindows.emplace_back(std::make_shared<Console>("Console"));
     mWindows.emplace_back(std::make_shared<PerformanceWindow>("Performance Window"));
     mWindows.emplace_back(std::make_shared<LayerWindow>("Layers"));
-    mWindows.emplace_back(std::make_shared<RenderPassViewer>("Render Pass Viewer"));
+    mWindows.emplace_back(std::make_shared<RenderPassViewer>("Render Pass Viewer"))->Toggle();  // default to non-active
     mWindows.emplace_back(std::make_shared<PostProcessingSettings>("Post Processing"));
 
     Styler& styler{ GUIVault::GetStyler() };

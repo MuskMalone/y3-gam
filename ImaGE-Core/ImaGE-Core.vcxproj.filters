@@ -765,6 +765,7 @@
     <ClInclude Include="source\BoundingVolumes\Frustum.h" />
     <ClInclude Include="source\BoundingVolumes\AABB.h" />
     <ClInclude Include="source\BoundingVolumes\IntersectionTests.h" />
+    <ClInclude Include="source\Serialization\FILEWrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />

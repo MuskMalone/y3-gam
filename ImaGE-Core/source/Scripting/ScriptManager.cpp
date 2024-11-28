@@ -34,6 +34,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Input/InputManager.h"
 #include "Asset/AssetManager.h"
 #include "Physics/PhysicsSystem.h"
+#include "Graphics/RenderSystem.h"
 //#define DEBUG_MONO
 namespace Mono
 {
@@ -189,8 +190,9 @@ void ScriptManager::AddInternalCalls()
   ADD_CLASS_INTERNAL_CALL(AnyKeyDown, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(AnyKeyTriggered, Input::InputManager::GetInstance());
   ADD_INTERNAL_CALL(GetMousePos);
+  ADD_INTERNAL_CALL(GetMousePosWorld);
   ADD_INTERNAL_CALL(GetMouseDelta);
-
+  ADD_INTERNAL_CALL(GetCameraForward);
 
 
   //// Get Functions
@@ -956,6 +958,19 @@ glm::vec3 Mono::GetMouseDelta()
 glm::vec3 Mono::GetMousePos()
 {
   return glm::vec3(Input::InputManager::GetInstance().GetMousePos(), 0);
+}
+
+glm::vec3 Mono::GetMousePosWorld()
+{
+    return Input::InputManager::GetInstance().GetMousePosWorld();
+}
+
+glm::vec3 Mono::GetCameraForward()
+{
+    if (Graphics::RenderSystem::mCameraManager.HasActiveCamera()) {
+        return Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent().GetForwardVector();
+    }
+    return { 1,0,0 };
 }
 
 ECS::Entity::EntityID Mono::Raycast(glm::vec3 start, glm::vec3 end)

@@ -155,6 +155,10 @@ public class CDDragAndDrop : Entity
     //sound
     private bool isSpinningSoundPlaying = false;
     //private float spinningSoundTimer = 0f;
+
+    //dragging
+    private float toCDDist;
+    private Vector3 toCDVec;
     void Start()
     {
         originalRotation = InternalCalls.GetRotation(mEntityID);
@@ -338,16 +342,21 @@ public class CDDragAndDrop : Entity
 
     public void OnMouseUp()
     {
+        Console.WriteLine("Hello Mouseup");
         isBeingDragged = false;
     }
 
     private void FollowMouse()
     {
-        Vector3 MousePos = InternalCalls.GetMousePos();
-        Console.WriteLine("MousePos " + MousePos);
-        InternalCalls.SetWorldPosition(mEntityID, ref MousePos);
-        Console.WriteLine("My Entity WorldPos " + InternalCalls.GetWorldPosition(mEntityID));
-        Console.WriteLine("My Entity Pos " + InternalCalls.GetPosition(mEntityID));
+        Vector3 MousePos = InternalCalls.GetMousePosWorld();
+        //Console.WriteLine("MousePos " + MousePos);
+        Vector3 ForwardVec = InternalCalls.GetCameraForward();
+        ForwardVec /= ForwardVec.Length();
+        ForwardVec *= toCDDist;
+        Vector3 NewPos = MousePos + ForwardVec;
+        InternalCalls.SetWorldPosition(mEntityID, ref NewPos);
+        //Console.WriteLine("My Entity WorldPos " + InternalCalls.GetWorldPosition(mEntityID));
+        //Console.WriteLine("My Entity Pos " + InternalCalls.GetPosition(mEntityID));
     }
     private void ShakeCD(float duration, float magnitude)
     {
@@ -373,6 +382,9 @@ public class CDDragAndDrop : Entity
     {
         zRotAngle = 0f;
         //InternalCalls.PlaySound(mEntityID, "SpinningDiscPS1_SFX");
+        Vector3 MousePos = InternalCalls.GetMousePosWorld();
+        //tch: the accurate distance doesnt really matter i guess
+        toCDDist = (MousePos - originalPosition).Length();
         isHovered = true;
     }
 

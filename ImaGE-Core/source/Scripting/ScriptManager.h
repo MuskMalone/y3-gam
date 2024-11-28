@@ -361,6 +361,10 @@ namespace Mono
 
 		static glm::vec3 GetMousePos();
 
+		static glm::vec3 GetMousePosWorld();
+
+		static glm::vec3 GetCameraForward();
+
 		static ECS::Entity::EntityID FindChildByTag(ECS::Entity::EntityID entity, MonoString* s);
 
 		static ECS::Entity::EntityID FindParentByTag(MonoString* s);

@@ -68,7 +68,7 @@ namespace GUI
     if (!mEditingPrefab) {
       // Ctrl + S to save
       if (ImGui::GetIO().KeyCtrl && ImGui::IsKeyPressed(ImGuiKey_S, false)) {
-        QUEUE_EVENT(Events::SaveSceneEvent);
+        QUEUE_EVENT(Events::SaveSceneEvent, GUIVault::sSerializePrettyScene);
         if (mSceneModified) {
           mSceneName.erase(mSceneName.size() - 2);
           mSceneModified = false;
