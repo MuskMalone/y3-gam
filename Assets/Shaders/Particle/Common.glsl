@@ -20,48 +20,52 @@
 #define ALPHA_SIZE_DECR_OVER_LIFETIME 2  //decreasing alpha and size over lifetime
 #define ALPHA_SIZE_INCR_OVER_LIFETIME 3  //increasing alpha and size over lifetime
 
-struct Particle {
-    vec4 col;     // 16 bytes
-    vec4 pos;     // 12 bytes
-
-    vec2 vel;     // 8 bytes
-    vec2 gravity; // 8 bytes
-    vec2 size;    // 8 bytes (vec2 is aligned to 8 bytes)
-    float rot;    // 4 bytes
-    float age;    // 4 bytes
-    float lifetime; // 4 bytes
-    float angvel;  // 4 bytes
-    int emtIdx;
-    bool alive;   // 4 bytes (bool is often aligned to 4 bytes, same as float)
-    // Possibly padding here to align the structure size to a multiple of 16 bytes
-};
-
-
 struct Emitter {
-    //vertices are stored in clockwise order;
-    vec4 vertices[4]; // Each vec4 is 16 bytes, total 64 bytes
-    vec4 col;         // 16 bytes (vec3 is aligned like vec4)
+    vec4 vertices[8];  // 4 vec4s, each vec4 is 16 bytes, total 64 bytes
+    vec4 col;          // 16 bytes
+    vec3 pos;          // vec3
+    vec3 vel;          // vec3
+    vec3 size;         // vec3
+    vec3 rot;
+    vec3 angvel;
 
-    vec2 gravity; // 8 bytes
-    vec2 size;    // 8 bytes (vec2 is aligned to 8 bytes)
-    float rot;    // 4 bytes
-    float lifetime; // 4 bytes
-    float angvel;  // 4 bytes
-    float speed;     // 8 bytes
+    float lifetime;         // 4 bytes
+    float speed;            // 4 bytes
 
-    float time;       // 4 bytes, but due to the vec3 above, you can expect padding here
-    float frequency;  // 4 bytes
+    float time;             // 4 bytes
+    float frequency;        // 4 bytes
 
-    int type;         // 4 bytes
-    // 1 for point, 2 for line, 4 for rect
-    int vCount;       // 4 bytes
-    int preset;    // 4 bytes //alpha over lifetime etc
-    int particlesPerFrame; // 4 bytes
+    int type;               // 4 bytes
+    int vCount;             // 4 bytes
+    int preset;             // 4 bytes
+    int particlesPerFrame;  // 4 bytes
 
-    bool alive;       // 4 bytes (bools are often treated as 4 bytes for alignment)
-    
-    // Padding might be added here to align the entire structure size
+    bool alive;             // 1 byte (in practice, often treated as 4 bytes for alignment)
 };
+
+struct Particle {
+    vec4 startCol;
+    vec4 col;          // vec4
+
+    vec3 startPos;
+    vec3 pos;          // vec3
+    
+    vec3 startVel;
+    vec3 vel;          // vec3
+    
+    vec3 startSize;
+    vec3 size;         // vec3
+
+    vec3 rot;
+    vec3 angvel;
+
+    float age;
+    float lifetime;
+
+    int emtIdx;
+    bool alive;
+};
+
 
 //they are the same size owo
 layout(std430, binding=11) buffer RandIdx //the index for Rands, increments every time random() is called

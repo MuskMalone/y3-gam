@@ -43,6 +43,9 @@
     <Filter Include="Core\Systems">
       <UniqueIdentifier>{35582E35-21BB-BDD9-CA40-F68FB682895C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Systems\ParticleSystem">
+      <UniqueIdentifier>{7D756784-E982-956A-7269-9155DE756121}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Core\Systems\PlayerControllerSystem">
       <UniqueIdentifier>{FA988342-6652-EEEC-EFB1-08C75B6AA45C}</UniqueIdentifier>
     </Filter>
@@ -301,6 +304,9 @@
     </ClInclude>
     <ClInclude Include="source\Core\LayerManager\LayerManager.h">
       <Filter>Core\LayerManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\Systems\ParticleSystem\ParticleSystem.h">
+      <Filter>Core\Systems\ParticleSystem</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Systems\PlayerControllerSystem\PlayerControllerSystem.h">
       <Filter>Core\Systems\PlayerControllerSystem</Filter>
@@ -610,6 +616,9 @@
     <ClInclude Include="source\Graphics\Pipeline.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="source\Graphics\PostProcessing\ParticleManager.h">
+      <Filter>Graphics\PostProcessing</Filter>
+    </ClInclude>
     <ClInclude Include="source\Graphics\PostProcessing\PostProcessingManager.h">
       <Filter>Graphics\PostProcessing</Filter>
     </ClInclude>
@@ -620,6 +629,9 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderPass\GeomPass.h">
+      <Filter>Graphics\RenderPass</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Graphics\RenderPass\ParticlePass.h">
       <Filter>Graphics\RenderPass</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderPass\PostProcessPass.h">
@@ -761,9 +773,6 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Graphics\PostProcessing\ParticleManager.h" />
-    <ClInclude Include="source\Graphics\RenderPass\ParticlePass.h" />
-    <ClInclude Include="source\Core\Systems\ParticleSystem\ParticleSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -820,6 +829,9 @@
     </ClCompile>
     <ClCompile Include="source\Core\LayerManager\LayerManager.cpp">
       <Filter>Core\LayerManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Systems\ParticleSystem\ParticleSystem.cpp">
+      <Filter>Core\Systems\ParticleSystem</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Systems\PlayerControllerSystem\PlayerControllerSystem.cpp">
       <Filter>Core\Systems\PlayerControllerSystem</Filter>
@@ -935,6 +947,9 @@
     <ClCompile Include="source\Graphics\Pipeline.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="source\Graphics\PostProcessing\ParticleManager.cpp">
+      <Filter>Graphics\PostProcessing</Filter>
+    </ClCompile>
     <ClCompile Include="source\Graphics\PostProcessing\PostProcessingManager.cpp">
       <Filter>Graphics\PostProcessing</Filter>
     </ClCompile>
@@ -942,6 +957,9 @@
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\RenderPass\GeomPass.cpp">
+      <Filter>Graphics\RenderPass</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Graphics\RenderPass\ParticlePass.cpp">
       <Filter>Graphics\RenderPass</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\RenderPass\PostProcessPass.cpp">
@@ -1035,8 +1053,5 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\Graphics\PostProcessing\ParticleManager.cpp" />
-    <ClCompile Include="source\Graphics\RenderPass\ParticlePass.cpp" />
-    <ClCompile Include="source\Core\Systems\ParticleSystem\ParticleSystem.cpp" />
   </ItemGroup>
 </Project>

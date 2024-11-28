@@ -1,6 +1,6 @@
 
 
-#version 450 core
+#version 460 core
 #extension GL_ARB_compute_shader : enable
 #extension GL_ARB_shader_storage_buffer_object : enable
 //#extension GL_ARB_gpu_shader_uint64 : enable 
@@ -200,11 +200,11 @@ void main() {
     // that any particular instance is controlling
     uint gid = gl_GlobalInvocationID.x;
     if (Emitters[gid].alive == true){
-        //for each emitter
-        Emitters[gid].time += DT;
-        if (Emitters[gid].time >= Emitters[gid].frequency){
-            Emitters[gid].time = 0.0;
-            spawnEmitterParticle(gid);
-        }
+        // //for each emitter
+        // Emitters[gid].time += DT;
+        // if (Emitters[gid].time >= Emitters[gid].frequency){
+        //     Emitters[gid].time = 0.0;
+        //     spawnEmitterParticle(gid);
+        // }
     }
 }

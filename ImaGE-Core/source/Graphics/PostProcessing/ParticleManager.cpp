@@ -71,7 +71,7 @@ namespace Graphics{
 
     inline void ParticleManager::EmitterAction(EmitterInstance& emitter, int action) {
         //mEmitterShader->Use();
-
+        auto emitterShader{ ShaderLibrary::Get("Emitter") };
         //gets the first available idx for emitter;
         if (action == 1) {
             emitter.idx = mEmitterIdxQueue.front();
@@ -81,12 +81,12 @@ namespace Graphics{
         else if (action == -1) {
             mEmitterIdxQueue.push(emitter.idx);
         }
-        mEmitterShader->SetUniform("spawnEmitter", action);
-        mEmitterShader->SetUniform("emtTargetIdx", static_cast<GLint>(emitter.idx));
+        emitterShader->SetUniform("spawnEmitter", action);
+        emitterShader->SetUniform("emtTargetIdx", static_cast<GLint>(emitter.idx));
 
         if (action >= 0) {
             //sets the vertices
-            GLint uEmtverticesLoc = glGetUniformLocation(mEmitterShader->PgmHdl(), "uEmtvertices");
+            GLint uEmtverticesLoc = glGetUniformLocation(emitterShader->PgmHdl(), "uEmtvertices");
 
             //sets the emitter shape
             auto const& v{ emitter.vertices };
@@ -102,20 +102,20 @@ namespace Graphics{
             };
             glUniform4fv(uEmtverticesLoc, 4, vertices);
 
-            mEmitterShader->SetUniform("uEmtcol", emitter.col);
+            emitterShader->SetUniform("uEmtcol", emitter.col);
 
-            mEmitterShader->SetUniform("uEmtgravity", emitter.gravity);
-            mEmitterShader->SetUniform("uEmtsize", emitter.size);
-            mEmitterShader->SetUniform("uEmtrot", emitter.rot);
-            mEmitterShader->SetUniform("uEmtlifetime", emitter.lifetime);
-            mEmitterShader->SetUniform("uEmtangvel", emitter.angvel);
-            mEmitterShader->SetUniform("uEmtspeed", emitter.speed);
+            emitterShader->SetUniform("uEmtgravity", emitter.gravity);
+            emitterShader->SetUniform("uEmtsize", emitter.size);
+            emitterShader->SetUniform("uEmtrot", emitter.rot);
+            emitterShader->SetUniform("uEmtlifetime", emitter.lifetime);
+            emitterShader->SetUniform("uEmtangvel", emitter.angvel);
+            emitterShader->SetUniform("uEmtspeed", emitter.speed);
 
-            mEmitterShader->SetUniform("uEmtfrequency", emitter.frequency);
-            mEmitterShader->SetUniform("uEmttype", emitter.type);
-            mEmitterShader->SetUniform("uEmtvCount", emitter.vCount);
-            mEmitterShader->SetUniform("uEmtpreset", emitter.preset);
-            mEmitterShader->SetUniform("uEmtparticlesPerFrame", emitter.particlesPerFrame);
+            emitterShader->SetUniform("uEmtfrequency", emitter.frequency);
+            emitterShader->SetUniform("uEmttype", emitter.type);
+            emitterShader->SetUniform("uEmtvCount", emitter.vCount);
+            emitterShader->SetUniform("uEmtpreset", emitter.preset);
+            emitterShader->SetUniform("uEmtparticlesPerFrame", emitter.particlesPerFrame);
 
 
         }
@@ -125,9 +125,9 @@ namespace Graphics{
 
         //set the flags back
         //mParticleShader->SetUniform("spawnEmitter", 0);
-        mEmitterShader->SetUniform("emtTargetIdx", -1);
+        emitterShader->SetUniform("emtTargetIdx", -1);
 
-        mEmitterShader->Unuse();
+        emitterShader->Unuse();
     }
 
     void ParticleManager::Bind()
