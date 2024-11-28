@@ -5,8 +5,8 @@
 namespace Serialization {
   class FILEWrapper {
   public:
-    FILEWrapper(std::string const& filePath, const char* flags = "w") : mFile{ std::fopen(filePath.c_str(), flags) } {}
-    ~FILEWrapper() { if (mFile) { Close(); } }
+    FILEWrapper(std::string const& filePath, const char* flags) : mFile{ std::fopen(filePath.c_str(), flags) } {}
+    ~FILEWrapper() { if (mFile) { Close(); }  }
 
     operator bool() const { return mFile; }
 

@@ -68,7 +68,9 @@ namespace Serialization
 
   private:
     using EntityID = ECS::EntityManager::EntityID;
+
     static rttr::type const sDMIEntityListType;
+    inline static constexpr unsigned sBufferSize = 65536;
 
     /*!*********************************************************************
     \brief

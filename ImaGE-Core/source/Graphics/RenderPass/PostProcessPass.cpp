@@ -24,6 +24,7 @@ namespace Graphics {
 		auto numShaders{ Graphics::PostProcessingManager::GetInstance().GetShaderNum() };
 		numShaders = (numShaders) ? numShaders : 1;
 		for (unsigned i{}; i < numShaders; ++i) {
+			glMemoryBarrier(GL_ALL_BARRIER_BITS);
 			mSpec.pipeline->GetSpec().shader = Graphics::PostProcessingManager::GetInstance().GetShader(i);
 			Begin();
 
@@ -40,13 +41,12 @@ namespace Graphics {
 			Renderer::RenderFullscreenTexture();
 			End();
 			auto const& fb = mSpec.pipeline->GetSpec().targetFramebuffer;
-
+			glMemoryBarrier(GL_ALL_BARRIER_BITS);
 			// Check if mOutputTexture is null or if dimensions don’t match
 			if (i < numShaders - 1) {
 				if (mInputTexture) {
 					mInputTexture->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
 				}
-				std::swap(mSpec.pipeline->GetSpec().targetFramebuffer, mPingPongBuffer);
 			}
 			else {
 				if (!mOutputTexture || mOutputTexture->GetWidth() != fb->GetFramebufferSpec().width || mOutputTexture->GetHeight() != fb->GetFramebufferSpec().height) {
@@ -59,7 +59,7 @@ namespace Graphics {
 					mOutputTexture->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
 				}
 			}
-			glMemoryBarrier(GL_ALL_BARRIER_BITS);
+
 
 		}
 	}
