@@ -163,13 +163,13 @@ namespace Graphics {
 	This constructor initializes the Texture with the provided width and height.
 	It sets up the OpenGL texture with the specified dimensions.
 	*/
-	Texture::Texture(uint32_t width, uint32_t height, bool isBindless) :mWidth{ width }, mHeight{ height }, mIsBindless{isBindless} {
+	Texture::Texture(uint32_t width, uint32_t height, GLenum intFmt, bool isBindless) :mWidth{ width }, mHeight{ height }, mIsBindless{isBindless} {
 
 		//TODO might add more parameters
 
 		GLCALL(glCreateTextures(GL_TEXTURE_2D, 1, &mTexHdl));
 		// allocate GPU storage for texture image data loaded from file
-		GLCALL(glTextureStorage2D(mTexHdl, 1, GL_RGBA8, mWidth, mHeight));
+		GLCALL(glTextureStorage2D(mTexHdl, 1, intFmt, mWidth, mHeight));
 
 		// Set texture parameters
 		//GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));

@@ -24,7 +24,25 @@ namespace Graphics {
 		//shader->Use();
 		//shader->SetUniform("u_ViewProjMtx", viewProj);
 
-		Renderer::RenderSceneBegin(viewProj);
+		Renderer::RenderSceneBegin(viewProj, cam);
+
+		if (cam.isEditor) {
+			for (auto const& light : entities) {
+				if (!light.HasComponent<Component::Transform>()) continue;
+				if (!light.HasComponent<Component::Light>()) continue;
+				auto const& xform = ECS::Entity{ light }.GetComponent<Component::Transform>();
+				auto const& lightComp = ECS::Entity{ light }.GetComponent<Component::Light>();
+				Renderer::DrawLightGizmo(lightComp, xform, cam, ECS::Entity{ light }.GetEntityID());
+			}
+			//auto const& cameras = ecsMan.GetAllEntitiesWithComponents<Component::Camera>();
+			//for (auto const& camera : cameras) {
+			//    if (!ECS::Entity{ camera }.IsActive()) continue;
+			//    auto const& camComp = ECS::Entity{ camera }.GetComponent<Component::Camera>();
+			//    auto const& xform = ECS::Entity{ camera }.GetComponent<Component::Transform>();
+			//    Renderer::DrawSprite(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(Renderer::mIcons[2])->mTexture, Color::COLOR_WHITE, ECS::Entity { camera }.GetEntityID(), true, cam);
+			//}
+
+		}
 
 		//temp physics debug hack
 		if (cam.isEditor) 

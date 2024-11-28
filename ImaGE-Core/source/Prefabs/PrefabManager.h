@@ -107,11 +107,13 @@ namespace Prefabs
        The mappings of entity to subdataid when the prefab was created
      \param name
        The name of the prefab
-     \param filepath
-       The path to save the prefab to
+     \param guid
+       The guid of the prefab
+    \param pretty
+      Whether to serialize in pretty format
     ************************************************************************/
     void UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::string const& name,
-      Prefabs::Prefab::EntityMappings& mappings, IGE::Assets::GUID guid);
+      Prefabs::Prefab::EntityMappings& mappings, IGE::Assets::GUID guid, bool pretty);
 
   private:
   };

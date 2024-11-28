@@ -307,7 +307,11 @@ namespace Graphics {
 
 		// @TODO: Allow for multiple shadow maps; need extend code
 		//				to use glTexImage3D and GL_TEXTURE_2D_ARRAY
-		shadowSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::SHADOW_MAP };	// temporarily max. 1 shadow-caster
+		shadowSpec.attachments = { Graphics::FramebufferTextureFormat::SHADOW_MAP };	// temporarily max. 1 shadow-caster
+#ifndef DISTRIBUTION
+		// only add color buffer for engine use
+		shadowSpec.attachments.attachments.emplace_back(Graphics::FramebufferTextureFormat::RGBA8);
+#endif
 
 		PipelineSpec shadowPSpec;
 		shadowPSpec.shader = ShaderLibrary::Get("ShadowMap");
@@ -529,8 +533,6 @@ namespace Graphics {
 
 		SetLineBufferData(p0, clr);
 		SetLineBufferData(p1, clr);
-
-		mData.lineVtxCount += 2;
 
 		++mData.stats.lineCount;
 	}
@@ -1256,11 +1258,16 @@ namespace Graphics {
 			++mData.stats.drawCalls;
 		}
 		if (mData.lineVtxCount) {
+
 			unsigned int dataSize = static_cast<unsigned int>(mData.lineBufferIndex * sizeof(LineVtx));
 
 			mData.lineVertexBuffer->SetData(mData.lineBuffer.data(), dataSize);
 
-			ShaderLibrary::Get("Line")->Use();
+			auto const& lineShader = ShaderLibrary::Get("Line");
+			lineShader->Use();
+			auto depthTex = Renderer::GetPass<GeomPass>()->GetDepthTexture();
+			if (depthTex)
+				lineShader->SetUniform("u_DepthTex", depthTex, 0);
 			RenderAPI::DrawLines(mData.lineVertexArray, mData.lineVtxCount);
 
 			++mData.stats.drawCalls;
@@ -1272,6 +1279,7 @@ namespace Graphics {
 			mData.triVertexBuffer->SetData(mData.triBuffer.data(), dataSize);
 
 			ShaderLibrary::Get("Line")->Use();
+
 			RenderAPI::DrawTriangles(mData.triVertexArray, mData.triVtxCount);
 
 			++mData.stats.drawCalls;
@@ -1361,13 +1369,15 @@ namespace Graphics {
 		BeginBatch();
 	}
 
-	void Renderer::RenderSceneBegin(glm::mat4 const& viewProjMtx) {
-
-
+	void Renderer::RenderSceneBegin(glm::mat4 const& viewProjMtx, CameraSpec const& cam) {
 
 		auto const& lineShader = ShaderLibrary::Get("Line");
 		lineShader->Use();
 		lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
+		auto depthFb = Renderer::GetPass<GeomPass>()->GetTargetFramebuffer();
+
+		lineShader->SetUniform("u_ScreenSize", glm::vec2{depthFb->GetFramebufferSpec().width, depthFb->GetFramebufferSpec().height});
+		lineShader->SetUniform("u_FarPlane", cam.farClip);
 
 		//mData.lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
 		auto const& texShader = ShaderLibrary::Get("Tex2D");

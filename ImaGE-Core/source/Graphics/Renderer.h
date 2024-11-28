@@ -194,8 +194,8 @@ namespace Graphics {
 		static void BeginBatch();
 		static void FlushBatch();
 		static void FlushBatch(std::shared_ptr<RenderPass> const& renderPass);
-
-		static void RenderSceneBegin(glm::mat4 const& viewProjMtx);
+		
+		static void RenderSceneBegin(glm::mat4 const& viewProjMtx, CameraSpec const& cam = CameraSpec{});
 		static void RenderSceneEnd();
 
 		static unsigned int GetMaxTextureUnits();
