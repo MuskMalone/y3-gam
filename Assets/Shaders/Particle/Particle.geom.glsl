@@ -21,12 +21,10 @@ in uint texIdx[];
 
 out vec4 geomColor;
 out vec2 geomTexCoord;
-flat out uvec2 geomTexHdl;
 
-void EmitVertexCube(vec4 position, vec3 offset, vec2 texCoord, uvec2 texHdl) {
+void EmitVertexCube(vec4 position, vec3 offset, vec2 texCoord) {
     gl_Position = vertTransform[0] * (position + vec4(offset, 0.0));
     geomTexCoord = texCoord;
-    geomTexHdl = texHdl;
     EmitVertex();
 }
 
@@ -37,10 +35,10 @@ void main() {
     float size = 0.5;  // Half-size of the cube, since it's 1x1x1
 
 // only front face needed
-    EmitVertexCube(position, vec3(-size, -size, 0), vec2(0), 0); //bl
-    EmitVertexCube(position, vec3(size, -size, 0),  vec2(0), 0); //br
-    EmitVertexCube(position, vec3(-size, size, 0),  vec2(0), 0); //tl
-    EmitVertexCube(position, vec3(size, size, 0),  vec2(0), 0); //tr
+    EmitVertexCube(position, vec3(-size, -size, 0), vec2(0)); //bl
+    EmitVertexCube(position, vec3(size, -size, 0),  vec2(0)); //br
+    EmitVertexCube(position, vec3(-size, size, 0),  vec2(0)); //tl
+    EmitVertexCube(position, vec3(size, size, 0),  vec2(0)); //tr
     EndPrimitive();
 
 }

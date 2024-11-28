@@ -6,7 +6,6 @@
 
 in vec4 geomColor;
 in vec2 geomTexCoord;
-flat in uvec2 geomTexHdl;
 
 out vec4 FragColor;
 

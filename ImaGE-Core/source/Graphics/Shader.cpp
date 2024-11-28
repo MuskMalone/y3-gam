@@ -278,7 +278,9 @@ namespace Graphics {
 		// Get a program object.
 		pgmHdl = glCreateProgram();
 
-		throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to create program handle"));
+		if (pgmHdl == 0) {
+			throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to create program handle"));
+		}
 
 		// Attach our shaders to our program
 		GLCALL(glAttachShader(pgmHdl, vertexShader));
@@ -456,28 +458,33 @@ namespace Graphics {
 
 	*/
 	void Shader::CreateShaderFromFile(std::string const& vertFile, std::string const& fragFile) {
-		std::ifstream inVertFile{ vertFile };
+		//std::ifstream inVertFile{ vertFile };
 
-		if (!inVertFile) {
-			Debug::DebugLogger::GetInstance().LogError("Unable to open Vertex File: (" + vertFile + "). Check the directory");
-			//throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to open Vertex File: (" + vertFile + "). Check the directory"));
-		}
-		std::stringstream vertSrc;
-		vertSrc << inVertFile.rdbuf();
-		inVertFile.close();
+		//if (!inVertFile) {
+		//	Debug::DebugLogger::GetInstance().LogError("Unable to open Vertex File: (" + vertFile + "). Check the directory");
+		//	//throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to open Vertex File: (" + vertFile + "). Check the directory"));
+		//}
+		//std::stringstream vertSrc;
+		//vertSrc << inVertFile.rdbuf();
+		//inVertFile.close();
 
-		std::ifstream inFragFile{ fragFile };
+		//std::ifstream inFragFile{ fragFile };
 
-		if (!inFragFile) {
-			Debug::DebugLogger::GetInstance().LogError("Unable to open Fragment File: (" + fragFile + "). Check the directory");
-			//throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to open Fragment File: (" + fragFile + "). Check the directory"));
-		}
+		//if (!inFragFile) {
+		//	Debug::DebugLogger::GetInstance().LogError("Unable to open Fragment File: (" + fragFile + "). Check the directory");
+		//	//throw Debug::Exception<Shader>(Debug::LVL_ERROR, Msg("Unable to open Fragment File: (" + fragFile + "). Check the directory"));
+		//}
 
-		std::stringstream fragSrc;
-		fragSrc << inFragFile.rdbuf();
-		inFragFile.close();
+		//std::stringstream fragSrc;
+		//fragSrc << inFragFile.rdbuf();
+		//inFragFile.close();
+		std::unordered_map<std::string, std::string> umap{};
 
-		CreateShaderFromString(vertSrc.str(), fragSrc.str(), vertFile, fragFile);
+		std::string vertSrc{ PreprocessShader(vertFile, umap) };
+		std::string fragSrc{ PreprocessShader(fragFile, umap) };
+
+
+		CreateShaderFromString(vertSrc, fragSrc, vertFile, fragFile);
 	}
 	/*  _________________________________________________________________________ */
 	/*! CreateShaderFromFile
