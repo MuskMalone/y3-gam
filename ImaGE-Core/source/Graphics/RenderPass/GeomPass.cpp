@@ -87,7 +87,8 @@ namespace Graphics {
 
           MaterialTable::ApplyMaterialTextures(shader, batchStart, batchEnd);
 
-          shader->SetUniform("u_MatIdxOffset", matGrp == 0 ? 0 : -static_cast<int>(batchStart));
+          int offset = matGrp == 0 ? 0 : -static_cast<int>(batchStart);
+          shader->SetUniform("u_MatIdxOffset", offset);
           // Render all instances for this material
           for (const auto&[worldMtx, entity, matIdx] : entityData) {
             auto const& mesh = entity.GetComponent<Component::Mesh>();
@@ -217,6 +218,10 @@ namespace Graphics {
   GeomPass::ShaderGroupMap GeomPass::GroupEntities(std::vector<ECS::Entity> const& entities) {
     ShaderGroupMap shaderToMatGrp; // group by shader, then by material batch
 
+    auto CalculateMatBatch = [](int matID) -> int {
+        return (matID > 0) ? (matID - 1) / MaterialTable::sMaterialsPerBatch : 0;
+    };
+
     for (ECS::Entity const& entity : entities) {
       if (!entity.HasComponent<Component::Mesh>() || 
         !entity.GetComponent<Component::Mesh>().meshSource.IsValid()) { continue; }
@@ -232,7 +237,7 @@ namespace Graphics {
       auto const& xform = entity.GetComponent<Component::Transform>();
       
       // add entity based on material batch number
-      int const matBatch{ matID / static_cast<int>(MaterialTable::sMaterialsPerBatch + 1) };
+      int const matBatch{ CalculateMatBatch(matID) };
       matGroups[matBatch].emplace_back(xform.worldMtx, entity, matID);
     }
 
