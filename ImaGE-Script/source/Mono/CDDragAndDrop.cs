@@ -120,7 +120,7 @@ public class CDDragAndDrop : Entity
 
     //TEMPORARY
     public Entity CDinCase;
-    public Entity CDCurr;
+    //public Entity CDCurr;
 
     public Entity fadeImageEntity; // Entity containing the fade Image
     private Image fadeImage; // Image used for the fade effect
@@ -137,6 +137,14 @@ public class CDDragAndDrop : Entity
     private float targetAlpha = 1f; // Target alpha
 
     private bool isHovered = false;
+
+    //shakecd
+    private bool isShaking = false;
+    private float shakeDuration = 0f;
+    private float shakeElapsed = 0f;
+    private float shakeMagnitude = 0f;
+    private Vector3 originalPosition;
+    private float fakeRandomValue = 0f;
     void Start()
     {
         CDinCase.SetActive(false);
@@ -182,16 +190,20 @@ public class CDDragAndDrop : Entity
 
     void Update()
     {
-        if (isHovered)
-        {
-            Vector3 hoverVector = new Vector3(hoverScale.X, hoverScale.Y, hoverScale.Z);
-            InternalCalls.SetScale(mEntityID, ref hoverVector);
-        }
-        else
-        {
-            Vector3 originalVector = new Vector3(originalScale.X, originalScale.Y, originalScale.Z);
-            InternalCalls.SetScale(mEntityID, ref originalVector);
-        }
+        //string tag = InternalCalls.GetTag(mEntityID);
+        
+        
+            if (isHovered)
+            {
+                Vector3 hoverVector = new Vector3(hoverScale.X, hoverScale.Y, hoverScale.Z);
+                InternalCalls.SetScale(mEntityID, ref hoverVector);
+            }
+            else
+            {
+                Vector3 originalVector = new Vector3(originalScale.X, originalScale.Y, originalScale.Z);
+                InternalCalls.SetScale(mEntityID, ref originalVector);
+            }
+        
 
         if (isFading)
         {
@@ -208,8 +220,40 @@ public class CDDragAndDrop : Entity
                 InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
             }
         }
+
+        //shakingcd
+        if (isShaking)
+        {
+            Debug.Log("inIsShaking");
+            shakeElapsed += Time.deltaTime;
+            //float seed = shakeElapsed; 
+            //float offsetX = ShakeRandom(seed) * shakeMagnitude;
+            //float offsetY = ShakeRandom(seed + 1f) * shakeMagnitude; 
+
+            fakeRandomValue += 0.1f; 
+
+            float offsetX = (fakeRandomValue * 1.2f) % 2f - 1f; 
+            float offsetY = (fakeRandomValue * 3.8f) % 2f - 1f;
+
+            offsetX *= shakeMagnitude;
+            offsetY *= shakeMagnitude;
+            Vector3 shakingPos = new Vector3(originalPosition.X + offsetX, originalPosition.Y + offsetY, originalPosition.Z);
+            InternalCalls.SetWorldPosition(mEntityID, ref shakingPos);
+            //stop shake when duration is up
+            if (shakeElapsed >= shakeDuration)
+            {
+                Debug.Log("OvershakeDuration");
+                isShaking = false;
+                InternalCalls.SetWorldPosition(mEntityID, ref originalPosition);
+            }
+
+        }
     }
 
+    float ShakeRandom(float seed)
+    {
+        return Mathf.Sin(seed * 1000f) % 1f; 
+    }
 
 
     private void Startfade()
@@ -223,6 +267,15 @@ public class CDDragAndDrop : Entity
     }
     public void OnMouseDown()
     {
+        //shaking cds
+        string tag = InternalCalls.GetTag(mEntityID);
+        if(tag == "ContinueCDChild" ||tag == "CreditsCDChild" || tag == "SettingsCDChild")
+        {
+            Debug.Log("Entered tag == for shakecd");
+            ShakeCD(0.5f, 0.005f);
+            return;
+        }
+        //play sound
         InternalCalls.PlaySound(mEntityID, "PickupCD_SFX");
         CDinCase.SetActive(true);
         //CDCurr.SetActive(false);
@@ -230,6 +283,20 @@ public class CDDragAndDrop : Entity
         //Startfade();
         NextScene();
         
+    }
+
+    private void ShakeCD(float duration, float magnitude)
+    {
+        if (isShaking) return;
+
+
+        fakeRandomValue = 0f;
+        shakeDuration = duration;
+        shakeMagnitude = magnitude;
+        shakeElapsed = 0f;
+        originalPosition = InternalCalls.GetWorldPosition(mEntityID);
+        isShaking = true;
+
     }
 
     private void NextScene()

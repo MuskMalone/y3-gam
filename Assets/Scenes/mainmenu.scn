@@ -168,12 +168,12 @@
             "Child Entities": [
                 19
             ],
-            "isActive": true,
+            "isActive": false,
             "Components": [
                 {
                     "Tag": {
                         "tag": "Canvasofblackimage",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -413,7 +413,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.42197662591934206,
-                            "y": -0.25322261452674868,
+                            "y": -0.3386813700199127,
                             "z": -0.5083728432655335
                         },
                         "scale": {
@@ -434,7 +434,7 @@
                         },
                         "worldPos": {
                             "x": 0.42197662591934206,
-                            "y": -0.25322261452674868,
+                            "y": -0.3386813700199127,
                             "z": -0.5083728432655335
                         },
                         "worldScale": {
@@ -473,7 +473,7 @@
                     "Transform": {
                         "position": {
                             "x": -0.00002682209014892578,
-                            "y": -8.940696716308594e-7,
+                            "y": -0.04560273885726929,
                             "z": -0.0000374913215637207
                         },
                         "scale": {
@@ -494,7 +494,7 @@
                         },
                         "worldPos": {
                             "x": 0.4219582676887512,
-                            "y": -0.2532229721546173,
+                            "y": -0.3569224774837494,
                             "z": -0.5083710551261902
                         },
                         "worldScale": {
@@ -552,7 +552,7 @@
                     "Transform": {
                         "position": {
                             "x": -0.00002682209014892578,
-                            "y": -8.940696716308594e-7,
+                            "y": 0.0000022649765014648439,
                             "z": -0.0000374913215637207
                         },
                         "scale": {
@@ -573,7 +573,7 @@
                         },
                         "worldPos": {
                             "x": 0.4219582676887512,
-                            "y": -0.2532229721546173,
+                            "y": -0.3386804759502411,
                             "z": -0.5083710551261902
                         },
                         "worldScale": {
@@ -631,7 +631,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.000095367431640625,
-                            "y": -0.000568389892578125,
+                            "y": -0.0006103515625,
                             "z": -0.00452423095703125
                         },
                         "scale": {
@@ -652,7 +652,7 @@
                         },
                         "worldPos": {
                             "x": 0.43214428424835207,
-                            "y": -0.3519930839538574,
+                            "y": -0.45128175616264346,
                             "z": -0.4863905608654022
                         },
                         "worldScale": {
@@ -702,7 +702,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Props_PS1CD",
+                        "tag": "CreditsCDChild",
                         "isActive": true
                     }
                 },
@@ -769,6 +769,67 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048591,
+                                "scriptName": "CDDragAndDrop",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 2097156,
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 2097156,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "CDinCase"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 19,
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 19,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fadeImageEntity"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 10.0,
+                                            "y": 10.0,
+                                            "z": 10.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "outOfTheWay"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
@@ -905,7 +966,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Props_PS1CD",
+                        "tag": "SettingsCDChild",
                         "isActive": true
                     }
                 },
@@ -972,6 +1033,67 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048594,
+                                "scriptName": "CDDragAndDrop",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 2097156,
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 2097156,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "CDinCase"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 19,
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 19,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fadeImageEntity"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 10.0,
+                                            "y": 10.0,
+                                            "z": 10.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "outOfTheWay"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
@@ -1057,7 +1179,7 @@
                                         "position": {
                                             "x": 0.9107242226600647,
                                             "y": -0.44039857387542727,
-                                            "z": -0.7515754699707031
+                                            "z": -0.7515745759010315
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -1085,7 +1207,7 @@
                     "Transform": {
                         "position": {
                             "x": -0.0045928955078125,
-                            "y": 0.0022072745487093927,
+                            "y": 0.0023903800174593927,
                             "z": -0.004302978515625
                         },
                         "scale": {
@@ -1107,7 +1229,7 @@
                         "worldPos": {
                             "x": 0.9107242226600647,
                             "y": -0.44039857387542727,
-                            "z": -0.7515754699707031
+                            "z": -0.7515745759010315
                         },
                         "worldScale": {
                             "x": 0.004999999888241291,
@@ -1153,25 +1275,6 @@
                                 "entityID": 1048607,
                                 "scriptName": "CDDragAndDrop",
                                 "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 1048606,
-                                            "scriptName": "Entity",
-                                            "scriptFieldInstList": [
-                                                {
-                                                    "data": 1048606,
-                                                    "type": "System.UInt32",
-                                                    "scriptField": {
-                                                        "fieldName": "mEntityID"
-                                                    }
-                                                }
-                                            ]
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "CDCurr"
-                                        }
-                                    },
                                     {
                                         "data": {
                                             "entityID": 2097156,
@@ -1298,7 +1401,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Props_PS1CD",
+                        "tag": "ContinueCDChild",
                         "isActive": true
                     }
                 },
@@ -1365,6 +1468,67 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048616,
+                                "scriptName": "CDDragAndDrop",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 2097156,
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 2097156,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "CDinCase"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 19,
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 19,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fadeImageEntity"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 10.0,
+                                            "y": 10.0,
+                                            "z": 10.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "outOfTheWay"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
@@ -1447,8 +1611,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.000031948089599609378,
-                            "z": -0.000396728515625
+                            "y": 0.000034809112548828128,
+                            "z": -0.000431060791015625
                         },
                         "scale": {
                             "x": 1.0,
@@ -1468,8 +1632,8 @@
                         },
                         "worldPos": {
                             "x": 1.3216056823730469,
-                            "y": 0.09599025547504425,
-                            "z": -1.2558166980743409
+                            "y": 0.0959903746843338,
+                            "z": -1.2558181285858155
                         },
                         "worldScale": {
                             "x": 0.03999999910593033,
@@ -1492,7 +1656,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 0
+                            "ID": 12882319142451905872
                         }
                     }
                 },
@@ -1579,7 +1743,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 14968098043682820116
+                            "ID": 16565538838607279461
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1607,7 +1771,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.4321436285972595,
-                            "y": -0.35198909044265749,
+                            "y": -0.451277494430542,
                             "z": -0.4863588809967041
                         },
                         "scale": {
@@ -1628,7 +1792,7 @@
                         },
                         "worldPos": {
                             "x": 0.4321436285972595,
-                            "y": -0.35198909044265749,
+                            "y": -0.451277494430542,
                             "z": -0.4863588809967041
                         },
                         "worldScale": {
@@ -1720,7 +1884,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 3097481314841703499
+                            "ID": 841901579299980269
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
