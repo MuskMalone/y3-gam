@@ -307,7 +307,11 @@ namespace Graphics {
 
 		// @TODO: Allow for multiple shadow maps; need extend code
 		//				to use glTexImage3D and GL_TEXTURE_2D_ARRAY
-		shadowSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::SHADOW_MAP };	// temporarily max. 1 shadow-caster
+		shadowSpec.attachments = { Graphics::FramebufferTextureFormat::SHADOW_MAP };	// temporarily max. 1 shadow-caster
+#ifndef DISTRIBUTION
+		// only add color buffer for engine use
+		shadowSpec.attachments.attachments.emplace_back(Graphics::FramebufferTextureFormat::RGBA8);
+#endif
 
 		PipelineSpec shadowPSpec;
 		shadowPSpec.shader = ShaderLibrary::Get("ShadowMap");
