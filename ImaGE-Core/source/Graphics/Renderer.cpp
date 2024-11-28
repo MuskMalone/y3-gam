@@ -1258,11 +1258,16 @@ namespace Graphics {
 			++mData.stats.drawCalls;
 		}
 		if (mData.lineVtxCount) {
+
 			unsigned int dataSize = static_cast<unsigned int>(mData.lineBufferIndex * sizeof(LineVtx));
 
 			mData.lineVertexBuffer->SetData(mData.lineBuffer.data(), dataSize);
 
-			ShaderLibrary::Get("Line")->Use();
+			auto const& lineShader = ShaderLibrary::Get("Line");
+			lineShader->Use();
+			auto depthTex = Renderer::GetPass<GeomPass>()->GetDepthTexture();
+			if (depthTex)
+				lineShader->SetUniform("u_DepthTex", depthTex, 0);
 			RenderAPI::DrawLines(mData.lineVertexArray, mData.lineVtxCount);
 
 			++mData.stats.drawCalls;
@@ -1274,6 +1279,7 @@ namespace Graphics {
 			mData.triVertexBuffer->SetData(mData.triBuffer.data(), dataSize);
 
 			ShaderLibrary::Get("Line")->Use();
+
 			RenderAPI::DrawTriangles(mData.triVertexArray, mData.triVtxCount);
 
 			++mData.stats.drawCalls;
@@ -1363,13 +1369,15 @@ namespace Graphics {
 		BeginBatch();
 	}
 
-	void Renderer::RenderSceneBegin(glm::mat4 const& viewProjMtx) {
-
-
+	void Renderer::RenderSceneBegin(glm::mat4 const& viewProjMtx, CameraSpec const& cam) {
 
 		auto const& lineShader = ShaderLibrary::Get("Line");
 		lineShader->Use();
 		lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
+		auto depthFb = Renderer::GetPass<GeomPass>()->GetTargetFramebuffer();
+
+		lineShader->SetUniform("u_ScreenSize", glm::vec2{depthFb->GetFramebufferSpec().width, depthFb->GetFramebufferSpec().height});
+		lineShader->SetUniform("u_FarPlane", cam.farClip);
 
 		//mData.lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
 		auto const& texShader = ShaderLibrary::Get("Tex2D");

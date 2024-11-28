@@ -42,8 +42,6 @@ namespace Graphics {
       //auto shader = mSpec.pipeline->GetShader();
       GetTargetFramebuffer()->ClearAttachmentInt(1, -1);
 
-      Renderer::RenderSceneBegin(cam.viewProjMatrix);
-
       //=================================================SUBMESH VERSION===============================================================
       // STEP UNO: Collect entities into shader groups!!!
       ShaderGroupMap const shaderGroups{ GroupEntities(entities) };
@@ -100,27 +98,8 @@ namespace Graphics {
         }
       }
 
-      if (cam.isEditor) {
-          for(auto const& light : entities){
-              if (!light.HasComponent<Component::Transform>()) continue;
-              if (!light.HasComponent<Component::Light>()) continue;
-              auto const& xform = ECS::Entity{ light }.GetComponent<Component::Transform>();
-              auto const& lightComp = ECS::Entity{ light }.GetComponent<Component::Light>();
-              Renderer::DrawLightGizmo(lightComp, xform, cam, ECS::Entity{light}.GetEntityID());
-          }
-          //auto const& cameras = ecsMan.GetAllEntitiesWithComponents<Component::Camera>();
-          //for (auto const& camera : cameras) {
-          //    if (!ECS::Entity{ camera }.IsActive()) continue;
-          //    auto const& camComp = ECS::Entity{ camera }.GetComponent<Component::Camera>();
-          //    auto const& xform = ECS::Entity{ camera }.GetComponent<Component::Transform>();
-          //    Renderer::DrawSprite(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(Renderer::mIcons[2])->mTexture, Color::COLOR_WHITE, ECS::Entity { camera }.GetEntityID(), true, cam);
-          //}
-
-      }
-
-      //========================================2D Sprite Rendering=========================================================================================
-
 //========================================2D Sprite Rendering=========================================================================================
+      Renderer::RenderSceneBegin(cam.viewProjMatrix, cam);
       std::vector<ECS::Entity> opaqueSprites;
       std::vector<ECS::Entity> transparentSprites;
 
@@ -203,12 +182,18 @@ namespace Graphics {
       if (!mOutputTexture || mOutputTexture->GetWidth() != fb->GetFramebufferSpec().width || mOutputTexture->GetHeight() != fb->GetFramebufferSpec().height) {
           // Create or resize mOutputTexture based on the framebuffer's specs
           mOutputTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+          mDepthTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height, GL_DEPTH24_STENCIL8);
       }
 
       // Perform the copy operation
       if (mOutputTexture) {
           mOutputTexture->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+          mDepthTexture->CopyFrom(fb->GetDepthAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
       }
+  }
+
+  std::shared_ptr<Texture> GeomPass::GetDepthTexture() {
+      return mDepthTexture;
   }
 
   std::shared_ptr<Framebuffer> GeomPass::GetGameViewFramebuffer() const {
