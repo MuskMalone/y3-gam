@@ -140,12 +140,14 @@ namespace Serialization
 #endif
           if (!compType.is_valid())
           {
+#ifndef DISTRIBUTION
             std::ostringstream oss{};
             oss << "Trying to deserialize an invalid component: " << compName;
             Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
             std::cout << oss.str() << "\n";
 #endif
+#endif  // DISTRIBUTION
             continue;
           }
 
@@ -207,12 +209,14 @@ namespace Serialization
 #endif
 
       if (!compType.is_valid()) {
+#ifndef DISTRIBUTION
         std::ostringstream oss{};
         oss << "Trying to deserialize an invalid component: " << compName;
         Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
         std::cout << oss.str() << "\n";
 #endif
+#endif  // DISTRIBUTION
         continue;
       }
 
@@ -247,12 +251,14 @@ namespace Serialization
 
         if (!compType.is_valid())
         {
+#ifndef DISTRIBUTION
           std::ostringstream oss{};
           oss << "Trying to deserialize an invalid component: " << compName;
           Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
           std::cout << oss.str() << "\n";
 #endif
+#endif  // DISTRIBUTION
           continue;
         }
 
@@ -306,12 +312,14 @@ namespace Serialization
       rttr::type compType{ rttr::type::get_by_name(keyIter->value.GetString()) };
       if (!compType.is_valid())
       {
+#ifndef DISTRIBUTION
         std::ostringstream oss{};
         oss << "Trying to deserialize an invalid component: " << compType.get_name().to_string();
         Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
         std::cout << oss.str() << "\n";
 #endif
+#endif  // DISTRIBUTION
         continue;
       }
 
@@ -363,10 +371,12 @@ namespace Serialization
             rapidjson::Value::ConstMemberIterator iter{ compJson.FindMember(prop.get_name().to_string().c_str()) };
             if (iter == compJson.MemberEnd())
             {
+#ifndef DISTRIBUTION
               std::ostringstream oss{};
               oss << "Unable to find " << prop.get_name().to_string()
                 << " property in " << compType.get_name().to_string();
               Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
+#endif
               continue;
             }
 
@@ -540,7 +550,7 @@ namespace Serialization
       // if its a class, deserialize each of its members
       else if (idxVal.IsObject())
       {
-        rttr::variant wrappedVal{ wrappedVal.get_type().is_wrapper() ? seqView.get_value(i).extract_wrapped_value() : seqView.get_value(i) };
+        rttr::variant wrappedVal{ seqView.get_value_type().is_wrapper() ? seqView.get_value(i).extract_wrapped_value() : seqView.get_value(i) };
 
         DeserializeRecursive(wrappedVal, idxVal);
         seqView.set_value(i, wrappedVal);
@@ -631,6 +641,7 @@ namespace Serialization
       {
         auto keyIter{ idxVal.FindMember("key") }, valIter{ idxVal.FindMember("value") };
 
+#ifndef DISTRIBUTION
         if (keyIter == idxVal.MemberEnd() || valIter == idxVal.MemberEnd()) {
           std::ostringstream oss{};
           oss << "Unable to find key-value pair for element of type " << view.get_key_type().get_name().to_string()
@@ -640,9 +651,11 @@ namespace Serialization
           std::cout << oss.str() << "\n";
 #endif
         }
+#endif  // DISTRIBUTION
 
         auto keyVar{ ExtractValue(keyIter->value, view.get_key_type()) }, valVar{ ExtractValue(valIter->value, view.get_value_type()) };
         if (!keyVar || !valVar) {
+#ifndef DISTRIBUTION
           std::ostringstream oss{}, oss2{};
           oss << "Unable to extract key-value pair for element of type " << view.get_key_type().get_name().to_string()
             << "-" << view.get_value_type().get_name().to_string() << " in associative view ";
@@ -651,6 +664,7 @@ namespace Serialization
 #ifdef _DEBUG
           std::cout << oss.str() << "\n" << oss2.str() << '\n';
 #endif
+#endif  // DISTRIBUTION
         }
         else
         {
@@ -664,6 +678,7 @@ namespace Serialization
                 continue;
               }
             }
+#ifndef DISTRIBUTION
             std::ostringstream oss{};
             oss << "Unable to insert key-value pair for element of type " << view.get_key_type().get_name().to_string()
               << "-" << view.get_value_type().get_name().to_string();
@@ -672,6 +687,7 @@ namespace Serialization
             std::cout << oss.str() << "\n";
             std::cout << "Types are " << keyVar.get_type().get_name().to_string() << " and " << valVar.get_type().get_name().to_string() << "\n";
 #endif
+#endif  // DISTRIBUTION
           }
         }
       }
@@ -755,6 +771,7 @@ namespace Serialization
       // set the data property
       rttr::variant data{ DeserializeScriptInstance(jsonVal[JSON_SCRIPT_DMI_DATA_KEY]) };
       if (!scriptFIType.set_property_value(JSON_SCRIPT_DMI_DATA_KEY, scriptFIList, data)) {
+#ifndef DISTRIBUTION
         std::ostringstream oss{};
         oss << "[Deserializer] Unable to set " JSON_SCRIPT_DMI_DATA_KEY " of DataMemberInstance : "
           << jsonVal[JSON_SCRIPT_DMI_SF_KEY].GetObject()["fieldName"].GetString();
@@ -764,12 +781,14 @@ namespace Serialization
         std::cout << "  Argument was " << data.get_type() << ", expected "
           << scriptFIType.get_property(JSON_SCRIPT_DMI_DATA_KEY).get_type() << "\n";
 #endif
+#endif  // DISTRIBUTION
       }
 
       // set script field property
       Mono::ScriptFieldInfo sfInfo{};
       DeserializeRecursive(sfInfo, jsonVal[JSON_SCRIPT_DMI_SF_KEY]);
       if (!scriptFIType.set_property_value(JSON_SCRIPT_DMI_SF_KEY, scriptFIList, sfInfo)) {
+#ifndef DISTRIBUTION
         std::ostringstream oss{};
         oss << "[Deserializer] Unable to set " JSON_SCRIPT_DMI_SF_KEY " of DataMemberInstance: "
           << jsonVal[JSON_SCRIPT_DMI_SF_KEY].GetObject()["fieldName"].GetString();
@@ -779,6 +798,7 @@ namespace Serialization
         std::cout << "  Argument was " << rttr::type::get(sfInfo) << ", expected "
           << scriptFIType.get_property(JSON_SCRIPT_DMI_SF_KEY).get_type() << "\n";
 #endif
+#endif  // DISTRIBUTION
       }
     }
     else if (scriptFIType == rttr::type::get<MonoObjectVec>()) {
@@ -886,12 +906,14 @@ namespace Serialization
           auto result{ elem.FindMember(keyName.c_str()) };
           if (result == elem.MemberEnd())
           {
+#ifndef DISTRIBUTION
             std::ostringstream oss{};
             oss << filename << ": Unable to find key \"" + keyName + "\" of element: " << i << " in rapidjson value";
             Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
             std::cout << oss.str() << "\n";
 #endif
+#endif  // DISTRIBUTION
             status = false;
             continue;
           }
@@ -900,23 +922,27 @@ namespace Serialization
           {
             if (!elem[keyName.c_str()].IsBool())
             {
+#ifndef DISTRIBUTION
               std::ostringstream oss{};
               oss << filename << ": Element \"" << keyName << "\" is not of type bool";
               Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
               std::cout << oss.str() << "\n";
 #endif
+#endif  // DISTRIBUTION
               status = false;
             }
           }
           else if (!elem[keyName.c_str()].IsNull() && elem[keyName.c_str()].GetType() != type)
           {
+#ifndef DISTRIBUTION
             std::ostringstream oss{};
             oss << filename << ": Element \"" << keyName << "\" is not of rapidjson type:" << type;
             Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
             std::cout << oss.str() << "\n";
 #endif
+#endif  // DISTRIBUTION
             status = false;
           }
         }
@@ -929,12 +955,14 @@ namespace Serialization
         auto result{ value.FindMember(keyName.c_str()) };
         if (result == value.MemberEnd())
         {
+#ifndef DISTRIBUTION
           std::ostringstream oss{};
           oss << filename << ": Unable to find key \"" << keyName << "\" in rapidjson value";
           Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
           std::cout << oss.str() << "\n";
 #endif
+#endif  // DISTRIBUTION
           status = false;
           continue;
         }
@@ -943,23 +971,27 @@ namespace Serialization
         {
           if (!value[keyName.c_str()].IsBool())
           {
+#ifndef DISTRIBUTION
             std::ostringstream oss{};
             oss << filename << ": Element \"" << keyName << "\" is not of type bool";
             Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
             std::cout << oss.str() << "\n";
 #endif
+#endif   // DISTRIBUTION
             status = false;
           }
         }
         else if (!value[keyName.c_str()].IsNull() && value[keyName.c_str()].GetType() != type)
         {
+#ifndef DISTRIBUTION
           std::ostringstream oss{};
           oss << filename << ": Element \"" << keyName << "\" is not of rapidjson type:" << type;
           Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
           std::cout << oss.str() << "\n";
 #endif
+#endif  // DISTRIBUTION
           status = false;
         }
       }
