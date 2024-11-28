@@ -62,7 +62,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 17699972936341798334
+                            "ID": 9095215297967772941
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -150,7 +150,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 17699972936341798334
+                            "ID": 9095215297967772941
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -222,7 +222,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 7898024027134611564
+                            "ID": 990556825052769761
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -383,7 +383,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 17699972936341798334
+                            "ID": 9095215297967772941
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -453,6 +453,32 @@
                     "Layer": {
                         "layerName": "Default"
                     }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048587,
+                                "scriptName": "Test",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": 30,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "TestInt"
+                                        }
+                                    },
+                                    {
+                                        "data": 40,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "TestInt3"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 }
             ]
         },
@@ -518,7 +544,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 17699972936341798334
+                            "ID": 9095215297967772941
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
