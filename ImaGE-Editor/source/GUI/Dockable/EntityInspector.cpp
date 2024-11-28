@@ -17,7 +17,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "GUI/Helpers/ImGuiHelpers.h"
 #include <GUI/Helpers/AssetPayload.h>
 #include <Core/Systems/TransformSystem/TransformHelpers.h>
-
 #include "Physics/PhysicsSystem.h"
 #include <functional>
 #include <Reflection/ComponentTypes.h>
@@ -616,12 +615,10 @@ namespace GUI {
           ImGui::Text(s.mScriptName.c_str());
           ImGui::PopFont();
           ImGui::SameLine();
-          ImVec4 const boriginalColor = style.Colors[ImGuiCol_Button];
-          ImVec4 const boriginalHColor = style.Colors[ImGuiCol_ButtonHovered];
-          ImVec4 const boriginalAColor = style.Colors[ImGuiCol_ButtonActive];
-          style.Colors[ImGuiCol_Button] = ImVec4(0.6f, 0.f, 0.29f, 1.0f);
-          style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.8f, 0.1f, 0.49f, 1.0f);
-          style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.7f, 0.3f, 0.39f, 1.0f);
+
+          ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.6f, 0.f, 0.29f, 1.0f));
+          ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.8f, 0.1f, 0.49f, 1.0f));
+          ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.7f, 0.3f, 0.39f, 1.0f));
           ImGui::SetCursorPosX(deleteBtnPos);
           if (ImGui::Button(("Delete##DeleteButton" + s.mScriptName).c_str()))
           {
@@ -633,9 +630,7 @@ namespace GUI {
               selectedScript = s.mScriptName;
             }
           }
-          style.Colors[ImGuiCol_Button] = boriginalColor;
-          style.Colors[ImGuiCol_ButtonHovered] = boriginalHColor;
-          style.Colors[ImGuiCol_ButtonActive] = boriginalAColor;
+          ImGui::PopStyleColor(3);
         }
 
         ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
@@ -662,6 +657,7 @@ namespace GUI {
 
           // invoke the relevant function in the map based on type
           if (ScriptInputs::sScriptInputFuncs.contains(dmiType)) {
+            auto const& t = f.get_value<Mono::DataMemberInstance<int>>();
             if (ScriptInputs::sScriptInputFuncs[dmiType](s, f, INPUT_SIZE)) {
               modified = true;
             }
@@ -683,15 +679,12 @@ namespace GUI {
       {
         ImVec2 const buttonSize(100.0f, 30.0f);
         float const dropdownPos{ ImGui::GetCursorPosX() + FIRST_COLUMN_LENGTH };
-        ImGuiStyle& style = ImGui::GetStyle();
-        ImVec4 const originalColor = style.Colors[ImGuiCol_FrameBg];
-        ImVec4 const originalHColor = style.Colors[ImGuiCol_FrameBgHovered];
-        ImVec4 const originalBColor = style.Colors[ImGuiCol_Button];
-        ImVec4 const originalBHColor = style.Colors[ImGuiCol_ButtonHovered];
-        style.Colors[ImGuiCol_FrameBg] = ImVec4(0.18f, 0.28f, 0.66f, 1.0f);
-        style.Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.28f, 0.48f, 0.86f, 1.0f);
-        style.Colors[ImGuiCol_Button] = ImVec4(0.18f, 0.28f, 0.66f, 1.0f);
-        style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.28f, 0.48f, 0.86f, 1.0f);
+
+        ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.18f, 0.28f, 0.66f, 1.0f));
+        ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0.28f, 0.48f, 0.86f, 1.0f));
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.18f, 0.28f, 0.66f, 1.0f));
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.28f, 0.48f, 0.86f, 1.0f));
+
         if (ImGui::Button("Add Script", buttonSize)) {
           if (!selectedScript.empty()) {
             modified = true;
@@ -735,10 +728,7 @@ namespace GUI {
           }
           ImGui::EndCombo();
         }
-        style.Colors[ImGuiCol_FrameBg] = originalColor;
-        style.Colors[ImGuiCol_FrameBgHovered] = originalHColor;
-        style.Colors[ImGuiCol_Button] = originalBColor;
-        style.Colors[ImGuiCol_ButtonHovered] = originalBHColor;
+        ImGui::PopStyleColor(4);
       }
 
       if (!toDelete.empty()) {
@@ -2217,7 +2207,7 @@ namespace {
     ImGui::EndDisabled();
 
     return valChanged;
-  } 
+  }
 }
 
 namespace ScriptInputs {
