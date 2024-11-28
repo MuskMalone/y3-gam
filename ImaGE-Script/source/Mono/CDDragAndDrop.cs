@@ -151,6 +151,10 @@ public class CDDragAndDrop : Entity
     //rotation
     private Quaternion originalRotation;
     private float zRotAngle = 0f;
+
+    //sound
+    private bool isSpinningSoundPlaying = false;
+    //private float spinningSoundTimer = 0f;
     void Start()
     {
         originalRotation = InternalCalls.GetRotation(mEntityID);
@@ -205,24 +209,33 @@ public class CDDragAndDrop : Entity
 
         if (isHovered && !isBeingDragged)
         {
-            Console.WriteLine("Entered isHovered");
+            //Console.WriteLine("Entered isHovered");
             Vector3 hoverVector = new Vector3(hoverScale.X, hoverScale.Y, hoverScale.Z);
             InternalCalls.SetScale(mEntityID, ref hoverVector);
 
             //rotation
-            zRotAngle += -1f * Time.deltaTime;
-            Quaternion zRot = Quaternion.CreateFromAxisAngle(Vector3.UnitZ, zRotAngle);
-            Quaternion xRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(90));
+            string tag = InternalCalls.GetTag(mEntityID);
+            if (tag == "NewGameCDChild")
+            {
+                if (!isSpinningSoundPlaying)
+                {
+                    //Console.WriteLine("Here?");
+                    InternalCalls.PlaySound(mEntityID, "SpinningDiscPS1_SFX");
+                    isSpinningSoundPlaying = true;
+                    //spinningSoundTimer = 0f;
+                }
+                zRotAngle += -2f * Time.deltaTime;
+                Quaternion zRot = Quaternion.CreateFromAxisAngle(Vector3.UnitZ, zRotAngle);
+
+                Quaternion xRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(90));
+
+                // Combine the rotations
+                Quaternion combinedRotation = zRot * xRotation; // Order matters!
+
+                // Apply the combined rotation
+                InternalCalls.SetWorldRotation(mEntityID, ref combinedRotation);
+            }
             
-            // Combine the rotations
-            Quaternion combinedRotation = zRot * xRotation; // Order matters!
-            
-            // Apply the combined rotation
-            InternalCalls.SetWorldRotation(mEntityID, ref combinedRotation);
-          
-
-
-
 
         }
         else if(!isHovered)
@@ -308,19 +321,19 @@ public class CDDragAndDrop : Entity
             return;
         }
 
-        isBeingDragged = true;
+        //isBeingDragged = true;
         //play sound
         InternalCalls.PlaySound(mEntityID, "PickupCD_SFX");
-        
+
         //CDCurr.SetActive(false);
-        
+
         //Startfade();
 
         //uncommentlater
-        //CDinCase.SetActive(true);
-        //InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
-        //NextScene();
-        
+        CDinCase.SetActive(true);
+        InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
+        NextScene();
+
     }
 
     public void OnMouseUp()
@@ -358,13 +371,21 @@ public class CDDragAndDrop : Entity
     }
     public void OnMouseEnter()
     {
+        zRotAngle = 0f;
+        //InternalCalls.PlaySound(mEntityID, "SpinningDiscPS1_SFX");
         isHovered = true;
     }
 
     public void OnMouseExit()
     {
         isHovered = false;
-        InternalCalls.SetWorldRotation(mEntityID, ref originalRotation);
+        string tag = InternalCalls.GetTag(mEntityID);
+        if (tag == "NewGameCDChild")
+        {
+            InternalCalls.SetWorldRotation(mEntityID, ref originalRotation);
+            InternalCalls.PauseSound(mEntityID, "SpinningDiscPS1_SFX");
+            isSpinningSoundPlaying = false;
+        }
     }
 }
 
