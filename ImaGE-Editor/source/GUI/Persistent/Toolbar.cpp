@@ -60,7 +60,7 @@ namespace GUI
         }
 
         if (ImGui::MenuItem("Save Scene", "Ctrl+S")) {
-          QUEUE_EVENT(Events::SaveSceneEvent);
+          QUEUE_EVENT(Events::SaveSceneEvent, GUIVault::sSerializePrettyScene);
         }
 
         if (creationMode) {
@@ -105,6 +105,34 @@ namespace GUI
             if (ImGui::MenuItem(styler.GetCustomThemeString(i).c_str(), nullptr, currentlyActive)) {
               styler.SetCurrentTheme(i);
             }
+          }
+
+          ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("Serialization Format")) {
+          if (ImGui::BeginMenu("Scenes")) {
+            if (ImGui::MenuItem("PRETTY", nullptr, GUIVault::sSerializePrettyScene)) {
+              GUIVault::sSerializePrettyScene = true;
+            }
+
+            if (ImGui::MenuItem("COMPACT", nullptr, !GUIVault::sSerializePrettyScene)) {
+              GUIVault::sSerializePrettyScene = false;
+            }
+
+            ImGui::EndMenu();
+          }
+
+          if (ImGui::BeginMenu("Prefabs")) {
+            if (ImGui::MenuItem("PRETTY", nullptr, GUIVault::sSerializePrettyPrefab)) {
+              GUIVault::sSerializePrettyPrefab = true;
+            }
+
+            if (ImGui::MenuItem("COMPACT", nullptr, !GUIVault::sSerializePrettyPrefab)) {
+              GUIVault::sSerializePrettyPrefab = false;
+            }
+
+            ImGui::EndMenu();
           }
 
           ImGui::EndMenu();
