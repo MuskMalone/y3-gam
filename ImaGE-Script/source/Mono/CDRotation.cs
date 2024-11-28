@@ -37,7 +37,8 @@ public class CDRotation : Entity
     void Start()
     {
         //Debug.Log("Start");
-        //originalRotation = InternalCalls.GetRotation(mEntityID);
+        originalRotation = InternalCalls.GetRotation(mEntityID);
+        Console.WriteLine("originalrotation " +  originalRotation);
     }
 
     // Update is called once per frame
@@ -90,6 +91,7 @@ public class CDRotation : Entity
         //// Retrieve the rotation back to confirm it was set
         //Quaternion currentRotation = InternalCalls.GetRotation(mEntityID);
         //Debug.Log($"Expected Rotation: {newRotation}, Current Rotation: {currentRotation}");
+
     }
 }
 

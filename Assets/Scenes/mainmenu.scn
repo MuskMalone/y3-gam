@@ -698,12 +698,12 @@
             "ID": 1048591,
             "Parent": 1048592,
             "Child Entities": [],
-            "isActive": true,
+            "isActive": false,
             "Components": [
                 {
                     "Tag": {
                         "tag": "CreditsCDChild",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -840,12 +840,12 @@
             "Child Entities": [
                 1048591
             ],
-            "isActive": true,
+            "isActive": false,
             "Components": [
                 {
                     "Tag": {
                         "tag": "CreditsCD",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -902,12 +902,12 @@
             "Child Entities": [
                 1048594
             ],
-            "isActive": true,
+            "isActive": false,
             "Components": [
                 {
                     "Tag": {
                         "tag": "SettingsCD",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -962,12 +962,12 @@
             "ID": 1048594,
             "Parent": 1048593,
             "Child Entities": [],
-            "isActive": true,
+            "isActive": false,
             "Components": [
                 {
                     "Tag": {
                         "tag": "SettingsCDChild",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -1125,13 +1125,13 @@
                             "z": 0.004999999888241291
                         },
                         "rotation": {
-                            "x": 0.7071067690849304,
+                            "x": 0.0,
                             "y": 0.0,
                             "z": 0.0,
-                            "w": 0.7071067690849304
+                            "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": 90.0,
+                            "x": 0.0,
                             "y": -0.0,
                             "z": 0.0
                         },
@@ -1146,10 +1146,10 @@
                             "z": 0.004999999888241291
                         },
                         "worldRot": {
-                            "x": 0.7071067690849304,
+                            "x": 0.0,
                             "y": 0.0,
                             "z": 0.0,
-                            "w": 0.7071067690849304
+                            "w": 1.0
                         }
                     }
                 },
@@ -1177,9 +1177,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 0.9107242226600647,
-                                            "y": -0.44039857387542727,
-                                            "z": -0.7515743374824524
+                                            "x": 0.9107471704483032,
+                                            "y": -0.44042012095451357,
+                                            "z": -0.7515867948532105
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -1206,9 +1206,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.0045928955078125,
-                            "y": 0.0024361563846468927,
-                            "z": -0.004302978515625
+                            "x": 0.0,
+                            "y": -0.00000762939453125,
+                            "z": -0.0000762939453125
                         },
                         "scale": {
                             "x": 1.0,
@@ -1216,20 +1216,20 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -7.748603820800781e-7,
-                            "y": 3.585591912269592e-8,
-                            "z": -3.585591912269592e-8,
-                            "w": 1.0
+                            "x": 0.7071067690849304,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
                         },
                         "eulerAngles": {
-                            "x": 0.0,
+                            "x": 90.0,
                             "y": 0.0,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.9107242226600647,
-                            "y": -0.44039857387542727,
-                            "z": -0.7515743374824524
+                            "x": 0.9107471704483032,
+                            "y": -0.44042012095451357,
+                            "z": -0.7515867948532105
                         },
                         "worldScale": {
                             "x": 0.004999999888241291,
@@ -1237,10 +1237,10 @@
                             "z": 0.004999999888241291
                         },
                         "worldRot": {
-                            "x": 0.7071062326431274,
-                            "y": 5.0707924970083698e-8,
+                            "x": 0.7071067690849304,
+                            "y": 0.0,
                             "z": 0.0,
-                            "w": 0.7071073055267334
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -1337,12 +1337,12 @@
             "Child Entities": [
                 1048616
             ],
-            "isActive": true,
+            "isActive": false,
             "Components": [
                 {
                     "Tag": {
                         "tag": "ContinueCD",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -1397,12 +1397,12 @@
             "ID": 1048616,
             "Parent": 1048615,
             "Child Entities": [],
-            "isActive": true,
+            "isActive": false,
             "Components": [
                 {
                     "Tag": {
                         "tag": "ContinueCDChild",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -1534,147 +1534,6 @@
             ]
         },
         {
-            "ID": 1048620,
-            "Parent": null,
-            "Child Entities": [
-                1048622
-            ],
-            "isActive": true,
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "MainMenu_PicturePerfectLogoPlaceholder (1)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 1.3216056823730469,
-                            "y": 0.09598898887634278,
-                            "z": -1.2558009624481202
-                        },
-                        "scale": {
-                            "x": 0.03999999910593033,
-                            "y": 0.03999999910593033,
-                            "z": 0.03999999910593033
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 1.3216056823730469,
-                            "y": 0.09598898887634278,
-                            "z": -1.2558009624481202
-                        },
-                        "worldScale": {
-                            "x": 0.03999999910593033,
-                            "y": 0.03999999910593033,
-                            "z": 0.03999999910593033
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1048622,
-            "Parent": 1048620,
-            "Child Entities": [],
-            "isActive": true,
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "typeMesh4",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.00003528594970703125,
-                            "z": -0.0004367828369140625
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 1.3216056823730469,
-                            "y": 0.095990389585495,
-                            "z": -1.2558183670043946
-                        },
-                        "worldScale": {
-                            "x": 0.03999999910593033,
-                            "y": 0.03999999910593033,
-                            "z": 0.03999999910593033
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 12882319142451905872
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "typeMesh4",
-                        "GUID": {
-                            "ID": 1197621459750794227
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 2097154,
             "Parent": null,
             "Child Entities": [],
@@ -1743,7 +1602,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 6793587295996806993
+                            "ID": 2782594761215695553
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1884,10 +1743,151 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 12979473553406070081
+                            "ID": 11229773817536796948
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3145772,
+            "Parent": null,
+            "Child Entities": [
+                3145774
+            ],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "PicturePerfect_Logo (2)",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 1.494311809539795,
+                            "y": 0.32568639516830447,
+                            "z": -1.1886452436447144
+                        },
+                        "scale": {
+                            "x": 0.03999999910593033,
+                            "y": 0.03999999910593033,
+                            "z": 0.03999999910593033
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 1.494311809539795,
+                            "y": 0.32568639516830447,
+                            "z": -1.1886452436447144
+                        },
+                        "worldScale": {
+                            "x": 0.03999999910593033,
+                            "y": 0.03999999910593033,
+                            "z": 0.03999999910593033
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3145774,
+            "Parent": 3145772,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "PicturePerfectLogo",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.000156402587890625,
+                            "y": 0.00002765655517578125,
+                            "z": -0.0001087188720703125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 1.4943180084228516,
+                            "y": 0.3256874978542328,
+                            "z": -1.1886495351791382
+                        },
+                        "worldScale": {
+                            "x": 0.03999999910593033,
+                            "y": 0.03999999910593033,
+                            "z": 0.03999999910593033
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 12882319142451905872
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "PicturePerfectLogo",
+                        "GUID": {
+                            "ID": 12615966028523870522
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
                     }

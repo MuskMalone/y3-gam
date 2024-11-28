@@ -145,8 +145,17 @@ public class CDDragAndDrop : Entity
     private float shakeMagnitude = 0f;
     private Vector3 originalPosition;
     private float fakeRandomValue = 0f;
+
+    private bool isBeingDragged = false;
+
+    //rotation
+    private Quaternion originalRotation;
     void Start()
     {
+        originalRotation = InternalCalls.GetRotation(mEntityID);
+        Console.WriteLine("originalrotation " + originalRotation);
+
+        Console.WriteLine("My Entity WorldPos INITIAL " + InternalCalls.GetWorldPosition(mEntityID));
         CDinCase.SetActive(false);
         Vector3 scaleVector = InternalCalls.GetScale(mEntityID);
         originalScale = new Vec3<float>(scaleVector.X, scaleVector.Y, scaleVector.Z);
@@ -193,10 +202,19 @@ public class CDDragAndDrop : Entity
         //string tag = InternalCalls.GetTag(mEntityID);
         
         
-            if (isHovered)
+            if (isHovered && !isBeingDragged)
             {
+                //Console.WriteLine("Entered isHovered");
                 Vector3 hoverVector = new Vector3(hoverScale.X, hoverScale.Y, hoverScale.Z);
                 InternalCalls.SetScale(mEntityID, ref hoverVector);
+
+                //rotation
+                Quaternion newRot = Quaternion.CreateFromAxisAngle(Vector3.UnitZ, Mathf.DegToRad(10));
+                originalRotation = InternalCalls.GetRotation(mEntityID);
+                Console.WriteLine("originalrotation " + originalRotation);
+                InternalCalls.SetWorldRotation(mEntityID, ref newRot);
+                Console.WriteLine("Newrotation " + originalRotation);
+
             }
             else
             {
@@ -204,6 +222,10 @@ public class CDDragAndDrop : Entity
                 InternalCalls.SetScale(mEntityID, ref originalVector);
             }
         
+        if(isBeingDragged)
+        {
+            FollowMouse();
+        }
 
         if (isFading)
         {
@@ -275,16 +297,34 @@ public class CDDragAndDrop : Entity
             ShakeCD(0.5f, 0.005f);
             return;
         }
+        isBeingDragged = true;
         //play sound
         InternalCalls.PlaySound(mEntityID, "PickupCD_SFX");
-        CDinCase.SetActive(true);
+        
         //CDCurr.SetActive(false);
-        InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
+        
         //Startfade();
-        NextScene();
+
+        //uncommentlater
+        //CDinCase.SetActive(true);
+        //InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
+        //NextScene();
         
     }
 
+    public void OnMouseUp()
+    {
+        isBeingDragged = false;
+    }
+
+    private void FollowMouse()
+    {
+        Vector3 MousePos = InternalCalls.GetMousePos();
+        Console.WriteLine("MousePos " + MousePos);
+        InternalCalls.SetWorldPosition(mEntityID, ref MousePos);
+        Console.WriteLine("My Entity WorldPos " + InternalCalls.GetWorldPosition(mEntityID));
+        Console.WriteLine("My Entity Pos " + InternalCalls.GetPosition(mEntityID));
+    }
     private void ShakeCD(float duration, float magnitude)
     {
         if (isShaking) return;
