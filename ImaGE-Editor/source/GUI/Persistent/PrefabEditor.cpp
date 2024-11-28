@@ -22,6 +22,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Scenes/SceneManager.h>
 #include <Prefabs/PrefabManager.h>
 #include <Reflection/ComponentTypes.h>
+#include <GUI/GUIVault.h>
 
 namespace GUI
 {
@@ -132,7 +133,8 @@ namespace GUI
         else
         {
           Debug::DebugLogger::GetInstance().LogInfo("[PrefabEditor] Saved " + mPrefabName);
-          pm.UpdatePrefabFromEditor(mPrefabInstance.first, mPrefabName, mPrefabInstance.second, mGUID);
+          pm.UpdatePrefabFromEditor(mPrefabInstance.first, mPrefabName,
+            mPrefabInstance.second, mGUID, GUIVault::sSerializePrettyPrefab);
         }
         Scenes::SceneManager::GetInstance().StopScene();
 

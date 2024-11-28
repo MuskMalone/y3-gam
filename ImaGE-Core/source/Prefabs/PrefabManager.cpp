@@ -80,7 +80,7 @@ std::pair<ECS::Entity, Prefabs::Prefab::EntityMappings> PrefabManager::SpawnPref
 }
 
 void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::string const& name,
-  Prefabs::Prefab::EntityMappings& mappings, IGE::Assets::GUID guid)
+  Prefabs::Prefab::EntityMappings& mappings, IGE::Assets::GUID guid, bool pretty)
 {
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
   Prefab prefab{ name, prefabInstance.IsActive() };
@@ -89,7 +89,8 @@ void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::stri
     prefab.CreateFixedSubData(entityMan.GetChildEntity(prefabInstance), mappings);
   }
 
-  Serialization::Serializer::SerializePrefab(prefab, gPrefabsDirectory + name + gPrefabFileExt);
+  Serialization::Serializer::SerializePrefab(prefab, gPrefabsDirectory + name + gPrefabFileExt,
+    pretty ? Serialization::PRETTY : Serialization::COMPACT);
   IGE_ASSETMGR.ReloadRef<IGE::Assets::PrefabAsset>(guid);
 }
 

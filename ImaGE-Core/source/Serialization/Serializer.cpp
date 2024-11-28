@@ -13,32 +13,248 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
 #include "Serializer.h"
-#include <Serialization/JsonKeys.h>
-#include <Core/Components/Components.h>
 #include <fstream>
-#include <Reflection/ObjectFactory.h>
+#include <rapidjson/Writer.h>
+#include <rapidjson/PrettyWriter.h>
+#include <rapidjson/filewritestream.h>
+
+#include <Serialization/JsonKeys.h>
+#include <Serialization/FILEWrapper.h>
+#include <Core/Components/Components.h>
+#include <Core/Entity.h>
+
 #include <Prefabs/PrefabManager.h>
-#include <Core/Systems/SystemManager/SystemManager.h>
+#include <Reflection/ObjectFactory.h>
 #include <Core/LayerManager/LayerManager.h>
 #include <Scripting/ScriptManager.h>
 #include <Scripting/ScriptInstance.h>
-#include <Serialization/FILEWrapper.h>
 
 namespace Helper {
   template <typename T>
   bool IsType(rttr::type const& t) { return t == rttr::type::get<T>(); }
 }
 
+namespace {
+  using StreamType = rapidjson::FileWriteStream;
+  using PrettyWriterType = rapidjson::PrettyWriter<StreamType>;
+  using CompactWriterType = rapidjson::Writer<StreamType>;
+  using MonoObjectVector = std::vector<MonoObject*>;
+
+  static rttr::type const sScriptCompType = rttr::type::get<Component::Script>();
+  static rttr::type const sMonoObjectVecType = rttr::type::get<MonoObjectVector>();
+  static constexpr unsigned sBufferSize = 65536;
+
+  // had to decltype a lambda LOL
+  using EntityList = std::priority_queue < ECS::Entity, std::vector<ECS::Entity>,
+    decltype([](ECS::Entity const& lhs, ECS::Entity const& rhs) { return lhs.GetRawEnttEntityID() > rhs.GetRawEnttEntityID(); }) > ;
+
+  template <typename WriterType>
+  void SerializeSceneInternal(std::string const& filePath);
+
+  template <typename WriterType>
+  void SerializePrefabInternal(Prefabs::Prefab const& prefab, std::string const& filePath);
+
+  /*!*********************************************************************
+  \brief
+    Helper function to serialize an entity's properties
+  \param entity
+    The entity to serialize
+  \param writer
+    The writer to write to
+  ************************************************************************/
+  template <typename WriterType>
+  void SerializeEntity(ECS::Entity const& entity, WriterType& writer);
+
+  /*!*********************************************************************
+  \brief
+    Helper function to serialize a vector of components of an entity
+  \param components
+    The vector of components
+  \param writer
+    The writer to write to
+  ************************************************************************/
+  template <typename WriterType>
+  void SerializeVariantComponents(std::vector<rttr::variant> const& components, WriterType& writer);
+
+  /*!*********************************************************************
+  \brief
+    Serializes a class by iterating through its properties
+  \param object
+    The object to serialize
+  \param writer
+    The writer to write to
+  ************************************************************************/
+  template <typename WriterType>
+  void SerializeClassTypes(rttr::instance const& obj, WriterType& writer);
+
+  template <typename WriterType>
+  void SerializeScriptClassTypes(rttr::instance const& obj, WriterType& writer);
+  template <typename WriterType>
+  bool SerializeScriptRecursive(rttr::variant const& var, WriterType& writer);
+  template <typename WriterType>
+  void WriteScriptSequentialContainer(rttr::variant_sequential_view const& seqView, WriterType& writer);
+
+  /*!*********************************************************************
+  \brief
+    Handles classes that require custom serialization. This should be
+    called before the standard SerializeClassTypes.
+  \param object
+    The object to serialize
+  \param type
+    The type of the object
+  \param writer
+    The writer to write to
+  \return
+    True if the object was serialized and false otherwise
+  ************************************************************************/
+  //template <typename WriterType>
+  //static bool SerializeSpecialCases(rttr::instance const& obj, rttr::type const& type, WriterType& writer);
+
+  /*!*********************************************************************
+  \brief
+    Serializes a basic type into the writer
+  \param valueType
+    The rttr::type of the object
+  \param value
+    The rttr::variant of the object
+  \param writer
+    The writer to write to
+  \return
+    True if the value was serialized and false otherwise
+  ************************************************************************/
+  template <typename WriterType>
+  bool WriteBasicTypes(rttr::type const& type, rttr::variant const& var, WriterType& writer);
+
+  /*!*********************************************************************
+  \brief
+    Serializes an rttr::variant containing a sequential container type
+    (such as std::vector). Makes use of recursion to serialize a
+    container till it reaches the base element
+  \param seqView
+    The sequential view of the container
+  \param writer
+    The writer to write to
+  ************************************************************************/
+  template <typename WriterType>
+  void WriteSequentialContainer(rttr::variant_sequential_view const& seqView, WriterType& writer);
+
+  /*!*********************************************************************
+  \brief
+    Retrieves the entities from the ECS and sorts them based on the pq
+    defined in EntityList
+  \return
+    The list of sorted entities
+  ************************************************************************/
+  EntityList GetSortedEntities();    // @TODO: May need to get entities from particular scene next time
+                                     //        instead of ECS
+
+/*!*********************************************************************
+\brief
+  Serializes an rttr::variant into a rapidjson::Value object based
+  on its type. (Whether its a C basic type, Enum or class type)
+\param var
+  The rttr::variant of the object
+\param writer
+  The writer to write to
+\return
+  True if the object was serialized and false otherwise
+************************************************************************/
+  template <typename WriterType>
+  bool SerializeRecursive(rttr::variant const& var, WriterType& writer);
+
+  /*!*********************************************************************
+  \brief
+    Serializes an rttr::variant containing an associative container type
+    (such as std::map)
+  \param view
+    The associative view of the container
+  \param writer
+    The writer to write to
+  ************************************************************************/
+  template <typename WriterType>
+  void WriteAssociativeContainer(rttr::variant_associative_view const& view, WriterType& writer);
+}
+
 namespace Serialization
 {
-  rttr::type const Serializer::sScriptCompType = rttr::type::get<Component::Script>();
-  using MonoObjectVector = std::vector<MonoObject*>;
-  rttr::type const Serializer::sMonoObjectVecType = rttr::type::get<MonoObjectVector>();
+  void Serializer::SerializePrefab(Prefabs::Prefab const& prefab, std::string const& filePath, FileFormat format) {
+    if (format == FileFormat::PRETTY) {
+      SerializePrefabInternal<PrettyWriterType>(prefab, filePath);
+      return;
+    }
 
-//#ifndef IMGUI_DISABLE
-  void Serializer::SerializePrefab(Prefabs::Prefab const& prefab, std::string const& filePath)
+    SerializePrefabInternal<CompactWriterType>(prefab, filePath);
+  }
+
+  void Serializer::SerializeAny(rttr::instance const& obj, std::string const& filePath, FileFormat format)
   {
     FILEWrapper fileWrapper{ filePath.c_str(), "w" };
+    if (!fileWrapper) {
+      Debug::DebugLogger::GetInstance().LogError("[Serializer] Unable to create file: " + filePath);
+#ifdef _DEBUG
+      std::cout << "Unable to open file " << filePath << "\n";
+#endif
+      return;
+    }
+
+    std::vector<char> buffer(sBufferSize);
+    StreamType outStream{ fileWrapper.GetFILE(), buffer.data(), sBufferSize };
+    if (format == FileFormat::PRETTY) {
+      PrettyWriterType writer{ outStream };
+      SerializeClassTypes(obj, writer);
+    }
+    else {
+      CompactWriterType writer{ outStream };
+      SerializeClassTypes(obj, writer);
+    }
+  }
+
+  void Serializer::SerializeScene(std::string const& filePath, FileFormat format) {
+    if (format == FileFormat::PRETTY) {
+      SerializeSceneInternal<PrettyWriterType>(filePath);
+      return;
+    }
+
+    SerializeSceneInternal<CompactWriterType>(filePath);
+  }
+} // namespace Serialization
+
+namespace {
+  template <typename WriterType>
+  void SerializeSceneInternal(std::string const& filePath) {
+    Serialization::FILEWrapper fileWrapper{ filePath.c_str(), "w" };
+    if (!fileWrapper) {
+      Debug::DebugLogger::GetInstance().LogError("[Serializer] Unable to create scene file: " + filePath);
+    }
+
+    std::vector<char> buffer(sBufferSize);
+    StreamType outStream{ fileWrapper.GetFILE(), buffer.data(), sBufferSize };
+
+    WriterType writer{ outStream };
+
+    EntityList entityList{ GetSortedEntities() };
+
+    // serialize entities
+    writer.StartObject();
+
+    writer.Key(JSON_SCENE_KEY);
+    writer.StartArray();
+    while (!entityList.empty()) {
+      SerializeEntity<WriterType>(entityList.top(), writer);
+      entityList.pop();
+    }
+    writer.EndArray();
+
+    // serialize layer data
+    writer.Key(JSON_LAYERS_KEY);
+    SerializeClassTypes<WriterType>(IGE_LAYERMGR.GetLayerData(), writer);
+
+    writer.EndObject();
+  }
+
+  template <typename WriterType>
+  void SerializePrefabInternal(Prefabs::Prefab const& prefab, std::string const& filePath) {
+    Serialization::FILEWrapper fileWrapper{ filePath.c_str(), "w" };
     if (!fileWrapper) {
       Debug::DebugLogger::GetInstance().LogCritical("Unable to serialize prefab into " + filePath);
 #ifdef _DEBUG
@@ -57,7 +273,7 @@ namespace Serialization
     writer.Key(JSON_PFB_ACTIVE_KEY); writer.Bool(prefab.mIsActive);
 
     writer.Key(JSON_COMPONENTS_KEY);
-    SerializeVariantComponents(prefab.mComponents, writer);
+    SerializeVariantComponents<WriterType>(prefab.mComponents, writer);
 
     // serialize nested components if prefab has multiple layers
     writer.Key(JSON_PFB_DATA_KEY);
@@ -65,7 +281,7 @@ namespace Serialization
     for (Prefabs::PrefabSubData const& obj : prefab.mObjects)
     {
       writer.StartObject();
-      
+
       writer.Key(JSON_ID_KEY); writer.Uint(obj.mId);
       writer.Key(JSON_PFB_ACTIVE_KEY); writer.Bool(true);
       writer.Key(JSON_PARENT_KEY);
@@ -75,9 +291,9 @@ namespace Serialization
       else {
         writer.Uint(obj.mParent);
       }
-      
+
       writer.Key(JSON_COMPONENTS_KEY);
-      SerializeVariantComponents(obj.mComponents, writer);
+      SerializeVariantComponents<WriterType>(obj.mComponents, writer);
 
       writer.EndObject();
     }
@@ -85,57 +301,9 @@ namespace Serialization
 
     writer.EndObject();
   }
-//#endif
 
-  void Serializer::SerializeAny(rttr::instance const& obj, std::string const& filePath)
-  {
-    FILEWrapper fileWrapper{ filePath.c_str(), "w" };
-    if (!fileWrapper) {
-      Debug::DebugLogger::GetInstance().LogError("[Serializer] Unable to create file: " + filePath);
-#ifdef _DEBUG
-      std::cout << "Unable to open file " << filePath << "\n";
-#endif
-      return;
-    }
-
-    std::vector<char> buffer(sBufferSize);
-    StreamType outStream{ fileWrapper.GetFILE(), buffer.data(), sBufferSize };
-    WriterType writer{ outStream };
-    SerializeClassTypes(obj, writer);
-  }
-
-  void Serializer::SerializeScene(std::string const& filePath)
-  {
-    FILEWrapper fileWrapper{ filePath.c_str(), "w" };
-    if (!fileWrapper) {
-      Debug::DebugLogger::GetInstance().LogError("[Serializer] Unable to create scene file: " + filePath);
-    }
-
-    std::vector<char> buffer(sBufferSize);
-    StreamType outStream{ fileWrapper.GetFILE(), buffer.data(), sBufferSize };
-    WriterType writer{ outStream };
-
-    EntityList entityList{ GetSortedEntities() };
-
-    // serialize entities
-    writer.StartObject();
-
-    writer.Key(JSON_SCENE_KEY);
-    writer.StartArray();
-    while (!entityList.empty()) {
-      SerializeEntity(entityList.top(), writer);
-      entityList.pop();
-    }
-    writer.EndArray();
-
-    // serialize layer data
-    writer.Key(JSON_LAYERS_KEY);
-    SerializeClassTypes(IGE_LAYERMGR.GetLayerData(), writer);
-
-    writer.EndObject();
-  }
-
-  void Serializer::SerializeEntity(ECS::Entity const& entity, WriterType& writer)
+  template <typename WriterType>
+  void SerializeEntity(ECS::Entity const& entity, WriterType& writer)
   {
     writer.StartObject();
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
@@ -170,12 +338,12 @@ namespace Serialization
       // if position exists, serialize it
       if (overrides.subDataId == Prefabs::PrefabSubData::BasePrefabId && !overrides.IsComponentModified(rttr::type::get<Component::Transform>())) {
         writer.Key(JSON_PFB_POS_KEY);
-        SerializeRecursive(entity.GetComponent<Component::Transform>().position, writer);
+        SerializeRecursive<WriterType>(entity.GetComponent<Component::Transform>().position, writer);
       }
 
       // serialize the components
       writer.Key(JSON_PREFAB_KEY);
-      SerializeRecursive(overrides, writer);
+      SerializeRecursive<WriterType>(overrides, writer);
       writer.EndObject();
       return;
     }
@@ -187,11 +355,12 @@ namespace Serialization
 
     writer.Key(JSON_COMPONENTS_KEY);
     std::vector<rttr::variant> const components{ Reflection::ObjectFactory::GetInstance().GetEntityComponents(entity) };
-    SerializeVariantComponents(components, writer);
+    SerializeVariantComponents<WriterType>(components, writer);
     writer.EndObject();
   }
 
-  void Serializer::SerializeVariantComponents(std::vector<rttr::variant> const& components, WriterType& writer)
+  template <typename WriterType>
+  void SerializeVariantComponents(std::vector<rttr::variant> const& components, WriterType& writer)
   {
     writer.StartArray();
     // for each component, extract the string of the class and serialize
@@ -204,26 +373,28 @@ namespace Serialization
       compType = compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType;
 
       writer.Key(compType.get_name().to_string().c_str());
-      
+
       // handle scripts separately
       if (compType == sScriptCompType) {
-        SerializeScriptClassTypes(comp, writer);
+        SerializeScriptClassTypes<WriterType>(comp, writer);
       }
       else {
-        SerializeClassTypes(comp, writer);
+        SerializeClassTypes<WriterType>(comp, writer);
       }
-      
+
       writer.EndObject();
     }
     writer.EndArray();
   }
 
-  bool Serializer::SerializeSpecialCases(rttr::instance const& obj, rttr::type const& type, WriterType& writer)
-  {
-    return false;
-  }
+  //template <typename WriterType>
+  //bool Serializer::SerializeSpecialCases(rttr::instance const& obj, rttr::type const& type, WriterType& writer)
+  //{
+  //  return false;
+  //}
 
-  void Serializer::SerializeClassTypes(rttr::instance const& obj, WriterType& writer)
+  template <typename WriterType>
+  void SerializeClassTypes(rttr::instance const& obj, WriterType& writer)
   {
     writer.StartObject();
 
@@ -246,7 +417,7 @@ namespace Serialization
 
       std::string const name{ property.get_name().to_string() };
       writer.String(name.c_str(), static_cast<rapidjson::SizeType>(name.length()), false);
-      if (!SerializeRecursive(propVal, writer))
+      if (!SerializeRecursive<WriterType>(propVal, writer))
       {
         std::ostringstream oss{};
         oss << "Unable to serialize property " << name << " of type " << property.get_type().get_name().to_string();
@@ -258,9 +429,10 @@ namespace Serialization
     }
 
     writer.EndObject();
-  }  
+  }
 
-  bool Serializer::WriteBasicTypes(rttr::type const& type, rttr::variant const& var, WriterType& writer)
+  template <typename WriterType>
+  bool WriteBasicTypes(rttr::type const& type, rttr::variant const& var, WriterType& writer)
   {
     // if basic C type
     if (type.is_arithmetic())
@@ -310,7 +482,8 @@ namespace Serialization
     return false;
   }
 
-  void Serializer::WriteSequentialContainer(rttr::variant_sequential_view const& seqView, WriterType& writer)
+  template <typename WriterType>
+  void WriteSequentialContainer(rttr::variant_sequential_view const& seqView, WriterType& writer)
   {
     writer.StartArray();
 
@@ -318,15 +491,15 @@ namespace Serialization
     {
       // if elem is another sequential container, call this function again
       if (elem.is_sequential_container()) {
-        WriteSequentialContainer(elem.create_sequential_view(), writer);
+        WriteSequentialContainer<WriterType>(elem.create_sequential_view(), writer);
       }
       else
       {
         rttr::variant wrappedVar{ elem.extract_wrapped_value() };
         rttr::type const valType{ wrappedVar.get_type() };
-        if (!WriteBasicTypes(valType, wrappedVar, writer))
+        if (!WriteBasicTypes<WriterType>(valType, wrappedVar, writer))
         {
-          SerializeClassTypes(wrappedVar, writer);
+          SerializeClassTypes<WriterType>(wrappedVar, writer);
         }
       }
     }
@@ -334,29 +507,30 @@ namespace Serialization
     writer.EndArray();
   }
 
-  bool Serializer::SerializeRecursive(rttr::variant const& var, WriterType& writer)
+  template <typename WriterType>
+  bool SerializeRecursive(rttr::variant const& var, WriterType& writer)
   {
     bool const isWrapper{ var.get_type().is_wrapper() };
     rttr::type const type{ isWrapper ? var.get_type().get_wrapped_type().get_raw_type() :
           var.get_type().is_pointer() ? var.get_type().get_raw_type() : var.get_type() };
 
-    if (WriteBasicTypes(type, isWrapper ? var.extract_wrapped_value() : var, writer)) {
+    if (WriteBasicTypes<WriterType>(type, isWrapper ? var.extract_wrapped_value() : var, writer)) {
 
     }
     else if (var.is_sequential_container())
     {
-      WriteSequentialContainer(var.create_sequential_view(), writer);
+      WriteSequentialContainer<WriterType>(var.create_sequential_view(), writer);
     }
     else if (var.is_associative_container())
     {
-      WriteAssociativeContainer(var.create_associative_view(), writer);
+      WriteAssociativeContainer<WriterType>(var.create_associative_view(), writer);
     }
     else
     {
       auto properties{ type.get_properties() };
       if (!properties.empty())
       {
-        SerializeClassTypes(var, writer);
+        SerializeClassTypes<WriterType>(var, writer);
       }
       else if (type == rttr::type::get<rttr::type>()) {
         bool ok;
@@ -377,13 +551,14 @@ namespace Serialization
     return true;
   }
 
-  void Serializer::WriteAssociativeContainer(rttr::variant_associative_view const& view, WriterType& writer)
+  template <typename WriterType>
+  void WriteAssociativeContainer(rttr::variant_associative_view const& view, WriterType& writer)
   {
     writer.StartArray();
 
     if (view.is_key_only_type()) {
       for (auto const& elem : view) {
-        SerializeRecursive(elem.first, writer);
+        SerializeRecursive<WriterType>(elem.first, writer);
       }
     }
     else {
@@ -391,10 +566,10 @@ namespace Serialization
       {
         writer.StartObject();
         writer.String("key", 3, false);
-        SerializeRecursive(elem.first, writer);
+        SerializeRecursive<WriterType>(elem.first, writer);
 
         writer.String("value", 5, false);
-        SerializeRecursive(elem.second.get_type().is_wrapper() ? elem.second.extract_wrapped_value() : elem.second, writer);
+        SerializeRecursive<WriterType>(elem.second.get_type().is_wrapper() ? elem.second.extract_wrapped_value() : elem.second, writer);
 
         writer.EndObject();
       }
@@ -404,7 +579,8 @@ namespace Serialization
   }
 
 #pragma region ScriptsSpecific
-  void Serializer::SerializeScriptClassTypes(rttr::instance const& obj, WriterType& writer)
+  template <typename WriterType>
+  void SerializeScriptClassTypes(rttr::instance const& obj, WriterType& writer)
   {
     writer.StartObject();
 
@@ -430,7 +606,7 @@ namespace Serialization
 
       std::string const name{ property.get_name().to_string() };
       writer.String(name.c_str(), static_cast<rapidjson::SizeType>(name.length()), false);
-      if (!SerializeScriptRecursive(propVal, writer))
+      if (!SerializeScriptRecursive<WriterType>(propVal, writer))
       {
         std::ostringstream oss{};
         oss << "Unable to serialize property " << name << " of type " << property.get_type().get_name().to_string();
@@ -444,29 +620,30 @@ namespace Serialization
     writer.EndObject();
   }
 
-  bool Serializer::SerializeScriptRecursive(rttr::variant const& var, WriterType& writer)
+  template <typename WriterType>
+  bool SerializeScriptRecursive(rttr::variant const& var, WriterType& writer)
   {
     bool const isWrapper{ var.get_type().is_wrapper() };
     rttr::type const type{ isWrapper ? var.get_type().get_wrapped_type().get_raw_type() :
           var.get_type().is_pointer() ? var.get_type().get_raw_type() : var.get_type() };
 
-    if (WriteBasicTypes(type, isWrapper ? var.extract_wrapped_value() : var, writer)) {
+    if (WriteBasicTypes<WriterType>(type, isWrapper ? var.extract_wrapped_value() : var, writer)) {
 
     }
     else if (var.is_sequential_container())
     {
-      WriteScriptSequentialContainer(var.create_sequential_view(), writer);
+      WriteScriptSequentialContainer<WriterType>(var.create_sequential_view(), writer);
     }
     else if (var.is_associative_container())
     {
-      WriteAssociativeContainer(var.create_associative_view(), writer);
+      WriteAssociativeContainer<WriterType>(var.create_associative_view(), writer);
     }
     else
     {
       auto properties{ type.get_properties() };
       if (!properties.empty())
       {
-        SerializeScriptClassTypes(var, writer);
+        SerializeScriptClassTypes<WriterType>(var, writer);
       }
       else if (type == rttr::type::get<rttr::type>()) {
         bool ok;
@@ -487,7 +664,8 @@ namespace Serialization
     return true;
   }
 
-  void Serializer::WriteScriptSequentialContainer(rttr::variant_sequential_view const& seqView, WriterType& writer)
+  template <typename WriterType>
+  void WriteScriptSequentialContainer(rttr::variant_sequential_view const& seqView, WriterType& writer)
   {
     writer.StartArray();
 
@@ -495,15 +673,15 @@ namespace Serialization
     {
       // if elem is another sequential container, call this function again
       if (elem.is_sequential_container()) {
-        WriteScriptSequentialContainer(elem.create_sequential_view(), writer);
+        WriteScriptSequentialContainer<WriterType>(elem.create_sequential_view(), writer);
       }
       else
       {
         rttr::variant wrappedVar{ elem.extract_wrapped_value() };
         rttr::type const valType{ wrappedVar.get_type() };
-        if (!WriteBasicTypes(valType, wrappedVar, writer))
+        if (!WriteBasicTypes<WriterType>(valType, wrappedVar, writer))
         {
-          SerializeScriptClassTypes(wrappedVar, writer);
+          SerializeScriptClassTypes<WriterType>(wrappedVar, writer);
         }
       }
     }
@@ -512,7 +690,7 @@ namespace Serialization
   }
 #pragma endregion
 
-  Serializer::EntityList Serializer::GetSortedEntities() {
+  EntityList GetSortedEntities() {
     auto const& entityList{ ECS::EntityManager::GetInstance().GetAllEntities() };
     EntityList entityPQ{};
 
@@ -520,5 +698,4 @@ namespace Serialization
 
     return entityPQ;
   }
-
-} // namespace Serialization
+}
