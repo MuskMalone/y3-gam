@@ -82,9 +82,12 @@ namespace Scenes
 
   void SceneManager::InitScene() {
     Reflection::ObjectFactory::GetInstance().InitScene();
+    // realign colliders with transforms
+    IGE_EVENTMGR.DispatchImmediateEvent<Events::TriggerPausedUpdate>();
     Mono::ScriptManager::GetInstance().LinkAllScriptDataMember();
   }
 
+  // i should just combine clear and unload functions
   void SceneManager::ClearScene() {
     mSceneName.clear();
     IGE::Physics::PhysicsSystem::GetInstance()->ClearSystem();
@@ -134,9 +137,6 @@ namespace Scenes
 
     if (mSceneState != SceneState::PLAYING) {
       mSceneState = SceneState::STOPPED;
-    }
-    else {
-      IGE_EVENTMGR.DispatchImmediateEvent<Events::TriggerPausedUpdate>();
     }
   }
 

@@ -95,49 +95,8 @@ namespace ImGuiHelpers
   ************************************************************************/
   bool InputCheckBox(std::string const& propertyName, bool& property, bool disabled);
 
-  void WrapMousePosEx(int axises_mask, const ImRect& wrap_rect)
-  {
-    ImGuiContext& g = *GImGui;
-    IM_ASSERT(axises_mask == 1 || axises_mask == 2 || axises_mask == (1 | 2));
-    ImVec2 p_mouse = g.IO.MousePos;
-    for (int axis = 0; axis < 2; axis++)
-    {
-      if ((axises_mask & (1 << axis)) == 0) {
-        continue;
-      }
-      float size = wrap_rect.Max[axis] - wrap_rect.Min[axis];
-      if (p_mouse[axis] >= wrap_rect.Max[axis] - 1.f) {
-        p_mouse[axis] = wrap_rect.Min[axis] + 1.0f;
-      }
-      else if (p_mouse[axis] <= wrap_rect.Min[axis] + 1.f) {
-        p_mouse[axis] = wrap_rect.Max[axis] - 1.0f;
-      }
-    }
-    if (p_mouse.x != g.IO.MousePos.x || p_mouse.y != g.IO.MousePos.y) {
-      ImGui::TeleportMousePos(p_mouse);
-    }
-  }
-
-  // When multi-viewports are disabled: wrap in main viewport.
-  // When multi-viewports are enabled: wrap in monitor.
-  // FIXME: Experimental: not sure how this behaves with multi-monitor and monitor coordinates gaps.
-  void WrapMousePos(int axises_mask)
-  {
-    ImGuiContext& g = *GImGui;
-#ifdef IMGUI_HAS_DOCK
-    if (g.IO.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-    {
-      const ImGuiPlatformMonitor* monitor = ImGui::GetViewportPlatformMonitor(g.MouseViewport);
-      WrapMousePosEx(axises_mask, ImRect(monitor->MainPos, monitor->MainPos + monitor->MainSize));
-    }
-    else
-#endif
-    {
-      ImGuiViewport* viewport = ImGui::GetMainViewport();
-      WrapMousePosEx(axises_mask, ImRect(viewport->Pos, viewport->Pos + viewport->Size));
-    }
-  }
-
+  void WrapMousePos(int axises_mask);
+  void WrapMousePosEx(int axises_mask, const ImRect& wrap_rect);
 } // namespace ImGuiHelpers
 
 // operator overloads
