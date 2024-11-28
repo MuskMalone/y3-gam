@@ -27,6 +27,7 @@
 namespace Graphics {
 	constexpr int INVALID_ENTITY_ID = -1;
 
+	ECS::Entity Renderer::mHighlightedEntity;
 	RendererData Renderer::mData;
 	MaterialTable Renderer::mMaterialTable;
 	ShaderLibrary Renderer::mShaderLibrary;
@@ -41,6 +42,7 @@ namespace Graphics {
 	}
 	void Renderer::Init() {
 		SUBSCRIBE_STATIC_FUNC(Events::EventType::WINDOW_RESIZED, OnResize);
+		SUBSCRIBE_STATIC_FUNC(Events::EventType::ENTITY_PICKED, OnEntityPicked );
 		InitUICamera();
 
 		//----------------------Init Batching Quads------------------------------------------------------------//
@@ -246,6 +248,7 @@ namespace Graphics {
 		ShaderLibrary::Add("Tex2D", Shader::Create("Tex2D.vert.glsl", "Tex2D.frag.glsl"));
 		ShaderLibrary::Add("SkyboxProc", Shader::Create("Skybox\\Procedural.vert.glsl", "Skybox\\Procedural.frag.glsl"));
 		ShaderLibrary::Add("SkyboxPano", Shader::Create("Skybox\\Panoramic.vert.glsl", "Skybox\\Panoramic.frag.glsl"));
+		ShaderLibrary::Add("Highlight", Shader::Create("Highlight.vert.glsl", "Highlight.frag.glsl"));
 	}
 
 	void Renderer::InitGeomPass() {
@@ -307,7 +310,11 @@ namespace Graphics {
 
 		// @TODO: Allow for multiple shadow maps; need extend code
 		//				to use glTexImage3D and GL_TEXTURE_2D_ARRAY
-		shadowSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::SHADOW_MAP };	// temporarily max. 1 shadow-caster
+		shadowSpec.attachments = { Graphics::FramebufferTextureFormat::SHADOW_MAP };	// temporarily max. 1 shadow-caster
+#ifndef DISTRIBUTION
+		// only add color buffer for engine use
+		shadowSpec.attachments.attachments.emplace_back(Graphics::FramebufferTextureFormat::RGBA8);
+#endif
 
 		PipelineSpec shadowPSpec;
 		shadowPSpec.shader = ShaderLibrary::Get("ShadowMap");
@@ -419,12 +426,25 @@ namespace Graphics {
 		mUICamera.top = 10.0f;
 	}
 
+	void Renderer::SetHighlightedEntity(ECS::Entity const& entity) {
+		mHighlightedEntity = entity;
+	}
+
+	ECS::Entity Renderer::GetHighlightedEntity(){
+		return mHighlightedEntity;
+	}
+
 	EVENT_CALLBACK_DEF(Renderer, OnResize) {
 		auto const& e { CAST_TO_EVENT(Events::WindowResized)};
 
 		for (auto const& pass : mRenderPasses) {
 			pass->GetTargetFramebuffer()->Resize(e->mWidth, e->mHeight);
 		}
+	}
+
+	EVENT_CALLBACK_DEF(Renderer, OnEntityPicked) {
+		auto const& entity { CAST_TO_EVENT(Events::EntityScreenPicked)->mEntity };
+		SetHighlightedEntity(entity);
 	}
 
 	void Renderer::Shutdown() {
@@ -529,8 +549,6 @@ namespace Graphics {
 
 		SetLineBufferData(p0, clr);
 		SetLineBufferData(p1, clr);
-
-		mData.lineVtxCount += 2;
 
 		++mData.stats.lineCount;
 	}
@@ -1256,11 +1274,16 @@ namespace Graphics {
 			++mData.stats.drawCalls;
 		}
 		if (mData.lineVtxCount) {
+
 			unsigned int dataSize = static_cast<unsigned int>(mData.lineBufferIndex * sizeof(LineVtx));
 
 			mData.lineVertexBuffer->SetData(mData.lineBuffer.data(), dataSize);
 
-			ShaderLibrary::Get("Line")->Use();
+			auto const& lineShader = ShaderLibrary::Get("Line");
+			lineShader->Use();
+			auto depthTex = Renderer::GetPass<GeomPass>()->GetDepthTexture();
+			if (depthTex)
+				lineShader->SetUniform("u_DepthTex", depthTex, 0);
 			RenderAPI::DrawLines(mData.lineVertexArray, mData.lineVtxCount);
 
 			++mData.stats.drawCalls;
@@ -1272,6 +1295,7 @@ namespace Graphics {
 			mData.triVertexBuffer->SetData(mData.triBuffer.data(), dataSize);
 
 			ShaderLibrary::Get("Line")->Use();
+
 			RenderAPI::DrawTriangles(mData.triVertexArray, mData.triVtxCount);
 
 			++mData.stats.drawCalls;
@@ -1361,13 +1385,15 @@ namespace Graphics {
 		BeginBatch();
 	}
 
-	void Renderer::RenderSceneBegin(glm::mat4 const& viewProjMtx) {
-
-
+	void Renderer::RenderSceneBegin(glm::mat4 const& viewProjMtx, CameraSpec const& cam) {
 
 		auto const& lineShader = ShaderLibrary::Get("Line");
 		lineShader->Use();
 		lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
+		auto depthFb = Renderer::GetPass<GeomPass>()->GetTargetFramebuffer();
+
+		lineShader->SetUniform("u_ScreenSize", glm::vec2{depthFb->GetFramebufferSpec().width, depthFb->GetFramebufferSpec().height});
+		lineShader->SetUniform("u_FarPlane", cam.farClip);
 
 		//mData.lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
 		auto const& texShader = ShaderLibrary::Get("Tex2D");

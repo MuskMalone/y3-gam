@@ -194,8 +194,8 @@ namespace Graphics {
 		static void BeginBatch();
 		static void FlushBatch();
 		static void FlushBatch(std::shared_ptr<RenderPass> const& renderPass);
-
-		static void RenderSceneBegin(glm::mat4 const& viewProjMtx);
+		
+		static void RenderSceneBegin(glm::mat4 const& viewProjMtx, CameraSpec const& cam = CameraSpec{});
 		static void RenderSceneEnd();
 
 		static unsigned int GetMaxTextureUnits();
@@ -208,6 +208,9 @@ namespace Graphics {
 		static IGE::Assets::GUID GetDebugMeshSource(size_t idx = 0);
 
 		static IGE::Assets::GUID GetQuadMeshSource();
+
+		static void SetHighlightedEntity(ECS::Entity const& entity);
+		static ECS::Entity GetHighlightedEntity();
 	private:
 		static void SetQuadBufferData(glm::vec3 const& pos, glm::vec4 const& clr,
 									  glm::vec2 const& texCoord, float texIdx, int entity);
@@ -247,6 +250,7 @@ namespace Graphics {
 
 		static void InitUICamera();
 		static EVENT_CALLBACK_DECL(OnResize);
+		static EVENT_CALLBACK_DECL(OnEntityPicked);
 
 		template <typename T>
 		static void AddPass(std::shared_ptr<T>&& pass) {
@@ -255,6 +259,7 @@ namespace Graphics {
 		}
 
 	private:
+		static ECS::Entity mHighlightedEntity;
 		static RendererData mData;
 		static MaterialTable mMaterialTable;
 		static ShaderLibrary mShaderLibrary;

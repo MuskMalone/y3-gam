@@ -42,8 +42,6 @@ namespace Graphics {
       //auto shader = mSpec.pipeline->GetShader();
       GetTargetFramebuffer()->ClearAttachmentInt(1, -1);
 
-      Renderer::RenderSceneBegin(cam.viewProjMatrix);
-
       //=================================================SUBMESH VERSION===============================================================
       // STEP UNO: Collect entities into shader groups!!!
       ShaderGroupMap const shaderGroups{ GroupEntities(entities) };
@@ -87,7 +85,8 @@ namespace Graphics {
 
           MaterialTable::ApplyMaterialTextures(shader, batchStart, batchEnd);
 
-          shader->SetUniform("u_MatIdxOffset", matGrp == 0 ? 0 : -static_cast<int>(batchStart));
+          int offset = matGrp == 0 ? 0 : -static_cast<int>(batchStart);
+          shader->SetUniform("u_MatIdxOffset", offset);
           // Render all instances for this material
           for (const auto&[worldMtx, entity, matIdx] : entityData) {
             auto const& mesh = entity.GetComponent<Component::Mesh>();
@@ -99,27 +98,8 @@ namespace Graphics {
         }
       }
 
-      if (cam.isEditor) {
-          for(auto const& light : entities){
-              if (!light.HasComponent<Component::Transform>()) continue;
-              if (!light.HasComponent<Component::Light>()) continue;
-              auto const& xform = ECS::Entity{ light }.GetComponent<Component::Transform>();
-              auto const& lightComp = ECS::Entity{ light }.GetComponent<Component::Light>();
-              Renderer::DrawLightGizmo(lightComp, xform, cam, ECS::Entity{light}.GetEntityID());
-          }
-          //auto const& cameras = ecsMan.GetAllEntitiesWithComponents<Component::Camera>();
-          //for (auto const& camera : cameras) {
-          //    if (!ECS::Entity{ camera }.IsActive()) continue;
-          //    auto const& camComp = ECS::Entity{ camera }.GetComponent<Component::Camera>();
-          //    auto const& xform = ECS::Entity{ camera }.GetComponent<Component::Transform>();
-          //    Renderer::DrawSprite(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(Renderer::mIcons[2])->mTexture, Color::COLOR_WHITE, ECS::Entity { camera }.GetEntityID(), true, cam);
-          //}
-
-      }
-
-      //========================================2D Sprite Rendering=========================================================================================
-
 //========================================2D Sprite Rendering=========================================================================================
+      Renderer::RenderSceneBegin(cam.viewProjMatrix, cam);
       std::vector<ECS::Entity> opaqueSprites;
       std::vector<ECS::Entity> transparentSprites;
 
@@ -202,12 +182,24 @@ namespace Graphics {
       if (!mOutputTexture || mOutputTexture->GetWidth() != fb->GetFramebufferSpec().width || mOutputTexture->GetHeight() != fb->GetFramebufferSpec().height) {
           // Create or resize mOutputTexture based on the framebuffer's specs
           mOutputTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+          mDepthTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height, GL_DEPTH24_STENCIL8);
+          mRedTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height, GL_R32I);
       }
 
       // Perform the copy operation
       if (mOutputTexture) {
           mOutputTexture->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+          mDepthTexture->CopyFrom(fb->GetDepthAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+          mRedTexture->CopyFrom(fb->GetColorAttachmentID(1), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
       }
+  }
+
+  std::shared_ptr<Texture> GeomPass::GetDepthTexture() {
+      return mDepthTexture;
+  }
+
+  std::shared_ptr<Texture> GeomPass::GetEntityTexture(){
+      return mRedTexture;
   }
 
   std::shared_ptr<Framebuffer> GeomPass::GetGameViewFramebuffer() const {
@@ -216,6 +208,10 @@ namespace Graphics {
 
   GeomPass::ShaderGroupMap GeomPass::GroupEntities(std::vector<ECS::Entity> const& entities) {
     ShaderGroupMap shaderToMatGrp; // group by shader, then by material batch
+
+    auto CalculateMatBatch = [](int matID) -> int {
+        return (matID > 0) ? (matID - 1) / MaterialTable::sMaterialsPerBatch : 0;
+    };
 
     for (ECS::Entity const& entity : entities) {
       if (!entity.HasComponent<Component::Mesh>() || 
@@ -232,7 +228,7 @@ namespace Graphics {
       auto const& xform = entity.GetComponent<Component::Transform>();
       
       // add entity based on material batch number
-      int const matBatch{ matID / static_cast<int>(MaterialTable::sMaterialsPerBatch + 1) };
+      int const matBatch{ CalculateMatBatch(matID) };
       matGroups[matBatch].emplace_back(xform.worldMtx, entity, matID);
     }
 
