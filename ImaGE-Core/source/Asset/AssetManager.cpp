@@ -140,13 +140,13 @@ namespace IGE {
 
 		std::string AssetManager::GUIDToPath(GUID const& guid) {
 			if (mGUID2PathRegistry.find(guid) == mGUID2PathRegistry.end())
-				throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("GUID doesnt have path"));
+				throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("GUID " + std::to_string(static_cast<uint64_t>(guid)) + " doesnt have path"));
 			return mGUID2PathRegistry.at(guid);
 		}
 
 		GUID AssetManager::PathToGUID(std::string const& path) {
 			if (mPath2GUIDRegistry.find(path) == mPath2GUIDRegistry.end())
-				throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("path doesnt have GUID"));
+				throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("path " + path + " doesnt have GUID"));
 			return mPath2GUIDRegistry.at(path);
 		}
 
