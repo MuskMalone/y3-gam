@@ -117,6 +117,7 @@ public class Dialogue : Entity
       return;
     }
 
+    InternalCalls.PlaySound(mEntityID, "DefaultDialogueSound");
     playerMove.FreezePlayer();
     lineIndex = 0;
     InternalCalls.SetText(mEntityID, string.Empty);

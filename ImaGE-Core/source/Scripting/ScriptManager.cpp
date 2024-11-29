@@ -87,6 +87,7 @@ namespace Mono
     { "TutorialLevelInventory", ScriptFieldType::TUTORIALLEVELINVENTORY },
     { "SpecialDialogue", ScriptFieldType::SPECIALDIALOGUE },
     { "KeyDoor", ScriptFieldType::KEYDOOR },
+    { "PictureAlign", ScriptFieldType::PICTUREALIGN },
   };
 }
 
