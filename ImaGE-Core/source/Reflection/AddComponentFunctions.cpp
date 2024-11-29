@@ -40,7 +40,9 @@ namespace Reflection::ComponentUtils {
       }
     }
 
-    entity.EmplaceOrReplaceComponent<AudioSource>(comp);
+    if (valid) {
+      entity.EmplaceOrReplaceComponent<AudioSource>(comp);
+    }
   }
   void AddTag(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Tag, comp);

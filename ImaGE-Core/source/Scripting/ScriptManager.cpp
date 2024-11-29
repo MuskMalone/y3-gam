@@ -1281,18 +1281,17 @@ void Mono::AppendText(ECS::Entity::EntityID textEntity, MonoString* textContent)
 
 glm::vec4 Mono::GetImageColor(ECS::Entity::EntityID entity)
 {
-  glm::vec4 c{};
-  if (ECS::Entity(entity))
-  {
+  if (ECS::Entity(entity)) {
     if (ECS::Entity(entity).HasComponent<Component::Image>())
-      c = ECS::Entity(entity).GetComponent<Component::Image>().color;
+      return ECS::Entity(entity).GetComponent<Component::Image>().color;
     else
-      Debug::DebugLogger::GetInstance().LogError("You r trying to Get image color from an entity that does not have image component");
+      Debug::DebugLogger::GetInstance().LogError("GetImageColor: Entity " + ECS::Entity(entity).GetTag() + " does not have an Image component");
   }
-  else
-    Debug::DebugLogger::GetInstance().LogError("You r trying to Get Image color from an invalid entity");
+  else {
+    Debug::DebugLogger::GetInstance().LogError("GetImageColor: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
 
-  return c;
+  return {};
 }
 
 void Mono::SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val)
@@ -1302,10 +1301,11 @@ void Mono::SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val)
     if (ECS::Entity(entity).HasComponent<Component::Image>())
        ECS::Entity(entity).GetComponent<Component::Image>().color = val;
     else
-      Debug::DebugLogger::GetInstance().LogError("You r trying to set image color from an entity that does not have image component");
+      Debug::DebugLogger::GetInstance().LogError("SetImageColor: Entity " + ECS::Entity(entity).GetTag() + " does not have an Image component");
   }
-  else
-    Debug::DebugLogger::GetInstance().LogError("You r trying to set Image color from an invalid entity");
+  else {
+    Debug::DebugLogger::GetInstance().LogError("SetImageColor: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
 }
 
 MonoString* Mono::GetCurrentScene() {

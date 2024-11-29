@@ -830,7 +830,7 @@ namespace Serialization
   Mono::ScriptInstance Deserializer::DeserializeScriptInstance(rapidjson::Value const& jsonVal) {
     // check if fields exist in json file
     if (!ScanJsonFileForMembers(jsonVal, "Script Instance", 2, JSON_SCRIPT_NAME_KEY, rapidjson::kStringType,
-      JSON_SCRIPT_FIELD_LIST_KEY, rapidjson::kArrayType)) {
+      JSON_SCRIPT_ENTITY_ID_KEY, rapidjson::kNumberType)) {
       return {};
     }
 
@@ -839,19 +839,23 @@ namespace Serialization
 #endif
 
     Mono::ScriptInstance scriptInst{ jsonVal[JSON_SCRIPT_NAME_KEY].GetString() };
-
-    auto const& fieldListJson{ jsonVal[JSON_SCRIPT_FIELD_LIST_KEY].GetArray() };
-    std::vector<rttr::variant> sfInstList{};
-    sfInstList.reserve(fieldListJson.Size());
-
-    for (rapidjson::Value const& fieldInst : fieldListJson) {
-      rttr::variant scriptFIList{ DeserializeDataMemberInstance(fieldInst) };
-      if (!scriptFIList.is_valid()) { continue; }
-
-      sfInstList.emplace_back(std::move(scriptFIList));
-    }
     scriptInst.mEntityID = static_cast<ECS::Entity::EntityID>(jsonVal[JSON_SCRIPT_ENTITY_ID_KEY].GetUint());
-    scriptInst.SetAllFields(sfInstList);
+
+    // for DataMemberInstance<ScriptInstance>, we don't serialize data
+    if (jsonVal.HasMember(JSON_SCRIPT_FIELD_LIST_KEY)) {
+      auto const& fieldListJson{ jsonVal[JSON_SCRIPT_FIELD_LIST_KEY].GetArray() };
+      std::vector<rttr::variant> sfInstList{};
+      sfInstList.reserve(fieldListJson.Size());
+
+      for (rapidjson::Value const& fieldInst : fieldListJson) {
+        rttr::variant scriptFIList{ DeserializeDataMemberInstance(fieldInst) };
+        if (!scriptFIList.is_valid()) { continue; }
+
+        sfInstList.emplace_back(std::move(scriptFIList));
+      }
+
+      scriptInst.SetAllFields(sfInstList);
+    }
 
     return scriptInst;
   }
