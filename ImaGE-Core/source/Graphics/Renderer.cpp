@@ -469,7 +469,7 @@ namespace Graphics {
 
 		glm::vec2 canvasPos;
 		canvasPos.x = orthoBounds.x + normalizedMousePos.x * (orthoBounds.y - orthoBounds.x); // Map to canvas X
-		canvasPos.y = orthoBounds.z + normalizedMousePos.y * (orthoBounds.w - orthoBounds.z); // Map to canvas Y
+		canvasPos.y = orthoBounds.z +(1.f - normalizedMousePos.y) * (orthoBounds.w - orthoBounds.z); // Map to canvas Y
 		return canvasPos;
 	}
 
