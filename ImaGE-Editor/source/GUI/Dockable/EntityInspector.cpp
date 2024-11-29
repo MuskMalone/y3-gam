@@ -98,7 +98,8 @@ namespace GUI {
       { typeid(Component::Image), ICON_FA_IMAGE_PORTRAIT ICON_PADDING },
       { typeid(Component::Sprite2D), ICON_FA_IMAGE ICON_PADDING },
       { typeid(Component::Camera), ICON_FA_CAMERA ICON_PADDING },
-      { typeid(Component::Skybox), ICON_FA_EARTH_ASIA ICON_PADDING }
+      { typeid(Component::Skybox), ICON_FA_EARTH_ASIA ICON_PADDING },
+      { typeid(Component::Interactive), ICON_FA_COMPUTER_MOUSE ICON_PADDING }
     },
     mObjFactory{Reflection::ObjectFactory::GetInstance()},
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
@@ -428,6 +429,18 @@ namespace GUI {
               SetIsComponentEdited(true);
               if (prefabOverride) {
                   prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Skybox>());
+              }
+          }
+      }
+
+      if (currentEntity.HasComponent<Component::Interactive>()) {
+          rttr::type const sourceType{ rttr::type::get<Component::Interactive>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(sourceType);
+
+          if (InteractiveComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Interactive>());
               }
           }
       }
@@ -1040,6 +1053,26 @@ namespace GUI {
           //    }
           //    ImGui::EndDragDropTarget();
           //}
+
+          ImGui::EndTable();
+      }
+
+      WindowEnd(isOpen);
+      return modified;
+  }
+
+  bool Inspector::InteractiveComponentWindow(ECS::Entity entity, bool highlight) {
+      bool const isOpen{ WindowBegin<Component::Interactive>("Interactive", highlight) };
+      bool modified{ false };
+
+      if (isOpen) {
+          Component::Interactive& interactive = entity.GetComponent<Component::Interactive>();
+
+          float const inputWidth{ CalcInputWidth(60.f) };
+
+          // Start a table for organizing the color and textureAsset inputs
+          ImGui::BeginTable("ImageTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
 
           ImGui::EndTable();
       }
@@ -1690,57 +1723,6 @@ namespace GUI {
   }
 
   bool Inspector::SkyboxComponentWindow(ECS::Entity entity, bool highlight) {
-      //bool const isOpen{ WindowBegin<Component::Skybox>("Skybox", highlight) };
-      //bool modified{ false };
-
-      //if (isOpen) {
-      //    Component::Skybox& skybox = entity.GetComponent<Component::Skybox>();
-
-      //    float const inputWidth{ CalcInputWidth(60.f) };
-
-      //    ImGui::BeginTable("SkyboxTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
-
-      //    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-      //    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
-
-      //    NextRowTable("Material");
-      //    ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 2.0f);
-      //    const char* name;
-      //    IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
-      //    if (skybox.materialAsset.IsValid()) {
-      //        name = am.GetAsset<IGE::Assets::MaterialAsset>(skybox.materialAsset)->mMaterial->GetName().c_str();
-      //    }
-      //    else {
-      //        name = "Drag Material Here";
-      //    }
-      //    if (ImGui::Button(name, ImVec2(inputWidth, 30.f))) {
-      //        skybox.Clear();
-      //    }
-      //    ImGui::PopStyleVar();
-      //    if (ImGui::IsItemHovered()) { ImGui::SetTooltip("Remove Material"); }
-
-      //    if (ImGui::BeginDragDropTarget()) {
-      //        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
-      //        if (drop) {
-      //            AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
-      //            if (assetPayload.mAssetType == AssetPayload::MATERIAL) {
-      //                try {
-
-      //                    skybox.SetGUID(am.LoadRef<IGE::Assets::MaterialAsset>(assetPayload.GetFilePath()));
-      //                }
-      //                catch (Debug::ExceptionBase& e) {
-      //                    e.LogSource();
-      //                }
-      //            }
-      //        }
-      //        ImGui::EndDragDropTarget();
-      //    }
-
-      //    ImGui::EndTable();
-      //}
-
-      //WindowEnd(isOpen);
-      //return modified;
       bool const isOpen{ WindowBegin<Component::Skybox>("Skybox", highlight) };
       bool modified{ false };
 
@@ -2150,7 +2132,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Sprite2D>("Sprite2D");
         DrawAddComponentButton<Component::Camera>("Camera");
         DrawAddComponentButton<Component::Skybox>("Skybox");
-
+        DrawAddComponentButton<Component::Interactive>("Interactive");
         ImGui::EndTable();
       }
 

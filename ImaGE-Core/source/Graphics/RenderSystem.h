@@ -29,6 +29,7 @@ namespace Graphics {
 
 		static void PrepareFrame();
 		static void HandleGameViewInput();
+		static void HandleUIInput(std::vector<ECS::Entity> const& uiEntities);
 		static CameraManager mCameraManager; // Add CameraManager as a static member
 
 		static uint32_t GetEditorCullCount() { return mEditorCullCount; }

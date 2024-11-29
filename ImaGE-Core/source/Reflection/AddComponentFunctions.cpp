@@ -187,4 +187,10 @@ namespace Reflection::ComponentUtils {
 
       entity.EmplaceOrReplaceComponent<Skybox>(comp);
   }
+
+  void AddInteractive(ECS::Entity entity, rttr::variant const& var) {
+      EXTRACT_RAW_COMP(Interactive, comp);
+
+      entity.EmplaceOrReplaceComponent<Interactive>(comp);
+  }
 } // namespace Reflection
