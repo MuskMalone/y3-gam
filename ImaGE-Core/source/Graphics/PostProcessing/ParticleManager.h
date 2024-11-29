@@ -2,7 +2,7 @@
 #include "Core/Entity.h"
 #include "glad/glad.h"
 #include <queue>
-
+#include "Singleton/ThreadSafeSingleton.h"
 namespace Graphics{
 #pragma warning(push)
 #pragma warning(disable : 4324)
@@ -102,11 +102,11 @@ namespace Graphics{
         bool drawEmitterVertices{ false };
     };
 
-	class ParticleManager {
+	class ParticleManager : ThreadSafeSingleton<ParticleManager> {
 	public:
 		void Initialize();
 		ParticleManager();
-
+        ~ParticleManager();
         void EmitterAction(EmitterInstance& emitter, int action);
 
 
@@ -117,11 +117,10 @@ namespace Graphics{
 		GLuint mEmitterSSbo;
 		GLuint mParticleSSbo;
 		GLuint mParticleStartSSbo;
-		GLuint mParticleCountSSbo;
 
 		//for randomness in glsl
 		GLuint mRandomSSbo;
-		GLuint mRandomIdxSSbo;
+		GLuint mVariableSSbo;
 
 		std::queue<GLuint> mEmitterIdxQueue;
 	};

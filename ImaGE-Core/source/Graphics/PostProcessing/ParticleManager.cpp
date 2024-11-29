@@ -8,16 +8,12 @@
 namespace Graphics{
     void ParticleManager::Initialize()
     {
+        //2 4byte variables to be stored, macros for idx corresponding to each var in Common.glsl
+        constexpr int variableCount{ 2 };
         GLuint zero = 0;
-        glGenBuffers(1, &mRandomIdxSSbo);
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, mRandomIdxSSbo);
-        glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(GLuint), NULL, GL_DYNAMIC_DRAW);
-        glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, sizeof(GLuint), &zero);
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-
-        glGenBuffers(1, &mParticleCountSSbo);
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, mParticleCountSSbo);
-        glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(GLuint), NULL, GL_DYNAMIC_DRAW);
+        glGenBuffers(1, &mVariableSSbo);
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, mVariableSSbo);
+        glBufferData(GL_SHADER_STORAGE_BUFFER, variableCount * sizeof(GLuint), NULL, GL_DYNAMIC_DRAW);
         glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, sizeof(GLuint), &zero);
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 
@@ -29,6 +25,12 @@ namespace Graphics{
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 
         // Do it again, twice.
+        glGenBuffers(1, &mParticleStartSSbo);
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, mParticleStartSSbo);
+        glBufferData(GL_SHADER_STORAGE_BUFFER, MAX_BUFFER * sizeof(GLSLStructs::Particle), NULL, GL_STATIC_DRAW);
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+
+        // Do it again, thrice.
         glGenBuffers(1, &mParticleSSbo);
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, mParticleSSbo);
         glBufferData(GL_SHADER_STORAGE_BUFFER, MAX_BUFFER * sizeof(GLSLStructs::Particle), NULL, GL_STATIC_DRAW);
@@ -57,16 +59,22 @@ namespace Graphics{
         // Ensures accesses to the SSBOs "reflect" writes from compute shader
         glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
 
-        //mEmitterShader = std::make_shared<Shader>("../assets/shaders/Emitter.glsl");
-        //mEmitterStepShader = std::make_shared<Shader>("../assets/shaders/EmitterStep.glsl");
-        //mParticleShader = std::make_shared<Shader>("../assets/shaders/Particle.glsl");
-        //mParticleRenderShader = std::make_shared<Shader>("../assets/shaders/Particle.geom", "../assets/shaders/Particle.vert", "../assets/shaders/Particle.frag");
-
+        //create
         for (uint64_t i{}; i < MAX_BUFFER; ++i) { mEmitterIdxQueue.push(static_cast<unsigned int>(i)); }
     }
 
     ParticleManager::ParticleManager()
     {
+        Initialize();
+    }
+
+    ParticleManager::~ParticleManager()
+    {
+        glDeleteBuffers(1, &mVariableSSbo);
+        glDeleteBuffers(1, &mRandomSSbo);
+        glDeleteBuffers(1, &mEmitterSSbo);
+        glDeleteBuffers(1, &mParticleSSbo);
+        glDeleteBuffers(1, &mParticleStartSSbo);
     }
 
     inline void ParticleManager::EmitterAction(EmitterInstance& emitter, int action) {
@@ -117,7 +125,6 @@ namespace Graphics{
             emitterShader->SetUniform("uEmtpreset", emitter.preset);
             emitterShader->SetUniform("uEmtparticlesPerFrame", emitter.particlesPerFrame);
 
-
         }
 
         glDispatchCompute(1, 1, 1);
@@ -132,11 +139,11 @@ namespace Graphics{
 
     void ParticleManager::Bind()
     {
-        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 11, mRandomIdxSSbo);
+        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 11, mVariableSSbo);
         glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 12, mRandomSSbo);
         glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 13, mEmitterSSbo);
         glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 14, mParticleSSbo);
-        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 15, mParticleCountSSbo);
+        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 15, mParticleStartSSbo);
     }
     void ParticleManager::Unbind()
     {
