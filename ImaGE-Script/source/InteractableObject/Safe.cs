@@ -5,6 +5,7 @@ public class Safe : Entity
   // Script to be placed in the Safe Entity (Parent)
   public PlayerInteraction playerInteraction;
   public Entity interactWithSafeUI;
+  public Entity safeInstructionsUI;
   public Entity keyPadUI;
   public Entity safeTextBox; // Entity with text component to display the keyed in characters
   public PlayerMove playerMove;
@@ -27,6 +28,7 @@ public class Safe : Entity
     interactWithSafeUI?.SetActive(false);
     keyPadUI?.SetActive(false);
     safeTextBox?.SetActive(false);
+    safeInstructionsUI?.SetActive(false);
     ABC?.SetActive(false);
     DEF?.SetActive(false);
     GHI?.SetActive(false);
@@ -57,6 +59,7 @@ public class Safe : Entity
       playerMove.FreezePlayer();
       keyPadUI.SetActive(true);
       safeTextBox.SetActive(true);
+      safeInstructionsUI.SetActive(true);
     }
   }
 }
