@@ -6,7 +6,7 @@
 #include "Core/Components/Text.h"
 #include "Core/Components/Image.h"
 #include <Physics/PhysicsSystem.h>
-#include <Input/InputManager.h>
+#include "GeomPass.h"
 
 namespace Graphics {
 	UIPass::UIPass(const RenderPassSpec& spec) : RenderPass{ spec } {
@@ -21,37 +21,42 @@ namespace Graphics {
 		glm::mat4 viewProj{};
 		viewProj = cam.isEditor ? cam.viewProjMatrix : Renderer::mUICamera.GetViewProjMatrix();
 
-		auto const& fb = mSpec.pipeline->GetSpec().targetFramebuffer;
-		float viewportHeight = fb->GetFramebufferSpec().height;
-		float viewportWidth = fb->GetFramebufferSpec().width;
-		auto const& inputMan = Input::InputManager::GetInstance();
-
 		// @TODO: TEMP, TO MERGE WITH XAVIER
 		//shader->Use();
 		//shader->SetUniform("u_ViewProjMtx", viewProj);
 
-		Renderer::RenderSceneBegin(viewProj);
+		Renderer::RenderSceneBegin(viewProj, cam);
+
+		if (cam.isEditor) {
+			for (auto const& light : entities) {
+				if (!light.HasComponent<Component::Transform>()) continue;
+				if (!light.HasComponent<Component::Light>()) continue;
+				auto const& xform = ECS::Entity{ light }.GetComponent<Component::Transform>();
+				auto const& lightComp = ECS::Entity{ light }.GetComponent<Component::Light>();
+				Renderer::DrawLightGizmo(lightComp, xform, cam, ECS::Entity{ light }.GetEntityID());
+			}
+			//auto const& cameras = ecsMan.GetAllEntitiesWithComponents<Component::Camera>();
+			//for (auto const& camera : cameras) {
+			//    if (!ECS::Entity{ camera }.IsActive()) continue;
+			//    auto const& camComp = ECS::Entity{ camera }.GetComponent<Component::Camera>();
+			//    auto const& xform = ECS::Entity{ camera }.GetComponent<Component::Transform>();
+			//    Renderer::DrawSprite(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(Renderer::mIcons[2])->mTexture, Color::COLOR_WHITE, ECS::Entity { camera }.GetEntityID(), true, cam);
+			//}
+
+		}
 
 		//temp physics debug hack
 		if (cam.isEditor) 
 			IGE::Physics::PhysicsSystem::GetInstance()->Debug();
 
-		auto& ecsMan{ ECS::EntityManager::GetInstance() };
 		if (cam.isEditor) {
-			auto const& cameras = ecsMan.GetAllEntitiesWithComponents<Component::Camera>();
-			for (auto const& camera : cameras) {
-				if (!ECS::Entity{ camera }.IsActive()) continue;
-				auto const& camComp = ECS::Entity{ camera }.GetComponent<Component::Camera>();
-				auto const& xform = ECS::Entity{ camera }.GetComponent<Component::Transform>();
+			for (auto const& camera : entities ) {
+				if (!camera.HasComponent<Component::Camera>()) continue;
+				if (!camera.IsActive()) continue;
+				auto const& camComp = camera.GetComponent<Component::Camera>();
+				auto const& xform = camera.GetComponent<Component::Transform>();
 				Renderer::DrawCameraFrustrum(camComp, Color::COLOR_CYAN);
 			}
-			//auto const& lights = ecsMan.GetAllEntitiesWithComponents<Component::Light, Component::Transform>();
-			//for (auto const& light : lights) {
-			//	if (!ECS::Entity{ light }.IsActive()) continue;
-			//	auto const& xform = ECS::Entity{ light }.GetComponent<Component::Transform>();
-			//	auto const& lightComp = ECS::Entity{ light }.GetComponent<Component::Light>();
-			//	Renderer::DrawLightGizmo(lightComp, xform);
-			//}
 		}
 
 		for (ECS::Entity const& entity : entities) {
@@ -140,34 +145,6 @@ namespace Graphics {
 				}
 				*/
 
-				// Handle interactive components
-				if (uiEntity.HasComponent<Component::Interactive>()) {
-					auto& interactiveComp = uiEntity.GetComponent<Component::Interactive>();
-					// Get mouse position in screen coordinates
-					glm::vec2 mousePos = inputMan.GetMousePos(); // x and y in pixels
-					// Convert mouse position to world coordinates (assuming orthographic projection)
-					float worldX = bounds.x + (mousePos.x / viewportWidth) * (bounds.y - bounds.x);
-					float worldY = bounds.w - (mousePos.y / viewportHeight) * (bounds.w - bounds.z); // Flip y-axis
-					glm::vec2 mouseWorldPos = glm::vec2(worldX, worldY);
-					// Compute the bounds of the UI element
-					glm::vec2 position = uiXform.worldPos; // Center position
-					glm::vec2 size = uiXform.worldScale;   // Width and height
-
-					// Compute bounds: left, top, width, height
-					glm::vec4 uiBounds{};
-					uiBounds.x = position.x - size.x * 0.5f; // left
-					uiBounds.y = position.y - size.y * 0.5f; // top
-					uiBounds.z = size.x;                     // width
-					uiBounds.w = size.y;                     // height
-
-					// Call isMouseOver
-					bool isHovered = interactiveComp.IsMouseOver(mouseWorldPos, uiBounds);
-
-					// Update the isHovered state
-					interactiveComp.isHovered = isHovered;
-
-				}
-
 				if (uiEntity.HasComponent<Component::Image>()) {
 					auto const& imageComp = uiEntity.GetComponent<Component::Image>();
 
@@ -179,7 +156,7 @@ namespace Graphics {
 				}
 
 				else {
-					//Renderer::DrawRect(uiXform.worldPos, glm::vec2{ uiXform.worldScale }, uiXform.worldRot, Color::COLOR_WHITE);
+					Renderer::DrawRect(uiXform.worldPos, glm::vec2{ uiXform.worldScale }, uiXform.worldRot, Color::COLOR_WHITE);
 				}
 				
 
@@ -188,6 +165,23 @@ namespace Graphics {
 		}
 
 		Renderer::RenderSceneEnd();
+
+		if (cam.isEditor) {
+			auto const& highlightShader{ ShaderLibrary::Get("Highlight") };
+			highlightShader->Use();
+			auto const& fb{ Renderer::GetPass<GeomPass>()->GetTargetFramebuffer() };
+			auto const& fbSpec{ fb->GetFramebufferSpec() };
+			auto const& redTex{ Renderer::GetPass<GeomPass>()->GetEntityTexture() };
+
+			highlightShader->SetUniform("u_ScreenTex", mInputTexture, 30);
+			highlightShader->SetUniform("u_EntityTex", redTex, 31);
+			highlightShader->SetUniform("u_TexelSize", glm::vec2{1.f/fbSpec.width, 1.f/fbSpec.height});
+			int ent = static_cast<int>(Renderer::GetHighlightedEntity().GetEntityID());
+			highlightShader->SetUniform("u_SelectedEntity", ent);
+			
+
+			Renderer::RenderFullscreenTexture();
+		}
 
 		// @TODO: TEMP, TO MERGE WITH XAVIER
 		if (std::shared_ptr<Systems::TextSystem> textSys =

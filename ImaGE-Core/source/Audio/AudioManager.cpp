@@ -455,7 +455,10 @@ namespace IGE {
             if (state == Events::SceneStateChange::NewSceneState::STARTED) {
                 mSceneStarted = true;
             }
-            if (state == Events::SceneStateChange::NewSceneState::STOPPED) {
+            if (state == Events::SceneStateChange::NewSceneState::STOPPED || state == Events::SceneStateChange::NewSceneState::CHANGED) {
+                if (state == Events::SceneStateChange::CHANGED) { // this is for game app
+                    mSceneStarted = true;
+                }
                 mSceneStopped = true;
                 auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
                 for (auto entity : rbsystem) {

@@ -50,6 +50,8 @@ namespace GUI {
     static inline Styler& GetStyler() noexcept { return mStyler; }
 
     inline static bool sDevTools = false;
+    inline static bool sShowCulledEntities = false; // visualize culled entities in editor view
+    inline static bool sSerializePrettyScene = true, sSerializePrettyPrefab = true; // serialization formats
 
   private:
     inline static Styler mStyler; // handles editor's styles

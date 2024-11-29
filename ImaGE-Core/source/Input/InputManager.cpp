@@ -228,7 +228,6 @@ void InputManager::QueueInputEvents()
 	if (IsKeyPressed(IK_LEFT_ALT) && IsKeyTriggered(IK_TAB))
 	{
 		QUEUE_EVENT(Events::WindowMinimized);
-		//eventMan.Dispatch(WindowMinimize());
 	}
 }
 

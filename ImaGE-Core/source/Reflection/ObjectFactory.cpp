@@ -27,6 +27,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Events/EventManager.h>
 #include "AddComponentFunctions.h"
 #include <Core/Components/Components.h>
+#include <Physics/PhysicsSystem.h>
 
 #define GET_RTTR_TYPE(T) rttr::type::get<T>()
 #ifdef _DEBUG
@@ -209,8 +210,8 @@ namespace Reflection
       //        then remap the GUIDs to the newly generated one
       catch ([[maybe_unused]] Debug::ExceptionBase& e) {
         PrefabInst const& inst{ data.cbegin()->second };
-        IGE_DBGLOGGER.LogCritical("GUID of Prefab: " + inst.mName + " invalid!");
-        IGE_DBGLOGGER.LogCritical("Say bye bye to Entity " + ECS::Entity(inst.mId).GetTag() + " until I implement GUI to allow remapping!");
+        IGE_DBGLOGGER.LogCritical("GUID: " + std::to_string(static_cast<uint64_t>(guid)) + " of Prefab: " + inst.mName + " invalid!");
+        IGE_DBGLOGGER.LogCritical("Say bye bye to its intsance until I implement GUI to allow remapping!");
         //IGE_EVENTMGR.DispatchImmediateEvent<Events::RemapPrefabGUID>(inst.mId, inst.mName);
         continue;
       }

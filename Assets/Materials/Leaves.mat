@@ -2,17 +2,17 @@
     "name": "Leaves",
     "shader": "PBR",
     "albedoColor": {
-        "x": 0.1538461446762085,
+        "x": 1.0,
         "y": 1.0,
-        "z": 0.0
+        "z": 1.0
     },
-    "metalness": 0.5,
-    "roughness": 0.5,
+    "metalness": 0.0,
+    "roughness": 1.0,
     "ao": 1.0,
     "emission": 0.0,
-    "transparency": 0.8930000066757202,
+    "transparency": 1.0,
     "tiling": {
-        "x": 1.0,
+        "x": 0.7599999904632568,
         "y": 1.0
     },
     "offset": {
@@ -20,7 +20,7 @@
         "y": 0.0
     },
     "albedoMap": {
-        "ID": 0
+        "ID": 18388681067564138038
     },
     "normalMap": {
         "ID": 0

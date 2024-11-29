@@ -1,4 +1,5 @@
 using IGE.Utils;
+using System.Numerics;
 
 public class Dialogue : Entity
 {
@@ -28,6 +29,7 @@ public class Dialogue : Entity
   public Entity HappyTara;
   public Entity DisturbedTara;
   public Entity SadTara;
+  public SpecialDialogue specialDialogue;
 
   // Private Variables
   private Emotion[] emotions;           // The emotions from the caller
@@ -35,6 +37,8 @@ public class Dialogue : Entity
   private string[] lines;               // The lines from the caller
   private int charIndex = 0;            // Tracks the current character index
   private float nextCharTime = 0f;      // Tracks the time for the next character
+  private const float defaultFontSize = 0.006f;
+  private bool specialSequence = true;
 
   public Dialogue() : base()
   {
@@ -84,8 +88,9 @@ public class Dialogue : Entity
   }
 
   // To be called by other scripts before starting the dialogue
-  public void SetDialogue(string[] newLines, Emotion[] newEmotions)
+  public void SetDialogue(string[] newLines, Emotion[] newEmotions, float textScale = defaultFontSize)
   {
+    InternalCalls.SetTextScale(mEntityID, textScale);
     if (newLines.Length != newEmotions.Length)
     {
       Debug.LogError("Lines and emotions arrays must be the same length. " +
@@ -112,6 +117,7 @@ public class Dialogue : Entity
       return;
     }
 
+    InternalCalls.PlaySound(mEntityID, "DefaultDialogueSound");
     playerMove.FreezePlayer();
     lineIndex = 0;
     InternalCalls.SetText(mEntityID, string.Empty);
@@ -123,13 +129,20 @@ public class Dialogue : Entity
     nextCharTime = Time.gameTime;       // Start typing immediately
   }
 
-  void EndDialogue()
+  private void EndDialogue()
   {
     InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
     playerMove.UnfreezePlayer();
     DialogueBox.SetActive(false);
     SetActive(false);
     isInDialogueMode = false;
+
+    // The first sequence
+    if (specialSequence)
+    {
+      specialDialogue.StartSilhouetteSequence();
+      specialSequence = false;
+    }
   }
 
   private void SkipTyping()

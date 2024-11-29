@@ -568,13 +568,13 @@
       <Filter>FrameRateController</Filter>
     </ClInclude>
     <ClInclude Include="source\Globals.h" />
-    <ClInclude Include="source\Graphics\CameraManager.h">
+    <ClInclude Include="source\Graphics\Camera\CameraManager.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="source\Graphics\CameraSpec.h">
+    <ClInclude Include="source\Graphics\Camera\CameraSpec.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="source\Graphics\EditorCamera.h">
+    <ClInclude Include="source\Graphics\Camera\EditorCamera.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\ElementBuffer.h">
@@ -761,7 +761,11 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Core\Components\Interactive.h" />
+    <ClInclude Include="source\BoundingVolumes\BoundingSphere.h" />
+    <ClInclude Include="source\BoundingVolumes\Frustum.h" />
+    <ClInclude Include="source\BoundingVolumes\AABB.h" />
+    <ClInclude Include="source\BoundingVolumes\IntersectionTests.h" />
+    <ClInclude Include="source\Serialization\FILEWrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -900,10 +904,10 @@
     <ClCompile Include="source\FrameRateController\FrameRateController.cpp">
       <Filter>FrameRateController</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\CameraManager.cpp">
+    <ClCompile Include="source\Graphics\Camera\CameraManager.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Graphics\EditorCamera.cpp">
+    <ClCompile Include="source\Graphics\Camera\EditorCamera.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\ElementBuffer.cpp">
@@ -1033,5 +1037,7 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
+    <ClCompile Include="source\Graphics\Camera\CameraSpec.cpp" />
+    <ClCompile Include="source\BoundingVolumes\IntersectionTests.cpp" />
   </ItemGroup>
 </Project>

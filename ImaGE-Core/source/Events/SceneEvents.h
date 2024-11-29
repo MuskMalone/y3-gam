@@ -56,8 +56,10 @@ namespace Events
   class SaveSceneEvent : public Event
   {
   public:
-    SaveSceneEvent() : Event(EventType::SAVE_SCENE) {}
+    SaveSceneEvent(bool pretty) : Event(EventType::SAVE_SCENE), mPretty{ pretty } {}
     inline std::string GetName() const noexcept override { return "Saving Scene"; }
+
+    bool const mPretty;
   };
 
   class SceneModifiedEvent : public Event

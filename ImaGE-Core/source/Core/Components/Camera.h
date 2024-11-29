@@ -1,5 +1,6 @@
 #pragma once
 #include "Graphics/Utils.h"
+//#include <BoundingVolumes/Frustum.h>
 
 namespace Component {
 
@@ -8,9 +9,9 @@ namespace Component {
             PERSP,
             ORTHO
         };
-        Type projType{ Type::PERSP };
         glm::vec3 position{ glm::vec3{ 0.0f, 0.0f, -10.0f } };
         glm::quat rotation{ glm::quat{glm::vec3{0.f}} };
+        Type projType{ Type::PERSP };
         float yaw{ 0.0f };
         float pitch{ 0.0f };
         float fov{ 45.0f };
@@ -51,10 +52,8 @@ namespace Component {
             //glm::vec3 right = glm::normalize(glm::cross(front, glm::vec3(0.0f, 1.0f, 0.0f)));
             //glm::vec3 up = glm::normalize(glm::cross(right, front));
             //return glm::lookAt(position, position + front, up);
-            glm::vec3 front = rotation * glm::vec3(0.0f, 0.0f, -1.0f);
-            glm::vec3 up = rotation * glm::vec3(0.0f, 1.0f, 0.0f);
 
-            return glm::lookAt(position, position + front, up);
+            return glm::lookAt(position, position + GetForwardVector(), GetUpVector());
         }
 
         inline glm::mat4 GetProjMatrix() const {
@@ -79,5 +78,27 @@ namespace Component {
         inline glm::vec4 GetOrthographicBounds() const {
             return glm::vec4(left, right, bottom, top);
         }
+
+        inline glm::vec3 GetUpVector() const { return glm::vec3(0.0f, 1.0f, 0.0f); }
+        inline glm::vec3 GetForwardVector() const { return rotation * glm::vec3(0.f, 0.f, -1.f); }
+        inline glm::vec3 GetRightVector() const { return rotation * glm::vec3(1.0f, 0.0f, 0.0f); }
+
+        //void ComputeFrustum() {
+        //  float const halfV{ farClip * tanf(fov * 0.5f) }, halfH{ halfV * aspectRatio };
+        //  glm::vec3 const fwdVec{ GetForwardVector() }, rightVec{ GetRightVector() },
+        //    upVec{ GetUpVector() };
+        //  glm::vec3 const fwdFarProd{ farClip * fwdVec };
+
+        //  frustum.topP = { fwdVec * nearClip + position, fwdVec };
+        //  frustum.btmP = { position + fwdFarProd, -fwdVec };
+
+        //  glm::vec3 vecFwdFarProd{ rightVec * halfH };
+        //  frustum.leftP = { position, glm::cross(fwdFarProd - vecFwdFarProd, GetUpVector()) };
+        //  frustum.rightP = { position, glm::cross(upVec, fwdFarProd + vecFwdFarProd) };
+
+        //  vecFwdFarProd = upVec * halfV;
+        //  frustum.nearP = { position, glm::cross(fwdFarProd + vecFwdFarProd, rightVec) };
+        //  frustum.farP = { position, glm::cross(rightVec, fwdFarProd - vecFwdFarProd) };
+        //}
     };
 }

@@ -88,7 +88,17 @@ using IGE.Utils;
       return null;
     }
 
-    public Entity FindEntityByTag(string tag)
+    public T FindScript<T>() where T : Entity
+    {
+      string name = typeof(T).Name;
+      ////  string s = "huh";
+      //   InternalCalls.Log(name);
+      Entity e = InternalCalls.FindScriptInEntity(mEntityID ,name);
+      return (T)e;
+    }
+
+
+  public Entity FindEntityByTag(string tag)
     {
         uint e = InternalCalls.FindParentByTag(tag);
         Entity newEnt = new Entity();

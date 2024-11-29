@@ -1,15 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Numerics;
 using IGE.Utils;
-
-using System.Drawing.Imaging;
+using static Dialogue;
 
 public class NightPainting : Entity, IInventoryItem
 {
+  public Entity _Image;
+  public Inventory inventoryScript;
+  public PlayerInteraction playerInteraction;
+  public Entity EToPickUpUI;
+  public Dialogue dialogueSystem;
+  public string[] pitPaintingDialogue;
+
   public string Name
   {
     get
@@ -17,8 +17,6 @@ public class NightPainting : Entity, IInventoryItem
       return "NightPainting";
     }
   }
-
-  public Entity _Image = null;
 
   public Entity Image
   {
@@ -41,5 +39,24 @@ public class NightPainting : Entity, IInventoryItem
   public void OnUsed()
   {
     Destroy(mEntityID);
+  }
+
+  void Start()
+  {
+    _Image?.SetActive(false);
+    EToPickUpUI?.SetActive(false);
+  }
+
+  void Update()
+  {
+    // For Painting Picking Up
+    bool isPaintHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
+    if (isPaintHit && Input.GetKeyTriggered(KeyCode.E))
+    {
+      InternalCalls.PlaySound(mEntityID, "PickupObjects");
+      inventoryScript.Additem(this);
+      dialogueSystem.SetDialogue(pitPaintingDialogue, new Dialogue.Emotion[] { Emotion.Surprised, Emotion.Shocked });
+    }
+    EToPickUpUI.SetActive(isPaintHit);
   }
 }

@@ -23,7 +23,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <imgui/backends/imgui_impl_opengl3.h>
 
 #include <Core/Systems/Systems.h>
-#include "Graphics/CameraSpec.h"
+#include <Graphics/Camera/CameraSpec.h>
+#include <GUI/GUIVault.h>
 
 #include <Graphics/Renderer.h>
 #include <Graphics/MaterialTable.h>
@@ -80,10 +81,8 @@ namespace IGE {
 
     while (!glfwWindowShouldClose(mWindow.get())) {
         if (inputManager.IsKeyTriggered(IK_K)) {
-            ToggleImGuiEnabled();
+            ToggleImGuiEnabled(); //TODO CHANGE TO EVENT SYSTEM
         }
-
-
       frameRateController.Start();
       try {
         if (GetApplicationSpecification().EnableImGui) {
@@ -228,8 +227,12 @@ namespace IGE {
 
     //  target.framebuffer->Unbind();
     //}
+      auto const& cam = mRenderTargets[0].camera;
+      Graphics::CameraSpec const editorCam{ cam.GetViewProjMatrix(), cam.GetViewMatrix(),
+          cam.GetPosition(), cam.GetNearPlane(), cam.GetFarPlane(), cam.GetFOV(), cam.GetAspectRatio(), true };
+
       if (mGUIManager.IsGameViewActive() && Graphics::RenderSystem::mCameraManager.HasActiveCamera()) {
-          Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() });
+          std::vector<ECS::Entity> const entities{ Graphics::RenderSystem::RenderScene(Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent()) };
           auto const& fb0 = Graphics::Renderer::GetFinalFramebuffer();
           gameTex = std::make_shared<Graphics::Texture>(fb0->GetFramebufferSpec().width, fb0->GetFramebufferSpec().height);
 
@@ -237,12 +240,28 @@ namespace IGE {
             gameTex->CopyFrom(fb0->GetColorAttachmentID(), fb0->GetFramebufferSpec().width, fb0->GetFramebufferSpec().height);
           }
 
+          if (Mono::ScriptManager::GetInstance().mScreenShotInfo.size() > 0)
+          {
+
+            fb0->Bind();
+            for (const auto& ss : Mono::ScriptManager::GetInstance().mScreenShotInfo)
+              Mono::SaveScreenShot(std::get<0>(ss), std::get<1>(ss), std::get<2>(ss));
+            Mono::ScriptManager::GetInstance().mScreenShotInfo.clear();
+            fb0->Unbind();
+          }
+
+          // if ShowCulledEntities is on, only render with the entities returned from game view's render
+          if (GUI::GUIVault::sShowCulledEntities) {
+            Graphics::RenderSystem::RenderScene(editorCam, entities);
+          }
+          else {
+            Graphics::RenderSystem::RenderScene(editorCam);
+          }
       }
-
-      Graphics::RenderTarget const& target = mRenderTargets[0];
-      auto const& cam = target.camera;
-      Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ cam.GetViewProjMatrix(), cam.GetViewMatrix(), cam.GetPosition(), cam.GetNearPlane(), cam.GetFarPlane(), cam.GetFOV(), cam.GetAspectRatio(), true});
-
+      // if no camera component, simply render with editor cam only
+      else {
+        Graphics::RenderSystem::RenderScene(editorCam);
+      }
   }
 
   void EditorApplication::SetEditorCallbacks() {
@@ -279,7 +298,7 @@ namespace IGE {
 
   // ensure proper shutdown in case of crash
   EVENT_CALLBACK_DEF(EditorApplication, SignalCallback) {
-    IGE_SCENEMGR.BackupSave();
+    IGE_SCENEMGR.BackupSave(false);
     IGE_ASSETMGR.SaveMetadata();
 
     EditorApplication::Shutdown();

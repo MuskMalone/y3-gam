@@ -19,9 +19,12 @@ public class PlayerInteraction : Entity
 
     uint rayHitID = InternalCalls.RaycastFromEntity(mEntityID, rayOrigin, rayEnd);
 
-    if (rayHitID != 0)
-      RayHitString = InternalCalls.GetTag(rayHitID);
-    else
-      RayHitString = "None";
+        if (rayHitID != 0)
+        {
+            RayHitString = InternalCalls.GetTag(rayHitID);
+            Debug.Log(RayHitString);
+        }
+        else
+            RayHitString = "None";
   }
 }

@@ -36,6 +36,15 @@ namespace Events
     inline std::string GetName() const noexcept override { return "Window Minimized"; }
   };
 
+  class WindowResized : public Event
+  {
+  public:
+      WindowResized(int width, int height) : Event(EventType::WINDOW_RESIZED), mWidth{width}, mHeight{height} {}
+      inline std::string GetName() const noexcept override { return "Window Resized"; }
+      int const mWidth;
+      int const mHeight;
+  };
+
   class ToggleFullscreen : public Event
   {
   public:
@@ -143,28 +152,47 @@ namespace Events
     ECS::Entity mEntity;
   };
 
+  class EntityMouseEnter : public Event {
+  public:
+      EntityMouseEnter(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_ENTER), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On mouse enter entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
+  };
+
+  class EntityMouseExit : public Event {
+  public:
+      EntityMouseExit(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_EXIT), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On mouse exit entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
+  };
+
+  class EntityMouseDown : public Event {
+  public:
+      EntityMouseDown(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_DOWN), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On mouse down entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
+  };
+
+  class EntityMouseUp : public Event {
+  public:
+      EntityMouseUp(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_UP), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On mouse up entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
+  };
+
   class SignalEvent : public Event {
   public:
     SignalEvent() : Event(EventType::SIGNAL) {}
     inline std::string GetName() const noexcept override { return "Program terminated unexpectedly"; }
   };
 
-  class PointerEnterEvent : public Event {
+  class TriggerPausedUpdate : public Event {
   public:
-      PointerEnterEvent(ECS::Entity entity)
-          : Event(EventType::POINTER_ENTER), mEntity{ entity } {}
-
-      inline std::string GetName() const noexcept override { return "Pointer Entered Entity: " + mEntity.GetTag(); }
-      ECS::Entity const mEntity;
-  };
-
-  class PointerExitEvent : public Event
-  {
-  public:
-      PointerExitEvent(ECS::Entity entity)
-          : Event(EventType::POINTER_EXIT), mEntity{ entity } {}
-
-      inline std::string GetName() const noexcept override { return "Pointer Exit Entity: " + mEntity.GetTag(); }
-      ECS::Entity const mEntity;
+    TriggerPausedUpdate() : Event(EventType::TRIGGER_PAUSED_UPDATE) {}
+    inline std::string GetName() const noexcept override { return "Triggering paused update"; }
   };
 }

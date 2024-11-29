@@ -22,8 +22,9 @@ namespace Graphics {
 
 		//Temp default constructor
 		Texture();
+		Texture(uint32_t texHdl);
 		Texture(std::string const& path, bool isBindless = false);
-		Texture(uint32_t width, uint32_t height, bool isBindless = false);
+		Texture(uint32_t width, uint32_t height, GLenum intFmt = GL_RGBA8, bool isBindless = false);
 
 		// For Font Glyphs
 		Texture(unsigned int width, unsigned int height, const void* data);

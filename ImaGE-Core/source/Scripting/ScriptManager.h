@@ -39,6 +39,7 @@ namespace Mono
 	public:
 		static std::unordered_map<std::string, ScriptFieldType> mScriptFieldTypeMap;
 		static std::unordered_map<ScriptFieldType, std::string> mRevClassMap;			//Rev Map of Scripts, for getting the name of script based on type 
+		static std::vector < std::tuple<std::string, int, int>>mScreenShotInfo;
 		static std::vector<std::string> mAllScriptNames;
 		static std::shared_ptr<MonoDomain> mRootDomain;
 		static std::shared_ptr<MonoDomain> mAppDomain;
@@ -346,7 +347,9 @@ namespace Mono
 
 		static glm::vec3 GetMouseDelta();
 
-		static MonoObject* FindScript(MonoString* s);
+		static MonoObject* FindScript(MonoString* s);   //Returns the first script it can find from all the entities
+
+		static MonoObject* FindScriptInEntity(ECS::Entity::EntityID entity, MonoString* s); //Return a script that belongs to an entity
 
 		static void DestroyEntity(ECS::Entity::EntityID entity);
 
@@ -362,12 +365,23 @@ namespace Mono
 
 		static ECS::Entity::EntityID FindParentByTag(MonoString* s);
 
+
 		static MonoArray* GetAllChildren(ECS::Entity::EntityID entity);
 
 		static glm::vec3 GetMainCameraPosition(ECS::Entity::EntityID cameraEntity);
 
 		static glm::vec3 GetMainCameraDirection(ECS::Entity::EntityID cameraEntity);
+
+		static glm::quat GetMainCameraRotation(ECS::Entity::EntityID cameraEntity);
 		
+		static glm::vec4 GetTextColor(ECS::Entity::EntityID textEntity);
+
+		static void SetTextColor(ECS::Entity::EntityID textEntity, glm::vec4 textColor);
+
+		static float GetTextScale(ECS::Entity::EntityID textEntity);
+
+		static void SetTextScale(ECS::Entity::EntityID textEntity, float textScale);
+
 		static MonoString* GetText(ECS::Entity::EntityID entity);
 
 		static void SetText(ECS::Entity::EntityID textEntity, MonoString* textContent);
@@ -377,6 +391,14 @@ namespace Mono
 		static glm::vec4 GetImageColor(ECS::Entity::EntityID entity);
 
 		static void SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val);
+
+		static MonoString* GetCurrentScene();
+		static void SetCurrentScene(MonoString* scenePath);
+
+		static void TakeScreenShot(MonoString* name, int width, int height);
+		void SaveScreenShot(std::string name, int width, int height);
+
+		static bool SetDaySkyBox(ECS::Entity::EntityID cameraEntity);
 
 		/*!**********************************************************************
 		*																																			  *

@@ -1,5 +1,7 @@
 #pragma once
 #include "RenderPass.h"
+#include <unordered_map>
+#include <Core/Entity.h>
 
 namespace ECS { class Entity; }
 
@@ -10,21 +12,31 @@ namespace Graphics {
     GeomPass(const RenderPassSpec& spec);
 
     void Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) override;
-
+    std::shared_ptr<Texture> GetDepthTexture();
+    std::shared_ptr<Texture> GetEntityTexture();
+    std::shared_ptr<Framebuffer> GetGameViewFramebuffer() const;
+    
   private:
-    using EntityXform = std::pair<ECS::Entity, glm::mat4>;
-    using MatGroup = std::vector<EntityXform>;
-    using MatGroupsMap = std::unordered_map<uint32_t, MatGroup>;
+    struct EntityRenderData {
+      EntityRenderData() = default;
+      EntityRenderData(glm::mat4 const& _xform, ECS::Entity _entity, int _matIdx) :
+        xform{ _xform }, entity{ _entity }, matIdx{ _matIdx } {}
 
-    struct MaterialGroup {
-      int matID;                          // Material ID
-      std::shared_ptr<Shader> shader;     // Associated shader
-      std::vector<EntityXform> entityPairs; // Vector of entity-transform pairs
+      glm::mat4 xform;
+      ECS::Entity entity;
+      int matIdx;
     };
+
+    using MatGroupMap = std::unordered_map<int, std::vector<EntityRenderData>>;
+    using ShaderGroupMap = std::unordered_map<std::shared_ptr<Shader>, MatGroupMap>;
 
     static inline constexpr unsigned sMaxLights = 30;
 
-    std::vector<MaterialGroup> CreateMaterialGroups(std::vector<ECS::Entity> const& entities);
+    ShaderGroupMap GroupEntities(std::vector<ECS::Entity> const& entities);
+
+    std::shared_ptr<Framebuffer> mPickFramebuffer{ nullptr };
+    std::shared_ptr<Texture> mDepthTexture{ nullptr };
+    std::shared_ptr<Texture> mRedTexture{ nullptr };
   };
 
 } // namespace Graphics

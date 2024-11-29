@@ -17,7 +17,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "GUI/Helpers/ImGuiHelpers.h"
 #include <GUI/Helpers/AssetPayload.h>
 #include <Core/Systems/TransformSystem/TransformHelpers.h>
-
 #include "Physics/PhysicsSystem.h"
 #include <functional>
 #include <Reflection/ComponentTypes.h>
@@ -62,6 +61,7 @@ namespace ScriptInputs {
   template <typename T>
   bool ScriptInputField(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth);
 
+  SCRIPT_INPUT_FUNC_DECL(bool);
   SCRIPT_INPUT_FUNC_DECL(int);
   SCRIPT_INPUT_FUNC_DECL(float);
   SCRIPT_INPUT_FUNC_DECL(double);
@@ -190,6 +190,7 @@ namespace GUI {
         prefabOverride = nullptr;
       }
 
+      SetIsComponentEdited(false);
       // @TODO: EDIT WHEN NEW COMPONENTS (ALSO ITS OWN WINDOW FUNCTION)
       if (currentEntity.HasComponent<Component::Tag>()) {
         rttr::type const tagType{ rttr::type::get<Component::Tag>() };
@@ -462,6 +463,11 @@ namespace GUI {
       QUEUE_EVENT(Events::SceneModifiedEvent);
       mFirstEdit = true;
     }
+
+    // wrap cursor when an input field is used
+    if (ImGui::IsKeyDown(ImGuiKey_MouseLeft) && mIsComponentEdited) {
+      ImGuiHelpers::WrapMousePos(1 << ImGuiAxis_X);
+    }
   }
 
   EVENT_CALLBACK_DEF(Inspector, HandleEvent) {
@@ -612,7 +618,7 @@ namespace GUI {
 
     if (isOpen) {
       Mono::ScriptManager* sm = &Mono::ScriptManager::GetInstance();
-      std::vector <std::string> toDeleteList{};
+      std::string toDelete{};
       static std::string selectedScript{};
       float const inputWidth{ CalcInputWidth(60.f) };
       Component::Script* allScripts = &entity.GetComponent<Component::Script>();
@@ -628,25 +634,22 @@ namespace GUI {
           ImGui::Text(s.mScriptName.c_str());
           ImGui::PopFont();
           ImGui::SameLine();
-          ImVec4 const boriginalColor = style.Colors[ImGuiCol_Button];
-          ImVec4 const boriginalHColor = style.Colors[ImGuiCol_ButtonHovered];
-          ImVec4 const boriginalAColor = style.Colors[ImGuiCol_ButtonActive];
-          style.Colors[ImGuiCol_Button] = ImVec4(0.6f, 0.f, 0.29f, 1.0f);
-          style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.8f, 0.1f, 0.49f, 1.0f);
-          style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.7f, 0.3f, 0.39f, 1.0f);
+
+          ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.6f, 0.f, 0.29f, 1.0f));
+          ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.8f, 0.1f, 0.49f, 1.0f));
+          ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.7f, 0.3f, 0.39f, 1.0f));
           ImGui::SetCursorPosX(deleteBtnPos);
           if (ImGui::Button(("Delete##DeleteButton" + s.mScriptName).c_str()))
           {
-            toDeleteList.push_back(s.mScriptName);
+            modified = true;
+            toDelete = s.mScriptName;
 
             // if selection is empty, set it to the deleted script
             if (selectedScript.empty()) {
               selectedScript = s.mScriptName;
             }
           }
-          style.Colors[ImGuiCol_Button] = boriginalColor;
-          style.Colors[ImGuiCol_ButtonHovered] = boriginalHColor;
-          style.Colors[ImGuiCol_ButtonActive] = boriginalAColor;
+          ImGui::PopStyleColor(3);
         }
 
         ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
@@ -673,6 +676,7 @@ namespace GUI {
 
           // invoke the relevant function in the map based on type
           if (ScriptInputs::sScriptInputFuncs.contains(dmiType)) {
+            auto const& t = f.get_value<Mono::DataMemberInstance<int>>();
             if (ScriptInputs::sScriptInputFuncs[dmiType](s, f, INPUT_SIZE)) {
               modified = true;
             }
@@ -694,17 +698,15 @@ namespace GUI {
       {
         ImVec2 const buttonSize(100.0f, 30.0f);
         float const dropdownPos{ ImGui::GetCursorPosX() + FIRST_COLUMN_LENGTH };
-        ImGuiStyle& style = ImGui::GetStyle();
-        ImVec4 const originalColor = style.Colors[ImGuiCol_FrameBg];
-        ImVec4 const originalHColor = style.Colors[ImGuiCol_FrameBgHovered];
-        ImVec4 const originalBColor = style.Colors[ImGuiCol_Button];
-        ImVec4 const originalBHColor = style.Colors[ImGuiCol_ButtonHovered];
-        style.Colors[ImGuiCol_FrameBg] = ImVec4(0.18f, 0.28f, 0.66f, 1.0f);
-        style.Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.28f, 0.48f, 0.86f, 1.0f);
-        style.Colors[ImGuiCol_Button] = ImVec4(0.18f, 0.28f, 0.66f, 1.0f);
-        style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.28f, 0.48f, 0.86f, 1.0f);
+
+        ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.18f, 0.28f, 0.66f, 1.0f));
+        ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0.28f, 0.48f, 0.86f, 1.0f));
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.18f, 0.28f, 0.66f, 1.0f));
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.28f, 0.48f, 0.86f, 1.0f));
+
         if (ImGui::Button("Add Script", buttonSize)) {
           if (!selectedScript.empty()) {
+            modified = true;
             allScripts->mScriptList.emplace_back(selectedScript);
             allScripts->mScriptList[allScripts->mScriptList.size() - 1].SetEntityID(entity.GetRawEnttEntityID());
 
@@ -745,18 +747,12 @@ namespace GUI {
           }
           ImGui::EndCombo();
         }
-        style.Colors[ImGuiCol_FrameBg] = originalColor;
-        style.Colors[ImGuiCol_FrameBgHovered] = originalHColor;
-        style.Colors[ImGuiCol_Button] = originalBColor;
-        style.Colors[ImGuiCol_ButtonHovered] = originalBHColor;
+        ImGui::PopStyleColor(4);
       }
 
-      if (!toDeleteList.empty()) {
-        for (const std::string& tds : toDeleteList)
-        {
-          auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [tds](const Mono::ScriptInstance pair) { return pair.mScriptName == tds; });
-          allScripts->mScriptList.erase(it);
-        }
+      if (!toDelete.empty()) {
+        auto it = std::find_if(allScripts->mScriptList.begin(), allScripts->mScriptList.end(), [&toDelete](const Mono::ScriptInstance pair) { return pair.mScriptName == toDelete; });
+        allScripts->mScriptList.erase(it);
       }
     }
 
@@ -799,7 +795,7 @@ namespace GUI {
     bool modified{ false };
 
     if (isOpen) {
-      ImGui::Text("Usage: Must be child of an Entity with the \"Canvas\" Component");
+      ImGui::Text("Usage: Must be child of an Entity with a \"Canvas\" Component");
 
       auto& text = entity.GetComponent<Component::Text>();
       float inputWidth{ CalcInputWidth(60.f) };
@@ -851,7 +847,7 @@ namespace GUI {
       ImGui::EndDisabled();
       
       NextRowTable("Color");
-      if (ImGui::ColorEdit4("##TextColor", &text.color[0], ImGuiColorEditFlags_NoAlpha)) {
+      if (ImGui::ColorEdit4("##TextColor", &text.color[0])) {
         modified = true;
       }
 
@@ -1701,6 +1697,11 @@ namespace GUI {
       ImGui::InputText("##TextureAsset", &textureText);
       ImGui::EndDisabled();
 
+      NextRowTable("Has Transparent Pixels");
+      if (ImGui::Checkbox("##TransparentPixels", &sprite.isTransparent)) {
+          modified = true;
+      }
+
       //if (ImGui::BeginDragDropTarget()) {
       //  ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
       //  if (drop) {
@@ -2194,12 +2195,13 @@ namespace {
     ImGui::EndDisabled();
 
     return valChanged;
-  } 
+  }
 }
 
 namespace ScriptInputs {
   void InitScriptInputMap() {
     sScriptInputFuncs = {
+          { rttr::type::get<Mono::DataMemberInstance<bool>>(), ScriptInputField<bool> },
       { rttr::type::get<Mono::DataMemberInstance<int>>(), ScriptInputField<int> },
       { rttr::type::get<Mono::DataMemberInstance<float>>(), ScriptInputField<float> },
       { rttr::type::get<Mono::DataMemberInstance<double>>(), ScriptInputField<double> },
@@ -2217,6 +2219,19 @@ namespace ScriptInputs {
 
   template <typename T>
   bool ScriptInputField(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) { return false; }
+
+
+  template <>
+  bool ScriptInputField<bool>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {
+    Mono::DataMemberInstance<bool>& sfi = dataMemberInst.get_value<Mono::DataMemberInstance<bool>>();
+    NextRowTable(sfi.mScriptField.mFieldName.c_str());
+    if (ImGui::Checkbox(("##DataMemberBool" + sfi.mScriptField.mFieldName).c_str(), &(sfi.mData))) {
+      scriptInst.SetFieldValue<bool>(sfi.mData, sfi.mScriptField.mClassField);
+      return true;
+    }
+
+    return false;
+  }
 
   template <>
   bool ScriptInputField<int>(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth) {

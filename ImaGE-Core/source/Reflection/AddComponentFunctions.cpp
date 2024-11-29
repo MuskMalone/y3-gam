@@ -158,13 +158,19 @@ namespace Reflection::ComponentUtils {
 
       try {
           IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(comp.tex1);
-          IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(comp.tex2);
-          entity.EmplaceOrReplaceComponent<Skybox>(comp);
       }
       catch (Debug::ExceptionBase const&) {
           IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(comp.tex1)) + " of Skybox component invalid");
       }
 
+      try {
+        IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(comp.tex2);
+      }
+      catch (Debug::ExceptionBase const&) {
+        IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(comp.tex2)) + " of Skybox component invalid");
+      }
+
+      entity.EmplaceOrReplaceComponent<Skybox>(comp);
   }
 
   void AddInteractive(ECS::Entity entity, rttr::variant const& var) {

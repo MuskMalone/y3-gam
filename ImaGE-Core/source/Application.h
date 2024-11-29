@@ -14,6 +14,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <DebugTools/Exception/Exception.h>
 #include <Graphics/Framebuffer.h>
 #include <Graphics/RenderTarget.h>
+#include <Events/EventCallback.h>
 
 namespace IGE {
   class Application {
@@ -26,6 +27,7 @@ namespace IGE {
       bool StartMaximized = true;
       bool Resizable = true;
       bool EnableImGui = true;
+      std::pair<bool, std::string> StartFromScene = std::pair<bool, std::string>(false, ""); // First: StartFromScene Flag, Second: Path to Scene
     };
 
   public:
@@ -68,7 +70,7 @@ namespace IGE {
     //inline std::vector<std::pair<std::shared_ptr<Graphics::Framebuffer>, SceneDrawCall>> const& GetFrameBuffer() const { return mFramebuffers; }
     void ToggleFullscreen();
     inline static bool GetImGuiEnabled() { return mSpecification.EnableImGui; }
-    inline static bool ToggleImGuiEnabled() { return mSpecification.EnableImGui = !mSpecification.EnableImGui;  }
+    inline static bool ToggleImGuiEnabled() { return mSpecification.EnableImGui = !mSpecification.EnableImGui; }
   protected:
       struct WindowState {
           int windowedPosX = {}, windowedPosY = {}; // Previous window position
@@ -99,5 +101,7 @@ namespace IGE {
       Registers all systems to the SystemManager
     ************************************************************************/
     void RegisterSystems();
+
+    EVENT_CALLBACK_DECL(OnPausedUpdateTrigger);
   };
 } // namespace IGE
