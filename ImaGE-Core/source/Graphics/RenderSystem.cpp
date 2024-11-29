@@ -38,7 +38,7 @@ namespace Graphics {
 			prevOutputTex = pass->GetOutputTexture();
 		}
 
-		if(!cam.isEditor)
+		if (!cam.isEditor)
 			HandleGameViewInput();
 		return entityVector;
 	}
