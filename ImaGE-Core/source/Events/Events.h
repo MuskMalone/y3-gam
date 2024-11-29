@@ -186,7 +186,7 @@ namespace Events
 
   class EntityPointerEnter : public Event {
   public:
-      EntityPointerEnter(ECS::Entity entity) : Event(EventType::POINTER_UP), mEntity{ entity } {}
+      EntityPointerEnter(ECS::Entity entity) : Event(EventType::POINTER_ENTER), mEntity{ entity } {}
       inline std::string GetName() const noexcept override { return "On pointer enter entity " + mEntity.GetTag(); }
 
       ECS::Entity mEntity;
