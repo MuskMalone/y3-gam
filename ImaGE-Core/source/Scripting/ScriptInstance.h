@@ -68,6 +68,12 @@ namespace Mono {
 		MonoMethod* mMouseExitMethod = { nullptr };
 		MonoMethod* mMouseDownMethod = { nullptr };
 		MonoMethod* mMouseUpMethod = { nullptr };
+
+		MonoMethod* mPointerEnterMethod = { nullptr };
+		MonoMethod* mPointerExitMethod = { nullptr };
+		MonoMethod* mPointerDownMethod = { nullptr };
+		MonoMethod* mPointerUpMethod = { nullptr };
+
 		std::vector<rttr::variant> mScriptFieldInstList;
 		inline static char mFieldValBuffer[maxBufferSize];
 
@@ -156,6 +162,14 @@ namespace Mono {
 		void InvokeOnMouseDown();
 
 		void InvokeOnMouseUp();
+
+		void InvokeOnPointerEnter();
+
+		void InvokeOnPointerExit();
+
+		void InvokeOnPointerDown();
+
+		void InvokeOnPointerUp();
 
 		/*!*********************************************************************
 			\brief
