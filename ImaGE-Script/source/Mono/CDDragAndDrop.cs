@@ -351,6 +351,9 @@ public class CDDragAndDrop : Entity
     }
     public void OnMouseDown()
     {
+        
+            Debug.Log("Went in MouseDown");
+        
         //shaking cds
         string tag = InternalCalls.GetTag(mEntityID);
         if(tag == "ContinueCDChild" ||tag == "CreditsCDChild" || tag == "SettingsCDChild")
@@ -374,6 +377,7 @@ public class CDDragAndDrop : Entity
 
     public void OnMouseUp()
     {
+        Debug.Log("Went in Mouseup?");
         isBeingDragged = false;
         bool mouseOnCDPlayer = false;
         Vector3 MousePos = InternalCalls.GetMousePosWorld(1.0f);
@@ -393,6 +397,7 @@ public class CDDragAndDrop : Entity
         }
         else
         {
+            Debug.Log("Tried to go back to original pos");
             InternalCalls.SetWorldPosition(mEntityID, ref originalPosition);
         }
     }
