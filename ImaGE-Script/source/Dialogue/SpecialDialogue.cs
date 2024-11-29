@@ -37,7 +37,7 @@ public class SpecialDialogue : Entity
   private bool isInSillouetteSequence = false;
   private int currentSillouetteIndex = -1;
   private float sillouetteElapsedTime = 0f;
-  private const float activationInterval = 2.0f;
+  private const float activationInterval = 1.0f;
 
   private int charIndex = 0;            // Tracks the current character index
   private float nextCharTime = 0f;      // Tracks the time for the next character

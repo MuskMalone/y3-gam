@@ -51,15 +51,15 @@ public class Safe : Entity
     WXYZ?.SetActive(false);
     Enter?.SetActive(false);
 
-    ABCButtonScript = ABC.FindObjectOfType<SafeButtons>();
-    DEFButtonScript = DEF.FindObjectOfType<SafeButtons>();
-    GHIButtonScript = GHI.FindObjectOfType<SafeButtons>();
-    JKLButtonScript = JKL.FindObjectOfType<SafeButtons>();
-    MNOButtonScript = MNO.FindObjectOfType<SafeButtons>();
-    PQRSButtonScript = PQRS.FindObjectOfType<SafeButtons>();
-    TUVButtonScript = TUV.FindObjectOfType<SafeButtons>();
-    WXYZButtonScript = WXYZ.FindObjectOfType<SafeButtons>();
-    EnterButtonScript = Enter.FindObjectOfType<SafeButtons>();
+    ABCButtonScript = ABC.FindScript<SafeButtons>();
+    DEFButtonScript = DEF.FindScript<SafeButtons>();
+    GHIButtonScript = GHI.FindScript<SafeButtons>();
+    JKLButtonScript = JKL.FindScript<SafeButtons>();
+    MNOButtonScript = MNO.FindScript<SafeButtons>();
+    PQRSButtonScript = PQRS.FindScript<SafeButtons>();
+    TUVButtonScript = TUV.FindScript<SafeButtons>();
+    WXYZButtonScript = WXYZ.FindScript<SafeButtons>();
+    EnterButtonScript = Enter.FindScript<SafeButtons>();
   }
 
   void Update()
@@ -80,8 +80,10 @@ public class Safe : Entity
     if (safeUIActive)
     {
       SetAllButtonsInactive();
+      if (ABCButtonScript.IsVisible) { 
+        ABC.SetActive(true);
 
-      if (ABCButtonScript.IsVisible) { ABC.SetActive(true); }
+      }
       if (DEFButtonScript.IsVisible) { DEF.SetActive(true); }
       if (GHIButtonScript.IsVisible) { GHI.SetActive(true); }
       if (JKLButtonScript.IsVisible) { JKL.SetActive(true); }
@@ -90,6 +92,12 @@ public class Safe : Entity
       if (TUVButtonScript.IsVisible) { TUV.SetActive(true); }
       if (WXYZButtonScript.IsVisible) { WXYZ.SetActive(true); }
       if (EnterButtonScript.IsVisible) { Enter.SetActive(true); }
+
+      if (Input.GetKeyTriggered(KeyCode.ESCAPE))
+      {
+        EndSafeUI();
+        safeInteraction = false;
+      }
     }
   }
 
@@ -100,6 +108,7 @@ public class Safe : Entity
     keyPadUI.SetActive(true);
     safeTextBox.SetActive(true);
     safeInstructionsUI.SetActive(true);
+    InternalCalls.ShowCursor();
   }
 
   private void EndSafeUI()
@@ -110,6 +119,7 @@ public class Safe : Entity
     safeTextBox.SetActive(false);
     safeInstructionsUI.SetActive(false);
     SetAllButtonsInactive();
+    InternalCalls.HideCursor();
   }
 
   private void SetAllButtonsInactive()

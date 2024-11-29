@@ -264,6 +264,8 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetCurrentScene);
   ADD_INTERNAL_CALL(SetCurrentScene);
   ADD_INTERNAL_CALL(TakeScreenShot);
+  ADD_INTERNAL_CALL(ShowCursor);
+  ADD_INTERNAL_CALL(HideCursor);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -1394,6 +1396,15 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity) {
   }
   return true;
 }
+
+void Mono::ShowCursor() {
+  QUEUE_EVENT(Events::LockMouseEvent, false);
+}
+
+void Mono::HideCursor() {
+  QUEUE_EVENT(Events::LockMouseEvent, true);
+}
+
 /*!**********************************************************************
 *																																			  *
 *								  Helper Functions to get data from C#			           	*

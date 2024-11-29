@@ -400,6 +400,10 @@ namespace Mono
 
 		static bool SetDaySkyBox(ECS::Entity::EntityID cameraEntity);
 
+		static void ShowCursor();
+
+		static void HideCursor();
+
 		/*!**********************************************************************
 		*																																			  *
 		*								            Helper Function			          						  *
