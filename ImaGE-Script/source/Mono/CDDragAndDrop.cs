@@ -216,7 +216,7 @@ public class CDDragAndDrop : Entity
             //Console.WriteLine("Entered isHovered");
             Vector3 hoverVector = new Vector3(hoverScale.X, hoverScale.Y, hoverScale.Z);
             InternalCalls.SetScale(mEntityID, ref hoverVector);
-
+            
             //rotation
             string tag = InternalCalls.GetTag(mEntityID);
             if (tag == "NewGameCDChild")
@@ -320,7 +320,8 @@ public class CDDragAndDrop : Entity
         string tag = InternalCalls.GetTag(mEntityID);
         if(tag == "ContinueCDChild" ||tag == "CreditsCDChild" || tag == "SettingsCDChild")
         {
-            Debug.Log("Entered tag == for shakecd");
+            //Debug.Log("Entered tag == for shakecd");
+            
             ShakeCD(0.5f, 0.005f);
             return;
         }
@@ -362,7 +363,7 @@ public class CDDragAndDrop : Entity
     {
         if (isShaking) return;
 
-
+        InternalCalls.PlaySound(mEntityID, "WrongInput_SFX");
         fakeRandomValue = 0f;
         shakeDuration = duration;
         shakeMagnitude = magnitude;
