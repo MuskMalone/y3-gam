@@ -109,14 +109,15 @@ public class PictureAlign : Entity
     {
       if(isTransitioning)
       {
-        if (picture == "NightPainting")
-        {
+        //if (picture == "NightPainting")
+        //{
           if(ChangeSkyBox())
           {
+         
             playerMove.UnfreezePlayer();
             isTransitioning = false;
           }
-        }
+        //}
 
       }
     }
@@ -247,12 +248,15 @@ public class PictureAlign : Entity
      savedCameraEuler = euler;
     currentImg = UI;
     picture = s;
-    DownArrow.SetActive(true);
-    UpArrow.SetActive(true);
-    RightArrow.SetActive(true);
-    LeftArrow.SetActive(true);
-    border.SetActive(true);
-    toStop = false;
+    //DownArrow.SetActive(true);
+    //UpArrow.SetActive(true);
+    //RightArrow.SetActive(true);
+    //LeftArrow.SetActive(true);
+    //border.SetActive(true);
+    //toStop = false;
+    isTransitioning = true;
+    FreezePlayer();
+    SetActive(false);
   }
 
   public void SetBorder(bool BigPic)
@@ -276,7 +280,7 @@ public class PictureAlign : Entity
 
   public bool ChangeSkyBox()
   {
-    return InternalCalls.SetDaySkyBox(mainCamera.mEntityID);
+    return InternalCalls.SetDaySkyBox(mainCamera.mEntityID, 2.0f);
   }
 
 

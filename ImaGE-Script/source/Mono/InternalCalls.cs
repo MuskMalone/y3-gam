@@ -252,7 +252,7 @@ namespace IGE.Utils
     extern public static void TakeScreenShot(string s, int width, int height);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static bool SetDaySkyBox(uint mEntityID);
+    extern public static bool SetDaySkyBox(uint mEntityID, float speed);
     
     #endregion
   }

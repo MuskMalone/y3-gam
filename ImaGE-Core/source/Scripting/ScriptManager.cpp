@@ -1374,10 +1374,62 @@ void Mono::SaveScreenShot(std::string name, int width, int height)
   }
 }
 
-bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity) {
+bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
+
+  ECS::Entity e = ECS::EntityManager::GetInstance().GetEntityFromTag("[Folder] Outdoorlight");
+  if (ECS::Entity(e))
+  {
+    for (ECS::Entity child : ECS::EntityManager::GetInstance().GetChildEntity(e))
+    {
+      if (child.GetTag() == "Props_CeilingLight")
+      {
+        for (ECS::Entity gchild : ECS::EntityManager::GetInstance().GetChildEntity(child))
+        {
+          if (gchild.GetTag() == "Light")
+          {
+            Component::Light& l = gchild.GetComponent<Component::Light>();
+            l.mRange = 21.f;
+            l.mLightIntensity += (2.0f - l.mLightIntensity) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
+            if (l.mLightIntensity >= 1.96f)
+            {
+              std::cout << "Faster?\n";
+              l.mLightIntensity = 2.f;
+            }
+          }
+        }
+      }
+      else
+      {
+        if (child.HasComponent<Component::Light>())
+        {
+          Component::Light& l = child.GetComponent<Component::Light>();
+          l.mLightIntensity -= (l.mLightIntensity - 0.0f) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
+          if (l.mLightIntensity <= 0.04f)
+          {
+            std::cout << "Faster?\n";
+            l.mLightIntensity = 0.f;
+          }
+        }
+        
+      }
+    }
+  }
+  else
+    Debug::DebugLogger::GetInstance().LogError("Unable to find entity: [Folder] Outdoorlight");
+   
+  for (ECS::Entity child : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Light>())
+  {
+    if (child.GetTag() == "Light")
+    {
+      child.SetIsActive(true);
+    }
+  }
+
+
+
   if (ECS::Entity(cameraEntity) && ECS::Entity{ cameraEntity }.HasComponent<Component::Skybox>()) {
-    ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend -= Performance::FrameRateController::GetInstance().GetDeltaTime();
-    if (ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend <= 0.f)
+    ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend -= (ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend - 0.0f) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
+    if (ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend <= 0.01f)
       ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend = 0.f;
     return(ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend <= 0.f);
   }
