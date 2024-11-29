@@ -214,7 +214,7 @@ public class PictureAlign : Entity
     //border.SetActive(true);
     //toStop = false;
     isTransitioning = true;
-    FreezePlayer();
+    playerMove.FreezePlayer();
     SetActive(false);
   }
 
