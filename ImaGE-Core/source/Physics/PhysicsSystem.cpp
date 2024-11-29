@@ -79,6 +79,7 @@ namespace IGE {
 			for (auto entity : rbsystem) {
 				auto& xfm{ rbsystem.get<Component::Transform>(entity) };
 				auto& rb{ rbsystem.get<Component::RigidBody>(entity) };
+
 				auto rbiter{ mRigidBodyIDs.find(rb.bodyID) };
 				if (rbiter != mRigidBodyIDs.end()) {
 					physx::PxRigidDynamic* pxrigidbody{ mRigidBodyIDs.at(rb.bodyID) };
@@ -318,9 +319,6 @@ namespace IGE {
 		}
 		template <typename _physx_type, typename _collider_component>
 		void PhysicsSystem::AddNewCollider(physx::PxRigidDynamic*& rb, ECS::Entity const& entity, _collider_component& collider, bool newCollider) {
-			//if (entity.GetComponent<Component::Tag>().tag == std::string{"MainGround"}) {
-			//	std::cout << "hello\n";
-			//}
 			Component::Transform transform = entity.GetComponent<Component::Transform>();
 			if ((glm::abs(transform.worldScale.x) + glm::abs(transform.worldScale.y) + glm::abs(transform.worldScale.z)) <= glm::epsilon<float>()) {
 				transform.worldScale = { 1,1,1 }; //temp fix
@@ -345,6 +343,13 @@ namespace IGE {
 			mScene->addActor(*rb);
 			collider.idx = 0;
 			rb->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
+			//getting from graphics
+			if (rb->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC))
+				rb->setKinematicTarget(physx::PxTransform{ ToPxVec3(transform.worldPos), ToPxQuat(transform.worldRot) });
+			else
+				rb->setGlobalPose(physx::PxTransform{ ToPxVec3(transform.worldPos), ToPxQuat(transform.worldRot) });
+
+
 		}
 		template <typename _physx_type, typename _collider_component>
 		_collider_component& PhysicsSystem::AddCollider(ECS::Entity entity, _collider_component collider, bool newCollider) {
@@ -649,6 +654,8 @@ namespace IGE {
 			}
 			mRigidBodyIDs.clear();
 			mRigidBodyToEntity.clear();
+			mInactiveActors.clear();
+			mOnTriggerPairs.clear();
 		}
 
 		bool PhysicsSystem::RayCastSingular(glm::vec3 const& origin, glm::vec3 const& end, RaycastHit& result)

@@ -21,6 +21,7 @@ namespace IGE {
 		}
 		void PhysicsEventManager::onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)
 		{
+			if (!pairHeader.actors[0]->userData || !pairHeader.actors[1]->userData) return;
 			if (pairHeader.actors[0]->getType() == physx::PxActorType::eRIGID_DYNAMIC && pairHeader.actors[1]->getType() == physx::PxActorType::eRIGID_DYNAMIC) {
 				auto firstactor{ reinterpret_cast<physx::PxRigidDynamic*>(pairHeader.actors[0]) };
 				auto secondactor{ reinterpret_cast<physx::PxRigidDynamic*>(pairHeader.actors[1]) };

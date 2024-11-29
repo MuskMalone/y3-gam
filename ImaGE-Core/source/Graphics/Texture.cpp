@@ -15,6 +15,10 @@ namespace Graphics {
 	*/
 	Texture::Texture() : mWidth{ 0 }, mHeight{ 0 }, mTexHdl{ 0 } {}
 
+	Texture::Texture(uint32_t texHdl) : mWidth{}, mHeight{}, mTexHdl{ texHdl } {
+
+	}
+
 	/*  _________________________________________________________________________ */
 	/*! Texture
 
@@ -163,20 +167,20 @@ namespace Graphics {
 	This constructor initializes the Texture with the provided width and height.
 	It sets up the OpenGL texture with the specified dimensions.
 	*/
-	Texture::Texture(uint32_t width, uint32_t height, bool isBindless) :mWidth{ width }, mHeight{ height }, mIsBindless{isBindless} {
+	Texture::Texture(uint32_t width, uint32_t height, GLenum intFmt, bool isBindless) :mWidth{ width }, mHeight{ height }, mIsBindless{isBindless} {
 
 		//TODO might add more parameters
 
 		GLCALL(glCreateTextures(GL_TEXTURE_2D, 1, &mTexHdl));
 		// allocate GPU storage for texture image data loaded from file
-		GLCALL(glTextureStorage2D(mTexHdl, 1, GL_RGBA8, mWidth, mHeight));
+		GLCALL(glTextureStorage2D(mTexHdl, 1, intFmt, mWidth, mHeight));
 
 		// Set texture parameters
 		//GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
 		//GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
 		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_WRAP_S, GL_REPEAT));
 		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_WRAP_T, GL_REPEAT));
-		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
 		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
 
 		if (mIsBindless) {

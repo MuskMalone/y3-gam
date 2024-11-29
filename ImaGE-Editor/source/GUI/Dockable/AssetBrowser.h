@@ -32,6 +32,7 @@ namespace GUI
     bool mDirMenuPopup, mAssetMenuPopup;
 
     static constexpr float sMaxAssetSize = 100.f;
+    static inline constexpr char sCompiledDirectory[]       = "Compiled";
     static inline constexpr char sMeshPopupTitle[]          = "Mesh Import Config";
     static inline constexpr char sDirMenuTitle[]            = "DirectoryMenu";
     static inline constexpr char sAssetsMenuTitle[]         = "AssetsMenu";

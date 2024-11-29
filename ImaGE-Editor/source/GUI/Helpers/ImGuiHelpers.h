@@ -95,6 +95,8 @@ namespace ImGuiHelpers
   ************************************************************************/
   bool InputCheckBox(std::string const& propertyName, bool& property, bool disabled);
 
+  void WrapMousePos(int axises_mask);
+  void WrapMousePosEx(int axises_mask, const ImRect& wrap_rect);
 } // namespace ImGuiHelpers
 
 // operator overloads

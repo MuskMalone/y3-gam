@@ -162,7 +162,7 @@ namespace Events
 
   class EntityMouseExit : public Event {
   public:
-      EntityMouseExit(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_ENTER), mEntity{ entity } {}
+      EntityMouseExit(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_EXIT), mEntity{ entity } {}
       inline std::string GetName() const noexcept override { return "On mouse exit entity " + mEntity.GetTag(); }
 
       ECS::Entity mEntity;
@@ -170,7 +170,7 @@ namespace Events
 
   class EntityMouseDown : public Event {
   public:
-      EntityMouseDown(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_ENTER), mEntity{ entity } {}
+      EntityMouseDown(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_DOWN), mEntity{ entity } {}
       inline std::string GetName() const noexcept override { return "On mouse down entity " + mEntity.GetTag(); }
 
       ECS::Entity mEntity;
@@ -178,7 +178,7 @@ namespace Events
 
   class EntityMouseUp : public Event {
   public:
-      EntityMouseUp(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_ENTER), mEntity{ entity } {}
+      EntityMouseUp(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_UP), mEntity{ entity } {}
       inline std::string GetName() const noexcept override { return "On mouse up entity " + mEntity.GetTag(); }
 
       ECS::Entity mEntity;
@@ -188,5 +188,11 @@ namespace Events
   public:
     SignalEvent() : Event(EventType::SIGNAL) {}
     inline std::string GetName() const noexcept override { return "Program terminated unexpectedly"; }
+  };
+
+  class TriggerPausedUpdate : public Event {
+  public:
+    TriggerPausedUpdate() : Event(EventType::TRIGGER_PAUSED_UPDATE) {}
+    inline std::string GetName() const noexcept override { return "Triggering paused update"; }
   };
 }

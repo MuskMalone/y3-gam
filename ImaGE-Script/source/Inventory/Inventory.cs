@@ -25,6 +25,7 @@ public class Inventory : Entity
   public Entity crowbarUI;
   public Entity transitionPaintingUI;
   public Entity keyUI;
+  public Entity pickupHandUI;
 
   // Inventory Item Selection (Image in the inventory bar)
   public Entity pitPaintingSelection;
@@ -108,7 +109,7 @@ public class Inventory : Entity
     Vector3 startPosition = new Vector3(16.6f, -8.9f, 0f);
     InternalCalls.SetPosition(pitPaintingUI.mEntityID, ref startPosition);
     InternalCalls.SetPosition(seedUI.mEntityID, ref startPosition);
-    InternalCalls.SetPosition(nightPaintingUI.mEntityID, ref startPosition);
+    //InternalCalls.SetPosition(nightPaintingUI.mEntityID, ref startPosition);
     InternalCalls.SetPosition(toolsPaintingUI.mEntityID, ref startPosition);
     InternalCalls.SetPosition(hammerUI.mEntityID, ref startPosition);
     InternalCalls.SetPosition(crowbarUI.mEntityID, ref startPosition);
@@ -350,7 +351,6 @@ public class Inventory : Entity
   private void ShowUIForItem(string itemName)
   {
     DisableAllUI();
-
     switch (itemName)
     {
       case "Pit Painting":
@@ -363,11 +363,11 @@ public class Inventory : Entity
         break;
       case "NightPainting":
         nightPaintingUI?.SetActive(true);
-        toolsPaintingUI?.FindScript<HoldupUI>().SetAlginUI();
+        nightPaintingUI?.FindScript<HoldupUI>().SetAlginUI("NightPainting");
         break;
       case "Tools Painting":
         toolsPaintingUI?.SetActive(true);
-        toolsPaintingUI?.FindScript<HoldupUI>().SetAlginUI();
+        toolsPaintingUI?.FindScript<HoldupUI>().SetAlginUI("Tools Painting");
         break;
       case "Hammer":
         hammerUI?.SetActive(true);
@@ -378,23 +378,25 @@ public class Inventory : Entity
         crowbarEquipped = true;
         break;
       case "Transition Painting":
+        Console.WriteLine("TransitionPainting");
         transitionPaintingUI?.SetActive(true);
-        transitionPaintingUI?.FindScript<HoldupUI>().SetAlginUI();
+        transitionPaintingUI?.FindScript<HoldupUI>().SetAlginUI("Transition Painting");
         break;
       case "Key":
         keyUI?.SetActive(true);
         keyEquipped = true;
         break;
 
+
     }
   }
 
   private void DisableAllUI()
   {
-    pictureAlignscript.SetActive(false);
     pitPaintingUI?.SetActive(false);
     seedUI?.SetActive(false);
     seedEquipped = false;
+    pictureAlignscript.SetActive(false);
     nightPaintingUI?.SetActive(false);
     toolsPaintingUI?.SetActive(false);
     hammerUI?.SetActive(false);

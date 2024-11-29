@@ -89,29 +89,30 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="source\Cutscene\TutorialCutscene.cs" />
     <Compile Include="source\Dialogue\Dialogue.cs" />
     <Compile Include="source\Dialogue\SpecialDialogue.cs" />
     <Compile Include="source\Engine Tools\Easing.cs" />
     <Compile Include="source\Engine Tools\FPS.cs" />
+    <Compile Include="source\InteractableObject\Key.cs" />
+    <Compile Include="source\InteractableObject\Safe.cs" />
+    <Compile Include="source\InteractableObject\KeyDoor.cs" />
     <Compile Include="source\InteractableObject\Crowbar.cs" />
     <Compile Include="source\InteractableObject\Hammer.cs" />
-    <Compile Include="source\InteractableObject\KeyDoor.cs" />
     <Compile Include="source\InteractableObject\NightPainting.cs" />
     <Compile Include="source\InteractableObject\NoteInteraction.cs" />
     <Compile Include="source\InteractableObject\PitPainting.cs" />
     <Compile Include="source\InteractableObject\Seed.cs" />
     <Compile Include="source\InteractableObject\Tools.cs" />
-    <Compile Include="source\InteractableObject\TutorialPainting.cs" />
     <Compile Include="source\Inventory\HUD.cs" />
     <Compile Include="source\Inventory\Inventory.cs" />
     <Compile Include="source\Inventory\InventoryItemData.cs" />
-    <Compile Include="source\Inventory\TutorialLevelHUD.cs" />
-    <Compile Include="source\Inventory\TutorialLevelInventory.cs" />
+    <Compile Include="source\Mono\CDDragAndDrop.cs" />
+    <Compile Include="source\Mono\CDRotation.cs" />
     <Compile Include="source\Mono\Color.cs" />
     <Compile Include="source\Mono\Component.cs" />
     <Compile Include="source\Mono\Debug.cs" />
     <Compile Include="source\Mono\Entity.cs" />
+    <Compile Include="source\Mono\FadeManager.cs" />
     <Compile Include="source\Mono\Image.cs" />
     <Compile Include="source\Mono\Input.cs" />
     <Compile Include="source\Mono\Inside.cs" />
@@ -119,11 +120,11 @@
     <Compile Include="source\Mono\InternalCalls.cs" />
     <Compile Include="source\Mono\Keycode.cs" />
     <Compile Include="source\Mono\Math.cs" />
+    <Compile Include="source\Mono\textAsset.cs" />
     <Compile Include="source\Mono\Time.cs" />
     <Compile Include="source\Mono\Vec2.cs" />
     <Compile Include="source\Mono\Vec3.cs" />
     <Compile Include="source\Mono\Vec4.cs" />
-    <Compile Include="source\Mono\textAsset.cs" />
     <Compile Include="source\Painting\AlignUI.cs" />
     <Compile Include="source\Painting\AlignUINight.cs" />
     <Compile Include="source\Painting\AudioManager.cs" />
@@ -150,10 +151,9 @@
     <Compile Include="source\ToolsPuzzle\RotationGuidanceToolsPainting.cs" />
     <Compile Include="source\Triggers\DeathtriggerPit.cs" />
     <Compile Include="source\Triggers\FinishLineTrigger.cs" />
-    <Compile Include="source\Tutorial\InventoryTutorial.cs" />
-    <Compile Include="source\Tutorial\WASDTutorial.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="source\MainMenu\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
