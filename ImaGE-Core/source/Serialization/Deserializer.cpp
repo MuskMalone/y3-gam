@@ -839,7 +839,8 @@ namespace Serialization
 #endif
 
     Mono::ScriptInstance scriptInst{ jsonVal[JSON_SCRIPT_NAME_KEY].GetString() };
-    scriptInst.mEntityID = static_cast<ECS::Entity::EntityID>(jsonVal[JSON_SCRIPT_ENTITY_ID_KEY].GetUint());
+    //scriptInst.mEntityID = static_cast<ECS::Entity::EntityID>(jsonVal[JSON_SCRIPT_ENTITY_ID_KEY].GetUint());
+    scriptInst.SetEntityID(static_cast<ECS::Entity::EntityID>(jsonVal[JSON_SCRIPT_ENTITY_ID_KEY].GetUint()));
 
     // for DataMemberInstance<ScriptInstance>, we don't serialize data
     if (jsonVal.HasMember(JSON_SCRIPT_FIELD_LIST_KEY)) {
