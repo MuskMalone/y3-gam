@@ -229,8 +229,9 @@ public class Safe : Entity
       {
         InternalCalls.PlaySound(mEntityID, "SafeInteract");
         EndSafeUI();
-        Vector3 tmpPos = new Vector3(-999f, -999f, -999f);
-        InternalCalls.SetPosition(safeDoorPart.mEntityID, ref tmpPos);
+        safeDoorPart.SetActive(false);
+        //Vector3 tmpPos = new Vector3(-999f, -999f, -999f);
+        //InternalCalls.SetPosition(safeDoorPart.mEntityID, ref tmpPos);
       }
     }
   }
