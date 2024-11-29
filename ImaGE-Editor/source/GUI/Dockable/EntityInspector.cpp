@@ -2423,7 +2423,6 @@ namespace ScriptInputs {
                   {
                     sfi.mData = Mono::ScriptInstance(sfi.mData.mScriptName);
                     sfi.mData.SetEntityID(e.GetRawEnttEntityID());
-                    std::cout << (uint32_t)e.GetRawEnttEntityID() << std::endl;
                     s.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
                     sfi.mData.GetAllUpdatedFields();
                   }

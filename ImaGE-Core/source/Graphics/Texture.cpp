@@ -37,7 +37,9 @@ namespace Graphics {
 		DirectX::ScratchImage image;
 		HRESULT hr = DirectX::LoadFromDDSFile(wPath.c_str(), DirectX::DDS_FLAGS_NONE, nullptr, image);
 		if (FAILED(hr)) {
+#ifdef _DEBUG
 			std::cerr << "Failed to load DDS texture: " << path << std::endl;
+#endif
 			throw std::runtime_error{ "failed to load dds tex"};
 		}
 
@@ -45,14 +47,18 @@ namespace Graphics {
 		DirectX::ScratchImage flippedImage;
 		hr = DirectX::FlipRotate(image.GetImages(), image.GetImageCount(), image.GetMetadata(), DirectX::TEX_FR_FLIP_VERTICAL, flippedImage);
 		if (FAILED(hr)) {
+#ifdef _DEBUG
 			std::cerr << "Failed to flip DDS texture vertically." << std::endl;
+#endif
 			throw std::runtime_error{ "Failed to flip DDS texture vertically" };
 		}
 
 		// Retrieve the flipped image data
 		const DirectX::Image* img = flippedImage.GetImage(0, 0, 0);
 		if (!img) {
+#ifdef _DEBUG
 			std::cerr << "Failed to retrieve flipped image data." << std::endl;
+#endif
 			throw std::runtime_error{ "Failed to retrieve flipped image data" };
 		}
 
@@ -137,7 +143,7 @@ namespace Graphics {
 			break;
 
 		default:
-			std::cerr << "Unsupported DXGI format! ENUM: (" << img->format <<") Using default parameters." << std::endl;
+			IGE_DBGLOGGER.LogError("Unsupported DXGI format! ENUM: (" + std::to_string(img->format) + ") Using default parameters.");
 			internalFormat = GL_RGBA8;
 			format = GL_RGBA;
 			type = GL_UNSIGNED_BYTE;

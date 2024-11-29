@@ -480,7 +480,9 @@ namespace Graphics {
 	
 	void Renderer::SetLineBufferData(glm::vec3 const& pos, glm::vec4 const& clr) {
 		if (mData.lineBufferIndex >= mData.lineBuffer.size()) {
+#ifdef _DEBUG
 			std::cerr << "Error: Line buffer index out of range! Index: " << mData.lineBufferIndex << ", Max: " << mData.lineBuffer.size() << std::endl;
+#endif
 			return; // Prevent writing out of bounds
 		}
 		if (mData.lineVtxCount < mData.lineBuffer.size()) {
@@ -1201,7 +1203,9 @@ namespace Graphics {
 		auto const& pickFb{ geomPass->GetGameViewFramebuffer() };
 
 		if (!pickFb) {
+#ifdef _DEBUG
 			std::cout << "ERROR: PICK FRAMEBUFFER IS NULL!" << std::endl;
+#endif
 			return INVALID_ENTITY_ID;
 		}
 
@@ -1242,7 +1246,9 @@ namespace Graphics {
 
 	void Renderer::FlushBatch() {
 		if (mData.lineVtxCount > RendererData::cMaxVertices2D) {
+#ifdef _DEBUG
 			std::cerr << "Error: Line vertex count exceeds buffer capacity during FlushBatch!" << std::endl;
+#endif
 			mData.lineVtxCount = RendererData::cMaxVertices2D; // Clamp to valid range
 		}
 
