@@ -375,7 +375,7 @@ namespace Serialization
               std::ostringstream oss{};
               oss << "Unable to find " << prop.get_name().to_string()
                 << " property in " << compType.get_name().to_string();
-              Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
+              Debug::DebugLogger::GetInstance().LogWarning("[Deserializer] " + oss.str());
 #endif
               continue;
             }
@@ -432,7 +432,7 @@ namespace Serialization
       if (ret == jsonObj.MemberEnd())
       {
         std::string const msg{ "Unable to find property with name: " + prop.get_name().to_string() };
-        Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
+        Debug::DebugLogger::GetInstance().LogWarning("[Deserializer] " + msg);
 #ifdef _DEBUG
         std::cout << msg << "\n";
 #endif
@@ -646,7 +646,7 @@ namespace Serialization
           std::ostringstream oss{};
           oss << "Unable to find key-value pair for element of type " << view.get_key_type().get_name().to_string()
             << "-" << view.get_value_type().get_name().to_string() << " in associative view";
-          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
+          Debug::DebugLogger::GetInstance().LogWarning("[Deserializer] " + oss.str());
 #ifdef _DEBUG
           std::cout << oss.str() << "\n";
 #endif
@@ -660,7 +660,7 @@ namespace Serialization
           oss << "Unable to extract key-value pair for element of type " << view.get_key_type().get_name().to_string()
             << "-" << view.get_value_type().get_name().to_string() << " in associative view ";
           oss2 << "Types are " << keyVar.get_type().get_name().to_string() << ", " << valVar.get_type().get_name().to_string();
-          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
+          Debug::DebugLogger::GetInstance().LogWarning("[Deserializer] " + oss.str());
 #ifdef _DEBUG
           std::cout << oss.str() << "\n" << oss2.str() << '\n';
 #endif
@@ -909,7 +909,7 @@ namespace Serialization
 #ifndef DISTRIBUTION
             std::ostringstream oss{};
             oss << filename << ": Unable to find key \"" + keyName + "\" of element: " << i << " in rapidjson value";
-            Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
+            Debug::DebugLogger::GetInstance().LogWarning("[Deserializer] " + oss.str());
 #ifdef _DEBUG
             std::cout << oss.str() << "\n";
 #endif
@@ -958,7 +958,7 @@ namespace Serialization
 #ifndef DISTRIBUTION
           std::ostringstream oss{};
           oss << filename << ": Unable to find key \"" << keyName << "\" in rapidjson value";
-          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
+          Debug::DebugLogger::GetInstance().LogWarning("[Deserializer] " + oss.str());
 #ifdef _DEBUG
           std::cout << oss.str() << "\n";
 #endif
