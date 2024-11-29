@@ -1,4 +1,5 @@
 using IGE.Utils;
+using System;
 using System.Numerics;
 
 public class PlayerInteraction : Entity
@@ -22,6 +23,7 @@ public class PlayerInteraction : Entity
         if (rayHitID != 0)
         {
             RayHitString = InternalCalls.GetTag(rayHitID);
+            Console.WriteLine(RayHitString);
         }
         else
             RayHitString = "None";
