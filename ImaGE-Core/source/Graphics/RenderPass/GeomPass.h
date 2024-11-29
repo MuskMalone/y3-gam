@@ -13,7 +13,9 @@ namespace Graphics {
 
     void Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) override;
     std::shared_ptr<Texture> GetDepthTexture();
+    std::shared_ptr<Texture> GetEntityTexture();
     std::shared_ptr<Framebuffer> GetGameViewFramebuffer() const;
+    
   private:
     struct EntityRenderData {
       EntityRenderData() = default;
@@ -34,6 +36,7 @@ namespace Graphics {
 
     std::shared_ptr<Framebuffer> mPickFramebuffer{ nullptr };
     std::shared_ptr<Texture> mDepthTexture{ nullptr };
+    std::shared_ptr<Texture> mRedTexture{ nullptr };
   };
 
 } // namespace Graphics

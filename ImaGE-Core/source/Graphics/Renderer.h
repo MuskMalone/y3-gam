@@ -190,6 +190,9 @@ namespace Graphics {
 		static void RenderSubmeshInstances(std::vector<InstanceData> const& instances, IGE::Assets::GUID const& meshSource, size_t submeshIndex);
 
 		static int PickEntity(glm::vec2 const& mousePos, glm::vec2 const& viewportStart, glm::vec2 const& viewportSize);
+		static ECS::Entity PickUIEntity(glm::vec2 const& mousePos, std::vector<ECS::Entity> const& uiEntities);
+		static bool IsPointInsideBounds(glm::vec2 const& point, glm::vec2 const& min, glm::vec2 const& max);
+
 		// Batching
 		static void BeginBatch();
 		static void FlushBatch();
@@ -208,6 +211,15 @@ namespace Graphics {
 		static IGE::Assets::GUID GetDebugMeshSource(size_t idx = 0);
 
 		static IGE::Assets::GUID GetQuadMeshSource();
+
+
+		//MOUSE and POINTER input
+		static void SetHighlightedEntity(ECS::Entity const& entity);
+		static ECS::Entity GetHighlightedEntity();
+
+		static void HandleUIInput(std::vector<ECS::Entity> const& entities);
+
+		static glm::vec2 ConvertMouseToCanvasSpace(glm::vec2 const& mousePos, glm::vec4 const& orthoBounds, glm::vec2 const& screenSize);
 	private:
 		static void SetQuadBufferData(glm::vec3 const& pos, glm::vec4 const& clr,
 									  glm::vec2 const& texCoord, float texIdx, int entity);
@@ -247,6 +259,8 @@ namespace Graphics {
 
 		static void InitUICamera();
 		static EVENT_CALLBACK_DECL(OnResize);
+		static EVENT_CALLBACK_DECL(OnEntityPicked);
+		static EVENT_CALLBACK_DECL(On);
 
 		template <typename T>
 		static void AddPass(std::shared_ptr<T>&& pass) {
@@ -255,6 +269,7 @@ namespace Graphics {
 		}
 
 	private:
+		static ECS::Entity mHighlightedEntity;
 		static RendererData mData;
 		static MaterialTable mMaterialTable;
 		static ShaderLibrary mShaderLibrary;

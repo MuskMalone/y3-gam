@@ -32,6 +32,7 @@ public class KeyDoor : Entity
           InternalCalls.PlaySound(mEntityID, "LockedDoor");
           dialogueSystem.SetDialogue(lockedDialogue, new Dialogue.Emotion[] { Dialogue.Emotion.Sad });
           doorFlag = true;
+          return;
         }
 
         UnlockDoor();

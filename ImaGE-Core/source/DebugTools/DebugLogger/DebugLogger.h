@@ -17,10 +17,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
-#ifdef _DEBUG
-#define LOG_TO_FILE true
-#else
+#ifdef DISTRIBUTION
 #define LOG_TO_FILE false
+#else
+#define LOG_TO_FILE true
 #endif
 
 #define IGE_DBGLOGGER Debug::DebugLogger::GetInstance()

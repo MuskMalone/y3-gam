@@ -61,7 +61,8 @@ namespace Reflection
       { GET_RTTR_TYPE(Image), ComponentUtils::AddImage },
       { GET_RTTR_TYPE(Sprite2D), ComponentUtils::AddSprite2D },
       { GET_RTTR_TYPE(Camera), ComponentUtils::AddCamera },
-      { GET_RTTR_TYPE(Skybox), ComponentUtils::AddSkybox }
+      { GET_RTTR_TYPE(Skybox), ComponentUtils::AddSkybox },
+      { GET_RTTR_TYPE(Interactive), ComponentUtils::AddInteractive}
     };
 
     if (mAddComponentFuncs.size() != gComponentTypes.size()) {
@@ -209,8 +210,8 @@ namespace Reflection
       //        then remap the GUIDs to the newly generated one
       catch ([[maybe_unused]] Debug::ExceptionBase& e) {
         PrefabInst const& inst{ data.cbegin()->second };
-        IGE_DBGLOGGER.LogCritical("GUID of Prefab: " + inst.mName + " invalid!");
-        IGE_DBGLOGGER.LogCritical("Say bye bye to Entity " + ECS::Entity(inst.mId).GetTag() + " until I implement GUI to allow remapping!");
+        IGE_DBGLOGGER.LogCritical("GUID: " + std::to_string(static_cast<uint64_t>(guid)) + " of Prefab: " + inst.mName + " invalid!");
+        IGE_DBGLOGGER.LogCritical("Say bye bye to its intsance until I implement GUI to allow remapping!");
         //IGE_EVENTMGR.DispatchImmediateEvent<Events::RemapPrefabGUID>(inst.mId, inst.mName);
         continue;
       }
@@ -246,8 +247,6 @@ namespace Reflection
 
     // override each entity's components
     OverrideInstanceComponents();
-    // re-align colliders with entitiies' transforms
-    //IGE::Physics::PhysicsSystem::GetInstance()->PausedUpdate();
   }
 
   void ObjectFactory::InitScene()

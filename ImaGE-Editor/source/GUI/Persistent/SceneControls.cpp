@@ -74,7 +74,7 @@ namespace GUI
               QUEUE_EVENT(Events::LockMouseEvent, isCursorLocked);
             }
 
-            if (ImGui::Button(ICON_FA_STOP) || (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyPressed(ImGuiKey_P))) {
+            if (ImGui::Button(ICON_FA_STOP) || (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyPressed(ImGuiKey_P, false))) {
               wasRunning = true;
               isCursorLocked = false;
               QUEUE_EVENT(Events::LockMouseEvent, isCursorLocked);
@@ -110,7 +110,7 @@ namespace GUI
               ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.f, 0.5f, 0.f, 0.7f));
             }
             if (mSceneManager.GetSceneState() != Scenes::SceneState::PLAYING && !wasRunning) {
-              if (ImGui::Button(ICON_FA_PLAY) || (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyPressed(ImGuiKey_P))) {
+              if (ImGui::Button(ICON_FA_PLAY) || (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyPressed(ImGuiKey_P, false))) {
                 isCursorLocked = true;
                 QUEUE_EVENT(Events::LockMouseEvent, isCursorLocked);
                 mSceneManager.PlayScene();

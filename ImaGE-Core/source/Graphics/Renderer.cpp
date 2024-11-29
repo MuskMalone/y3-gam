@@ -23,10 +23,12 @@
 #include "Core/Components/Transform.h"
 #include "Core/Components/Light.h"
 #include "Core/Entity.h"
+#include "Input/InputManager.h"
 
 namespace Graphics {
 	constexpr int INVALID_ENTITY_ID = -1;
 
+	ECS::Entity Renderer::mHighlightedEntity;
 	RendererData Renderer::mData;
 	MaterialTable Renderer::mMaterialTable;
 	ShaderLibrary Renderer::mShaderLibrary;
@@ -41,6 +43,7 @@ namespace Graphics {
 	}
 	void Renderer::Init() {
 		SUBSCRIBE_STATIC_FUNC(Events::EventType::WINDOW_RESIZED, OnResize);
+		SUBSCRIBE_STATIC_FUNC(Events::EventType::ENTITY_PICKED, OnEntityPicked );
 		InitUICamera();
 
 		//----------------------Init Batching Quads------------------------------------------------------------//
@@ -246,6 +249,7 @@ namespace Graphics {
 		ShaderLibrary::Add("Tex2D", Shader::Create("Tex2D.vert.glsl", "Tex2D.frag.glsl"));
 		ShaderLibrary::Add("SkyboxProc", Shader::Create("Skybox\\Procedural.vert.glsl", "Skybox\\Procedural.frag.glsl"));
 		ShaderLibrary::Add("SkyboxPano", Shader::Create("Skybox\\Panoramic.vert.glsl", "Skybox\\Panoramic.frag.glsl"));
+		ShaderLibrary::Add("Highlight", Shader::Create("Highlight.vert.glsl", "Highlight.frag.glsl"));
 	}
 
 	void Renderer::InitGeomPass() {
@@ -423,12 +427,71 @@ namespace Graphics {
 		mUICamera.top = 10.0f;
 	}
 
+	void Renderer::HandleUIInput(std::vector<ECS::Entity> const& entities) {
+		static ECS::Entity prevHoveredUIEntity{};
+
+		glm::vec2 mousePos = Input::InputManager::GetInstance().GetMousePos();
+
+		// Step 1: Perform UI picking
+		ECS::Entity const hoveredUIEntity = Renderer::PickUIEntity(mousePos, entities);
+
+		// Step 2: Handle hover state changes
+		if (hoveredUIEntity != prevHoveredUIEntity) {
+			if (prevHoveredUIEntity) {
+				// Trigger Pointer Exit event for the previously hovered UI element
+				QUEUE_EVENT(Events::EntityPointerExit, prevHoveredUIEntity);
+			}
+			if (hoveredUIEntity) {
+				// Trigger Pointer Enter event for the newly hovered UI element
+				QUEUE_EVENT(Events::EntityPointerEnter, hoveredUIEntity);
+			}
+		}
+
+		// Step 3: Track hovered UI entity
+		prevHoveredUIEntity = hoveredUIEntity;
+
+		// Step 4: Handle pointer press/release states
+		if (hoveredUIEntity) {
+			if (Input::InputManager::GetInstance().IsKeyTriggered(IK_MOUSE_LEFT)) {
+				// Trigger Pointer Down event
+				QUEUE_EVENT(Events::EntityPointerDown, hoveredUIEntity);
+			}
+			if (Input::InputManager::GetInstance().IsKeyReleased(IK_MOUSE_LEFT)) {
+				// Trigger Pointer Up event
+				QUEUE_EVENT(Events::EntityPointerUp, hoveredUIEntity);
+			}
+		}
+	}
+
+	glm::vec2 Renderer::ConvertMouseToCanvasSpace(glm::vec2 const& mousePos, glm::vec4 const& orthoBounds, glm::vec2 const& screenSize) {
+		glm::vec2 normalizedMousePos = mousePos / screenSize; // Normalize to [0, 1]
+
+
+		glm::vec2 canvasPos;
+		canvasPos.x = orthoBounds.x + normalizedMousePos.x * (orthoBounds.y - orthoBounds.x); // Map to canvas X
+		canvasPos.y = orthoBounds.z + normalizedMousePos.y * (orthoBounds.w - orthoBounds.z); // Map to canvas Y
+		return canvasPos;
+	}
+
+	void Renderer::SetHighlightedEntity(ECS::Entity const& entity) {
+		mHighlightedEntity = entity;
+	}
+
+	ECS::Entity Renderer::GetHighlightedEntity(){
+		return mHighlightedEntity;
+	}
+
 	EVENT_CALLBACK_DEF(Renderer, OnResize) {
 		auto const& e { CAST_TO_EVENT(Events::WindowResized)};
 
 		for (auto const& pass : mRenderPasses) {
 			pass->GetTargetFramebuffer()->Resize(e->mWidth, e->mHeight);
 		}
+	}
+
+	EVENT_CALLBACK_DEF(Renderer, OnEntityPicked) {
+		auto const& entity { CAST_TO_EVENT(Events::EntityScreenPicked)->mEntity };
+		SetHighlightedEntity(entity);
 	}
 
 	void Renderer::Shutdown() {
@@ -1224,6 +1287,37 @@ namespace Graphics {
 		return INVALID_ENTITY_ID;
 	}
 
+	ECS::Entity Renderer::PickUIEntity(glm::vec2 const& mousePos, std::vector<ECS::Entity> const& entities){
+		ECS::Entity closestEntity{};
+		float closestZ = std::numeric_limits<float>::max(); // Initialize with a very large value
+
+		// Iterate through all UI entities
+		for (ECS::Entity const& entity : entities) {
+			if (!entity.HasComponent<Component::Transform>()) continue;
+
+			auto const& transform = entity.GetComponent<Component::Transform>();
+
+			glm::vec4 bounds = Renderer::mUICamera.GetOrthographicBounds();
+			auto const& fb = Renderer::GetPass<UIPass>()->GetTargetFramebuffer()->GetFramebufferSpec();
+
+			glm::vec2 canvasMousePos = ConvertMouseToCanvasSpace(mousePos, bounds, glm::vec2{fb.width,fb.height});
+
+			glm::vec2 min = glm::vec2(transform.worldPos.x - transform.worldScale.x * 0.5f,
+				transform.worldPos.y - transform.worldScale.y * 0.5f);
+			glm::vec2 max = glm::vec2(transform.worldPos.x + transform.worldScale.x * 0.5f,
+				transform.worldPos.y + transform.worldScale.y * 0.5f);
+
+			if (IsPointInsideBounds(canvasMousePos, min, max)) {
+				if (transform.worldPos.z < closestZ) {
+					closestEntity = entity;
+					closestZ = transform.worldPos.z;
+					return closestEntity;
+				}
+			}
+		}
+		return ECS::Entity{}; // No UI entity hovered
+	}
+
 	void Renderer::FlushBatch() {
 		if (mData.lineVtxCount > RendererData::cMaxVertices2D) {
 			std::cerr << "Error: Line vertex count exceeds buffer capacity during FlushBatch!" << std::endl;
@@ -1362,6 +1456,13 @@ namespace Graphics {
 		mData.meshVtxCount = 0;
 		mData.meshIdxBuffer.clear();
 
+	}
+
+	bool Renderer::IsPointInsideBounds(glm::vec2 const& point, glm::vec2 const& min, glm::vec2 const& max)
+	{
+		if (point.x < min.x || point.x > max.x || point.y < min.y || point.y > max.y)
+			return false;
+		return true;
 	}
 
 	void Renderer::NextBatch() {

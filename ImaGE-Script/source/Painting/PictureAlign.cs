@@ -11,7 +11,7 @@ using System.Security;
 
 public class PictureAlign : Entity
 {
-  public Entity player;            // Assign the player object
+  public Entity player;               // Assign the player object
   public Entity mainCamera;           // Assign the main camera for rotation checking
   public Entity border;
   public Entity RightArrow;
@@ -19,13 +19,11 @@ public class PictureAlign : Entity
   public Entity UpArrow;
   public Entity DownArrow;
   public Entity LeftClickText;
-  public Entity Flower;
   public Entity GardenLightSpot;
   private bool isBigPic;
   private bool toStop = true;
   private bool isTransitioning = false;
-  private bool FinishedTransition = false;
-
+  public bool isNight = false;
 
   public float positionThreshold = 0.5f;  // Threshold for position alignment
   public float rotationThreshold = 2f;    // Threshold for rotation alignment (in degrees)
@@ -37,7 +35,6 @@ public class PictureAlign : Entity
   private Vector3 savedPosition;
   private Vector3 savedCameraEuler;
   private Quaternion savedCameraRotation;
-
 
   //For setting the borderSize
   private Vector3 smallBorderScale = new Vector3(12.320f, 12.820f, 12.820f);
@@ -55,11 +52,8 @@ public class PictureAlign : Entity
     playerMove = player.FindObjectOfType<PlayerMove>();
 
     if (playerMove == null) Debug.LogError("PlayerMove component not found!");
-    Flower.SetActive(false);
     GardenLightSpot.SetActive(true);
   }
-
-
 
   void Update()
   {
@@ -75,7 +69,7 @@ public class PictureAlign : Entity
           toStop = true;
           alignCheck = true;
           Debug.Log("Player is aligned.");
-          FreezePlayer();
+          playerMove.FreezePlayer();
           currentImg.SetActive(false);
           isTransitioning = true;
           
@@ -89,7 +83,7 @@ public class PictureAlign : Entity
           DownArrow.SetActive(false);
           SetActive(false);
           InternalCalls.PlaySound(player.mEntityID, "PaintingMatchObject");
-          Flower.SetActive(true);
+          isNight = true;
           GardenLightSpot.SetActive(false);
         }
         else
@@ -199,41 +193,6 @@ public class PictureAlign : Entity
     return aligned; // All checks passed, the player is aligned
   }
 
-  public void FreezePlayer()
-  {
-    if (playerMove != null)
-    {
-      playerMove.canMove = false;  // Freeze player movement
-      Debug.Log("Player movement frozen.");
-    }
-
-    if (playerMove != null)
-    {
-      playerMove.canLook = false;  // Freeze camera movement
-      Debug.Log("Player camera look frozen.");
-    }
-
-    isFrozen = true;
-  }
-
-  // Method to unfreeze the player if needed
-  public void UnfreezePlayer()
-  {
-    if (playerMove != null)
-    {
-      playerMove.canMove = true;  // Unfreeze player movement
-    }
-
-    if (playerMove != null)
-    {
-      playerMove.canLook = true;  // Unfreeze camera movement
-    }
-
-    isFrozen = false;
-  }
-
-  // Helper method to parse a Vector3 from a string
-
   // Method to retrieve the saved camera rotation
   public Quaternion GetSavedCameraRotation()
   {
@@ -282,9 +241,4 @@ public class PictureAlign : Entity
   {
     return InternalCalls.SetDaySkyBox(mainCamera.mEntityID, 2.0f);
   }
-
-
-
-
-
 }

@@ -17,7 +17,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "GUI/Helpers/ImGuiHelpers.h"
 #include <GUI/Helpers/AssetPayload.h>
 #include <Core/Systems/TransformSystem/TransformHelpers.h>
-
 #include "Physics/PhysicsSystem.h"
 #include <functional>
 #include <Reflection/ComponentTypes.h>
@@ -99,7 +98,8 @@ namespace GUI {
       { typeid(Component::Image), ICON_FA_IMAGE_PORTRAIT ICON_PADDING },
       { typeid(Component::Sprite2D), ICON_FA_IMAGE ICON_PADDING },
       { typeid(Component::Camera), ICON_FA_CAMERA ICON_PADDING },
-      { typeid(Component::Skybox), ICON_FA_EARTH_ASIA ICON_PADDING }
+      { typeid(Component::Skybox), ICON_FA_EARTH_ASIA ICON_PADDING },
+      { typeid(Component::Interactive), ICON_FA_COMPUTER_MOUSE ICON_PADDING }
     },
     mObjFactory{Reflection::ObjectFactory::GetInstance()},
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
@@ -190,6 +190,7 @@ namespace GUI {
         prefabOverride = nullptr;
       }
 
+      SetIsComponentEdited(false);
       // @TODO: EDIT WHEN NEW COMPONENTS (ALSO ITS OWN WINDOW FUNCTION)
       if (currentEntity.HasComponent<Component::Tag>()) {
         rttr::type const tagType{ rttr::type::get<Component::Tag>() };
@@ -431,6 +432,18 @@ namespace GUI {
               }
           }
       }
+
+      if (currentEntity.HasComponent<Component::Interactive>()) {
+          rttr::type const sourceType{ rttr::type::get<Component::Interactive>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(sourceType);
+
+          if (InteractiveComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Interactive>());
+              }
+          }
+      }
       if (prefabOverride) {
         for (rttr::type const& type : prefabOverride->removedComponents) {
           DisplayRemovedComponent(type);
@@ -449,6 +462,11 @@ namespace GUI {
     if (!mFirstEdit && mIsComponentEdited) {
       QUEUE_EVENT(Events::SceneModifiedEvent);
       mFirstEdit = true;
+    }
+
+    // wrap cursor when an input field is used
+    if (ImGui::IsKeyDown(ImGuiKey_MouseLeft) && mIsComponentEdited) {
+      ImGuiHelpers::WrapMousePos(1 << ImGuiAxis_X);
     }
   }
 
@@ -616,12 +634,10 @@ namespace GUI {
           ImGui::Text(s.mScriptName.c_str());
           ImGui::PopFont();
           ImGui::SameLine();
-          ImVec4 const boriginalColor = style.Colors[ImGuiCol_Button];
-          ImVec4 const boriginalHColor = style.Colors[ImGuiCol_ButtonHovered];
-          ImVec4 const boriginalAColor = style.Colors[ImGuiCol_ButtonActive];
-          style.Colors[ImGuiCol_Button] = ImVec4(0.6f, 0.f, 0.29f, 1.0f);
-          style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.8f, 0.1f, 0.49f, 1.0f);
-          style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.7f, 0.3f, 0.39f, 1.0f);
+
+          ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.6f, 0.f, 0.29f, 1.0f));
+          ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.8f, 0.1f, 0.49f, 1.0f));
+          ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.7f, 0.3f, 0.39f, 1.0f));
           ImGui::SetCursorPosX(deleteBtnPos);
           if (ImGui::Button(("Delete##DeleteButton" + s.mScriptName).c_str()))
           {
@@ -633,9 +649,7 @@ namespace GUI {
               selectedScript = s.mScriptName;
             }
           }
-          style.Colors[ImGuiCol_Button] = boriginalColor;
-          style.Colors[ImGuiCol_ButtonHovered] = boriginalHColor;
-          style.Colors[ImGuiCol_ButtonActive] = boriginalAColor;
+          ImGui::PopStyleColor(3);
         }
 
         ImGui::BeginTable("##", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
@@ -662,6 +676,7 @@ namespace GUI {
 
           // invoke the relevant function in the map based on type
           if (ScriptInputs::sScriptInputFuncs.contains(dmiType)) {
+            auto const& t = f.get_value<Mono::DataMemberInstance<int>>();
             if (ScriptInputs::sScriptInputFuncs[dmiType](s, f, INPUT_SIZE)) {
               modified = true;
             }
@@ -683,15 +698,12 @@ namespace GUI {
       {
         ImVec2 const buttonSize(100.0f, 30.0f);
         float const dropdownPos{ ImGui::GetCursorPosX() + FIRST_COLUMN_LENGTH };
-        ImGuiStyle& style = ImGui::GetStyle();
-        ImVec4 const originalColor = style.Colors[ImGuiCol_FrameBg];
-        ImVec4 const originalHColor = style.Colors[ImGuiCol_FrameBgHovered];
-        ImVec4 const originalBColor = style.Colors[ImGuiCol_Button];
-        ImVec4 const originalBHColor = style.Colors[ImGuiCol_ButtonHovered];
-        style.Colors[ImGuiCol_FrameBg] = ImVec4(0.18f, 0.28f, 0.66f, 1.0f);
-        style.Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.28f, 0.48f, 0.86f, 1.0f);
-        style.Colors[ImGuiCol_Button] = ImVec4(0.18f, 0.28f, 0.66f, 1.0f);
-        style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.28f, 0.48f, 0.86f, 1.0f);
+
+        ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.18f, 0.28f, 0.66f, 1.0f));
+        ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0.28f, 0.48f, 0.86f, 1.0f));
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.18f, 0.28f, 0.66f, 1.0f));
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.28f, 0.48f, 0.86f, 1.0f));
+
         if (ImGui::Button("Add Script", buttonSize)) {
           if (!selectedScript.empty()) {
             modified = true;
@@ -735,10 +747,7 @@ namespace GUI {
           }
           ImGui::EndCombo();
         }
-        style.Colors[ImGuiCol_FrameBg] = originalColor;
-        style.Colors[ImGuiCol_FrameBgHovered] = originalHColor;
-        style.Colors[ImGuiCol_Button] = originalBColor;
-        style.Colors[ImGuiCol_ButtonHovered] = originalBHColor;
+        ImGui::PopStyleColor(4);
       }
 
       if (!toDelete.empty()) {
@@ -1044,6 +1053,26 @@ namespace GUI {
           //    }
           //    ImGui::EndDragDropTarget();
           //}
+
+          ImGui::EndTable();
+      }
+
+      WindowEnd(isOpen);
+      return modified;
+  }
+
+  bool Inspector::InteractiveComponentWindow(ECS::Entity entity, bool highlight) {
+      bool const isOpen{ WindowBegin<Component::Interactive>("Interactive", highlight) };
+      bool modified{ false };
+
+      if (isOpen) {
+          Component::Interactive& interactive = entity.GetComponent<Component::Interactive>();
+
+          float const inputWidth{ CalcInputWidth(60.f) };
+
+          // Start a table for organizing the color and textureAsset inputs
+          ImGui::BeginTable("ImageTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+
 
           ImGui::EndTable();
       }
@@ -1694,57 +1723,6 @@ namespace GUI {
   }
 
   bool Inspector::SkyboxComponentWindow(ECS::Entity entity, bool highlight) {
-      //bool const isOpen{ WindowBegin<Component::Skybox>("Skybox", highlight) };
-      //bool modified{ false };
-
-      //if (isOpen) {
-      //    Component::Skybox& skybox = entity.GetComponent<Component::Skybox>();
-
-      //    float const inputWidth{ CalcInputWidth(60.f) };
-
-      //    ImGui::BeginTable("SkyboxTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
-
-      //    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-      //    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
-
-      //    NextRowTable("Material");
-      //    ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 2.0f);
-      //    const char* name;
-      //    IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
-      //    if (skybox.materialAsset.IsValid()) {
-      //        name = am.GetAsset<IGE::Assets::MaterialAsset>(skybox.materialAsset)->mMaterial->GetName().c_str();
-      //    }
-      //    else {
-      //        name = "Drag Material Here";
-      //    }
-      //    if (ImGui::Button(name, ImVec2(inputWidth, 30.f))) {
-      //        skybox.Clear();
-      //    }
-      //    ImGui::PopStyleVar();
-      //    if (ImGui::IsItemHovered()) { ImGui::SetTooltip("Remove Material"); }
-
-      //    if (ImGui::BeginDragDropTarget()) {
-      //        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
-      //        if (drop) {
-      //            AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
-      //            if (assetPayload.mAssetType == AssetPayload::MATERIAL) {
-      //                try {
-
-      //                    skybox.SetGUID(am.LoadRef<IGE::Assets::MaterialAsset>(assetPayload.GetFilePath()));
-      //                }
-      //                catch (Debug::ExceptionBase& e) {
-      //                    e.LogSource();
-      //                }
-      //            }
-      //        }
-      //        ImGui::EndDragDropTarget();
-      //    }
-
-      //    ImGui::EndTable();
-      //}
-
-      //WindowEnd(isOpen);
-      //return modified;
       bool const isOpen{ WindowBegin<Component::Skybox>("Skybox", highlight) };
       bool modified{ false };
 
@@ -2154,7 +2132,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Sprite2D>("Sprite2D");
         DrawAddComponentButton<Component::Camera>("Camera");
         DrawAddComponentButton<Component::Skybox>("Skybox");
-
+        DrawAddComponentButton<Component::Interactive>("Interactive");
         ImGui::EndTable();
       }
 
@@ -2217,7 +2195,7 @@ namespace {
     ImGui::EndDisabled();
 
     return valChanged;
-  } 
+  }
 }
 
 namespace ScriptInputs {

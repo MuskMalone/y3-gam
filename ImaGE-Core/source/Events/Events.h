@@ -184,6 +184,38 @@ namespace Events
       ECS::Entity mEntity;
   };
 
+  class EntityPointerEnter : public Event {
+  public:
+      EntityPointerEnter(ECS::Entity entity) : Event(EventType::POINTER_UP), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On pointer enter entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
+  };
+
+  class EntityPointerExit : public Event {
+  public:
+      EntityPointerExit(ECS::Entity entity) : Event(EventType::POINTER_EXIT), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On pointer exit entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
+  };
+
+  class EntityPointerDown : public Event {
+  public:
+      EntityPointerDown(ECS::Entity entity) : Event(EventType::POINTER_DOWN), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On pointer down entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
+  };
+
+  class EntityPointerUp : public Event {
+  public:
+      EntityPointerUp(ECS::Entity entity) : Event(EventType::POINTER_UP), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On pointer up entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
+  };
+
   class SignalEvent : public Event {
   public:
     SignalEvent() : Event(EventType::SIGNAL) {}

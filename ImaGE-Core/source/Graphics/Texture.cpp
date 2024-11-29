@@ -15,6 +15,10 @@ namespace Graphics {
 	*/
 	Texture::Texture() : mWidth{ 0 }, mHeight{ 0 }, mTexHdl{ 0 } {}
 
+	Texture::Texture(uint32_t texHdl) : mWidth{}, mHeight{}, mTexHdl{ texHdl } {
+
+	}
+
 	/*  _________________________________________________________________________ */
 	/*! Texture
 
@@ -125,6 +129,13 @@ namespace Graphics {
 			format = GL_RED;
 			type = GL_HALF_FLOAT;
 			break;
+
+		case DXGI_FORMAT_R16G16B16A16_UNORM:
+			internalFormat = GL_RGBA16;
+			format = GL_RGBA;
+			type = GL_UNSIGNED_SHORT;
+			break;
+
 		default:
 			std::cerr << "Unsupported DXGI format! ENUM: (" << img->format <<") Using default parameters." << std::endl;
 			internalFormat = GL_RGBA8;
@@ -176,7 +187,7 @@ namespace Graphics {
 		//GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
 		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_WRAP_S, GL_REPEAT));
 		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_WRAP_T, GL_REPEAT));
-		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
 		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
 
 		if (mIsBindless) {

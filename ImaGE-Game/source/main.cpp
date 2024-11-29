@@ -15,7 +15,7 @@ int Main(int argc, char** argv) {
   spec.VSync = true;
   spec.WindowHeight = 1080;
   spec.WindowWidth = 1920;
-  spec.StartFromScene = { true, "..\\Assets\\Scenes\\M3.scn" };
+  spec.StartFromScene = { true, "..\\Assets\\Scenes\\mainmenu.scn" };
 
   IGE::Application myApp{ spec };
   try

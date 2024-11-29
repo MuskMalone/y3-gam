@@ -82,7 +82,10 @@ namespace IGE {
     if (mSpecification.StartFromScene.first) {
         IGE_EVENTMGR.DispatchImmediateEvent<Events::LoadSceneEvent>(std::filesystem::path(mSpecification.StartFromScene.second).stem().string(),
             mSpecification.StartFromScene.second);
-        Systems::SystemManager::GetInstance().PausedUpdate<Systems::TransformSystem, IGE::Physics::PhysicsSystem, IGE::Audio::AudioSystem>();
+
+        // TEMP - NEED THIS TO PLAY GAME BUILD
+        glfwSetCursorPos(mWindow.get(), mSpecification.WindowWidth / 2.0, mSpecification.WindowHeight / 2.0);
+        glfwSetInputMode(mWindow.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     }
 
     SUBSCRIBE_CLASS_FUNC(Events::EventType::TRIGGER_PAUSED_UPDATE, &Application::OnPausedUpdateTrigger, this);
@@ -108,7 +111,9 @@ namespace IGE {
       systemManager.UpdateSystems();
 
       //=======================================================================
-      Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() });
+      if (Graphics::RenderSystem::mCameraManager.HasActiveCamera()) {
+          Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() });
+      }
       auto const& fb = Graphics::Renderer::GetFinalFramebuffer();
       std::shared_ptr<Graphics::Texture> gameTex = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
 
@@ -174,7 +179,7 @@ namespace IGE {
       monitor = glfwGetPrimaryMonitor();
       const GLFWvidmode* mode = glfwGetVideoMode(monitor);
       glfwSetWindowMonitor(mWindow.get(), monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
-      mWindowState.isFullscreen = true;
+      mWindowState.isFullscreen = false;
     }
 
     glfwMakeContextCurrent(mWindow.get());

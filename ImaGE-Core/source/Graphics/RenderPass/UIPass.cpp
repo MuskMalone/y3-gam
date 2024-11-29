@@ -6,6 +6,7 @@
 #include "Core/Components/Text.h"
 #include "Core/Components/Image.h"
 #include <Physics/PhysicsSystem.h>
+#include "GeomPass.h"
 
 namespace Graphics {
 	UIPass::UIPass(const RenderPassSpec& spec) : RenderPass{ spec } {
@@ -48,22 +49,14 @@ namespace Graphics {
 		if (cam.isEditor) 
 			IGE::Physics::PhysicsSystem::GetInstance()->Debug();
 
-		auto& ecsMan{ ECS::EntityManager::GetInstance() };
 		if (cam.isEditor) {
-			auto const& cameras = ecsMan.GetAllEntitiesWithComponents<Component::Camera>();
-			for (auto const& camera : cameras) {
-				if (!ECS::Entity{ camera }.IsActive()) continue;
-				auto const& camComp = ECS::Entity{ camera }.GetComponent<Component::Camera>();
-				auto const& xform = ECS::Entity{ camera }.GetComponent<Component::Transform>();
+			for (auto const& camera : entities ) {
+				if (!camera.HasComponent<Component::Camera>()) continue;
+				if (!camera.IsActive()) continue;
+				auto const& camComp = camera.GetComponent<Component::Camera>();
+				auto const& xform = camera.GetComponent<Component::Transform>();
 				Renderer::DrawCameraFrustrum(camComp, Color::COLOR_CYAN);
 			}
-			//auto const& lights = ecsMan.GetAllEntitiesWithComponents<Component::Light, Component::Transform>();
-			//for (auto const& light : lights) {
-			//	if (!ECS::Entity{ light }.IsActive()) continue;
-			//	auto const& xform = ECS::Entity{ light }.GetComponent<Component::Transform>();
-			//	auto const& lightComp = ECS::Entity{ light }.GetComponent<Component::Light>();
-			//	Renderer::DrawLightGizmo(lightComp, xform);
-			//}
 		}
 
 		for (ECS::Entity const& entity : entities) {
@@ -103,8 +96,10 @@ namespace Graphics {
 
 			if (cam.isEditor) {
 				Graphics::Renderer::DrawRect(xform.position, canvasScale, xform.rotation, Color::COLOR_WHITE); //canvas drawn only in editor
+			}
 
-
+			if (!cam.isEditor) {
+				Graphics::Renderer::HandleUIInput(children);
 			}
 
 			for (ECS::Entity& uiEntity : children) {
@@ -162,16 +157,34 @@ namespace Graphics {
 						
 				}
 
+				/*
 				else {
-					//Renderer::DrawRect(uiXform.worldPos, glm::vec2{ uiXform.worldScale }, uiXform.worldRot, Color::COLOR_WHITE);
+					Renderer::DrawRect(uiXform.worldPos, glm::vec2{ uiXform.worldScale }, uiXform.worldRot, Color::COLOR_WHITE);
 				}
-				
+				*/
 
 				//Graphics::Renderer::SubmitInstance(Renderer::GetQuadMeshSource(), uiXform.worldMtx, Color::COLOR_WHITE, uiEntity.GetEntityID());
 			}
 		}
 
 		Renderer::RenderSceneEnd();
+
+		if (cam.isEditor) {
+			auto const& highlightShader{ ShaderLibrary::Get("Highlight") };
+			highlightShader->Use();
+			auto const& fb{ Renderer::GetPass<GeomPass>()->GetTargetFramebuffer() };
+			auto const& fbSpec{ fb->GetFramebufferSpec() };
+			auto const& redTex{ Renderer::GetPass<GeomPass>()->GetEntityTexture() };
+
+			highlightShader->SetUniform("u_ScreenTex", mInputTexture, 30);
+			highlightShader->SetUniform("u_EntityTex", redTex, 31);
+			highlightShader->SetUniform("u_TexelSize", glm::vec2{1.f/fbSpec.width, 1.f/fbSpec.height});
+			int ent = static_cast<int>(Renderer::GetHighlightedEntity().GetEntityID());
+			highlightShader->SetUniform("u_SelectedEntity", ent);
+			
+
+			Renderer::RenderFullscreenTexture();
+		}
 
 		// @TODO: TEMP, TO MERGE WITH XAVIER
 		if (std::shared_ptr<Systems::TextSystem> textSys =
