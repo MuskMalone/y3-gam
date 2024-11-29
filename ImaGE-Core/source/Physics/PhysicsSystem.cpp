@@ -660,15 +660,18 @@ namespace IGE {
 
 		bool PhysicsSystem::RayCastSingular(glm::vec3 const& origin, glm::vec3 const& end, RaycastHit& result)
 		{
-			physx::PxRaycastBuffer hitBuffer{};
+			physx::PxRaycastBufferN<8> hitBuffer{};
 			auto dir{ glm::normalize(end - origin) };
 			auto mag{ glm::distance(origin, end) };
 			bool hit{ mScene->raycast(ToPxVec3(origin), ToPxVec3(dir), mag, hitBuffer) };
 			if (hit) {
-				result.entity = mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.block.actor));
-				result.distance = hitBuffer.block.distance;
-				result.normal = ToGLMVec3(hitBuffer.block.normal);
-				result.position = ToGLMVec3(hitBuffer.block.position);
+				std::sort(hitBuffer.touches, hitBuffer.touches + hitBuffer.getNbTouches(), [](const physx::PxRaycastHit& a, const physx::PxRaycastHit& b) {
+					return a.distance < b.distance;
+					});
+				result.entity = mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[0].actor));
+				result.distance = hitBuffer.touches[0].distance;
+				result.normal = ToGLMVec3(hitBuffer.touches[0].normal);
+				result.position = ToGLMVec3(hitBuffer.touches[0].position);
 				if (mDrawDebug)
 					mRays.emplace_back(RayCastResult{
 							origin, end, result, true

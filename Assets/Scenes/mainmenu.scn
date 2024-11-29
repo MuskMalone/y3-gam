@@ -465,7 +465,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "polySurface9",
+                        "tag": "CDPlayer_Body",
                         "isActive": true
                     }
                 },
@@ -532,6 +532,32 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.30000001192092898,
+                            "y": 0.20000000298023225,
+                            "z": 0.20000000298023225
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": -0.15000000596046449,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
                     }
                 }
             ]
@@ -795,6 +821,25 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "CDinCase"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 0,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "cdPlayer"
                                         }
                                     },
                                     {
@@ -1063,6 +1108,25 @@
                                     },
                                     {
                                         "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 0,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "cdPlayer"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 19,
                                             "scriptName": "Entity",
                                             "scriptFieldInstList": [
@@ -1117,7 +1181,7 @@
                         "position": {
                             "x": 0.9107471704483032,
                             "y": -0.44042009115219118,
-                            "z": -0.7515864372253418
+                            "z": -0.7491838932037354
                         },
                         "scale": {
                             "x": 0.004999999888241291,
@@ -1125,20 +1189,20 @@
                             "z": 0.004999999888241291
                         },
                         "rotation": {
-                            "x": 0.0,
+                            "x": 0.7071067690849304,
                             "y": 0.0,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         },
                         "eulerAngles": {
-                            "x": 0.0,
+                            "x": 90.0,
                             "y": -0.0,
                             "z": 0.0
                         },
                         "worldPos": {
                             "x": 0.9107471704483032,
                             "y": -0.44042009115219118,
-                            "z": -0.7515864372253418
+                            "z": -0.7491838932037354
                         },
                         "worldScale": {
                             "x": 0.004999999888241291,
@@ -1146,10 +1210,10 @@
                             "z": 0.004999999888241291
                         },
                         "worldRot": {
-                            "x": 0.0,
+                            "x": 0.7071067690849304,
                             "y": 0.0,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -1177,9 +1241,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 0.9107471704483032,
-                                            "y": -0.44042012095451357,
-                                            "z": -0.7515867948532105
+                                            "x": 0.9107471108436585,
+                                            "y": -0.4404177963733673,
+                                            "z": -0.7491857409477234
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -1206,9 +1270,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
-                            "y": -0.0000152587890625,
-                            "z": -0.0000762939453125
+                            "x": -0.0000152587890625,
+                            "y": -0.0003562023339327425,
+                            "z": -0.000457763671875
                         },
                         "scale": {
                             "x": 1.0,
@@ -1216,10 +1280,10 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 0.7071068286895752,
+                            "x": 0.0,
                             "y": 0.0,
                             "z": 0.0,
-                            "w": 0.7071068286895752
+                            "w": 1.0
                         },
                         "eulerAngles": {
                             "x": 90.0,
@@ -1227,9 +1291,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.9107471704483032,
-                            "y": -0.44042012095451357,
-                            "z": -0.7515867948532105
+                            "x": 0.9107471108436585,
+                            "y": -0.4404177963733673,
+                            "z": -0.7491857409477234
                         },
                         "worldScale": {
                             "x": 0.004999999888241291,
@@ -1292,6 +1356,25 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "CDinCase"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 0,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "cdPlayer"
                                         }
                                     },
                                     {
@@ -1498,6 +1581,25 @@
                                     },
                                     {
                                         "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity",
+                                            "scriptFieldInstList": [
+                                                {
+                                                    "data": 0,
+                                                    "type": "System.UInt32",
+                                                    "scriptField": {
+                                                        "fieldName": "mEntityID"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "cdPlayer"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 19,
                                             "scriptName": "Entity",
                                             "scriptFieldInstList": [
@@ -1602,7 +1704,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 11409585286584451048
+                            "ID": 7343767113389994648
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1743,7 +1845,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 1383811629235227331
+                            "ID": 16873871654464405197
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,

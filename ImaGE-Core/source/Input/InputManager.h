@@ -238,7 +238,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 		\return
 			returns the mouse's pos as dvec2
 		************************************************************************/
-			static vec3 GetMousePosWorld();
+			static vec3 GetMousePosWorld(float depth = 0.f);
 
 			/*!*********************************************************************
 		\brief

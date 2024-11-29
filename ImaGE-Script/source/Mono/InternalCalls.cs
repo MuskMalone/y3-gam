@@ -99,7 +99,7 @@ namespace IGE.Utils
     internal extern static Vector3 GetMousePos();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vector3 GetMousePosWorld();
+    internal extern static Vector3 GetMousePosWorld(float depth);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetCameraForward();

@@ -960,9 +960,9 @@ glm::vec3 Mono::GetMousePos()
   return glm::vec3(Input::InputManager::GetInstance().GetMousePos(), 0);
 }
 
-glm::vec3 Mono::GetMousePosWorld()
+glm::vec3 Mono::GetMousePosWorld(float depth)
 {
-    return Input::InputManager::GetInstance().GetMousePosWorld();
+    return Input::InputManager::GetInstance().GetMousePosWorld(depth);
 }
 
 glm::vec3 Mono::GetCameraForward()

@@ -120,6 +120,7 @@ public class CDDragAndDrop : Entity
 
     //TEMPORARY
     public Entity CDinCase;
+    public Entity cdPlayer;
     //public Entity CDCurr;
 
     public Entity fadeImageEntity; // Entity containing the fade Image
@@ -157,6 +158,7 @@ public class CDDragAndDrop : Entity
     private Vector3 toCDVec;
     void Start()
     {
+        originalPosition = InternalCalls.GetWorldPosition(mEntityID);
         originalRotation = InternalCalls.GetRotation(mEntityID);
         Console.WriteLine("originalrotation " + originalRotation);
 
@@ -204,12 +206,16 @@ public class CDDragAndDrop : Entity
 
     void Update()
     {
-        //string tag = InternalCalls.GetTag(mEntityID);
+        //Vector3 MousePos = InternalCalls.GetMousePosWorld(1.0f);
+        //Vector3 MousPosRayEnd = MousePos + (InternalCalls.GetCameraForward() * 5.0f);
 
-
+        //uint hitEntity = InternalCalls.Raycast(MousePos, MousPosRayEnd);
+        //Console.WriteLine("Entity " + InternalCalls.GetTag(hitEntity) + " hit ");
+        //Console.WriteLine(MousePos.ToString() + " " + MousPosRayEnd.ToString());
+            //string tag = InternalCalls.GetTag(mEntityID);
         if (isHovered && !isBeingDragged)
         {
-            Console.WriteLine("Entered isHovered");
+            //Console.WriteLine("Entered isHovered");
             Vector3 hoverVector = new Vector3(hoverScale.X, hoverScale.Y, hoverScale.Z);
             InternalCalls.SetScale(mEntityID, ref hoverVector);
 
@@ -329,21 +335,36 @@ public class CDDragAndDrop : Entity
 
     public void OnMouseUp()
     {
-        Console.WriteLine("Hello Mouseup");
         isBeingDragged = false;
+        bool mouseOnCDPlayer = false;
+        Vector3 MousePos = InternalCalls.GetMousePosWorld(1.0f);
+        Vector3 MousPosRayEnd = MousePos + (InternalCalls.GetCameraForward() * 5.0f);
+        uint hitEntity = InternalCalls.Raycast(MousePos, MousPosRayEnd);
+
+        if (InternalCalls.GetTag(hitEntity) == "CDPlayer_Body") {
+
+            mouseOnCDPlayer = true;
+        }
+
+        if (mouseOnCDPlayer)
+        {
+            CDinCase.SetActive(true);
+            Vector3 newPos = new Vector3(0, 0, 0);
+            InternalCalls.SetWorldPosition(mEntityID, ref newPos);
+        }
+        else
+        {
+            InternalCalls.SetWorldPosition(mEntityID, ref originalPosition);
+        }
     }
 
     private void FollowMouse()
     {
-        Vector3 MousePos = InternalCalls.GetMousePosWorld();
-        //Console.WriteLine("MousePos " + MousePos);
-        Vector3 ForwardVec = InternalCalls.GetCameraForward();
-        ForwardVec /= ForwardVec.Length();
-        ForwardVec *= toCDDist;
-        Vector3 NewPos = MousePos + ForwardVec;
-        InternalCalls.SetWorldPosition(mEntityID, ref NewPos);
-        //Console.WriteLine("My Entity WorldPos " + InternalCalls.GetWorldPosition(mEntityID));
-        //Console.WriteLine("My Entity Pos " + InternalCalls.GetPosition(mEntityID));
+        Vector3 MousePos = InternalCalls.GetMousePosWorld(toCDDist);
+        //mouse offset to make sure the mouse is not in the cd hole
+        MousePos.X += 0.02f;
+        MousePos.Y += 0.02f;
+        InternalCalls.SetWorldPosition(mEntityID, ref MousePos);
     }
     private void ShakeCD(float duration, float magnitude)
     {
@@ -367,7 +388,7 @@ public class CDDragAndDrop : Entity
     }
     public void OnMouseEnter()
     {
-        Vector3 MousePos = InternalCalls.GetMousePosWorld();
+        Vector3 MousePos = InternalCalls.GetMousePosWorld(0.0f);
         //tch: the accurate distance doesnt really matter i guess
         toCDDist = (MousePos - originalPosition).Length();
         isHovered = true;

@@ -294,26 +294,39 @@ void Input::InputManager::SetCurrFramebuffer(size_t framebufferID)
 	mCurrFramebuffer = framebufferID;
 }
 
-vec3 InputManager::GetMousePosWorld()
+vec3 InputManager::GetMousePosWorld(float depth)
 {
 	auto const& geomPass{ Graphics::Renderer::GetPass<Graphics::GeomPass>() };
 	auto const& gameView{ geomPass->GetGameViewFramebuffer()->GetFramebufferSpec() };
 	auto const& activeCamera{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() };
 
 	vec2 fbDims{ gameView.width, gameView.height };
-	glm::vec4 ndc{ 2.f * mCurrMousePos / fbDims - 1.f, -1.f, 1 };
 
+	// Convert mouse position to normalized device coordinates (NDC)
+	glm::vec4 ndc{
+		(2.f * mCurrMousePos.x / fbDims.x - 1.f),
+		(1.f - 2.f * mCurrMousePos.y / fbDims.y), // Invert Y-axis to match NDC convention
+		-1.f, // Near plane in NDC
+		1.f
+	};
+
+	// Unproject mouse position to a ray direction in world space
 	glm::vec4 eyeCoords{ glm::inverse(activeCamera.GetProjMatrix()) * ndc };
-	eyeCoords /= eyeCoords.w;
+	eyeCoords.z = -1.f; // Forward direction in eye space
+	eyeCoords.w = 0.f;  // Treat as direction vector, not a point
 
-	glm::vec4 out{ glm::inverse(activeCamera.GetViewMatrix()) * eyeCoords };
-	out *= glm::vec4{1.f, -1.f, 1.f, 1.f}; // for some reason y coord is inverted
-	return vec3{ out };
-	//auto& gEngine{ Graphics::GraphicsEngine::GetInstance() };
-	//// TODO: change to current framebuffer
-	//Graphics::gVec2 worldPosF32{ gEngine.ScreenToWS({ static_cast<GLfloat>(mMousePos.x), static_cast<GLfloat>(mHeight - mMousePos.y) }, m_currFramebuffer) };
-	//return  {worldPosF32.x, worldPosF32.y};
-	/*return { 0,0 };*/
+	glm::vec3 rayDirection{
+		glm::normalize(glm::vec3(glm::inverse(activeCamera.GetViewMatrix()) * eyeCoords))
+	};
+
+	// Get camera position in world space
+	glm::vec3 cameraPosition{ glm::vec3(glm::inverse(activeCamera.GetViewMatrix())[3]) };
+
+	// Compute world position along the ray at the given depth
+	float scale{ depth / glm::dot(rayDirection, rayDirection) };
+	glm::vec3 worldPos{ cameraPosition + rayDirection * scale };
+
+	return worldPos;
 }
 
 void InputManager::UpdateAllAxis()

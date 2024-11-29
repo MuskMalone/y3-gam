@@ -361,7 +361,7 @@ namespace Mono
 
 		static glm::vec3 GetMousePos();
 
-		static glm::vec3 GetMousePosWorld();
+		static glm::vec3 GetMousePosWorld(float depth);
 
 		static glm::vec3 GetCameraForward();
 
