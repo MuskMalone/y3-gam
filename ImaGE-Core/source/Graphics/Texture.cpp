@@ -129,6 +129,13 @@ namespace Graphics {
 			format = GL_RED;
 			type = GL_HALF_FLOAT;
 			break;
+
+		case DXGI_FORMAT_R16G16B16A16_UNORM:
+			internalFormat = GL_RGBA16;
+			format = GL_RGBA;
+			type = GL_UNSIGNED_SHORT;
+			break;
+
 		default:
 			std::cerr << "Unsupported DXGI format! ENUM: (" << img->format <<") Using default parameters." << std::endl;
 			internalFormat = GL_RGBA8;
