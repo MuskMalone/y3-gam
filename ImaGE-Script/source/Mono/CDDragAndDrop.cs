@@ -332,7 +332,7 @@ public class CDDragAndDrop : Entity
             return;
         }
 
-        //isBeingDragged = true;
+        isBeingDragged = true;
         //play sound
         InternalCalls.PlaySound(mEntityID, "PickupCD_SFX");
 
@@ -340,10 +340,6 @@ public class CDDragAndDrop : Entity
 
         //Startfade();
 
-        //uncommentlater
-        CDinCase.SetActive(true);
-        InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
-        NextScene();
 
     }
 
@@ -363,8 +359,8 @@ public class CDDragAndDrop : Entity
         if (mouseOnCDPlayer)
         {
             CDinCase.SetActive(true);
-            Vector3 newPos = new Vector3(0, 0, 0);
-            InternalCalls.SetWorldPosition(mEntityID, ref newPos);
+            InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
+            NextScene();
         }
         else
         {
@@ -376,8 +372,8 @@ public class CDDragAndDrop : Entity
     {
         Vector3 MousePos = InternalCalls.GetMousePosWorld(toCDDist);
         //mouse offset to make sure the mouse is not in the cd hole
-        MousePos.X += 0.02f;
-        MousePos.Y += 0.02f;
+        MousePos.X += 0.03f;
+        MousePos.Y += 0.03f;
         InternalCalls.SetWorldPosition(mEntityID, ref MousePos);
     }
     private void ShakeCD(float duration, float magnitude)
@@ -404,7 +400,6 @@ public class CDDragAndDrop : Entity
     {
         zRotAngle = 0f;
         //InternalCalls.PlaySound(mEntityID, "SpinningDiscPS1_SFX");
-        Vector3 MousePos = InternalCalls.GetMousePosWorld();
         Vector3 MousePos = InternalCalls.GetMousePosWorld(0.0f);
         //tch: the accurate distance doesnt really matter i guess
         toCDDist = (MousePos - originalPosition).Length();
