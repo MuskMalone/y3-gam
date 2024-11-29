@@ -771,6 +771,7 @@ namespace GUI {
       bool isEntityActive = entity.IsActive();
       if (ImGui::Checkbox("##IsActiveCheckbox", &isEntityActive)) {
         entity.SetIsActive(isEntityActive);
+        modified = true;
       }
       ImGui::SameLine();
       ImGui::Text(" ");
@@ -2405,7 +2406,6 @@ namespace ScriptInputs {
                   {
                     sfi.mData = Mono::ScriptInstance(sfi.mData.mScriptName);
                     sfi.mData.SetEntityID(e.GetRawEnttEntityID());
-                    std::cout << (uint32_t)e.GetRawEnttEntityID() << std::endl;
                     s.SetFieldValue<MonoObject>(sfi.mData.mClassInst, sfi.mScriptField.mClassField);
                     sfi.mData.GetAllUpdatedFields();
                   }

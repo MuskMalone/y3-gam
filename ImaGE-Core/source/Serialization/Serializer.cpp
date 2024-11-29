@@ -42,6 +42,8 @@ namespace {
 
   static rttr::type const sScriptCompType = rttr::type::get<Component::Script>();
   static rttr::type const sMonoObjectVecType = rttr::type::get<MonoObjectVector>();
+  template <typename T>
+  static T* sWriter = nullptr;
   static constexpr unsigned sBufferSize = 65536;
 
   // had to decltype a lambda LOL
@@ -201,6 +203,7 @@ namespace Serialization
     StreamType outStream{ fileWrapper.GetFILE(), buffer.data(), sBufferSize };
     if (format == FileFormat::PRETTY) {
       PrettyWriterType writer{ outStream };
+      sWriter<PrettyWriterType> = &writer;
       SerializeClassTypes(obj, writer);
     }
     else {
@@ -270,7 +273,6 @@ namespace {
 
     // serialize the base layer of the prefab
     writer.Key(JSON_PFB_NAME_KEY); writer.String(prefab.mName.c_str());
-    writer.Key(JSON_PFB_ACTIVE_KEY); writer.Bool(prefab.mIsActive);
 
     writer.Key(JSON_COMPONENTS_KEY);
     SerializeVariantComponents<WriterType>(prefab.mComponents, writer);
@@ -283,7 +285,6 @@ namespace {
       writer.StartObject();
 
       writer.Key(JSON_ID_KEY); writer.Uint(obj.mId);
-      writer.Key(JSON_PFB_ACTIVE_KEY); writer.Bool(true);
       writer.Key(JSON_PARENT_KEY);
       if (obj.mParent == entt::null) {
         writer.Null();
@@ -349,10 +350,6 @@ namespace {
     }
 
     // if not, serialize the entity as per normal
-    // serialize state
-    writer.Key(JSON_ENTITY_STATE_KEY);
-    writer.Bool(entity.IsActive());
-
     writer.Key(JSON_COMPONENTS_KEY);
     std::vector<rttr::variant> const components{ Reflection::ObjectFactory::GetInstance().GetEntityComponents(entity) };
     SerializeVariantComponents<WriterType>(components, writer);
@@ -528,16 +525,13 @@ namespace {
     else
     {
       auto properties{ type.get_properties() };
-      if (!properties.empty())
-      {
-        SerializeClassTypes<WriterType>(var, writer);
-      }
-      else if (type == rttr::type::get<rttr::type>()) {
-        bool ok;
-        writer.String(var.convert<std::string>(&ok).c_str());
-        return true;
-      }
-      else {
+      if (properties.empty()) {
+        if (type == rttr::type::get<rttr::type>()) {
+          bool ok;
+          writer.String(var.convert<std::string>(&ok).c_str());
+          return true;
+        }
+
         std::string const msg{ "Unable to write variant of type " + (isWrapper ? type.get_name().to_string() : type.get_name().to_string()) };
         Debug::DebugLogger::GetInstance().LogError("[Serializer] " + msg);
 #ifdef _DEBUG
@@ -546,6 +540,8 @@ namespace {
 
         return false;
       }
+      
+      SerializeClassTypes<WriterType>(var, writer);
     }
 
     return true;
@@ -584,7 +580,7 @@ namespace {
   {
     writer.StartObject();
 
-    rttr::instance wrappedObj{ obj.get_type().get_raw_type().is_wrapper() ? obj.get_wrapped_instance() : obj };
+    rttr::instance wrappedObj{ obj.get_type().is_wrapper() ? obj.get_wrapped_instance() : obj };
 
     auto const properties{ wrappedObj.get_type().get_properties() };
     for (auto const& property : properties)
@@ -643,7 +639,23 @@ namespace {
       auto properties{ type.get_properties() };
       if (!properties.empty())
       {
-        SerializeScriptClassTypes<WriterType>(var, writer);
+        // we only need entity ID and script name for ScriptInstances
+        if (type == rttr::type::get<Mono::ScriptInstance>()) {
+          Mono::ScriptInstance const& scriptInst{ var.get_value<Mono::ScriptInstance>() };
+          writer.StartObject();
+
+          writer.Key(JSON_SCRIPT_ENTITY_ID_KEY);
+          writer.Uint(static_cast<uint32_t>(scriptInst.mEntityID));
+
+          writer.Key(JSON_SCRIPT_NAME_KEY);
+          writer.String(scriptInst.mScriptName.c_str());
+
+          writer.EndObject();
+          return true;
+        }
+        else {
+          SerializeScriptClassTypes<WriterType>(var, writer);
+        }
       }
       else if (type == rttr::type::get<rttr::type>()) {
         bool ok;

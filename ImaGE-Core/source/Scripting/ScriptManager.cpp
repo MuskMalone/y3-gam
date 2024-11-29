@@ -116,7 +116,9 @@ ScriptManager::ScriptManager()
     //mono_set_assemblies_path(assetManager.GetConfigData<std::string>("MonoAssembly").c_str());
     mono_set_assemblies_path("./4.5/");
   }
+#ifdef _DEBUG
   std::cout << "Finish load assembly file\n";
+#endif
   //MonoDomain* rootDomain = mono_jit_init(assetManager.GetConfigData<std::string>("RootDomain").c_str());
   MonoDomain* rootDomain = mono_jit_init("ImaGEJITRuntime");
   if (rootDomain == nullptr)
@@ -378,7 +380,9 @@ MonoAssembly* Mono::LoadCSharpAssembly(const std::string& assemblyPath)
     std::filesystem::path currentPath = std::filesystem::current_path();
 
     // Print the current directory
+#ifdef _DEBUG
     std::cout << "Current directory: " << currentPath << std::endl;
+#endif
     e.LogSource();
     e.Log();
     throw Debug::Exception<ScriptManager>(Debug::LVL_ERROR, "Read file fail", __FUNCTION__, __LINE__);
@@ -1206,7 +1210,9 @@ glm::vec3 Mono::GetMainCameraDirection(ECS::Entity::EntityID cameraEntity) {
 glm::quat Mono::GetMainCameraRotation(ECS::Entity::EntityID cameraEntity) {
   if (ECS::Entity(cameraEntity) && ECS::Entity{ cameraEntity }.HasComponent<Component::Camera>()) {
     const auto rot = glm::eulerAngles(ECS::Entity(cameraEntity).GetComponent<Component::Transform>().worldRot);
+#ifdef _DEBUG
     std::cout << "CPP: " << rot.x << "," << rot.y  << "," << rot.z << "\n";
+#endif
     return ECS::Entity{ cameraEntity }.GetComponent<Component::Transform>().worldRot;
   }
   else {
@@ -1296,18 +1302,17 @@ void Mono::AppendText(ECS::Entity::EntityID textEntity, MonoString* textContent)
 
 glm::vec4 Mono::GetImageColor(ECS::Entity::EntityID entity)
 {
-  glm::vec4 c{};
-  if (ECS::Entity(entity))
-  {
+  if (ECS::Entity(entity)) {
     if (ECS::Entity(entity).HasComponent<Component::Image>())
-      c = ECS::Entity(entity).GetComponent<Component::Image>().color;
+      return ECS::Entity(entity).GetComponent<Component::Image>().color;
     else
-      Debug::DebugLogger::GetInstance().LogError("You r trying to Get image color from an entity that does not have image component");
+      Debug::DebugLogger::GetInstance().LogError("GetImageColor: Entity " + ECS::Entity(entity).GetTag() + " does not have an Image component");
   }
-  else
-    Debug::DebugLogger::GetInstance().LogError("You r trying to Get Image color from an invalid entity");
+  else {
+    Debug::DebugLogger::GetInstance().LogError("GetImageColor: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
 
-  return c;
+  return {};
 }
 
 void Mono::SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val)
@@ -1317,10 +1322,11 @@ void Mono::SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val)
     if (ECS::Entity(entity).HasComponent<Component::Image>())
        ECS::Entity(entity).GetComponent<Component::Image>().color = val;
     else
-      Debug::DebugLogger::GetInstance().LogError("You r trying to set image color from an entity that does not have image component");
+      Debug::DebugLogger::GetInstance().LogError("SetImageColor: Entity " + ECS::Entity(entity).GetTag() + " does not have an Image component");
   }
-  else
-    Debug::DebugLogger::GetInstance().LogError("You r trying to set Image color from an invalid entity");
+  else {
+    Debug::DebugLogger::GetInstance().LogError("SetImageColor: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
 }
 
 MonoString* Mono::GetCurrentScene() {
@@ -1361,7 +1367,9 @@ void Mono::SaveScreenShot(std::string name, int width, int height)
   // Window's full width and height
   int windowWidth = mode->width;
   int windowHeight = mode->height;
+#ifdef _DEBUG
   std::cout << "Width: " << windowWidth << "  Height:" << windowHeight << "\n";
+#endif
 
   // Calculate the starting coordinates for capturing the center
   int startX = (windowWidth - width) / 2;
@@ -1369,7 +1377,9 @@ void Mono::SaveScreenShot(std::string name, int width, int height)
 
   // Ensure the capture area is within bounds
   if (startX < 0 || startY < 0 || startX + width > windowWidth || startY + height > windowHeight) {
+#ifdef _DEBUG
     std::cerr << "Invalid dimensions for screenshot. Check width and height." << std::endl;
+#endif
     return;
   }
 
@@ -1389,11 +1399,15 @@ void Mono::SaveScreenShot(std::string name, int width, int height)
   // Save as PNG
   if (stbi_write_png(("../Assets/GameImg/" + name + ".png").c_str(), width, height, 3, flippedPixels.data(), width * 3))
   {
+#ifdef _DEBUG
     std::cout << "Screenshot saved to " << (name + ".png") << std::endl;
+#endif
   }
   else
   {
+#ifdef _DEBUG
     std::cerr << "Failed to save screenshot!" << std::endl;
+#endif
   }
 }
 
