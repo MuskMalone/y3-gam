@@ -1,10 +1,10 @@
 {
-    "name": "RockPainting",
+    "name": "TutorialWall",
     "shader": "PBR",
     "albedoColor": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
+        "x": 0.09610629081726074,
+        "y": 0.5633656978607178,
+        "z": 0.5986621975898743
     },
     "metalness": 0.5,
     "roughness": 0.5,
@@ -20,7 +20,7 @@
         "y": 0.0
     },
     "albedoMap": {
-        "ID": 11407124826432405658
+        "ID": 0
     },
     "normalMap": {
         "ID": 0

@@ -1,15 +1,15 @@
 {
-    "name": "RockPainting",
+    "name": "Glow",
     "shader": "PBR",
     "albedoColor": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
+        "x": 0.7926421165466309,
+        "y": 0.675653338432312,
+        "z": 0.2544938027858734
     },
-    "metalness": 0.5,
+    "metalness": 1.0,
     "roughness": 0.5,
     "ao": 1.0,
-    "emission": 0.0,
+    "emission": 1.0,
     "transparency": 1.0,
     "tiling": {
         "x": 1.0,
@@ -20,7 +20,7 @@
         "y": 0.0
     },
     "albedoMap": {
-        "ID": 11407124826432405658
+        "ID": 0
     },
     "normalMap": {
         "ID": 0

@@ -84,6 +84,7 @@ namespace Mono
     { "Dialogue", ScriptFieldType::DIALOGUE},
     { "PlayerInteraction", ScriptFieldType::PLAYERINTERACTION },
     { "Inventory", ScriptFieldType::INVENTORY },
+    { "TutorialLevelInventory", ScriptFieldType::TUTORIALLEVELINVENTORY },
     { "SpecialDialogue", ScriptFieldType::SPECIALDIALOGUE },
     { "KeyDoor", ScriptFieldType::KEYDOOR },
     { "PictureAlign", ScriptFieldType::PICTUREALIGN },
@@ -1070,6 +1071,12 @@ ECS::Entity::EntityID Mono::FindChildByTag(ECS::Entity::EntityID entity, MonoStr
 }
 
 ECS::Entity::EntityID Mono::FindParentByTag(MonoString* s) {
+  std::string msg{ MonoStringToSTD(s) };
+  for (ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntities()) {
+      if (e.GetTag() == msg) {
+          return e.GetRawEnttEntityID();
+      }
+  }
   return ECS::Entity::EntityID();
 }
 

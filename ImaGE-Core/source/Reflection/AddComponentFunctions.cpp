@@ -26,6 +26,19 @@ namespace Reflection::ComponentUtils {
   }
   void AddAudioSource(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(AudioSource, comp);
+      
+    // may be bad to try catch in for loop
+    // @TODO: should optimize for game build
+    bool valid{ true };
+    for (auto const& [str, audioInst] : comp.sounds) {
+      try {
+          IGE_ASSETMGR.LoadRef<IGE::Assets::AudioAsset>(audioInst.guid);
+      }
+      catch (Debug::ExceptionBase&) {
+        IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(audioInst.guid)) + " of AudioSource component invalid");
+        valid = false;
+      }
+    }
 
     entity.EmplaceOrReplaceComponent<AudioSource>(comp);
   }
@@ -158,12 +171,20 @@ namespace Reflection::ComponentUtils {
 
       try {
           IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(comp.tex1);
-          IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(comp.tex2);
-          entity.EmplaceOrReplaceComponent<Skybox>(comp);
       }
       catch (Debug::ExceptionBase const&) {
           IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(comp.tex1)) + " of Skybox component invalid");
+          return;
       }
 
+      try {
+        IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(comp.tex2);
+      }
+      catch (Debug::ExceptionBase const&) {
+        IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(comp.tex2)) + " of Skybox component invalid");
+        return;
+      }
+
+      entity.EmplaceOrReplaceComponent<Skybox>(comp);
   }
 } // namespace Reflection
