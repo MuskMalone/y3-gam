@@ -51,6 +51,7 @@ namespace Mono {
 		INVENTORY,
 		SPECIALDIALOGUE,
 		KEYDOOR,
+		PICTUREALIGN,
 	};
 
 

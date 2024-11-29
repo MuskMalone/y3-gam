@@ -8,6 +8,10 @@ public class Seed : Entity, IInventoryItem
   public Entity EToPickUpUI;
   public Entity EToPlantSeedUI;
   public Entity Pot;
+  public Entity Flower;
+  public PictureAlign PictureAlignScript;
+
+  private bool seedPlanted = false;
 
   public string Name
   {
@@ -45,6 +49,7 @@ public class Seed : Entity, IInventoryItem
     _Image?.SetActive(false);
     EToPickUpUI?.SetActive(false);
     EToPlantSeedUI?.SetActive(false);
+    Flower?.SetActive(false);
   }
 
   void Update()
@@ -77,6 +82,12 @@ public class Seed : Entity, IInventoryItem
       EToPlantSeedUI.SetActive(false);
       inventoryScript.RemoveItem(this);
       Pot.SetActive(true); // Sets the child seeds active as well
+      seedPlanted = true;
+    }
+
+    if (PictureAlignScript.isNight && seedPlanted)
+    {
+      Flower.SetActive(true);
     }
   }
 }
