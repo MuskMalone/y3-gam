@@ -1,5 +1,7 @@
 ﻿using IGE.Utils;
 using System.Numerics;
+using System;
+using System.Collections.Generic;
 using static Dialogue;
 
 public class SpecialDialogue : Entity
@@ -11,7 +13,12 @@ public class SpecialDialogue : Entity
   public float typewriterSpeed = 0.04f;
 
   public Dialogue dialogueSystem;
-  public Entity[] BeginningSilhouetteSequence;
+  // Workaround for Entity[] Deserialization not working properly
+  public Entity firstSilhouette;
+  public Entity secondSilhouette;
+  public Entity thirdSilhouette;
+  public Entity fourthSilhouette;
+  private Entity[] BeginningSilhouetteSequence;
   public Entity fadeImage;
 
   // Private Variables
@@ -20,7 +27,7 @@ public class SpecialDialogue : Entity
   private float fadeTransitionTimer = 0f; 
   private float fadeStartTime;
 
-  private bool triggerInitialSpecialDialogue = false; // set this to true later
+  private bool triggerInitialSpecialDialogue = false;
   private string specialLine;
   private bool triggerInitialDialogue = false;
   private bool isInSpecialDialogueMode = false;
@@ -46,6 +53,13 @@ public class SpecialDialogue : Entity
 
   void Start()
   {
+    // Workaround
+    BeginningSilhouetteSequence = new Entity[4];
+    BeginningSilhouetteSequence[0] = firstSilhouette;
+    BeginningSilhouetteSequence[1] = secondSilhouette;
+    BeginningSilhouetteSequence[2] = thirdSilhouette;
+    BeginningSilhouetteSequence[3] = fourthSilhouette;
+
     for (int i = 0; i < BeginningSilhouetteSequence.Length; i++)
     {
       BeginningSilhouetteSequence[i]?.SetActive(false);
@@ -69,9 +83,7 @@ public class SpecialDialogue : Entity
 
       if (fadeTransitionTimer >= fadeDuration)
       {
-        isInFadeTransition = false;
-        fadeImage.SetActive(false);
-        triggerInitialSpecialDialogue = true;
+        EndFade();
       }
     }
 
@@ -137,9 +149,17 @@ public class SpecialDialogue : Entity
     triggerFadeTransition = false;
     isInFadeTransition = true;
     fadeImage.SetActive(true);
+    playerMove.FreezePlayer();
 
     isInFadeTransition = true;
     fadeStartTime = Time.gameTime;
+  }
+  private void EndFade()
+  {
+    playerMove.UnfreezePlayer();
+    isInFadeTransition = false;
+    fadeImage.SetActive(false);
+    triggerInitialSpecialDialogue = true;
   }
 
   private void SetSpecialDialogue(string line, float textScale)

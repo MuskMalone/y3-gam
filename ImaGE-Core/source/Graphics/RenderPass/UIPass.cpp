@@ -96,8 +96,10 @@ namespace Graphics {
 
 			if (cam.isEditor) {
 				Graphics::Renderer::DrawRect(xform.position, canvasScale, xform.rotation, Color::COLOR_WHITE); //canvas drawn only in editor
+			}
 
-
+			if (!cam.isEditor) {
+				Graphics::Renderer::HandleUIInput(children);
 			}
 
 			for (ECS::Entity& uiEntity : children) {
@@ -155,10 +157,11 @@ namespace Graphics {
 						
 				}
 
+				/*
 				else {
 					Renderer::DrawRect(uiXform.worldPos, glm::vec2{ uiXform.worldScale }, uiXform.worldRot, Color::COLOR_WHITE);
 				}
-				
+				*/
 
 				//Graphics::Renderer::SubmitInstance(Renderer::GetQuadMeshSource(), uiXform.worldMtx, Color::COLOR_WHITE, uiEntity.GetEntityID());
 			}

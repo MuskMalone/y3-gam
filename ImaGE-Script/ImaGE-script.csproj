@@ -89,6 +89,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="source\Cutscene\TutorialCutscene.cs" />
     <Compile Include="source\Dialogue\Dialogue.cs" />
     <Compile Include="source\Dialogue\SpecialDialogue.cs" />
     <Compile Include="source\Engine Tools\Easing.cs" />
@@ -103,9 +104,12 @@
     <Compile Include="source\InteractableObject\PitPainting.cs" />
     <Compile Include="source\InteractableObject\Seed.cs" />
     <Compile Include="source\InteractableObject\Tools.cs" />
+    <Compile Include="source\InteractableObject\TutorialPainting.cs" />
     <Compile Include="source\Inventory\HUD.cs" />
     <Compile Include="source\Inventory\Inventory.cs" />
     <Compile Include="source\Inventory\InventoryItemData.cs" />
+    <Compile Include="source\Inventory\TutorialLevelHUD.cs" />
+    <Compile Include="source\Inventory\TutorialLevelInventory.cs" />
     <Compile Include="source\Mono\CDDragAndDrop.cs" />
     <Compile Include="source\Mono\CDRotation.cs" />
     <Compile Include="source\Mono\Color.cs" />
@@ -151,6 +155,8 @@
     <Compile Include="source\ToolsPuzzle\RotationGuidanceToolsPainting.cs" />
     <Compile Include="source\Triggers\DeathtriggerPit.cs" />
     <Compile Include="source\Triggers\FinishLineTrigger.cs" />
+    <Compile Include="source\Tutorial\InventoryTutorial.cs" />
+    <Compile Include="source\Tutorial\WASDTutorial.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="source\MainMenu\" />

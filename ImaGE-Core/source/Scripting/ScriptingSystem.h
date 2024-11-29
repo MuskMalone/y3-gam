@@ -24,6 +24,11 @@ namespace Mono
 		EVENT_CALLBACK_DECL(HandleMouseExit);
 		EVENT_CALLBACK_DECL(HandleMouseDown);
 		EVENT_CALLBACK_DECL(HandleMouseUp);
+
+		EVENT_CALLBACK_DECL(HandlePointerEnter);
+		EVENT_CALLBACK_DECL(HandlePointerExit);
+		EVENT_CALLBACK_DECL(HandlePointerDown);
+		EVENT_CALLBACK_DECL(HandlePointerUp);
 	};
 }
 
