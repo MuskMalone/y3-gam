@@ -660,7 +660,7 @@ namespace GUI
         ImGui::SetTooltip("Rename feature coming soon!");
       }
 
-      NextRowTable("##emptyline");
+      NextRowTable("");
 
       bool elementHover{ false };
 
@@ -690,6 +690,14 @@ namespace GUI
         ImGui::SetTooltip("Rescale the mesh to a unit size");
         elementHover = false;
       }
+      ImGui::TableNextRow();
+
+      // flip UVs checkbox
+      ImGui::AlignTextToFramePadding();
+      NextRowTable("Flip UVs?");
+      if (ImGui::IsItemHovered()) { elementHover = true; }
+
+      ImGui::Checkbox("##FlipUVs", &Graphics::AssetIO::IMSH::sFlipUVs);
       ImGui::TableNextRow();
 
       // static mesh checkbox
