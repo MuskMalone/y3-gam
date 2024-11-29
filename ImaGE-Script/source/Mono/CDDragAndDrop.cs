@@ -257,26 +257,35 @@ public class CDDragAndDrop : Entity
 
         if (isBeingDragged)
         {
+            
             FollowMouse();
 
-            //try to rotate when above release area and mousedown
+            //try to rotate when above release area and mousedown (kinda laggy so commented out)
             //bool mouseDownOnCDPlayer = false;
-            Vector3 MousePos = InternalCalls.GetMousePosWorld(1.0f);
-            Vector3 MousPosRayEnd = MousePos + (InternalCalls.GetCameraForward() * 5.0f);
-            uint hitEntity = InternalCalls.Raycast(MousePos, MousPosRayEnd);
+            //Vector3 MousePos = InternalCalls.GetMousePosWorld(1.0f);
+            //Vector3 MousPosRayEnd = MousePos + (InternalCalls.GetCameraForward() * 5.0f);
+            //uint hitEntity = InternalCalls.Raycast(MousePos, MousPosRayEnd);
 
-            if (InternalCalls.GetTag(hitEntity) == "CDPlayer_Body")
-            {
-                //Console.WriteLine("hit cd player");
-                //mouseDownOnCDPlayer = true;
-                Quaternion xRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(0));
-                InternalCalls.SetWorldRotation(mEntityID, ref xRotation);
-            }
-            else
-            {
-                InternalCalls.SetWorldRotation(mEntityID, ref originalRotation);
-            }
-            
+            //if (InternalCalls.GetTag(hitEntity) == "CDPlayer_Body")
+            //{
+            //    //Console.WriteLine("hit cd player");
+            //    mouseDownOnCDPlayer = true;
+            //    //Quaternion xRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(0));
+            //    //InternalCalls.SetWorldRotation(mEntityID, ref xRotation);
+            //}
+            ////else
+            ////{
+            ////    InternalCalls.SetWorldRotation(mEntityID, ref originalRotation);
+            ////}
+            //if(mouseDownOnCDPlayer)
+            //{
+            //    Quaternion xRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(0));
+            //    InternalCalls.SetWorldRotation(mEntityID, ref xRotation);
+            //}
+            //else
+            //{
+            //    InternalCalls.SetWorldRotation(mEntityID, ref originalRotation);
+            //}
 
         }
 
@@ -351,7 +360,7 @@ public class CDDragAndDrop : Entity
             ShakeCD(0.5f, 0.005f);
             return;
         }
-
+        
         isBeingDragged = true;
         //play sound
         InternalCalls.PlaySound(mEntityID, "PickupCD_SFX");
@@ -428,6 +437,7 @@ public class CDDragAndDrop : Entity
 
     public void OnMouseExit()
     {
+        Console.WriteLine("OnMouseExit?");
         isHovered = false;
         string tag = InternalCalls.GetTag(mEntityID);
         if (tag == "NewGameCDChild")
