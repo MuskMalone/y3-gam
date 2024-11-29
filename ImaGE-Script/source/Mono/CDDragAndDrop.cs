@@ -163,10 +163,10 @@ public class CDDragAndDrop : Entity
     void Start()
     {
         originalPosition = InternalCalls.GetWorldPosition(mEntityID);
-        originalRotation = InternalCalls.GetRotation(mEntityID);
-        Console.WriteLine("originalrotation " + originalRotation);
+        originalRotation = InternalCalls.GetWorldRotation(mEntityID);
+        //Console.WriteLine("originalrotation " + originalRotation);
 
-        Console.WriteLine("My Entity WorldPos INITIAL " + InternalCalls.GetWorldPosition(mEntityID));
+        //Console.WriteLine("My Entity WorldPos INITIAL " + InternalCalls.GetWorldPosition(mEntityID));
         CDinCase.SetActive(false);
         Vector3 scaleVector = InternalCalls.GetScale(mEntityID);
         originalScale = new Vec3<float>(scaleVector.X, scaleVector.Y, scaleVector.Z);
@@ -184,7 +184,7 @@ public class CDDragAndDrop : Entity
 
         if (fadeImage != null)
         {
-            Debug.Log("fadeimage is here");
+            //Debug.Log("fadeimage is here");
             fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, startAlpha);
         }
 
@@ -258,6 +258,26 @@ public class CDDragAndDrop : Entity
         if (isBeingDragged)
         {
             FollowMouse();
+
+            //try to rotate when above release area and mousedown
+            //bool mouseDownOnCDPlayer = false;
+            Vector3 MousePos = InternalCalls.GetMousePosWorld(1.0f);
+            Vector3 MousPosRayEnd = MousePos + (InternalCalls.GetCameraForward() * 5.0f);
+            uint hitEntity = InternalCalls.Raycast(MousePos, MousPosRayEnd);
+
+            if (InternalCalls.GetTag(hitEntity) == "CDPlayer_Body")
+            {
+                //Console.WriteLine("hit cd player");
+                //mouseDownOnCDPlayer = true;
+                Quaternion xRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(0));
+                InternalCalls.SetWorldRotation(mEntityID, ref xRotation);
+            }
+            else
+            {
+                InternalCalls.SetWorldRotation(mEntityID, ref originalRotation);
+            }
+            
+
         }
 
         if (isFading)
@@ -279,7 +299,7 @@ public class CDDragAndDrop : Entity
         //shakingcd
         if (isShaking)
         {
-            Debug.Log("inIsShaking");
+            //Debug.Log("inIsShaking");
             shakeElapsed += Time.deltaTime;
             //float seed = shakeElapsed; 
             //float offsetX = ShakeRandom(seed) * shakeMagnitude;
@@ -297,7 +317,7 @@ public class CDDragAndDrop : Entity
             //stop shake when duration is up
             if (shakeElapsed >= shakeDuration)
             {
-                Debug.Log("OvershakeDuration");
+                //Debug.Log("OvershakeDuration");
                 isShaking = false;
                 InternalCalls.SetWorldPosition(mEntityID, ref originalPosition);
             }
