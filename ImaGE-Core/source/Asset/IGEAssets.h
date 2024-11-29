@@ -28,7 +28,9 @@ inline void IGEAssetsImportAllAssets() {
     IGE::Assets::AssetManager& am{ IGE::Assets::AssetManager::GetInstance() };
     // Check if the root path exists and is a directory
     if (!fs::exists(rootDir) || !fs::is_directory(rootDir)) {
+#ifdef _DEBUG
         std::cerr << "Invalid root directory path." << std::endl;
+#endif
         return;
     }
     fs::path textures { IGE::Assets::cTextureDirectory };
