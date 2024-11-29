@@ -151,7 +151,7 @@ public class CDDragAndDrop : Entity
 
     //rotation
     private Quaternion originalRotation;
-    private float zRotAngle = 0f;
+    private float zRotAngle = 170f;
 
     //sound
     private bool isSpinningSoundPlaying = false;
@@ -427,7 +427,7 @@ public class CDDragAndDrop : Entity
     }
     public void OnMouseEnter()
     {
-        zRotAngle = 0f;
+        zRotAngle = 170f;
         //InternalCalls.PlaySound(mEntityID, "SpinningDiscPS1_SFX");
         Vector3 MousePos = InternalCalls.GetMousePosWorld(0.0f);
         //tch: the accurate distance doesnt really matter i guess
