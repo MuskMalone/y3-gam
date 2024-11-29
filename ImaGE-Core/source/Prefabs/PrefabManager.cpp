@@ -83,7 +83,7 @@ void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::stri
   Prefabs::Prefab::EntityMappings& mappings, IGE::Assets::GUID guid, bool pretty)
 {
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
-  Prefab prefab{ name, prefabInstance.IsActive() };
+  Prefab prefab{ name };
   prefab.mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(prefabInstance);
   if (entityMan.HasChild(prefabInstance)) {
     prefab.CreateFixedSubData(entityMan.GetChildEntity(prefabInstance), mappings);
@@ -97,7 +97,7 @@ void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::stri
 void PrefabManager::CreatePrefabFromEntity(ECS::Entity entity, std::string const& name, std::string const& path)
 {
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
-  Prefab prefab{ name, entity.IsActive() };
+  Prefab prefab{ name };
   prefab.mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(entity);
 
   if (entityMan.HasChild(entity)) {

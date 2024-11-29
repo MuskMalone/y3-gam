@@ -758,6 +758,7 @@ namespace GUI {
       bool isEntityActive = entity.IsActive();
       if (ImGui::Checkbox("##IsActiveCheckbox", &isEntityActive)) {
         entity.SetIsActive(isEntityActive);
+        modified = true;
       }
       ImGui::SameLine();
       ImGui::Text(" ");

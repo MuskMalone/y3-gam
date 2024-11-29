@@ -109,17 +109,17 @@ namespace Serialization
       }
 
       // check if entity json contains all basic keys
-      if (!ScanJsonFileForMembers(entity, filepath, 5,
+      if (!ScanJsonFileForMembers(entity, filepath, 4,
         JSON_CHILD_ENTITIES_KEY, rapidjson::kArrayType,
         JSON_ID_KEY, rapidjson::kNumberType, JSON_PARENT_KEY, rapidjson::kNumberType,
-        JSON_COMPONENTS_KEY, rapidjson::kArrayType, JSON_ENTITY_STATE_KEY, rapidjson::kFalseType))
+        JSON_COMPONENTS_KEY, rapidjson::kArrayType))
       {
         continue;
       }
 
       EntityID entityId{ entity[JSON_ID_KEY].GetUint() };
       EntityID const parentId{ entity[JSON_PARENT_KEY].IsNull() ? entt::null : entity[JSON_PARENT_KEY].GetUint() };
-      Reflection::VariantEntity entityVar{ entityId, parentId, entity[JSON_ENTITY_STATE_KEY].GetBool() };  // set parent
+      Reflection::VariantEntity entityVar{ entityId, parentId };  // set parent
       // get child ids
       for (auto const& child : entity[JSON_CHILD_ENTITIES_KEY].GetArray()) {
         entityVar.mChildEntities.emplace_back(EntityID(child.GetUint()));
@@ -193,7 +193,6 @@ namespace Serialization
     else {
       IGE_DBGLOGGER.LogError("Prefab " + json + " has no name, re-save from prefab editor!");
     }
-    prefab.mIsActive = (document.HasMember(JSON_PFB_ACTIVE_KEY) ? document[JSON_PFB_ACTIVE_KEY].GetBool() : true);
 
     // iterate through component objects in json array
     std::vector<rttr::variant>& compVector{ prefab.mComponents };
@@ -236,7 +235,6 @@ namespace Serialization
       }
 
       Prefabs::PrefabSubData subObj{ elem[JSON_ID_KEY].GetUint(), elem[JSON_PARENT_KEY].GetUint() };
-      subObj.mIsActive = (elem.HasMember(JSON_PFB_ACTIVE_KEY) ? elem[JSON_PFB_ACTIVE_KEY].GetBool() : true);
 
       for (auto const& component : elem[JSON_COMPONENTS_KEY].GetArray())
       {

@@ -69,7 +69,6 @@ namespace Prefabs
 
     std::vector<rttr::variant> mComponents;
     SubDataId mId, mParent;
-    bool mIsActive;
 
     // id of the first layer of the prefab
     static constexpr SubDataId BasePrefabId = 0;
@@ -82,7 +81,7 @@ namespace Prefabs
     using SubObjectComponentMap = std::unordered_map<SubDataId, std::vector<rttr::variant>>;
 
     Prefab() = default;
-    Prefab(std::string name, bool isActive = true);
+    Prefab(std::string name);
 
     /*!*********************************************************************
     \brief
@@ -158,7 +157,6 @@ namespace Prefabs
     std::string mName;
     std::vector<PrefabSubData> mObjects;
     std::vector<rttr::variant> mComponents;
-    bool mIsActive;
   };
 
   struct Prefab::EntityMappings {
