@@ -380,7 +380,7 @@ public class CDDragAndDrop : Entity
     {
         if (isShaking) return;
 
-        InternalCalls.PlaySound(mEntityID, "WrongInput_SFX");
+        //InternalCalls.PlaySound(mEntityID, "WrongInput_SFX");
         fakeRandomValue = 0f;
         shakeDuration = duration;
         shakeMagnitude = magnitude;
