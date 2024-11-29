@@ -767,7 +767,7 @@ namespace Serialization
     //  if it is a multi-layered DataMemberInstance, recursively extract each layer
     if (scriptFIType == rttr::type::get<Mono::DataMemberInstance<Mono::ScriptInstance>>()) {
       // set the data property
-      rttr::variant data{ DeserializeScriptInstance(jsonVal[JSON_SCRIPT_DMI_DATA_KEY]) };
+      rttr::variant data{ DeserializeScriptInstance(jsonVal[JSON_SCRIPT_DMI_DATA_KEY], false) };
       if (!scriptFIType.set_property_value(JSON_SCRIPT_DMI_DATA_KEY, scriptFIList, data)) {
 #ifndef DISTRIBUTION
         std::ostringstream oss{};
@@ -808,7 +808,7 @@ namespace Serialization
         auto const& jsonArr{ jsonVal[JSON_SCRIPT_DMI_DATA_KEY].GetArray() };
         dmi.mData.reserve(jsonArr.Size());
         for (rapidjson::Value const& elem : jsonArr) {
-          dmi.mData.emplace_back(DeserializeScriptInstance(elem));
+          dmi.mData.emplace_back(DeserializeScriptInstance(elem, false));
         }
       }
       else {
@@ -825,7 +825,7 @@ namespace Serialization
     return scriptFIList;
   }
 
-  Mono::ScriptInstance Deserializer::DeserializeScriptInstance(rapidjson::Value const& jsonVal) {
+  Mono::ScriptInstance Deserializer::DeserializeScriptInstance(rapidjson::Value const& jsonVal, bool hasData) {
     // check if fields exist in json file
     if (!ScanJsonFileForMembers(jsonVal, "Script Instance", 2, JSON_SCRIPT_NAME_KEY, rapidjson::kStringType,
       JSON_SCRIPT_ENTITY_ID_KEY, rapidjson::kNumberType)) {
@@ -841,7 +841,7 @@ namespace Serialization
     scriptInst.SetEntityID(static_cast<ECS::Entity::EntityID>(jsonVal[JSON_SCRIPT_ENTITY_ID_KEY].GetUint()));
 
     // for DataMemberInstance<ScriptInstance>, we don't serialize data
-    if (jsonVal.HasMember(JSON_SCRIPT_FIELD_LIST_KEY)) {
+    if (hasData && jsonVal.HasMember(JSON_SCRIPT_FIELD_LIST_KEY)) {
       auto const& fieldListJson{ jsonVal[JSON_SCRIPT_FIELD_LIST_KEY].GetArray() };
       std::vector<rttr::variant> sfInstList{};
       sfInstList.reserve(fieldListJson.Size());

@@ -186,7 +186,7 @@ namespace Serialization
     ************************************************************************/
     static void DeserializeProxyScript(rttr::variant& var, rapidjson::Value const& jsonVal);
 
-    static Mono::ScriptInstance DeserializeScriptInstance(rapidjson::Value const& jsonVal);
+    static Mono::ScriptInstance DeserializeScriptInstance(rapidjson::Value const& jsonVal, bool hasData = true);
 
     /*!*********************************************************************
     \brief
