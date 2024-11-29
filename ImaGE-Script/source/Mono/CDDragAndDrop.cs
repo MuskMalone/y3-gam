@@ -151,7 +151,7 @@ public class CDDragAndDrop : Entity
 
     //rotation
     private Quaternion originalRotation;
-    private float zRotAngle = 170f;
+    private float zRotAngle = 229.3f;
 
     //sound
     private bool isSpinningSoundPlaying = false;
@@ -352,7 +352,7 @@ public class CDDragAndDrop : Entity
     public void OnMouseDown()
     {
         
-            Debug.Log("Went in MouseDown");
+        Debug.Log("Went in MouseDown");
         
         //shaking cds
         string tag = InternalCalls.GetTag(mEntityID);
@@ -414,7 +414,7 @@ public class CDDragAndDrop : Entity
     {
         if (isShaking) return;
 
-        //InternalCalls.PlaySound(mEntityID, "WrongInput_SFX");
+        //InternalCalls.PlaySound(mEntityID, "ErrorPlacingDisk_SFX");
         fakeRandomValue = 0f;
         shakeDuration = duration;
         shakeMagnitude = magnitude;
@@ -432,7 +432,7 @@ public class CDDragAndDrop : Entity
     }
     public void OnMouseEnter()
     {
-        zRotAngle = 170f;
+        zRotAngle = 229.3f;
         //InternalCalls.PlaySound(mEntityID, "SpinningDiscPS1_SFX");
         Vector3 MousePos = InternalCalls.GetMousePosWorld(0.0f);
         //tch: the accurate distance doesnt really matter i guess
