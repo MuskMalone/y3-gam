@@ -8,8 +8,8 @@ public class TutorialPainting : Entity, IInventoryItem
     public PlayerInteraction playerInteraction;
     public Entity EToPickUpUI;
 
-    //private TutorialDialogue tutorialDialogue;
-    //public string[] dialogueWhenPaintingPickup;
+    private TutorialDialogue tutorialDialogue;
+    public string[] dialogueWhenPaintingPickup;
     public string Name
     {
         get
@@ -45,6 +45,7 @@ public class TutorialPainting : Entity, IInventoryItem
 
     void Start()
     {
+        tutorialDialogue = FindObjectOfType<TutorialDialogue>();
         _Image?.SetActive(false);
         EToPickUpUI?.SetActive(false);
     }
