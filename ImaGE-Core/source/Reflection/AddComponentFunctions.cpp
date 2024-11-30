@@ -14,6 +14,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/Mesh/MeshFactory.h>
 #include <Graphics/Mesh/Mesh.h>
 #include <Asset/IGEAssets.h>
+#include <Events/EventManager.h>
+#include <Events/AssetEvents.h>
 
 namespace Reflection::ComponentUtils {
   using namespace Component;
@@ -95,6 +97,8 @@ namespace Reflection::ComponentUtils {
     }
     catch (Debug::ExceptionBase&) {
       IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(comp.materialGUID)) + " of Material component invalid");
+      IGE_EVENTMGR.DispatchImmediateEvent<Events::GUIDInvalidated>(entity, entity.GetTag(), comp.materialGUID,
+        rttr::type::get<IGE::Assets::MaterialAsset>().get_name().to_string());
     }
   }
 

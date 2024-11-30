@@ -1,6 +1,7 @@
 #include <pch.h>
 #include "AssetManager.h"
 #include "Events/EventManager.h"
+#include <Events/AssetEvents.h>
 #include <Asset/Assetables/AssetExtensions.h>
 #include <Asset/AssetUtils.h>
 #include <Asset/Assetables/Assetables.h>
@@ -83,6 +84,7 @@ namespace IGE {
 		}
 		AssetManager::AssetManager() {
 			SUBSCRIBE_CLASS_FUNC(Events::EventType::REGISTER_FILES, &AssetManager::HandleAddFiles, this);
+			SUBSCRIBE_CLASS_FUNC(Events::EventType::GUID_REMAP, &AssetManager::OnRemapGUID, this);
 			Initialize();
 			 //code snippet to "manufacture" all the data needed for importing
 			 //assumes that all the files are imported as is
@@ -186,6 +188,18 @@ namespace IGE {
 				}
 			}
 
+		}
+
+		EVENT_CALLBACK_DEF(AssetManager, OnRemapGUID) {
+			auto const& remapEvent{ CAST_TO_EVENT(Events::RemapGUID) };
+
+			if (mPath2GUIDRegistry.contains(remapEvent->mPath)) {
+				GUID original{ mPath2GUIDRegistry[remapEvent->mPath] };
+				if (original != remapEvent->mGUID) {
+					mPath2GUIDRegistry.erase(remapEvent->mPath);
+					mGUID2PathRegistry.erase(original);
+				}
+			}
 		}
 
 	}
