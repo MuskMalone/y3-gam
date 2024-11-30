@@ -1437,6 +1437,10 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
           }
         }
       }
+      else if(child.GetTag() == "Tools Spotlight")
+      {
+        child.SetIsActive(true);
+      }
       else
       {
         if (child.HasComponent<Component::Light>())
