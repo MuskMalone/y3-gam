@@ -264,6 +264,12 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void HideCursor();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool OnTriggerEnter(uint entityTrigger, uint entityOther);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool OnTriggerExit(uint entityTrigger, uint entityOther);
     #endregion
   }
 }

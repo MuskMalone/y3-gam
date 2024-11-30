@@ -270,6 +270,8 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(TakeScreenShot);
   ADD_INTERNAL_CALL(ShowCursor);
   ADD_INTERNAL_CALL(HideCursor);
+  ADD_INTERNAL_CALL(OnTriggerEnter);
+  ADD_INTERNAL_CALL(OnTriggerExit);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -1484,6 +1486,30 @@ void Mono::ShowCursor() {
 
 void Mono::HideCursor() {
   QUEUE_EVENT(Events::LockMouseEvent, true);
+}
+
+bool Mono::OnTriggerEnter(ECS::Entity trigger, ECS::Entity other) {
+  if (!trigger.HasComponent<Component::BoxCollider>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to check collision using an entity that does not have collider!");
+  }
+
+  if (!trigger.GetComponent<Component::BoxCollider>().sensor) {
+    Debug::DebugLogger::GetInstance().LogWarning("You are trying to check collision using an entity that has sensor turned off!");
+  }
+
+  return IGE::Physics::PhysicsSystem::GetInstance().get()->OnTriggerEnter(trigger, other);
+}
+
+bool Mono::OnTriggerExit(ECS::Entity trigger, ECS::Entity other) {
+  if (!trigger.HasComponent<Component::BoxCollider>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to check collision using an entity that does not have collider!");
+  }
+
+  if (!trigger.GetComponent<Component::BoxCollider>().sensor) {
+    Debug::DebugLogger::GetInstance().LogWarning("You are trying to check collision using an entity that has sensor turned off!");
+  }
+
+  return IGE::Physics::PhysicsSystem::GetInstance().get()->OnTriggerExit(trigger, other);
 }
 
 /*!**********************************************************************

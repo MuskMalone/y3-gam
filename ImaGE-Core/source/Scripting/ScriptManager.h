@@ -408,6 +408,10 @@ namespace Mono
 
 		static void HideCursor();
 
+		static bool OnTriggerEnter(ECS::Entity trigger, ECS::Entity other);
+
+		static bool OnTriggerExit(ECS::Entity trigger, ECS::Entity other);
+
 		/*!**********************************************************************
 		*																																			  *
 		*								            Helper Function			          						  *
