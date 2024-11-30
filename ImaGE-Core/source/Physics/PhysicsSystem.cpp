@@ -647,6 +647,7 @@ namespace IGE {
 
 		void PhysicsSystem::ClearSystem()
 		{
+			mScene->setSimulationEventCallback(nullptr); // unsubscribe from all events first
 			for (auto rbpair : mRigidBodyIDs) {
 				auto rb{ rbpair.second };
 				mScene->removeActor(*rb);
@@ -656,6 +657,9 @@ namespace IGE {
 			mRigidBodyToEntity.clear();
 			mInactiveActors.clear();
 			mOnTriggerPairs.clear();
+			mScene->simulate(0.0f);
+			mScene->fetchResults(true);
+			mScene->setSimulationEventCallback(mEventManager);
 		}
 
 		bool PhysicsSystem::RayCastSingular(glm::vec3 const& origin, glm::vec3 const& end, RaycastHit& result)
