@@ -99,6 +99,7 @@ public class Safe : Entity
     if (!safeInteraction)
     {
       bool isSafeHit = playerInteraction.RayHitString == InternalCalls.GetTag(safeDoorPart.mEntityID);
+
       if (Input.GetKeyTriggered(0) && isSafeHit)
       {
         safeInteraction = true;
