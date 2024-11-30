@@ -121,6 +121,8 @@ public class CDDragAndDrop : Entity
     //TEMPORARY
     public Entity CDinCase;
     public Entity cdPlayer;
+    public Entity cdPlayerLidOpen;
+    public Entity cdPlayerLidClose;
     //public Entity CDCurr;
 
     public Entity fadeImageEntity; // Entity containing the fade Image
@@ -160,9 +162,22 @@ public class CDDragAndDrop : Entity
     //dragging
     private float toCDDist;
     private Vector3 toCDVec;
+
+    //cdLid
+    //private Quaternion originalCdLidRot;
+    //private Vector3 originalCdLidPos;
+    //Vector3 zeroPos = Vector3.Zero;
+    //Quaternion zeroRot = Quaternion.Identity;
     void Start()
     {
-        originalPosition = InternalCalls.GetWorldPosition(mEntityID);
+        cdPlayerLidOpen.SetActive(false);
+        cdPlayerLidClose.SetActive(true);
+         //uint cdLidParent = InternalCalls.FindParentByTag("MainMenu_PS1_Open");
+         //uint cdLid = InternalCalls.FindChildByTag(cdLidParent, "OpenCircular_Lid");
+         //originalCdLidRot = InternalCalls.GetWorldRotation(cdLid);
+         //originalCdLidPos = InternalCalls.GetWorldPosition(cdLid);
+
+         originalPosition = InternalCalls.GetWorldPosition(mEntityID);
         originalRotation = InternalCalls.GetWorldRotation(mEntityID);
         //Console.WriteLine("originalrotation " + originalRotation);
 
@@ -363,7 +378,14 @@ public class CDDragAndDrop : Entity
             ShakeCD(0.5f, 0.005f);
             return;
         }
-        
+        //uint cdLidParent = InternalCalls.FindParentByTag("MainMenu_PS1_Open");
+        //uint cdLid = InternalCalls.FindChildByTag(cdLidParent, "OpenCircular_Lid");
+        //Debug.Log("CdLidid " + cdLid);
+        //InternalCalls.SetWorldPosition(cdLid, ref zeroPos);
+        //InternalCalls.SetWorldRotation(cdLid, ref zeroRot);
+
+        cdPlayerLidOpen.SetActive(true);
+        cdPlayerLidClose.SetActive(false);
         isBeingDragged = true;
         //play sound
         InternalCalls.PlaySound(mEntityID, "PickupCD_SFX");
@@ -377,7 +399,11 @@ public class CDDragAndDrop : Entity
 
     public void OnMouseUp()
     {
+        cdPlayerLidOpen.SetActive(false);
+        cdPlayerLidClose.SetActive(true);
         Debug.Log("Went in Mouseup?");
+        //uint cdLidParent = InternalCalls.FindParentByTag("MainMenu_PS1_Open");
+        //uint cdLid = InternalCalls.FindChildByTag(cdLidParent, "OpenCircular_Lid");
         isBeingDragged = false;
         bool mouseOnCDPlayer = false;
         Vector3 MousePos = InternalCalls.GetMousePosWorld(1.0f);
@@ -399,6 +425,8 @@ public class CDDragAndDrop : Entity
         {
             Debug.Log("Tried to go back to original pos");
             InternalCalls.SetWorldPosition(mEntityID, ref originalPosition);
+            //InternalCalls.SetWorldPosition(cdLid, ref originalCdLidPos);
+            //InternalCalls.SetWorldRotation(cdLid, ref originalCdLidRot);
         }
     }
 
