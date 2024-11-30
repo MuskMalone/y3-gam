@@ -198,7 +198,7 @@ namespace Graphics {
       auto& positionTexture{ pass->mPositionGBuffer };
       if (!positionTexture || positionTexture->GetWidth() != fb->GetFramebufferSpec().width || positionTexture->GetHeight() != fb->GetFramebufferSpec().height) {
           // Create or resize mOutputTexture based on the framebuffer's specs
-          positionTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height, false, GL_RGBA32F);
+          positionTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height, GL_RGBA32F);
       }
 
       // Perform the copy operation

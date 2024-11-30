@@ -42,7 +42,6 @@ namespace Graphics {
 			if (mInputTexture) {
 				mInputTexture->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
 			}
-			std::swap(mSpec.pipeline->GetSpec().targetFramebuffer, mPingPongBuffer);
 			glMemoryBarrier(GL_ALL_BARRIER_BITS);
 		}
 		auto numShaders{ Graphics::PostProcessingManager::GetInstance().GetShaderNum() };
@@ -92,6 +91,6 @@ namespace Graphics {
 				glMemoryBarrier(GL_ALL_BARRIER_BITS);
 
 			}
-
+		}
 	}
 }
