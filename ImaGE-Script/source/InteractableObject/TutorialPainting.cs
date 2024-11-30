@@ -56,7 +56,7 @@ public class TutorialPainting : Entity, IInventoryItem
 
         if (Input.GetKeyTriggered(KeyCode.E) && isTutorialPaintingHit)
         {
-            tutorialDialogue.SetDialogue(dialogueWhenPaintingPickup, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Sad });
+            tutorialDialogue.SetDialogue(dialogueWhenPaintingPickup, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Sad, TutorialDialogue.Emotion.Sad });
             InternalCalls.PlaySound(mEntityID, "PickupObjects");
             inventoryScript.Additem(this);
         }
