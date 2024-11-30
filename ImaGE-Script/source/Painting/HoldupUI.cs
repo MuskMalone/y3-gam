@@ -46,11 +46,12 @@ public class HoldupUI : Entity
     LoadDataFromTextAsset();
     if (isBigPaintingActive)
     {
+
       GetComponent<Transform>().position = bigPicPos;
       GetComponent<Transform>().scale = bigPicScale;
     }
     else
-    {
+    { 
       GetComponent<Transform>().position = smallPicPos;
       GetComponent<Transform>().scale = smallPicScale;
     }
@@ -91,7 +92,7 @@ public class HoldupUI : Entity
       }
       else
       {
-        Console.WriteLine("Switch to Small Pic");
+
         GetComponent<Transform>().position = smallPicPos;
         GetComponent<Transform>().scale = smallPicScale;
       }
@@ -106,9 +107,9 @@ public class HoldupUI : Entity
     //}
   }
 
-  public void SetAlginUI(string s)
+  public void SetAlginUI(string s, IInventoryItem i)
   {
-    //Console.WriteLine("SETALIGNUI");
+    associatedItem = i;
     if (pictureAlignscript != null)
     {
       pictureAlignscript.SetActive(true);
@@ -117,6 +118,19 @@ public class HoldupUI : Entity
     }
     else
       Debug.Log("Picture Align is null");
+
+    if (isBigPaintingActive)
+    {
+      Console.WriteLine(GetComponent<Tag>().tag + " set big");
+      GetComponent<Transform>().position = bigPicPos;
+      GetComponent<Transform>().scale = bigPicScale;
+    }
+    else
+    {
+      Console.WriteLine(GetComponent<Tag>().tag + " set small");
+      GetComponent<Transform>().position = smallPicPos;
+      GetComponent<Transform>().scale = smallPicScale;
+    }
   }
 
   ///Functions to load Picture data
@@ -210,5 +224,10 @@ public class HoldupUI : Entity
     }
 
     return new Quaternion();
+  }
+
+  public void RemoveItself()
+  {
+    inventoryScript.RemoveItem(associatedItem);
   }
 }

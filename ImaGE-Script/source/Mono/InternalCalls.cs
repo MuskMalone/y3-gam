@@ -56,6 +56,15 @@ namespace IGE.Utils
     internal extern static Quaternion GetRotation(uint ID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static Vector3 GetRotationEuler(uint ID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void SetRotationEuler(uint ID, ref Vector3 position);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static Vector3 GetWorldRotationEuler(uint ID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void SetRotation(uint entityHandle, ref Quaternion position);
 
 
@@ -264,6 +273,13 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void HideCursor();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void ChangeToolsPainting();
+
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SpawnToolBox();
     #endregion
   }
 }

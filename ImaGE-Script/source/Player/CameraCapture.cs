@@ -42,7 +42,7 @@ public class CameraCapture : Entity
     // Store the player's position, rotation, and the main camera's rotation
     savedPlayerPosition = player.GetComponent<Transform>().worldPosition;
     savedCameraRotation = InternalCalls.GetMainCameraRotation(FindEntityByTag("MainCamera").mEntityID);
-    savedCameraEuler = Mathf.QuaternionToEuler(savedCameraRotation);
+    savedCameraEuler = Mathf.QuaternionToEuler(savedCameraRotation); savedCameraRotation = InternalCalls.GetMainCameraRotation(FindEntityByTag("MainCamera").mEntityID); savedCameraRotation = InternalCalls.GetMainCameraRotation(FindEntityByTag("MainCamera").mEntityID);
 
     Debug.Log("Player Position: " + savedPlayerPosition);
     Debug.Log("Camera Rotation: " + savedCameraRotation);

@@ -140,8 +140,8 @@ namespace IGE {
     Systems::SystemManager& systemManager{ Systems::SystemManager::GetInstance() };
 
     systemManager.RegisterSystem<Systems::TransformSystem>("Transform System");
-    systemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
     systemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
+    systemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
     systemManager.RegisterSystem<IGE::Audio::AudioSystem>("Audio System");
     systemManager.RegisterSystem<Systems::TextSystem>("Text System");
   }

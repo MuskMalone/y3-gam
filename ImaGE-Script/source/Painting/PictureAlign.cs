@@ -19,7 +19,6 @@ public class PictureAlign : Entity
   public Entity UpArrow;
   public Entity DownArrow;
   public Entity LeftClickText;
-  public Entity GardenLightSpot;
   private bool isBigPic;
   private bool toStop = true;
   private bool isTransitioning = false;
@@ -41,7 +40,7 @@ public class PictureAlign : Entity
   private Vector3 bigBorderScale = new Vector3(25.980f, 27.4f, 0.38f);
   private Vector3 smallBorderPos = new Vector3(10.200f, -0.100f, -0.010f);
   private Vector3 bigBorderPos = new Vector3(0.360f, 0.4f, -0.010f);
-  private Entity currentImg;
+  private HoldupUI currentImg;
   private string picture;
 
   delegate void PictureInteration();
@@ -52,7 +51,6 @@ public class PictureAlign : Entity
     playerMove = player.FindObjectOfType<PlayerMove>();
 
     if (playerMove == null) Debug.LogError("PlayerMove component not found!");
-    GardenLightSpot.SetActive(true);
   }
 
   void Update()
@@ -62,7 +60,7 @@ public class PictureAlign : Entity
       // Perform alignment checks and freeze the player if aligned
       if (isBigPic && IsAligned())
       {
-        if(LeftClickText != null)
+        if (LeftClickText != null)
           LeftClickText.SetActive(true);
         if (Input.GetMouseButtonDown(0))
         {
@@ -72,7 +70,7 @@ public class PictureAlign : Entity
           playerMove.FreezePlayer();
           currentImg.SetActive(false);
           isTransitioning = true;
-          
+
 
 
           if (LeftClickText != null)
@@ -84,7 +82,6 @@ public class PictureAlign : Entity
           SetActive(false);
           InternalCalls.PlaySound(player.mEntityID, "PaintingMatchObject");
           isNight = true;
-          GardenLightSpot.SetActive(false);
         }
         else
         {
@@ -101,17 +98,27 @@ public class PictureAlign : Entity
 
     else
     {
-      if(isTransitioning)
+      if (isTransitioning)
       {
-        //if (picture == "NightPainting")
-        //{
-          if(ChangeSkyBox())
+        if (picture == "NightPainting")
+        {
+          if (ChangeSkyBox())
           {
-         
+            InternalCalls.ChangeToolsPainting();
             playerMove.UnfreezePlayer();
             isTransitioning = false;
+            currentImg.RemoveItself();
+            currentImg = null;
           }
-        //}
+        }
+        else if (picture == "ToolsPainting")
+        {
+          InternalCalls.SpawnToolBox();
+          playerMove.UnfreezePlayer();
+          isTransitioning = false;
+          currentImg.RemoveItself();
+          currentImg = null;
+        }
 
       }
     }
@@ -122,71 +129,72 @@ public class PictureAlign : Entity
   {
     
     float positionDistance = Vector3.Distance(player.GetComponent<Transform>().worldPosition, savedPosition);
-    Quaternion currRot = mainCamera.GetComponent<Transform>().worldRotation;
+    Vector3 currWRot = mainCamera.GetComponent<Transform>().rotationWorldEuler;
+    Vector3 currLRot = mainCamera.GetComponent<Transform>().rotationEuler;
+
     bool aligned = true;
-    //Console.WriteLine(Mathf.QuaternionAngle(currRot, savedCameraRotation));
-
-    // Check if the main camera's rotation is within the threshold of the saved camera rotation
-    if (Mathf.QuaternionAngle(currRot, savedCameraRotation) > rotationThreshold)
-    {
-      aligned = false;
-      Vector3 curEulerAngles = Mathf.QuaternionToEuler(currRot);
-      curEulerAngles.X = Mathf.RadToDeg(curEulerAngles.X);
-      curEulerAngles.Y = Mathf.RadToDeg(curEulerAngles.Y);
-      curEulerAngles.Z = Mathf.RadToDeg(curEulerAngles.Z);
-      float pitchDifference =  Mathf.DeltaAngle(curEulerAngles.X, savedCameraEuler.X); // Up/Down
-      float yawDifference = Mathf.DeltaAngle(curEulerAngles.Y, savedCameraEuler.Y);   // Left/Right
-      if (Math.Abs(pitchDifference) > rotationThreshold) // Ignore small differences (optional threshold)
-      {
-        //Console.WriteLine($"Pitch difference: {pitchDifference}");
-        if (pitchDifference > 0)
-        {
-          //Console.WriteLine("Look up");
-          DownArrow.SetActive(false);
-          UpArrow.SetActive(true);
-        }
-        else
-        {
-          //Console.WriteLine("Look Down");
-          DownArrow.SetActive(true);
-          UpArrow.SetActive(false);
-
-        }
-      }
-      else
-      {
-        DownArrow.SetActive(false);
-        UpArrow.SetActive(false);
-      }
-
-      // Determine yaw (left/right) adjustment
-      if (Math.Abs(yawDifference) > rotationThreshold) // Ignore small differences (optional threshold)
-      {
-        if (yawDifference > 0)
-        {
-          //Console.WriteLine("Look left");
-          RightArrow.SetActive(false);
-          LeftArrow.SetActive(true);
-        }
-        else
-        {
-          //Console.WriteLine("Look right");
-          RightArrow.SetActive(true);
-          LeftArrow.SetActive(false);
-        }
-      }
-      else
-      {
-        RightArrow.SetActive(false);
-        LeftArrow.SetActive(false);
-      }
-    }
 
     if (positionDistance > positionThreshold)
     {
+      DownArrow.SetActive(false);
+      UpArrow.SetActive(false);
+      RightArrow.SetActive(false);
+      LeftArrow.SetActive(false);
+      return false;// All checks passed, the player is aligned
+    }
+      //Console.WriteLine(Mathf.QuaternionAngle(currRot, savedCameraRotation));
+
+    float xDiff = currLRot.X - savedCameraEuler.X;
+    float yDiff = currWRot.Y - savedCameraEuler.Y;
+    //Vector2 angleDiff = CalculatePitchAndYawDifferences(currWRot, savedCameraRotation);
+    if (Math.Abs(xDiff) > rotationThreshold) // Ignore small differences (optional threshold)
+    {
+
       aligned = false;
+      if (xDiff < 0)
+      {
+        //Console.WriteLine("Look up");
+        DownArrow.SetActive(false);
+        UpArrow.SetActive(true);
+      }
+      else
+      {
+        //Console.WriteLine("Look Down");
+        DownArrow.SetActive(true);
+        UpArrow.SetActive(false);
+
+      }
+
+    }
+    else
+    {
+      DownArrow.SetActive(false);
+      UpArrow.SetActive(false);
     }
 
+    // Determine yaw (left/right) adjustment
+    //if (Math.Abs(yDiff) > rotationThreshold) // Ignore small differences (optional threshold)
+    //{
+    //  //Console.WriteLine(yDiff + "::" + savedCameraEuler.Y + "vs" + currWRot.Y);
+    //  aligned = false;
+    //  if (yDiff > 0)
+    //  {
+    //    //Console.WriteLine("Look left");
+    //    RightArrow.SetActive(false);
+    //    LeftArrow.SetActive(true);
+    //  }
+    //  else
+    //  {
+    //    //Console.WriteLine("Look right");
+    //    RightArrow.SetActive(true);
+    //    LeftArrow.SetActive(false);
+    //  }
+    //}
+    //else
+    //{
+    //  RightArrow.SetActive(false);
+    //  LeftArrow.SetActive(false);
+    //}
 
     if (aligned)
       Console.WriteLine("Player is aligned.");
@@ -200,22 +208,20 @@ public class PictureAlign : Entity
   }
 
 
-  public void SetTarget(Vector3 position, Quaternion rot, Vector3 euler, string s, Entity UI)
+  public void SetTarget(Vector3 position, Quaternion rot, Vector3 euler, string s, HoldupUI UI)
   {
      savedPosition = position;
      savedCameraRotation = rot;
      savedCameraEuler = euler;
-    currentImg = UI;
-    picture = s;
-    //DownArrow.SetActive(true);
-    //UpArrow.SetActive(true);
-    //RightArrow.SetActive(true);
-    //LeftArrow.SetActive(true);
-    //border.SetActive(true);
-    //toStop = false;
-    isTransitioning = true;
-    playerMove.FreezePlayer();
-    SetActive(false);
+      currentImg = UI;
+      picture = s;
+      DownArrow.SetActive(true);
+      UpArrow.SetActive(true);
+      RightArrow.SetActive(true);
+      LeftArrow.SetActive(true);
+      border.SetActive(true);
+      toStop = false;
+
   }
 
   public void SetBorder(bool BigPic)
@@ -232,13 +238,53 @@ public class PictureAlign : Entity
     }
     else
     {
+      toStop = false;
       border.GetComponent<Transform>().position = bigBorderPos;
       border.GetComponent<Transform>().scale = bigBorderScale;
     }
   }
 
+  public void ClearUI()
+  {
+    DownArrow.SetActive(false);
+    UpArrow.SetActive(false);
+    RightArrow.SetActive(false);
+    LeftArrow.SetActive(false);
+    border.SetActive(false);
+    toStop = true;
+  }
+
   public bool ChangeSkyBox()
   {
     return InternalCalls.SetDaySkyBox(mainCamera.mEntityID, 2.0f);
+  }
+
+  public Vector2 CalculatePitchAndYawDifferences(Quaternion current, Quaternion target)
+  {
+    // Compute the relative quaternion
+    Quaternion relative = Quaternion.Multiply(target, Quaternion.Inverse(current));
+
+    // Define the forward vector (-Z) and up vector (Y) in local space
+    Vector3 forward = new Vector3(0.0f, 0.0f, -1.0f);
+    Vector3 up = new Vector3(0.0f, 1.0f, 0.0f);
+
+    // Rotate the forward and up vectors by the respective quaternions
+    Vector3 forwardCurrent = Vector3.Transform(forward, current);
+    Vector3 forwardTarget = Vector3.Transform(forward, target);
+    Vector3 upCurrent = Vector3.Transform(up, current);
+    Vector3 upTarget = Vector3.Transform(up, target);
+
+    // Calculate pitch difference (angle around X-axis)
+    double pitchDifference = Math.Asin(Vector3.Dot(forwardCurrent, upTarget)) * (180.0f / Math.PI);
+
+    // Calculate yaw difference (angle around Y-axis)
+    double yawDifference = Math.Atan2(forwardTarget.X, forwardTarget.Z) - Math.Atan2(forwardCurrent.X, forwardCurrent.Z);
+    yawDifference *= (180.0f / Math.PI);
+
+    // Normalize yaw to the range [-180, 180]
+    if (yawDifference > 180.0f) yawDifference -= 360.0f;
+    if (yawDifference < -180.0f) yawDifference += 360.0f;
+
+    return new Vector2((float)pitchDifference, (float)yawDifference); // X = Pitch, Y = Yaw
   }
 }

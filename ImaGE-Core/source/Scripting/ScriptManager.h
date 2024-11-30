@@ -281,6 +281,9 @@ namespace Mono
 		static void SetWorldRotation(ECS::Entity::EntityID entity, glm::quat rotAdjustment);
 		static glm::quat GetRotation(ECS::Entity::EntityID entity);
 		static void SetRotation(ECS::Entity::EntityID entity, glm::quat rotAdjustment);
+		static glm::vec3 GetWorldRotationEuler(ECS::Entity::EntityID entity);
+		static glm::vec3 GetRotationEuler(ECS::Entity::EntityID entity);
+		static void SetRotationEuler(ECS::Entity::EntityID entity, glm::vec3 rotAdjustment);
 
 
 		/*!*********************************************************************
@@ -407,6 +410,11 @@ namespace Mono
 		static void ShowCursor();
 
 		static void HideCursor();
+
+		static void ChangeToolsPainting();
+		
+
+		static void SpawnToolBox();
 
 		/*!**********************************************************************
 		*																																			  *
