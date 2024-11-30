@@ -30,97 +30,13 @@ using System.Numerics;
 
 public class CDDragAndDrop : Entity
 {
-    //    private Vector3 offset;         // Offset between mouse and CD position
-    //    private bool isBeingDragged = false; // Whether the CD is being dragged
-    //    private Vector3 initialPosition; // Initial position of the CD
-    //    public Entity mainCamera;
+    
 
-    //    void Start()
-    //    {
-    //        // Save the initial position as System.Numerics.Vector3
-    //        initialPosition = InternalCalls.GetPosition(mEntityID);
-
-    //    }
-
-    //    void Update()
-    //    {
-    //        if (isBeingDragged)
-    //        {
-    //            FollowMouseWithRay();
-    //        }
-    //    }
-
-    //    public void OnMouseDown()
-    //    {
-    //        isBeingDragged = true;
-
-    //        // Get the camera's position and direction using its entity ID
-    //        uint mainCameraID = mainCamera.mEntityID; // Assuming mainCamera has a property `mEntityID`
-    //        Vector3 cameraPosition = InternalCalls.GetMainCameraPosition(mainCameraID);
-    //        Vector3 cameraDirection = InternalCalls.GetMainCameraDirection(mainCameraID);
-
-    //        // Estimate the ray's end point
-    //        Vector3 rayStart = cameraPosition;
-    //        Vector3 rayEnd = rayStart + cameraDirection * 100.0f;
-
-    //        // Perform the raycast from the CD entity
-    //        uint hitEntity = InternalCalls.RaycastFromEntity(mEntityID, rayStart, rayEnd);
-
-    //        if (hitEntity != 0)
-    //        {
-    //            // Get the CD's current position
-    //            Vector3 cdPosition = InternalCalls.GetPosition(mEntityID);
-
-    //            // Use the intersection point to calculate the offset
-    //            Vector3 intersection = rayStart + cameraDirection * 10.0f; // Adjust as needed
-    //            offset = cdPosition - intersection;
-    //        }
-    //    }
-
-    //    public void OnMouseUp()
-    //    {
-    //        isBeingDragged = false;
-    //    }
-
-    //    private void FollowMouseWithRay()
-    //    {
-    //        // Get the camera's position and forward direction using its entity ID
-    //        uint mainCameraID = mainCamera.mEntityID; // Assuming mainCamera has a property `mEntityID`
-    //        Vector3 rayOrigin = InternalCalls.GetMainCameraPosition(mainCameraID);
-    //        Vector3 rayDirection = InternalCalls.GetMainCameraDirection(mainCameraID);
-
-    //        // Use these for raycasting or plane intersection
-    //        Vector3 intersection = RayPlaneIntersection(rayOrigin, rayDirection, initialPosition.Y);
-
-    //        // Calculate the new position for the CD
-    //        Vector3 newPosition = intersection + offset;
-
-    //        // Update the CD's position
-    //        InternalCalls.SetPosition(mEntityID, ref newPosition);
-    //    }
-
-    //    private Vector3 RayPlaneIntersection(Vector3 rayOrigin, Vector3 rayDirection, float planeY)
-    //    {
-    //        // Assume the plane is parallel to the XZ plane at height planeY
-    //        Vector3 planeNormal = new Vector3(0.0f, 1.0f, 0.0f); // Normal pointing up
-
-    //        // Calculate the dot product
-    //        float denominator = Vector3.Dot(rayDirection, planeNormal);
-
-    //        if (Math.Abs(denominator) > 0.0001f) // Ensure the ray is not parallel to the plane
-    //        {
-    //            float t = (planeY - rayOrigin.Y) / rayDirection.Y;
-    //            return rayOrigin + rayDirection * t;
-    //        }
-
-    //        // If the ray doesn't intersect the plane, return the ray's origin
-    //        return rayOrigin;
-    //    }
-    //}
-
-    //TEMPORARY
+    
     public Entity CDinCase;
     public Entity cdPlayer;
+    //public Entity cdLidOpened;
+    //public Entity cdLidClosed;
     //public Entity CDCurr;
 
     public Entity fadeImageEntity; // Entity containing the fade Image
@@ -151,7 +67,7 @@ public class CDDragAndDrop : Entity
 
     //rotation
     private Quaternion originalRotation;
-    private float zRotAngle = 0f;
+    private float zRotAngle = 229.3f;
 
     //sound
     private bool isSpinningSoundPlaying = false;
@@ -160,11 +76,17 @@ public class CDDragAndDrop : Entity
     //dragging
     private float toCDDist;
     private Vector3 toCDVec;
+
+    //openorclose
+    public bool isLidOpen = false;
     void Start()
     {
         originalPosition = InternalCalls.GetWorldPosition(mEntityID);
         originalRotation = InternalCalls.GetWorldRotation(mEntityID);
         //Console.WriteLine("originalrotation " + originalRotation);
+
+        //cdLidClosed.SetActive(true);
+        //cdLidOpened.SetActive(false);
 
         //Console.WriteLine("My Entity WorldPos INITIAL " + InternalCalls.GetWorldPosition(mEntityID));
         CDinCase.SetActive(false);
@@ -360,7 +282,7 @@ public class CDDragAndDrop : Entity
             ShakeCD(0.5f, 0.005f);
             return;
         }
-        
+        isLidOpen = true;
         isBeingDragged = true;
         //play sound
         InternalCalls.PlaySound(mEntityID, "PickupCD_SFX");
@@ -387,12 +309,14 @@ public class CDDragAndDrop : Entity
 
         if (mouseOnCDPlayer)
         {
+            isLidOpen = true;
             CDinCase.SetActive(true);
             InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
             NextScene();
         }
         else
         {
+            isLidOpen = false;
             InternalCalls.SetWorldPosition(mEntityID, ref originalPosition);
         }
     }
@@ -427,7 +351,7 @@ public class CDDragAndDrop : Entity
     }
     public void OnMouseEnter()
     {
-        zRotAngle = 0f;
+        zRotAngle = 229.3f;
         //InternalCalls.PlaySound(mEntityID, "SpinningDiscPS1_SFX");
         Vector3 MousePos = InternalCalls.GetMousePosWorld(0.0f);
         //tch: the accurate distance doesnt really matter i guess
