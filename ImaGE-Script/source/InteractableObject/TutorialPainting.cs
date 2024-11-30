@@ -8,6 +8,8 @@ public class TutorialPainting : Entity, IInventoryItem
     public PlayerInteraction playerInteraction;
     public Entity EToPickUpUI;
 
+    //private TutorialDialogue tutorialDialogue;
+    //public string[] dialogueWhenPaintingPickup;
     public string Name
     {
         get
