@@ -26,6 +26,7 @@ namespace Graphics {
                 props.Roughness = mMaterials[i]->GetRoughness();
                 props.Transparency = mMaterials[i]->GetTransparency();
                 props.AO = mMaterials[i]->GetAO();
+                props.Emission = mMaterials[i]->GetEmission();
 
                 mMaterials[i]->ClearModifiedFlag();
                 anyUpdated = true;
