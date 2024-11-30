@@ -32,6 +32,8 @@ namespace Graphics {
         float Roughness;        // Roughness factor
         float Transparency;     // Transparency (alpha)
         float AO;               // Ambient occlusion
+        float Emission;
+        float Padding[3];
     };
 
     class MaterialData {
