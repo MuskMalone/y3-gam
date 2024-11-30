@@ -51,19 +51,19 @@ namespace GUI {
 
   EVENT_CALLBACK_DEF(PopupHelper, OnGUIDRemap) {
     // do nothing if queue is empty
-    if (!sGUIDDataMap.empty()) {
+    if (sGUIDDataMap.empty()) { return; }
 
     // move data into queue
     for (auto& data : sGUIDDataMap) {
-      sGUIDData.emplace(std::move(data.second));
+        sGUIDData.emplace(std::move(data.second));
     }
     sGUIDDataMap.clear();
-    }
 
     // trigger the popup
     sCurrentPopup = sGUIDPopupTitle;
     sOpenPopup = true;
   }
+
 
   void PopupHelper::GUIDRemapPopup() {
     ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
