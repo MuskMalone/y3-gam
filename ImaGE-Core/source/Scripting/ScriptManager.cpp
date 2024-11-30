@@ -1343,10 +1343,10 @@ void Mono::SetCurrentScene(MonoString* scenePath) {
   std::string scenePathSTD{ MonoStringToSTD(scenePath) };
 
   if (!scenePathSTD.empty()) {
-    IGE_EVENTMGR.DispatchImmediateEvent<Events::LoadSceneEvent>(std::filesystem::path(scenePathSTD).stem().string(),
+    //IGE_EVENTMGR.DispatchImmediateEvent<Events::LoadSceneEvent>(std::filesystem::path(scenePathSTD).stem().string(),
+     // scenePathSTD);
+    QUEUE_EVENT(Events::LoadSceneEvent, std::filesystem::path(scenePathSTD).stem().string(),
       scenePathSTD);
-    //QUEUE_EVENT(Events::LoadSceneEvent, std::filesystem::path(scenePathSTD).stem().string(),
-      //scenePathSTD);
 
     // Play the scene (Most common use case is to set scene and immediately want it playing)
     /*
