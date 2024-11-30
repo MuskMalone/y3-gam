@@ -1,3 +1,12 @@
+/*!*********************************************************************
+\file   PopupHelper.h
+\author chengen.lau\@digipen.edu
+\date   30-November-2024
+\brief  Class encapsulating functions to faciliate general 
+        engine-related popups such as remapping invalidated guids.
+  
+Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
+************************************************************************/
 #pragma once
 #include <GUI/GUIWindow.h>
 #include <Events/EventCallback.h>

@@ -220,6 +220,7 @@ copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Release\bin\Release\rtt
     <ClCompile Include="source\GUI\Dockable\SceneHierarchy.cpp" />
     <ClCompile Include="source\GUI\Dockable\Viewport.cpp" />
     <ClCompile Include="source\GUI\GUIManager.cpp" />
+    <ClCompile Include="source\GUI\GUIVault.cpp" />
     <ClCompile Include="source\GUI\Helpers\AssetHelpers.cpp" />
     <ClCompile Include="source\GUI\Helpers\ImGuiHelpers.cpp" />
     <ClCompile Include="source\GUI\Persistent\PopupHelper.cpp" />

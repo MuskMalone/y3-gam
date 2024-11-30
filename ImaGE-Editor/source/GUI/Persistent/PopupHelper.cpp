@@ -67,7 +67,7 @@ namespace GUI {
 
   void PopupHelper::GUIDRemapPopup() {
     ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
-    ImGui::SetNextWindowSize(ImVec2(0.f, ImGui::GetMainViewport()->Size.y * 0.8f));
+    ImGui::SetNextWindowSizeConstraints(ImVec2(100.0f, 0.0f), ImVec2(FLT_MAX, ImGui::GetMainViewport()->Size.y * 0.8f));
 
     Styler const& styler{ GUIVault::GetStyler() };
     ImGui::PushFont(styler.GetCustomFont(CustomFonts::ROBOTO_BOLD));

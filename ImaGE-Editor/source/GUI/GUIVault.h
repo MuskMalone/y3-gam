@@ -22,7 +22,7 @@ namespace GUI {
     \param entity
       The entity to set
     ************************************************************************/
-    static inline void SetSelectedEntity(ECS::Entity const& entity) noexcept { sSelectedEntity = entity; }
+    static void SetSelectedEntity(ECS::Entity entity);
 
     // entity multi-select functions
     static inline std::unordered_set<ECS::Entity::EntityID> const& GetSelectedEntities() noexcept { return sSelectedEntities; }

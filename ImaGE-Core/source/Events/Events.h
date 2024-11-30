@@ -89,6 +89,7 @@ namespace Events
     ECS::Entity const mEntity;
   };
 
+  // entity
   class RemoveEntityEvent : public Event
   {
   public:
@@ -108,10 +109,20 @@ namespace Events
     ECS::Entity const mEntity;
   };
 
+  // entity
   class EntityScreenPicked : public Event {
   public:
     EntityScreenPicked(ECS::Entity entity) : Event(EventType::ENTITY_PICKED), mEntity{ entity } {}
     inline std::string GetName() const noexcept override { return "Screen-picked entity " + mEntity.GetTag(); }
+
+    ECS::Entity const mEntity;
+  };
+
+  // entity
+  class EntitySelectedInEditor : public Event {
+  public:
+    EntitySelectedInEditor(ECS::Entity entity) : Event(EventType::ENTITY_SELECTED), mEntity{ entity } {}
+    inline std::string GetName() const noexcept override { return "Selected entity " + mEntity.GetTag(); }
 
     ECS::Entity const mEntity;
   };
