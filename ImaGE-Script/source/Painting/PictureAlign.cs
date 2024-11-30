@@ -119,6 +119,15 @@ public class PictureAlign : Entity
           currentImg.RemoveItself();
           currentImg = null;
         }
+        //else if (picture == "TutorialPainting")
+        //{
+        //  Debug.Log("Aligned Tutorial Painting");
+        //  //InternalCalls.SpawnToolBox();
+        //  playerMove.UnfreezePlayer();
+        //  isTransitioning = false;
+        //  currentImg.RemoveItself();
+        //  currentImg = null;
+        //}
 
       }
     }
