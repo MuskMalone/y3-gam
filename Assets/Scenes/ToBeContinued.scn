@@ -169,7 +169,8 @@
             "Child Entities": [
                 3,
                 4,
-                1048581
+                1048581,
+                1048586
             ],
             "Components": [
                 {
@@ -464,6 +465,89 @@
                             "x": 5.0,
                             "y": 5.0,
                             "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048586,
+            "Parent": 2,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Button",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -7.099999904632568,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 5.340000152587891,
+                            "y": 1.940000057220459,
+                            "z": 1.940000057220459
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -7.099999904632568,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 5.340000152587891,
+                            "y": 1.940000057220459,
+                            "z": 1.940000057220459
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048586,
+                                "scriptName": "BackToMainMenuButton",
+                                "scriptFieldInstList": []
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 0.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 0
                         }
                     }
                 }
