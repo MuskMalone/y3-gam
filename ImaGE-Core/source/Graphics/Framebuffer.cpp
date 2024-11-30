@@ -82,7 +82,9 @@ namespace Graphics
         GLenum status;
         if (status = glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
             //log
+#ifdef _DEBUG
             std::cout << "Framebuffer not complete! " << status << std::endl;
+#endif
         }
 //            LoggingSystem::GetInstance().Log(LogLevel::ERROR_LEVEL, "ERROR: Framebuffer is INCOMPLETE!", __FUNCTION__);
 //        else LoggingSystem::GetInstance().Log(LogLevel::INFO_LEVEL, "Framebuffer is complete!", __FUNCTION__);

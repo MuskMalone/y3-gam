@@ -109,17 +109,17 @@ namespace Serialization
       }
 
       // check if entity json contains all basic keys
-      if (!ScanJsonFileForMembers(entity, filepath, 5,
+      if (!ScanJsonFileForMembers(entity, filepath, 4,
         JSON_CHILD_ENTITIES_KEY, rapidjson::kArrayType,
         JSON_ID_KEY, rapidjson::kNumberType, JSON_PARENT_KEY, rapidjson::kNumberType,
-        JSON_COMPONENTS_KEY, rapidjson::kArrayType, JSON_ENTITY_STATE_KEY, rapidjson::kFalseType))
+        JSON_COMPONENTS_KEY, rapidjson::kArrayType))
       {
         continue;
       }
 
       EntityID entityId{ entity[JSON_ID_KEY].GetUint() };
       EntityID const parentId{ entity[JSON_PARENT_KEY].IsNull() ? entt::null : entity[JSON_PARENT_KEY].GetUint() };
-      Reflection::VariantEntity entityVar{ entityId, parentId, entity[JSON_ENTITY_STATE_KEY].GetBool() };  // set parent
+      Reflection::VariantEntity entityVar{ entityId, parentId };  // set parent
       // get child ids
       for (auto const& child : entity[JSON_CHILD_ENTITIES_KEY].GetArray()) {
         entityVar.mChildEntities.emplace_back(EntityID(child.GetUint()));
@@ -193,7 +193,6 @@ namespace Serialization
     else {
       IGE_DBGLOGGER.LogError("Prefab " + json + " has no name, re-save from prefab editor!");
     }
-    prefab.mIsActive = (document.HasMember(JSON_PFB_ACTIVE_KEY) ? document[JSON_PFB_ACTIVE_KEY].GetBool() : true);
 
     // iterate through component objects in json array
     std::vector<rttr::variant>& compVector{ prefab.mComponents };
@@ -236,7 +235,6 @@ namespace Serialization
       }
 
       Prefabs::PrefabSubData subObj{ elem[JSON_ID_KEY].GetUint(), elem[JSON_PARENT_KEY].GetUint() };
-      subObj.mIsActive = (elem.HasMember(JSON_PFB_ACTIVE_KEY) ? elem[JSON_PFB_ACTIVE_KEY].GetBool() : true);
 
       for (auto const& component : elem[JSON_COMPONENTS_KEY].GetArray())
       {
@@ -769,7 +767,7 @@ namespace Serialization
     //  if it is a multi-layered DataMemberInstance, recursively extract each layer
     if (scriptFIType == rttr::type::get<Mono::DataMemberInstance<Mono::ScriptInstance>>()) {
       // set the data property
-      rttr::variant data{ DeserializeScriptInstance(jsonVal[JSON_SCRIPT_DMI_DATA_KEY]) };
+      rttr::variant data{ DeserializeScriptInstance(jsonVal[JSON_SCRIPT_DMI_DATA_KEY], false) };
       if (!scriptFIType.set_property_value(JSON_SCRIPT_DMI_DATA_KEY, scriptFIList, data)) {
 #ifndef DISTRIBUTION
         std::ostringstream oss{};
@@ -810,7 +808,7 @@ namespace Serialization
         auto const& jsonArr{ jsonVal[JSON_SCRIPT_DMI_DATA_KEY].GetArray() };
         dmi.mData.reserve(jsonArr.Size());
         for (rapidjson::Value const& elem : jsonArr) {
-          dmi.mData.emplace_back(DeserializeScriptInstance(elem));
+          dmi.mData.emplace_back(DeserializeScriptInstance(elem, false));
         }
       }
       else {
@@ -827,10 +825,10 @@ namespace Serialization
     return scriptFIList;
   }
 
-  Mono::ScriptInstance Deserializer::DeserializeScriptInstance(rapidjson::Value const& jsonVal) {
+  Mono::ScriptInstance Deserializer::DeserializeScriptInstance(rapidjson::Value const& jsonVal, bool hasData) {
     // check if fields exist in json file
     if (!ScanJsonFileForMembers(jsonVal, "Script Instance", 2, JSON_SCRIPT_NAME_KEY, rapidjson::kStringType,
-      JSON_SCRIPT_FIELD_LIST_KEY, rapidjson::kArrayType)) {
+      JSON_SCRIPT_ENTITY_ID_KEY, rapidjson::kNumberType)) {
       return {};
     }
 
@@ -839,19 +837,24 @@ namespace Serialization
 #endif
 
     Mono::ScriptInstance scriptInst{ jsonVal[JSON_SCRIPT_NAME_KEY].GetString() };
+    //scriptInst.mEntityID = static_cast<ECS::Entity::EntityID>(jsonVal[JSON_SCRIPT_ENTITY_ID_KEY].GetUint());
+    scriptInst.SetEntityID(static_cast<ECS::Entity::EntityID>(jsonVal[JSON_SCRIPT_ENTITY_ID_KEY].GetUint()));
 
-    auto const& fieldListJson{ jsonVal[JSON_SCRIPT_FIELD_LIST_KEY].GetArray() };
-    std::vector<rttr::variant> sfInstList{};
-    sfInstList.reserve(fieldListJson.Size());
+    // for DataMemberInstance<ScriptInstance>, we don't serialize data
+    if (hasData && jsonVal.HasMember(JSON_SCRIPT_FIELD_LIST_KEY)) {
+      auto const& fieldListJson{ jsonVal[JSON_SCRIPT_FIELD_LIST_KEY].GetArray() };
+      std::vector<rttr::variant> sfInstList{};
+      sfInstList.reserve(fieldListJson.Size());
 
-    for (rapidjson::Value const& fieldInst : fieldListJson) {
-      rttr::variant scriptFIList{ DeserializeDataMemberInstance(fieldInst) };
-      if (!scriptFIList.is_valid()) { continue; }
+      for (rapidjson::Value const& fieldInst : fieldListJson) {
+        rttr::variant scriptFIList{ DeserializeDataMemberInstance(fieldInst) };
+        if (!scriptFIList.is_valid()) { continue; }
 
-      sfInstList.emplace_back(std::move(scriptFIList));
+        sfInstList.emplace_back(std::move(scriptFIList));
+      }
+
+      scriptInst.SetAllFields(sfInstList);
     }
-    scriptInst.mEntityID = static_cast<ECS::Entity::EntityID>(jsonVal[JSON_SCRIPT_ENTITY_ID_KEY].GetUint());
-    scriptInst.SetAllFields(sfInstList);
 
     return scriptInst;
   }

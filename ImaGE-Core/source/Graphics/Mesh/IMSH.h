@@ -67,8 +67,7 @@ namespace Graphics::AssetIO
 
     // this is a workaround to not being able to pass extra flags during AssetManager import
     static inline bool sStaticMeshConversion = false;
-    static inline bool sRecenterMesh = true;
-    static inline bool sNormalizeScale = true;
+    static inline bool sRecenterMesh = true, sNormalizeScale = true, sFlipUVs = false;
 
   private:
     // serialized as first 24 bytes

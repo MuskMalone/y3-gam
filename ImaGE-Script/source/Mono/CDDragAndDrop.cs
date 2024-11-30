@@ -120,7 +120,8 @@ public class CDDragAndDrop : Entity
 
     //TEMPORARY
     public Entity CDinCase;
-    public Entity CDCurr;
+    public Entity cdPlayer;
+    //public Entity CDCurr;
 
     public Entity fadeImageEntity; // Entity containing the fade Image
     private Image fadeImage; // Image used for the fade effect
@@ -137,8 +138,35 @@ public class CDDragAndDrop : Entity
     private float targetAlpha = 1f; // Target alpha
 
     private bool isHovered = false;
+
+    //shakecd
+    private bool isShaking = false;
+    private float shakeDuration = 0f;
+    private float shakeElapsed = 0f;
+    private float shakeMagnitude = 0f;
+    private Vector3 originalPosition;
+    private float fakeRandomValue = 0f;
+
+    private bool isBeingDragged = false;
+
+    //rotation
+    private Quaternion originalRotation;
+    private float zRotAngle = 0f;
+
+    //sound
+    private bool isSpinningSoundPlaying = false;
+    //private float spinningSoundTimer = 0f;
+
+    //dragging
+    private float toCDDist;
+    private Vector3 toCDVec;
     void Start()
     {
+        originalPosition = InternalCalls.GetWorldPosition(mEntityID);
+        originalRotation = InternalCalls.GetWorldRotation(mEntityID);
+        //Console.WriteLine("originalrotation " + originalRotation);
+
+        //Console.WriteLine("My Entity WorldPos INITIAL " + InternalCalls.GetWorldPosition(mEntityID));
         CDinCase.SetActive(false);
         Vector3 scaleVector = InternalCalls.GetScale(mEntityID);
         originalScale = new Vec3<float>(scaleVector.X, scaleVector.Y, scaleVector.Z);
@@ -156,7 +184,7 @@ public class CDDragAndDrop : Entity
 
         if (fadeImage != null)
         {
-            Debug.Log("fadeimage is here");
+            //Debug.Log("fadeimage is here");
             fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, startAlpha);
         }
 
@@ -182,15 +210,83 @@ public class CDDragAndDrop : Entity
 
     void Update()
     {
-        if (isHovered)
+        //Vector3 MousePos = InternalCalls.GetMousePosWorld(1.0f);
+        //Vector3 MousPosRayEnd = MousePos + (InternalCalls.GetCameraForward() * 5.0f);
+
+        //uint hitEntity = InternalCalls.Raycast(MousePos, MousPosRayEnd);
+        //Console.WriteLine("Entity " + InternalCalls.GetTag(hitEntity) + " hit ");
+        //Console.WriteLine(MousePos.ToString() + " " + MousPosRayEnd.ToString());
+            //string tag = InternalCalls.GetTag(mEntityID);
+        if (isHovered && !isBeingDragged)
         {
+            //Console.WriteLine("Entered isHovered");
             Vector3 hoverVector = new Vector3(hoverScale.X, hoverScale.Y, hoverScale.Z);
             InternalCalls.SetScale(mEntityID, ref hoverVector);
+            
+            //rotation
+            string tag = InternalCalls.GetTag(mEntityID);
+            if (tag == "NewGameCDChild")
+            {
+                if (!isSpinningSoundPlaying)
+                {
+                    //Console.WriteLine("Here?");
+                    InternalCalls.PlaySound(mEntityID, "SpinningDiscPS1_SFX");
+                    isSpinningSoundPlaying = true;
+                    //spinningSoundTimer = 0f;
+                }
+                zRotAngle += -2f * Time.deltaTime;
+                Quaternion zRot = Quaternion.CreateFromAxisAngle(Vector3.UnitZ, zRotAngle);
+
+                Quaternion xRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(90));
+
+                // Combine the rotations
+                Quaternion combinedRotation = zRot * xRotation; // Order matters!
+
+                // Apply the combined rotation
+                InternalCalls.SetWorldRotation(mEntityID, ref combinedRotation);
+            }
+            
+
         }
-        else
+        else if(!isHovered)
         {
             Vector3 originalVector = new Vector3(originalScale.X, originalScale.Y, originalScale.Z);
             InternalCalls.SetScale(mEntityID, ref originalVector);
+            
+        }
+
+        if (isBeingDragged)
+        {
+            
+            FollowMouse();
+
+            //try to rotate when above release area and mousedown (kinda laggy so commented out)
+            //bool mouseDownOnCDPlayer = false;
+            //Vector3 MousePos = InternalCalls.GetMousePosWorld(1.0f);
+            //Vector3 MousPosRayEnd = MousePos + (InternalCalls.GetCameraForward() * 5.0f);
+            //uint hitEntity = InternalCalls.Raycast(MousePos, MousPosRayEnd);
+
+            //if (InternalCalls.GetTag(hitEntity) == "CDPlayer_Body")
+            //{
+            //    //Console.WriteLine("hit cd player");
+            //    mouseDownOnCDPlayer = true;
+            //    //Quaternion xRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(0));
+            //    //InternalCalls.SetWorldRotation(mEntityID, ref xRotation);
+            //}
+            ////else
+            ////{
+            ////    InternalCalls.SetWorldRotation(mEntityID, ref originalRotation);
+            ////}
+            //if(mouseDownOnCDPlayer)
+            //{
+            //    Quaternion xRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(0));
+            //    InternalCalls.SetWorldRotation(mEntityID, ref xRotation);
+            //}
+            //else
+            //{
+            //    InternalCalls.SetWorldRotation(mEntityID, ref originalRotation);
+            //}
+
         }
 
         if (isFading)
@@ -208,8 +304,40 @@ public class CDDragAndDrop : Entity
                 InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
             }
         }
+
+        //shakingcd
+        if (isShaking)
+        {
+            //Debug.Log("inIsShaking");
+            shakeElapsed += Time.deltaTime;
+            //float seed = shakeElapsed; 
+            //float offsetX = ShakeRandom(seed) * shakeMagnitude;
+            //float offsetY = ShakeRandom(seed + 1f) * shakeMagnitude; 
+
+            fakeRandomValue += 0.1f; 
+
+            float offsetX = (fakeRandomValue * 1.2f) % 2f - 1f; 
+            float offsetY = (fakeRandomValue * 3.8f) % 2f - 1f;
+
+            offsetX *= shakeMagnitude;
+            offsetY *= shakeMagnitude;
+            Vector3 shakingPos = new Vector3(originalPosition.X + offsetX, originalPosition.Y + offsetY, originalPosition.Z);
+            InternalCalls.SetWorldPosition(mEntityID, ref shakingPos);
+            //stop shake when duration is up
+            if (shakeElapsed >= shakeDuration)
+            {
+                //Debug.Log("OvershakeDuration");
+                isShaking = false;
+                InternalCalls.SetWorldPosition(mEntityID, ref originalPosition);
+            }
+
+        }
     }
 
+    float ShakeRandom(float seed)
+    {
+        return Mathf.Sin(seed * 1000f) % 1f; 
+    }
 
 
     private void Startfade()
@@ -223,13 +351,72 @@ public class CDDragAndDrop : Entity
     }
     public void OnMouseDown()
     {
-        InternalCalls.PlaySound(mEntityID, "PickupCD_SFX");
-        CDinCase.SetActive(true);
-        //CDCurr.SetActive(false);
-        InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
-        //Startfade();
-        NextScene();
+        //shaking cds
+        string tag = InternalCalls.GetTag(mEntityID);
+        if(tag == "ContinueCDChild" ||tag == "CreditsCDChild" || tag == "SettingsCDChild")
+        {
+            //Debug.Log("Entered tag == for shakecd");
+            
+            ShakeCD(0.5f, 0.005f);
+            return;
+        }
         
+        isBeingDragged = true;
+        //play sound
+        InternalCalls.PlaySound(mEntityID, "PickupCD_SFX");
+
+        //CDCurr.SetActive(false);
+
+        //Startfade();
+
+
+    }
+
+    public void OnMouseUp()
+    {
+        isBeingDragged = false;
+        bool mouseOnCDPlayer = false;
+        Vector3 MousePos = InternalCalls.GetMousePosWorld(1.0f);
+        Vector3 MousPosRayEnd = MousePos + (InternalCalls.GetCameraForward() * 5.0f);
+        uint hitEntity = InternalCalls.Raycast(MousePos, MousPosRayEnd);
+
+        if (InternalCalls.GetTag(hitEntity) == "CDPlayer_Body") {
+
+            mouseOnCDPlayer = true;
+        }
+
+        if (mouseOnCDPlayer)
+        {
+            CDinCase.SetActive(true);
+            InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
+            NextScene();
+        }
+        else
+        {
+            InternalCalls.SetWorldPosition(mEntityID, ref originalPosition);
+        }
+    }
+
+    private void FollowMouse()
+    {
+        Vector3 MousePos = InternalCalls.GetMousePosWorld(toCDDist);
+        //mouse offset to make sure the mouse is not in the cd hole
+        MousePos.X += 0.03f;
+        MousePos.Y += 0.03f;
+        InternalCalls.SetWorldPosition(mEntityID, ref MousePos);
+    }
+    private void ShakeCD(float duration, float magnitude)
+    {
+        if (isShaking) return;
+
+        //InternalCalls.PlaySound(mEntityID, "WrongInput_SFX");
+        fakeRandomValue = 0f;
+        shakeDuration = duration;
+        shakeMagnitude = magnitude;
+        shakeElapsed = 0f;
+        originalPosition = InternalCalls.GetWorldPosition(mEntityID);
+        isShaking = true;
+
     }
 
     private void NextScene()
@@ -240,12 +427,25 @@ public class CDDragAndDrop : Entity
     }
     public void OnMouseEnter()
     {
+        zRotAngle = 0f;
+        //InternalCalls.PlaySound(mEntityID, "SpinningDiscPS1_SFX");
+        Vector3 MousePos = InternalCalls.GetMousePosWorld(0.0f);
+        //tch: the accurate distance doesnt really matter i guess
+        toCDDist = (MousePos - originalPosition).Length();
         isHovered = true;
     }
 
     public void OnMouseExit()
     {
+        Console.WriteLine("OnMouseExit?");
         isHovered = false;
+        string tag = InternalCalls.GetTag(mEntityID);
+        if (tag == "NewGameCDChild")
+        {
+            InternalCalls.SetWorldRotation(mEntityID, ref originalRotation);
+            InternalCalls.PauseSound(mEntityID, "SpinningDiscPS1_SFX");
+            isSpinningSoundPlaying = false;
+        }
     }
 }
 

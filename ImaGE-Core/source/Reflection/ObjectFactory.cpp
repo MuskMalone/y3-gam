@@ -61,7 +61,8 @@ namespace Reflection
       { GET_RTTR_TYPE(Image), ComponentUtils::AddImage },
       { GET_RTTR_TYPE(Sprite2D), ComponentUtils::AddSprite2D },
       { GET_RTTR_TYPE(Camera), ComponentUtils::AddCamera },
-      { GET_RTTR_TYPE(Skybox), ComponentUtils::AddSkybox }
+      { GET_RTTR_TYPE(Skybox), ComponentUtils::AddSkybox },
+      { GET_RTTR_TYPE(Interactive), ComponentUtils::AddInteractive}
     };
 
     if (mAddComponentFuncs.size() != gComponentTypes.size()) {
@@ -278,6 +279,8 @@ namespace Reflection
     }
 
     LoadPrefabInstances();
+    // trigger the guid remapping popup if needed
+    QUEUE_EVENT(Events::TriggerGUIDRemap);
   }
 
   void ObjectFactory::ClearData() {

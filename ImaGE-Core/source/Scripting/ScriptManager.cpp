@@ -34,6 +34,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Input/InputManager.h"
 #include "Asset/AssetManager.h"
 #include "Physics/PhysicsSystem.h"
+#include "Graphics/RenderSystem.h"
 //#define DEBUG_MONO
 namespace Mono
 {
@@ -115,7 +116,9 @@ ScriptManager::ScriptManager()
     //mono_set_assemblies_path(assetManager.GetConfigData<std::string>("MonoAssembly").c_str());
     mono_set_assemblies_path("./4.5/");
   }
+#ifdef _DEBUG
   std::cout << "Finish load assembly file\n";
+#endif
   //MonoDomain* rootDomain = mono_jit_init(assetManager.GetConfigData<std::string>("RootDomain").c_str());
   MonoDomain* rootDomain = mono_jit_init("ImaGEJITRuntime");
   if (rootDomain == nullptr)
@@ -191,8 +194,9 @@ void ScriptManager::AddInternalCalls()
   ADD_CLASS_INTERNAL_CALL(AnyKeyDown, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(AnyKeyTriggered, Input::InputManager::GetInstance());
   ADD_INTERNAL_CALL(GetMousePos);
+  ADD_INTERNAL_CALL(GetMousePosWorld);
   ADD_INTERNAL_CALL(GetMouseDelta);
-
+  ADD_INTERNAL_CALL(GetCameraForward);
 
 
   //// Get Functions
@@ -264,6 +268,8 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetCurrentScene);
   ADD_INTERNAL_CALL(SetCurrentScene);
   ADD_INTERNAL_CALL(TakeScreenShot);
+  ADD_INTERNAL_CALL(ShowCursor);
+  ADD_INTERNAL_CALL(HideCursor);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -376,7 +382,9 @@ MonoAssembly* Mono::LoadCSharpAssembly(const std::string& assemblyPath)
     std::filesystem::path currentPath = std::filesystem::current_path();
 
     // Print the current directory
+#ifdef _DEBUG
     std::cout << "Current directory: " << currentPath << std::endl;
+#endif
     e.LogSource();
     e.Log();
     throw Debug::Exception<ScriptManager>(Debug::LVL_ERROR, "Read file fail", __FUNCTION__, __LINE__);
@@ -960,6 +968,19 @@ glm::vec3 Mono::GetMousePos()
   return glm::vec3(Input::InputManager::GetInstance().GetMousePos(), 0);
 }
 
+glm::vec3 Mono::GetMousePosWorld(float depth)
+{
+    return Input::InputManager::GetInstance().GetMousePosWorld(depth);
+}
+
+glm::vec3 Mono::GetCameraForward()
+{
+    if (Graphics::RenderSystem::mCameraManager.HasActiveCamera()) {
+        return Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent().GetForwardVector();
+    }
+    return { 1,0,0 };
+}
+
 ECS::Entity::EntityID Mono::Raycast(glm::vec3 start, glm::vec3 end)
 {
     IGE::Physics::RaycastHit hit{};
@@ -1191,7 +1212,9 @@ glm::vec3 Mono::GetMainCameraDirection(ECS::Entity::EntityID cameraEntity) {
 glm::quat Mono::GetMainCameraRotation(ECS::Entity::EntityID cameraEntity) {
   if (ECS::Entity(cameraEntity) && ECS::Entity{ cameraEntity }.HasComponent<Component::Camera>()) {
     const auto rot = glm::eulerAngles(ECS::Entity(cameraEntity).GetComponent<Component::Transform>().worldRot);
+#ifdef _DEBUG
     std::cout << "CPP: " << rot.x << "," << rot.y  << "," << rot.z << "\n";
+#endif
     return ECS::Entity{ cameraEntity }.GetComponent<Component::Transform>().worldRot;
   }
   else {
@@ -1281,18 +1304,17 @@ void Mono::AppendText(ECS::Entity::EntityID textEntity, MonoString* textContent)
 
 glm::vec4 Mono::GetImageColor(ECS::Entity::EntityID entity)
 {
-  glm::vec4 c{};
-  if (ECS::Entity(entity))
-  {
+  if (ECS::Entity(entity)) {
     if (ECS::Entity(entity).HasComponent<Component::Image>())
-      c = ECS::Entity(entity).GetComponent<Component::Image>().color;
+      return ECS::Entity(entity).GetComponent<Component::Image>().color;
     else
-      Debug::DebugLogger::GetInstance().LogError("You r trying to Get image color from an entity that does not have image component");
+      Debug::DebugLogger::GetInstance().LogError("GetImageColor: Entity " + ECS::Entity(entity).GetTag() + " does not have an Image component");
   }
-  else
-    Debug::DebugLogger::GetInstance().LogError("You r trying to Get Image color from an invalid entity");
+  else {
+    Debug::DebugLogger::GetInstance().LogError("GetImageColor: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
 
-  return c;
+  return {};
 }
 
 void Mono::SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val)
@@ -1302,10 +1324,11 @@ void Mono::SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val)
     if (ECS::Entity(entity).HasComponent<Component::Image>())
        ECS::Entity(entity).GetComponent<Component::Image>().color = val;
     else
-      Debug::DebugLogger::GetInstance().LogError("You r trying to set image color from an entity that does not have image component");
+      Debug::DebugLogger::GetInstance().LogError("SetImageColor: Entity " + ECS::Entity(entity).GetTag() + " does not have an Image component");
   }
-  else
-    Debug::DebugLogger::GetInstance().LogError("You r trying to set Image color from an invalid entity");
+  else {
+    Debug::DebugLogger::GetInstance().LogError("SetImageColor: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
 }
 
 MonoString* Mono::GetCurrentScene() {
@@ -1346,7 +1369,9 @@ void Mono::SaveScreenShot(std::string name, int width, int height)
   // Window's full width and height
   int windowWidth = mode->width;
   int windowHeight = mode->height;
+#ifdef _DEBUG
   std::cout << "Width: " << windowWidth << "  Height:" << windowHeight << "\n";
+#endif
 
   // Calculate the starting coordinates for capturing the center
   int startX = (windowWidth - width) / 2;
@@ -1354,7 +1379,9 @@ void Mono::SaveScreenShot(std::string name, int width, int height)
 
   // Ensure the capture area is within bounds
   if (startX < 0 || startY < 0 || startX + width > windowWidth || startY + height > windowHeight) {
+#ifdef _DEBUG
     std::cerr << "Invalid dimensions for screenshot. Check width and height." << std::endl;
+#endif
     return;
   }
 
@@ -1374,18 +1401,78 @@ void Mono::SaveScreenShot(std::string name, int width, int height)
   // Save as PNG
   if (stbi_write_png(("../Assets/GameImg/" + name + ".png").c_str(), width, height, 3, flippedPixels.data(), width * 3))
   {
+#ifdef _DEBUG
     std::cout << "Screenshot saved to " << (name + ".png") << std::endl;
+#endif
   }
   else
   {
+#ifdef _DEBUG
     std::cerr << "Failed to save screenshot!" << std::endl;
+#endif
   }
 }
 
-bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity) {
+bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
+
+  ECS::Entity e = ECS::EntityManager::GetInstance().GetEntityFromTag("[Folder] Outdoorlight");
+  if (ECS::Entity(e))
+  {
+    for (ECS::Entity child : ECS::EntityManager::GetInstance().GetChildEntity(e))
+    {
+      if (child.GetTag() == "Props_CeilingLight")
+      {
+        for (ECS::Entity gchild : ECS::EntityManager::GetInstance().GetChildEntity(child))
+        {
+          if (gchild.GetTag() == "Light")
+          {
+            Component::Light& l = gchild.GetComponent<Component::Light>();
+            l.mRange = 21.f;
+            l.mLightIntensity += (2.0f - l.mLightIntensity) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
+            if (l.mLightIntensity >= 1.96f)
+            {
+              std::cout << "Faster?\n";
+              l.mLightIntensity = 2.f;
+            }
+          }
+        }
+      }
+      else if(child.GetTag() == "Tools Spotlight")
+      {
+        child.SetIsActive(true);
+      }
+      else
+      {
+        if (child.HasComponent<Component::Light>())
+        {
+          Component::Light& l = child.GetComponent<Component::Light>();
+          l.mLightIntensity -= (l.mLightIntensity - 0.0f) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
+          if (l.mLightIntensity <= 0.04f)
+          {
+            std::cout << "Faster?\n";
+            l.mLightIntensity = 0.f;
+          }
+        }
+        
+      }
+    }
+  }
+  else
+    Debug::DebugLogger::GetInstance().LogError("Unable to find entity: [Folder] Outdoorlight");
+   
+  for (ECS::Entity child : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Light>())
+  {
+    if (child.GetTag() == "Light")
+    {
+      child.SetIsActive(true);
+    }
+  }
+
+
+
   if (ECS::Entity(cameraEntity) && ECS::Entity{ cameraEntity }.HasComponent<Component::Skybox>()) {
-    ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend -= Performance::FrameRateController::GetInstance().GetDeltaTime();
-    if (ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend <= 0.f)
+    ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend -= (ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend - 0.0f) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
+    if (ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend <= 0.01f)
       ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend = 0.f;
     return(ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend <= 0.f);
   }
@@ -1394,6 +1481,15 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity) {
   }
   return true;
 }
+
+void Mono::ShowCursor() {
+  QUEUE_EVENT(Events::LockMouseEvent, false);
+}
+
+void Mono::HideCursor() {
+  QUEUE_EVENT(Events::LockMouseEvent, true);
+}
+
 /*!**********************************************************************
 *																																			  *
 *								  Helper Functions to get data from C#			           	*

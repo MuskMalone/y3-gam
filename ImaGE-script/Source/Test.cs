@@ -82,7 +82,7 @@ public class Test : Entity
     {
 
     Console.WriteLine("TEST INT:" + TestInt);
-    Console.WriteLine("TEST INT2:" + TestInt3);
+    //Console.WriteLine("TEST INT2:" + TestInt3);
     //  Console.WriteLine(testEnt.mEntityID.ToString());
     // Console.WriteLine("Hit\n");
     //if (testEnt != null)
@@ -116,24 +116,24 @@ public class Test : Entity
 
   }
 
-    public void OnMouseEnter() {
+    public void OnPointerEnter() {
         string tag = InternalCalls.GetTag(mEntityID);
         Console.WriteLine("From MONO Enter" + tag);
     }
 
-    public void OnMouseExit()
+    public void OnPointerExit()
     {
         string tag = InternalCalls.GetTag(mEntityID);
         Console.WriteLine("From MONO Exit" + tag);
     }
 
-    public void OnMouseDown()
+    public void OnPointerDown()
     {
         string tag = InternalCalls.GetTag(mEntityID);
         Console.WriteLine("From MONO Down" + tag);
     }
 
-    public void OnMouseUp()
+    public void OnPointerUp()
     {
         string tag = InternalCalls.GetTag(mEntityID);
         Console.WriteLine("From MONO Up" + tag);

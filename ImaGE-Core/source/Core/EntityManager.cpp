@@ -204,22 +204,25 @@ namespace ECS {
       return;
     }
 
+    std::string const& parentLayer{ parent.GetComponent<Component::Layer>().name };
     if (mChildren.find(parent.GetRawEnttEntityID()) != mChildren.end()) {
-      for (EntityID id : mChildren[parent.GetRawEnttEntityID()]) {
-        ECS::Entity entity{ id };
-        if (!entity.HasComponent<Component::Layer>()) { continue; }
+      for (ECS::Entity child : mChildren[parent.GetRawEnttEntityID()]) {
+        if (!child.HasComponent<Component::Layer>()) { continue; }
 
-        Component::Layer& layer{ entity.GetComponent<Component::Layer>() };
-        layer.name = parent.GetComponent<Component::Layer>().name;
+        Component::Layer& layer{ child.GetComponent<Component::Layer>() };
 
-        // updated prefab instances with overrides
-        if (entity.HasComponent<Component::PrefabOverrides>()) {
-          entity.GetComponent<Component::PrefabOverrides>().AddComponentModification(layer);
+        if (layer.name != parentLayer) {
+          layer.name = parentLayer;
+
+          // updated prefab instances with overrides
+          if (child.HasComponent<Component::PrefabOverrides>()) {
+            child.GetComponent<Component::PrefabOverrides>().AddComponentModification(layer);
+          }
         }
 
         // Recursively set the children of children
-        if (mChildren.find(id) != mChildren.end()) {
-          SetChildLayersToFollowParent(id);
+        if (mChildren.find(child.GetRawEnttEntityID()) != mChildren.end()) {
+          SetChildLayersToFollowParent(child);
         }
       }
     }
@@ -235,17 +238,25 @@ namespace ECS {
       Debug::DebugLogger::GetInstance().LogError("[EntityManager] Parent(" + std::to_string(parent.GetEntityID()) + ") does not have a Tag!");
       return;
     }
-
+    
+    bool const parentActive{ parent.IsActive() };
     if (mChildren.find(parent.GetRawEnttEntityID()) != mChildren.end()) {
-      for (EntityID id : mChildren[parent.GetRawEnttEntityID()]) {
-        if (Entity{ id }.HasComponent<Component::Tag>()) {
-          Entity{ id }.GetComponent<Component::Tag>().isActive =
-            parent.GetComponent<Component::Tag>().isActive;
+      for (ECS::Entity child : mChildren[parent.GetRawEnttEntityID()]) {
+        if (!child.HasComponent<Component::Tag>()) { continue; }
+
+        Component::Tag& tag{ child.GetComponent<Component::Tag>() };
+        if (tag.isActive != parentActive) {
+          tag.isActive = parentActive;
+
+          // updated prefab instances with overrides
+          if (child.HasComponent<Component::PrefabOverrides>()) {
+            child.GetComponent<Component::PrefabOverrides>().AddComponentModification(tag);
+          }
         }
 
         // Recursively set the children of children
-        if (mChildren.find(id) != mChildren.end()) {
-          SetChildActiveToFollowParent(id);
+        if (mChildren.find(child.GetRawEnttEntityID()) != mChildren.end()) {
+          SetChildActiveToFollowParent(child);
         }
       }
     }

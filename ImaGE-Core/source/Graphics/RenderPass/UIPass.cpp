@@ -96,8 +96,10 @@ namespace Graphics {
 
 			if (cam.isEditor) {
 				Graphics::Renderer::DrawRect(xform.position, canvasScale, xform.rotation, Color::COLOR_WHITE); //canvas drawn only in editor
+			}
 
-
+			if (!cam.isEditor) {
+				Graphics::Renderer::HandleUIInput(children);
 			}
 
 			for (ECS::Entity& uiEntity : children) {

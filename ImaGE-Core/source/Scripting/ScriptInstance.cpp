@@ -39,6 +39,11 @@ ScriptInstance::ScriptInstance(const std::string& scriptName) : mScriptName{scri
   mMouseDownMethod = mono_class_get_method_from_name(mScriptClass, "OnMouseDown", 0);
   mMouseUpMethod = mono_class_get_method_from_name(mScriptClass, "OnMouseUp", 0);
 
+  mPointerEnterMethod = mono_class_get_method_from_name(mScriptClass, "OnPointerEnter", 0);
+  mPointerExitMethod = mono_class_get_method_from_name(mScriptClass, "OnPointerExit", 0);
+  mPointerDownMethod = mono_class_get_method_from_name(mScriptClass, "OnPointerDown", 0);
+  mPointerUpMethod = mono_class_get_method_from_name(mScriptClass, "OnPointerUp", 0);
+
   //mOnCreateMethod = mono_class_get_method_from_name(mScriptClass, "Create", 0);
   mGcHandle = mono_gchandle_new(mClassInst, true);
   GetAllFieldsInst();
@@ -162,6 +167,31 @@ void ScriptInstance::InvokeOnMouseUp() {
     if (mMouseUpMethod) {
         std::vector<void*> params = { };
         mono_runtime_invoke(mMouseUpMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+    }
+}
+
+void ScriptInstance::InvokeOnPointerEnter() {
+    if (mPointerEnterMethod) {
+        std::vector<void*> params = {  };
+        mono_runtime_invoke(mPointerEnterMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+    }
+}
+void ScriptInstance::InvokeOnPointerExit() {
+    if (mPointerExitMethod) {
+        std::vector<void*> params = { };
+        mono_runtime_invoke(mPointerExitMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+    }
+}
+void ScriptInstance::InvokeOnPointerDown() {
+    if (mPointerDownMethod) {
+        std::vector<void*> params = { };
+        mono_runtime_invoke(mPointerDownMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+    }
+}
+void ScriptInstance::InvokeOnPointerUp() {
+    if (mPointerUpMethod) {
+        std::vector<void*> params = { };
+        mono_runtime_invoke(mPointerUpMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
     }
 }
 

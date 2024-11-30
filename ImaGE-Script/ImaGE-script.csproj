@@ -94,6 +94,7 @@
     <Compile Include="source\Dialogue\SpecialDialogue.cs" />
     <Compile Include="source\Engine Tools\Easing.cs" />
     <Compile Include="source\Engine Tools\FPS.cs" />
+    <Compile Include="source\InteractableObject\AltarPaintingFrame.cs" />
     <Compile Include="source\InteractableObject\Key.cs" />
     <Compile Include="source\InteractableObject\Safe.cs" />
     <Compile Include="source\InteractableObject\KeyDoor.cs" />
@@ -102,7 +103,9 @@
     <Compile Include="source\InteractableObject\NightPainting.cs" />
     <Compile Include="source\InteractableObject\NoteInteraction.cs" />
     <Compile Include="source\InteractableObject\PitPainting.cs" />
+    <Compile Include="source\InteractableObject\SafeButtons.cs" />
     <Compile Include="source\InteractableObject\Seed.cs" />
+    <Compile Include="source\InteractableObject\SuspiciousPainting.cs" />
     <Compile Include="source\InteractableObject\Tools.cs" />
     <Compile Include="source\InteractableObject\TutorialPainting.cs" />
     <Compile Include="source\Inventory\HUD.cs" />

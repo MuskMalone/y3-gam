@@ -13,6 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "AssetBrowser.h"
 #include <imgui/imgui.h>
 #include <Events/EventManager.h>
+#include <Events/AssetEvents.h>
 #include <GUI/Helpers/AssetHelpers.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
@@ -660,7 +661,7 @@ namespace GUI
         ImGui::SetTooltip("Rename feature coming soon!");
       }
 
-      NextRowTable("##emptyline");
+      NextRowTable("");
 
       bool elementHover{ false };
 
@@ -690,6 +691,14 @@ namespace GUI
         ImGui::SetTooltip("Rescale the mesh to a unit size");
         elementHover = false;
       }
+      ImGui::TableNextRow();
+
+      // flip UVs checkbox
+      ImGui::AlignTextToFramePadding();
+      NextRowTable("Flip UVs?");
+      if (ImGui::IsItemHovered()) { elementHover = true; }
+
+      ImGui::Checkbox("##FlipUVs", &Graphics::AssetIO::IMSH::sFlipUVs);
       ImGui::TableNextRow();
 
       // static mesh checkbox

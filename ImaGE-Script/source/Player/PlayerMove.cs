@@ -71,6 +71,9 @@ public class  PlayerMove : Entity
       }
     }
 
+    if(InternalCalls.IsKeyTriggered(KeyCode.SEMICOLON))
+      canLook = false;
+
     ProcessLook();
     if (canMove)
       PlayerMovement();

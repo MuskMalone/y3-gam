@@ -361,6 +361,10 @@ namespace Mono
 
 		static glm::vec3 GetMousePos();
 
+		static glm::vec3 GetMousePosWorld(float depth);
+
+		static glm::vec3 GetCameraForward();
+
 		static ECS::Entity::EntityID FindChildByTag(ECS::Entity::EntityID entity, MonoString* s);
 
 		static ECS::Entity::EntityID FindParentByTag(MonoString* s);
@@ -398,7 +402,11 @@ namespace Mono
 		static void TakeScreenShot(MonoString* name, int width, int height);
 		void SaveScreenShot(std::string name, int width, int height);
 
-		static bool SetDaySkyBox(ECS::Entity::EntityID cameraEntity);
+		static bool SetDaySkyBox(ECS::Entity::EntityID cameraEntity,float speed);
+
+		static void ShowCursor();
+
+		static void HideCursor();
 
 		/*!**********************************************************************
 		*																																			  *

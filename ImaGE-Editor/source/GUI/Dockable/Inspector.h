@@ -69,7 +69,8 @@ namespace GUI {
     bool ScriptComponentWindow(ECS::Entity entity, bool highlight = false);
     bool SphereColliderComponentWindow(ECS::Entity entity, bool highlight = false);
     bool Sprite2DComponentWindow(ECS::Entity entity, bool highlight = false);
-    bool SkyboxComponentWindow(ECS::Entity entity, bool highlight);
+    bool SkyboxComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool InteractiveComponentWindow(ECS::Entity entity, bool highlight = false);
     bool TagComponentWindow(ECS::Entity entity, bool highlight = false);
     bool TextComponentWindow(ECS::Entity entity, bool highlight = false);
     bool TransformComponentWindow(ECS::Entity entity, bool highlight = false);

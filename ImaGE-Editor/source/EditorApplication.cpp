@@ -11,6 +11,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "EditorApplication.h"
 
 #include <Events/EventManager.h>
+#include <Events/AssetEvents.h>
 #include <Physics/PhysicsSystem.h>
 #include <Scenes/SceneManager.h>
 #include <Prefabs/PrefabManager.h>

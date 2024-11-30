@@ -19,6 +19,11 @@ Mono::ScriptingSystem::ScriptingSystem(const char* name) : System(name) {
     SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_MOUSE_EXIT, &ScriptingSystem::HandleMouseExit, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_MOUSE_DOWN, &ScriptingSystem::HandleMouseDown, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_MOUSE_UP, &ScriptingSystem::HandleMouseUp, this);
+
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::POINTER_ENTER, &ScriptingSystem::HandlePointerEnter, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::POINTER_EXIT, &ScriptingSystem::HandlePointerExit, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::POINTER_DOWN, &ScriptingSystem::HandlePointerDown, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::POINTER_UP, &ScriptingSystem::HandlePointerUp, this);
 }
 
 void ScriptingSystem::Update()
@@ -93,3 +98,56 @@ EVENT_CALLBACK_DEF(Mono::ScriptingSystem, HandleMouseUp) {
         }
     }
 }
+
+EVENT_CALLBACK_DEF(Mono::ScriptingSystem, HandlePointerEnter) {
+    auto e{ CAST_TO_EVENT(Events::EntityPointerEnter) };
+    if (e->mEntity.HasComponent<Component::Script>()) {
+        auto& scriptList{ e->mEntity.GetComponent<Component::Script>().mScriptList };
+        for (Mono::ScriptInstance& cs : scriptList)
+        {
+            if (scriptList.size() == 0) //This is in case a script is deleted while being updated
+                break;
+            cs.InvokeOnPointerEnter();
+        }
+    }
+}
+
+EVENT_CALLBACK_DEF(Mono::ScriptingSystem, HandlePointerExit) {
+    auto e{ CAST_TO_EVENT(Events::EntityPointerExit) };
+    if (e->mEntity.HasComponent<Component::Script>()) {
+        auto& scriptList{ e->mEntity.GetComponent<Component::Script>().mScriptList };
+        for (Mono::ScriptInstance& cs : scriptList)
+        {
+            if (scriptList.size() == 0) //This is in case a script is deleted while being updated
+                break;
+            cs.InvokeOnPointerExit();
+        }
+    }
+}
+
+EVENT_CALLBACK_DEF(Mono::ScriptingSystem, HandlePointerDown) {
+    auto e{ CAST_TO_EVENT(Events::EntityPointerDown) };
+    if (e->mEntity.HasComponent<Component::Script>()) {
+        auto& scriptList{ e->mEntity.GetComponent<Component::Script>().mScriptList };
+        for (Mono::ScriptInstance& cs : scriptList)
+        {
+            if (scriptList.size() == 0) //This is in case a script is deleted while being updated
+                break;
+            cs.InvokeOnPointerDown();
+        }
+    }
+}
+
+EVENT_CALLBACK_DEF(Mono::ScriptingSystem, HandlePointerUp) {
+    auto e{ CAST_TO_EVENT(Events::EntityPointerUp) };
+    if (e->mEntity.HasComponent<Component::Script>()) {
+        auto& scriptList{ e->mEntity.GetComponent<Component::Script>().mScriptList };
+        for (Mono::ScriptInstance& cs : scriptList)
+        {
+            if (scriptList.size() == 0) //This is in case a script is deleted while being updated
+                break;
+            cs.InvokeOnPointerUp();
+        }
+    }
+}
+
