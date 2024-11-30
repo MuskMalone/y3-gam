@@ -26,8 +26,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Scenes
 {
-  SceneManager::SceneManager() : mSaveStates{}, mMainThreadQueue{}, mSceneName{},
-    mTempDir{ gTempDirectory }, mMainThreadQueueMutex{}, mSceneState{ NO_SCENE }
+  SceneManager::SceneManager(SceneState startingState) : mSaveStates{}, mMainThreadQueue{}, mSceneName{},
+    mTempDir{ gTempDirectory }, mMainThreadQueueMutex{}, mSceneState{ startingState }
   {
     // @TODO: SHOULD RETREIVE FROM CONFIG FILE IN FUTURE
     //mTempDir = gTempDirectory;
@@ -135,8 +135,12 @@ namespace Scenes
     }
     Debug::DebugLogger::GetInstance().LogInfo("Loading scene: " + mSceneName + "...");
 
+    // if the scene changed while playing, we dont stop it
     if (mSceneState != SceneState::PLAYING) {
       mSceneState = SceneState::STOPPED;
+    }
+    else {
+      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mSceneName);
     }
   }
 

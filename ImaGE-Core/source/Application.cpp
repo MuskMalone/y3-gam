@@ -53,7 +53,7 @@ namespace IGE {
     IGE::Audio::AudioManager::CreateInstance();
     Assets::AssetManager::CreateInstance();
     Reflection::ObjectFactory::CreateInstance();
-    Scenes::SceneManager::CreateInstance();
+    Scenes::SceneManager::CreateInstance(mSpecification.StartFromScene.first ? Scenes::PLAYING : Scenes::NO_SCENE);
     Prefabs::PrefabManager::CreateInstance();
     Performance::FrameRateController::CreateInstance(120.f, 0.05f, false);
     Input::InputManager::CreateInstance(mWindow, mSpecification.WindowWidth, mSpecification.WindowHeight, 0.1);

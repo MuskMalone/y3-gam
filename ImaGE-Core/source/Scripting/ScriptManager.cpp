@@ -1335,23 +1335,12 @@ MonoString* Mono::GetCurrentScene() {
   return STDToMonoString(IGE_SCENEMGR.GetSceneName());
 }
 
-// Note: For now this function works in ImaGE-Game, but not exactly in ImaGE-Editor (Scene is unable to play automatically
-// after changing scenes, but scene still changes). Just assume that the scene changes and plays in the game application
 void Mono::SetCurrentScene(MonoString* scenePath) {
   std::string scenePathSTD{ MonoStringToSTD(scenePath) };
 
   if (!scenePathSTD.empty()) {
-    //IGE_EVENTMGR.DispatchImmediateEvent<Events::LoadSceneEvent>(std::filesystem::path(scenePathSTD).stem().string(),
-      //scenePathSTD);
     QUEUE_EVENT(Events::LoadSceneEvent, std::filesystem::path(scenePathSTD).stem().string(),
       scenePathSTD);
-
-    // Play the scene (Most common use case is to set scene and immediately want it playing)
-    /*
-    if (IGE_SCENEMGR.GetSceneState() != Scenes::SceneState::PLAYING) {
-      IGE_SCENEMGR.PlayScene();
-    }
-    */
   }
 }
 
