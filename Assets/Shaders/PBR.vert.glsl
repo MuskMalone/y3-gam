@@ -22,6 +22,7 @@ out vec3 v_FragPos;
 out vec3 v_Normal;           // Normal in world space
 out vec3 v_Tangent;          // Tangent in world space
 out vec3 v_Bitangent;        // Bitangent in world space
+out vec3 v_ViewPosition;
 
 out uvec2 v_AlbedoHandle;
 out int v_MaterialIdx;

@@ -19,7 +19,9 @@ namespace IGE {
                 HRESULT hr = DirectX::LoadFromWICFile(inputPath.c_str(), DirectX::WIC_FLAGS_NONE, &metadata, image);
 
                 if (FAILED(hr)) {
+#ifdef _DEBUG
                     std::cerr << "Failed to load image: " << std::hex << hr << std::endl;
+#endif
                     return false;
                 }
 
@@ -34,7 +36,9 @@ namespace IGE {
                     return false;
                 }
 #endif           
+#ifdef _DEBUG
                 std::cout << "Image successfully converted to DDS: ";
+#endif
                 std::wcout <<  outputPath << std::endl;
                 return true;
             }
@@ -52,7 +56,7 @@ namespace IGE {
             }
 
             newFp = inputImagePath;
-            metadata.emplace("path", newFp);
+            metadata["path"] = newFp;
             return GUID{ GUID::Seed{} };
         }
 		void* TextureAsset::Load([[maybe_unused]] GUID guid) {
@@ -65,8 +69,16 @@ namespace IGE {
 
             if (fileext != ".dds" && cImageExtensions.find(fileext) != cImageExtensions.end()) {
                 // Convert the copied image to DDS format
-                if (!ConvertToDDS(std::wstring(fp.begin(), fp.end()), std::wstring(ddsImagePath.begin(), ddsImagePath.end()))) {
-                    throw Debug::Exception<TextureAsset>(Debug::LVL_ERROR, Msg("compilation failed to convert " + fileext + " to .dds"));
+                try {
+                    if (!ConvertToDDS(std::wstring(fp.begin(), fp.end()), std::wstring(ddsImagePath.begin(), ddsImagePath.end()))) {
+                        throw Debug::Exception<TextureAsset>(Debug::LVL_ERROR, Msg("compilation failed to convert " + fileext + " to .dds"));
+                        Debug::DebugLogger::GetInstance().LogError("compilation failed to convert " + fileext + " to .dds");
+                    }
+                    
+                }
+                catch (Debug::ExceptionBase& e)
+                {
+                    e.LogSource();
                 }
             }
             else if (fileext == ".dds") {

@@ -24,6 +24,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Dockable/Debugging/PerformanceWindow.h"
 #include "Dockable/Debugging/RenderPassViewer.h"
 #include "Persistent/PrefabEditor.h"
+#include "Persistent/PopupHelper.h"
 #include "Persistent/SceneControls.h"
 #include "Dockable/SceneHierarchy.h"
 #include "Persistent/Toolbar.h"
@@ -39,10 +40,11 @@ namespace GUI {
   }
 
   void GUIManager::Init(Graphics::RenderTarget& renderTarget) {
-    mPersistentElements.reserve(3);
+    mPersistentElements.reserve(4);
     mPersistentElements.emplace_back(std::make_unique<Toolbar>("Toolbar", mWindows));
     mPersistentElements.emplace_back(std::make_unique<SceneControls>("Scene Controls"));
     mPersistentElements.emplace_back(std::make_unique<PrefabEditor>("Prefab Editor"));
+    mPersistentElements.emplace_back(std::make_unique<PopupHelper>("Popup Helper"));
 
     // hold ptrs to the viewports
     mEditorViewport = std::make_shared<Viewport>("Viewport", renderTarget.camera);
@@ -58,7 +60,7 @@ namespace GUI {
     mWindows.emplace_back(std::make_shared<Console>("Console"));
     mWindows.emplace_back(std::make_shared<PerformanceWindow>("Performance Window"));
     mWindows.emplace_back(std::make_shared<LayerWindow>("Layers"));
-    mWindows.emplace_back(std::make_shared<RenderPassViewer>("Render Pass Viewer"));
+    mWindows.emplace_back(std::make_shared<RenderPassViewer>("Render Pass Viewer"))->Toggle();  // default to non-active
     mWindows.emplace_back(std::make_shared<PostProcessingSettings>("Post Processing"));
 
     Styler& styler{ GUIVault::GetStyler() };

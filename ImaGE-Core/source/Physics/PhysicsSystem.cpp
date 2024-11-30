@@ -79,6 +79,7 @@ namespace IGE {
 			for (auto entity : rbsystem) {
 				auto& xfm{ rbsystem.get<Component::Transform>(entity) };
 				auto& rb{ rbsystem.get<Component::RigidBody>(entity) };
+
 				auto rbiter{ mRigidBodyIDs.find(rb.bodyID) };
 				if (rbiter != mRigidBodyIDs.end()) {
 					physx::PxRigidDynamic* pxrigidbody{ mRigidBodyIDs.at(rb.bodyID) };
@@ -318,9 +319,6 @@ namespace IGE {
 		}
 		template <typename _physx_type, typename _collider_component>
 		void PhysicsSystem::AddNewCollider(physx::PxRigidDynamic*& rb, ECS::Entity const& entity, _collider_component& collider, bool newCollider) {
-			//if (entity.GetComponent<Component::Tag>().tag == std::string{"MainGround"}) {
-			//	std::cout << "hello\n";
-			//}
 			Component::Transform transform = entity.GetComponent<Component::Transform>();
 			if ((glm::abs(transform.worldScale.x) + glm::abs(transform.worldScale.y) + glm::abs(transform.worldScale.z)) <= glm::epsilon<float>()) {
 				transform.worldScale = { 1,1,1 }; //temp fix
@@ -345,6 +343,13 @@ namespace IGE {
 			mScene->addActor(*rb);
 			collider.idx = 0;
 			rb->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
+			//getting from graphics
+			if (rb->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC))
+				rb->setKinematicTarget(physx::PxTransform{ ToPxVec3(transform.worldPos), ToPxQuat(transform.worldRot) });
+			else
+				rb->setGlobalPose(physx::PxTransform{ ToPxVec3(transform.worldPos), ToPxQuat(transform.worldRot) });
+
+
 		}
 		template <typename _physx_type, typename _collider_component>
 		_collider_component& PhysicsSystem::AddCollider(ECS::Entity entity, _collider_component collider, bool newCollider) {
@@ -649,19 +654,24 @@ namespace IGE {
 			}
 			mRigidBodyIDs.clear();
 			mRigidBodyToEntity.clear();
+			mInactiveActors.clear();
+			mOnTriggerPairs.clear();
 		}
 
 		bool PhysicsSystem::RayCastSingular(glm::vec3 const& origin, glm::vec3 const& end, RaycastHit& result)
 		{
-			physx::PxRaycastBuffer hitBuffer{};
+			physx::PxRaycastBufferN<8> hitBuffer{};
 			auto dir{ glm::normalize(end - origin) };
 			auto mag{ glm::distance(origin, end) };
 			bool hit{ mScene->raycast(ToPxVec3(origin), ToPxVec3(dir), mag, hitBuffer) };
 			if (hit) {
-				result.entity = mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.block.actor));
-				result.distance = hitBuffer.block.distance;
-				result.normal = ToGLMVec3(hitBuffer.block.normal);
-				result.position = ToGLMVec3(hitBuffer.block.position);
+				std::sort(hitBuffer.touches, hitBuffer.touches + hitBuffer.getNbTouches(), [](const physx::PxRaycastHit& a, const physx::PxRaycastHit& b) {
+					return a.distance < b.distance;
+					});
+				result.entity = mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[0].actor));
+				result.distance = hitBuffer.touches[0].distance;
+				result.normal = ToGLMVec3(hitBuffer.touches[0].normal);
+				result.position = ToGLMVec3(hitBuffer.touches[0].position);
 				if (mDrawDebug)
 					mRays.emplace_back(RayCastResult{
 							origin, end, result, true
@@ -693,46 +703,30 @@ namespace IGE {
 			auto magnitude{ glm::distance(origin, end) };
 			bool hit{ mScene->raycast(ToPxVec3(origin), ToPxVec3(dir), magnitude, hitBuffer) };
 			if (hit) {
-				if (hitBuffer.nbTouches == 1){
-					if (mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[0].actor)) == entity) {
-						mRays.emplace_back(RayCastResult{
-							origin, end, result, false
-							});
-						return false;
-					}
-					else {
-						result.entity = mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[0].actor));
-						result.distance = hitBuffer.touches[0].distance;
-						result.normal = ToGLMVec3(hitBuffer.touches[0].normal);
-						result.position = ToGLMVec3(hitBuffer.touches[0].position);
-						return true;
-					}
-				}
-				//sort the distance of the objects
 				std::sort(hitBuffer.touches, hitBuffer.touches + hitBuffer.getNbTouches(), [](const physx::PxRaycastHit& a, const physx::PxRaycastHit& b) {
 					return a.distance < b.distance;
-				});
-				uint64_t idx{};
-				ECS::Entity entity1 { mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[0].actor)) };
-				ECS::Entity entity2 { mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[1].actor)) };
-				if (entity1 == entity) { // if entity1 is the original entity use the other
-					idx = 1;
+					});
+
+				//sort the distance of the objects
+				
+				for (uint64_t idx{}; idx < hitBuffer.nbTouches; ++idx) {
+					auto const& e{ mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[idx].actor)) };
+					if (e == entity) { // if entity1 is the original entity use the other
+						continue;
+					}
+					if (!e.IsActive()) {
+						continue;
+					}
+					result.entity = e;
+					result.distance = hitBuffer.touches[idx].distance;
+					result.normal = ToGLMVec3(hitBuffer.touches[idx].normal);
+					result.position = ToGLMVec3(hitBuffer.touches[idx].position);
+					if (mDrawDebug)
+						mRays.emplace_back(RayCastResult{
+								origin, end, result, true
+							});
+					return true;
 				}
-				else if (entity2 == entity) { // if entity2 is the original entity use the other
-					idx = 0;
-				}
-				else { // if none of the entity matches, 
-					idx = (hitBuffer.touches[0].distance < hitBuffer.touches[1].distance) ? 0 : 1;
-				}
-				result.entity = mRigidBodyToEntity.at(reinterpret_cast<void*>(hitBuffer.touches[idx].actor));
-				result.distance = hitBuffer.touches[idx].distance;
-				result.normal = ToGLMVec3(hitBuffer.touches[idx].normal);
-				result.position = ToGLMVec3(hitBuffer.touches[idx].position);
-				if (mDrawDebug)
-					mRays.emplace_back(RayCastResult{
-							origin, end, result, true
-						});
-				return true;
 			}
 			if (mDrawDebug)
 				mRays.emplace_back(RayCastResult{

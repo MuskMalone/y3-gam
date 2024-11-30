@@ -99,6 +99,12 @@ namespace IGE.Utils
     internal extern static Vector3 GetMousePos();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static Vector3 GetMousePosWorld(float depth);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static Vector3 GetCameraForward();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static string GetInputString();
 
     #endregion
@@ -139,6 +145,10 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void DestroyScript(Entity obj, uint EntityID);
 
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static Entity FindScriptInEntity(uint entity,string s);
+
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static uint FindChildByTag(uint EntityID, string s);
 
@@ -150,10 +160,26 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetMainCameraDirection(uint cameraEntityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static Quaternion GetMainCameraRotation(uint cameraEntityID);
     #endregion
 
 
     #region Text Component
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static Vector4 GetTextColor(uint EntityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetTextColor(uint TextEntityID, Vector4 textColor);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetTextScale(uint EntityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetTextScale(uint TextEntityID, float textScale);
+
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static string GetText(uint EntityID);
 
@@ -220,6 +246,24 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static Entity FindScript(string s);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static string GetCurrentScene();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetCurrentScene(string sceneName);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void TakeScreenShot(string s, int width, int height);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool SetDaySkyBox(uint mEntityID, float speed);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void ShowCursor();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void HideCursor();
     #endregion
   }
 }

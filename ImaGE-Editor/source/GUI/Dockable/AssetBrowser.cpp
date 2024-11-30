@@ -13,6 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "AssetBrowser.h"
 #include <imgui/imgui.h>
 #include <Events/EventManager.h>
+#include <Events/AssetEvents.h>
 #include <GUI/Helpers/AssetHelpers.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
@@ -323,9 +324,11 @@ namespace GUI
   {
     for (auto const& file : std::filesystem::recursive_directory_iterator(gAssetsDirectory))
     {
-      if (file.is_directory() || file.path().extension() == gMeshFileExt) { continue; }
+      std::filesystem::path const& path{ file.path() };
+      if (file.is_directory() || path.extension() == gMeshFileExt
+          || path.parent_path().filename() == sCompiledDirectory) { continue; } 
 
-      std::string const fileName{ file.path().filename().string() };
+      std::string const fileName{ path.filename().string() };
       if (ToLower(fileName).find(sLowerSearchQuery) == std::string::npos) { continue; }
 
       ImGui::TableNextColumn();
@@ -335,7 +338,7 @@ namespace GUI
       ImGui::ImageButton(0, ImVec2(imgSize, imgSize));
       ImVec2 const originalPos{ ImGui::GetCursorPos() };
 
-      CheckInput(file);
+      CheckInput(path);
 
       // display file name below
       ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
@@ -350,7 +353,7 @@ namespace GUI
         float const halfImgSize{ imgSize * 0.5f };
         ImVec2 const offset{ ImVec2(halfImgSize - 7.f, -halfImgSize - 23.f) };
         ImGui::SetCursorPos(originalPos + offset);
-        DisplayTempFileIcon(file.path().extension().string());
+        DisplayTempFileIcon(path.extension().string());
         ImGui::SetCursorPos(originalPos);
       }
 
@@ -460,7 +463,7 @@ namespace GUI
       {
         for (auto const& file : std::filesystem::directory_iterator(path))
         {
-          if (!file.is_directory() || file.path().filename() == "Compiled") { continue; }
+          if (!file.is_directory() || file.path().filename() == sCompiledDirectory) { continue; }
 
           RecurseDownDirectory(file);
         }
@@ -658,7 +661,7 @@ namespace GUI
         ImGui::SetTooltip("Rename feature coming soon!");
       }
 
-      NextRowTable("##emptyline");
+      NextRowTable("");
 
       bool elementHover{ false };
 
@@ -688,6 +691,14 @@ namespace GUI
         ImGui::SetTooltip("Rescale the mesh to a unit size");
         elementHover = false;
       }
+      ImGui::TableNextRow();
+
+      // flip UVs checkbox
+      ImGui::AlignTextToFramePadding();
+      NextRowTable("Flip UVs?");
+      if (ImGui::IsItemHovered()) { elementHover = true; }
+
+      ImGui::Checkbox("##FlipUVs", &Graphics::AssetIO::IMSH::sFlipUVs);
       ImGui::TableNextRow();
 
       // static mesh checkbox

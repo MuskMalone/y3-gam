@@ -1,6 +1,7 @@
 #include <pch.h>
 #include "AssetManager.h"
 #include "Events/EventManager.h"
+#include <Events/AssetEvents.h>
 #include <Asset/Assetables/AssetExtensions.h>
 #include <Asset/AssetUtils.h>
 #include <Asset/Assetables/Assetables.h>
@@ -83,6 +84,7 @@ namespace IGE {
 		}
 		AssetManager::AssetManager() {
 			SUBSCRIBE_CLASS_FUNC(Events::EventType::REGISTER_FILES, &AssetManager::HandleAddFiles, this);
+			SUBSCRIBE_CLASS_FUNC(Events::EventType::GUID_REMAP, &AssetManager::OnRemapGUID, this);
 			Initialize();
 			 //code snippet to "manufacture" all the data needed for importing
 			 //assumes that all the files are imported as is
@@ -140,13 +142,13 @@ namespace IGE {
 
 		std::string AssetManager::GUIDToPath(GUID const& guid) {
 			if (mGUID2PathRegistry.find(guid) == mGUID2PathRegistry.end())
-				throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("GUID doesnt have path"));
+				throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("GUID " + std::to_string(static_cast<uint64_t>(guid)) + " doesnt have path"));
 			return mGUID2PathRegistry.at(guid);
 		}
 
 		GUID AssetManager::PathToGUID(std::string const& path) {
 			if (mPath2GUIDRegistry.find(path) == mPath2GUIDRegistry.end())
-				throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("path doesnt have GUID"));
+				throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("path " + path + " doesnt have GUID"));
 			return mPath2GUIDRegistry.at(path);
 		}
 
@@ -186,6 +188,35 @@ namespace IGE {
 				}
 			}
 
+		}
+
+		EVENT_CALLBACK_DEF(AssetManager, OnRemapGUID) {
+			auto const& remapEvent{ CAST_TO_EVENT(Events::RemapGUID) };
+
+			AssetMetadata::AssetCategory& assetCat{ mMetadata.mAssetProperties[remapEvent->mAssetType] };
+
+			if (!IsValidFilePath(remapEvent->mPath) || !IsPathWithinDirectory(remapEvent->mPath, gAssetsDirectory)) {
+				throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("Invalid file path or file is not within assets dir"));
+			}
+
+			// if existing file is mapped to another guid, remove that entry
+			if (mPath2GUIDRegistry.contains(remapEvent->mPath)) {
+				GUID original{ mPath2GUIDRegistry[remapEvent->mPath] };
+				if (original != remapEvent->mGUID) {
+					mPath2GUIDRegistry.erase(remapEvent->mPath);
+					mGUID2PathRegistry.erase(original);
+					assetCat.erase(original);
+					mAssetRefs.erase(original);
+				}
+			}
+
+			assetCat[remapEvent->mGUID]["path"] = remapEvent->mPath;
+			mPath2GUIDRegistry[remapEvent->mPath] = remapEvent->mGUID;
+			mGUID2PathRegistry[remapEvent->mGUID] = remapEvent->mPath;
+
+			IGE_DBGLOGGER.LogInfo("[AssetManager] Remapped " + remapEvent->mAssetType + " " 
+				+ std::to_string(static_cast<uint64_t>(remapEvent->mGUID)) + " to " + remapEvent->mPath);
+			SaveMetadata();
 		}
 
 	}

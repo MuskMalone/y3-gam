@@ -10,16 +10,25 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
 #include <Core/Systems/System.h>
-
+#include <Events/EventCallback.h>
 namespace Mono
 {
 	class ScriptingSystem : public Systems::System {
 		
 	public:
 
-		ScriptingSystem(const char* name) : System(name)  {}
+		ScriptingSystem(const char* name);
 		void Update() override;
+	private:
+		EVENT_CALLBACK_DECL(HandleMouseEnter);
+		EVENT_CALLBACK_DECL(HandleMouseExit);
+		EVENT_CALLBACK_DECL(HandleMouseDown);
+		EVENT_CALLBACK_DECL(HandleMouseUp);
 
+		EVENT_CALLBACK_DECL(HandlePointerEnter);
+		EVENT_CALLBACK_DECL(HandlePointerExit);
+		EVENT_CALLBACK_DECL(HandlePointerDown);
+		EVENT_CALLBACK_DECL(HandlePointerUp);
 	};
 }
 

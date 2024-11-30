@@ -38,7 +38,7 @@ namespace Graphics::AssetIO
     | aiProcess_GenSmoothNormals | aiProcess_SortByPType;
   unsigned const IMSH::sAssimpImportFlags = aiProcess_ValidateDataStructure | aiProcess_JoinIdenticalVertices | aiProcess_Triangulate
     | aiProcess_RemoveComponent | aiProcess_GenSmoothNormals | aiProcess_ImproveCacheLocality | aiProcess_FixInfacingNormals
-    | aiProcess_FindInvalidData | aiProcess_SortByPType | aiProcess_OptimizeMeshes | aiProcess_FlipUVs | aiProcess_RemoveRedundantMaterials
+    | aiProcess_FindInvalidData | aiProcess_SortByPType | aiProcess_OptimizeMeshes | aiProcess_RemoveRedundantMaterials
     | aiProcess_SplitLargeMeshes | aiProcess_TransformUVCoords;
 
 
@@ -59,7 +59,9 @@ namespace Graphics::AssetIO
 
     importer.SetPropertyInteger(AI_CONFIG_PP_RVC_FLAGS, importFlags.GetFlags());
 
-    aiScene const* aiScn{ importer.ReadFile(file, sAssimpImportFlags) };
+    unsigned const flags{ sFlipUVs ? sAssimpImportFlags | aiProcess_FlipUVs : sAssimpImportFlags };
+
+    aiScene const* aiScn{ importer.ReadFile(file, flags) };
     if (!aiScn || aiScn->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !aiScn->mRootNode) {
       mStatus = false;
       Debug::DebugLogger::GetInstance().LogError("Unable to import model " + file);

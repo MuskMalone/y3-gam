@@ -19,14 +19,15 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
 #include "ObjectFactory.h"
-#include "ComponentTypes.h"
-#include <Serialization/Deserializer.h>
 #include <sstream>
+#include <Core/Components/Components.h>
+#include "ComponentTypes.h"
+#include "AddComponentFunctions.h"
+
+#include <Serialization/Deserializer.h>
 #include <Physics/PhysicsSystem.h>
 #include <Prefabs/PrefabManager.h>
 #include <Events/EventManager.h>
-#include "AddComponentFunctions.h"
-#include <Core/Components/Components.h>
 
 #define GET_RTTR_TYPE(T) rttr::type::get<T>()
 #ifdef _DEBUG
@@ -60,7 +61,8 @@ namespace Reflection
       { GET_RTTR_TYPE(Image), ComponentUtils::AddImage },
       { GET_RTTR_TYPE(Sprite2D), ComponentUtils::AddSprite2D },
       { GET_RTTR_TYPE(Camera), ComponentUtils::AddCamera },
-      { GET_RTTR_TYPE(Skybox), ComponentUtils::AddSkybox }
+      { GET_RTTR_TYPE(Skybox), ComponentUtils::AddSkybox },
+      { GET_RTTR_TYPE(Interactive), ComponentUtils::AddInteractive}
     };
 
     if (mAddComponentFuncs.size() != gComponentTypes.size()) {
@@ -183,6 +185,20 @@ namespace Reflection
 
     for (auto const& [guid, data] : mPrefabInstances) {
       std::vector<ECS::Entity> baseEntities;
+      bool isPrefabValid{ true };
+
+      try {
+        am.LoadRef<Assets::PrefabAsset>(guid);
+      }
+      catch ([[maybe_unused]] Debug::ExceptionBase& e) {
+        // if invalid, dispatch event to remap the reference
+        PrefabInst const& inst{ data.cbegin()->second };
+        IGE_DBGLOGGER.LogCritical("GUID: " + std::to_string(static_cast<uint64_t>(guid)) + " of Prefab: " + inst.mName + " invalid!");
+        QUEUE_EVENT(Events::GUIDInvalidated, data.begin()->first, guid, rttr::type::get<IGE::Assets::PrefabAsset>().get_name().to_string());
+
+        // we'll continue to create the entity, just without the prefab overrides
+        isPrefabValid = false;
+      }
 
       // first, construct each entity while creating a map of parent to children
       // we will use this to traverse down the root entity of each prefab instance,
@@ -198,23 +214,12 @@ namespace Reflection
         }
 
         // restore its prefab overrides
-        ent.EmplaceComponent<Component::PrefabOverrides>(instData.mOverrides);
+        if (isPrefabValid) {
+          ent.EmplaceComponent<Component::PrefabOverrides>(instData.mOverrides);
+        }
       }
 
-      try {
-        am.LoadRef<Assets::PrefabAsset>(guid);
-      }
-      // @TODO: Start a blocking call to an ImGui::Popup to allow selection of the prefab file,
-      //        then remap the GUIDs to the newly generated one
-      catch ([[maybe_unused]] Debug::ExceptionBase& e) {
-        PrefabInst const& inst{ data.cbegin()->second };
-        IGE_DBGLOGGER.LogCritical("GUID of Prefab: " + inst.mName + " invalid!");
-        IGE_DBGLOGGER.LogCritical("Say bye bye to Entity " + ECS::Entity(inst.mId).GetTag() + " until I implement GUI to allow remapping!");
-        //IGE_EVENTMGR.DispatchImmediateEvent<Events::RemapPrefabGUID>(inst.mId, inst.mName);
-        continue;
-      }
-
-      auto const& originalPfb{ am.GetAsset<Assets::PrefabAsset>(guid)->mPrefabData };
+      Prefabs::Prefab const* originalPfb{ isPrefabValid ? &am.GetAsset<Assets::PrefabAsset>(guid)->mPrefabData : nullptr };
 
       for (ECS::Entity& e : baseEntities) {
         std::unordered_map<Prefabs::SubDataId, ECS::Entity> idToEntity{};
@@ -223,8 +228,9 @@ namespace Reflection
         TraverseDownInstance(e, idToEntity, data);
 
         // fill the instance with its components and missing sub-objects
-        originalPfb.FillPrefabInstance(guid, idToEntity);
-
+        if (isPrefabValid) {
+          originalPfb->FillPrefabInstance(guid, idToEntity);
+        }
       }
 
       // set the root positions
@@ -277,6 +283,8 @@ namespace Reflection
     }
 
     LoadPrefabInstances();
+    // trigger the guid remapping popup if needed
+    QUEUE_EVENT(Events::TriggerGUIDRemap);
   }
 
   void ObjectFactory::ClearData() {

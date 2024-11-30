@@ -15,7 +15,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 // Names of Keys used when serializing to file
 // Both Serializer and Deserializer use these to determine the name of the keys
 #define JSON_ID_KEY                 "ID"
-#define JSON_ENTITY_STATE_KEY       "isActive"
 #define JSON_PARENT_KEY             "Parent"
 #define JSON_CHILD_ENTITIES_KEY     "Child Entities"
 #define JSON_COMPONENTS_KEY         "Components"
@@ -23,7 +22,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #define JSON_PFB_POS_KEY            "Position"
 #define JSON_GUID_KEY               "GUID"
 #define JSON_PFB_NAME_KEY           "Name"
-#define JSON_PFB_ACTIVE_KEY         "isActive"
 #define JSON_PFB_DATA_KEY           "SubData"
 #define JSON_ASSOCIATIVE_KEY        "key"
 #define JSON_ASSOCIATIVE_VALUE      "value"

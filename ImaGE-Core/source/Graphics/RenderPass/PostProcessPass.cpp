@@ -16,32 +16,42 @@ namespace Graphics {
 
 	void PostProcessingPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities)
 	{
-		if (!cam.isEditor) {
-			{//fog/visibility shader
-				//copy the color buffer to inputTexture
-				glMemoryBarrier(GL_ALL_BARRIER_BITS);
-				auto shader{ ShaderLibrary::Get("Fog") };
-				mSpec.pipeline->GetSpec().shader = shader;
-				Begin();
-				shader->SetUniform("u_TexViewPosition", mPositionGBuffer, 0);
-				shader->SetUniform("u_TexFragColor", mInputTexture, 1);
+		if (cam.isEditor) {
+			mOutputTexture = mInputTexture;
+			return; 
+		}
+		{//fog/visibility shader
+	//copy the color buffer to inputTexture
+			glMemoryBarrier(GL_ALL_BARRIER_BITS);
+			auto shader{ ShaderLibrary::Get("Fog") };
+			mSpec.pipeline->GetSpec().shader = shader;
+			Begin();
+			shader->SetUniform("u_TexViewPosition", mPositionGBuffer, 0);
+			shader->SetUniform("u_TexFragColor", mInputTexture, 1);
 
-				shader->SetUniform("u_MinDist", Graphics::PostProcessingManager::GetInstance().GetFogMinDist());
-				shader->SetUniform("u_MaxDist", Graphics::PostProcessingManager::GetInstance().GetFogMaxDist());
-				shader->SetUniform("u_FogColor", Graphics::PostProcessingManager::GetInstance().GetFogColor());
-				Renderer::RenderFullscreenTexture();
-				//swap back the shader
-				End();
+			shader->SetUniform("u_MinDist", Graphics::PostProcessingManager::GetInstance().GetFogMinDist());
+			shader->SetUniform("u_MaxDist", Graphics::PostProcessingManager::GetInstance().GetFogMaxDist());
+			shader->SetUniform("u_FogColor", Graphics::PostProcessingManager::GetInstance().GetFogColor());
+			Renderer::RenderFullscreenTexture();
+			//swap back the shader
+			End();
 
-				auto const& fb = mSpec.pipeline->GetSpec().targetFramebuffer;
+			auto const& fb = mSpec.pipeline->GetSpec().targetFramebuffer;
 
-				// Check if mOutputTexture is null or if dimensions don’t match
-				if (mInputTexture) {
-					mInputTexture->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
-				}
-				std::swap(mSpec.pipeline->GetSpec().targetFramebuffer, mPingPongBuffer);
-				glMemoryBarrier(GL_ALL_BARRIER_BITS);
+			// Check if mOutputTexture is null or if dimensions don’t match
+			if (mInputTexture) {
+				mInputTexture->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
 			}
+			std::swap(mSpec.pipeline->GetSpec().targetFramebuffer, mPingPongBuffer);
+			glMemoryBarrier(GL_ALL_BARRIER_BITS);
+		}
+		auto numShaders{ Graphics::PostProcessingManager::GetInstance().GetShaderNum() };
+		numShaders = (numShaders) ? numShaders : 1;
+		for (unsigned i{}; i < numShaders; ++i) {
+			glMemoryBarrier(GL_ALL_BARRIER_BITS);
+			mSpec.pipeline->GetSpec().shader = Graphics::PostProcessingManager::GetInstance().GetShader(i);
+			Begin();
+
 			auto numShaders{ Graphics::PostProcessingManager::GetInstance().GetShaderNum() };
 			numShaders = (numShaders) ? numShaders : 1;
 			for (unsigned i{}; i < numShaders; ++i) {
@@ -61,13 +71,12 @@ namespace Graphics {
 				Renderer::RenderFullscreenTexture();
 				End();
 				auto const& fb = mSpec.pipeline->GetSpec().targetFramebuffer;
-
+				glMemoryBarrier(GL_ALL_BARRIER_BITS);
 				// Check if mOutputTexture is null or if dimensions don’t match
 				if (i < numShaders - 1) {
 					if (mInputTexture) {
 						mInputTexture->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
 					}
-					std::swap(mSpec.pipeline->GetSpec().targetFramebuffer, mPingPongBuffer);
 				}
 				else {
 					if (!mOutputTexture || mOutputTexture->GetWidth() != fb->GetFramebufferSpec().width || mOutputTexture->GetHeight() != fb->GetFramebufferSpec().height) {
@@ -83,27 +92,6 @@ namespace Graphics {
 				glMemoryBarrier(GL_ALL_BARRIER_BITS);
 
 			}
-		}
-		else {
-			mSpec.pipeline->GetSpec().shader = Graphics::PostProcessingManager::GetInstance().GetDefaultShader();
-			Begin();
 
-			auto const& shader = mSpec.pipeline->GetShader();
-			shader->SetUniform("u_ScreenTex", mInputTexture, 0);
-
-			Renderer::RenderFullscreenTexture();
-			End();
-			auto const& fb = mSpec.pipeline->GetSpec().targetFramebuffer;
-			if (!mOutputTexture || mOutputTexture->GetWidth() != fb->GetFramebufferSpec().width || mOutputTexture->GetHeight() != fb->GetFramebufferSpec().height) {
-				// Create or resize mOutputTexture based on the framebuffer's specs
-				mOutputTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
-			}
-
-			// Perform the copy operation
-			if (mOutputTexture) {
-				mOutputTexture->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
-			}
-
-		}
 	}
 }

@@ -14,6 +14,13 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/Mesh/MeshFactory.h>
 #include <Graphics/Mesh/Mesh.h>
 #include <Asset/IGEAssets.h>
+#include <Events/EventManager.h>
+#include <Events/AssetEvents.h>
+
+namespace {
+  template <typename T>
+  std::string GetRttrTypeString() { return rttr::type::get<T>().get_name().to_string(); }
+}
 
 namespace Reflection::ComponentUtils {
   using namespace Component;
@@ -26,8 +33,24 @@ namespace Reflection::ComponentUtils {
   }
   void AddAudioSource(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(AudioSource, comp);
+      
+    // may be bad to try catch in for loop
+    // @TODO: should optimize for game build
+    bool valid{ true };
+    for (auto const& [str, audioInst] : comp.sounds) {
+      try {
+          IGE_ASSETMGR.LoadRef<IGE::Assets::AudioAsset>(audioInst.guid);
+      }
+      catch (Debug::ExceptionBase&) {
+        IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(audioInst.guid)) + " of AudioSource component invalid");
+        QUEUE_EVENT(Events::GUIDInvalidated, entity, audioInst.guid, GetRttrTypeString<IGE::Assets::AudioAsset>());
+        valid = false;
+      }
+    }
 
-    entity.EmplaceOrReplaceComponent<AudioSource>(comp);
+    if (valid) {
+      entity.EmplaceOrReplaceComponent<AudioSource>(comp);
+    }
   }
   void AddTag(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Tag, comp);
@@ -80,6 +103,7 @@ namespace Reflection::ComponentUtils {
     }
     catch (Debug::ExceptionBase&) {
       IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(comp.materialGUID)) + " of Material component invalid");
+      QUEUE_EVENT(Events::GUIDInvalidated, entity, comp.materialGUID, GetRttrTypeString<IGE::Assets::MaterialAsset>());
     }
   }
 
@@ -96,6 +120,7 @@ namespace Reflection::ComponentUtils {
     }
     catch (Debug::ExceptionBase&) {
       IGE_DBGLOGGER.LogError("Unable to load mesh: " + comp.meshName + "[GUID " + std::to_string(static_cast<uint64_t>(comp.meshSource)) + "]");
+      QUEUE_EVENT(Events::GUIDInvalidated, entity, comp.meshSource, GetRttrTypeString<IGE::Assets::ModelAsset>());
     }
   }
 
@@ -132,6 +157,7 @@ namespace Reflection::ComponentUtils {
     }
     catch (Debug::ExceptionBase&) {
       IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(comp.textureAsset)) + " of Image component invalid");
+      QUEUE_EVENT(Events::GUIDInvalidated, entity, comp.textureAsset, GetRttrTypeString<IGE::Assets::TextureAsset>());
     }
   }
 
@@ -144,6 +170,7 @@ namespace Reflection::ComponentUtils {
     }
     catch (Debug::ExceptionBase const&) {
       IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(comp.textureAsset)) + " of Sprite2D component invalid");
+      QUEUE_EVENT(Events::GUIDInvalidated, entity, comp.textureAsset, GetRttrTypeString<IGE::Assets::TextureAsset>());
     }
   }
 
@@ -154,16 +181,35 @@ namespace Reflection::ComponentUtils {
   }
 
   void AddSkybox(ECS::Entity entity, rttr::variant const& var) {
-      EXTRACT_RAW_COMP(Skybox, comp);
+    EXTRACT_RAW_COMP(Skybox, comp);
 
-      try {
-          IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(comp.tex1);
-          IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(comp.tex2);
-          entity.EmplaceOrReplaceComponent<Skybox>(comp);
-      }
-      catch (Debug::ExceptionBase const&) {
-          IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(comp.tex1)) + " of Skybox component invalid");
-      }
+    bool success{ true };
+    try {
+      IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(comp.tex1);
+    }
+    catch (Debug::ExceptionBase const&) {
+      IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(comp.tex1)) + " of Skybox component invalid");
+      QUEUE_EVENT(Events::GUIDInvalidated, entity, comp.tex1, GetRttrTypeString<IGE::Assets::TextureAsset>());
+      success = false;
+    }
 
+    try {
+      IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(comp.tex2);
+    }
+    catch (Debug::ExceptionBase const&) {
+      IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(comp.tex2)) + " of Skybox component invalid");
+      QUEUE_EVENT(Events::GUIDInvalidated, entity, comp.tex2, GetRttrTypeString<IGE::Assets::TextureAsset>());
+      success = false;
+    }
+
+    if (success) {
+      entity.EmplaceOrReplaceComponent<Skybox>(comp);
+    }
+  }
+
+  void AddInteractive(ECS::Entity entity, rttr::variant const& var) {
+      EXTRACT_RAW_COMP(Interactive, comp);
+
+      entity.EmplaceOrReplaceComponent<Interactive>(comp);
   }
 } // namespace Reflection

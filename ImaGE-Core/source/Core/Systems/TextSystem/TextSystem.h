@@ -85,7 +85,7 @@ namespace Systems {
 
 	private:
 		void RenderText(uint32_t filePathHash, std::string const& textContent,
-			float xPos, float yPos, float scale, glm::quat rotation, glm::vec3 color,
+			float xPos, float yPos, float scale, glm::quat rotation, glm::vec4 color,
 			std::vector<std::pair<size_t, float>> const& newLineIndices, float multiLineSpacingOffset, glm::mat4 viewProj);
 		void LoadFontFace(Systems::Font& font) const;
 		void SetFontSize(uint32_t filePathHash, int fontSize);

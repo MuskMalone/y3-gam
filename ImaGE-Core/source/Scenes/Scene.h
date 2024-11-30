@@ -2,7 +2,7 @@
 #include <vector>
 #include <variant>
 #include <Graphics/Mesh/Mesh.h>
-#include <Graphics/EditorCamera.h>
+#include <Graphics/Camera/EditorCamera.h>
 
 #include "Core/Entity.h"
 

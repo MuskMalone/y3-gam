@@ -15,7 +15,9 @@ namespace IGE {
                 return true;
             }
             catch (const std::filesystem::filesystem_error& e) {
+#ifdef _DEBUG
                 std::cerr << "Error copying file: " << e.what() << std::endl;
+#endif
                 return false;
             }
         }
@@ -26,7 +28,9 @@ namespace IGE {
                 return true;
             }
             catch (const std::filesystem::filesystem_error& e) {
+#ifdef _DEBUG
                 std::cerr << "Error deleting file: " << e.what() << std::endl;
+#endif
                 return false;
             }
         }
@@ -101,7 +105,9 @@ namespace IGE {
                 return std::mismatch(dirCanonical.begin(), dirCanonical.end(), fileCanonical.begin()).first == dirCanonical.end();
             }
             catch (const fs::filesystem_error& e) {
+#ifdef _DEBUG
                 std::cerr << "Error: " << e.what() << std::endl;
+#endif
                 return false;
             }
         }

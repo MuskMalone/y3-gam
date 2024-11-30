@@ -80,23 +80,24 @@ std::pair<ECS::Entity, Prefabs::Prefab::EntityMappings> PrefabManager::SpawnPref
 }
 
 void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::string const& name,
-  Prefabs::Prefab::EntityMappings& mappings, IGE::Assets::GUID guid)
+  Prefabs::Prefab::EntityMappings& mappings, IGE::Assets::GUID guid, bool pretty)
 {
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
-  Prefab prefab{ name, prefabInstance.IsActive() };
+  Prefab prefab{ name };
   prefab.mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(prefabInstance);
   if (entityMan.HasChild(prefabInstance)) {
     prefab.CreateFixedSubData(entityMan.GetChildEntity(prefabInstance), mappings);
   }
 
-  Serialization::Serializer::SerializePrefab(prefab, gPrefabsDirectory + name + gPrefabFileExt);
+  Serialization::Serializer::SerializePrefab(prefab, gPrefabsDirectory + name + gPrefabFileExt,
+    pretty ? Serialization::PRETTY : Serialization::COMPACT);
   IGE_ASSETMGR.ReloadRef<IGE::Assets::PrefabAsset>(guid);
 }
 
 void PrefabManager::CreatePrefabFromEntity(ECS::Entity entity, std::string const& name, std::string const& path)
 {
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
-  Prefab prefab{ name, entity.IsActive() };
+  Prefab prefab{ name };
   prefab.mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(entity);
 
   if (entityMan.HasChild(entity)) {

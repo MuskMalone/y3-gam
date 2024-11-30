@@ -42,13 +42,13 @@ public class RotationGuidanceToolsPainting : Entity
     Quaternion currentCameraRotation = mainCamera.GetComponent<Transform>().rotation;
     Quaternion savedCameraRotation = pictureAlign.GetSavedCameraRotation();
 
-    Vector3 currentCameraEulerAngles = Mathf.QuatToEuler(currentCameraRotation);
-    Vector3 savedCameraEulerAngles = Mathf.QuatToEuler(savedCameraRotation);
+    //Vector3 currentCameraEulerAngles = Mathf.QuatToEuler(currentCameraRotation);
+    //Vector3 savedCameraEulerAngles = Mathf.QuatToEuler(savedCameraRotation);
 
-    float xDifference = Mathf.DeltaAngle(currentCameraEulerAngles.X, savedCameraEulerAngles.X);
-    float yDifference = Mathf.DeltaAngle(currentCameraEulerAngles.Y, savedCameraEulerAngles.Y);
+    //float xDifference = Mathf.DeltaAngle(currentCameraEulerAngles.X, savedCameraEulerAngles.X);
+    //float yDifference = Mathf.DeltaAngle(currentCameraEulerAngles.Y, savedCameraEulerAngles.Y);
 
-    CheckCameraRotation(xDifference, yDifference);
+   // CheckCameraRotation(xDifference, yDifference);
   }
 
   void CheckCameraRotation(float xDifference, float yDifference)

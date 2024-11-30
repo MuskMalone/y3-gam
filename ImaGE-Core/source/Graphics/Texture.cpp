@@ -15,6 +15,10 @@ namespace Graphics {
 	*/
 	Texture::Texture() : mWidth{ 0 }, mHeight{ 0 }, mTexHdl{ 0 } {}
 
+	Texture::Texture(uint32_t texHdl) : mWidth{}, mHeight{}, mTexHdl{ texHdl } {
+
+	}
+
 	/*  _________________________________________________________________________ */
 	/*! Texture
 
@@ -33,7 +37,9 @@ namespace Graphics {
 		DirectX::ScratchImage image;
 		HRESULT hr = DirectX::LoadFromDDSFile(wPath.c_str(), DirectX::DDS_FLAGS_NONE, nullptr, image);
 		if (FAILED(hr)) {
+#ifdef _DEBUG
 			std::cerr << "Failed to load DDS texture: " << path << std::endl;
+#endif
 			throw std::runtime_error{ "failed to load dds tex"};
 		}
 
@@ -41,14 +47,18 @@ namespace Graphics {
 		DirectX::ScratchImage flippedImage;
 		hr = DirectX::FlipRotate(image.GetImages(), image.GetImageCount(), image.GetMetadata(), DirectX::TEX_FR_FLIP_VERTICAL, flippedImage);
 		if (FAILED(hr)) {
+#ifdef _DEBUG
 			std::cerr << "Failed to flip DDS texture vertically." << std::endl;
+#endif
 			throw std::runtime_error{ "Failed to flip DDS texture vertically" };
 		}
 
 		// Retrieve the flipped image data
 		const DirectX::Image* img = flippedImage.GetImage(0, 0, 0);
 		if (!img) {
+#ifdef _DEBUG
 			std::cerr << "Failed to retrieve flipped image data." << std::endl;
+#endif
 			throw std::runtime_error{ "Failed to retrieve flipped image data" };
 		}
 
@@ -125,8 +135,15 @@ namespace Graphics {
 			format = GL_RED;
 			type = GL_HALF_FLOAT;
 			break;
+
+		case DXGI_FORMAT_R16G16B16A16_UNORM:
+			internalFormat = GL_RGBA16;
+			format = GL_RGBA;
+			type = GL_UNSIGNED_SHORT;
+			break;
+
 		default:
-			std::cerr << "Unsupported DXGI format! ENUM: (" << img->format <<") Using default parameters." << std::endl;
+			IGE_DBGLOGGER.LogError("Unsupported DXGI format! ENUM: (" + std::to_string(img->format) + ") Using default parameters.");
 			internalFormat = GL_RGBA8;
 			format = GL_RGBA;
 			type = GL_UNSIGNED_BYTE;
@@ -163,20 +180,20 @@ namespace Graphics {
 	This constructor initializes the Texture with the provided width and height.
 	It sets up the OpenGL texture with the specified dimensions.
 	*/
-	Texture::Texture(uint32_t width, uint32_t height, bool isBindless, GLenum type) :mWidth{ width }, mHeight{ height }, mIsBindless{isBindless} {
+	Texture::Texture(uint32_t width, uint32_t height, GLenum intFmt, bool isBindless) :mWidth{ width }, mHeight{ height }, mIsBindless{isBindless} {
 
 		//TODO might add more parameters
 
 		GLCALL(glCreateTextures(GL_TEXTURE_2D, 1, &mTexHdl));
 		// allocate GPU storage for texture image data loaded from file
-		GLCALL(glTextureStorage2D(mTexHdl, 1, type, mWidth, mHeight));
+		GLCALL(glTextureStorage2D(mTexHdl, 1, intFmt, mWidth, mHeight));
 
 		// Set texture parameters
 		//GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
 		//GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
 		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_WRAP_S, GL_REPEAT));
 		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_WRAP_T, GL_REPEAT));
-		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
 		GLCALL(glTextureParameteri(mTexHdl, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
 
 		if (mIsBindless) {

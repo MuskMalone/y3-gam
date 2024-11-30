@@ -12,6 +12,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <vector>
 #include "InputEvents.h"
 #include "SceneEvents.h"
+#include "AssetEvents.h"
 
 namespace Events
 {
@@ -34,6 +35,15 @@ namespace Events
   public:
     WindowMinimized() : Event(EventType::WINDOW_MINIMIZED) {}
     inline std::string GetName() const noexcept override { return "Window Minimized"; }
+  };
+
+  class WindowResized : public Event
+  {
+  public:
+      WindowResized(int width, int height) : Event(EventType::WINDOW_RESIZED), mWidth{width}, mHeight{height} {}
+      inline std::string GetName() const noexcept override { return "Window Resized"; }
+      int const mWidth;
+      int const mHeight;
   };
 
   class ToggleFullscreen : public Event
@@ -65,7 +75,6 @@ namespace Events
     bool const mMapEntity;
   };
 
-#ifndef IMGUI_DISABLE
   class RemoveComponentEvent : public Event
   {
   public:
@@ -80,6 +89,7 @@ namespace Events
     ECS::Entity const mEntity;
   };
 
+  // entity
   class RemoveEntityEvent : public Event
   {
   public:
@@ -89,63 +99,107 @@ namespace Events
     ECS::Entity const mEntity;
   };
 
-  // int pathCount, const char* paths[]
-  class AddFilesFromExplorerEvent : public Event
-  {
-  public:
-    AddFilesFromExplorerEvent(int pathCount, const char* paths[]) : Event(EventType::ADD_FILES) {
-      for (int i{}; i < pathCount; ++i) {
-        mPaths.emplace_back(paths[i]);
-      }
-    }
-    inline std::string GetName() const noexcept override { return "Adding " + std::to_string(mPaths.size()) + " files from file explorer"; }
-
-    std::vector<std::string> mPaths;
-  };
-
-  class RegisterAssetsEvent : public Event
-  {
-  public:
-    RegisterAssetsEvent(std::vector<std::string> const& paths) : Event(EventType::REGISTER_FILES), mPaths{ paths } {}
-    RegisterAssetsEvent(std::vector<std::string>&& paths) : Event(EventType::REGISTER_FILES), mPaths{ std::move(paths) } {}
-    inline std::string GetName() const noexcept override { return "Registering " + std::to_string(mPaths.size()) + " files to AssetManager"; }
-
-    std::vector<std::string> const mPaths;
-  };
-#endif
-
   class EntityLayerModified : public Event
   {
   public:
-    EntityLayerModified(ECS::Entity entity, std::string oldLayer) : Event(EventType::LAYER_MODIFIED), mEntity{ entity }, mOldLayer{ oldLayer } {}
+    EntityLayerModified(ECS::Entity entity, std::string oldLayer) : Event(EventType::LAYER_MODIFIED), mEntity{ entity }, mOldLayer{ std::move(oldLayer) } {}
     inline std::string GetName() const noexcept override { return "Modified Layer Component of Entity: " + mEntity.GetTag(); }
 
-    std::string mOldLayer;
+    std::string const mOldLayer;
     ECS::Entity const mEntity;
   };
 
-  // entity, prefabName
-  class RemapPrefabGUID : public Event
-  {
-  public:
-    RemapPrefabGUID(ECS::Entity entity, std::string prefabName) : Event(EventType::PREFAB_GUID_REMAP), mPrefabName{ prefabName }, mEntity{ entity } {}
-    inline std::string GetName() const noexcept override { return "Prefab instance of " + mPrefabName + " has to be remapped"; }
-
-    std::string const mPrefabName;
-    ECS::Entity const mEntity;
-  };
-
+  // entity
   class EntityScreenPicked : public Event {
   public:
     EntityScreenPicked(ECS::Entity entity) : Event(EventType::ENTITY_PICKED), mEntity{ entity } {}
     inline std::string GetName() const noexcept override { return "Screen-picked entity " + mEntity.GetTag(); }
 
-    ECS::Entity mEntity;
+    ECS::Entity const mEntity;
+  };
+
+  // entity
+  class EntitySelectedInEditor : public Event {
+  public:
+    EntitySelectedInEditor(ECS::Entity entity) : Event(EventType::ENTITY_SELECTED), mEntity{ entity } {}
+    inline std::string GetName() const noexcept override { return "Selected entity " + mEntity.GetTag(); }
+
+    ECS::Entity const mEntity;
+  };
+
+  class EntityMouseEnter : public Event {
+  public:
+      EntityMouseEnter(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_ENTER), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On mouse enter entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
+  };
+
+  class EntityMouseExit : public Event {
+  public:
+      EntityMouseExit(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_EXIT), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On mouse exit entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
+  };
+
+  class EntityMouseDown : public Event {
+  public:
+      EntityMouseDown(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_DOWN), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On mouse down entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
+  };
+
+  class EntityMouseUp : public Event {
+  public:
+      EntityMouseUp(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_UP), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On mouse up entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
+  };
+
+  class EntityPointerEnter : public Event {
+  public:
+      EntityPointerEnter(ECS::Entity entity) : Event(EventType::POINTER_ENTER), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On pointer enter entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
+  };
+
+  class EntityPointerExit : public Event {
+  public:
+      EntityPointerExit(ECS::Entity entity) : Event(EventType::POINTER_EXIT), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On pointer exit entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
+  };
+
+  class EntityPointerDown : public Event {
+  public:
+      EntityPointerDown(ECS::Entity entity) : Event(EventType::POINTER_DOWN), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On pointer down entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
+  };
+
+  class EntityPointerUp : public Event {
+  public:
+      EntityPointerUp(ECS::Entity entity) : Event(EventType::POINTER_UP), mEntity{ entity } {}
+      inline std::string GetName() const noexcept override { return "On pointer up entity " + mEntity.GetTag(); }
+
+      ECS::Entity mEntity;
   };
 
   class SignalEvent : public Event {
   public:
     SignalEvent() : Event(EventType::SIGNAL) {}
     inline std::string GetName() const noexcept override { return "Program terminated unexpectedly"; }
+  };
+
+  class TriggerPausedUpdate : public Event {
+  public:
+    TriggerPausedUpdate() : Event(EventType::TRIGGER_PAUSED_UPDATE) {}
+    inline std::string GetName() const noexcept override { return "Triggering paused update"; }
   };
 }

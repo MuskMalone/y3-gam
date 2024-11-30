@@ -1,6 +1,22 @@
 #version 460 core
 //#extension GL_ARB_bindless_texture : require
 
+struct MaterialProperties {
+    vec2 Tiling;
+    vec2 Offset;
+    vec4 AlbedoColor;  // Base color
+    float Metalness;   // Metalness factor
+    float Roughness;   // Roughness factor
+    float Transparency; // Transparency (alpha)
+    float AO;          // Ambient occlusion
+};
+
+
+layout(std430, binding = 0) buffer MaterialPropsBuffer {
+    MaterialProperties materials[];
+};
+
+
 layout(location = 0) out vec4 fragColor;
 layout(location = 1) out int entityID;
 layout(location = 2) out vec4 viewPosition;
@@ -27,18 +43,7 @@ uniform float u_ShadowBias;
 uniform int u_ShadowSoftness;
 uniform sampler2D u_ShadowMap;
 
-// Tiling and offset uniforms
-uniform vec2 u_Tiling; // Tiling factor (x, y)
-uniform vec2 u_Offset; // Offset (x, y)
-
-//PBR parameters
-uniform vec3 u_Albedo;
-uniform float u_Metalness;
-uniform float u_Roughness;
-uniform float u_Transparency;
-uniform float u_AO;
-
-
+uniform int u_MatIdxOffset;
 uniform sampler2D[16] u_AlbedoMaps;
 //uniform sampler2D[16] u_NormalMaps;
 
@@ -76,12 +81,11 @@ void main(){
     // //pls add this line for subsequent custom shaders
     viewPosition = vec4(v_ViewPosition, 1);
     
-    vec2 texCoord = v_TexCoord * u_Tiling + u_Offset;
-    
 	//vec4 texColor = texture2D(u_NormalMaps[int(v_MaterialIdx)], texCoord); //currently unused
-    
-    vec4 albedoTexture = texture2D(u_AlbedoMaps[int(v_MaterialIdx)], texCoord);
-    vec3 albedo = albedoTexture.rgb * u_Albedo; // Mixing texture and uniform
+    MaterialProperties mat = materials[v_MaterialIdx];
+    vec2 texCoord = v_TexCoord * mat.Tiling + mat.Offset;
+    vec4 albedoTexture = texture2D(u_AlbedoMaps[int(v_MaterialIdx) + u_MatIdxOffset], texCoord);
+    vec3 albedo = albedoTexture.rgb * mat.AlbedoColor.rgb; // Mixing texture and uniform
 	// Normalize inputs
     vec3 N = normalize(v_Normal);
     vec3 Lo = vec3(0); 
@@ -127,16 +131,16 @@ void main(){
         vec3 H = normalize(V + L);                   // Halfway vector
 
         vec3 F0 = vec3(0.04); 
-            F0 = mix(F0, albedo, u_Metalness);
+            F0 = mix(F0, albedo, mat.Metalness);
 
         // cook-torrance brdf
-        float NDF = DistributionGGX(N, H, u_Roughness);        
-        float G   = GeometrySmith(N, V, L, u_Roughness);      
+        float NDF = DistributionGGX(N, H, mat.Roughness);        
+        float G   = GeometrySmith(N, V, L, mat.Roughness);      
         vec3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0); 
 
         vec3 kS = F;
         vec3 kD = vec3(1.0) - kS;
-        kD *= 1.0 - u_Metalness;	
+        kD *= 1.0 - mat.Metalness;	
 
         vec3 numerator    = NDF * G * F;
         float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
@@ -147,13 +151,13 @@ void main(){
         Lo += (kD * albedo / PI + specular) * lightColor * NdotL * (1.0 - shadow);
     }
 
-    vec3 ambient = vec3(0.01) * albedo * u_AO;
+    vec3 ambient = vec3(0.01) * albedo * mat.AO;
 
     vec3 color = ambient + Lo;
     color = color / (color + vec3(1.0));
     color = pow(color, vec3(1.0/2.2)); //gamma correction
     //change transparency here
-    float alpha = u_Transparency;
+    float alpha = mat.Transparency;
 	fragColor = vec4(color, alpha) * v_Color;
 
     // float u_MinDist = 1.f;

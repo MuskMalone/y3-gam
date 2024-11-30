@@ -38,6 +38,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <FrameRateController/FrameRateController.h>
 #include <Application.h>
 #include <Scripting/ScriptManager.h>
+#include <Graphics/Camera/CameraManager.h>
+#include <Graphics/Renderer.h>
+#include <Graphics/RenderSystem.h>
+#include <Graphics/RenderPass/GeomPass.h>
 
 using namespace Input;
 using namespace Events;
@@ -228,7 +232,6 @@ void InputManager::QueueInputEvents()
 	if (IsKeyPressed(IK_LEFT_ALT) && IsKeyTriggered(IK_TAB))
 	{
 		QUEUE_EVENT(Events::WindowMinimized);
-		//eventMan.Dispatch(WindowMinimize());
 	}
 }
 
@@ -291,13 +294,39 @@ void Input::InputManager::SetCurrFramebuffer(size_t framebufferID)
 	mCurrFramebuffer = framebufferID;
 }
 
-vec2 InputManager::GetMousePosWorld()
+vec3 InputManager::GetMousePosWorld(float depth)
 {
-	//auto& gEngine{ Graphics::GraphicsEngine::GetInstance() };
-	//// TODO: change to current framebuffer
-	//Graphics::gVec2 worldPosF32{ gEngine.ScreenToWS({ static_cast<GLfloat>(mMousePos.x), static_cast<GLfloat>(mHeight - mMousePos.y) }, m_currFramebuffer) };
-	//return  {worldPosF32.x, worldPosF32.y};
-	return { 0,0 };
+	auto const& geomPass{ Graphics::Renderer::GetPass<Graphics::GeomPass>() };
+	auto const& gameView{ geomPass->GetGameViewFramebuffer()->GetFramebufferSpec() };
+	auto const& activeCamera{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() };
+
+	vec2 fbDims{ gameView.width, gameView.height };
+
+	// Convert mouse position to normalized device coordinates (NDC)
+	glm::vec4 ndc{
+		(2.f * mCurrMousePos.x / fbDims.x - 1.f),
+		(1.f - 2.f * mCurrMousePos.y / fbDims.y), // Invert Y-axis to match NDC convention
+		-1.f, // Near plane in NDC
+		1.f
+	};
+
+	// Unproject mouse position to a ray direction in world space
+	glm::vec4 eyeCoords{ glm::inverse(activeCamera.GetProjMatrix()) * ndc };
+	eyeCoords.z = -1.f; // Forward direction in eye space
+	eyeCoords.w = 0.f;  // Treat as direction vector, not a point
+
+	glm::vec3 rayDirection{
+		glm::normalize(glm::vec3(glm::inverse(activeCamera.GetViewMatrix()) * eyeCoords))
+	};
+
+	// Get camera position in world space
+	glm::vec3 cameraPosition{ glm::vec3(glm::inverse(activeCamera.GetViewMatrix())[3]) };
+
+	// Compute world position along the ray at the given depth
+	float scale{ depth / glm::dot(rayDirection, rayDirection) };
+	glm::vec3 worldPos{ cameraPosition + rayDirection * scale };
+
+	return worldPos;
 }
 
 void InputManager::UpdateAllAxis()

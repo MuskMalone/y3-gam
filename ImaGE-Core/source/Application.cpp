@@ -77,7 +77,20 @@ namespace IGE {
     int width, height;
     glfwGetFramebufferSize(mWindow.get(), &width, &height);
     glViewport(0, 0, width, height);
-    Graphics::Renderer::ResizeFinalFramebuffer(width, height);
+    //Graphics::Renderer::ResizeFinalFramebuffer(width, height);
+    QUEUE_EVENT(Events::WindowResized, width, height);
+
+    
+    if (mSpecification.StartFromScene.first) {
+        IGE_EVENTMGR.DispatchImmediateEvent<Events::LoadSceneEvent>(std::filesystem::path(mSpecification.StartFromScene.second).stem().string(),
+            mSpecification.StartFromScene.second);
+
+        // TEMP - NEED THIS TO PLAY GAME BUILD
+        glfwSetCursorPos(mWindow.get(), mSpecification.WindowWidth / 2.0, mSpecification.WindowHeight / 2.0);
+        glfwSetInputMode(mWindow.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    }
+
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::TRIGGER_PAUSED_UPDATE, &Application::OnPausedUpdateTrigger, this);
   }
 
   void Application::Run() {
@@ -97,12 +110,12 @@ namespace IGE {
       // dispatch all events in the queue at the start of game loop
       eventManager.DispatchAll();
 
-
-
       systemManager.UpdateSystems();
 
       //=======================================================================
-      Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() });
+      if (Graphics::RenderSystem::mCameraManager.HasActiveCamera()) {
+          Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() });
+      }
       auto const& fb = Graphics::Renderer::GetFinalFramebuffer();
       std::shared_ptr<Graphics::Texture> gameTex = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
 
@@ -169,7 +182,7 @@ namespace IGE {
       monitor = glfwGetPrimaryMonitor();
       const GLFWvidmode* mode = glfwGetVideoMode(monitor);
       glfwSetWindowMonitor(mWindow.get(), monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
-      mWindowState.isFullscreen = true;
+      mWindowState.isFullscreen = false;
     }
 
     glfwMakeContextCurrent(mWindow.get());
@@ -203,7 +216,7 @@ namespace IGE {
   mRenderTargets.front().camera = Graphics::EditorCamera(
       glm::vec3(0.0f, 5.0f, 10.0f),  // Position
       -90.0f,                        // Yaw
-      -30.0f,                        // Pitch (look downwards slightly)
+      0.0f,                        // Pitch (look downwards slightly)
       60.0f,                         // FOV
       16.0f / 9.0f,                  // Aspect Ratio
       0.1f,                          // Near Clip
@@ -223,6 +236,8 @@ namespace IGE {
     for (auto& target : app->mRenderTargets) {
       target.framebuffer->Resize(width, height);
     }
+
+    QUEUE_EVENT(Events::WindowResized, width, height);
   }
 
   void Application::ErrorCallback(int err, const char* desc) {
@@ -277,6 +292,10 @@ namespace IGE {
       //    target.framebuffer->Resize(width, height);
       //}
       Graphics::Renderer::ResizeFinalFramebuffer(width, height);
+  }
+
+  EVENT_CALLBACK_DEF(Application, OnPausedUpdateTrigger) {
+    Systems::SystemManager::GetInstance().PausedUpdate<Systems::TransformSystem, IGE::Physics::PhysicsSystem, IGE::Audio::AudioSystem>();
   }
 
   Application::~Application()

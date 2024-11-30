@@ -38,6 +38,7 @@ public class Test : Entity
   //  public Entity testEnt;
 
   public int TestInt = 10;
+  public int TestInt3 = 20;
   //public float TestFloat = 22f;
   //public double TestDouble = 30.0;
   //public Vector3 dVec3 = new Vector3(336.318f, 100f, 0f);
@@ -81,15 +82,16 @@ public class Test : Entity
     {
 
     Console.WriteLine("TEST INT:" + TestInt);
-      //  Console.WriteLine(testEnt.mEntityID.ToString());
-      // Console.WriteLine("Hit\n");
-      //if (testEnt != null)
-      //{
-      //  Console.WriteLine(testEnt.mEntityID + "::ID");
-      //}
-      //Vec3<float> Position = GetComponent<Transform>().Position;
-      //GetComponent<Transform>().Position = new Vec3<float>(1,1,2);
-      //  Console.WriteLine(Position.X + "," + Position.Y + "," + Position.Z);
+    //Console.WriteLine("TEST INT2:" + TestInt3);
+    //  Console.WriteLine(testEnt.mEntityID.ToString());
+    // Console.WriteLine("Hit\n");
+    //if (testEnt != null)
+    //{
+    //  Console.WriteLine(testEnt.mEntityID + "::ID");
+    //}
+    //Vec3<float> Position = GetComponent<Transform>().Position;
+    //GetComponent<Transform>().Position = new Vec3<float>(1,1,2);
+    //  Console.WriteLine(Position.X + "," + Position.Y + "," + Position.Z);
 
     //  bool isChanged = false;
 
@@ -112,10 +114,31 @@ public class Test : Entity
 
 
 
+  }
+
+    public void OnPointerEnter() {
+        string tag = InternalCalls.GetTag(mEntityID);
+        Console.WriteLine("From MONO Enter" + tag);
     }
 
+    public void OnPointerExit()
+    {
+        string tag = InternalCalls.GetTag(mEntityID);
+        Console.WriteLine("From MONO Exit" + tag);
+    }
 
-   
-  }
+    public void OnPointerDown()
+    {
+        string tag = InternalCalls.GetTag(mEntityID);
+        Console.WriteLine("From MONO Down" + tag);
+    }
+
+    public void OnPointerUp()
+    {
+        string tag = InternalCalls.GetTag(mEntityID);
+        Console.WriteLine("From MONO Up" + tag);
+    }
+
+}
 
 

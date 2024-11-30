@@ -143,10 +143,10 @@ public class PictureAlignTools : Entity
         }
       }
 
-      Debug.Log("Data loaded from text asset:");
-      Debug.Log("Saved Position: " + savedPosition);
-      Debug.Log("Saved Rotation: " + Mathf.QuatToEuler(savedRotation));
-      Debug.Log("Saved Camera Rotation: " + Mathf.QuatToEuler(savedCameraRotation));
+      //Debug.Log("Data loaded from text asset:");
+      //Debug.Log("Saved Position: " + savedPosition);
+      //Debug.Log("Saved Rotation: " + Mathf.QuatToEuler(savedRotation));
+      //Debug.Log("Saved Camera Rotation: " + Mathf.QuatToEuler(savedCameraRotation));
     }
     else
     {

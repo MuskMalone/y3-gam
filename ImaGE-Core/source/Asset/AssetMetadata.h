@@ -5,12 +5,12 @@
 namespace IGE{
     namespace Assets {
         struct AssetMetadata {
-            using AssetProps = ::std::map<::std::string, ::std::string>;
+            using AssetProps = std::map<std::string, std::string>;
             using AssetPropsKey = uint64_t; // this is wtv the guid has been converted to
-            using AssetCategory = ::std::map<AssetPropsKey, AssetProps>;
+            using AssetCategory = std::map<AssetPropsKey, AssetProps>;
 
             //split up bc deep nesting doesnt work
-            using IGEProjProperties = ::std::map<::std::string, AssetCategory>;
+            using IGEProjProperties = std::map<std::string, AssetCategory>;
 
             //std::map<
             //    std::string, 

@@ -7,6 +7,8 @@
 #include "MaterialTable.h"
 #include "MaterialData.h"
 #include <Graphics/Mesh/Mesh.h>
+#include "Events/EventManager.h"
+#include "Events/Event.h"
 
 #pragma region RenderPasses
 #include <Graphics/RenderPass/SkyboxPass.h>
@@ -18,11 +20,15 @@
 #pragma endregion
 
 #include "Core/Components/Camera.h"
+#include "Core/Components/Transform.h"
+#include "Core/Components/Light.h"
 #include "Core/Entity.h"
+#include "Input/InputManager.h"
 
 namespace Graphics {
 	constexpr int INVALID_ENTITY_ID = -1;
 
+	ECS::Entity Renderer::mHighlightedEntity;
 	RendererData Renderer::mData;
 	MaterialTable Renderer::mMaterialTable;
 	ShaderLibrary Renderer::mShaderLibrary;
@@ -32,7 +38,12 @@ namespace Graphics {
 	std::vector<std::shared_ptr<RenderPass>> Renderer::mRenderPasses;
 	Component::Camera Renderer::mUICamera;
 
+	Renderer::Renderer() {
+
+	}
 	void Renderer::Init() {
+		SUBSCRIBE_STATIC_FUNC(Events::EventType::WINDOW_RESIZED, OnResize);
+		SUBSCRIBE_STATIC_FUNC(Events::EventType::ENTITY_SELECTED, OnEntityPicked);
 		InitUICamera();
 
 		//----------------------Init Batching Quads------------------------------------------------------------//
@@ -111,11 +122,11 @@ namespace Graphics {
 
 		//----------------------------------Line Batching-------------------------------------------------------//
 		mData.lineVertexArray = VertexArray::Create();
-		mData.lineVertexBuffer = VertexBuffer::Create(mData.cMaxVertices * sizeof(LineVtx));
+		mData.lineVertexBuffer = VertexBuffer::Create(mData.cMaxVertices2D * sizeof(LineVtx));
 
 		mData.lineVertexBuffer->SetLayout(lineLayout);
 		mData.lineVertexArray->AddVertexBuffer(mData.lineVertexBuffer);
-		mData.lineBuffer = std::vector<LineVtx>(mData.cMaxVertices);
+		mData.lineBuffer = std::vector<LineVtx>(mData.cMaxVertices2D);
 
 		//----------------------------------------------------------------------------------------------------------//
 		
@@ -162,7 +173,7 @@ namespace Graphics {
 		InitParticlePass();
 		InitPostProcessPass();
 		InitUIPass();
-
+	
 		InitFullscreenQuad();
 
 		mFinalFramebuffer = mRenderPasses.back()->GetTargetFramebuffer();
@@ -170,9 +181,9 @@ namespace Graphics {
 		IGE::Assets::GUID texguid1{ Texture::Create(gAssetsDirectory + std::string("Textures\\default.dds")) };
 		IGE::Assets::GUID texguid{ Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
 		//Init Materials
-
+		MaterialTable::Init(mData.cMaxMaterials);
 		// Create a default material with a default shader and properties
-		std::shared_ptr<MaterialData> defaultMaterial = MaterialData::Create("PBR", "Default");
+		std::shared_ptr<MaterialData> defaultMaterial = MaterialData::Create("PBR", "Default"); //should probably shift all this in MaterialTable Init
 		defaultMaterial->SetAlbedoColor(glm::vec3(1.0f));  // Set default white albedo
 		defaultMaterial->SetMetalness(0.0f);
 		defaultMaterial->SetRoughness(1.0f);
@@ -239,6 +250,7 @@ namespace Graphics {
 		ShaderLibrary::Add("Tex2D", Shader::Create("Tex2D.vert.glsl", "Tex2D.frag.glsl"));
 		ShaderLibrary::Add("SkyboxProc", Shader::Create("Skybox\\Procedural.vert.glsl", "Skybox\\Procedural.frag.glsl"));
 		ShaderLibrary::Add("SkyboxPano", Shader::Create("Skybox\\Panoramic.vert.glsl", "Skybox\\Panoramic.frag.glsl"));
+		ShaderLibrary::Add("Highlight", Shader::Create("Highlight.vert.glsl", "Highlight.frag.glsl"));
 		ShaderLibrary::Add("Fog", Shader::Create("Fog.vert.glsl", "Fog.frag.glsl"));
 		ShaderLibrary::Add("Particle", Shader::Create("Particle\\Particle.geom.glsl", "Particle\\Particle.vert.glsl", "Particle\\Particle.frag.glsl"));
 		
@@ -306,7 +318,11 @@ namespace Graphics {
 
 		// @TODO: Allow for multiple shadow maps; need extend code
 		//				to use glTexImage3D and GL_TEXTURE_2D_ARRAY
-		shadowSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::SHADOW_MAP };	// temporarily max. 1 shadow-caster
+		shadowSpec.attachments = { Graphics::FramebufferTextureFormat::SHADOW_MAP };	// temporarily max. 1 shadow-caster
+#ifndef DISTRIBUTION
+		// only add color buffer for engine use
+		shadowSpec.attachments.attachments.emplace_back(Graphics::FramebufferTextureFormat::RGBA8);
+#endif
 
 		PipelineSpec shadowPSpec;
 		shadowPSpec.shader = ShaderLibrary::Get("ShadowMap");
@@ -438,8 +454,75 @@ namespace Graphics {
 		mUICamera.top = 10.0f;
 	}
 
+	void Renderer::HandleUIInput(std::vector<ECS::Entity> const& entities) {
+		static ECS::Entity prevHoveredUIEntity{};
+
+		glm::vec2 mousePos = Input::InputManager::GetInstance().GetMousePos();
+
+		// Step 1: Perform UI picking
+		ECS::Entity const hoveredUIEntity = Renderer::PickUIEntity(mousePos, entities);
+
+		// Step 2: Handle hover state changes
+		if (hoveredUIEntity != prevHoveredUIEntity) {
+			if (prevHoveredUIEntity) {
+				// Trigger Pointer Exit event for the previously hovered UI element
+				QUEUE_EVENT(Events::EntityPointerExit, prevHoveredUIEntity);
+			}
+			if (hoveredUIEntity) {
+				// Trigger Pointer Enter event for the newly hovered UI element
+				QUEUE_EVENT(Events::EntityPointerEnter, hoveredUIEntity);
+			}
+		}
+
+		// Step 3: Track hovered UI entity
+		prevHoveredUIEntity = hoveredUIEntity;
+
+		// Step 4: Handle pointer press/release states
+		if (hoveredUIEntity) {
+			if (Input::InputManager::GetInstance().IsKeyTriggered(IK_MOUSE_LEFT)) {
+				// Trigger Pointer Down event
+				QUEUE_EVENT(Events::EntityPointerDown, hoveredUIEntity);
+			}
+			if (Input::InputManager::GetInstance().IsKeyReleased(IK_MOUSE_LEFT)) {
+				// Trigger Pointer Up event
+				QUEUE_EVENT(Events::EntityPointerUp, hoveredUIEntity);
+			}
+		}
+	}
+
+	glm::vec2 Renderer::ConvertMouseToCanvasSpace(glm::vec2 const& mousePos, glm::vec4 const& orthoBounds, glm::vec2 const& screenSize) {
+		glm::vec2 normalizedMousePos = mousePos / screenSize; // Normalize to [0, 1]
+
+
+		glm::vec2 canvasPos;
+		canvasPos.x = orthoBounds.x + normalizedMousePos.x * (orthoBounds.y - orthoBounds.x); // Map to canvas X
+		canvasPos.y = orthoBounds.z +(1.f - normalizedMousePos.y) * (orthoBounds.w - orthoBounds.z); // Map to canvas Y
+		return canvasPos;
+	}
+
+	void Renderer::SetHighlightedEntity(ECS::Entity const& entity) {
+		mHighlightedEntity = entity;
+	}
+
+	ECS::Entity Renderer::GetHighlightedEntity(){
+		return mHighlightedEntity;
+	}
+
+	EVENT_CALLBACK_DEF(Renderer, OnResize) {
+		auto const& e { CAST_TO_EVENT(Events::WindowResized)};
+
+		for (auto const& pass : mRenderPasses) {
+			pass->GetTargetFramebuffer()->Resize(e->mWidth, e->mHeight);
+		}
+	}
+
+	EVENT_CALLBACK_DEF(Renderer, OnEntityPicked) {
+		ECS::Entity const& entity { CAST_TO_EVENT(Events::EntityScreenPicked)->mEntity };
+		SetHighlightedEntity(entity);
+	}
+
 	void Renderer::Shutdown() {
-		// Add shutdown logic if necessary
+		MaterialTable::Shutdown();
 	}
 
 	void Renderer::Clear(){
@@ -471,7 +554,9 @@ namespace Graphics {
 	
 	void Renderer::SetLineBufferData(glm::vec3 const& pos, glm::vec4 const& clr) {
 		if (mData.lineBufferIndex >= mData.lineBuffer.size()) {
+#ifdef _DEBUG
 			std::cerr << "Error: Line buffer index out of range! Index: " << mData.lineBufferIndex << ", Max: " << mData.lineBuffer.size() << std::endl;
+#endif
 			return; // Prevent writing out of bounds
 		}
 		if (mData.lineVtxCount < mData.lineBuffer.size()) {
@@ -530,14 +615,16 @@ namespace Graphics {
 		return instanceBuffer;
 	}
 
+	Renderer::~Renderer(){
+		Renderer::Shutdown();
+	}
+
 	void Renderer::DrawLine(glm::vec3 const& p0, glm::vec3 const& p1, glm::vec4 const& clr) {
-		if (mData.lineVtxCount >= RendererData::cMaxVertices)
+		if (mData.lineVtxCount >= RendererData::cMaxVertices2D)
 			NextBatch();
 
 		SetLineBufferData(p0, clr);
 		SetLineBufferData(p1, clr);
-
-		mData.lineVtxCount += 2;
 
 		++mData.stats.lineCount;
 	}
@@ -1180,12 +1267,93 @@ namespace Graphics {
 			submesh.baseVtx,                // Base vertex offset
 			0                               // Instance offset
 		);
+
+		++mData.stats.drawCalls;
+	}
+
+	int Renderer::PickEntity(glm::vec2 const& mousePos, glm::vec2 const& vpStart = {}, glm::vec2 const& vpSize = {}) {
+		auto const& geomPass { Renderer::GetPass<GeomPass>() };
+
+		auto const& pickFb{ geomPass->GetGameViewFramebuffer() };
+
+		if (!pickFb) {
+#ifdef _DEBUG
+			std::cout << "ERROR: PICK FRAMEBUFFER IS NULL!" << std::endl;
+#endif
+			return INVALID_ENTITY_ID;
+		}
+
+		auto const& fbSpec {pickFb->GetFramebufferSpec() };
+
+		glm::vec2 viewportStart(0.0f, 0.0f); // Game view typically starts at (0, 0)
+		glm::vec2 viewportSize(static_cast<float>(fbSpec.width), static_cast<float>(fbSpec.height));
+
+		// Ensure the mouse position is within the viewport bounds
+		if (mousePos.x < viewportStart.x || mousePos.x >(viewportStart.x + viewportSize.x) ||
+			mousePos.y < viewportStart.y || mousePos.y >(viewportStart.y + viewportSize.y)) {
+			// Return an invalid entity if mouse is outside the viewport
+			return INVALID_ENTITY_ID;
+		}
+
+		// Calculate the mouse offset relative to the viewport's top-left corner
+		glm::vec2 offset = mousePos - viewportStart;
+
+		// Normalize the offset to a [0, 1] range based on the viewport size
+		float normalizedX = offset.x / viewportSize.x; // X-coordinate in [0, 1]
+		float normalizedY = offset.y / viewportSize.y; // Y-coordinate in [0, 1]
+
+		// Map normalized coordinates to framebuffer pixel coordinates
+		int framebufferX = static_cast<int>(normalizedX * fbSpec.width);
+		int framebufferY = static_cast<int>((1.0f - normalizedY) * fbSpec.height); // Flip Y-axis for framebuffer space
+
+		// Bind the picking framebuffer and read the pixel under the mouse position
+		pickFb->Bind();
+		int entityId = pickFb->ReadPixel(1, framebufferX, framebufferY); // Read from color attachment 1
+		pickFb->Unbind();
+
+		if (entityId > 0) {
+			return entityId;
+		}
+
+		return INVALID_ENTITY_ID;
+	}
+
+	ECS::Entity Renderer::PickUIEntity(glm::vec2 const& mousePos, std::vector<ECS::Entity> const& entities){
+		ECS::Entity closestEntity{};
+		float closestZ = std::numeric_limits<float>::lowest();
+
+		// Iterate through all UI entities
+		for (ECS::Entity const& entity : entities) {
+			if (!entity.HasComponent<Component::Transform>()) continue;
+
+			auto const& transform = entity.GetComponent<Component::Transform>();
+
+			glm::vec4 bounds = Renderer::mUICamera.GetOrthographicBounds();
+			auto const& fb = Renderer::GetPass<UIPass>()->GetTargetFramebuffer()->GetFramebufferSpec();
+
+			glm::vec2 canvasMousePos = ConvertMouseToCanvasSpace(mousePos, bounds, glm::vec2{fb.width,fb.height});
+
+			glm::vec2 min = glm::vec2(transform.worldPos.x - transform.worldScale.x * 0.5f,
+				transform.worldPos.y - transform.worldScale.y * 0.5f);
+			glm::vec2 max = glm::vec2(transform.worldPos.x + transform.worldScale.x * 0.5f,
+				transform.worldPos.y + transform.worldScale.y * 0.5f);
+
+			if (IsPointInsideBounds(canvasMousePos, min, max)) {
+				if (transform.worldPos.z > closestZ) {
+					closestEntity = entity;
+					closestZ = transform.worldPos.z; // Update the closest Z value
+				}
+			}
+		}
+		return closestEntity;
 	}
 
 	void Renderer::FlushBatch() {
-		if (mData.lineVtxCount > RendererData::cMaxVertices) {
+		if (mData.lineVtxCount > RendererData::cMaxVertices2D) {
+#ifdef _DEBUG
 			std::cerr << "Error: Line vertex count exceeds buffer capacity during FlushBatch!" << std::endl;
-			mData.lineVtxCount = RendererData::cMaxVertices; // Clamp to valid range
+#endif
+			mData.lineVtxCount = RendererData::cMaxVertices2D; // Clamp to valid range
 		}
 
 		if (mData.quadIdxCount) {
@@ -1216,11 +1384,16 @@ namespace Graphics {
 			++mData.stats.drawCalls;
 		}
 		if (mData.lineVtxCount) {
+
 			unsigned int dataSize = static_cast<unsigned int>(mData.lineBufferIndex * sizeof(LineVtx));
 
 			mData.lineVertexBuffer->SetData(mData.lineBuffer.data(), dataSize);
 
-			ShaderLibrary::Get("Line")->Use();
+			auto const& lineShader = ShaderLibrary::Get("Line");
+			lineShader->Use();
+			auto depthTex = Renderer::GetPass<GeomPass>()->GetDepthTexture();
+			if (depthTex)
+				lineShader->SetUniform("u_DepthTex", depthTex, 0);
 			RenderAPI::DrawLines(mData.lineVertexArray, mData.lineVtxCount);
 
 			++mData.stats.drawCalls;
@@ -1232,6 +1405,7 @@ namespace Graphics {
 			mData.triVertexBuffer->SetData(mData.triBuffer.data(), dataSize);
 
 			ShaderLibrary::Get("Line")->Use();
+
 			RenderAPI::DrawTriangles(mData.triVertexArray, mData.triVtxCount);
 
 			++mData.stats.drawCalls;
@@ -1316,18 +1490,27 @@ namespace Graphics {
 
 	}
 
+	bool Renderer::IsPointInsideBounds(glm::vec2 const& point, glm::vec2 const& min, glm::vec2 const& max)
+	{
+		if (point.x < min.x || point.x > max.x || point.y < min.y || point.y > max.y)
+			return false;
+		return true;
+	}
+
 	void Renderer::NextBatch() {
 		FlushBatch();
 		BeginBatch();
 	}
 
-	void Renderer::RenderSceneBegin(glm::mat4 const& viewProjMtx) {
-
-
+	void Renderer::RenderSceneBegin(glm::mat4 const& viewProjMtx, CameraSpec const& cam) {
 
 		auto const& lineShader = ShaderLibrary::Get("Line");
 		lineShader->Use();
 		lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
+		auto depthFb = Renderer::GetPass<GeomPass>()->GetTargetFramebuffer();
+
+		lineShader->SetUniform("u_ScreenSize", glm::vec2{depthFb->GetFramebufferSpec().width, depthFb->GetFramebufferSpec().height});
+		lineShader->SetUniform("u_FarPlane", cam.farClip);
 
 		//mData.lineShader->SetUniform("u_ViewProjMtx", viewProjMtx);
 		auto const& texShader = ShaderLibrary::Get("Tex2D");
@@ -1350,7 +1533,7 @@ namespace Graphics {
 		FlushBatch();
 	}
 
-	Statistics Renderer::GetStats() {
+	Statistics const& Renderer::GetStats() {
 		return mData.stats;
 	}
 

@@ -96,7 +96,7 @@ namespace Scenes
 
     void SubmitToMainThread(const std::function<void()>& function);
     void ExecuteMainThreadQueue();
-    void BackupSave() const;
+    void BackupSave(bool pretty) const;
 
   private:
     struct SaveState
@@ -112,7 +112,7 @@ namespace Scenes
     \brief
       Saves the current scene
     ************************************************************************/
-    void SaveScene() const;
+    void SaveScene(bool pretty) const;
 
     /*!*********************************************************************
     \brief
@@ -145,7 +145,7 @@ namespace Scenes
       Temporarily saves the scene to m_tempPath and stores the scene name
       in m_tempScene.
     ************************************************************************/
-    void TemporarySave();
+    void TemporarySave(bool pretty);
 
     /*!*********************************************************************
     \brief
@@ -156,26 +156,9 @@ namespace Scenes
   
     void BackupCopy(std::string const& path) const;
 
-    /*!*********************************************************************
-    \brief
-      Handles the events the SceneManager subscribed to
-      
-      LOAD_SCENE
-        - Sets the current scene name
-      START_SCENE
-        - Trigger a temporary save before the scene is played in the
-          editor (to later revert to)
-      STOP_SCENE
-        - Revert to the temporary save when the scene is stopped in
-          the editor
-      EDIT_PREFAB
-        - Temporarily saves the scene and pushes it to the stack before
-          transitioning to prefab editor mode
-
-    \param event
-      The event to handle
-    ************************************************************************/
-    EVENT_CALLBACK_DECL(HandleEvent);
+    EVENT_CALLBACK_DECL(OnSceneSave);
+    EVENT_CALLBACK_DECL(OnSceneLoad);
+    EVENT_CALLBACK_DECL(OnPrefabEditor);
 
     std::stack<SaveState> mSaveStates;  // used to temporarily store scene saves when playing/stopping/transitioning to PrefabEditor
     std::vector<std::function<void()>> mMainThreadQueue;

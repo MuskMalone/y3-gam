@@ -59,8 +59,8 @@ namespace GUI
           ImGui::BeginDisabled();
         }
 
-        if (ImGui::MenuItem("Save Scene (Ctrl+S)")) {
-          QUEUE_EVENT(Events::SaveSceneEvent);
+        if (ImGui::MenuItem("Save Scene", "Ctrl+S")) {
+          QUEUE_EVENT(Events::SaveSceneEvent, GUIVault::sSerializePrettyScene);
         }
 
         if (creationMode) {
@@ -108,6 +108,43 @@ namespace GUI
           }
 
           ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("Serialization Format")) {
+          if (ImGui::BeginMenu("Scenes")) {
+            if (ImGui::MenuItem("PRETTY", nullptr, GUIVault::sSerializePrettyScene)) {
+              GUIVault::sSerializePrettyScene = true;
+            }
+
+            if (ImGui::MenuItem("COMPACT", nullptr, !GUIVault::sSerializePrettyScene)) {
+              GUIVault::sSerializePrettyScene = false;
+            }
+
+            ImGui::EndMenu();
+          }
+
+          if (ImGui::BeginMenu("Prefabs")) {
+            if (ImGui::MenuItem("PRETTY", nullptr, GUIVault::sSerializePrettyPrefab)) {
+              GUIVault::sSerializePrettyPrefab = true;
+            }
+
+            if (ImGui::MenuItem("COMPACT", nullptr, !GUIVault::sSerializePrettyPrefab)) {
+              GUIVault::sSerializePrettyPrefab = false;
+            }
+
+            ImGui::EndMenu();
+          }
+
+          ImGui::EndMenu();
+        }
+
+        ImGui::EndMenu();
+      }
+
+      if (ImGui::BeginMenu("Debug")) {
+        ImGui::MenuItem("Cull out-of-frustum Entities", nullptr, &GUIVault::sShowCulledEntities);
+        if (ImGui::IsItemHovered()) {
+          ImGui::SetTooltip("Cull all entities outside the frustum in the editor view");
         }
 
         ImGui::EndMenu();

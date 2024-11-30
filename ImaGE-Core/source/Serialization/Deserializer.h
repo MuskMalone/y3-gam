@@ -68,7 +68,9 @@ namespace Serialization
 
   private:
     using EntityID = ECS::EntityManager::EntityID;
+
     static rttr::type const sDMIEntityListType;
+    inline static constexpr unsigned sBufferSize = 65536;
 
     /*!*********************************************************************
     \brief
@@ -184,7 +186,7 @@ namespace Serialization
     ************************************************************************/
     static void DeserializeProxyScript(rttr::variant& var, rapidjson::Value const& jsonVal);
 
-    static Mono::ScriptInstance DeserializeScriptInstance(rapidjson::Value const& jsonVal);
+    static Mono::ScriptInstance DeserializeScriptInstance(rapidjson::Value const& jsonVal, bool hasData = true);
 
     /*!*********************************************************************
     \brief

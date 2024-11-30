@@ -120,11 +120,13 @@ namespace Graphics {
 
                     // Log the error
                     success = false;
+#ifdef _DEBUG
                     std::stringstream ss;
                     ss << "[OpenGL Error] (" << error << "): " << function
                         << " in file " << file << " at line " << line << std::endl;
 
                     std::cout << ss.str() << std::endl;
+#endif
 
                     //Debug::DebugLogger::GetInstance().LogError(ss.str());
                 }
