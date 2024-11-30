@@ -25,7 +25,7 @@ namespace GUI {
     inline static bool sOpenPopup;
     inline static std::string sCurrentPopup;
 
-    inline static constexpr char sGUIDPopupTitle[] = "Did you just merge???";
+    inline static constexpr char sGUIDPopupTitle[] = "Did you just merge??? Unlucky.";
     inline static constexpr char sGUIDCompletePopupTitle[] = "GUID Repair Complete";
 
     std::vector<PopupFn> mPopupFunctions;
@@ -33,6 +33,7 @@ namespace GUI {
     EVENT_CALLBACK_DECL(OnGUIDInvalidated);
     EVENT_CALLBACK_DECL(OnGUIDRemap);
     
+    void InitGUIDPopup();
     void GUIDRemapPopup();
     void GUIDCompletePopup();
 
