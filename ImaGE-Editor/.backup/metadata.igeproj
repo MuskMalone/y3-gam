@@ -22,11 +22,47 @@
                     ]
                 },
                 {
+                    "key": 11381209882212531234,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Audio\\KeypadBeep2_SFX.wav"
+                        }
+                    ]
+                },
+                {
+                    "key": 2188072231801161263,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Audio\\KeypadBeep_SFX.wav"
+                        }
+                    ]
+                },
+                {
                     "key": 1367675903760881373,
                     "value": [
                         {
                             "key": "path",
                             "value": "..\\Assets\\Audio\\GardenAmbience_BGM.wav"
+                        }
+                    ]
+                },
+                {
+                    "key": 4389676295286586758,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Audio\\SafeInteract_SFX.wav"
+                        }
+                    ]
+                },
+                {
+                    "key": 17393377810543433938,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Audio\\WrongInput_SFX.wav"
                         }
                     ]
                 },
@@ -473,6 +509,69 @@
                     ]
                 },
                 {
+                    "key": 1302518569969946230,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Materials\\FlowerPainting.mat"
+                        }
+                    ]
+                },
+                {
+                    "key": 5193884273289677601,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Materials\\Ps1Base.mat"
+                        }
+                    ]
+                },
+                {
+                    "key": 5776969370051059208,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Materials\\GreenPainting.mat"
+                        }
+                    ]
+                },
+                {
+                    "key": 17715913249894061526,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Materials\\Black.mat"
+                        }
+                    ]
+                },
+                {
+                    "key": 18281545277828084395,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Materials\\NightPainting.mat"
+                        }
+                    ]
+                },
+                {
+                    "key": 6794660236197056046,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Materials\\SunsetPainting.mat"
+                        }
+                    ]
+                },
+                {
+                    "key": 4555097902870280641,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Materials\\TreePainting.mat"
+                        }
+                    ]
+                },
+                {
                     "key": 450678740972950416,
                     "value": [
                         {
@@ -752,20 +851,20 @@
                     ]
                 },
                 {
-                    "key": 12882319142451905872,
-                    "value": [
-                        {
-                            "key": "path",
-                            "value": "..\\Assets\\Materials\\PicturePerfectMM.mat"
-                        }
-                    ]
-                },
-                {
                     "key": 11695833195534174825,
                     "value": [
                         {
                             "key": "path",
                             "value": "..\\Assets\\Materials\\Bed.mat"
+                        }
+                    ]
+                },
+                {
+                    "key": 12882319142451905872,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Materials\\PicturePerfectMM.mat"
                         }
                     ]
                 },
@@ -793,6 +892,15 @@
                         {
                             "key": "path",
                             "value": "..\\Assets\\Materials\\Wood Floor Corridor Alternate.mat"
+                        }
+                    ]
+                },
+                                {
+                    "key": 566910909923529782,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Materials\\CreditsCD.mat"
                         }
                     ]
                 },
@@ -824,11 +932,20 @@
                     ]
                 },
                 {
-                    "key": 16643807743570932751,
+                    "key": 3832641821579367456,
                     "value": [
                         {
                             "key": "path",
-                            "value": "..\\Assets\\Materials\\Red.mat"
+                            "value": "..\\Assets\\Materials\\SettingsCD2.mat"
+                        }
+                    ]
+                },
+                {
+                    "key": 4004348736857560767,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Materials\\MainMenuBG.mat"
                         }
                     ]
                 },
@@ -838,6 +955,15 @@
                         {
                             "key": "path",
                             "value": "..\\Assets\\Materials\\NewGameCD3.mat"
+                        }
+                    ]
+                },
+                {
+                    "key": 16643807743570932751,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Materials\\Red.mat"
                         }
                     ]
                 },
@@ -865,6 +991,24 @@
                         {
                             "key": "path",
                             "value": "..\\Assets\\Materials\\Drawer.mat"
+                        }
+                    ]
+                },
+                {
+                    "key": 8893670667570807355,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Materials\\NewGameCD2.mat"
+                        }
+                    ]
+                },
+                {
+                    "key": 14840939470102888852,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Materials\\ContinueCD3.mat"
                         }
                     ]
                 },
@@ -1392,38 +1536,11 @@
             "key": "PostProcessing",
             "value": [
                 {
-                    "key": 566910909923529782,
-                    "value": [
-                        {
-                            "key": "path",
-                            "value": "..\\Assets\\Materials\\CreditsCD.mat"
-                        }
-                    ]
-                },
-                {
                     "key": 3357145615205506964,
                     "value": [
                         {
                             "key": "path",
                             "value": "..\\Assets\\PostProcessing\\sinwave.frag.glsl"
-                        }
-                    ]
-                },
-                {
-                    "key": 3832641821579367456,
-                    "value": [
-                        {
-                            "key": "path",
-                            "value": "..\\Assets\\Materials\\SettingsCD2.mat"
-                        }
-                    ]
-                },
-                {
-                    "key": 4004348736857560767,
-                    "value": [
-                        {
-                            "key": "path",
-                            "value": "..\\Assets\\Materials\\MainMenuBG.mat"
                         }
                     ]
                 },
@@ -1446,29 +1563,11 @@
                     ]
                 },
                 {
-                    "key": 8893670667570807355,
-                    "value": [
-                        {
-                            "key": "path",
-                            "value": "..\\Assets\\Materials\\NewGameCD2.mat"
-                        }
-                    ]
-                },
-                {
                     "key": 14222384982541115964,
                     "value": [
                         {
                             "key": "path",
                             "value": "..\\Assets\\PostProcessing\\Blue.frag.glsl"
-                        }
-                    ]
-                },
-                {
-                    "key": 14840939470102888852,
-                    "value": [
-                        {
-                            "key": "path",
-                            "value": "..\\Assets\\Materials\\ContinueCD3.mat"
                         }
                     ]
                 },
@@ -1704,6 +1803,42 @@
                         {
                             "key": "path",
                             "value": "..\\Assets\\Textures\\MainMenu_NewGame2Flipped.png"
+                        }
+                    ]
+                },
+                {
+                    "key": 8485408677781204132,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Textures\\UI_LeftClicktoRemove.png"
+                        }
+                    ]
+                },
+                {
+                    "key": 8508782768409723500,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Textures\\UI_LeftClickSafeInteract.png"
+                        }
+                    ]
+                },
+                {
+                    "key": 14809817590802918865,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Textures\\UI_LeftClicktoTypePassword.png"
+                        }
+                    ]
+                },
+                {
+                    "key": 8912148281184916715,
+                    "value": [
+                        {
+                            "key": "path",
+                            "value": "..\\Assets\\Textures\\notif.png"
                         }
                     ]
                 },
@@ -1947,15 +2082,6 @@
                         {
                             "key": "path",
                             "value": "..\\Assets\\Textures\\UI_EtoPickUpNightPainting.png"
-                        }
-                    ]
-                },
-                {
-                    "key": 5193884273289677601,
-                    "value": [
-                        {
-                            "key": "path",
-                            "value": "..\\Assets\\Materials\\Ps1Base.mat"
                         }
                     ]
                 },
@@ -2649,15 +2775,6 @@
                         {
                             "key": "path",
                             "value": "..\\Assets\\Textures\\sun_icon.png"
-                        }
-                    ]
-                },
-                {
-                    "key": 17715913249894061526,
-                    "value": [
-                        {
-                            "key": "path",
-                            "value": "..\\Assets\\Materials\\Black.mat"
                         }
                     ]
                 },
