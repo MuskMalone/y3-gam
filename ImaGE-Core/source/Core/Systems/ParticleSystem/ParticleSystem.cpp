@@ -8,7 +8,7 @@ namespace Systems {
 	{}
 	void ParticleSystem::Update()
 	{
-		std::cout << "FROM PARTICLE SYSTEM\n";
+
 		//Graphics::ParticleManager::GetInstance().Bind();
 		float dt{ Performance::FrameRateController::GetInstance().GetDeltaTime() };
 		auto const& emitterStepShader{ Graphics::ShaderLibrary::Get("EmitterStep") };
@@ -29,6 +29,8 @@ namespace Systems {
 		glDispatchCompute(MAX_BUFFER / WORK_GROUP, 1, 1);
 		glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
 		particleStepShader->Unuse();
+
+		Graphics::ParticleManager::GetInstance().DebugSSBO();
 		//Graphics::ParticleManager::GetInstance().Unbind();
 	}
 	void ParticleSystem::PausedUpdate()

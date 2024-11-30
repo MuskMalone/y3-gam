@@ -13,7 +13,13 @@
 // { TextureData TexHdls[]; }; 
 
 uniform mat4 vertViewProjection;
+uniform mat4 vertView; // Camera view matrix
 out mat4 vertTransform;
+
+out mat4 translate;
+out mat4 rotate;
+out mat4 scale; 
+
 out vec4 vertFragColor;
 out uint texIdx;
 
@@ -70,13 +76,31 @@ mat4 scale(vec2 scale) {
         0.0, 0.0, 0.0, 1.0
     );
 }
+// Function to compute the billboard alignment
+mat4 computeBillboardAlignment(mat4 viewMatrix) {
+    // Extract camera rotation (upper 3x3) and invert it to align the quad to the camera
+    mat3 cameraRotation = mat3(viewMatrix);
+    cameraRotation[0] = normalize(cameraRotation[0]);
+    cameraRotation[1] = normalize(cameraRotation[1]);
+    cameraRotation[2] = normalize(cameraRotation[2]);
+
+    // Convert 3x3 rotation matrix to 4x4
+    return mat4(
+        vec4(cameraRotation[0], 0.0),
+        vec4(cameraRotation[1], 0.0),
+        vec4(cameraRotation[2], 0.0),
+        vec4(0.0, 0.0, 0.0, 1.0)
+    );
+}
 
 void main() {
     if (!Particles[gl_VertexID].alive) {
-        // vertTransform = mat4(0.0);
-        // texIdx = 0;
+        vertTransform = mat4(0.0);
+        texIdx = 0;
     } else {
-        vertTransform = vertViewProjection * translate(Particles[gl_VertexID].pos) * rotate(Particles[gl_VertexID].rot) * scale(Particles[gl_VertexID].size);
+        // Billboard alignment
+        mat4 billboardAlignment = computeBillboardAlignment(vertView);
+        vertTransform = vertViewProjection * translate(Particles[gl_VertexID].pos) * scale(Particles[gl_VertexID].size);
         vertFragColor = Particles[gl_VertexID].col;
         texIdx = Particles[gl_VertexID].emtIdx;
     }

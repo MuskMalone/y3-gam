@@ -91,6 +91,51 @@ namespace IGE {
     }
 
     SUBSCRIBE_CLASS_FUNC(Events::EventType::TRIGGER_PAUSED_UPDATE, &Application::OnPausedUpdateTrigger, this);
+
+    Graphics::EmitterInstance emitter{
+        // vertices
+        {
+            {1.0f, 1.0f, 1.0f, 1.0f},
+            {-1.0f, 1.0f, 1.0f, 1.0f},
+            {1.0f, -1.0f, 1.0f, 1.0f},
+            {-1.0f, -1.0f, 1.0f, 1.0f},
+            {1.0f, 1.0f, -1.0f, 1.0f},
+            {-1.0f, 1.0f, -1.0f, 1.0f},
+            {1.0f, -1.0f, -1.0f, 1.0f},
+            {-1.0f, -1.0f, -1.0f, 1.0f},
+        },
+        // col
+        {0.8f, 0.6f, 0.4f, 1.0f}, // RGBA color
+        // vel
+        {0.5f, 0.0f, -0.5f},       // Velocity vector
+        // rot
+        {45.0f, 0.0f, 90.0f},      // Rotation angles (in degrees)
+        // size
+        {1.0f, 2.0f},              // Size
+        // angvel
+        10.0f,                     // Angular velocity
+        // lifetime
+        5.0f,                      // Particle lifetime
+        // speed
+        2.5f,                      // Particle speed
+        // time
+        1.0f,                      // Emitter active time
+        // frequency
+        1.0f,                     // Emission frequency
+        // type
+        1,                         // Type (e.g., EMT_TYPE_RAIN)
+        // vCount
+        8,                         // Number of vertices
+        // preset
+        0,                         // Preset (e.g., ALPHA_OVER_LIFETIME)
+        // particlesPerFrame
+        100,                       // Particles emitted per frame
+        // idx
+        0,                         // Emitter index
+        // drawEmitterVertices
+        true                       // Whether to draw emitter vertices
+    };
+    Graphics::ParticleManager::GetInstance().EmitterAction(emitter, 1);
   }
 
   void Application::Run() {

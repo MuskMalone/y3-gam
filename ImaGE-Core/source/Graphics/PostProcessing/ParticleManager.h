@@ -68,30 +68,28 @@ namespace Graphics{
     //each emitter is an EmitterInstance
     //not the same as Emitter inside GLSLStructs
     struct EmitterInstance {
-        glm::vec4 vertices[4]; // Each vec4 is 16 bytes, total 64 bytes
-        glm::vec4 col;         // 16 bytes (vec3 is aligned like vec4)
+        glm::vec4 vertices[8];  // 4 vec4s, each vec4 is 16 bytes, total 64 bytes
+        //color
+        glm::vec4 col;          // 16 bytes
+        glm::vec3 vel;          // vec3
+        glm::vec3 rot;
+        glm::vec2 size;         // vec2
 
-        glm::vec2 gravity; // 8 bytes
-        glm::vec2 size;    // 8 bytes (vec2 is aligned to 8 bytes)
-        float rot;    // 4 bytes
-        float lifetime; // 4 bytes
-        float angvel;  // 4 bytes
-        float speed;     // 8 bytes
+        //since particles are billboard, means that angle velocity is 2d
+        float angvel;
+        //lifetime of each particle
+        float lifetime;         // 4 bytes
+        float speed;            // 4 bytes
 
-        float time;       // 4 bytes, but due to the vec3 above, you can expect padding here
-        float frequency;  // 4 bytes
+        // total duration the Emitter has existed for
+        float time;             // 4 bytes
+        float frequency;        // 4 bytes
 
-        // type of emmission
-        //0: smoke
-        //1: fire
-        //2: burst
-        //3: burst with gravity
-        //4: gradual emission
-        int type;         // 4 bytes
-        // 1 for point, 2 for line, 4 for rect
-        int vCount{ 1 };       // 4 bytes
-        int preset;    // 4 bytes //alpha over lifetime etc
-        int particlesPerFrame; // 4 bytes
+        int type;               // 4 bytes
+        int vCount;             // 4 bytes
+        int preset;             // 4 bytes
+        int particlesPerFrame;  // 4 bytes
+
         int idx{ -1 };
         bool drawEmitterVertices{ false };
     };
@@ -102,7 +100,7 @@ namespace Graphics{
 		ParticleManager();
         ~ParticleManager();
         void EmitterAction(EmitterInstance& emitter, int action);
-
+        void DebugSSBO();
         void Bind();
         void Unbind();
 

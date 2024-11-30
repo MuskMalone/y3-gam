@@ -61,6 +61,8 @@ namespace Graphics{
 
         //create
         for (uint64_t i{}; i < MAX_BUFFER; ++i) { mEmitterIdxQueue.push(static_cast<unsigned int>(i)); }
+
+        //for testing purpose
     }
 
     ParticleManager::ParticleManager()
@@ -77,9 +79,10 @@ namespace Graphics{
         glDeleteBuffers(1, &mParticleStartSSbo);
     }
 
-    inline void ParticleManager::EmitterAction(EmitterInstance& emitter, int action) {
-        //mEmitterShader->Use();
+    void ParticleManager::EmitterAction(EmitterInstance& emitter, int action) {
         auto emitterShader{ ShaderLibrary::Get("Emitter") };
+        emitterShader->Use();
+
         //gets the first available idx for emitter;
         if (action == 1) {
             emitter.idx = mEmitterIdxQueue.front();
@@ -93,37 +96,42 @@ namespace Graphics{
         emitterShader->SetUniform("emtTargetIdx", static_cast<GLint>(emitter.idx));
 
         if (action >= 0) {
-            //sets the vertices
-            GLint uEmtverticesLoc = glGetUniformLocation(emitterShader->PgmHdl(), "uEmtvertices");
+            // Set the emitter struct values in the shader
 
-            //sets the emitter shape
+            // Assuming emitterShader is your shader program instance
+            GLint uEmtVerticesLoc = glGetUniformLocation(emitterShader->PgmHdl(), "emitter.vertices");
+
+            // Set the vertices (8 vec4 elements)
             auto const& v{ emitter.vertices };
-            GLfloat vertices[16] = {
-                // vec4 1
+            GLfloat vertices[32] = { // 8 vec4s, each with 4 components
                 v[0][0], v[0][1], v[0][2], v[0][3],
-                // vec4 2
                 v[1][0], v[1][1], v[1][2], v[1][3],
-                // vec4 3
                 v[2][0], v[2][1], v[2][2], v[2][3],
-                // vec4 4
                 v[3][0], v[3][1], v[3][2], v[3][3],
+                v[4][0], v[4][1], v[4][2], v[4][3],
+                v[5][0], v[5][1], v[5][2], v[5][3],
+                v[6][0], v[6][1], v[6][2], v[6][3],
+                v[7][0], v[7][1], v[7][2], v[7][3],
             };
-            glUniform4fv(uEmtverticesLoc, 4, vertices);
+            glUniform4fv(uEmtVerticesLoc, 8, vertices);
 
-            emitterShader->SetUniform("uEmtcol", emitter.col);
+            // Set the other uniform values individually
+            emitterShader->SetUniform("emitter.col", emitter.col);
+            emitterShader->SetUniform("emitter.vel", emitter.vel);
+            emitterShader->SetUniform("emitter.rot", emitter.rot);
+            emitterShader->SetUniform("emitter.size", emitter.size);
 
-            emitterShader->SetUniform("uEmtgravity", emitter.gravity);
-            emitterShader->SetUniform("uEmtsize", emitter.size);
-            emitterShader->SetUniform("uEmtrot", emitter.rot);
-            emitterShader->SetUniform("uEmtlifetime", emitter.lifetime);
-            emitterShader->SetUniform("uEmtangvel", emitter.angvel);
-            emitterShader->SetUniform("uEmtspeed", emitter.speed);
+            emitterShader->SetUniform("emitter.angvel", emitter.angvel);
+            emitterShader->SetUniform("emitter.lifetime", emitter.lifetime);
+            emitterShader->SetUniform("emitter.speed", emitter.speed);
 
-            emitterShader->SetUniform("uEmtfrequency", emitter.frequency);
-            emitterShader->SetUniform("uEmttype", emitter.type);
-            emitterShader->SetUniform("uEmtvCount", emitter.vCount);
-            emitterShader->SetUniform("uEmtpreset", emitter.preset);
-            emitterShader->SetUniform("uEmtparticlesPerFrame", emitter.particlesPerFrame);
+            emitterShader->SetUniform("emitter.time", emitter.time);
+            emitterShader->SetUniform("emitter.frequency", emitter.frequency);
+
+            emitterShader->SetUniform("emitter.type", emitter.type);
+            emitterShader->SetUniform("emitter.vCount", emitter.vCount);
+            emitterShader->SetUniform("emitter.preset", emitter.preset);
+            emitterShader->SetUniform("emitter.particlesPerFrame", emitter.particlesPerFrame);
 
         }
 
@@ -135,6 +143,25 @@ namespace Graphics{
         emitterShader->SetUniform("emtTargetIdx", -1);
 
         emitterShader->Unuse();
+    }
+
+    void ParticleManager::DebugSSBO()
+    {
+        //glBindBuffer(GL_SHADER_STORAGE_BUFFER, mEmitterSSbo);
+        //GLSLStructs::Emitter* vels = (GLSLStructs::Emitter*)glMapBufferRange(GL_SHADER_STORAGE_BUFFER, 0, MAX_BUFFER * sizeof(GLSLStructs::Emitter), GL_MAP_READ_BIT);
+        //glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
+
+        //glBindBuffer(GL_SHADER_STORAGE_BUFFER, mParticleStartSSbo);
+        //GLSLStructs::Particle* vels = (GLSLStructs::Particle*)glMapBufferRange(GL_SHADER_STORAGE_BUFFER, 0, MAX_BUFFER * sizeof(GLSLStructs::Particle), GL_MAP_READ_BIT);
+        //glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
+
+        //glBindBuffer(GL_SHADER_STORAGE_BUFFER, mRandomSSbo);
+        //float* vels = (float*)glMapBufferRange(GL_SHADER_STORAGE_BUFFER, 0, MAX_BUFFER * sizeof(float), GL_MAP_READ_BIT);
+        //glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
+
+        //glBindBuffer(GL_SHADER_STORAGE_BUFFER, mVariableSSbo);
+        //GLuint* idx = (GLuint*)glMapBufferRange(GL_SHADER_STORAGE_BUFFER, 0, sizeof(GLuint), GL_MAP_READ_BIT);
+        //glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
     }
 
     void ParticleManager::Bind()

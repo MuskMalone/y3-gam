@@ -1,44 +1,50 @@
-
 #version 460 core
-// #extension GL_ARB_bindless_texture : enable
-
 #include "..\\Assets\\Shaders\\Particle\\Common.glsl"
 
 layout(points) in;
 layout(triangle_strip, max_vertices = 24) out;
 
-// struct TextureData{
-//     vec2 texCoords[4];
-//     uvec2 texHdl;
-// };
-
-// layout(std430, binding = 9) buffer TextureHandles 
-// { TextureData TexHdls[]; }; 
-
 in mat4 vertTransform[];
+
+out mat4 translate[];
+out mat4 rotate[];
+out mat4 scale[]; 
+
 in vec4 vertFragColor[];
 in uint texIdx[];
 
 out vec4 geomColor;
 out vec2 geomTexCoord;
 
-void EmitVertexCube(vec4 position, vec3 offset, vec2 texCoord) {
-    gl_Position = vertTransform[0] * (position + vec4(offset, 0.0));
+// Helper function to remove rotation from a matrix
+mat4 extractTranslationAndScale(mat4 transform) {
+    return mat4(
+        vec4(length(transform[0].xyz), 0.0, 0.0, 0.0), // Scale X
+        vec4(0.0, length(transform[1].xyz), 0.0, 0.0), // Scale Y
+        vec4(0.0, 0.0, length(transform[2].xyz), 0.0), // Scale Z (optional for billboards)
+        transform[3]                                   // Translation
+    );
+}
+
+void EmitVertexBillboard(vec4 position, vec3 offset, vec2 texCoord, mat4 transform) {
+    gl_Position = transform * (position + vec4(offset, 0.0));
     geomTexCoord = texCoord;
     EmitVertex();
 }
 
 void main() {
-    vec4 position = vec4(0,0,0,1);//gl_in[0].gl_Position;  // The position of the point
-    geomColor = vertFragColor[0];  // Pass the color
+    vec4 position = vec4(0, 0, 0, 1); // Center of the quad
+    geomColor = vertFragColor[0];     // Pass the particle color
 
-    float size = 0.5;  // Half-size of the cube, since it's 1x1x1
+    float size = 0.5;                 // Half-size of the quad
 
-// only front face needed
-    EmitVertexCube(position, vec3(-size, -size, 0), vec2(0)); //bl
-    EmitVertexCube(position, vec3(size, -size, 0),  vec2(0)); //br
-    EmitVertexCube(position, vec3(-size, size, 0),  vec2(0)); //tl
-    EmitVertexCube(position, vec3(size, size, 0),  vec2(0)); //tr
+    // Remove rotation from the transformation matrix
+    mat4 billboardTransform = extractTranslationAndScale(vertTransform[0]);
+
+    // Emit vertices for a single quad (billboarded)
+    EmitVertexBillboard(position, vec3(-size, -size, 0), vec2(0, 0), billboardTransform); // Bottom-left
+    EmitVertexBillboard(position, vec3(size, -size, 0), vec2(1, 0), billboardTransform);  // Bottom-right
+    EmitVertexBillboard(position, vec3(-size, size, 0), vec2(0, 1), billboardTransform);  // Top-left
+    EmitVertexBillboard(position, vec3(size, size, 0), vec2(1, 1), billboardTransform);   // Top-right
     EndPrimitive();
-
 }

@@ -16,6 +16,7 @@
 #include <Graphics/RenderPass/ShadowPass.h>
 #include <Graphics/RenderPass/ScreenPass.h>
 #include <Graphics/RenderPass/PostProcessPass.h>
+#include <Graphics/RenderPass/ParticlePass.h>
 #include <Graphics/RenderPass/UIPass.h>
 #pragma endregion
 
@@ -375,22 +376,22 @@ namespace Graphics {
 
 	void Renderer::InitParticlePass()
 	{
-		//Graphics::FramebufferSpec postprocessSpec;
-		//postprocessSpec.width = WINDOW_WIDTH<int>;
-		//postprocessSpec.height = WINDOW_HEIGHT<int>;
-		//postprocessSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };	// temporarily max. 1 shadow-caster
+		Graphics::FramebufferSpec particleSpec;
+		particleSpec.width = WINDOW_WIDTH<int>;
+		particleSpec.height = WINDOW_HEIGHT<int>;
+		particleSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };	// temporarily max. 1 shadow-caster
 
-		//PipelineSpec postprocessPSpec;
+		PipelineSpec particlePSpec;
 
-		////leaving this blank, i have multipel shaders in postproc mgr to be run in a pingpong fashion
-		//postprocessPSpec.shader = nullptr; //ShaderLibrary::Get("ShadowMap");
-		//postprocessPSpec.targetFramebuffer = Framebuffer::Create(postprocessSpec);
+		//leaving this blank, i have multipel shaders in postproc mgr to be run in a pingpong fashion
+		particlePSpec.shader = ShaderLibrary::Get("Particle");
+		particlePSpec.targetFramebuffer = Framebuffer::Create(particleSpec);
 
-		//RenderPassSpec postprocessPassSpec;
-		//postprocessPassSpec.pipeline = Pipeline::Create(postprocessPSpec);
-		//postprocessPassSpec.debugName = "Post Process Pass";
+		RenderPassSpec particlePassSpec;
+		particlePassSpec.pipeline = Pipeline::Create(particlePSpec);
+		particlePassSpec.debugName = "Particle Pass";
 
-		//AddPass(RenderPass::Create<PostProcessingPass>(postprocessPassSpec));
+		AddPass(RenderPass::Create<ParticlePass>(particlePassSpec));
 	}
 
 	void Renderer::InitUIPass() {
