@@ -9,6 +9,21 @@ namespace Component {
 	{
 		sounds.clear();
 	}
+	void AudioSource::SetSoundPitch(std::string const& id, float pitch)
+	{
+		if (sounds.find(id) != sounds.end()) {
+			auto& sound{ sounds.at(id) };
+			sound.playSettings.pitch = pitch;
+		}
+	}
+	void AudioSource::SetSoundVolume(std::string const& id, float volume)
+	{
+		glm::clamp(volume, 0.f, 1.f);
+		if (sounds.find(id) != sounds.end()) {
+			auto & sound{ sounds.at(id) };
+			sound.playSettings.volume = volume;
+		}
+	}
 	void AudioSource::PlaySound(std::string const& id) const
 	{
 		//play sound

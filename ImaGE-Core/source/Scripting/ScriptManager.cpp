@@ -215,6 +215,9 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetRotation);
   ADD_INTERNAL_CALL(SetWorldRotation);
   ADD_INTERNAL_CALL(SetWorldScale);
+  ADD_INTERNAL_CALL(GetWorldRotationEuler);
+  ADD_INTERNAL_CALL(GetRotationEuler);
+  ADD_INTERNAL_CALL(SetRotationEuler);
   ADD_INTERNAL_CALL(SetScale);
   ADD_INTERNAL_CALL(MoveCharacter);
   ADD_INTERNAL_CALL(SetAngularVelocity);
@@ -260,7 +263,9 @@ void ScriptManager::AddInternalCalls()
 
   // Utility Functions
   ADD_INTERNAL_CALL(Raycast);
-  ADD_INTERNAL_CALL(RaycastFromEntity)
+  ADD_INTERNAL_CALL(RaycastFromEntity);
+  ADD_INTERNAL_CALL(SetSoundPitch);
+  ADD_INTERNAL_CALL(SetSoundVolume);
   ADD_INTERNAL_CALL(PlaySound);
   ADD_INTERNAL_CALL(PauseSound);
   ADD_INTERNAL_CALL(StopSound);
@@ -270,6 +275,8 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(TakeScreenShot);
   ADD_INTERNAL_CALL(ShowCursor);
   ADD_INTERNAL_CALL(HideCursor);
+  ADD_INTERNAL_CALL(ChangeToolsPainting);
+  ADD_INTERNAL_CALL(SpawnToolBox);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -837,8 +844,28 @@ void Mono::SetRotation(ECS::Entity::EntityID entity, glm::quat rotAdjustment)
 {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
   trans.rotation = rotAdjustment;
-  trans.modified = true;
+  trans.eulerAngles = glm::degrees(glm::eulerAngles(rotAdjustment));
+  //trans.modified = true;
   // need to use quaternions
+  TransformHelpers::UpdateWorldTransform(entity);
+}
+
+glm::vec3 Mono::GetWorldRotationEuler(ECS::Entity::EntityID entity)
+{
+  Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+  std::cout << trans.GetWorldEulerAngles().y << "\n";
+  return trans.GetWorldEulerAngles();
+}
+glm::vec3 Mono::GetRotationEuler(ECS::Entity::EntityID entity)
+{
+  Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+  return trans.eulerAngles;
+}
+void Mono::SetRotationEuler(ECS::Entity::EntityID entity, glm::vec3 rotAdjustment)
+{
+  Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+  trans.SetLocalRotWithEuler(rotAdjustment);
+  TransformHelpers::UpdateWorldTransform(entity);
 }
 
 glm::vec3 Mono::GetWorldPosition(ECS::Entity::EntityID entity)
@@ -996,6 +1023,20 @@ ECS::Entity::EntityID Mono::RaycastFromEntity(ECS::Entity::EntityID e, glm::vec3
         ECS::Entity::EntityID out {hit.entity.GetEntityID()};
         return out;
     }return static_cast<ECS::Entity::EntityID>(0);
+}
+
+void Mono::SetSoundPitch(ECS::Entity::EntityID e, MonoString* s, float p)
+{
+    std::string name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().SetSoundPitch(name, p);
+}
+
+void Mono::SetSoundVolume(ECS::Entity::EntityID e, MonoString* s, float v) 
+{
+    std::string name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().SetSoundVolume(name, v);
 }
 
 void Mono::PlaySound(ECS::Entity::EntityID e, MonoString* s)
@@ -1478,6 +1519,42 @@ void Mono::ShowCursor() {
 void Mono::HideCursor() {
   QUEUE_EVENT(Events::LockMouseEvent, true);
 }
+
+void Mono::ChangeToolsPainting() {
+  ECS::Entity ToolsUI = ECS::EntityManager::GetInstance().GetEntityFromTag("ToolsPaintingUI");
+  ECS::Entity Toolspaint = ECS::EntityManager::GetInstance().GetEntityFromTag("ToolsPainting");
+  IGE::Assets::GUID toolsPaintingNight{ IGE::Assets::AssetManager::GetInstance().PathToGUID("..\\Assets\\Textures\\ToolsPaintingNight.png") };
+  IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(toolsPaintingNight);
+  if (ECS::EntityManager::GetInstance().IsValidEntity(ToolsUI))
+  {
+    ToolsUI.GetComponent<Component::Image>().textureAsset = toolsPaintingNight;
+  }
+ 
+  for (ECS::Entity& child : ECS::EntityManager::GetInstance().GetChildEntity(Toolspaint))
+  {
+    if (child.GetTag() == "Painting Plane")
+    {
+      if (child.HasComponent<Component::Material>())
+      {
+        Graphics::MaterialTable::GetMaterialByGUID(child.GetComponent<Component::Material>().materialGUID)->SetAlbedoMap(toolsPaintingNight);
+      }
+      break;
+    }
+  }
+
+}
+
+void Mono::SpawnToolBox() {
+  ECS::Entity toolBox = ECS::EntityManager::GetInstance().GetEntityFromTag("Toolbox");
+  if (ECS::EntityManager::GetInstance().IsValidEntity(toolBox))
+  {
+    toolBox.SetIsActive(true);
+    ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(toolBox);
+  }
+
+}
+
+
 
 /*!**********************************************************************
 *																																			  *

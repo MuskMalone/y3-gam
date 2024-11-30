@@ -245,10 +245,8 @@ namespace {
 
     //Get the list of light
     std::vector<ECS::Entity> lights{};
-    std::cout << "ALL LIGHT-----------------------------\n";
     for (ECS::Entity const& entity : entities) {
       if (!entity.HasComponent<Component::Light>()) { continue; }
-      std::cout << entity.GetTag() << "\n";
       auto const& light = entity.GetComponent<Component::Light>();
       lightUniforms.u_type[numLights] = light.type;
       lightUniforms.u_LightDirection[numLights] = entity.GetComponent<Component::Transform>().worldRot * light.forwardVec; // Directional light direction in world space
@@ -263,7 +261,6 @@ namespace {
       ++numLights;
     }
     lightUniforms.numLights = numLights;
-    std::cout << "--------------------------------------\n";
     return lightUniforms;
   }
 
