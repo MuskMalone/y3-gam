@@ -106,6 +106,7 @@
     <Compile Include="source\InteractableObject\SafeButtons.cs" />
     <Compile Include="source\InteractableObject\Seed.cs" />
     <Compile Include="source\InteractableObject\SuspiciousPainting.cs" />
+    <Compile Include="source\InteractableObject\ToolsPainting.cs" />
     <Compile Include="source\InteractableObject\Tools.cs" />
     <Compile Include="source\InteractableObject\TutorialPainting.cs" />
     <Compile Include="source\Inventory\HUD.cs" />
@@ -113,13 +114,13 @@
     <Compile Include="source\Inventory\InventoryItemData.cs" />
     <Compile Include="source\Inventory\TutorialLevelHUD.cs" />
     <Compile Include="source\Inventory\TutorialLevelInventory.cs" />
-    <Compile Include="source\Mono\CDDragAndDrop.cs" />
-    <Compile Include="source\Mono\CDRotation.cs" />
+    <Compile Include="source\MainMenu\CDDragAndDrop.cs" />
+    <Compile Include="source\MainMenu\NewGameCD.cs" />
+    <Compile Include="source\MainMenu\OpenedCdLid.cs" />
     <Compile Include="source\Mono\Color.cs" />
     <Compile Include="source\Mono\Component.cs" />
     <Compile Include="source\Mono\Debug.cs" />
     <Compile Include="source\Mono\Entity.cs" />
-    <Compile Include="source\Mono\FadeManager.cs" />
     <Compile Include="source\Mono\Image.cs" />
     <Compile Include="source\Mono\Input.cs" />
     <Compile Include="source\Mono\Inside.cs" />
@@ -162,9 +163,7 @@
     <Compile Include="source\Tutorial\TutorialDialogue.cs" />
     <Compile Include="source\Tutorial\WASDTutorial.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="source\MainMenu\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -9,17 +9,18 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
 #include <string>
+#include <vector>
 #include <Asset/SmartPointer.h>
 #include <Core/Entity.h>
 
 namespace IGE::Assets {
   struct RemapData {
     RemapData() = default;
-    RemapData(ECS::Entity _entity, IGE::Assets::GUID _guid, std::string _fileType) :
-      entity{ _entity }, guid{ _guid }, fileType{ std::move(_fileType) } {}
+    RemapData(IGE::Assets::GUID _guid, std::string _fileType) :
+      fileType{ std::move(_fileType) }, guid{ _guid }, entities{} {}
 
     std::string fileType; // the name of the asset registered to rttr
     IGE::Assets::GUID guid; // the original guid of the asset
-    ECS::Entity entity;
+    std::vector<ECS::Entity> entities;
   };
 }

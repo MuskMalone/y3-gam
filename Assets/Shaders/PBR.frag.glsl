@@ -9,6 +9,8 @@ struct MaterialProperties {
     float Roughness;   // Roughness factor
     float Transparency; // Transparency (alpha)
     float AO;          // Ambient occlusion
+    float Emission;
+    float padding[3];
 };
 
 
@@ -147,7 +149,8 @@ void main(){
 
     vec3 ambient = vec3(0.01) * albedo * mat.AO;
 
-    vec3 color = ambient + Lo;
+    vec3 emission = albedo * mat.Emission; // Uniform emission
+    vec3 color = ambient + Lo + emission;
     color = color / (color + vec3(1.0));
     color = pow(color, vec3(1.0/2.2)); //gamma correction
     //change transparency here
