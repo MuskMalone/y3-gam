@@ -223,7 +223,7 @@ public class CDDragAndDrop : Entity
             if (fadeElapsed >= fadeDuration)
             {
                 isFading = false;
-                InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
+                InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\TutorialLevel.scn");
             }
         }
 
