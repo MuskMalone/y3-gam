@@ -223,6 +223,7 @@ public class CDDragAndDrop : Entity
             if (fadeElapsed >= fadeDuration)
             {
                 isFading = false;
+                //InternalCalls.StopSound(mEntityID, "..\\Assets\\Audio\\Picture Perfect - BGM1_Vers1_Loop.wav");
                 InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\TutorialLevel.scn");
             }
         }
