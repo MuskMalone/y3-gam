@@ -493,6 +493,7 @@ namespace GUI
         ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
         ECS::Entity newEntity{ Reflection::ObjectFactory::GetInstance().CloneObject(mRightClickedEntity,
           em.HasParent(mRightClickedEntity) ? em.GetParentEntity(mRightClickedEntity) : ECS::Entity()) };
+        newEntity.GetComponent<Component::Tag>().tag += " (Copy)";
         GUIVault::SetSelectedEntity(newEntity);
       }
 

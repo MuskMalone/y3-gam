@@ -110,7 +110,6 @@ namespace Reflection
     }
 
     AddComponentsToEntity(newEntity, components);
-    newEntity.GetComponent<Component::Tag>().tag += " (Copy)";
 
     if (entity.HasComponent<Component::PrefabOverrides>()) {
       newEntity.EmplaceComponent<Component::PrefabOverrides>(entity.GetComponent<Component::PrefabOverrides>());
