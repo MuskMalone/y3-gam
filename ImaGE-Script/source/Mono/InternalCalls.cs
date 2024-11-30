@@ -253,13 +253,17 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetCurrentScene(string sceneName);
 
-
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void TakeScreenShot(string s, int width, int height);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static bool SetDaySkyBox(uint mEntityID, float speed);
-    
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void ShowCursor();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void HideCursor();
     #endregion
   }
 }

@@ -469,7 +469,7 @@ namespace Graphics {
 
 		glm::vec2 canvasPos;
 		canvasPos.x = orthoBounds.x + normalizedMousePos.x * (orthoBounds.y - orthoBounds.x); // Map to canvas X
-		canvasPos.y = orthoBounds.z + normalizedMousePos.y * (orthoBounds.w - orthoBounds.z); // Map to canvas Y
+		canvasPos.y = orthoBounds.z +(1.f - normalizedMousePos.y) * (orthoBounds.w - orthoBounds.z); // Map to canvas Y
 		return canvasPos;
 	}
 
@@ -1293,7 +1293,7 @@ namespace Graphics {
 
 	ECS::Entity Renderer::PickUIEntity(glm::vec2 const& mousePos, std::vector<ECS::Entity> const& entities){
 		ECS::Entity closestEntity{};
-		float closestZ = std::numeric_limits<float>::max(); // Initialize with a very large value
+		float closestZ = std::numeric_limits<float>::lowest();
 
 		// Iterate through all UI entities
 		for (ECS::Entity const& entity : entities) {
@@ -1312,14 +1312,13 @@ namespace Graphics {
 				transform.worldPos.y + transform.worldScale.y * 0.5f);
 
 			if (IsPointInsideBounds(canvasMousePos, min, max)) {
-				if (transform.worldPos.z < closestZ) {
+				if (transform.worldPos.z > closestZ) {
 					closestEntity = entity;
-					closestZ = transform.worldPos.z;
-					return closestEntity;
+					closestZ = transform.worldPos.z; // Update the closest Z value
 				}
 			}
 		}
-		return ECS::Entity{}; // No UI entity hovered
+		return closestEntity;
 	}
 
 	void Renderer::FlushBatch() {
