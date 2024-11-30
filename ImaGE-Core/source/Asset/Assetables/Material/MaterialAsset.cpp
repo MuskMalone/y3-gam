@@ -33,7 +33,7 @@ namespace IGE {
             //}
 
             // Populate metadata
-            metadata.emplace("path", assetFilePath);
+            metadata["path"] = assetFilePath;
             newFp = assetFilePath;
 
             return GUID{ GUID::Seed{} }; // Generate a unique GUID

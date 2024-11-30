@@ -190,6 +190,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClInclude Include="source\Asset\Assetables\Shader\ShaderAsset.h" />
     <ClInclude Include="source\Asset\Assetables\Texture\TextureAsset.h" />
     <ClInclude Include="source\Asset\IGEAssets.h" />
+    <ClInclude Include="source\Asset\RemapData.h" />
     <ClInclude Include="source\Asset\SmartPointer.h" />
     <ClInclude Include="source\Audio\AudioManager.h" />
     <ClInclude Include="source\Audio\AudioSystem.h" />
@@ -235,6 +236,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClInclude Include="source\DebugTools\DebugLogger\DebugLogger.h" />
     <ClInclude Include="source\DebugTools\Exception\Exception.h" />
     <ClInclude Include="source\DebugTools\Exception\ExceptionBase.h" />
+    <ClInclude Include="source\Events\AssetEvents.h" />
     <ClInclude Include="source\Events\Event.h" />
     <ClInclude Include="source\Events\EventCallback.h" />
     <ClInclude Include="source\Events\EventManager.h" />

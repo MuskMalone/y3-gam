@@ -39,15 +39,19 @@ public class Test : Entity
 
   public int TestInt = 10;
   public int TestInt3 = 20;
-  //public float TestFloat = 22f;
-  //public double TestDouble = 30.0;
-  //public Vector3 dVec3 = new Vector3(336.318f, 100f, 0f);
+    public float TestFloat = 0.1f;
+
+    public float TestFloat2 = 1.0f;
+
+    //public float TestFloat = 22f;
+    //public double TestDouble = 30.0;
+    //public Vector3 dVec3 = new Vector3(336.318f, 100f, 0f);
 
 
 
 
 
-  public Test() : base()
+    public Test() : base()
     {
       
       //AddComponent<Transform>(new Transform());
@@ -81,7 +85,10 @@ public class Test : Entity
     public void Update()
     {
 
-    Console.WriteLine("TEST INT:" + TestInt);
+        //Console.WriteLine("TEST INT:" + TestInt);
+
+        InternalCalls.SetSoundPitch(mEntityID, "BGM", TestFloat);
+        InternalCalls.SetSoundVolume(mEntityID, "BGM", TestFloat2);
     //Console.WriteLine("TEST INT2:" + TestInt3);
     //  Console.WriteLine(testEnt.mEntityID.ToString());
     // Console.WriteLine("Hit\n");

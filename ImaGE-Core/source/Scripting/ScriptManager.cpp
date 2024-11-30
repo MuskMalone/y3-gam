@@ -263,7 +263,9 @@ void ScriptManager::AddInternalCalls()
 
   // Utility Functions
   ADD_INTERNAL_CALL(Raycast);
-  ADD_INTERNAL_CALL(RaycastFromEntity)
+  ADD_INTERNAL_CALL(RaycastFromEntity);
+  ADD_INTERNAL_CALL(SetSoundPitch);
+  ADD_INTERNAL_CALL(SetSoundVolume);
   ADD_INTERNAL_CALL(PlaySound);
   ADD_INTERNAL_CALL(PauseSound);
   ADD_INTERNAL_CALL(StopSound);
@@ -1023,6 +1025,20 @@ ECS::Entity::EntityID Mono::RaycastFromEntity(ECS::Entity::EntityID e, glm::vec3
     }return static_cast<ECS::Entity::EntityID>(0);
 }
 
+void Mono::SetSoundPitch(ECS::Entity::EntityID e, MonoString* s, float p)
+{
+    std::string name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().SetSoundPitch(name, p);
+}
+
+void Mono::SetSoundVolume(ECS::Entity::EntityID e, MonoString* s, float v) 
+{
+    std::string name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().SetSoundVolume(name, v);
+}
+
 void Mono::PlaySound(ECS::Entity::EntityID e, MonoString* s)
 {
     std::string name{ MonoStringToSTD(s) };
@@ -1360,23 +1376,12 @@ MonoString* Mono::GetCurrentScene() {
   return STDToMonoString(IGE_SCENEMGR.GetSceneName());
 }
 
-// Note: For now this function works in ImaGE-Game, but not exactly in ImaGE-Editor (Scene is unable to play automatically
-// after changing scenes, but scene still changes). Just assume that the scene changes and plays in the game application
 void Mono::SetCurrentScene(MonoString* scenePath) {
   std::string scenePathSTD{ MonoStringToSTD(scenePath) };
 
   if (!scenePathSTD.empty()) {
-    //IGE_EVENTMGR.DispatchImmediateEvent<Events::LoadSceneEvent>(std::filesystem::path(scenePathSTD).stem().string(),
-      //scenePathSTD);
     QUEUE_EVENT(Events::LoadSceneEvent, std::filesystem::path(scenePathSTD).stem().string(),
       scenePathSTD);
-
-    // Play the scene (Most common use case is to set scene and immediately want it playing)
-    /*
-    if (IGE_SCENEMGR.GetSceneState() != Scenes::SceneState::PLAYING) {
-      IGE_SCENEMGR.PlayScene();
-    }
-    */
   }
 }
 

@@ -26,12 +26,13 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Scenes
 {
-  SceneManager::SceneManager() : mSaveStates{}, mMainThreadQueue{}, mSceneName{},
-    mTempDir{ gTempDirectory }, mMainThreadQueueMutex{}, mSceneState{ NO_SCENE }
+  SceneManager::SceneManager(SceneState startingState) : mSaveStates{}, mMainThreadQueue{}, mSceneName{},
+    mTempDir{ gTempDirectory }, mMainThreadQueueMutex{}, mSceneState{ startingState }
   {
     // @TODO: SHOULD RETREIVE FROM CONFIG FILE IN FUTURE
     //mTempDir = gTempDirectory;
 
+#ifndef DISTRIBUTION
     // create temp directory if it doesn't already exist
     if (!std::filesystem::exists(mTempDir))
     {
@@ -42,6 +43,7 @@ namespace Scenes
         Debug::DebugLogger::GetInstance().LogWarning("Unable to create temp directory at: " + mTempDir + ". Scene reloading features may be unavailable!");
       }
     }
+#endif
 
     // subscribe to scene events
     SUBSCRIBE_CLASS_FUNC(Events::EventType::LOAD_SCENE, &SceneManager::OnSceneLoad, this);
@@ -108,7 +110,7 @@ namespace Scenes
     LoadTemporarySave();
     InitScene();
 
-    QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mSceneName);
+    QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::NEW, mSceneName);
   }
 
   EVENT_CALLBACK_DEF(SceneManager, OnSceneLoad) {
@@ -135,8 +137,12 @@ namespace Scenes
     }
     Debug::DebugLogger::GetInstance().LogInfo("Loading scene: " + mSceneName + "...");
 
+    // if the scene changed while playing, we dont stop it
     if (mSceneState != SceneState::PLAYING) {
       mSceneState = SceneState::STOPPED;
+    }
+    else {
+      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mSceneName);
     }
   }
 

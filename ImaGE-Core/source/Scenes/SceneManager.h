@@ -28,7 +28,7 @@ namespace Scenes
     \brief
       Initializes the SceneManager
     ************************************************************************/
-    SceneManager();
+    SceneManager(SceneState startingState = SceneState::NO_SCENE);
 
     /*!*********************************************************************
     \brief
