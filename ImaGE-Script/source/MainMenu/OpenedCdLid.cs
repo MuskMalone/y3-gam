@@ -35,7 +35,7 @@ public class OpenedCdLid : Entity
 
     private Vector3 originalPosition;
     //private Quaternion originalRotation;
-
+    private Vector3 openCDpos = new Vector3(0.382f, -0.308f, -0.442f);
     private NewGameCD newGameCD;
     // Start is called before the first frame update
     void Start()
@@ -63,7 +63,7 @@ public class OpenedCdLid : Entity
         {
             if (tag == "OpenCircular_Lid")
             {
-                InternalCalls.SetWorldPosition(mEntityID, ref originalPosition);
+                InternalCalls.SetWorldPosition(mEntityID, ref openCDpos);
             }
             else if (tag == "ClosedCircular_Lid")
             {

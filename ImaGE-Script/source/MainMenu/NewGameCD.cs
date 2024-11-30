@@ -30,11 +30,15 @@ using System.Numerics;
 
 public class NewGameCD : Entity
 {
-    public bool isLidOpen = false;
+    public bool isLidOpen;
+    //private bool hasOpenSoundPlayed;
+    //private bool hasCloseSoundPlayed;
     // Start is called before the first frame update
     void Start()
     {
-
+        isLidOpen = false;
+        //hasOpenSoundPlayed = false;
+        //hasCloseSoundPlayed = false;
     }
 
     // Update is called once per frame
@@ -45,11 +49,20 @@ public class NewGameCD : Entity
 
     public void OnMouseDown()
     {
+        
         isLidOpen = true;
+        //hasCloseSoundPlayed = false;
+        //if(!hasOpenSoundPlayed)
+        //{
+        //    InternalCalls.PlaySound("OpenConsole_SFX");
+        //    hasOpenSoundPlayed=true;
+        //}
     }
 
     public void OnMouseUp()
     {
+
+        //hasOpenSoundPlayed = false;
         bool mouseOnCDPlayer = false;
         Vector3 MousePos = InternalCalls.GetMousePosWorld(1.0f);
         Vector3 MousPosRayEnd = MousePos + (InternalCalls.GetCameraForward() * 5.0f);
@@ -69,7 +82,11 @@ public class NewGameCD : Entity
         else
         {
             isLidOpen = false;
-            
+            //if (!hasCloseSoundPlayed)
+            //{
+            //    InternalCalls.PlaySound("CloseConsole_SFX");
+            //    hasCloseSoundPlayed = true;
+            //}
         }
     }
 }
