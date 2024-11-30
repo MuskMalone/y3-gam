@@ -58,7 +58,7 @@ public class PictureAlign : Entity
     if (!toStop)
     {
       // Perform alignment checks and freeze the player if aligned
-      if (isBigPic && IsAligned())
+      if (IsActive() && isBigPic && IsAligned())
       {
         if (LeftClickText != null)
           LeftClickText.SetActive(true);
