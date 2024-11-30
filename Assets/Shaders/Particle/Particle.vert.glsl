@@ -1,5 +1,5 @@
 
-#version 450 core
+#version 460 core
 // #extension GL_ARB_bindless_texture : enable
 
 #include "..\\Assets\\Shaders\\Particle\\Common.glsl"
@@ -62,7 +62,7 @@ mat4 translate(vec3 pos) {
         vec4(pos, 1.0)
     );
 }
-mat4 scale(vec3 scale) {
+mat4 scale(vec2 scale) {
     return mat4(
         scale.x, 0.0, 0.0, 0.0,
         0.0, scale.y, 0.0, 0.0,

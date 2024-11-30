@@ -4,5 +4,6 @@
 #include <Scripting/ScriptingSystem.h>
 #include <Physics/PhysicsSystem.h>
 #include <Graphics/RenderSystem.h>
+#include <Core/Systems/ParticleSystem/ParticleSystem.h>
 #include <Core/LayerManager/LayerManager.h>
 #include <Core/Systems/TextSystem/TextSystem.h>

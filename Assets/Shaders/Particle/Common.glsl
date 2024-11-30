@@ -21,25 +21,25 @@
 #define ALPHA_SIZE_INCR_OVER_LIFETIME 3  //increasing alpha and size over lifetime
 
 //for variables inside the variable ssbo
-#define VARIABLE_RAND_IDX 0; // variable for Random. increments everytime rand is called
-#define VARIABLE_PARTICLE_COUNT 1; // keep track of particle count thro all gpu threads
+#define VARIABLE_RAND_IDX 0 // variable for Random. increments everytime rand is called
+#define VARIABLE_PARTICLE_COUNT 1 // keep track of particle count thro all gpu threads
 
 struct Emitter {
-    //for now, only supporting cube mesh emission
+    //for now, only supporting oct mesh emission
     vec4 vertices[8];  // 4 vec4s, each vec4 is 16 bytes, total 64 bytes
     //color
     vec4 col;          // 16 bytes
-    vec3 pos;          // vec3
     vec3 vel;          // vec3
     vec3 rot;
     vec2 size;         // vec2
 
     //since particles are billboard, means that angle velocity is 2d
     float angvel;
-
+    //lifetime of each particle
     float lifetime;         // 4 bytes
     float speed;            // 4 bytes
 
+    // total duration the Emitter has existed for
     float time;             // 4 bytes
     float frequency;        // 4 bytes
 
@@ -55,8 +55,8 @@ struct Particle {
     vec4 col;          // vec4
     vec3 pos;          // vec3
     vec3 vel;          // vec3
-    vec2 size;         // vec3
     vec3 rot;
+    vec2 size;         // vec3
     float angvel;
     float age;
     float lifetime;

@@ -428,7 +428,7 @@ namespace Serialization
         continue;
       }
 
-      std::cout << "  Prop " << property.get_type() << "\n";
+      //std::cout << "  Prop " << property.get_type() << "\n";
 
       std::string const name{ property.get_name().to_string() };
       writer.String(name.c_str(), static_cast<rapidjson::SizeType>(name.length()), false);

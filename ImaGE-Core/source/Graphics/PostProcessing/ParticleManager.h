@@ -3,6 +3,8 @@
 #include "glad/glad.h"
 #include <queue>
 #include "Singleton/ThreadSafeSingleton.h"
+#define MAX_BUFFER 1000000
+#define WORK_GROUP 1000 //max buffer should be divisible by work group
 namespace Graphics{
 #pragma warning(push)
 #pragma warning(disable : 4324)
@@ -10,62 +12,54 @@ namespace Graphics{
 
         //1-1 map of the structs in Particle/Common.glsl
         //its structured to be packed as 16 bytes with minimal intra object padding
+// Ensure 16-byte alignment for compatibility with std430 layout
         struct alignas(16) Emitter {
-            glm::vec4 vertices[8];    // 8 vec4s, each 16 bytes
-            glm::vec4 col;            // 16 bytes
-            glm::vec3 pos;            // 12 bytes
-            float padding1;           // Align to 16 bytes
-            glm::vec3 vel;            // 12 bytes
-            float padding2;           // Align to 16 bytes
-            glm::vec3 size;           // 12 bytes
-            float padding3;           // Align to 16 bytes
-            glm::vec3 rot;            // 12 bytes
-            float padding4;           // Align to 16 bytes
-            glm::vec3 angvel;         // 12 bytes
-            float padding5;           // Align to 16 bytes
+            glm::vec4 vertices[8]; // 8 vec4s, 64 bytes
+            glm::vec4 col;                    // Color, 16 bytes
 
-            float lifetime;           // 4 bytes
-            float speed;              // 4 bytes
-            float time;               // 4 bytes
-            float frequency;          // 4 bytes
+            glm::vec3 vel;                    // Velocity, 12 bytes
+            float _padding1;                  // Padding for 16-byte alignment
 
-            int type;                 // 4 bytes
-            int vCount;               // 4 bytes
-            int preset;               // 4 bytes
-            int particlesPerFrame;    // 4 bytes
+            glm::vec3 rot;                    // Rotation, 12 bytes
+            float _padding2;                  // Padding for 16-byte alignment
 
-            int alive;                // GLSL `bool` is 4 bytes; use `int` for compatibility
-            float padding6;           // Align struct size to a multiple of 16 bytes
+            glm::vec2 size;                   // Size, 8 bytes
+            float angvel;                     // Angular velocity, 4 bytes
+            float lifetime;                   // Lifetime, 4 bytes
+
+            float speed;                      // Speed, 4 bytes
+            float time;                       // Total emitter time, 4 bytes
+            float frequency;                  // Emission frequency, 4 bytes
+
+            int type;                         // Type, 4 bytes
+            int vCount;                       // Vertex count, 4 bytes
+            int preset;                       // Preset, 4 bytes
+            int particlesPerFrame;            // Particles emitted per frame, 4 bytes
+
+            bool alive;                       // Active flag, 1 byte
+            char _padding3[3];                // Padding for 16-byte alignment
         };
 
+        // Ensure 16-byte alignment for compatibility with std430 layout
         struct alignas(16) Particle {
-            glm::vec4 startCol;       // 16 bytes
-            glm::vec4 col;            // 16 bytes
+            glm::vec4 col;                    // Current color, 16 bytes
 
-            glm::vec3 startPos;       // 12 bytes
-            float padding1;           // Align to 16 bytes
-            glm::vec3 pos;            // 12 bytes
-            float padding2;           // Align to 16 bytes
+            glm::vec3 pos;                    // Current position, 12 bytes
+            float _padding1;                  // Padding for 16-byte alignment
 
-            glm::vec3 startVel;       // 12 bytes
-            float padding3;           // Align to 16 bytes
-            glm::vec3 vel;            // 12 bytes
-            float padding4;           // Align to 16 bytes
+            glm::vec3 vel;                    // Current velocity, 12 bytes
+            float _padding2;                  // Padding for 16-byte alignment
 
-            glm::vec3 startSize;      // 12 bytes
-            float padding5;           // Align to 16 bytes
-            glm::vec3 size;           // 12 bytes
-            float padding6;           // Align to 16 bytes
+            glm::vec3 rot;                    // Rotation, 12 bytes
+            float angvel;                     // Angular velocity, 4 bytes
 
-            glm::vec3 rot;            // 12 bytes
-            float padding7;           // Align to 16 bytes
-            glm::vec3 angvel;         // 12 bytes
-            float padding8;           // Align to 16 bytes
+            glm::vec2 size;                   // Size, 8 bytes
+            float age;                        // Age, 4 bytes
+            float lifetime;                   // Lifetime, 4 bytes
 
-            float age;                // 4 bytes
-            float lifetime;           // 4 bytes
-            int emtIdx;               // 4 bytes
-            int alive;                // GLSL `bool` is 4 bytes; use `int` for compatibility
+            int emtIdx;                       // Emitter index, 4 bytes
+            bool alive;                       // Active flag, 1 byte
+            char _padding3[3];                // Padding for 16-byte alignment
         };
     }
 #pragma warning(pop)
@@ -102,13 +96,12 @@ namespace Graphics{
         bool drawEmitterVertices{ false };
     };
 
-	class ParticleManager : ThreadSafeSingleton<ParticleManager> {
+	class ParticleManager : public ThreadSafeSingleton<ParticleManager> {
 	public:
 		void Initialize();
 		ParticleManager();
         ~ParticleManager();
         void EmitterAction(EmitterInstance& emitter, int action);
-
 
         void Bind();
         void Unbind();

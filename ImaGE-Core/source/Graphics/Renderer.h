@@ -240,6 +240,7 @@ namespace Graphics {
 		static void InitShadowMapPass();
 		static void InitScreenPass(std::shared_ptr<Framebuffer> const& fb);
 		static void InitPostProcessPass();
+		static void InitParticlePass();
 		static void InitUIPass();
 		static void InitMeshSources();
 

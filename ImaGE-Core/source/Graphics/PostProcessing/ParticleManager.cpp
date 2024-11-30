@@ -2,8 +2,7 @@
 #include "ParticleManager.h"
 #include <random>
 #include "Graphics/Shader.h"
-#define MAX_BUFFER 1000000
-#define WORK_GROUP 1000 //max buffer should be divisible by work group
+
 
 namespace Graphics{
     void ParticleManager::Initialize()
@@ -57,6 +56,7 @@ namespace Graphics{
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 
         // Ensures accesses to the SSBOs "reflect" writes from compute shader
+        Bind();
         glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
 
         //create

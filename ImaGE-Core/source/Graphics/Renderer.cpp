@@ -159,6 +159,7 @@ namespace Graphics {
 		//InitPickPass();
 		InitShadowMapPass();
 		InitGeomPass();
+		InitParticlePass();
 		InitPostProcessPass();
 		InitUIPass();
 
@@ -337,6 +338,26 @@ namespace Graphics {
 	}
 
 	void Renderer::InitPostProcessPass()
+	{
+		Graphics::FramebufferSpec postprocessSpec;
+		postprocessSpec.width = WINDOW_WIDTH<int>;
+		postprocessSpec.height = WINDOW_HEIGHT<int>;
+		postprocessSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };	// temporarily max. 1 shadow-caster
+
+		PipelineSpec postprocessPSpec;
+
+		//leaving this blank, i have multipel shaders in postproc mgr to be run in a pingpong fashion
+		postprocessPSpec.shader = nullptr; //ShaderLibrary::Get("ShadowMap");
+		postprocessPSpec.targetFramebuffer = Framebuffer::Create(postprocessSpec);
+
+		RenderPassSpec postprocessPassSpec;
+		postprocessPassSpec.pipeline = Pipeline::Create(postprocessPSpec);
+		postprocessPassSpec.debugName = "Post Process Pass";
+
+		AddPass(RenderPass::Create<PostProcessingPass>(postprocessPassSpec));
+	}
+
+	void Renderer::InitParticlePass()
 	{
 		Graphics::FramebufferSpec postprocessSpec;
 		postprocessSpec.width = WINDOW_WIDTH<int>;

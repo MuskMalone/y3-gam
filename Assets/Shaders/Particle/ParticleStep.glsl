@@ -35,37 +35,36 @@ void main() {
     uint gid = gl_GlobalInvocationID.x;
         
     if (Particles[gid].alive == true){
-
-    //     Particles[gid].age += DT;
-    //     Particles[gid].vel += Particles[gid].gravity;
-    //     Particles[gid].pos += vec4(Particles[gid].vel, 0, 1) * DT;
-    //     Particles[gid].rot += Particles[gid].angvel * DT;
+        Particles[gid].age += DT;
+        // Particles[gid].vel += Particles[gid].gravity;
+        Particles[gid].pos += Particles[gid].vel * DT;
+        // Particles[gid].rot += Particles[gid].angvel * DT;
         
-    //     switch(Emitters[Particles[gid].emtIdx].preset){
-    //     case ALPHA_OVER_LIFETIME:{
-    //         Particles[gid].col.a = linearLerp(ParticlesStart[gid].col.a, 0, Particles[gid].age / Particles[gid].lifetime);
-    //         }
-	// 		break;
-    //     case SIZE_OVER_LIFETIME:{
-    //         Particles[gid].size = linearLerp(ParticlesStart[gid].size, vec2(0, 0), Particles[gid].age / Particles[gid].lifetime);
-    //         }
-    //         break;
-    //     case ALPHA_SIZE_DECR_OVER_LIFETIME:{
-    //         Particles[gid].col.a = linearLerp(ParticlesStart[gid].col.a, 0, Particles[gid].age / Particles[gid].lifetime);
+        switch(Emitters[Particles[gid].emtIdx].preset){
+        case ALPHA_OVER_LIFETIME:{
+            Particles[gid].col.a = linearLerp(ParticlesStart[gid].col.a, 0, Particles[gid].age / Particles[gid].lifetime);
+            }
+			break;
+        case SIZE_OVER_LIFETIME:{
+            Particles[gid].size = linearLerp(ParticlesStart[gid].size, vec2(0, 0), Particles[gid].age / Particles[gid].lifetime);
+            }
+            break;
+        case ALPHA_SIZE_DECR_OVER_LIFETIME:{
+            Particles[gid].col.a = linearLerp(ParticlesStart[gid].col.a, 0, Particles[gid].age / Particles[gid].lifetime);
 
-    //         Particles[gid].size = linearLerp(ParticlesStart[gid].size, vec2(0, 0), Particles[gid].age / Particles[gid].lifetime);
-    //         }
-    //         break;
-    //     case ALPHA_SIZE_INCR_OVER_LIFETIME:{
-    //             Particles[gid].col.a = linearLerp(ParticlesStart[gid].col.a, 0, Particles[gid].age / Particles[gid].lifetime);
-    //             Particles[gid].size = linearLerp(vec2(0), ParticlesStart[gid].size, Particles[gid].age / Particles[gid].lifetime);
-    //         }
-    //         break;
-    //     }
-    //     //if particles are dead
-    //     if (Particles[gid].age >= Particles[gid].lifetime){
-    //         Particles[gid].alive = false;
-    //     }
+            Particles[gid].size = linearLerp(ParticlesStart[gid].size, vec2(0, 0), Particles[gid].age / Particles[gid].lifetime);
+            }
+            break;
+        case ALPHA_SIZE_INCR_OVER_LIFETIME:{
+                Particles[gid].col.a = linearLerp(ParticlesStart[gid].col.a, 0, Particles[gid].age / Particles[gid].lifetime);
+                Particles[gid].size = linearLerp(vec2(0), ParticlesStart[gid].size, Particles[gid].age / Particles[gid].lifetime);
+            }
+            break;
+        }
+        //if particles are dead
+        if (Particles[gid].age >= Particles[gid].lifetime){
+            Particles[gid].alive = false;
+        }
 
     }
 }

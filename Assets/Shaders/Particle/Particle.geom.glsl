@@ -1,5 +1,5 @@
 
-#version 450 core
+#version 460 core
 // #extension GL_ARB_bindless_texture : enable
 
 #include "..\\Assets\\Shaders\\Particle\\Common.glsl"
