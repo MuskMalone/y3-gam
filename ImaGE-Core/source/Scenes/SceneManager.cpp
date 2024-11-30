@@ -32,6 +32,7 @@ namespace Scenes
     // @TODO: SHOULD RETREIVE FROM CONFIG FILE IN FUTURE
     //mTempDir = gTempDirectory;
 
+#ifndef DISTRIBUTION
     // create temp directory if it doesn't already exist
     if (!std::filesystem::exists(mTempDir))
     {
@@ -42,6 +43,7 @@ namespace Scenes
         Debug::DebugLogger::GetInstance().LogWarning("Unable to create temp directory at: " + mTempDir + ". Scene reloading features may be unavailable!");
       }
     }
+#endif
 
     // subscribe to scene events
     SUBSCRIBE_CLASS_FUNC(Events::EventType::LOAD_SCENE, &SceneManager::OnSceneLoad, this);
