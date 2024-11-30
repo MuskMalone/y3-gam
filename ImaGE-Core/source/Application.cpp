@@ -248,7 +248,6 @@ namespace IGE {
   {
     // shutdown singletons
     Systems::SystemManager::DestroyInstance();
-    IGE::Audio::AudioManager::DestroyInstance();
     Graphics::PostProcessingManager::DestroyInstance();
     Scenes::SceneManager::DestroyInstance();
     Prefabs::PrefabManager::DestroyInstance();
@@ -260,6 +259,7 @@ namespace IGE {
     ECS::EntityManager::DestroyInstance();
     Input::InputManager::DestroyInstance();
     Assets::AssetManager::DestroyInstance();
+    IGE::Audio::AudioManager::DestroyInstance();
     Debug::DebugLogger::DestroyInstance();
 
     // @TODO: Shutdown physics and audio singletons
