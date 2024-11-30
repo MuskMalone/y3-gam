@@ -82,7 +82,8 @@ public class Dialogue : Entity
       }
       else
       {
-        SkipTyping();
+        if (charIndex > 2) // Temp workaround for mouse input triggering twice
+          SkipTyping();
       }
     }
   }
