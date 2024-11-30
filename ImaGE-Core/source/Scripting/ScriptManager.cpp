@@ -256,6 +256,8 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(AppendText);
   ADD_INTERNAL_CALL(GetImageColor);
   ADD_INTERNAL_CALL(SetImageColor);
+  ADD_INTERNAL_CALL(GetSprite2DColor);
+  ADD_INTERNAL_CALL(SetSprite2DColor);
   ADD_INTERNAL_CALL(SetDaySkyBox);
 
   // Utility Functions
@@ -1330,6 +1332,35 @@ void Mono::SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val)
   }
   else {
     Debug::DebugLogger::GetInstance().LogError("SetImageColor: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
+}
+
+glm::vec4 Mono::GetSprite2DColor(ECS::Entity::EntityID entity)
+{
+  if (ECS::Entity(entity)) {
+    if (ECS::Entity(entity).HasComponent<Component::Sprite2D>())
+      return ECS::Entity(entity).GetComponent<Component::Sprite2D>().color;
+    else
+      Debug::DebugLogger::GetInstance().LogError("GetSprite2DColor: Entity " + ECS::Entity(entity).GetTag() + " does not have an Sprite2D component");
+  }
+  else {
+    Debug::DebugLogger::GetInstance().LogError("GetSprite2DColor: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
+
+  return {};
+}
+
+void Mono::SetSprite2DColor(ECS::Entity::EntityID entity, glm::vec4 val)
+{
+  if (ECS::Entity(entity))
+  {
+    if (ECS::Entity(entity).HasComponent<Component::Sprite2D>())
+      ECS::Entity(entity).GetComponent<Component::Sprite2D>().color = val;
+    else
+      Debug::DebugLogger::GetInstance().LogError("SetSprite2DColor: Entity " + ECS::Entity(entity).GetTag() + " does not have an Sprite2D component");
+  }
+  else {
+    Debug::DebugLogger::GetInstance().LogError("SetSprite2DColor: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
   }
 }
 

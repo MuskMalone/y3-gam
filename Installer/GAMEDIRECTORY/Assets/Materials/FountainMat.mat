@@ -2,11 +2,11 @@
     "name": "FountainMat",
     "shader": "PBR",
     "albedoColor": {
-        "x": 0.1939799189567566,
-        "y": 0.1939799189567566,
-        "z": 0.1939799189567566
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
     },
-    "metalness": 0.5,
+    "metalness": 0.902999997138977,
     "roughness": 0.5,
     "ao": 1.0,
     "emission": 0.0,
@@ -20,7 +20,7 @@
         "y": 0.0
     },
     "albedoMap": {
-        "ID": 0
+        "ID": 2787152337834933337
     },
     "normalMap": {
         "ID": 0

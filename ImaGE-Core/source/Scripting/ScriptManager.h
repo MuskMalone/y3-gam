@@ -396,6 +396,9 @@ namespace Mono
 
 		static void SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val);
 
+		static glm::vec4 GetSprite2DColor(ECS::Entity::EntityID entity);
+		static void SetSprite2DColor(ECS::Entity::EntityID entity, glm::vec4 val);
+		
 		static MonoString* GetCurrentScene();
 		static void SetCurrentScene(MonoString* scenePath);
 
