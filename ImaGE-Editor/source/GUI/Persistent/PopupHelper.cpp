@@ -15,6 +15,8 @@ namespace {
   static std::queue<IGE::Assets::RemapData> sGUIDData; // guids to remap
   static std::string sNewPath;
   static bool sHideCompletionPopup{ false };
+
+  void DisplayLocalHierarchy(ECS::Entity entity, ImVec4 const& entityClr);
 }
 
 namespace GUI {
@@ -65,6 +67,7 @@ namespace GUI {
 
   void PopupHelper::GUIDRemapPopup() {
     ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    ImGui::SetNextWindowSize(ImVec2(0.f, ImGui::GetMainViewport()->Size.y * 0.8f));
 
     Styler const& styler{ GUIVault::GetStyler() };
     ImGui::PushFont(styler.GetCustomFont(CustomFonts::ROBOTO_BOLD));
@@ -95,12 +98,10 @@ namespace GUI {
 
     // entity info
     ImGui::NewLine();
-    ImGui::Text("Affected Entity:");
-    ImGui::PushStyleColor(ImGuiCol_Text, redClr);
-    ImGui::Text((remapData.entity.GetTag() + " (Entity").c_str());
-    ImGui::SameLine();
-    ImGui::Text((std::to_string(remapData.entity.GetEntityID()) + ")").c_str());
-    ImGui::PopStyleColor();
+    ImGui::Text("Affected entity's local hierarchy:");
+    ImGui::PushFont(styler.GetCustomFont(CustomFonts::MONTSERRAT_LIGHT));
+    DisplayLocalHierarchy(remapData.entity, redClr);
+    ImGui::PopFont();
 
     // file selection
     ImGui::NewLine(); ImGui::NewLine();
@@ -244,3 +245,51 @@ namespace GUI {
   }
 
 } // namespace GUI
+
+namespace {
+  void DisplayEntity(ECS::Entity entity, float cursorXPos) {
+    ImGui::SetCursorPosX(cursorXPos);
+    ImGui::Text((entity.GetTag() + " (Entity").c_str());
+    ImGui::SameLine();
+    ImGui::Text((std::to_string(entity.GetEntityID()) + ")").c_str());
+  }
+
+  void DisplayLocalHierarchy(ECS::Entity entity, ImVec4 const& entityClr) {
+    ECS::EntityManager& em{ IGE_ENTITYMGR };
+    float cursorXPos{ ImGui::GetCursorPosX() };
+
+    // if entity has parent, display as first level
+    if (em.HasParent(entity)) {
+      ECS::Entity const parent{ em.GetParentEntity(entity) };
+      DisplayEntity(parent, cursorXPos);
+      // indent cursorX by tree node indent width
+      cursorXPos += ImGui::GetTreeNodeToLabelSpacing();
+
+      for (ECS::Entity child : em.GetChildEntity(parent)) {
+        // highlight the target entity
+        if (child == entity) {
+          ImGui::PushStyleColor(ImGuiCol_Text, entityClr);
+          DisplayEntity(child, cursorXPos);
+          ImGui::PopStyleColor();
+          continue;
+        }
+
+        DisplayEntity(child, cursorXPos);
+      }
+    }
+    // no parent: just display entity on first lvl
+    else {
+      ImGui::PushStyleColor(ImGuiCol_Text, entityClr);
+      DisplayEntity(entity, cursorXPos);
+      ImGui::PopStyleColor();
+    }
+
+    if (em.HasChild(entity)) {
+      // indent cursorX by tree node indent width again
+      cursorXPos += ImGui::GetTreeNodeToLabelSpacing();
+      for (ECS::Entity child : em.GetChildEntity(entity)) {
+        DisplayEntity(child, cursorXPos);
+      }
+    }
+  }
+}

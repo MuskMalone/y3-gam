@@ -214,6 +214,8 @@ namespace IGE {
 			mPath2GUIDRegistry[remapEvent->mPath] = remapEvent->mGUID;
 			mGUID2PathRegistry[remapEvent->mGUID] = remapEvent->mPath;
 
+			IGE_DBGLOGGER.LogInfo("[AssetManager] Remapped " + remapEvent->mAssetType + " " 
+				+ std::to_string(static_cast<uint64_t>(remapEvent->mGUID)) + " to " + remapEvent->mPath);
 			SaveMetadata();
 		}
 
