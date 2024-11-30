@@ -260,7 +260,9 @@ void ScriptManager::AddInternalCalls()
 
   // Utility Functions
   ADD_INTERNAL_CALL(Raycast);
-  ADD_INTERNAL_CALL(RaycastFromEntity)
+  ADD_INTERNAL_CALL(RaycastFromEntity);
+  ADD_INTERNAL_CALL(SetSoundPitch);
+  ADD_INTERNAL_CALL(SetSoundVolume);
   ADD_INTERNAL_CALL(PlaySound);
   ADD_INTERNAL_CALL(PauseSound);
   ADD_INTERNAL_CALL(StopSound);
@@ -996,6 +998,20 @@ ECS::Entity::EntityID Mono::RaycastFromEntity(ECS::Entity::EntityID e, glm::vec3
         ECS::Entity::EntityID out {hit.entity.GetEntityID()};
         return out;
     }return static_cast<ECS::Entity::EntityID>(0);
+}
+
+void Mono::SetSoundPitch(ECS::Entity::EntityID e, MonoString* s, float p)
+{
+    std::string name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().SetSoundPitch(name, p);
+}
+
+void Mono::SetSoundVolume(ECS::Entity::EntityID e, MonoString* s, float v) 
+{
+    std::string name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().SetSoundVolume(name, v);
 }
 
 void Mono::PlaySound(ECS::Entity::EntityID e, MonoString* s)
