@@ -28,23 +28,24 @@ namespace Events {
     std::vector<std::string> const mPaths;
   };
 
-  // entity, entityName, guid, name of fileType
+  // entity, guid, name of fileType
   class GUIDInvalidated : public Event
   {
   public:
-    GUIDInvalidated(ECS::Entity entity, std::string entityName, IGE::Assets::GUID guid, std::string fileType) : Event(EventType::INVALID_GUID),
-      mEntityName{ std::move(entityName) }, mEntity{ entity }, mGUID{ guid }, mFileType{ std::move(fileType) } {}
+    GUIDInvalidated(ECS::Entity entity, IGE::Assets::GUID guid, std::string fileType) : Event(EventType::INVALID_GUID),
+      mEntity{ entity }, mGUID{ guid }, mFileType{ std::move(fileType) } {}
     inline std::string GetName() const noexcept override {
-      return mFileType + " asset " + std::to_string(static_cast<uint64_t>(mGUID)) + " of Entity " + mEntityName + " has to be remapped";
+      return mFileType + " asset " + std::to_string(static_cast<uint64_t>(mGUID)) + " of Entity " + std::to_string(mEntity.GetEntityID()) + " has to be remapped";
     }
 
-    std::string const mEntityName, mFileType;
+    std::string const mFileType;
     IGE::Assets::GUID const mGUID;
     ECS::Entity const mEntity;
   };
 
   class TriggerGUIDRemap: public Event
   {
+  public:
     TriggerGUIDRemap() : Event(EventType::TRIGGER_GUID_REMAP) {}
     inline std::string GetName() const noexcept override { return "Triggering GUID remap interface"; }
   };

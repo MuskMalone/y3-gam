@@ -1,8 +1,6 @@
 #pragma once
 #include <GUI/GUIWindow.h>
 #include <Events/EventCallback.h>
-#include <unordered_map>
-#include <Asset/RemapData.h>
 
 namespace GUI {
   class PopupHelper : public GUIWindow
@@ -14,16 +12,20 @@ namespace GUI {
 
   private:
     using PopupFn = std::function<void()>;
-    using GUIDDataMap = std::unordered_map<IGE::Assets::GUID, IGE::Assets::RemapData>;
 
-    static inline constexpr char sGUIDPopupTitle[] = "Broken GUID Reference";
+    inline static bool sOpenPopup;
+    inline static std::string sCurrentPopup;
 
-    GUIDDataMap mGUIDData;
+    inline static constexpr char sGUIDPopupTitle[] = "Did you just merge???";
+    inline static constexpr char sGUIDCompletePopupTitle[] = "GUID Repair Complete";
+
     std::vector<PopupFn> mPopupFunctions;
 
+    EVENT_CALLBACK_DECL(OnGUIDInvalidated);
     EVENT_CALLBACK_DECL(OnGUIDRemap);
-
+    
     void GUIDRemapPopup();
+    void GUIDCompletePopup();
 
   };
 } // namespace GUI

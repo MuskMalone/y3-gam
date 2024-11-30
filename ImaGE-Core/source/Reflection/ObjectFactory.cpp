@@ -279,6 +279,8 @@ namespace Reflection
     }
 
     LoadPrefabInstances();
+    // trigger the guid remapping popup if needed
+    QUEUE_EVENT(Events::TriggerGUIDRemap);
   }
 
   void ObjectFactory::ClearData() {

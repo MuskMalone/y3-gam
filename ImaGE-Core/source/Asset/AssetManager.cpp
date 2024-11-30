@@ -193,13 +193,28 @@ namespace IGE {
 		EVENT_CALLBACK_DEF(AssetManager, OnRemapGUID) {
 			auto const& remapEvent{ CAST_TO_EVENT(Events::RemapGUID) };
 
+			AssetMetadata::AssetCategory& assetCat{ mMetadata.mAssetProperties[remapEvent->mAssetType] };
+
+			if (!IsValidFilePath(remapEvent->mPath) || !IsPathWithinDirectory(remapEvent->mPath, gAssetsDirectory)) {
+				throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("Invalid file path or file is not within assets dir"));
+			}
+
+			// if existing file is mapped to another guid, remove that entry
 			if (mPath2GUIDRegistry.contains(remapEvent->mPath)) {
 				GUID original{ mPath2GUIDRegistry[remapEvent->mPath] };
 				if (original != remapEvent->mGUID) {
 					mPath2GUIDRegistry.erase(remapEvent->mPath);
 					mGUID2PathRegistry.erase(original);
+					assetCat.erase(original);
+					mAssetRefs.erase(original);
 				}
 			}
+
+			assetCat[remapEvent->mGUID]["path"] = remapEvent->mPath;
+			mPath2GUIDRegistry[remapEvent->mPath] = remapEvent->mGUID;
+			mGUID2PathRegistry[remapEvent->mGUID] = remapEvent->mPath;
+
+			SaveMetadata();
 		}
 
 	}

@@ -48,7 +48,7 @@ namespace IGE {
 			Debug::DebugLogger::GetInstance().LogInfo(("Added " + filename + fileext) + " to assets");
 
 			//populate metadata (right now its only path)
-			metadata.emplace("path", inputModelPath);
+			metadata["path"] = inputModelPath;
 			newFp = inputModelPath;
 			return GUID{ GUID::Seed{} }; // generate a unique guid
 		}

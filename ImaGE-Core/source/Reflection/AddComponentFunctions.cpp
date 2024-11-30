@@ -97,7 +97,7 @@ namespace Reflection::ComponentUtils {
     }
     catch (Debug::ExceptionBase&) {
       IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(comp.materialGUID)) + " of Material component invalid");
-      IGE_EVENTMGR.DispatchImmediateEvent<Events::GUIDInvalidated>(entity, entity.GetTag(), comp.materialGUID,
+      QUEUE_EVENT(Events::GUIDInvalidated, entity, comp.materialGUID,
         rttr::type::get<IGE::Assets::MaterialAsset>().get_name().to_string());
     }
   }
@@ -115,6 +115,8 @@ namespace Reflection::ComponentUtils {
     }
     catch (Debug::ExceptionBase&) {
       IGE_DBGLOGGER.LogError("Unable to load mesh: " + comp.meshName + "[GUID " + std::to_string(static_cast<uint64_t>(comp.meshSource)) + "]");
+      QUEUE_EVENT(Events::GUIDInvalidated, entity, comp.meshSource,
+        rttr::type::get<IGE::Assets::ModelAsset>().get_name().to_string());
     }
   }
 
