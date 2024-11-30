@@ -99,7 +99,7 @@ public class TutorialDialogue : Entity
         if (isInDialogueMode && IsActive() && DialogueBox.IsActive() && charIndex >= lines[lineIndex].Length)
         {
             // Line has ended, stop sound
-            InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
+            //InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
             isLineComplete = true;
         }
 
@@ -147,7 +147,7 @@ public class TutorialDialogue : Entity
             return;
         }
 
-        InternalCalls.PlaySound(mEntityID, "DefaultDialogueSound");
+        //InternalCalls.PlaySound(mEntityID, "DefaultDialogueSound");
         playerMove.FreezePlayer();
         lineIndex = 0;
         InternalCalls.SetText(mEntityID, string.Empty);
@@ -162,7 +162,7 @@ public class TutorialDialogue : Entity
     private void EndDialogue()
     {
         isLineComplete = true;
-        InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
+        //InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
         playerMove.UnfreezePlayer();
         DialogueBox.SetActive(false);
         SetActive(false);
@@ -178,7 +178,7 @@ public class TutorialDialogue : Entity
 
     private void SkipTyping()
     {
-        InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
+        //InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
         InternalCalls.SetText(mEntityID, lines[lineIndex]);
         charIndex = lines[lineIndex].Length;
         isLineComplete = true;
@@ -187,7 +187,7 @@ public class TutorialDialogue : Entity
     private void NextLine()
     {
         DeactivateAllEmotions();
-        InternalCalls.PlaySound(mEntityID, "DefaultDialogueSound");
+        //InternalCalls.PlaySound(mEntityID, "DefaultDialogueSound");
 
         if (lineIndex < lines.Length - 1)
         {
