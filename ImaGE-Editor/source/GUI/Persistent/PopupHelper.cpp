@@ -271,6 +271,15 @@ namespace {
           ImGui::PushStyleColor(ImGuiCol_Text, entityClr);
           DisplayEntity(child, cursorXPos);
           ImGui::PopStyleColor();
+
+          if (em.HasChild(entity)) {
+            // indent cursorX by tree node indent width again
+            cursorXPos += ImGui::GetTreeNodeToLabelSpacing();
+            for (ECS::Entity c : em.GetChildEntity(entity)) {
+              DisplayEntity(c, cursorXPos);
+            }
+          }
+
           continue;
         }
 
@@ -282,13 +291,13 @@ namespace {
       ImGui::PushStyleColor(ImGuiCol_Text, entityClr);
       DisplayEntity(entity, cursorXPos);
       ImGui::PopStyleColor();
-    }
 
-    if (em.HasChild(entity)) {
-      // indent cursorX by tree node indent width again
-      cursorXPos += ImGui::GetTreeNodeToLabelSpacing();
-      for (ECS::Entity child : em.GetChildEntity(entity)) {
-        DisplayEntity(child, cursorXPos);
+      if (em.HasChild(entity)) {
+        // indent cursorX by tree node indent width again
+        cursorXPos += ImGui::GetTreeNodeToLabelSpacing();
+        for (ECS::Entity child : em.GetChildEntity(entity)) {
+          DisplayEntity(child, cursorXPos);
+        }
       }
     }
   }
