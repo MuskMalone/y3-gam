@@ -141,6 +141,17 @@ namespace IGE.Utils
         return 0; // Undefined (0,0), you can choose how to handle this case
     }
 
+    public static float AngleDifference(float angle1, float angle2)
+    {
+      // Compute the raw difference
+      float difference = angle2 - angle1;
+
+      // Wrap the difference to the range [-180, 180)
+      difference = (difference + 180) % 360 - 180;
+
+      // Ensure the result is in the range [-180, 180]
+      return (difference < -180) ? difference + 360 : difference;
+    }
     public static float Asin(float value)
     {
       if (value < -1 || value > 1)

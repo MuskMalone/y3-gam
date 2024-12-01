@@ -152,8 +152,8 @@ public class PictureAlign : Entity
     }
       //Console.WriteLine(Mathf.QuaternionAngle(currRot, savedCameraRotation));
 
-    float xDiff = currRot.X - savedCameraEuler.X;
-    float yDiff = currRot.Y - savedCameraEuler.Y;
+    float xDiff = Mathf.AngleDifference(currRot.X,savedCameraEuler.X);
+    float yDiff = Mathf.AngleDifference(currRot.Y,savedCameraEuler.Y);
     //Vector2 angleDiff = CalculatePitchAndYawDifferences(currWRot, savedCameraRotation);
     if (Math.Abs(xDiff) > rotationThreshold) // Ignore small differences (optional threshold)
     {
