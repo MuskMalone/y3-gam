@@ -83,6 +83,9 @@ namespace IGE {
         IGE_EVENTMGR.DispatchImmediateEvent<Events::LoadSceneEvent>(std::filesystem::path(mSpecification.StartFromScene.second).stem().string(),
             mSpecification.StartFromScene.second);
 
+        // TEMP - idk why we need this when the code above already triggers it but okay
+        Systems::SystemManager::GetInstance().PausedUpdate<Systems::TransformSystem, IGE::Physics::PhysicsSystem, IGE::Audio::AudioSystem>();
+
         // TEMP - NEED THIS TO PLAY GAME BUILD
         glfwSetCursorPos(mWindow.get(), mSpecification.WindowWidth / 2.0, mSpecification.WindowHeight / 2.0);
         glfwSetInputMode(mWindow.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);

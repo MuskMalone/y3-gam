@@ -22,6 +22,7 @@ namespace {
 
 namespace GUI {
   PopupHelper::PopupHelper(const char* windowName) : GUIWindow(windowName) {
+    mPopupFunctions.reserve(2);
     mPopupFunctions.emplace_back(std::bind(&PopupHelper::GUIDRemapPopup, this));
     mPopupFunctions.emplace_back(std::bind(&PopupHelper::GUIDCompletePopup, this));
 
