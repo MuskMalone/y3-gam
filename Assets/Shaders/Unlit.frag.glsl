@@ -54,6 +54,7 @@ void main(){
 	// Normalize inputs
     
     //change transparency here
-    float alpha = albedoTexture.a * mat.Transparency;
+    //float alpha = albedoTexture.a * mat.Transparency;
+    float alpha = mat.Transparency;
 	fragColor = vec4(albedo, alpha);
 }
