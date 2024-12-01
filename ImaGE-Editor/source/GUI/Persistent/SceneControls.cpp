@@ -19,7 +19,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace {
   void BeginDisabledBlock(bool flag);
   void EndDisabledBlock(bool flag);
-  bool isCursorLocked = false;
 }
 
 namespace GUI
@@ -70,14 +69,14 @@ namespace GUI
           if (mSceneManager.GetSceneState() & Scenes::SceneState::PLAYING) {
             if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyPressed(ImGuiKey_O))
             {
-              isCursorLocked = !isCursorLocked;
-              QUEUE_EVENT(Events::LockMouseEvent, isCursorLocked);
+              Input::InputManager::GetInstance().SetisCursorLocked(!Input::InputManager::GetInstance().GetisCursorLocked());
+              QUEUE_EVENT(Events::LockMouseEvent, Input::InputManager::GetInstance().GetisCursorLocked());
             }
 
             if (ImGui::Button(ICON_FA_STOP) || (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyPressed(ImGuiKey_P, false))) {
               wasRunning = true;
-              isCursorLocked = false;
-              QUEUE_EVENT(Events::LockMouseEvent, isCursorLocked);
+              Input::InputManager::GetInstance().SetisCursorLocked(false);
+              QUEUE_EVENT(Events::LockMouseEvent, Input::InputManager::GetInstance().GetisCursorLocked());
               mSceneManager.StopScene();
             }
           }
@@ -111,8 +110,8 @@ namespace GUI
             }
             if (mSceneManager.GetSceneState() != Scenes::SceneState::PLAYING && !wasRunning) {
               if (ImGui::Button(ICON_FA_PLAY) || (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyPressed(ImGuiKey_P, false))) {
-                isCursorLocked = true;
-                QUEUE_EVENT(Events::LockMouseEvent, isCursorLocked);
+                Input::InputManager::GetInstance().SetisCursorLocked(true);
+                QUEUE_EVENT(Events::LockMouseEvent, Input::InputManager::GetInstance().GetisCursorLocked());
                 mSceneManager.PlayScene();
               }
             }

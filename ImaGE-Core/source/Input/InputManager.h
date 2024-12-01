@@ -73,6 +73,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 			// Store axis values
 			std::unordered_map<std::string, float> axes;
 			static std::vector<char> mKeyVec;
+			static bool isCursorLocked;
 
 		public:
 			/*!*********************************************************************
@@ -144,6 +145,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 			static bool AnyKeyDown();
 			static bool AnyKeyTriggered();
 
+			static bool GetisCursorLocked();
+			static void SetisCursorLocked(bool);
 
 			/*!*********************************************************************
 			\brief
