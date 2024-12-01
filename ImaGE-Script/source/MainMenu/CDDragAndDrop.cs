@@ -221,8 +221,8 @@ public class CDDragAndDrop : Entity
                 fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, alpha);
             }
 
-            float volume = Mathf.Lerp(0.6f, 0.0f, fadeElapsed / fadeDuration); // Fade volume from 1.0 to 0.0
-            InternalCalls.SetSoundVolume(mEntityID, "BGM", volume); // Apply the volume fade
+            float volume = Mathf.Lerp(1.0f, 0.0f, fadeElapsed / fadeDuration); // Fade volume from 1.0 to 0.0
+            InternalCalls.SetSoundVolume(mEntityID, "MainMenuBGM", volume); // Apply the volume fade
             if (fadeElapsed >= fadeDuration)
             {
                 isFading = false;
