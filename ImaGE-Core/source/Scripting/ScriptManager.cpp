@@ -1526,7 +1526,8 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
    
   for (ECS::Entity child : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Light>())
   {
-    if (child.GetTag() == "Light")
+    std::string n = child.GetTag();
+    if (n == "Light" || n == "LightR" || n == "LightL" || n == "LightN" || n == "LightF" || n == "LightT" || n == "LightB")
     {
       child.SetIsActive(true);
     }
