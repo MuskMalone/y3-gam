@@ -126,7 +126,7 @@ public class Inventory : Entity
         if (ItemAdded != null)
         {
           Console.WriteLine("Item "+item.Name + " has been added to inventory");
-         // ItemAdded(this, new InventoryEventArgs(item, iconPosition[i]));
+          ItemAdded(this, new InventoryEventArgs(item, iconPosition[i]));
         }
         return;
       }
