@@ -37,7 +37,7 @@ public class PictureAlign : Entity
 
   //For setting the borderSize
   private Vector3 smallBorderScale = new Vector3(12.320f, 12.820f, 12.820f);
-  private Vector3 bigBorderScale = new Vector3(25.980f, 27.4f, 0.38f);
+  private Vector3 bigBorderScale = new Vector3(24.800f, 26.220f, -0.800f);
   private Vector3 smallBorderPos = new Vector3(10.200f, -0.100f, -0.010f);
   private Vector3 bigBorderPos = new Vector3(0.360f, 0.4f, -0.010f);
   private HoldupUI currentImg;
@@ -136,8 +136,9 @@ public class PictureAlign : Entity
     bool IsAligned()
   {
     float positionDistance = Vector3.Distance(player.GetComponent<Transform>().worldPosition, savedPosition);
-    Vector3 currWRot = mainCamera.GetComponent<Transform>().rotationWorldEuler;
-    Vector3 currLRot = mainCamera.GetComponent<Transform>().rotationEuler;
+    Vector2 currRot =playerMove.GetRotation();
+    //Vector3 currWRot = mainCamera.GetComponent<Transform>().rotationWorldEuler;
+    //Vector3 currLRot = mainCamera.GetComponent<Transform>().rotationEuler;
 
     bool aligned = true;
 
@@ -151,8 +152,8 @@ public class PictureAlign : Entity
     }
       //Console.WriteLine(Mathf.QuaternionAngle(currRot, savedCameraRotation));
 
-    float xDiff = currLRot.X - savedCameraEuler.X;
-    float yDiff = currWRot.Y - savedCameraEuler.Y;
+    float xDiff = currRot.X - savedCameraEuler.X;
+    float yDiff = currRot.Y - savedCameraEuler.Y;
     //Vector2 angleDiff = CalculatePitchAndYawDifferences(currWRot, savedCameraRotation);
     if (Math.Abs(xDiff) > rotationThreshold) // Ignore small differences (optional threshold)
     {
@@ -179,29 +180,29 @@ public class PictureAlign : Entity
       UpArrow.SetActive(false);
     }
 
-    // Determine yaw (left/right) adjustment
-    //if (Math.Abs(yDiff) > rotationThreshold) // Ignore small differences (optional threshold)
-    //{
-    //  //Console.WriteLine(yDiff + "::" + savedCameraEuler.Y + "vs" + currWRot.Y);
-    //  aligned = false;
-    //  if (yDiff > 0)
-    //  {
-    //    //Console.WriteLine("Look left");
-    //    RightArrow.SetActive(false);
-    //    LeftArrow.SetActive(true);
-    //  }
-    //  else
-    //  {
-    //    //Console.WriteLine("Look right");
-    //    RightArrow.SetActive(true);
-    //    LeftArrow.SetActive(false);
-    //  }
-    //}
-    //else
-    //{
-    //  RightArrow.SetActive(false);
-    //  LeftArrow.SetActive(false);
-    //}
+    //Determine yaw(left/ right) adjustment
+    if (Math.Abs(yDiff) > rotationThreshold) // Ignore small differences (optional threshold)
+    {
+      Console.WriteLine(yDiff + "::" + savedCameraEuler.Y + "vs" + currRot.Y);
+      aligned = false;
+      if (yDiff > 0)
+      {
+        //Console.WriteLine("Look left");
+        RightArrow.SetActive(false);
+        LeftArrow.SetActive(true);
+      }
+      else
+      {
+        //Console.WriteLine("Look right");
+        RightArrow.SetActive(true);
+        LeftArrow.SetActive(false);
+      }
+    }
+    else
+    {
+      RightArrow.SetActive(false);
+      LeftArrow.SetActive(false);
+    }
 
     if (aligned)
       Console.WriteLine("Player is aligned.");

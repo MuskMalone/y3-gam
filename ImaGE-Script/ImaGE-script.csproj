@@ -89,7 +89,6 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="source\InteractableObject\BackToMainMenuButton.cs" />
     <Compile Include="source\Cutscene\EndSceneFadeToBlack.cs" />
     <Compile Include="source\Cutscene\TutorialCutscene.cs" />
     <Compile Include="source\Dialogue\Dialogue.cs" />
@@ -97,19 +96,20 @@
     <Compile Include="source\Engine Tools\Easing.cs" />
     <Compile Include="source\Engine Tools\FPS.cs" />
     <Compile Include="source\InteractableObject\AltarPaintingFrame.cs" />
-    <Compile Include="source\InteractableObject\Key.cs" />
-    <Compile Include="source\InteractableObject\Safe.cs" />
-    <Compile Include="source\InteractableObject\KeyDoor.cs" />
+    <Compile Include="source\InteractableObject\BackToMainMenuButton.cs" />
     <Compile Include="source\InteractableObject\Crowbar.cs" />
     <Compile Include="source\InteractableObject\Hammer.cs" />
+    <Compile Include="source\InteractableObject\Key.cs" />
+    <Compile Include="source\InteractableObject\KeyDoor.cs" />
     <Compile Include="source\InteractableObject\NightPainting.cs" />
     <Compile Include="source\InteractableObject\NoteInteraction.cs" />
     <Compile Include="source\InteractableObject\PitPainting.cs" />
+    <Compile Include="source\InteractableObject\Safe.cs" />
     <Compile Include="source\InteractableObject\SafeButtons.cs" />
     <Compile Include="source\InteractableObject\Seed.cs" />
     <Compile Include="source\InteractableObject\SuspiciousPainting.cs" />
-    <Compile Include="source\InteractableObject\ToolsPainting.cs" />
     <Compile Include="source\InteractableObject\Tools.cs" />
+    <Compile Include="source\InteractableObject\ToolsPainting.cs" />
     <Compile Include="source\InteractableObject\TutorialPainting.cs" />
     <Compile Include="source\Inventory\HUD.cs" />
     <Compile Include="source\Inventory\Inventory.cs" />
@@ -130,11 +130,11 @@
     <Compile Include="source\Mono\InternalCalls.cs" />
     <Compile Include="source\Mono\Keycode.cs" />
     <Compile Include="source\Mono\Math.cs" />
-    <Compile Include="source\Mono\textAsset.cs" />
     <Compile Include="source\Mono\Time.cs" />
     <Compile Include="source\Mono\Vec2.cs" />
     <Compile Include="source\Mono\Vec3.cs" />
     <Compile Include="source\Mono\Vec4.cs" />
+    <Compile Include="source\Mono\textAsset.cs" />
     <Compile Include="source\Painting\AlignUI.cs" />
     <Compile Include="source\Painting\AlignUINight.cs" />
     <Compile Include="source\Painting\AudioManager.cs" />
@@ -152,6 +152,7 @@
     <Compile Include="source\Player\PlayerFootsteps.cs" />
     <Compile Include="source\Player\PlayerInteraction.cs" />
     <Compile Include="source\Player\PlayerMove.cs" />
+    <Compile Include="source\PointerTest.cs" />
     <Compile Include="source\SelectionManager.cs" />
     <Compile Include="source\Test.cs" />
     <Compile Include="source\ToolsPuzzle\AlignUITools.cs" />
@@ -165,7 +166,8 @@
     <Compile Include="source\Tutorial\TutorialDialogue.cs" />
     <Compile Include="source\Tutorial\WASDTutorial.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

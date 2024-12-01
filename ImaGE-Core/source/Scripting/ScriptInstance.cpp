@@ -140,7 +140,7 @@ void ScriptInstance::InvokeOnUpdate()
   glm::vec2 delt = Input::InputManager::GetInstance().GetMouseDelta();
   if ( mUpdateMethod)
   {
-      std::cout << mScriptName << "\n";
+     // std::cout << mScriptName << "\n";
     std::vector<void*> params = { };
     mono_runtime_invoke( mUpdateMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
   }

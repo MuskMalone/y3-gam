@@ -29,7 +29,7 @@ using IGE.Utils;
 
 
 
-public class Test : Entity
+public class PointerTest : Entity
 {
 
   //  private float speed = 20f;
@@ -46,7 +46,7 @@ public class Test : Entity
 
 
 
-  public Test() : base()
+  public PointerTest() : base()
     {
       
       //AddComponent<Transform>(new Transform());
