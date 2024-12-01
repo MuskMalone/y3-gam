@@ -460,15 +460,17 @@ namespace IGE {
                     mSceneStarted = true;
                 }
                 mSceneStopped = true;
-                auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
-                for (auto entity : rbsystem) {
-                    auto& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
-                    auto grpiter{ mGroup.find(audiosource.channelGroup) };
-                    if (grpiter != mGroup.end()) {
-                        grpiter->second->stop();
-                    }
-                }
-
+                //auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource>() };
+                //for (auto entity : rbsystem) {
+                //    auto& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
+                //    auto grpiter{ mGroup.find(audiosource.channelGroup) };
+                //    if (grpiter != mGroup.end()) {
+                //        grpiter->second->stop();
+                //    }
+                //}
+                FMOD::ChannelGroup* mastergrp{ };
+                mSystem->getMasterChannelGroup(&mastergrp);
+                mastergrp->stop();
             }
             if (state == Events::SceneStateChange::NewSceneState::PAUSED) {
                 mScenePaused = true;
