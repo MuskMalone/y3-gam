@@ -119,15 +119,14 @@ public class PictureAlign : Entity
           currentImg.RemoveItself();
           currentImg = null;
         }
-        //else if (picture == "TutorialPainting")
-        //{
-        //  Debug.Log("Aligned Tutorial Painting");
-        //  //InternalCalls.SpawnToolBox();
-        //  playerMove.UnfreezePlayer();
-        //  isTransitioning = false;
-        //  currentImg.RemoveItself();
-        //  currentImg = null;
-        //}
+        else if (picture == "TutorialPainting")
+        {
+        
+          playerMove.UnfreezePlayer();
+          isTransitioning = false;
+          currentImg.TutorialRemoveItself();
+          currentImg = null;
+        }
 
       }
     }
@@ -136,7 +135,6 @@ public class PictureAlign : Entity
 
     bool IsAligned()
   {
-    
     float positionDistance = Vector3.Distance(player.GetComponent<Transform>().worldPosition, savedPosition);
     Vector3 currWRot = mainCamera.GetComponent<Transform>().rotationWorldEuler;
     Vector3 currLRot = mainCamera.GetComponent<Transform>().rotationEuler;

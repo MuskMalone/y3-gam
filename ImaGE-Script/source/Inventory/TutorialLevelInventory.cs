@@ -313,6 +313,7 @@ public class TutorialLevelInventory : Entity
         {
             case "TutorialPainting":
                 tutorialPaintingUI?.SetActive(true);
+                tutorialPaintingUI?.FindScript<HoldupUI>().SetAlginUI("TutorialPainting", GetItemByName("TutorialPainting"));
                 break;
 
         }

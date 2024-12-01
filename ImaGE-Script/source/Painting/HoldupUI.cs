@@ -17,6 +17,7 @@ public class HoldupUI : Entity
 
   // AudioManager audioManager;
   private Inventory inventoryScript;
+  private TutorialLevelInventory tutorialInventoryScript;
 
   // Track the associated item to remove
   private IInventoryItem associatedItem;
@@ -37,6 +38,7 @@ public class HoldupUI : Entity
   void Start()
   {
     inventoryScript = FindObjectOfType<Inventory>();
+    tutorialInventoryScript = FindObjectOfType<TutorialLevelInventory>();
     pictureAlignscript = FindObjectOfType<PictureAlign>();
     if (pictureAlignscript != null)
       Console.WriteLine(pictureAlignscript.GetComponent<Tag>().tag);
@@ -229,5 +231,11 @@ public class HoldupUI : Entity
   public void RemoveItself()
   {
     inventoryScript.RemoveItem(associatedItem);
+    
   }
+
+    public void TutorialRemoveItself()
+    {
+        tutorialInventoryScript.RemoveItem(associatedItem);
+    }
 }
