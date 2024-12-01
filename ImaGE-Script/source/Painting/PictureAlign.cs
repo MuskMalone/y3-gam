@@ -185,7 +185,7 @@ public class PictureAlign : Entity
     {
       Console.WriteLine(yDiff + "::" + savedCameraEuler.Y + "vs" + currRot.Y);
       aligned = false;
-      if (yDiff > 0)
+      if (yDiff < 0)
       {
         //Console.WriteLine("Look left");
         RightArrow.SetActive(false);
