@@ -44,13 +44,16 @@ public class PictureAlign : Entity
   private string picture;
 
   delegate void PictureInteration();
-
+    public bool startFade = false;
+   //private TutorialFade tutorialFade;
   void Start()
   {
-    // Initialize the movement and camera control components
+        //tutorialFade = FindObjectOfType<TutorialFade>();
+        // Initialize the movement and camera control components
     playerMove = player.FindObjectOfType<PlayerMove>();
 
     if (playerMove == null) Debug.LogError("PlayerMove component not found!");
+        
   }
 
   void Update()
@@ -126,6 +129,8 @@ public class PictureAlign : Entity
           isTransitioning = false;
           currentImg.TutorialRemoveItself();
           currentImg = null;
+                    //tutorialFade.StartFade();
+                    startFade = true;
         }
 
       }
