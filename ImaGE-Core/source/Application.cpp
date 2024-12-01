@@ -105,7 +105,7 @@ namespace IGE {
             {-1.0f, -1.0f, -1.0f, 1.0f},
         },
         // col
-        {0.8f, 0.6f, 0.4f, 1.0f}, // RGBA color
+        {1.f, 1.f, 1.f, 1.0f}, // RGBA color
         // vel
         {0.5f, 0.0f, -0.5f},       // Velocity vector
         // rot
@@ -115,13 +115,13 @@ namespace IGE {
         // angvel
         10.0f,                     // Angular velocity
         // lifetime
-        5.0f,                      // Particle lifetime
+        100.0f,                      // Particle lifetime
         // speed
         2.5f,                      // Particle speed
         // time
         1.0f,                      // Emitter active time
         // frequency
-        1.0f,                     // Emission frequency
+        .01f,                     // Emission frequency
         // type
         1,                         // Type (e.g., EMT_TYPE_RAIN)
         // vCount

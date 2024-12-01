@@ -3,7 +3,7 @@
 #include "glad/glad.h"
 #include <queue>
 #include "Singleton/ThreadSafeSingleton.h"
-#define MAX_BUFFER 1000000
+#define MAX_BUFFER 5000000
 #define WORK_GROUP 1000 //max buffer should be divisible by work group
 namespace Graphics{
 #pragma warning(push)

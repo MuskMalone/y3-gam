@@ -10,7 +10,7 @@ layout( local_size_x = 1000, local_size_y = 1, local_size_z = 1 ) in;
 // uniform control variables
 uniform float DT;
 
-uniform uint bufferMaxCount = 1000000;
+uniform uint bufferMaxCount = 5000000;
 //from -1 to 1
 
 float hello;

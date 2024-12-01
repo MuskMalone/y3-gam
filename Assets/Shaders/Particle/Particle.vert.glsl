@@ -3,7 +3,7 @@
 // #extension GL_ARB_bindless_texture : enable
 
 #include "..\\Assets\\Shaders\\Particle\\Common.glsl"
-
+#include "..\\Assets\\Shaders\\Particle\\ParticleUniforms.glsl"
 // struct TextureData{
 //     vec2 texCoords[4];
 //     uvec2 texHdl;
@@ -12,16 +12,16 @@
 // layout(std430, binding = 9) buffer TextureHandles 
 // { TextureData TexHdls[]; }; 
 
-uniform mat4 vertViewProjection;
-uniform mat4 vertView; // Camera view matrix
-out mat4 vertTransform;
+// out mat4 vertTransform;
 
-out mat4 translate;
-out mat4 rotate;
-out mat4 scale; 
+out mat4 T;
+out mat4 R;
+out mat4 S; 
 
 out vec4 vertFragColor;
 out uint texIdx;
+
+out int particleIdx;
 
 mat4 rotate(vec3 eulerAngles) {
     float cx = cos(eulerAngles.x); // cos(pitch)
@@ -94,13 +94,20 @@ mat4 computeBillboardAlignment(mat4 viewMatrix) {
 }
 
 void main() {
+    particleIdx = gl_VertexID;
     if (!Particles[gl_VertexID].alive) {
-        vertTransform = mat4(0.0);
+        T = mat4(0.0);
+        R = mat4(0.0);
+        S = mat4(0.0);        
         texIdx = 0;
     } else {
+
         // Billboard alignment
         mat4 billboardAlignment = computeBillboardAlignment(vertView);
-        vertTransform = vertViewProjection * translate(Particles[gl_VertexID].pos) * scale(Particles[gl_VertexID].size);
+        T = translate(Particles[gl_VertexID].pos);
+        R = rotate(Particles[gl_VertexID].rot);
+        S = scale(Particles[gl_VertexID].size);
+        // vertTransform = vertViewProjection * T * S;
         vertFragColor = Particles[gl_VertexID].col;
         texIdx = Particles[gl_VertexID].emtIdx;
     }
