@@ -24,7 +24,7 @@ public class  PlayerMove : Entity
   public float speed = 650f;
   public float walkingSpeed = 650f;
   public float runSpeed = 1200f;
-  public float jumpForce = 3500f;
+  public float jumpForce = 3000f;
   private readonly float extraGravityFactorDuringDescent = 15f;
   public float isGroundedRayHeight = 3f;
   public Entity cam;
