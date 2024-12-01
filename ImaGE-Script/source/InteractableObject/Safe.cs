@@ -352,6 +352,8 @@ public class Safe : Entity
     keyPadUI.SetActive(false);
     safeTextBox.SetActive(false);
     safeInstructionsUI.SetActive(false);
+    interactWithSafeUI.SetActive(false);
+
     SetAllButtonsInactive();
     InternalCalls.HideCursor();
   }
