@@ -234,7 +234,7 @@ public class PictureAlign : Entity
       LeftArrow.SetActive(true);
       border.SetActive(true);
       toStop = false;
-    //isTransitioning = true;
+      //isTransitioning = true;
 
   }
 
