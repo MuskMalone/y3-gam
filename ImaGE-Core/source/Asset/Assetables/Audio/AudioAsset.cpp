@@ -23,7 +23,7 @@ namespace IGE {
 
 			//populate the metatata//populate metadata (right now its only path)
 			newFp = inputAudioPath;
-			metadata.emplace("path", newFp);
+			metadata["path"] = newFp;
 			return GUID{ GUID::Seed{} };
 		}
 		void* AudioAsset::Load(GUID guid)

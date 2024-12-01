@@ -43,7 +43,7 @@ namespace Graphics {
 	}
 	void Renderer::Init() {
 		SUBSCRIBE_STATIC_FUNC(Events::EventType::WINDOW_RESIZED, OnResize);
-		SUBSCRIBE_STATIC_FUNC(Events::EventType::ENTITY_PICKED, OnEntityPicked );
+		SUBSCRIBE_STATIC_FUNC(Events::EventType::ENTITY_SELECTED, OnEntityPicked);
 		InitUICamera();
 
 		//----------------------Init Batching Quads------------------------------------------------------------//
@@ -490,7 +490,7 @@ namespace Graphics {
 	}
 
 	EVENT_CALLBACK_DEF(Renderer, OnEntityPicked) {
-		auto const& entity { CAST_TO_EVENT(Events::EntityScreenPicked)->mEntity };
+		ECS::Entity const& entity { CAST_TO_EVENT(Events::EntityScreenPicked)->mEntity };
 		SetHighlightedEntity(entity);
 	}
 

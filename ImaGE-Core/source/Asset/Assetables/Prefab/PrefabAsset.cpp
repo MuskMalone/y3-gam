@@ -15,7 +15,7 @@ namespace IGE {
 			std::string& newFp, 
 			AssetMetadata::AssetProps& metadata) {
 			newFp = cPrefabsDirectory + GetFileNameWithExtension(fp);
-			metadata.emplace("path", newFp);
+			metadata["path"] = newFp;
 			return GUID{ GUID::Seed{} };
 		}
 

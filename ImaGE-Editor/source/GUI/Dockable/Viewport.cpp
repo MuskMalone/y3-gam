@@ -264,9 +264,20 @@ namespace GUI
   }
 
   EVENT_CALLBACK_DEF(Viewport, OnEntityDoubleClicked) {
-    Component::Transform const& trans{ CAST_TO_EVENT(Events::ZoomInOnEntity)->mEntity.GetComponent<Component::Transform>() };
+    ECS::Entity const entity{ CAST_TO_EVENT(Events::ZoomInOnEntity)->mEntity };
+    Component::Transform const& trans{ entity.GetComponent<Component::Transform>() };
+    glm::vec3 scale{ trans.worldScale };
+
+    // if entity has mesh, apply its aabb on top of scale
+    if (entity.HasComponent<Component::Mesh>()) {
+      IGE::Assets::GUID const guid{ entity.GetComponent<Component::Mesh>().meshSource };
+      if (guid) {
+        scale *= 2.f * IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(guid)->mMeshSource.GetBoundingBox().halfExtents;
+      }
+    }
+
     // project the entity's scale onto the camera's view plane
-    glm::vec2 const projectedEntityScale{ ProjVectorOnCamPlane(trans.worldScale, mEditorCam) };
+    glm::vec2 const projectedEntityScale{ ProjVectorOnCamPlane(scale, mEditorCam) };
     
     // then offset backwards from the entity's position based on the larger scale component and scale factor
     sTargetPosition = trans.worldPos - mEditorCam.GetForwardVector()

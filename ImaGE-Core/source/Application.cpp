@@ -53,7 +53,7 @@ namespace IGE {
     IGE::Audio::AudioManager::CreateInstance();
     Assets::AssetManager::CreateInstance();
     Reflection::ObjectFactory::CreateInstance();
-    Scenes::SceneManager::CreateInstance();
+    Scenes::SceneManager::CreateInstance(mSpecification.StartFromScene.first ? Scenes::PLAYING : Scenes::NO_SCENE);
     Prefabs::PrefabManager::CreateInstance();
     Performance::FrameRateController::CreateInstance(120.f, 0.05f, false);
     Input::InputManager::CreateInstance(mWindow, mSpecification.WindowWidth, mSpecification.WindowHeight, 0.1);
@@ -140,8 +140,8 @@ namespace IGE {
     Systems::SystemManager& systemManager{ Systems::SystemManager::GetInstance() };
 
     systemManager.RegisterSystem<Systems::TransformSystem>("Transform System");
-    systemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
     systemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
+    systemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
     systemManager.RegisterSystem<IGE::Audio::AudioSystem>("Audio System");
     systemManager.RegisterSystem<Systems::TextSystem>("Text System");
   }
@@ -248,7 +248,6 @@ namespace IGE {
   {
     // shutdown singletons
     Systems::SystemManager::DestroyInstance();
-    IGE::Audio::AudioManager::DestroyInstance();
     Graphics::PostProcessingManager::DestroyInstance();
     Scenes::SceneManager::DestroyInstance();
     Prefabs::PrefabManager::DestroyInstance();
@@ -260,6 +259,7 @@ namespace IGE {
     ECS::EntityManager::DestroyInstance();
     Input::InputManager::DestroyInstance();
     Assets::AssetManager::DestroyInstance();
+    IGE::Audio::AudioManager::DestroyInstance();
     Debug::DebugLogger::DestroyInstance();
 
     // @TODO: Shutdown physics and audio singletons

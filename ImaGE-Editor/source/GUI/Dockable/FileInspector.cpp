@@ -114,7 +114,7 @@ namespace GUI {
       NextRowTable("Emission");
       {
         float emission{ selectedMaterial->GetEmission() };
-        if (ImGui::SliderFloat("##Emission", &emission, 0.f, 1.f, "%.3f", ImGuiSliderFlags_AlwaysClamp)) {
+        if (ImGui::SliderFloat("##Emission", &emission, 0.f, 10.f, "%.3f", ImGuiSliderFlags_AlwaysClamp)) {
           selectedMaterial->SetEmission(emission);
         }
       }

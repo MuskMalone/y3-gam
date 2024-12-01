@@ -8,6 +8,8 @@ struct MaterialProperties {
     float Roughness;   // Roughness factor
     float Transparency; // Transparency (alpha)
     float AO;          // Ambient occlusion
+    float Emission;
+    float Padding[3];
 };
 
 layout(std430, binding = 0) buffer MaterialPropsBuffer {

@@ -24,6 +24,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Dockable/Debugging/PerformanceWindow.h"
 #include "Dockable/Debugging/RenderPassViewer.h"
 #include "Persistent/PrefabEditor.h"
+#include "Persistent/PopupHelper.h"
 #include "Persistent/SceneControls.h"
 #include "Dockable/SceneHierarchy.h"
 #include "Persistent/Toolbar.h"
@@ -39,10 +40,11 @@ namespace GUI {
   }
 
   void GUIManager::Init(Graphics::RenderTarget& renderTarget) {
-    mPersistentElements.reserve(3);
+    mPersistentElements.reserve(4);
     mPersistentElements.emplace_back(std::make_unique<Toolbar>("Toolbar", mWindows));
     mPersistentElements.emplace_back(std::make_unique<SceneControls>("Scene Controls"));
     mPersistentElements.emplace_back(std::make_unique<PrefabEditor>("Prefab Editor"));
+    mPersistentElements.emplace_back(std::make_unique<PopupHelper>("Popup Helper"));
 
     // hold ptrs to the viewports
     mEditorViewport = std::make_shared<Viewport>("Viewport", renderTarget.camera);

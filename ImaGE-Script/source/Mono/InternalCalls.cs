@@ -56,6 +56,15 @@ namespace IGE.Utils
     internal extern static Quaternion GetRotation(uint ID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static Vector3 GetRotationEuler(uint ID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void SetRotationEuler(uint ID, ref Vector3 position);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static Vector3 GetWorldRotationEuler(uint ID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void SetRotation(uint entityHandle, ref Quaternion position);
 
 
@@ -219,6 +228,12 @@ namespace IGE.Utils
     extern public static uint RaycastFromEntity(uint entity, Vector3 start, Vector3 end);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetSoundPitch(uint entity, string sound, float pitch);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetSoundVolume(uint entity, string sound, float volume);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void PlaySound(uint entity, string sound);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -272,10 +287,20 @@ namespace IGE.Utils
     extern public static void HideCursor();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void ChangeToolsPainting();
+
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SpawnToolBox();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SpawnOpenDoor();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static bool OnTriggerEnter(uint entityTrigger, uint entityOther);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static bool OnTriggerExit(uint entityTrigger, uint entityOther);
     #endregion
-  }
+    }
 }

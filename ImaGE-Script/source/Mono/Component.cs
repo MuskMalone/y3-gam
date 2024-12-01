@@ -74,6 +74,25 @@ public class Component
       }
     }
 
+  public Vector3 rotationEuler
+  {
+    get
+    {
+      return InternalCalls.GetRotationEuler(entity.mEntityID); // Push update to C++ side
+    }
+    set
+    {
+      InternalCalls.SetRotationEuler(entity.mEntityID, ref value); // Push update to C++ side
+    }
+  }
+
+  public Vector3 rotationWorldEuler
+  {
+    get
+    {
+      return InternalCalls.GetWorldRotationEuler(entity.mEntityID); // Push update to C++ side
+    }
+  }
 
   public Vector3 scale
     {

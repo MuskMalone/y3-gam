@@ -766,6 +766,9 @@
     <ClInclude Include="source\BoundingVolumes\AABB.h" />
     <ClInclude Include="source\BoundingVolumes\IntersectionTests.h" />
     <ClInclude Include="source\Serialization\FILEWrapper.h" />
+    <ClInclude Include="source\Core\Components\Interactive.h" />
+    <ClInclude Include="source\Events\AssetEvents.h" />
+    <ClInclude Include="source\Asset\RemapData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />

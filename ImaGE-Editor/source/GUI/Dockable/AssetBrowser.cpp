@@ -13,6 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "AssetBrowser.h"
 #include <imgui/imgui.h>
 #include <Events/EventManager.h>
+#include <Events/AssetEvents.h>
 #include <GUI/Helpers/AssetHelpers.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>

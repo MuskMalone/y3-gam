@@ -77,7 +77,7 @@ public class TutorialLevelInventory : Entity
         tutorialPaintingUI?.SetActive(false);
 
 
-        Vector3 startPosition = new Vector3(16.6f, -8.9f, 0f);
+        Vector3 startPosition = new Vector3(12.0f, -4.0f, 0f);
         InternalCalls.SetPosition(tutorialPaintingUI.mEntityID, ref startPosition);
     }
 
@@ -313,6 +313,7 @@ public class TutorialLevelInventory : Entity
         {
             case "TutorialPainting":
                 tutorialPaintingUI?.SetActive(true);
+                tutorialPaintingUI?.FindScript<HoldupUI>().SetAlginUI("TutorialPainting", GetItemByName("TutorialPainting"));
                 break;
 
         }

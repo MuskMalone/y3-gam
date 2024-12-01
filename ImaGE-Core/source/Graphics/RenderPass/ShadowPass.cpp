@@ -85,7 +85,7 @@ namespace Graphics {
 
     void ShadowPass::ComputeLightSpaceMatrix(Component::Light& light, glm::quat const& lightRot) {
       glm::vec3 const center{ light.shadowConfig.customCenter ? light.shadowConfig.centerPos : glm::vec3() };
-      mLightSpaceMtx = glm::lookAt(center  - (lightRot * light.forwardVec), center, glm::vec3(0.f, 1.f, 0.f));
+      mLightSpaceMtx = glm::lookAt(center - (lightRot * light.forwardVec), center, glm::vec3(0.f, 1.f, 0.f));
 
       // combine orthographic and view mtx to get light space mtx
       float const& bounds{ light.shadowConfig.scenesBounds * sDefaultSceneBounds };

@@ -8,6 +8,8 @@ public class TutorialPainting : Entity, IInventoryItem
     public PlayerInteraction playerInteraction;
     public Entity EToPickUpUI;
 
+    private TutorialDialogue tutorialDialogue;
+    public string[] dialogueWhenPaintingPickup;
     public string Name
     {
         get
@@ -43,6 +45,7 @@ public class TutorialPainting : Entity, IInventoryItem
 
     void Start()
     {
+        tutorialDialogue = FindObjectOfType<TutorialDialogue>();
         _Image?.SetActive(false);
         EToPickUpUI?.SetActive(false);
     }
@@ -53,6 +56,7 @@ public class TutorialPainting : Entity, IInventoryItem
 
         if (Input.GetKeyTriggered(KeyCode.E) && isTutorialPaintingHit)
         {
+            tutorialDialogue.SetDialogue(dialogueWhenPaintingPickup, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Thinking, TutorialDialogue.Emotion.Neutral });
             InternalCalls.PlaySound(mEntityID, "PickupObjects");
             inventoryScript.Additem(this);
         }

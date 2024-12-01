@@ -20,7 +20,7 @@ namespace IGE {
       }
 
       newFp = inputFontPath;
-      metadata.emplace("path", newFp);
+      metadata["path"] = newFp;
       return GUID{ GUID::Seed{} };
     }
 

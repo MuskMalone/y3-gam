@@ -19,6 +19,7 @@ namespace IGE {
       {
       private: 
           EVENT_CALLBACK_DECL(HandleAddFiles);
+          EVENT_CALLBACK_DECL(OnRemapGUID);
 
           template <typename, typename, typename = void>
           struct HasStaticImport : std::false_type {};

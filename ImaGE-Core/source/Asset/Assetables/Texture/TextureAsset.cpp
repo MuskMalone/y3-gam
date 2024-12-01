@@ -56,7 +56,7 @@ namespace IGE {
             }
 
             newFp = inputImagePath;
-            metadata.emplace("path", newFp);
+            metadata["path"] = newFp;
             return GUID{ GUID::Seed{} };
         }
 		void* TextureAsset::Load([[maybe_unused]] GUID guid) {

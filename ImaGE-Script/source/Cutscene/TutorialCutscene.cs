@@ -30,6 +30,8 @@ using IGE.Utils;
 
 public class TutorialCutscene : Entity
 {
+
+
     public Entity mother;
     public Entity openDoor;
     public Entity closeDoor;
@@ -37,17 +39,19 @@ public class TutorialCutscene : Entity
 
     private PlayerMove playerMove;
 
-    private float timer = 0f;
-    private float firstCutDuration = 2f;
-    private float secondCutDelay = 2f;
-
     private bool firstCutscenePlaying = false;
     private bool secondCutscenePlaying = false;
     public bool cutsceneFinish = false;
 
+    //dialogue
+    private TutorialDialogue tutorialDialogue;
+    public string[] firstCutsceneDialogue;
+    public string[] secondCutsceneDialogue;
+    public string[] thirdCutsceneDialogue;
     // Start is called before the first frame update
     void Start()
     {
+        tutorialDialogue = FindObjectOfType<TutorialDialogue>();
         playerMove = FindObjectOfType<PlayerMove>();
 
         if (mother != null)
@@ -86,41 +90,27 @@ public class TutorialCutscene : Entity
             Debug.LogError("glow entity is missing.");
         }
 
-
         StartFirstCutscene();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (firstCutscenePlaying)
-        {
-            PlayCutscene();
-        }
-        else if (secondCutscenePlaying)
-        {
-            PlaySecondCutscene();
-        }
-
-    }
-
-    void PlayCutscene()
-    {
-
-        timer += Time.deltaTime;
-        if (timer >= firstCutDuration)
+        if (firstCutscenePlaying && Input.GetMouseButtonDown(0) && tutorialDialogue.isLineComplete) // Left mouse click
         {
             EndFirstCutscene();
         }
-
+        else if (secondCutscenePlaying && Input.GetMouseButtonDown(0) && tutorialDialogue.isLineComplete) // Left mouse click
+        {
+            EndSecondCutscene();
+        }
     }
 
     void StartFirstCutscene()
     {
         playerMove.FreezePlayer();
-        timer = 0f;
         firstCutscenePlaying = true;
+        tutorialDialogue.SetDialogue(firstCutsceneDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Neutral });
     }
 
     void EndFirstCutscene()
@@ -129,39 +119,23 @@ public class TutorialCutscene : Entity
         firstCutscenePlaying = false;
 
         StartSecondCutscene();
-
     }
-
-    void PlaySecondCutscene()
-    {
-
-        timer += Time.deltaTime;
-        if (timer >= secondCutDelay)
-        {
-            EndSecondCutscene();
-        }
-
-    }
-
 
     void StartSecondCutscene()
     {
-        timer = 0f;
         secondCutscenePlaying = true;
+        tutorialDialogue.SetDialogue(secondCutsceneDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Shocked });
     }
-
-
 
     void EndSecondCutscene()
     {
         closeDoor.SetActive(true);
         openDoor.SetActive(false);
         glow.SetActive(false);
+        tutorialDialogue.SetDialogue(thirdCutsceneDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Surprised });
         playerMove.UnfreezePlayer();
         secondCutscenePlaying = false;
         cutsceneFinish = true;
     }
-
-
 
 }
