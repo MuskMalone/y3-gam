@@ -335,6 +335,7 @@ namespace Reflection
     else IF_GET_ENTITY_COMP(Sprite2D)
     else IF_GET_ENTITY_COMP(Camera)
     else IF_GET_ENTITY_COMP(Skybox)
+    else IF_GET_ENTITY_COMP(Interactive)
     else
     {
       std::ostringstream oss{};
