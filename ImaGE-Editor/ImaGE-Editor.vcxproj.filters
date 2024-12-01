@@ -130,6 +130,9 @@
     <ClCompile Include="source\GUI\GUIManager.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="source\GUI\GUIVault.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
     <ClCompile Include="source\GUI\Helpers\AssetHelpers.cpp">
       <Filter>GUI\Helpers</Filter>
     </ClCompile>
@@ -152,6 +155,5 @@
       <Filter>GUI\Styles</Filter>
     </ClCompile>
     <ClCompile Include="source\main.cpp" />
-    <ClCompile Include="source\GUI\GUIVault.cpp" />
   </ItemGroup>
 </Project>

@@ -31,6 +31,9 @@
     <Filter Include="Audio">
       <UniqueIdentifier>{9718D90C-032D-01BE-CCAE-A41D3882FDEE}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BoundingVolumes">
+      <UniqueIdentifier>{06DECC74-7269-3A39-7B7A-BD2DE7849639}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
     </Filter>
@@ -142,6 +145,9 @@
     <Filter Include="Graphics">
       <UniqueIdentifier>{1653CE33-0220-293F-2B39-17E717655ECD}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\Camera">
+      <UniqueIdentifier>{CED20E8B-3A5E-7C4F-436F-FF43AF79D84F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Graphics\Mesh">
       <UniqueIdentifier>{92268A97-FEE6-05CE-C721-4F4B33A14AAA}</UniqueIdentifier>
     </Filter>
@@ -220,6 +226,9 @@
     <ClInclude Include="source\Asset\IGEAssets.h">
       <Filter>Asset</Filter>
     </ClInclude>
+    <ClInclude Include="source\Asset\RemapData.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
     <ClInclude Include="source\Asset\SmartPointer.h">
       <Filter>Asset</Filter>
     </ClInclude>
@@ -228,6 +237,18 @@
     </ClInclude>
     <ClInclude Include="source\Audio\AudioSystem.h">
       <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="source\BoundingVolumes\AABB.h">
+      <Filter>BoundingVolumes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\BoundingVolumes\BoundingSphere.h">
+      <Filter>BoundingVolumes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\BoundingVolumes\Frustum.h">
+      <Filter>BoundingVolumes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\BoundingVolumes\IntersectionTests.h">
+      <Filter>BoundingVolumes</Filter>
     </ClInclude>
     <ClInclude Include="source\Color.h" />
     <ClInclude Include="source\Core\Components\AudioListener.h">
@@ -252,6 +273,9 @@
       <Filter>Core\Components</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Components\Image.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\Components\Interactive.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Components\Layer.h">
@@ -335,6 +359,9 @@
     </ClInclude>
     <ClInclude Include="source\DebugTools\Exception\ExceptionBase.h">
       <Filter>DebugTools\Exception</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Events\AssetEvents.h">
+      <Filter>Events</Filter>
     </ClInclude>
     <ClInclude Include="source\Events\Event.h">
       <Filter>Events</Filter>
@@ -569,13 +596,13 @@
     </ClInclude>
     <ClInclude Include="source\Globals.h" />
     <ClInclude Include="source\Graphics\Camera\CameraManager.h">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Camera</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\Camera\CameraSpec.h">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Camera</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\Camera\EditorCamera.h">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Camera</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\ElementBuffer.h">
       <Filter>Graphics</Filter>
@@ -736,6 +763,9 @@
     <ClInclude Include="source\Serialization\Deserializer.h">
       <Filter>Serialization</Filter>
     </ClInclude>
+    <ClInclude Include="source\Serialization\FILEWrapper.h">
+      <Filter>Serialization</Filter>
+    </ClInclude>
     <ClInclude Include="source\Serialization\JsonKeys.h">
       <Filter>Serialization</Filter>
     </ClInclude>
@@ -761,14 +791,6 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\BoundingVolumes\BoundingSphere.h" />
-    <ClInclude Include="source\BoundingVolumes\Frustum.h" />
-    <ClInclude Include="source\BoundingVolumes\AABB.h" />
-    <ClInclude Include="source\BoundingVolumes\IntersectionTests.h" />
-    <ClInclude Include="source\Serialization\FILEWrapper.h" />
-    <ClInclude Include="source\Core\Components\Interactive.h" />
-    <ClInclude Include="source\Events\AssetEvents.h" />
-    <ClInclude Include="source\Asset\RemapData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -807,6 +829,9 @@
     </ClCompile>
     <ClCompile Include="source\Audio\AudioSystem.cpp">
       <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BoundingVolumes\IntersectionTests.cpp">
+      <Filter>BoundingVolumes</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Components\AudioSource.cpp">
       <Filter>Core\Components</Filter>
@@ -908,10 +933,13 @@
       <Filter>FrameRateController</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\Camera\CameraManager.cpp">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Graphics\Camera\CameraSpec.cpp">
+      <Filter>Graphics\Camera</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\Camera\EditorCamera.cpp">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Camera</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\ElementBuffer.cpp">
       <Filter>Graphics</Filter>
@@ -1040,7 +1068,5 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\Graphics\Camera\CameraSpec.cpp" />
-    <ClCompile Include="source\BoundingVolumes\IntersectionTests.cpp" />
   </ItemGroup>
 </Project>

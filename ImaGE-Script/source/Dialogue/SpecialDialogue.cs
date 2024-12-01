@@ -9,7 +9,7 @@ public class SpecialDialogue : Entity
   public PlayerMove playerMove;
   public string introMessage;
   public string[] initialDialogue;
-  public float fadeDuration = 1f;
+  public float fadeDuration = 3f;
   public float typewriterSpeed = 0.04f;
 
   public Dialogue dialogueSystem;
@@ -26,6 +26,8 @@ public class SpecialDialogue : Entity
   private bool isInFadeTransition = false;
   private float fadeTransitionTimer = 0f; 
   private float fadeStartTime;
+  private bool isFadingOut = true;
+  private float fadeProgress = 0f;
 
   private bool triggerInitialSpecialDialogue = false;
   private string specialLine;
@@ -112,20 +114,71 @@ public class SpecialDialogue : Entity
     if (isInSillouetteSequence)
     {
       sillouetteElapsedTime += Time.deltaTime;
-      if (sillouetteElapsedTime >= activationInterval)
+
+      // Handle the first sprite initialization
+      if (currentSillouetteIndex == -1)
+      {
+        currentSillouetteIndex = 0;
+        Entity firstSprite = BeginningSilhouetteSequence[currentSillouetteIndex];
+        firstSprite.SetActive(true);
+
+        // Initialize fade-in for the first sprite
+        fadeProgress = 0f;
+        Vector4 initialColor = InternalCalls.GetSprite2DColor(firstSprite.mEntityID);
+        InternalCalls.SetSprite2DColor(firstSprite.mEntityID,
+            new Vector4(initialColor.X, initialColor.Y, initialColor.Z, 0f));
+
+        isFadingOut = true;
+
+        Debug.Log($"Initialized First Sprite: {firstSprite.mEntityID}");
+      }
+
+      // Handle fading out of the current sprite
+      if (currentSillouetteIndex >= 0 && currentSillouetteIndex < BeginningSilhouetteSequence.Length)
+      {
+        Entity currentSprite = BeginningSilhouetteSequence[currentSillouetteIndex];
+
+        if (isFadingOut)
+        {
+          fadeProgress += Time.deltaTime / fadeDuration;
+
+          // Retrieve and modify the color with updated alpha
+          Vector4 initialColor = InternalCalls.GetSprite2DColor(currentSprite.mEntityID);
+          float newAlpha = 1f - Mathf.Clamp01(fadeProgress);
+          InternalCalls.SetSprite2DColor(currentSprite.mEntityID,
+              new Vector4(initialColor.X, initialColor.Y, initialColor.Z, newAlpha));
+
+          Debug.Log($"Fading Out - Sprite: {currentSprite.mEntityID}, Alpha: {newAlpha}");
+
+          if (fadeProgress >= 1f)
+          {
+            currentSprite.SetActive(false);
+            fadeProgress = 0f;
+            isFadingOut = false;
+          }
+        }
+      }
+
+      // Handle activation and fading in of the next sprite
+      if (!isFadingOut && sillouetteElapsedTime >= activationInterval)
       {
         sillouetteElapsedTime = 0f;
-
-        if (currentSillouetteIndex >= 0 && currentSillouetteIndex < BeginningSilhouetteSequence.Length)
-        {
-          BeginningSilhouetteSequence[currentSillouetteIndex].SetActive(false);
-        }
-
         currentSillouetteIndex++;
 
         if (currentSillouetteIndex < BeginningSilhouetteSequence.Length)
         {
-          BeginningSilhouetteSequence[currentSillouetteIndex].SetActive(true);
+          Entity nextSprite = BeginningSilhouetteSequence[currentSillouetteIndex];
+          nextSprite.SetActive(true);
+
+          // Initialize fade-in alpha
+          fadeProgress = 0f;
+          Vector4 initialColor = InternalCalls.GetSprite2DColor(nextSprite.mEntityID);
+          InternalCalls.SetSprite2DColor(nextSprite.mEntityID,
+              new Vector4(initialColor.X, initialColor.Y, initialColor.Z, 0f));
+
+          isFadingOut = true;
+
+          Debug.Log($"Activated Sprite: {nextSprite.mEntityID}");
         }
         else
         {

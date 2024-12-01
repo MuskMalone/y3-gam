@@ -27,7 +27,7 @@ public class KeyDoor : Entity
       bool isDoorHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
       if (Input.GetMouseButtonTriggered(0) && isDoorHit && !doorFlag)
       {
-        if (!inventoryScript.keyEquipped)
+        if (!inventoryScript.keyEquipped && !dialogueSystem.isInDialogueMode)
         {
           InternalCalls.PlaySound(mEntityID, "LockedDoor");
           dialogueSystem.SetDialogue(lockedDialogue, new Dialogue.Emotion[] { Dialogue.Emotion.Sad });

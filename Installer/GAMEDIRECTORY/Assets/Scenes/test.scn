@@ -1,23 +1,23 @@
 {
     "Scene": [
         {
-            "ID": 1048576,
+            "ID": 0,
             "Parent": null,
             "Child Entities": [],
             "isActive": true,
             "Components": [
                 {
                     "Tag": {
-                        "tag": "MainCamera",
+                        "tag": "Entity 0",
                         "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": -21.924224853515626,
-                            "y": -22.545272827148439,
-                            "z": -14.2630615234375
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
                         },
                         "scale": {
                             "x": 1.0,
@@ -32,13 +32,13 @@
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -0.0,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -21.924224853515626,
-                            "y": -22.545272827148439,
-                            "z": -14.2630615234375
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -56,72 +56,33 @@
                 {
                     "Layer": {
                         "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 3179415639664878146
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                },
-                {
-                    "Camera": {
-                        "projType": "PERSP",
-                        "position": {
-                            "x": -21.924224853515626,
-                            "y": -22.545272827148439,
-                            "z": -14.2630615234375
-                        },
-                        "yaw": 0.0,
-                        "pitch": 0.0,
-                        "fov": 60.0,
-                        "aspectRatio": 1.7777777910232545,
-                        "nearClip": 0.10000000149011612,
-                        "farClip": 100.0
-                    }
-                },
-                {
-                    "Skybox": {
-                        "textureAssetGUID1": {
-                            "ID": 10047813639139926775
-                        },
-                        "textureAssetGUID2": {
-                            "ID": 584268140086393045
-                        },
-                        "blend": 0.4399999976158142
                     }
                 }
             ]
         },
         {
-            "ID": 1048577,
+            "ID": 2,
             "Parent": null,
             "Child Entities": [],
             "isActive": true,
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Entity 1048577",
+                        "tag": "Entity 2",
                         "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": -3.2611083984375,
-                            "y": -13.643099784851075,
-                            "z": 13.068560600280762
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
                         },
                         "scale": {
-                            "x": 7.29199743270874,
-                            "y": 7.29199743270874,
-                            "z": 7.29199743270874
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
                         },
                         "rotation": {
                             "x": 0.0,
@@ -131,18 +92,78 @@
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -0.0,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -3.2611083984375,
-                            "y": -13.643099784851075,
-                            "z": 13.068560600280762
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
                         },
                         "worldScale": {
-                            "x": 7.29199743270874,
-                            "y": 7.29199743270874,
-                            "z": 7.29199743270874
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2097153,
+            "Parent": null,
+            "Child Entities": [],
+            "isActive": true,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Entity 2097153",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -158,15 +179,49 @@
                     }
                 },
                 {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 3179415639664878146
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 2097153,
+                                "scriptName": "Test",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": [
+                                            {
+                                                "entityID": 2,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 2,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 0,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 0,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "type": "MonoObjectVec",
+                                        "scriptField": {
+                                            "fieldName": "test"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]

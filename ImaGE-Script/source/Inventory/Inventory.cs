@@ -17,7 +17,6 @@ public class Inventory : Entity
   public bool isVisible = false;
 
   // Inventory Item UI (Image at the bottom right)
-  public Entity pitPaintingUI;
   public Entity seedUI;
   public Entity nightPaintingUI;
   public Entity toolsPaintingUI;
@@ -28,7 +27,6 @@ public class Inventory : Entity
   public Entity pickupHandUI;
 
   // Inventory Item Selection (Image in the inventory bar)
-  public Entity pitPaintingSelection;
   public Entity seedSelection;
   public Entity nightPaintingSelection;
   public Entity toolsPaintingSelection;
@@ -97,7 +95,6 @@ public class Inventory : Entity
     inventoryImage?.SetActive(false);
     selectionHand?.SetActive(false);
 
-    pitPaintingUI?.SetActive(false);
     seedUI?.SetActive(false);
     //nightPaintingUI?.SetActive(false);
     //toolsPaintingUI?.SetActive(false);
@@ -126,7 +123,7 @@ public class Inventory : Entity
         if (ItemAdded != null)
         {
           Console.WriteLine("Item "+item.Name + " has been added to inventory");
-         // ItemAdded(this, new InventoryEventArgs(item, iconPosition[i]));
+          ItemAdded(this, new InventoryEventArgs(item, iconPosition[i]));
         }
         return;
       }
@@ -348,9 +345,6 @@ public class Inventory : Entity
     DisableAllUI();
     switch (itemName)
     {
-      case "Pit Painting":
-        pitPaintingUI?.SetActive(true);
-        break;
       case "Seed":
         Debug.Log("Seed Equipped");
         seedUI?.SetActive(true);
@@ -388,7 +382,6 @@ public class Inventory : Entity
 
   private void DisableAllUI()
   {
-    pitPaintingUI?.SetActive(false);
     seedUI?.SetActive(false);
     seedEquipped = false;
     pictureAlignscript.SetActive(false);

@@ -191,4 +191,9 @@ public class  PlayerMove : Entity
     currTime = 0.0;
     startTimer = true;
   }
+
+  public Vector2 GetRotation()
+  {
+    return new Vector2(pitch,yaw);
+  }
 }

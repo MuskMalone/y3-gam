@@ -259,6 +259,8 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(AppendText);
   ADD_INTERNAL_CALL(GetImageColor);
   ADD_INTERNAL_CALL(SetImageColor);
+  ADD_INTERNAL_CALL(GetSprite2DColor);
+  ADD_INTERNAL_CALL(SetSprite2DColor);
   ADD_INTERNAL_CALL(SetDaySkyBox);
 
   // Utility Functions
@@ -275,6 +277,8 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(TakeScreenShot);
   ADD_INTERNAL_CALL(ShowCursor);
   ADD_INTERNAL_CALL(HideCursor);
+  ADD_INTERNAL_CALL(OnTriggerEnter);
+  ADD_INTERNAL_CALL(OnTriggerExit);
   ADD_INTERNAL_CALL(ChangeToolsPainting);
   ADD_INTERNAL_CALL(SpawnToolBox);
   ADD_INTERNAL_CALL(SpawnOpenDoor);
@@ -1373,6 +1377,35 @@ void Mono::SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val)
   }
 }
 
+glm::vec4 Mono::GetSprite2DColor(ECS::Entity::EntityID entity)
+{
+  if (ECS::Entity(entity)) {
+    if (ECS::Entity(entity).HasComponent<Component::Sprite2D>())
+      return ECS::Entity(entity).GetComponent<Component::Sprite2D>().color;
+    else
+      Debug::DebugLogger::GetInstance().LogError("GetSprite2DColor: Entity " + ECS::Entity(entity).GetTag() + " does not have an Sprite2D component");
+  }
+  else {
+    Debug::DebugLogger::GetInstance().LogError("GetSprite2DColor: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
+
+  return {};
+}
+
+void Mono::SetSprite2DColor(ECS::Entity::EntityID entity, glm::vec4 val)
+{
+  if (ECS::Entity(entity))
+  {
+    if (ECS::Entity(entity).HasComponent<Component::Sprite2D>())
+      ECS::Entity(entity).GetComponent<Component::Sprite2D>().color = val;
+    else
+      Debug::DebugLogger::GetInstance().LogError("SetSprite2DColor: Entity " + ECS::Entity(entity).GetTag() + " does not have an Sprite2D component");
+  }
+  else {
+    Debug::DebugLogger::GetInstance().LogError("SetSprite2DColor: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
+}
+
 MonoString* Mono::GetCurrentScene() {
   return STDToMonoString(IGE_SCENEMGR.GetSceneName());
 }
@@ -1573,6 +1606,30 @@ void Mono::SpawnOpenDoor() {
 }
 
 
+
+bool Mono::OnTriggerEnter(ECS::Entity trigger, ECS::Entity other) {
+  if (!trigger.HasComponent<Component::BoxCollider>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to check collision using an entity that does not have collider!");
+  }
+
+  if (!trigger.GetComponent<Component::BoxCollider>().sensor) {
+    Debug::DebugLogger::GetInstance().LogWarning("You are trying to check collision using an entity that has sensor turned off!");
+  }
+
+  return IGE::Physics::PhysicsSystem::GetInstance().get()->OnTriggerEnter(trigger, other);
+}
+
+bool Mono::OnTriggerExit(ECS::Entity trigger, ECS::Entity other) {
+  if (!trigger.HasComponent<Component::BoxCollider>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to check collision using an entity that does not have collider!");
+  }
+
+  if (!trigger.GetComponent<Component::BoxCollider>().sensor) {
+    Debug::DebugLogger::GetInstance().LogWarning("You are trying to check collision using an entity that has sensor turned off!");
+  }
+
+  return IGE::Physics::PhysicsSystem::GetInstance().get()->OnTriggerExit(trigger, other);
+}
 
 /*!**********************************************************************
 *																																			  *

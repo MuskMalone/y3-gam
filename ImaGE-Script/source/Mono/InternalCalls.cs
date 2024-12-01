@@ -207,6 +207,12 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetImageColor(uint EntityID, Vector4 val);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static Vector4 GetSprite2DColor(uint EntityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetSprite2DColor(uint EntityID, Vector4 val);
     #endregion
 
 
@@ -279,6 +285,12 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void HideCursor();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool OnTriggerEnter(uint entityTrigger, uint entityOther);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool OnTriggerExit(uint entityTrigger, uint entityOther);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void ChangeToolsPainting();
