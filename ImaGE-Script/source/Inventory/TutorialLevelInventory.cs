@@ -26,7 +26,7 @@ public class TutorialLevelInventory : Entity
     public Entity inventorySelectSquare;
     public Entity selectionHand;
     public Entity inventoryImage;
-    //private PictureAlign pictureAlignscript;
+    private PictureAlign pictureAlignscript;
 
     //public Vec3<float>[] SlotPositionList;
     // Workaround for lack of Vec3<float>[]
@@ -79,6 +79,8 @@ public class TutorialLevelInventory : Entity
 
         Vector3 startPosition = new Vector3(12.0f, -4.0f, 0f);
         InternalCalls.SetPosition(tutorialPaintingUI.mEntityID, ref startPosition);
+
+        pictureAlignscript = FindObjectOfType<PictureAlign>();
     }
 
     public void Additem(IInventoryItem item)
@@ -322,5 +324,7 @@ public class TutorialLevelInventory : Entity
     private void DisableAllUI()
     {
         tutorialPaintingUI?.SetActive(false);
+        pictureAlignscript.ClearUI();
+
     }
 }
