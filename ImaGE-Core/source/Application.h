@@ -40,6 +40,7 @@ namespace IGE {
     Application(Application const&) = delete;
     Application& operator=(Application const&) = delete;
 
+
     /*!*********************************************************************
     \brief
       Initializes the application
@@ -103,5 +104,6 @@ namespace IGE {
     void RegisterSystems();
 
     EVENT_CALLBACK_DECL(OnPausedUpdateTrigger);
+    EVENT_CALLBACK_DECL(LockMouse);
   };
 } // namespace IGE

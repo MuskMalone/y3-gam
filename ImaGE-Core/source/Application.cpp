@@ -92,6 +92,7 @@ namespace IGE {
     }
 
     SUBSCRIBE_CLASS_FUNC(Events::EventType::TRIGGER_PAUSED_UPDATE, &Application::OnPausedUpdateTrigger, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::LOCK_MOUSE, &Application::LockMouse, this);
   }
 
   void Application::Run() {
@@ -301,5 +302,18 @@ namespace IGE {
   {
     mWindow.reset();  // release the GLFWwindow before we terminate
     glfwTerminate();
+  }
+
+  EVENT_CALLBACK_DEF(Application, LockMouse) {
+    if (CAST_TO_EVENT(Events::LockMouseEvent)->isLocked)
+    {
+      // Set the cursor position to the center of the window
+      glfwSetCursorPos(mWindow.get(), mSpecification.WindowWidth / 2.0, mSpecification.WindowHeight / 2.0);
+      glfwSetInputMode(mWindow.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    }
+
+    else
+      glfwSetInputMode(mWindow.get(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    //CAST_TO_EVENT(Events::LockMouseEvent)->isLocked = !(CAST_TO_EVENT(Events::LockMouseEvent)->isLocked);
   }
 } // namespace IGE

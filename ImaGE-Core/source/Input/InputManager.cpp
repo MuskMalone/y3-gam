@@ -42,6 +42,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/Renderer.h>
 #include <Graphics/RenderSystem.h>
 #include <Graphics/RenderPass/GeomPass.h>
+#include <Application.h>
 
 using namespace Input;
 using namespace Events;
@@ -59,6 +60,7 @@ KEY_MAP InputManager::mKeysTriggered;
 KEY_PRESS_ARRAY InputManager::mKeyFramesHeld;
 size_t InputManager::mCurrFramebuffer;
 std::vector<char> InputManager::mKeyVec(static_cast<int>(KEY_CODE::KEY_COUNTS));
+bool InputManager::isCursorLocked = false;
 
 InputManager::InputManager(std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& window, int width, int height, double holdTime)
 {
@@ -153,6 +155,17 @@ void InputManager::UpdateInput()
 }
 
 
+bool InputManager::GetisCursorLocked()
+{
+	return isCursorLocked;
+}
+void InputManager::SetisCursorLocked(bool l)
+{
+	isCursorLocked = l;
+}
+
+
+
 
 void InputManager::QueueInputEvents()
 {
@@ -231,6 +244,13 @@ void InputManager::QueueInputEvents()
 	// ALT TAB = MINIMIZE
 	if (IsKeyPressed(IK_LEFT_ALT) && IsKeyTriggered(IK_TAB))
 	{
+		QUEUE_EVENT(Events::WindowMinimized);
+	}
+
+	if (IsKeyPressed(IK_LEFT_CONTROL) && IsKeyTriggered(IK_O))
+	{
+		isCursorLocked = !isCursorLocked;
+		QUEUE_EVENT(Events::LockMouseEvent, isCursorLocked);
 		QUEUE_EVENT(Events::WindowMinimized);
 	}
 }
