@@ -42,7 +42,7 @@ public class Seed : Entity, IInventoryItem
 
   public void OnUsed()
   {
-    Destroy(mEntityID);
+    //Destroy(mEntityID);
   }
 
   void Start()
