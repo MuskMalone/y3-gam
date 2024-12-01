@@ -62,7 +62,8 @@ namespace Reflection
       { GET_RTTR_TYPE(Sprite2D), ComponentUtils::AddSprite2D },
       { GET_RTTR_TYPE(Camera), ComponentUtils::AddCamera },
       { GET_RTTR_TYPE(Skybox), ComponentUtils::AddSkybox },
-      { GET_RTTR_TYPE(Interactive), ComponentUtils::AddInteractive}
+      { GET_RTTR_TYPE(Interactive), ComponentUtils::AddInteractive },
+      { GET_RTTR_TYPE(EmitterSystem), ComponentUtils::AddEmitterSystem }
     };
 
     if (mAddComponentFuncs.size() != gComponentTypes.size()) {

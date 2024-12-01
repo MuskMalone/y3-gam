@@ -78,7 +78,11 @@ namespace Graphics{
         glDeleteBuffers(1, &mParticleSSbo);
         glDeleteBuffers(1, &mParticleStartSSbo);
     }
-
+    void ParticleManager::MultiEmitterAction(std::vector<EmitterInstance>& emitters, int action) {
+        for (auto& emitter : emitters) {
+            EmitterAction(emitter, action);
+        }
+    }
     void ParticleManager::EmitterAction(EmitterInstance& emitter, int action) {
         auto emitterShader{ ShaderLibrary::Get("Emitter") };
         emitterShader->Use();

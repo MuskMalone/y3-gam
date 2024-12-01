@@ -163,6 +163,9 @@ static void rttr_auto_register_reflection_function2_(); namespace {
   REGISTER_COMPONENT(Interactive, "Interactive")
       .property("isHovered", &Interactive::isHovered);
 
+  REGISTER_COMPONENT(EmitterSystem, "EmitterSystem")
+      .property("emitters", &EmitterSystem::emitters);
+
   // stuff below are not actual "Components", hence we skip the REGISTER_COMPONENT checks
   rttr::registration::class_<PrefabOverrides>("PrefabOverrides")
     .constructor<>()(rttr::policy::ctor::as_object)

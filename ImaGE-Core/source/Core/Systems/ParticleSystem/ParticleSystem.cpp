@@ -3,9 +3,14 @@
 #include "Graphics/PostProcessing/ParticleManager.h"
 #include "Graphics/Shader.h"
 #include "FrameRateController/FrameRateController.h"
+#include "Events/EventManager.h"
+
 namespace Systems {
 	ParticleSystem::ParticleSystem(const char* name) : Systems::System{ name }
-	{}
+	{
+		SUBSCRIBE_CLASS_FUNC(Events::EventType::REMOVE_COMPONENT, &ParticleSystem::HandleRemoveComponent, this);
+		SUBSCRIBE_CLASS_FUNC(Events::EventType::REMOVE_ENTITY, &ParticleSystem::HandleRemoveEntity, this);
+	}
 	void ParticleSystem::Update()
 	{
 
@@ -33,9 +38,18 @@ namespace Systems {
 		Graphics::ParticleManager::GetInstance().DebugSSBO();
 		//Graphics::ParticleManager::GetInstance().Unbind();
 	}
+
 	void ParticleSystem::PausedUpdate()
 	{
 		Update();
 		//to update emitter stuff
+	}
+
+
+	EVENT_CALLBACK_DEF(ParticleSystem, HandleRemoveComponent) {
+		auto e{ CAST_TO_EVENT(Events::RemoveComponentEvent) };
+	}
+	EVENT_CALLBACK_DEF(ParticleSystem, HandleRemoveEntity) {
+		auto e{ CAST_TO_EVENT(Events::RemoveEntityEvent) };
 	}
 }

@@ -21,6 +21,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Audio/AudioManager.h>
 #include <Core/Components/AudioSource.h>
 #include <Graphics/PostProcessing/PostProcessingManager.h>
+#include <Graphics/PostProcessing/ParticleManager.h>
 #include <Graphics/MaterialData.h>
 #include <Core/Components/Light.h>
 
@@ -179,6 +180,24 @@ static void rttr_auto_register_reflection_function_(); namespace {
           .constructor<>()(rttr::policy::ctor::as_object)
           .property("guid", &Component::AudioSource::AudioInstance::guid)
           .property("playSettings", &Component::AudioSource::AudioInstance::playSettings);
+  }
+  /* ----------------- Particles --------------------- */
+  {
+      rttr::registration::class_<Graphics::EmitterInstance>("EmitterInstance")
+          .constructor<>()(rttr::policy::ctor::as_object)
+          .property("vertices", &Graphics::EmitterInstance::vertices)  // 8 vec4s
+          .property("col", &Graphics::EmitterInstance::col)            // Color
+          .property("vel", &Graphics::EmitterInstance::vel)            // Velocity
+          .property("rot", &Graphics::EmitterInstance::rot)            // Rotation
+          .property("size", &Graphics::EmitterInstance::size)          // Size
+          .property("angvel", &Graphics::EmitterInstance::angvel)      // Angular velocity
+          .property("lifetime", &Graphics::EmitterInstance::lifetime)  // Lifetime
+          .property("speed", &Graphics::EmitterInstance::speed)        // Speed
+          .property("frequency", &Graphics::EmitterInstance::frequency) // Emission frequency
+          .property("type", &Graphics::EmitterInstance::type)          // Emission type
+          .property("vCount", &Graphics::EmitterInstance::vCount)      // Vertex count
+          .property("preset", &Graphics::EmitterInstance::preset)      // Preset ID
+          .property("particlesPerFrame", &Graphics::EmitterInstance::particlesPerFrame);
   }
   /* ------------------ Shaders ---------------------*/
   rttr::registration::class_<Graphics::PostProcessingManager::PostProcessingConfigs::ShaderOrder>("ShaderOrder")

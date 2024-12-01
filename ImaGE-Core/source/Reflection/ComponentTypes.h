@@ -37,7 +37,8 @@ namespace Reflection
 		rttr::type::get<Component::Sprite2D>(),
 		rttr::type::get<Component::Camera>(),
 		rttr::type::get<Component::Skybox>(),
-		rttr::type::get<Component::Interactive>()
+		rttr::type::get<Component::Interactive>(),
+		rttr::type::get<Component::EmitterSystem>()
 	};
 
 } // namespace Reflection

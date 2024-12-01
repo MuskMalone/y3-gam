@@ -212,4 +212,10 @@ namespace Reflection::ComponentUtils {
 
       entity.EmplaceOrReplaceComponent<Interactive>(comp);
   }
+  void AddEmitterSystem(ECS::Entity entity, rttr::variant const& var)
+  {
+      EXTRACT_RAW_COMP(EmitterSystem, comp);
+      entity.EmplaceOrReplaceComponent<EmitterSystem>(comp);
+      Graphics::ParticleManager::GetInstance().MultiEmitterAction(entity.GetComponent<EmitterSystem>().emitters, 1);
+  }
 } // namespace Reflection

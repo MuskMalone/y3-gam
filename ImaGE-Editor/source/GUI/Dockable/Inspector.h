@@ -60,6 +60,7 @@ namespace GUI {
     bool CameraComponentWindow(ECS::Entity entity, bool highlight = false);
     bool CanvasComponentWindow(ECS::Entity entity, bool highlight = false);
     bool CapsuleColliderComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool EmitterSystemComponentWindow(ECS::Entity entity, bool highlight = false);
     bool ImageComponentWindow(ECS::Entity entity, bool highlight = false);
     bool LayerComponentWindow(ECS::Entity entity, bool highlight = false);
     bool LightComponentWindow(ECS::Entity entity, bool highlight = false);

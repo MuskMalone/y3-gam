@@ -275,6 +275,9 @@
     <ClInclude Include="source\Core\Components\Components.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
+    <ClInclude Include="source\Core\Components\EmitterSystem.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
     <ClInclude Include="source\Core\Components\Image.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
@@ -846,6 +849,9 @@
       <Filter>BoundingVolumes</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Components\AudioSource.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Components\EmitterSystem.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Components\RigidBody.cpp">

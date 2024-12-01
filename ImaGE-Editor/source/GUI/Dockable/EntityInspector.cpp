@@ -99,7 +99,8 @@ namespace GUI {
       { typeid(Component::Sprite2D), ICON_FA_IMAGE ICON_PADDING },
       { typeid(Component::Camera), ICON_FA_CAMERA ICON_PADDING },
       { typeid(Component::Skybox), ICON_FA_EARTH_ASIA ICON_PADDING },
-      { typeid(Component::Interactive), ICON_FA_COMPUTER_MOUSE ICON_PADDING }
+      { typeid(Component::Interactive), ICON_FA_COMPUTER_MOUSE ICON_PADDING },
+      { typeid(Component::EmitterSystem), ICON_FA_STAR ICON_PADDING }
     },
     mObjFactory{Reflection::ObjectFactory::GetInstance()},
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
@@ -441,6 +442,19 @@ namespace GUI {
               SetIsComponentEdited(true);
               if (prefabOverride) {
                   prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Interactive>());
+              }
+          }
+      }
+
+
+      if (currentEntity.HasComponent<Component::EmitterSystem>()) {
+          rttr::type const sourceType{ rttr::type::get<Component::EmitterSystem>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(sourceType);
+
+          if (EmitterSystemComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::EmitterSystem>());
               }
           }
       }
@@ -1877,6 +1891,113 @@ namespace GUI {
       return modified;
   }
 
+  bool Inspector::EmitterSystemComponentWindow(ECS::Entity entity, bool highlight) {
+      bool const isOpen{ WindowBegin<Component::EmitterSystem>("Emitter System", highlight) };
+      bool modified{ false };
+
+      if (isOpen) {
+          Component::EmitterSystem& emitterSystem = entity.GetComponent<Component::EmitterSystem>();
+          auto& emitters = emitterSystem.emitters;
+
+          float const inputWidth{ CalcInputWidth(50.f) / 3.f };
+
+          // Iterate over each emitter
+          for (size_t i = 0; i < emitters.size(); ++i) {
+              auto& emitter = emitters[i];
+
+              // Display emitter header with index
+              std::string emitterLabel = "Emitter #" + std::to_string(i);
+              bool isOpenEmitter = ImGui::CollapsingHeader(emitterLabel.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
+
+              if (isOpenEmitter) {
+                  BeginVec3Table(("EmitterTransformTable_" + std::to_string(i)).c_str(), inputWidth);
+
+                  // Edit vertices (display as read-only for now)
+                  for (size_t j = 0; j < emitter.vertices.size(); ++j) {
+                      ImGui::TableNextRow();
+                      ImGui::TableSetColumnIndex(0);
+                      ImGui::Text("Vertex %zu", j);
+                      ImGui::TableSetColumnIndex(1);
+                      ImGui::DragFloat4(("##Vertex" + std::to_string(i) + "_" + std::to_string(j)).c_str(), &emitter.vertices[j][0], 0.1f, -FLT_MAX, FLT_MAX);
+                  }
+
+                  // Edit position
+                  if (ImGuiHelpers::TableInputFloat3("Position", &emitter.vel[0], inputWidth, false, -FLT_MAX, FLT_MAX, 0.1f)) {
+                      modified = true;
+                  }
+
+                  // Edit rotation
+                  if (ImGuiHelpers::TableInputFloat3("Rotation", &emitter.rot[0], inputWidth, false, -360.f, 360.f, 0.3f)) {
+                      modified = true;
+                  }
+
+                  // Edit size
+                  if (ImGuiHelpers::TableInputFloat2("Size", &emitter.size[0], inputWidth, false, 0.001f, FLT_MAX, 0.02f)) {
+                      modified = true;
+                  }
+
+                  // Edit other fields
+                  ImGui::TableNextRow();
+                  ImGui::TableSetColumnIndex(0);
+                  ImGui::Text("Angular Velocity");
+                  ImGui::TableSetColumnIndex(1);
+                  if (ImGui::DragFloat(("##AngularVelocity_" + std::to_string(i)).c_str(), &emitter.angvel, 0.1f, -FLT_MAX, FLT_MAX)) {
+                      modified = true;
+                  }
+
+                  ImGui::TableNextRow();
+                  ImGui::TableSetColumnIndex(0);
+                  ImGui::Text("Lifetime");
+                  ImGui::TableSetColumnIndex(1);
+                  if (ImGui::DragFloat(("##Lifetime_" + std::to_string(i)).c_str(), &emitter.lifetime, 0.1f, 0.1f, 100.f)) {
+                      modified = true;
+                  }
+
+                  ImGui::TableNextRow();
+                  ImGui::TableSetColumnIndex(0);
+                  ImGui::Text("Speed");
+                  ImGui::TableSetColumnIndex(1);
+                  if (ImGui::DragFloat(("##Speed_" + std::to_string(i)).c_str(), &emitter.speed, 0.1f, 0.1f, 100.f)) {
+                      modified = true;
+                  }
+
+                  ImGui::TableNextRow();
+                  ImGui::TableSetColumnIndex(0);
+                  ImGui::Text("Frequency");
+                  ImGui::TableSetColumnIndex(1);
+                  if (ImGui::DragFloat(("##Frequency_" + std::to_string(i)).c_str(), &emitter.frequency, 0.01f)) {
+                      modified = true;
+                  }
+
+                  ImGui::TableNextRow();
+                  ImGui::TableSetColumnIndex(0);
+                  ImGui::Text("Particles Per Frame");
+                  ImGui::TableSetColumnIndex(1);
+                  if (ImGui::DragInt(("##ParticlesPerFrame_" + std::to_string(i)).c_str(), &emitter.particlesPerFrame, 1, 1, 1000)) {
+                      modified = true;
+                  }
+
+                  EndVec3Table();
+
+                  // Delete button for this emitter
+                  if (ImGui::Button(("Delete Emitter##" + std::to_string(i)).c_str())) {
+                      emitterSystem.RemoveEmitter(i);
+                      modified = true;
+                  }
+              }
+          }
+
+          // Add emitter button
+          if (ImGui::Button("Add Emitter")) {
+              emitterSystem.AddEmitter();
+              modified = true;
+          }
+      }
+
+      WindowEnd(isOpen);
+      return modified;
+  }
+
   bool Inspector::LightComponentWindow(ECS::Entity entity, bool highlight) {
     bool const isOpen{ WindowBegin<Component::Light>("Light", highlight) };
     bool modified{ false };
@@ -2134,6 +2255,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Camera>("Camera");
         DrawAddComponentButton<Component::Skybox>("Skybox");
         DrawAddComponentButton<Component::Interactive>("Interactive");
+        DrawAddComponentButton<Component::EmitterSystem>("Emitter System");
         ImGui::EndTable();
       }
 
