@@ -1093,7 +1093,9 @@ namespace Graphics {
 	}
 
 	void Renderer::RenderFullscreenTexture(){
+		glDisable(GL_BLEND);
 		RenderAPI::DrawTriangles(mData.screen.screenVertexArray, 6);
+		glEnable(GL_BLEND);
 	}
 
 	void Renderer::SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr) {
