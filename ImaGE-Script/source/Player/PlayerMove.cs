@@ -61,7 +61,8 @@ public class  PlayerMove : Entity
   // Update is called once per frame
   void Update()
   {
-    if(startTimer)
+ 
+    if (startTimer)
     {
       currTime += InternalCalls.GetDeltaTime();
       if (currTime > targetTime)
@@ -125,11 +126,14 @@ public class  PlayerMove : Entity
     // Skip look processing if the player is frozen
     if (canLook)
     {
+
       Vector3 mouseDelt = InternalCalls.GetMouseDelta();
       float mouseDeltaX = mouseDelt.X;
       float mouseDeltaY = mouseDelt.Y;
 
       yaw -= mouseDeltaX * sensitivity;
+      if(yaw > 360.0f || yaw < -360.0f) 
+        yaw /= 360.0f;
 
       // Apply mouse delta to pitch (rotate camera around the X-axis)
       pitch -= mouseDeltaY * sensitivity;
@@ -137,7 +141,7 @@ public class  PlayerMove : Entity
       // Clamp pitch to prevent camera from flipping upside down
       pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
     }
-
+   // Console.WriteLine(yaw);
     // Update the camera's rotation (pitch)
     cam.GetComponent<Transform>().rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(pitch));
 
