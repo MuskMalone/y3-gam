@@ -81,6 +81,7 @@ public class CDDragAndDrop : Entity
     public bool isLidOpen = false;
     void Start()
     {
+        InternalCalls.ShowCursor();
         originalPosition = InternalCalls.GetWorldPosition(mEntityID);
         originalRotation = InternalCalls.GetWorldRotation(mEntityID);
         //Console.WriteLine("originalrotation " + originalRotation);

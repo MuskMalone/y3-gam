@@ -46,6 +46,7 @@ public class TutorialFade : Entity
     // Start is called before the first frame update
     void Start()
     {
+        InternalCalls.HideCursor();
         pictureAlign = FindObjectOfType<PictureAlign>();
         if (pictureAlign == null) Debug.LogError("PictureAlign component not found!");
         playerMove = FindObjectOfType<PlayerMove>();

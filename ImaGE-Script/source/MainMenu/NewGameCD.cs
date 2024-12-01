@@ -77,7 +77,7 @@ public class NewGameCD : Entity
         if (mouseOnCDPlayer)
         {
             isLidOpen = true;
-            
+            InternalCalls.PlaySound(mEntityID, "PlaceCD_SFX");
         }
         else
         {
