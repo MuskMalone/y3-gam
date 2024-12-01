@@ -49,22 +49,32 @@ namespace Graphics {
 		unsigned cullCount{};
 
 		/* ========== Frustum Culling ========== */
-		auto shouldRender = [&am, &camFrustum, &cullCount](ECS::Entity entity) {
-			if (!entity.IsActive()) { return false; }
-			// lights and entities without mesh shouldnt be culled
-			else if (entity.HasComponent<Component::Light>() || !entity.HasComponent<Component::Mesh>()) {
-				return true;
-			}
+		// TEMP FIX - Dont cull for editor cam
+		std::function<bool(ECS::Entity)> shouldRender;
+		
+		if (cam.isEditor) {
+			shouldRender = [](ECS::Entity entity) {
+				return entity.IsActive();
+			};
+		}
+		else {
+			shouldRender = [&am, &camFrustum, &cullCount](ECS::Entity entity) {
+				if (!entity.IsActive()) { return false; }
+				// lights and entities without mesh shouldnt be culled
+				else if (entity.HasComponent<Component::Light>() || !entity.HasComponent<Component::Mesh>()) {
+					return true;
+				}
 
-			Component::Mesh& mesh{ entity.GetComponent<Component::Mesh>() };
-			if (!mesh.meshSource) { return true; }
+				Component::Mesh& mesh{ entity.GetComponent<Component::Mesh>() };
+				if (!mesh.meshSource) { return true; }
 
-			bool const ret{ EntityInViewFrustum(camFrustum, entity.GetComponent<Component::Transform>(),
-				am.GetAsset<IGE::Assets::ModelAsset>(mesh.meshSource)->mMeshSource) };
-			if (!ret) { ++cullCount; }
+				bool const ret{ EntityInViewFrustum(camFrustum, entity.GetComponent<Component::Transform>(),
+					am.GetAsset<IGE::Assets::ModelAsset>(mesh.meshSource)->mMeshSource) };
+				if (!ret) { ++cullCount; }
 
-			return ret;
-		};
+				return ret;
+			};
+		}
 
 		std::vector<ECS::Entity> entityVector{};
 		// if editing prefab, pass in all active entities
