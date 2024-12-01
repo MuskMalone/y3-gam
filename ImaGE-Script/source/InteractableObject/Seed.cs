@@ -1,4 +1,5 @@
 using IGE.Utils;
+using System;
 
 public class Seed : Entity, IInventoryItem
 {
@@ -9,7 +10,7 @@ public class Seed : Entity, IInventoryItem
   public Entity EToPlantSeedUI;
   public Entity Pot;
   public Entity Flower;
-  public PictureAlign PictureAlignScript;
+  private PictureAlign PictureAlignScript;
 
   private bool seedPlanted = false;
 
@@ -41,7 +42,7 @@ public class Seed : Entity, IInventoryItem
 
   public void OnUsed()
   {
-    Destroy(mEntityID);
+    //Destroy(mEntityID);
   }
 
   void Start()
@@ -50,6 +51,7 @@ public class Seed : Entity, IInventoryItem
     EToPickUpUI?.SetActive(false);
     EToPlantSeedUI?.SetActive(false);
     Flower?.SetActive(false);
+    PictureAlignScript = FindObjectOfType<PictureAlign>();
   }
 
   void Update()
@@ -84,7 +86,7 @@ public class Seed : Entity, IInventoryItem
       Pot.SetActive(true); // Sets the child seeds active as well
       seedPlanted = true;
     }
-
+   
     if (PictureAlignScript.isNight && seedPlanted)
     {
       Flower.SetActive(true);

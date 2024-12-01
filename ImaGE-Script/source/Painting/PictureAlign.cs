@@ -69,7 +69,7 @@ public class PictureAlign : Entity
         {
           toStop = true;
           alignCheck = true;
-          Debug.Log("Player is aligned.");
+          //Debug.Log("Player is aligned.");
           playerMove.FreezePlayer();
           currentImg.SetActive(false);
           isTransitioning = true;
@@ -164,7 +164,7 @@ public class PictureAlign : Entity
     {
 
       aligned = false;
-      if (xDiff < 0)
+      if (xDiff > 0)
       {
         //Console.WriteLine("Look up");
         DownArrow.SetActive(false);
@@ -188,9 +188,9 @@ public class PictureAlign : Entity
     //Determine yaw(left/ right) adjustment
     if (Math.Abs(yDiff) > rotationThreshold) // Ignore small differences (optional threshold)
     {
-      Console.WriteLine(yDiff + "::" + savedCameraEuler.Y + "vs" + currRot.Y);
+      //Console.WriteLine(yDiff + "::" + savedCameraEuler.Y + "vs" + currRot.Y);
       aligned = false;
-      if (yDiff < 0)
+      if (yDiff > 0)
       {
         //Console.WriteLine("Look left");
         RightArrow.SetActive(false);
@@ -209,8 +209,8 @@ public class PictureAlign : Entity
       LeftArrow.SetActive(false);
     }
 
-    if (aligned)
-      Console.WriteLine("Player is aligned.");
+    //if (aligned)
+    //  Console.WriteLine("Player is aligned.");
     return aligned; // All checks passed, the player is aligned
   }
 
@@ -234,6 +234,7 @@ public class PictureAlign : Entity
       LeftArrow.SetActive(true);
       border.SetActive(true);
       toStop = false;
+    //isTransitioning = true;
 
   }
 
