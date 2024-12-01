@@ -286,6 +286,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SpawnToolBox();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SpawnOpenDoor();
     #endregion
-  }
+    }
 }

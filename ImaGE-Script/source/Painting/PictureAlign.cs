@@ -121,7 +121,7 @@ public class PictureAlign : Entity
         }
         else if (picture == "TutorialPainting")
         {
-        
+          InternalCalls.SpawnOpenDoor();
           playerMove.UnfreezePlayer();
           isTransitioning = false;
           currentImg.TutorialRemoveItself();

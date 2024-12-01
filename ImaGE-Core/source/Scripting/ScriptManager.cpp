@@ -277,6 +277,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(HideCursor);
   ADD_INTERNAL_CALL(ChangeToolsPainting);
   ADD_INTERNAL_CALL(SpawnToolBox);
+  ADD_INTERNAL_CALL(SpawnOpenDoor);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -1551,6 +1552,23 @@ void Mono::SpawnToolBox() {
     toolBox.SetIsActive(true);
     ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(toolBox);
   }
+
+}
+
+void Mono::SpawnOpenDoor() {
+    ECS::Entity openDoor = ECS::EntityManager::GetInstance().GetEntityFromTag("OpenDoor");
+    ECS::Entity closedDoor = ECS::EntityManager::GetInstance().GetEntityFromTag("ClosedDoor");
+    ECS::Entity glowingDoor = ECS::EntityManager::GetInstance().GetEntityFromTag("Puzzle_GlowingDoor");
+    if (ECS::EntityManager::GetInstance().IsValidEntity(openDoor) && ECS::EntityManager::GetInstance().IsValidEntity(closedDoor) && ECS::EntityManager::GetInstance().IsValidEntity(glowingDoor))
+    {
+        openDoor.SetIsActive(true);
+        closedDoor.SetIsActive(false);
+        glowingDoor.SetIsActive(true);
+
+        ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(openDoor);
+        ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(closedDoor);
+        ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(glowingDoor);
+    }
 
 }
 

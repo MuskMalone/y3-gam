@@ -418,6 +418,8 @@ namespace Mono
 
 		static void SpawnToolBox();
 
+		static void SpawnOpenDoor();
+
 		/*!**********************************************************************
 		*																																			  *
 		*								            Helper Function			          						  *
