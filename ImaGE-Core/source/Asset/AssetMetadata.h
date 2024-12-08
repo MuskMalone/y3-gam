@@ -5,7 +5,11 @@
 namespace IGE{
     namespace Assets {
         struct AssetMetadata {
-            using AssetProps = std::map<std::string, std::string>;
+            struct AssetProps {
+                std::map<std::string, std::string> metadata;
+                bool modified{false};
+            };
+            //using AssetProps = std::map<std::string, std::string>;
             using AssetPropsKey = uint64_t; // this is wtv the guid has been converted to
             using AssetCategory = std::map<AssetPropsKey, AssetProps>;
 

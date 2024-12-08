@@ -15,6 +15,7 @@ namespace IGE {
 	namespace Assets {
         const std::string cAssetProjectSettingsPath{ gAssetsDirectory }; // just the same directory as the exe
         const std::string cSettingsFileName{ "metadata.igeproj" };
+        const std::string cAssetMetadataFileExtension{ ".igemeta" };
         class AssetManager : public ThreadSafeSingleton<AssetManager>
       {
       private: 
@@ -126,6 +127,7 @@ namespace IGE {
                   // not the compiled file that will be used during load time
                   std::string newFp{};
                   AssetMetadata::AssetProps metadata{};
+                  metadata.modified = true;
                   // this is to get the new FP
                   guid = T::Import(filepathstr, newFp, metadata); 
                   key = TypeAssetKey{ typeguid ^ guid };
@@ -146,7 +148,8 @@ namespace IGE {
               else {
                   std::string newFp{};
                   AssetMetadata::AssetProps metadata{};
-                  // this is to get the new FP
+                  metadata.modified = true;
+                  //runs the import function again even if theres a guid
                   T::Import(filepathstr, newFp, metadata);
                   Ref<T> ref { std::any_cast<Ref<T>>(mAssetRefs.at(key)) };
                   return ref.mInstance.partialRef.guid;
@@ -177,7 +180,8 @@ namespace IGE {
                   mGUID2PathRegistry.erase(guid);
               }
 
-              SaveMetadata();
+              auto metaToRemove{ cAssetProjectSettingsPath + GetTypeName<T>() + "\\" + GetFileName(path) + "." + std::to_string(static_cast<uint64_t>(guid)) + cAssetMetadataFileExtension };
+              std::remove(metaToRemove.c_str());
           }
 
           //-------------------------------------------------------------------------
@@ -346,14 +350,23 @@ namespace IGE {
           template <typename T>
           void ChangeAssetPath(GUID const& guid, std::string newPath) {
               try {
+                  //update the metadata stuff
                   auto& metadata{ GetMetadata<T>(guid) };
-                  auto const& oldPath{ metadata.at("path") };
+                  metadata.modified = true;
+                  auto const& oldPath{ metadata.metadata.at("path") };
                   //since guid is already in the metadata, safe to assume that it will be in the registries as well
                   mGUID2PathRegistry.at(guid) = newPath;
                   mPath2GUIDRegistry.emplace(newPath, guid);
                   mPath2GUIDRegistry.erase(oldPath);
 
-                  metadata.at("path") = newPath;
+                  auto metaToRemove{ cAssetProjectSettingsPath + GetTypeName<T>() + "\\" + GetFileName(oldPath) + "." + std::to_string(static_cast<uint64_t>(guid)) + cAssetMetadataFileExtension };
+                  std::remove(metaToRemove.c_str());
+
+                  metadata.metadata.at("path") = newPath;
+                  //remove the old metadata file
+
+
+                  SaveMetadata();
               }
               catch ([[maybe_unused]] Debug::Exception<AssetManager> const& e) {
                   Debug::DebugLogger::GetInstance().LogWarning("guid " + std::to_string(guid) + " does not exist within metadata");
@@ -385,6 +398,12 @@ namespace IGE {
             ImportFunc ImportFunction(std::string const& type);
             DeleteFunc DeleteFunction(std::string const& type);
             void SaveMetadata() const;
-      };
+
+            template <typename T>
+            bool IsTypeRegistered() {
+                return mRegisteredTypeNames.find(GetTypeName<T>()) != mRegisteredTypeNames.end();
+            }
+            bool IsTypeRegistered(std::string const&);
+        };
 	}
 }

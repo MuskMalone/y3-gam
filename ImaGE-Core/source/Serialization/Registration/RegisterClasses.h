@@ -118,17 +118,18 @@ static void rttr_auto_register_reflection_function_(); namespace {
           .property("first", &std::pair<std::string, unsigned>::first)
           .property("second", &std::pair<std::string, unsigned>::second);
   }
-
   {
     using T = IGE::Assets::AssetMetadata;
-    rttr::registration::class_<T::AssetProps>("AssetProps")
-      .constructor<>()(rttr::policy::ctor::as_object);
+
     rttr::registration::class_<T::AssetCategory>("AssetCategory")
       .constructor<>()(rttr::policy::ctor::as_object);
     rttr::registration::class_<T::IGEProjProperties>("IGEProjProperties")
       .constructor<>()(rttr::policy::ctor::as_object);
 
     /* ------------------- Assets ------------------- */
+    rttr::registration::class_<T::AssetProps>("AssetProps")
+        .constructor<>()(rttr::policy::ctor::as_object)
+        .property("metadata", &T::AssetProps::metadata);
     rttr::registration::class_<T>("AssetMetadata")
       .constructor<>()(rttr::policy::ctor::as_object)
       .property("Metadata", &T::mAssetProperties);

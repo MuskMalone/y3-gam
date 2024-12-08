@@ -61,6 +61,8 @@ namespace
   void DisplayTempFileIcon(std::string const& ext);
 
   void NextRowTable(const char* label);
+
+  bool IsAssetFile(std::string const&);
 }
 
 namespace GUI
@@ -251,7 +253,9 @@ namespace GUI
   void AssetBrowser::DisplayDirectory(float imgSize, unsigned maxChars, bool showIcon)
   {
     for (auto const& file : std::filesystem::directory_iterator(mCurrentDir)) {
+
       if (file.is_directory()) { continue; }
+      if (!IsAssetFile(file.path().string())) { continue; } // to account for igemeta files
 
       ImGui::TableNextColumn();
       std::string const fileName{ file.path().filename().string() };
@@ -325,6 +329,7 @@ namespace GUI
     for (auto const& file : std::filesystem::recursive_directory_iterator(gAssetsDirectory))
     {
       std::filesystem::path const& path{ file.path() };
+      if (!IsAssetFile(path.string())) { continue; } // to account for igemeta files
       if (file.is_directory() || path.extension() == gMeshFileExt
           || path.parent_path().filename() == sCompiledDirectory) { continue; } 
 
@@ -813,6 +818,12 @@ namespace
       ImGui::TextColored(sFileIconCol, ICON_FA_FILE);
     }
     ImGui::PopFont();
+  }
+
+  bool IsAssetFile(std::string const& fp){
+      auto fileext{ IGE::Assets::GetFileExtension(fp) };
+      if (fileext == IGE::Assets::cAssetMetadataFileExtension) return false;
+      return true;
   }
 
   void NextRowTable(const char* label) {
