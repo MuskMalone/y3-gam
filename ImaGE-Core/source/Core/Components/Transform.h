@@ -20,11 +20,11 @@ namespace Component
     Transform() :
       worldMtx{ glm::identity<glm::mat4>() }, parentWorldMtx{ glm::identity<glm::mat4>() }, rotation{ 1.f, 0.f, 0.f, 0.f }, worldRot{ 1.f, 0.f, 0.f, 0.f },
       position{}, scale{ 1.f, 1.f, 1.f }, eulerAngles{}, worldPos{}, worldScale{ 1.f, 1.f, 1.f },
-      modified{ true }, parentModified{ false } {}
+      modified{ true } {}
     Transform(glm::vec3 const& _pos, glm::vec3 const& _scale = { 1.f, 1.f, 1.f }, glm::vec3 const& _rot = {}) :
       worldMtx{ glm::identity<glm::mat4>() }, parentWorldMtx{ glm::identity<glm::mat4>() }, rotation{ 1.f, 0.f, 0.f, 0.f }, worldRot{ 1.f, 0.f, 0.f, 0.f },
       position{ _pos }, scale{ _scale }, eulerAngles{}, worldPos{ _pos }, worldScale{ _scale },
-      modified{ true }, parentModified{ false } {}
+      modified{ true } {}
 
     // local setters
     inline void SetPosition(glm::vec3 const& newPos) noexcept { position = newPos; modified = true; }
@@ -81,7 +81,7 @@ namespace Component
 
     glm::vec3 position, scale, eulerAngles;  // local
     glm::vec3 worldPos, worldScale;
-    bool modified, parentModified;
+    bool modified;
   };
 
 }

@@ -209,7 +209,7 @@ namespace GUI {
         Component::Transform& trans{ currentEntity.GetComponent<Component::Transform>() };
         glm::vec3 const oldPos{ trans.position };
         if (TransformComponentWindow(currentEntity, componentOverriden)) {
-          TransformHelpers::UpdateWorldTransform(currentEntity);  // must call this to update world transform according to changes to local
+          trans.modified = true;
           SetIsComponentEdited(true);
 
           if (prefabOverride) {

@@ -18,6 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Reflection/ObjectFactory.h>
 #include <Core/EntityManager.h>
 #include <Graphics/PostProcessing/PostProcessingManager.h>
+#include <Core/LayerManager/LayerManager.h>
 #pragma endregion
 
 #include <Core/Entity.h>
@@ -25,18 +26,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Asset/IGEAssets.h"
 #include "Graphics/Renderer.h"
 
-#pragma region SYSTEM_INCLUDES
 #include <Core/Systems/SystemManager/SystemManager.h>
-#include <Physics/PhysicsSystem.h>
-#include <Audio/AudioManager.h>
-#include <Core/Systems/TransformSystem/TransformSystem.h>
-#include <Scripting/ScriptingSystem.h>
-#include <Core/LayerManager/LayerManager.h>
-#include <Graphics/RenderSystem.h>
 #include <Core/Systems/Systems.h>
-#include <Audio/AudioSystem.h>
-#include <Core/LayerManager/LayerManager.h>
-#pragma endregion
 
 #include "Serialization/Serializer.h"
 #include "Serialization/Deserializer.h"
@@ -84,7 +75,7 @@ namespace IGE {
             mSpecification.StartFromScene.second);
 
         // TEMP - idk why we need this when the code above already triggers it but okay
-        Systems::SystemManager::GetInstance().PausedUpdate<Systems::TransformSystem, IGE::Physics::PhysicsSystem, IGE::Audio::AudioSystem>();
+        Systems::SystemManager::GetInstance().PausedUpdate<Systems::PostTransformSystem, IGE::Physics::PhysicsSystem, IGE::Audio::AudioSystem>();
 
         // TEMP - NEED THIS TO PLAY GAME BUILD
         glfwSetCursorPos(mWindow.get(), mSpecification.WindowWidth / 2.0, mSpecification.WindowHeight / 2.0);
@@ -143,9 +134,15 @@ namespace IGE {
   void Application::RegisterSystems() {
     Systems::SystemManager& systemManager{ Systems::SystemManager::GetInstance() };
 
-    systemManager.RegisterSystem<Systems::TransformSystem>("Transform System");
+    // converts local -> world (after imgui update)
+    systemManager.RegisterSystem<Systems::PreTransformSystem>("Pre-Transform System");
+
     systemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
     systemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
+
+    // converts world -> local (after physics update)
+    systemManager.RegisterSystem<Systems::PostTransformSystem>("Post-Transform System");
+
     systemManager.RegisterSystem<IGE::Audio::AudioSystem>("Audio System");
     systemManager.RegisterSystem<Systems::TextSystem>("Text System");
   }
@@ -295,7 +292,8 @@ namespace IGE {
   }
 
   EVENT_CALLBACK_DEF(Application, OnPausedUpdateTrigger) {
-    Systems::SystemManager::GetInstance().PausedUpdate<Systems::TransformSystem, IGE::Physics::PhysicsSystem, IGE::Audio::AudioSystem>();
+    Systems::SystemManager::GetInstance().PausedUpdate<Systems::PreTransformSystem, IGE::Physics::PhysicsSystem,
+      Systems::PostTransformSystem, IGE::Audio::AudioSystem>();
   }
 
   Application::~Application()

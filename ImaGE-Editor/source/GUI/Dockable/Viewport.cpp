@@ -20,7 +20,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Components/Mesh.h>
 #include <Core/Components/Transform.h>
 #include <Core/Components/PrefabOverrides.h>
-#include <Core/Systems/TransformSystem/TransformHelpers.h>
 #include <Core/EntityManager.h>
 #include <GUI/GUIVault.h>
 #include <Asset/IGEAssets.h>
@@ -310,8 +309,9 @@ namespace GUI
     float const windowHeight{ ImGui::GetWindowHeight() };
     ImGuizmo::SetRect(windowPos.x, windowPos.y, windowWidth, windowHeight);
     Component::Transform& transform{ selectedEntity.GetComponent<Component::Transform>() };
-    glm::mat4 const viewMatrix{ mEditorCam.GetViewMatrix() };
-    glm::mat4 const projMatrix{ mEditorCam.GetProjMatrix() };
+
+    glm::mat4 const viewMatrix{ mEditorCam.GetViewMatrix() }, projMatrix{ mEditorCam.GetProjMatrix() };
+    glm::mat4 worldMtx{ transform.worldMtx };
 
     static auto currentOperation = ImGuizmo::TRANSLATE;
     if (ImGui::IsWindowFocused() || ImGui::IsWindowHovered()) {
@@ -330,57 +330,57 @@ namespace GUI
       glm::value_ptr(projMatrix),
       currentOperation,
       ImGuizmo::LOCAL,
-      glm::value_ptr(transform.worldMtx)
+      glm::value_ptr(worldMtx)
     );
 
-    // since ImGuizmo uses the worldMtx, we'll modify it directly and
-    // set the entitiy's world transform. This means we only need
-    // to set the "modified" flag to true and let the transform system
-    // handle the rest
+    // since ImGuizmo uses the worldMtx, we'll need to translate the
+    // changes to the entity's local transform and set the "modified" flag to true.
+    // The transform system will handle the rest
     if (ImGuizmo::IsUsing()) {
       usingGuizmos = true;
       glm::vec3 s{}, r{}, t{};
-      ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(transform.worldMtx),
+      ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(worldMtx),
         glm::value_ptr(t), glm::value_ptr(r), glm::value_ptr(s));
 
       // for each operation, if multi-select active, update all their transforms
       bool const multiSelectActive{ !GUIVault::GetSelectedEntities().empty() };
       if (currentOperation == ImGuizmo::TRANSLATE) {
+        glm::vec3 const offset = t - transform.worldPos;
         if (multiSelectActive) {
-          glm::vec3 const offset{ t - transform.worldPos };
           for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
-            e.GetComponent<Component::Transform>().worldPos += offset;
+            e.GetComponent<Component::Transform>().position += offset;
           }
         }
         else {
-          transform.worldPos = t;
+          transform.position += offset;
         }
       }
       if (currentOperation == ImGuizmo::ROTATE) {
-        if (multiSelectActive) {
-          glm::quat const offset{ glm::quat(glm::radians(r)) * glm::inverse(transform.worldRot) };
-          glm::vec3 const eulerOffset{ r - transform.eulerAngles };
+        glm::quat const offset{ glm::quat(glm::radians(r)) * glm::inverse(transform.worldRot) };
+        glm::vec3 const eulerOffset{ r - transform.eulerAngles };
 
+        if (multiSelectActive) {
           for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
             Component::Transform& trans{ e.GetComponent<Component::Transform>() };
-            trans.worldRot = offset * trans.worldRot;
+            trans.rotation = offset * trans.rotation;
             trans.eulerAngles += eulerOffset;
           }
         }
         else {
-          transform.worldRot = glm::quat(glm::radians(r));
-          transform.eulerAngles = r;
+          transform.rotation = offset * transform.rotation;
+          transform.eulerAngles += eulerOffset;
         }
       }
       if (currentOperation == ImGuizmo::SCALE) {
+        glm::vec3 offset{ s - transform.worldScale };
+
         if (multiSelectActive) {
-          glm::vec3 offset{ s - transform.worldScale };
           for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
             e.GetComponent<Component::Transform>().worldScale += offset;
           }
         }
         else {
-          transform.worldScale = s;
+          transform.scale += offset;
         }
       }
 

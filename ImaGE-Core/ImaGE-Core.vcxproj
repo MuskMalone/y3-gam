@@ -229,9 +229,9 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClInclude Include="source\Core\Systems\SystemManager\SystemManager.h" />
     <ClInclude Include="source\Core\Systems\Systems.h" />
     <ClInclude Include="source\Core\Systems\TextSystem\TextSystem.h" />
-    <ClInclude Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.h" />
+    <ClInclude Include="source\Core\Systems\TransformSystem\PreTransformSystem.h" />
     <ClInclude Include="source\Core\Systems\TransformSystem\TransformHelpers.h" />
-    <ClInclude Include="source\Core\Systems\TransformSystem\TransformSystem.h" />
+    <ClInclude Include="source\Core\Systems\TransformSystem\PostTransformSystem.h" />
     <ClInclude Include="source\Debug.h" />
     <ClInclude Include="source\DebugTools\DebugLogger\DebugLogger.h" />
     <ClInclude Include="source\DebugTools\Exception\Exception.h" />
@@ -406,9 +406,9 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClCompile Include="source\Core\Systems\PlayerControllerSystem\PlayerControllerSystem.cpp" />
     <ClCompile Include="source\Core\Systems\SystemManager\SystemManager.cpp" />
     <ClCompile Include="source\Core\Systems\TextSystem\TextSystem.cpp" />
-    <ClCompile Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.cpp" />
+    <ClCompile Include="source\Core\Systems\TransformSystem\PreTransformSystem.cpp" />
     <ClCompile Include="source\Core\Systems\TransformSystem\TransformHelpers.cpp" />
-    <ClCompile Include="source\Core\Systems\TransformSystem\TransformSystem.cpp" />
+    <ClCompile Include="source\Core\Systems\TransformSystem\PostTransformSystem.cpp" />
     <ClCompile Include="source\DebugTools\DebugLogger\DebugLogger.cpp" />
     <ClCompile Include="source\Events\EventManager.cpp" />
     <ClCompile Include="source\External\ImGui\backends\imgui_impl_glfw.cpp">

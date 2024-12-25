@@ -18,6 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Input/InputManager.h>
 
 #include <Core/Systems/SystemManager/SystemManager.h>
+#include <Core/Systems/Systems.h>
 
 #include <imgui/imgui.h>
 #include <imgui/backends/imgui_impl_glfw.h>
@@ -104,7 +105,8 @@ namespace IGE {
             sysManager.UpdateSystems();
           }
           else {
-            sysManager.PausedUpdate<Systems::TransformSystem, IGE::Physics::PhysicsSystem, IGE::Audio::AudioSystem>();
+            sysManager.PausedUpdate<Systems::PreTransformSystem, IGE::Physics::PhysicsSystem,
+              Systems::PostTransformSystem, IGE::Audio::AudioSystem>();
             sceneManager.ExecuteMainThreadQueue();
           }
         }
@@ -133,10 +135,10 @@ namespace IGE {
             
             auto& fb{ GetDefaultRenderTarget().framebuffer };
             fb = Graphics::Renderer::GetFinalFramebuffer();
-            mGUIManager.UpdateGUI(fb, gameTex);
             frameRateController.EndSystemTimer("Graphics System");
             
             frameRateController.StartSystemTimer();
+            mGUIManager.UpdateGUI(fb, gameTex);
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
