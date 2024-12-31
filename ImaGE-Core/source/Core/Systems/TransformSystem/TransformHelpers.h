@@ -14,6 +14,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace TransformHelpers {
 
+  void UpdateLocalTransform(ECS::Entity entity);
   void UpdateWorldTransform(ECS::Entity entity);
 
   /*!*********************************************************************

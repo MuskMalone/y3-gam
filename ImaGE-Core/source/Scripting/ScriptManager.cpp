@@ -784,7 +784,7 @@ ScriptFieldInfo Mono::ScriptManager::GetScriptField(std::string className, std::
 void Mono::SetWorldPosition(ECS::Entity::EntityID entity, glm::vec3 posAdjustment) {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
   trans.worldPos = posAdjustment;
-  trans.modified = true;
+  TransformHelpers::UpdateLocalTransform(entity);
 }
 
 // @TODO: needs testing
@@ -797,7 +797,7 @@ void Mono::SetPosition(ECS::Entity::EntityID entity, glm::vec3 newPosition) {
 void Mono::SetWorldScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment) {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
   trans.scale = scaleAdjustment;
-  TransformHelpers::UpdateWorldTransform(entity);
+  TransformHelpers::UpdateLocalTransform(entity);
 }
 
 glm::vec3 Mono::GetScale(ECS::Entity::EntityID entity)
@@ -826,23 +826,19 @@ glm::quat Mono::GetWorldRotation(ECS::Entity::EntityID entity)
 {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
   return trans.worldRot;
-
-  // need to use quaternions
 }
 
 void Mono::SetWorldRotation(ECS::Entity::EntityID entity, glm::quat rotAdjustment)
 {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
   trans.worldRot = rotAdjustment;
-  trans.modified = true;
-  // need to use quaternions
+  TransformHelpers::UpdateLocalTransform(entity);
 }
 
 glm::quat Mono::GetRotation(ECS::Entity::EntityID entity)
 {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
   return trans.rotation;
-  // need to use quaternions
 }
 
 void Mono::SetRotation(ECS::Entity::EntityID entity, glm::quat rotAdjustment)
@@ -850,15 +846,12 @@ void Mono::SetRotation(ECS::Entity::EntityID entity, glm::quat rotAdjustment)
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
   trans.rotation = rotAdjustment;
   trans.eulerAngles = glm::degrees(glm::eulerAngles(rotAdjustment));
-  //trans.modified = true;
-  // need to use quaternions
   TransformHelpers::UpdateWorldTransform(entity);
 }
 
 glm::vec3 Mono::GetWorldRotationEuler(ECS::Entity::EntityID entity)
 {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
-  std::cout << trans.GetWorldEulerAngles().y << "\n";
   return trans.GetWorldEulerAngles();
 }
 glm::vec3 Mono::GetRotationEuler(ECS::Entity::EntityID entity)
@@ -899,31 +892,31 @@ MonoString* Mono::GetTag(ECS::Entity::EntityID entity)
   //return STDToMonoString(ECS::Entity(entity).GetComponent<Component::Tag>().tag);
 }
 
-void  Mono::Log(MonoString*s)
+void Mono::Log(MonoString*s)
 {
   std::string msg{ MonoStringToSTD(s) };
   Debug::DebugLogger::GetInstance().LogInfo(msg);
 }
 
-void  Mono::LogWarning(MonoString* s)
+void Mono::LogWarning(MonoString* s)
 {
   std::string msg{ MonoStringToSTD(s) };
   Debug::DebugLogger::GetInstance().LogWarning(msg);
 }
 
-void  Mono::LogError(MonoString* s)
+void Mono::LogError(MonoString* s)
 {
   std::string msg{ MonoStringToSTD(s) };
   Debug::DebugLogger::GetInstance().LogError(msg);
 }
 
-void  Mono::LogCritical(MonoString* s)
+void Mono::LogCritical(MonoString* s)
 {
   std::string msg{ MonoStringToSTD(s) };
   Debug::DebugLogger::GetInstance().LogCritical(msg);
 }
 
-float  Mono::GetAxis(MonoString* s)
+float Mono::GetAxis(MonoString* s)
 {
   std::string msg{ MonoStringToSTD(s) };
   return Input::InputManager::GetInstance().GetAxis(msg);
