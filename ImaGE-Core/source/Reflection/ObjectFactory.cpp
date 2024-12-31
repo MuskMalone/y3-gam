@@ -158,20 +158,22 @@ namespace Reflection
   }
 
   void ObjectFactory::OverrideInstanceComponents() const {
-    for (ECS::Entity entity : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::PrefabOverrides>()) {
-      Component::PrefabOverrides const& overrides{ entity.GetComponent<Component::PrefabOverrides>() };
+    for (auto const&[guid, pfbInstMap] : mPrefabInstances) {
+      for (auto const& [entity, pfbInstData] : pfbInstMap) {
+        Serialization::PfbOverridesData const& overrides{ pfbInstData.mOverrides };
 
-      // replace any components if needed
-      if (!overrides.modifiedComponents.empty()) {
-        for (auto const& [type, comp] : overrides.modifiedComponents) {
-          AddComponentToEntity(entity, comp);
+        // replace any components if needed
+        if (!overrides.componentData.empty()) {
+          for (auto const& [type, comp] : overrides.componentData) {
+            AddComponentToEntity(entity, comp);
+          }
         }
-      }
 
-      // then remove those in the vector
-      if (!overrides.removedComponents.empty()) {
-        for (rttr::type const& type : overrides.removedComponents) {
-          RemoveComponentFromEntity(entity, type);
+        // then remove those in the vector
+        if (!overrides.removedComponents.empty()) {
+          for (rttr::type const& type : overrides.removedComponents) {
+            RemoveComponentFromEntity(entity, type);
+          }
         }
       }
     }
@@ -214,7 +216,7 @@ namespace Reflection
 
         // restore its prefab overrides
         if (isPrefabValid) {
-          ent.EmplaceComponent<Component::PrefabOverrides>(instData.mOverrides);
+          ent.EmplaceComponent<Component::PrefabOverrides>(instData.mOverrides.ToPrefabOverrides());
         }
       }
 

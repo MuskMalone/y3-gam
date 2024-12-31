@@ -9,7 +9,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <rttr/registration>
 #include <policy.h>
-#include <Prefabs/Prefab.h>
+#include <Serialization/PfbOverridesData.h>
 #include <PxPhysicsAPI.h>
 #include <Scripting/ScriptInstance.h>
 #include <Serialization/JsonKeys.h>
@@ -203,7 +203,18 @@ static void rttr_auto_register_reflection_function_(); namespace {
         .property("normalMap", &T::mNormalMap)
         .property("metalnessMap", &T::mMetalnessMap)
         .property("roughnessMap", &T::mRoughnessMap);
-}
+  }
+
+  {
+    using T = Serialization::PfbOverridesData;
+    rttr::registration::class_<T>("PrefabOverridesData")
+      .constructor<>()(rttr::policy::ctor::as_object)
+      .property(JSON_GUID_KEY, &T::guid)
+      .property("subDataId", &T::subDataId)
+      .property("componentData", &T::componentData)
+      .property("removedComponents", &T::removedComponents);
+  }
+
   /* ------------------- Script ------------------- */
   {
     using T = Reflection::ProxyScript;

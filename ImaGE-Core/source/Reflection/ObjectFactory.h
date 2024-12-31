@@ -21,7 +21,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Singleton/ThreadSafeSingleton.h>
 #include "EntityData.h"
 #include <Core/Entity.h>
-#include <variant.h>
+#include <rttr/variant.h>
 #include <Asset/IGEAssets.h>
 
 namespace Reflection

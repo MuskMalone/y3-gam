@@ -56,7 +56,7 @@ namespace IGE {
 						}
 					}
 				}
-				catch (const std::filesystem::filesystem_error& e) {
+				catch ([[maybe_unused]] const std::filesystem::filesystem_error& e) {
 					throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("failed when getting assets"));
 				}
 			}

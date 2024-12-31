@@ -199,7 +199,7 @@ namespace GUI {
         if (TagComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Tag>());
+            prefabOverride->AddComponentOverride(tagType);
           }
         }
       }
@@ -218,11 +218,11 @@ namespace GUI {
               // here, im assuming only 1 value can be modified per frame.
               // So if position wasn't modified, it means either rot or scale was
               if (oldPos == trans.position) {
-                prefabOverride->AddComponentModification(trans);
+                prefabOverride->AddComponentOverride<Component::Transform>();
               }
             }
             else {
-              prefabOverride->AddComponentModification(trans);
+              prefabOverride->AddComponentOverride<Component::Transform>();
             }
           }
         }
@@ -235,33 +235,33 @@ namespace GUI {
         if (BoxColliderComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::BoxCollider>());
+            prefabOverride->AddComponentOverride(colliderType);
           }
         }
       }
 
       if (currentEntity.HasComponent<Component::SphereCollider>()) {
-          rttr::type const colliderType{ rttr::type::get<Component::SphereCollider>() };
-          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(colliderType);
+        rttr::type const colliderType{ rttr::type::get<Component::SphereCollider>() };
+        componentOverriden = prefabOverride && prefabOverride->IsComponentModified(colliderType);
 
-          if (SphereColliderComponentWindow(currentEntity, componentOverriden)) {
-              SetIsComponentEdited(true);
-              if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::SphereCollider>());
-              }
+        if (SphereColliderComponentWindow(currentEntity, componentOverriden)) {
+          SetIsComponentEdited(true);
+          if (prefabOverride) {
+            prefabOverride->AddComponentOverride(colliderType);
           }
+        }
       }
 
       if (currentEntity.HasComponent<Component::CapsuleCollider>()) {
-          rttr::type const colliderType{ rttr::type::get<Component::CapsuleCollider>() };
-          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(colliderType);
+        rttr::type const colliderType{ rttr::type::get<Component::CapsuleCollider>() };
+        componentOverriden = prefabOverride && prefabOverride->IsComponentModified(colliderType);
 
-          if (CapsuleColliderComponentWindow(currentEntity, componentOverriden)) {
-              SetIsComponentEdited(true);
-              if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::CapsuleCollider>());
-              }
+        if (CapsuleColliderComponentWindow(currentEntity, componentOverriden)) {
+          SetIsComponentEdited(true);
+          if (prefabOverride) {
+            prefabOverride->AddComponentOverride(colliderType);
           }
+        }
       }
 
       // don't run in PrefabEditor since layers are tied to a scene
@@ -272,7 +272,7 @@ namespace GUI {
         if (LayerComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Layer>());
+            prefabOverride->AddComponentOverride(layerType);
           }
         }
       }
@@ -284,7 +284,7 @@ namespace GUI {
         if (MaterialWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Material>());
+            prefabOverride->AddComponentOverride(materialType);
           }
         }
       }
@@ -296,7 +296,7 @@ namespace GUI {
         if (MeshComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Mesh>());
+            prefabOverride->AddComponentOverride(meshType);
           }
         }
       }
@@ -308,7 +308,7 @@ namespace GUI {
         if (RigidBodyComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::RigidBody>());
+            prefabOverride->AddComponentOverride(rigidBodyType);
           }
         }
       }
@@ -321,19 +321,18 @@ namespace GUI {
         if (ScriptComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Script>());
+            prefabOverride->AddComponentOverride(scriptType);
           }
         }
       }
       if (currentEntity.HasComponent<Component::Light>()) {
 
         rttr::type const lightType{ rttr::type::get<Component::Light>() };
-
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(lightType);
         if (LightComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Light>());
+            prefabOverride->AddComponentOverride(lightType);
           }
         }
       }
@@ -345,7 +344,7 @@ namespace GUI {
         if (TextComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Text>());
+            prefabOverride->AddComponentOverride(textType);
           }
         }
       }
@@ -357,7 +356,7 @@ namespace GUI {
           if (ImageComponentWindow(currentEntity, componentOverriden)) {
               SetIsComponentEdited(true);
               if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Image>());
+                  prefabOverride->AddComponentOverride(imageType);
               }
           }
       }
@@ -369,7 +368,7 @@ namespace GUI {
           if (CanvasComponentWindow(currentEntity, componentOverriden)) {
               SetIsComponentEdited(true);
               if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Canvas>());
+                  prefabOverride->AddComponentOverride(canvasType);
               }
           }
       }
@@ -381,7 +380,7 @@ namespace GUI {
           if (CameraComponentWindow(currentEntity, componentOverriden)) {
               SetIsComponentEdited(true);
               if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Camera>());
+                  prefabOverride->AddComponentOverride(cameraType);
               }
           }
       }
@@ -393,7 +392,7 @@ namespace GUI {
           if (AudioListenerComponentWindow(currentEntity, componentOverriden)) {
               SetIsComponentEdited(true);
               if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::AudioListener>());
+                  prefabOverride->AddComponentOverride(listenerType);
               }
           }
       }
@@ -404,43 +403,43 @@ namespace GUI {
           if (AudioSourceComponentWindow(currentEntity, componentOverriden)) {
               SetIsComponentEdited(true);
               if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::AudioSource>());
+                  prefabOverride->AddComponentOverride(sourceType);
               }
           }
       }
 
       if (currentEntity.HasComponent<Component::Sprite2D>()) {
-          rttr::type const sourceType{ rttr::type::get<Component::Sprite2D>() };
-          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(sourceType);
+          rttr::type const compType{ rttr::type::get<Component::Sprite2D>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(compType);
 
           if (Sprite2DComponentWindow(currentEntity, componentOverriden)) {
               SetIsComponentEdited(true);
               if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Sprite2D>());
+                  prefabOverride->AddComponentOverride(compType);
               }
           }
       }
 
       if (currentEntity.HasComponent<Component::Skybox>()) {
-          rttr::type const sourceType{ rttr::type::get<Component::Skybox>() };
-          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(sourceType);
+          rttr::type const compType{ rttr::type::get<Component::Skybox>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(compType);
 
           if (SkyboxComponentWindow(currentEntity, componentOverriden)) {
               SetIsComponentEdited(true);
               if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Skybox>());
+                  prefabOverride->AddComponentOverride(compType);
               }
           }
       }
 
       if (currentEntity.HasComponent<Component::Interactive>()) {
-          rttr::type const sourceType{ rttr::type::get<Component::Interactive>() };
-          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(sourceType);
+          rttr::type const compType{ rttr::type::get<Component::Interactive>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(compType);
 
           if (InteractiveComponentWindow(currentEntity, componentOverriden)) {
               SetIsComponentEdited(true);
               if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Interactive>());
+                  prefabOverride->AddComponentOverride(compType);
               }
           }
       }

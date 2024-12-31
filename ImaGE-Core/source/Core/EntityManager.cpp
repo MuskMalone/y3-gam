@@ -216,7 +216,7 @@ namespace ECS {
 
           // updated prefab instances with overrides
           if (child.HasComponent<Component::PrefabOverrides>()) {
-            child.GetComponent<Component::PrefabOverrides>().AddComponentModification(layer);
+            child.GetComponent<Component::PrefabOverrides>().AddComponentOverride<Component::Layer>();
           }
         }
 
@@ -250,7 +250,7 @@ namespace ECS {
 
           // updated prefab instances with overrides
           if (child.HasComponent<Component::PrefabOverrides>()) {
-            child.GetComponent<Component::PrefabOverrides>().AddComponentModification(tag);
+            child.GetComponent<Component::PrefabOverrides>().AddComponentOverride<Component::Tag>();
           }
         }
 

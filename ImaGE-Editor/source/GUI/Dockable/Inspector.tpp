@@ -88,8 +88,7 @@ bool Inspector::DrawAddComponentButton(std::string const& name) {
 
     // if entity is a prefab instance, update its modified components
     if (ent.HasComponent<Component::PrefabOverrides>()) {
-        ComponentType& newComp{ ent.GetComponent<ComponentType>() };
-      ent.GetComponent<Component::PrefabOverrides>().AddComponentModification(newComp);
+      ent.GetComponent<Component::PrefabOverrides>().AddComponentOverride<ComponentType>();
     }
 
     ImGui::CloseCurrentPopup();
@@ -148,17 +147,16 @@ bool Inspector::DrawOptionButton(std::string const& name) {
     }
 
     else if (name == "Clear") {
-      ComponentType& component = ent.GetComponent<ComponentType>();
+      ent.GetComponent<ComponentType>().Clear();
       SetIsComponentEdited(true);
 
-      component.Clear();
-      if (rttr::type::get<ComponentType>().get_name() == "Layer") {
+      if (std::is_same<Component::Layer, ComponentType>()) {
         ent.SetLayer("Default");
       }
 
       // if its a prefab instance, add to overrides
       if (ent.HasComponent<Component::PrefabOverrides>()) {
-        ent.GetComponent<Component::PrefabOverrides>().AddComponentModification(component);
+        ent.GetComponent<Component::PrefabOverrides>().AddComponentOverride<ComponentType>();
       }
     }
 

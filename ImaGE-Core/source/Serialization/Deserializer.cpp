@@ -272,27 +272,26 @@ namespace Serialization
     return prefab;
   }
 
-  void Deserializer::DeserializePrefabOverrides(Component::PrefabOverrides& prefabOverride, rapidjson::Value const& json)
+  void Deserializer::DeserializePrefabOverrides(Serialization::PfbOverridesData& overrides, rapidjson::Value const& json)
   {
-    if (!ScanJsonFileForMembers(json, "PrefabOverrides", 4, JSON_GUID_KEY, rapidjson::kObjectType, "modifiedComponents", rapidjson::kArrayType,
+    if (!ScanJsonFileForMembers(json, "PrefabOverrides", 4, JSON_GUID_KEY, rapidjson::kObjectType, "componentData", rapidjson::kArrayType,
       "removedComponents", rapidjson::kArrayType, "subDataId", rapidjson::kNumberType)) {
       return;
     }
 
-    DeserializeRecursive(prefabOverride.guid, json[JSON_GUID_KEY]);
-    prefabOverride.subDataId = json["subDataId"].GetUint();
+    DeserializeRecursive(overrides.guid, json[JSON_GUID_KEY]);
+    overrides.subDataId = json["subDataId"].GetUint();
 
     // deserialize removed components
     {
-      rttr::variant var{ std::unordered_set<rttr::type>() };
+      rttr::variant var{ std::set<rttr::type>() };
       auto associativeView{ var.create_associative_view() };
       DeserializeAssociativeContainer(associativeView, json["removedComponents"]);
-      prefabOverride.removedComponents = std::move(var.get_value<std::unordered_set<rttr::type>>());
+      overrides.removedComponents = std::move(var.get_value<std::set<rttr::type>>());
     }
 
     // deserialize modified components
-    rapidjson::Value const& jsonMap{ json["modifiedComponents"] };
-    prefabOverride.modifiedComponents.reserve(jsonMap.Size());
+    rapidjson::Value const& jsonMap{ json["componentData"] };
     for (rapidjson::SizeType i{}; i < jsonMap.Size(); ++i)
     {
       auto& idxVal{ jsonMap[i] };
@@ -325,7 +324,7 @@ namespace Serialization
       if (!DeserializeSpecialCases(compVar, compType, valIter->value)) {
         DeserializeComponent(compVar, compType, valIter->value);
       }
-      prefabOverride.modifiedComponents.emplace(std::move(compType), std::move(compVar));
+      overrides.componentData.emplace(std::move(compType), std::move(compVar));
     }
   }
 

@@ -341,13 +341,7 @@
     <ClInclude Include="source\Core\Systems\TextSystem\TextSystem.h">
       <Filter>Core\Systems\TextSystem</Filter>
     </ClInclude>
-    <ClInclude Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.h">
-      <Filter>Core\Systems\TransformSystem</Filter>
-    </ClInclude>
     <ClInclude Include="source\Core\Systems\TransformSystem\TransformHelpers.h">
-      <Filter>Core\Systems\TransformSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Core\Systems\TransformSystem\TransformSystem.h">
       <Filter>Core\Systems\TransformSystem</Filter>
     </ClInclude>
     <ClInclude Include="source\Debug.h" />
@@ -791,6 +785,9 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
+    <ClInclude Include="source\Core\Systems\TransformSystem\PreTransformSystem.h" />
+    <ClInclude Include="source\Core\Systems\TransformSystem\PostTransformSystem.h" />
+    <ClInclude Include="source\Serialization\PfbOverridesData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -860,13 +857,7 @@
     <ClCompile Include="source\Core\Systems\TextSystem\TextSystem.cpp">
       <Filter>Core\Systems\TextSystem</Filter>
     </ClCompile>
-    <ClCompile Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.cpp">
-      <Filter>Core\Systems\TransformSystem</Filter>
-    </ClCompile>
     <ClCompile Include="source\Core\Systems\TransformSystem\TransformHelpers.cpp">
-      <Filter>Core\Systems\TransformSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Core\Systems\TransformSystem\TransformSystem.cpp">
       <Filter>Core\Systems\TransformSystem</Filter>
     </ClCompile>
     <ClCompile Include="source\DebugTools\DebugLogger\DebugLogger.cpp">
@@ -1068,5 +1059,8 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
+    <ClCompile Include="source\Core\Systems\TransformSystem\PreTransformSystem.cpp" />
+    <ClCompile Include="source\Core\Systems\TransformSystem\PostTransformSystem.cpp" />
+    <ClCompile Include="source\Serialization\PfbOverridesData.cpp" />
   </ItemGroup>
 </Project>

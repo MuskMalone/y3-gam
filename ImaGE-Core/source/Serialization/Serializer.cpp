@@ -20,6 +20,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 #include <Serialization/JsonKeys.h>
 #include <Serialization/FILEWrapper.h>
+#include <Serialization/PfbOverridesData.h>
 #include <Core/Components/Components.h>
 #include <Core/Entity.h>
 
@@ -344,7 +345,8 @@ namespace {
 
       // serialize the components
       writer.Key(JSON_PREFAB_KEY);
-      SerializeRecursive<WriterType>(overrides, writer);
+      Serialization::PfbOverridesData overridesData{ entity.GetComponent<Component::PrefabOverrides>(), entity };
+      SerializeRecursive<WriterType>(overridesData, writer);
       writer.EndObject();
       return;
     }
@@ -700,7 +702,7 @@ namespace {
 
     writer.EndArray();
   }
-#pragma endregion
+#pragma endregion // ScriptsSpecific
 
   EntityList GetSortedEntities() {
     auto const& entityList{ ECS::EntityManager::GetInstance().GetAllEntities() };

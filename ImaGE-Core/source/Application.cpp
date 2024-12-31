@@ -262,8 +262,6 @@ namespace IGE {
     Assets::AssetManager::DestroyInstance();
     IGE::Audio::AudioManager::DestroyInstance();
     Debug::DebugLogger::DestroyInstance();
-
-    // @TODO: Shutdown physics and audio singletons
   }
 
   void Application::ToggleFullscreen(){

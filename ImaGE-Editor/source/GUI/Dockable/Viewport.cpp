@@ -389,18 +389,17 @@ namespace GUI
         ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
 
         for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
-          Component::Transform& trans{ e.GetComponent<Component::Transform>() };
-          trans.modified = true;
+          e.GetComponent<Component::Transform>().modified = true;
 
           if (!e.HasComponent<Component::PrefabOverrides>()) { continue; }
 
           Component::PrefabOverrides& pfbOverrides{ e.GetComponent<Component::PrefabOverrides>() };
 
           if (pfbOverrides.IsComponentModified<Component::Transform>() || pfbOverrides.subDataId != Prefabs::PrefabSubData::BasePrefabId) {
-            pfbOverrides.AddComponentModification(trans);
+            pfbOverrides.AddComponentOverride<Component::Transform>();
           }
           else if (currentOperation != ImGuizmo::TRANSLATE) {
-            pfbOverrides.AddComponentModification(trans);
+            pfbOverrides.AddComponentOverride<Component::Transform>();
           }
         }
       }
@@ -409,10 +408,10 @@ namespace GUI
         selectedEntity.GetComponent<Component::Transform>().modified = true;
         if (prefabOverrides) {
           if (prefabOverrides->IsComponentModified<Component::Transform>() || prefabOverrides->subDataId != Prefabs::PrefabSubData::BasePrefabId) {
-            prefabOverrides->AddComponentModification(transform);
+            prefabOverrides->AddComponentOverride<Component::Transform>();
           }
           else if (currentOperation != ImGuizmo::TRANSLATE) {
-            prefabOverrides->AddComponentModification(transform);
+            prefabOverrides->AddComponentOverride<Component::Transform>();
           }
         }
       }
