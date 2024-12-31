@@ -281,7 +281,7 @@ public class CDDragAndDrop : Entity
     {
         //shaking cds
         string tag = InternalCalls.GetTag(mEntityID);
-        if(tag == "ContinueCDChild" ||tag == "CreditsCDChild" || tag == "SettingsCDChild")
+        if(tag == "ContinueCDChild" || tag == "CreditsCDChild" || tag == "SettingsCDChild")
         {
             //Debug.Log("Entered tag == for shakecd");
             
@@ -367,7 +367,6 @@ public class CDDragAndDrop : Entity
 
     public void OnMouseExit()
     {
-        Console.WriteLine("OnMouseExit?");
         isHovered = false;
         string tag = InternalCalls.GetTag(mEntityID);
         if (tag == "NewGameCDChild")

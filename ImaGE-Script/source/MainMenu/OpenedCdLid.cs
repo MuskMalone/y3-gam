@@ -68,18 +68,19 @@ public class OpenedCdLid : Entity
             else if (tag == "ClosedCircular_Lid")
             {
                 InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
-            }
-        }
+
+      }
+    }
         else
         {
             if (tag == "OpenCircular_Lid")
             {
                 InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
-            }
+      }
             else if (tag == "ClosedCircular_Lid")
             {
                 InternalCalls.SetWorldPosition(mEntityID, ref originalPosition);
-            }
+      }
         }
     }
 }

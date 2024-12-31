@@ -24,10 +24,7 @@ namespace TransformHelpers {
     }
     else {
       Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
-      trans.worldPos = trans.position;
-      trans.worldScale = trans.scale;
-      trans.worldRot = trans.rotation;
-
+      trans.SetLocalToWorld();
       trans.ComputeWorldMtx();
     }
   }
