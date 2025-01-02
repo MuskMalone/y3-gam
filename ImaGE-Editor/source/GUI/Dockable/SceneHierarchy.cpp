@@ -54,7 +54,7 @@ namespace GUI
   void SceneHierarchy::Run()
   {
     ImGui::Begin(mWindowName.c_str());
-
+    ImGui::ShowDemoWindow();
     if (mSceneName.empty())
     {
       ImGui::Text("No Scene Selected");
@@ -238,7 +238,7 @@ namespace GUI
     if (isCurrentEntity) { treeFlag |= ImGuiTreeNodeFlags_Selected; }
 
     // create the tree nodes
-    std::string const displayName{ isEditMode ? "##" : "" + entity.GetComponent<Component::Tag>().tag };
+    std::string const displayName{ isEditMode ? "##" : entity.GetComponent<Component::Tag>().tag };
 
     // highlight if its a prefab instance
     bool const isPrefabInstance{ entity.HasComponent<Component::PrefabOverrides>() };
@@ -509,21 +509,21 @@ namespace GUI
 
            }*/
 
-          if (overrides.IsRoot()) {
-            // only allow detaching from the root entity
-            if (ImGui::MenuItem("Detach Instance")) {
-              RemovePrefabOverrides(mRightClickedEntity, overrides.guid);
-              modified = true;
-            }
-          }
-          else {
-            // get root entity of prefab
-            if (ImGui::MenuItem("Select Root")) {
-              GUIVault::SetSelectedEntity(GetPrefabRoot(mRightClickedEntity));
-            }
-          }
+if (overrides.IsRoot()) {
+  // only allow detaching from the root entity
+  if (ImGui::MenuItem("Detach Instance")) {
+    RemovePrefabOverrides(mRightClickedEntity, overrides.guid);
+    modified = true;
+  }
+}
+else {
+  // get root entity of prefab
+  if (ImGui::MenuItem("Select Root")) {
+    GUIVault::SetSelectedEntity(GetPrefabRoot(mRightClickedEntity));
+  }
+}
 
-          ImGui::EndMenu();
+ImGui::EndMenu();
         }
       }
 
@@ -598,6 +598,35 @@ namespace GUI
   void SceneHierarchy::ResetEditNameMode() {
     sEditNameMode = mLockControls = false;
     sFirstEnterEditMode = true;
+  }
+
+  void GetTreeNodeStatesR(std::set<ECS::Entity::EntityID>& collapsed, ECS::Entity entity, ImGuiID parentHash) {
+    ImGuiID const newHash{ ImGuiHelpers::GetTreeNodeId(entity.GetTag() + "##" + std::to_string(entity.GetEntityID()), parentHash)};
+    
+    if (!ImGui::TreeNodeBehaviorIsOpen(newHash, ImGuiTreeNodeFlags_DefaultOpen)) {
+      collapsed.emplace(entity.GetRawEnttEntityID());
+      //std::cout << entity.GetTag() << "##" << entity.GetEntityID() << " is closed - " << std::hex << newHash << "\n";
+    }
+
+    ECS::EntityManager& em{ IGE_ENTITYMGR };
+    for (ECS::Entity child : IGE_ENTITYMGR.GetChildEntity(entity)) {
+      if (!em.HasChild(child)) { continue; }
+
+      GetTreeNodeStatesR(collapsed, child, newHash);
+    }
+  }
+
+  std::set<ECS::Entity::EntityID> SceneHierarchy::GetTreeNodeStates() const {
+    std::set<ECS::Entity::EntityID> ret;
+    ECS::EntityManager& em{ IGE_ENTITYMGR };
+
+    for (ECS::Entity e : em.GetAllEntities()) {
+      if (em.HasParent(e) || !em.HasChild(e)) { continue; }
+
+      GetTreeNodeStatesR(ret, e, ImHashStr(mWindowName.c_str()));
+    }
+
+    return ret;
   }
 
   void SceneHierarchy::SceneModified() {

@@ -15,9 +15,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Events/EventCallback.h>
 #include <ImGui/imgui.h>
 
-// forward declaration
-namespace Scenes { class SceneManager; }
-
 namespace GUI
 {
 
@@ -117,6 +114,8 @@ namespace GUI
     ************************************************************************/
     EVENT_CALLBACK_DECL(HandleEvent);
     EVENT_CALLBACK_DECL(OnEntityPicked);
+
+    std::set<ECS::Entity::EntityID> GetTreeNodeStates() const;
 
     void SceneModified();
   };

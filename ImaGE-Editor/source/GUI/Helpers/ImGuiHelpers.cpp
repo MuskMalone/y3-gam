@@ -115,6 +115,12 @@ namespace ImGuiHelpers
     return true;
   }
 
+  ImGuiID GetTreeNodeId(std::string const& nodeName, ImGuiID parentPath) {
+    //std::string const path{ parentPath.empty() ? nodeName : parentPath + "/" + nodeName };
+
+    return ImHashStr(nodeName.c_str(), nodeName.size(), parentPath);
+  }
+
   bool TableInputFloat2(std::string const& propertyName, float* property, float fieldWidth, bool disabled, float minVal, float maxVal, float step, const char* fmt) {
     ImGui::BeginDisabled(disabled);
 
