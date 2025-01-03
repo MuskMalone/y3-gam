@@ -474,12 +474,18 @@ namespace Serialization
       {
         rttr::variant extractedVal{ ExtractBasicTypes(jsonVal) };
         if (!extractedVal.convert(propType)) {
-          std::string const msg{ "Unable to convert element to type " + propType.get_name().to_string() };
-          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
+          // temp fix for entt::entity
+          if (propType == rttr::type::get<entt::entity>()) {
+            extractedVal = static_cast<entt::entity>(jsonVal.GetUint());
+          }
+          else {
+            std::string const msg{ "Unable to convert element to type " + propType.get_name().to_string() };
+            Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
-          std::cout << msg << "\n";
+            std::cout << msg << "\n";
 #endif
-          continue;
+            continue;
+          }
         }
 
         prop.set_value(wrappedInst, extractedVal);
@@ -513,9 +519,9 @@ namespace Serialization
       break;
     }
 
-    case rapidjson::kNullType:
     case rapidjson::kObjectType:
     case rapidjson::kArrayType:
+    case rapidjson::kNullType:
     default:
       break;
     }
@@ -634,7 +640,7 @@ namespace Serialization
     {
       auto& idxVal{ jsonVal[i] };
       // if key-value pair
-      if (idxVal.IsObject())
+      if (!view.is_key_only_type())
       {
         auto keyIter{ idxVal.FindMember("key") }, valIter{ idxVal.FindMember("value") };
 
@@ -693,11 +699,17 @@ namespace Serialization
       {
         rttr::variant extractedVal{ ExtractBasicTypes(idxVal) };
         if (!extractedVal || !extractedVal.convert(view.get_key_type())) {
-          std::string const msg{ "Unable to extract key-only type of " + view.get_key_type().get_name().to_string() };
-          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
+            rttr::variant wrappedVal{ view.get_key_type().is_wrapper() ? view.get_key_type().get_raw_type().create() : view.get_key_type().create() };
+
+            DeserializeRecursive(wrappedVal, idxVal);
+            if (!view.insert(wrappedVal).second) {
+              std::string const msg{ "Unable to extract key-only type of " + view.get_key_type().get_name().to_string() };
+              Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
-          std::cout << msg << "\n";
+              std::cout << msg << "\n";
 #endif
+            }
+            continue;
         }
 
         auto result{ view.insert(extractedVal) };

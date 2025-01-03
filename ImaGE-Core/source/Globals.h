@@ -14,6 +14,7 @@ constexpr char gRootDirectory[] = "y3-gam";
 constexpr char gTempDirectory[] = ".temp\\";
 constexpr char gBackupDirectory[] = ".backup\\";
 constexpr char gAssetsDirectory[] = "..\\Assets\\";
+constexpr char gEditorAssetsDirectory[] = "..\\Assets\\Editor\\";
 constexpr char gScenesDirectory[] = "..\\Assets\\Scenes\\";
 constexpr char gPrefabsDirectory[] = "..\\Assets\\Prefabs\\";
 constexpr char gSceneFileExt[] = ".scn";

@@ -197,6 +197,7 @@ copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Release\bin\Release\rtt
     <ClInclude Include="source\GUI\GUIWindow.h" />
     <ClInclude Include="source\GUI\Helpers\AssetHelpers.h" />
     <ClInclude Include="source\GUI\Helpers\AssetPayload.h" />
+    <ClInclude Include="source\GUI\Helpers\HierarchyConfig.h" />
     <ClInclude Include="source\GUI\Helpers\ImGuiHelpers.h" />
     <ClInclude Include="source\GUI\Persistent\PopupHelper.h" />
     <ClInclude Include="source\GUI\Persistent\PrefabEditor.h" />
@@ -229,6 +230,7 @@ copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Release\bin\Release\rtt
     <ClCompile Include="source\GUI\Persistent\Toolbar.cpp" />
     <ClCompile Include="source\GUI\Styles\Styler.cpp" />
     <ClCompile Include="source\main.cpp" />
+    <ClInclude Include="source\RegisterEditorClasses.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ImaGE-Core\ImaGE-Core.vcxproj">

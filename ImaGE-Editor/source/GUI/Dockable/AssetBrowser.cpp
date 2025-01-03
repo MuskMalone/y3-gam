@@ -245,6 +245,12 @@ namespace GUI
     else if (std::string(gSupportedAudioFormats).find(ext) != std::string::npos) {
       am.ChangeAssetPath<IGE::Assets::AudioAsset>(am.LoadRef<IGE::Assets::AudioAsset>(original.string()), newPath.string());
     }
+    else if (ext == gSceneFileExt) {
+      // rename hierarchy state file of scene
+      std::string const editorScenesDir{ gEditorAssetsDirectory + std::string("Scenes\\") };
+      std::filesystem::rename(editorScenesDir + original.stem().string(),
+        editorScenesDir + newPath.stem().string());
+    }
 
     std::filesystem::rename(original, newPath);
     GUIVault::SetSelectedFile(newPath);

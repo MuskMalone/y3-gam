@@ -18,27 +18,30 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Prefabs/PrefabManager.h>
 #include <GUI/Dockable/Inspector.h>
 #include <Core/Systems/TransformSystem/TransformHelpers.h>
+#include <Serialization/Deserializer.h>
+#include <Serialization/Serializer.h>
 
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <imgui/imgui.h>
 #include <ImGui/imgui_internal.h>
 
 namespace {
+  static bool sEntityDoubleClicked{ false }, sEditNameMode{ false }, sFirstEnterEditMode{ true };
+  static bool sLMouseReleased{ false }, sCtrlHeld{ false }, sWasCtrlHeld{ false };
+  static float sTimeElapsed;  // for renaming entity
+  static bool sJumpToEntity{ false }, sSaveHierarchyState{ false };
+  static std::string sLoadHierarchyPath{};
+
   void RemovePrefabOverrides(ECS::Entity root, IGE::Assets::GUID guid);
   ECS::Entity GetPrefabRoot(ECS::Entity root);
   void CopyWorldTransform(Component::Transform const& source, Component::Transform& dest);
 
   void ReassignSubmeshIndices(ECS::Entity root);
+  void LoadHierarchyState();
 }
 
 namespace GUI
 {
-  static bool sEntityDoubleClicked{ false }, sEditNameMode{ false }, sFirstEnterEditMode{ true };
-  static bool sLMouseReleased{ false }, sCtrlHeld{ false }, sWasCtrlHeld{ false };
-  static float sTimeElapsed;  // for renaming entity
-  static bool sJumpToEntity;
-  static int sEntityCount;
-
   SceneHierarchy::SceneHierarchy(const char* name) : GUIWindow(name),
     mEntityManager{ ECS::EntityManager::GetInstance() },
     mSceneName{},
@@ -49,12 +52,19 @@ namespace GUI
     SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &SceneHierarchy::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_MODIFIED, &SceneHierarchy::HandleEvent, this);
     SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_PICKED, &SceneHierarchy::OnEntityPicked, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::LOAD_SCENE, &SceneHierarchy::OnSceneLoad, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EventType::SAVE_SCENE, &SceneHierarchy::OnSceneSave, this);
+
+    std::string const hierarchyConfigDir{ std::string(gEditorAssetsDirectory) + "Scenes" };
+    if (!std::filesystem::is_directory(hierarchyConfigDir)) {
+      std::filesystem::create_directory(hierarchyConfigDir);
+    }
   }
 
   void SceneHierarchy::Run()
   {
     ImGui::Begin(mWindowName.c_str());
-    ImGui::ShowDemoWindow();
+
     if (mSceneName.empty())
     {
       ImGui::Text("No Scene Selected");
@@ -128,12 +138,21 @@ namespace GUI
       sTimeElapsed = 0;
     }
 
-    sEntityCount = 0;
     for (auto const& e : mEntityManager.GetAllEntities())
     {
       if (mEntityManager.HasParent(e)) { continue; }
 
       RecurseDownHierarchy(e);
+    }
+
+    if (sSaveHierarchyState) {
+      HierarchyConfig hierarchyCfg{ GetTreeNodeStates() };
+      Serialization::Serializer::SerializeAny(hierarchyCfg, gEditorAssetsDirectory + std::string("Scenes\\") + mSceneName);
+      sSaveHierarchyState = false;
+    }
+    else if (!sLoadHierarchyPath.empty()) {
+      LoadHierarchyState();
+      sLoadHierarchyPath.clear();
     }
 
     if (ImGui::IsKeyPressed(ImGuiKey_Delete) && GUIVault::GetSelectedEntity() && !mLockControls) {
@@ -151,6 +170,11 @@ namespace GUI
 
       GUIVault::SetSelectedEntity(ECS::Entity());
       SceneModified();
+    }
+
+    if (ImGui::IsKeyPressed(ImGuiKey_B)) {
+      ImGui::GetStateStorage()->SetInt(1261679633, 0);
+      std::cout << std::hex << 1261679633 << " set to open\n";
     }
 
     sCtrlHeld = ImGui::IsKeyDown(ImGuiKey_LeftCtrl) || ImGui::IsKeyDown(ImGuiKey_RightCtrl);
@@ -600,13 +624,21 @@ ImGui::EndMenu();
     sFirstEnterEditMode = true;
   }
 
-  void GetTreeNodeStatesR(std::set<ECS::Entity::EntityID>& collapsed, ECS::Entity entity, ImGuiID parentHash) {
+  EVENT_CALLBACK_DEF(SceneHierarchy, OnSceneLoad) {
+    auto sceneLoadEvent{ CAST_TO_EVENT(Events::LoadSceneEvent) };
+    sLoadHierarchyPath = gEditorAssetsDirectory + std::string("Scenes\\") + sceneLoadEvent->mSceneName;
+  }
+
+  EVENT_CALLBACK_DEF(SceneHierarchy, OnSceneSave) {
+    sSaveHierarchyState = true;
+  }
+
+  void GetTreeNodeStatesR(std::set<HierarchyEntry>& collapsed, ECS::Entity entity, ImGuiID parentHash) {
     ImGuiID const newHash{ ImGuiHelpers::GetTreeNodeId(entity.GetTag() + "##" + std::to_string(entity.GetEntityID()), parentHash)};
     
-    if (!ImGui::TreeNodeBehaviorIsOpen(newHash, ImGuiTreeNodeFlags_DefaultOpen)) {
-      collapsed.emplace(entity.GetRawEnttEntityID());
-      //std::cout << entity.GetTag() << "##" << entity.GetEntityID() << " is closed - " << std::hex << newHash << "\n";
-    }
+    bool const state{ ImGui::TreeNodeBehaviorIsOpen(newHash, ImGuiTreeNodeFlags_DefaultOpen) };
+    collapsed.emplace(entity.GetRawEnttEntityID(), newHash, state);
+    //std::cout << entity.GetTag() << "##" << entity.GetEntityID() << " is closed - " << std::hex << newHash << "\n";
 
     ECS::EntityManager& em{ IGE_ENTITYMGR };
     for (ECS::Entity child : IGE_ENTITYMGR.GetChildEntity(entity)) {
@@ -616,14 +648,14 @@ ImGui::EndMenu();
     }
   }
 
-  std::set<ECS::Entity::EntityID> SceneHierarchy::GetTreeNodeStates() const {
-    std::set<ECS::Entity::EntityID> ret;
+  HierarchyConfig SceneHierarchy::GetTreeNodeStates() const {
+    HierarchyConfig ret{};
     ECS::EntityManager& em{ IGE_ENTITYMGR };
 
     for (ECS::Entity e : em.GetAllEntities()) {
       if (em.HasParent(e) || !em.HasChild(e)) { continue; }
 
-      GetTreeNodeStatesR(ret, e, ImHashStr(mWindowName.c_str()));
+      GetTreeNodeStatesR(ret.collapsedNodes, e, ImHashStr(mWindowName.c_str()));
     }
 
     return ret;
@@ -689,6 +721,17 @@ namespace {
 
       child.GetComponent<Component::Mesh>().submeshIdx = idx;
       ++idx;
+    }
+  }
+
+  void LoadHierarchyState() {
+    if (!std::filesystem::exists(sLoadHierarchyPath)) { return; }
+
+    GUI::HierarchyConfig hierarchyCfg{};
+    Serialization::Deserializer::DeserializeAny(hierarchyCfg, sLoadHierarchyPath);
+    ImGuiStorage* stateStore{ ImGui::GetStateStorage() };
+    for (GUI::HierarchyEntry const& entry : hierarchyCfg.collapsedNodes) {
+      stateStore->SetInt(entry.stackId, entry.isOpen ? 1 : 0);
     }
   }
 }

@@ -13,11 +13,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GUI/GUIWindow.h>
 #include <Core/Entity.h>
 #include <Events/EventCallback.h>
+#include <GUI/Helpers/HierarchyConfig.h>
 #include <ImGui/imgui.h>
 
 namespace GUI
 {
-
   class SceneHierarchy : public GUIWindow
   {
   public:
@@ -114,8 +114,10 @@ namespace GUI
     ************************************************************************/
     EVENT_CALLBACK_DECL(HandleEvent);
     EVENT_CALLBACK_DECL(OnEntityPicked);
+    EVENT_CALLBACK_DECL(OnSceneSave);
+    EVENT_CALLBACK_DECL(OnSceneLoad);
 
-    std::set<ECS::Entity::EntityID> GetTreeNodeStates() const;
+    HierarchyConfig GetTreeNodeStates() const;
 
     void SceneModified();
   };
