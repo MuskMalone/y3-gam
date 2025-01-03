@@ -70,8 +70,8 @@ namespace Prefabs
     std::vector<rttr::variant> mComponents;
     SubDataId mId, mParent;
 
-    // id of the first layer of the prefab
-    static constexpr SubDataId BasePrefabId = 0;
+    inline static constexpr SubDataId BasePrefabId = 0; // id of the root of the prefab
+    inline static constexpr SubDataId InvalidId = -1;
   };
   // struct encapsulating deserialized prefab data
   // components are stored in an std::vector of rttr::variants
@@ -80,7 +80,7 @@ namespace Prefabs
     struct EntityMappings;
     using SubObjectComponentMap = std::unordered_map<SubDataId, std::vector<rttr::variant>>;
 
-    Prefab() = default;
+    Prefab();
     Prefab(std::string name);
 
     /*!*********************************************************************
@@ -90,6 +90,9 @@ namespace Prefabs
       True if child components exist and false otherwise
     ************************************************************************/
     inline bool HasChildComponents() const noexcept { return !mObjects.empty(); }
+
+    inline PrefabSubData const& GetRoot() const { return mObjects.front(); }
+    inline PrefabSubData& GetRoot() { return mObjects.front(); }
 
     /*!*********************************************************************
     \brief
@@ -166,7 +169,6 @@ namespace Prefabs
 
     std::string mName;
     std::vector<PrefabSubData> mObjects;
-    std::vector<rttr::variant> mComponents;
   };
 
   struct Prefab::EntityMappings {

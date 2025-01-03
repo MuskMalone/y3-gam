@@ -276,7 +276,7 @@ namespace {
     writer.Key(JSON_PFB_NAME_KEY); writer.String(prefab.mName.c_str());
 
     writer.Key(JSON_COMPONENTS_KEY);
-    SerializeVariantComponents<WriterType>(prefab.mComponents, writer);
+    SerializeVariantComponents<WriterType>(prefab.GetRoot().mComponents, writer);
 
     // serialize nested components if prefab has multiple layers
     writer.Key(JSON_PFB_DATA_KEY);

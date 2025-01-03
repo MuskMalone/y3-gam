@@ -195,7 +195,7 @@ namespace Serialization
     }
 
     // iterate through component objects in json array
-    std::vector<rttr::variant>& compVector{ prefab.mComponents };
+    std::vector<rttr::variant>& compVector{ prefab.GetRoot().mComponents };
     for (auto const& elem : document[JSON_COMPONENTS_KEY].GetArray())
     {
       rapidjson::Value::ConstMemberIterator comp{ elem.MemberBegin() };
