@@ -163,11 +163,10 @@ namespace GUI {
     \brief
       Draws the options for a particular component
     \param name
-      The name of the component
+      The name of the option
     \return
       True if the main window should be opened and false otherwise
     ************************************************************************/
-    template<typename Component>
     bool DrawOptionButton(std::string const& name);
 
     /*!*********************************************************************

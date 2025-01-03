@@ -101,7 +101,7 @@ namespace GUI {
       { typeid(Component::Skybox), ICON_FA_EARTH_ASIA ICON_PADDING },
       { typeid(Component::Interactive), ICON_FA_COMPUTER_MOUSE ICON_PADDING }
     },
-    mObjFactory{Reflection::ObjectFactory::GetInstance()},
+    mObjFactory{ Reflection::ObjectFactory::GetInstance() },
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
     for (auto const& component : Reflection::gComponentTypes) {
       mComponentOpenStatusMap[component.get_name().to_string().c_str()] = true;
@@ -2081,6 +2081,40 @@ namespace GUI {
     return modified;
   }
 
+  bool Inspector::DrawOptionButton(std::string const& name) {
+    bool openMainWindow{ true };
+    auto fillRowWithColour = [](const ImColor& colour) {
+      for (int column = 0; column < ImGui::TableGetColumnCount(); column++) {
+        ImGui::TableSetBgColor(ImGuiTableBgTarget_CellBg, colour, column);
+      }
+    };
+
+    const float rowHeight = 25.0f;
+    auto* window = ImGui::GetCurrentWindow();
+    window->DC.CurrLineSize.y = rowHeight;
+    ImGui::TableNextRow(0, rowHeight);
+    ImGui::TableSetColumnIndex(0);
+
+    window->DC.CurrLineTextBaseOffset = 3.0f;
+
+    const ImVec2 rowAreaMin = ImGui::TableGetCellBgRect(ImGui::GetCurrentTable(), 0).Min;
+    const ImVec2 rowAreaMax = { ImGui::TableGetCellBgRect(ImGui::GetCurrentTable(),
+      ImGui::TableGetColumnCount() - 1).Max.x, rowAreaMin.y + rowHeight };
+
+    ImGui::PushClipRect(rowAreaMin, rowAreaMax, false);
+    bool isRowHovered, isRowClicked;
+    ImGui::ButtonBehavior(ImRect(rowAreaMin, rowAreaMax), ImGui::GetID(name.c_str()),
+      &isRowHovered, &isRowClicked, ImGuiButtonFlags_MouseButtonLeft);
+    ImGui::SetItemAllowOverlap();
+    ImGui::PopClipRect();
+
+    ImGui::TextUnformatted(name.c_str());
+
+    if (isRowHovered)
+      fillRowWithColour(Color::IMGUI_COLOR_RED);
+
+    return isRowClicked;
+  }
 
   void Inspector::DrawAddButton() {
     ImVec2 addTextSize = ImGui::CalcTextSize("Add");
@@ -2201,7 +2235,7 @@ namespace {
 namespace ScriptInputs {
   void InitScriptInputMap() {
     sScriptInputFuncs = {
-          { rttr::type::get<Mono::DataMemberInstance<bool>>(), ScriptInputField<bool> },
+      { rttr::type::get<Mono::DataMemberInstance<bool>>(), ScriptInputField<bool> },
       { rttr::type::get<Mono::DataMemberInstance<int>>(), ScriptInputField<int> },
       { rttr::type::get<Mono::DataMemberInstance<float>>(), ScriptInputField<float> },
       { rttr::type::get<Mono::DataMemberInstance<double>>(), ScriptInputField<double> },
@@ -2749,7 +2783,6 @@ namespace ScriptInputs {
     }
     return changed;
   }
-
 
   bool InputScriptList(std::string const& propertyName, std::vector<std::string>& list, float fieldWidth)
   {

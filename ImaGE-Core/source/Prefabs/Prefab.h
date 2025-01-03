@@ -93,6 +93,16 @@ namespace Prefabs
 
     /*!*********************************************************************
     \brief
+      Returns a particular sub-object of the prefab
+    \param subDataId
+      The ID of the sub-object
+    \return
+      The corresponding sub-object
+    ************************************************************************/
+    inline PrefabSubData const& GetSubObject(unsigned subDataId) const { return mObjects[subDataId]; }
+
+    /*!*********************************************************************
+    \brief
       Constructs an entity with the data in the current Prefab.
       The entity will be created along with it's relevant hierarchy and
       is automatically added to the ECS.
@@ -168,9 +178,9 @@ namespace Prefabs
       idDict.emplace(subDataId);
     }
 
-    inline SubDataId Get(ECS::EntityManager::EntityID const& id) { return mappings[id]; }
-    inline SubDataId Get(ECS::EntityManager::EntityID const& id) const { return mappings.at(id); }
-    inline bool Contains(ECS::EntityManager::EntityID const& id) const { return mappings.contains(id); }
+    inline SubDataId Get(ECS::EntityManager::EntityID id) { return mappings[id]; }
+    inline SubDataId Get(ECS::EntityManager::EntityID id) const { return mappings.at(id); }
+    inline bool Contains(ECS::EntityManager::EntityID id) const { return mappings.contains(id); }
     inline bool Contains(SubDataId id) const { return idDict.contains(id); }
     inline size_t Size() const { return idDict.size(); }
     inline bool Empty() const noexcept { return idDict.empty(); }

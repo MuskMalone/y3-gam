@@ -77,9 +77,8 @@ namespace Component {
       modifiedComponents.emplace(std::move(compType));
     }
     void AddComponentOverride(rttr::type const& compType) {
-      rttr::type rawType{ compType.is_wrapper() ? compType.get_wrapped_type().get_raw_type() : compType.is_pointer() ? compType.get_raw_type() : compType };
-      removedComponents.erase(rawType);
-      modifiedComponents.emplace(std::move(rawType));
+      removedComponents.erase(compType);
+      modifiedComponents.emplace(compType);
     }
 
     /*!*********************************************************************
@@ -97,14 +96,26 @@ namespace Component {
     }
     void AddComponentRemoval(rttr::type const& type) {
       // make sure to extract the base type if it is a wrapper/ptr
-      rttr::type rawType{ type.is_wrapper() ? type.get_wrapped_type().get_raw_type() : type.is_pointer() ? type.get_raw_type() : type };
-      modifiedComponents.erase(rawType);
-      removedComponents.emplace(std::move(rawType));
+      modifiedComponents.erase(type);
+      removedComponents.emplace(type);
     }
 
-    void Reset() {
+    template <typename T>
+    void RemoveOverride() {
+      rttr::type compType{ rttr::type::get<T>() };
+      modifiedComponents.erase(compType);
+      removedComponents.erase(compType);
+    }
+    void RemoveOverride(rttr::type const& compType) {
+      modifiedComponents.erase(compType);
+      removedComponents.erase(compType);
+    }
+
+    void Reset() noexcept {
       modifiedComponents.clear();
       removedComponents.clear();
+      guid = {};
+      subDataId = Prefabs::PrefabSubData::BasePrefabId;
     }
 
     std::unordered_set<rttr::type> modifiedComponents, removedComponents;
