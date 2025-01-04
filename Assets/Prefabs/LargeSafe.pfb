@@ -1,64 +1,66 @@
 {
     "Name": "LargeSafe",
-    "isActive": true,
-    "Components": [
-        {
-            "Tag": {
-                "tag": "LargeSafe",
-                "isActive": true
-            }
-        },
-        {
-            "Transform": {
-                "position": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "scale": {
-                    "x": 3.5,
-                    "y": 3.5,
-                    "z": 3.5
-                },
-                "rotation": {
-                    "x": -4.227392835787214e-8,
-                    "y": 0.9994762539863586,
-                    "z": -4.227392835787214e-8,
-                    "w": 0.032361481338739398
-                },
-                "eulerAngles": {
-                    "x": 180.0,
-                    "y": 3.7090001106262209,
-                    "z": 180.0
-                },
-                "worldPos": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "worldScale": {
-                    "x": 3.5,
-                    "y": 3.5,
-                    "z": 3.5
-                },
-                "worldRot": {
-                    "x": -4.227392835787214e-8,
-                    "y": 0.9994762539863586,
-                    "z": -4.227392835787214e-8,
-                    "w": 0.032361481338739398
-                }
-            }
-        },
-        {
-            "Layer": {
-                "layerName": "Default"
-            }
-        }
-    ],
     "SubData": [
         {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "LargeSafe",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 3.5,
+                            "y": 3.5,
+                            "z": 3.5
+                        },
+                        "rotation": {
+                            "x": -4.227392835787214e-8,
+                            "y": 0.9994762539863586,
+                            "z": -4.227392835787214e-8,
+                            "w": 0.032361481338739398
+                        },
+                        "eulerAngles": {
+                            "x": 180.0,
+                            "y": 3.7090001106262209,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 3.5,
+                            "y": 3.5,
+                            "z": 3.5
+                        },
+                        "worldRot": {
+                            "x": -4.227392835787214e-8,
+                            "y": 0.9994762539863586,
+                            "z": -4.227392835787214e-8,
+                            "w": 0.032361481338739398
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
             "ID": 28,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -117,8 +119,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -137,7 +138,6 @@
         },
         {
             "ID": 29,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -196,8 +196,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -216,7 +215,6 @@
         },
         {
             "ID": 30,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -275,8 +273,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -295,7 +292,6 @@
         },
         {
             "ID": 31,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -354,8 +350,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -374,7 +369,6 @@
         },
         {
             "ID": 32,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -433,8 +427,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -453,7 +446,6 @@
         },
         {
             "ID": 33,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -512,8 +504,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -532,7 +523,6 @@
         },
         {
             "ID": 34,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -591,8 +581,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -611,7 +600,6 @@
         },
         {
             "ID": 35,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -670,8 +658,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -690,7 +677,6 @@
         },
         {
             "ID": 36,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -749,8 +735,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -769,7 +754,6 @@
         },
         {
             "ID": 37,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -828,8 +812,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -848,7 +831,6 @@
         },
         {
             "ID": 38,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -907,8 +889,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -927,7 +908,6 @@
         },
         {
             "ID": 39,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -986,8 +966,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -1006,7 +985,6 @@
         },
         {
             "ID": 40,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -1065,8 +1043,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -1085,7 +1062,6 @@
         },
         {
             "ID": 41,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -1144,8 +1120,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -1164,7 +1139,6 @@
         },
         {
             "ID": 42,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -1223,8 +1197,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -1243,7 +1216,6 @@
         },
         {
             "ID": 43,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -1302,8 +1274,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -1322,7 +1293,6 @@
         },
         {
             "ID": 44,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -1381,8 +1351,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -1401,7 +1370,6 @@
         },
         {
             "ID": 45,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -1460,8 +1428,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -1480,7 +1447,6 @@
         },
         {
             "ID": 46,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -1539,8 +1505,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -1559,7 +1524,6 @@
         },
         {
             "ID": 47,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -1618,8 +1582,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -1638,7 +1601,6 @@
         },
         {
             "ID": 48,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -1697,8 +1659,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -1717,7 +1678,6 @@
         },
         {
             "ID": 49,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -1776,8 +1736,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -1796,7 +1755,6 @@
         },
         {
             "ID": 50,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -1855,8 +1813,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -1875,7 +1832,6 @@
         },
         {
             "ID": 51,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -1934,8 +1890,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -1954,7 +1909,6 @@
         },
         {
             "ID": 52,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -2013,8 +1967,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -2033,7 +1986,6 @@
         },
         {
             "ID": 53,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -2092,8 +2044,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {

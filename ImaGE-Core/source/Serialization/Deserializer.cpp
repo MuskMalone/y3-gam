@@ -182,7 +182,7 @@ namespace Serialization
     rapidjson::Document document{};
     if (!ParseJsonIntoDocument(document, json)) { return {}; }
 
-    if (!ScanJsonFileForMembers(document, json, 2, JSON_COMPONENTS_KEY, rapidjson::kArrayType, JSON_PFB_DATA_KEY, rapidjson::kArrayType)) {
+    if (!ScanJsonFileForMembers(document, json, 1, JSON_PFB_DATA_KEY, rapidjson::kArrayType)) {
       return {};
     }
 
@@ -194,40 +194,32 @@ namespace Serialization
       IGE_DBGLOGGER.LogError("Prefab " + json + " has no name, re-save from prefab editor!");
     }
 
-    // iterate through component objects in json array
-    std::vector<rttr::variant>& compVector{ prefab.GetRoot().mComponents };
-    for (auto const& elem : document[JSON_COMPONENTS_KEY].GetArray())
-    {
-      rapidjson::Value::ConstMemberIterator comp{ elem.MemberBegin() };
-      std::string const compName{ comp->name.GetString() };
-      rapidjson::Value const& compJson{ comp->value };
-      rttr::type compType = rttr::type::get_by_name(compName);
+    if (document.HasMember(JSON_COMPONENTS_KEY)) {
+      auto const& compArr{ document[JSON_COMPONENTS_KEY].GetArray() };
+      Prefabs::PrefabSubData subObj{ Prefabs::PrefabSubData::BasePrefabId, Prefabs::PrefabSubData::InvalidId };
+      subObj.mComponents.reserve(compArr.Size());
 
-#ifdef DESERIALIZER_DEBUG
-      std::cout << "  [P] Deserializing " << compType << "\n";
-#endif
+      for (auto const& component : compArr)
+      {
+        rapidjson::Value::ConstMemberIterator comp{ component.MemberBegin() };
+        std::string const compName{ comp->name.GetString() };
+        rapidjson::Value const& compJson{ comp->value };
+        rttr::type compType = rttr::type::get_by_name(compName);
 
-      if (!compType.is_valid()) {
-#ifndef DISTRIBUTION
-        std::ostringstream oss{};
-        oss << "Trying to deserialize an invalid component: " << compName;
-        Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
-#ifdef _DEBUG
-        std::cout << oss.str() << "\n";
-#endif
-#endif  // DISTRIBUTION
-        continue;
-      }
+        if (!compType.is_valid()) { continue; }
 
-      rttr::variant compVar{};
-      if (!DeserializeSpecialCases(compVar, compType, compJson)) {
+        rttr::variant compVar{};
         DeserializeComponent(compVar, compType, compJson);
+
+        subObj.AddComponent(std::move(compVar));
       }
 
-      compVector.emplace_back(compVar);
+      prefab.mObjects.emplace_back(std::move(subObj));
     }
 
-    for (auto const& elem : document[JSON_PFB_DATA_KEY].GetArray())
+    auto const& subObjArr{ document[JSON_PFB_DATA_KEY].GetArray() };
+    prefab.mObjects.reserve(subObjArr.Size());
+    for (auto const& elem : subObjArr)
     {
       if (!ScanJsonFileForMembers(elem, json, 3, JSON_ID_KEY, rapidjson::kNumberType,
         JSON_COMPONENTS_KEY, rapidjson::kArrayType, JSON_PARENT_KEY, rapidjson::kNumberType)) {
@@ -236,7 +228,9 @@ namespace Serialization
 
       Prefabs::PrefabSubData subObj{ elem[JSON_ID_KEY].GetUint(), elem[JSON_PARENT_KEY].GetUint() };
 
-      for (auto const& component : elem[JSON_COMPONENTS_KEY].GetArray())
+      auto const& compArr{ elem[JSON_COMPONENTS_KEY].GetArray() };
+      subObj.mComponents.reserve(compArr.Size());
+      for (auto const& component : compArr)
       {
         rapidjson::Value::ConstMemberIterator comp{ component.MemberBegin() };
         std::string const compName{ comp->name.GetString() };

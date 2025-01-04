@@ -1,84 +1,85 @@
 {
     "Name": "Stairs (7 Steps)",
-    "isActive": true,
-    "Components": [
-        {
-            "Tag": {
-                "tag": "Stair Head",
-                "isActive": true
-            }
-        },
-        {
-            "Transform": {
-                "position": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "scale": {
-                    "x": 11.4093599319458,
-                    "y": 15.880000114440918,
-                    "z": 1.9564045667648316
-                },
-                "rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "eulerAngles": {
-                    "x": 0.0,
-                    "y": -0.0,
-                    "z": 0.0
-                },
-                "worldPos": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "worldScale": {
-                    "x": 11.4093599319458,
-                    "y": 15.880000114440918,
-                    "z": 1.9564045667648316
-                },
-                "worldRot": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                }
-            }
-        },
-        {
-            "Layer": {
-                "layerName": "Default"
-            }
-        },
-        {
-            "Material": {
-                "materialGUID": {
-                    "ID": 11128135777711506320
-                },
-                "matIdx": 10
-            }
-        },
-        {
-            "Mesh": {
-                "meshName": "Cube",
-                "GUID": {
-                    "ID": 14971352809646686180
-                },
-                "submeshIdx": 0,
-                "isCustomMesh": false,
-                "castShadows": true,
-                "receiveShadows": true
-            }
-        }
-    ],
     "SubData": [
         {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Stair Head",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 11.4093599319458,
+                            "y": 15.880000114440918,
+                            "z": 1.9564045667648316
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 11.4093599319458,
+                            "y": 15.880000114440918,
+                            "z": 1.9564045667648316
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 11128135777711506320
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 14971352809646686180
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -137,8 +138,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 11128135777711506320
-                        },
-                        "matIdx": 10
+                        }
                     }
                 },
                 {
@@ -157,7 +157,6 @@
         },
         {
             "ID": 2,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -216,8 +215,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 11128135777711506320
-                        },
-                        "matIdx": 10
+                        }
                     }
                 },
                 {
@@ -236,7 +234,6 @@
         },
         {
             "ID": 3,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -295,8 +292,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 11128135777711506320
-                        },
-                        "matIdx": 10
+                        }
                     }
                 },
                 {
@@ -315,7 +311,6 @@
         },
         {
             "ID": 4,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -374,8 +369,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 11128135777711506320
-                        },
-                        "matIdx": 10
+                        }
                     }
                 },
                 {
@@ -394,7 +388,6 @@
         },
         {
             "ID": 5,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -453,8 +446,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 11128135777711506320
-                        },
-                        "matIdx": 10
+                        }
                     }
                 },
                 {
@@ -473,7 +465,6 @@
         },
         {
             "ID": 6,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -532,8 +523,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 11128135777711506320
-                        },
-                        "matIdx": 10
+                        }
                     }
                 },
                 {
@@ -552,7 +542,6 @@
         },
         {
             "ID": 7,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -611,8 +600,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 11128135777711506320
-                        },
-                        "matIdx": 10
+                        }
                     }
                 },
                 {
@@ -631,7 +619,6 @@
         },
         {
             "ID": 8,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {

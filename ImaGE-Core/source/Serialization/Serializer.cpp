@@ -275,10 +275,7 @@ namespace {
     // serialize the base layer of the prefab
     writer.Key(JSON_PFB_NAME_KEY); writer.String(prefab.mName.c_str());
 
-    writer.Key(JSON_COMPONENTS_KEY);
-    SerializeVariantComponents<WriterType>(prefab.GetRoot().mComponents, writer);
-
-    // serialize nested components if prefab has multiple layers
+    // serialize all layers of the prefab
     writer.Key(JSON_PFB_DATA_KEY);
     writer.StartArray();
     for (Prefabs::PrefabSubData const& obj : prefab.mObjects)
@@ -287,7 +284,7 @@ namespace {
 
       writer.Key(JSON_ID_KEY); writer.Uint(obj.mId);
       writer.Key(JSON_PARENT_KEY);
-      if (obj.mParent == entt::null) {
+      if (obj.mParent == Prefabs::PrefabSubData::InvalidId) {
         writer.Null();
       }
       else {

@@ -24,6 +24,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rttr/variant.h>
 #include <Asset/IGEAssets.h>
 
+#define IGE_OBJFACTORY Reflection::ObjectFactory::GetInstance()
+
 namespace Reflection
 {
 

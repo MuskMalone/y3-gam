@@ -4,7 +4,6 @@
             "ID": 0,
             "Parent": null,
             "Child Entities": [],
-            "isActive": true,
             "Components": [
                 {
                     "Tag": {
@@ -64,7 +63,6 @@
             "ID": 2,
             "Parent": null,
             "Child Entities": [],
-            "isActive": true,
             "Components": [
                 {
                     "Tag": {
@@ -121,10 +119,98 @@
             ]
         },
         {
+            "ID": 1048582,
+            "Parent": null,
+            "Child Entities": [
+                1048584,
+                1048587,
+                1048596,
+                1048606,
+                1048607
+            ],
+            "Position": {
+                "x": 0.6000000238418579,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 13818176251542423782
+                },
+                "subDataId": 0,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048584,
+            "Parent": 1048582,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13818176251542423782
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048587,
+            "Parent": 1048582,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13818176251542423782
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048596,
+            "Parent": 1048582,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13818176251542423782
+                },
+                "subDataId": 4,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048606,
+            "Parent": 1048582,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13818176251542423782
+                },
+                "subDataId": 5,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048607,
+            "Parent": 1048582,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13818176251542423782
+                },
+                "subDataId": 6,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 2097153,
             "Parent": null,
             "Child Entities": [],
-            "isActive": true,
             "Components": [
                 {
                     "Tag": {
@@ -186,37 +272,31 @@
                                 "scriptName": "Test",
                                 "scriptFieldInstList": [
                                     {
-                                        "data": [
-                                            {
-                                                "entityID": 2,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 2,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 0,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 0,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        ],
-                                        "type": "MonoObjectVec",
+                                        "data": 0.10000000149011612,
+                                        "type": "System.Single",
                                         "scriptField": {
-                                            "fieldName": "test"
+                                            "fieldName": "TestFloat"
+                                        }
+                                    },
+                                    {
+                                        "data": 1.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "TestFloat2"
+                                        }
+                                    },
+                                    {
+                                        "data": 10,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "TestInt"
+                                        }
+                                    },
+                                    {
+                                        "data": 20,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "TestInt3"
                                         }
                                     }
                                 ]

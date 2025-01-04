@@ -167,11 +167,22 @@ bool Inspector::DrawOptionsListButton(std::string const& windowName) {
       }
 
       // Reset component overrides
-      //if (overrides && overrides->IsComponentModified<ComponentType>()) {
-      //  if (DrawOptionButton("Reset Overrides")) {
-      //    overrides->RemoveOverride<ComponentType>();
-      //  }
-      //}
+      if (overrides && overrides->IsComponentModified<ComponentType>()) {
+        // remove the overriden component and restore the prefab's original
+        if (DrawOptionButton("Reset Overrides")) {
+          overrides->RemoveOverride<ComponentType>();
+          try {
+            Prefabs::Prefab const& pfb{ IGE_ASSETMGR.GetAsset<IGE::Assets::PrefabAsset>(overrides->guid)->mPrefabData };
+            IGE_OBJFACTORY.AddComponentToEntity(ent, pfb.GetSubObject(overrides->subDataId).GetComponent<ComponentType>());
+          }
+          catch (Debug::ExceptionBase&) {
+            IGE_DBGLOGGER.LogError("Unable to fetch prefab " + std::to_string(overrides->guid));
+          }
+
+          SetIsComponentEdited(true);
+          ImGui::CloseCurrentPopup();
+        }
+      }
 
       ImGui::EndTable();
     }

@@ -9,14 +9,17 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
 #include "Toolbar.h"
+#include "GUI/GUIVault.h"
+#include <Events/EventManager.h>
+#include <GUI/Helpers/AssetHelpers.h>
+#include <Prefabs/PrefabManager.h>
+#include <Asset/IGEAssets.h>
+#include <Serialization/Serializer.h>
+
+#include <filesystem>
 #include <imgui/imgui.h>
 #include <ImGui/imgui_internal.h> // for BeginViewportSideBar
 #include <ImGui/misc/cpp/imgui_stdlib.h>
-#include <Events/EventManager.h>
-#include <GUI/Helpers/AssetHelpers.h>
-#include <filesystem>
-#include <Prefabs/PrefabManager.h>
-#include "GUI/GUIVault.h"
 
 namespace GUI
 {
@@ -145,6 +148,30 @@ namespace GUI
         ImGui::MenuItem("Cull out-of-frustum Entities", nullptr, &GUIVault::sShowCulledEntities);
         if (ImGui::IsItemHovered()) {
           ImGui::SetTooltip("Cull all entities outside the frustum in the editor view");
+        }
+
+        if (ImGui::MenuItem("Re-save all Prefabs")) {
+          IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+          for (auto const& file : std::filesystem::recursive_directory_iterator(gPrefabsDirectory)) {
+            if (file.is_directory() || file.path().extension() != gPrefabFileExt) { continue; }
+
+            std::string const filePath{ file.path().string() };
+            try {
+              IGE::Assets::GUID guid{ am.LoadRef<IGE::Assets::PrefabAsset>(filePath) };
+              Serialization::Serializer::SerializePrefab(am.GetAsset<IGE::Assets::PrefabAsset>(guid)->mPrefabData, filePath);
+            }
+            catch (Debug::ExceptionBase&) {
+              IGE_DBGLOGGER.LogError("Unable to load " + filePath);
+            }
+          }
+
+          IGE_DBGLOGGER.LogInfo("Successfully re-saved all prefabs");
+        }
+        if (ImGui::IsItemHovered()) {
+          ImGui::BeginTooltip();
+          ImGui::Text("Automatically saves all prefabs again");
+          ImGui::Text("For use when components/formats are modified and require saving to a new format.");
+          ImGui::EndTooltip();
         }
 
         ImGui::EndMenu();

@@ -24,6 +24,16 @@ PrefabSubData::PrefabSubData() : mParent{ BasePrefabId } {}
 PrefabSubData::PrefabSubData(SubDataId id, SubDataId parent) :
   mComponents{}, mId{ id }, mParent{ parent } {}
 
+rttr::variant const& PrefabSubData::GetComponent(rttr::type const& type) const {
+  for (rttr::variant const& component : mComponents) {
+    if (component.get_type() == type) {
+      return component;
+    }
+  }
+
+  return {};
+}
+
 ECS::Entity PrefabSubData::Construct(IGE::Assets::GUID guid, bool createInst) const
 {
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
@@ -37,11 +47,9 @@ ECS::Entity PrefabSubData::Construct(IGE::Assets::GUID guid, bool createInst) co
   return entity;
 }
 
-Prefab::Prefab() : mName{},
-mObjects{ { PrefabSubData::BasePrefabId, PrefabSubData::InvalidId } } {}
+Prefab::Prefab() : mName{}, mObjects{} {}
 
-Prefab::Prefab(std::string name) : mName{ std::move(name) },
-  mObjects{ { PrefabSubData::BasePrefabId, PrefabSubData::InvalidId } } {}
+Prefab::Prefab(std::string name) : mName{ std::move(name) }, mObjects{} {}
 
 std::pair<ECS::Entity, Prefab::EntityMappings> Prefab::ConstructAndMap(glm::vec3 const& pos) const
 {
