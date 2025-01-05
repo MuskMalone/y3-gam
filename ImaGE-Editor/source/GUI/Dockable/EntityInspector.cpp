@@ -97,10 +97,10 @@ namespace GUI {
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
     for (auto const& component : Reflection::gComponentTypes) {
       mComponentOpenStatusMap[component.get_name().to_string().c_str()] = true;
-
-      // Workaround because the Reflection component name for Script is ScriptComponent for some odd reason
-      mComponentOpenStatusMap["Script"] = true;
     }
+    // Workaround because the Reflection component name for Script is ScriptComponent for some odd reason
+    mComponentOpenStatusMap["Script"] = true;
+    mComponentOpenStatusMap["Prefab Overrides"] = true;
 
     // get notified when scene is saved
     SUBSCRIBE_CLASS_FUNC(Events::SaveSceneEvent, &Inspector::OnSceneSave, this);
@@ -193,6 +193,12 @@ namespace GUI {
           if (prefabOverride) {
             prefabOverride->AddComponentOverride(tagType);
           }
+        }
+      }
+
+      if (GUIVault::sDevTools && prefabOverride) {
+        if (PrefabOverridesWindow(currentEntity, prefabOverride)) {
+          SetIsComponentEdited(true);
         }
       }
 
@@ -2065,6 +2071,53 @@ namespace GUI {
     }
 
     WindowEnd(isOpen);
+    return modified;
+  }
+
+  bool Inspector::PrefabOverridesWindow(ECS::Entity entity, Component::PrefabOverrides* overrides) {
+    ImGui::Separator();
+
+    ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+    std::string const compName{ "Prefab Overrides" }, display{ ICON_FA_DATABASE ICON_PADDING + compName };
+
+    if (mEntityChanged) {
+      bool& openMapStatus = mComponentOpenStatusMap[compName];
+      ImGui::SetNextItemOpen(openMapStatus, ImGuiCond_Always);
+    }
+    bool const isOpen{ ImGui::TreeNodeEx(display.c_str()) };
+    mComponentOpenStatusMap[compName] = isOpen;
+
+    bool modified{ false };
+
+    if (isOpen) {
+      ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_LIGHT));
+      float const inputWidth{ CalcInputWidth(50.f) };
+
+      if (ImGui::BeginTable("##OverridesTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+        ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+        ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+        NextRowTable("GUID");
+        std::string guidStr{ std::to_string(overrides->guid) };
+        if (ImGui::InputText("##guid", &guidStr, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CharsDecimal)) {
+          overrides->guid = std::stol(guidStr);
+          modified = true;
+        }
+
+        NextRowTable("Sub-data ID");
+        int id{ static_cast<int>(overrides->subDataId) };
+        if (ImGui::DragInt("##SubdataId", &id)) {
+          overrides->subDataId = static_cast<Prefabs::SubDataId>(id);
+          modified = true;
+        }
+
+        ImGui::EndTable();
+      }
+    }
+
+    ImGui::PopStyleColor();
+    WindowEnd(isOpen);
+
     return modified;
   }
 

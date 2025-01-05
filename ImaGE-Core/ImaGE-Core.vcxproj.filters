@@ -715,7 +715,7 @@
     <ClInclude Include="source\Prefabs\PrefabManager.h">
       <Filter>Prefabs</Filter>
     </ClInclude>
-    <ClInclude Include="source\Reflection\AddComponentFunctions.h">
+    <ClInclude Include="source\Reflection\ComponentUtils.h">
       <Filter>Reflection</Filter>
     </ClInclude>
     <ClInclude Include="source\Reflection\ComponentTypes.h">
@@ -1028,7 +1028,7 @@
     <ClCompile Include="source\Prefabs\PrefabManager.cpp">
       <Filter>Prefabs</Filter>
     </ClCompile>
-    <ClCompile Include="source\Reflection\AddComponentFunctions.cpp">
+    <ClCompile Include="source\Reflection\ComponentUtils.cpp">
       <Filter>Reflection</Filter>
     </ClCompile>
     <ClCompile Include="source\Reflection\ObjectFactory.cpp">

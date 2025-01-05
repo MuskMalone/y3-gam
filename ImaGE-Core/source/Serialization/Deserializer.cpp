@@ -226,7 +226,8 @@ namespace Serialization
         continue;
       }
 
-      Prefabs::PrefabSubData subObj{ elem[JSON_ID_KEY].GetUint(), elem[JSON_PARENT_KEY].GetUint() };
+      Prefabs::PrefabSubData subObj{ elem[JSON_ID_KEY].GetUint(), 
+       elem[JSON_PARENT_KEY].IsNull() ? Prefabs::PrefabSubData::InvalidId : elem[JSON_PARENT_KEY].GetUint()};
 
       auto const& compArr{ elem[JSON_COMPONENTS_KEY].GetArray() };
       subObj.mComponents.reserve(compArr.Size());

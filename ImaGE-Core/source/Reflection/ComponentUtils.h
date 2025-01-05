@@ -34,4 +34,16 @@ namespace Reflection::ComponentUtils {
   void AddCamera(ECS::Entity entity, rttr::variant const& var);
   void AddSkybox(ECS::Entity entity, rttr::variant const& var);
   void AddInteractive(ECS::Entity entity, rttr::variant const& var);
-} // namespace Reflection
+
+  template <typename T>
+  rttr::variant GetComponentVariant(ECS::Entity entity) {
+    return entity.HasComponent<T>() ? entity.GetComponent<T>() : rttr::variant();
+  }
+
+  template <typename T>
+  void RemoveComponent(ECS::Entity entity) {
+    if (entity.HasComponent<T>()) {
+      entity.RemoveComponent<T>();
+    }
+  }
+}

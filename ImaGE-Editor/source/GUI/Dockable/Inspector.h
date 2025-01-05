@@ -65,6 +65,7 @@ namespace GUI {
     bool LightComponentWindow(ECS::Entity entity, bool highlight = false);
     bool MaterialWindow(ECS::Entity entity, bool highlight = false);
     bool MeshComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool PrefabOverridesWindow(ECS::Entity entity, Component::PrefabOverrides* overrides);
     bool RigidBodyComponentWindow(ECS::Entity entity, bool highlight = false);
     bool ScriptComponentWindow(ECS::Entity entity, bool highlight = false);
     bool SphereColliderComponentWindow(ECS::Entity entity, bool highlight = false);

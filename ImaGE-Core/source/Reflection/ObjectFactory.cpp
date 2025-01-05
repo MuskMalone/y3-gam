@@ -22,19 +22,94 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <sstream>
 #include <Core/Components/Components.h>
 #include "ComponentTypes.h"
-#include "AddComponentFunctions.h"
+#include "ComponentUtils.h"
 
 #include <Serialization/Deserializer.h>
 #include <Physics/PhysicsSystem.h>
 #include <Prefabs/PrefabManager.h>
 #include <Events/EventManager.h>
 
-#define GET_RTTR_TYPE(T) rttr::type::get<T>()
+#define RTTR_TYPE(T) rttr::type::get<T>()
 #ifdef _DEBUG
 //#define OF_DEBUG
 #endif
 
 using namespace IGE;
+
+namespace {
+  using AddComponentFunc = std::function<void(ECS::Entity, rttr::variant const&)>;
+  using GetComponentFunc = std::function<rttr::variant(ECS::Entity)>;
+  using RemoveComponentFunc = std::function<void(ECS::Entity)>;
+
+  using namespace Reflection::ComponentUtils;
+  using namespace Component;
+  std::unordered_map<rttr::type, AddComponentFunc> const sAddComponentFuncs{
+    { RTTR_TYPE(AudioListener), AddAudioListener },
+    { RTTR_TYPE(AudioSource), AddAudioSource },
+    { RTTR_TYPE(Tag), AddTag },
+    { RTTR_TYPE(Transform), AddTransform },
+    { RTTR_TYPE(Layer), AddLayer },
+    { RTTR_TYPE(Mesh), AddMesh },
+    { RTTR_TYPE(Material), AddMaterial },
+    { RTTR_TYPE(BoxCollider), AddBoxCollider },
+    { RTTR_TYPE(SphereCollider), AddSphereCollider },
+    { RTTR_TYPE(CapsuleCollider), AddCapsuleCollider },
+    { RTTR_TYPE(RigidBody), AddRigidBody },
+    { RTTR_TYPE(Reflection::ProxyScriptComponent), AddScript },
+    { RTTR_TYPE(Text), AddText },
+    { RTTR_TYPE(Light), AddLight },
+    { RTTR_TYPE(Canvas), AddCanvas },
+    { RTTR_TYPE(Image), AddImage },
+    { RTTR_TYPE(Sprite2D), AddSprite2D },
+    { RTTR_TYPE(Camera), AddCamera },
+    { RTTR_TYPE(Skybox), AddSkybox },
+    { RTTR_TYPE(Interactive), AddInteractive }
+  };
+  std::unordered_map<rttr::type, GetComponentFunc> const sGetComponentFuncs{
+    { RTTR_TYPE(AudioListener), GetComponentVariant<AudioListener> },
+    { RTTR_TYPE(AudioSource), GetComponentVariant<AudioSource> },
+    { RTTR_TYPE(Tag), GetComponentVariant<Tag> },
+    { RTTR_TYPE(Transform), GetComponentVariant<Transform> },
+    { RTTR_TYPE(Layer), GetComponentVariant<Layer> },
+    { RTTR_TYPE(Mesh), GetComponentVariant<Mesh> },
+    { RTTR_TYPE(Material), GetComponentVariant<Material> },
+    { RTTR_TYPE(BoxCollider), GetComponentVariant<BoxCollider> },
+    { RTTR_TYPE(SphereCollider), GetComponentVariant<SphereCollider> },
+    { RTTR_TYPE(CapsuleCollider), GetComponentVariant<CapsuleCollider> },
+    { RTTR_TYPE(RigidBody), GetComponentVariant<RigidBody> },
+    { RTTR_TYPE(Script), GetComponentVariant<Script> },
+    { RTTR_TYPE(Text), GetComponentVariant<Text> },
+    { RTTR_TYPE(Light), GetComponentVariant<Light> },
+    { RTTR_TYPE(Canvas), GetComponentVariant<Canvas> },
+    { RTTR_TYPE(Image), GetComponentVariant<Image> },
+    { RTTR_TYPE(Sprite2D), GetComponentVariant<Sprite2D> },
+    { RTTR_TYPE(Camera), GetComponentVariant<Camera> },
+    { RTTR_TYPE(Skybox), GetComponentVariant<Skybox> },
+    { RTTR_TYPE(Interactive), GetComponentVariant<Interactive> }
+  };
+  std::unordered_map<rttr::type, RemoveComponentFunc> const sRemoveComponentFuncs{
+    { RTTR_TYPE(AudioListener), RemoveComponent<AudioListener> },
+    { RTTR_TYPE(AudioSource), RemoveComponent<AudioSource> },
+    { RTTR_TYPE(Tag), RemoveComponent<Tag> },
+    { RTTR_TYPE(Transform), RemoveComponent<Transform> },
+    { RTTR_TYPE(Layer), RemoveComponent<Layer> },
+    { RTTR_TYPE(Mesh), RemoveComponent<Mesh> },
+    { RTTR_TYPE(Material), RemoveComponent<Material> },
+    { RTTR_TYPE(BoxCollider), RemoveComponent<BoxCollider> },
+    { RTTR_TYPE(SphereCollider), RemoveComponent<SphereCollider> },
+    { RTTR_TYPE(CapsuleCollider), RemoveComponent<CapsuleCollider> },
+    { RTTR_TYPE(RigidBody), RemoveComponent<RigidBody> },
+    { RTTR_TYPE(Script), RemoveComponent<Script> },
+    { RTTR_TYPE(Text), RemoveComponent<Text> },
+    { RTTR_TYPE(Light), RemoveComponent<Light> },
+    { RTTR_TYPE(Canvas), RemoveComponent<Canvas> },
+    { RTTR_TYPE(Image), RemoveComponent<Image> },
+    { RTTR_TYPE(Sprite2D), RemoveComponent<Sprite2D> },
+    { RTTR_TYPE(Camera), RemoveComponent<Camera> },
+    { RTTR_TYPE(Skybox), RemoveComponent<Skybox> },
+    { RTTR_TYPE(Interactive), RemoveComponent<Interactive> }
+  };
+}
 
 namespace Reflection
 {
@@ -42,30 +117,7 @@ namespace Reflection
   ObjectFactory::ObjectFactory() {
     using namespace Component;
 
-    mAddComponentFuncs = {
-      { GET_RTTR_TYPE(AudioListener), ComponentUtils::AddAudioListener },      
-      { GET_RTTR_TYPE(AudioSource), ComponentUtils::AddAudioSource },
-      { GET_RTTR_TYPE(Tag), ComponentUtils::AddTag },
-      { GET_RTTR_TYPE(Transform), ComponentUtils::AddTransform },
-      { GET_RTTR_TYPE(Layer), ComponentUtils::AddLayer },
-      { GET_RTTR_TYPE(Mesh), ComponentUtils::AddMesh },
-      { GET_RTTR_TYPE(Material), ComponentUtils::AddMaterial },
-      { GET_RTTR_TYPE(BoxCollider), ComponentUtils::AddBoxCollider },
-      { GET_RTTR_TYPE(SphereCollider), ComponentUtils::AddSphereCollider },
-      { GET_RTTR_TYPE(CapsuleCollider), ComponentUtils::AddCapsuleCollider },
-      { GET_RTTR_TYPE(RigidBody), ComponentUtils::AddRigidBody },
-      { GET_RTTR_TYPE(ProxyScriptComponent), ComponentUtils::AddScript },
-      { GET_RTTR_TYPE(Text), ComponentUtils::AddText },
-      { GET_RTTR_TYPE(Light), ComponentUtils::AddLight },
-      { GET_RTTR_TYPE(Canvas), ComponentUtils::AddCanvas },
-      { GET_RTTR_TYPE(Image), ComponentUtils::AddImage },
-      { GET_RTTR_TYPE(Sprite2D), ComponentUtils::AddSprite2D },
-      { GET_RTTR_TYPE(Camera), ComponentUtils::AddCamera },
-      { GET_RTTR_TYPE(Skybox), ComponentUtils::AddSkybox },
-      { GET_RTTR_TYPE(Interactive), ComponentUtils::AddInteractive}
-    };
-
-    if (mAddComponentFuncs.size() != gComponentTypes.size()) {
+    if (sAddComponentFuncs.size() != gComponentTypes.size()) {
       throw Debug::Exception<ObjectFactory>(Debug::LVL_CRITICAL,
         Msg("ObjectFactory::mAddComponentFuncs and Reflection::gComponentTypes size mismatch! Did you forget to update one?"));
     }
@@ -103,7 +155,7 @@ namespace Reflection
 
     for (rttr::type const& type : Reflection::gComponentTypes) {
       // we're not handling copying of scripts now
-      if (type == GET_RTTR_TYPE(Component::Script)) { continue; }
+      if (type == RTTR_TYPE(Component::Script)) { continue; }
 
       auto compVar{ GetEntityComponent(entity, type) };
       if (compVar) { components.emplace_back(std::move(compVar)); }
@@ -303,83 +355,46 @@ namespace Reflection
     rttr::type const compType{ compVar.get_type() };
     // get underlying type if it's wrapped in a pointer
 
-    if (!mAddComponentFuncs.contains(compType)) {
+#ifdef _DEBUG
+    if (!sAddComponentFuncs.contains(compType)) {
       std::ostringstream oss{};
       oss << "Trying to add unknown component type: " << compType.get_name().to_string() << " to entity " << entity << " | Update ObjectFactory::AddComponentToEntity";
       Debug::DebugLogger::GetInstance().LogError(oss.str());
       return;
     }
+#endif
 
-    mAddComponentFuncs.at(compType)(entity, compVar);
+    sAddComponentFuncs.at(compType)(entity, compVar);
   }
-
-  #define IF_GET_ENTITY_COMP(ComponentClass) if (compType == rttr::type::get<Component::ComponentClass>()) {\
-    return entity.HasComponent<Component::ComponentClass>() ? entity.GetComponent<Component::ComponentClass>() : rttr::variant(); }
 
   rttr::variant ObjectFactory::GetEntityComponent(ECS::Entity const& entity, rttr::type const& compType) const
   {
-    IF_GET_ENTITY_COMP(Transform)
-    else IF_GET_ENTITY_COMP(Tag)
-    else IF_GET_ENTITY_COMP(Layer)
-    else IF_GET_ENTITY_COMP(Mesh)
-    else IF_GET_ENTITY_COMP(Material)
-    else IF_GET_ENTITY_COMP(RigidBody)
-    else IF_GET_ENTITY_COMP(BoxCollider)
-    else IF_GET_ENTITY_COMP(SphereCollider)
-    else IF_GET_ENTITY_COMP(CapsuleCollider)
-    else IF_GET_ENTITY_COMP(Script)
-    else IF_GET_ENTITY_COMP(Text)
-    else IF_GET_ENTITY_COMP(Light)
-    else IF_GET_ENTITY_COMP(AudioListener)
-    else IF_GET_ENTITY_COMP(AudioSource)
-    else IF_GET_ENTITY_COMP(Canvas)
-    else IF_GET_ENTITY_COMP(Image)
-    else IF_GET_ENTITY_COMP(Sprite2D)
-    else IF_GET_ENTITY_COMP(Camera)
-    else IF_GET_ENTITY_COMP(Skybox)
-    else IF_GET_ENTITY_COMP(Interactive)
-    else
-    {
+#ifdef _DEBUG
+    if (!sGetComponentFuncs.contains(compType)) {
       std::ostringstream oss{};
       oss << "Trying to get unsupported component type (" << compType.get_name().to_string() << ") from Entity " << entity.GetEntityID();
       oss << " | Update ObjectFactory::GetEntityComponent";
       Debug::DebugLogger::GetInstance().LogError(oss.str());
       return rttr::variant();
     }
-  }
+#endif
 
-#define IF_REMOVE_COMP(ComponentClass) if (compType == rttr::type::get<Component::ComponentClass>()) { entity.RemoveComponent<Component::ComponentClass>(); }
+    return sGetComponentFuncs.at(compType)(entity);
+  }
 
   // not in use for now
   void ObjectFactory::RemoveComponentFromEntity(ECS::Entity entity, rttr::type const& compType) const
   {
-    UNREFERENCED_PARAMETER(entity); UNREFERENCED_PARAMETER(compType);
-    ////// get underlying type if it's wrapped in a pointer
+#ifdef _DEBUG
+    if (!sRemoveComponentFuncs.contains(compType)) {
+        std::ostringstream oss{};
+        oss << "Trying to remove unknown component type: " << compType.get_name().to_string() << " to entity " << entity << " | Update ObjectFactory::RemoveComponentFromEntity";
+        oss << " | Update ObjectFactory::RemoveComponentFromEntity";
+        Debug::DebugLogger::GetInstance().LogError(oss.str());
+    }
+#endif
 
-    //IF_REMOVE_COMP(Transform)
-    //else IF_REMOVE_COMP(Tag)
-    //else IF_REMOVE_COMP(Layer)
-    //else IF_REMOVE_COMP(Mesh)
-    //else IF_REMOVE_COMP(Material)
-    //else IF_REMOVE_COMP(RigidBody)
-    //else IF_REMOVE_COMP(BoxCollider)
-    //else IF_REMOVE_COMP(SphereCollider)
-    //else IF_REMOVE_COMP(CapsuleCollider)
-    //else IF_REMOVE_COMP(Script)
-    //else IF_REMOVE_COMP(Text)
-    //else IF_REMOVE_COMP(Light)
-    //else IF_REMOVE_COMP(AudioListener)
-    //else IF_REMOVE_COMP(AudioSource)
-    //else IF_REMOVE_COMP(Canvas)
-    //else IF_REMOVE_COMP(Image)
-    //else IF_REMOVE_COMP(Camera)
-    //else
-    //{
-    //  std::ostringstream oss{};
-    //  oss << "Trying to remove unknown component type: " << compType.get_name().to_string() << " to entity " << entity << " | Update ObjectFactory::RemoveComponentFromEntity";
-    //  oss << " | Update ObjectFactory::RemoveComponentFromEntity";
-    //  Debug::DebugLogger::GetInstance().LogError(oss.str());
-    //}
+    sRemoveComponentFuncs.at(compType)(entity);
   }
 
 } // namespace Reflection

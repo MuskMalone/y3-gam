@@ -357,7 +357,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClInclude Include="source\Physics\PhysicsSystem.h" />
     <ClInclude Include="source\Prefabs\Prefab.h" />
     <ClInclude Include="source\Prefabs\PrefabManager.h" />
-    <ClInclude Include="source\Reflection\AddComponentFunctions.h" />
+    <ClInclude Include="source\Reflection\ComponentUtils.h" />
     <ClInclude Include="source\Reflection\ComponentTypes.h" />
     <ClInclude Include="source\Reflection\EntityData.h" />
     <ClInclude Include="source\Reflection\Metadata.h" />
@@ -502,7 +502,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClCompile Include="source\Physics\PhysicsSystem.cpp" />
     <ClCompile Include="source\Prefabs\Prefab.cpp" />
     <ClCompile Include="source\Prefabs\PrefabManager.cpp" />
-    <ClCompile Include="source\Reflection\AddComponentFunctions.cpp" />
+    <ClCompile Include="source\Reflection\ComponentUtils.cpp" />
     <ClCompile Include="source\Reflection\ObjectFactory.cpp" />
     <ClCompile Include="source\Scenes\Scene.cpp" />
     <ClCompile Include="source\Scenes\SceneManager.cpp" />

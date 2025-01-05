@@ -132,10 +132,6 @@ namespace Reflection
     std::vector<rttr::variant> GetEntityComponents(ECS::Entity const& id) const;
 
   private:
-    using AddComponentFunc = std::function<void(ECS::Entity, rttr::variant const&)>;
-
-    std::unordered_map<rttr::type, AddComponentFunc> mAddComponentFuncs;
-
     std::unordered_map<ECS::Entity::EntityID, ECS::Entity> mNewIDs; // remaps entities if IDs are taken
     PrefabInstanceContainer mPrefabInstances;   // stores deserialized prefab instances
     std::vector<VariantEntity> mRawEntities; // stores deserialized entity data
