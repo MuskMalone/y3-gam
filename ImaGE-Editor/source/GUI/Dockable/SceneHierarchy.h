@@ -112,7 +112,9 @@ namespace GUI
     \param event
       The event to be handled
     ************************************************************************/
-    EVENT_CALLBACK_DECL(HandleEvent);
+    EVENT_CALLBACK_DECL(OnSceneStateChange);
+    EVENT_CALLBACK_DECL(OnPrefabEdit);
+    EVENT_CALLBACK_DECL(OnSceneModified);
     EVENT_CALLBACK_DECL(OnEntityPicked);
     EVENT_CALLBACK_DECL(OnSceneSave);
     EVENT_CALLBACK_DECL(OnSceneLoad);

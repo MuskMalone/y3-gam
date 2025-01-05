@@ -110,8 +110,8 @@ namespace IGE {
 			*/
 		}
 		AssetManager::AssetManager() {
-			SUBSCRIBE_CLASS_FUNC(Events::EventType::REGISTER_FILES, &AssetManager::HandleAddFiles, this);
-			SUBSCRIBE_CLASS_FUNC(Events::EventType::GUID_REMAP, &AssetManager::OnRemapGUID, this);
+			SUBSCRIBE_CLASS_FUNC(Events::RegisterAssetsEvent, &AssetManager::HandleAddFiles, this);
+			SUBSCRIBE_CLASS_FUNC(Events::RemapGUID, &AssetManager::OnRemapGUID, this);
 			Initialize();
 			 //code snippet to "manufacture" all the data needed for importing
 			 //assumes that all the files are imported as is

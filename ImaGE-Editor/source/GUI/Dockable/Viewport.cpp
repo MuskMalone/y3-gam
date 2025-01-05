@@ -70,8 +70,8 @@ namespace GUI
 {
   Viewport::Viewport(const char* name, Graphics::EditorCamera& camera) : GUIWindow(name),
     mEditorCam{ camera }, mIsPanning{ false }, mRightClickHeld{ false }, mFocusWindow{ false } {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_ZOOM, &Viewport::OnEntityDoubleClicked, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &Viewport::OnSceneStart, this);
+    SUBSCRIBE_CLASS_FUNC(Events::ZoomInOnEntity, &Viewport::OnEntityDoubleClicked, this);
+    SUBSCRIBE_CLASS_FUNC(Events::SceneStateChange, &Viewport::OnSceneStart, this);
   }
 
   void Viewport::Render(std::shared_ptr<Graphics::Framebuffer> const& framebuffer)

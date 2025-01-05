@@ -129,14 +129,16 @@ namespace GUI {
       This function handles the corresponding events the Inspector
       subscribed to.
 
-      SAVE_SCENE
+      SaveScene
         - Resets the mIsComponentEdited flag when the scene is saved
-      SCENE_STATE_CHANGE
+      SceneStateChange
         - Resets the mIsComponentEdited flag when another scene is loaded
     \param event
       The event to be handled
     ************************************************************************/
-    EVENT_CALLBACK_DECL(HandleEvent);
+    EVENT_CALLBACK_DECL(OnSceneSave);
+    EVENT_CALLBACK_DECL(OnSceneStateChange);
+    EVENT_CALLBACK_DECL(OnPrefabEdit);
 
     void RunDragDropInspector(ECS::Entity entity);
 

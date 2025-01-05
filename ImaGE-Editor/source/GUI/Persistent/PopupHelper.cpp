@@ -26,8 +26,8 @@ namespace GUI {
     mPopupFunctions.emplace_back(std::bind(&PopupHelper::GUIDRemapPopup, this));
     mPopupFunctions.emplace_back(std::bind(&PopupHelper::GUIDCompletePopup, this));
 
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::INVALID_GUID, &PopupHelper::OnGUIDInvalidated, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::TRIGGER_GUID_REMAP, &PopupHelper::OnGUIDRemap, this);
+    SUBSCRIBE_CLASS_FUNC(Events::GUIDInvalidated, &PopupHelper::OnGUIDInvalidated, this);
+    SUBSCRIBE_CLASS_FUNC(Events::TriggerGUIDRemap, &PopupHelper::OnGUIDRemap, this);
   }
 
   void PopupHelper::Run() {

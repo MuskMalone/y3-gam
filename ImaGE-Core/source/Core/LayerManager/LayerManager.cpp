@@ -15,10 +15,10 @@ namespace {
 namespace Layers {
 
   LayerManager::LayerManager() : mLayerData{}, mLayerEntities{} {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &LayerManager::OnSceneChange, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::LAYER_MODIFIED, &LayerManager::OnLayerModification, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &LayerManager::OnPrefabEditor, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::REMOVE_ENTITY, &LayerManager::OnEntityRemove, this);
+    SUBSCRIBE_CLASS_FUNC(Events::SceneStateChange, &LayerManager::OnSceneChange, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EntityLayerModified, &LayerManager::OnLayerModification, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EditPrefabEvent, &LayerManager::OnPrefabEditor, this);
+    SUBSCRIBE_CLASS_FUNC(Events::RemoveEntityEvent, &LayerManager::OnEntityRemove, this);
   }
 
   void LayerManager::CopyValidEntities(std::vector<ECS::Entity>& entityVector, const std::pair<std::string, std::vector<ECS::Entity>>& mapPair) {

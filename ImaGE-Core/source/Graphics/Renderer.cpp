@@ -42,8 +42,8 @@ namespace Graphics {
 
 	}
 	void Renderer::Init() {
-		SUBSCRIBE_STATIC_FUNC(Events::EventType::WINDOW_RESIZED, OnResize);
-		SUBSCRIBE_STATIC_FUNC(Events::EventType::ENTITY_SELECTED, OnEntityPicked);
+		SUBSCRIBE_STATIC_FUNC(Events::WindowResized, OnResize);
+		SUBSCRIBE_STATIC_FUNC(Events::EntitySelectedInEditor, OnEntityPicked);
 		InitUICamera();
 
 		//----------------------Init Batching Quads------------------------------------------------------------//

@@ -28,8 +28,8 @@ namespace GUI
     mWindowsRef{ windowsRef }, mScenePopup{ false }, mPrefabPopup{ false },
     mDisableAll{ false }, mAllowCreationOnly{ true }
   {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &Toolbar::HandleEvent, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &Toolbar::HandleEvent, this);
+    SUBSCRIBE_CLASS_FUNC(Events::SceneStateChange, &Toolbar::OnSceneStateChange, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EditPrefabEvent, &Toolbar::OnPrefabEdit, this);
   }
 
   void Toolbar::Run()
@@ -263,34 +263,28 @@ namespace GUI
     }
   }
 
-  EVENT_CALLBACK_DEF(Toolbar, HandleEvent)
+  EVENT_CALLBACK_DEF(Toolbar, OnSceneStateChange)
   {
-    switch (event->GetCategory())
+    switch (CAST_TO_EVENT(Events::SceneStateChange)->mNewState)
     {
-    case Events::EventType::EDIT_PREFAB:
+    case Events::SceneStateChange::STOPPED:
+      mAllowCreationOnly = true;
+      mDisableAll = false;
+      break;
+    case Events::SceneStateChange::NEW:
+    case Events::SceneStateChange::CHANGED:
+      mAllowCreationOnly = mDisableAll = false;
+      break;
+    case Events::SceneStateChange::STARTED:
+    case Events::SceneStateChange::PAUSED:
       mDisableAll = true;
       break;
-    case Events::EventType::SCENE_STATE_CHANGE:
-    {
-      switch (CAST_TO_EVENT(Events::SceneStateChange)->mNewState)
-      {
-      case Events::SceneStateChange::STOPPED:
-        mAllowCreationOnly = true;
-        mDisableAll = false;
-        break;
-      case Events::SceneStateChange::NEW:
-      case Events::SceneStateChange::CHANGED:
-        mAllowCreationOnly = mDisableAll = false;
-        break;
-      case Events::SceneStateChange::STARTED:
-      case Events::SceneStateChange::PAUSED:
-        mDisableAll = true;
-        break;
-      default: break;
-      }
-    }
     default: break;
     }
+  }
+
+  EVENT_CALLBACK_DEF(Toolbar, OnPrefabEdit) {
+    mDisableAll = true;
   }
 
   void Toolbar::RunNewScenePopup()

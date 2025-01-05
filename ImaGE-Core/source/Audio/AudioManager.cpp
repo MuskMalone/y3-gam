@@ -11,7 +11,7 @@ namespace IGE {
     namespace Audio {
         AudioManager::AudioManager()
         {
-            SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &AudioManager::HandleSystemEvents, this);
+            SUBSCRIBE_CLASS_FUNC(Events::SceneStateChange, &AudioManager::HandleSystemEvents, this);
             Initialize();
         }
         AudioManager::~AudioManager()

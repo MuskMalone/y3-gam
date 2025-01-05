@@ -41,7 +41,7 @@ namespace {
 
 PrefabManager::PrefabManager()
 {
-  SUBSCRIBE_CLASS_FUNC(Events::EventType::SPAWN_PREFAB, &PrefabManager::OnPrefabSpawn, this);
+  SUBSCRIBE_CLASS_FUNC(Events::SpawnPrefabEvent, &PrefabManager::OnPrefabSpawn, this);
 }
 
 EVENT_CALLBACK_DEF(PrefabManager, OnPrefabSpawn)

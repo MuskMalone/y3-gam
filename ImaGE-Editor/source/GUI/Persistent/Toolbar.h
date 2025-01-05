@@ -47,14 +47,15 @@ namespace GUI
 
     /*!*********************************************************************
     \brief
-      Handles the events the AssetBrowser subscribed to.
+      Handles the events the Toolbar subscribed to.
 
       SCENE_STATE_CHANGE
         - Disables certain menu options based on the current scene state
     \param event
       The event to handle
     ************************************************************************/
-    EVENT_CALLBACK_DECL(HandleEvent);
+    EVENT_CALLBACK_DECL(OnSceneStateChange);
+    EVENT_CALLBACK_DECL(OnPrefabEdit);
   };
 
 } // namespace GUI

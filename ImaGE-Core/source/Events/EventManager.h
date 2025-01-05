@@ -15,6 +15,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma once
 #include <Singleton/ThreadSafeSingleton.h>
 #include "Events.h"
+#include <typeindex>
 #include <functional>
 #include <vector>
 #include <queue>
@@ -40,7 +41,10 @@ namespace Events
     \param callback
       The callback function to subscribe to the event
     ************************************************************************/
-    void Subscribe(EventType eventType, EventCallback const& callback);
+    template <typename T>
+    void Subscribe(EventCallback const& callback) {
+      mSubscribers[typeid(T)].emplace_back(callback);
+    }
 
     /*!*********************************************************************
     \brief
@@ -49,8 +53,15 @@ namespace Events
     \param event
       The event to queue
     ************************************************************************/
-    void QueueEvent(EventPtr const& event);
-    void QueueEvent(EventPtr&& event);
+    template <typename T>
+    void QueueEvent(EventPtr const& event) {
+      mEventQueue.emplace(typeid(T), event);
+    }
+
+    template <typename T>
+    void QueueEvent(EventPtr&& event) {
+      mEventQueue.emplace(typeid(T), std::move(event));
+    }
 
     /*!*********************************************************************
     \brief
@@ -65,7 +76,7 @@ namespace Events
 
   private:
     using SubscriberList = std::vector<EventCallback>;
-    using SubscriberMap = std::unordered_map<EventType, SubscriberList>;
+    using SubscriberMap = std::unordered_map<std::type_index, SubscriberList>;
 
     // allow only application to invoke DispatchAll function
     friend class IGE::Application; 
@@ -81,14 +92,14 @@ namespace Events
     // list of subscribers for each event
     // each event in the map will have its own list of subscribers
     SubscriberMap mSubscribers;
-    std::queue<EventPtr> mEventQueue; // events to be dispatched
+    std::queue<std::pair<std::type_index, EventPtr>> mEventQueue; // events to be dispatched
   };
 
   template <typename EventClass, typename... Args>
   void EventManager::DispatchImmediateEvent(Args&& ...args) {
     std::shared_ptr<EventClass> eventToDispatch{ std::make_shared<EventClass>(std::forward<Args>(args)...) };
 
-    SubscriberList& subscribers{ mSubscribers[eventToDispatch->GetCategory()] };
+    SubscriberList& subscribers{ mSubscribers[typeid(EventClass)]};
     for (auto& fn : subscribers) {
       fn(eventToDispatch);
     }
@@ -99,29 +110,29 @@ namespace Events
   /*!*********************************************************************
     \brief
       Subscribe a class member function to an event
-      e.g. SUBSCRIBE_CLASS_FUNC(Events::EventType::KEY_TRIGGERED, &MyClass::MyCallback, &MyClass.GetInstance());
-    \param eventType
-      The type of the event
+      e.g. SUBSCRIBE_CLASS_FUNC(Events::KeyTriggeredEvent, &MyClass::MyCallback, &MyClass.GetInstance());
+    \param EventClass
+      The class of the event
     \param callbackFn
       The class member function to be used as the callback
     \param instance
       The instance of the class
     ************************************************************************/
-#define SUBSCRIBE_CLASS_FUNC(eventType, callbackFn, instance) \
-  Events::EventManager::GetInstance().Subscribe(eventType, std::bind(callbackFn, instance, std::placeholders::_1))
+#define SUBSCRIBE_CLASS_FUNC(EventClass, callbackFn, instance) \
+  Events::EventManager::GetInstance().Subscribe<EventClass>(std::bind(callbackFn, instance, std::placeholders::_1))
 
     // Subscribe a static function to an event
     /*!*********************************************************************
     \brief
       Subscribe a static function to an event
-      e.g. SUBSCRIBE_STATIC_FUNC(Events::EventType::KEY_TRIGGERED, MyCallback);
-    \param eventType
-      The type of the event
+      e.g. SUBSCRIBE_STATIC_FUNC(Events::KeyTriggeredEvent, MyCallback);
+    \param EventClass
+      The class of the event
     \param callbackFn
       The function to be used as the callback
     ************************************************************************/
-#define SUBSCRIBE_STATIC_FUNC(eventType, callbackFn) \
-  Events::EventManager::GetInstance().Subscribe(eventType, std::bind(callbackFn, std::placeholders::_1))
+#define SUBSCRIBE_STATIC_FUNC(EventClass, callbackFn) \
+  Events::EventManager::GetInstance().Subscribe<EventClass>(std::bind(callbackFn, std::placeholders::_1))
 
     /*!*********************************************************************
     \brief
@@ -133,6 +144,6 @@ namespace Events
       Arguments to construct the class (variadic)
     ************************************************************************/
 #define QUEUE_EVENT(EventClass, ...) \
-  Events::EventManager::GetInstance().QueueEvent(std::make_shared<EventClass>(__VA_ARGS__))
+  Events::EventManager::GetInstance().QueueEvent<EventClass>(std::make_shared<EventClass>(__VA_ARGS__))
 
 } // namespace Events

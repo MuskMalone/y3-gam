@@ -46,9 +46,9 @@ namespace Scenes
 #endif
 
     // subscribe to scene events
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::LOAD_SCENE, &SceneManager::OnSceneLoad, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SAVE_SCENE, &SceneManager::OnSceneSave, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &SceneManager::OnPrefabEditor, this);
+    SUBSCRIBE_CLASS_FUNC(Events::LoadSceneEvent, &SceneManager::OnSceneLoad, this);
+    SUBSCRIBE_CLASS_FUNC(Events::SaveSceneEvent, &SceneManager::OnSceneSave, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EditPrefabEvent, &SceneManager::OnPrefabEditor, this);
   }
 
   void SceneManager::PauseScene() {

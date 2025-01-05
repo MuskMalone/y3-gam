@@ -72,7 +72,7 @@ namespace GUI
     mCurrentDir{ gAssetsDirectory }, mRightClickedDir{},
     mSelectedAsset{}, mDirMenuPopup{ false }, mAssetMenuPopup{ false }
   {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::ADD_FILES, &AssetBrowser::FilesImported, this);
+    SUBSCRIBE_CLASS_FUNC(Events::AddFilesFromExplorerEvent, &AssetBrowser::FilesImported, this);
   }
 
   void AssetBrowser::Run()

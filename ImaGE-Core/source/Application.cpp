@@ -82,8 +82,8 @@ namespace IGE {
         glfwSetInputMode(mWindow.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     }
 
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::TRIGGER_PAUSED_UPDATE, &Application::OnPausedUpdateTrigger, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::LOCK_MOUSE, &Application::LockMouse, this);
+    SUBSCRIBE_CLASS_FUNC(Events::TriggerPausedUpdate, &Application::OnPausedUpdateTrigger, this);
+    SUBSCRIBE_CLASS_FUNC(Events::LockMouseEvent, &Application::LockMouse, this);
   }
 
   void Application::Run() {

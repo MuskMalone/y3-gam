@@ -48,12 +48,12 @@ namespace GUI
     mRightClickedEntity{}, mRightClickMenu{ false }, mEntityOptionsMenu{ false },
     mPrefabPopup{ false }, mFirstTimePfbPopup{ true }, mEditingPrefab{ false }, mLockControls{ false }, mSceneModified{ false }
   {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &SceneHierarchy::HandleEvent, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &SceneHierarchy::HandleEvent, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_MODIFIED, &SceneHierarchy::HandleEvent, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_PICKED, &SceneHierarchy::OnEntityPicked, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::LOAD_SCENE, &SceneHierarchy::OnSceneLoad, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SAVE_SCENE, &SceneHierarchy::OnSceneSave, this);
+    SUBSCRIBE_CLASS_FUNC(Events::SceneStateChange, &SceneHierarchy::OnSceneStateChange, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EditPrefabEvent, &SceneHierarchy::OnPrefabEdit, this);
+    SUBSCRIBE_CLASS_FUNC(Events::SceneModifiedEvent, &SceneHierarchy::OnSceneModified, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EntityScreenPicked, &SceneHierarchy::OnEntityPicked, this);
+    SUBSCRIBE_CLASS_FUNC(Events::LoadSceneEvent, &SceneHierarchy::OnSceneLoad, this);
+    SUBSCRIBE_CLASS_FUNC(Events::SaveSceneEvent, &SceneHierarchy::OnSceneSave, this);
 
     std::string const hierarchyConfigDir{ std::string(gEditorAssetsDirectory) + "Scenes" };
     if (!std::filesystem::is_directory(hierarchyConfigDir)) {
@@ -201,41 +201,34 @@ namespace GUI
     ImGui::End();
   }
 
-  EVENT_CALLBACK_DEF(SceneHierarchy, HandleEvent)
+  EVENT_CALLBACK_DEF(SceneHierarchy, OnSceneStateChange)
   {
-    switch (event->GetCategory())
+    auto sceneStateEvent{ CAST_TO_EVENT(Events::SceneStateChange) };
+    switch (sceneStateEvent->mNewState)
     {
-    case Events::EventType::EDIT_PREFAB:
-      mSceneName = CAST_TO_EVENT(Events::EditPrefabEvent)->mPrefab;
-      mEditingPrefab = true;
+    case Events::SceneStateChange::NEW:
+    case Events::SceneStateChange::CHANGED:
+      mSceneName = sceneStateEvent->mSceneName;
+      mEditingPrefab = mSceneModified = false;
       break;
-    case Events::EventType::SCENE_STATE_CHANGE:
-    {
-      auto sceneStateEvent{ CAST_TO_EVENT(Events::SceneStateChange) };
-      switch (sceneStateEvent->mNewState)
-      {
-      case Events::SceneStateChange::NEW:
-      case Events::SceneStateChange::CHANGED:
-        mSceneName = sceneStateEvent->mSceneName;
-        mEditingPrefab = mSceneModified = false;
-        break;
-      case Events::SceneStateChange::STOPPED:
-        mEditingPrefab = false;
-        mSceneName.clear();
-        break;
-      default: break;
-      }
-
+    case Events::SceneStateChange::STOPPED:
+      mEditingPrefab = false;
+      mSceneName.clear();
       break;
+    default: break;
     }
-    case Events::EventType::SCENE_MODIFIED:
-      if (mSceneModified) { return; }
+  }
 
-      mSceneName += " *";
-      mSceneModified = true;
-      break;
-    default:break;
-    }
+  EVENT_CALLBACK_DEF(SceneHierarchy, OnPrefabEdit) {
+    mSceneName = CAST_TO_EVENT(Events::EditPrefabEvent)->mPrefab;
+    mEditingPrefab = true;
+  }
+
+  EVENT_CALLBACK_DEF(SceneHierarchy, OnSceneModified) {
+    if (mSceneModified) { return; }
+
+    mSceneName += " *";
+    mSceneModified = true;
   }
 
   EVENT_CALLBACK_DEF(SceneHierarchy, OnEntityPicked) {

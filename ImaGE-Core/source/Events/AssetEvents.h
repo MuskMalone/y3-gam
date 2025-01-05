@@ -8,7 +8,7 @@ namespace Events {
   class AddFilesFromExplorerEvent : public Event
   {
   public:
-    AddFilesFromExplorerEvent(int pathCount, const char* paths[]) : Event(EventType::ADD_FILES) {
+    AddFilesFromExplorerEvent(int pathCount, const char* paths[]) : Event() {
       for (int i{}; i < pathCount; ++i) {
         mPaths.emplace_back(paths[i]);
       }
@@ -21,8 +21,8 @@ namespace Events {
   class RegisterAssetsEvent : public Event
   {
   public:
-    RegisterAssetsEvent(std::vector<std::string> const& paths) : Event(EventType::REGISTER_FILES), mPaths{ paths } {}
-    RegisterAssetsEvent(std::vector<std::string>&& paths) : Event(EventType::REGISTER_FILES), mPaths{ std::move(paths) } {}
+    RegisterAssetsEvent(std::vector<std::string> const& paths) : Event(), mPaths{ paths } {}
+    RegisterAssetsEvent(std::vector<std::string>&& paths) : Event(), mPaths{ std::move(paths) } {}
     inline std::string GetName() const noexcept override { return "Registering " + std::to_string(mPaths.size()) + " files to AssetManager"; }
 
     std::vector<std::string> const mPaths;
@@ -32,7 +32,7 @@ namespace Events {
   class GUIDInvalidated : public Event
   {
   public:
-    GUIDInvalidated(ECS::Entity entity, IGE::Assets::GUID guid, std::string fileType) : Event(EventType::INVALID_GUID),
+    GUIDInvalidated(ECS::Entity entity, IGE::Assets::GUID guid, std::string fileType) : Event(),
       mEntity{ entity }, mGUID{ guid }, mFileType{ std::move(fileType) } {}
     inline std::string GetName() const noexcept override {
       return mFileType + " asset " + std::to_string(static_cast<uint64_t>(mGUID)) + " of Entity " + std::to_string(mEntity.GetEntityID()) + " has to be remapped";
@@ -46,7 +46,7 @@ namespace Events {
   class TriggerGUIDRemap: public Event
   {
   public:
-    TriggerGUIDRemap() : Event(EventType::TRIGGER_GUID_REMAP) {}
+    TriggerGUIDRemap() : Event() {}
     inline std::string GetName() const noexcept override { return "Triggering GUID remap interface"; }
   };
 
@@ -54,7 +54,7 @@ namespace Events {
   class RemapGUID : public Event
   {
   public:
-    RemapGUID(IGE::Assets::GUID guid, std::string path, std::string assetTypeName) : Event(EventType::GUID_REMAP),
+    RemapGUID(IGE::Assets::GUID guid, std::string path, std::string assetTypeName) : Event(),
       mPath{ std::move(path) }, mGUID{ guid }, mAssetType{ std::move(assetTypeName) } {}
     inline std::string GetName() const noexcept override {
       return "Adding guid " + std::to_string(static_cast<uint64_t>(mGUID)) + " to " + mPath;

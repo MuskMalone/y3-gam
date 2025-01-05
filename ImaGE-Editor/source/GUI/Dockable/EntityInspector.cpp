@@ -61,19 +61,11 @@ namespace ScriptInputs {
   template <typename T>
   bool ScriptInputField(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth);
 
-  SCRIPT_INPUT_FUNC_DECL(bool);
-  SCRIPT_INPUT_FUNC_DECL(int);
-  SCRIPT_INPUT_FUNC_DECL(float);
-  SCRIPT_INPUT_FUNC_DECL(double);
-  SCRIPT_INPUT_FUNC_DECL(std::string);
-  SCRIPT_INPUT_FUNC_DECL(glm::vec3);
-  SCRIPT_INPUT_FUNC_DECL(glm::dvec3);
-  SCRIPT_INPUT_FUNC_DECL(std::vector<int>);
-  SCRIPT_INPUT_FUNC_DECL(std::vector<float>);
-  SCRIPT_INPUT_FUNC_DECL(std::vector<double>);
-  SCRIPT_INPUT_FUNC_DECL(std::vector<std::string>);
-  SCRIPT_INPUT_FUNC_DECL(std::vector<MonoObject*>);
-  SCRIPT_INPUT_FUNC_DECL(Mono::ScriptInstance);
+  SCRIPT_INPUT_FUNC_DECL(bool); SCRIPT_INPUT_FUNC_DECL(int); SCRIPT_INPUT_FUNC_DECL(float);
+  SCRIPT_INPUT_FUNC_DECL(double); SCRIPT_INPUT_FUNC_DECL(std::string); SCRIPT_INPUT_FUNC_DECL(glm::vec3);
+  SCRIPT_INPUT_FUNC_DECL(glm::dvec3); SCRIPT_INPUT_FUNC_DECL(std::vector<int>); SCRIPT_INPUT_FUNC_DECL(std::vector<float>);
+  SCRIPT_INPUT_FUNC_DECL(std::vector<double>); SCRIPT_INPUT_FUNC_DECL(std::vector<std::string>);
+  SCRIPT_INPUT_FUNC_DECL(std::vector<MonoObject*>); SCRIPT_INPUT_FUNC_DECL(Mono::ScriptInstance);
 }
 
 namespace GUI {
@@ -111,9 +103,9 @@ namespace GUI {
     }
 
     // get notified when scene is saved
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SAVE_SCENE, &Inspector::HandleEvent, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &Inspector::HandleEvent, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &Inspector::HandleEvent, this);
+    SUBSCRIBE_CLASS_FUNC(Events::SaveSceneEvent, &Inspector::OnSceneSave, this);
+    SUBSCRIBE_CLASS_FUNC(Events::SceneStateChange, &Inspector::OnSceneStateChange, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EditPrefabEvent, &Inspector::OnPrefabEdit, this);
 
     // simple check to ensure all components have icons
     if (Reflection::gComponentTypes.size() != mComponentIcons.size()) {
@@ -469,29 +461,24 @@ namespace GUI {
     }
   }
 
-  EVENT_CALLBACK_DEF(Inspector, HandleEvent) {
-    switch (event->GetCategory()) {
-    case Events::EventType::SAVE_SCENE:
+  EVENT_CALLBACK_DEF(Inspector, OnSceneSave) {
       mIsComponentEdited = mFirstEdit = false;
-      break;
-    case Events::EventType::SCENE_STATE_CHANGE:
-    {
-      auto state{ CAST_TO_EVENT(Events::SceneStateChange)->mNewState };
-      // if changing to another scene, reset modified flag
-      if (state == Events::SceneStateChange::CHANGED) {
-        mIsComponentEdited = mFirstEdit = mEditingPrefab = false;
-      }
-      else if (state == Events::SceneStateChange::NEW) {
-        mIsComponentEdited = true;
-        mFirstEdit = mEditingPrefab = false;
-      }
-      break;
+  }
+
+  EVENT_CALLBACK_DEF(Inspector, OnSceneStateChange) {
+    auto state{ CAST_TO_EVENT(Events::SceneStateChange)->mNewState };
+    // if changing to another scene, reset modified flag
+    if (state == Events::SceneStateChange::CHANGED) {
+      mIsComponentEdited = mFirstEdit = mEditingPrefab = false;
     }
-    case Events::EventType::EDIT_PREFAB:
-      mEditingPrefab = true;
-      break;
-    default: break;
+    else if (state == Events::SceneStateChange::NEW) {
+      mIsComponentEdited = true;
+      mFirstEdit = mEditingPrefab = false;
     }
+  }
+
+  EVENT_CALLBACK_DEF(Inspector, OnPrefabEdit) {
+    mEditingPrefab = true;
   }
 
   void Inspector::DisplayRemovedComponent(rttr::type const& type) {

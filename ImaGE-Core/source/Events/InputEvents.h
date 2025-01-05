@@ -18,7 +18,7 @@ namespace Events
   class KeyTriggeredEvent : public Event
   {
   public:
-    KeyTriggeredEvent(KEY_CODE code) : Event(EventType::KEY_TRIGGERED), mCode{ code } {}
+    KeyTriggeredEvent(KEY_CODE code) : Event(), mCode{ code } {}
     inline KEY_CODE GetKey() const noexcept { return mCode; }
     inline std::string GetName() const noexcept override { return "Key Triggered"; }
 
@@ -29,7 +29,7 @@ namespace Events
   class KeyHeldEvent : public Event
   {
   public:
-    KeyHeldEvent(KEY_CODE code) : Event(EventType::KEY_HELD), mCode{ code } {}
+    KeyHeldEvent(KEY_CODE code) : Event(), mCode{ code } {}
     inline KEY_CODE GetKey() const noexcept { return mCode; }
     inline std::string GetName() const noexcept override { return "Key Held"; }
 
@@ -40,7 +40,7 @@ namespace Events
   class KeyReleasedEvent : public Event
   {
   public:
-    KeyReleasedEvent(KEY_CODE code) : Event(EventType::KEY_RELEASED), mCode{ code } {}
+    KeyReleasedEvent(KEY_CODE code) : Event(), mCode{ code } {}
     inline KEY_CODE GetKey() const noexcept { return mCode; }
     inline std::string GetName() const noexcept override { return "Key Released"; }
 
@@ -51,7 +51,7 @@ namespace Events
   class MouseTriggeredEvent : public Event
   {
   public:
-    MouseTriggeredEvent(KEY_CODE code) : Event(EventType::MOUSE_TRIGGERED), mCode{ code } {}
+    MouseTriggeredEvent(KEY_CODE code) : Event(), mCode{ code } {}
     inline KEY_CODE GetKey() const noexcept { return mCode; }
     inline std::string GetName() const noexcept override { return "Mouse Triggered"; }
 
@@ -62,7 +62,7 @@ namespace Events
   class MouseHeldEvent : public Event
   {
   public:
-    MouseHeldEvent(KEY_CODE code) : Event(EventType::MOUSE_HELD), mCode{ code } {}
+    MouseHeldEvent(KEY_CODE code) : Event(), mCode{ code } {}
     inline KEY_CODE GetKey() const noexcept { return mCode; }
     inline std::string GetName() const noexcept override { return "Mouse Held"; }
 
@@ -73,7 +73,7 @@ namespace Events
   class MouseReleasedEvent : public Event
   {
   public:
-    MouseReleasedEvent(KEY_CODE code) : Event(EventType::MOUSE_RELEASED), mCode{ code } {}
+    MouseReleasedEvent(KEY_CODE code) : Event(), mCode{ code } {}
     inline KEY_CODE GetKey() const noexcept { return mCode; }
     inline std::string GetName() const noexcept override { return "Mouse Released"; }
 

@@ -15,15 +15,15 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 using namespace Mono;
 
 Mono::ScriptingSystem::ScriptingSystem(const char* name) : System(name) {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_MOUSE_ENTER, &ScriptingSystem::HandleMouseEnter, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_MOUSE_EXIT, &ScriptingSystem::HandleMouseExit, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_MOUSE_DOWN, &ScriptingSystem::HandleMouseDown, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_MOUSE_UP, &ScriptingSystem::HandleMouseUp, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EntityMouseEnter, &ScriptingSystem::HandleMouseEnter, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EntityMouseExit, &ScriptingSystem::HandleMouseExit, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EntityMouseDown, &ScriptingSystem::HandleMouseDown, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EntityMouseUp, &ScriptingSystem::HandleMouseUp, this);
 
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::POINTER_ENTER, &ScriptingSystem::HandlePointerEnter, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::POINTER_EXIT, &ScriptingSystem::HandlePointerExit, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::POINTER_DOWN, &ScriptingSystem::HandlePointerDown, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::POINTER_UP, &ScriptingSystem::HandlePointerUp, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EntityPointerEnter, &ScriptingSystem::HandlePointerEnter, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EntityPointerExit, &ScriptingSystem::HandlePointerExit, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EntityPointerDown, &ScriptingSystem::HandlePointerDown, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EntityPointerUp, &ScriptingSystem::HandlePointerUp, this);
 }
 
 void ScriptingSystem::Update()

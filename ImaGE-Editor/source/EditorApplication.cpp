@@ -70,7 +70,7 @@ namespace IGE {
     // if more stuff requires it
     mGUIManager.Init(GetDefaultRenderTarget());
 
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SIGNAL, &EditorApplication::SignalCallback, this);
+    SUBSCRIBE_CLASS_FUNC(Events::SignalEvent, &EditorApplication::SignalCallback, this);
     
   }
 
