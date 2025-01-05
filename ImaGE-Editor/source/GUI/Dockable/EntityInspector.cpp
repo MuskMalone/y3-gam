@@ -96,9 +96,10 @@ namespace GUI {
     mObjFactory{ Reflection::ObjectFactory::GetInstance() },
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
     for (auto const& component : Reflection::gComponentTypes) {
-      mComponentOpenStatusMap[component.get_name().to_string().c_str()] = true;
+      mComponentOpenStatusMap[component.get_name().to_string()] = true;
     }
     // Workaround because the Reflection component name for Script is ScriptComponent for some odd reason
+    mComponentOpenStatusMap.erase(rttr::type::get<Component::Script>().get_name().to_string());
     mComponentOpenStatusMap["Script"] = true;
     mComponentOpenStatusMap["Prefab Overrides"] = true;
 

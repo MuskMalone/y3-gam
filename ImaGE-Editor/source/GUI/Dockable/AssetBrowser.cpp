@@ -90,6 +90,19 @@ namespace GUI
 
     ContentViewer();
 
+    // temp code to re-save meshes to new format
+    /*if (ImGui::IsKeyPressed(ImGuiKey_B)) {
+      for (auto const& file : std::filesystem::directory_iterator(std::string(gAssetsDirectory) + "Models\\Compiled")) {
+        Graphics::AssetIO::IMSH imsh{};
+        std::string const fp{ file.path().string() };
+        imsh.ReadFromBinFile(fp);
+
+        imsh.WriteToBinFile(fp);
+
+        IGE_DBGLOGGER.LogInfo("Re-saved " + file.path().stem().string());
+      }
+    }*/
+
     ImGui::EndChild();
 
     ImGui::End();

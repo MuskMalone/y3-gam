@@ -26,17 +26,13 @@ namespace Graphics {
     public:
       MeshSource(const std::shared_ptr<VertexArray>& vao, const std::vector<Submesh>& submeshes,
           const std::vector<Vertex>& vertices, const std::vector<uint32_t>& indices)
-          : mVertices{ vertices }, mMeshNames{}, mIndices{ indices }, mVertexArray{ vao }, mSubmeshes{ submeshes }, mBoundingBox{} {
-        ComputeBV();
-      }
+          : mVertices{ vertices }, mMeshNames{}, mIndices{ indices }, mVertexArray{ vao }, mSubmeshes{ submeshes }, mBoundingBox{} {}
 
       MeshSource(std::shared_ptr<VertexArray>&& vao,
         std::vector<Submesh>&& submeshes, std::vector<Vertex>&& vertices,
         std::vector<uint32_t>&& indices, std::vector<std::string>&& names)
         : mVertices{ std::move(vertices) }, mMeshNames{ names }, mIndices{ std::move(indices) },
-        mVertexArray{ std::move(vao) }, mSubmeshes{ std::move(submeshes) }, mBoundingBox{} {
-        ComputeBV();
-      }
+        mVertexArray{ std::move(vao) }, mSubmeshes{ std::move(submeshes) }, mBoundingBox{} {}
 
       const std::vector<Vertex>& GetVertices() const { return mVertices; }
       const std::vector<uint32_t>& GetIndices() const { return mIndices; }
@@ -59,6 +55,8 @@ namespace Graphics {
 
       BV::AABB const& GetBoundingBox() const { return mBoundingBox; }
 
+      void SetBoundingVolume(glm::vec3 const& min, glm::vec3 const& max);
+
       bool IsWireframe() { return mIsWireframe; }
       void ToggleWireframe() { mIsWireframe = !mIsWireframe; }
     private:
@@ -72,9 +70,6 @@ namespace Graphics {
       BV::AABB mBoundingBox;
       
       bool mIsWireframe{ false };
-
-      // @TODO: should be computed and read from IMSH file
-      void ComputeBV();
 
       //MATERIALS VECTOR TO ADD
 	};

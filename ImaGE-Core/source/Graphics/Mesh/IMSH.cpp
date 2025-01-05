@@ -71,6 +71,8 @@ namespace Graphics::AssetIO
     sFirstMaterialEncountered = false;
     ProcessMeshes(aiScn->mRootNode, aiScn);
 
+    ComputeBV();
+
     if (sRecenterMesh) {
       RecenterMesh();
     }
@@ -159,6 +161,7 @@ namespace Graphics::AssetIO
       ofs.write(reinterpret_cast<char const*>(mIndices.data()), header.idxSize * sizeof(uint32_t));
       ofs.write(reinterpret_cast<char const*>(mSubmeshData.data()), header.submeshSize * sizeof(SubmeshData));
       ofs.write(reinterpret_cast<char const*>(combinedNames.data()), header.nameSize);
+      ofs.write(reinterpret_cast<char const*>(&mMin), sizeof(glm::vec3) * 2); // write min and max
       ofs.write(reinterpret_cast<char const*>(&mIsStatic), sizeof(bool));
 
       ofs.close();
@@ -168,15 +171,16 @@ namespace Graphics::AssetIO
     mStatus = false;
 
     std::vector<Submesh> submeshes;
-    if (!mIsStatic) {
-      submeshes.reserve(mSubmeshData.size());
-      for (auto const& data : mSubmeshData) {
-        submeshes.emplace_back(data.baseVtx, data.baseIdx, data.vtxCount, data.idxCount,
-          0, glm::identity<glm::mat4>(), std::vector<uint32_t>());
-      }
+    submeshes.reserve(mSubmeshData.size());
+    for (auto const& data : mSubmeshData) {
+      submeshes.emplace_back(data.baseVtx, data.baseIdx, data.vtxCount, data.idxCount,
+        0, glm::identity<glm::mat4>(), std::vector<uint32_t>());
     }
 
-    return MeshSource(std::move(vao), std::move(submeshes), std::move(mVertexBuffer), std::move(mIndices), std::move(mMeshNames));
+    MeshSource meshSrc{ std::move(vao), std::move(submeshes), std::move(mVertexBuffer), std::move(mIndices), std::move(mMeshNames) };
+    meshSrc.SetBoundingVolume(mMin, mMax);
+
+    return meshSrc;
   }
 
   void IMSH::ReadFromBinFile(std::string const& file) {
@@ -196,6 +200,7 @@ namespace Graphics::AssetIO
     ifs.read(reinterpret_cast<char*>(mSubmeshData.data()), header.submeshSize * sizeof(SubmeshData));
     std::string buffer(header.nameSize, ' ');
     ifs.read(reinterpret_cast<char*>(buffer.data()), header.nameSize);
+    ifs.read(reinterpret_cast<char*>(&mMin), sizeof(glm::vec3) * 2);
     ifs.read(reinterpret_cast<char*>(&mIsStatic), sizeof(bool));
 
     // retrieve each name separated by the null-terminating character
@@ -209,16 +214,8 @@ namespace Graphics::AssetIO
   }
 
   void IMSH::RecenterMesh() {
-    glm::vec3 min{ FLT_MAX }, max{ -FLT_MAX };
-
-    // find the min and max AABB
-    for (Graphics::Vertex const& vtx : mVertexBuffer) {
-      min = glm::min(vtx.position, min);
-      max = glm::max(vtx.position, max);
-    }
-
     // get the center of the AABB
-    glm::vec3 const center{ (min + max) * 0.5f };
+    glm::vec3 const center{ (mMin + mMax) * 0.5f };
     // if already centered, return
     if (glm::all(glm::lessThan(glm::abs(center), glm::vec3(glm::epsilon<float>())))) { return; }
 
@@ -229,16 +226,8 @@ namespace Graphics::AssetIO
   }
 
   void IMSH::NormalizeScale() {
-    glm::vec3 min{ FLT_MAX }, max{ -FLT_MAX };
-
-    // find the min and max AABB
-    for (Graphics::Vertex const& vtx : mVertexBuffer) {
-      min = glm::min(vtx.position, min);
-      max = glm::max(vtx.position, max);
-    }
-
-    glm::vec3 const center{ sRecenterMesh ? glm::vec3() : (min + max) * 0.5f };
-    glm::vec3 const scale{ max - min };
+    glm::vec3 const center{ sRecenterMesh ? glm::vec3() : (mMin + mMax) * 0.5f };
+    glm::vec3 const scale{ mMax - mMin };
     float const maxScale{ std::min(scale.x, std::min(scale.y, scale.z)) };
     glm::mat4 transform{
       1.f / maxScale, 0.f, 0.f, 0.f,
@@ -255,6 +244,16 @@ namespace Graphics::AssetIO
     // transform all vertices
     for (Graphics::Vertex& vtx : mVertexBuffer) {
       vtx.position = transform * glm::vec4(vtx.position, 1.f);
+    }
+  }
+
+  void IMSH::ComputeBV() {
+    mMin = glm::vec3(FLT_MAX);
+    mMax = glm::vec3(-FLT_MAX);
+
+    for (Vertex const& vtx : mVertexBuffer) {
+      mMin = glm::min(mMin, vtx.position);
+      mMax = glm::max(mMax, vtx.position);
     }
   }
 
