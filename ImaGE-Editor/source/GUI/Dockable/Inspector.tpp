@@ -173,7 +173,14 @@ bool Inspector::DrawOptionsListButton(std::string const& windowName) {
           overrides->RemoveOverride<ComponentType>();
           try {
             Prefabs::Prefab const& pfb{ IGE_ASSETMGR.GetAsset<IGE::Assets::PrefabAsset>(overrides->guid)->mPrefabData };
-            IGE_OBJFACTORY.AddComponentToEntity(ent, pfb.GetSubObject(overrides->subDataId).GetComponent<ComponentType>());
+            rttr::variant const& compToRestore{ pfb.GetSubObject(overrides->subDataId).GetComponent<ComponentType>() };
+            if (compToRestore.is_valid()) {
+              IGE_OBJFACTORY.AddComponentToEntity(ent, compToRestore);
+            }
+            else {
+              ent.RemoveComponent<ComponentType>();
+              openMainWindow = false;
+            }
           }
           catch (Debug::ExceptionBase&) {
             IGE_DBGLOGGER.LogError("Unable to fetch prefab " + std::to_string(overrides->guid));

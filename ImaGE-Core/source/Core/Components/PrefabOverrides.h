@@ -114,8 +114,6 @@ namespace Component {
     void Reset() noexcept {
       modifiedComponents.clear();
       removedComponents.clear();
-      guid = {};
-      subDataId = Prefabs::PrefabSubData::BasePrefabId;
     }
 
     std::unordered_set<rttr::type> modifiedComponents, removedComponents;

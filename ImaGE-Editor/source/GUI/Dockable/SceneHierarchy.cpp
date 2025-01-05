@@ -529,25 +529,45 @@ namespace GUI
       {
         Component::PrefabOverrides& overrides{ mRightClickedEntity.GetComponent<Component::PrefabOverrides>() };
         if (ImGui::BeginMenu("Prefab")) {
-          /* if (ImGui::MenuItem("Reset All Overrides")) {
+          if (ImGui::MenuItem("Reset All Overrides")) {
+            try {
+              Reflection::ObjectFactory& of{ IGE_OBJFACTORY };
+              Prefabs::Prefab const& pfb{ IGE_ASSETMGR.GetAsset<IGE::Assets::PrefabAsset>(overrides.guid)->mPrefabData };
+              std::vector<rttr::variant> const comps{ of.GetEntityComponents(mRightClickedEntity) };
 
-           }*/
+              for (rttr::variant const& comp : comps) {
+                rttr::variant const& compToRestore{ pfb.GetSubObject(overrides.subDataId).GetComponent(comp.get_type()) };
+                
+                if (compToRestore.is_valid()) {
+                  of.AddComponentToEntity(mRightClickedEntity, compToRestore);
+                }
+                else {
+                  of.RemoveComponentFromEntity(mRightClickedEntity, comp.get_type());
+                }
+              }
+            }
+            catch (Debug::ExceptionBase&) {
+              IGE_DBGLOGGER.LogError("Unable to fetch prefab " + std::to_string(overrides.guid));
+            }
 
-if (overrides.IsRoot()) {
-  // only allow detaching from the root entity
-  if (ImGui::MenuItem("Detach Instance")) {
-    RemovePrefabOverrides(mRightClickedEntity, overrides.guid);
-    modified = true;
-  }
-}
-else {
-  // get root entity of prefab
-  if (ImGui::MenuItem("Select Root")) {
-    GUIVault::SetSelectedEntity(GetPrefabRoot(mRightClickedEntity));
-  }
-}
+            overrides.Reset();
+          }
 
-ImGui::EndMenu();
+          if (overrides.IsRoot()) {
+            // only allow detaching from the root entity
+            if (ImGui::MenuItem("Detach Instance")) {
+              RemovePrefabOverrides(mRightClickedEntity, overrides.guid);
+              modified = true;
+            }
+          }
+          else {
+            // get root entity of prefab
+            if (ImGui::MenuItem("Select Root")) {
+              GUIVault::SetSelectedEntity(GetPrefabRoot(mRightClickedEntity));
+            }
+          }
+
+          ImGui::EndMenu();
         }
       }
 
