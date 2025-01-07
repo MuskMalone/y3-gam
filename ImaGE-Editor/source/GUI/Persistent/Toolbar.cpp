@@ -15,6 +15,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Prefabs/PrefabManager.h>
 #include <Asset/IGEAssets.h>
 #include <Serialization/Serializer.h>
+#include <Core/Components/Light.h>
+#include "Scenes/SceneManager.h"
 
 #include <filesystem>
 #include <imgui/imgui.h>
@@ -235,6 +237,23 @@ namespace GUI
           ImGui::EndMenu();
         }
 
+        ImGui::EndMenu();
+      }
+      if(!Scenes::SceneManager::GetInstance().NoSceneSelected()){
+        if (ImGui::BeginMenu("Lighting")) {
+          if (ImGui::BeginTable("##LightTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+            ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, 175);
+            ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, 200);
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0); ImGui::Text("Ambient Intensity: ");
+            ImGui::TableSetColumnIndex(1); ImGui::DragFloat("##AmbIn", &(Component::Light::ambIntensity), 0.5f, 0.f, FLT_MAX, "%.2f");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0); ImGui::Text("Ambient Color");
+            ImGui::TableSetColumnIndex(1); ImGui::ColorEdit4("##Ambc", &(Component::Light::ambColor[0]), ImGuiColorEditFlags_NoAlpha);
+
+            ImGui::EndTable();
+          }
+        }
         ImGui::EndMenu();
       }
 

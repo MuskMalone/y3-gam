@@ -1062,5 +1062,8 @@
     <ClCompile Include="source\Core\Systems\TransformSystem\PreTransformSystem.cpp" />
     <ClCompile Include="source\Core\Systems\TransformSystem\PostTransformSystem.cpp" />
     <ClCompile Include="source\Serialization\PfbOverridesData.cpp" />
+    <ClCompile Include="Light.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

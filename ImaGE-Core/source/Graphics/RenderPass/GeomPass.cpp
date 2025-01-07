@@ -9,6 +9,7 @@
 #include <Graphics/RenderPass/ShadowPass.h>
 #include "Graphics/MaterialData.h"
 #include "Graphics/RenderAPI.h"
+#include "Scenes/SceneManager.h"
 
 namespace {
   template <unsigned N>
@@ -275,5 +276,15 @@ namespace {
     shader->SetUniform("u_OuterSpotAngle", u_OuterSpotAngle, N);
     shader->SetUniform("u_LightIntensity", u_LightIntensity, N);
     shader->SetUniform("u_Range", u_Range, N);
+    if (!Scenes::SceneManager::GetInstance().NoSceneSelected())
+    {
+      shader->SetUniform("u_AmbientLight", Component::Light::ambColor*Component::Light::ambIntensity);
+    }
+    else
+      shader->SetUniform("u_AmbientLight", glm::vec3());
+  
+
+
+    
   }
 }

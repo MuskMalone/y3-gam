@@ -51,7 +51,7 @@ const int typeSpot = 1;
 const int maxLights = 30;
 uniform vec3 u_CamPos;       // Camera position in world space
 uniform int numlights;
-
+uniform vec3 u_AmbientLight; 
 
 uniform int u_type[maxLights];       // Camera position in world space
 
@@ -147,7 +147,7 @@ void main(){
         Lo += (kD * albedo / PI + specular) * lightColor * NdotL * (1.0 - shadow);
     }
 
-    vec3 ambient = vec3(0.01) * albedo * mat.AO;
+    vec3 ambient =  u_AmbientLight * albedo * mat.AO;
 
     vec3 emission = albedo * mat.Emission; // Uniform emission
     vec3 color = ambient + Lo + emission;

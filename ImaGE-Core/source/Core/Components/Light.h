@@ -62,6 +62,9 @@ namespace Component {
 			castShadows = false;
 		}
 
+		static glm::vec3 ambColor;
+		static float ambIntensity;
+
 		glm::vec3 forwardVec;		// Set default forward vector to face the -z-axis
 		glm::vec3 color;				// Color of the light
 		LightType type;
