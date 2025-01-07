@@ -63,6 +63,9 @@ namespace IGE {
     Systems::SystemManager::GetInstance().InitSystems();
     Graphics::RenderSystem::Init();
 
+    SUBSCRIBE_CLASS_FUNC(Events::TriggerPausedUpdate, &Application::OnPausedUpdateTrigger, this);
+    SUBSCRIBE_CLASS_FUNC(Events::LockMouseEvent, &Application::LockMouse, this);
+
     int width, height;
     glfwGetFramebufferSize(mWindow.get(), &width, &height);
     glViewport(0, 0, width, height);
@@ -81,9 +84,6 @@ namespace IGE {
         glfwSetCursorPos(mWindow.get(), mSpecification.WindowWidth / 2.0, mSpecification.WindowHeight / 2.0);
         glfwSetInputMode(mWindow.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     }
-
-    SUBSCRIBE_CLASS_FUNC(Events::TriggerPausedUpdate, &Application::OnPausedUpdateTrigger, this);
-    SUBSCRIBE_CLASS_FUNC(Events::LockMouseEvent, &Application::LockMouse, this);
   }
 
   void Application::Run() {
