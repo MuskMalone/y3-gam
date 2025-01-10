@@ -19,9 +19,6 @@ namespace Graphics {
     else if (meshName == "Capsule") {
         return CreateCapsule();
     }
-    else if (meshName == "None") {
-        return MeshSource{ {},{},{},{} };
-    }
 
     throw Debug::Exception<MeshFactory>(Debug::LVL_ERROR, Msg("[MeshFactory] No such model exists: " + meshName));
   }

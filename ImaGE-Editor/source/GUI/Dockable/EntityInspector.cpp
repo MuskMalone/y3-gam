@@ -1136,7 +1136,7 @@ namespace GUI {
     if (isOpen) {
       Component::Mesh& mesh{ entity.GetComponent<Component::Mesh>() };
       static const std::vector<const char*> meshNames{
-        "None", "Cube", "Plane", "Sphere", "Capsule"
+        "Cube", "Plane", "Sphere", "Capsule"
       };
 
       float const inputWidth{ CalcInputWidth(60.f) };
@@ -1146,49 +1146,13 @@ namespace GUI {
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
-      // dont think we need this anymore
-#ifdef MESH_DRAG_DROP
-      NextRowTable("");
-      ImVec2 boxSize = ImVec2(200.0f, 40.0f);
-      ImVec2 cursorPos = ImGui::GetCursorScreenPos();
-      ImVec2 boxEnd = ImVec2(cursorPos.x + boxSize.x, cursorPos.y + boxSize.y);
-      ImGui::BeginChild("DragDropTargetBox", boxSize, false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
-      ImGui::GetWindowDrawList()->AddRect(cursorPos, boxEnd, IM_COL32(0, 0, 0, 255), 0.0f, 0, 1.0f);
-      ImVec2 textSize = ImGui::CalcTextSize("Drag here to add mesh");
-      ImVec2 textPos = ImVec2(
-        cursorPos.x + (boxSize.x - textSize.x) * 0.5f,
-        cursorPos.y + (boxSize.y - textSize.y) * 0.5f
-      );
-      ImGui::SetCursorScreenPos(textPos);
-      ImGui::TextUnformatted("Drag here to add mesh");
-      ImGui::EndChild();
-
-      // allow dropping of models
-      if (ImGui::BeginDragDropTarget()) {
-        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
-        if (drop) {
-          AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
-          if (assetPayload.mAssetType == AssetPayload::MODEL) {
-            //auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
-            mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath());
-            mesh.meshName = assetPayload.GetFileName();
-            mesh.isCustomMesh = true;
-            modified = true;
-          }
-        }
-        ImGui::EndDragDropTarget();
-      }
-#endif
-
       NextRowTable("Mesh Type");
       if (ImGui::BeginCombo("##MeshSelection", mesh.meshName.c_str())) {
         for (unsigned i{}; i < meshNames.size(); ++i) {
           const char* selected{ meshNames[i] };
           if (ImGui::Selectable(selected)) {
             try {
-              if (i != 0) {
-                mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(selected);
-              }
+              mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(selected);
 
               if (selected != mesh.meshName) {
                 modified = true;

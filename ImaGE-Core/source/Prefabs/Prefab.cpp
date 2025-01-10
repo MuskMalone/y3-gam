@@ -24,7 +24,7 @@ PrefabSubData::PrefabSubData() : mParent{ BasePrefabId } {}
 PrefabSubData::PrefabSubData(SubDataId id, SubDataId parent) :
   mComponents{}, mId{ id }, mParent{ parent } {}
 
-rttr::variant const& PrefabSubData::GetComponent(rttr::type const& type) const {
+rttr::variant PrefabSubData::GetComponent(rttr::type const& type) const {
   for (rttr::variant const& component : mComponents) {
     if (component.get_type() == type) {
       return component;

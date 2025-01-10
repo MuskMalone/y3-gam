@@ -33,7 +33,7 @@ namespace GUI
     ECS::EntityManager& mEntityManager;
     std::string mSceneName;
     ECS::Entity mRightClickedEntity; // used to hold the entity the menu was opened on
-    bool mRightClickMenu, mEntityOptionsMenu, mPrefabPopup, mFirstTimePfbPopup;
+    bool mEntityOptionsMenu, mPrefabPopup, mFirstTimePfbPopup, mEntityRightClicked;
     bool mEditingPrefab, mLockControls, mSceneModified;
 
     static inline constexpr char sDragDropPayload[] = "ENTITY";
@@ -57,7 +57,7 @@ namespace GUI
     \param entity
       The current entity being displayed
     ************************************************************************/
-    void RecurseDownHierarchy(ECS::Entity entity);
+    void RecurseDownHierarchy(ECS::Entity entity, float nodeToLabelSpacing);
 
     /*!*********************************************************************
     \brief
@@ -67,19 +67,7 @@ namespace GUI
     \param collapsed
       Whether the node is collapsed
     ************************************************************************/
-    void ProcessInput(ECS::Entity entity, bool collapsed);
-
-    /*!*********************************************************************
-    \brief
-      Runs the right-click menu when it is triggered
-    ************************************************************************/
-    bool RunRightClickMenu();
-
-    /*!*********************************************************************
-    \brief
-      Displays the contents of the right-click menu
-    ************************************************************************/
-    bool RunEntityOptions();
+    void ProcessInput(ECS::Entity entity, bool collapsed, float nodeToLabelSpacing);
 
     /*!*********************************************************************
     \brief
@@ -120,6 +108,19 @@ namespace GUI
     EVENT_CALLBACK_DECL(OnSceneLoad);
 
     HierarchyConfig GetTreeNodeStates() const;
+
+#pragma region RightClickMenu
+    /*!*********************************************************************
+    \brief
+      Runs the right-click menu when it is triggered
+    ************************************************************************/
+    bool RunRightClickMenu(bool entitySelected);
+
+    bool MeshMenu(bool entitySelected);
+    bool LightMenu(bool entitySelected);
+    bool CreateEmptyParent();
+    bool PrefabMenu();
+#pragma endregion
 
     void SceneModified();
   };

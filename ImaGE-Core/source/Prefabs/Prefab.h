@@ -34,9 +34,9 @@ namespace Prefabs
     PrefabSubData();
     PrefabSubData(SubDataId id, SubDataId parent = BasePrefabId);
 
-    rttr::variant const& GetComponent(rttr::type const& type) const;
+    rttr::variant GetComponent(rttr::type const& type) const;
     template <typename T>
-    rttr::variant const& GetComponent() const { return GetComponent(rttr::type::get<T>()); }
+    rttr::variant GetComponent() const { return GetComponent(rttr::type::get<T>()); }
 
     /*!*********************************************************************
     \brief
