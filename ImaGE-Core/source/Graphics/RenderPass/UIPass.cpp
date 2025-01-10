@@ -70,7 +70,7 @@ namespace Graphics {
 			ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
 			// if no children, early exit
 			if (!entityMan.HasChild(entity)) {
-				IGE_DBGLOGGER.LogWarning("Canvas entity requires a child");
+				//GE_DBGLOGGER.LogWarning("Canvas entity requires a child");
 				Renderer::RenderSceneEnd();
 				End();
 				return;

@@ -799,6 +799,7 @@ namespace GUI {
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
+#ifdef OLD_DRAG_DROP
       NextRowTable("Drag Drop Box");
       ImVec2 boxSize = ImVec2(200.0f, 40.0f); // Width and height of the box
       ImVec2 cursorPos = ImGui::GetCursorScreenPos();
@@ -833,8 +834,9 @@ namespace GUI {
         }
         ImGui::EndDragDropTarget();
       }
+#endif
 
-      std::string fontText = (text.fontFamilyName == "None") ? "[None]" : text.fontFamilyName;
+      std::string fontText = (text.fontFamilyName == "None") ? "[Drag Font Here]" : text.fontFamilyName;
       NextRowTable("Font Family");
       ImGui::BeginDisabled();
       ImGui::InputText("##FontTextInput", &fontText);

@@ -118,6 +118,7 @@ namespace GUI
 
     bool MeshMenu(bool entitySelected);
     bool LightMenu(bool entitySelected);
+    bool UIMenu(bool entitySelected);
     bool CreateEmptyParent();
     bool PrefabMenu();
 #pragma endregion

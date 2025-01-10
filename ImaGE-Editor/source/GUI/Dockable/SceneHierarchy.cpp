@@ -39,6 +39,7 @@ namespace {
 
   void ReassignSubmeshIndices(ECS::Entity root);
   void LoadHierarchyState();
+  ECS::Entity GetCanvasEntity();
 }
 
 namespace GUI
@@ -243,8 +244,8 @@ namespace GUI
 
   void SceneHierarchy::RecurseDownHierarchy(ECS::Entity entity, float nodeToLabelSpacing)
   {
-    bool const isCurrentEntity{ sEntityToRename == entity || GUIVault::IsEntitySelected(entity) },
-      isEditMode{ isCurrentEntity && sEditNameMode };
+    bool const isCurrentEntity{ GUIVault::GetSelectedEntity() == entity || GUIVault::IsEntitySelected(entity)},
+      isEditMode{ sEntityToRename == entity && sEditNameMode };
     // set the flag accordingly
     ImGuiTreeNodeFlags treeFlag{ ImGuiTreeNodeFlags_SpanFullWidth };
     bool const hasChildren{ mEntityManager.HasChild(entity) };
@@ -521,6 +522,23 @@ namespace GUI
         modified = true;
       }
 
+      if (ImGui::Selectable("Camera")) {
+        ECS::Entity newEntity{ mEntityManager.CreateEntityWithTag("Camera") };
+        newEntity.EmplaceComponent<Component::Camera>().fov = 60.f;
+
+        if (entitySelected) {
+          mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
+          CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
+        }
+        modified = true;
+      }
+
+      // Create UI
+      if (UIMenu(entitySelected)) {
+        modified = true;
+      }
+
+
       ImGui::EndPopup();
     }
     // reset flag for entity selected
@@ -533,7 +551,7 @@ namespace GUI
 
   bool SceneHierarchy::MeshMenu(bool entitySelected) {
     const char* meshName{ nullptr };
-    if (ImGui::BeginMenu("Create Object")) {
+    if (ImGui::BeginMenu("Object")) {
       if (ImGui::Selectable("Cube")) { meshName = "Cube"; }
 
       if (ImGui::Selectable("Sphere")) { meshName = "Sphere"; }
@@ -545,8 +563,7 @@ namespace GUI
       if (ImGui::Selectable("Quad")) { meshName = "Quad"; }
 
       if (meshName) {
-        ECS::Entity newEntity{ mEntityManager.CreateEntity() };
-        newEntity.SetTag(meshName);
+        ECS::Entity newEntity{ mEntityManager.CreateEntityWithTag(meshName) };
         newEntity.EmplaceComponent<Component::Mesh>(meshName);
         GUIVault::SetSelectedEntity(newEntity);
 
@@ -564,21 +581,19 @@ namespace GUI
 
   bool SceneHierarchy::LightMenu(bool entitySelected) {
     bool modified{ false };
-    if (ImGui::BeginMenu("Create Light")) {
+    if (ImGui::BeginMenu("Light")) {
       ECS::Entity newEntity{};
 
       if (ImGui::Selectable("Directional")) {
-        newEntity = mEntityManager.CreateEntity();
+        newEntity = mEntityManager.CreateEntityWithTag("Directional Light");
 
-        newEntity.SetTag("Directional Light");
         newEntity.EmplaceComponent<Component::Light>(Component::DIRECTIONAL);
         modified = true;
       }
 
       if (ImGui::Selectable("Spotlight")) {
-        newEntity = mEntityManager.CreateEntity();
+        newEntity = mEntityManager.CreateEntityWithTag("SpotLight");
 
-        newEntity.SetTag("SpotLight");
         newEntity.EmplaceComponent<Component::Light>(Component::SPOTLIGHT);
         modified = true;
       }
@@ -597,6 +612,83 @@ namespace GUI
     }
 
     return modified;
+  }
+
+  bool SceneHierarchy::UIMenu(bool entitySelected) {
+    ECS::Entity newEntity{};
+    if (ImGui::BeginMenu("UI")) {
+      bool canvasCreated{ false };
+      if (ImGui::Selectable("Image")) {
+        newEntity = mEntityManager.CreateEntityWithTag("Image");
+        newEntity.EmplaceComponent<Component::Image>();
+      }
+
+      if (ImGui::Selectable("Text")) {
+        newEntity = mEntityManager.CreateEntityWithTag("Text");
+        newEntity.EmplaceComponent<Component::Text>();
+      }
+
+      ImGui::Separator();
+
+      if (ImGui::Selectable("Canvas")) {
+        newEntity = mEntityManager.CreateEntityWithTag("Canvas");
+        newEntity.EmplaceComponent<Component::Canvas>();
+        canvasCreated = true;
+      }
+
+      if (newEntity) {
+        GUIVault::SetSelectedEntity(newEntity);
+
+        if (entitySelected) {
+          // check if under canvas
+          bool const valid{ mRightClickedEntity.HasComponent<Component::Canvas>()
+              || ImGuiHelpers::IsUnderCanvasEntity(mRightClickedEntity) };
+
+          // if canvas created or under canvas, simply nest under the right-clicked entity
+          if (canvasCreated || valid) {
+            mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
+            CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
+          }
+          // else we create a new canvas to hold the new entity,
+          // then set the canvas to be the child of the right-clicked entity
+          else {
+            ECS::Entity canvas{ mEntityManager.CreateEntityWithTag("Canvas") };
+            canvas.EmplaceComponent<Component::Canvas>();
+
+            mEntityManager.SetParentEntity(canvas, newEntity);
+            mEntityManager.SetParentEntity(mRightClickedEntity, canvas);
+
+            // set world transform of both canvas and new entity equal to the parent
+            Component::Transform& canvasTrans{ canvas.GetComponent<Component::Transform>() };
+            CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), canvasTrans);
+            CopyWorldTransform(canvasTrans, newEntity.GetComponent<Component::Transform>());
+          }
+        }
+        else {
+          // canvas created - default behavior
+          if (canvasCreated) {
+            mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
+            CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
+          }
+          // entity created at root level - look for the canvas
+          // and set the new entity as its child
+          else {
+            ECS::Entity canvas{ GetCanvasEntity() };
+            if (!canvas) {
+              canvas = mEntityManager.CreateEntityWithTag("Canvas");
+              canvas.EmplaceComponent<Component::Canvas>();
+            }
+
+            mEntityManager.SetParentEntity(canvas, newEntity);
+            CopyWorldTransform(canvas.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
+          }
+        }
+      }
+
+      ImGui::EndMenu();
+    }
+
+    return newEntity;
   }
 
   bool SceneHierarchy::CreateEmptyParent() {
@@ -849,5 +941,10 @@ namespace {
     for (GUI::HierarchyEntry const& entry : hierarchyCfg.collapsedNodes) {
       stateStore->SetInt(entry.stackId, entry.isOpen ? 1 : 0);
     }
+  }
+
+  ECS::Entity GetCanvasEntity() {
+    auto const canvases{ IGE_ENTITYMGR.GetAllEntitiesWithComponents<Component::Canvas>() };
+    return canvases.empty() ? ECS::Entity() : canvases.front();
   }
 }
