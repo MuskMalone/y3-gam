@@ -78,6 +78,8 @@ namespace GUI
 
     void RenameEntity(ECS::Entity entity);
 
+    void TriggerRename();
+
     /*!*********************************************************************
     \brief
       Resets the variables used to enable editing of entity name

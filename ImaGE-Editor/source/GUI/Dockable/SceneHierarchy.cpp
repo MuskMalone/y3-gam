@@ -468,6 +468,7 @@ namespace GUI
             em.HasParent(mRightClickedEntity) ? em.GetParentEntity(mRightClickedEntity) : ECS::Entity()) };
           newEntity.GetComponent<Component::Tag>().tag += " (Copy)";
           GUIVault::SetSelectedEntity(newEntity);
+          TriggerRename();
 
           modified = true;
         }
@@ -502,24 +503,28 @@ namespace GUI
           CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
         }
         GUIVault::SetSelectedEntity(newEntity);
-        modified = sEditNameMode = mLockControls = true;
+        modified = true;
+        TriggerRename();
       }
 
       // Create Empty Parent
       if (entitySelected) {
         if (CreateEmptyParent()) {
-          modified = sEditNameMode = mLockControls = true;
+          modified = true;
+          TriggerRename();
         }
       }
 
       // Create Object
       if (MeshMenu(entitySelected)) {
         modified = true;
+        TriggerRename();
       }
 
       // Create Light
       if (LightMenu(entitySelected)) {
         modified = true;
+        TriggerRename();
       }
 
       if (ImGui::Selectable("Camera")) {
@@ -530,12 +535,16 @@ namespace GUI
           mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
           CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
         }
+
+        GUIVault::SetSelectedEntity(newEntity);
         modified = true;
+        TriggerRename();
       }
 
       // Create UI
       if (UIMenu(entitySelected)) {
         modified = true;
+        TriggerRename();
       }
 
 
@@ -664,24 +673,17 @@ namespace GUI
             CopyWorldTransform(canvasTrans, newEntity.GetComponent<Component::Transform>());
           }
         }
-        else {
-          // canvas created - default behavior
-          if (canvasCreated) {
-            mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
-            CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
-          }
-          // entity created at root level - look for the canvas
+        // entity created at root level - look for the canvas
           // and set the new entity as its child
-          else {
-            ECS::Entity canvas{ GetCanvasEntity() };
-            if (!canvas) {
-              canvas = mEntityManager.CreateEntityWithTag("Canvas");
-              canvas.EmplaceComponent<Component::Canvas>();
-            }
-
-            mEntityManager.SetParentEntity(canvas, newEntity);
-            CopyWorldTransform(canvas.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
+        else if (!canvasCreated) {
+          ECS::Entity canvas{ GetCanvasEntity() };
+          if (!canvas) {
+            canvas = mEntityManager.CreateEntityWithTag("Canvas");
+            canvas.EmplaceComponent<Component::Canvas>();
           }
+
+          mEntityManager.SetParentEntity(canvas, newEntity);
+          CopyWorldTransform(canvas.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
         }
       }
 
@@ -867,6 +869,11 @@ namespace GUI
     }
 
     return ret;
+  }
+
+  void SceneHierarchy::TriggerRename() {
+    sEntityToRename = GUIVault::GetSelectedEntity();
+    sEditNameMode = mLockControls = true;
   }
 
   void SceneHierarchy::SceneModified() {
