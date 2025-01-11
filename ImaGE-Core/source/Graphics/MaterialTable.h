@@ -46,5 +46,7 @@ namespace Graphics {
         static std::vector<std::shared_ptr<MaterialData>> mMaterials;
         static GLuint mMaterialSSBO;
         static std::vector<Graphics::MaterialProperties> mMaterialPropsBuffer;
+
+        static void AddDefaultMaterial();
     };
 }

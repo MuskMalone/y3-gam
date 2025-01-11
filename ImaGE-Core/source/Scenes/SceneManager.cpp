@@ -93,6 +93,7 @@ namespace Scenes
   void SceneManager::ClearScene() {
     mSceneName.clear();
     IGE::Physics::PhysicsSystem::GetInstance()->ClearSystem();
+    Graphics::MaterialTable::ClearMaterials();
   }
 
   void SceneManager::UnloadScene()

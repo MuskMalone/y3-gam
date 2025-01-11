@@ -181,14 +181,6 @@ namespace Graphics {
 		IGE::Assets::GUID texguid{ Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
 		//Init Materials
 		MaterialTable::Init(mData.cMaxMaterials);
-		// Create a default material with a default shader and properties
-		std::shared_ptr<MaterialData> defaultMaterial = MaterialData::Create("PBR", "Default"); //should probably shift all this in MaterialTable Init
-		defaultMaterial->SetAlbedoColor(glm::vec3(1.0f));  // Set default white albedo
-		defaultMaterial->SetMetalness(0.0f);
-		defaultMaterial->SetRoughness(1.0f);
-
-		// Add default material to the table (e.g., at index 0)
-		MaterialTable::AddMaterial(defaultMaterial);
 
 		//std::shared_ptr<MaterialData> mat1 = MaterialData::Create("PBR", "MatLighting");
 		//mat1->SetAlbedoMap(texguid1);
