@@ -83,8 +83,8 @@ namespace Graphics {
 		uint32_t cMaxMaterials{64};
 
 		//------------------Mesh Batching-----------------------------------//
-		static const uint32_t cMaxVertices = 0;
-		static const uint32_t cMaxIndices = cMaxVertices * 3;
+		static constexpr uint32_t cMaxVertices = 0;
+		static constexpr uint32_t cMaxIndices = cMaxVertices * 3;
 
 		std::shared_ptr<VertexArray> meshVertexArray;
 		std::shared_ptr<VertexBuffer> meshVertexBuffer;
@@ -98,9 +98,9 @@ namespace Graphics {
 
 		//------------------2D Quad Batching--------------------------------//
 		
-		static const uint32_t cMaxQuads{ 20000 };
-		static const uint32_t cMaxVertices2D{ cMaxQuads * 4 };
-		static const uint32_t cMaxIndices2D{ cMaxQuads * 6 };
+		static constexpr uint32_t cMaxQuads{ 20000 };
+		static constexpr uint32_t cMaxVertices2D{ cMaxQuads * 4 };
+		static constexpr uint32_t cMaxIndices2D{ cMaxQuads * 6 };
 
 		std::shared_ptr<VertexArray> quadVertexArray;
 		std::shared_ptr<VertexBuffer> quadVertexBuffer;
@@ -155,6 +155,8 @@ namespace Graphics {
 
 	class Renderer {
 	public:
+		static constexpr uint32_t cInstanceCap = 100;
+
 		Renderer();
 		~Renderer();
 		static void Init();

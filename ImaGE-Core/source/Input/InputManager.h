@@ -48,6 +48,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <External/GLFWwindowDestructor.h>
 #include <Scripting/ScriptUtils.h>
 
+#define IGE_INPUTMGR Input::InputManager::GetInstance()
+
 	namespace Input
 	{
 		using KEY_MAP = std::bitset<static_cast<size_t>(IK_KEY_COUNT)>;

@@ -556,8 +556,7 @@ namespace Graphics {
 		}
 
 		// else creatae new instance buffer
-		uint32_t instanceCap = 100;
-		auto instanceBuffer = VertexBuffer::Create(instanceCap * sizeof(InstanceData));
+		auto instanceBuffer = VertexBuffer::Create(cInstanceCap * sizeof(InstanceData));
 
 		// Set up the buffer layout for instance data
 		BufferLayout instanceLayout = {
@@ -1167,46 +1166,61 @@ namespace Graphics {
 
 	void Renderer::RenderSubmeshInstances() {
 		
-		for (auto& [meshSrc, instances] : mData.instanceBufferDataMap) {
-			if (instances.empty()) continue;
+		while (!mData.instanceBufferDataMap.empty()) {
+			// collect the leftover entities after the batch
+			decltype(mData.instanceBufferDataMap) overflow{};
 
-			auto const& meshSource = IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource;
-			auto const& submeshes = meshSource.GetSubmeshes();
-			auto& vao = meshSource.GetVertexArray();
+			for (auto& [meshSrc, instances] : mData.instanceBufferDataMap) {
+				if (instances.empty()) continue;
+				// move any access into the overflow vector
+				else if (instances.size() > cInstanceCap) {
+					overflow.emplace(meshSrc,
+						std::vector<SubmeshInstanceData>(
+							std::make_move_iterator(instances.begin() + cInstanceCap),
+							std::make_move_iterator(instances.end()))
+					);
 
-			// Ensure the instance buffer exists for the mesh source
-			auto instanceBuffer = GetInstanceBuffer(meshSrc);
-			// Update the instance buffer with the latest data
-			//instanceBuffer->SetData(instances.data(), instances.size() * sizeof(InstanceData));
-
-			// Iterate through submeshes for rendering
-			for (size_t submeshIndex = 0; submeshIndex < submeshes.size(); ++submeshIndex) {
-
-				std::vector<InstanceData> submeshInstances;
-				for (const auto& instance : instances) {
-					if (instance.submeshIdx == submeshIndex) { // Match submeshIdx
-						submeshInstances.push_back(instance.data);
-					}
+					instances.erase(instances.begin() + cInstanceCap, instances.end());
 				}
-				if (submeshInstances.empty()) continue;
-				instanceBuffer->SetData(submeshInstances.data(), static_cast<unsigned>(submeshInstances.size() * sizeof(InstanceData)));
-				auto const& submesh = submeshes[submeshIndex];
+
+				auto const& meshSource = IGE_REF(IGE::Assets::ModelAsset, meshSrc)->mMeshSource;
+				auto const& submeshes = meshSource.GetSubmeshes();
+				auto& vao = meshSource.GetVertexArray();
+
+				// Ensure the instance buffer exists for the mesh source
+				auto instanceBuffer = GetInstanceBuffer(meshSrc);
+				// Update the instance buffer with the latest data
+				//instanceBuffer->SetData(instances.data(), instances.size() * sizeof(InstanceData));
+
+				// Iterate through submeshes for rendering
+				for (size_t submeshIndex = 0; submeshIndex < submeshes.size(); ++submeshIndex) {
+
+					std::vector<InstanceData> submeshInstances;
+					for (const auto& instance : instances) {
+						if (instance.submeshIdx == submeshIndex) { // Match submeshIdx
+							submeshInstances.push_back(instance.data);
+						}
+					}
+					if (submeshInstances.empty()) continue;
+					instanceBuffer->SetData(submeshInstances.data(), static_cast<unsigned>(submeshInstances.size() * sizeof(InstanceData)));
+					auto const& submesh = submeshes[submeshIndex];
 
 
-				// Use glDrawElementsInstancedBaseVertexBaseInstance for rendering
-				RenderAPI::DrawIndicesInstancedBaseVertexBaseInstance(
-					vao,
-					submesh.idxCount,           // Index count for this submesh
-					static_cast<unsigned>(submeshInstances.size()), // Total instances
-					submesh.baseIdx,            // Index offset
-					submesh.baseVtx,            // Base vertex
-					0                // Offset in the instance buffer
-				);
+					// Use glDrawElementsInstancedBaseVertexBaseInstance for rendering
+					RenderAPI::DrawIndicesInstancedBaseVertexBaseInstance(
+						vao,
+						submesh.idxCount,           // Index count for this submesh
+						static_cast<unsigned>(submeshInstances.size()), // Total instances
+						submesh.baseIdx,            // Index offset
+						submesh.baseVtx,            // Base vertex
+						0                // Offset in the instance buffer
+					);
+				}
 			}
-		}
 
-		// Clear instances after rendering
-		mData.instanceBufferDataMap.clear();
+			// Clear the rendered instances
+			mData.instanceBufferDataMap = std::move(overflow);
+		}
 	}
 
 	void Renderer::RenderSubmeshInstances(std::vector<InstanceData> const& instances,

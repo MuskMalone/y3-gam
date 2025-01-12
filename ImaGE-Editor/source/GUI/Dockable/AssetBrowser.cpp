@@ -261,6 +261,7 @@ namespace GUI
     else if (ext == gSceneFileExt) {
       // rename hierarchy state file of scene
       std::string const editorScenesDir{ gEditorAssetsDirectory + std::string("Scenes\\") };
+      // also rename the editor scene config file
       std::filesystem::rename(editorScenesDir + original.stem().string(),
         editorScenesDir + newPath.stem().string());
     }
@@ -633,7 +634,12 @@ namespace GUI
         if (GUIVault::GetSelectedFile() == path) {
           GUIVault::SetSelectedFile({});
         }
-        std::remove(mSelectedAsset.relative_path().string().c_str());
+
+        // remove the editor scene config file
+        if (mSelectedAsset.extension() == gSceneFileExt) {
+          std::filesystem::remove(gEditorAssetsDirectory + std::string("Scenes\\") + mSelectedAsset.stem().string());
+        }
+        std::filesystem::remove(mSelectedAsset.relative_path().string().c_str());
 
         ImGui::CloseCurrentPopup();
       }
