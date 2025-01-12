@@ -499,8 +499,7 @@ namespace GUI
         ECS::Entity newEntity{ CreateNewEntity() };
 
         if (entitySelected) {
-          mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
-          CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
+          ParentRightClickedEntity(newEntity);
         }
         GUIVault::SetSelectedEntity(newEntity);
         modified = true;
@@ -527,13 +526,17 @@ namespace GUI
         TriggerRename();
       }
 
+      if (AudioMenu(entitySelected)) {
+        modified = true;
+        TriggerRename();
+      }
+
       if (ImGui::Selectable("Camera")) {
         ECS::Entity newEntity{ mEntityManager.CreateEntityWithTag("Camera") };
         newEntity.EmplaceComponent<Component::Camera>().fov = 60.f;
 
         if (entitySelected) {
-          mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
-          CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
+          ParentRightClickedEntity(newEntity);
         }
 
         GUIVault::SetSelectedEntity(newEntity);
@@ -577,8 +580,7 @@ namespace GUI
         GUIVault::SetSelectedEntity(newEntity);
 
         if (entitySelected) {
-          mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
-          CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
+          ParentRightClickedEntity(newEntity);
         }
       }
 
@@ -612,8 +614,7 @@ namespace GUI
         GUIVault::SetSelectedEntity(newEntity);
 
         if (entitySelected) {
-          mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
-          CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
+          ParentRightClickedEntity(newEntity);
         }
       }
 
@@ -621,6 +622,34 @@ namespace GUI
     }
 
     return modified;
+  }
+
+  bool SceneHierarchy::AudioMenu(bool entitySelected) {
+    ECS::Entity newEntity{};
+    if (ImGui::BeginMenu("Audio")) {
+
+      if (ImGui::Selectable("Audio Source")) {
+        newEntity = mEntityManager.CreateEntityWithTag("Audio Source");
+        newEntity.EmplaceComponent<Component::AudioSource>();
+      }
+
+      if (ImGui::Selectable("Audio Listener")) {
+        newEntity = mEntityManager.CreateEntityWithTag("Audio Listener");
+        newEntity.EmplaceComponent<Component::AudioListener>();
+      }
+
+      if (newEntity) {
+        GUIVault::SetSelectedEntity(newEntity);
+
+        if (entitySelected) {
+          ParentRightClickedEntity(newEntity);
+        }
+      }
+
+      ImGui::EndMenu();
+    }
+
+    return newEntity;
   }
 
   bool SceneHierarchy::UIMenu(bool entitySelected) {
@@ -655,8 +684,7 @@ namespace GUI
 
           // if canvas created or under canvas, simply nest under the right-clicked entity
           if (canvasCreated || valid) {
-            mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
-            CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
+            ParentRightClickedEntity(newEntity);
           }
           // else we create a new canvas to hold the new entity,
           // then set the canvas to be the child of the right-clicked entity
@@ -874,6 +902,11 @@ namespace GUI
   void SceneHierarchy::TriggerRename() {
     sEntityToRename = GUIVault::GetSelectedEntity();
     sEditNameMode = mLockControls = true;
+  }
+
+  void SceneHierarchy::ParentRightClickedEntity(ECS::Entity child) {
+    mEntityManager.SetParentEntity(mRightClickedEntity, child);
+    CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), child.GetComponent<Component::Transform>());
   }
 
   void SceneHierarchy::SceneModified() {

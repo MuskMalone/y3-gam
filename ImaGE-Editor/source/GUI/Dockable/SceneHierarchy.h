@@ -118,8 +118,11 @@ namespace GUI
     ************************************************************************/
     bool RunRightClickMenu(bool entitySelected);
 
+    void ParentRightClickedEntity(ECS::Entity child);
+
     bool MeshMenu(bool entitySelected);
     bool LightMenu(bool entitySelected);
+    bool AudioMenu(bool entitySelected);
     bool UIMenu(bool entitySelected);
     bool CreateEmptyParent();
     bool PrefabMenu();
