@@ -1122,8 +1122,6 @@ namespace GUI {
               modified = true;
           }
           
-
-
           ImGui::EndTable();
       }
 

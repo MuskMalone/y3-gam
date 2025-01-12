@@ -13,8 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/Utils.h>
 
 namespace Graphics {
-	class EditorCamera {
-	public:
+	struct EditorCamera {
 		enum class CameraMovement {
 			FORWARD,
 			BACKWARD,
@@ -33,7 +32,7 @@ namespace Graphics {
 			float nearClip = 0.1f,                            // Near clipping plane
 			float farClip = 1500.0f)                           // Far clipping plane
 			: mPosition(position), mYaw(yaw), mPitch(pitch), mFov(fov),
-			mAspectRatio(aspectRatio), mNearClip(nearClip), mFarClip(farClip) {}
+			mNearClip(nearClip), mFarClip(farClip), mAspectRatio(aspectRatio) {}
 
 		float GetFOV() const noexcept;
 		float GetAspectRatio() const noexcept;
@@ -66,16 +65,15 @@ namespace Graphics {
 
 		void MoveAlongPlane(float xDisp, float yDisp);
 
-
-	private:
 		glm::vec3 mPosition;
 		float mYaw;
 		float mPitch;
 		float mFov;
-		float mAspectRatio;
 		float mNearClip;
 		float mFarClip;
 
+	private:
+		float mAspectRatio;
 		float mMoveSpeed{ 15.f };
 		float mMousePanningSpeed{ 5.f };
 		float mMouseSense{ 50.f };

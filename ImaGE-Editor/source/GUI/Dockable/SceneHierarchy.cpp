@@ -487,7 +487,7 @@ namespace GUI
 
       // Prefab menu
       if (entitySelected && mRightClickedEntity.HasComponent<Component::PrefabOverrides>()) {
-        if (PrefabMenu()) {
+        if (PrefabMenu("Prefab")) {
           modified = true;
         }
 
@@ -508,25 +508,25 @@ namespace GUI
 
       // Create Empty Parent
       if (entitySelected) {
-        if (CreateEmptyParent()) {
+        if (CreateEmptyParent("Create Empty Parent")) {
           modified = true;
           TriggerRename();
         }
       }
 
       // Create Object
-      if (MeshMenu(entitySelected)) {
+      if (MeshMenu("Object", entitySelected)) {
         modified = true;
         TriggerRename();
       }
 
       // Create Light
-      if (LightMenu(entitySelected)) {
+      if (LightMenu("Light", entitySelected)) {
         modified = true;
         TriggerRename();
       }
 
-      if (AudioMenu(entitySelected)) {
+      if (AudioMenu("Audio", entitySelected)) {
         modified = true;
         TriggerRename();
       }
@@ -545,7 +545,7 @@ namespace GUI
       }
 
       // Create UI
-      if (UIMenu(entitySelected)) {
+      if (UIMenu("UI", entitySelected)) {
         modified = true;
         TriggerRename();
       }
@@ -561,9 +561,9 @@ namespace GUI
     return modified;
   }
 
-  bool SceneHierarchy::MeshMenu(bool entitySelected) {
+  bool SceneHierarchy::MeshMenu(const char* label, bool entitySelected) {
     const char* meshName{ nullptr };
-    if (ImGui::BeginMenu("Object")) {
+    if (ImGui::BeginMenu(label)) {
       if (ImGui::Selectable("Cube")) { meshName = "Cube"; }
 
       if (ImGui::Selectable("Sphere")) { meshName = "Sphere"; }
@@ -590,9 +590,9 @@ namespace GUI
     return meshName;
   }
 
-  bool SceneHierarchy::LightMenu(bool entitySelected) {
+  bool SceneHierarchy::LightMenu(const char* label, bool entitySelected) {
     bool modified{ false };
-    if (ImGui::BeginMenu("Light")) {
+    if (ImGui::BeginMenu(label)) {
       ECS::Entity newEntity{};
 
       if (ImGui::Selectable("Directional")) {
@@ -624,9 +624,9 @@ namespace GUI
     return modified;
   }
 
-  bool SceneHierarchy::AudioMenu(bool entitySelected) {
+  bool SceneHierarchy::AudioMenu(const char* label, bool entitySelected) {
     ECS::Entity newEntity{};
-    if (ImGui::BeginMenu("Audio")) {
+    if (ImGui::BeginMenu(label)) {
 
       if (ImGui::Selectable("Audio Source")) {
         newEntity = mEntityManager.CreateEntityWithTag("Audio Source");
@@ -652,9 +652,9 @@ namespace GUI
     return newEntity;
   }
 
-  bool SceneHierarchy::UIMenu(bool entitySelected) {
+  bool SceneHierarchy::UIMenu(const char* label, bool entitySelected) {
     ECS::Entity newEntity{};
-    if (ImGui::BeginMenu("UI")) {
+    if (ImGui::BeginMenu(label)) {
       bool canvasCreated{ false };
       if (ImGui::Selectable("Image")) {
         newEntity = mEntityManager.CreateEntityWithTag("Image");
@@ -721,40 +721,39 @@ namespace GUI
     return newEntity;
   }
 
-  bool SceneHierarchy::CreateEmptyParent() {
-    if (ImGui::Selectable("Create Empty Parent")) {
-      ECS::Entity newEntity{ CreateNewEntity() };
+  bool SceneHierarchy::CreateEmptyParent(const char* label) {
+    if (!ImGui::Selectable(label)) { return false; }
 
-      // if original entity has a parent, set this new entity as a child
-      if (mEntityManager.HasParent(mRightClickedEntity)) {
-        ECS::Entity const originalParent{ mEntityManager.GetParentEntity(mRightClickedEntity) };
-        mEntityManager.RemoveParent(mRightClickedEntity);
-        CopyWorldTransform(originalParent.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
-        mEntityManager.SetParentEntity(originalParent, newEntity);
-      }
-      else {
-        Component::Transform& newTrans{ newEntity.GetComponent<Component::Transform>() },
-          & rightClickedTrans{ mRightClickedEntity.GetComponent<Component::Transform>() };
-        newTrans = rightClickedTrans;
-        rightClickedTrans.ResetLocal();
-        newTrans.SetLocalToWorld();
-      }
+    ECS::Entity newEntity{ CreateNewEntity() };
 
-      mEntityManager.SetParentEntity(newEntity, mRightClickedEntity);
-      /*mRightClickedEntity.GetComponent<Component::Transform>().ResetLocal();
-      TransformHelpers::UpdateTransformToNewParent(mRightClickedEntity);*/
-      GUIVault::SetSelectedEntity(newEntity);
-      return true;
+    // if original entity has a parent, set this new entity as a child
+    if (mEntityManager.HasParent(mRightClickedEntity)) {
+      ECS::Entity const originalParent{ mEntityManager.GetParentEntity(mRightClickedEntity) };
+      mEntityManager.RemoveParent(mRightClickedEntity);
+      CopyWorldTransform(originalParent.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
+      mEntityManager.SetParentEntity(originalParent, newEntity);
+    }
+    else {
+      Component::Transform& newTrans{ newEntity.GetComponent<Component::Transform>() },
+        & rightClickedTrans{ mRightClickedEntity.GetComponent<Component::Transform>() };
+      newTrans = rightClickedTrans;
+      rightClickedTrans.ResetLocal();
+      newTrans.SetLocalToWorld();
     }
 
-    return false;
+    mEntityManager.SetParentEntity(newEntity, mRightClickedEntity);
+    /*mRightClickedEntity.GetComponent<Component::Transform>().ResetLocal();
+    TransformHelpers::UpdateTransformToNewParent(mRightClickedEntity);*/
+    GUIVault::SetSelectedEntity(newEntity);
+
+    return true;
   }
 
-  bool SceneHierarchy::PrefabMenu() {
+  bool SceneHierarchy::PrefabMenu(const char* label) {
     Component::PrefabOverrides& overrides{ mRightClickedEntity.GetComponent<Component::PrefabOverrides>() };
     bool modified{ false };
 
-    if (ImGui::BeginMenu("Prefab")) {
+    if (ImGui::BeginMenu(label)) {
       if (ImGui::MenuItem("Reset All Overrides")) {
         try {
           Reflection::ObjectFactory& of{ IGE_OBJFACTORY };

@@ -10,25 +10,33 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <pch.h>
 #include "Toolbar.h"
 #include "GUI/GUIVault.h"
-#include <Events/EventManager.h>
+#include <GUI/Helpers/ImGuiHelpers.h>
 #include <GUI/Helpers/AssetHelpers.h>
-#include <Prefabs/PrefabManager.h>
-#include <Asset/IGEAssets.h>
-#include <Serialization/Serializer.h>
 #include <Core/Components/Light.h>
+#include <Asset/IGEAssets.h>
+
+#include <Serialization/Serializer.h>
+#include <Events/EventManager.h>
+#include <Prefabs/PrefabManager.h>
 #include "Scenes/SceneManager.h"
+#include <Graphics/Renderer.h>
 
 #include <filesystem>
 #include <imgui/imgui.h>
 #include <ImGui/imgui_internal.h> // for BeginViewportSideBar
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 
+namespace {
+  void NextRowTable(const char* labelName, float inputSize);
+}
+
 namespace GUI
 {
 
-  Toolbar::Toolbar(const char* name, std::vector<std::shared_ptr<GUIWindow>> const& windowsRef) : GUIWindow(name),
-    mWindowsRef{ windowsRef }, mScenePopup{ false }, mPrefabPopup{ false },
-    mDisableAll{ false }, mAllowCreationOnly{ true }
+  Toolbar::Toolbar(const char* name, std::vector<std::shared_ptr<GUIWindow>> const& windowsRef,
+    std::weak_ptr<Graphics::EditorCamera> editorCam) : GUIWindow(name),
+      mWindowsRef{ windowsRef }, mEditorCam{ std::move(editorCam) }, mScenePopup{false}, mPrefabPopup{false},
+      mDisableAll{ false }, mAllowCreationOnly{ true }
   {
     SUBSCRIBE_CLASS_FUNC(Events::SceneStateChange, &Toolbar::OnSceneStateChange, this);
     SUBSCRIBE_CLASS_FUNC(Events::EditPrefabEvent, &Toolbar::OnPrefabEdit, this);
@@ -84,7 +92,7 @@ namespace GUI
           ImGui::EndDisabled();
         }
 
-        ImGui::EndMenu();
+        ImGui::EndMenu(); // File
       }
 
       if (ImGui::BeginMenu("View"))
@@ -97,7 +105,7 @@ namespace GUI
           }
         }
 
-        ImGui::EndMenu();
+        ImGui::EndMenu(); // View
       }
 
       if (ImGui::BeginMenu("Options"))
@@ -112,158 +120,38 @@ namespace GUI
             }
           }
 
-          ImGui::EndMenu();
+          ImGui::EndMenu(); // Theme
         }
 
-        if (ImGui::BeginMenu("Serialization Format")) {
-          if (ImGui::BeginMenu("Scenes")) {
-            if (ImGui::MenuItem("PRETTY", nullptr, GUIVault::sSerializePrettyScene)) {
-              GUIVault::sSerializePrettyScene = true;
-            }
+        SerializationMenu("Serialization Format");
 
-            if (ImGui::MenuItem("COMPACT", nullptr, !GUIVault::sSerializePrettyScene)) {
-              GUIVault::sSerializePrettyScene = false;
-            }
-
-            ImGui::EndMenu();
-          }
-
-          if (ImGui::BeginMenu("Prefabs")) {
-            if (ImGui::MenuItem("PRETTY", nullptr, GUIVault::sSerializePrettyPrefab)) {
-              GUIVault::sSerializePrettyPrefab = true;
-            }
-
-            if (ImGui::MenuItem("COMPACT", nullptr, !GUIVault::sSerializePrettyPrefab)) {
-              GUIVault::sSerializePrettyPrefab = false;
-            }
-
-            ImGui::EndMenu();
-          }
-
-          ImGui::EndMenu();
-        }
-
-        ImGui::EndMenu();
+        ImGui::EndMenu(); // Options
       }
 
+      bool const noScene{ Scenes::SceneManager::GetInstance().NoSceneSelected() };
+
       if (ImGui::BeginMenu("Debug")) {
+
+        if (EditorCamMenu("Editor Camera", noScene)) {
+          // let editor know the scene has been modified (to trigger star symbol)
+          QUEUE_EVENT(Events::SceneModifiedEvent);
+        }
+
         ImGui::MenuItem("Cull out-of-frustum Entities", nullptr, &GUIVault::sShowCulledEntities);
         if (ImGui::IsItemHovered()) {
           ImGui::SetTooltip("Cull all entities outside the frustum in the editor view");
         }
 
-        if (ImGui::MenuItem("Re-save all Prefabs")) {
-          IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
-          for (auto const& file : std::filesystem::recursive_directory_iterator(gPrefabsDirectory)) {
-            if (file.is_directory() || file.path().extension() != gPrefabFileExt) { continue; }
+        ResavePrefabsMenuItem("Re-save all Prefabs");
 
-            std::string const filePath{ file.path().string() };
-            try {
-              IGE::Assets::GUID guid{ am.LoadRef<IGE::Assets::PrefabAsset>(filePath) };
-              Serialization::Serializer::SerializePrefab(am.GetAsset<IGE::Assets::PrefabAsset>(guid)->mPrefabData, filePath);
-            }
-            catch (Debug::ExceptionBase&) {
-              IGE_DBGLOGGER.LogError("Unable to load " + filePath);
-            }
-          }
-
-          IGE_DBGLOGGER.LogInfo("Successfully re-saved all prefabs");
-        }
-        if (ImGui::IsItemHovered()) {
-          ImGui::BeginTooltip();
-          ImGui::Text("Automatically saves all prefabs again");
-          ImGui::Text("For use when components/formats are modified and require saving to a new format.");
-          ImGui::EndTooltip();
-        }
-
-        ImGui::EndMenu();
+        ImGui::EndMenu(); // Debug
       }
 
-      if (ImGui::BeginMenu("Help")) {
-        if (ImGui::BeginMenu("Controls")) {
-          if (ImGui::BeginTable("ControlsTable", 3, ImGuiTableFlags_None)) {
-            ImGui::TableNextRow();
-            ImGui::TableSetColumnIndex(0); ImGui::Text("CAMERA");
-            ImGui::TableNextRow();
+      HelpMenu("Help");
 
-            ImGui::TableSetColumnIndex(1); ImGui::Text("Left Click:");
-            ImGui::TableSetColumnIndex(2); ImGui::Text("Select Entity");
-            ImGui::TableNextRow();
-            ImGui::TableSetColumnIndex(1); ImGui::Text("Middle Click:");
-            ImGui::TableSetColumnIndex(2); ImGui::Text("Pan");
-            ImGui::TableNextRow();
-            ImGui::TableSetColumnIndex(1); ImGui::Text("Scroll:");
-            ImGui::TableSetColumnIndex(2); ImGui::Text("Zoom");
-
-            ImGui::TableNextRow(); ImGui::TableNextRow();
-            ImGui::TableSetColumnIndex(1); ImGui::Text("While Right-click Held:");
-            ImGui::TableSetColumnIndex(2); ImGui::Text("");
-            ImGui::TableNextRow();
-            ImGui::TableSetColumnIndex(1); ImGui::Text("Left Click:");
-            ImGui::TableSetColumnIndex(2); ImGui::Text("Look");
-            ImGui::TableNextRow();
-            ImGui::TableSetColumnIndex(1); ImGui::Text("WASD QE:");
-            ImGui::TableSetColumnIndex(2); ImGui::Text("Move");
-
-            ImGui::TableNextRow();
-            ImGui::TableSetColumnIndex(0); ImGui::Text("GUIZMOS:");
-
-            ImGui::TableNextRow();
-            ImGui::TableSetColumnIndex(1); ImGui::Text("Translate: ");
-            ImGui::TableSetColumnIndex(2); ImGui::Text("T");
-            ImGui::TableNextRow();
-            ImGui::TableSetColumnIndex(1); ImGui::Text("Scale: ");
-            ImGui::TableSetColumnIndex(2); ImGui::Text("S");
-            ImGui::TableNextRow();
-            ImGui::TableSetColumnIndex(1); ImGui::Text("Rotate: ");
-            ImGui::TableSetColumnIndex(2); ImGui::Text("R");
-
-            ImGui::TableNextRow();
-            ImGui::TableSetColumnIndex(0); ImGui::Text("Scene:");
-
-            ImGui::TableNextRow();
-            ImGui::TableSetColumnIndex(1); ImGui::Text("Play/Stop Scene: ");
-            ImGui::TableSetColumnIndex(2); ImGui::Text("Ctrl + P");
-            ImGui::TableNextRow();
-            ImGui::TableSetColumnIndex(1); ImGui::Text("Free/Lock Cursor: ");
-            ImGui::TableSetColumnIndex(2); ImGui::Text("Ctrl + O");
-            ImGui::TableNextRow();
-            ImGui::TableSetColumnIndex(1); ImGui::Text("Debug Lines: ");
-            ImGui::TableSetColumnIndex(2); ImGui::Text("Ctrl + D");
-
-            ImGui::EndTable();
-          }
-
-          ImGui::EndMenu();
-        }
-
-        ImGui::EndMenu();
-      }
-
-      if (ImGui::BeginMenu("Lighting")) {
-        bool const noScene{ Scenes::SceneManager::GetInstance().NoSceneSelected() };
-
-        ImGui::BeginDisabled(noScene);
-
-        if (ImGui::BeginTable("##LightTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
-          Component::LightGlobalProps& globalProps{ Component::Light::sGlobalProps };
-
-          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, 175);
-          ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, 200);
-          ImGui::TableNextRow();
-
-          ImGui::TableSetColumnIndex(0); ImGui::Text("Ambient Color");
-          ImGui::TableSetColumnIndex(1); ImGui::ColorEdit4("##Ambc", &globalProps.ambColor[0], ImGuiColorEditFlags_NoAlpha);
-
-          ImGui::TableNextRow();
-          ImGui::TableSetColumnIndex(0); ImGui::Text("Ambient Intensity: ");
-          ImGui::TableSetColumnIndex(1); ImGui::DragFloat("##AmbIn", &globalProps.ambIntensity, 0.001f, 0.f, FLT_MAX, "%.3f");
-
-          ImGui::EndTable();
-        }
-
-        ImGui::EndDisabled();
-        ImGui::EndMenu();
+      if (LightingMenu("Lighting", noScene)) {
+        // let editor know the scene has been modified (to trigger star symbol)
+        QUEUE_EVENT(Events::SceneModifiedEvent);
       }
 
       // update popups
@@ -422,4 +310,234 @@ namespace GUI
     }
   }
 
+  bool Toolbar::LightingMenu(const char* label, bool disabled) const {
+    // early return if menu not open
+    if (!ImGui::BeginMenu(label)) { return false; }
+
+    bool modified{ false };
+
+    ImGui::BeginDisabled(disabled);
+
+    if (ImGui::BeginTable("##LightTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+      bool modified{ false };
+      Component::LightGlobalProps& globalProps{ Component::Light::sGlobalProps };
+
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, 175);
+      ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, 200);
+      ImGui::TableNextRow();
+
+      ImGui::TableSetColumnIndex(0); ImGui::Text("Ambient Color");
+      ImGui::TableSetColumnIndex(1);
+      if (ImGui::ColorEdit4("##Ambc", &globalProps.ambColor[0], ImGuiColorEditFlags_NoAlpha)) {
+        modified = true;
+      }
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0); ImGui::Text("Ambient Intensity: ");
+      ImGui::TableSetColumnIndex(1);
+      if (ImGui::DragFloat("##AmbIn", &globalProps.ambIntensity, 0.001f, 0.f, FLT_MAX, "%.3f")) {
+        modified = true;
+      }
+
+      ImGui::EndTable();
+    }
+
+    ImGui::EndDisabled();
+    ImGui::EndMenu();
+
+    return modified;
+  }
+
+  bool Toolbar::EditorCamMenu(const char* label, bool disabled) const {
+    std::shared_ptr<Graphics::EditorCamera> eCam{ mEditorCam.lock() };
+    if (!eCam) {
+      IGE_DBGLOGGER.LogError("Editor Camera doesn't exist!");
+      return false;
+    }
+    // early return if menu not open
+    else if (!ImGui::BeginMenu(label)) {
+      return false;
+    }
+    ImGui::BeginDisabled(disabled);
+
+    bool modified{ false };
+    float const col1{ 80.f }, elemWidth{ 200.f };
+
+    if (ImGui::BeginTable("EditorCamVec3Table", 4, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+      float const vec3Width{ elemWidth * 0.33f };
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, col1);
+      ImGui::TableSetupColumn(" X", ImGuiTableColumnFlags_WidthFixed, vec3Width);
+      ImGui::TableSetupColumn(" Y", ImGuiTableColumnFlags_WidthFixed, vec3Width);
+      ImGui::TableSetupColumn(" Z", ImGuiTableColumnFlags_WidthFixed, vec3Width);
+      ImGui::TableHeadersRow();
+
+      if (ImGuiHelpers::TableInputFloat3("Position", &eCam->mPosition.x, elemWidth, false, -FLT_MAX, FLT_MAX, 0.1f)) {
+        modified = true;
+      }
+      ImGui::EndTable();
+    }
+
+    if (ImGui::BeginTable("EditorCamTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, col1);
+      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, elemWidth);
+
+      NextRowTable("Yaw", elemWidth);
+      if (ImGui::SliderFloat("##Yaw", &eCam->mYaw, -180.f, 180.f)) {
+        modified = true;
+      }
+      NextRowTable("Pitch", elemWidth);
+      if (ImGui::SliderFloat("##Pitch", &eCam->mPitch, -180.f, 180.f)) {
+        modified = true;
+      }
+
+      NextRowTable("FOV", elemWidth);
+      if (ImGui::SliderFloat("##FOV", &eCam->mFov, 0.f, 180.f)) {
+        modified = true;
+      }
+
+      NextRowTable("Near Clip", elemWidth);
+      if (ImGui::DragFloat("##Near", &eCam->mNearClip, 5.f, -100.f, FLT_MAX)) {
+        modified = true;
+      }
+      NextRowTable("Far Clip", elemWidth);
+      if (ImGui::DragFloat("##Far", &eCam->mFarClip, 5.f, 0.f, 1000.f)) {
+        modified = true;
+      }
+
+      ImGui::EndTable();
+    }
+    ImGui::EndDisabled();
+    ImGui::EndMenu();
+
+    return modified;
+  }
+
+  void Toolbar::ResavePrefabsMenuItem(const char* label) const {
+    if (ImGui::MenuItem(label)) {
+      IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+
+      for (auto const& file : std::filesystem::recursive_directory_iterator(gPrefabsDirectory)) {
+        if (file.is_directory() || file.path().extension() != gPrefabFileExt) { continue; }
+
+        std::string const filePath{ file.path().string() };
+        try {
+          IGE::Assets::GUID guid{ am.LoadRef<IGE::Assets::PrefabAsset>(filePath) };
+          Serialization::Serializer::SerializePrefab(am.GetAsset<IGE::Assets::PrefabAsset>(guid)->mPrefabData, filePath);
+        }
+        catch (Debug::ExceptionBase&) {
+          IGE_DBGLOGGER.LogError("Unable to load " + filePath);
+        }
+      }
+
+      IGE_DBGLOGGER.LogInfo("Successfully re-saved all prefabs");
+    }
+    if (ImGui::IsItemHovered()) {
+      ImGui::BeginTooltip();
+      ImGui::Text("Automatically saves all prefabs again");
+      ImGui::Text("For use when components/formats are modified and require saving to a new format.");
+      ImGui::EndTooltip();
+    }
+  }
+
+  void Toolbar::SerializationMenu(const char* label) const {
+    if (!ImGui::BeginMenu(label)) { return; }
+
+    if (ImGui::BeginMenu("Scenes")) {
+      if (ImGui::MenuItem("PRETTY", nullptr, GUIVault::sSerializePrettyScene)) {
+        GUIVault::sSerializePrettyScene = true;
+      }
+
+      if (ImGui::MenuItem("COMPACT", nullptr, !GUIVault::sSerializePrettyScene)) {
+        GUIVault::sSerializePrettyScene = false;
+      }
+
+      ImGui::EndMenu(); // Scenes
+    }
+
+    if (ImGui::BeginMenu("Prefabs")) {
+      if (ImGui::MenuItem("PRETTY", nullptr, GUIVault::sSerializePrettyPrefab)) {
+        GUIVault::sSerializePrettyPrefab = true;
+      }
+
+      if (ImGui::MenuItem("COMPACT", nullptr, !GUIVault::sSerializePrettyPrefab)) {
+        GUIVault::sSerializePrettyPrefab = false;
+      }
+
+      ImGui::EndMenu(); // Prefabs
+    }
+
+    ImGui::EndMenu(); // label
+  }
+
+  void Toolbar::HelpMenu(const char* label) const {
+    if (!ImGui::BeginMenu(label)) { return; }
+
+    if (ImGui::BeginMenu("Controls")) {
+      if (ImGui::BeginTable("ControlsTable", 3, ImGuiTableFlags_None)) {
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(0); ImGui::Text("CAMERA");
+        ImGui::TableNextRow();
+
+        ImGui::TableSetColumnIndex(1); ImGui::Text("Left Click:");
+        ImGui::TableSetColumnIndex(2); ImGui::Text("Select Entity");
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(1); ImGui::Text("Middle Click:");
+        ImGui::TableSetColumnIndex(2); ImGui::Text("Pan");
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(1); ImGui::Text("Scroll:");
+        ImGui::TableSetColumnIndex(2); ImGui::Text("Zoom");
+
+        ImGui::TableNextRow(); ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(1); ImGui::Text("While Right-click Held:");
+        ImGui::TableSetColumnIndex(2); ImGui::Text("");
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(1); ImGui::Text("Left Click:");
+        ImGui::TableSetColumnIndex(2); ImGui::Text("Look");
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(1); ImGui::Text("WASD QE:");
+        ImGui::TableSetColumnIndex(2); ImGui::Text("Move");
+
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(0); ImGui::Text("GUIZMOS:");
+
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(1); ImGui::Text("Translate: ");
+        ImGui::TableSetColumnIndex(2); ImGui::Text("T");
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(1); ImGui::Text("Scale: ");
+        ImGui::TableSetColumnIndex(2); ImGui::Text("S");
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(1); ImGui::Text("Rotate: ");
+        ImGui::TableSetColumnIndex(2); ImGui::Text("R");
+
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(0); ImGui::Text("Scene:");
+
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(1); ImGui::Text("Play/Stop Scene: ");
+        ImGui::TableSetColumnIndex(2); ImGui::Text("Ctrl + P");
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(1); ImGui::Text("Free/Lock Cursor: ");
+        ImGui::TableSetColumnIndex(2); ImGui::Text("Ctrl + O");
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(1); ImGui::Text("Debug Lines: ");
+        ImGui::TableSetColumnIndex(2); ImGui::Text("Ctrl + D");
+
+        ImGui::EndTable();
+      }
+      ImGui::EndMenu(); // Controls
+    }
+
+    ImGui::EndMenu(); // label
+  }
 } // namespace GUI
+
+namespace {
+  void NextRowTable(const char* labelName, float inputSize) {
+    ImGui::TableNextRow();
+    ImGui::TableSetColumnIndex(0);
+    ImGui::Text(labelName);
+    ImGui::TableSetColumnIndex(1);
+    ImGui::SetNextItemWidth(inputSize);
+  }
+}

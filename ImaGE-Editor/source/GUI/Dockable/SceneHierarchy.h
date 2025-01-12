@@ -120,12 +120,12 @@ namespace GUI
 
     void ParentRightClickedEntity(ECS::Entity child);
 
-    bool MeshMenu(bool entitySelected);
-    bool LightMenu(bool entitySelected);
-    bool AudioMenu(bool entitySelected);
-    bool UIMenu(bool entitySelected);
-    bool CreateEmptyParent();
-    bool PrefabMenu();
+    bool MeshMenu(const char* label, bool entitySelected);
+    bool LightMenu(const char* label, bool entitySelected);
+    bool AudioMenu(const char* label, bool entitySelected);
+    bool UIMenu(const char* label, bool entitySelected);
+    bool CreateEmptyParent(const char* label);
+    bool PrefabMenu(const char* label);
 #pragma endregion
 
     void SceneModified();

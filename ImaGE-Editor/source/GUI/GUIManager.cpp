@@ -41,7 +41,7 @@ namespace GUI {
 
   void GUIManager::Init(Graphics::RenderTarget& renderTarget) {
     mPersistentElements.reserve(4);
-    mPersistentElements.emplace_back(std::make_unique<Toolbar>("Toolbar", mWindows));
+    mPersistentElements.emplace_back(std::make_unique<Toolbar>("Toolbar", mWindows, renderTarget.camera));
     mPersistentElements.emplace_back(std::make_unique<SceneControls>("Scene Controls"));
     mPersistentElements.emplace_back(std::make_unique<PrefabEditor>("Prefab Editor"));
     mPersistentElements.emplace_back(std::make_unique<PopupHelper>("Popup Helper"));
