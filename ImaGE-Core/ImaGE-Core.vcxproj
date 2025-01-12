@@ -384,7 +384,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClInclude Include="source\pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Light.cpp" />
     <ClCompile Include="source\Application.cpp" />
     <ClCompile Include="source\Asset\AssetManager.cpp" />
     <ClCompile Include="source\Asset\AssetUtils.cpp" />

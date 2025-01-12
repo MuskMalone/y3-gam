@@ -246,16 +246,18 @@ namespace GUI
         ImGui::BeginDisabled(noScene);
 
         if (ImGui::BeginTable("##LightTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+          Component::LightGlobalProps& globalProps{ Component::Light::sGlobalProps };
+
           ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, 175);
           ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, 200);
           ImGui::TableNextRow();
 
-          ImGui::TableSetColumnIndex(0); ImGui::Text("Ambient Intensity: ");
-          ImGui::TableSetColumnIndex(1); ImGui::DragFloat("##AmbIn", &(Component::Light::ambIntensity), 0.5f, 0.f, FLT_MAX, "%.2f");
+          ImGui::TableSetColumnIndex(0); ImGui::Text("Ambient Color");
+          ImGui::TableSetColumnIndex(1); ImGui::ColorEdit4("##Ambc", &globalProps.ambColor[0], ImGuiColorEditFlags_NoAlpha);
 
           ImGui::TableNextRow();
-          ImGui::TableSetColumnIndex(0); ImGui::Text("Ambient Color");
-          ImGui::TableSetColumnIndex(1); ImGui::ColorEdit4("##Ambc", &(Component::Light::ambColor[0]), ImGuiColorEditFlags_NoAlpha);
+          ImGui::TableSetColumnIndex(0); ImGui::Text("Ambient Intensity: ");
+          ImGui::TableSetColumnIndex(1); ImGui::DragFloat("##AmbIn", &globalProps.ambIntensity, 0.001f, 0.f, FLT_MAX, "%.3f");
 
           ImGui::EndTable();
         }

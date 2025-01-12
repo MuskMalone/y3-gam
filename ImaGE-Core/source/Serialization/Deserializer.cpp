@@ -12,15 +12,18 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
 #include "Deserializer.h"
+#include <rapidjson/filereadstream.h>
+#include <cstdarg>
 #include "JsonKeys.h"
 #include <Serialization/FILEWrapper.h>
-#include <cstdarg>
+
 #include <Prefabs/PrefabManager.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
 #include <Core/LayerManager/LayerManager.h>
+
 #include <Core/Components/Script.h>
 #include <Reflection/ProxyScript.h>
-#include <rapidjson/filereadstream.h>
+#include <Core/Components/Light.h>
 
 //#define DESERIALIZER_DEBUG
 
@@ -169,12 +172,24 @@ namespace Serialization
 #ifdef _DEBUG
       std::cout << filepath + ": Unable to find Layer data" << "\n";
 #endif
-      return;
+    }
+    else {
+      Layers::LayerManager::LayerData layerData;
+      DeserializeRecursive(layerData, document[JSON_LAYERS_KEY]);
+      IGE_LAYERMGR.LoadLayerData(std::move(layerData));
     }
 
-    Layers::LayerManager::LayerData layerData;
-    DeserializeRecursive(layerData, document[JSON_LAYERS_KEY]);
-    IGE_LAYERMGR.LoadLayerData(std::move(layerData));
+    // deserialize global properties
+    if (!document.HasMember(JSON_GLOBAL_PROPS_KEY) || !document[JSON_GLOBAL_PROPS_KEY].IsObject()) {
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + filepath + ": Unable to find scene Global Properties");
+#ifdef _DEBUG
+      std::cout << filepath + ": Unable to find scene Global Properties" << "\n";
+#endif
+      Component::Light::sGlobalProps = {};
+    }
+    else {
+      DeserializeRecursive(Component::Light::sGlobalProps, document[JSON_GLOBAL_PROPS_KEY]);
+    }    
   }
 
   Prefabs::Prefab Deserializer::DeserializePrefabToVariant(std::string const& json)

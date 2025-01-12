@@ -160,6 +160,14 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("customCenter", &T::customCenter);
   }
 
+  {
+    using T = Component::LightGlobalProps;
+    rttr::registration::class_<T>("LightGlobalProps")
+      .constructor<>()(rttr::policy::ctor::as_object)
+      .property("ambColor", &T::ambColor)
+      .property("ambIntensity", &T::ambIntensity);
+  }
+
   /* ------------------- Audio ------------------- */
   {
       // Register the SoundInvokeSetting struct

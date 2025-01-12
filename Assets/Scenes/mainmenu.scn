@@ -1263,10 +1263,10 @@
                     "AudioSource": {
                         "sounds": [
                             {
-                                "key": "WrongInput_SFX",
+                                "key": "SpinningDiscPS1_SFX",
                                 "value": {
                                     "guid": {
-                                        "ID": 15700067558509682526
+                                        "ID": 11217827401232649265
                                     },
                                     "playSettings": {
                                         "position": {
@@ -1274,11 +1274,11 @@
                                             "y": -0.4189999997615814,
                                             "z": -0.7515864372253418
                                         },
-                                        "volume": 1.0,
+                                        "volume": 8.0,
                                         "pitch": 1.0,
                                         "pan": 0.0,
                                         "mute": false,
-                                        "loop": false,
+                                        "loop": true,
                                         "playOnAwake": false,
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
@@ -1313,10 +1313,10 @@
                                 }
                             },
                             {
-                                "key": "SpinningDiscPS1_SFX",
+                                "key": "WrongInput_SFX",
                                 "value": {
                                     "guid": {
-                                        "ID": 11217827401232649265
+                                        "ID": 15700067558509682526
                                     },
                                     "playSettings": {
                                         "position": {
@@ -1324,11 +1324,11 @@
                                             "y": -0.4189999997615814,
                                             "z": -0.7515864372253418
                                         },
-                                        "volume": 8.0,
+                                        "volume": 1.0,
                                         "pitch": 1.0,
                                         "pan": 0.0,
                                         "mute": false,
-                                        "loop": true,
+                                        "loop": false,
                                         "playOnAwake": false,
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
@@ -1480,10 +1480,10 @@
                             "z": 0.006000000052154064
                         },
                         "worldRot": {
-                            "x": 0.0,
+                            "x": 0.7071067690849304,
                             "y": 0.0,
                             "z": 0.0,
-                            "w": 0.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -1985,7 +1985,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 9482326159702970336
+                            "ID": 10108527197352195871
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2124,7 +2124,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 15079670514084162100
+                            "ID": 6335328087791440725
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2601,5 +2601,13 @@
                 0
             ]
         ]
+    },
+    "Global Properties": {
+        "ambColor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "ambIntensity": 0.0
     }
 }

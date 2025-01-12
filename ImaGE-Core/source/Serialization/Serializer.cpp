@@ -253,6 +253,10 @@ namespace {
     writer.Key(JSON_LAYERS_KEY);
     SerializeClassTypes<WriterType>(IGE_LAYERMGR.GetLayerData(), writer);
 
+    // serialize global light properties
+    writer.Key(JSON_GLOBAL_PROPS_KEY);
+    SerializeClassTypes<WriterType>(Component::Light::sGlobalProps, writer);
+
     writer.EndObject();
   }
 
