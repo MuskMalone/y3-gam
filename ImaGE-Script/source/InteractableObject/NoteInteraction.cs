@@ -17,7 +17,7 @@ public class NoteInteraction : Entity
   {
     if (noteUI == null)
     {
-      Debug.LogError("[Dialogue.cs] Note UI Entity not found!");
+      Debug.LogError("[NoteInteraction.cs] Note UI Entity not found!");
       return;
     }
 
@@ -26,7 +26,7 @@ public class NoteInteraction : Entity
 
     if (playerMove == null)
     {
-      Debug.LogError("[Dialogue.cs] PlayerMove Script Entity not found!");
+      Debug.LogError("[NoteInteraction.cs] PlayerMove Script Entity not found!");
       return;
     }
   }
