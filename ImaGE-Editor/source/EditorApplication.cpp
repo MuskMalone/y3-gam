@@ -52,6 +52,15 @@ namespace IGE {
     ImGui_ImplOpenGL3_Init("#version 460 core");
     
     SetEditorCallbacks();
+
+    // EditorView
+    Graphics::FramebufferSpec framebufferSpec;
+    framebufferSpec.width = spec.WindowWidth;
+    framebufferSpec.height = spec.WindowHeight;
+    framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
+
+    mRenderTargets.emplace_back(framebufferSpec);
+    mRenderTargets.back().camera->InitForEditorView();
   }
 
   EditorApplication::~EditorApplication() {
@@ -65,13 +74,9 @@ namespace IGE {
     Application::Init();  // perform default Init
 
     // init editor-specific stuff
-    // im not sure if this is scalable;
-    // may just make SystemManager globally accesible in future
-    // if more stuff requires it
-    mGUIManager.Init(GetDefaultRenderTarget());
+    mGUIManager.Init(GetEditorRenderTarget());
 
     SUBSCRIBE_CLASS_FUNC(Events::SignalEvent, &EditorApplication::SignalCallback, this);
-    
   }
 
   void EditorApplication::Run() {
@@ -230,9 +235,9 @@ namespace IGE {
 
     //  target.framebuffer->Unbind();
     //}
-      auto const& cam = mRenderTargets[0].camera;
-      Graphics::CameraSpec const editorCam{ cam.GetViewProjMatrix(), cam.GetViewMatrix(),
-          cam.GetPosition(), cam.GetNearPlane(), cam.GetFarPlane(), cam.GetFOV(), cam.GetAspectRatio(), true };
+      auto const& cam = GetEditorRenderTarget().camera;
+      Graphics::CameraSpec const editorCam{ cam->GetViewProjMatrix(), cam->GetViewMatrix(),
+          cam->GetPosition(), cam->GetNearPlane(), cam->GetFarPlane(), cam->GetFOV(), cam->GetAspectRatio(), true };
 
       if (mGUIManager.IsGameViewActive() && Graphics::RenderSystem::mCameraManager.HasActiveCamera()) {
           std::vector<ECS::Entity> const entities{ Graphics::RenderSystem::RenderScene(Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent()) };

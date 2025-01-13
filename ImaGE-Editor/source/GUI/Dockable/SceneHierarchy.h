@@ -13,7 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GUI/GUIWindow.h>
 #include <Core/Entity.h>
 #include <Events/EventCallback.h>
-#include <GUI/Helpers/HierarchyConfig.h>
+#include <GUI/Helpers/SceneEditorConfig.h>
 #include <ImGui/imgui.h>
 
 namespace GUI
@@ -30,6 +30,7 @@ namespace GUI
     void Run() override;
 
   private:
+    std::set<HierarchyEntry> mCollapsedNodes;
     ECS::EntityManager& mEntityManager;
     std::string mSceneName;
     ECS::Entity mRightClickedEntity; // used to hold the entity the menu was opened on
@@ -106,10 +107,11 @@ namespace GUI
     EVENT_CALLBACK_DECL(OnPrefabEdit);
     EVENT_CALLBACK_DECL(OnSceneModified);
     EVENT_CALLBACK_DECL(OnEntityPicked);
-    EVENT_CALLBACK_DECL(OnSceneSave);
-    EVENT_CALLBACK_DECL(OnSceneLoad);
+    EVENT_CALLBACK_DECL(OnCollectEditorData);
+    EVENT_CALLBACK_DECL(OnLoadEditorData);
 
-    HierarchyConfig GetTreeNodeStates() const;
+    std::set<HierarchyEntry> GetTreeNodeStates() const;
+    void LoadHierarchyState();
 
 #pragma region RightClickMenu
     /*!*********************************************************************
@@ -120,12 +122,12 @@ namespace GUI
 
     void ParentRightClickedEntity(ECS::Entity child);
 
-    bool MeshMenu(bool entitySelected);
-    bool LightMenu(bool entitySelected);
-    bool AudioMenu(bool entitySelected);
-    bool UIMenu(bool entitySelected);
-    bool CreateEmptyParent();
-    bool PrefabMenu();
+    bool MeshMenu(const char* label, bool entitySelected);
+    bool LightMenu(const char* label, bool entitySelected);
+    bool AudioMenu(const char* label, bool entitySelected);
+    bool UIMenu(const char* label, bool entitySelected);
+    bool CreateEmptyParent(const char* label);
+    bool PrefabMenu(const char* label);
 #pragma endregion
 
     void SceneModified();
