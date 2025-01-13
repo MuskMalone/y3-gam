@@ -309,7 +309,7 @@ namespace Mono
 
 
 		static MonoString* GetTag(ECS::Entity::EntityID entity);
-
+		static void SetTag(ECS::Entity::EntityID entity, MonoString* tag);
 
 		static void Log(MonoString*);
 

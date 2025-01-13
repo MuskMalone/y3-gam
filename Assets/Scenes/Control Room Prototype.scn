@@ -231,7 +231,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 13922605629959913364
+                            "ID": 16277071840334824712
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -357,7 +357,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 8898635099887230496
+                            "ID": 8886617285342714411
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -461,7 +461,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 8898635099887230496
+                            "ID": 8886617285342714411
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -503,6 +503,7 @@
             "Child Entities": [
                 3,
                 4,
+                112,
                 1048613,
                 1048615
             ],
@@ -624,7 +625,7 @@
                     "Mesh": {
                         "meshName": "Capsule",
                         "GUID": {
-                            "ID": 11872729439938498730
+                            "ID": 2348538624955252485
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -781,6 +782,13 @@
                 "subDataId": 3,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -820,13 +828,6 @@
                                 "z": 0.0,
                                 "w": -0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": true
                         }
                     },
                     {
@@ -1109,6 +1110,13 @@
                 "subDataId": 3,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -1148,13 +1156,6 @@
                                 "z": 0.0,
                                 "w": -0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": true
                         }
                     },
                     {
@@ -1274,6 +1275,13 @@
                 "subDataId": 3,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -1313,13 +1321,6 @@
                                 "z": 0.0,
                                 "w": -0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": true
                         }
                     },
                     {
@@ -1439,6 +1440,13 @@
                 "subDataId": 3,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -1478,13 +1486,6 @@
                                 "z": 0.0,
                                 "w": -0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": true
                         }
                     },
                     {
@@ -1934,7 +1935,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 13922605629959913364
+                            "ID": 16277071840334824712
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1984,6 +1985,13 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Props_PaintingFrame2",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -2023,13 +2031,6 @@
                                 "z": 0.0000026912650810118068,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Props_PaintingFrame2",
-                            "isActive": true
                         }
                     }
                 ],
@@ -2455,7 +2456,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 13922605629959913364
+                            "ID": 16277071840334824712
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3237,12 +3238,191 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 13922605629959913364
+                            "ID": 16277071840334824712
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": false,
                         "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 111,
+            "Parent": 1048607,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "PanelCamera",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 21.14116668701172,
+                            "y": 4.231085300445557,
+                            "z": 8.796314239501954
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.2609780728816986,
+                            "z": 0.0,
+                            "w": 0.9653447270393372
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 30.256210327148439,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 21.14116668701172,
+                            "y": 4.231085300445557,
+                            "z": 8.796314239501954
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.2609780728816986,
+                            "z": 0.0,
+                            "w": 0.9653447270393372
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Camera": {
+                        "projType": "PERSP",
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -10.0
+                        },
+                        "yaw": 0.0,
+                        "pitch": 0.0,
+                        "fov": 60.0,
+                        "aspectRatio": 1.7777777910232545,
+                        "nearClip": 0.10000000149011612,
+                        "farClip": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 112,
+            "Parent": 5,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Wall",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.017964227125048639,
+                            "y": 15.684162139892579,
+                            "z": 14.446480751037598
+                        },
+                        "scale": {
+                            "x": 0.9999999403953552,
+                            "y": 33.05031204223633,
+                            "z": 55.132568359375
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 90.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.017964227125048639,
+                            "y": 15.684162139892579,
+                            "z": 14.446480751037598
+                        },
+                        "worldScale": {
+                            "x": 0.9999999403953552,
+                            "y": 33.05031204223633,
+                            "z": 55.132568359375
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 11128135777711506320
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 8886617285342714411
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.4999999701976776,
+                            "y": 16.525156021118165,
+                            "z": 27.5662841796875
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
                     }
                 }
             ]
@@ -3315,7 +3495,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 8898635099887230496
+                            "ID": 8886617285342714411
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3364,6 +3544,16 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "UVLight"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 111,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "controlPanelCamera"
                                         }
                                     },
                                     {
@@ -3417,6 +3607,16 @@
                                     },
                                     {
                                         "data": {
+                                            "entityID": 1,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 6,
                                             "scriptName": "PlayerInteraction"
                                         },
@@ -3455,6 +3655,7 @@
             "Child Entities": [
                 92,
                 110,
+                111,
                 1048606,
                 1048608
             ],
@@ -3581,7 +3782,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 8898635099887230496
+                            "ID": 8886617285342714411
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3625,24 +3826,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 15,
+                                                "entityID": 27,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 15,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 19,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 19,
+                                                        "data": 27,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -3664,11 +3852,24 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 27,
+                                                "entityID": 19,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 27,
+                                                        "data": 19,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 15,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 15,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -3767,7 +3968,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 8898635099887230496
+                            "ID": 8886617285342714411
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3871,7 +4072,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 8898635099887230496
+                            "ID": 8886617285342714411
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3964,6 +4165,13 @@
                 "subDataId": 3,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -4003,13 +4211,6 @@
                                 "z": 0.0,
                                 "w": -0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": true
                         }
                     },
                     {

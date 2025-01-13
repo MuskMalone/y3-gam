@@ -6,6 +6,8 @@ public class ControlPanel : Entity
   public PlayerInteraction playerInteraction;
   public Entity UVLight;
   public Entity[] hiddenText;
+  public Entity playerCamera;
+  public Entity controlPanelCamera;
   public PlayerMove playerMove;
   public float rotationSpeed = 50.0f; // degrees per second
 
@@ -42,6 +44,7 @@ public class ControlPanel : Entity
 
     if (mouseClicked && isPanelHit)
     {
+      SetControlPanelCameraAsMain();
       controllingLights = true;
       foreach (Entity text in hiddenText)
       {
@@ -87,9 +90,22 @@ public class ControlPanel : Entity
         {
           text?.SetActive(false);
         }
+        SetPlayerCameraAsMain();
       }
     }
 
     UVLight.SetActive(controllingLights);
+  }
+
+  private void SetPlayerCameraAsMain()
+  {
+    InternalCalls.SetTag(playerCamera.mEntityID, "MainCamera");
+    InternalCalls.SetTag(controlPanelCamera.mEntityID, "PanelCamera");
+  }
+
+  private void SetControlPanelCameraAsMain()
+  {
+    InternalCalls.SetTag(playerCamera.mEntityID, "PlayerCamera");
+    InternalCalls.SetTag(controlPanelCamera.mEntityID, "MainCamera");
   }
 }
