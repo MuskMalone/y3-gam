@@ -52,6 +52,15 @@ namespace IGE {
     ImGui_ImplOpenGL3_Init("#version 460 core");
     
     SetEditorCallbacks();
+
+    // EditorView
+    Graphics::FramebufferSpec framebufferSpec;
+    framebufferSpec.width = spec.WindowWidth;
+    framebufferSpec.height = spec.WindowHeight;
+    framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
+
+    mRenderTargets.emplace_back(framebufferSpec);
+    mRenderTargets.back().camera->InitForEditorView();
   }
 
   EditorApplication::~EditorApplication() {
@@ -65,7 +74,7 @@ namespace IGE {
     Application::Init();  // perform default Init
 
     // init editor-specific stuff
-    mGUIManager.Init(GetDefaultRenderTarget());
+    mGUIManager.Init(GetEditorRenderTarget());
 
     SUBSCRIBE_CLASS_FUNC(Events::SignalEvent, &EditorApplication::SignalCallback, this);
   }
@@ -226,7 +235,7 @@ namespace IGE {
 
     //  target.framebuffer->Unbind();
     //}
-      auto const& cam = mRenderTargets[0].camera;
+      auto const& cam = GetEditorRenderTarget().camera;
       Graphics::CameraSpec const editorCam{ cam->GetViewProjMatrix(), cam->GetViewMatrix(),
           cam->GetPosition(), cam->GetNearPlane(), cam->GetFarPlane(), cam->GetFOV(), cam->GetAspectRatio(), true };
 

@@ -62,8 +62,10 @@ namespace Graphics {
 			The amount to move
 		************************************************************************/
 		void MoveCamera(glm::vec3 const& offset);
-
 		void MoveAlongPlane(float xDisp, float yDisp);
+		
+		// initializes camera for editor view
+		void InitForEditorView();
 
 		glm::vec3 mPosition;
 		float mYaw;
@@ -74,9 +76,10 @@ namespace Graphics {
 
 	private:
 		float mAspectRatio;
-		float mMoveSpeed{ 15.f };
-		float mMousePanningSpeed{ 5.f };
-		float mMouseSense{ 50.f };
-		float mZoomSpeed{ 2.5f };
+
+		inline static float sMoveSpeed{ 15.f };
+		inline static float sMousePanningSpeed{ 5.f };
+		inline static float sMouseSense{ 50.f };
+		inline static float sZoomSpeed{ 2.5f };
 	};
 }

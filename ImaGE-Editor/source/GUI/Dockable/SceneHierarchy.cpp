@@ -11,15 +11,16 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
 #include "SceneHierarchy.h"
-#include <Core/Components/Tag.h>
 #include <GUI/GUIVault.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
-#include <Events/EventManager.h>
-#include <Prefabs/PrefabManager.h>
-#include <GUI/Dockable/Inspector.h>
 #include <Core/Systems/TransformSystem/TransformHelpers.h>
-#include <Serialization/Deserializer.h>
+#include <Core/Components/Components.h>
+#include <EditorEvents.h>
+
+#include <Prefabs/PrefabManager.h>
+#include <Events/EventManager.h>
 #include <Serialization/Serializer.h>
+#include <Serialization/Deserializer.h>
 
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <imgui/imgui.h>
@@ -30,22 +31,22 @@ namespace {
   static bool sEntityDoubleClicked{ false }, sEditNameMode{ false }, sFirstEnterEditMode{ true };
   static bool sLMouseReleased{ false }, sCtrlHeld{ false }, sWasCtrlHeld{ false };
   static float sTimeElapsed;  // for renaming entity
-  static bool sJumpToEntity{ false }, sSaveHierarchyState{ false };
-  static std::string sLoadHierarchyPath{};
+  static bool sJumpToEntity{ false };
+  // have to use these bools cause we can't get ImGui ID stack out of window scope
+  static bool sSaveHierarchyState{ false }, sLoadHierarchyState{ false };
 
   void RemovePrefabOverrides(ECS::Entity root, IGE::Assets::GUID guid);
   ECS::Entity GetPrefabRoot(ECS::Entity root);
   void CopyWorldTransform(Component::Transform const& source, Component::Transform& dest);
 
   void ReassignSubmeshIndices(ECS::Entity root);
-  void LoadHierarchyState();
   ECS::Entity GetCanvasEntity();
 }
 
 namespace GUI
 {
   SceneHierarchy::SceneHierarchy(const char* name) : GUIWindow(name),
-    mEntityManager{ ECS::EntityManager::GetInstance() },
+    mCollapsedNodes{}, mEntityManager{ ECS::EntityManager::GetInstance() },
     mSceneName{},
     mRightClickedEntity{}, mEntityOptionsMenu{ false }, mEntityRightClicked{ false },
     mPrefabPopup{ false }, mFirstTimePfbPopup{ true }, mEditingPrefab{ false }, mLockControls{ false }, mSceneModified{ false }
@@ -54,8 +55,8 @@ namespace GUI
     SUBSCRIBE_CLASS_FUNC(Events::EditPrefabEvent, &SceneHierarchy::OnPrefabEdit, this);
     SUBSCRIBE_CLASS_FUNC(Events::SceneModifiedEvent, &SceneHierarchy::OnSceneModified, this);
     SUBSCRIBE_CLASS_FUNC(Events::EntityScreenPicked, &SceneHierarchy::OnEntityPicked, this);
-    SUBSCRIBE_CLASS_FUNC(Events::LoadSceneEvent, &SceneHierarchy::OnSceneLoad, this);
-    SUBSCRIBE_CLASS_FUNC(Events::SaveSceneEvent, &SceneHierarchy::OnSceneSave, this);
+    SUBSCRIBE_CLASS_FUNC(Events::CollectEditorSceneData, &SceneHierarchy::OnCollectEditorData, this);
+    SUBSCRIBE_CLASS_FUNC(Events::LoadEditorSceneData, &SceneHierarchy::OnLoadEditorData, this);
 
     std::string const hierarchyConfigDir{ std::string(gEditorAssetsDirectory) + "Scenes" };
     if (!std::filesystem::is_directory(hierarchyConfigDir)) {
@@ -85,6 +86,8 @@ namespace GUI
           mSceneName.erase(mSceneName.size() - 2);
           mSceneModified = false;
         }
+
+        sSaveHierarchyState = true;
       }
 
       ImGui::Text(sceneNameSave.c_str());
@@ -149,13 +152,13 @@ namespace GUI
     }
 
     if (sSaveHierarchyState) {
-      HierarchyConfig hierarchyCfg{ GetTreeNodeStates() };
-      Serialization::Serializer::SerializeAny(hierarchyCfg, gEditorAssetsDirectory + std::string("Scenes\\") + mSceneName);
+      // save the hieararchy
+      mCollapsedNodes = GetTreeNodeStates();
       sSaveHierarchyState = false;
     }
-    else if (!sLoadHierarchyPath.empty()) {
+    else if (sLoadHierarchyState) {
       LoadHierarchyState();
-      sLoadHierarchyPath.clear();
+      sLoadHierarchyState = false;
     }
 
     if (ImGui::IsKeyPressed(ImGuiKey_Delete) && GUIVault::GetSelectedEntity() && !mLockControls) {
@@ -861,13 +864,16 @@ namespace GUI
     sFirstEnterEditMode = true;
   }
 
-  EVENT_CALLBACK_DEF(SceneHierarchy, OnSceneLoad) {
-    auto sceneLoadEvent{ CAST_TO_EVENT(Events::LoadSceneEvent) };
-    sLoadHierarchyPath = gEditorAssetsDirectory + std::string("Scenes\\") + sceneLoadEvent->mSceneName;
+  EVENT_CALLBACK_DEF(SceneHierarchy, OnCollectEditorData) {
+    auto sceneDataEvent{ CAST_TO_EVENT(Events::CollectEditorSceneData) };
+    sceneDataEvent->mSceneName = mSceneName;
+    sceneDataEvent->mSceneConfig.collapsedNodes = std::move(mCollapsedNodes);
+    mCollapsedNodes = {};
   }
 
-  EVENT_CALLBACK_DEF(SceneHierarchy, OnSceneSave) {
-    sSaveHierarchyState = true;
+  EVENT_CALLBACK_DEF(SceneHierarchy, OnLoadEditorData) {
+    mCollapsedNodes = CAST_TO_EVENT(Events::LoadEditorSceneData)->mSceneConfig.collapsedNodes;
+    sLoadHierarchyState = true;
   }
 
   void GetTreeNodeStatesR(std::set<HierarchyEntry>& collapsed, ECS::Entity entity, ImGuiID parentHash) {
@@ -885,14 +891,14 @@ namespace GUI
     }
   }
 
-  HierarchyConfig SceneHierarchy::GetTreeNodeStates() const {
-    HierarchyConfig ret{};
+  std::set<HierarchyEntry> SceneHierarchy::GetTreeNodeStates() const {
+    std::set<HierarchyEntry> ret{};
     ECS::EntityManager& em{ IGE_ENTITYMGR };
 
     for (ECS::Entity e : em.GetAllEntities()) {
       if (em.HasParent(e) || !em.HasChild(e)) { continue; }
 
-      GetTreeNodeStatesR(ret.collapsedNodes, e, ImHashStr(mWindowName.c_str()));
+      GetTreeNodeStatesR(ret, e, ImHashStr(mWindowName.c_str()));
     }
 
     return ret;
@@ -906,6 +912,13 @@ namespace GUI
   void SceneHierarchy::ParentRightClickedEntity(ECS::Entity child) {
     mEntityManager.SetParentEntity(mRightClickedEntity, child);
     CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), child.GetComponent<Component::Transform>());
+  }
+
+  void SceneHierarchy::LoadHierarchyState() {
+    ImGuiStorage* stateStore{ ImGui::GetStateStorage() };
+    for (GUI::HierarchyEntry const& entry : mCollapsedNodes) {
+      stateStore->SetInt(entry.stackId, entry.isOpen ? 1 : 0);
+    }
   }
 
   void SceneHierarchy::SceneModified() {
@@ -968,17 +981,6 @@ namespace {
 
       child.GetComponent<Component::Mesh>().submeshIdx = idx;
       ++idx;
-    }
-  }
-
-  void LoadHierarchyState() {
-    if (!std::filesystem::exists(sLoadHierarchyPath)) { return; }
-
-    GUI::HierarchyConfig hierarchyCfg{};
-    Serialization::Deserializer::DeserializeAny(hierarchyCfg, sLoadHierarchyPath);
-    ImGuiStorage* stateStore{ ImGui::GetStateStorage() };
-    for (GUI::HierarchyEntry const& entry : hierarchyCfg.collapsedNodes) {
-      stateStore->SetInt(entry.stackId, entry.isOpen ? 1 : 0);
     }
   }
 

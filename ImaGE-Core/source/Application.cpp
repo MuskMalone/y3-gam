@@ -208,18 +208,6 @@ namespace IGE {
   framebufferSpec.height = spec.WindowHeight;
   framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
 
-  //EditorView
-  mRenderTargets.emplace_back(framebufferSpec,
-    std::make_shared<Graphics::EditorCamera>(
-      glm::vec3(0.0f, 5.0f, 10.0f),  // Position
-      -90.0f,                        // Yaw
-      0.0f,                        // Pitch (look downwards slightly)
-      60.0f,                         // FOV
-      16.0f / 9.0f,                  // Aspect Ratio
-      0.1f,                          // Near Clip
-      1500.0f                         // Far Clip
-    ));
-
   mRenderTargets.emplace_back(framebufferSpec); //GameView
 }
 

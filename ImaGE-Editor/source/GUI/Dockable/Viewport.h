@@ -62,6 +62,8 @@ namespace GUI
 
     EVENT_CALLBACK_DECL(OnEntityDoubleClicked);
     EVENT_CALLBACK_DECL(OnSceneStart);
+    EVENT_CALLBACK_DECL(OnCollectEditorData);
+    EVENT_CALLBACK_DECL(OnLoadEditorData);
   };
   
 } // namespace GUI

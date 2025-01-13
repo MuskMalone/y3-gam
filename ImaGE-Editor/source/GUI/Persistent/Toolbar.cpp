@@ -406,6 +406,12 @@ namespace GUI
 
       ImGui::EndTable();
     }
+
+    if (ImGui::Button("Reset to Defaults")) {
+      eCam->InitForEditorView();
+      modified = true;
+    }
+
     ImGui::EndDisabled();
     ImGui::EndMenu();
 

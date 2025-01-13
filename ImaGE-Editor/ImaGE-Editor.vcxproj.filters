@@ -91,8 +91,9 @@
     <ClInclude Include="source\GUI\Styles\Styler.h">
       <Filter>GUI\Styles</Filter>
     </ClInclude>
-    <ClInclude Include="source\GUI\Helpers\HierarchyConfig.h" />
+    <ClInclude Include="source\GUI\Helpers\SceneEditorConfig.h" />
     <ClInclude Include="source\RegisterEditorClasses.h" />
+    <ClInclude Include="source\EditorEvents.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\EditorApplication.cpp" />

@@ -16,6 +16,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Entity.h>
 #include "Graphics/Texture.h"
 #include <GUI/GUIVault.h>
+#include <EditorEvents.h>
+
+#include <Events/EventManager.h>
+#include <Serialization/Serializer.h>
+#include <Serialization/Deserializer.h>
 
 #pragma region IndivWindowIncludes
 #include "Dockable/AssetBrowser.h"
@@ -36,7 +41,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace GUI {
   GUIManager::GUIManager() : mPersistentElements{}, mWindows{}, mEditorViewport{} {
-  
+    
   }
 
   void GUIManager::Init(Graphics::RenderTarget& renderTarget) {
@@ -66,6 +71,11 @@ namespace GUI {
     Styler& styler{ GUIVault::GetStyler() };
     styler.LoadFonts();
     styler.SetCurrentTheme(static_cast<CustomTheme>(gEditorDefaultTheme)); // Default theme should be read from settings file
+
+    SUBSCRIBE_CLASS_FUNC(Events::SaveSceneEvent, &GUIManager::OnSceneSave, this);
+    SUBSCRIBE_CLASS_FUNC(Events::LoadSceneEvent, &GUIManager::OnSceneLoad, this);
+    // ensure GUIManager is the last subscriber
+    SUBSCRIBE_CLASS_FUNC(Events::CollectEditorSceneData, &GUIManager::OnCollectEditorData, this);
   }
 
   void GUIManager::UpdateGUI(std::shared_ptr<Graphics::Framebuffer> const& framebuffer, std::shared_ptr<Graphics::Texture> const& tex) {
@@ -96,6 +106,26 @@ namespace GUI {
     }
   }
 
+  EVENT_CALLBACK_DEF(GUIManager, OnCollectEditorData) {
+    auto editorDataEvent{ CAST_TO_EVENT(Events::CollectEditorSceneData) };
+    Serialization::Serializer::SerializeAny(editorDataEvent->mSceneConfig,
+      gEditorAssetsDirectory + std::string("Scenes\\") + editorDataEvent->mSceneName);
+  }
+
+  EVENT_CALLBACK_DEF(GUIManager, OnSceneSave) {
+    // have all GUI elements deposit the relevant data, then trigger the GUIManager's callback
+    IGE_EVENTMGR.DispatchImmediateEvent<Events::CollectEditorSceneData>();
+  }
+
+  EVENT_CALLBACK_DEF(GUIManager, OnSceneLoad) {
+    std::string const path{ gEditorAssetsDirectory + std::string("Scenes\\")
+      + CAST_TO_EVENT(Events::LoadSceneEvent)->mSceneName };
+
+    SceneEditorConfig cfg{};
+    Serialization::Deserializer::DeserializeAny(cfg, path);
+    QUEUE_EVENT(Events::LoadEditorSceneData, std::move(cfg));
+  }
+
   void GUIManager::Shutdown() {
     GUIVault::GetStyler().Shutdown();
 
@@ -103,8 +133,4 @@ namespace GUI {
     mPersistentElements.clear();
     mWindows.clear();
   }
-
-
-
-
 } // namespace GUI

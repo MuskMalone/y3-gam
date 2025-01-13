@@ -2,6 +2,7 @@
 #include <Core/Entity.h>
 #include <ImGui/imgui.h>
 #include <set>
+#include <Graphics/Camera/EditorCamera.h>
 
 namespace GUI {
   struct HierarchyEntry {
@@ -18,7 +19,10 @@ namespace GUI {
     }
   };
 
-  struct HierarchyConfig {
+  struct SceneEditorConfig {
+    SceneEditorConfig() : editorCam{}, collapsedNodes{} { editorCam.InitForEditorView(); }
+
+    Graphics::EditorCamera editorCam;
     std::set<HierarchyEntry> collapsedNodes;
   };
 }

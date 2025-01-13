@@ -14,8 +14,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Viewport.h"
 #include <GUI/Helpers/AssetPayload.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
-#include <Events/EventManager.h>
-#include <FrameRateController/FrameRateController.h>
 #include <Core/Entity.h>
 #include <Core/Components/Mesh.h>
 #include <Core/Components/Transform.h>
@@ -24,7 +22,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GUI/GUIVault.h>
 #include <Asset/IGEAssets.h>
 #include <Graphics/RenderPass/GeomPass.h>
+#include <EditorEvents.h>
+
 #include "Graphics/Renderer.h"
+#include <Events/EventManager.h>
+#include <FrameRateController/FrameRateController.h>
 
 namespace {
   // for panning camera to entity when double-clicked upon
@@ -72,6 +74,8 @@ namespace GUI
     mEditorCam{ camera }, mIsPanning{ false }, mRightClickHeld{ false }, mFocusWindow{ false } {
     SUBSCRIBE_CLASS_FUNC(Events::ZoomInOnEntity, &Viewport::OnEntityDoubleClicked, this);
     SUBSCRIBE_CLASS_FUNC(Events::SceneStateChange, &Viewport::OnSceneStart, this);
+    SUBSCRIBE_CLASS_FUNC(Events::CollectEditorSceneData, &Viewport::OnCollectEditorData, this);
+    SUBSCRIBE_CLASS_FUNC(Events::LoadEditorSceneData, &Viewport::OnLoadEditorData, this);
   }
 
   void Viewport::Render(std::shared_ptr<Graphics::Framebuffer> const& framebuffer)
@@ -469,6 +473,15 @@ namespace GUI
       }
       ImGui::EndDragDropTarget();
     }
+  }
+
+  EVENT_CALLBACK_DEF(Viewport, OnCollectEditorData) {
+    GUI::SceneEditorConfig& cfg{ CAST_TO_EVENT(Events::CollectEditorSceneData)->mSceneConfig };
+    cfg.editorCam = *mEditorCam;
+  }
+
+  EVENT_CALLBACK_DEF(Viewport, OnLoadEditorData) {
+    *mEditorCam = CAST_TO_EVENT(Events::CollectEditorSceneData)->mSceneConfig.editorCam;
   }
 
 } // namespace GUI

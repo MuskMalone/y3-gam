@@ -192,12 +192,13 @@ copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Release\bin\Release\rtt
     <ClInclude Include="source\GUI\Dockable\PostProcessingSettings.h" />
     <ClInclude Include="source\GUI\Dockable\SceneHierarchy.h" />
     <ClInclude Include="source\GUI\Dockable\Viewport.h" />
+    <ClInclude Include="source\EditorEvents.h" />
     <ClInclude Include="source\GUI\GUIManager.h" />
     <ClInclude Include="source\GUI\GUIVault.h" />
     <ClInclude Include="source\GUI\GUIWindow.h" />
     <ClInclude Include="source\GUI\Helpers\AssetHelpers.h" />
     <ClInclude Include="source\GUI\Helpers\AssetPayload.h" />
-    <ClInclude Include="source\GUI\Helpers\HierarchyConfig.h" />
+    <ClInclude Include="source\GUI\Helpers\SceneEditorConfig.h" />
     <ClInclude Include="source\GUI\Helpers\ImGuiHelpers.h" />
     <ClInclude Include="source\GUI\Persistent\PopupHelper.h" />
     <ClInclude Include="source\GUI\Persistent\PrefabEditor.h" />
