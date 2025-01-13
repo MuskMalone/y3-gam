@@ -125,6 +125,20 @@ namespace ImGuiHelpers
       }
       break;
     }
+    case GUI::AssetPayload::AUDIO:
+    {
+      std::string const fp{ assetPayload.GetFilePath() };
+
+      if (entity.HasComponent<Component::AudioSource>()) {
+        entity.GetComponent<Component::AudioSource>().CreateSound(fp);
+      }
+      // else add the component and add the sound
+      else {
+        entity.EmplaceComponent<Component::AudioSource>().CreateSound(fp);
+      }
+      
+      break;
+    }
     default:
       break;
     }
