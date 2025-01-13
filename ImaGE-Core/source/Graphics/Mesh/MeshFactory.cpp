@@ -72,7 +72,9 @@ namespace Graphics {
       submeshes.push_back(quadSubmesh);
 
       // Create MeshSource with the generated data
-      return MeshSource(vao, submeshes, {}, quadIndices);  // Empty vertices list, since we use Vertex2D locally
+      MeshSource ret{ vao, submeshes, {}, quadIndices };  // Empty vertices list, since we use Vertex2D locally
+      ret.ComputeBV();
+      return ret;  
   }
 
   MeshSource MeshFactory::CreateCube() {
@@ -163,7 +165,9 @@ namespace Graphics {
     submeshes.push_back(cubeSubmesh);
 
     // Create MeshSource with the generated data
-    return MeshSource(vao, submeshes, cubeVertices, cubeIndices);
+    MeshSource ret{ vao, submeshes, cubeVertices, cubeIndices };
+    ret.ComputeBV();
+    return ret;
   }
 
   MeshSource MeshFactory::CreatePlane() {
@@ -230,7 +234,9 @@ namespace Graphics {
     submeshes.push_back(planeSubmesh);
 
     // Create MeshSource with the generated data
-    return MeshSource(vao, submeshes, planeVertices, planeIndices);
+    MeshSource ret{ vao, submeshes, planeVertices, planeIndices };
+    ret.ComputeBV();
+    return ret;
   }
 
   MeshSource MeshFactory::CreateSphere(uint32_t stacks, uint32_t slices){
@@ -313,7 +319,9 @@ namespace Graphics {
       };
 
       submeshes.push_back(sphereSubmesh);
-      return MeshSource(vao, submeshes, sphereVertices, sphereIndices);
+      MeshSource ret{ vao, submeshes, sphereVertices, sphereIndices };
+      ret.ComputeBV();
+      return ret;
   }
 
   MeshSource MeshFactory::CreateCapsule(float radius, float height, int stacks, int slices) {
@@ -468,7 +476,9 @@ namespace Graphics {
 
       submeshes.push_back(capsuleSubmesh);
 
-      return MeshSource(vao, submeshes, vertices, indices);
+      MeshSource ret{ vao, submeshes, vertices, indices };
+      ret.ComputeBV();
+      return ret;
   }
 
   MeshSource MeshFactory::CreateModelFromImport(std::string const& imshFile) {

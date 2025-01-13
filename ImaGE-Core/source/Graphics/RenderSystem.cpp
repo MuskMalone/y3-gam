@@ -50,32 +50,33 @@ namespace Graphics {
 
 		/* ========== Frustum Culling ========== */
 		// TEMP FIX - Dont cull
-		auto shouldRender = [](ECS::Entity entity) {
+	/*	auto shouldRender = [](ECS::Entity entity) {
 			return entity.IsActive();
+		};*/
+		auto shouldRender = [&am, &camFrustum, &cullCount](ECS::Entity entity) {
+			if (!entity.IsActive()) { return false; }
+			// lights and entities without mesh shouldnt be culled
+			else if (entity.HasComponent<Component::Light>() || !entity.HasComponent<Component::Mesh>()) {
+				return true;
+			}
+
+			Component::Mesh& mesh{ entity.GetComponent<Component::Mesh>() };
+			if (!mesh.meshSource) { return false; }
+
+			bool const ret{ EntityInViewFrustum(camFrustum, entity.GetComponent<Component::Transform>(),
+				am.GetAsset<IGE::Assets::ModelAsset>(mesh.meshSource)->mMeshSource) };
+			if (!ret) { ++cullCount; }
+
+			return ret;
 		};
-		//shouldRender = [&am, &camFrustum, &cullCount](ECS::Entity entity) {
-		//	if (!entity.IsActive()) { return false; }
-		//	// lights and entities without mesh shouldnt be culled
-		//	else if (entity.HasComponent<Component::Light>() || !entity.HasComponent<Component::Mesh>()) {
-		//		return true;
-		//	}
-
-		//	Component::Mesh& mesh{ entity.GetComponent<Component::Mesh>() };
-		//	if (!mesh.meshSource) { return true; }
-
-		//	bool const ret{ EntityInViewFrustum(camFrustum, entity.GetComponent<Component::Transform>(),
-		//		am.GetAsset<IGE::Assets::ModelAsset>(mesh.meshSource)->mMeshSource) };
-		//	if (!ret) { ++cullCount; }
-
-		//	return ret;
-		//};
 
 		std::vector<ECS::Entity> entityVector{};
 		// if editing prefab, pass in all active entities
 		if (Scenes::SceneManager::GetInstance().GetSceneState() == Scenes::PREFAB_EDITOR) {
-			auto const& entities{ ECS::EntityManager::GetInstance().GetAllEntities() };
+			auto entities{ ECS::EntityManager::GetInstance().GetAllEntities() };
 			entityVector.reserve(entities.size());
-			std::copy_if(entities.begin(), entities.end(), std::back_inserter(entityVector),
+			std::copy_if(std::make_move_iterator(entities.begin()),
+				std::make_move_iterator(entities.end()), std::back_inserter(entityVector),
 				shouldRender);
 		}
 		// else call on the layer system

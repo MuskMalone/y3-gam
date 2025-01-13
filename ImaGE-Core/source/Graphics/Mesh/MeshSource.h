@@ -56,6 +56,7 @@ namespace Graphics {
       BV::AABB const& GetBoundingBox() const { return mBoundingBox; }
 
       void SetBoundingVolume(glm::vec3 const& min, glm::vec3 const& max);
+      void ComputeBV();
 
       bool IsWireframe() { return mIsWireframe; }
       void ToggleWireframe() { mIsWireframe = !mIsWireframe; }

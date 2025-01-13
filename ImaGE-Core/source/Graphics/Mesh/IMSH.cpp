@@ -71,14 +71,14 @@ namespace Graphics::AssetIO
     sFirstMaterialEncountered = false;
     ProcessMeshes(aiScn->mRootNode, aiScn);
 
-    ComputeBV();
-
     if (sRecenterMesh) {
       RecenterMesh();
     }
     if (sNormalizeScale) {
       NormalizeScale();
     }
+
+    ComputeBV();
   }
 
   void IMSH::ProcessSubmeshes(aiNode* node, aiScene const* scene, aiMatrix4x4 const& parentMtx)
@@ -214,8 +214,16 @@ namespace Graphics::AssetIO
   }
 
   void IMSH::RecenterMesh() {
+    glm::vec3 min{ FLT_MAX }, max{ -FLT_MAX };
+
+    // find the min and max AABB
+    for (Graphics::Vertex const& vtx : mVertexBuffer) {
+      min = glm::min(vtx.position, min);
+      max = glm::max(vtx.position, max);
+    }
+
     // get the center of the AABB
-    glm::vec3 const center{ (mMin + mMax) * 0.5f };
+    glm::vec3 const center{ (min + max) * 0.5f };
     // if already centered, return
     if (glm::all(glm::lessThan(glm::abs(center), glm::vec3(glm::epsilon<float>())))) { return; }
 
@@ -226,8 +234,16 @@ namespace Graphics::AssetIO
   }
 
   void IMSH::NormalizeScale() {
-    glm::vec3 const center{ sRecenterMesh ? glm::vec3() : (mMin + mMax) * 0.5f };
-    glm::vec3 const scale{ mMax - mMin };
+    glm::vec3 min{ FLT_MAX }, max{ -FLT_MAX };
+
+    // find the min and max AABB
+    for (Graphics::Vertex const& vtx : mVertexBuffer) {
+      min = glm::min(vtx.position, min);
+      max = glm::max(vtx.position, max);
+    }
+
+    glm::vec3 const center{ sRecenterMesh ? glm::vec3() : (min + max) * 0.5f };
+    glm::vec3 const scale{ max - min };
     float const maxScale{ std::min(scale.x, std::min(scale.y, scale.z)) };
     glm::mat4 transform{
       1.f / maxScale, 0.f, 0.f, 0.f,
