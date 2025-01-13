@@ -60,6 +60,7 @@ namespace GUI {
     void HelpMenu(const char* label) const;
     void SerializationMenu(const char* label) const;
     void ResavePrefabsMenuItem(const char* label) const;
+    void ReimportMeshesMenuItem(const char* label) const;
     bool LightingMenu(const char* label, bool disabled) const;
     bool EditorCamMenu(const char* label, bool disabled) const;
   };

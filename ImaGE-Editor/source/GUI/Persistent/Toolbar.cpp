@@ -14,6 +14,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GUI/Helpers/AssetHelpers.h>
 #include <Core/Components/Light.h>
 #include <Asset/IGEAssets.h>
+#include <Graphics/Mesh/IMSH.h>
 
 #include <Serialization/Serializer.h>
 #include <Events/EventManager.h>
@@ -143,6 +144,8 @@ namespace GUI
         }
 
         ResavePrefabsMenuItem("Re-save all Prefabs");
+
+        ReimportMeshesMenuItem("Re-import all Meshes");
 
         ImGui::EndMenu(); // Debug
       }
@@ -429,18 +432,37 @@ namespace GUI
         try {
           IGE::Assets::GUID guid{ am.LoadRef<IGE::Assets::PrefabAsset>(filePath) };
           Serialization::Serializer::SerializePrefab(am.GetAsset<IGE::Assets::PrefabAsset>(guid)->mPrefabData, filePath);
+          IGE_DBGLOGGER.LogInfo("Re-saved " + filePath);
         }
         catch (Debug::ExceptionBase&) {
           IGE_DBGLOGGER.LogError("Unable to load " + filePath);
         }
       }
-
-      IGE_DBGLOGGER.LogInfo("Successfully re-saved all prefabs");
     }
     if (ImGui::IsItemHovered()) {
       ImGui::BeginTooltip();
       ImGui::Text("Automatically saves all prefabs again");
       ImGui::Text("For use when components/formats are modified and require saving to a new format.");
+      ImGui::EndTooltip();
+    }
+  }
+
+  void Toolbar::ReimportMeshesMenuItem(const char* label) const {
+    if (ImGui::MenuItem(label)) {
+      for (auto const& file : std::filesystem::directory_iterator(std::string(gAssetsDirectory) + "Models\\Compiled")) {
+        Graphics::AssetIO::IMSH imsh{};
+        std::string const fp{ file.path().string() };
+
+        imsh.ReadFromBinFile(fp);
+        imsh.WriteToBinFile(fp);
+
+        IGE_DBGLOGGER.LogInfo("Reimported " + fp);
+      }
+    }
+    if (ImGui::IsItemHovered()) {
+      ImGui::BeginTooltip();
+      ImGui::Text("Automatically imports all models again");
+      ImGui::Text("For use when certain models are outdated and require saving to a new format.");
       ImGui::EndTooltip();
     }
   }
