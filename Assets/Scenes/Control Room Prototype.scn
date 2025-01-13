@@ -231,7 +231,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 17534368454326030442
+                            "ID": 13312063730975009689
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -357,7 +357,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2331050550725418273
+                            "ID": 4872572780699074268
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -461,7 +461,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2331050550725418273
+                            "ID": 4872572780699074268
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -624,7 +624,7 @@
                     "Mesh": {
                         "meshName": "Capsule",
                         "GUID": {
-                            "ID": 17043136010164229019
+                            "ID": 3912503167643006327
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -1048,7 +1048,7 @@
                     {
                         "key": "Tag",
                         "value": {
-                            "tag": "Props_CeilingLight",
+                            "tag": "ToggleLight1",
                             "isActive": true
                         }
                     }
@@ -1213,7 +1213,7 @@
                     {
                         "key": "Tag",
                         "value": {
-                            "tag": "Props_CeilingLight",
+                            "tag": "ToggleLight2",
                             "isActive": true
                         }
                     }
@@ -1378,7 +1378,7 @@
                     {
                         "key": "Tag",
                         "value": {
-                            "tag": "Props_CeilingLight",
+                            "tag": "ToggleLight3",
                             "isActive": true
                         }
                     }
@@ -1543,7 +1543,7 @@
                     {
                         "key": "Tag",
                         "value": {
-                            "tag": "Props_CeilingLight",
+                            "tag": "ToggleLight4",
                             "isActive": true
                         }
                     }
@@ -1934,7 +1934,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 17534368454326030442
+                            "ID": 13312063730975009689
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2455,7 +2455,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 17534368454326030442
+                            "ID": 13312063730975009689
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2681,6 +2681,144 @@
             ]
         },
         {
+            "ID": 93,
+            "Parent": null,
+            "Child Entities": [
+                94
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Canvas",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Canvas": {
+                        "isVisible": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 94,
+            "Parent": 93,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Image",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.020999999716877939,
+                            "y": 0.08100000023841858,
+                            "z": 0.06100001558661461
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.020999999716877939,
+                            "y": 0.08100000023841858,
+                            "z": 0.06100001558661461
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 2203736300003804932
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048606,
             "Parent": 1048607,
             "Child Entities": [],
@@ -2748,7 +2886,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2331050550725418273
+                            "ID": 4872572780699074268
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2915,7 +3053,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2331050550725418273
+                            "ID": 4872572780699074268
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2947,6 +3085,88 @@
                             "w": 1.0
                         },
                         "sensor": false
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048608,
+                                "scriptName": "LightSwitch",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": [
+                                            {
+                                                "entityID": 15,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 15,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 19,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 19,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 23,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 23,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 27,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 27,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "type": "MonoObjectVec",
+                                        "scriptField": {
+                                            "fieldName": "LightsToToggleActive"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 6,
+                                            "scriptName": "PlayerInteraction"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerInteraction"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
@@ -3019,7 +3239,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2331050550725418273
+                            "ID": 4872572780699074268
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -3123,7 +3343,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 2331050550725418273
+                            "ID": 4872572780699074268
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
