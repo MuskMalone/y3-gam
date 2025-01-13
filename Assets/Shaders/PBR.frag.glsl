@@ -48,6 +48,7 @@ uniform sampler2D[16] u_AlbedoMaps;
 //lighting parameters
 const int typeDir = 0;
 const int typeSpot = 1;
+const int typePoint = 2;
 const int maxLights = 30;
 uniform vec3 u_CamPos;       // Camera position in world space
 uniform int numlights;
@@ -122,6 +123,22 @@ void main(){
 
             // Final light color for spotlight
             lightColor = u_LightColor[i] * u_LightIntensity[i] * attenuation;
+        }
+         if(u_type[i] == typePoint)
+        {
+            L = normalize(u_LightPos[i] - v_FragPos);  // Direction from fragment to light
+            float distance = length(u_LightPos[i] - v_FragPos);  // Distance to light
+
+            // Range attenuation based on inverse square law (simplified with smoothstep)
+            float attenuation = smoothstep(0.0, u_Range[i], u_Range[i] - distance);
+            lightColor = u_LightColor[i] * u_LightIntensity[i] * attenuation;
+
+            // if (u_ShadowsActive) {
+            //     shadow = CheckShadow(v_LightSpaceFragPos);  // Shadows for point light
+            // }
+
+            
+
         }
 
         vec3 H = normalize(V + L);                   // Halfway vector

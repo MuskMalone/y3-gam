@@ -67,6 +67,9 @@
     <ClInclude Include="source\GUI\Helpers\AssetPayload.h">
       <Filter>GUI\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="source\GUI\Helpers\HierarchyConfig.h">
+      <Filter>GUI\Helpers</Filter>
+    </ClInclude>
     <ClInclude Include="source\GUI\Helpers\ImGuiHelpers.h">
       <Filter>GUI\Helpers</Filter>
     </ClInclude>
@@ -91,7 +94,6 @@
     <ClInclude Include="source\GUI\Styles\Styler.h">
       <Filter>GUI\Styles</Filter>
     </ClInclude>
-    <ClInclude Include="source\GUI\Helpers\HierarchyConfig.h" />
     <ClInclude Include="source\RegisterEditorClasses.h" />
   </ItemGroup>
   <ItemGroup>

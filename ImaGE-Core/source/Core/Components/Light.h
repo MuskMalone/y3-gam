@@ -18,6 +18,7 @@ namespace Component {
 	enum LightType {
 			DIRECTIONAL,
 			SPOTLIGHT,
+			POINT,
 			LIGHT_COUNT
 		};
 

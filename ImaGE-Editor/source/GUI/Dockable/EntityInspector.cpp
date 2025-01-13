@@ -1844,7 +1844,7 @@ namespace GUI {
     if (entityRotModified) { light.shadowConfig.shadowModified = true; }
 
     if (isOpen) {
-      const std::vector<std::string> Lights{ "Directional","Spotlight" };
+      const std::vector<std::string> Lights{ "Directional","Spotlight", "Point"};
       //  // Assuming 'collider' is an instance of Collider
       float const inputWidth{ CalcInputWidth(50.f) }, vec3InputWidth{ inputWidth / 3.f };
 
@@ -1907,6 +1907,16 @@ namespace GUI {
         }
 
 
+        ImGui::TableNextRow();
+        ImGui::TableNextColumn();
+        ImGui::Text("Range");
+        ImGui::TableNextColumn();
+        if (ImGui::DragFloat("##R", &light.mRange, 0.5f, 0.f, FLT_MAX)) {
+          modified = true;
+        }
+      }
+      if (light.type == Component::POINT)
+      {
         ImGui::TableNextRow();
         ImGui::TableNextColumn();
         ImGui::Text("Range");
