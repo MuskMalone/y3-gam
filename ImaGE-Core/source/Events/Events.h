@@ -19,28 +19,28 @@ namespace Events
   class WindowGainFocus : public Event
   {
   public:
-    WindowGainFocus() : Event(EventType::WINDOW_GAIN_FOCUS) {}
+    WindowGainFocus() : Event() {}
     inline std::string GetName() const noexcept override { return "Window Gained Focus"; }
   };
 
   class WindowLoseFocus : public Event
   {
   public:
-    WindowLoseFocus() : Event(EventType::WINDOW_LOSE_FOCUS) {}
+    WindowLoseFocus() : Event() {}
     inline std::string GetName() const noexcept override { return "Window Lost Focus"; }
   };
 
   class WindowMinimized : public Event
   {
   public:
-    WindowMinimized() : Event(EventType::WINDOW_MINIMIZED) {}
+    WindowMinimized() : Event() {}
     inline std::string GetName() const noexcept override { return "Window Minimized"; }
   };
 
   class WindowResized : public Event
   {
   public:
-      WindowResized(int width, int height) : Event(EventType::WINDOW_RESIZED), mWidth{width}, mHeight{height} {}
+      WindowResized(int width, int height) : Event(), mWidth{width}, mHeight{height} {}
       inline std::string GetName() const noexcept override { return "Window Resized"; }
       int const mWidth;
       int const mHeight;
@@ -49,14 +49,14 @@ namespace Events
   class ToggleFullscreen : public Event
   {
   public:
-    ToggleFullscreen() : Event(EventType::TOGGLE_FULLSCREEN) {}
+    ToggleFullscreen() : Event() {}
     inline std::string GetName() const noexcept override { return "Toggle Fullscreen"; }
   };
 
   class ZoomInOnEntity : public Event
   {
   public:
-    ZoomInOnEntity(ECS::Entity entity) : Event(EventType::ENTITY_ZOOM), mEntity{ entity } {}
+    ZoomInOnEntity(ECS::Entity entity) : Event(), mEntity{ entity } {}
     inline std::string GetName() const noexcept override { return "Zooming in on Entity " + mEntity.GetTag(); }
 
     ECS::Entity const mEntity;
@@ -66,7 +66,7 @@ namespace Events
   class SpawnPrefabEvent : public Event
   {
   public:
-    SpawnPrefabEvent(std::string name, std::string path, glm::vec3 const& pos = {}, bool mapEntity = true) : Event(EventType::SPAWN_PREFAB),
+    SpawnPrefabEvent(std::string name, std::string path, glm::vec3 const& pos = {}, bool mapEntity = true) : Event(),
       mName{ std::move(name) }, mPath{ std::move(path) }, mPos{ pos }, mMapEntity{ mapEntity } {}
     inline std::string GetName() const noexcept override { return "Spawn Prefab: " + mName; }
 
@@ -78,7 +78,7 @@ namespace Events
   class RemoveComponentEvent : public Event
   {
   public:
-    RemoveComponentEvent(ECS::Entity entity, rttr::type const& compType) : Event(EventType::REMOVE_COMPONENT), mEntity{ entity }, mType{ compType } {}
+    RemoveComponentEvent(ECS::Entity entity, rttr::type const& compType) : Event(), mEntity{ entity }, mType{ compType } {}
     inline std::string GetName() const noexcept override { return "Deleted Component " + mType.get_name().to_string()
       + " from entity " + std::to_string(mEntity.GetEntityID()); }
 
@@ -93,7 +93,7 @@ namespace Events
   class RemoveEntityEvent : public Event
   {
   public:
-    RemoveEntityEvent(ECS::Entity entity) : Event(EventType::REMOVE_ENTITY), mEntity{ entity } {}
+    RemoveEntityEvent(ECS::Entity entity) : Event(), mEntity{ entity } {}
     inline std::string GetName() const noexcept override { return "Deleted Entity: " + mEntity.GetTag(); }
 
     ECS::Entity const mEntity;
@@ -102,7 +102,7 @@ namespace Events
   class EntityLayerModified : public Event
   {
   public:
-    EntityLayerModified(ECS::Entity entity, std::string oldLayer) : Event(EventType::LAYER_MODIFIED), mEntity{ entity }, mOldLayer{ std::move(oldLayer) } {}
+    EntityLayerModified(ECS::Entity entity, std::string oldLayer) : Event(), mEntity{ entity }, mOldLayer{ std::move(oldLayer) } {}
     inline std::string GetName() const noexcept override { return "Modified Layer Component of Entity: " + mEntity.GetTag(); }
 
     std::string const mOldLayer;
@@ -112,7 +112,7 @@ namespace Events
   // entity
   class EntityScreenPicked : public Event {
   public:
-    EntityScreenPicked(ECS::Entity entity) : Event(EventType::ENTITY_PICKED), mEntity{ entity } {}
+    EntityScreenPicked(ECS::Entity entity) : Event(), mEntity{ entity } {}
     inline std::string GetName() const noexcept override { return "Screen-picked entity " + mEntity.GetTag(); }
 
     ECS::Entity const mEntity;
@@ -121,7 +121,7 @@ namespace Events
   // entity
   class EntitySelectedInEditor : public Event {
   public:
-    EntitySelectedInEditor(ECS::Entity entity) : Event(EventType::ENTITY_SELECTED), mEntity{ entity } {}
+    EntitySelectedInEditor(ECS::Entity entity) : Event(), mEntity{ entity } {}
     inline std::string GetName() const noexcept override { return "Selected entity " + mEntity.GetTag(); }
 
     ECS::Entity const mEntity;
@@ -129,7 +129,7 @@ namespace Events
 
   class EntityMouseEnter : public Event {
   public:
-      EntityMouseEnter(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_ENTER), mEntity{ entity } {}
+      EntityMouseEnter(ECS::Entity entity) : Event(), mEntity{ entity } {}
       inline std::string GetName() const noexcept override { return "On mouse enter entity " + mEntity.GetTag(); }
 
       ECS::Entity mEntity;
@@ -137,7 +137,7 @@ namespace Events
 
   class EntityMouseExit : public Event {
   public:
-      EntityMouseExit(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_EXIT), mEntity{ entity } {}
+      EntityMouseExit(ECS::Entity entity) : Event(), mEntity{ entity } {}
       inline std::string GetName() const noexcept override { return "On mouse exit entity " + mEntity.GetTag(); }
 
       ECS::Entity mEntity;
@@ -145,7 +145,7 @@ namespace Events
 
   class EntityMouseDown : public Event {
   public:
-      EntityMouseDown(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_DOWN), mEntity{ entity } {}
+      EntityMouseDown(ECS::Entity entity) : Event(), mEntity{ entity } {}
       inline std::string GetName() const noexcept override { return "On mouse down entity " + mEntity.GetTag(); }
 
       ECS::Entity mEntity;
@@ -153,7 +153,7 @@ namespace Events
 
   class EntityMouseUp : public Event {
   public:
-      EntityMouseUp(ECS::Entity entity) : Event(EventType::ENTITY_MOUSE_UP), mEntity{ entity } {}
+      EntityMouseUp(ECS::Entity entity) : Event(), mEntity{ entity } {}
       inline std::string GetName() const noexcept override { return "On mouse up entity " + mEntity.GetTag(); }
 
       ECS::Entity mEntity;
@@ -161,7 +161,7 @@ namespace Events
 
   class EntityPointerEnter : public Event {
   public:
-      EntityPointerEnter(ECS::Entity entity) : Event(EventType::POINTER_ENTER), mEntity{ entity } {}
+      EntityPointerEnter(ECS::Entity entity) : Event(), mEntity{ entity } {}
       inline std::string GetName() const noexcept override { return "On pointer enter entity " + mEntity.GetTag(); }
 
       ECS::Entity mEntity;
@@ -169,7 +169,7 @@ namespace Events
 
   class EntityPointerExit : public Event {
   public:
-      EntityPointerExit(ECS::Entity entity) : Event(EventType::POINTER_EXIT), mEntity{ entity } {}
+      EntityPointerExit(ECS::Entity entity) : Event(), mEntity{ entity } {}
       inline std::string GetName() const noexcept override { return "On pointer exit entity " + mEntity.GetTag(); }
 
       ECS::Entity mEntity;
@@ -177,7 +177,7 @@ namespace Events
 
   class EntityPointerDown : public Event {
   public:
-      EntityPointerDown(ECS::Entity entity) : Event(EventType::POINTER_DOWN), mEntity{ entity } {}
+      EntityPointerDown(ECS::Entity entity) : Event(), mEntity{ entity } {}
       inline std::string GetName() const noexcept override { return "On pointer down entity " + mEntity.GetTag(); }
 
       ECS::Entity mEntity;
@@ -185,7 +185,7 @@ namespace Events
 
   class EntityPointerUp : public Event {
   public:
-      EntityPointerUp(ECS::Entity entity) : Event(EventType::POINTER_UP), mEntity{ entity } {}
+      EntityPointerUp(ECS::Entity entity) : Event(), mEntity{ entity } {}
       inline std::string GetName() const noexcept override { return "On pointer up entity " + mEntity.GetTag(); }
 
       ECS::Entity mEntity;
@@ -193,13 +193,13 @@ namespace Events
 
   class SignalEvent : public Event {
   public:
-    SignalEvent() : Event(EventType::SIGNAL) {}
+    SignalEvent() : Event() {}
     inline std::string GetName() const noexcept override { return "Program terminated unexpectedly"; }
   };
 
   class TriggerPausedUpdate : public Event {
   public:
-    TriggerPausedUpdate() : Event(EventType::TRIGGER_PAUSED_UPDATE) {}
+    TriggerPausedUpdate() : Event() {}
     inline std::string GetName() const noexcept override { return "Triggering paused update"; }
   };
 }

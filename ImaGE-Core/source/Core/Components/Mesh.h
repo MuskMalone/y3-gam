@@ -13,7 +13,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Component {
 	struct Mesh{
-		Mesh() : meshName{ "None" }, meshSource{}, submeshIdx{}, isCustomMesh{ false }, castShadows{ true }, receiveShadows{ true } {}
+		Mesh(const char* name = "Cube") : meshName{ name }, meshSource{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(name) },
+			submeshIdx{}, isCustomMesh{false}, castShadows{true}, receiveShadows{true} {}
 		Mesh(IGE::Assets::GUID const& meshSrc, std::string name, bool custom = false, uint32_t _submeshIdx = 0) :
 			meshName{ std::move(name) }, meshSource { meshSrc }, submeshIdx{ _submeshIdx },
 			isCustomMesh{ custom }, castShadows{ true }, receiveShadows{ true } {}
@@ -23,7 +24,7 @@ namespace Component {
 		//const std::vector<std::shared_ptr<Material>>& GetMaterials() const { return mMaterials; }
 
 		inline void Clear() noexcept {
-			meshName = "None";
+			meshName = "Cube";
 			meshSource = {};
 			submeshIdx = {};
 			castShadows = receiveShadows = true;

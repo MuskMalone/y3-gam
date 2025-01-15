@@ -15,7 +15,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rttr/variant.h>
 #include <string>
 #include <Reflection/ObjectFactory.h>
-#include <Prefabs/Prefab.h>
+#include <Serialization/PfbOverridesData.h>
 
 namespace Mono { struct ScriptInstance; }
 
@@ -104,12 +104,12 @@ namespace Serialization
     /*!*********************************************************************
     \brief
       Deserializes the PrefabOverrides component
-    \param prefabOverride
+    \param prefabOverrides
       Reference to the component
     \param json
       The json value of the component
     ************************************************************************/
-    static void DeserializePrefabOverrides(Component::PrefabOverrides& prefabOverride, rapidjson::Value const& json);
+    static void DeserializePrefabOverrides(Serialization::PfbOverridesData& overrides, rapidjson::Value const& json);
 
     /*!*********************************************************************
     \brief

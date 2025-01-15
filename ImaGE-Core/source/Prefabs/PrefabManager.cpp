@@ -41,23 +41,15 @@ namespace {
 
 PrefabManager::PrefabManager()
 {
-  SUBSCRIBE_CLASS_FUNC(Events::EventType::SPAWN_PREFAB, &PrefabManager::HandleEvent, this);
+  SUBSCRIBE_CLASS_FUNC(Events::SpawnPrefabEvent, &PrefabManager::OnPrefabSpawn, this);
 }
 
-EVENT_CALLBACK_DEF(PrefabManager, HandleEvent)
+EVENT_CALLBACK_DEF(PrefabManager, OnPrefabSpawn)
 {
-  switch (event->GetCategory())
-  {
-  case Events::EventType::SPAWN_PREFAB:
-  {
-    auto pfbEvent{ CAST_TO_EVENT(Events::SpawnPrefabEvent) };
-    Assets::AssetManager& assetMan{ IGE_ASSETMGR };
-    Assets::GUID guid{ assetMan.LoadRef<IGE::Assets::PrefabAsset>(pfbEvent->mPath) };
-    assetMan.GetAsset<IGE::Assets::PrefabAsset>(guid)->mPrefabData.Construct(guid, pfbEvent->mPos);
-
-    break;
-  }
-  }
+  auto pfbEvent{ CAST_TO_EVENT(Events::SpawnPrefabEvent) };
+  Assets::AssetManager& assetMan{ IGE_ASSETMGR };
+  Assets::GUID guid{ assetMan.LoadRef<IGE::Assets::PrefabAsset>(pfbEvent->mPath) };
+  assetMan.GetAsset<IGE::Assets::PrefabAsset>(guid)->mPrefabData.Construct(guid, pfbEvent->mPos);
 }
 
 bool PrefabManager::DoesPrefabExist(std::string const& name) const
@@ -84,7 +76,7 @@ void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::stri
 {
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
   Prefab prefab{ name };
-  prefab.mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(prefabInstance);
+  prefab.GetRoot().mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(prefabInstance);
   if (entityMan.HasChild(prefabInstance)) {
     prefab.CreateFixedSubData(entityMan.GetChildEntity(prefabInstance), mappings);
   }
@@ -98,7 +90,7 @@ void PrefabManager::CreatePrefabFromEntity(ECS::Entity entity, std::string const
 {
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
   Prefab prefab{ name };
-  prefab.mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(entity);
+  prefab.GetRoot().mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(entity);
 
   if (entityMan.HasChild(entity)) {
     prefab.CreateSubData({}, entityMan.GetChildEntity(entity));

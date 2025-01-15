@@ -89,17 +89,21 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="source\Cutscene\EndSceneFadeToBlack.cs" />
     <Compile Include="source\Cutscene\TutorialCutscene.cs" />
     <Compile Include="source\Dialogue\Dialogue.cs" />
     <Compile Include="source\Dialogue\SpecialDialogue.cs" />
     <Compile Include="source\Engine Tools\Easing.cs" />
     <Compile Include="source\Engine Tools\FPS.cs" />
     <Compile Include="source\InteractableObject\AltarPaintingFrame.cs" />
+    <Compile Include="source\InteractableObject\BackToMainMenuButton.cs" />
     <Compile Include="source\InteractableObject\Crowbar.cs" />
     <Compile Include="source\InteractableObject\Hammer.cs" />
     <Compile Include="source\InteractableObject\Key.cs" />
     <Compile Include="source\InteractableObject\KeyDoor.cs" />
+    <Compile Include="source\InteractableObject\ControlPanel.cs" />
     <Compile Include="source\InteractableObject\NightPainting.cs" />
+    <Compile Include="source\InteractableObject\LightSwitch.cs" />
     <Compile Include="source\InteractableObject\NoteInteraction.cs" />
     <Compile Include="source\InteractableObject\PitPainting.cs" />
     <Compile Include="source\InteractableObject\Safe.cs" />
@@ -107,19 +111,20 @@
     <Compile Include="source\InteractableObject\Seed.cs" />
     <Compile Include="source\InteractableObject\SuspiciousPainting.cs" />
     <Compile Include="source\InteractableObject\Tools.cs" />
+    <Compile Include="source\InteractableObject\ToolsPainting.cs" />
     <Compile Include="source\InteractableObject\TutorialPainting.cs" />
     <Compile Include="source\Inventory\HUD.cs" />
     <Compile Include="source\Inventory\Inventory.cs" />
     <Compile Include="source\Inventory\InventoryItemData.cs" />
     <Compile Include="source\Inventory\TutorialLevelHUD.cs" />
     <Compile Include="source\Inventory\TutorialLevelInventory.cs" />
-    <Compile Include="source\Mono\CDDragAndDrop.cs" />
-    <Compile Include="source\Mono\CDRotation.cs" />
+    <Compile Include="source\MainMenu\CDDragAndDrop.cs" />
+    <Compile Include="source\MainMenu\NewGameCD.cs" />
+    <Compile Include="source\MainMenu\OpenedCdLid.cs" />
     <Compile Include="source\Mono\Color.cs" />
     <Compile Include="source\Mono\Component.cs" />
     <Compile Include="source\Mono\Debug.cs" />
     <Compile Include="source\Mono\Entity.cs" />
-    <Compile Include="source\Mono\FadeManager.cs" />
     <Compile Include="source\Mono\Image.cs" />
     <Compile Include="source\Mono\Input.cs" />
     <Compile Include="source\Mono\Inside.cs" />
@@ -149,6 +154,7 @@
     <Compile Include="source\Player\PlayerFootsteps.cs" />
     <Compile Include="source\Player\PlayerInteraction.cs" />
     <Compile Include="source\Player\PlayerMove.cs" />
+    <Compile Include="source\PointerTest.cs" />
     <Compile Include="source\SelectionManager.cs" />
     <Compile Include="source\Test.cs" />
     <Compile Include="source\ToolsPuzzle\AlignUITools.cs" />
@@ -160,6 +166,7 @@
     <Compile Include="source\Triggers\FinishLineTrigger.cs" />
     <Compile Include="source\Tutorial\InventoryTutorial.cs" />
     <Compile Include="source\Tutorial\TutorialDialogue.cs" />
+    <Compile Include="source\Tutorial\TutorialFade.cs" />
     <Compile Include="source\Tutorial\WASDTutorial.cs" />
   </ItemGroup>
   <ItemGroup>

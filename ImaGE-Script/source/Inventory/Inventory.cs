@@ -17,7 +17,6 @@ public class Inventory : Entity
   public bool isVisible = false;
 
   // Inventory Item UI (Image at the bottom right)
-  public Entity pitPaintingUI;
   public Entity seedUI;
   public Entity nightPaintingUI;
   public Entity toolsPaintingUI;
@@ -28,7 +27,6 @@ public class Inventory : Entity
   public Entity pickupHandUI;
 
   // Inventory Item Selection (Image in the inventory bar)
-  public Entity pitPaintingSelection;
   public Entity seedSelection;
   public Entity nightPaintingSelection;
   public Entity toolsPaintingSelection;
@@ -97,23 +95,18 @@ public class Inventory : Entity
     inventoryImage?.SetActive(false);
     selectionHand?.SetActive(false);
 
-    pitPaintingUI?.SetActive(false);
     seedUI?.SetActive(false);
     //nightPaintingUI?.SetActive(false);
-    toolsPaintingUI?.SetActive(false);
+    //toolsPaintingUI?.SetActive(false);
     hammerUI?.SetActive(false);
     crowbarUI?.SetActive(false);
     transitionPaintingUI?.SetActive(false);
     keyUI?.SetActive(false);
 
     Vector3 startPosition = new Vector3(16.6f, -8.9f, 0f);
-    InternalCalls.SetPosition(pitPaintingUI.mEntityID, ref startPosition);
     InternalCalls.SetPosition(seedUI.mEntityID, ref startPosition);
-    //InternalCalls.SetPosition(nightPaintingUI.mEntityID, ref startPosition);
-    InternalCalls.SetPosition(toolsPaintingUI.mEntityID, ref startPosition);
     InternalCalls.SetPosition(hammerUI.mEntityID, ref startPosition);
     InternalCalls.SetPosition(crowbarUI.mEntityID, ref startPosition);
-    InternalCalls.SetPosition(transitionPaintingUI.mEntityID, ref startPosition);
     InternalCalls.SetPosition(keyUI.mEntityID, ref startPosition);
     pictureAlignscript = FindObjectOfType<PictureAlign>();
   }
@@ -129,7 +122,7 @@ public class Inventory : Entity
 
         if (ItemAdded != null)
         {
-          Debug.Log("Item has been added to inventory");
+          Console.WriteLine("Item "+item.Name + " has been added to inventory");
           ItemAdded(this, new InventoryEventArgs(item, iconPosition[i]));
         }
         return;
@@ -146,7 +139,7 @@ public class Inventory : Entity
     hammerEquipped = false;
     keyEquipped = false;
     seedEquipped = false;
-
+    Console.WriteLine("Remove item: "+ item.Name);
     currentItem = null;
     highlighted = false;
     selectionHand.SetActive(false);
@@ -191,7 +184,6 @@ public class Inventory : Entity
           mItems[i].Image.SetActive(false);
         }
       }
-
       selectionHand.SetActive(false);
       inventorySelectSquare.SetActive(false);
     }
@@ -353,9 +345,6 @@ public class Inventory : Entity
     DisableAllUI();
     switch (itemName)
     {
-      case "Pit Painting":
-        pitPaintingUI?.SetActive(true);
-        break;
       case "Seed":
         Debug.Log("Seed Equipped");
         seedUI?.SetActive(true);
@@ -363,11 +352,11 @@ public class Inventory : Entity
         break;
       case "NightPainting":
         nightPaintingUI?.SetActive(true);
-        nightPaintingUI?.FindScript<HoldupUI>().SetAlginUI("NightPainting");
+        nightPaintingUI?.FindScript<HoldupUI>().SetAlginUI("NightPainting", GetItemByName("NightPainting"));
         break;
-      case "Tools Painting":
+      case "ToolsPainting":
         toolsPaintingUI?.SetActive(true);
-        toolsPaintingUI?.FindScript<HoldupUI>().SetAlginUI("Tools Painting");
+        toolsPaintingUI?.FindScript<HoldupUI>().SetAlginUI("ToolsPainting", GetItemByName("ToolsPainting"));
         break;
       case "Hammer":
         hammerUI?.SetActive(true);
@@ -377,11 +366,11 @@ public class Inventory : Entity
         crowbarUI?.SetActive(true);
         crowbarEquipped = true;
         break;
-      case "Transition Painting":
-        Console.WriteLine("TransitionPainting");
-        transitionPaintingUI?.SetActive(true);
-        transitionPaintingUI?.FindScript<HoldupUI>().SetAlginUI("Transition Painting");
-        break;
+      //case "Transition Painting":
+      //  Console.WriteLine("TransitionPainting");
+      //  transitionPaintingUI?.SetActive(true);
+      //  transitionPaintingUI?.FindScript<HoldupUI>().SetAlginUI("Transition Painting");
+      //  break;
       case "Key":
         keyUI?.SetActive(true);
         keyEquipped = true;
@@ -393,12 +382,11 @@ public class Inventory : Entity
 
   private void DisableAllUI()
   {
-    pitPaintingUI?.SetActive(false);
     seedUI?.SetActive(false);
     seedEquipped = false;
     pictureAlignscript.SetActive(false);
-    nightPaintingUI?.SetActive(false);
-    toolsPaintingUI?.SetActive(false);
+    nightPaintingUI.SetActive(false);
+    toolsPaintingUI.SetActive(false);
     hammerUI?.SetActive(false);
     hammerEquipped = false;
     crowbarUI?.SetActive(false);
@@ -406,5 +394,7 @@ public class Inventory : Entity
     transitionPaintingUI?.SetActive(false);
     keyUI?.SetActive(false);
     keyEquipped = false;
+    pictureAlignscript.ClearUI();
+    Console.WriteLine("CLEAE ARROWS");
   }
 }

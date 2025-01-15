@@ -14,18 +14,19 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Viewport.h"
 #include <GUI/Helpers/AssetPayload.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
-#include <Events/EventManager.h>
-#include <FrameRateController/FrameRateController.h>
 #include <Core/Entity.h>
 #include <Core/Components/Mesh.h>
 #include <Core/Components/Transform.h>
 #include <Core/Components/PrefabOverrides.h>
-#include <Core/Systems/TransformSystem/TransformHelpers.h>
 #include <Core/EntityManager.h>
 #include <GUI/GUIVault.h>
 #include <Asset/IGEAssets.h>
 #include <Graphics/RenderPass/GeomPass.h>
+#include <EditorEvents.h>
+
 #include "Graphics/Renderer.h"
+#include <Events/EventManager.h>
+#include <FrameRateController/FrameRateController.h>
 
 namespace {
   // for panning camera to entity when double-clicked upon
@@ -47,7 +48,7 @@ namespace {
     \return
       The projected 2d vector on the plane
     ************************************************************************/
-  glm::vec2 ProjVectorOnCamPlane(glm::vec3 const& vector , Graphics::EditorCamera const& cam);
+  glm::vec2 ProjVectorOnCamPlane(glm::vec3 const& vector, std::shared_ptr<Graphics::EditorCamera> const& cam);
 
   /*!*********************************************************************
   \brief
@@ -69,10 +70,12 @@ namespace {
 
 namespace GUI
 {
-  Viewport::Viewport(const char* name, Graphics::EditorCamera& camera) : GUIWindow(name),
+  Viewport::Viewport(const char* name, std::shared_ptr<Graphics::EditorCamera> const& camera) : GUIWindow(name),
     mEditorCam{ camera }, mIsPanning{ false }, mRightClickHeld{ false }, mFocusWindow{ false } {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_ZOOM, &Viewport::OnEntityDoubleClicked, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &Viewport::OnSceneStart, this);
+    SUBSCRIBE_CLASS_FUNC(Events::ZoomInOnEntity, &Viewport::OnEntityDoubleClicked, this);
+    SUBSCRIBE_CLASS_FUNC(Events::SceneStateChange, &Viewport::OnSceneStart, this);
+    SUBSCRIBE_CLASS_FUNC(Events::CollectEditorSceneData, &Viewport::OnCollectEditorData, this);
+    SUBSCRIBE_CLASS_FUNC(Events::LoadEditorSceneData, &Viewport::OnLoadEditorData, this);
   }
 
   void Viewport::Render(std::shared_ptr<Graphics::Framebuffer> const& framebuffer)
@@ -190,28 +193,28 @@ namespace GUI
 
       // process input for movement
       if (ImGui::IsKeyDown(ImGuiKey_W)) {
-        mEditorCam.ProcessKeyboardInput(FORWARD, dt);
+        mEditorCam->ProcessKeyboardInput(FORWARD, dt);
       }
       if (ImGui::IsKeyDown(ImGuiKey_S)) {
-        mEditorCam.ProcessKeyboardInput(BACKWARD, dt);
+        mEditorCam->ProcessKeyboardInput(BACKWARD, dt);
       }
       if (ImGui::IsKeyDown(ImGuiKey_A)) {
-        mEditorCam.ProcessKeyboardInput(LEFT, dt);
+        mEditorCam->ProcessKeyboardInput(LEFT, dt);
       }
       if (ImGui::IsKeyDown(ImGuiKey_D)) {
-        mEditorCam.ProcessKeyboardInput(RIGHT, dt);
+        mEditorCam->ProcessKeyboardInput(RIGHT, dt);
       }
       if (ImGui::IsKeyDown(ImGuiKey_Q)) {
-        mEditorCam.ProcessKeyboardInput(DOWN, dt);
+        mEditorCam->ProcessKeyboardInput(DOWN, dt);
       }
       if (ImGui::IsKeyDown(ImGuiKey_E)) {
-        mEditorCam.ProcessKeyboardInput(UP, dt);
+        mEditorCam->ProcessKeyboardInput(UP, dt);
       }
 
       // process input for panning
       ImVec2 const currMousePos{ ImGui::GetMousePos() };
       ImVec2 const mouseDelta{ currMousePos - previousMousePos };
-      mEditorCam.ProcessMouseInput(mouseDelta.x / windowSize.x, mouseDelta.y / windowSize.y);
+      mEditorCam->ProcessMouseInput(mouseDelta.x / windowSize.x, mouseDelta.y / windowSize.y);
       previousMousePos = currMousePos;
     }
     else {
@@ -226,7 +229,7 @@ namespace GUI
 
         ImVec2 const currMousePos{ ImGui::GetMousePos() };
         ImVec2 const mouseDelta{ currMousePos - previousMousePos };
-        mEditorCam.MoveAlongPlane(mouseDelta.x / windowSize.x, mouseDelta.y / windowSize.y);
+        mEditorCam->MoveAlongPlane(mouseDelta.x / windowSize.x, mouseDelta.y / windowSize.y);
         previousMousePos = currMousePos;
       }
       else {
@@ -238,9 +241,9 @@ namespace GUI
 
     // move camera towards entity if the event has been triggered
     if (sMovingToEntity) {
-      if (glm::distance2(sTargetPosition, mEditorCam.GetPosition()) > 0.5f) {
+      if (glm::distance2(sTargetPosition, mEditorCam->GetPosition()) > 0.5f) {
         float const movePercentageThisFrame{ Performance::FrameRateController::GetInstance().GetDeltaTime() / 0.5f * sDistToCover };
-        glm::vec3 const remainingDist{ sTargetPosition - mEditorCam.GetPosition() };
+        glm::vec3 const remainingDist{ sTargetPosition - mEditorCam->GetPosition() };
         glm::vec3 offsetThisFrame{ sMoveDir * movePercentageThisFrame };
 
         // clamp the distance so we don't overshoot
@@ -249,29 +252,40 @@ namespace GUI
           offsetThisFrame = remainingDist;
         }
 
-        mEditorCam.MoveCamera(offsetThisFrame);
+        mEditorCam->MoveCamera(offsetThisFrame);
       }
       else {
-        mEditorCam.SetPosition(sTargetPosition);
+        mEditorCam->SetPosition(sTargetPosition);
         sMovingToEntity = false;
       }
     }
 
     float const scrollDelta{ ImGui::GetIO().MouseWheel };
     if (glm::abs(scrollDelta) > glm::epsilon<float>()) {
-      mEditorCam.ProcessMouseScroll(scrollDelta);
+      mEditorCam->ProcessMouseScroll(scrollDelta);
     }
   }
 
   EVENT_CALLBACK_DEF(Viewport, OnEntityDoubleClicked) {
-    Component::Transform const& trans{ CAST_TO_EVENT(Events::ZoomInOnEntity)->mEntity.GetComponent<Component::Transform>() };
+    ECS::Entity const entity{ CAST_TO_EVENT(Events::ZoomInOnEntity)->mEntity };
+    Component::Transform const& trans{ entity.GetComponent<Component::Transform>() };
+    glm::vec3 scale{ trans.worldScale };
+
+    // if entity has mesh, apply its aabb on top of scale
+    if (entity.HasComponent<Component::Mesh>()) {
+      IGE::Assets::GUID const guid{ entity.GetComponent<Component::Mesh>().meshSource };
+      if (guid) {
+        scale *= 2.f * IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(guid)->mMeshSource.GetBoundingBox().halfExtents;
+      }
+    }
+
     // project the entity's scale onto the camera's view plane
-    glm::vec2 const projectedEntityScale{ ProjVectorOnCamPlane(trans.worldScale, mEditorCam) };
+    glm::vec2 const projectedEntityScale{ ProjVectorOnCamPlane(scale, mEditorCam) };
     
     // then offset backwards from the entity's position based on the larger scale component and scale factor
-    sTargetPosition = trans.worldPos - mEditorCam.GetForwardVector()
+    sTargetPosition = trans.worldPos - mEditorCam->GetForwardVector()
       * glm::max(projectedEntityScale.x, projectedEntityScale.y) * sEntityScaleFactor;
-    glm::vec3 const totalDist{ sTargetPosition - mEditorCam.GetPosition() };
+    glm::vec3 const totalDist{ sTargetPosition - mEditorCam->GetPosition() };
     sMoveDir = glm::normalize(totalDist);
     sDistToCover = glm::length(totalDist);
     sMovingToEntity = true;
@@ -299,8 +313,9 @@ namespace GUI
     float const windowHeight{ ImGui::GetWindowHeight() };
     ImGuizmo::SetRect(windowPos.x, windowPos.y, windowWidth, windowHeight);
     Component::Transform& transform{ selectedEntity.GetComponent<Component::Transform>() };
-    glm::mat4 const viewMatrix{ mEditorCam.GetViewMatrix() };
-    glm::mat4 const projMatrix{ mEditorCam.GetProjMatrix() };
+
+    glm::mat4 const viewMatrix{ mEditorCam->GetViewMatrix() }, projMatrix{ mEditorCam->GetProjMatrix() };
+    glm::mat4 worldMtx{ transform.worldMtx };
 
     static auto currentOperation = ImGuizmo::TRANSLATE;
     if (ImGui::IsWindowFocused() || ImGui::IsWindowHovered()) {
@@ -319,57 +334,57 @@ namespace GUI
       glm::value_ptr(projMatrix),
       currentOperation,
       ImGuizmo::LOCAL,
-      glm::value_ptr(transform.worldMtx)
+      glm::value_ptr(worldMtx)
     );
 
-    // since ImGuizmo uses the worldMtx, we'll modify it directly and
-    // set the entitiy's world transform. This means we only need
-    // to set the "modified" flag to true and let the transform system
-    // handle the rest
+    // since ImGuizmo uses the worldMtx, we'll need to translate the
+    // changes to the entity's local transform and set the "modified" flag to true.
+    // The transform system will handle the rest
     if (ImGuizmo::IsUsing()) {
       usingGuizmos = true;
       glm::vec3 s{}, r{}, t{};
-      ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(transform.worldMtx),
+      ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(worldMtx),
         glm::value_ptr(t), glm::value_ptr(r), glm::value_ptr(s));
 
       // for each operation, if multi-select active, update all their transforms
       bool const multiSelectActive{ !GUIVault::GetSelectedEntities().empty() };
       if (currentOperation == ImGuizmo::TRANSLATE) {
+        glm::vec3 const offset = t - transform.worldPos;
         if (multiSelectActive) {
-          glm::vec3 const offset{ t - transform.worldPos };
           for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
-            e.GetComponent<Component::Transform>().worldPos += offset;
+            e.GetComponent<Component::Transform>().position += offset;
           }
         }
         else {
-          transform.worldPos = t;
+          transform.position += offset;
         }
       }
       if (currentOperation == ImGuizmo::ROTATE) {
-        if (multiSelectActive) {
-          glm::quat const offset{ glm::quat(glm::radians(r)) * glm::inverse(transform.worldRot) };
-          glm::vec3 const eulerOffset{ r - transform.eulerAngles };
+        glm::quat const offset{ glm::quat(glm::radians(r)) * glm::inverse(transform.worldRot) };
+        glm::vec3 const eulerOffset{ r - transform.eulerAngles };
 
+        if (multiSelectActive) {
           for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
             Component::Transform& trans{ e.GetComponent<Component::Transform>() };
-            trans.worldRot = offset * trans.worldRot;
+            trans.rotation = offset * trans.rotation;
             trans.eulerAngles += eulerOffset;
           }
         }
         else {
-          transform.worldRot = glm::quat(glm::radians(r));
-          transform.eulerAngles = r;
+          transform.rotation = offset * transform.rotation;
+          transform.eulerAngles += eulerOffset;
         }
       }
       if (currentOperation == ImGuizmo::SCALE) {
+        glm::vec3 offset{ s - transform.worldScale };
+
         if (multiSelectActive) {
-          glm::vec3 offset{ s - transform.worldScale };
           for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
             e.GetComponent<Component::Transform>().worldScale += offset;
           }
         }
         else {
-          transform.worldScale = s;
+          transform.scale += offset;
         }
       }
 
@@ -378,18 +393,17 @@ namespace GUI
         ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
 
         for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
-          Component::Transform& trans{ e.GetComponent<Component::Transform>() };
-          trans.modified = true;
+          e.GetComponent<Component::Transform>().modified = true;
 
           if (!e.HasComponent<Component::PrefabOverrides>()) { continue; }
 
           Component::PrefabOverrides& pfbOverrides{ e.GetComponent<Component::PrefabOverrides>() };
 
           if (pfbOverrides.IsComponentModified<Component::Transform>() || pfbOverrides.subDataId != Prefabs::PrefabSubData::BasePrefabId) {
-            pfbOverrides.AddComponentModification(trans);
+            pfbOverrides.AddComponentOverride<Component::Transform>();
           }
           else if (currentOperation != ImGuizmo::TRANSLATE) {
-            pfbOverrides.AddComponentModification(trans);
+            pfbOverrides.AddComponentOverride<Component::Transform>();
           }
         }
       }
@@ -398,10 +412,10 @@ namespace GUI
         selectedEntity.GetComponent<Component::Transform>().modified = true;
         if (prefabOverrides) {
           if (prefabOverrides->IsComponentModified<Component::Transform>() || prefabOverrides->subDataId != Prefabs::PrefabSubData::BasePrefabId) {
-            prefabOverrides->AddComponentModification(transform);
+            prefabOverrides->AddComponentOverride<Component::Transform>();
           }
           else if (currentOperation != ImGuizmo::TRANSLATE) {
-            prefabOverrides->AddComponentModification(transform);
+            prefabOverrides->AddComponentOverride<Component::Transform>();
           }
         }
       }
@@ -461,14 +475,23 @@ namespace GUI
     }
   }
 
+  EVENT_CALLBACK_DEF(Viewport, OnCollectEditorData) {
+    GUI::SceneEditorConfig& cfg{ CAST_TO_EVENT(Events::CollectEditorSceneData)->mSceneConfig };
+    cfg.editorCam = *mEditorCam;
+  }
+
+  EVENT_CALLBACK_DEF(Viewport, OnLoadEditorData) {
+    *mEditorCam = CAST_TO_EVENT(Events::CollectEditorSceneData)->mSceneConfig.editorCam;
+  }
+
 } // namespace GUI
 
 namespace {
-  glm::vec2 ProjVectorOnCamPlane(glm::vec3 const& vector, Graphics::EditorCamera const& cam) {
+  glm::vec2 ProjVectorOnCamPlane(glm::vec3 const& vector, std::shared_ptr<Graphics::EditorCamera> const& cam) {
     // projection = vector - dot(vector, normal) * normal
-    glm::vec3 const camFwdVec{ cam.GetForwardVector() };
+    glm::vec3 const camFwdVec{ cam->GetForwardVector() };
     glm::vec3 const projectedVec{ vector - glm::dot(vector, camFwdVec) * camFwdVec };
 
-    return { glm::dot(cam.GetRightVector(), projectedVec), glm::dot(cam.GetUpVector(), projectedVec) };
+    return { glm::dot(cam->GetRightVector(), projectedVec), glm::dot(cam->GetUpVector(), projectedVec) };
   }
 }

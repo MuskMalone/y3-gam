@@ -350,13 +350,13 @@
     <ClInclude Include="source\Core\Systems\TextSystem\TextSystem.h">
       <Filter>Core\Systems\TextSystem</Filter>
     </ClInclude>
-    <ClInclude Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.h">
+    <ClInclude Include="source\Core\Systems\TransformSystem\PostTransformSystem.h">
+      <Filter>Core\Systems\TransformSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\Systems\TransformSystem\PreTransformSystem.h">
       <Filter>Core\Systems\TransformSystem</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Systems\TransformSystem\TransformHelpers.h">
-      <Filter>Core\Systems\TransformSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Core\Systems\TransformSystem\TransformSystem.h">
       <Filter>Core\Systems\TransformSystem</Filter>
     </ClInclude>
     <ClInclude Include="source\Debug.h" />
@@ -736,10 +736,10 @@
     <ClInclude Include="source\Prefabs\PrefabManager.h">
       <Filter>Prefabs</Filter>
     </ClInclude>
-    <ClInclude Include="source\Reflection\AddComponentFunctions.h">
+    <ClInclude Include="source\Reflection\ComponentTypes.h">
       <Filter>Reflection</Filter>
     </ClInclude>
-    <ClInclude Include="source\Reflection\ComponentTypes.h">
+    <ClInclude Include="source\Reflection\ComponentUtils.h">
       <Filter>Reflection</Filter>
     </ClInclude>
     <ClInclude Include="source\Reflection\EntityData.h">
@@ -782,6 +782,9 @@
       <Filter>Serialization</Filter>
     </ClInclude>
     <ClInclude Include="source\Serialization\JsonKeys.h">
+      <Filter>Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Serialization\PfbOverridesData.h">
       <Filter>Serialization</Filter>
     </ClInclude>
     <ClInclude Include="source\Serialization\Registration\ConverterFuncs.h">
@@ -881,13 +884,13 @@
     <ClCompile Include="source\Core\Systems\TextSystem\TextSystem.cpp">
       <Filter>Core\Systems\TextSystem</Filter>
     </ClCompile>
-    <ClCompile Include="source\Core\Systems\TransformSystem\LocalToWorldTransformSystem.cpp">
+    <ClCompile Include="source\Core\Systems\TransformSystem\PostTransformSystem.cpp">
+      <Filter>Core\Systems\TransformSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Systems\TransformSystem\PreTransformSystem.cpp">
       <Filter>Core\Systems\TransformSystem</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Systems\TransformSystem\TransformHelpers.cpp">
-      <Filter>Core\Systems\TransformSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Core\Systems\TransformSystem\TransformSystem.cpp">
       <Filter>Core\Systems\TransformSystem</Filter>
     </ClCompile>
     <ClCompile Include="source\DebugTools\DebugLogger\DebugLogger.cpp">
@@ -1064,7 +1067,7 @@
     <ClCompile Include="source\Prefabs\PrefabManager.cpp">
       <Filter>Prefabs</Filter>
     </ClCompile>
-    <ClCompile Include="source\Reflection\AddComponentFunctions.cpp">
+    <ClCompile Include="source\Reflection\ComponentUtils.cpp">
       <Filter>Reflection</Filter>
     </ClCompile>
     <ClCompile Include="source\Reflection\ObjectFactory.cpp">
@@ -1089,6 +1092,9 @@
       <Filter>Scripting</Filter>
     </ClCompile>
     <ClCompile Include="source\Serialization\Deserializer.cpp">
+      <Filter>Serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Serialization\PfbOverridesData.cpp">
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\Serialization\Serializer.cpp">

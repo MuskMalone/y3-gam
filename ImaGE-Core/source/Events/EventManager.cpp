@@ -21,22 +21,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Events
 {
-
-  void EventManager::Subscribe(EventType eventType, EventCallback const& callback)
-  {
-    mSubscribers[eventType].emplace_back(callback);
-  }
-
-  void EventManager::QueueEvent(EventPtr const& event)
-  {
-    mEventQueue.emplace(event);
-  }
-
-  void EventManager::QueueEvent(EventPtr&& event)
-  {
-    mEventQueue.emplace(std::move(event));
-  }
-
   void EventManager::DispatchAll()
   {
     while (!mEventQueue.empty())
@@ -48,10 +32,10 @@ namespace Events
       std::cout << "[EventManager] Dispatched Event: " << eventToDispatch->GetName() << "\n";
 #endif
 
-      SubscriberList& subscribers{ mSubscribers[eventToDispatch->GetCategory()] };
+      SubscriberList& subscribers{ mSubscribers[eventToDispatch.first] };
       for (auto& fn : subscribers)
       {
-        fn(eventToDispatch);
+        fn(eventToDispatch.second);
       }
     }
   }

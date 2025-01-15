@@ -12,57 +12,15 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
+#include <typeindex>
+#include <string>
 
 namespace Events
 {
-  enum class EventType
-  {
-    KEY_TRIGGERED,
-    KEY_HELD,
-    KEY_RELEASED,
-    MOUSE_TRIGGERED,
-    MOUSE_HELD,
-    MOUSE_RELEASED,
-    WINDOW_LOSE_FOCUS,
-    WINDOW_GAIN_FOCUS,
-    WINDOW_MINIMIZED,
-    WINDOW_RESIZED,
-    TOGGLE_FULLSCREEN,
-    SPAWN_PREFAB,
-    ENTITY_ZOOM,
-    LOAD_SCENE,
-    UNLOAD_SCENE,
-    REMOVE_COMPONENT,
-    REMOVE_ENTITY,
-    ADD_FILES,
-    REGISTER_FILES,
-    EDIT_PREFAB,
-    SAVE_SCENE,
-    SCENE_MODIFIED,
-    SCENE_STATE_CHANGE,
-    LAYER_MODIFIED,
-    GUID_REMAP,
-    TRIGGER_GUID_REMAP,
-    INVALID_GUID,
-    SIGNAL,
-    ENTITY_PICKED,
-    ENTITY_SELECTED,
-    ENTITY_MOUSE_ENTER,
-    ENTITY_MOUSE_EXIT,
-    ENTITY_MOUSE_DOWN,
-    ENTITY_MOUSE_UP,
-    POINTER_ENTER,
-    POINTER_EXIT,
-    POINTER_DOWN,
-    POINTER_UP,
-    LOCK_MOUSE,
-    TRIGGER_PAUSED_UPDATE
-  };
-
   class Event
   {
   public:
-    Event(EventType type) : mCategory{ type } {}
+    Event() = default;
 
     /*!*********************************************************************
       \brief
@@ -71,14 +29,6 @@ namespace Events
         The name of the current event
       ************************************************************************/
     virtual inline std::string GetName() const noexcept { return "Base Event"; }
-
-    /*!*********************************************************************
-    \brief
-      Returns the category of the current event
-    \return
-      The category of the current event
-    ************************************************************************/
-    inline EventType GetCategory() const noexcept { return mCategory; }
 
     /*!*********************************************************************
     \brief
@@ -95,7 +45,6 @@ namespace Events
     virtual ~Event() {}
 
   protected:
-    EventType mCategory;
     //bool mHandled = false;
   };
 

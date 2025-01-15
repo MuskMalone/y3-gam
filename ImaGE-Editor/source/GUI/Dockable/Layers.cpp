@@ -13,8 +13,8 @@ namespace GUI {
   int LayerWindow::sSelectedLayer{};
 
   LayerWindow::LayerWindow(const char* name) : GUIWindow(name), mIsActive{ true } {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &LayerWindow::OnPrefabEditor, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &LayerWindow::OnSceneStop, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EditPrefabEvent, &LayerWindow::OnPrefabEditor, this);
+    SUBSCRIBE_CLASS_FUNC(Events::SceneStateChange, &LayerWindow::OnSceneStop, this);
   }
 
   void LayerWindow::Run() {

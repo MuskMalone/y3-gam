@@ -21,8 +21,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Singleton/ThreadSafeSingleton.h>
 #include "EntityData.h"
 #include <Core/Entity.h>
-#include <variant.h>
+#include <rttr/variant.h>
 #include <Asset/IGEAssets.h>
+
+#define IGE_OBJFACTORY Reflection::ObjectFactory::GetInstance()
 
 namespace Reflection
 {
@@ -130,10 +132,6 @@ namespace Reflection
     std::vector<rttr::variant> GetEntityComponents(ECS::Entity const& id) const;
 
   private:
-    using AddComponentFunc = std::function<void(ECS::Entity, rttr::variant const&)>;
-
-    std::unordered_map<rttr::type, AddComponentFunc> mAddComponentFuncs;
-
     std::unordered_map<ECS::Entity::EntityID, ECS::Entity> mNewIDs; // remaps entities if IDs are taken
     PrefabInstanceContainer mPrefabInstances;   // stores deserialized prefab instances
     std::vector<VariantEntity> mRawEntities; // stores deserialized entity data

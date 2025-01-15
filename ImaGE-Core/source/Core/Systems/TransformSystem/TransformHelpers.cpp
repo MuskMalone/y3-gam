@@ -18,6 +18,17 @@ namespace {
 
 namespace TransformHelpers {
 
+  void UpdateLocalTransform(ECS::Entity entity) {
+    if (ECS::EntityManager::GetInstance().HasParent(entity)) {
+      UpdateTransformToNewParent(entity);
+    }
+    else {
+      Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
+      trans.SetLocalToWorld();
+      trans.ComputeWorldMtx();
+    }
+  }
+
   void UpdateWorldTransform(ECS::Entity entity) {
     ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
     Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
@@ -132,7 +143,6 @@ namespace TransformHelpers {
     // if no children, we are done
     if (!entityMan.HasChild(entity)) { return; }
 
-    //trans.modified = false;
     // update all children transforms
     for (ECS::Entity& child : entityMan.GetChildEntity(entity)) {
       UpdateTransformToNewParent(child);

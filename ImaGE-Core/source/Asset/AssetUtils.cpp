@@ -14,7 +14,7 @@ namespace IGE {
 #endif
                 return true;
             }
-            catch (const std::filesystem::filesystem_error& e) {
+            catch ([[maybe_unused]] const std::filesystem::filesystem_error& e) {
 #ifdef _DEBUG
                 std::cerr << "Error copying file: " << e.what() << std::endl;
 #endif
@@ -27,7 +27,7 @@ namespace IGE {
                 fs::remove(filePath);
                 return true;
             }
-            catch (const std::filesystem::filesystem_error& e) {
+            catch ([[maybe_unused]] const std::filesystem::filesystem_error& e) {
 #ifdef _DEBUG
                 std::cerr << "Error deleting file: " << e.what() << std::endl;
 #endif
@@ -104,7 +104,7 @@ namespace IGE {
                 // Check if the file's canonical path starts with the directory's canonical path
                 return std::mismatch(dirCanonical.begin(), dirCanonical.end(), fileCanonical.begin()).first == dirCanonical.end();
             }
-            catch (const fs::filesystem_error& e) {
+            catch ([[maybe_unused]] const fs::filesystem_error& e) {
 #ifdef _DEBUG
                 std::cerr << "Error: " << e.what() << std::endl;
 #endif

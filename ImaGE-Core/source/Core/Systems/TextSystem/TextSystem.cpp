@@ -39,7 +39,7 @@ namespace Systems {
   }
 
   void TextSystem::Start() {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::LOAD_SCENE, &TextSystem::OnSceneLoad, this);
+    SUBSCRIBE_CLASS_FUNC(Events::LoadSceneEvent, &TextSystem::OnSceneLoad, this);
   }
 
   void TextSystem::Update() {

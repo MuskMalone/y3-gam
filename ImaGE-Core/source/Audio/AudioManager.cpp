@@ -11,7 +11,7 @@ namespace IGE {
     namespace Audio {
         AudioManager::AudioManager()
         {
-            SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &AudioManager::HandleSystemEvents, this);
+            SUBSCRIBE_CLASS_FUNC(Events::SceneStateChange, &AudioManager::HandleSystemEvents, this);
             Initialize();
         }
         AudioManager::~AudioManager()
@@ -460,15 +460,17 @@ namespace IGE {
                     mSceneStarted = true;
                 }
                 mSceneStopped = true;
-                auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
-                for (auto entity : rbsystem) {
-                    auto& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
-                    auto grpiter{ mGroup.find(audiosource.channelGroup) };
-                    if (grpiter != mGroup.end()) {
-                        grpiter->second->stop();
-                    }
-                }
-
+                //auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource>() };
+                //for (auto entity : rbsystem) {
+                //    auto& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
+                //    auto grpiter{ mGroup.find(audiosource.channelGroup) };
+                //    if (grpiter != mGroup.end()) {
+                //        grpiter->second->stop();
+                //    }
+                //}
+                FMOD::ChannelGroup* mastergrp{ };
+                mSystem->getMasterChannelGroup(&mastergrp);
+                mastergrp->stop();
             }
             if (state == Events::SceneStateChange::NewSceneState::PAUSED) {
                 mScenePaused = true;
@@ -503,7 +505,7 @@ namespace IGE {
             void* userData = nullptr;
             channel->getUserData(&userData);
             
-            if (userData) {
+            if (userData && !IGE::Audio::AudioManager::GetInstance().mSceneStopped) {
                 try {
                     SoundInvokeSetting* settings = static_cast<SoundInvokeSetting*>(userData);
                     settings->channels.erase(channel); // Remove channel from active list

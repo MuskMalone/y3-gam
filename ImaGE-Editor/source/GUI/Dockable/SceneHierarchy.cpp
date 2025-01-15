@@ -11,44 +11,57 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
 #include "SceneHierarchy.h"
-#include <Core/Components/Tag.h>
 #include <GUI/GUIVault.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
-#include <Events/EventManager.h>
-#include <Prefabs/PrefabManager.h>
-#include <GUI/Dockable/Inspector.h>
 #include <Core/Systems/TransformSystem/TransformHelpers.h>
+#include <Core/Components/Components.h>
+#include <EditorEvents.h>
+
+#include <Prefabs/PrefabManager.h>
+#include <Events/EventManager.h>
+#include <Serialization/Serializer.h>
+#include <Serialization/Deserializer.h>
 
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <imgui/imgui.h>
 #include <ImGui/imgui_internal.h>
 
 namespace {
+  static ECS::Entity sEntityToRename{};
+  static bool sEntityDoubleClicked{ false }, sEditNameMode{ false }, sFirstEnterEditMode{ true };
+  static bool sLMouseReleased{ false }, sCtrlHeld{ false }, sWasCtrlHeld{ false };
+  static float sTimeElapsed;  // for renaming entity
+  static bool sJumpToEntity{ false };
+  // have to use these bools cause we can't get ImGui ID stack out of window scope
+  static bool sSaveHierarchyState{ false }, sLoadHierarchyState{ false };
+
   void RemovePrefabOverrides(ECS::Entity root, IGE::Assets::GUID guid);
   ECS::Entity GetPrefabRoot(ECS::Entity root);
   void CopyWorldTransform(Component::Transform const& source, Component::Transform& dest);
 
   void ReassignSubmeshIndices(ECS::Entity root);
+  ECS::Entity GetCanvasEntity();
 }
 
 namespace GUI
 {
-  static bool sEntityDoubleClicked{ false }, sEditNameMode{ false }, sFirstEnterEditMode{ true };
-  static bool sLMouseReleased{ false }, sCtrlHeld{ false }, sWasCtrlHeld{ false };
-  static float sTimeElapsed;  // for renaming entity
-  static bool sJumpToEntity;
-  static int sEntityCount;
-
   SceneHierarchy::SceneHierarchy(const char* name) : GUIWindow(name),
-    mEntityManager{ ECS::EntityManager::GetInstance() },
+    mCollapsedNodes{}, mEntityManager{ ECS::EntityManager::GetInstance() },
     mSceneName{},
-    mRightClickedEntity{}, mRightClickMenu{ false }, mEntityOptionsMenu{ false },
+    mRightClickedEntity{}, mEntityOptionsMenu{ false }, mEntityRightClicked{ false },
     mPrefabPopup{ false }, mFirstTimePfbPopup{ true }, mEditingPrefab{ false }, mLockControls{ false }, mSceneModified{ false }
   {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &SceneHierarchy::HandleEvent, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &SceneHierarchy::HandleEvent, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_MODIFIED, &SceneHierarchy::HandleEvent, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::ENTITY_PICKED, &SceneHierarchy::OnEntityPicked, this);
+    SUBSCRIBE_CLASS_FUNC(Events::SceneStateChange, &SceneHierarchy::OnSceneStateChange, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EditPrefabEvent, &SceneHierarchy::OnPrefabEdit, this);
+    SUBSCRIBE_CLASS_FUNC(Events::SceneModifiedEvent, &SceneHierarchy::OnSceneModified, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EntityScreenPicked, &SceneHierarchy::OnEntityPicked, this);
+    SUBSCRIBE_CLASS_FUNC(Events::CollectEditorSceneData, &SceneHierarchy::OnCollectEditorData, this);
+    SUBSCRIBE_CLASS_FUNC(Events::LoadEditorSceneData, &SceneHierarchy::OnLoadEditorData, this);
+
+    std::string const hierarchyConfigDir{ std::string(gEditorAssetsDirectory) + "Scenes" };
+    if (!std::filesystem::is_directory(hierarchyConfigDir)) {
+      std::filesystem::create_directory(hierarchyConfigDir);
+    }
   }
 
   void SceneHierarchy::Run()
@@ -73,6 +86,8 @@ namespace GUI
           mSceneName.erase(mSceneName.size() - 2);
           mSceneModified = false;
         }
+
+        sSaveHierarchyState = true;
       }
 
       ImGui::Text(sceneNameSave.c_str());
@@ -119,6 +134,7 @@ namespace GUI
         // to determine if it was a rename operation
         if (sLMouseReleased && !mEditingPrefab) {
           sEditNameMode = mLockControls = true;
+          sEntityToRename = GUIVault::GetSelectedEntity();
         }
         sTimeElapsed = 0;
         sEntityDoubleClicked = false;
@@ -128,12 +144,21 @@ namespace GUI
       sTimeElapsed = 0;
     }
 
-    sEntityCount = 0;
     for (auto const& e : mEntityManager.GetAllEntities())
     {
       if (mEntityManager.HasParent(e)) { continue; }
 
-      RecurseDownHierarchy(e);
+      RecurseDownHierarchy(e, ImGui::GetTreeNodeToLabelSpacing());
+    }
+
+    if (sSaveHierarchyState) {
+      // save the hieararchy
+      mCollapsedNodes = GetTreeNodeStates();
+      sSaveHierarchyState = false;
+    }
+    else if (sLoadHierarchyState) {
+      LoadHierarchyState();
+      sLoadHierarchyState = false;
     }
 
     if (ImGui::IsKeyPressed(ImGuiKey_Delete) && GUIVault::GetSelectedEntity() && !mLockControls) {
@@ -157,61 +182,56 @@ namespace GUI
     if (sCtrlHeld) { sWasCtrlHeld = true; }
 
     if (mEntityOptionsMenu) {
-      ImGui::OpenPopup("EntityOptions");
+      ImGui::OpenPopup("HierarchyOptions");
       mEntityOptionsMenu = false;
+      mEntityRightClicked = true;
     }
     else if (ImGui::IsMouseClicked(ImGuiMouseButton_Right) && ImGui::IsWindowHovered()) {
       ImGui::OpenPopup("HierarchyOptions");
-      mRightClickMenu = false;
     }
     else if (mPrefabPopup) {
       ImGui::OpenPopup("Create Prefab");
       mPrefabPopup = false;
       mFirstTimePfbPopup = true;
     }
-    if (RunRightClickMenu() || RunEntityOptions()) {
+
+    if (RunRightClickMenu(mEntityRightClicked)) {
       SceneModified();
     }
+    
     RunPrefabPopup();
 
     ImGui::End();
   }
 
-  EVENT_CALLBACK_DEF(SceneHierarchy, HandleEvent)
+  EVENT_CALLBACK_DEF(SceneHierarchy, OnSceneStateChange)
   {
-    switch (event->GetCategory())
+    auto sceneStateEvent{ CAST_TO_EVENT(Events::SceneStateChange) };
+    switch (sceneStateEvent->mNewState)
     {
-    case Events::EventType::EDIT_PREFAB:
-      mSceneName = CAST_TO_EVENT(Events::EditPrefabEvent)->mPrefab;
-      mEditingPrefab = true;
+    case Events::SceneStateChange::NEW:
+    case Events::SceneStateChange::CHANGED:
+      mSceneName = sceneStateEvent->mSceneName;
+      mEditingPrefab = mSceneModified = false;
       break;
-    case Events::EventType::SCENE_STATE_CHANGE:
-    {
-      auto sceneStateEvent{ CAST_TO_EVENT(Events::SceneStateChange) };
-      switch (sceneStateEvent->mNewState)
-      {
-      case Events::SceneStateChange::NEW:
-      case Events::SceneStateChange::CHANGED:
-        mSceneName = sceneStateEvent->mSceneName;
-        mEditingPrefab = mSceneModified = false;
-        break;
-      case Events::SceneStateChange::STOPPED:
-        mEditingPrefab = false;
-        mSceneName.clear();
-        break;
-      default: break;
-      }
-
+    case Events::SceneStateChange::STOPPED:
+      mEditingPrefab = false;
+      mSceneName.clear();
       break;
+    default: break;
     }
-    case Events::EventType::SCENE_MODIFIED:
-      if (mSceneModified) { return; }
+  }
 
-      mSceneName += " *";
-      mSceneModified = true;
-      break;
-    default:break;
-    }
+  EVENT_CALLBACK_DEF(SceneHierarchy, OnPrefabEdit) {
+    mSceneName = CAST_TO_EVENT(Events::EditPrefabEvent)->mPrefab;
+    mEditingPrefab = true;
+  }
+
+  EVENT_CALLBACK_DEF(SceneHierarchy, OnSceneModified) {
+    if (mSceneModified) { return; }
+
+    mSceneName += " *";
+    mSceneModified = true;
   }
 
   EVENT_CALLBACK_DEF(SceneHierarchy, OnEntityPicked) {
@@ -225,10 +245,10 @@ namespace GUI
     return newEntity;
   }
 
-  void SceneHierarchy::RecurseDownHierarchy(ECS::Entity entity)
+  void SceneHierarchy::RecurseDownHierarchy(ECS::Entity entity, float nodeToLabelSpacing)
   {
-    bool const isCurrentEntity{ GUIVault::GetSelectedEntity() == entity || GUIVault::IsEntitySelected(entity) },
-      isEditMode{ isCurrentEntity && sEditNameMode };
+    bool const isCurrentEntity{ GUIVault::GetSelectedEntity() == entity || GUIVault::IsEntitySelected(entity)},
+      isEditMode{ sEntityToRename == entity && sEditNameMode };
     // set the flag accordingly
     ImGuiTreeNodeFlags treeFlag{ ImGuiTreeNodeFlags_SpanFullWidth };
     bool const hasChildren{ mEntityManager.HasChild(entity) };
@@ -238,7 +258,7 @@ namespace GUI
     if (isCurrentEntity) { treeFlag |= ImGuiTreeNodeFlags_Selected; }
 
     // create the tree nodes
-    std::string const displayName{ isEditMode ? "##" : "" + entity.GetComponent<Component::Tag>().tag };
+    std::string const displayName{ isEditMode ? "##" : entity.GetComponent<Component::Tag>().tag };
 
     // highlight if its a prefab instance
     bool const isPrefabInstance{ entity.HasComponent<Component::PrefabOverrides>() };
@@ -257,7 +277,7 @@ namespace GUI
       // if renaming entity
       if (isEditMode) { RenameEntity(entity); }
 
-      ProcessInput(entity, false);
+      ProcessInput(entity, false, nodeToLabelSpacing);
 
       // if entity picked from viewport, set scroll position to it
       if (sJumpToEntity && GUIVault::GetSelectedEntity() == entity) {
@@ -266,8 +286,9 @@ namespace GUI
       }
 
       if (hasChildren) {
+        nodeToLabelSpacing += ImGui::GetTreeNodeToLabelSpacing();
         for (auto const& child : mEntityManager.GetChildEntity(entity)) {
-          RecurseDownHierarchy(child);
+          RecurseDownHierarchy(child, nodeToLabelSpacing);
         }
       }
 
@@ -280,7 +301,7 @@ namespace GUI
       // if renaming entity
       if (isEditMode) { RenameEntity(entity); }
 
-      ProcessInput(entity, true);
+      ProcessInput(entity, true, nodeToLabelSpacing);
 
       // if entity picked from viewport, set scroll position to it
       if (sJumpToEntity && GUIVault::GetSelectedEntity() == entity) {
@@ -316,7 +337,7 @@ namespace GUI
     }
   }
 
-  void SceneHierarchy::ProcessInput(ECS::Entity entity, bool collapsed) {
+  void SceneHierarchy::ProcessInput(ECS::Entity entity, bool collapsed, float nodeToLabelSpacing) {
 
     if (!mLockControls) {
       if (ImGui::BeginDragDropSource())
@@ -350,7 +371,7 @@ namespace GUI
         ImGui::EndDragDropTarget();
       }
 
-      if (ImGui::IsItemClicked(ImGuiMouseButton_Right) && !collapsed) {
+      if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
         mRightClickedEntity = entity;
         mEntityOptionsMenu = true;
       }
@@ -361,7 +382,7 @@ namespace GUI
       QUEUE_EVENT(Events::ZoomInOnEntity, entity);
       sEntityDoubleClicked = false;
     }
-    else if (ImGui::IsItemClicked(ImGuiMouseButton_Left) && (ImGui::GetMousePos().x - ImGui::GetItemRectMin().x) > ImGui::GetTreeNodeToLabelSpacing()) {
+    else if (ImGui::IsItemClicked(ImGuiMouseButton_Left) && (ImGui::GetMousePos().x - ImGui::GetItemRectMin().x) > nodeToLabelSpacing) {
       if (GUIVault::GetSelectedEntity() == entity && !sCtrlHeld && !collapsed) {
         sEntityDoubleClicked = true;
         sLMouseReleased = false;
@@ -404,38 +425,13 @@ namespace GUI
     }
   }
 
-  bool SceneHierarchy::RunRightClickMenu()
+  bool SceneHierarchy::RunRightClickMenu(bool entitySelected)
   {
     bool modified{ false };
     if (ImGui::BeginPopup("HierarchyOptions"))
     {
-      if (ImGui::Selectable("Create Entity")) {
-        ECS::Entity const newEntity{ CreateNewEntity() };
-        GUIVault::SetSelectedEntity(newEntity);
-        modified = sEditNameMode = mLockControls = true;
-      }
-
-      if (ImGui::Selectable("Create Light")) {
-        ECS::Entity newEntity{ mEntityManager.CreateEntity() };
-        newEntity.SetTag("Light");
-        newEntity.EmplaceComponent<Component::Light>();
-        newEntity.GetComponent<Component::Transform>().ApplyWorldRotation(-90.f, glm::vec3(1.f, 0.f, 0.f));  // face down by default
-        GUIVault::SetSelectedEntity(newEntity);
-        modified = true;
-      }
-
-      ImGui::EndPopup();
-    }
-
-    return modified;
-  }
-
-  bool SceneHierarchy::RunEntityOptions()
-  {
-    bool modified{ false };
-    if (ImGui::BeginPopup("EntityOptions"))
-    {
-      if (GUIVault::sDevTools) {
+      // Reassign Submesh Indices
+      if (GUIVault::sDevTools && entitySelected) {
         if (!mRightClickedEntity.HasComponent<Component::Mesh>()) {
           ImGui::PushStyleColor(ImGuiCol_HeaderHovered, IM_COL32(128, 0, 0, 255));
           ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
@@ -444,94 +440,368 @@ namespace GUI
           }
           ImGui::PopStyleColor(2);
         }
+
+        ImGui::Separator();
       }
 
+      // if entity is right-clicked
+      if (entitySelected) {
+        if (mEntityManager.HasChild(mRightClickedEntity)) {
+          if (ImGui::Selectable("Set Children to follow Layer")) {
+            mEntityManager.SetChildLayersToFollowParent(mRightClickedEntity);
+            modified = true;
+          }
+
+          if (ImGui::Selectable("Set Children to follow Active Status")) {
+            mEntityManager.SetChildActiveToFollowParent(mRightClickedEntity);
+            modified = true;
+          }
+
+          ImGui::Separator();
+        }
+
+        if (ImGui::Selectable("Rename")) {
+          sEditNameMode = mLockControls = true;
+          sEntityToRename = mRightClickedEntity;
+        }
+
+        if (ImGui::Selectable("Duplicate")) {
+          ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
+          ECS::Entity newEntity{ Reflection::ObjectFactory::GetInstance().CloneObject(mRightClickedEntity,
+            em.HasParent(mRightClickedEntity) ? em.GetParentEntity(mRightClickedEntity) : ECS::Entity()) };
+          newEntity.GetComponent<Component::Tag>().tag += " (Copy)";
+          GUIVault::SetSelectedEntity(newEntity);
+          TriggerRename();
+
+          modified = true;
+        }
+
+        if (!mEditingPrefab && ImGui::Selectable("Save as Prefab")) {
+          mPrefabPopup = modified = true;
+        }
+
+        if (ImGui::Selectable("Delete")) {
+          mEntityManager.RemoveEntity(mRightClickedEntity);
+          modified = true;
+        }
+
+        ImGui::Separator();
+      }
+
+      // Prefab menu
+      if (entitySelected && mRightClickedEntity.HasComponent<Component::PrefabOverrides>()) {
+        if (PrefabMenu("Prefab")) {
+          modified = true;
+        }
+
+        ImGui::Separator();
+      }
+
+      // Create Entity
       if (ImGui::Selectable("Create Entity")) {
         ECS::Entity newEntity{ CreateNewEntity() };
-        mEntityManager.SetParentEntity(mRightClickedEntity, newEntity);
-        CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
+
+        if (entitySelected) {
+          ParentRightClickedEntity(newEntity);
+        }
         GUIVault::SetSelectedEntity(newEntity);
-        modified = sEditNameMode = mLockControls = true;
+        modified = true;
+        TriggerRename();
       }
 
-      if (ImGui::Selectable("Create Empty Parent")) {
-        ECS::Entity newEntity{ CreateNewEntity() };
-
-        // if original entity has a parent, set this new entity as a child
-        if (mEntityManager.HasParent(mRightClickedEntity)) {
-          ECS::Entity const originalParent{ mEntityManager.GetParentEntity(mRightClickedEntity) };
-          mEntityManager.RemoveParent(mRightClickedEntity);
-          CopyWorldTransform(originalParent.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
-          mEntityManager.SetParentEntity(originalParent, newEntity);
+      // Create Empty Parent
+      if (entitySelected) {
+        if (CreateEmptyParent("Create Empty Parent")) {
+          modified = true;
+          TriggerRename();
         }
-        else {
-          Component::Transform& newTrans{ newEntity.GetComponent<Component::Transform>() },
-            & rightClickedTrans{ mRightClickedEntity.GetComponent<Component::Transform>() };
-          newTrans = rightClickedTrans;
-          rightClickedTrans.ResetLocal();
-          newTrans.SetLocalToWorld();
+      }
+
+      // Create Object
+      if (MeshMenu("Object", entitySelected)) {
+        modified = true;
+        TriggerRename();
+      }
+
+      // Create Light
+      if (LightMenu("Light", entitySelected)) {
+        modified = true;
+        TriggerRename();
+      }
+
+      if (AudioMenu("Audio", entitySelected)) {
+        modified = true;
+        TriggerRename();
+      }
+
+      if (ImGui::Selectable("Camera")) {
+        ECS::Entity newEntity{ mEntityManager.CreateEntityWithTag("Camera") };
+        newEntity.EmplaceComponent<Component::Camera>().fov = 60.f;
+
+        if (entitySelected) {
+          ParentRightClickedEntity(newEntity);
         }
 
-        mEntityManager.SetParentEntity(newEntity, mRightClickedEntity);
-        /*mRightClickedEntity.GetComponent<Component::Transform>().ResetLocal();
-        TransformHelpers::UpdateTransformToNewParent(mRightClickedEntity);*/
         GUIVault::SetSelectedEntity(newEntity);
-        modified = sEditNameMode = mLockControls = true;
+        modified = true;
+        TriggerRename();
       }
 
-      if (mEntityManager.HasChild(mRightClickedEntity)) {
-        if (ImGui::Selectable("Set Children to follow Layer")) {
-          mEntityManager.SetChildLayersToFollowParent(mRightClickedEntity);
-        }
-
-        if (ImGui::Selectable("Set Children to follow Active Status")) {
-          mEntityManager.SetChildActiveToFollowParent(mRightClickedEntity);
-        }
+      // Create UI
+      if (UIMenu("UI", entitySelected)) {
+        modified = true;
+        TriggerRename();
       }
 
-      if (ImGui::Selectable("Duplicate")) {
-        ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
-        ECS::Entity newEntity{ Reflection::ObjectFactory::GetInstance().CloneObject(mRightClickedEntity,
-          em.HasParent(mRightClickedEntity) ? em.GetParentEntity(mRightClickedEntity) : ECS::Entity()) };
+
+      ImGui::EndPopup();
+    }
+    // reset flag for entity selected
+    else if (mEntityRightClicked) {
+      mEntityRightClicked = false;
+    }
+
+    return modified;
+  }
+
+  bool SceneHierarchy::MeshMenu(const char* label, bool entitySelected) {
+    const char* meshName{ nullptr };
+    if (ImGui::BeginMenu(label)) {
+      if (ImGui::Selectable("Cube")) { meshName = "Cube"; }
+
+      if (ImGui::Selectable("Sphere")) { meshName = "Sphere"; }
+
+      if (ImGui::Selectable("Plane")) { meshName = "Plane"; }
+
+      if (ImGui::Selectable("Capsule")) { meshName = "Capsule"; }
+
+      if (ImGui::Selectable("Quad")) { meshName = "Quad"; }
+
+      if (meshName) {
+        ECS::Entity newEntity{ mEntityManager.CreateEntityWithTag(meshName) };
+        newEntity.EmplaceComponent<Component::Mesh>(meshName);
         GUIVault::SetSelectedEntity(newEntity);
-      }
 
-      if (!mEditingPrefab && ImGui::Selectable("Save as Prefab")) {
-        mPrefabPopup = true;
-      }
-
-      if (mRightClickedEntity.HasComponent<Component::PrefabOverrides>())
-      {
-        Component::PrefabOverrides& overrides{ mRightClickedEntity.GetComponent<Component::PrefabOverrides>() };
-        if (ImGui::BeginMenu("Prefab")) {
-          /* if (ImGui::MenuItem("Reset All Overrides")) {
-
-           }*/
-
-          if (overrides.IsRoot()) {
-            // only allow detaching from the root entity
-            if (ImGui::MenuItem("Detach Instance")) {
-              RemovePrefabOverrides(mRightClickedEntity, overrides.guid);
-              modified = true;
-            }
-          }
-          else {
-            // get root entity of prefab
-            if (ImGui::MenuItem("Select Root")) {
-              GUIVault::SetSelectedEntity(GetPrefabRoot(mRightClickedEntity));
-            }
-          }
-
-          ImGui::EndMenu();
+        if (entitySelected) {
+          ParentRightClickedEntity(newEntity);
         }
       }
 
-      if (ImGui::Selectable("Delete")) {
-        mEntityManager.RemoveEntity(mRightClickedEntity);
+      ImGui::EndMenu();
+    }
+
+    return meshName;
+  }
+
+  bool SceneHierarchy::LightMenu(const char* label, bool entitySelected) {
+    bool modified{ false };
+    if (ImGui::BeginMenu(label)) {
+      ECS::Entity newEntity{};
+
+      if (ImGui::Selectable("Directional")) {
+        newEntity = mEntityManager.CreateEntityWithTag("Directional Light");
+        newEntity.GetComponent<Component::Transform>().ApplyWorldRotation(-90.f, glm::vec3(1.f, 0.f, 0.f));  // face down by default
+        newEntity.EmplaceComponent<Component::Light>(Component::DIRECTIONAL);
         modified = true;
       }
 
-      ImGui::EndPopup();
+      if (ImGui::Selectable("Spot Light")) {
+        newEntity = mEntityManager.CreateEntityWithTag("Spot Light");
+        newEntity.GetComponent<Component::Transform>().ApplyWorldRotation(-90.f, glm::vec3(1.f, 0.f, 0.f));  // face down by default
+        newEntity.EmplaceComponent<Component::Light>(Component::SPOTLIGHT);
+        modified = true;
+      }
+
+      if (ImGui::Selectable("Point Light")) {
+        newEntity = mEntityManager.CreateEntityWithTag("Point Light");
+        newEntity.EmplaceComponent<Component::Light>(Component::POINT);
+        modified = true;
+      }
+
+      if (modified) {
+        GUIVault::SetSelectedEntity(newEntity);
+
+        if (entitySelected) {
+          ParentRightClickedEntity(newEntity);
+        }
+      }
+
+      ImGui::EndMenu();
+    }
+
+    return modified;
+  }
+
+  bool SceneHierarchy::AudioMenu(const char* label, bool entitySelected) {
+    ECS::Entity newEntity{};
+    if (ImGui::BeginMenu(label)) {
+
+      if (ImGui::Selectable("Audio Source")) {
+        newEntity = mEntityManager.CreateEntityWithTag("Audio Source");
+        newEntity.EmplaceComponent<Component::AudioSource>();
+      }
+
+      if (ImGui::Selectable("Audio Listener")) {
+        newEntity = mEntityManager.CreateEntityWithTag("Audio Listener");
+        newEntity.EmplaceComponent<Component::AudioListener>();
+      }
+
+      if (newEntity) {
+        GUIVault::SetSelectedEntity(newEntity);
+
+        if (entitySelected) {
+          ParentRightClickedEntity(newEntity);
+        }
+      }
+
+      ImGui::EndMenu();
+    }
+
+    return newEntity;
+  }
+
+  bool SceneHierarchy::UIMenu(const char* label, bool entitySelected) {
+    ECS::Entity newEntity{};
+    if (ImGui::BeginMenu(label)) {
+      bool canvasCreated{ false };
+      if (ImGui::Selectable("Image")) {
+        newEntity = mEntityManager.CreateEntityWithTag("Image");
+        newEntity.EmplaceComponent<Component::Image>();
+      }
+
+      if (ImGui::Selectable("Text")) {
+        newEntity = mEntityManager.CreateEntityWithTag("Text");
+        newEntity.EmplaceComponent<Component::Text>();
+      }
+
+      ImGui::Separator();
+
+      if (ImGui::Selectable("Canvas")) {
+        newEntity = mEntityManager.CreateEntityWithTag("Canvas");
+        newEntity.EmplaceComponent<Component::Canvas>();
+        canvasCreated = true;
+      }
+
+      if (newEntity) {
+        GUIVault::SetSelectedEntity(newEntity);
+
+        if (entitySelected) {
+          // check if under canvas
+          bool const valid{ mRightClickedEntity.HasComponent<Component::Canvas>()
+              || ImGuiHelpers::IsUnderCanvasEntity(mRightClickedEntity) };
+
+          // if canvas created or under canvas, simply nest under the right-clicked entity
+          if (canvasCreated || valid) {
+            ParentRightClickedEntity(newEntity);
+          }
+          // else we create a new canvas to hold the new entity,
+          // then set the canvas to be the child of the right-clicked entity
+          else {
+            ECS::Entity canvas{ mEntityManager.CreateEntityWithTag("Canvas") };
+            canvas.EmplaceComponent<Component::Canvas>();
+
+            mEntityManager.SetParentEntity(canvas, newEntity);
+            mEntityManager.SetParentEntity(mRightClickedEntity, canvas);
+
+            // set world transform of both canvas and new entity equal to the parent
+            Component::Transform& canvasTrans{ canvas.GetComponent<Component::Transform>() };
+            CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), canvasTrans);
+            CopyWorldTransform(canvasTrans, newEntity.GetComponent<Component::Transform>());
+          }
+        }
+        // entity created at root level - look for the canvas
+          // and set the new entity as its child
+        else if (!canvasCreated) {
+          ECS::Entity canvas{ GetCanvasEntity() };
+          if (!canvas) {
+            canvas = mEntityManager.CreateEntityWithTag("Canvas");
+            canvas.EmplaceComponent<Component::Canvas>();
+          }
+
+          mEntityManager.SetParentEntity(canvas, newEntity);
+          CopyWorldTransform(canvas.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
+        }
+      }
+
+      ImGui::EndMenu();
+    }
+
+    return newEntity;
+  }
+
+  bool SceneHierarchy::CreateEmptyParent(const char* label) {
+    if (!ImGui::Selectable(label)) { return false; }
+
+    ECS::Entity newEntity{ CreateNewEntity() };
+
+    // if original entity has a parent, set this new entity as a child
+    if (mEntityManager.HasParent(mRightClickedEntity)) {
+      ECS::Entity const originalParent{ mEntityManager.GetParentEntity(mRightClickedEntity) };
+      mEntityManager.RemoveParent(mRightClickedEntity);
+      CopyWorldTransform(originalParent.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
+      mEntityManager.SetParentEntity(originalParent, newEntity);
+    }
+    else {
+      Component::Transform& newTrans{ newEntity.GetComponent<Component::Transform>() },
+        & rightClickedTrans{ mRightClickedEntity.GetComponent<Component::Transform>() };
+      newTrans = rightClickedTrans;
+      rightClickedTrans.ResetLocal();
+      newTrans.SetLocalToWorld();
+    }
+
+    mEntityManager.SetParentEntity(newEntity, mRightClickedEntity);
+    /*mRightClickedEntity.GetComponent<Component::Transform>().ResetLocal();
+    TransformHelpers::UpdateTransformToNewParent(mRightClickedEntity);*/
+    GUIVault::SetSelectedEntity(newEntity);
+
+    return true;
+  }
+
+  bool SceneHierarchy::PrefabMenu(const char* label) {
+    Component::PrefabOverrides& overrides{ mRightClickedEntity.GetComponent<Component::PrefabOverrides>() };
+    bool modified{ false };
+
+    if (ImGui::BeginMenu(label)) {
+      if (ImGui::MenuItem("Reset All Overrides")) {
+        try {
+          Reflection::ObjectFactory& of{ IGE_OBJFACTORY };
+          Prefabs::Prefab const& pfb{ IGE_ASSETMGR.GetAsset<IGE::Assets::PrefabAsset>(overrides.guid)->mPrefabData };
+          std::vector<rttr::variant> const comps{ of.GetEntityComponents(mRightClickedEntity) };
+
+          for (rttr::variant const& comp : comps) {
+            rttr::variant const& compToRestore{ pfb.GetSubObject(overrides.subDataId).GetComponent(comp.get_type()) };
+
+            if (compToRestore.is_valid()) {
+              of.AddComponentToEntity(mRightClickedEntity, compToRestore);
+            }
+            else {
+              of.RemoveComponentFromEntity(mRightClickedEntity, comp.get_type());
+            }
+          }
+        }
+        catch (Debug::ExceptionBase&) {
+          IGE_DBGLOGGER.LogError("Unable to fetch prefab " + std::to_string(overrides.guid));
+        }
+
+        overrides.Reset();
+        modified = true;
+      }
+
+      if (overrides.IsRoot()) {
+        // only allow detaching from the root entity
+        if (ImGui::MenuItem("Detach Instance")) {
+          RemovePrefabOverrides(mRightClickedEntity, overrides.guid);
+          modified = true;
+        }
+      }
+      else {
+        // get root entity of prefab
+        if (ImGui::MenuItem("Select Root")) {
+          GUIVault::SetSelectedEntity(GetPrefabRoot(mRightClickedEntity));
+        }
+      }
+
+      ImGui::EndMenu();
     }
 
     return modified;
@@ -599,6 +869,63 @@ namespace GUI
     sFirstEnterEditMode = true;
   }
 
+  EVENT_CALLBACK_DEF(SceneHierarchy, OnCollectEditorData) {
+    auto sceneDataEvent{ CAST_TO_EVENT(Events::CollectEditorSceneData) };
+    sceneDataEvent->mSceneName = mSceneName;
+    sceneDataEvent->mSceneConfig.collapsedNodes = std::move(mCollapsedNodes);
+    mCollapsedNodes = {};
+  }
+
+  EVENT_CALLBACK_DEF(SceneHierarchy, OnLoadEditorData) {
+    mCollapsedNodes = CAST_TO_EVENT(Events::LoadEditorSceneData)->mSceneConfig.collapsedNodes;
+    sLoadHierarchyState = true;
+  }
+
+  void GetTreeNodeStatesR(std::set<HierarchyEntry>& collapsed, ECS::Entity entity, ImGuiID parentHash) {
+    ImGuiID const newHash{ ImGuiHelpers::GetTreeNodeId(entity.GetTag() + "##" + std::to_string(entity.GetEntityID()), parentHash)};
+    
+    bool const state{ ImGui::TreeNodeBehaviorIsOpen(newHash, ImGuiTreeNodeFlags_DefaultOpen) };
+    collapsed.emplace(entity.GetRawEnttEntityID(), newHash, state);
+    //std::cout << entity.GetTag() << "##" << entity.GetEntityID() << " is closed - " << std::hex << newHash << "\n";
+
+    ECS::EntityManager& em{ IGE_ENTITYMGR };
+    for (ECS::Entity child : IGE_ENTITYMGR.GetChildEntity(entity)) {
+      if (!em.HasChild(child)) { continue; }
+
+      GetTreeNodeStatesR(collapsed, child, newHash);
+    }
+  }
+
+  std::set<HierarchyEntry> SceneHierarchy::GetTreeNodeStates() const {
+    std::set<HierarchyEntry> ret{};
+    ECS::EntityManager& em{ IGE_ENTITYMGR };
+
+    for (ECS::Entity e : em.GetAllEntities()) {
+      if (em.HasParent(e) || !em.HasChild(e)) { continue; }
+
+      GetTreeNodeStatesR(ret, e, ImHashStr(mWindowName.c_str()));
+    }
+
+    return ret;
+  }
+
+  void SceneHierarchy::TriggerRename() {
+    sEntityToRename = GUIVault::GetSelectedEntity();
+    sEditNameMode = mLockControls = true;
+  }
+
+  void SceneHierarchy::ParentRightClickedEntity(ECS::Entity child) {
+    mEntityManager.SetParentEntity(mRightClickedEntity, child);
+    CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), child.GetComponent<Component::Transform>());
+  }
+
+  void SceneHierarchy::LoadHierarchyState() {
+    ImGuiStorage* stateStore{ ImGui::GetStateStorage() };
+    for (GUI::HierarchyEntry const& entry : mCollapsedNodes) {
+      stateStore->SetInt(entry.stackId, entry.isOpen ? 1 : 0);
+    }
+  }
+
   void SceneHierarchy::SceneModified() {
     if (mSceneModified) { return; }
 
@@ -660,5 +987,10 @@ namespace {
       child.GetComponent<Component::Mesh>().submeshIdx = idx;
       ++idx;
     }
+  }
+
+  ECS::Entity GetCanvasEntity() {
+    auto const canvases{ IGE_ENTITYMGR.GetAllEntitiesWithComponents<Component::Canvas>() };
+    return canvases.empty() ? ECS::Entity() : canvases.front();
   }
 }

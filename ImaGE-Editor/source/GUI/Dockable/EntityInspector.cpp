@@ -61,19 +61,11 @@ namespace ScriptInputs {
   template <typename T>
   bool ScriptInputField(Mono::ScriptInstance& scriptInst, rttr::variant& dataMemberInst, float inputWidth);
 
-  SCRIPT_INPUT_FUNC_DECL(bool);
-  SCRIPT_INPUT_FUNC_DECL(int);
-  SCRIPT_INPUT_FUNC_DECL(float);
-  SCRIPT_INPUT_FUNC_DECL(double);
-  SCRIPT_INPUT_FUNC_DECL(std::string);
-  SCRIPT_INPUT_FUNC_DECL(glm::vec3);
-  SCRIPT_INPUT_FUNC_DECL(glm::dvec3);
-  SCRIPT_INPUT_FUNC_DECL(std::vector<int>);
-  SCRIPT_INPUT_FUNC_DECL(std::vector<float>);
-  SCRIPT_INPUT_FUNC_DECL(std::vector<double>);
-  SCRIPT_INPUT_FUNC_DECL(std::vector<std::string>);
-  SCRIPT_INPUT_FUNC_DECL(std::vector<MonoObject*>);
-  SCRIPT_INPUT_FUNC_DECL(Mono::ScriptInstance);
+  SCRIPT_INPUT_FUNC_DECL(bool); SCRIPT_INPUT_FUNC_DECL(int); SCRIPT_INPUT_FUNC_DECL(float);
+  SCRIPT_INPUT_FUNC_DECL(double); SCRIPT_INPUT_FUNC_DECL(std::string); SCRIPT_INPUT_FUNC_DECL(glm::vec3);
+  SCRIPT_INPUT_FUNC_DECL(glm::dvec3); SCRIPT_INPUT_FUNC_DECL(std::vector<int>); SCRIPT_INPUT_FUNC_DECL(std::vector<float>);
+  SCRIPT_INPUT_FUNC_DECL(std::vector<double>); SCRIPT_INPUT_FUNC_DECL(std::vector<std::string>);
+  SCRIPT_INPUT_FUNC_DECL(std::vector<MonoObject*>); SCRIPT_INPUT_FUNC_DECL(Mono::ScriptInstance);
 }
 
 namespace GUI {
@@ -102,19 +94,20 @@ namespace GUI {
       { typeid(Component::Interactive), ICON_FA_COMPUTER_MOUSE ICON_PADDING },
       { typeid(Component::EmitterSystem), ICON_FA_STAR ICON_PADDING }
     },
-    mObjFactory{Reflection::ObjectFactory::GetInstance()},
+    mObjFactory{ Reflection::ObjectFactory::GetInstance() },
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
     for (auto const& component : Reflection::gComponentTypes) {
-      mComponentOpenStatusMap[component.get_name().to_string().c_str()] = true;
-
-      // Workaround because the Reflection component name for Script is ScriptComponent for some odd reason
-      mComponentOpenStatusMap["Script"] = true;
+      mComponentOpenStatusMap[component.get_name().to_string()] = true;
     }
+    // Workaround because the Reflection component name for Script is ScriptComponent for some odd reason
+    mComponentOpenStatusMap.erase(rttr::type::get<Component::Script>().get_name().to_string());
+    mComponentOpenStatusMap["Script"] = true;
+    mComponentOpenStatusMap["Prefab Overrides"] = true;
 
     // get notified when scene is saved
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SAVE_SCENE, &Inspector::HandleEvent, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &Inspector::HandleEvent, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &Inspector::HandleEvent, this);
+    SUBSCRIBE_CLASS_FUNC(Events::SaveSceneEvent, &Inspector::OnSceneSave, this);
+    SUBSCRIBE_CLASS_FUNC(Events::SceneStateChange, &Inspector::OnSceneStateChange, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EditPrefabEvent, &Inspector::OnPrefabEdit, this);
 
     // simple check to ensure all components have icons
     if (Reflection::gComponentTypes.size() != mComponentIcons.size()) {
@@ -200,8 +193,14 @@ namespace GUI {
         if (TagComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Tag>());
+            prefabOverride->AddComponentOverride(tagType);
           }
+        }
+      }
+
+      if (GUIVault::sDevTools && prefabOverride) {
+        if (PrefabOverridesWindow(currentEntity, prefabOverride)) {
+          SetIsComponentEdited(true);
         }
       }
 
@@ -210,7 +209,7 @@ namespace GUI {
         Component::Transform& trans{ currentEntity.GetComponent<Component::Transform>() };
         glm::vec3 const oldPos{ trans.position };
         if (TransformComponentWindow(currentEntity, componentOverriden)) {
-          TransformHelpers::UpdateWorldTransform(currentEntity);  // must call this to update world transform according to changes to local
+          trans.modified = true;
           SetIsComponentEdited(true);
 
           if (prefabOverride) {
@@ -219,11 +218,11 @@ namespace GUI {
               // here, im assuming only 1 value can be modified per frame.
               // So if position wasn't modified, it means either rot or scale was
               if (oldPos == trans.position) {
-                prefabOverride->AddComponentModification(trans);
+                prefabOverride->AddComponentOverride<Component::Transform>();
               }
             }
             else {
-              prefabOverride->AddComponentModification(trans);
+              prefabOverride->AddComponentOverride<Component::Transform>();
             }
           }
         }
@@ -236,33 +235,33 @@ namespace GUI {
         if (BoxColliderComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::BoxCollider>());
+            prefabOverride->AddComponentOverride(colliderType);
           }
         }
       }
 
       if (currentEntity.HasComponent<Component::SphereCollider>()) {
-          rttr::type const colliderType{ rttr::type::get<Component::SphereCollider>() };
-          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(colliderType);
+        rttr::type const colliderType{ rttr::type::get<Component::SphereCollider>() };
+        componentOverriden = prefabOverride && prefabOverride->IsComponentModified(colliderType);
 
-          if (SphereColliderComponentWindow(currentEntity, componentOverriden)) {
-              SetIsComponentEdited(true);
-              if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::SphereCollider>());
-              }
+        if (SphereColliderComponentWindow(currentEntity, componentOverriden)) {
+          SetIsComponentEdited(true);
+          if (prefabOverride) {
+            prefabOverride->AddComponentOverride(colliderType);
           }
+        }
       }
 
       if (currentEntity.HasComponent<Component::CapsuleCollider>()) {
-          rttr::type const colliderType{ rttr::type::get<Component::CapsuleCollider>() };
-          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(colliderType);
+        rttr::type const colliderType{ rttr::type::get<Component::CapsuleCollider>() };
+        componentOverriden = prefabOverride && prefabOverride->IsComponentModified(colliderType);
 
-          if (CapsuleColliderComponentWindow(currentEntity, componentOverriden)) {
-              SetIsComponentEdited(true);
-              if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::CapsuleCollider>());
-              }
+        if (CapsuleColliderComponentWindow(currentEntity, componentOverriden)) {
+          SetIsComponentEdited(true);
+          if (prefabOverride) {
+            prefabOverride->AddComponentOverride(colliderType);
           }
+        }
       }
 
       // don't run in PrefabEditor since layers are tied to a scene
@@ -273,7 +272,7 @@ namespace GUI {
         if (LayerComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Layer>());
+            prefabOverride->AddComponentOverride(layerType);
           }
         }
       }
@@ -285,7 +284,7 @@ namespace GUI {
         if (MaterialWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Material>());
+            prefabOverride->AddComponentOverride(materialType);
           }
         }
       }
@@ -297,7 +296,7 @@ namespace GUI {
         if (MeshComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Mesh>());
+            prefabOverride->AddComponentOverride(meshType);
           }
         }
       }
@@ -309,7 +308,7 @@ namespace GUI {
         if (RigidBodyComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::RigidBody>());
+            prefabOverride->AddComponentOverride(rigidBodyType);
           }
         }
       }
@@ -322,19 +321,18 @@ namespace GUI {
         if (ScriptComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Script>());
+            prefabOverride->AddComponentOverride(scriptType);
           }
         }
       }
       if (currentEntity.HasComponent<Component::Light>()) {
 
         rttr::type const lightType{ rttr::type::get<Component::Light>() };
-
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(lightType);
         if (LightComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Light>());
+            prefabOverride->AddComponentOverride(lightType);
           }
         }
       }
@@ -346,7 +344,7 @@ namespace GUI {
         if (TextComponentWindow(currentEntity, componentOverriden)) {
           SetIsComponentEdited(true);
           if (prefabOverride) {
-            prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Text>());
+            prefabOverride->AddComponentOverride(textType);
           }
         }
       }
@@ -358,7 +356,7 @@ namespace GUI {
           if (ImageComponentWindow(currentEntity, componentOverriden)) {
               SetIsComponentEdited(true);
               if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Image>());
+                  prefabOverride->AddComponentOverride(imageType);
               }
           }
       }
@@ -370,7 +368,7 @@ namespace GUI {
           if (CanvasComponentWindow(currentEntity, componentOverriden)) {
               SetIsComponentEdited(true);
               if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Canvas>());
+                  prefabOverride->AddComponentOverride(canvasType);
               }
           }
       }
@@ -382,7 +380,7 @@ namespace GUI {
           if (CameraComponentWindow(currentEntity, componentOverriden)) {
               SetIsComponentEdited(true);
               if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Camera>());
+                  prefabOverride->AddComponentOverride(cameraType);
               }
           }
       }
@@ -394,7 +392,7 @@ namespace GUI {
           if (AudioListenerComponentWindow(currentEntity, componentOverriden)) {
               SetIsComponentEdited(true);
               if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::AudioListener>());
+                  prefabOverride->AddComponentOverride(listenerType);
               }
           }
       }
@@ -405,43 +403,43 @@ namespace GUI {
           if (AudioSourceComponentWindow(currentEntity, componentOverriden)) {
               SetIsComponentEdited(true);
               if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::AudioSource>());
+                  prefabOverride->AddComponentOverride(sourceType);
               }
           }
       }
 
       if (currentEntity.HasComponent<Component::Sprite2D>()) {
-          rttr::type const sourceType{ rttr::type::get<Component::Sprite2D>() };
-          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(sourceType);
+          rttr::type const compType{ rttr::type::get<Component::Sprite2D>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(compType);
 
           if (Sprite2DComponentWindow(currentEntity, componentOverriden)) {
               SetIsComponentEdited(true);
               if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Sprite2D>());
+                  prefabOverride->AddComponentOverride(compType);
               }
           }
       }
 
       if (currentEntity.HasComponent<Component::Skybox>()) {
-          rttr::type const sourceType{ rttr::type::get<Component::Skybox>() };
-          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(sourceType);
+          rttr::type const compType{ rttr::type::get<Component::Skybox>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(compType);
 
           if (SkyboxComponentWindow(currentEntity, componentOverriden)) {
               SetIsComponentEdited(true);
               if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Skybox>());
+                  prefabOverride->AddComponentOverride(compType);
               }
           }
       }
 
       if (currentEntity.HasComponent<Component::Interactive>()) {
-          rttr::type const sourceType{ rttr::type::get<Component::Interactive>() };
-          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(sourceType);
+          rttr::type const compType{ rttr::type::get<Component::Interactive>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(compType);
 
           if (InteractiveComponentWindow(currentEntity, componentOverriden)) {
               SetIsComponentEdited(true);
               if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::Interactive>());
+                  prefabOverride->AddComponentOverride(compType);
               }
           }
       }
@@ -484,29 +482,24 @@ namespace GUI {
     }
   }
 
-  EVENT_CALLBACK_DEF(Inspector, HandleEvent) {
-    switch (event->GetCategory()) {
-    case Events::EventType::SAVE_SCENE:
+  EVENT_CALLBACK_DEF(Inspector, OnSceneSave) {
       mIsComponentEdited = mFirstEdit = false;
-      break;
-    case Events::EventType::SCENE_STATE_CHANGE:
-    {
-      auto state{ CAST_TO_EVENT(Events::SceneStateChange)->mNewState };
-      // if changing to another scene, reset modified flag
-      if (state == Events::SceneStateChange::CHANGED) {
-        mIsComponentEdited = mFirstEdit = mEditingPrefab = false;
-      }
-      else if (state == Events::SceneStateChange::NEW) {
-        mIsComponentEdited = true;
-        mFirstEdit = mEditingPrefab = false;
-      }
-      break;
+  }
+
+  EVENT_CALLBACK_DEF(Inspector, OnSceneStateChange) {
+    auto state{ CAST_TO_EVENT(Events::SceneStateChange)->mNewState };
+    // if changing to another scene, reset modified flag
+    if (state == Events::SceneStateChange::CHANGED) {
+      mIsComponentEdited = mFirstEdit = mEditingPrefab = false;
     }
-    case Events::EventType::EDIT_PREFAB:
-      mEditingPrefab = true;
-      break;
-    default: break;
+    else if (state == Events::SceneStateChange::NEW) {
+      mIsComponentEdited = true;
+      mFirstEdit = mEditingPrefab = false;
     }
+  }
+
+  EVENT_CALLBACK_DEF(Inspector, OnPrefabEdit) {
+    mEditingPrefab = true;
   }
 
   void Inspector::DisplayRemovedComponent(rttr::type const& type) {
@@ -820,6 +813,7 @@ namespace GUI {
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
+#ifdef OLD_DRAG_DROP
       NextRowTable("Drag Drop Box");
       ImVec2 boxSize = ImVec2(200.0f, 40.0f); // Width and height of the box
       ImVec2 cursorPos = ImGui::GetCursorScreenPos();
@@ -854,8 +848,9 @@ namespace GUI {
         }
         ImGui::EndDragDropTarget();
       }
+#endif
 
-      std::string fontText = (text.fontFamilyName == "None") ? "[None]" : text.fontFamilyName;
+      std::string fontText = (text.fontFamilyName == "None") ? "[Drag Font Here]" : text.fontFamilyName;
       NextRowTable("Font Family");
       ImGui::BeginDisabled();
       ImGui::InputText("##FontTextInput", &fontText);
@@ -1141,8 +1136,6 @@ namespace GUI {
               modified = true;
           }
           
-
-
           ImGui::EndTable();
       }
 
@@ -1157,7 +1150,7 @@ namespace GUI {
     if (isOpen) {
       Component::Mesh& mesh{ entity.GetComponent<Component::Mesh>() };
       static const std::vector<const char*> meshNames{
-        "None", "Cube", "Plane", "Sphere", "Capsule"
+        "Cube", "Plane", "Sphere", "Capsule"
       };
 
       float const inputWidth{ CalcInputWidth(60.f) };
@@ -1167,49 +1160,13 @@ namespace GUI {
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
-      // dont think we need this anymore
-#ifdef MESH_DRAG_DROP
-      NextRowTable("");
-      ImVec2 boxSize = ImVec2(200.0f, 40.0f);
-      ImVec2 cursorPos = ImGui::GetCursorScreenPos();
-      ImVec2 boxEnd = ImVec2(cursorPos.x + boxSize.x, cursorPos.y + boxSize.y);
-      ImGui::BeginChild("DragDropTargetBox", boxSize, false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
-      ImGui::GetWindowDrawList()->AddRect(cursorPos, boxEnd, IM_COL32(0, 0, 0, 255), 0.0f, 0, 1.0f);
-      ImVec2 textSize = ImGui::CalcTextSize("Drag here to add mesh");
-      ImVec2 textPos = ImVec2(
-        cursorPos.x + (boxSize.x - textSize.x) * 0.5f,
-        cursorPos.y + (boxSize.y - textSize.y) * 0.5f
-      );
-      ImGui::SetCursorScreenPos(textPos);
-      ImGui::TextUnformatted("Drag here to add mesh");
-      ImGui::EndChild();
-
-      // allow dropping of models
-      if (ImGui::BeginDragDropTarget()) {
-        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
-        if (drop) {
-          AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
-          if (assetPayload.mAssetType == AssetPayload::MODEL) {
-            //auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
-            mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath());
-            mesh.meshName = assetPayload.GetFileName();
-            mesh.isCustomMesh = true;
-            modified = true;
-          }
-        }
-        ImGui::EndDragDropTarget();
-      }
-#endif
-
       NextRowTable("Mesh Type");
       if (ImGui::BeginCombo("##MeshSelection", mesh.meshName.c_str())) {
         for (unsigned i{}; i < meshNames.size(); ++i) {
           const char* selected{ meshNames[i] };
           if (ImGui::Selectable(selected)) {
             try {
-              if (i != 0) {
-                mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(selected);
-              }
+              mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(selected);
 
               if (selected != mesh.meshName) {
                 modified = true;
@@ -1407,7 +1364,7 @@ namespace GUI {
           float const inputWidth{ CalcInputWidth(50.f) / 3.f };
           ImVec2 const boxSize = ImVec2(200.0f, 40.0f); // Width and height of the box
           ImVec2 const cursorPos = ImGui::GetCursorScreenPos();
-          ImVec2 const boxEnd = ImVec2(cursorPos.x + boxSize.x, cursorPos.y + boxSize.y);
+          ImVec2 const boxEnd = cursorPos + boxSize;
 
           // Draw a child window to act as the box
           ImGui::BeginChild("DragDropTargetBox", boxSize, false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
@@ -1417,27 +1374,10 @@ namespace GUI {
 
           // Center the text inside the box
           ImVec2 const textSize = ImGui::CalcTextSize("Drag here to add sound");
-          ImVec2 const textPos = ImVec2(
-              cursorPos.x + (boxSize.x - textSize.x) * 0.5f,
-              cursorPos.y + (boxSize.y - textSize.y) * 0.5f
-          );
+          ImVec2 const textPos = cursorPos + (boxSize - textSize) * 0.5f;
           ImGui::SetCursorScreenPos(textPos);
           ImGui::TextUnformatted("Drag here to add sound");
           ImGui::EndChild();
-          if (ImGui::BeginDragDropTarget())
-          {
-              ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
-              if (drop) {
-                  AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
-                  if (assetPayload.mAssetType == AssetPayload::AUDIO) {
-                      //auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
-                      auto fp{ assetPayload.GetFilePath() };
-                      audioSource.CreateSound(fp);
-                      modified = true;
-                  }
-              }
-              ImGui::EndDragDropTarget();
-          }
 
           for (auto& [currentName, audioInstance] : audioSource.sounds) {
               // Unique ID for this entry
@@ -2006,7 +1946,7 @@ namespace GUI {
     if (entityRotModified) { light.shadowConfig.shadowModified = true; }
 
     if (isOpen) {
-      const std::vector<std::string> Lights{ "Directional","Spotlight" };
+      const std::vector<std::string> Lights{ "Directional","Spotlight", "Point"};
       //  // Assuming 'collider' is an instance of Collider
       float const inputWidth{ CalcInputWidth(50.f) }, vec3InputWidth{ inputWidth / 3.f };
 
@@ -2069,6 +2009,16 @@ namespace GUI {
         }
 
 
+        ImGui::TableNextRow();
+        ImGui::TableNextColumn();
+        ImGui::Text("Range");
+        ImGui::TableNextColumn();
+        if (ImGui::DragFloat("##R", &light.mRange, 0.5f, 0.f, FLT_MAX)) {
+          modified = true;
+        }
+      }
+      if (light.type == Component::POINT)
+      {
         ImGui::TableNextRow();
         ImGui::TableNextColumn();
         ImGui::Text("Range");
@@ -2203,6 +2153,87 @@ namespace GUI {
     return modified;
   }
 
+  bool Inspector::PrefabOverridesWindow(ECS::Entity entity, Component::PrefabOverrides* overrides) {
+    ImGui::Separator();
+
+    ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+    std::string const compName{ "Prefab Overrides" }, display{ ICON_FA_DATABASE ICON_PADDING + compName };
+
+    if (mEntityChanged) {
+      bool& openMapStatus = mComponentOpenStatusMap[compName];
+      ImGui::SetNextItemOpen(openMapStatus, ImGuiCond_Always);
+    }
+    bool const isOpen{ ImGui::TreeNodeEx(display.c_str()) };
+    mComponentOpenStatusMap[compName] = isOpen;
+
+    bool modified{ false };
+
+    if (isOpen) {
+      ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_LIGHT));
+      float const inputWidth{ CalcInputWidth(50.f) };
+
+      if (ImGui::BeginTable("##OverridesTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+        ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+        ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+        NextRowTable("GUID");
+        std::string guidStr{ std::to_string(overrides->guid) };
+        if (ImGui::InputText("##guid", &guidStr, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CharsDecimal)) {
+          overrides->guid = std::stol(guidStr);
+          modified = true;
+        }
+
+        NextRowTable("Sub-data ID");
+        int id{ static_cast<int>(overrides->subDataId) };
+        if (ImGui::DragInt("##SubdataId", &id)) {
+          overrides->subDataId = static_cast<Prefabs::SubDataId>(id);
+          modified = true;
+        }
+
+        ImGui::EndTable();
+      }
+    }
+
+    ImGui::PopStyleColor();
+    WindowEnd(isOpen);
+
+    return modified;
+  }
+
+  bool Inspector::DrawOptionButton(std::string const& name) {
+    bool openMainWindow{ true };
+    auto fillRowWithColour = [](const ImColor& colour) {
+      for (int column = 0; column < ImGui::TableGetColumnCount(); column++) {
+        ImGui::TableSetBgColor(ImGuiTableBgTarget_CellBg, colour, column);
+      }
+    };
+
+    const float rowHeight = 25.0f;
+    auto* window = ImGui::GetCurrentWindow();
+    window->DC.CurrLineSize.y = rowHeight;
+    ImGui::TableNextRow(0, rowHeight);
+    ImGui::TableSetColumnIndex(0);
+
+    window->DC.CurrLineTextBaseOffset = 3.0f;
+
+    const ImVec2 rowAreaMin = ImGui::TableGetCellBgRect(ImGui::GetCurrentTable(), 0).Min;
+    const ImVec2 rowAreaMax = { ImGui::TableGetCellBgRect(ImGui::GetCurrentTable(),
+      ImGui::TableGetColumnCount() - 1).Max.x, rowAreaMin.y + rowHeight };
+
+    ImGui::PushClipRect(rowAreaMin, rowAreaMax, false);
+    bool isRowHovered, isRowClicked;
+    ImGui::ButtonBehavior(ImRect(rowAreaMin, rowAreaMax), ImGui::GetID(name.c_str()),
+      &isRowHovered, &isRowClicked, ImGuiButtonFlags_MouseButtonLeft);
+    ImGui::SetItemAllowOverlap();
+    ImGui::PopClipRect();
+
+    ImGui::TextUnformatted(name.c_str());
+
+    if (isRowHovered)
+      fillRowWithColour(Color::IMGUI_COLOR_RED);
+
+    return isRowClicked;
+  }
 
   void Inspector::DrawAddButton() {
     ImVec2 addTextSize = ImGui::CalcTextSize("Add");
@@ -2324,7 +2355,7 @@ namespace {
 namespace ScriptInputs {
   void InitScriptInputMap() {
     sScriptInputFuncs = {
-          { rttr::type::get<Mono::DataMemberInstance<bool>>(), ScriptInputField<bool> },
+      { rttr::type::get<Mono::DataMemberInstance<bool>>(), ScriptInputField<bool> },
       { rttr::type::get<Mono::DataMemberInstance<int>>(), ScriptInputField<int> },
       { rttr::type::get<Mono::DataMemberInstance<float>>(), ScriptInputField<float> },
       { rttr::type::get<Mono::DataMemberInstance<double>>(), ScriptInputField<double> },
@@ -2872,7 +2903,6 @@ namespace ScriptInputs {
     }
     return changed;
   }
-
 
   bool InputScriptList(std::string const& propertyName, std::vector<std::string>& list, float fieldWidth)
   {

@@ -31,7 +31,7 @@ namespace GUI
     mPrefabName{}, mGUID{}, mPrefabInstance{},
     mIsEditing{ false }, mEscTriggered{ false }, GUIWindow(name)
   {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &PrefabEditor::HandleEvent, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EditPrefabEvent, &PrefabEditor::OnPrefabEdit, this);
   }
 
   void PrefabEditor::Run()
@@ -50,38 +50,31 @@ namespace GUI
     BackToScenePopup();
   }
 
-  EVENT_CALLBACK_DEF(PrefabEditor, HandleEvent)
+  EVENT_CALLBACK_DEF(PrefabEditor, OnPrefabEdit)
   {
-    switch (event->GetCategory())
-    {
-    case Events::EventType::EDIT_PREFAB:
-    {
-      auto editPrefabEvent{ std::static_pointer_cast<Events::EditPrefabEvent>(event) };
-      IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+    auto editPrefabEvent{ std::static_pointer_cast<Events::EditPrefabEvent>(event) };
+    IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
 
-      mPrefabName = editPrefabEvent->mPrefab;
-      mIsEditing = true;
-      // if new prefab, create an entity with the prefab's name
-      if (editPrefabEvent->mPath.empty()) {
-        mPrefabInstance.first = ECS::EntityManager::GetInstance().CreateEntity();
-        mPrefabInstance.first.GetComponent<Component::Tag>().tag = mPrefabName;
-        return;
-      }
-
-      try {
-        mGUID = am.LoadRef<IGE::Assets::PrefabAsset>(editPrefabEvent->mPath);
-        mPrefabInstance = Prefabs::PrefabManager::GetInstance().SpawnPrefabAndMap(mGUID);
-      }
-      catch (Debug::ExceptionBase const&) {
-        IGE_DBGLOGGER.LogInfo("Untracked file detected. Registering to Asset Manager...");
-        std::string const filepath{ gPrefabsDirectory + mPrefabName + gPrefabFileExt };
-        am.ImportAsset<IGE::Assets::PrefabAsset>(filepath);
-        IGE::Assets::GUID const guid{ am.LoadRef<IGE::Assets::PrefabAsset>(filepath) };
-        mPrefabInstance = Prefabs::PrefabManager::GetInstance().SpawnPrefabAndMap(guid);
-        mGUID = {};
-      }
-      break;
+    mPrefabName = editPrefabEvent->mPrefab;
+    mIsEditing = true;
+    // if new prefab, create an entity with the prefab's name
+    if (editPrefabEvent->mPath.empty()) {
+      mPrefabInstance.first = ECS::EntityManager::GetInstance().CreateEntity();
+      mPrefabInstance.first.GetComponent<Component::Tag>().tag = mPrefabName;
+      return;
     }
+
+    try {
+      mGUID = am.LoadRef<IGE::Assets::PrefabAsset>(editPrefabEvent->mPath);
+      mPrefabInstance = Prefabs::PrefabManager::GetInstance().SpawnPrefabAndMap(mGUID);
+    }
+    catch (Debug::ExceptionBase const&) {
+      IGE_DBGLOGGER.LogInfo("Untracked file detected. Registering to Asset Manager...");
+      std::string const filepath{ gPrefabsDirectory + mPrefabName + gPrefabFileExt };
+      am.ImportAsset<IGE::Assets::PrefabAsset>(filepath);
+      IGE::Assets::GUID const guid{ am.LoadRef<IGE::Assets::PrefabAsset>(filepath) };
+      mPrefabInstance = Prefabs::PrefabManager::GetInstance().SpawnPrefabAndMap(guid);
+      mGUID = {};
     }
   }
 

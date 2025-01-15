@@ -21,7 +21,7 @@ namespace IGE {
 
 			//populate the metatata//populate metadata (right now its only path)
 			newFp = inputShaderPath;
-			metadata["path"] = newFp;
+			metadata.metadata["path"] = newFp;
 
 			return GUID{ GUID::Seed{} };
 		}

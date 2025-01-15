@@ -18,6 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Input/InputManager.h>
 
 #include <Core/Systems/SystemManager/SystemManager.h>
+#include <Core/Systems/Systems.h>
 
 #include <imgui/imgui.h>
 #include <imgui/backends/imgui_impl_glfw.h>
@@ -51,6 +52,15 @@ namespace IGE {
     ImGui_ImplOpenGL3_Init("#version 460 core");
     
     SetEditorCallbacks();
+
+    // EditorView
+    Graphics::FramebufferSpec framebufferSpec;
+    framebufferSpec.width = spec.WindowWidth;
+    framebufferSpec.height = spec.WindowHeight;
+    framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
+
+    mRenderTargets.emplace_back(framebufferSpec);
+    mRenderTargets.back().camera->InitForEditorView();
   }
 
   EditorApplication::~EditorApplication() {
@@ -64,13 +74,9 @@ namespace IGE {
     Application::Init();  // perform default Init
 
     // init editor-specific stuff
-    // im not sure if this is scalable;
-    // may just make SystemManager globally accesible in future
-    // if more stuff requires it
-    mGUIManager.Init(GetDefaultRenderTarget());
+    mGUIManager.Init(GetEditorRenderTarget());
 
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SIGNAL, &EditorApplication::SignalCallback, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::LOCK_MOUSE, &EditorApplication::LockMouse, this);
+    SUBSCRIBE_CLASS_FUNC(Events::SignalEvent, &EditorApplication::SignalCallback, this);
   }
 
   void EditorApplication::Run() {
@@ -104,7 +110,8 @@ namespace IGE {
             sysManager.UpdateSystems();
           }
           else {
-            sysManager.PausedUpdate<Systems::TransformSystem, IGE::Physics::PhysicsSystem, IGE::Audio::AudioSystem, Systems::ParticleSystem>();
+            sysManager.PausedUpdate<Systems::PreTransformSystem, IGE::Physics::PhysicsSystem,
+              Systems::PostTransformSystem, IGE::Audio::AudioSystem, Systems::ParticleSystem>();
             sceneManager.ExecuteMainThreadQueue();
           }
         }
@@ -133,10 +140,10 @@ namespace IGE {
             
             auto& fb{ GetDefaultRenderTarget().framebuffer };
             fb = Graphics::Renderer::GetFinalFramebuffer();
-            mGUIManager.UpdateGUI(fb, gameTex);
             frameRateController.EndSystemTimer("Graphics System");
             
             frameRateController.StartSystemTimer();
+            mGUIManager.UpdateGUI(fb, gameTex);
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -228,9 +235,9 @@ namespace IGE {
 
     //  target.framebuffer->Unbind();
     //}
-      auto const& cam = mRenderTargets[0].camera;
-      Graphics::CameraSpec const editorCam{ cam.GetViewProjMatrix(), cam.GetViewMatrix(),
-          cam.GetPosition(), cam.GetNearPlane(), cam.GetFarPlane(), cam.GetFOV(), cam.GetAspectRatio(), true };
+      auto const& cam = GetEditorRenderTarget().camera;
+      Graphics::CameraSpec const editorCam{ cam->GetViewProjMatrix(), cam->GetViewMatrix(),
+          cam->GetPosition(), cam->GetNearPlane(), cam->GetFarPlane(), cam->GetFOV(), cam->GetAspectRatio(), true };
 
       if (mGUIManager.IsGameViewActive() && Graphics::RenderSystem::mCameraManager.HasActiveCamera()) {
           std::vector<ECS::Entity> const entities{ Graphics::RenderSystem::RenderScene(Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent()) };
@@ -320,17 +327,6 @@ namespace IGE {
     }
   }
 
-  EVENT_CALLBACK_DEF(EditorApplication, LockMouse) {
-    if (CAST_TO_EVENT(Events::LockMouseEvent)->isLocked)
-    {
-      // Set the cursor position to the center of the window
-      glfwSetCursorPos(mWindow.get(), mSpecification.WindowWidth / 2.0, mSpecification.WindowHeight / 2.0);
-      glfwSetInputMode(mWindow.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    }
 
-    else
-      glfwSetInputMode(mWindow.get(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-    //CAST_TO_EVENT(Events::LockMouseEvent)->isLocked = !(CAST_TO_EVENT(Events::LockMouseEvent)->isLocked);
-  }
 
 } // namespace IGE

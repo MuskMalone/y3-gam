@@ -66,6 +66,7 @@ namespace GUI {
     bool LightComponentWindow(ECS::Entity entity, bool highlight = false);
     bool MaterialWindow(ECS::Entity entity, bool highlight = false);
     bool MeshComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool PrefabOverridesWindow(ECS::Entity entity, Component::PrefabOverrides* overrides);
     bool RigidBodyComponentWindow(ECS::Entity entity, bool highlight = false);
     bool ScriptComponentWindow(ECS::Entity entity, bool highlight = false);
     bool SphereColliderComponentWindow(ECS::Entity entity, bool highlight = false);
@@ -130,14 +131,16 @@ namespace GUI {
       This function handles the corresponding events the Inspector
       subscribed to.
 
-      SAVE_SCENE
+      SaveScene
         - Resets the mIsComponentEdited flag when the scene is saved
-      SCENE_STATE_CHANGE
+      SceneStateChange
         - Resets the mIsComponentEdited flag when another scene is loaded
     \param event
       The event to be handled
     ************************************************************************/
-    EVENT_CALLBACK_DECL(HandleEvent);
+    EVENT_CALLBACK_DECL(OnSceneSave);
+    EVENT_CALLBACK_DECL(OnSceneStateChange);
+    EVENT_CALLBACK_DECL(OnPrefabEdit);
 
     void RunDragDropInspector(ECS::Entity entity);
 
@@ -164,11 +167,10 @@ namespace GUI {
     \brief
       Draws the options for a particular component
     \param name
-      The name of the component
+      The name of the option
     \return
       True if the main window should be opened and false otherwise
     ************************************************************************/
-    template<typename Component>
     bool DrawOptionButton(std::string const& name);
 
     /*!*********************************************************************

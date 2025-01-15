@@ -4,12 +4,9 @@ bool Inspector::WindowBegin(std::string const& windowName, bool highlight) {
 
   std::string const display{ mComponentIcons.at(typeid(Component)) + windowName };
 
-  std::string cleanWindowName{ windowName }; // Remove Spaces
-  cleanWindowName.erase(std::remove(cleanWindowName.begin(), cleanWindowName.end(), ' '), cleanWindowName.end());
-
   if (highlight) { ImGui::PushStyleColor(ImGuiCol_Text, sComponentHighlightCol); }
   if (mEntityChanged) {
-    bool& openMapStatus = mComponentOpenStatusMap[cleanWindowName];
+    bool& openMapStatus = mComponentOpenStatusMap[windowName];
     ImGui::SetNextItemOpen(openMapStatus, ImGuiCond_Always);
   }
   bool const isOpen{ ImGui::TreeNodeEx(display.c_str()) };
@@ -24,7 +21,7 @@ bool Inspector::WindowBegin(std::string const& windowName, bool highlight) {
     }
   }
 
-  mComponentOpenStatusMap[cleanWindowName] = isOpen;
+  mComponentOpenStatusMap[windowName] = isOpen;
   return isOpen;
 }
 
@@ -88,8 +85,7 @@ bool Inspector::DrawAddComponentButton(std::string const& name) {
 
     // if entity is a prefab instance, update its modified components
     if (ent.HasComponent<Component::PrefabOverrides>()) {
-        ComponentType& newComp{ ent.GetComponent<ComponentType>() };
-      ent.GetComponent<Component::PrefabOverrides>().AddComponentModification(newComp);
+      ent.GetComponent<Component::PrefabOverrides>().AddComponentOverride<ComponentType>();
     }
 
     ImGui::CloseCurrentPopup();
@@ -101,74 +97,6 @@ bool Inspector::DrawAddComponentButton(std::string const& name) {
 }
 
 template<typename ComponentType>
-bool Inspector::DrawOptionButton(std::string const& name) {
-  bool openMainWindow{ true };
-  auto fillRowWithColour = [](const ImColor& colour) {
-    for (int column = 0; column < ImGui::TableGetColumnCount(); column++) {
-      ImGui::TableSetBgColor(ImGuiTableBgTarget_CellBg, colour, column);
-    }
-  };
-
-  const float rowHeight = 25.0f;
-  auto* window = ImGui::GetCurrentWindow();
-  window->DC.CurrLineSize.y = rowHeight;
-  ImGui::TableNextRow(0, rowHeight);
-  ImGui::TableSetColumnIndex(0);
-
-  window->DC.CurrLineTextBaseOffset = 3.0f;
-
-  const ImVec2 rowAreaMin = ImGui::TableGetCellBgRect(ImGui::GetCurrentTable(), 0).Min;
-  const ImVec2 rowAreaMax = { ImGui::TableGetCellBgRect(ImGui::GetCurrentTable(),
-    ImGui::TableGetColumnCount() - 1).Max.x, rowAreaMin.y + rowHeight };
-
-  ImGui::PushClipRect(rowAreaMin, rowAreaMax, false);
-  bool isRowHovered, isRowClicked;
-  ImGui::ButtonBehavior(ImRect(rowAreaMin, rowAreaMax), ImGui::GetID(name.c_str()),
-    &isRowHovered, &isRowClicked, ImGuiButtonFlags_MouseButtonLeft);
-  ImGui::SetItemAllowOverlap();
-  ImGui::PopClipRect();
-
-  ImGui::TextUnformatted(name.c_str());
-
-  if (isRowHovered)
-    fillRowWithColour(Color::IMGUI_COLOR_RED);
-
-  if (isRowClicked) {
-    ECS::Entity ent{ GUIVault::GetSelectedEntity().GetRawEnttEntityID() };
-
-    if (name == "Remove Component") {
-      ent.RemoveComponent<ComponentType>();
-      SetIsComponentEdited(true);
-      
-      // if its a prefab instance, add to overrides
-      if (ent.HasComponent<Component::PrefabOverrides>()) {
-        ent.GetComponent<Component::PrefabOverrides>().AddComponentRemoval(rttr::type::get<ComponentType>());
-      }
-      openMainWindow = false;
-    }
-
-    else if (name == "Clear") {
-      ComponentType& component = ent.GetComponent<ComponentType>();
-      SetIsComponentEdited(true);
-
-      component.Clear();
-      if (rttr::type::get<ComponentType>().get_name() == "Layer") {
-        ent.SetLayer("Default");
-      }
-
-      // if its a prefab instance, add to overrides
-      if (ent.HasComponent<Component::PrefabOverrides>()) {
-        ent.GetComponent<Component::PrefabOverrides>().AddComponentModification(component);
-      }
-    }
-
-    ImGui::CloseCurrentPopup();
-  }
-
-  return openMainWindow;
-}
-
-template<typename Component>
 bool Inspector::DrawOptionsListButton(std::string const& windowName) {
   bool openMainWindow{ true };
   //ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 5.f);
@@ -195,12 +123,70 @@ bool Inspector::DrawOptionsListButton(std::string const& windowName) {
   }
 
   if (ImGui::BeginPopup("OptionsPanel", ImGuiWindowFlags_NoMove)) {
-
     if (ImGui::BeginTable("##options_table", 1, ImGuiTableFlags_SizingStretchSame)) {
       ImGui::TableSetupColumn("OptionNames", ImGuiTableColumnFlags_WidthFixed, 200.f);
-      DrawOptionButton<Component>("Clear");
-      if ((windowName != "Tag") && (windowName != "Layer"))
-        openMainWindow = DrawOptionButton<Component>("Remove Component");
+
+      ECS::Entity ent{ GUIVault::GetSelectedEntity() };
+      Component::PrefabOverrides* overrides{ ent.HasComponent<Component::PrefabOverrides>() ?
+        &ent.GetComponent<Component::PrefabOverrides>() : nullptr };
+
+      // Clear component
+      if (DrawOptionButton("Clear")) {
+        if (std::is_same<Component::Layer, ComponentType>()) {
+          ent.SetLayer("Default");
+        }
+
+        // if its a prefab instance, add to overrides
+        if (overrides) {
+          overrides->AddComponentOverride<ComponentType>();
+        }
+
+        SetIsComponentEdited(true);
+        ImGui::CloseCurrentPopup();
+      }
+
+      // Remove component
+      if (!std::is_same<Component::Tag, ComponentType>() && !std::is_same<Component::Layer, ComponentType>()
+        && !std::is_same<Component::Transform, ComponentType>()) {
+        if (DrawOptionButton("Remove Component")) {
+          ent.GetComponent<ComponentType>().Clear();
+          ent.RemoveComponent<ComponentType>();
+
+          // if its a prefab instance, add to overrides
+          if (overrides) {
+            overrides->AddComponentRemoval<ComponentType>();
+          }
+
+          openMainWindow = false;
+          SetIsComponentEdited(true);
+          ImGui::CloseCurrentPopup();
+        }
+      }
+
+      // Reset component overrides
+      if (overrides && overrides->IsComponentModified<ComponentType>()) {
+        // remove the overriden component and restore the prefab's original
+        if (DrawOptionButton("Reset Overrides")) {
+          overrides->RemoveOverride<ComponentType>();
+          try {
+            Prefabs::Prefab const& pfb{ IGE_ASSETMGR.GetAsset<IGE::Assets::PrefabAsset>(overrides->guid)->mPrefabData };
+            rttr::variant const& compToRestore{ pfb.GetSubObject(overrides->subDataId).GetComponent<ComponentType>() };
+            if (compToRestore.is_valid()) {
+              IGE_OBJFACTORY.AddComponentToEntity(ent, compToRestore);
+            }
+            else {
+              ent.RemoveComponent<ComponentType>();
+              openMainWindow = false;
+            }
+          }
+          catch (Debug::ExceptionBase&) {
+            IGE_DBGLOGGER.LogError("Unable to fetch prefab " + std::to_string(overrides->guid));
+          }
+
+          SetIsComponentEdited(true);
+          ImGui::CloseCurrentPopup();
+        }
+      }
 
       ImGui::EndTable();
     }

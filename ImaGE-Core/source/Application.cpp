@@ -19,6 +19,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/EntityManager.h>
 #include <Graphics/PostProcessing/PostProcessingManager.h>
 #include <Graphics/PostProcessing/ParticleManager.h>
+#include <Core/LayerManager/LayerManager.h>
 #pragma endregion
 
 #include <Core/Entity.h>
@@ -26,17 +27,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Asset/IGEAssets.h"
 #include "Graphics/Renderer.h"
 
-#pragma region SYSTEM_INCLUDES
 #include <Core/Systems/SystemManager/SystemManager.h>
-#include <Physics/PhysicsSystem.h>
-#include <Audio/AudioManager.h>
-#include <Core/Systems/TransformSystem/TransformSystem.h>
-#include <Scripting/ScriptingSystem.h>
-#include <Core/LayerManager/LayerManager.h>
-#include <Graphics/RenderSystem.h>
 #include <Core/Systems/Systems.h>
 #include <Audio/AudioSystem.h>
-#include <Core/LayerManager/LayerManager.h>
 #include <Core/Systems/ParticleSystem/ParticleSystem.h>
 #pragma endregion
 
@@ -55,7 +48,7 @@ namespace IGE {
     IGE::Audio::AudioManager::CreateInstance();
     Assets::AssetManager::CreateInstance();
     Reflection::ObjectFactory::CreateInstance();
-    Scenes::SceneManager::CreateInstance();
+    Scenes::SceneManager::CreateInstance(mSpecification.StartFromScene.first ? Scenes::PLAYING : Scenes::NO_SCENE);
     Prefabs::PrefabManager::CreateInstance();
     Performance::FrameRateController::CreateInstance(120.f, 0.05f, false);
     Input::InputManager::CreateInstance(mWindow, mSpecification.WindowWidth, mSpecification.WindowHeight, 0.1);
@@ -74,6 +67,9 @@ namespace IGE {
     Systems::SystemManager::GetInstance().InitSystems();
     Graphics::RenderSystem::Init();
 
+    SUBSCRIBE_CLASS_FUNC(Events::TriggerPausedUpdate, &Application::OnPausedUpdateTrigger, this);
+    SUBSCRIBE_CLASS_FUNC(Events::LockMouseEvent, &Application::LockMouse, this);
+
     int width, height;
     glfwGetFramebufferSize(mWindow.get(), &width, &height);
     glViewport(0, 0, width, height);
@@ -85,12 +81,13 @@ namespace IGE {
         IGE_EVENTMGR.DispatchImmediateEvent<Events::LoadSceneEvent>(std::filesystem::path(mSpecification.StartFromScene.second).stem().string(),
             mSpecification.StartFromScene.second);
 
+        // TEMP - idk why we need this when the code above already triggers it but okay
+        Systems::SystemManager::GetInstance().PausedUpdate<Systems::PostTransformSystem, IGE::Physics::PhysicsSystem, IGE::Audio::AudioSystem>();
+
         // TEMP - NEED THIS TO PLAY GAME BUILD
         glfwSetCursorPos(mWindow.get(), mSpecification.WindowWidth / 2.0, mSpecification.WindowHeight / 2.0);
         glfwSetInputMode(mWindow.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     }
-
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::TRIGGER_PAUSED_UPDATE, &Application::OnPausedUpdateTrigger, this);
   }
 
   void Application::Run() {
@@ -141,9 +138,15 @@ namespace IGE {
   void Application::RegisterSystems() {
     Systems::SystemManager& systemManager{ Systems::SystemManager::GetInstance() };
 
-    systemManager.RegisterSystem<Systems::TransformSystem>("Transform System");
-    systemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
+    // converts local -> world (after imgui update)
+    systemManager.RegisterSystem<Systems::PreTransformSystem>("Pre-Transform System");
+
     systemManager.RegisterSystem<Mono::ScriptingSystem>("Scripting System");
+    systemManager.RegisterSystem<IGE::Physics::PhysicsSystem>("Physics System");
+
+    // converts world -> local (after physics update)
+    systemManager.RegisterSystem<Systems::PostTransformSystem>("Post-Transform System");
+
     systemManager.RegisterSystem<IGE::Audio::AudioSystem>("Audio System");
     systemManager.RegisterSystem<Systems::TextSystem>("Text System");
     systemManager.RegisterSystem<Systems::ParticleSystem>("Particle System");
@@ -210,18 +213,7 @@ namespace IGE {
   framebufferSpec.height = spec.WindowHeight;
   framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
 
-  mRenderTargets.emplace_back(framebufferSpec); //EditorView
   mRenderTargets.emplace_back(framebufferSpec); //GameView
-
-  mRenderTargets.front().camera = Graphics::EditorCamera(
-      glm::vec3(0.0f, 5.0f, 10.0f),  // Position
-      -90.0f,                        // Yaw
-      0.0f,                        // Pitch (look downwards slightly)
-      60.0f,                         // FOV
-      16.0f / 9.0f,                  // Aspect Ratio
-      0.1f,                          // Near Clip
-      1500.0f                         // Far Clip
-    );
 }
 
   void Application::SetCallbacks() {
@@ -264,9 +256,8 @@ namespace IGE {
     ECS::EntityManager::DestroyInstance();
     Input::InputManager::DestroyInstance();
     Assets::AssetManager::DestroyInstance();
+    IGE::Audio::AudioManager::DestroyInstance();
     Debug::DebugLogger::DestroyInstance();
-
-    // @TODO: Shutdown physics and audio singletons
   }
 
   void Application::ToggleFullscreen(){
@@ -295,12 +286,26 @@ namespace IGE {
   }
 
   EVENT_CALLBACK_DEF(Application, OnPausedUpdateTrigger) {
-    Systems::SystemManager::GetInstance().PausedUpdate<Systems::TransformSystem, IGE::Physics::PhysicsSystem, IGE::Audio::AudioSystem>();
+    Systems::SystemManager::GetInstance().PausedUpdate<Systems::PreTransformSystem, IGE::Physics::PhysicsSystem,
+      Systems::PostTransformSystem, IGE::Audio::AudioSystem>();
   }
 
   Application::~Application()
   {
     mWindow.reset();  // release the GLFWwindow before we terminate
     glfwTerminate();
+  }
+
+  EVENT_CALLBACK_DEF(Application, LockMouse) {
+    if (CAST_TO_EVENT(Events::LockMouseEvent)->isLocked)
+    {
+      // Set the cursor position to the center of the window
+      glfwSetCursorPos(mWindow.get(), mSpecification.WindowWidth / 2.0, mSpecification.WindowHeight / 2.0);
+      glfwSetInputMode(mWindow.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    }
+
+    else
+      glfwSetInputMode(mWindow.get(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    //CAST_TO_EVENT(Events::LockMouseEvent)->isLocked = !(CAST_TO_EVENT(Events::LockMouseEvent)->isLocked);
   }
 } // namespace IGE

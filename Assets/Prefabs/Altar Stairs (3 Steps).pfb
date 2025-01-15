@@ -1,76 +1,78 @@
 {
     "Name": "Altar Stairs (3 Steps)",
-    "isActive": true,
-    "Components": [
-        {
-            "Tag": {
-                "tag": "Altar Stair Head",
-                "isActive": true
-            }
-        },
-        {
-            "Transform": {
-                "position": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "scale": {
-                    "x": 19.836265563964845,
-                    "y": 1.4900647401809693,
-                    "z": 1.0
-                },
-                "rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "eulerAngles": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "worldPos": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "worldScale": {
-                    "x": 19.836265563964845,
-                    "y": 1.4900647401809693,
-                    "z": 1.0
-                },
-                "worldRot": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                }
-            }
-        },
-        {
-            "Layer": {
-                "layerName": "Default"
-            }
-        },
-        {
-            "Mesh": {
-                "meshName": "Cube",
-                "GUID": {
-                    "ID": 15793382301938419980
-                },
-                "submeshIdx": 0,
-                "isCustomMesh": false,
-                "castShadows": true,
-                "receiveShadows": true
-            }
-        }
-    ],
     "SubData": [
         {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Altar Stair Head",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 19.836265563964845,
+                            "y": 1.4900647401809693,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 19.836265563964845,
+                            "y": 1.4900647401809693,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 15793382301938419980
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -141,7 +143,6 @@
         },
         {
             "ID": 2,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {

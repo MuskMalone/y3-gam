@@ -70,7 +70,7 @@ namespace Graphics::AssetIO
     static inline bool sRecenterMesh = true, sNormalizeScale = true, sFlipUVs = false;
 
   private:
-    // serialized as first 24 bytes
+    // serialized as first 32 bytes
     struct Header {
       Header() = default;
       Header(uint64_t _vtxSize, uint64_t _idxSize, uint64_t _submeshSize, uint64_t _nameSize)
@@ -93,10 +93,12 @@ namespace Graphics::AssetIO
     std::vector<uint32_t> mIndices;
     std::vector<SubmeshData> mSubmeshData;
     std::vector<std::string> mMeshNames;
+    glm::vec3 mMin, mMax;
     bool mStatus, mIsStatic;
 
     static const unsigned sAssimpImportFlags, sMinimalAssimpImportFlags;
 
+    void ComputeBV();
     void RecenterMesh();
     void NormalizeScale();
 

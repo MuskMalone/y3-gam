@@ -8,19 +8,18 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#ifndef IMGUI_DISABLE
 #include <GUI/GUIWindow.h>
 #include <vector>
 #include <memory>
 #include <Events/EventCallback.h>
+#include <Graphics/Camera/EditorCamera.h>
 
-namespace GUI
-{
-
-  class Toolbar : public GUIWindow
-  {
+namespace GUI {
+  class Toolbar : public GUIWindow {
   public:
-    Toolbar(const char* name, std::vector<std::shared_ptr<GUIWindow>> const& windowsRef);
+    Toolbar(const char* name,
+      std::vector<std::shared_ptr<GUIWindow>> const& windowsRef,
+      std::weak_ptr<Graphics::EditorCamera> editorCam);
 
     /*!*********************************************************************
     \brief
@@ -30,6 +29,7 @@ namespace GUI
 
   private:
     std::vector<std::shared_ptr<GUIWindow>> const& mWindowsRef;  // to manage active states
+    std::weak_ptr<Graphics::EditorCamera> mEditorCam;
     bool mScenePopup, mPrefabPopup;
     bool mDisableAll, mAllowCreationOnly;
 
@@ -47,16 +47,21 @@ namespace GUI
 
     /*!*********************************************************************
     \brief
-      Handles the events the AssetBrowser subscribed to.
+      Handles the events the Toolbar subscribed to.
 
       SCENE_STATE_CHANGE
         - Disables certain menu options based on the current scene state
     \param event
       The event to handle
     ************************************************************************/
-    EVENT_CALLBACK_DECL(HandleEvent);
+    EVENT_CALLBACK_DECL(OnSceneStateChange);
+    EVENT_CALLBACK_DECL(OnPrefabEdit);
+
+    void HelpMenu(const char* label) const;
+    void SerializationMenu(const char* label) const;
+    void ResavePrefabsMenuItem(const char* label) const;
+    void ReimportMeshesMenuItem(const char* label) const;
+    bool LightingMenu(const char* label, bool disabled) const;
+    bool EditorCamMenu(const char* label, bool disabled) const;
   };
-
 } // namespace GUI
-
-#endif  // IMGUI_DISABLE

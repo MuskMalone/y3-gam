@@ -9,6 +9,8 @@ struct MaterialProperties {
     float Roughness;   // Roughness factor
     float Transparency; // Transparency (alpha)
     float AO;          // Ambient occlusion
+    float Emission;
+    float padding[3];
 };
 
 
@@ -50,10 +52,11 @@ uniform sampler2D[16] u_AlbedoMaps;
 //lighting parameters
 const int typeDir = 0;
 const int typeSpot = 1;
+const int typePoint = 2;
 const int maxLights = 30;
 uniform vec3 u_CamPos;       // Camera position in world space
 uniform int numlights;
-
+uniform vec3 u_AmbientLight; 
 
 uniform int u_type[maxLights];       // Camera position in world space
 
@@ -127,6 +130,22 @@ void main(){
             // Final light color for spotlight
             lightColor = u_LightColor[i] * u_LightIntensity[i] * attenuation;
         }
+         if(u_type[i] == typePoint)
+        {
+            L = normalize(u_LightPos[i] - v_FragPos);  // Direction from fragment to light
+            float distance = length(u_LightPos[i] - v_FragPos);  // Distance to light
+
+            // Range attenuation based on inverse square law (simplified with smoothstep)
+            float attenuation = smoothstep(0.0, u_Range[i], u_Range[i] - distance);
+            lightColor = u_LightColor[i] * u_LightIntensity[i] * attenuation;
+
+            // if (u_ShadowsActive) {
+            //     shadow = CheckShadow(v_LightSpaceFragPos);  // Shadows for point light
+            // }
+
+            
+
+        }
 
         vec3 H = normalize(V + L);                   // Halfway vector
 
@@ -151,9 +170,10 @@ void main(){
         Lo += (kD * albedo / PI + specular) * lightColor * NdotL * (1.0 - shadow);
     }
 
-    vec3 ambient = vec3(0.01) * albedo * mat.AO;
+    vec3 ambient =  u_AmbientLight * albedo * mat.AO;
 
-    vec3 color = ambient + Lo;
+    vec3 emission = albedo * mat.Emission; // Uniform emission
+    vec3 color = ambient + Lo + emission;
     color = color / (color + vec3(1.0));
     color = pow(color, vec3(1.0/2.2)); //gamma correction
     //change transparency here

@@ -53,7 +53,7 @@ public class NightPainting : Entity, IInventoryItem
     bool isPaintHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
     if (isPaintHit && Input.GetKeyTriggered(KeyCode.E))
     {
-      InternalCalls.PlaySound(mEntityID, "PickupObjects");
+      InternalCalls.PlaySound(mEntityID, "PickupPainting");
       inventoryScript.Additem(this);
       dialogueSystem.SetDialogue(pitPaintingDialogue, new Dialogue.Emotion[] { Emotion.Surprised, Emotion.Shocked });
     }

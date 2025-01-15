@@ -9,7 +9,7 @@ namespace GUI {
 
     GameViewport::GameViewport(const char* name) : GUIWindow(name),
       mFocusWindow{ false } {
-      SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &GameViewport::OnScenePlay, this);
+      SUBSCRIBE_CLASS_FUNC(Events::SceneStateChange, &GameViewport::OnScenePlay, this);
     }
 
     void GameViewport::Render(std::shared_ptr<Graphics::Texture> const& tex)

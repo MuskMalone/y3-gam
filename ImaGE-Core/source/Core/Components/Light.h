@@ -18,6 +18,7 @@ namespace Component {
 	enum LightType {
 			DIRECTIONAL,
 			SPOTLIGHT,
+			POINT,
 			LIGHT_COUNT
 		};
 
@@ -44,8 +45,18 @@ namespace Component {
 		}
 	};
 
+	struct LightGlobalProps {
+		glm::vec3 ambColor;
+		float ambIntensity;
+
+		LightGlobalProps() : ambColor{ 1.f, 1.f, 1.f }, ambIntensity{} {}
+		LightGlobalProps(glm::vec3 const& _ambClr, float _ambIntensity) : ambColor{ _ambClr }, ambIntensity{ _ambIntensity } {}
+	};
+
 	struct Light {
 		Light() : forwardVec{ 0.f, 0.f, -1.f }, color{ 1.f, 1.f, 1.f }, type{ DIRECTIONAL }, mLightIntensity{ 1.f },
+			mInnerSpotAngle{ 5.f }, mOuterSpotAngle{ 12.5f }, mRange{ 10.f }, shadowConfig{}, castShadows{ false } {}
+		Light(LightType lightType) : forwardVec{ 0.f, 0.f, -1.f }, color{ 1.f, 1.f, 1.f }, type{ lightType }, mLightIntensity{ 1.f },
 			mInnerSpotAngle{ 5.f }, mOuterSpotAngle{ 12.5f }, mRange{ 10.f }, shadowConfig{}, castShadows{ false } {}
 
 		inline void Clear() noexcept {
@@ -61,6 +72,8 @@ namespace Component {
 			shadowConfig.Clear();
 			castShadows = false;
 		}
+
+		inline static LightGlobalProps sGlobalProps;
 
 		glm::vec3 forwardVec;		// Set default forward vector to face the -z-axis
 		glm::vec3 color;				// Color of the light

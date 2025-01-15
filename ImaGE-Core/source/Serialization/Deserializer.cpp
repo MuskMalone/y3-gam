@@ -12,15 +12,18 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
 #include "Deserializer.h"
+#include <rapidjson/filereadstream.h>
+#include <cstdarg>
 #include "JsonKeys.h"
 #include <Serialization/FILEWrapper.h>
-#include <cstdarg>
+
 #include <Prefabs/PrefabManager.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
 #include <Core/LayerManager/LayerManager.h>
+
 #include <Core/Components/Script.h>
 #include <Reflection/ProxyScript.h>
-#include <rapidjson/filereadstream.h>
+#include <Core/Components/Light.h>
 
 //#define DESERIALIZER_DEBUG
 
@@ -169,12 +172,24 @@ namespace Serialization
 #ifdef _DEBUG
       std::cout << filepath + ": Unable to find Layer data" << "\n";
 #endif
-      return;
+    }
+    else {
+      Layers::LayerManager::LayerData layerData;
+      DeserializeRecursive(layerData, document[JSON_LAYERS_KEY]);
+      IGE_LAYERMGR.LoadLayerData(std::move(layerData));
     }
 
-    Layers::LayerManager::LayerData layerData;
-    DeserializeRecursive(layerData, document[JSON_LAYERS_KEY]);
-    IGE_LAYERMGR.LoadLayerData(std::move(layerData));
+    // deserialize global properties
+    if (!document.HasMember(JSON_GLOBAL_PROPS_KEY) || !document[JSON_GLOBAL_PROPS_KEY].IsObject()) {
+      Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + filepath + ": Unable to find scene Global Properties");
+#ifdef _DEBUG
+      std::cout << filepath + ": Unable to find scene Global Properties" << "\n";
+#endif
+      Component::Light::sGlobalProps = {};
+    }
+    else {
+      DeserializeRecursive(Component::Light::sGlobalProps, document[JSON_GLOBAL_PROPS_KEY]);
+    }    
   }
 
   Prefabs::Prefab Deserializer::DeserializePrefabToVariant(std::string const& json)
@@ -182,7 +197,7 @@ namespace Serialization
     rapidjson::Document document{};
     if (!ParseJsonIntoDocument(document, json)) { return {}; }
 
-    if (!ScanJsonFileForMembers(document, json, 2, JSON_COMPONENTS_KEY, rapidjson::kArrayType, JSON_PFB_DATA_KEY, rapidjson::kArrayType)) {
+    if (!ScanJsonFileForMembers(document, json, 1, JSON_PFB_DATA_KEY, rapidjson::kArrayType)) {
       return {};
     }
 
@@ -194,49 +209,44 @@ namespace Serialization
       IGE_DBGLOGGER.LogError("Prefab " + json + " has no name, re-save from prefab editor!");
     }
 
-    // iterate through component objects in json array
-    std::vector<rttr::variant>& compVector{ prefab.mComponents };
-    for (auto const& elem : document[JSON_COMPONENTS_KEY].GetArray())
-    {
-      rapidjson::Value::ConstMemberIterator comp{ elem.MemberBegin() };
-      std::string const compName{ comp->name.GetString() };
-      rapidjson::Value const& compJson{ comp->value };
-      rttr::type compType = rttr::type::get_by_name(compName);
+    if (document.HasMember(JSON_COMPONENTS_KEY)) {
+      auto const& compArr{ document[JSON_COMPONENTS_KEY].GetArray() };
+      Prefabs::PrefabSubData subObj{ Prefabs::PrefabSubData::BasePrefabId, Prefabs::PrefabSubData::InvalidId };
+      subObj.mComponents.reserve(compArr.Size());
 
-#ifdef DESERIALIZER_DEBUG
-      std::cout << "  [P] Deserializing " << compType << "\n";
-#endif
+      for (auto const& component : compArr)
+      {
+        rapidjson::Value::ConstMemberIterator comp{ component.MemberBegin() };
+        std::string const compName{ comp->name.GetString() };
+        rapidjson::Value const& compJson{ comp->value };
+        rttr::type compType = rttr::type::get_by_name(compName);
 
-      if (!compType.is_valid()) {
-#ifndef DISTRIBUTION
-        std::ostringstream oss{};
-        oss << "Trying to deserialize an invalid component: " << compName;
-        Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
-#ifdef _DEBUG
-        std::cout << oss.str() << "\n";
-#endif
-#endif  // DISTRIBUTION
-        continue;
-      }
+        if (!compType.is_valid()) { continue; }
 
-      rttr::variant compVar{};
-      if (!DeserializeSpecialCases(compVar, compType, compJson)) {
+        rttr::variant compVar{};
         DeserializeComponent(compVar, compType, compJson);
+
+        subObj.AddComponent(std::move(compVar));
       }
 
-      compVector.emplace_back(compVar);
+      prefab.mObjects.emplace_back(std::move(subObj));
     }
 
-    for (auto const& elem : document[JSON_PFB_DATA_KEY].GetArray())
+    auto const& subObjArr{ document[JSON_PFB_DATA_KEY].GetArray() };
+    prefab.mObjects.reserve(subObjArr.Size());
+    for (auto const& elem : subObjArr)
     {
       if (!ScanJsonFileForMembers(elem, json, 3, JSON_ID_KEY, rapidjson::kNumberType,
         JSON_COMPONENTS_KEY, rapidjson::kArrayType, JSON_PARENT_KEY, rapidjson::kNumberType)) {
         continue;
       }
 
-      Prefabs::PrefabSubData subObj{ elem[JSON_ID_KEY].GetUint(), elem[JSON_PARENT_KEY].GetUint() };
+      Prefabs::PrefabSubData subObj{ elem[JSON_ID_KEY].GetUint(), 
+       elem[JSON_PARENT_KEY].IsNull() ? Prefabs::PrefabSubData::InvalidId : elem[JSON_PARENT_KEY].GetUint()};
 
-      for (auto const& component : elem[JSON_COMPONENTS_KEY].GetArray())
+      auto const& compArr{ elem[JSON_COMPONENTS_KEY].GetArray() };
+      subObj.mComponents.reserve(compArr.Size());
+      for (auto const& component : compArr)
       {
         rapidjson::Value::ConstMemberIterator comp{ component.MemberBegin() };
         std::string const compName{ comp->name.GetString() };
@@ -272,27 +282,26 @@ namespace Serialization
     return prefab;
   }
 
-  void Deserializer::DeserializePrefabOverrides(Component::PrefabOverrides& prefabOverride, rapidjson::Value const& json)
+  void Deserializer::DeserializePrefabOverrides(Serialization::PfbOverridesData& overrides, rapidjson::Value const& json)
   {
-    if (!ScanJsonFileForMembers(json, "PrefabOverrides", 4, JSON_GUID_KEY, rapidjson::kObjectType, "modifiedComponents", rapidjson::kArrayType,
+    if (!ScanJsonFileForMembers(json, "PrefabOverrides", 4, JSON_GUID_KEY, rapidjson::kObjectType, "componentData", rapidjson::kArrayType,
       "removedComponents", rapidjson::kArrayType, "subDataId", rapidjson::kNumberType)) {
       return;
     }
 
-    DeserializeRecursive(prefabOverride.guid, json[JSON_GUID_KEY]);
-    prefabOverride.subDataId = json["subDataId"].GetUint();
+    DeserializeRecursive(overrides.guid, json[JSON_GUID_KEY]);
+    overrides.subDataId = json["subDataId"].GetUint();
 
     // deserialize removed components
     {
-      rttr::variant var{ std::unordered_set<rttr::type>() };
+      rttr::variant var{ std::set<rttr::type>() };
       auto associativeView{ var.create_associative_view() };
       DeserializeAssociativeContainer(associativeView, json["removedComponents"]);
-      prefabOverride.removedComponents = std::move(var.get_value<std::unordered_set<rttr::type>>());
+      overrides.removedComponents = std::move(var.get_value<std::set<rttr::type>>());
     }
 
     // deserialize modified components
-    rapidjson::Value const& jsonMap{ json["modifiedComponents"] };
-    prefabOverride.modifiedComponents.reserve(jsonMap.Size());
+    rapidjson::Value const& jsonMap{ json["componentData"] };
     for (rapidjson::SizeType i{}; i < jsonMap.Size(); ++i)
     {
       auto& idxVal{ jsonMap[i] };
@@ -325,7 +334,7 @@ namespace Serialization
       if (!DeserializeSpecialCases(compVar, compType, valIter->value)) {
         DeserializeComponent(compVar, compType, valIter->value);
       }
-      prefabOverride.modifiedComponents.emplace(std::move(compType), std::move(compVar));
+      overrides.componentData.emplace(std::move(compType), std::move(compVar));
     }
   }
 
@@ -475,12 +484,18 @@ namespace Serialization
       {
         rttr::variant extractedVal{ ExtractBasicTypes(jsonVal) };
         if (!extractedVal.convert(propType)) {
-          std::string const msg{ "Unable to convert element to type " + propType.get_name().to_string() };
-          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
+          // temp fix for entt::entity
+          if (propType == rttr::type::get<entt::entity>()) {
+            extractedVal = static_cast<entt::entity>(jsonVal.GetUint());
+          }
+          else {
+            std::string const msg{ "Unable to convert element to type " + propType.get_name().to_string() };
+            Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
-          std::cout << msg << "\n";
+            std::cout << msg << "\n";
 #endif
-          continue;
+            continue;
+          }
         }
 
         prop.set_value(wrappedInst, extractedVal);
@@ -514,9 +529,9 @@ namespace Serialization
       break;
     }
 
-    case rapidjson::kNullType:
     case rapidjson::kObjectType:
     case rapidjson::kArrayType:
+    case rapidjson::kNullType:
     default:
       break;
     }
@@ -635,7 +650,7 @@ namespace Serialization
     {
       auto& idxVal{ jsonVal[i] };
       // if key-value pair
-      if (idxVal.IsObject())
+      if (!view.is_key_only_type())
       {
         auto keyIter{ idxVal.FindMember("key") }, valIter{ idxVal.FindMember("value") };
 
@@ -694,11 +709,17 @@ namespace Serialization
       {
         rttr::variant extractedVal{ ExtractBasicTypes(idxVal) };
         if (!extractedVal || !extractedVal.convert(view.get_key_type())) {
-          std::string const msg{ "Unable to extract key-only type of " + view.get_key_type().get_name().to_string() };
-          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
+            rttr::variant wrappedVal{ view.get_key_type().is_wrapper() ? view.get_key_type().get_raw_type().create() : view.get_key_type().create() };
+
+            DeserializeRecursive(wrappedVal, idxVal);
+            if (!view.insert(wrappedVal).second) {
+              std::string const msg{ "Unable to extract key-only type of " + view.get_key_type().get_name().to_string() };
+              Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
-          std::cout << msg << "\n";
+              std::cout << msg << "\n";
 #endif
+            }
+            continue;
         }
 
         auto result{ view.insert(extractedVal) };

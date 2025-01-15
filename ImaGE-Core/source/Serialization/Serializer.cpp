@@ -20,6 +20,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 #include <Serialization/JsonKeys.h>
 #include <Serialization/FILEWrapper.h>
+#include <Serialization/PfbOverridesData.h>
 #include <Core/Components/Components.h>
 #include <Core/Entity.h>
 
@@ -252,6 +253,10 @@ namespace {
     writer.Key(JSON_LAYERS_KEY);
     SerializeClassTypes<WriterType>(IGE_LAYERMGR.GetLayerData(), writer);
 
+    // serialize global light properties
+    writer.Key(JSON_GLOBAL_PROPS_KEY);
+    SerializeClassTypes<WriterType>(Component::Light::sGlobalProps, writer);
+
     writer.EndObject();
   }
 
@@ -274,10 +279,7 @@ namespace {
     // serialize the base layer of the prefab
     writer.Key(JSON_PFB_NAME_KEY); writer.String(prefab.mName.c_str());
 
-    writer.Key(JSON_COMPONENTS_KEY);
-    SerializeVariantComponents<WriterType>(prefab.mComponents, writer);
-
-    // serialize nested components if prefab has multiple layers
+    // serialize all layers of the prefab
     writer.Key(JSON_PFB_DATA_KEY);
     writer.StartArray();
     for (Prefabs::PrefabSubData const& obj : prefab.mObjects)
@@ -286,7 +288,7 @@ namespace {
 
       writer.Key(JSON_ID_KEY); writer.Uint(obj.mId);
       writer.Key(JSON_PARENT_KEY);
-      if (obj.mParent == entt::null) {
+      if (obj.mParent == Prefabs::PrefabSubData::InvalidId) {
         writer.Null();
       }
       else {
@@ -344,7 +346,8 @@ namespace {
 
       // serialize the components
       writer.Key(JSON_PREFAB_KEY);
-      SerializeRecursive<WriterType>(overrides, writer);
+      Serialization::PfbOverridesData overridesData{ entity.GetComponent<Component::PrefabOverrides>(), entity };
+      SerializeRecursive<WriterType>(overridesData, writer);
       writer.EndObject();
       return;
     }
@@ -700,7 +703,7 @@ namespace {
 
     writer.EndArray();
   }
-#pragma endregion
+#pragma endregion // ScriptsSpecific
 
   EntityList GetSortedEntities() {
     auto const& entityList{ ECS::EntityManager::GetInstance().GetAllEntities() };

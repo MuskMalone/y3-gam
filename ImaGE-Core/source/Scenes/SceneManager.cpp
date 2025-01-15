@@ -26,12 +26,13 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Scenes
 {
-  SceneManager::SceneManager() : mSaveStates{}, mMainThreadQueue{}, mSceneName{},
-    mTempDir{ gTempDirectory }, mMainThreadQueueMutex{}, mSceneState{ NO_SCENE }
+  SceneManager::SceneManager(SceneState startingState) : mSaveStates{}, mMainThreadQueue{}, mSceneName{},
+    mTempDir{ gTempDirectory }, mMainThreadQueueMutex{}, mSceneState{ startingState }
   {
     // @TODO: SHOULD RETREIVE FROM CONFIG FILE IN FUTURE
     //mTempDir = gTempDirectory;
 
+#ifndef DISTRIBUTION
     // create temp directory if it doesn't already exist
     if (!std::filesystem::exists(mTempDir))
     {
@@ -42,11 +43,12 @@ namespace Scenes
         Debug::DebugLogger::GetInstance().LogWarning("Unable to create temp directory at: " + mTempDir + ". Scene reloading features may be unavailable!");
       }
     }
+#endif
 
     // subscribe to scene events
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::LOAD_SCENE, &SceneManager::OnSceneLoad, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::SAVE_SCENE, &SceneManager::OnSceneSave, this);
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::EDIT_PREFAB, &SceneManager::OnPrefabEditor, this);
+    SUBSCRIBE_CLASS_FUNC(Events::LoadSceneEvent, &SceneManager::OnSceneLoad, this);
+    SUBSCRIBE_CLASS_FUNC(Events::SaveSceneEvent, &SceneManager::OnSceneSave, this);
+    SUBSCRIBE_CLASS_FUNC(Events::EditPrefabEvent, &SceneManager::OnPrefabEditor, this);
   }
 
   void SceneManager::PauseScene() {
@@ -91,6 +93,7 @@ namespace Scenes
   void SceneManager::ClearScene() {
     mSceneName.clear();
     IGE::Physics::PhysicsSystem::GetInstance()->ClearSystem();
+    Graphics::MaterialTable::ClearMaterials();
   }
 
   void SceneManager::UnloadScene()
@@ -135,8 +138,12 @@ namespace Scenes
     }
     Debug::DebugLogger::GetInstance().LogInfo("Loading scene: " + mSceneName + "...");
 
+    // if the scene changed while playing, we dont stop it
     if (mSceneState != SceneState::PLAYING) {
       mSceneState = SceneState::STOPPED;
+    }
+    else {
+      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mSceneName);
     }
   }
 

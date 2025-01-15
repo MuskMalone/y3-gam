@@ -110,6 +110,7 @@ namespace IGE {
 
 		private:
 			friend AudioSystem;
+			friend SoundInvokeSetting;
 			using ChannelGroupGUID = Core::GUID<FMOD::Channel>;
 			//for managing FMOD system
 			 FMOD::System* mSystem;

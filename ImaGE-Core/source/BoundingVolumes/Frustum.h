@@ -6,7 +6,7 @@ namespace BV {
   struct Plane {
     Plane() = default;
     Plane(glm::vec3 const& _normal, float _dist) : normal{ _normal }, dist{ _dist } {}
-    Plane(glm::vec3 const& point, glm::vec3 const& _normal) : normal{ _normal }, dist{ glm::dot(point, normal) } {}
+    Plane(glm::vec3 const& point, glm::vec3 const& _normal) : normal{ glm::normalize(_normal) }, dist{ glm::dot(point, normal) } {}
     Plane(float a, float b, float c, float d) : normal{ a, b, c }, dist{ d } {}
 
     float GetPlaneSignedDist(glm::vec3 const& point) const {

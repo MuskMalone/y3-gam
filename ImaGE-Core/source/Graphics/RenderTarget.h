@@ -6,9 +6,13 @@
 namespace Graphics {
   struct RenderTarget {
     RenderTarget(FramebufferSpec const& spec) :
-        camera{}, framebuffer{ std::make_shared<Framebuffer>(spec) } {}
+      camera{ std::make_shared<EditorCamera>() },
+      framebuffer{std::make_shared<Framebuffer>(spec)} {}
+    RenderTarget(FramebufferSpec const& spec, std::shared_ptr<EditorCamera>&& cam) :
+      camera{ std::move(cam) },
+      framebuffer{ std::make_shared<Framebuffer>(spec) } {}
 
-    EditorCamera camera;
+    std::shared_ptr<EditorCamera> camera;
     std::shared_ptr<Framebuffer> framebuffer;
   };
 } // namespace Graphics

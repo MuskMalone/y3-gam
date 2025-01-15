@@ -11,11 +11,11 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#ifndef IMGUI_DISABLE
 #include <memory>
 #include <GUI/GUIWindow.h>
 #include <Graphics/RenderTarget.h>
 #include "GUI/Dockable/GameViewport.h"
+#include <Events/EventCallback.h>
 
 namespace GUI {
   class Viewport;
@@ -49,7 +49,12 @@ namespace GUI {
     void Shutdown();
     
     inline bool IsGameViewActive() const { return mGameViewport->IsActive(); }
+
   private:
+    EVENT_CALLBACK_DECL(OnSceneSave);
+    EVENT_CALLBACK_DECL(OnSceneLoad);
+    EVENT_CALLBACK_DECL(OnCollectEditorData);
+
     std::vector<std::unique_ptr<GUIWindow>> mPersistentElements;  // contains controls outside of the dockspace
     std::vector<std::shared_ptr<GUIWindow>> mWindows; // dockable/hideable windows
     std::shared_ptr<Viewport> mEditorViewport;  // ptr to the viewport in mWindows
@@ -57,5 +62,3 @@ namespace GUI {
   };
 
 } // namespace GUI
-
-#endif  // IMGUI_DISABLE

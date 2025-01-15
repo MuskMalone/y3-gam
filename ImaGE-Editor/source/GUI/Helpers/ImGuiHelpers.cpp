@@ -16,10 +16,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Asset/IGEAssets.h>
 #include <Core/Components/Components.h>
 
-namespace {
-  bool IsUnderCanvasEntity(ECS::Entity entity);
-}
-
 namespace ImGuiHelpers
 {
   // How to accept payload in entire window as well as Tree nodes?
@@ -76,10 +72,10 @@ namespace ImGuiHelpers
     {
       // because we have Sprite2D and Image components, we will
       // climb up the hierarchy to check if it is a child of a canvas entity
-      bool const hasCanvasParent{ IsUnderCanvasEntity(entity) };
       try {
         IGE::Assets::GUID const texGUID{ IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath()) };
         
+        bool const hasCanvasParent{ IsUnderCanvasEntity(entity) };
         // under Canvas so we use the Image component
         if (hasCanvasParent) {
           // add Image component if it doesn't exist
@@ -108,11 +104,52 @@ namespace ImGuiHelpers
       }
       break;
     }
+    case GUI::AssetPayload::FONT:
+    {
+      try {
+        IGE::Assets::GUID const font{ IGE_ASSETMGR.LoadRef<IGE::Assets::FontAsset>(assetPayload.GetFilePath()) };
+
+        if (entity.HasComponent<Component::Text>()) {
+          Component::Text& textComp{ entity.GetComponent<Component::Text>() };
+          textComp.textAsset = font;
+          textComp.fontFamilyName = assetPayload.GetFileName();
+          textComp.newLineIndicesUpdatedFlag = false;
+        }
+        // else add the component and set the guid
+        else {
+          entity.EmplaceComponent<Component::Text>(font, "YOUR TEXT HERE", assetPayload.GetFileName());
+        }
+      }
+      catch (Debug::ExceptionBase&) {
+        IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
+      }
+      break;
+    }
+    case GUI::AssetPayload::AUDIO:
+    {
+      std::string const fp{ assetPayload.GetFilePath() };
+
+      if (entity.HasComponent<Component::AudioSource>()) {
+        entity.GetComponent<Component::AudioSource>().CreateSound(fp);
+      }
+      // else add the component and add the sound
+      else {
+        entity.EmplaceComponent<Component::AudioSource>().CreateSound(fp);
+      }
+      
+      break;
+    }
     default:
       break;
     }
 
     return true;
+  }
+
+  ImGuiID GetTreeNodeId(std::string const& nodeName, ImGuiID parentPath) {
+    //std::string const path{ parentPath.empty() ? nodeName : parentPath + "/" + nodeName };
+
+    return ImHashStr(nodeName.c_str(), nodeName.size(), parentPath);
   }
 
   bool TableInputFloat2(std::string const& propertyName, float* property, float fieldWidth, bool disabled, float minVal, float maxVal, float step, const char* fmt) {
@@ -364,6 +401,18 @@ namespace ImGuiHelpers
       ImGui::TeleportMousePos(p_mouse);
     }
   }
+
+  bool IsUnderCanvasEntity(ECS::Entity entity) {
+    ECS::EntityManager& em{ IGE_ENTITYMGR };
+
+    // keep checking if next parent has Canvas component
+    while (em.HasParent(entity)) {
+      entity = em.GetParentEntity(entity);
+      if (entity.HasComponent<Component::Canvas>()) { return true; }
+    }
+
+    return false;
+  }
 } // namespace ImGuiHelpers
 
 
@@ -410,18 +459,4 @@ ImVec4 operator-(ImVec4 const& lhs, ImVec4 const& rhs) {
 
 ImVec4 operator-(ImVec4 const& lhs, float rhs) {
   return { lhs.x - rhs, lhs.y - rhs, lhs.z - rhs, lhs.w - rhs };
-}
-
-namespace {
-  bool IsUnderCanvasEntity(ECS::Entity entity) {
-    ECS::EntityManager& em{ IGE_ENTITYMGR };
-
-    // keep checking if next parent has Canvas component
-    while (em.HasParent(entity)) {
-      entity = em.GetParentEntity(entity);
-      if (entity.HasComponent<Component::Canvas>()) { return true; }
-    }
-
-    return false;
-  }
 }

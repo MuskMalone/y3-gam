@@ -10,6 +10,7 @@
 #include <Graphics/Renderpass/PostProcessPass.h>
 #include "Graphics/MaterialData.h"
 #include "Graphics/RenderAPI.h"
+#include "Scenes/SceneManager.h"
 
 namespace {
   template <unsigned N>
@@ -258,10 +259,8 @@ namespace {
 
     //Get the list of light
     std::vector<ECS::Entity> lights{};
-    std::cout << "ALL LIGHT-----------------------------\n";
     for (ECS::Entity const& entity : entities) {
       if (!entity.HasComponent<Component::Light>()) { continue; }
-      std::cout << entity.GetTag() << "\n";
       auto const& light = entity.GetComponent<Component::Light>();
       lightUniforms.u_type[numLights] = light.type;
       lightUniforms.u_LightDirection[numLights] = entity.GetComponent<Component::Transform>().worldRot * light.forwardVec; // Directional light direction in world space
@@ -276,7 +275,6 @@ namespace {
       ++numLights;
     }
     lightUniforms.numLights = numLights;
-    std::cout << "--------------------------------------\n";
     return lightUniforms;
   }
 
@@ -291,5 +289,8 @@ namespace {
     shader->SetUniform("u_OuterSpotAngle", u_OuterSpotAngle, N);
     shader->SetUniform("u_LightIntensity", u_LightIntensity, N);
     shader->SetUniform("u_Range", u_Range, N);
+
+    Component::LightGlobalProps& globalProps{ Component::Light::sGlobalProps };
+    shader->SetUniform("u_AmbientLight", globalProps.ambColor * globalProps.ambIntensity);
   }
 }

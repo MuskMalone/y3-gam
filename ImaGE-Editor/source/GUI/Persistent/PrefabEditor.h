@@ -44,18 +44,11 @@ namespace GUI
 
     /*!*********************************************************************
     \brief
-      This function handles the corresponding events the PrefabEditor
-      subscribed to.
-
-      SCENE_STATE_CHANGE
-        - Disables certain menu options based on the current scene state
-      EDIT_PREFAB
-        - Switches the editor to Prefab-editing mode
-
+      Switches the editor to Prefab-editing mode
     \param event
       The event to be handled
     ************************************************************************/
-    EVENT_CALLBACK_DECL(HandleEvent);
+    EVENT_CALLBACK_DECL(OnPrefabEdit);
 
     /*!*********************************************************************
     \brief

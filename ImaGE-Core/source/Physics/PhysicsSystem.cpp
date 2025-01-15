@@ -41,8 +41,8 @@ namespace IGE {
 			//mTempAllocator{ 10 * 1024 * 1024 },
 			//mJobSystem{ cMaxPhysicsJobs, cMaxPhysicsBarriers, static_cast<int>(thread::hardware_concurrency() - 1) }
 		{
-			SUBSCRIBE_CLASS_FUNC(Events::EventType::REMOVE_COMPONENT, &PhysicsSystem::HandleRemoveComponent, this);
-			SUBSCRIBE_CLASS_FUNC(Events::EventType::REMOVE_ENTITY, &PhysicsSystem::HandleRemoveEntity, this);
+			SUBSCRIBE_CLASS_FUNC(Events::RemoveComponentEvent, &PhysicsSystem::HandleRemoveComponent, this);
+			SUBSCRIBE_CLASS_FUNC(Events::RemoveEntityEvent, &PhysicsSystem::HandleRemoveEntity, this);
 
 			physx::PxPvdTransport* transport = physx::PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
 			mPvd->connect(*transport, physx::PxPvdInstrumentationFlag::eALL);
@@ -647,6 +647,7 @@ namespace IGE {
 
 		void PhysicsSystem::ClearSystem()
 		{
+			mScene->setSimulationEventCallback(nullptr); // unsubscribe from all events first
 			for (auto rbpair : mRigidBodyIDs) {
 				auto rb{ rbpair.second };
 				mScene->removeActor(*rb);
@@ -656,6 +657,9 @@ namespace IGE {
 			mRigidBodyToEntity.clear();
 			mInactiveActors.clear();
 			mOnTriggerPairs.clear();
+			mScene->simulate(0.0f);
+			mScene->fetchResults(true);
+			mScene->setSimulationEventCallback(mEventManager);
 		}
 
 		bool PhysicsSystem::RayCastSingular(glm::vec3 const& origin, glm::vec3 const& end, RaycastHit& result)

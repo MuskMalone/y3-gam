@@ -9,7 +9,7 @@ namespace Graphics {
 	PostProcessingManager::PostProcessingManager() : 
 		mDefaultShader{ std::make_shared<Graphics::Shader>(IGE::Assets::cDefaultVertShader, std::string(gAssetsDirectory) + "Shaders\\PostProcessingDefault.frag.glsl")}
 	{
-		SUBSCRIBE_CLASS_FUNC(Events::EventType::SCENE_STATE_CHANGE, &PostProcessingManager::HandleSystemEvents, this);
+		SUBSCRIBE_CLASS_FUNC(Events::SceneStateChange, &PostProcessingManager::HandleSystemEvents, this);
 
 		CreateConfigFile();
 		Serialization::Deserializer::DeserializeAny(mPpc, cConfigFilePath);

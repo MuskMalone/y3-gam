@@ -2,6 +2,7 @@ using IGE.Utils;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using static Dialogue;
 
 public class Safe : Entity
 {
@@ -14,6 +15,7 @@ public class Safe : Entity
   public PlayerMove playerMove;
   public Entity safeDoorPart;
   private Random random = new Random();
+  public Inventory inventory;
 
   // Workaround for broken Entity[]
   public Entity ABC;
@@ -62,6 +64,24 @@ public class Safe : Entity
   public bool enterPressed = false;
   public bool correctAnswer = false;
 
+  // Hammer/Crowbar logic
+  public Entity crowbarAtSafe;
+  public Entity hammerAtSafe;
+
+  public Dialogue dialogue; // Reference to the Dialogue script
+  public string[] hammerDialogue = { "I need something to wedge into the gap first!" };
+  public string[] crowbarDialogue = { "There must be something I can use to whack it into\nthe hinge." };
+  public string[] lastDialogue = { "Alright, now one good whack!" };
+
+  public bool isCrowbarOnSafe;
+  public bool isHammerOnSafe;
+  public bool isSafeOpenedByCrowbar = false;
+  public bool safeSolvedByCrowbar;
+
+  Emotion[] EhammerFirst = { Emotion.Thinking };
+  Emotion[] EcrowbarFirst = { Emotion.Surprised };
+  Emotion[] EhammerAfterCrowbar = { Emotion.Neutral };
+
   void Start()
   {
     interactWithSafeUI?.SetActive(false);
@@ -96,18 +116,98 @@ public class Safe : Entity
 
   void Update()
   {
-    if (!safeInteraction)
+    if (!isSafeOpenedByCrowbar)
     {
-      bool isSafeHit = playerInteraction.RayHitString == InternalCalls.GetTag(safeDoorPart.mEntityID);
-
-      if (Input.GetKeyTriggered(0) && isSafeHit)
+      if (!correctAnswer && !safeInteraction)
       {
-        safeInteraction = true;
-        interactWithSafeUI.SetActive(false);
-        BeginSafeUI();
-        return;
+        bool isSafeHit = playerInteraction.RayHitString == InternalCalls.GetTag(safeDoorPart.mEntityID);
+
+        //if player tries to use hammer on it first
+        if (Input.GetMouseButtonTriggered(0) && isSafeHit && !safeUIActive && 
+          inventory.hammerEquipped && !isCrowbarOnSafe && !dialogue.isInDialogueMode)
+        {
+          dialogue.SetDialogue(hammerDialogue, EhammerFirst);
+          //interactWithSafeUI.SetActive(false);
+          return;
+        }
+
+        // crowbar is equipped and placed on safe
+        //insert dialogue: Now i need something to whack this thing 
+        else if (Input.GetMouseButtonTriggered(0) && isSafeHit && !safeUIActive &&
+          inventory.crowbarEquipped && !isCrowbarOnSafe && !dialogue.isInDialogueMode)
+        {
+          crowbarAtSafe.SetActive(true);
+          //audioManager.Play3DSound(audioManager.crowbar, crowbarAtSafe, audioManager.CrowbarVolume);
+
+          IInventoryItem itemToUse = inventory.GetItemByName("Crowbar");
+          Debug.Log("itemToUse" + itemToUse);
+          if (itemToUse != null)
+          {
+            Debug.Log("name" + itemToUse.Name);
+            inventory.RemoveItem(itemToUse);
+          }
+
+          isCrowbarOnSafe = true;
+          dialogue.SetDialogue(crowbarDialogue, EcrowbarFirst);
+          //interactWithSafeUI.SetActive(false);
+          return;
+        }
+
+        // if crowbar is already on the safe but hammer isnt and hammer is equipped
+        //insert dialogue Alright now give it a good whack 
+        else if (Input.GetMouseButtonTriggered(0) && isSafeHit && !safeUIActive && 
+          isCrowbarOnSafe && inventory.hammerEquipped && !isHammerOnSafe && !dialogue.isInDialogueMode)
+        {
+          hammerAtSafe.SetActive(true);
+          //audioManager.Play3DSound(audioManager.hammer, hammerAtSafe, audioManager.HammerVolume);
+          IInventoryItem itemToUse = inventory.GetItemByName("Hammer");
+          Debug.Log("itemToUse" + itemToUse);
+          if (itemToUse != null)
+          {
+            Debug.Log("name" + itemToUse.Name);
+            inventory.RemoveItem(itemToUse); // Remove after use
+          }
+
+          isHammerOnSafe = true;
+          dialogue.SetDialogue(lastDialogue, EhammerAfterCrowbar); // Send specific dialogue lines for scene 1
+          //interactWithSafeUI.SetActive(false);
+          return;
+        }
+
+        ////if crowbar and hammer are on the safe already
+        ////position the crowbar and hammer and safe door on the ground
+        else if (Input.GetMouseButtonTriggered(0) && isSafeHit && !safeUIActive && isCrowbarOnSafe && isHammerOnSafe)
+        {
+          /*
+          //move and rotate crowbar
+          //crowbarAtSafe.transform.localposition = crowbarNewPos;
+          crowbarAtSafe.transform.localPosition = crowbarNewPos;
+          crowbarAtSafe.transform.eulerAngles = crowbarNewRot;
+          //move and rotate hammer
+          hammerAtSafe.transform.localPosition = hammerNewPos;
+          hammerAtSafe.transform.eulerAngles = hammerNewRot;
+          */
+          //interactWithSafeUI.SetActive(false);
+          isSafeOpenedByCrowbar = true;
+          InternalCalls.PlaySound(mEntityID, "SafeInteract");
+          EndSafeUI();
+          safeDoorPart.SetActive(false);
+          hammerAtSafe.SetActive(false);
+          crowbarAtSafe.SetActive(false);
+          return;
+        }
+
+        else if (Input.GetMouseButtonTriggered(0) && isSafeHit && !safeUIActive && 
+          !isHammerOnSafe && !inventory.crowbarEquipped && !inventory.hammerEquipped && !dialogue.isInDialogueMode)
+        {
+          safeInteraction = true;
+          interactWithSafeUI.SetActive(false);
+          BeginSafeUI();
+          return;
+        }
+
+        interactWithSafeUI.SetActive(isSafeHit);
       }
-      interactWithSafeUI.SetActive(isSafeHit);
     }
 
     if (safeUIActive)
@@ -231,8 +331,6 @@ public class Safe : Entity
         InternalCalls.PlaySound(mEntityID, "SafeInteract");
         EndSafeUI();
         safeDoorPart.SetActive(false);
-        //Vector3 tmpPos = new Vector3(-999f, -999f, -999f);
-        //InternalCalls.SetPosition(safeDoorPart.mEntityID, ref tmpPos);
       }
     }
   }
@@ -254,6 +352,8 @@ public class Safe : Entity
     keyPadUI.SetActive(false);
     safeTextBox.SetActive(false);
     safeInstructionsUI.SetActive(false);
+    interactWithSafeUI.SetActive(false);
+
     SetAllButtonsInactive();
     InternalCalls.HideCursor();
   }

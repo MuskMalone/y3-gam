@@ -11,15 +11,15 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
 #include <string>
+#include <vector>
 #include <rttr/type.h>
 #include <Core/EntityManager.h>
-#include <Core/Components/PrefabOverrides.h>
+#include <Serialization/PfbOverridesData.h>
 #include <optional>
 #include <glm/glm.hpp>
 
 namespace Reflection
 {
-
   // struct encapsulating deserialized data of an entity
   // this is pre-creation of the entity where components
   // are stored as rttr::variants in a vector
@@ -45,7 +45,7 @@ namespace Reflection
     PrefabInst(EntityID id, const char* name, EntityID parent = entt::null)
       : mOverrides{}, mChildren{}, mName{ name }, mPosition {}, mId{ id }, mParent{ parent } {}
 
-    Component::PrefabOverrides mOverrides;
+    Serialization::PfbOverridesData mOverrides;
     std::vector<EntityID> mChildren;
     std::string mName;
     std::optional<glm::vec3> mPosition; // only for root entity

@@ -3,6 +3,7 @@
 #include <Serialization/Registration/RegisterClasses.h>
 #include <Serialization/Registration/RegisterComponents.h>
 #include <Serialization/Registration/RegisterEnumsAndFuncs.h>
+#include <RegisterEditorClasses.h>
 
 int Main(int argc, char** argv) {
   // Enable run-time memory check for debug builds.

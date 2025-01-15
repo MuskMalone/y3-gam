@@ -76,24 +76,24 @@ namespace Graphics {
 
     void EditorCamera::ProcessKeyboardInput(CameraMovement dir, float dt) {
         //if (Input::InputManager::GetInstance().IsKeyHeld(IK_W)) {
-        //    mPosition += GetForwardVector() * mMoveSpeed * dt;
+        //    mPosition += GetForwardVector() * sMoveSpeed * dt;
         //}
         //if (Input::InputManager::GetInstance().IsKeyHeld(IK_S)) {
-        //    mPosition -= GetForwardVector() * mMoveSpeed * dt;
+        //    mPosition -= GetForwardVector() * sMoveSpeed * dt;
         //}
         //if (Input::InputManager::GetInstance().IsKeyHeld(IK_A)) {
-        //    mPosition -= GetRightVector() * mMoveSpeed * dt;
+        //    mPosition -= GetRightVector() * sMoveSpeed * dt;
         //}
         //if (Input::InputManager::GetInstance().IsKeyHeld(IK_D)) {
-        //    mPosition += GetRightVector() * mMoveSpeed * dt;
+        //    mPosition += GetRightVector() * sMoveSpeed * dt;
         //}
         //if (Input::InputManager::GetInstance().IsKeyHeld(IK_Q)) {  // Move down
-        //    mPosition -= glm::vec3{ 0.0f, 1.0f, 0.0f } *mMoveSpeed * dt;
+        //    mPosition -= glm::vec3{ 0.0f, 1.0f, 0.0f } *sMoveSpeed * dt;
         //}
         //if (Input::InputManager::GetInstance().IsKeyHeld(IK_E)) {  // Move up
-        //    mPosition += glm::vec3{ 0.0f, 1.0f, 0.0f } *mMoveSpeed * dt;
+        //    mPosition += glm::vec3{ 0.0f, 1.0f, 0.0f } *sMoveSpeed * dt;
         //}
-        float velocity = mMoveSpeed * dt;
+        float velocity = sMoveSpeed * dt;
 
         if(dir == CameraMovement::FORWARD)
             mPosition += GetForwardVector() * velocity;
@@ -130,8 +130,8 @@ namespace Graphics {
         //}
     }
     void EditorCamera::ProcessMouseInput(float offsetX, float offsetY) {
-        offsetX *= mMouseSense;
-        offsetY *= mMouseSense;
+        offsetX *= sMouseSense;
+        offsetY *= sMouseSense;
 
         mYaw += offsetX;
         mPitch -= offsetY;
@@ -141,7 +141,7 @@ namespace Graphics {
         if (mPitch < -89.0f) mPitch = -89.0f;
     }
     void EditorCamera::ProcessMouseScroll(float scrollOffset) {
-        mFov -= scrollOffset * mZoomSpeed;
+        mFov -= scrollOffset * sZoomSpeed;
         if (mFov < 1.0f) mFov = 1.0f;
         if (mFov > 45.0f) mFov = 45.0f;
     }
@@ -159,10 +159,20 @@ namespace Graphics {
       forward.y = 0.0f; // zero out Y-component
       forward = glm::normalize(forward);
 
-      glm::vec3 rightMovement = GetRightVector() * xDisp * mMousePanningSpeed;
-      glm::vec3 forwardMovement = forward * yDisp * mMousePanningSpeed;
+      glm::vec3 rightMovement = GetRightVector() * xDisp * sMousePanningSpeed;
+      glm::vec3 forwardMovement = forward * yDisp * sMousePanningSpeed;
 
       // move based on inverted xDisp
       mPosition += forwardMovement - rightMovement;
+    }
+
+    void EditorCamera::InitForEditorView() {
+      mPosition = { 0.0f, 5.0f, 10.0f };
+      mYaw = -90.0f;
+      mPitch = 0.0f;  // look downwards slightly
+      mFov = 60.0f;
+      mAspectRatio = 16.f / 9.f;
+      mNearClip = 0.1f;
+      mFarClip = 1500.0f;
     }
 }

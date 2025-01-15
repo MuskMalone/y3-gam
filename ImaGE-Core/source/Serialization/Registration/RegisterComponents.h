@@ -159,7 +159,6 @@ static void rttr_auto_register_reflection_function2_(); namespace {
       .property("textureAssetGUID2", &Skybox::tex2)
       .property("blend", &Skybox::blend);
 
-
   REGISTER_COMPONENT(Interactive, "Interactive")
       .property("isHovered", &Interactive::isHovered);
 

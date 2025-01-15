@@ -37,6 +37,8 @@ namespace ImGuiHelpers
   // im using this for both inspector and hierarchy
   bool AssetDragDropBehavior(ECS::Entity entity);
 
+  ImGuiID GetTreeNodeId(std::string const& nodeName, ImGuiID parentPath);
+
   /*!*********************************************************************
   \brief
     Helper function to create a table input for vec2
@@ -97,6 +99,8 @@ namespace ImGuiHelpers
 
   void WrapMousePos(int axises_mask);
   void WrapMousePosEx(int axises_mask, const ImRect& wrap_rect);
+
+  bool IsUnderCanvasEntity(ECS::Entity entity);
 } // namespace ImGuiHelpers
 
 // operator overloads

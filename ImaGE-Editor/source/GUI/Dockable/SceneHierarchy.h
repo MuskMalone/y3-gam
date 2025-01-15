@@ -13,14 +13,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GUI/GUIWindow.h>
 #include <Core/Entity.h>
 #include <Events/EventCallback.h>
+#include <GUI/Helpers/SceneEditorConfig.h>
 #include <ImGui/imgui.h>
-
-// forward declaration
-namespace Scenes { class SceneManager; }
 
 namespace GUI
 {
-
   class SceneHierarchy : public GUIWindow
   {
   public:
@@ -33,10 +30,11 @@ namespace GUI
     void Run() override;
 
   private:
+    std::set<HierarchyEntry> mCollapsedNodes;
     ECS::EntityManager& mEntityManager;
     std::string mSceneName;
     ECS::Entity mRightClickedEntity; // used to hold the entity the menu was opened on
-    bool mRightClickMenu, mEntityOptionsMenu, mPrefabPopup, mFirstTimePfbPopup;
+    bool mEntityOptionsMenu, mPrefabPopup, mFirstTimePfbPopup, mEntityRightClicked;
     bool mEditingPrefab, mLockControls, mSceneModified;
 
     static inline constexpr char sDragDropPayload[] = "ENTITY";
@@ -60,7 +58,7 @@ namespace GUI
     \param entity
       The current entity being displayed
     ************************************************************************/
-    void RecurseDownHierarchy(ECS::Entity entity);
+    void RecurseDownHierarchy(ECS::Entity entity, float nodeToLabelSpacing);
 
     /*!*********************************************************************
     \brief
@@ -70,19 +68,7 @@ namespace GUI
     \param collapsed
       Whether the node is collapsed
     ************************************************************************/
-    void ProcessInput(ECS::Entity entity, bool collapsed);
-
-    /*!*********************************************************************
-    \brief
-      Runs the right-click menu when it is triggered
-    ************************************************************************/
-    bool RunRightClickMenu();
-
-    /*!*********************************************************************
-    \brief
-      Displays the contents of the right-click menu
-    ************************************************************************/
-    bool RunEntityOptions();
+    void ProcessInput(ECS::Entity entity, bool collapsed, float nodeToLabelSpacing);
 
     /*!*********************************************************************
     \brief
@@ -92,6 +78,8 @@ namespace GUI
     void RunPrefabPopup();
 
     void RenameEntity(ECS::Entity entity);
+
+    void TriggerRename();
 
     /*!*********************************************************************
     \brief
@@ -115,8 +103,32 @@ namespace GUI
     \param event
       The event to be handled
     ************************************************************************/
-    EVENT_CALLBACK_DECL(HandleEvent);
+    EVENT_CALLBACK_DECL(OnSceneStateChange);
+    EVENT_CALLBACK_DECL(OnPrefabEdit);
+    EVENT_CALLBACK_DECL(OnSceneModified);
     EVENT_CALLBACK_DECL(OnEntityPicked);
+    EVENT_CALLBACK_DECL(OnCollectEditorData);
+    EVENT_CALLBACK_DECL(OnLoadEditorData);
+
+    std::set<HierarchyEntry> GetTreeNodeStates() const;
+    void LoadHierarchyState();
+
+#pragma region RightClickMenu
+    /*!*********************************************************************
+    \brief
+      Runs the right-click menu when it is triggered
+    ************************************************************************/
+    bool RunRightClickMenu(bool entitySelected);
+
+    void ParentRightClickedEntity(ECS::Entity child);
+
+    bool MeshMenu(const char* label, bool entitySelected);
+    bool LightMenu(const char* label, bool entitySelected);
+    bool AudioMenu(const char* label, bool entitySelected);
+    bool UIMenu(const char* label, bool entitySelected);
+    bool CreateEmptyParent(const char* label);
+    bool PrefabMenu(const char* label);
+#pragma endregion
 
     void SceneModified();
   };

@@ -61,6 +61,8 @@ namespace
   void DisplayTempFileIcon(std::string const& ext);
 
   void NextRowTable(const char* label);
+
+  bool IsAssetFile(std::string const&);
 }
 
 namespace GUI
@@ -70,7 +72,7 @@ namespace GUI
     mCurrentDir{ gAssetsDirectory }, mRightClickedDir{},
     mSelectedAsset{}, mDirMenuPopup{ false }, mAssetMenuPopup{ false }
   {
-    SUBSCRIBE_CLASS_FUNC(Events::EventType::ADD_FILES, &AssetBrowser::FilesImported, this);
+    SUBSCRIBE_CLASS_FUNC(Events::AddFilesFromExplorerEvent, &AssetBrowser::FilesImported, this);
   }
 
   void AssetBrowser::Run()
@@ -243,6 +245,13 @@ namespace GUI
     else if (std::string(gSupportedAudioFormats).find(ext) != std::string::npos) {
       am.ChangeAssetPath<IGE::Assets::AudioAsset>(am.LoadRef<IGE::Assets::AudioAsset>(original.string()), newPath.string());
     }
+    else if (ext == gSceneFileExt) {
+      // rename hierarchy state file of scene
+      std::string const editorScenesDir{ gEditorAssetsDirectory + std::string("Scenes\\") };
+      // also rename the editor scene config file
+      std::filesystem::rename(editorScenesDir + original.stem().string(),
+        editorScenesDir + newPath.stem().string());
+    }
 
     std::filesystem::rename(original, newPath);
     GUIVault::SetSelectedFile(newPath);
@@ -251,7 +260,9 @@ namespace GUI
   void AssetBrowser::DisplayDirectory(float imgSize, unsigned maxChars, bool showIcon)
   {
     for (auto const& file : std::filesystem::directory_iterator(mCurrentDir)) {
+
       if (file.is_directory()) { continue; }
+      if (!IsAssetFile(file.path().string())) { continue; } // to account for igemeta files
 
       ImGui::TableNextColumn();
       std::string const fileName{ file.path().filename().string() };
@@ -325,6 +336,7 @@ namespace GUI
     for (auto const& file : std::filesystem::recursive_directory_iterator(gAssetsDirectory))
     {
       std::filesystem::path const& path{ file.path() };
+      if (!IsAssetFile(path.string())) { continue; } // to account for igemeta files
       if (file.is_directory() || path.extension() == gMeshFileExt
           || path.parent_path().filename() == sCompiledDirectory) { continue; } 
 
@@ -609,7 +621,12 @@ namespace GUI
         if (GUIVault::GetSelectedFile() == path) {
           GUIVault::SetSelectedFile({});
         }
-        std::remove(mSelectedAsset.relative_path().string().c_str());
+
+        // remove the editor scene config file
+        if (mSelectedAsset.extension() == gSceneFileExt) {
+          std::filesystem::remove(gEditorAssetsDirectory + std::string("Scenes\\") + mSelectedAsset.stem().string());
+        }
+        std::filesystem::remove(mSelectedAsset.relative_path().string().c_str());
 
         ImGui::CloseCurrentPopup();
       }
@@ -813,6 +830,12 @@ namespace
       ImGui::TextColored(sFileIconCol, ICON_FA_FILE);
     }
     ImGui::PopFont();
+  }
+
+  bool IsAssetFile(std::string const& fp){
+      auto fileext{ IGE::Assets::GetFileExtension(fp) };
+      if (fileext == IGE::Assets::cAssetMetadataFileExtension) return false;
+      return true;
   }
 
   void NextRowTable(const char* label) {

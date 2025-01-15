@@ -28,6 +28,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 #define JSON_SCENE_KEY              "Scene"
 #define JSON_LAYERS_KEY             "Layers"
+#define JSON_GLOBAL_PROPS_KEY       "Global Properties"
 
 #define JSON_SCRIPT_ENTITY_ID_KEY   "entityID"
 #define JSON_SCRIPT_LIST_KEY        "scriptList"

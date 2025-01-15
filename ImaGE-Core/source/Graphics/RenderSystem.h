@@ -18,7 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace ECS { class Entity; }
 
 namespace Graphics {
-	class EditorCamera;
+	struct EditorCamera;
 
 	class RenderSystem {
 	public:

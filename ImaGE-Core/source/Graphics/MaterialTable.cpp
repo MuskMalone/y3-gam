@@ -26,6 +26,7 @@ namespace Graphics {
                 props.Roughness = mMaterials[i]->GetRoughness();
                 props.Transparency = mMaterials[i]->GetTransparency();
                 props.AO = mMaterials[i]->GetAO();
+                props.Emission = mMaterials[i]->GetEmission();
 
                 mMaterials[i]->ClearModifiedFlag();
                 anyUpdated = true;
@@ -60,6 +61,8 @@ namespace Graphics {
 
          // Bind the SSBO to binding point 0
         glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, mMaterialSSBO);
+
+        AddDefaultMaterial();
     }
     void MaterialTable::Shutdown() {
         if (mMaterialSSBO) {
@@ -264,6 +267,17 @@ namespace Graphics {
 
     }
 
+    void MaterialTable::AddDefaultMaterial() {
+      // Create a default material with a default shader and properties
+      std::shared_ptr<MaterialData> defaultMaterial = MaterialData::Create("PBR", "Default"); //should probably shift all this in MaterialTable Init
+      defaultMaterial->SetAlbedoColor(glm::vec3(1.0f));  // Set default white albedo
+      defaultMaterial->SetMetalness(0.0f);
+      defaultMaterial->SetRoughness(1.0f);
+
+      // Add default material to the table (e.g., at index 0)
+      MaterialTable::AddMaterial(defaultMaterial);
+    }
+
     void MaterialTable::SaveMaterials() {
         for (size_t i = 1; i < mMaterials.size(); ++i) {  // Start from index 1 to skip the default material at index 0
             auto& material = mMaterials[i];
@@ -317,9 +331,11 @@ namespace Graphics {
         return material;
     }
 
+    // clear all materials and add back the default
     void MaterialTable::ClearMaterials(){
-        if (mMaterials.size() > 1) {
-            mMaterials.erase(mMaterials.begin() + 1, mMaterials.end());
-        }
+      mMaterials.clear();
+      mGUIDToIndexMap.clear();
+
+      AddDefaultMaterial();
     }
 }

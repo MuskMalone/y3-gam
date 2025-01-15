@@ -8,6 +8,8 @@ struct MaterialProperties {
     float Roughness;   // Roughness factor
     float Transparency; // Transparency (alpha)
     float AO;          // Ambient occlusion
+    float Emission;
+    float Padding[3];
 };
 
 layout(std430, binding = 0) buffer MaterialPropsBuffer {
@@ -52,6 +54,7 @@ void main(){
 	// Normalize inputs
     
     //change transparency here
-    float alpha = albedoTexture.a * mat.Transparency;
+    //float alpha = albedoTexture.a * mat.Transparency;
+    float alpha = mat.Transparency;
 	fragColor = vec4(albedo, alpha);
 }

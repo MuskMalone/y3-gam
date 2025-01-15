@@ -20,7 +20,7 @@ namespace Events
     };
 
     SceneStateChange(NewSceneState newState, std::string const& name)
-      : Event(EventType::SCENE_STATE_CHANGE), mSceneName{ name }, mNewState { newState } {}
+      : Event(), mSceneName{ name }, mNewState { newState } {}
     inline std::string GetName() const noexcept override { return "Scene state of " + mSceneName + " changed to " + std::to_string(static_cast<int>(mNewState)); }
 
     std::string const mSceneName;
@@ -31,7 +31,7 @@ namespace Events
   class LoadSceneEvent : public Event
   {
   public:
-    LoadSceneEvent(std::string const& name, std::string const& path) : Event(EventType::LOAD_SCENE), mSceneName{ name }, mPath{ path } {}
+    LoadSceneEvent(std::string const& name, std::string const& path) : Event(), mSceneName{ name }, mPath{ path } {}
     inline std::string GetName() const noexcept override { return "Loading Scene " + mSceneName; }
 
     std::string const mSceneName, mPath;
@@ -40,7 +40,7 @@ namespace Events
   class UnloadSceneEvent : public Event
   {
   public:
-    UnloadSceneEvent() : Event(EventType::UNLOAD_SCENE) {}
+    UnloadSceneEvent() : Event() {}
     inline std::string GetName() const noexcept override { return "Unloading Scene"; }
   };
 
@@ -48,7 +48,7 @@ namespace Events
   {
   public:
     bool isLocked{ false };
-    LockMouseEvent(bool lock) : Event(EventType::LOCK_MOUSE) { isLocked = lock; }
+    LockMouseEvent(bool lock) : Event() { isLocked = lock; }
     inline std::string GetName() const noexcept override { return "Saving Scene"; }
   };
 
@@ -56,7 +56,7 @@ namespace Events
   class SaveSceneEvent : public Event
   {
   public:
-    SaveSceneEvent(bool pretty) : Event(EventType::SAVE_SCENE), mPretty{ pretty } {}
+    SaveSceneEvent(bool pretty) : Event(), mPretty{ pretty } {}
     inline std::string GetName() const noexcept override { return "Saving Scene"; }
 
     bool const mPretty;
@@ -65,7 +65,7 @@ namespace Events
   class SceneModifiedEvent : public Event
   {
   public:
-    SceneModifiedEvent() : Event(EventType::SCENE_MODIFIED) {}
+    SceneModifiedEvent() : Event() {}
     inline std::string GetName() const noexcept override { return "Scene modified"; }
   };
 
@@ -73,7 +73,7 @@ namespace Events
   class EditPrefabEvent : public Event
   {
   public:
-    EditPrefabEvent(std::string prefab, std::string path) : Event(EventType::EDIT_PREFAB), mPrefab{ std::move(prefab) }, mPath{ std::move(path) } {}
+    EditPrefabEvent(std::string prefab, std::string path) : Event(), mPrefab{ std::move(prefab) }, mPath{ std::move(path) } {}
     inline std::string GetName() const noexcept override { return "Editing Prefab: " + mPrefab; }
 
     std::string const mPrefab, mPath;

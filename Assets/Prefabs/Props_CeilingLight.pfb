@@ -1,64 +1,66 @@
 {
     "Name": "Props_CeilingLight",
-    "isActive": true,
-    "Components": [
-        {
-            "Tag": {
-                "tag": "Props_CeilingLight",
-                "isActive": true
-            }
-        },
-        {
-            "Transform": {
-                "position": {
-                    "x": -46.814552307128909,
-                    "y": 25.6643009185791,
-                    "z": 16.02499008178711
-                },
-                "scale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "eulerAngles": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "worldPos": {
-                    "x": -46.814552307128909,
-                    "y": 25.6643009185791,
-                    "z": 16.02499008178711
-                },
-                "worldScale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "worldRot": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                }
-            }
-        },
-        {
-            "Layer": {
-                "layerName": "Default"
-            }
-        }
-    ],
     "SubData": [
         {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Props_CeilingLight",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -46.814552307128909,
+                            "y": 25.6643009185791,
+                            "z": 16.02499008178711
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -46.814552307128909,
+                            "y": 25.6643009185791,
+                            "z": 16.02499008178711
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -117,8 +119,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -137,7 +138,6 @@
         },
         {
             "ID": 2,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -196,8 +196,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -216,7 +215,6 @@
         },
         {
             "ID": 3,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -284,9 +282,20 @@
                         "outerAngle": 69.0,
                         "range": 28.0,
                         "castShadows": false,
-                        "bias": 0.004999999888241291,
-                        "softness": 1,
-                        "nearPlaneMultiplier": 10.0
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
                     }
                 }
             ]

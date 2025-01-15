@@ -29,10 +29,10 @@ public class CameraCapture : Entity
   void Update()
   {
     // Capture image and store data when the capture key is pressed
-    if (Input.GetKeyDown(captureKey))
-    {
-      CaptureImageAndStoreData();
-    }
+    //if (Input.GetKeyDown(captureKey))
+    //{
+    //  CaptureImageAndStoreData();
+    //}
   }
 
   void CaptureImageAndStoreData()
@@ -42,7 +42,8 @@ public class CameraCapture : Entity
     // Store the player's position, rotation, and the main camera's rotation
     savedPlayerPosition = player.GetComponent<Transform>().worldPosition;
     savedCameraRotation = InternalCalls.GetMainCameraRotation(FindEntityByTag("MainCamera").mEntityID);
-    savedCameraEuler = Mathf.QuaternionToEuler(savedCameraRotation);
+    PlayerMove playerM = FindObjectOfType<PlayerMove>();
+    savedCameraEuler = new Vector3(playerM.GetRotation(),0);
 
     Debug.Log("Player Position: " + savedPlayerPosition);
     Debug.Log("Camera Rotation: " + savedCameraRotation);

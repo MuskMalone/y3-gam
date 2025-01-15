@@ -1,77 +1,80 @@
 {
     "Name": "Weed",
-    "isActive": true,
-    "Components": [
-        {
-            "Tag": {
-                "tag": "Weed",
-                "isActive": true
-            }
-        },
-        {
-            "Transform": {
-                "position": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "scale": {
-                    "x": 5.0,
-                    "y": 5.0,
-                    "z": 5.0
-                },
-                "rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "eulerAngles": {
-                    "x": 0.0,
-                    "y": -0.0,
-                    "z": 0.0
-                },
-                "worldPos": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "worldScale": {
-                    "x": 5.0,
-                    "y": 5.0,
-                    "z": 5.0
-                },
-                "worldRot": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                }
-            }
-        },
-        {
-            "Layer": {
-                "layerName": "Default"
-            }
-        },
-        {
-            "Sprite2D": {
-                "color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "textureAssetGUID": {
-                    "ID": 10643385131553561900
-                }
-            }
-        }
-    ],
     "SubData": [
         {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Weed",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Sprite2D": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 10643385131553561900
+                        },
+                        "isTransparent": false
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -136,7 +139,8 @@
                         },
                         "textureAssetGUID": {
                             "ID": 10643385131553561900
-                        }
+                        },
+                        "isTransparent": false
                     }
                 }
             ]

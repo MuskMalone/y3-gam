@@ -215,6 +215,9 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetRotation);
   ADD_INTERNAL_CALL(SetWorldRotation);
   ADD_INTERNAL_CALL(SetWorldScale);
+  ADD_INTERNAL_CALL(GetWorldRotationEuler);
+  ADD_INTERNAL_CALL(GetRotationEuler);
+  ADD_INTERNAL_CALL(SetRotationEuler);
   ADD_INTERNAL_CALL(SetScale);
   ADD_INTERNAL_CALL(MoveCharacter);
   ADD_INTERNAL_CALL(SetAngularVelocity);
@@ -235,6 +238,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetFPS);
   ADD_INTERNAL_CALL(MoveCharacter);
   ADD_INTERNAL_CALL(GetTag);
+  ADD_INTERNAL_CALL(SetTag);
   ADD_INTERNAL_CALL(FindScript);
   ADD_INTERNAL_CALL(FindScriptInEntity);
   ADD_INTERNAL_CALL(DestroyEntity);
@@ -256,11 +260,15 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(AppendText);
   ADD_INTERNAL_CALL(GetImageColor);
   ADD_INTERNAL_CALL(SetImageColor);
+  ADD_INTERNAL_CALL(GetSprite2DColor);
+  ADD_INTERNAL_CALL(SetSprite2DColor);
   ADD_INTERNAL_CALL(SetDaySkyBox);
 
   // Utility Functions
   ADD_INTERNAL_CALL(Raycast);
-  ADD_INTERNAL_CALL(RaycastFromEntity)
+  ADD_INTERNAL_CALL(RaycastFromEntity);
+  ADD_INTERNAL_CALL(SetSoundPitch);
+  ADD_INTERNAL_CALL(SetSoundVolume);
   ADD_INTERNAL_CALL(PlaySound);
   ADD_INTERNAL_CALL(PauseSound);
   ADD_INTERNAL_CALL(StopSound);
@@ -270,6 +278,11 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(TakeScreenShot);
   ADD_INTERNAL_CALL(ShowCursor);
   ADD_INTERNAL_CALL(HideCursor);
+  ADD_INTERNAL_CALL(OnTriggerEnter);
+  ADD_INTERNAL_CALL(OnTriggerExit);
+  ADD_INTERNAL_CALL(ChangeToolsPainting);
+  ADD_INTERNAL_CALL(SpawnToolBox);
+  ADD_INTERNAL_CALL(SpawnOpenDoor);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -772,7 +785,7 @@ ScriptFieldInfo Mono::ScriptManager::GetScriptField(std::string className, std::
 void Mono::SetWorldPosition(ECS::Entity::EntityID entity, glm::vec3 posAdjustment) {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
   trans.worldPos = posAdjustment;
-  trans.modified = true;
+  TransformHelpers::UpdateLocalTransform(entity);
 }
 
 // @TODO: needs testing
@@ -785,7 +798,7 @@ void Mono::SetPosition(ECS::Entity::EntityID entity, glm::vec3 newPosition) {
 void Mono::SetWorldScale(ECS::Entity::EntityID entity, glm::vec3 scaleAdjustment) {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
   trans.scale = scaleAdjustment;
-  TransformHelpers::UpdateWorldTransform(entity);
+  TransformHelpers::UpdateLocalTransform(entity);
 }
 
 glm::vec3 Mono::GetScale(ECS::Entity::EntityID entity)
@@ -814,31 +827,44 @@ glm::quat Mono::GetWorldRotation(ECS::Entity::EntityID entity)
 {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
   return trans.worldRot;
-
-  // need to use quaternions
 }
 
 void Mono::SetWorldRotation(ECS::Entity::EntityID entity, glm::quat rotAdjustment)
 {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
   trans.worldRot = rotAdjustment;
-  trans.modified = true;
-  // need to use quaternions
+  TransformHelpers::UpdateLocalTransform(entity);
 }
 
 glm::quat Mono::GetRotation(ECS::Entity::EntityID entity)
 {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
   return trans.rotation;
-  // need to use quaternions
 }
 
 void Mono::SetRotation(ECS::Entity::EntityID entity, glm::quat rotAdjustment)
 {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
   trans.rotation = rotAdjustment;
-  trans.modified = true;
-  // need to use quaternions
+  trans.eulerAngles = glm::degrees(glm::eulerAngles(rotAdjustment));
+  TransformHelpers::UpdateWorldTransform(entity);
+}
+
+glm::vec3 Mono::GetWorldRotationEuler(ECS::Entity::EntityID entity)
+{
+  Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+  return trans.GetWorldEulerAngles();
+}
+glm::vec3 Mono::GetRotationEuler(ECS::Entity::EntityID entity)
+{
+  Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+  return trans.eulerAngles;
+}
+void Mono::SetRotationEuler(ECS::Entity::EntityID entity, glm::vec3 rotAdjustment)
+{
+  Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
+  trans.SetLocalRotWithEuler(rotAdjustment);
+  TransformHelpers::UpdateWorldTransform(entity);
 }
 
 glm::vec3 Mono::GetWorldPosition(ECS::Entity::EntityID entity)
@@ -867,31 +893,37 @@ MonoString* Mono::GetTag(ECS::Entity::EntityID entity)
   //return STDToMonoString(ECS::Entity(entity).GetComponent<Component::Tag>().tag);
 }
 
-void  Mono::Log(MonoString*s)
+void Mono::SetTag(ECS::Entity::EntityID entity, MonoString* tag) {
+  std::string convertedTag{ MonoStringToSTD(tag) };
+  if (ECS::Entity(entity).HasComponent<Component::Tag>())
+    ECS::Entity(entity).GetComponent<Component::Tag>().tag = convertedTag;
+}
+
+void Mono::Log(MonoString*s)
 {
   std::string msg{ MonoStringToSTD(s) };
   Debug::DebugLogger::GetInstance().LogInfo(msg);
 }
 
-void  Mono::LogWarning(MonoString* s)
+void Mono::LogWarning(MonoString* s)
 {
   std::string msg{ MonoStringToSTD(s) };
   Debug::DebugLogger::GetInstance().LogWarning(msg);
 }
 
-void  Mono::LogError(MonoString* s)
+void Mono::LogError(MonoString* s)
 {
   std::string msg{ MonoStringToSTD(s) };
   Debug::DebugLogger::GetInstance().LogError(msg);
 }
 
-void  Mono::LogCritical(MonoString* s)
+void Mono::LogCritical(MonoString* s)
 {
   std::string msg{ MonoStringToSTD(s) };
   Debug::DebugLogger::GetInstance().LogCritical(msg);
 }
 
-float  Mono::GetAxis(MonoString* s)
+float Mono::GetAxis(MonoString* s)
 {
   std::string msg{ MonoStringToSTD(s) };
   return Input::InputManager::GetInstance().GetAxis(msg);
@@ -996,6 +1028,20 @@ ECS::Entity::EntityID Mono::RaycastFromEntity(ECS::Entity::EntityID e, glm::vec3
         ECS::Entity::EntityID out {hit.entity.GetEntityID()};
         return out;
     }return static_cast<ECS::Entity::EntityID>(0);
+}
+
+void Mono::SetSoundPitch(ECS::Entity::EntityID e, MonoString* s, float p)
+{
+    std::string name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().SetSoundPitch(name, p);
+}
+
+void Mono::SetSoundVolume(ECS::Entity::EntityID e, MonoString* s, float v) 
+{
+    std::string name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().SetSoundVolume(name, v);
 }
 
 void Mono::PlaySound(ECS::Entity::EntityID e, MonoString* s)
@@ -1331,27 +1377,45 @@ void Mono::SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val)
   }
 }
 
+glm::vec4 Mono::GetSprite2DColor(ECS::Entity::EntityID entity)
+{
+  if (ECS::Entity(entity)) {
+    if (ECS::Entity(entity).HasComponent<Component::Sprite2D>())
+      return ECS::Entity(entity).GetComponent<Component::Sprite2D>().color;
+    else
+      Debug::DebugLogger::GetInstance().LogError("GetSprite2DColor: Entity " + ECS::Entity(entity).GetTag() + " does not have an Sprite2D component");
+  }
+  else {
+    Debug::DebugLogger::GetInstance().LogError("GetSprite2DColor: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
+
+  return {};
+}
+
+void Mono::SetSprite2DColor(ECS::Entity::EntityID entity, glm::vec4 val)
+{
+  if (ECS::Entity(entity))
+  {
+    if (ECS::Entity(entity).HasComponent<Component::Sprite2D>())
+      ECS::Entity(entity).GetComponent<Component::Sprite2D>().color = val;
+    else
+      Debug::DebugLogger::GetInstance().LogError("SetSprite2DColor: Entity " + ECS::Entity(entity).GetTag() + " does not have an Sprite2D component");
+  }
+  else {
+    Debug::DebugLogger::GetInstance().LogError("SetSprite2DColor: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
+}
+
 MonoString* Mono::GetCurrentScene() {
   return STDToMonoString(IGE_SCENEMGR.GetSceneName());
 }
 
-// Note: For now this function works in ImaGE-Game, but not exactly in ImaGE-Editor (Scene is unable to play automatically
-// after changing scenes, but scene still changes). Just assume that the scene changes and plays in the game application
 void Mono::SetCurrentScene(MonoString* scenePath) {
   std::string scenePathSTD{ MonoStringToSTD(scenePath) };
 
   if (!scenePathSTD.empty()) {
-    //IGE_EVENTMGR.DispatchImmediateEvent<Events::LoadSceneEvent>(std::filesystem::path(scenePathSTD).stem().string(),
-      //scenePathSTD);
     QUEUE_EVENT(Events::LoadSceneEvent, std::filesystem::path(scenePathSTD).stem().string(),
       scenePathSTD);
-
-    // Play the scene (Most common use case is to set scene and immediately want it playing)
-    /*
-    if (IGE_SCENEMGR.GetSceneState() != Scenes::SceneState::PLAYING) {
-      IGE_SCENEMGR.PlayScene();
-    }
-    */
   }
 }
 
@@ -1462,7 +1526,8 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
    
   for (ECS::Entity child : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Light>())
   {
-    if (child.GetTag() == "Light")
+    std::string n = child.GetTag();
+    if (n == "Light" || n == "LightR" || n == "LightL" || n == "LightN" || n == "LightF" || n == "LightT" || n == "LightB")
     {
       child.SetIsActive(true);
     }
@@ -1488,6 +1553,83 @@ void Mono::ShowCursor() {
 
 void Mono::HideCursor() {
   QUEUE_EVENT(Events::LockMouseEvent, true);
+}
+
+void Mono::ChangeToolsPainting() {
+  ECS::Entity ToolsUI = ECS::EntityManager::GetInstance().GetEntityFromTag("ToolsPaintingUI");
+  ECS::Entity Toolspaint = ECS::EntityManager::GetInstance().GetEntityFromTag("ToolsPainting");
+  IGE::Assets::GUID toolsPaintingNight{ IGE::Assets::AssetManager::GetInstance().PathToGUID("..\\Assets\\Textures\\ToolsPaintingNight.png") };
+  IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(toolsPaintingNight);
+  if (ECS::EntityManager::GetInstance().IsValidEntity(ToolsUI))
+  {
+    ToolsUI.GetComponent<Component::Image>().textureAsset = toolsPaintingNight;
+  }
+ 
+  for (ECS::Entity& child : ECS::EntityManager::GetInstance().GetChildEntity(Toolspaint))
+  {
+    if (child.GetTag() == "Painting Plane")
+    {
+      if (child.HasComponent<Component::Material>())
+      {
+        Graphics::MaterialTable::GetMaterialByGUID(child.GetComponent<Component::Material>().materialGUID)->SetAlbedoMap(toolsPaintingNight);
+      }
+      break;
+    }
+  }
+
+}
+
+void Mono::SpawnToolBox() {
+  ECS::Entity toolBox = ECS::EntityManager::GetInstance().GetEntityFromTag("Toolbox");
+  if (ECS::EntityManager::GetInstance().IsValidEntity(toolBox))
+  {
+    toolBox.SetIsActive(true);
+    ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(toolBox);
+  }
+
+}
+
+void Mono::SpawnOpenDoor() {
+    ECS::Entity openDoor = ECS::EntityManager::GetInstance().GetEntityFromTag("OpenDoor");
+    ECS::Entity closedDoor = ECS::EntityManager::GetInstance().GetEntityFromTag("ClosedDoor");
+    ECS::Entity glowingDoor = ECS::EntityManager::GetInstance().GetEntityFromTag("Puzzle_GlowingDoor");
+    if (ECS::EntityManager::GetInstance().IsValidEntity(openDoor) && ECS::EntityManager::GetInstance().IsValidEntity(closedDoor) && ECS::EntityManager::GetInstance().IsValidEntity(glowingDoor))
+    {
+        openDoor.SetIsActive(true);
+        closedDoor.SetIsActive(false);
+        glowingDoor.SetIsActive(true);
+
+        ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(openDoor);
+        ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(closedDoor);
+        ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(glowingDoor);
+    }
+
+}
+
+
+
+bool Mono::OnTriggerEnter(ECS::Entity trigger, ECS::Entity other) {
+  if (!trigger.HasComponent<Component::BoxCollider>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to check collision using an entity that does not have collider!");
+  }
+
+  if (!trigger.GetComponent<Component::BoxCollider>().sensor) {
+    Debug::DebugLogger::GetInstance().LogWarning("You are trying to check collision using an entity that has sensor turned off!");
+  }
+
+  return IGE::Physics::PhysicsSystem::GetInstance().get()->OnTriggerEnter(trigger, other);
+}
+
+bool Mono::OnTriggerExit(ECS::Entity trigger, ECS::Entity other) {
+  if (!trigger.HasComponent<Component::BoxCollider>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to check collision using an entity that does not have collider!");
+  }
+
+  if (!trigger.GetComponent<Component::BoxCollider>().sensor) {
+    Debug::DebugLogger::GetInstance().LogWarning("You are trying to check collision using an entity that has sensor turned off!");
+  }
+
+  return IGE::Physics::PhysicsSystem::GetInstance().get()->OnTriggerExit(trigger, other);
 }
 
 /*!**********************************************************************

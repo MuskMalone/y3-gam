@@ -110,7 +110,7 @@ public class TutorialCutscene : Entity
     {
         playerMove.FreezePlayer();
         firstCutscenePlaying = true;
-        tutorialDialogue.SetDialogue(firstCutsceneDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Sad });
+        tutorialDialogue.SetDialogue(firstCutsceneDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Neutral });
     }
 
     void EndFirstCutscene()
@@ -124,7 +124,7 @@ public class TutorialCutscene : Entity
     void StartSecondCutscene()
     {
         secondCutscenePlaying = true;
-        tutorialDialogue.SetDialogue(secondCutsceneDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Sad });
+        tutorialDialogue.SetDialogue(secondCutsceneDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Shocked });
     }
 
     void EndSecondCutscene()
@@ -132,7 +132,7 @@ public class TutorialCutscene : Entity
         closeDoor.SetActive(true);
         openDoor.SetActive(false);
         glow.SetActive(false);
-        tutorialDialogue.SetDialogue(thirdCutsceneDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Sad });
+        tutorialDialogue.SetDialogue(thirdCutsceneDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Surprised });
         playerMove.UnfreezePlayer();
         secondCutscenePlaying = false;
         cutsceneFinish = true;

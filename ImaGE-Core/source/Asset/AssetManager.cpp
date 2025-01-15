@@ -17,7 +17,7 @@ namespace IGE {
 		{
 			HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 			if (FAILED(hr)) {
-				throw std::runtime_error{"Error: CoInitializeEx failed!"};
+				throw std::runtime_error{ "Error: CoInitializeEx failed!" };
 			}
 			//#endif
 
@@ -32,18 +32,45 @@ namespace IGE {
 				IGE::Assets::MaterialAsset
 			>();
 			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			auto fp{ CreateProjectFile() }; // create project file if it doesnt exist
-			Serialization::Deserializer::DeserializeAny(mMetadata, fp);
+			//auto fp{ CreateProjectFile() }; // create project file if it doesnt exist
+			//Serialization::Deserializer::DeserializeAny(mMetadata, fp);
+			for (auto const& dir : mRegisteredTypeNames) {
+				auto directoryPath{ cAssetProjectSettingsPath + dir + "\\" };
+				try {
+					for (const auto& entry : std::filesystem::directory_iterator(directoryPath)) {
+						if (entry.is_regular_file()) { // Check if it's a regular file
+							auto file{ GetFileNameWithExtension(entry.path().string()) };
+							auto filename{ GetFileName(file) };
+							auto fileext{ GetFileExtension(file) };
+							if (fileext == cAssetMetadataFileExtension) {
+								uint64_t guidUint64{};
+								// Extract substring between the dots
+								auto guid64str{ GetFileExtension(filename) };
+								guid64str = guid64str.substr(1, guid64str.size());
+								guidUint64 = std::stoull(guid64str);
+								AssetMetadata::AssetProps metadata{};
+								Serialization::Deserializer::DeserializeAny(metadata, entry.path().string());
+								mMetadata.Emplace(dir, guidUint64, metadata);
+							}
+							
+						}
+					}
+				}
+				catch ([[maybe_unused]] const std::filesystem::filesystem_error& e) {
+					throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("failed when getting assets"));
+				}
+			}
 			//load the guid/path registries
 			for (std::pair<std::string, AssetMetadata::AssetCategory> const& category : mMetadata.mAssetProperties) {
 				for (std::pair<AssetMetadata::AssetPropsKey, AssetMetadata::AssetProps> const& entry : category.second) {
 					//if the attribute path doesnt exist :(
-					if (entry.second.find("path") == entry.second.end())
+					if (entry.second.metadata.find("path") == entry.second.metadata.end())
 						throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("asset " + std::to_string(entry.first) + " doesnt have a path!"));
-					mGUID2PathRegistry.emplace(GUID{ entry.first }, entry.second.at("path"));
-					mPath2GUIDRegistry.emplace(entry.second.at("path"), GUID(entry.first));
+					mGUID2PathRegistry.emplace(GUID{ entry.first }, entry.second.metadata.at("path"));
+					mPath2GUIDRegistry.emplace(entry.second.metadata.at("path"), GUID(entry.first));
 				}
 			}
+			//SaveMetadata();
 		}
 		std::string AssetManager::CreateProjectFile() const
 		{
@@ -83,8 +110,8 @@ namespace IGE {
 			*/
 		}
 		AssetManager::AssetManager() {
-			SUBSCRIBE_CLASS_FUNC(Events::EventType::REGISTER_FILES, &AssetManager::HandleAddFiles, this);
-			SUBSCRIBE_CLASS_FUNC(Events::EventType::GUID_REMAP, &AssetManager::OnRemapGUID, this);
+			SUBSCRIBE_CLASS_FUNC(Events::RegisterAssetsEvent, &AssetManager::HandleAddFiles, this);
+			SUBSCRIBE_CLASS_FUNC(Events::RemapGUID, &AssetManager::OnRemapGUID, this);
 			Initialize();
 			 //code snippet to "manufacture" all the data needed for importing
 			 //assumes that all the files are imported as is
@@ -106,15 +133,15 @@ namespace IGE {
 			bool removed{ false };
 			for (auto& entry : mMetadata.mAssetProperties) {
 				for (auto iter{ entry.second.begin() }; iter != entry.second.end();) {
-					if (!iter->second.contains("path")) {
+					if (!iter->second.metadata.contains("path")) {
 #ifdef _DEBUG
 						std::cout << "[AssetManager] Removed invalid metadata for asset " << iter->first << "\n";
 #endif
 					}
 
-					if (!std::filesystem::exists(iter->second["path"])) {
+					if (!std::filesystem::exists(iter->second.metadata["path"])) {
 #ifdef _DEBUG
-						std::cout << "[AssetManager] Removed " << iter->second["path"] << " from asset metadata as it no longer exists\n";
+						std::cout << "[AssetManager] Removed " << iter->second.metadata["path"] << " from asset metadata as it no longer exists\n";
 #endif
 						removed = true;
 						iter = entry.second.erase(iter);
@@ -136,8 +163,23 @@ namespace IGE {
 		}
 
 		void AssetManager::SaveMetadata() const {
-			auto fp{ CreateProjectFile() }; // get the project file if exists
-			Serialization::Serializer::SerializeAny(mMetadata, fp);
+			for (auto const& [cat, assets] : mMetadata.mAssetProperties) {
+				for (auto const& [guid, metadata] : assets) {
+					if (!metadata.modified) continue;
+					auto filename{ GetFileName(metadata.metadata.at("path")) };
+					// ill be storing the guid inside here for now
+					// using . as the delimiter
+					auto fp{ cAssetProjectSettingsPath + cat + "\\" + filename + "." + std::to_string(guid) + cAssetMetadataFileExtension};
+					Serialization::Serializer::SerializeAny(metadata, fp);
+				}
+			}
+			//auto fp{ CreateProjectFile() }; // get the project file if exists
+			//Serialization::Serializer::SerializeAny(mMetadata, fp);
+		}
+
+		bool AssetManager::IsTypeRegistered(std::string const& type)
+		{
+			return mRegisteredTypeNames.find(type) != mRegisteredTypeNames.end();
 		}
 
 		std::string AssetManager::GUIDToPath(GUID const& guid) {
@@ -210,7 +252,7 @@ namespace IGE {
 				}
 			}
 
-			assetCat[remapEvent->mGUID]["path"] = remapEvent->mPath;
+			assetCat[remapEvent->mGUID].metadata["path"] = remapEvent->mPath;
 			mPath2GUIDRegistry[remapEvent->mPath] = remapEvent->mGUID;
 			mGUID2PathRegistry[remapEvent->mGUID] = remapEvent->mPath;
 

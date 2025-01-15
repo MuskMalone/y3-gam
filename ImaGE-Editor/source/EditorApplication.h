@@ -39,9 +39,11 @@ namespace IGE {
 
   private:
     GUI::GUIManager mGUIManager;
-    EVENT_CALLBACK_DECL(LockMouse);
+
 
   private:
+    inline Graphics::RenderTarget& GetEditorRenderTarget() noexcept { return mRenderTargets[1]; }
+
     /*!*********************************************************************
     \brief
       Starts the ImGui frame

@@ -40,9 +40,9 @@ namespace Graphics {
 										 viewProjMatrix[3][3] - viewProjMatrix[3][2]
     };
 
-		/*for (int i{}; i < 6; ++i) {
+		for (int i{}; i < 6; ++i) {
 			frustum[i].Normalize();
-		}*/
+		}
 #else	// requires projection mtx to be passed in
 		// source: https://github.com/EQMG/Acid/blob/master/Sources/Physics/Frustum.cpp
 		std::array<float, 16> clip;

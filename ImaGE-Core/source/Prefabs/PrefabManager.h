@@ -64,7 +64,7 @@ namespace Prefabs
     \param event
       The event to be handled
     ************************************************************************/
-    EVENT_CALLBACK_DECL(HandleEvent);
+    EVENT_CALLBACK_DECL(OnPrefabSpawn);
 
   public:
     /*---------------------------- EDITOR - ONLY FUNCTIONS ----------------------------*/

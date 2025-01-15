@@ -34,6 +34,10 @@ namespace Prefabs
     PrefabSubData();
     PrefabSubData(SubDataId id, SubDataId parent = BasePrefabId);
 
+    rttr::variant GetComponent(rttr::type const& type) const;
+    template <typename T>
+    rttr::variant GetComponent() const { return GetComponent(rttr::type::get<T>()); }
+
     /*!*********************************************************************
     \brief
       Adds a component held by an rttr::variant object into the SubData's
@@ -70,8 +74,8 @@ namespace Prefabs
     std::vector<rttr::variant> mComponents;
     SubDataId mId, mParent;
 
-    // id of the first layer of the prefab
-    static constexpr SubDataId BasePrefabId = 0;
+    inline static constexpr SubDataId BasePrefabId = 0; // id of the root of the prefab
+    inline static constexpr SubDataId InvalidId = -1;
   };
   // struct encapsulating deserialized prefab data
   // components are stored in an std::vector of rttr::variants
@@ -80,7 +84,7 @@ namespace Prefabs
     struct EntityMappings;
     using SubObjectComponentMap = std::unordered_map<SubDataId, std::vector<rttr::variant>>;
 
-    Prefab() = default;
+    Prefab();
     Prefab(std::string name);
 
     /*!*********************************************************************
@@ -90,6 +94,19 @@ namespace Prefabs
       True if child components exist and false otherwise
     ************************************************************************/
     inline bool HasChildComponents() const noexcept { return !mObjects.empty(); }
+
+    inline PrefabSubData const& GetRoot() const { return mObjects.front(); }
+    inline PrefabSubData& GetRoot() { return mObjects.front(); }
+
+    /*!*********************************************************************
+    \brief
+      Returns a particular sub-object of the prefab
+    \param subDataId
+      The ID of the sub-object
+    \return
+      The corresponding sub-object
+    ************************************************************************/
+    inline PrefabSubData const& GetSubObject(unsigned subDataId) const { return mObjects[subDataId]; }
 
     /*!*********************************************************************
     \brief
@@ -156,7 +173,6 @@ namespace Prefabs
 
     std::string mName;
     std::vector<PrefabSubData> mObjects;
-    std::vector<rttr::variant> mComponents;
   };
 
   struct Prefab::EntityMappings {
@@ -168,9 +184,9 @@ namespace Prefabs
       idDict.emplace(subDataId);
     }
 
-    inline SubDataId Get(ECS::EntityManager::EntityID const& id) { return mappings[id]; }
-    inline SubDataId Get(ECS::EntityManager::EntityID const& id) const { return mappings.at(id); }
-    inline bool Contains(ECS::EntityManager::EntityID const& id) const { return mappings.contains(id); }
+    inline SubDataId Get(ECS::EntityManager::EntityID id) { return mappings[id]; }
+    inline SubDataId Get(ECS::EntityManager::EntityID id) const { return mappings.at(id); }
+    inline bool Contains(ECS::EntityManager::EntityID id) const { return mappings.contains(id); }
     inline bool Contains(SubDataId id) const { return idDict.contains(id); }
     inline size_t Size() const { return idDict.size(); }
     inline bool Empty() const noexcept { return idDict.empty(); }

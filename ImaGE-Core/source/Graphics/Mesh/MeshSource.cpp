@@ -28,6 +28,11 @@ namespace Graphics {
     return parent;
   }
 
+  void MeshSource::SetBoundingVolume(glm::vec3 const& min, glm::vec3 const& max) {
+    mBoundingBox.center = (min + max) * 0.5f;
+    mBoundingBox.halfExtents = (max - min) * 0.5f;
+  }
+
   void MeshSource::ComputeBV() {
     glm::vec3 min{ FLT_MAX }, max{ -FLT_MAX };
 
@@ -37,7 +42,7 @@ namespace Graphics {
     }
 
     mBoundingBox.center = (min + max) * 0.5f;
-    mBoundingBox.halfExtents = mBoundingBox.center - min;
+    mBoundingBox.halfExtents = (max - min) * 0.5f;
   }
 }
 

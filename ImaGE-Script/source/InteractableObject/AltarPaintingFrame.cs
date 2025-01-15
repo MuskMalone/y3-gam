@@ -18,7 +18,7 @@ public class AltarPaintingFrame : Entity
   void Update()
   {
     bool isPaintingHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
-    if (Input.GetMouseButtonTriggered(0) && isPaintingHit && !paintingFlag)
+    if (Input.GetMouseButtonTriggered(0) && isPaintingHit && !paintingFlag && !dialogueSystem.isInDialogueMode)
     {
       dialogueSystem.SetDialogue(paintingDialogue, new Dialogue.Emotion[] { Dialogue.Emotion.Neutral, Dialogue.Emotion.Thinking });
       paintingFlag = true;
