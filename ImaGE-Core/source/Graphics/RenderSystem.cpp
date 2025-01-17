@@ -11,11 +11,6 @@
 #include "Events/Event.h"
 #include "Events/EventManager.h"
 #include <Input/InputManager.h>
-#include <BoundingVolumes/IntersectionTests.h>
-
-namespace {
-	bool EntityInViewFrustum(BV::Frustum const& frustum, Component::Transform const& transform, Graphics::MeshSource const& meshSource);
-}
 
 namespace Graphics {
 	CameraManager RenderSystem::mCameraManager;
@@ -63,7 +58,7 @@ namespace Graphics {
 			Component::Mesh& mesh{ entity.GetComponent<Component::Mesh>() };
 			if (!mesh.meshSource) { return false; }
 
-			bool const ret{ EntityInViewFrustum(camFrustum, entity.GetComponent<Component::Transform>(),
+			bool const ret{ Utils::Culling::EntityInViewFrustum(camFrustum, entity.GetComponent<Component::Transform>(),
 				am.GetAsset<IGE::Assets::ModelAsset>(mesh.meshSource)->mMeshSource) };
 			if (!ret) { ++cullCount; }
 
@@ -153,40 +148,5 @@ namespace Graphics {
 				QUEUE_EVENT(Events::EntityMouseUp, hoveredEntity);
 			}
 		}
-	}
-}
-
-namespace {
-	// looks like it works (may need more testing)
-	// from learnopengl
-	bool EntityInViewFrustum(BV::Frustum const& frustum, Component::Transform const& transform, Graphics::MeshSource const& meshSource) {
-		BV::AABB aabb{ transform.worldPos, glm::vec3(1.f) };
-		// apply scale to halfExtents of mesh
-		glm::vec3 const& halfExt{ meshSource.GetBoundingBox().halfExtents };
-
-		// if rotation is identity (unmodified), simply multiply half extents to scale
-		if (glm::epsilonEqual(transform.worldRot.x, 1.f, glm::epsilon<float>()) && glm::epsilonEqual(transform.worldRot.y, 0.f, glm::epsilon<float>())
-			&& glm::epsilonEqual(transform.worldRot.z, 0.f, glm::epsilon<float>()) && glm::epsilonEqual(transform.worldRot.w, 0.f, glm::epsilon<float>())) {
-			aabb.halfExtents = halfExt * transform.worldScale;
-		}
-		else {
-			glm::vec3 const right = transform.worldMtx[0] * halfExt.x;
-			glm::vec3 const up = transform.worldMtx[1] * halfExt.y;
-			glm::vec3 const forward = -transform.worldMtx[2] * halfExt.z;
-
-			aabb.halfExtents.x = std::abs(glm::dot(glm::vec3{ 1.f, 0.f, 0.f }, right)) +
-				std::abs(glm::dot(glm::vec3{ 1.f, 0.f, 0.f }, up)) +
-				std::abs(glm::dot(glm::vec3{ 1.f, 0.f, 0.f }, forward));
-
-			aabb.halfExtents.y = std::abs(glm::dot(glm::vec3{ 0.f, 1.f, 0.f }, right)) +
-				std::abs(glm::dot(glm::vec3{ 0.f, 1.f, 0.f }, up)) +
-				std::abs(glm::dot(glm::vec3{ 0.f, 1.f, 0.f }, forward));
-
-			aabb.halfExtents.z = std::abs(glm::dot(glm::vec3{ 0.f, 0.f, 1.f }, right)) +
-				std::abs(glm::dot(glm::vec3{ 0.f, 0.f, 1.f }, up)) +
-				std::abs(glm::dot(glm::vec3{ 0.f, 0.f, 1.f }, forward));
-		}
-
-		return BV::FrustumAABBIntersection(frustum, aabb);
 	}
 }

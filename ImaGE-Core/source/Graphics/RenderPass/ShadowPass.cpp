@@ -11,7 +11,6 @@
 #include <Core/LayerManager/LayerManager.h>
 
 namespace Graphics {
-
     ShadowPass::ShadowPass(const RenderPassSpec& spec) : RenderPass(spec),
       mLightSpaceMtx{}, mLightEntity{}, mShadowSoftness {}, mShadowBias{}, mActive{ false } {}
 
