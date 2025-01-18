@@ -61,7 +61,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 5971321523229111017
+                            "ID": 16211310182187335803
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -132,7 +132,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 2451404758156040788
+                            "ID": 3815097445005270835
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -278,7 +278,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 5971321523229111017
+                            "ID": 16211310182187335803
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -367,6 +367,7 @@
                             "softness": 1,
                             "bias": 0.004999999888241291,
                             "nearPlane": -100.0,
+                            "farPlane": 200.0,
                             "scenesBounds": 2.809999942779541,
                             "isStatic": true,
                             "shadowModified": false,
@@ -437,7 +438,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 5971321523229111017
+                            "ID": 16211310182187335803
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -775,5 +776,13 @@
                 0
             ]
         ]
+    },
+    "Global Properties": {
+        "ambColor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "ambIntensity": 0.0
     }
 }

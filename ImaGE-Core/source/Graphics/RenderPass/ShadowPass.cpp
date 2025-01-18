@@ -43,10 +43,11 @@ namespace Graphics {
         if (!mesh.meshSource.IsValid() || !mesh.castShadows) { continue; }
 
             Graphics::Renderer::SubmitInstance(
-                entity.GetComponent<Component::Mesh>().meshSource,
+                mesh.meshSource,
                 entity.GetComponent<Component::Transform>().worldMtx,
                 Color::COLOR_WHITE,
-                entity.GetEntityID()
+                entity.GetEntityID(),
+                0, mesh.submeshIdx
             );
         }
         Renderer::RenderSubmeshInstances();

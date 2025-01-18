@@ -15,7 +15,7 @@ namespace Component
   struct Tag
   {
     Tag() : tag{ "NoName" }, isActive{ true } {}
-    Tag(std::string const& tagString) : tag{ tagString }, isActive{ true } {}
+    Tag(std::string const& tagString, bool active = true) : tag{ tagString }, isActive{ active } {}
 
     /*!*********************************************************************
     \brief
