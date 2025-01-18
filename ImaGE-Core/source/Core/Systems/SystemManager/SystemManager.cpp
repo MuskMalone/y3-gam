@@ -22,11 +22,15 @@ namespace Systems {
   void SystemManager::UpdateSystems() {
     Performance::FrameRateController& frc{ Performance::FrameRateController::GetInstance() };
     for (SystemPtr const& system : mSystems) {
+#ifndef DISTRIBUTION
       frc.StartSystemTimer();
+#endif
 
       system->Update();
 
+#ifndef DISTRIBUTION
       frc.EndSystemTimer(system->GetName());
+#endif
     }
   }
 
@@ -40,9 +44,14 @@ namespace Systems {
       }
 #endif
 
+#ifndef DISTRIBUTION
       frc.StartSystemTimer();
+#endif
       mNameToSystem[name]->PausedUpdate();
+
+#ifndef DISTRIBUTION
       frc.EndSystemTimer(name);
+#endif
     }
   }
 

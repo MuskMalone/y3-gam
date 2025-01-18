@@ -54,12 +54,7 @@ namespace IGE {
     SetEditorCallbacks();
 
     // EditorView
-    Graphics::FramebufferSpec framebufferSpec;
-    framebufferSpec.width = spec.WindowWidth;
-    framebufferSpec.height = spec.WindowHeight;
-    framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
-
-    mRenderTargets.emplace_back(framebufferSpec);
+    mRenderTargets.emplace_back();
     mRenderTargets.back().camera->InitForEditorView();
   }
 
@@ -129,7 +124,8 @@ namespace IGE {
           std::cerr << e.what() << std::endl;
 #endif
         }
-
+        
+        auto const& fb{ Graphics::Renderer::GetFinalFramebuffer() };
         try {
           if (GetApplicationSpecification().EnableImGui) {
 
@@ -138,8 +134,6 @@ namespace IGE {
 
             UpdateFramebuffers(gameTex);
             
-            auto& fb{ GetDefaultRenderTarget().framebuffer };
-            fb = Graphics::Renderer::GetFinalFramebuffer();
             frameRateController.EndSystemTimer("Graphics System");
             
             frameRateController.StartSystemTimer();
@@ -172,7 +166,6 @@ namespace IGE {
               if (Graphics::RenderSystem::mCameraManager.HasActiveCamera()) {
                   Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() });
               }
-              auto const& fb = Graphics::Renderer::GetFinalFramebuffer();
               std::shared_ptr<Graphics::Texture> gameTex = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
 
               if (gameTex) {
