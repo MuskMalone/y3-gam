@@ -6760,6 +6760,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -6789,12 +6795,6 @@
                                 "customCenter": false
                             }
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -6815,6 +6815,12 @@
                         "value": {
                             "tag": "Light",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
                         }
                     },
                     {
@@ -6846,12 +6852,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -10474,7 +10474,10 @@
                 42,
                 142,
                 145,
-                1015
+                1015,
+                1048903,
+                1049596,
+                1049630
             ],
             "Components": [
                 {
@@ -10930,6 +10933,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -10958,12 +10967,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -11104,6 +11107,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -11132,12 +11141,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -11460,6 +11463,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -11488,12 +11497,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -11827,6 +11830,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -11855,12 +11864,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -12017,6 +12020,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -12045,12 +12054,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -49973,6 +49976,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -50001,12 +50010,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -50755,35 +50758,6 @@
                 "subDataId": 8,
                 "componentData": [
                     {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 1.0,
-                            "dynamicFriction": 1.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "KINEMATIC",
-                            "axisLock": 7,
-                            "angularAxisLock": 7
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -50808,6 +50782,35 @@
                                 "w": 0.9636304378509522
                             },
                             "sensor": false
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
+                        "key": "RigidBody",
+                        "value": {
+                            "velocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "angularVelocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "staticFriction": 1.0,
+                            "dynamicFriction": 1.0,
+                            "restitution": 0.0,
+                            "gravityFactor": 0.0,
+                            "linearDamping": 0.9800000190734863,
+                            "motionType": "KINEMATIC",
+                            "axisLock": 7,
+                            "angularAxisLock": 7
                         }
                     }
                 ],
@@ -50956,35 +50959,6 @@
                 "subDataId": 8,
                 "componentData": [
                     {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 1.0,
-                            "dynamicFriction": 1.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "KINEMATIC",
-                            "axisLock": 7,
-                            "angularAxisLock": 7
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -51009,6 +50983,35 @@
                                 "w": 0.9636304378509522
                             },
                             "sensor": false
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
+                        "key": "RigidBody",
+                        "value": {
+                            "velocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "angularVelocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "staticFriction": 1.0,
+                            "dynamicFriction": 1.0,
+                            "restitution": 0.0,
+                            "gravityFactor": 0.0,
+                            "linearDamping": 0.9800000190734863,
+                            "motionType": "KINEMATIC",
+                            "axisLock": 7,
+                            "angularAxisLock": 7
                         }
                     }
                 ],
@@ -51243,6 +51246,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -51271,12 +51280,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -52785,35 +52788,6 @@
                         }
                     },
                     {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 0.0,
-                            "dynamicFriction": 0.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "DYNAMIC",
-                            "axisLock": 0,
-                            "angularAxisLock": 0
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Puzzle"
-                        }
-                    },
-                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -52838,6 +52812,35 @@
                                 "w": 0.9990482330322266
                             },
                             "sensor": false
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Puzzle"
+                        }
+                    },
+                    {
+                        "key": "RigidBody",
+                        "value": {
+                            "velocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "angularVelocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "staticFriction": 0.0,
+                            "dynamicFriction": 0.0,
+                            "restitution": 0.0,
+                            "gravityFactor": 0.0,
+                            "linearDamping": 0.9800000190734863,
+                            "motionType": "DYNAMIC",
+                            "axisLock": 0,
+                            "angularAxisLock": 0
                         }
                     }
                 ],
@@ -54948,7 +54951,7 @@
         },
         {
             "ID": 1048903,
-            "Parent": null,
+            "Parent": 269,
             "Child Entities": [
                 1039,
                 1041,
@@ -62334,7 +62337,7 @@
         },
         {
             "ID": 1049596,
-            "Parent": null,
+            "Parent": 269,
             "Child Entities": [
                 285,
                 4194493,
@@ -62370,9 +62373,9 @@
                                 "w": 0.05415723845362663
                             },
                             "eulerAngles": {
-                                "x": 180.0,
+                                "x": -180.0,
                                 "y": 6.209000110626221,
-                                "z": 180.0
+                                "z": -180.0
                             },
                             "worldPos": {
                                 "x": 12.630999565124512,
@@ -62398,7 +62401,7 @@
         },
         {
             "ID": 1049630,
-            "Parent": null,
+            "Parent": 269,
             "Child Entities": [
                 1049635,
                 4194499,
@@ -71098,12 +71101,6 @@
                 "subDataId": 13,
                 "componentData": [
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -71128,6 +71125,12 @@
                                 "w": 1.0
                             },
                             "sensor": false
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
                         }
                     }
                 ],
@@ -71748,12 +71751,6 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -71778,6 +71775,12 @@
                                 "w": 1.0
                             },
                             "sensor": false
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
                         }
                     }
                 ],

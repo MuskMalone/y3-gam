@@ -1495,7 +1495,7 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
             l.mLightIntensity += (2.0f - l.mLightIntensity) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
             if (l.mLightIntensity >= 1.96f)
             {
-              std::cout << "Faster?\n";
+              //std::cout << "Faster?\n";
               l.mLightIntensity = 2.f;
             }
           }
@@ -1513,7 +1513,7 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
           l.mLightIntensity -= (l.mLightIntensity - 0.0f) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
           if (l.mLightIntensity <= 0.04f)
           {
-            std::cout << "Faster?\n";
+            //std::cout << "Faster?\n";
             l.mLightIntensity = 0.f;
           }
         }
@@ -1527,7 +1527,7 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
   for (ECS::Entity child : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Light>())
   {
     std::string n = child.GetTag();
-    if (n == "Light" || n == "LightR" || n == "LightL" || n == "LightN" || n == "LightF" || n == "LightT" || n == "LightB")
+    if (n == "Light")
     {
       child.SetIsActive(true);
     }
