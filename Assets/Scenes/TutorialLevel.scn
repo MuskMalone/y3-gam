@@ -6098,31 +6098,6 @@
                                 }
                             },
                             {
-                                "key": "PaintingMatchObject",
-                                "value": {
-                                    "guid": {
-                                        "ID": 9407064822443940162
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 0.08451122045516968,
-                                            "y": 2.2012765407562258,
-                                            "z": 7.153004169464111
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
-                                    }
-                                }
-                            },
-                            {
                                 "key": "BGM",
                                 "value": {
                                     "guid": {
@@ -6140,6 +6115,31 @@
                                         "mute": false,
                                         "loop": true,
                                         "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "PaintingMatchObject",
+                                "value": {
+                                    "guid": {
+                                        "ID": 9407064822443940162
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.08451122045516968,
+                                            "y": 2.2012765407562258,
+                                            "z": 7.153004169464111
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
@@ -7557,10 +7557,10 @@
                     "AudioSource": {
                         "sounds": [
                             {
-                                "key": "MoveSlots",
+                                "key": "InventoryPopUp",
                                 "value": {
                                     "guid": {
-                                        "ID": 2818988100017391053
+                                        "ID": 6850159606409790597
                                     },
                                     "playSettings": {
                                         "position": {
@@ -7582,10 +7582,10 @@
                                 }
                             },
                             {
-                                "key": "InventoryPopUp",
+                                "key": "MoveSlots",
                                 "value": {
                                     "guid": {
-                                        "ID": 6850159606409790597
+                                        "ID": 2818988100017391053
                                     },
                                     "playSettings": {
                                         "position": {
