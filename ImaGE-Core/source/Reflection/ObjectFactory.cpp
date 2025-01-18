@@ -231,7 +231,7 @@ namespace Reflection
     }
   }
 
-  void ObjectFactory::LoadPrefabInstances() {
+  void ObjectFactory::LoadPrefabInstances(std::vector<ECS::Entity>& entityVector) {
     Prefabs::PrefabManager& pm{ Prefabs::PrefabManager::GetInstance() };
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
     IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
@@ -270,6 +270,8 @@ namespace Reflection
         if (isPrefabValid) {
           ent.EmplaceComponent<Component::PrefabOverrides>(instData.mOverrides.ToPrefabOverrides());
         }
+
+        entityVector.emplace_back(ent);
       }
 
       Prefabs::Prefab const* originalPfb{ isPrefabValid ? &am.GetAsset<Assets::PrefabAsset>(guid)->mPrefabData : nullptr };
@@ -306,8 +308,9 @@ namespace Reflection
     OverrideInstanceComponents();
   }
 
-  void ObjectFactory::InitScene()
+  void ObjectFactory::InitScene(std::vector<ECS::Entity>& entityVector)
   {
+    entityVector.reserve(mRawEntities.size());
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
 
     // iterate through data and create entities
@@ -322,6 +325,7 @@ namespace Reflection
 
       newEntity.SetIsActive(data.mIsActive);
       AddComponentsToEntity(newEntity, data.mComponents);
+      entityVector.emplace_back(newEntity);
     }
 
     // restore the hierarchy
@@ -335,7 +339,7 @@ namespace Reflection
         mNewIDs.contains(data.mID) ? mNewIDs[data.mID] : data.mID);
     }
 
-    LoadPrefabInstances();
+    LoadPrefabInstances(entityVector);
     // trigger the guid remapping popup if needed
     QUEUE_EVENT(Events::TriggerGUIDRemap);
   }

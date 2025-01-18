@@ -1,13 +1,13 @@
 #pragma once
 #include <vector>
+#include <string>
 #include <Core/Entity.h>
 
 namespace Scenes {
-  class Scene {
-  public:
-    Scene();
+  struct Scene {
+    Scene(std::string name);
 
-  private:
+    std::string mName;
     std::vector<ECS::Entity> mEntities;
   };
 } // namespace Scenes

@@ -10,15 +10,14 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <pch.h>
 #include "SceneManager.h"
 #include <filesystem>
-#include <Events/EventManager.h>
-#include <Globals.h>
-#include <Serialization/Serializer.h>
 #include <Core/Entity.h>
-#include <Physics/PhysicsSystem.h> //tch: this is to clear the physics rbs for now 
+#include <Core/Components/Light.h>
+
+#include <Events/EventManager.h>
 #include <Reflection/ObjectFactory.h>
 #include "Graphics/RenderSystem.h"
-#include <Core/Components/Light.h>
 #include <Physics/PhysicsSystem.h>
+#include <Serialization/Serializer.h>
 
 #ifdef _DEBUG
 //#define EVENTS_DEBUG
@@ -26,8 +25,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Scenes
 {
-  SceneManager::SceneManager(SceneState startingState) : mSaveStates{}, mMainThreadQueue{}, mSceneName{},
-    mTempDir{ gTempDirectory }, mMainThreadQueueMutex{}, mSceneState{ startingState }
+  SceneManager::SceneManager(SceneState startingState) : mTempDir{ gTempDirectory }, mSaveStates{},
+    mScenes{}, mMainThreadQueue {}, mMainThreadQueueMutex{}, mSceneState{ startingState }
   {
     // @TODO: SHOULD RETREIVE FROM CONFIG FILE IN FUTURE
     //mTempDir = gTempDirectory;
@@ -53,17 +52,17 @@ namespace Scenes
 
   void SceneManager::PauseScene() {
     mSceneState = SceneState::PAUSED;
-    QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::PAUSED, mSceneName);
+    QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::PAUSED, mScenes.front().mName);
   }
 
   void SceneManager::PlayScene() {
     TemporarySave(false);
     mSceneState = SceneState::PLAYING;
-    QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::STARTED, mSceneName);
+    QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::STARTED, mScenes.front().mName);
   }
 
   void SceneManager::StopScene() {
-    Events::EventManager::GetInstance().DispatchImmediateEvent<Events::SceneStateChange>(Events::SceneStateChange::STOPPED, mSceneName);
+    Events::EventManager::GetInstance().DispatchImmediateEvent<Events::SceneStateChange>(Events::SceneStateChange::STOPPED, mScenes.front().mName);
     ClearScene();
     UnloadScene();
 
@@ -71,8 +70,7 @@ namespace Scenes
     // else it means we're loading back to a previous scene
     if (!mSaveStates.empty()) {
       LoadTemporarySave();
-      InitScene();
-      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mSceneName);
+      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mScenes.front().mName);
     }
 
     mSceneState = SceneState::STOPPED;
@@ -82,8 +80,8 @@ namespace Scenes
     Reflection::ObjectFactory::GetInstance().LoadEntityData(path);
   }
 
-  void SceneManager::InitScene() {
-    Reflection::ObjectFactory::GetInstance().InitScene();
+  void SceneManager::InitScene(std::vector<ECS::Entity>& entityVector) {
+    Reflection::ObjectFactory::GetInstance().InitScene(entityVector);
     // realign colliders with transforms
     IGE_EVENTMGR.DispatchImmediateEvent<Events::TriggerPausedUpdate>();
     Mono::ScriptManager::GetInstance().LinkAllScriptDataMember();
@@ -91,7 +89,7 @@ namespace Scenes
 
   // i should just combine clear and unload functions
   void SceneManager::ClearScene() {
-    mSceneName.clear();
+    mScenes.clear();
     IGE::Physics::PhysicsSystem::GetInstance()->ClearSystem();
     Graphics::MaterialTable::ClearMaterials();
   }
@@ -109,9 +107,8 @@ namespace Scenes
 
     // load it back
     LoadTemporarySave();
-    InitScene();
 
-    QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::NEW, mSceneName);
+    QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::NEW, mScenes.front().mName);
   }
 
   EVENT_CALLBACK_DEF(SceneManager, OnSceneLoad) {
@@ -119,14 +116,17 @@ namespace Scenes
     UnloadScene();
 
     auto loadSceneEvent{ std::static_pointer_cast<Events::LoadSceneEvent>(event) };
-    mSceneName = loadSceneEvent->mSceneName;
+    Debug::DebugLogger::GetInstance().LogInfo("Loading scene: " + loadSceneEvent->mSceneName + "...");
+
+    mScenes.emplace_back(loadSceneEvent->mSceneName);
+
     if (!loadSceneEvent->mPath.empty()) {
       LoadScene(loadSceneEvent->mPath);
-      InitScene();
-      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mSceneName);
+      InitScene(mScenes.back().mEntities);
+      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, loadSceneEvent->mSceneName);
     }
     else {
-      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::NEW, mSceneName);
+      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::NEW, loadSceneEvent->mSceneName);
 
       // add light to scene
       ECS::Entity newEntity{ IGE_ENTITYMGR.CreateEntity() };
@@ -136,14 +136,13 @@ namespace Scenes
       // add camera
       Graphics::RenderSystem::mCameraManager.AddMainCamera();
     }
-    Debug::DebugLogger::GetInstance().LogInfo("Loading scene: " + mSceneName + "...");
 
     // if the scene changed while playing, we dont stop it
     if (mSceneState != SceneState::PLAYING) {
       mSceneState = SceneState::STOPPED;
     }
     else {
-      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mSceneName);
+      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, loadSceneEvent->mSceneName);
     }
   }
 
@@ -153,14 +152,13 @@ namespace Scenes
 
   EVENT_CALLBACK_DEF(SceneManager, OnPrefabEditor) {
     // save and unload
-    if (!mSceneName.empty()) {
+    if (!mScenes.empty()) {
       TemporarySave(false);
       ClearScene();
       UnloadScene();
     }
     mSceneState = SceneState::PREFAB_EDITOR;
     auto prefabEvent{ std::static_pointer_cast<Events::EditPrefabEvent>(event) };
-    mSceneName = prefabEvent->mPrefab;
     Debug::DebugLogger::GetInstance().LogInfo("Entering prefab editor for: " + prefabEvent->mPrefab + "...");
   }
 
@@ -176,9 +174,10 @@ namespace Scenes
       }
     }
 
-    std::ostringstream filepath{};
-    filepath << gBackupDirectory << mSceneName << sSceneFileExtension;
-    Serialization::Serializer::SerializeScene(filepath.str(), pretty ? Serialization::PRETTY : Serialization::COMPACT);
+    for (Scene const& scene : mScenes) {
+      std::string filePath{ gBackupDirectory + scene.mName + gSceneFileExt };
+      Serialization::Serializer::SerializeScene(filePath, pretty ? Serialization::PRETTY : Serialization::COMPACT);
+    }
   }
 
   void SceneManager::BackupCopy(std::string const& path) const {
@@ -204,24 +203,30 @@ namespace Scenes
 
   void SceneManager::SaveScene(bool pretty) const
   {
-    // Save the scene
-    std::ostringstream filepath{};
-    filepath << gAssetsDirectory << "Scenes\\" << mSceneName << sSceneFileExtension;
+    // Save the scenes
+    for (Scene const& scene : mScenes) {
+      std::ostringstream filepath{};
+      filepath << gAssetsDirectory << "Scenes\\" << scene.mName << gSceneFileExt;
 
-    BackupCopy(filepath.str());
-    Serialization::Serializer::SerializeScene(filepath.str(), pretty ? Serialization::PRETTY : Serialization::COMPACT);
+      BackupCopy(filepath.str());
+      Serialization::Serializer::SerializeScene(filepath.str(), pretty ? Serialization::PRETTY : Serialization::COMPACT);
 
-    Debug::DebugLogger::GetInstance().LogInfo("Successfully saved scene to " + filepath.str());
+      Debug::DebugLogger::GetInstance().LogInfo("Successfully saved scene to " + filepath.str());
+    }
   }
 
   void SceneManager::TemporarySave(bool pretty)
   {
-    // we will differentiate save files using the size of the stack
-    std::string const path{ mTempDir + "temp" + std::to_string(mSaveStates.size())};
-    mSaveStates.emplace(mSceneName, path);
-    Serialization::Serializer::SerializeScene(path, pretty ? Serialization::PRETTY : Serialization::COMPACT);
+    SaveState saveState{};
+    for (Scene const& scene : mScenes) {
+      std::string path{ mTempDir + scene.mName + ".tmp" };
+      Serialization::Serializer::SerializeScene(path, pretty ? Serialization::PRETTY : Serialization::COMPACT);
+      saveState.saves.emplace_back(scene.mName, std::move(path));
 
-    //Debug::DebugLogger::GetInstance().LogInfo("Temporarily saved scene to " + path);
+      //Debug::DebugLogger::GetInstance().LogInfo("Temporarily saved scene to " + path);
+    }
+
+    mSaveStates.emplace(std::move(saveState));
   }
 
   void SceneManager::LoadTemporarySave()
@@ -229,11 +234,17 @@ namespace Scenes
     ClearScene();
     UnloadScene();
 
-    auto saveState{ std::move(mSaveStates.top()) };
+    SaveState saveState{ std::move(mSaveStates.top()) };
     mSaveStates.pop();
-    mSceneName = std::move(saveState.mName);
-    LoadScene(saveState.mPath);
-    std::filesystem::remove(saveState.mPath); // delete the temp scene file
+
+    for (auto const& [name, path] : saveState.saves) {
+      mScenes.emplace_back(name);
+
+      LoadScene(path);
+      InitScene(mScenes.back().mEntities);
+
+      std::filesystem::remove(path); // delete the temp scene file
+    }
 
     Debug::DebugLogger::GetInstance().LogInfo("Scene reverted to previous state");
   }

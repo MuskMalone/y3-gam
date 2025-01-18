@@ -61,7 +61,7 @@ namespace Reflection
     \brief
       Creates the entities for the scene with the data stored.
     ************************************************************************/
-    void InitScene();
+    void InitScene(std::vector<ECS::Entity>& entityVector);
 
     /*!*********************************************************************
     \brief
@@ -136,7 +136,7 @@ namespace Reflection
     PrefabInstanceContainer mPrefabInstances;   // stores deserialized prefab instances
     std::vector<VariantEntity> mRawEntities; // stores deserialized entity data
 
-    void LoadPrefabInstances();
+    void LoadPrefabInstances(std::vector<ECS::Entity>& entityVector);
 
     void OverrideInstanceComponents() const;
 

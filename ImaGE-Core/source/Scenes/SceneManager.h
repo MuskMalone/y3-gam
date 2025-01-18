@@ -10,6 +10,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma once
 #include <Singleton/ThreadSafeSingleton.h>
 #include "SceneStates.h"
+#include <Scenes/Scene.h>
 #include <string>
 #include <stack>
 #include <Events/EventCallback.h>
@@ -64,7 +65,7 @@ namespace Scenes {
     \return
       The name of the current scene
     ************************************************************************/
-    inline std::string const& GetSceneName() const noexcept { return mSceneName; }
+    inline std::string const& GetSceneName() const noexcept { return mScenes.front().mName; }
 
     /*!*********************************************************************
     \brief
@@ -97,14 +98,10 @@ namespace Scenes {
     void BackupSave(bool pretty) const;
 
   private:
-    struct SaveState
-    {
-      SaveState(std::string name, std::string path) : mName{ std::move(name) }, mPath{ std::move(path) } {}
-
-      std::string mName, mPath;
+    struct SaveState {
+      // <name, path>
+      std::vector<std::pair<std::string, std::string>> saves;
     };
-
-    static constexpr char sSceneFileExtension[] = ".scn";
 
     /*!*********************************************************************
     \brief
@@ -124,7 +121,7 @@ namespace Scenes {
     \brief
       Initializes a scene
     ************************************************************************/
-    void InitScene();
+    void InitScene(std::vector<ECS::Entity>& entityVector);
 
     /*!*********************************************************************
     \brief
@@ -158,9 +155,10 @@ namespace Scenes {
     EVENT_CALLBACK_DECL(OnSceneLoad);
     EVENT_CALLBACK_DECL(OnPrefabEditor);
 
+    std::string mTempDir;
     std::stack<SaveState> mSaveStates;  // used to temporarily store scene saves when playing/stopping/transitioning to PrefabEditor
+    std::vector<Scene> mScenes;
     std::vector<std::function<void()>> mMainThreadQueue;
-    std::string mSceneName, mTempDir;
     std::mutex mMainThreadQueueMutex;
     SceneState mSceneState;
   };
