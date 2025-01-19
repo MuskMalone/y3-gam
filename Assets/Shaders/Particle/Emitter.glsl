@@ -67,7 +67,7 @@ void main() {
             Emitter prevEmitter = Emitters[emtTargetIdx];
             Emitters[emtTargetIdx] = emitter;
             Emitters[emtTargetIdx].time = prevEmitter.time;
-
+            Emitters[emtTargetIdx].alive = true;
             // TexHdls[emtTargetIdx].texCoords[0] = uTexcoords[0];
             // TexHdls[emtTargetIdx].texCoords[1] = uTexcoords[1];
             // TexHdls[emtTargetIdx].texCoords[2] = uTexcoords[2];

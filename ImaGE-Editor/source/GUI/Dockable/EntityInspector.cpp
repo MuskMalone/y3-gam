@@ -446,13 +446,13 @@ namespace GUI {
 
 
       if (currentEntity.HasComponent<Component::EmitterSystem>()) {
-          rttr::type const sourceType{ rttr::type::get<Component::EmitterSystem>() };
-          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(sourceType);
+          rttr::type const compType{ rttr::type::get<Component::EmitterSystem>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(compType);
 
           if (EmitterSystemComponentWindow(currentEntity, componentOverriden)) {
               SetIsComponentEdited(true);
               if (prefabOverride) {
-                  prefabOverride->AddComponentModification(currentEntity.GetComponent<Component::EmitterSystem>());
+                  prefabOverride->AddComponentOverride(compType);
               }
           }
       }
@@ -1850,79 +1850,67 @@ namespace GUI {
               bool isOpenEmitter = ImGui::CollapsingHeader(emitterLabel.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
 
               if (isOpenEmitter) {
-                  BeginVec3Table(("EmitterTransformTable_" + std::to_string(i)).c_str(), inputWidth);
-
-                  // Edit vertices (display as read-only for now)
-                  for (size_t j = 0; j < emitter.vertices.size(); ++j) {
-                      ImGui::TableNextRow();
-                      ImGui::TableSetColumnIndex(0);
-                      ImGui::Text("Vertex %zu", j);
-                      ImGui::TableSetColumnIndex(1);
-                      ImGui::DragFloat4(("##Vertex" + std::to_string(i) + "_" + std::to_string(j)).c_str(), &emitter.vertices[j][0], 0.1f, -FLT_MAX, FLT_MAX);
+                  // Show vertices based on vCount
+                  for (int j = 0; j < emitter.vCount; ++j) {
+                      ImGui::Text("Vertex %d: X: %.2f, Y: %.2f, Z: %.2f, W: %.2f", j, emitter.vertices[j].x, emitter.vertices[j].y, emitter.vertices[j].z, emitter.vertices[j].w);
+                      if (ImGui::DragFloat4(("##Vertex_" + std::to_string(i) + "_" + std::to_string(j)).c_str(), &emitter.vertices[j][0], 0.1f, -FLT_MAX, FLT_MAX)) {
+                          modified = true;
+                      }
                   }
 
-                  // Edit position
-                  if (ImGuiHelpers::TableInputFloat3("Position", &emitter.vel[0], inputWidth, false, -FLT_MAX, FLT_MAX, 0.1f)) {
+                  // Edit color
+                  if (ImGui::ColorEdit4(("Color##" + std::to_string(i)).c_str(), &emitter.col[0])) {
+                      modified = true;
+                  }
+
+                  // Edit velocity
+                  if (ImGui::DragFloat3(("Velocity##" + std::to_string(i)).c_str(), &emitter.vel[0], 0.1f, -FLT_MAX, FLT_MAX)) {
                       modified = true;
                   }
 
                   // Edit rotation
-                  if (ImGuiHelpers::TableInputFloat3("Rotation", &emitter.rot[0], inputWidth, false, -360.f, 360.f, 0.3f)) {
+                  if (ImGui::DragFloat3(("Rotation##" + std::to_string(i)).c_str(), &emitter.rot[0], 0.3f, -360.f, 360.f)) {
                       modified = true;
                   }
 
                   // Edit size
-                  if (ImGuiHelpers::TableInputFloat2("Size", &emitter.size[0], inputWidth, false, 0.001f, FLT_MAX, 0.02f)) {
+                  if (ImGui::DragFloat2(("Size##" + std::to_string(i)).c_str(), &emitter.size[0], 0.02f, 0.001f, FLT_MAX)) {
                       modified = true;
                   }
 
-                  // Edit other fields
-                  ImGui::TableNextRow();
-                  ImGui::TableSetColumnIndex(0);
-                  ImGui::Text("Angular Velocity");
-                  ImGui::TableSetColumnIndex(1);
-                  if (ImGui::DragFloat(("##AngularVelocity_" + std::to_string(i)).c_str(), &emitter.angvel, 0.1f, -FLT_MAX, FLT_MAX)) {
+                  // Edit angular velocity
+                  if (ImGui::DragFloat(("Angular Velocity##" + std::to_string(i)).c_str(), &emitter.angvel, 0.1f, -FLT_MAX, FLT_MAX)) {
                       modified = true;
                   }
 
-                  ImGui::TableNextRow();
-                  ImGui::TableSetColumnIndex(0);
-                  ImGui::Text("Lifetime");
-                  ImGui::TableSetColumnIndex(1);
-                  if (ImGui::DragFloat(("##Lifetime_" + std::to_string(i)).c_str(), &emitter.lifetime, 0.1f, 0.1f, 100.f)) {
+                  // Edit lifetime
+                  if (ImGui::DragFloat(("Lifetime##" + std::to_string(i)).c_str(), &emitter.lifetime, 0.1f, 0.1f, 100.f)) {
                       modified = true;
                   }
 
-                  ImGui::TableNextRow();
-                  ImGui::TableSetColumnIndex(0);
-                  ImGui::Text("Speed");
-                  ImGui::TableSetColumnIndex(1);
-                  if (ImGui::DragFloat(("##Speed_" + std::to_string(i)).c_str(), &emitter.speed, 0.1f, 0.1f, 100.f)) {
+                  // Edit speed
+                  if (ImGui::DragFloat(("Speed##" + std::to_string(i)).c_str(), &emitter.speed, 0.1f, 0.1f, 100.f)) {
                       modified = true;
                   }
 
-                  ImGui::TableNextRow();
-                  ImGui::TableSetColumnIndex(0);
-                  ImGui::Text("Frequency");
-                  ImGui::TableSetColumnIndex(1);
-                  if (ImGui::DragFloat(("##Frequency_" + std::to_string(i)).c_str(), &emitter.frequency, 0.01f)) {
+                  // Edit frequency
+                  if (ImGui::DragFloat(("Frequency##" + std::to_string(i)).c_str(), &emitter.frequency, 0.01f, 0.01f, 10.f)) {
                       modified = true;
                   }
 
-                  ImGui::TableNextRow();
-                  ImGui::TableSetColumnIndex(0);
-                  ImGui::Text("Particles Per Frame");
-                  ImGui::TableSetColumnIndex(1);
-                  if (ImGui::DragInt(("##ParticlesPerFrame_" + std::to_string(i)).c_str(), &emitter.particlesPerFrame, 1, 1, 1000)) {
+                  // Edit particles per frame
+                  if (ImGui::DragInt(("Particles Per Frame##" + std::to_string(i)).c_str(), &emitter.particlesPerFrame, 1, 1, 1000)) {
                       modified = true;
                   }
-
-                  EndVec3Table();
 
                   // Delete button for this emitter
                   if (ImGui::Button(("Delete Emitter##" + std::to_string(i)).c_str())) {
                       emitterSystem.RemoveEmitter(i);
                       modified = true;
+                  }
+
+                  if (modified) {
+                      emitter.modified = true;
                   }
               }
           }

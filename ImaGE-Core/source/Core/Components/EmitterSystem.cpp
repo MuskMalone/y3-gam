@@ -16,6 +16,7 @@ namespace Component {
 	{
 		if (idx >= emitters.size()) return;
 		Graphics::ParticleManager::GetInstance().EmitterAction(emitters[idx], -1);
+		emitters.erase(emitters.begin() + idx);
 	}
 	std::vector<Graphics::EmitterInstance> const& EmitterSystem::GetEmitters()
 	{

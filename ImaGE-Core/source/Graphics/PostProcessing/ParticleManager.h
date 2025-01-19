@@ -91,6 +91,8 @@ namespace Graphics{
         int particlesPerFrame{100};  // 4 bytes
 
         int idx{ -1 };
+
+        bool modified{ false };
     };
 
 	class ParticleManager : public ThreadSafeSingleton<ParticleManager> {

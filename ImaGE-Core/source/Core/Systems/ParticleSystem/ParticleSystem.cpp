@@ -4,16 +4,34 @@
 #include "Graphics/Shader.h"
 #include "FrameRateController/FrameRateController.h"
 #include "Events/EventManager.h"
+#include "Core/Components/Components.h"
 
 namespace Systems {
 	ParticleSystem::ParticleSystem(const char* name) : Systems::System{ name }
 	{
-		SUBSCRIBE_CLASS_FUNC(Events::EventType::REMOVE_COMPONENT, &ParticleSystem::HandleRemoveComponent, this);
-		SUBSCRIBE_CLASS_FUNC(Events::EventType::REMOVE_ENTITY, &ParticleSystem::HandleRemoveEntity, this);
+		SUBSCRIBE_CLASS_FUNC(Events::RemoveComponentEvent, &ParticleSystem::HandleRemoveComponent, this);
+		SUBSCRIBE_CLASS_FUNC(Events::RemoveEntityEvent, &ParticleSystem::HandleRemoveEntity, this);
 	}
 	void ParticleSystem::Update()
 	{
-
+		auto ptclsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::EmitterSystem, Component::Transform>() };
+		for (auto entity : ptclsystem) {
+			ECS::Entity e{ entity };
+			// this is not a ref. i have to update all the transforms as they are offsets of the main transform
+			std::vector<Graphics::EmitterInstance> vecProxy{ e.GetComponent<Component::EmitterSystem>().emitters };
+			auto const& pos{ e.GetComponent<Component::Transform>().position };
+			//update the transforms
+			for (int i{}; i < vecProxy.size(); ++i) {
+				auto& emitproxy{ vecProxy[i] };
+				if (!emitproxy.modified) continue;
+				for (int i{}; i < emitproxy.vCount; ++i)
+					emitproxy.vertices[i][0] += pos.x, emitproxy.vertices[i][1] += pos.y, emitproxy.vertices[i][2] += pos.z;
+				Graphics::ParticleManager::GetInstance().EmitterAction(emitproxy, 0);
+				e.GetComponent<Component::EmitterSystem>().emitters[i].modified = false;
+			}
+			//updates the emitters
+			//Graphics::ParticleManager::GetInstance().MultiEmitterAction(vecProxy, 0);
+		}
 		//Graphics::ParticleManager::GetInstance().Bind();
 		float dt{ Performance::FrameRateController::GetInstance().GetDeltaTime() };
 		auto const& emitterStepShader{ Graphics::ShaderLibrary::Get("EmitterStep") };
