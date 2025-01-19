@@ -590,6 +590,8 @@ namespace GUI
     if (ImGui::BeginPopup(sDirMenuTitle))
     {
       if (ImGui::Selectable("New Folder")) {
+        // set the folder to current directory to facilitate renaming
+        mCurrentDir = mRightClickedDir;
         CreateNewFolder();
       }
 
