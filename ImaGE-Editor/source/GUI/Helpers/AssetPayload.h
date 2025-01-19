@@ -30,14 +30,19 @@ namespace GUI
       MATERIAL,
       AUDIO,
       FONT,
-      SHADER
+      SHADER,
+      DIRECTORY
     };
 
     static constexpr char sAssetDragDropPayload[] = "ASSET";
 
     AssetPayload(std::filesystem::path const& path) : mPath{ path }, mAssetType{ AssetType::NONE } {
       std::string const fileExt{ path.extension().string() };
-      if (fileExt == gSceneFileExt) {
+
+      if (std::filesystem::is_directory(path)) {
+        mAssetType = AssetType::DIRECTORY;
+      }
+      else if (fileExt == gSceneFileExt) {
         mAssetType = AssetType::SCENE;
       }
       else if (fileExt == gPrefabFileExt) {

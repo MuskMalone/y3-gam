@@ -34,6 +34,7 @@ namespace GUI
     static constexpr float sMaxAssetSize = 100.f;
     static inline constexpr char sCompiledDirectory[]       = "Compiled";
     static inline constexpr char sMeshPopupTitle[]          = "Mesh Import Config";
+    static inline constexpr char sDeletePopupTitle[]        = "Confirm Delete";
     static inline constexpr char sDirMenuTitle[]            = "DirectoryMenu";
     static inline constexpr char sAssetsMenuTitle[]         = "AssetsMenu";
     static inline constexpr char sContentViewerMenuTitle[]  = "ContentViewerMenu";
@@ -45,6 +46,7 @@ namespace GUI
       them to the asset manager
     ************************************************************************/
     EVENT_CALLBACK_DECL(FilesImported);
+    EVENT_CALLBACK_DECL(OnRenameFile);
 
     /*!*********************************************************************
     \brief
@@ -104,6 +106,8 @@ namespace GUI
     ************************************************************************/
     void RecurseDownDirectory(std::filesystem::path const& dirEntry, float nodeToLabelSpacing);
 
+    void CreateNewFolder();
+
     /*!*********************************************************************
     \brief
       Creates the popup menu for when the content viewer is right-clicked
@@ -115,7 +119,7 @@ namespace GUI
     \brief
       Creates the popup menu for when a directory is right-clicked upon
     ************************************************************************/
-    void DirectoryMenuPopup() const;
+    void DirectoryMenuPopup();
 
     /*!*********************************************************************
     \brief
@@ -127,7 +131,7 @@ namespace GUI
     \brief
       Creates the confirmation popup for when an asset is deleted
     ************************************************************************/
-    void ConfirmDeletePopup() const;
+    void ConfirmDeletePopup();
 
     /*!*********************************************************************
     \brief
