@@ -66,10 +66,11 @@ namespace
 
   void DisplayFolderIcon(std::filesystem::path const& path);
   void DisplayTempFileIcon(std::string const& ext);
+  void MoveAssetDragDropTarget(std::filesystem::path const& path);
 
   void NextRowTable(const char* label);
-
   bool IsAssetFile(std::string const&);
+  void DeleteAssetDependencies(std::filesystem::path const& path);
   std::string ChangeAssetPath(GUI::AssetPayload const& asset, std::filesystem::path const& targetDirectory);
 }
 
@@ -369,24 +370,10 @@ namespace GUI
       if (std::filesystem::is_directory(file)) {
         ImGui::SetCursorPos(imgBtnStart);
         ImGui::SetNextItemAllowOverlap();
-        ImGui::InvisibleButton(("##" + file.path().string()).c_str(), elemSize);
-        if (ImGui::BeginDragDropTarget()) {
-          ImGuiPayload const* drop{ ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload) };
-          if (drop) {
-            AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
 
-            try {
-              ChangeAssetPath(assetPayload, file);
-            }
-            catch (Debug::ExceptionBase&) {
-              IGE_DBGLOGGER.LogError("Unable to move " + assetPayload.GetFilePath() + " to " + file.path().string());
-            }
-            catch (std::filesystem::filesystem_error& e) {
-              IGE_DBGLOGGER.LogError(e.what());
-            }
-          }
-          ImGui::EndDragDropTarget();
-        }
+        ImGui::InvisibleButton(("##" + file.path().string()).c_str(), elemSize);
+        MoveAssetDragDropTarget(file);
+
         ImGui::SetCursorPos(originalPos);
       }
 
@@ -551,27 +538,7 @@ namespace GUI
       mDirMenuPopup = true;
     }
 
-    if (ImGui::BeginDragDropTarget()) {
-      ImGuiPayload const* drop{ ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload) };
-      if (drop) {
-        AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
-
-        std::string const oldPath{ assetPayload.GetFilePath() },
-          newPath{ ChangeAssetPath(assetPayload, path) };
-
-        try {
-          // move the file to the new dir
-          std::filesystem::copy(oldPath, newPath, std::filesystem::copy_options::recursive);
-          std::uintmax_t const count{ std::filesystem::remove_all(oldPath) };
-
-          IGE_DBGLOGGER.LogInfo("Successfully moved " + std::to_string(count) + " files to " + path.string());
-        }
-        catch (std::filesystem::filesystem_error& e) {
-          IGE_DBGLOGGER.LogError(e.what());
-        }
-      }
-      ImGui::EndDragDropTarget();
-    }
+    MoveAssetDragDropTarget(path);
   }
 
   void AssetBrowser::ContentViewerPopup() {
@@ -591,7 +558,7 @@ namespace GUI
       std::string fileName{ "NewMaterial" };
 
       if (std::filesystem::exists(std::string(gMaterialDirectory) + fileName + gMaterialFileExt)) {
-        int i{};
+        int i{ 2 };
         std::string newFileName{ fileName };
         // loop until a valid name
         do {
@@ -709,32 +676,15 @@ namespace GUI
       if (ImGui::Button("Yes##Confirm"))
       {
         std::string const path{ mSelectedAsset.relative_path().string() };
-        if (std::filesystem::is_regular_file(mSelectedAsset)) {
-          try {
-            auto guid{ IGE_ASSETMGR.PathToGUID(mSelectedAsset.relative_path().string()) };
-            if (mSelectedAsset.extension() == gMaterialFileExt) {
-              Graphics::MaterialTable::DeleteMaterial(guid);
-            }
-            IGE_ASSETMGR.DeleteFunction(mSelectedAsset.parent_path().filename().string())(guid);
-          }
-          catch (...) {
-            //do nothing
-          }
-        }
-        else {
-          if (mCurrentDir == mSelectedAsset) {
-            mCurrentDir = gAssetsDirectory;
-          }
+        DeleteAssetDependencies(path);
+
+        if (mCurrentDir == mSelectedAsset) {
+          mCurrentDir = gAssetsDirectory;
         }
         if (GUIVault::GetSelectedFile() == path) {
           GUIVault::SetSelectedFile({});
         }
         
-
-        // remove the editor scene config file
-        if (mSelectedAsset.extension() == gSceneFileExt) {
-          std::filesystem::remove(gEditorAssetsDirectory + std::string("Scenes\\") + mSelectedAsset.stem().string());
-        }
         std::uintmax_t const count{ std::filesystem::remove_all(mSelectedAsset.relative_path().string().c_str()) };
         IGE_DBGLOGGER.LogInfo("Successfully deleted " + std::to_string(count) + " files");
 
@@ -912,6 +862,42 @@ namespace GUI
 
 namespace
 {
+  void MoveAssetDragDropTarget(std::filesystem::path const& path) {
+    if (ImGui::BeginDragDropTarget()) {
+      ImGuiPayload const* drop{ ImGui::AcceptDragDropPayload(GUI::AssetPayload::sAssetDragDropPayload) };
+      if (drop) {
+        GUI::AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+
+        { // if the target dir alr exists, cancel the move operation
+          std::string const newPath{ path.string() + "\\" + assetPayload.mPath.filename().string() };
+          if (std::filesystem::exists(newPath)) {
+            IGE_DBGLOGGER.LogError("Move aborted. Target directory already exists! (" + newPath + ")");
+            ImGui::EndDragDropTarget();
+            return;
+          }
+        }
+
+        // ignore if same file
+        if (path != assetPayload.mPath) {
+          std::string const oldPath{ assetPayload.GetFilePath() },
+            newPath{ ChangeAssetPath(assetPayload, path) };
+
+          try {
+            // move the file to the new dir
+            std::filesystem::copy(oldPath, newPath, std::filesystem::copy_options::recursive);
+            std::uintmax_t const count{ std::filesystem::remove_all(oldPath) };
+
+            IGE_DBGLOGGER.LogInfo("Successfully moved " + std::to_string(count) + " files to " + path.string());
+          }
+          catch (std::filesystem::filesystem_error& e) {
+            IGE_DBGLOGGER.LogError(e.what());
+          }
+        }
+      }
+      ImGui::EndDragDropTarget();
+    }
+  }
+
   bool ContainsDirectories(std::filesystem::path const& dirEntry)
   {
     for (auto const& file : std::filesystem::directory_iterator(dirEntry)) {
@@ -948,6 +934,87 @@ namespace
     ImGui::PopFont();
   }
 
+  void DeleteAssetDependencies(std::filesystem::path const& path) {
+    // if its a normal asset, update asset manager
+    if (std::filesystem::is_regular_file(path)) {
+      // remove the editor scene config file
+      if (path.extension() == gSceneFileExt) {
+        std::filesystem::remove(gEditorAssetsDirectory + std::string("Scenes\\") + path.stem().string());
+      }
+      else {
+        try {
+          auto guid{ IGE_ASSETMGR.PathToGUID(path.string()) };
+          if (path.extension() == gMaterialFileExt) {
+            Graphics::MaterialTable::DeleteMaterial(guid);
+          }
+          IGE_DBGLOGGER.LogInfo("DeleteFunction called on " + path.string());
+          IGE_ASSETMGR.DeleteFunction(path.parent_path().filename().string())(guid);
+        }
+        catch (...) {
+          //do nothing
+        }
+      }
+    }
+    // file is a directory. Recursively delete all dependencies within it
+    else {
+      for (auto const& file : std::filesystem::directory_iterator(path)) {
+        // call this func agn but with target = targetDir/parentDir
+        DeleteAssetDependencies(file.path());
+      }
+    }
+  }
+
+  std::string ChangeAssetPath(GUI::AssetPayload const& asset, std::filesystem::path const& targetDirectory) {
+    std::string const originalPath{ asset.GetFilePath() },
+      newPath{ targetDirectory.string() + "\\" + asset.mPath.filename().string() };
+
+    // if its a normal asset file
+    if (std::filesystem::is_regular_file(asset.mPath)) {
+      try {
+        IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+        IGE::Assets::GUID const guid{ am.PathToGUID(originalPath) };
+
+        switch (asset.mAssetType) {
+        case GUI::AssetPayload::AUDIO:
+          am.ChangeAssetPath<IGE::Assets::AudioAsset>(guid, newPath);
+          break;
+        case GUI::AssetPayload::FONT:
+          am.ChangeAssetPath<IGE::Assets::FontAsset>(guid, newPath);
+          break;
+        case GUI::AssetPayload::MODEL:
+          am.ChangeAssetPath<IGE::Assets::ModelAsset>(guid, newPath);
+          break;
+        case GUI::AssetPayload::PREFAB:
+          am.ChangeAssetPath<IGE::Assets::PrefabAsset>(guid, newPath);
+          break;
+        case GUI::AssetPayload::SPRITE:
+          am.ChangeAssetPath<IGE::Assets::TextureAsset>(guid, newPath);
+          break;
+        case GUI::AssetPayload::SHADER:
+          am.ChangeAssetPath<IGE::Assets::ShaderAsset>(guid, newPath);
+          break;
+        case GUI::AssetPayload::SCENE:
+        default:
+          break;
+        }
+      }
+      catch (Debug::ExceptionBase&) {
+        IGE_DBGLOGGER.LogError("Unable to get GUID of " + originalPath);
+      }
+    }
+    // asset is a folder:
+    // recursively update the paths of every asset inside the source directory
+    else {
+      for (auto const& file : std::filesystem::directory_iterator(asset.mPath)) {
+        // call this func agn but with target = targetDir/parentDir
+        ChangeAssetPath(file.path(), newPath);
+      }
+    }
+
+    //IGE_DBGLOGGER.LogInfo("Changed " + originalPath + " to " + newPath);
+    return newPath;
+  }
+
   void DisplayTempFileIcon(std::string const& ext) {
     ImGui::PushFont(GUI::GUIVault::GetStyler().GetCustomFont(GUI::CustomFonts::ROBOTO_BOLD));
     if (std::string(gSupportedModelFormats).find(ext) != std::string::npos) {
@@ -978,58 +1045,6 @@ namespace
       ImGui::TextColored(sFileIconCol, ICON_FA_FILE);
     }
     ImGui::PopFont();
-  }
-
-  std::string ChangeAssetPath(GUI::AssetPayload const& asset, std::filesystem::path const& targetDirectory) {
-    // ignore if same file or in same directory
-    if (targetDirectory == asset.mPath || targetDirectory == asset.mPath.parent_path()) { return; }
-
-    std::string const originalPath{ asset.GetFilePath() },
-      newPath{ targetDirectory.string() + "\\" + asset.mPath.filename().string()};
-
-    try {
-      IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
-      IGE::Assets::GUID const guid{ am.PathToGUID(originalPath) };
-
-      switch (asset.mAssetType) {
-      case GUI::AssetPayload::AUDIO:
-        am.ChangeAssetPath<IGE::Assets::AudioAsset>(guid, newPath);
-        break;
-      case GUI::AssetPayload::FONT:
-        am.ChangeAssetPath<IGE::Assets::FontAsset>(guid, newPath);
-        break;
-      case GUI::AssetPayload::MODEL:
-        am.ChangeAssetPath<IGE::Assets::ModelAsset>(guid, newPath);
-        break;
-      case GUI::AssetPayload::PREFAB:
-        am.ChangeAssetPath<IGE::Assets::PrefabAsset>(guid, newPath);
-        break;
-      case GUI::AssetPayload::SPRITE:
-        am.ChangeAssetPath<IGE::Assets::TextureAsset>(guid, newPath);
-        break;
-      case GUI::AssetPayload::SHADER:
-        am.ChangeAssetPath<IGE::Assets::ShaderAsset>(guid, newPath);
-        break;
-      case GUI::AssetPayload::DIRECTORY:
-      {
-        // recursively update the paths of every asset inside the source directory
-        for (auto const& file : std::filesystem::directory_iterator(asset.mPath)) {
-          // call this func agn but with target = targetDir/parentDir
-          ChangeAssetPath(file.path(), newPath);
-        }
-        break;
-      }
-      case GUI::AssetPayload::SCENE:
-      default:
-        break;
-      }
-    }
-    catch (Debug::ExceptionBase&) {
-      IGE_DBGLOGGER.LogError("Unable to get GUID of " + originalPath);
-    }
-
-    //IGE_DBGLOGGER.LogInfo("Changed " + originalPath + " to " + newPath);
-    return newPath;
   }
 
   bool IsAssetFile(std::string const& fp){
