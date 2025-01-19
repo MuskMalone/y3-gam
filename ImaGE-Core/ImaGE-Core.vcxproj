@@ -199,6 +199,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClInclude Include="source\BoundingVolumes\Frustum.h" />
     <ClInclude Include="source\BoundingVolumes\IntersectionTests.h" />
     <ClInclude Include="source\Color.h" />
+    <ClInclude Include="source\Commands\CommandManager.h" />
     <ClInclude Include="source\Core\Components\AudioListener.h" />
     <ClInclude Include="source\Core\Components\AudioSource.h" />
     <ClInclude Include="source\Core\Components\Camera.h" />
@@ -398,6 +399,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClCompile Include="source\Audio\AudioManager.cpp" />
     <ClCompile Include="source\Audio\AudioSystem.cpp" />
     <ClCompile Include="source\BoundingVolumes\IntersectionTests.cpp" />
+    <ClCompile Include="source\Commands\CommandManager.cpp" />
     <ClCompile Include="source\Core\Components\AudioSource.cpp" />
     <ClCompile Include="source\Core\Components\RigidBody.cpp" />
     <ClCompile Include="source\Core\Components\Transform.cpp" />

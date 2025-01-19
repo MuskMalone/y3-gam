@@ -30,6 +30,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Persistent/Toolbar.h"
 #include "Dockable/Viewport.h"
 #include "Dockable/Layers.h"
+#include <Commands/CommandManager.h>
 #include "Dockable/GameViewport.h"
 #include "Dockable/PostProcessingSettings.h"
 #pragma endregion
@@ -94,6 +95,11 @@ namespace GUI {
     if (mEditorViewport->IsActive()) {
       mEditorViewport->Render(framebuffer);
     }
+
+    if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyDown(ImGuiKey_Z)){
+      CMD::CommandManager::GetInstance().UndoCommand();
+    }
+
   }
 
   void GUIManager::Shutdown() {
