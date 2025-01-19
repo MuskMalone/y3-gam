@@ -158,19 +158,13 @@ namespace GUI
     if (mCurrentDir == gAssetsDirectory) { flags |= ImGuiTreeNodeFlags_Selected; }
     if (ImGui::TreeNodeEx("Assets", flags))
     {
-      if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-        mCurrentDir = gAssetsDirectory;
-      }
-      else if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
-        mRightClickedDir = gAssetsDirectory;
-        mDirMenuPopup = true;
-      }
+      CheckDirectoryInput(gAssetsDirectory, 0.f);
 
       for (auto const& file : std::filesystem::directory_iterator(gAssetsDirectory))
       {
         if (!file.is_directory()) { continue; }
 
-        RecurseDownDirectory(file);
+        RecurseDownDirectory(file, ImGui::GetTreeNodeToLabelSpacing());
       }
 
       ImGui::TreePop();
@@ -315,7 +309,7 @@ namespace GUI
         }
       }
       else {
-        CheckInput(file);
+        CheckFileInput(file);
 
         // display file name below
         ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
@@ -392,7 +386,7 @@ namespace GUI
 
       ImVec2 const originalPos{ ImGui::GetCursorPos() };
 
-      CheckInput(path);
+      CheckFileInput(path);
 
       // display file name below
       ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
@@ -421,7 +415,7 @@ namespace GUI
     }
   }
 
-  void AssetBrowser::CheckInput(std::filesystem::path const& path)
+  void AssetBrowser::CheckFileInput(std::filesystem::path const& path)
   {
     static std::filesystem::path draggedAsset;
     
@@ -491,7 +485,7 @@ namespace GUI
     }
   }
 
-  void AssetBrowser::RecurseDownDirectory(std::filesystem::path const& path)
+  void AssetBrowser::RecurseDownDirectory(std::filesystem::path const& path, float nodeToLabelSpacing)
   {
     std::string const fileName{ path.filename().string() };
     bool const hasDirectories{ ContainsDirectories(path) };
@@ -501,13 +495,7 @@ namespace GUI
 
     if (ImGui::TreeNodeEx(fileName.c_str(), flag))
     {
-      if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-        mCurrentDir = path;
-      }
-      else if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
-        mRightClickedDir = path;
-        mDirMenuPopup = true;
-      }
+      CheckDirectoryInput(path, nodeToLabelSpacing);
 
       if (hasDirectories)
       {
@@ -515,11 +503,24 @@ namespace GUI
         {
           if (!file.is_directory() || file.path().filename() == sCompiledDirectory) { continue; }
 
-          RecurseDownDirectory(file);
+          RecurseDownDirectory(file, nodeToLabelSpacing + ImGui::GetTreeNodeToLabelSpacing());
         }
       }
 
       ImGui::TreePop();
+    }
+    else {
+      CheckDirectoryInput(path, nodeToLabelSpacing);
+    }
+  }
+  
+  void AssetBrowser::CheckDirectoryInput(std::filesystem::path const& path, float nodeToLabelSpacing) {
+    if (ImGui::IsItemClicked(ImGuiMouseButton_Left) && (ImGui::GetMousePos().x - ImGui::GetItemRectMin().x) > nodeToLabelSpacing + 25.f) {
+      mCurrentDir = path;
+    }
+    else if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+      mRightClickedDir = path;
+      mDirMenuPopup = true;
     }
   }
 

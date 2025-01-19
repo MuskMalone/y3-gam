@@ -92,7 +92,8 @@ namespace GUI
     \param path
       The path of the file selected
     ************************************************************************/
-    void CheckInput(std::filesystem::path const& path);
+    void CheckFileInput(std::filesystem::path const& path);
+    void CheckDirectoryInput(std::filesystem::path const& path, float nodeToLabelSpacing);
 
     /*!*********************************************************************
     \brief
@@ -101,7 +102,7 @@ namespace GUI
     \param filepath
       Parent directory i.e. current directory
     ************************************************************************/
-    void RecurseDownDirectory(std::filesystem::path const& dirEntry);
+    void RecurseDownDirectory(std::filesystem::path const& dirEntry, float nodeToLabelSpacing);
 
     /*!*********************************************************************
     \brief
