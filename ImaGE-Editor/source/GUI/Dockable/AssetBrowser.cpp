@@ -48,6 +48,8 @@ namespace
   ************************************************************************/
   bool ContainsDirectories(std::filesystem::path const& dirEntry);
 
+  bool ContainsFiles(std::filesystem::path const& directory);
+
   /*!*********************************************************************
   \brief
     Converts a string to lower case
@@ -58,11 +60,13 @@ namespace
   ************************************************************************/
   std::string ToLower(std::string const& str);
 
+  void DisplayFolderIcon(std::filesystem::path const& path);
   void DisplayTempFileIcon(std::string const& ext);
 
   void NextRowTable(const char* label);
 
   bool IsAssetFile(std::string const&);
+  void MoveAsset(GUI::AssetPayload const& asset, std::filesystem::path const& targetDirectory);
 }
 
 namespace GUI
@@ -261,16 +265,20 @@ namespace GUI
   {
     for (auto const& file : std::filesystem::directory_iterator(mCurrentDir)) {
 
-      if (file.is_directory()) { continue; }
+      //if (file.is_directory()) { continue; }
       if (!IsAssetFile(file.path().string())) { continue; } // to account for igemeta files
 
-      ImGui::TableNextColumn();
       std::string const fileName{ file.path().filename().string() };
+      if (fileName == "Compiled") { continue; }
+
+      ImGui::TableNextColumn();
       bool const exceed{ fileName.size() > maxChars };
+      ImVec2 const imgBtnStart{ ImGui::GetCursorPos() };
 
       // asset icon + input
       ImGui::ImageButton(0, ImVec2(imgSize, imgSize));
       ImVec2 const originalPos{ ImGui::GetCursorPos() };
+      ImVec2 elemSize{ ImGui::GetItemRectSize() };
 
       if (sRenameMode && file == mSelectedAsset) {
         static std::string cpy;
@@ -312,18 +320,51 @@ namespace GUI
         // display file name below
         ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
         ImGui::Text((exceed ? fileName.substr(0, maxChars) : fileName).c_str());
+
         if (exceed) {
           ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 0.05f * imgSize);
           std::string const secondRow{ fileName.substr(maxChars) };
           ImGui::Text((secondRow.size() > maxChars ? secondRow.substr(0, maxChars - 2) + "..." : secondRow).c_str());
         }
+        elemSize.y = ImGui::GetCursorPos().y - imgBtnStart.y;
       }
 
       if (showIcon) {
         float const halfImgSize{ imgSize * 0.5f };
         ImVec2 const offset{ ImVec2(halfImgSize - 7.f, -halfImgSize - 23.f) };
         ImGui::SetCursorPos(originalPos + offset);
-        DisplayTempFileIcon(file.path().extension().string());
+
+        if (file.is_directory()) {
+          DisplayFolderIcon(file.path());
+        }
+        else {
+          DisplayTempFileIcon(file.path().extension().string());
+        }
+        
+        ImGui::SetCursorPos(originalPos);
+      }
+      
+      if (std::filesystem::is_directory(file)) {
+        ImGui::SetCursorPos(imgBtnStart);
+        ImGui::SetNextItemAllowOverlap();
+        ImGui::InvisibleButton(("##" + file.path().string()).c_str(), elemSize);
+        if (ImGui::BeginDragDropTarget()) {
+          ImGuiPayload const* drop{ ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload) };
+          if (drop) {
+            AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+
+            try {
+              MoveAsset(assetPayload, file);
+            }
+            catch (Debug::ExceptionBase&) {
+              IGE_DBGLOGGER.LogError("Unable to move " + assetPayload.GetFilePath() + " to " + file.path().string());
+            }
+            catch (std::filesystem::filesystem_error& e) {
+              IGE_DBGLOGGER.LogError(e.what());
+            }
+          }
+          ImGui::EndDragDropTarget();
+        }
         ImGui::SetCursorPos(originalPos);
       }
 
@@ -348,6 +389,7 @@ namespace GUI
 
       // asset icon + input
       ImGui::ImageButton(0, ImVec2(imgSize, imgSize));
+
       ImVec2 const originalPos{ ImGui::GetCursorPos() };
 
       CheckInput(path);
@@ -365,7 +407,13 @@ namespace GUI
         float const halfImgSize{ imgSize * 0.5f };
         ImVec2 const offset{ ImVec2(halfImgSize - 7.f, -halfImgSize - 23.f) };
         ImGui::SetCursorPos(originalPos + offset);
-        DisplayTempFileIcon(path.extension().string());
+
+        if (file.is_directory()) {
+          DisplayFolderIcon(file.path());
+        }
+        else {
+          DisplayTempFileIcon(file.path().extension().string());
+        }
         ImGui::SetCursorPos(originalPos);
       }
 
@@ -385,7 +433,12 @@ namespace GUI
     else if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
     {
       if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
-        AssetHelpers::OpenFileWithDefaultProgram(path.string());
+        if (std::filesystem::is_directory(path)) {
+          mCurrentDir = path.string();
+        }
+        else {
+          AssetHelpers::OpenFileWithDefaultProgram(path.string());
+        }
       }
       else {
         draggedAsset = path;
@@ -398,27 +451,12 @@ namespace GUI
     else if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
       ImGui::SetTooltip(path.filename().string().c_str());
     }
-    
-    if (ImGui::BeginDragDropSource()) {
-      std::string const ext{ draggedAsset.extension().string() };
-      Scenes::SceneState const sceneState{ IGE_SCENEMGR.GetSceneState() };
-      bool popStyleCol{ false };
-      if (ext == gPrefabFileExt && (sceneState & (Scenes::NO_SCENE | Scenes::PREFAB_EDITOR))) {
-        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
-        popStyleCol = true;
-      }
-      else if (std::string(gSupportedModelFormats).find(ext) != std::string::npos && (sceneState & ~(Scenes::STOPPED | Scenes::PREFAB_EDITOR))) {
-        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
-        popStyleCol = true;
-      }
-      else {
-        std::string const pathStr{ draggedAsset.relative_path().string() };
-        ImGui::SetDragDropPayload(AssetPayload::sAssetDragDropPayload, pathStr.data(), pathStr.size() + 1, ImGuiCond_Once);
-      }
-      
-      ImGui::Text(draggedAsset.filename().string().c_str());
 
-      if (popStyleCol) { ImGui::PopStyleColor(); }
+    if (ImGui::BeginDragDropSource()) {
+      std::string const pathStr{ draggedAsset.relative_path().string() };
+
+      ImGui::SetDragDropPayload(AssetPayload::sAssetDragDropPayload, pathStr.data(), pathStr.size() + 1, ImGuiCond_Once);
+      ImGui::Text(draggedAsset.filename().string().c_str());
 
       ImGui::EndDragDropSource();
     }
@@ -542,7 +580,12 @@ namespace GUI
     if (ImGui::BeginPopup(sAssetsMenuTitle))
     {
       if (ImGui::Selectable("Open##AssetMenu")) {
-        AssetHelpers::OpenFileWithDefaultProgram(mSelectedAsset.string());
+        if (std::filesystem::is_directory(mSelectedAsset)) {
+          mCurrentDir = mSelectedAsset.string();
+        }
+        else {
+          AssetHelpers::OpenFileWithDefaultProgram(mSelectedAsset.string());
+        }
       }
 
       if (ImGui::Selectable("Rename##AssetMenu")) {
@@ -791,6 +834,16 @@ namespace
     return false;
   }
 
+  bool ContainsFiles(std::filesystem::path const& directory) {
+    for (auto const& file : std::filesystem::directory_iterator(directory)) {
+      if (file.path().filename() == "Compiled") { continue; }
+
+      return true;
+    }
+
+    return false;
+  }
+
   std::string ToLower(std::string const& str) {
     std::string ret{ str };
     for (char& ch : ret) {
@@ -798,6 +851,12 @@ namespace
     }
 
     return ret;
+  }
+
+  void DisplayFolderIcon(std::filesystem::path const& path) {
+    ImGui::PushFont(GUI::GUIVault::GetStyler().GetCustomFont(GUI::CustomFonts::ROBOTO_BOLD));
+    ImGui::TextColored(sFileIconCol, ContainsFiles(path) ? ICON_FA_FOLDER_OPEN : ICON_FA_FOLDER_CLOSED);
+    ImGui::PopFont();
   }
 
   void DisplayTempFileIcon(std::string const& ext) {
@@ -830,6 +889,43 @@ namespace
       ImGui::TextColored(sFileIconCol, ICON_FA_FILE);
     }
     ImGui::PopFont();
+  }
+
+  void MoveAsset(GUI::AssetPayload const& asset, std::filesystem::path const& targetDirectory) {
+    // ignore if same file or in same directory
+    if (targetDirectory == asset.mPath || targetDirectory == asset.mPath.parent_path()) { return; }
+
+    std::string const originalPath{ asset.GetFilePath() },
+      newPath{ targetDirectory.string() + "\\" + asset.mPath.filename().string()};
+    IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+
+    switch (asset.mAssetType) {
+    case GUI::AssetPayload::AUDIO:
+      am.ChangeAssetPath<IGE::Assets::AudioAsset>(am.PathToGUID(originalPath), newPath);
+      break;
+    case GUI::AssetPayload::FONT:
+      am.ChangeAssetPath<IGE::Assets::FontAsset>(am.PathToGUID(originalPath), newPath);
+      break;
+    case GUI::AssetPayload::MODEL:
+      am.ChangeAssetPath<IGE::Assets::ModelAsset>(am.PathToGUID(originalPath), newPath);
+      break;
+    case GUI::AssetPayload::PREFAB:
+      am.ChangeAssetPath<IGE::Assets::PrefabAsset>(am.PathToGUID(originalPath), newPath);
+      break;
+    case GUI::AssetPayload::SPRITE:
+      am.ChangeAssetPath<IGE::Assets::TextureAsset>(am.PathToGUID(originalPath), newPath);
+      break;
+    case GUI::AssetPayload::SHADER:
+      am.ChangeAssetPath<IGE::Assets::ShaderAsset>(am.PathToGUID(originalPath), newPath);
+      break;
+    case GUI::AssetPayload::SCENE:
+    default:
+      break;
+    }
+
+    // move the file to the new dir
+    std::filesystem::copy(asset.mPath, newPath);
+    std::filesystem::remove(asset.mPath);
   }
 
   bool IsAssetFile(std::string const& fp){

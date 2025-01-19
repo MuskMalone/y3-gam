@@ -27,6 +27,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Graphics/Renderer.h"
 #include <Events/EventManager.h>
 #include <FrameRateController/FrameRateController.h>
+#include <Scenes/SceneManager.h>
 
 namespace {
   // for panning camera to entity when double-clicked upon
@@ -429,6 +430,7 @@ namespace GUI
 
   void Viewport::ReceivePayload()
   {
+    bool const noScene{ IGE_SCENEMGR.NoSceneSelected() };
     if (ImGui::BeginDragDropTarget())
     {
       ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
@@ -442,6 +444,11 @@ namespace GUI
           break;
         case AssetPayload::PREFAB:
         {
+          if (noScene) {
+            ImGui::EndDragDropTarget();
+            return;
+          }
+
           // @TODO: Convert screen to world pos when viewport is up
           try {
             IGE::Assets::AssetManager& assetMan{ IGE_ASSETMGR };
@@ -457,6 +464,11 @@ namespace GUI
         }
         case AssetPayload::MODEL:
         {
+          if (noScene) {
+            ImGui::EndDragDropTarget();
+            return;
+          }
+
           try {
             IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
             ECS::Entity const newEntity{ IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(meshSrc)->mMeshSource.ConstructEntity(meshSrc, assetPayload.GetFileName()) };
