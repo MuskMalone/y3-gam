@@ -15,6 +15,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Prefabs/PrefabManager.h>
 #include <Input/InputManager.h>
 #include <Scripting/ScriptManager.h>
+#include  <Commands/CommandManager.h>
 #include <Reflection/ObjectFactory.h>
 #include <Core/EntityManager.h>
 #include <Graphics/PostProcessing/PostProcessingManager.h>
@@ -53,6 +54,7 @@ namespace IGE {
     Layers::LayerManager::CreateInstance();
     Systems::SystemManager::CreateInstance();
     Graphics::PostProcessingManager::CreateInstance();
+    CMD::CommandManager::CreateInstance();
 
     
     // @TODO: Init physics and audio singletons
@@ -229,6 +231,7 @@ namespace IGE {
   void Application::Shutdown()
   {
     // shutdown singletons
+    CMD::CommandManager::DestroyInstance();
     Systems::SystemManager::DestroyInstance();
     Graphics::PostProcessingManager::DestroyInstance();
     Scenes::SceneManager::DestroyInstance();
