@@ -3,7 +3,7 @@
     "SubData": [
         {
             "ID": 0,
-            "Parent": null,
+            "Parent": 0,
             "Components": [
                 {
                     "Tag": {
@@ -68,7 +68,7 @@
                         "textureAssetGUID": {
                             "ID": 4712519113482082219
                         },
-                        "isTransparent": false
+                        "isTransparent": true
                     }
                 }
             ]
@@ -140,7 +140,7 @@
                         "textureAssetGUID": {
                             "ID": 4712519113482082219
                         },
-                        "isTransparent": false
+                        "isTransparent": true
                     }
                 }
             ]

@@ -1526,7 +1526,7 @@ namespace Graphics {
 		return static_cast<unsigned int>(maxTexUnits);
 	}
 
-	std::shared_ptr<Graphics::Framebuffer> Renderer::GetFinalFramebuffer() {
+	std::shared_ptr<Graphics::Framebuffer> const& Renderer::GetFinalFramebuffer() {
 		return mFinalFramebuffer; // Assuming `mFinalFramebuffer` holds the final rendered result
 	}
 

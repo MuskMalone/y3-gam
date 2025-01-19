@@ -76,7 +76,11 @@ void PrefabManager::UpdatePrefabFromEditor(ECS::Entity prefabInstance, std::stri
 {
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
   Prefab prefab{ name };
-  prefab.GetRoot().mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(prefabInstance);
+  {
+    PrefabSubData root{ PrefabSubData::BasePrefabId };
+    root.mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(prefabInstance);
+    prefab.mObjects.emplace_back(std::move(root));
+  }
   if (entityMan.HasChild(prefabInstance)) {
     prefab.CreateFixedSubData(entityMan.GetChildEntity(prefabInstance), mappings);
   }

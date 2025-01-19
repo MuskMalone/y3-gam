@@ -1128,8 +1128,6 @@ namespace GUI {
               modified = true;
           }
           
-
-
           ImGui::EndTable();
       }
 
@@ -1358,7 +1356,7 @@ namespace GUI {
           float const inputWidth{ CalcInputWidth(50.f) / 3.f };
           ImVec2 const boxSize = ImVec2(200.0f, 40.0f); // Width and height of the box
           ImVec2 const cursorPos = ImGui::GetCursorScreenPos();
-          ImVec2 const boxEnd = ImVec2(cursorPos.x + boxSize.x, cursorPos.y + boxSize.y);
+          ImVec2 const boxEnd = cursorPos + boxSize;
 
           // Draw a child window to act as the box
           ImGui::BeginChild("DragDropTargetBox", boxSize, false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
@@ -1368,27 +1366,10 @@ namespace GUI {
 
           // Center the text inside the box
           ImVec2 const textSize = ImGui::CalcTextSize("Drag here to add sound");
-          ImVec2 const textPos = ImVec2(
-              cursorPos.x + (boxSize.x - textSize.x) * 0.5f,
-              cursorPos.y + (boxSize.y - textSize.y) * 0.5f
-          );
+          ImVec2 const textPos = cursorPos + (boxSize - textSize) * 0.5f;
           ImGui::SetCursorScreenPos(textPos);
           ImGui::TextUnformatted("Drag here to add sound");
           ImGui::EndChild();
-          if (ImGui::BeginDragDropTarget())
-          {
-              ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
-              if (drop) {
-                  AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
-                  if (assetPayload.mAssetType == AssetPayload::AUDIO) {
-                      //auto meshSrc{ std::make_shared<Graphics::Mesh>(Graphics::MeshFactory::CreateModelFromImport(assetPayload.GetFilePath())) };
-                      auto fp{ assetPayload.GetFilePath() };
-                      audioSource.CreateSound(fp);
-                      modified = true;
-                  }
-              }
-              ImGui::EndDragDropTarget();
-          }
 
           for (auto& [currentName, audioInstance] : audioSource.sounds) {
               // Unique ID for this entry
@@ -1969,7 +1950,7 @@ namespace GUI {
               ImGui::EndTooltip();
             }
             ImGui::TableSetColumnIndex(1); ImGui::SetNextItemWidth(INPUT_SIZE);
-            if (ImGui::SliderFloat("##BiasSlider", &lightShadow.bias, 0.f, 2.f, "% .3f")) {
+            if (ImGui::DragFloat("##BiasSlider", &lightShadow.bias, 0.0005,0.f, FLT_MAX, "% .4f")) {
               modified = lightShadow.shadowModified = true;
             }
 

@@ -119,13 +119,13 @@ namespace Graphics {
 
       // Sort transparent sprites by distance to the camera (back-to-front)
       std::sort(transparentSprites.begin(), transparentSprites.end(),
-          [&cam](auto const& a, auto const& b) {
-              auto const& aTransform = a.GetComponent<Component::Transform>();
-              auto const& bTransform = b.GetComponent<Component::Transform>();
+          [&cam](ECS::Entity a, ECS::Entity b) {
+              Component::Transform const& aTransform = a.GetComponent<Component::Transform>();
+              Component::Transform const& bTransform = b.GetComponent<Component::Transform>();
 
               // Compute distance from the camera to each sprite
-              float distanceA = glm::length2(cam.position - aTransform.worldPos); // Squared distance
-              float distanceB = glm::length2(cam.position - bTransform.worldPos); // Squared distance
+              float const distanceA = glm::length2(cam.position - aTransform.worldPos); // Squared distance
+              float const distanceB = glm::length2(cam.position - bTransform.worldPos); // Squared distance
 
               return distanceA > distanceB; // Sort back-to-front
           });

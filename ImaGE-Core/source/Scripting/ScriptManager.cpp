@@ -238,6 +238,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetFPS);
   ADD_INTERNAL_CALL(MoveCharacter);
   ADD_INTERNAL_CALL(GetTag);
+  ADD_INTERNAL_CALL(SetTag);
   ADD_INTERNAL_CALL(FindScript);
   ADD_INTERNAL_CALL(FindScriptInEntity);
   ADD_INTERNAL_CALL(DestroyEntity);
@@ -892,6 +893,12 @@ MonoString* Mono::GetTag(ECS::Entity::EntityID entity)
   //return STDToMonoString(ECS::Entity(entity).GetComponent<Component::Tag>().tag);
 }
 
+void Mono::SetTag(ECS::Entity::EntityID entity, MonoString* tag) {
+  std::string convertedTag{ MonoStringToSTD(tag) };
+  if (ECS::Entity(entity).HasComponent<Component::Tag>())
+    ECS::Entity(entity).GetComponent<Component::Tag>().tag = convertedTag;
+}
+
 void Mono::Log(MonoString*s)
 {
   std::string msg{ MonoStringToSTD(s) };
@@ -1488,7 +1495,7 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
             l.mLightIntensity += (2.0f - l.mLightIntensity) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
             if (l.mLightIntensity >= 1.96f)
             {
-              std::cout << "Faster?\n";
+              //std::cout << "Faster?\n";
               l.mLightIntensity = 2.f;
             }
           }
@@ -1506,7 +1513,7 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
           l.mLightIntensity -= (l.mLightIntensity - 0.0f) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
           if (l.mLightIntensity <= 0.04f)
           {
-            std::cout << "Faster?\n";
+            //std::cout << "Faster?\n";
             l.mLightIntensity = 0.f;
           }
         }
@@ -1520,7 +1527,7 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
   for (ECS::Entity child : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Light>())
   {
     std::string n = child.GetTag();
-    if (n == "Light" || n == "LightR" || n == "LightL" || n == "LightN" || n == "LightF" || n == "LightT" || n == "LightB")
+    if (n == "Light")
     {
       child.SetIsActive(true);
     }

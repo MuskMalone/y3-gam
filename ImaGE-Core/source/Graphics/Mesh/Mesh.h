@@ -16,10 +16,10 @@ namespace Graphics {
 	class Mesh {
     public:
       Mesh() {};
-      Mesh(IGE::Assets::GUID meshSource ): mMeshSource{ meshSource }{}
+      Mesh(IGE::Assets::GUID meshSource): mMeshSource{ meshSource }{}
 
       const IGE::Assets::GUID& GetMeshSource() const { return mMeshSource; }
-      void SetMeshSource(const IGE::Assets::GUID& meshSrc) { mMeshSource = meshSrc;}
+      void SetMeshSource(const IGE::Assets::GUID& meshSrc) { mMeshSource = meshSrc; }
       //const std::vector<std::shared_ptr<Material>>& GetMaterials() const { return mMaterials; }
 
     private:

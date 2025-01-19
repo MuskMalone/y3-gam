@@ -22,6 +22,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\EditorApplication.h" />
+    <ClInclude Include="source\EditorEvents.h" />
     <ClInclude Include="source\GUI\Dockable\AssetBrowser.h">
       <Filter>GUI\Dockable</Filter>
     </ClInclude>
@@ -67,10 +68,10 @@
     <ClInclude Include="source\GUI\Helpers\AssetPayload.h">
       <Filter>GUI\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="source\GUI\Helpers\HierarchyConfig.h">
+    <ClInclude Include="source\GUI\Helpers\ImGuiHelpers.h">
       <Filter>GUI\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="source\GUI\Helpers\ImGuiHelpers.h">
+    <ClInclude Include="source\GUI\Helpers\SceneEditorConfig.h">
       <Filter>GUI\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="source\GUI\Persistent\PopupHelper.h">

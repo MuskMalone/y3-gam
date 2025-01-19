@@ -11,7 +11,6 @@
 #include <Core/LayerManager/LayerManager.h>
 
 namespace Graphics {
-
     ShadowPass::ShadowPass(const RenderPassSpec& spec) : RenderPass(spec),
       mLightSpaceMtx{}, mLightEntity{}, mShadowSoftness {}, mShadowBias{}, mActive{ false } {}
 
@@ -44,10 +43,11 @@ namespace Graphics {
         if (!mesh.meshSource.IsValid() || !mesh.castShadows) { continue; }
 
             Graphics::Renderer::SubmitInstance(
-                entity.GetComponent<Component::Mesh>().meshSource,
+                mesh.meshSource,
                 entity.GetComponent<Component::Transform>().worldMtx,
                 Color::COLOR_WHITE,
-                entity.GetEntityID()
+                entity.GetEntityID(),
+                0, mesh.submeshIdx
             );
         }
         Renderer::RenderSubmeshInstances();

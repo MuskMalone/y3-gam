@@ -42,6 +42,8 @@ namespace IGE {
 
 
   private:
+    inline Graphics::RenderTarget& GetEditorRenderTarget() noexcept { return mRenderTargets[1]; }
+
     /*!*********************************************************************
     \brief
       Starts the ImGui frame

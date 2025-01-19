@@ -142,6 +142,9 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static string GetTag(uint EntityID);
 
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetTag(uint EntityID, string tag); // Try not to use, dangerous
+
     // avoid using this, prefer SetPosition (local)
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetActive(uint entityHandle, bool active);

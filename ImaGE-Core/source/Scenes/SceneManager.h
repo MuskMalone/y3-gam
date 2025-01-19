@@ -17,9 +17,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 #define IGE_SCENEMGR Scenes::SceneManager::GetInstance()
 
-namespace Scenes
-{
-
+namespace Scenes {
   class SceneManager : public ThreadSafeSingleton<SceneManager>
   {
   public:

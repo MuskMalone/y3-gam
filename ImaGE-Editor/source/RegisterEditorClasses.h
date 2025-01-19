@@ -1,6 +1,6 @@
 #include <rttr/registration>
 #include <policy.h>
-#include <GUI/Helpers/HierarchyConfig.h>
+#include <GUI/Helpers/SceneEditorConfig.h>
 #include <ImGui/imgui.h>
 
 static void rttr_auto_register_reflection_function4_(); namespace {
@@ -20,7 +20,19 @@ static void rttr_auto_register_reflection_function4_(); namespace {
   rttr::registration::class_<std::set<GUI::HierarchyEntry>>("HierarchyEntrySet")
     .constructor<>()(rttr::policy::ctor::as_object);
 
-  rttr::registration::class_<GUI::HierarchyConfig>("HierarchyConfig")
+  {
+    using T = Graphics::EditorCamera;
+    rttr::registration::class_<T>("EditorCamera")
+      .constructor<>()(rttr::policy::ctor::as_object)
+      .property("position", &T::mPosition)
+      .property("fov", &T::mFov)
+      .property("pitch", &T::mPitch)
+      .property("yaw", &T::mYaw)
+      .property("nearClip", &T::mNearClip)
+      .property("farClip", &T::mFarClip);
+  }
+  rttr::registration::class_<GUI::SceneEditorConfig>("SceneEditorConfig")
     .constructor<>()(rttr::policy::ctor::as_object)
-    .property("collapsedNodes", &GUI::HierarchyConfig::collapsedNodes);
+    .property("editorCam", &GUI::SceneEditorConfig::editorCam)
+    .property("collapsedNodes", &GUI::SceneEditorConfig::collapsedNodes);
 }

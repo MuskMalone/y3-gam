@@ -1,6 +1,9 @@
 #include <pch.h>
 #include "Utils.h"
 #include "Renderer.h"
+#include <Core/Components/Transform.h>
+#include <BoundingVolumes/IntersectionTests.h>
+#include <Graphics/Mesh/MeshSource.h>
 
 namespace Graphics {
     namespace Utils {
@@ -139,5 +142,77 @@ namespace Graphics {
             }
 
         }//namespace GL
+
+        namespace Culling {
+          // Gribb/Hartmann method
+          // source: https://www8.cs.umu.se/kurser/5DV051/HT12/lab/plane_extraction.pdf
+          BV::Frustum ComputeFrustum(glm::mat4 const& viewProjMatrix) {
+            BV::Frustum frustum{};
+            frustum.leftP = { viewProjMatrix[0][3] + viewProjMatrix[0][0],
+                      viewProjMatrix[1][3] + viewProjMatrix[1][0],
+                      viewProjMatrix[2][3] + viewProjMatrix[2][0],
+                      viewProjMatrix[3][3] + viewProjMatrix[3][0]
+            };
+            frustum.rightP = { viewProjMatrix[0][3] - viewProjMatrix[0][0],
+                               viewProjMatrix[1][3] - viewProjMatrix[1][0],
+                               viewProjMatrix[2][3] - viewProjMatrix[2][0],
+                               viewProjMatrix[3][3] - viewProjMatrix[3][0]
+            };
+
+            frustum.topP = { viewProjMatrix[0][3] - viewProjMatrix[0][1],
+                             viewProjMatrix[1][3] - viewProjMatrix[1][1],
+                             viewProjMatrix[2][3] - viewProjMatrix[2][1],
+                             viewProjMatrix[3][3] - viewProjMatrix[3][1]
+            };
+            frustum.btmP = { viewProjMatrix[0][3] + viewProjMatrix[0][1],
+                             viewProjMatrix[1][3] + viewProjMatrix[1][1],
+                             viewProjMatrix[2][3] + viewProjMatrix[2][1],
+                             viewProjMatrix[3][3] + viewProjMatrix[3][1]
+            };
+
+            frustum.nearP = { viewProjMatrix[0][3] + viewProjMatrix[0][2],
+                              viewProjMatrix[1][3] + viewProjMatrix[1][2],
+                              viewProjMatrix[2][3] + viewProjMatrix[2][2],
+                              viewProjMatrix[3][3] + viewProjMatrix[3][2]
+            };
+            frustum.farP = { viewProjMatrix[0][3] - viewProjMatrix[0][2],
+                             viewProjMatrix[1][3] - viewProjMatrix[1][2],
+                             viewProjMatrix[2][3] - viewProjMatrix[2][2],
+                             viewProjMatrix[3][3] - viewProjMatrix[3][2]
+            };
+
+            /*for (int i{}; i < 6; ++i) {
+              frustum[i].Normalize();
+            }*/
+
+            return frustum;
+          }
+
+          // from learnopengl
+          bool EntityInViewFrustum(BV::Frustum const& frustum, Component::Transform const& transform, Graphics::MeshSource const& meshSource) {
+            BV::AABB aabb{ transform.worldPos, glm::vec3(1.f) };
+            // apply scale to halfExtents of mesh
+            glm::vec3 const& halfExt{ meshSource.GetBoundingBox().halfExtents };
+
+            // if rotation is identity (unmodified), simply multiply half extents to scale
+            glm::vec3 const right = transform.worldMtx[0] * halfExt.x;
+            glm::vec3 const up = transform.worldMtx[1] * halfExt.y;
+            glm::vec3 const forward = -transform.worldMtx[2] * halfExt.z;
+
+            aabb.halfExtents.x = std::abs(glm::dot(glm::vec3{ 1.f, 0.f, 0.f }, right)) +
+              std::abs(glm::dot(glm::vec3{ 1.f, 0.f, 0.f }, up)) +
+              std::abs(glm::dot(glm::vec3{ 1.f, 0.f, 0.f }, forward));
+
+            aabb.halfExtents.y = std::abs(glm::dot(glm::vec3{ 0.f, 1.f, 0.f }, right)) +
+              std::abs(glm::dot(glm::vec3{ 0.f, 1.f, 0.f }, up)) +
+              std::abs(glm::dot(glm::vec3{ 0.f, 1.f, 0.f }, forward));
+
+            aabb.halfExtents.z = std::abs(glm::dot(glm::vec3{ 0.f, 0.f, 1.f }, right)) +
+              std::abs(glm::dot(glm::vec3{ 0.f, 0.f, 1.f }, up)) +
+              std::abs(glm::dot(glm::vec3{ 0.f, 0.f, 1.f }, forward));
+
+            return BV::FrustumAABBIntersection(frustum, aabb);
+          }
+        }
     };
 }

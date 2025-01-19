@@ -17,7 +17,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace ECS { class Entity; }
 
 namespace Graphics {
-    class EditorCamera;
+    struct EditorCamera;
 
     struct RenderPassSpec {
         std::shared_ptr<Pipeline> pipeline;

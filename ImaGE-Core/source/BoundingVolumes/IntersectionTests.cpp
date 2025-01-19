@@ -13,7 +13,7 @@ namespace BV {
       + extents.y * std::abs(plane.normal.y)
       + extents.z * std::abs(plane.normal.z) };
 
-    return -r + glm::epsilon<float>() <= plane.GetPlaneSignedDist(aabb.center);
+    return -r <= plane.GetPlaneSignedDist(aabb.center);
   }
 
   bool FrustumSphereIntersection(Frustum const& frustum, BoundingSphere const& sphere) {

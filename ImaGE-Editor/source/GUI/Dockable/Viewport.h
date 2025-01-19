@@ -21,7 +21,7 @@ namespace GUI
   class Viewport : public GUIWindow
   {
   public:
-    Viewport(const char* name, Graphics::EditorCamera& camera);
+    Viewport(const char* name, std::shared_ptr<Graphics::EditorCamera> const& camera);
     
     void Run() override {}  // not in use
 
@@ -36,7 +36,7 @@ namespace GUI
   private:
     static inline constexpr float sEntityScaleFactor = 1.f; // for camera zooming
 
-    Graphics::EditorCamera& mEditorCam;
+    std::shared_ptr<Graphics::EditorCamera> mEditorCam;
     bool mIsPanning, mRightClickHeld, mFocusWindow;
 
     /*!*********************************************************************
@@ -62,6 +62,8 @@ namespace GUI
 
     EVENT_CALLBACK_DECL(OnEntityDoubleClicked);
     EVENT_CALLBACK_DECL(OnSceneStart);
+    EVENT_CALLBACK_DECL(OnCollectEditorData);
+    EVENT_CALLBACK_DECL(OnLoadEditorData);
   };
   
 } // namespace GUI

@@ -11,6 +11,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma once
 //#include "Renderer.h"
 #include "Framebuffer.h"
+#include <glm/glm.hpp>
 
 #ifndef NDEBUG
 // Debug or other specific mode: error checking and logging
@@ -19,6 +20,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 // Release or other non-debug mode: no error checking
 #define GLCALL(x) x
 #endif
+
+// forward declarations
+namespace BV { struct Frustum; }
+namespace Graphics { class MeshSource; }
+namespace Component { struct Transform; }
 
 namespace Graphics {
 	namespace Utils{
@@ -54,6 +60,11 @@ namespace Graphics {
             void GlClearErrors();
 
         }//GL
+
+        namespace Culling {
+          BV::Frustum ComputeFrustum(glm::mat4 const& viewProjMtx);
+          bool EntityInViewFrustum(BV::Frustum const& frustum, Component::Transform const& transform, Graphics::MeshSource const& meshSource);
+        }
 	};
 
 } //namespace Graphics

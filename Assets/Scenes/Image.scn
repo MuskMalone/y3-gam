@@ -4,7 +4,6 @@
             "ID": 0,
             "Parent": null,
             "Child Entities": [],
-            "isActive": true,
             "Components": [
                 {
                     "Tag": {
@@ -80,6 +79,7 @@
                             "softness": 1,
                             "bias": 0.004999999888241291,
                             "nearPlane": -100.0,
+                            "farPlane": 200.0,
                             "scenesBounds": 1.0,
                             "isStatic": true,
                             "shadowModified": true,
@@ -93,7 +93,6 @@
             "ID": 1,
             "Parent": null,
             "Child Entities": [],
-            "isActive": true,
             "Components": [
                 {
                     "Tag": {
@@ -171,7 +170,6 @@
             "Child Entities": [
                 3
             ],
-            "isActive": true,
             "Components": [
                 {
                     "Tag": {
@@ -236,7 +234,6 @@
             "ID": 3,
             "Parent": 2,
             "Child Entities": [],
-            "isActive": true,
             "Components": [
                 {
                     "Tag": {
@@ -633,5 +630,13 @@
                 0
             ]
         ]
+    },
+    "Global Properties": {
+        "ambColor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "ambIntensity": 0.0
     }
 }

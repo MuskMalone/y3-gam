@@ -4,11 +4,11 @@
 #include <Graphics/Camera/EditorCamera.h>
 
 namespace Graphics {
+  // only holds a camera for now since fb is handled by render passes
   struct RenderTarget {
-    RenderTarget(FramebufferSpec const& spec) :
-        camera{}, framebuffer{ std::make_shared<Framebuffer>(spec) } {}
+    RenderTarget() : camera{ std::make_shared<EditorCamera>() } {}
+    RenderTarget(std::shared_ptr<EditorCamera>&& cam) : camera{ std::move(cam) } {}
 
-    EditorCamera camera;
-    std::shared_ptr<Framebuffer> framebuffer;
+    std::shared_ptr<EditorCamera> camera;
   };
 } // namespace Graphics
