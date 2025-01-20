@@ -30,7 +30,7 @@ struct Emitter {
     //color
     vec4 col;          // 16 bytes
     vec3 vel;          // vec3
-    vec3 rot;
+    vec3 gravity;
     vec2 size;         // vec2
 
     //since particles are billboard, means that angle velocity is 2d
@@ -55,7 +55,7 @@ struct Particle {
     vec4 col;          // vec4
     vec3 pos;          // vec3
     vec3 vel;          // vec3
-    vec3 rot;
+    vec3 gravity;
     vec2 size;         // vec3
     float angvel;
     float age;

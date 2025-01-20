@@ -105,7 +105,7 @@ void main() {
         // Billboard alignment
         mat4 billboardAlignment = computeBillboardAlignment(vertView);
         T = translate(Particles[gl_VertexID].pos);
-        R = rotate(Particles[gl_VertexID].rot);
+        R = rotate(vec3(0));
         S = scale(Particles[gl_VertexID].size);
         // vertTransform = vertViewProjection * T * S;
         vertFragColor = Particles[gl_VertexID].col;

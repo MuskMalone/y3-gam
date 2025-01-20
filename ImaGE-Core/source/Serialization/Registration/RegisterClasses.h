@@ -197,7 +197,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
           .property("vertices", &Graphics::EmitterInstance::vertices)  // 8 vec4s
           .property("col", &Graphics::EmitterInstance::col)            // Color
           .property("vel", &Graphics::EmitterInstance::vel)            // Velocity
-          .property("rot", &Graphics::EmitterInstance::rot)            // Rotation
+          .property("gravity", &Graphics::EmitterInstance::gravity)            // Gravity
           .property("size", &Graphics::EmitterInstance::size)          // Size
           .property("angvel", &Graphics::EmitterInstance::angvel)      // Angular velocity
           .property("lifetime", &Graphics::EmitterInstance::lifetime)  // Lifetime

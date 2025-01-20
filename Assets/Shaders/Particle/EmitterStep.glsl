@@ -76,7 +76,7 @@ void spawnParticlePoint(uint emtidx){
         Emitters[emtidx].col, //
         vec3(Emitters[emtidx].vertices[0]),
         randDir(0, 360, Emitters[emtidx].speed), // velocity'        
-        Emitters[emtidx].rot, 
+        Emitters[emtidx].gravity, 
         Emitters[emtidx].size,
         Emitters[emtidx].angvel, 
         0, 
@@ -101,7 +101,7 @@ void spawnParticlePoint(uint emtidx){
 //         randDirInRange(nml, angleRange, Emitters[emtidx].speed), // velocity
 //         Emitters[emtidx].gravity,
 //         Emitters[emtidx].size,
-//         Emitters[emtidx].rot, 
+//         Emitters[emtidx].gravity, 
 //         0, 
 //         Emitters[emtidx].lifetime, 
 //         Emitters[emtidx].angvel, 
@@ -161,7 +161,7 @@ void spawnEmitterParticle(uint emtidx){
 	// 			    randDir(0, 360, Emitters[emtidx].speed), // velocity
 	// 			    Emitters[emtidx].gravity,
 	// 			    Emitters[emtidx].size,
-	// 			    Emitters[emtidx].rot, 
+	// 			    Emitters[emtidx].gravity, 
 	// 			    0, 
 	// 			    Emitters[emtidx].lifetime, 
 	// 			    Emitters[emtidx].angvel, 
@@ -186,7 +186,7 @@ void spawnEmitterParticle(uint emtidx){
 	// 			        randDir(0, 360, Emitters[emtidx].speed),
 	// 			        Emitters[emtidx].gravity,
 	// 			        invdims,
-	// 			        Emitters[emtidx].rot, 
+	// 			        Emitters[emtidx].gravity, 
 	// 			        0, 
 	// 			        Emitters[emtidx].lifetime, 
 	// 			        Emitters[emtidx].angvel, 

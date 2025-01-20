@@ -122,7 +122,7 @@ namespace Graphics{
             // Set the other uniform values individually
             emitterShader->SetUniform("emitter.col", emitter.col);
             emitterShader->SetUniform("emitter.vel", emitter.vel);
-            emitterShader->SetUniform("emitter.rot", emitter.rot);
+            emitterShader->SetUniform("emitter.gravity", emitter.gravity);
             emitterShader->SetUniform("emitter.size", emitter.size);
 
             emitterShader->SetUniform("emitter.angvel", emitter.angvel);

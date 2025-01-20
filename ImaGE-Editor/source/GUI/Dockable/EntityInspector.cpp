@@ -1868,8 +1868,8 @@ namespace GUI {
                       modified = true;
                   }
 
-                  // Edit rotation
-                  if (ImGui::DragFloat3(("Rotation##" + std::to_string(i)).c_str(), &emitter.rot[0], 0.3f, -360.f, 360.f)) {
+                  // Edit gravity
+                  if (ImGui::DragFloat3(("Gravity##" + std::to_string(i)).c_str(), &emitter.gravity[0], 0.01f, -99999.f, 99999.f)) {
                       modified = true;
                   }
 
@@ -1878,10 +1878,10 @@ namespace GUI {
                       modified = true;
                   }
 
-                  // Edit angular velocity
-                  if (ImGui::DragFloat(("Angular Velocity##" + std::to_string(i)).c_str(), &emitter.angvel, 0.1f, -FLT_MAX, FLT_MAX)) {
-                      modified = true;
-                  }
+                  //// Edit angular velocity
+                  //if (ImGui::DragFloat(("Angular Velocity##" + std::to_string(i)).c_str(), &emitter.angvel, 0.1f, -FLT_MAX, FLT_MAX)) {
+                  //    modified = true;
+                  //}
 
                   // Edit lifetime
                   if (ImGui::DragFloat(("Lifetime##" + std::to_string(i)).c_str(), &emitter.lifetime, 0.1f, 0.1f, 100.f)) {
@@ -1900,6 +1900,17 @@ namespace GUI {
 
                   // Edit particles per frame
                   if (ImGui::DragInt(("Particles Per Frame##" + std::to_string(i)).c_str(), &emitter.particlesPerFrame, 1, 1, 1000)) {
+                      modified = true;
+                  }
+
+                  // Dropdown for preset
+                  const char* presetTitles[] = {
+                      "Alpha Over Lifetime",
+                      "Size Over Lifetime",
+                      "Alpha and Size Decrease Over Lifetime",
+                      "Alpha and Size Increase Over Lifetime"
+                  };
+                  if (ImGui::Combo(("Preset##" + std::to_string(i)).c_str(), &emitter.preset, presetTitles, IM_ARRAYSIZE(presetTitles))) {
                       modified = true;
                   }
 

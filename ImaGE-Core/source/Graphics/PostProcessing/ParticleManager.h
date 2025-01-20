@@ -20,7 +20,7 @@ namespace Graphics{
             glm::vec3 vel;                    // Velocity, 12 bytes
             float _padding1;                  // Padding for 16-byte alignment
 
-            glm::vec3 rot;                    // Rotation, 12 bytes
+            glm::vec3 gravity;                    // Rotation, 12 bytes
             float _padding2;                  // Padding for 16-byte alignment
 
             glm::vec2 size;                   // Size, 8 bytes
@@ -50,7 +50,7 @@ namespace Graphics{
             glm::vec3 vel;                    // Current velocity, 12 bytes
             float _padding2;                  // Padding for 16-byte alignment
 
-            glm::vec3 rot;                    // Rotation, 12 bytes
+            glm::vec3 gravity;                    // Rotation, 12 bytes
             float angvel;                     // Angular velocity, 4 bytes
 
             glm::vec2 size;                   // Size, 8 bytes
@@ -72,7 +72,7 @@ namespace Graphics{
         //color
         glm::vec4 col{1,1,1,1};          // 16 bytes
         glm::vec3 vel{ .5f, .0f, -0.5f };          // vec3
-        glm::vec3 rot{ 0,0,0 };
+        glm::vec3 gravity{ 0,0,0 };
         glm::vec2 size{1,1};         // vec2
 
         //since particles are billboard, means that angle velocity is 2d
