@@ -18,7 +18,7 @@ void main() {
     float sampledDepth = texture(depthBuffer, screenUV).r;
 
     // Perform depth testing
-    float fragmentDepth = ndc.z;
+    float fragmentDepth = ndc.z * 0.5 + 0.5;
     if (fragmentDepth > sampledDepth + 0.0001) {
         discard; // Fragment is occluded
     }
