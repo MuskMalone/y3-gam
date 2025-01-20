@@ -1,13 +1,13 @@
 {
-    "Name": "Periwinkle",
+    "Name": "Lily",
     "SubData": [
         {
             "ID": 0,
-            "Parent": null,
+            "Parent": 0,
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Periwinkle",
+                        "tag": "Lily",
                         "isActive": true
                     }
                 },
@@ -66,9 +66,9 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 12606187729823517750
+                            "ID": 4712519113482082219
                         },
-                        "isTransparent": false
+                        "isTransparent": true
                     }
                 }
             ]
@@ -79,7 +79,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Periwinkle Mirror",
+                        "tag": "Lily Mirror",
                         "isActive": true
                     }
                 },
@@ -97,9 +97,9 @@
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": 0.7071067690849304,
+                            "y": 0.7071068286895752,
                             "z": 0.0,
-                            "w": 0.7071067690849304
+                            "w": 0.7071068286895752
                         },
                         "eulerAngles": {
                             "x": 0.0,
@@ -118,9 +118,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.7071067690849304,
+                            "y": 0.7071068286895752,
                             "z": 0.0,
-                            "w": 0.7071067690849304
+                            "w": 0.7071068286895752
                         }
                     }
                 },
@@ -138,9 +138,9 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 12606187729823517750
+                            "ID": 4712519113482082219
                         },
-                        "isTransparent": false
+                        "isTransparent": true
                     }
                 }
             ]

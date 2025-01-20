@@ -27,6 +27,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/LayerManager/LayerManager.h>
 #include <Physics/PhysicsHelpers.h>
 #include <malloc.h>
+#include <Commands/CommandManager.h>
 
 #define ICON_PADDING "   "
 
@@ -931,6 +932,7 @@ namespace GUI {
 
     if (isOpen) {
       Component::Transform& transform = entity.GetComponent<Component::Transform>();
+      Component::Transform oldTrans = transform;
 
       float const inputWidth{ CalcInputWidth(50.f) / 3.f };
 
@@ -984,6 +986,10 @@ namespace GUI {
       ImGui::EndDisabled();
 
       EndVec3Table();
+
+
+      if (modified)
+        CMD::CommandManager::GetInstance().AddCommand("Transform", entity, oldTrans);
     }
 
     WindowEnd(isOpen);
@@ -2064,7 +2070,7 @@ namespace GUI {
               ImGui::EndTooltip();
             }
             ImGui::TableSetColumnIndex(1); ImGui::SetNextItemWidth(INPUT_SIZE);
-            if (ImGui::SliderFloat("##BiasSlider", &lightShadow.bias, 0.f, 2.f, "% .3f")) {
+            if (ImGui::DragFloat("##BiasSlider", &lightShadow.bias, 0.0005,0.f, FLT_MAX, "% .4f")) {
               modified = lightShadow.shadowModified = true;
             }
 

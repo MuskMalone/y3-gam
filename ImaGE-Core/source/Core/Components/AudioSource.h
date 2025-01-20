@@ -9,7 +9,8 @@ namespace Component{
 			IGE::Audio::SoundInvokeSetting playSettings;
 			AudioInstance() = default;
 		};
-		std::unordered_map<std::string, AudioInstance> sounds{};
+		// made it ordered so its always serialized the same
+		std::map<std::string, AudioInstance> sounds{};
 		
 		//honestly i couldve gone with categorizing the sounds instead of one channel group per entity
 		//but this way seems less convoluted

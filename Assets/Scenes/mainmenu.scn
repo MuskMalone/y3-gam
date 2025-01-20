@@ -79,6 +79,7 @@
                             "softness": 1,
                             "bias": 0.004999999888241291,
                             "nearPlane": -100.0,
+                            "farPlane": 200.0,
                             "scenesBounds": 1.0,
                             "isStatic": true,
                             "shadowModified": true,
@@ -305,6 +306,7 @@
                             "softness": 1,
                             "bias": 0.004999999888241291,
                             "nearPlane": -100.0,
+                            "farPlane": 200.0,
                             "scenesBounds": 1.0,
                             "isStatic": true,
                             "shadowModified": true,
@@ -1263,106 +1265,6 @@
                     "AudioSource": {
                         "sounds": [
                             {
-                                "key": "WrongInput_SFX",
-                                "value": {
-                                    "guid": {
-                                        "ID": 15700067558509682526
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 1.0232267379760743,
-                                            "y": -0.4189999997615814,
-                                            "z": -0.7515864372253418
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
-                                    }
-                                }
-                            },
-                            {
-                                "key": "PickupCD_SFX",
-                                "value": {
-                                    "guid": {
-                                        "ID": 12923978811107902370
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 1.0232267379760743,
-                                            "y": -0.4189999997615814,
-                                            "z": -0.7515864372253418
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
-                                    }
-                                }
-                            },
-                            {
-                                "key": "SpinningDiscPS1_SFX",
-                                "value": {
-                                    "guid": {
-                                        "ID": 11217827401232649265
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 1.0232267379760743,
-                                            "y": -0.4189999997615814,
-                                            "z": -0.7515864372253418
-                                        },
-                                        "volume": 8.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": true,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
-                                    }
-                                }
-                            },
-                            {
-                                "key": "OpenConsole_SFX",
-                                "value": {
-                                    "guid": {
-                                        "ID": 7035964496769354032
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 1.0232267379760743,
-                                            "y": -0.4189999997615814,
-                                            "z": -0.7515864372253418
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
-                                    }
-                                }
-                            },
-                            {
                                 "key": "CloseConsole_SFX",
                                 "value": {
                                     "guid": {
@@ -1413,6 +1315,56 @@
                                 }
                             },
                             {
+                                "key": "OpenConsole_SFX",
+                                "value": {
+                                    "guid": {
+                                        "ID": 7035964496769354032
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 1.0232267379760743,
+                                            "y": -0.4189999997615814,
+                                            "z": -0.7515864372253418
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "PickupCD_SFX",
+                                "value": {
+                                    "guid": {
+                                        "ID": 12923978811107902370
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 1.0232267379760743,
+                                            "y": -0.4189999997615814,
+                                            "z": -0.7515864372253418
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
                                 "key": "PlaceCD_SFX",
                                 "value": {
                                     "guid": {
@@ -1430,6 +1382,56 @@
                                         "mute": false,
                                         "loop": false,
                                         "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "SpinningDiscPS1_SFX",
+                                "value": {
+                                    "guid": {
+                                        "ID": 11217827401232649265
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 1.0232267379760743,
+                                            "y": -0.4189999997615814,
+                                            "z": -0.7515864372253418
+                                        },
+                                        "volume": 8.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": true,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "WrongInput_SFX",
+                                "value": {
+                                    "guid": {
+                                        "ID": 15700067558509682526
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 1.0232267379760743,
+                                            "y": -0.4189999997615814,
+                                            "z": -0.7515864372253418
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
@@ -1459,14 +1461,14 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
+                            "x": -0.0,
+                            "y": 1.0,
+                            "z": -0.0,
+                            "w": -4.371138828673793e-8
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": -0.0,
+                            "y": 180.0,
                             "z": 0.0
                         },
                         "worldPos": {
@@ -1480,10 +1482,10 @@
                             "z": 0.006000000052154064
                         },
                         "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 0.0
+                            "x": -3.0908619663705397e-8,
+                            "y": 0.7071067690849304,
+                            "z": 0.7071067690849304,
+                            "w": -3.0908619663705397e-8
                         }
                     }
                 },
@@ -1985,7 +1987,7 @@
                     "Mesh": {
                         "meshName": "Plane",
                         "GUID": {
-                            "ID": 14514269531133450498
+                            "ID": 3815097445005270835
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -2124,7 +2126,7 @@
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 11275074046946446085
+                            "ID": 16211310182187335803
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,

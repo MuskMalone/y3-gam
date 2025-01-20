@@ -1,6 +1,7 @@
 #pragma once
 #include <Events/Event.h>
 #include <GUI/Helpers/SceneEditorConfig.h>
+#include <filesystem>
 
 namespace Events {
   class CollectEditorSceneData : public Event
@@ -22,5 +23,15 @@ namespace Events {
     inline std::string GetName() const noexcept override { return "Loading Editor Configs for Scene"; }
 
     GUI::SceneEditorConfig const mSceneConfig;
+  };
+
+  // original, newFile
+  class RenameAsset : public Event {
+  public:
+    RenameAsset(std::filesystem::path const& original, std::string newFile) : mOriginal{ original }, mNewFile{ std::move(newFile) } {}
+    inline std::string GetName() const noexcept override { return "Renaming " + mOriginal.string() + " to " + mNewFile; }
+
+    std::filesystem::path const mOriginal;
+    std::string const mNewFile;
   };
 }

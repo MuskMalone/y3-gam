@@ -1,13 +1,13 @@
 {
-    "Name": "Weed",
+    "Name": "Chrysanthemum",
     "SubData": [
         {
             "ID": 0,
-            "Parent": null,
+            "Parent": 0,
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Weed",
+                        "tag": "Chrysanthemum",
                         "isActive": true
                     }
                 },
@@ -66,9 +66,9 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 10643385131553561900
+                            "ID": 12807705691605869654
                         },
-                        "isTransparent": false
+                        "isTransparent": true
                     }
                 }
             ]
@@ -79,7 +79,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Weed Mirror",
+                        "tag": "Chrysanthemum Mirror",
                         "isActive": true
                     }
                 },
@@ -138,9 +138,9 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 10643385131553561900
+                            "ID": 12807705691605869654
                         },
-                        "isTransparent": false
+                        "isTransparent": true
                     }
                 }
             ]

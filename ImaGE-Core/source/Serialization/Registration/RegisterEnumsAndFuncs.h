@@ -50,7 +50,8 @@ static void rttr_auto_register_reflection_function3_(); namespace {
 
   rttr::registration::enumeration<Component::LightType>("LightType")(
     rttr::value("DIRECTIONAL", Component::LightType::DIRECTIONAL),
-    rttr::value("SPOTLIGHT", Component::LightType::SPOTLIGHT)
+    rttr::value("SPOTLIGHT", Component::LightType::SPOTLIGHT),
+    rttr::value("POINT", Component::LightType::POINT)
     );
 
   rttr::registration::enumeration<Component::Camera::Type>("CameraType")(

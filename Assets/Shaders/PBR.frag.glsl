@@ -259,7 +259,7 @@ float CheckShadow(vec4 lightSpacePos) {
 
         // if current depth more than what is in the shadow map,
         // it means that it is in shadow
-        return projCoords.z - u_ShadowBias > closestDepth ? 0.5 : 0.0;
+        return projCoords.z - u_ShadowBias > closestDepth ? 1.0 : 0.0;
     }
 
     return SimplePCF(projCoords);

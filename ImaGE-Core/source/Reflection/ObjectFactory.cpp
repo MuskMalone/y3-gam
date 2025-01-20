@@ -214,8 +214,9 @@ namespace Reflection
 
   void ObjectFactory::OverrideInstanceComponents() const {
     for (auto const&[guid, pfbInstMap] : mPrefabInstances) {
-      for (auto const& [entity, pfbInstData] : pfbInstMap) {
+      for (auto const& [id, pfbInstData] : pfbInstMap) {
         Serialization::PfbOverridesData const& overrides{ pfbInstData.mOverrides };
+        ECS::Entity entity{ mNewIDs.contains(id) ? mNewIDs.at(id) : id };
 
         // replace any components if needed
         if (!overrides.componentData.empty()) {

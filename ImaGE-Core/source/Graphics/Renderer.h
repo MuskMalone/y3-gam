@@ -204,7 +204,7 @@ namespace Graphics {
 		static void RenderSceneEnd();
 
 		static unsigned int GetMaxTextureUnits();
-		static std::shared_ptr<Graphics::Framebuffer> GetFinalFramebuffer();
+		static std::shared_ptr<Graphics::Framebuffer> const& GetFinalFramebuffer();
 		static void ResizeFinalFramebuffer(int width, int height);
 		static void SetFinalFramebuffer(std::shared_ptr<Graphics::Framebuffer> const& framebuffer);
 		static IGE::Assets::GUID GetDefaultTexture();
