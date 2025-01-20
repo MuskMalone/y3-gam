@@ -1001,7 +1001,7 @@ namespace
         }
       }
       catch (Debug::ExceptionBase&) {
-        IGE_DBGLOGGER.LogError("Unable to get GUID of " + originalPath);
+        IGE_DBGLOGGER.LogError("Unable to get GUID of " + originalPath + ". You may wanna reimport it.");
       }
     }
     // asset is a folder:
