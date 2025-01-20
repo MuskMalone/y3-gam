@@ -97,13 +97,13 @@ namespace Graphics {
     void ShadowPass::StartRender() {
         Begin();
         glEnable(GL_DEPTH_TEST);
-        glCullFace(GL_FRONT);
+        //glCullFace(GL_FRONT);
         Renderer::Clear();
     }
 
     void ShadowPass::EndRender() {
         End();
-        glCullFace(GL_BACK);
+        //glCullFace(GL_BACK);
     }
 
     void ShadowPass::SetLightUniforms(){

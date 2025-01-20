@@ -96,8 +96,10 @@ namespace Graphics {
 
               glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, id, 0);
               // since we don't touch the color buffer
-          /*    glDrawBuffer(GL_NONE);
-              glReadBuffer(GL_NONE);*/
+#ifdef DISTRIBUTION
+              glDrawBuffer(GL_NONE);
+              glReadBuffer(GL_NONE);
+#endif
 
               glBindTexture(GL_TEXTURE_2D, 0);
             }
