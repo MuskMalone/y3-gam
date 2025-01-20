@@ -97,12 +97,14 @@ namespace Graphics {
     void ShadowPass::StartRender() {
         Begin();
         glEnable(GL_DEPTH_TEST);
+        glDisable(GL_CULL_FACE);
         //glCullFace(GL_FRONT);
         Renderer::Clear();
     }
 
     void ShadowPass::EndRender() {
         End();
+        glEnable(GL_CULL_FACE);
         //glCullFace(GL_BACK);
     }
 

@@ -1968,11 +1968,11 @@
                                 "y": 8.699999809265137,
                                 "z": -12.600000381469727
                             },
-                            "softness": 5,
-                            "bias": 0.004999999888241291,
-                            "nearPlane": -75.8499984741211,
-                            "farPlane": 44.79999923706055,
-                            "scenesBounds": 1.2100000381469727,
+                            "softness": 2,
+                            "bias": 0.0035000001080334188,
+                            "nearPlane": -109.8499984741211,
+                            "farPlane": 56.5,
+                            "scenesBounds": 1.5099999904632569,
                             "isStatic": true,
                             "shadowModified": false,
                             "customCenter": true
@@ -6709,13 +6709,6 @@
                 "subDataId": 3,
                 "componentData": [
                     {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": false
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -6755,6 +6748,13 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": false
                         }
                     },
                     {
@@ -10882,13 +10882,6 @@
                 "subDataId": 3,
                 "componentData": [
                     {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": false
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -10928,6 +10921,13 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": false
                         }
                     },
                     {
@@ -11056,13 +11056,6 @@
                 "subDataId": 3,
                 "componentData": [
                     {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": false
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -11102,6 +11095,13 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": false
                         }
                     },
                     {
@@ -11412,13 +11412,6 @@
                 "subDataId": 3,
                 "componentData": [
                     {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": false
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -11458,6 +11451,13 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": false
                         }
                     },
                     {
@@ -11627,13 +11627,6 @@
                 "subDataId": 0,
                 "componentData": [
                     {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Props_Vase2",
-                            "isActive": true
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -11673,6 +11666,13 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Props_Vase2",
+                            "isActive": true
                         }
                     },
                     {
@@ -11779,13 +11779,6 @@
                 "subDataId": 3,
                 "componentData": [
                     {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": false
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -11825,6 +11818,13 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": false
                         }
                     },
                     {
@@ -11969,13 +11969,6 @@
                 "subDataId": 3,
                 "componentData": [
                     {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": false
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -12015,6 +12008,13 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": false
                         }
                     },
                     {
@@ -49925,13 +49925,6 @@
                 "subDataId": 3,
                 "componentData": [
                     {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": true
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -49971,6 +49964,13 @@
                                 "z": 0.0,
                                 "w": 0.7071068286895752
                             }
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": true
                         }
                     },
                     {
@@ -50368,13 +50368,6 @@
                 "subDataId": 0,
                 "componentData": [
                     {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Stair Head",
-                            "isActive": true
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -50414,6 +50407,13 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Stair Head",
+                            "isActive": true
                         }
                     },
                     {
@@ -50510,6 +50510,29 @@
                         }
                     },
                     {
+                        "key": "RigidBody",
+                        "value": {
+                            "velocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "angularVelocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "staticFriction": 1.0,
+                            "dynamicFriction": 1.0,
+                            "restitution": 0.0,
+                            "gravityFactor": 0.0,
+                            "linearDamping": 0.9800000190734863,
+                            "motionType": "KINEMATIC",
+                            "axisLock": 7,
+                            "angularAxisLock": 7
+                        }
+                    },
+                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -50534,29 +50557,6 @@
                                 "w": 0.9636304378509522
                             },
                             "sensor": false
-                        }
-                    },
-                    {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 1.0,
-                            "dynamicFriction": 1.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "KINEMATIC",
-                            "axisLock": 7,
-                            "angularAxisLock": 7
                         }
                     }
                 ],
@@ -50711,6 +50711,29 @@
                         }
                     },
                     {
+                        "key": "RigidBody",
+                        "value": {
+                            "velocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "angularVelocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "staticFriction": 1.0,
+                            "dynamicFriction": 1.0,
+                            "restitution": 0.0,
+                            "gravityFactor": 0.0,
+                            "linearDamping": 0.9800000190734863,
+                            "motionType": "KINEMATIC",
+                            "axisLock": 7,
+                            "angularAxisLock": 7
+                        }
+                    },
+                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -50735,29 +50758,6 @@
                                 "w": 0.9636304378509522
                             },
                             "sensor": false
-                        }
-                    },
-                    {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 1.0,
-                            "dynamicFriction": 1.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "KINEMATIC",
-                            "axisLock": 7,
-                            "angularAxisLock": 7
                         }
                     }
                 ],
@@ -50943,13 +50943,6 @@
                 "subDataId": 3,
                 "componentData": [
                     {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": false
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -50989,6 +50982,13 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": false
                         }
                     },
                     {
@@ -51196,13 +51196,6 @@
                 "subDataId": 0,
                 "componentData": [
                     {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "ArcDoor",
-                            "isActive": true
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -51242,6 +51235,13 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "ArcDoor",
+                            "isActive": true
                         }
                     },
                     {
@@ -52485,13 +52485,6 @@
                 "subDataId": 0,
                 "componentData": [
                     {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Inside Pit Painting",
-                            "isActive": true
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -52534,9 +52527,39 @@
                         }
                     },
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Inside Pit Painting",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "Layer",
                         "value": {
                             "layerName": "Puzzle"
+                        }
+                    },
+                    {
+                        "key": "RigidBody",
+                        "value": {
+                            "velocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "angularVelocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "staticFriction": 0.0,
+                            "dynamicFriction": 0.0,
+                            "restitution": 0.0,
+                            "gravityFactor": 0.0,
+                            "linearDamping": 0.9800000190734863,
+                            "motionType": "DYNAMIC",
+                            "axisLock": 0,
+                            "angularAxisLock": 0
                         }
                     },
                     {
@@ -52564,29 +52587,6 @@
                                 "w": 0.9990482330322266
                             },
                             "sensor": false
-                        }
-                    },
-                    {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 0.0,
-                            "dynamicFriction": 0.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "DYNAMIC",
-                            "axisLock": 0,
-                            "angularAxisLock": 0
                         }
                     }
                 ],
@@ -70517,13 +70517,6 @@
                 "subDataId": 1,
                 "componentData": [
                     {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Vase2",
-                            "isActive": true
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -70563,6 +70556,13 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Vase2",
+                            "isActive": true
                         }
                     },
                     {
@@ -71590,13 +71590,6 @@
                 "subDataId": 0,
                 "componentData": [
                     {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "ArcDoor",
-                            "isActive": true
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -71636,6 +71629,13 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "ArcDoor",
+                            "isActive": true
                         }
                     },
                     {
@@ -73679,13 +73679,6 @@
                 "subDataId": 1,
                 "componentData": [
                     {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "ArcDoor Wall",
-                            "isActive": true
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -73725,6 +73718,13 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "ArcDoor Wall",
+                            "isActive": true
                         }
                     },
                     {
@@ -73775,13 +73775,6 @@
                 "subDataId": 1,
                 "componentData": [
                     {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "ArcDoor Wall",
-                            "isActive": true
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -73821,6 +73814,13 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "ArcDoor Wall",
+                            "isActive": true
                         }
                     },
                     {

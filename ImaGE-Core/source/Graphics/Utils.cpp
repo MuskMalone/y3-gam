@@ -80,7 +80,7 @@ namespace Graphics {
             void AttachShadowMapTexture(uint32_t& id, uint32_t width, uint32_t height) {
               glGenTextures(1, &id);
               glBindTexture(GL_TEXTURE_2D, id);
-              glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+              glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
               //glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH_COMPONENT, width, height);
               
               glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -95,7 +95,7 @@ namespace Graphics {
               glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, clampColor);
 
               glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, id, 0);
-              // since we don't touch the color buffer
+              // since we don't touch the color buffer in game build
 #ifdef DISTRIBUTION
               glDrawBuffer(GL_NONE);
               glReadBuffer(GL_NONE);
