@@ -2,7 +2,6 @@
 #include "ShadowPass.h"
 #include "Core/Entity.h"
 #include "Graphics/Renderer.h"
-#include <Graphics/Camera/EditorCamera.h>
 #include <Graphics/RenderAPI.h>
 #include <Core/Components/Light.h>
 #include <Core/Components/Transform.h>

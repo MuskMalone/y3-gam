@@ -374,7 +374,7 @@ namespace GUI
       ImGui::TableSetupColumn(" Z", ImGuiTableColumnFlags_WidthFixed, vec3Width);
       ImGui::TableHeadersRow();
 
-      if (ImGuiHelpers::TableInputFloat3("Position", &eCam->mPosition.x, elemWidth, false, -FLT_MAX, FLT_MAX, 0.1f)) {
+      if (ImGuiHelpers::TableInputFloat3("Position", &eCam->position.x, elemWidth, false, -FLT_MAX, FLT_MAX, 0.1f)) {
         modified = true;
       }
       ImGui::EndTable();
@@ -394,16 +394,16 @@ namespace GUI
       }
 
       NextRowTable("FOV", elemWidth);
-      if (ImGui::SliderFloat("##FOV", &eCam->mFov, 0.f, 180.f)) {
+      if (ImGui::SliderFloat("##FOV", &eCam->fov, 0.f, 180.f)) {
         modified = true;
       }
 
       NextRowTable("Near Clip", elemWidth);
-      if (ImGui::DragFloat("##Near", &eCam->mNearClip, 5.f, -100.f, FLT_MAX)) {
+      if (ImGui::DragFloat("##Near", &eCam->nearClip, 5.f, -100.f, FLT_MAX)) {
         modified = true;
       }
       NextRowTable("Far Clip", elemWidth);
-      if (ImGui::DragFloat("##Far", &eCam->mFarClip, 5.f, 0.f, 1000.f)) {
+      if (ImGui::DragFloat("##Far", &eCam->farClip, 5.f, 0.f, 1000.f)) {
         modified = true;
       }
 
@@ -417,6 +417,10 @@ namespace GUI
 
     ImGui::EndDisabled();
     ImGui::EndMenu();
+
+    if (modified) {
+      eCam->modified = true;
+    }
 
     return modified;
   }
@@ -524,6 +528,8 @@ namespace GUI
         ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(1); ImGui::Text("WASD QE:");
         ImGui::TableSetColumnIndex(2); ImGui::Text("Move");
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(1); ImGui::Text("*Hold SHIFT to move slowly");
 
         ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(0); ImGui::Text("GUIZMOS:");

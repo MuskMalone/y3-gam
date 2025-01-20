@@ -3,18 +3,19 @@
 #include <glm/glm.hpp>        // Include the EditorCamera class
 #include "Core/Components/Camera.h"  // Include the Camera component struct
 #include <BoundingVolumes/Frustum.h>
+#include <rttr/rttr_enable.h>
 
 namespace Graphics {
  
     struct CameraSpec {
-    private:
+    protected:
         BV::Frustum frustum;
 
         void ComputeFrustum();
     public:
         // Forward declaration of EditorCamera
-        glm::mat4 viewProjMatrix;
         glm::mat4 viewMatrix;
+        glm::mat4 viewProjMatrix;
         glm::vec3 position;
         glm::quat rotation;
         float nearClip, farClip;
@@ -24,15 +25,12 @@ namespace Graphics {
 
         CameraSpec() = default;
         // Main constructor to initialize all fields directly
-        CameraSpec(const glm::mat4& vpMatrix, const glm::mat4& vMatrix, const glm::vec3& pos, float nearC, float farC, float fieldOfView, float ar, bool editorMode = false)
-            : viewProjMatrix{ vpMatrix }, viewMatrix{ vMatrix }, position{ pos }, rotation{},
-          nearClip { nearC }, farClip{ farC }, fov{ fieldOfView }, aspectRatio{ ar }, isEditor{ editorMode } {
-          ComputeFrustum();
-        }
+        CameraSpec(glm::vec3 const& position, float yaw, float pitch,
+          float fov, float aspectRatio, float nearClip, float farClip, bool editorMode = false);
 
         // Constructor overload for Camera component
         CameraSpec(const Component::Camera& cameraComp)
-            : viewProjMatrix{ cameraComp.GetViewProjMatrix() }, viewMatrix{cameraComp.GetViewMatrix()},
+            : viewMatrix{ cameraComp.GetViewMatrix() }, viewProjMatrix{ cameraComp.GetViewProjMatrix() },
             position{ cameraComp.position }, rotation{ cameraComp.rotation },
             nearClip{ cameraComp.nearClip }, farClip{ cameraComp.farClip },
             fov{ cameraComp.fov }, aspectRatio{ cameraComp.aspectRatio }, isEditor{ false } {
@@ -44,5 +42,7 @@ namespace Graphics {
         inline glm::vec3 GetRightVector() const { return rotation * glm::vec3(1.0f, 0.0f, 0.0f); }
 
         BV::Frustum const& GetFrustum() const { return frustum; }
+
+        RTTR_ENABLE()
     };
 }

@@ -12,7 +12,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <vector>
 #include <memory>
 #include <Events/EventCallback.h>
-#include <Graphics/Camera/EditorCamera.h>
+#include <EditorCamera.h>
 
 namespace GUI {
   class Toolbar : public GUIWindow {

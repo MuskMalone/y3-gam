@@ -318,7 +318,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClInclude Include="source\Globals.h" />
     <ClInclude Include="source\Graphics\Camera\CameraManager.h" />
     <ClInclude Include="source\Graphics\Camera\CameraSpec.h" />
-    <ClInclude Include="source\Graphics\Camera\EditorCamera.h" />
     <ClInclude Include="source\Graphics\ElementBuffer.h" />
     <ClInclude Include="source\Graphics\Framebuffer.h" />
     <ClInclude Include="source\Graphics\MaterialData.h" />
@@ -341,7 +340,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClInclude Include="source\Graphics\RenderPass\SkyboxPass.h" />
     <ClInclude Include="source\Graphics\RenderPass\UIPass.h" />
     <ClInclude Include="source\Graphics\RenderSystem.h" />
-    <ClInclude Include="source\Graphics\RenderTarget.h" />
     <ClInclude Include="source\Graphics\Renderer.h" />
     <ClInclude Include="source\Graphics\Shader.h" />
     <ClInclude Include="source\Graphics\Texture.h" />
@@ -471,7 +469,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClCompile Include="source\FrameRateController\FrameRateController.cpp" />
     <ClCompile Include="source\Graphics\Camera\CameraManager.cpp" />
     <ClCompile Include="source\Graphics\Camera\CameraSpec.cpp" />
-    <ClCompile Include="source\Graphics\Camera\EditorCamera.cpp" />
     <ClCompile Include="source\Graphics\ElementBuffer.cpp" />
     <ClCompile Include="source\Graphics\Framebuffer.cpp" />
     <ClCompile Include="source\Graphics\MaterialData.cpp" />

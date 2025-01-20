@@ -601,9 +601,6 @@
     <ClInclude Include="source\Graphics\Camera\CameraSpec.h">
       <Filter>Graphics\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="source\Graphics\Camera\EditorCamera.h">
-      <Filter>Graphics\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="source\Graphics\ElementBuffer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -668,9 +665,6 @@
       <Filter>Graphics\RenderPass</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderSystem.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Graphics\RenderTarget.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\Renderer.h">
@@ -940,9 +934,6 @@
       <Filter>Graphics\Camera</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\Camera\CameraSpec.cpp">
-      <Filter>Graphics\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Graphics\Camera\EditorCamera.cpp">
       <Filter>Graphics\Camera</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\ElementBuffer.cpp">

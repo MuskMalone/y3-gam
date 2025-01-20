@@ -69,7 +69,8 @@ namespace
   void MoveAssetDragDropTarget(std::filesystem::path const& path);
 
   void NextRowTable(const char* label);
-  bool IsAssetFile(std::string const&);
+  bool IsAssetFile(std::string const& file);
+  bool ShouldHideDirectory(std::string const& dirName);
   void DeleteAssetDependencies(std::filesystem::path const& path);
   std::string ChangeAssetPath(GUI::AssetPayload const& asset, std::filesystem::path const& targetDirectory);
 }
@@ -168,7 +169,7 @@ namespace GUI
 
       for (auto const& file : std::filesystem::directory_iterator(gAssetsDirectory))
       {
-        if (!file.is_directory()) { continue; }
+        if (!file.is_directory() || ShouldHideDirectory(file.path().filename().string())) { continue; }
 
         RecurseDownDirectory(file, ImGui::GetTreeNodeToLabelSpacing());
       }
@@ -259,7 +260,7 @@ namespace GUI
       }
       else if (ext == gSceneFileExt) {
         // rename hierarchy state file of scene
-        std::string const editorScenesDir{ gEditorAssetsDirectory + std::string("Scenes\\") };
+        std::string const editorScenesDir{ gEditorAssetsDirectory + std::string(".Scenes\\") };
         // also rename the editor scene config file
         std::filesystem::rename(editorScenesDir + original.stem().string(),
           editorScenesDir + newPath.stem().string());
@@ -288,7 +289,7 @@ namespace GUI
       if (!IsAssetFile(file.path().string())) { continue; } // to account for igemeta files
 
       std::string const fileName{ file.path().filename().string() };
-      if (fileName == "Compiled") { continue; }
+      if (ShouldHideDirectory(fileName)) { continue; }
 
       ImGui::TableNextColumn();
       bool const exceed{ fileName.size() > maxChars };
@@ -387,8 +388,9 @@ namespace GUI
     {
       std::filesystem::path const& path{ file.path() };
       if (!IsAssetFile(path.string())) { continue; } // to account for igemeta files
-      if (file.is_directory() || path.extension() == gMeshFileExt
-          || path.parent_path().filename() == sCompiledDirectory) { continue; } 
+      // dont show hidden folders or files within it
+      else if ((file.is_directory() && ShouldHideDirectory(path.filename().string()))
+          || ShouldHideDirectory(path.parent_path().filename().string())) { continue; }
 
       std::string const fileName{ path.filename().string() };
       if (ToLower(fileName).find(sLowerSearchQuery) == std::string::npos) { continue; }
@@ -903,7 +905,7 @@ namespace
   bool ContainsDirectories(std::filesystem::path const& dirEntry)
   {
     for (auto const& file : std::filesystem::directory_iterator(dirEntry)) {
-      if (file.path().filename() == "Compiled") { continue; }
+      if (ShouldHideDirectory(file.path().filename().string())) { continue; }
 
       if (file.is_directory()) { return true; }
     }
@@ -913,7 +915,7 @@ namespace
 
   bool ContainsFiles(std::filesystem::path const& directory) {
     for (auto const& file : std::filesystem::directory_iterator(directory)) {
-      if (file.path().filename() == "Compiled") { continue; }
+      if (ShouldHideDirectory(file.path().filename().string())) { continue; }
 
       return true;
     }
@@ -941,7 +943,7 @@ namespace
     if (std::filesystem::is_regular_file(path)) {
       // remove the editor scene config file
       if (path.extension() == gSceneFileExt) {
-        std::filesystem::remove(gEditorAssetsDirectory + std::string("Scenes\\") + path.stem().string());
+        std::filesystem::remove(gEditorAssetsDirectory + std::string(".Scenes\\") + path.stem().string());
       }
       else {
         try {
@@ -1049,7 +1051,11 @@ namespace
     ImGui::PopFont();
   }
 
-  bool IsAssetFile(std::string const& fp){
+  bool ShouldHideDirectory(std::string const& dirName) {
+    return dirName == "Compiled" || (!dirName.empty() && dirName[0] == '.');
+  }
+
+  bool IsAssetFile(std::string const& fp) {
       auto fileext{ IGE::Assets::GetFileExtension(fp) };
       if (fileext == IGE::Assets::cAssetMetadataFileExtension) return false;
       return true;
