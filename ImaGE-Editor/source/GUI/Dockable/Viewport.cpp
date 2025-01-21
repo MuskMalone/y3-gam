@@ -233,7 +233,7 @@ namespace GUI
       
       if (!shiftHeld) {
         if (moved) {
-          mEditorCam->mMoveSpeed *= 1.05f;
+          mEditorCam->mMoveSpeed *= 1.02f;
         }
         else {
           mEditorCam->mMoveSpeed = 15.f;

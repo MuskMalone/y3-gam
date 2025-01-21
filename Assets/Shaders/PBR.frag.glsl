@@ -159,19 +159,24 @@ void main(){
         // Lo += (kD * albedo / PI + specular) * lightColor * Ndo  tL * (1.0 - shadow);
         vec3 LightIntensity = u_LightColor[i] * u_LightIntensity[i];
         vec3 l = vec3(0.0);
+        float shadow = 0.0; // Shadow factor default (0.0 = no shadow)
 
-        if(u_type[i] == typeDir)
-        {
-            if(hasRenderDir)
-            continue;
+        if(u_type[i] == typeDir) {
+            if (hasRenderDir)
+                continue;
             hasRenderDir = true;
             l = -u_LightDirection[i].xyz;
-        } else {
+
+            if (u_ShadowsActive) {
+                shadow = CheckShadow(v_LightSpaceFragPos);  // 1.0 if in shadow and 0.0 otherwise
+            }
+        }
+        else {
             l = u_LightPos[i] - v_FragPos;
             float LightToPixelDist = length(l);
             l = normalize(l);
             float attenuation = smoothstep(0.0, u_Range[i], u_Range[i] - LightToPixelDist);
-           // LightIntensity /= (LightToPixelDist * LightToPixelDist);
+            // LightIntensity /= (LightToPixelDist * LightToPixelDist);
             LightIntensity *= attenuation;
             // L = normalize(u_LightPos[i] - v_FragPos);  // Direction from fragment to light
             // float distance = length(u_LightPos[i] - v_FragPos);  // Distance to light
@@ -214,7 +219,7 @@ void main(){
 
         vec3 FinalColor = (DiffuseBRDF + SpecBRDF) * LightIntensity * nDotL;
 
-        TotalLight += FinalColor;
+        TotalLight += FinalColor * (1.0 - shadow);
     }
 
 
