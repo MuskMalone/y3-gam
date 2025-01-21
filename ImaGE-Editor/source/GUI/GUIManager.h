@@ -13,7 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #pragma once
 #include <memory>
 #include <GUI/GUIWindow.h>
-#include <Graphics/RenderTarget.h>
+#include <EditorCamera.h>
 #include "GUI/Dockable/GameViewport.h"
 #include <Events/EventCallback.h>
 
@@ -28,11 +28,8 @@ namespace GUI {
     /*!*********************************************************************
     \brief
       Initializes the GUIManager along with all other GUI elements
-    \param renderTarget
-      Reference to the render target holding the framebuffer and editor
-      camera to initialize the viewport class
     ************************************************************************/
-    void Init(Graphics::RenderTarget& renderTarget);
+    void Init(std::shared_ptr<Graphics::EditorCamera> editorCamPtr);
 
     /*!*********************************************************************
     \brief

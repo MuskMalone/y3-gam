@@ -306,14 +306,19 @@ float SimplePCF(vec3 projCoords) {
 float CheckShadow(vec4 lightSpacePos) {
     // perform perspective division and map to [0,1]
     vec3 projCoords = vec3(lightSpacePos / lightSpacePos.w) * 0.5 + 0.5;
-    projCoords.xy = clamp(projCoords.xy, 0.0, 1.0);
+
+    // force value to 0 if out of bounds
+    if(projCoords.z > 1.0) {
+        return 0.0;
+    }
+    //projCoords.xy = clamp(projCoords.xy, 0.0, 1.0);
 
     if (u_ShadowSoftness == 0) {
         float closestDepth = texture(u_ShadowMap, projCoords.xy).r;
 
         // if current depth more than what is in the shadow map,
         // it means that it is in shadow
-        return projCoords.z - u_ShadowBias > closestDepth ? 0.5 : 0.0;
+        return projCoords.z - u_ShadowBias > closestDepth ? 1.0 : 0.0;
     }
 
     return SimplePCF(projCoords);

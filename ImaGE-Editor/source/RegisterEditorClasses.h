@@ -24,12 +24,12 @@ static void rttr_auto_register_reflection_function4_(); namespace {
     using T = Graphics::EditorCamera;
     rttr::registration::class_<T>("EditorCamera")
       .constructor<>()(rttr::policy::ctor::as_object)
-      .property("position", &T::mPosition)
-      .property("fov", &T::mFov)
+      .property("position", &T::position)
+      .property("fov", &T::fov)
       .property("pitch", &T::mPitch)
       .property("yaw", &T::mYaw)
-      .property("nearClip", &T::mNearClip)
-      .property("farClip", &T::mFarClip);
+      .property("nearClip", &T::nearClip)
+      .property("farClip", &T::farClip);
   }
   rttr::registration::class_<GUI::SceneEditorConfig>("SceneEditorConfig")
     .constructor<>()(rttr::policy::ctor::as_object)

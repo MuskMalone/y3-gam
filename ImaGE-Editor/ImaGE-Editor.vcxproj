@@ -182,6 +182,7 @@ copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Release\bin\Release\rtt
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="source\EditorApplication.h" />
+    <ClInclude Include="source\EditorCamera.h" />
     <ClInclude Include="source\EditorEvents.h" />
     <ClInclude Include="source\GUI\Dockable\AssetBrowser.h" />
     <ClInclude Include="source\GUI\Dockable\Console.h" />
@@ -211,6 +212,7 @@ copy /B /Y "$(SolutionDir)Libraries\rttr\Built-Libraries\Release\bin\Release\rtt
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\EditorApplication.cpp" />
+    <ClCompile Include="source\EditorCamera.cpp" />
     <ClCompile Include="source\GUI\Dockable\AssetBrowser.cpp" />
     <ClCompile Include="source\GUI\Dockable\Console.cpp" />
     <ClCompile Include="source\GUI\Dockable\Debugging\PerformanceWindow.cpp" />

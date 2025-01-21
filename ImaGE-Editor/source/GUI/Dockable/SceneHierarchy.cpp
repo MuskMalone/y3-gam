@@ -58,7 +58,7 @@ namespace GUI
     SUBSCRIBE_CLASS_FUNC(Events::CollectEditorSceneData, &SceneHierarchy::OnCollectEditorData, this);
     SUBSCRIBE_CLASS_FUNC(Events::LoadEditorSceneData, &SceneHierarchy::OnLoadEditorData, this);
 
-    std::string const hierarchyConfigDir{ std::string(gEditorAssetsDirectory) + "Scenes" };
+    std::string const hierarchyConfigDir{ std::string(gEditorAssetsDirectory) + ".Scenes" };
     if (!std::filesystem::is_directory(hierarchyConfigDir)) {
       std::filesystem::create_directory(hierarchyConfigDir);
     }

@@ -2,7 +2,6 @@
 #include "ShadowPass.h"
 #include "Core/Entity.h"
 #include "Graphics/Renderer.h"
-#include <Graphics/Camera/EditorCamera.h>
 #include <Graphics/RenderAPI.h>
 #include <Core/Components/Light.h>
 #include <Core/Components/Transform.h>
@@ -97,13 +96,15 @@ namespace Graphics {
     void ShadowPass::StartRender() {
         Begin();
         glEnable(GL_DEPTH_TEST);
-        glCullFace(GL_FRONT);
+        glDisable(GL_CULL_FACE);
+        //glCullFace(GL_FRONT);
         Renderer::Clear();
     }
 
     void ShadowPass::EndRender() {
         End();
-        glCullFace(GL_BACK);
+        glEnable(GL_CULL_FACE);
+        //glCullFace(GL_BACK);
     }
 
     void ShadowPass::SetLightUniforms(){

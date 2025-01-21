@@ -11,30 +11,27 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "EditorApplication.h"
 
 #include <Events/EventManager.h>
-#include <Events/AssetEvents.h>
 #include <Physics/PhysicsSystem.h>
 #include <Scenes/SceneManager.h>
 #include <Prefabs/PrefabManager.h>
 #include <Input/InputManager.h>
-
 #include <Core/Systems/SystemManager/SystemManager.h>
-#include <Core/Systems/Systems.h>
+#include <Graphics/Renderer.h>
 
 #include <imgui/imgui.h>
 #include <imgui/backends/imgui_impl_glfw.h>
 #include <imgui/backends/imgui_impl_opengl3.h>
-
-#include <Core/Systems/Systems.h>
-#include <Graphics/Camera/CameraSpec.h>
-#include <GUI/GUIVault.h>
-
-#include <Graphics/Renderer.h>
-#include <Graphics/MaterialTable.h>
 #include <csignal>
+
+#include <Events/AssetEvents.h>
+#include <Core/Systems/Systems.h>
+#include <EditorCamera.h>
+#include <GUI/GUIVault.h>
+#include <Graphics/MaterialTable.h>
 
 namespace IGE {
   EditorApplication::EditorApplication(Application::ApplicationSpecification const& spec) :
-    mGUIManager{}, Application(spec) {
+    Application(spec), mGUIManager{}, mEditorCamera{} {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
@@ -53,9 +50,10 @@ namespace IGE {
     
     SetEditorCallbacks();
 
-    // EditorView
-    mRenderTargets.emplace_back();
-    mRenderTargets.back().camera->InitForEditorView();
+    // Init EditorView
+    std::shared_ptr<Graphics::EditorCamera> editorCam{ std::make_shared<Graphics::EditorCamera>() };
+    editorCam->InitForEditorView();
+    mEditorCamera = editorCam;  // store the base class ptr
   }
 
   EditorApplication::~EditorApplication() {
@@ -69,7 +67,7 @@ namespace IGE {
     Application::Init();  // perform default Init
 
     // init editor-specific stuff
-    mGUIManager.Init(GetEditorRenderTarget());
+    mGUIManager.Init(std::static_pointer_cast<Graphics::EditorCamera>(mEditorCamera));
 
     SUBSCRIBE_CLASS_FUNC(Events::SignalEvent, &EditorApplication::SignalCallback, this);
   }
@@ -138,6 +136,7 @@ namespace IGE {
             
             frameRateController.StartSystemTimer();
             mGUIManager.UpdateGUI(fb, gameTex);
+
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -228,9 +227,6 @@ namespace IGE {
 
     //  target.framebuffer->Unbind();
     //}
-      auto const& cam = GetEditorRenderTarget().camera;
-      Graphics::CameraSpec const editorCam{ cam->GetViewProjMatrix(), cam->GetViewMatrix(),
-          cam->GetPosition(), cam->GetNearPlane(), cam->GetFarPlane(), cam->GetFOV(), cam->GetAspectRatio(), true };
 
       if (mGUIManager.IsGameViewActive() && Graphics::RenderSystem::mCameraManager.HasActiveCamera()) {
           std::vector<ECS::Entity> const entities{ Graphics::RenderSystem::RenderScene(Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent()) };
@@ -253,15 +249,15 @@ namespace IGE {
 
           // if ShowCulledEntities is on, only render with the entities returned from game view's render
           if (GUI::GUIVault::sShowCulledEntities) {
-            Graphics::RenderSystem::RenderScene(editorCam, entities);
+            Graphics::RenderSystem::RenderScene(*mEditorCamera, entities);
           }
           else {
-            Graphics::RenderSystem::RenderScene(editorCam);
+            Graphics::RenderSystem::RenderScene(*mEditorCamera);
           }
       }
       // if no camera component, simply render with editor cam only
       else {
-        Graphics::RenderSystem::RenderScene(editorCam);
+        Graphics::RenderSystem::RenderScene(*mEditorCamera);
       }
   }
 

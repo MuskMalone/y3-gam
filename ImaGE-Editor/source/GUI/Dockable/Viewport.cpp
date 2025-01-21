@@ -10,23 +10,26 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
-#include <imgui/imgui.h>
 #include "Viewport.h"
+#include <imgui/imgui.h>
+
+#include "Graphics/Renderer.h"
+#include <Events/EventManager.h>
+#include <FrameRateController/FrameRateController.h>
+#include <Scenes/SceneManager.h>
+#include <Core/EntityManager.h>
+
 #include <GUI/Helpers/AssetPayload.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
 #include <Core/Entity.h>
 #include <Core/Components/Mesh.h>
 #include <Core/Components/Transform.h>
 #include <Core/Components/PrefabOverrides.h>
-#include <Core/EntityManager.h>
+#include <Core/Components/Light.h>
 #include <GUI/GUIVault.h>
 #include <Asset/IGEAssets.h>
 #include <Graphics/RenderPass/GeomPass.h>
 #include <EditorEvents.h>
-
-#include "Graphics/Renderer.h"
-#include <Events/EventManager.h>
-#include <FrameRateController/FrameRateController.h>
 
 namespace {
   // for panning camera to entity when double-clicked upon
@@ -70,8 +73,8 @@ namespace {
 
 namespace GUI
 {
-  Viewport::Viewport(const char* name, std::shared_ptr<Graphics::EditorCamera> const& camera) : GUIWindow(name),
-    mEditorCam{ camera }, mIsPanning{ false }, mRightClickHeld{ false }, mFocusWindow{ false } {
+  Viewport::Viewport(const char* name, std::shared_ptr<Graphics::EditorCamera> camera) : GUIWindow(name),
+    mEditorCam{ std::move(camera) }, mIsPanning{ false }, mRightClickHeld{ false }, mFocusWindow{ false } {
     SUBSCRIBE_CLASS_FUNC(Events::ZoomInOnEntity, &Viewport::OnEntityDoubleClicked, this);
     SUBSCRIBE_CLASS_FUNC(Events::SceneStateChange, &Viewport::OnSceneStart, this);
     SUBSCRIBE_CLASS_FUNC(Events::CollectEditorSceneData, &Viewport::OnCollectEditorData, this);
@@ -170,6 +173,11 @@ namespace GUI
         }
       }
 
+      if (mEditorCam->modified) {
+        mEditorCam->UpdateMatrices();
+        mEditorCam->modified = false;
+      }
+
       ReceivePayload();
 
       ImGui::End();
@@ -191,24 +199,45 @@ namespace GUI
       }
       ImGui::SetMouseCursor(ImGuiMouseCursor_None); // hide cursor when looking
 
+      bool const shiftHeld{ ImGui::IsKeyDown(ImGuiKey_LeftShift) || ImGui::IsKeyDown(ImGuiKey_RightShift) };
+      if (shiftHeld) {
+        mEditorCam->mMoveSpeed = 2.f;
+      }
+
+      bool moved{ false };
       // process input for movement
       if (ImGui::IsKeyDown(ImGuiKey_W)) {
         mEditorCam->ProcessKeyboardInput(FORWARD, dt);
+        moved = true;
       }
       if (ImGui::IsKeyDown(ImGuiKey_S)) {
         mEditorCam->ProcessKeyboardInput(BACKWARD, dt);
+        moved = true;
       }
       if (ImGui::IsKeyDown(ImGuiKey_A)) {
         mEditorCam->ProcessKeyboardInput(LEFT, dt);
+        moved = true;
       }
       if (ImGui::IsKeyDown(ImGuiKey_D)) {
         mEditorCam->ProcessKeyboardInput(RIGHT, dt);
+        moved = true;
       }
       if (ImGui::IsKeyDown(ImGuiKey_Q)) {
         mEditorCam->ProcessKeyboardInput(DOWN, dt);
+        moved = true;
       }
       if (ImGui::IsKeyDown(ImGuiKey_E)) {
         mEditorCam->ProcessKeyboardInput(UP, dt);
+        moved = true;
+      }
+      
+      if (!shiftHeld) {
+        if (moved) {
+          mEditorCam->mMoveSpeed *= 1.05f;
+        }
+        else {
+          mEditorCam->mMoveSpeed = 15.f;
+        }
       }
 
       // process input for panning
@@ -219,6 +248,7 @@ namespace GUI
     }
     else {
       mRightClickHeld = false;
+      mEditorCam->mMoveSpeed = 15.f;
 
       if (ImGui::IsMouseDown(ImGuiMouseButton_Middle)) {
         if (!mIsPanning) {
@@ -241,9 +271,9 @@ namespace GUI
 
     // move camera towards entity if the event has been triggered
     if (sMovingToEntity) {
-      if (glm::distance2(sTargetPosition, mEditorCam->GetPosition()) > 0.5f) {
+      if (glm::distance2(sTargetPosition, mEditorCam->position) > 0.5f) {
         float const movePercentageThisFrame{ Performance::FrameRateController::GetInstance().GetDeltaTime() / 0.5f * sDistToCover };
-        glm::vec3 const remainingDist{ sTargetPosition - mEditorCam->GetPosition() };
+        glm::vec3 const remainingDist{ sTargetPosition - mEditorCam->position };
         glm::vec3 offsetThisFrame{ sMoveDir * movePercentageThisFrame };
 
         // clamp the distance so we don't overshoot
@@ -255,9 +285,10 @@ namespace GUI
         mEditorCam->MoveCamera(offsetThisFrame);
       }
       else {
-        mEditorCam->SetPosition(sTargetPosition);
+        mEditorCam->position = sTargetPosition;
         sMovingToEntity = false;
       }
+      mEditorCam->Modified();
     }
 
     float const scrollDelta{ ImGui::GetIO().MouseWheel };
@@ -285,7 +316,7 @@ namespace GUI
     // then offset backwards from the entity's position based on the larger scale component and scale factor
     sTargetPosition = trans.worldPos - mEditorCam->GetForwardVector()
       * glm::max(projectedEntityScale.x, projectedEntityScale.y) * sEntityScaleFactor;
-    glm::vec3 const totalDist{ sTargetPosition - mEditorCam->GetPosition() };
+    glm::vec3 const totalDist{ sTargetPosition - mEditorCam->position };
     sMoveDir = glm::normalize(totalDist);
     sDistToCover = glm::length(totalDist);
     sMovingToEntity = true;
@@ -314,7 +345,8 @@ namespace GUI
     ImGuizmo::SetRect(windowPos.x, windowPos.y, windowWidth, windowHeight);
     Component::Transform& transform{ selectedEntity.GetComponent<Component::Transform>() };
 
-    glm::mat4 const viewMatrix{ mEditorCam->GetViewMatrix() }, projMatrix{ mEditorCam->GetProjMatrix() };
+    glm::mat4 const& viewMatrix{ mEditorCam->viewMatrix };
+    glm::mat4 const projMatrix{ mEditorCam->GetProjMatrix() };
     glm::mat4 worldMtx{ transform.worldMtx };
 
     static auto currentOperation = ImGuizmo::TRANSLATE;
@@ -405,6 +437,12 @@ namespace GUI
           else if (currentOperation != ImGuizmo::TRANSLATE) {
             pfbOverrides.AddComponentOverride<Component::Transform>();
           }
+          if (selectedEntity.HasComponent<Component::Light>()) {
+            Component::Light& lightComp{ selectedEntity.GetComponent<Component::Light>() };
+            if (lightComp.type == Component::DIRECTIONAL && lightComp.castShadows) {
+              lightComp.shadowConfig.shadowModified = true;
+            }
+          }
         }
       }
       else {
@@ -418,6 +456,13 @@ namespace GUI
             prefabOverrides->AddComponentOverride<Component::Transform>();
           }
         }
+
+        if (selectedEntity.HasComponent<Component::Light>()) {
+          Component::Light& lightComp{ selectedEntity.GetComponent<Component::Light>() };
+          if (lightComp.type == Component::DIRECTIONAL && lightComp.castShadows) {
+            lightComp.shadowConfig.shadowModified = true;
+          }
+        }
       }
 
       transform.modified = true;
@@ -429,6 +474,7 @@ namespace GUI
 
   void Viewport::ReceivePayload()
   {
+    bool const noScene{ IGE_SCENEMGR.NoSceneSelected() };
     if (ImGui::BeginDragDropTarget())
     {
       ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
@@ -442,6 +488,11 @@ namespace GUI
           break;
         case AssetPayload::PREFAB:
         {
+          if (noScene) {
+            ImGui::EndDragDropTarget();
+            return;
+          }
+
           // @TODO: Convert screen to world pos when viewport is up
           try {
             IGE::Assets::AssetManager& assetMan{ IGE_ASSETMGR };
@@ -457,6 +508,11 @@ namespace GUI
         }
         case AssetPayload::MODEL:
         {
+          if (noScene) {
+            ImGui::EndDragDropTarget();
+            return;
+          }
+
           try {
             IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
             ECS::Entity const newEntity{ IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(meshSrc)->mMeshSource.ConstructEntity(meshSrc, assetPayload.GetFileName()) };
@@ -482,6 +538,7 @@ namespace GUI
 
   EVENT_CALLBACK_DEF(Viewport, OnLoadEditorData) {
     *mEditorCam = CAST_TO_EVENT(Events::CollectEditorSceneData)->mSceneConfig.editorCam;
+    mEditorCam->UpdateMatrices();
   }
 
 } // namespace GUI

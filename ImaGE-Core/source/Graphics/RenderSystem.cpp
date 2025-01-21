@@ -6,7 +6,6 @@
 #include "Core/Entity.h"
 #include "Renderer.h"
 #include "Utils.h"
-#include <Graphics/Camera/EditorCamera.h>
 #include <Scenes/SceneManager.h>
 #include "Events/Event.h"
 #include "Events/EventManager.h"
@@ -45,7 +44,7 @@ namespace Graphics {
 
 		/* ========== Frustum Culling ========== */
 		// TEMP FIX - Dont cull
-	/*	auto shouldRender = [](ECS::Entity entity) {
+		/*auto shouldRender = [](ECS::Entity entity) {
 			return entity.IsActive();
 		};*/
 		auto shouldRender = [&am, &camFrustum, &cullCount](ECS::Entity entity) {
