@@ -28,7 +28,7 @@ in flat float v_TexIdx; //not being used might delete
 
 in flat int v_EntityID;
 in flat int v_MaterialIdx;
-           
+
 in vec3 v_FragPos;              // Fragment position in world space
 in vec3 v_Normal;               // Normal in world space
 in vec3 v_Tangent;              // Tangent in world space
@@ -52,7 +52,7 @@ const int typePoint = 2;
 const int maxLights = 30;
 uniform vec3 u_CamPos;       // Camera position in world space
 uniform int numlights;
-uniform vec3 u_AmbientLight; 
+uniform vec3 u_AmbientLight;
 
 uniform int u_type[maxLights];       // Camera position in world space
 
@@ -87,13 +87,13 @@ void main(){
 
 	// Normalize inputs
     vec3 N = normalize(v_Normal);
-    vec3 TotalLight = vec3(0); 
+    vec3 TotalLight = vec3(0);
     vec3 V = normalize(u_CamPos - v_FragPos);    // View direction
 
     for (int i = 0; i < numlights; ++i) {
-       
+
         // vec3 L = vec3(0);
-        // vec3 lightColor = vec3(0); 
+        // vec3 lightColor = vec3(0);
         // float shadow = 0.0; // Shadow factor default (0.0 = no shadow)
         // if(u_type[i] == typeDir && !hasRenderDir)
         // {
@@ -138,22 +138,22 @@ void main(){
 
         // vec3 H = normalize(V + L);                   // Halfway vector
 
-        // vec3 F0 = vec3(0.04); 
+        // vec3 F0 = vec3(0.04);
         //     F0 = mix(F0, albedo, mat.Metalness);
 
         // // cook-torrance brdf
-        // float NDF = DistributionGGX(N, H, mat.Roughness);        
-        // float G   = GeometrySmith(N, V, L, mat.Roughness);      
-        // vec3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0); 
+        // float NDF = DistributionGGX(N, H, mat.Roughness);
+        // float G   = GeometrySmith(N, V, L, mat.Roughness);
+        // vec3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0);
 
         // vec3 kS = F;
         // vec3 kD = vec3(1.0) - kS;
-        // kD *= 1.0 - mat.Metalness;	
+        // kD *= 1.0 - mat.Metalness;
 
         // vec3 numerator    = NDF * G * F;
         // float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
-        // vec3 specular     = numerator / denominator;  
-                
+        // vec3 specular     = numerator / denominator;
+
         // float NdotL = max(dot(N, L), 0.0);
 
         // Lo += (kD * albedo / PI + specular) * lightColor * Ndo  tL * (1.0 - shadow);
@@ -187,12 +187,15 @@ void main(){
         float vDotH = max(dot(V, h), 0.0);
         float nDotL = max(dot(n, l), 0.0);
         float nDotV = max(dot(n, V), 0.0);
+        vec3 fLambert = pow(albedo, vec3(2.2)); // Gamma correction
+        fLambert = mix(vec3(0.04), fLambert, mat.Metalness);
+  // Fresnel F0 based on metalness
+        // if(mat.Metalness > 0.f)
+        //     fLambert = pow(albedo, vec3(2.2)); // Gamma correction
+        // else
+        //     fLambert = mat.AlbedoColor.rgb;
 
-        
-       // vec3 fLambert = albedo;
-       vec3 fLambert = pow(albedo, vec3(2.2)); // Gamma correction
 
-        
 
         vec3 F = fresnelSchlick(vDotH, fLambert);
         vec3 kS = F;
@@ -209,7 +212,7 @@ void main(){
         vec3 DiffuseBRDF = kD * fLambert / PI;
 
         vec3 FinalColor = (DiffuseBRDF + SpecBRDF) * LightIntensity * nDotL;
-        
+
         TotalLight += FinalColor;
     }
 
@@ -230,7 +233,7 @@ void main(){
 
     // Gamma correction
     fragColor = vec4(pow(TotalLight, vec3(1.0/2.2)), 1.0);
-	
+
 }
 
 vec3 fresnelSchlick(float cosTheta, vec3 F0)
@@ -244,11 +247,11 @@ float DistributionGGX(vec3 N, vec3 H, float roughness)
     float a2     = a*a;
     float NdotH  = max(dot(N, H), 0.0);
     float NdotH2 = NdotH*NdotH;
-	
+
     float num   = a2;
     float denom = (NdotH2 * (a2 - 1.0) + 1.0);
     denom = PI * denom * denom;
-	
+
     return num / denom;
 }
 
@@ -259,7 +262,7 @@ float GeometrySchlickGGX(float NdotV, float roughness)
 
     float num   = NdotV;
     float denom = NdotV * (1.0 - k) + k;
-	
+
     return num / denom;
 }
 
@@ -276,7 +279,7 @@ float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
     float NdotL = max(dot(N, L), 0.0);
     float ggx2  = GeometrySchlickGGX(NdotV, roughness);
     float ggx1  = GeometrySchlickGGX(NdotL, roughness);
-	
+
     return ggx1 * ggx2;
 }
 
@@ -289,11 +292,11 @@ float SimplePCF(vec3 projCoords) {
     {
         for(int y = -range; y <= range; ++y)
         {
-            float pcfDepth = texture(u_ShadowMap, projCoords.xy + vec2(x, y) * texelSize).r; 
+            float pcfDepth = texture(u_ShadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
             // if current depth more than what is in the shadow map,
             // it means that it is in shadow
-            shadow += projCoords.z - u_ShadowBias > pcfDepth ? 1.0 : 0.0;        
-        }    
+            shadow += projCoords.z - u_ShadowBias > pcfDepth ? 1.0 : 0.0;
+        }
     }
 
     int sampleSize = range * 2 + 1;
