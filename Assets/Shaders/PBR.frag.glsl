@@ -188,7 +188,8 @@ void main(){
         float nDotL = max(dot(n, l), 0.0);
         float nDotV = max(dot(n, V), 0.0);
         vec3 fLambert = pow(albedo, vec3(2.2)); // Gamma correction
-        fLambert = mix(vec3(0.04), fLambert, mat.Metalness);
+        if( mat.Metalness > 0.f)
+            fLambert = mix(vec3(0.04), fLambert, mat.Metalness);
   // Fresnel F0 based on metalness
         // if(mat.Metalness > 0.f)
         //     fLambert = pow(albedo, vec3(2.2)); // Gamma correction
