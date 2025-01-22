@@ -53,6 +53,8 @@ namespace GUI
     ************************************************************************/
     bool UpdateGuizmos() const;
 
+    bool UpdateViewManipulate(ImVec2 const& windowPos, ImVec2 const& size);
+
     /*!*********************************************************************
     \brief
       Checks the viewport for any DragDrop operations and handles them

@@ -38,6 +38,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Commands/CommandManager.h>
 #include "Dockable/GameViewport.h"
 #include "Dockable/PostProcessingSettings.h"
+#include "Dockable/KeyframeEditor.h"
 #pragma endregion
 
 namespace GUI {
@@ -56,7 +57,7 @@ namespace GUI {
     mEditorViewport = std::make_shared<Viewport>("Viewport", std::move(editorCamPtr));
     mGameViewport = std::make_shared<GameViewport>("Game View");
 
-    mWindows.reserve(10);
+    mWindows.reserve(11);
     mWindows.emplace_back(mEditorViewport); // viewports should always be first
     mWindows.emplace_back(mGameViewport);
 
@@ -68,6 +69,7 @@ namespace GUI {
     mWindows.emplace_back(std::make_shared<LayerWindow>("Layers"));
     mWindows.emplace_back(std::make_shared<RenderPassViewer>("Render Pass Viewer"))->Toggle();  // default to non-active
     mWindows.emplace_back(std::make_shared<PostProcessingSettings>("Post Processing"));
+    mWindows.emplace_back(std::make_shared<KeyframeEditor>("Keyframe Editor"))->Toggle();
 
     Styler& styler{ GUIVault::GetStyler() };
     styler.LoadFonts();

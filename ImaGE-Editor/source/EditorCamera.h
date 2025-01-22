@@ -33,11 +33,12 @@ namespace Graphics {
 			float farClip = 1500.0f														// Far clipping plane
 		);
 
+		
 		void UpdateMatrices();
-		glm::mat4 GetProjMatrix() const;
-
+		void UpdateFromViewMtx(glm::mat4 const& newView);
 		//void UpdateCamera(float dt);
 
+		glm::mat4 GetProjMatrix() const;
 		glm::vec3 GetForwardVector() const;
 		glm::vec3 GetRightVector() const;
 		glm::vec3 GetUpVector() const;
