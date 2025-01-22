@@ -221,6 +221,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClInclude Include="source\Core\Components\Tag.h" />
     <ClInclude Include="source\Core\Components\Text.h" />
     <ClInclude Include="source\Core\Components\Transform.h" />
+    <ClInclude Include="source\Core\Components\Tween.h" />
     <ClInclude Include="source\Core\Entity.h" />
     <ClInclude Include="source\Core\EntityManager.h" />
     <ClInclude Include="source\Core\GUID.h" />

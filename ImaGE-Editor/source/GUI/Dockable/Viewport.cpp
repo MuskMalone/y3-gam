@@ -114,7 +114,16 @@ namespace GUI
         mFocusWindow = false;
       }
 
-      if (!UpdateGuizmos() && checkInput) {
+      float const windowRight{ vpStartPos.x + vpSize.x };
+      ImVec2 const topLeft{ windowRight - 128.f , vpStartPos.y }, size{ 128.f, 128.f };
+
+      bool const viewManipulateWindowClicked{ ImGui::IsMouseClicked(ImGuiMouseButton_Left)
+        && ImGui::IsMouseHoveringRect(topLeft, { windowRight, vpStartPos.y + 128.f }) };
+
+      if (UpdateViewManipulate(topLeft, size)) {
+        mEditorCam->UpdateFromViewMtx(mEditorCam->viewMatrix);
+      }
+      else if (!viewManipulateWindowClicked && !UpdateGuizmos() && checkInput) {
         // object picking
         if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
           ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
@@ -173,10 +182,12 @@ namespace GUI
         }
       }
 
+
       if (mEditorCam->modified) {
         mEditorCam->UpdateMatrices();
         mEditorCam->modified = false;
       }
+      
 
       ReceivePayload();
 
@@ -327,6 +338,12 @@ namespace GUI
     if (CAST_TO_EVENT(Events::SceneStateChange)->mNewState == Events::SceneStateChange::STOPPED) {
       mFocusWindow = true;
     }
+  }
+
+  bool Viewport::UpdateViewManipulate(ImVec2 const& windowPos, ImVec2 const& size) {
+    ImGuizmo::ViewManipulate(glm::value_ptr(mEditorCam->viewMatrix), 8.f, windowPos, size, 0x10101010);
+
+    return ImGuizmo::IsUsingViewManipulate();
   }
 
   bool Viewport::UpdateGuizmos() const {

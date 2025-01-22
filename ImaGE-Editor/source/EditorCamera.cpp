@@ -18,6 +18,20 @@ namespace Graphics {
     ComputeFrustum();
   }
 
+  void EditorCamera::UpdateFromViewMtx(glm::mat4 const& newView) {
+    // first get the inverse view mtx
+    glm::mat4 const invView{ glm::inverse(viewMatrix) };
+    glm::vec3 const front{ glm::normalize(-glm::vec3(invView[2])) };
+
+    position = invView[3];
+    mYaw = glm::degrees(atan2(front.z, front.x));
+    mPitch = glm::degrees(asin(front.y));
+
+    viewMatrix = newView;
+    viewProjMatrix = GetProjMatrix() * viewMatrix;
+    ComputeFrustum();
+  }
+
   glm::mat4 EditorCamera::GetProjMatrix() const {
     return Utils::Camera::GetProjMatrix(fov, aspectRatio, nearClip, farClip);
   }
