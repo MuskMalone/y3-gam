@@ -2,14 +2,19 @@
     "name": "MainMenuBG",
     "shader": "PBR",
     "albedoColor": {
-        "x": 0.7658863067626953,
-        "y": 0.5577542781829834,
-        "z": 0.2151654064655304
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
     },
-    "metalness": 1.0,
-    "roughness": 0.4650000035762787,
+    "metalness": 0.0,
+    "roughness": 0.5899999737739563,
     "ao": 1.0,
-    "emission": 0.0,
+    "emission": {
+        "x": 225.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
     "transparency": 1.0,
     "tiling": {
         "x": 1.0,

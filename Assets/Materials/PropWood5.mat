@@ -9,7 +9,12 @@
     "metalness": 0.41499999165534975,
     "roughness": 1.0,
     "ao": 1.0,
-    "emission": 0.0,
+      "emission": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
     "transparency": 1.0,
     "tiling": {
         "x": 1.0,

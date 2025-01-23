@@ -113,8 +113,11 @@ namespace GUI {
 
       NextRowTable("Emission");
       {
-        float emission{ selectedMaterial->GetEmission() };
-        if (ImGui::SliderFloat("##Emission", &emission, 0.f, 10.f, "%.3f", ImGuiSliderFlags_AlwaysClamp)) {
+        glm::vec4 emission{ selectedMaterial->GetEmission() };
+        if (ImGui::ColorEdit4("##Emission", &emission[0], ImGuiColorEditFlags_NoAlpha)) {
+          selectedMaterial->SetEmission(emission);
+        }
+        if (ImGui::SliderFloat("##EmissionBrightness", &emission[3], 0.f, 1.f, "%.3f", ImGuiSliderFlags_AlwaysClamp)) {
           selectedMaterial->SetEmission(emission);
         }
       }
