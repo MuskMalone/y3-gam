@@ -11,6 +11,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "GUI/GUIManager.h"
 #include "Graphics/Texture.h"
 #include <Events/EventCallback.h>
+#include <Graphics/Camera/CameraSpec.h>
 
 namespace IGE {
   class EditorApplication : public Application {
@@ -39,11 +40,9 @@ namespace IGE {
 
   private:
     GUI::GUIManager mGUIManager;
-
+    std::shared_ptr<Graphics::CameraSpec> mEditorCamera;
 
   private:
-    inline Graphics::RenderTarget& GetEditorRenderTarget() noexcept { return mRenderTargets[1]; }
-
     /*!*********************************************************************
     \brief
       Starts the ImGui frame

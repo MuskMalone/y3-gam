@@ -152,7 +152,7 @@ namespace IGE {
     systemManager.RegisterSystem<Systems::ParticleSystem>("Particle System");
   }
 
-  Application::Application(ApplicationSpecification spec) : mRenderTargets{}, mWindow{}
+  Application::Application(ApplicationSpecification spec) : mWindow{}
   {
     mSpecification = spec;
     glfwInit();
@@ -212,8 +212,6 @@ namespace IGE {
   framebufferSpec.width = spec.WindowWidth;
   framebufferSpec.height = spec.WindowHeight;
   framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
-
-  mRenderTargets.emplace_back(); //GameView
 }
 
   void Application::SetCallbacks() {

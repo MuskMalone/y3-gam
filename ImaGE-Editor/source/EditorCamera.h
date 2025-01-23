@@ -8,12 +8,12 @@
 
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
-
 #pragma once
-#include <Graphics/Utils.h>
+#include <Graphics/Camera/CameraSpec.h>
+#include <rttr/rttr_enable.h>
 
 namespace Graphics {
-	struct EditorCamera {
+	struct EditorCamera : public CameraSpec {
 		enum class CameraMovement {
 			FORWARD,
 			BACKWARD,
@@ -24,28 +24,21 @@ namespace Graphics {
 		};
 
 		EditorCamera(
-			glm::vec3 position = glm::vec3(0.0f, 0.0f, 3.0f),  // Default position
+			glm::vec3 position = glm::vec3(0.0f, 0.0f, 3.0f), // Default position
 			float yaw = -90.0f,                               // Default yaw
 			float pitch = 0.0f,                               // Default pitch
 			float fov = 45.0f,                                // Default field of view
 			float aspectRatio = 16.0f / 9.0f,                 // Default aspect ratio
 			float nearClip = 0.1f,                            // Near clipping plane
-			float farClip = 1500.0f)                           // Far clipping plane
-			: mPosition(position), mYaw(yaw), mPitch(pitch), mFov(fov),
-			mNearClip(nearClip), mFarClip(farClip), mAspectRatio(aspectRatio) {}
+			float farClip = 1500.0f														// Far clipping plane
+		);
 
-		float GetFOV() const noexcept;
-		float GetAspectRatio() const noexcept;
-		float GetNearPlane() const noexcept;
-		float GetFarPlane() const noexcept;
-		glm::mat4 GetViewMatrix() const;
+		
+		void UpdateMatrices();
+		void UpdateFromViewMtx(glm::mat4 const& newView);
+		//void UpdateCamera(float dt);
+
 		glm::mat4 GetProjMatrix() const;
-		glm::mat4 GetViewProjMatrix() const;
-		glm::vec3 GetPosition() const;
-		void SetPosition(glm::vec3 const& pos);
-
-		void UpdateCamera(float dt);
-
 		glm::vec3 GetForwardVector() const;
 		glm::vec3 GetRightVector() const;
 		glm::vec3 GetUpVector() const;
@@ -66,20 +59,19 @@ namespace Graphics {
 		
 		// initializes camera for editor view
 		void InitForEditorView();
+		inline void Modified() noexcept{ modified = true; }
 
-		glm::vec3 mPosition;
 		float mYaw;
 		float mPitch;
-		float mFov;
-		float mNearClip;
-		float mFarClip;
+		float mMoveSpeed;
+		bool modified;
 
 	private:
-		float mAspectRatio;
-
-		inline static float sMoveSpeed{ 15.f };
+		inline static float sBaseMoveSpeed{ 15.f };
 		inline static float sMousePanningSpeed{ 5.f };
 		inline static float sMouseSense{ 50.f };
 		inline static float sZoomSpeed{ 2.5f };
+
+		RTTR_ENABLE()
 	};
 }

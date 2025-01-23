@@ -2070,7 +2070,7 @@ namespace GUI {
               ImGui::EndTooltip();
             }
             ImGui::TableSetColumnIndex(1); ImGui::SetNextItemWidth(INPUT_SIZE);
-            if (ImGui::DragFloat("##BiasSlider", &lightShadow.bias, 0.0005,0.f, FLT_MAX, "% .4f")) {
+            if (ImGui::DragFloat("##BiasSlider", &lightShadow.bias, 0.0005f, 0.f, FLT_MAX, "% .4f")) {
               modified = lightShadow.shadowModified = true;
             }
 

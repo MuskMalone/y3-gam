@@ -2,7 +2,7 @@
 #include <Core/Entity.h>
 #include <ImGui/imgui.h>
 #include <set>
-#include <Graphics/Camera/EditorCamera.h>
+#include <EditorCamera.h>
 
 namespace GUI {
   struct HierarchyEntry {

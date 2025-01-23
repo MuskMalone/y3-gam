@@ -1,7 +1,6 @@
 #include <pch.h>
 #include "GeomPass.h"
 #include "Core/Entity.h"
-#include <Graphics/Camera/EditorCamera.h>
 #include <Core/Components/Components.h>
 #include "Color.h"
 #include "Asset/IGEAssets.h"
@@ -51,6 +50,16 @@ namespace Graphics {
 
       // get light data to pass into shader
       LightUniforms<sMaxLights> const lightUniforms{ GetLightData<sMaxLights>(entities) };
+      int count{ 0 };
+
+      //for (ECS::Entity const& entity : entities) {
+      //  if (entity.HasComponent<Component::Material>()) { //GUID is 0 or invalid
+      //    std::cout << entity.GetComponent<Component::Material>().GetGUID() << "\n";
+      //    const auto emissionProp = Graphics::MaterialTable::GetMaterialByGUID(entity.GetComponent<Component::Material>().materialGUID);          
+      //  }
+      //}
+
+  
 
       unsigned matCount{ static_cast<unsigned>(MaterialTable::GetMaterialCount()) };
       // STEP TRES: Render shader groups
@@ -260,19 +269,40 @@ namespace {
     //Get the list of light
     std::vector<ECS::Entity> lights{};
     for (ECS::Entity const& entity : entities) {
-      if (!entity.HasComponent<Component::Light>()) { continue; }
-      auto const& light = entity.GetComponent<Component::Light>();
-      lightUniforms.u_type[numLights] = light.type;
-      lightUniforms.u_LightDirection[numLights] = entity.GetComponent<Component::Transform>().worldRot * light.forwardVec; // Directional light direction in world space
-      lightUniforms.u_LightColor[numLights] = light.color;     // Directional light color
+      if (numLights >= N)
+        break;
+      if (entity.HasComponent<Component::Light>()) {
+        auto const& light = entity.GetComponent<Component::Light>();
+        lightUniforms.u_type[numLights] = light.type;
+        lightUniforms.u_LightDirection[numLights] = entity.GetComponent<Component::Transform>().worldRot * light.forwardVec; // Directional light direction in world space
+        lightUniforms.u_LightColor[numLights] = light.color;     // Directional light color
 
-      //For spotlight
-      lightUniforms.u_LightPos[numLights] = entity.GetComponent<Component::Transform>().worldPos; // Position of the spotlight
-      lightUniforms.u_InnerSpotAngle[numLights] = light.mInnerSpotAngle; // Inner spot angle in degrees
-      lightUniforms.u_OuterSpotAngle[numLights] = light.mOuterSpotAngle; // Outer spot angle in degrees
-      lightUniforms.u_LightIntensity[numLights] = light.mLightIntensity; // Intensity of the light
-      lightUniforms.u_Range[numLights] = light.mRange; // Maximum range of the spotlight
-      ++numLights;
+        //For spotlight
+        lightUniforms.u_LightPos[numLights] = entity.GetComponent<Component::Transform>().worldPos; // Position of the spotlight
+        lightUniforms.u_InnerSpotAngle[numLights] = light.mInnerSpotAngle; // Inner spot angle in degrees
+        lightUniforms.u_OuterSpotAngle[numLights] = light.mOuterSpotAngle; // Outer spot angle in degrees
+        lightUniforms.u_LightIntensity[numLights] = light.mLightIntensity; // Intensity of the light
+        lightUniforms.u_Range[numLights] = light.mRange; // Maximum range of the spotlight
+        ++numLights;
+      }
+      //if (numLights >= N)
+      //  break;
+      //if (entity.HasComponent<Component::Material>()) {
+      ////const auto& emissionProp = Graphics::MaterialTable::GetMaterialByGUID(entity.GetComponent<Component::Material>().materialGUID);
+      // //std::cout << emissionProp->GetName() << "\n";
+      //// std::cout << entity.GetComponent<Component::Material>().materialGUID << "\n";
+      // // lightUniforms.u_type[numLights] = Component::POINT;
+      // //// lightUniforms.u_LightDirection[numLights] = glm::vec3(0.f); // Directional light direction in world space
+      // // lightUniforms.u_LightColor[numLights] = glm::vec3(emissionProp.x, emissionProp.y, emissionProp.z);     // Directional light color
+
+      // // //For spotlight
+      // // lightUniforms.u_LightPos[numLights] = entity.GetComponent<Component::Transform>().worldPos; // Position of the spotlight
+      // // //lightUniforms.u_InnerSpotAngle[numLights] = 0.f; // Inner spot angle in degrees
+      // // //lightUniforms.u_OuterSpotAngle[numLights] = 0.f; // Outer spot angle in degrees
+      // // lightUniforms.u_LightIntensity[numLights] = emissionProp.w; // Intensity of the light
+      // // lightUniforms.u_Range[numLights] = 1.f; // Maximum range of the spotlight
+      // // ++numLights;
+      //}
     }
     lightUniforms.numLights = numLights;
     return lightUniforms;

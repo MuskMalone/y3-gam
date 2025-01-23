@@ -34,6 +34,9 @@
     <Filter Include="BoundingVolumes">
       <UniqueIdentifier>{06DECC74-7269-3A39-7B7A-BD2DE7849639}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Commands">
+      <UniqueIdentifier>{17269CB7-03F3-F6C2-2C0C-E56A18382C51}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
     </Filter>
@@ -254,6 +257,9 @@
       <Filter>BoundingVolumes</Filter>
     </ClInclude>
     <ClInclude Include="source\Color.h" />
+    <ClInclude Include="source\Commands\CommandManager.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
     <ClInclude Include="source\Core\Components\AudioListener.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
@@ -610,9 +616,6 @@
     <ClInclude Include="source\Graphics\Camera\CameraSpec.h">
       <Filter>Graphics\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="source\Graphics\Camera\EditorCamera.h">
-      <Filter>Graphics\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="source\Graphics\ElementBuffer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -683,9 +686,6 @@
       <Filter>Graphics\RenderPass</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderSystem.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Graphics\RenderTarget.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\Renderer.h">
@@ -809,7 +809,7 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Commands\CommandManager.h" />
+    <ClInclude Include="source\Core\Components\Tween.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -851,6 +851,9 @@
     </ClCompile>
     <ClCompile Include="source\BoundingVolumes\IntersectionTests.cpp">
       <Filter>BoundingVolumes</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Commands\CommandManager.cpp">
+      <Filter>Commands</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Components\AudioSource.cpp">
       <Filter>Core\Components</Filter>
@@ -961,9 +964,6 @@
       <Filter>Graphics\Camera</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\Camera\CameraSpec.cpp">
-      <Filter>Graphics\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Graphics\Camera\EditorCamera.cpp">
       <Filter>Graphics\Camera</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\ElementBuffer.cpp">
@@ -1102,6 +1102,5 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\Commands\CommandManager.cpp" />
   </ItemGroup>
 </Project>

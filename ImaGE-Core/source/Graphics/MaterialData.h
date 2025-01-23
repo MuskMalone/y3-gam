@@ -32,8 +32,7 @@ namespace Graphics {
         float Roughness;        // Roughness factor
         float Transparency;     // Transparency (alpha)
         float AO;               // Ambient occlusion
-        float Emission;
-        float Padding[3];
+        glm::vec4 Emission;
     };
 
     class MaterialData {
@@ -47,7 +46,7 @@ namespace Graphics {
             mMetalness(0.0f),                 // Default non-metallic
             mRoughness(0.5f),                 // Default roughness value
             mAO(1.0f),                        // Default ambient occlusion
-            mEmission(0.0f),                  // Default no emission
+            mEmission(0.f,0.f,0.f,0.0f),                  // Default no emission
             mTransparency(1.0f),              // Default fully opaque
             mFlags(0),                        // No flags set
             mTiling(1.0f, 1.0f),              // Default tiling factor
@@ -85,8 +84,8 @@ namespace Graphics {
         float GetAO() const { return mAO; }
         void SetAO(float ao) { mAO = ao; mModified = true; }
 
-        float GetEmission() const { return mEmission; }
-        void SetEmission(float value) { mEmission = value; mModified = true; }
+        glm::vec4 GetEmission() const { return mEmission; }
+        void SetEmission(glm::vec4 value) { mEmission = value; mModified = true; }
 
         float GetTransparency() const { return mTransparency; }
         void SetTransparency(float value) { mTransparency = value; mModified = true; }
@@ -136,7 +135,7 @@ namespace Graphics {
         float mMetalness;
         float mRoughness;
         float mAO;
-        float mEmission;
+        glm::vec4 mEmission;
         float mTransparency;
 
         bool mModified;

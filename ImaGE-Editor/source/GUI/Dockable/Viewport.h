@@ -11,7 +11,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
 #include <GUI/GUIWindow.h>
-#include <Graphics/RenderTarget.h>  // for framebuffer and camera
+#include <EditorCamera.h>
 #include <memory>
 #include <Events/EventCallback.h>
 
@@ -21,7 +21,7 @@ namespace GUI
   class Viewport : public GUIWindow
   {
   public:
-    Viewport(const char* name, std::shared_ptr<Graphics::EditorCamera> const& camera);
+    Viewport(const char* name, std::shared_ptr<Graphics::EditorCamera> camera);
     
     void Run() override {}  // not in use
 
@@ -52,6 +52,8 @@ namespace GUI
       Updates ImGuizmos controls based on the selected entity
     ************************************************************************/
     bool UpdateGuizmos() const;
+
+    bool UpdateViewManipulate(ImVec2 const& windowPos, ImVec2 const& size);
 
     /*!*********************************************************************
     \brief

@@ -1,6 +1,5 @@
 #pragma once
 #include <GUI/GUIWindow.h>
-#include <Graphics/RenderTarget.h>
 #include "Graphics/Texture.h"
 #include <memory>
 #include <Events/EventCallback.h>

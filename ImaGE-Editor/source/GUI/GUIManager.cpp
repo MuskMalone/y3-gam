@@ -38,6 +38,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Commands/CommandManager.h>
 #include "Dockable/GameViewport.h"
 #include "Dockable/PostProcessingSettings.h"
+#include "Dockable/KeyframeEditor.h"
 #pragma endregion
 
 namespace GUI {
@@ -45,18 +46,18 @@ namespace GUI {
     
   }
 
-  void GUIManager::Init(Graphics::RenderTarget& renderTarget) {
+  void GUIManager::Init(std::shared_ptr<Graphics::EditorCamera> editorCamPtr) {
     mPersistentElements.reserve(4);
-    mPersistentElements.emplace_back(std::make_unique<Toolbar>("Toolbar", mWindows, renderTarget.camera));
+    mPersistentElements.emplace_back(std::make_unique<Toolbar>("Toolbar", mWindows, editorCamPtr));
     mPersistentElements.emplace_back(std::make_unique<SceneControls>("Scene Controls"));
     mPersistentElements.emplace_back(std::make_unique<PrefabEditor>("Prefab Editor"));
     mPersistentElements.emplace_back(std::make_unique<PopupHelper>("Popup Helper"));
 
     // hold ptrs to the viewports
-    mEditorViewport = std::make_shared<Viewport>("Viewport", renderTarget.camera);
+    mEditorViewport = std::make_shared<Viewport>("Viewport", std::move(editorCamPtr));
     mGameViewport = std::make_shared<GameViewport>("Game View");
 
-    mWindows.reserve(10);
+    mWindows.reserve(11);
     mWindows.emplace_back(mEditorViewport); // viewports should always be first
     mWindows.emplace_back(mGameViewport);
 
@@ -68,6 +69,7 @@ namespace GUI {
     mWindows.emplace_back(std::make_shared<LayerWindow>("Layers"));
     mWindows.emplace_back(std::make_shared<RenderPassViewer>("Render Pass Viewer"))->Toggle();  // default to non-active
     mWindows.emplace_back(std::make_shared<PostProcessingSettings>("Post Processing"));
+    mWindows.emplace_back(std::make_shared<KeyframeEditor>("Keyframe Editor"))->Toggle();
 
     Styler& styler{ GUIVault::GetStyler() };
     styler.LoadFonts();
@@ -115,7 +117,7 @@ namespace GUI {
   EVENT_CALLBACK_DEF(GUIManager, OnCollectEditorData) {
     auto editorDataEvent{ CAST_TO_EVENT(Events::CollectEditorSceneData) };
     Serialization::Serializer::SerializeAny(editorDataEvent->mSceneConfig,
-      gEditorAssetsDirectory + std::string("Scenes\\") + editorDataEvent->mSceneName);
+      gEditorAssetsDirectory + std::string(".Scenes\\") + editorDataEvent->mSceneName);
   }
 
   EVENT_CALLBACK_DEF(GUIManager, OnSceneSave) {
@@ -124,7 +126,7 @@ namespace GUI {
   }
 
   EVENT_CALLBACK_DEF(GUIManager, OnSceneLoad) {
-    std::string const path{ gEditorAssetsDirectory + std::string("Scenes\\")
+    std::string const path{ gEditorAssetsDirectory + std::string(".Scenes\\")
       + CAST_TO_EVENT(Events::LoadSceneEvent)->mSceneName };
 
     SceneEditorConfig cfg{};
