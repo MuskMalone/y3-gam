@@ -737,7 +737,16 @@ MonoObject* Mono::ScriptManager::InstantiateClass(const char* className, std::ve
     {
       classCtor = mono_class_get_method_from_name(currClass, ".ctor", static_cast<int>(arg.size()));
     }
-    mono_runtime_invoke(classCtor, classInstance, arg.data(), nullptr);
+    MonoObject* exception{ nullptr };
+    mono_runtime_invoke(classCtor, classInstance, arg.data(), &exception);
+
+    // don't print in game build
+#ifndef DISTRIBUTION
+    if (exception) {
+      mono_print_unhandled_exception(exception);
+      IGE_DBGLOGGER.LogError("C# exception thrown from " + std::string(className) + " constructor. Check console for details.");
+    }
+#endif
 
 
     if (classInstance == nullptr) {
