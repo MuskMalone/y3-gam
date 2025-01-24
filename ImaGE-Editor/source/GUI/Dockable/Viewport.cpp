@@ -24,6 +24,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Entity.h>
 #include <Core/Components/Mesh.h>
 #include <Core/Components/Transform.h>
+#include <Core/Systems/TransformSystem/TransformHelpers.h>
 #include <Core/Components/PrefabOverrides.h>
 #include <Core/Components/Light.h>
 #include <GUI/GUIVault.h>
@@ -117,70 +118,72 @@ namespace GUI
       float const windowRight{ vpStartPos.x + vpSize.x };
       ImVec2 const topLeft{ windowRight - 128.f , vpStartPos.y }, size{ 128.f, 128.f };
 
-      bool const viewManipulateWindowClicked{ ImGui::IsMouseClicked(ImGuiMouseButton_Left)
-        && ImGui::IsMouseHoveringRect(topLeft, { windowRight, vpStartPos.y + 128.f }) };
-
       if (UpdateViewManipulate(topLeft, size)) {
         mEditorCam->UpdateFromViewMtx(mEditorCam->viewMatrix);
       }
-      else if (!viewManipulateWindowClicked && !UpdateGuizmos() && checkInput) {
-        // object picking
-        if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
-          ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
+      else {
+        bool const viewManipulateWindowClicked{ ImGui::IsMouseClicked(ImGuiMouseButton_Left)
+        && ImGui::IsMouseHoveringRect(topLeft, { windowRight, vpStartPos.y + 128.f }) };
 
-          // check if clicking outside viewport
-          if (!(offset.x < 0 || offset.x > vpSize.x || offset.y < 0 || offset.y > vpSize.y)) {
+        if (!viewManipulateWindowClicked && !UpdateGuizmos() && checkInput) {
+          // object picking
+          if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
+            ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
 
-            auto const& geomPass{ Graphics::Renderer::GetPass<Graphics::GeomPass>() };
-            auto const& pickFb{ geomPass->GetTargetFramebuffer() };
-            Graphics::FramebufferSpec const& fbSpec{ pickFb->GetFramebufferSpec() };
+            // check if clicking outside viewport
+            if (!(offset.x < 0 || offset.x > vpSize.x || offset.y < 0 || offset.y > vpSize.y)) {
 
-            pickFb->Bind();
-            int const entityId{ pickFb->ReadPixel(1,
-              static_cast<int>(offset.x / vpSize.x * static_cast<float>(fbSpec.width)),
-              static_cast<int>((vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height))) };
-            pickFb->Unbind();
+              auto const& geomPass{ Graphics::Renderer::GetPass<Graphics::GeomPass>() };
+              auto const& pickFb{ geomPass->GetTargetFramebuffer() };
+              Graphics::FramebufferSpec const& fbSpec{ pickFb->GetFramebufferSpec() };
 
-            if (entityId >= 0) {
-              ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
-                root{ GetRootEntity(selected) };
-              sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
+              pickFb->Bind();
+              int const entityId{ pickFb->ReadPixel(1,
+                static_cast<int>(offset.x / vpSize.x * static_cast<float>(fbSpec.width)),
+                static_cast<int>((vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height))) };
+              pickFb->Unbind();
 
-              if (sCtrlHeld) {
-                ECS::Entity const curr{ GUIVault::GetSelectedEntity() };
-                if (GUIVault::GetSelectedEntities().empty() && curr) {
-                  GUIVault::AddSelectedEntity(curr);
-                }
+              if (entityId >= 0) {
+                ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
+                  root{ GetRootEntity(selected) };
+                sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
 
-                if (GUIVault::IsEntitySelected(root)) {
-                  GUIVault::RemoveSelectedEntity(root);
-                  if (GUIVault::GetSelectedEntities().empty()) {
-                    GUIVault::SetSelectedEntity({});
+                if (sCtrlHeld) {
+                  ECS::Entity const curr{ GUIVault::GetSelectedEntity() };
+                  if (GUIVault::GetSelectedEntities().empty() && curr) {
+                    GUIVault::AddSelectedEntity(curr);
+                  }
+
+                  if (GUIVault::IsEntitySelected(root)) {
+                    GUIVault::RemoveSelectedEntity(root);
+                    if (GUIVault::GetSelectedEntities().empty()) {
+                      GUIVault::SetSelectedEntity({});
+                    }
+                    else {
+                      GUIVault::SetSelectedEntity(*GUIVault::GetSelectedEntities().begin());
+                    }
                   }
                   else {
-                    GUIVault::SetSelectedEntity(*GUIVault::GetSelectedEntities().begin());
+                    GUIVault::AddSelectedEntity(root);
+                    GUIVault::SetSelectedEntity(sPrevSelectedEntity);
                   }
                 }
                 else {
-                  GUIVault::AddSelectedEntity(root);
+                  GUIVault::ClearSelectedEntities();
                   GUIVault::SetSelectedEntity(sPrevSelectedEntity);
                 }
+
+                QUEUE_EVENT(Events::EntityScreenPicked, sPrevSelectedEntity);
               }
               else {
+                sPrevSelectedEntity = {};
+                GUIVault::SetSelectedEntity({});
                 GUIVault::ClearSelectedEntities();
-                GUIVault::SetSelectedEntity(sPrevSelectedEntity);
               }
-
-              QUEUE_EVENT(Events::EntityScreenPicked, sPrevSelectedEntity);
-            }
-            else {
-              sPrevSelectedEntity = {};
-              GUIVault::SetSelectedEntity({});
-              GUIVault::ClearSelectedEntities();
-            }
-          }
+            } // if within bounds
+          } // if left click
         }
-      }
+      } // else block UpdateViewManipulate
 
 
       if (mEditorCam->modified) {
@@ -382,7 +385,7 @@ namespace GUI
       glm::value_ptr(viewMatrix),
       glm::value_ptr(projMatrix),
       currentOperation,
-      ImGuizmo::LOCAL,
+      ImGuizmo::WORLD,
       glm::value_ptr(worldMtx)
     );
 
@@ -398,34 +401,36 @@ namespace GUI
       // for each operation, if multi-select active, update all their transforms
       bool const multiSelectActive{ !GUIVault::GetSelectedEntities().empty() };
       if (currentOperation == ImGuizmo::TRANSLATE) {
-        glm::vec3 const offset = t - transform.worldPos;
+        glm::vec3 const offset{ t - transform.worldPos };
         if (multiSelectActive) {
           for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
-            e.GetComponent<Component::Transform>().position += offset;
+            e.GetComponent<Component::Transform>().worldPos += offset;
           }
         }
         else {
-          transform.position += offset;
+          transform.worldPos += offset;
         }
       }
-      if (currentOperation == ImGuizmo::ROTATE) {
-        glm::quat const offset{ glm::quat(glm::radians(r)) * glm::inverse(transform.worldRot) };
-        glm::vec3 const eulerOffset{ r - transform.eulerAngles };
+      else if (currentOperation == ImGuizmo::ROTATE) {
+       // glm::quat const offset{ glm::quat(glm::radians(r)) * glm::inverse(transform.worldRot) };
+        //glm::vec3 const eulerOffset{ r - transform.eulerAngles };
 
         if (multiSelectActive) {
           for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
             Component::Transform& trans{ e.GetComponent<Component::Transform>() };
-            trans.rotation = offset * trans.rotation;
-            trans.eulerAngles += eulerOffset;
+            trans.worldRot = glm::quat(glm::radians(r));
+            //trans.rotation = offset * trans.rotation;
+            //trans.eulerAngles += eulerOffset;
           }
         }
         else {
-          transform.rotation = offset * transform.rotation;
-          transform.eulerAngles += eulerOffset;
+          //transform.rotation = offset * transform.rotation;
+          //transform.eulerAngles += eulerOffset;
+          transform.worldRot = glm::quat(glm::radians(r));
         }
       }
-      if (currentOperation == ImGuizmo::SCALE) {
-        glm::vec3 offset{ s - transform.worldScale };
+      else if (currentOperation == ImGuizmo::SCALE) {
+        glm::vec3 const offset{ s - transform.worldScale };
 
         if (multiSelectActive) {
           for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
@@ -433,7 +438,7 @@ namespace GUI
           }
         }
         else {
-          transform.scale += offset;
+          transform.worldScale += offset;
         }
       }
 
@@ -443,6 +448,7 @@ namespace GUI
 
         for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
           e.GetComponent<Component::Transform>().modified = true;
+          TransformHelpers::UpdateLocalTransform(e);  // TEMP FIX
 
           if (!e.HasComponent<Component::PrefabOverrides>()) { continue; }
 
@@ -464,7 +470,8 @@ namespace GUI
       }
       else {
         // if single select, simply update that entity normally
-        selectedEntity.GetComponent<Component::Transform>().modified = true;
+        transform.modified = true;
+        TransformHelpers::UpdateLocalTransform(selectedEntity); // TEMP FIX
         if (prefabOverrides) {
           if (prefabOverrides->IsComponentModified<Component::Transform>() || prefabOverrides->subDataId != Prefabs::PrefabSubData::BasePrefabId) {
             prefabOverrides->AddComponentOverride<Component::Transform>();
@@ -482,7 +489,6 @@ namespace GUI
         }
       }
 
-      transform.modified = true;
       QUEUE_EVENT(Events::SceneModifiedEvent);
     }
 

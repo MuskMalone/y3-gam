@@ -38,6 +38,7 @@ namespace {
   void RemovePrefabOverrides(ECS::Entity root, IGE::Assets::GUID guid);
   ECS::Entity GetPrefabRoot(ECS::Entity root);
   void CopyWorldTransform(Component::Transform const& source, Component::Transform& dest);
+  void CopyWorldPos(Component::Transform const& source, Component::Transform& dest);
 
   void ReassignSubmeshIndices(ECS::Entity root);
   ECS::Entity GetCanvasEntity();
@@ -705,8 +706,9 @@ namespace GUI
 
             // set world transform of both canvas and new entity equal to the parent
             Component::Transform& canvasTrans{ canvas.GetComponent<Component::Transform>() };
-            CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), canvasTrans);
-            CopyWorldTransform(canvasTrans, newEntity.GetComponent<Component::Transform>());
+            CopyWorldPos(mRightClickedEntity.GetComponent<Component::Transform>(), canvasTrans);
+            CopyWorldPos(canvasTrans, newEntity.GetComponent<Component::Transform>());
+            TransformHelpers::UpdateTransformToNewParent(canvas);
           }
         }
         // entity created at root level - look for the canvas
@@ -719,7 +721,8 @@ namespace GUI
           }
 
           mEntityManager.SetParentEntity(canvas, newEntity);
-          CopyWorldTransform(canvas.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
+          CopyWorldPos(canvas.GetComponent<Component::Transform>(), newEntity.GetComponent<Component::Transform>());
+          TransformHelpers::UpdateTransformToNewParent(newEntity);
         }
       }
 
@@ -916,7 +919,8 @@ namespace GUI
 
   void SceneHierarchy::ParentRightClickedEntity(ECS::Entity child) {
     mEntityManager.SetParentEntity(mRightClickedEntity, child);
-    CopyWorldTransform(mRightClickedEntity.GetComponent<Component::Transform>(), child.GetComponent<Component::Transform>());
+    CopyWorldPos(mRightClickedEntity.GetComponent<Component::Transform>(), child.GetComponent<Component::Transform>());
+    TransformHelpers::UpdateTransformToNewParent(child);
   }
 
   void SceneHierarchy::LoadHierarchyState() {
@@ -974,6 +978,11 @@ namespace {
     dest.worldScale = source.worldScale;
     dest.worldRot = source.worldRot;
     dest.worldMtx = source.worldMtx;
+  }
+
+  void CopyWorldPos(Component::Transform const& source, Component::Transform& dest) {
+    dest.worldPos = source.worldPos;
+    dest.ComputeWorldMtx();
   }
 
   void ReassignSubmeshIndices(ECS::Entity root) {

@@ -61,7 +61,7 @@ namespace Component {
     position = worldPos = eulerAngles = {};
     scale = worldScale = { 1.f, 1.f, 1.f };
     rotation = worldRot = { 1.f, 0.f, 0.f, 0.f };
-    worldMtx = parentWorldMtx = glm::identity<glm::mat4>();
+    worldMtx = glm::identity<glm::mat4>();
     modified = true;
   }
 
