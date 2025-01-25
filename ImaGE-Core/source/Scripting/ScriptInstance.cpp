@@ -100,17 +100,35 @@ void ScriptInstance::SetEntityID(ECS::Entity::EntityID entityID)
   MonoMethod* InitMethod = mono_class_get_method_from_name(mono_class_get_parent(mScriptClass), "Init", 1);
   if (InitMethod)
   {
-    mono_runtime_invoke(InitMethod, mono_gchandle_get_target(mGcHandle), arg.data(), nullptr);  // We will call an init function to pass in the entityID
+    MonoObject* exception{ nullptr };
+    mono_runtime_invoke(InitMethod, mono_gchandle_get_target(mGcHandle), arg.data(), &exception);  // We will call an init function to pass in the entityID
+
+    // don't print in game build
+#ifndef DISTRIBUTION
+    if (exception) {
+      mono_print_unhandled_exception(exception);
+      IGE_DBGLOGGER.LogError("Init(): C# exception thrown. Check console for details.");
+    }
+#endif
   }
   else
   {
     MonoMethod* InitMethod = mono_class_get_method_from_name(mScriptClass, "Init", 1);
     if (InitMethod)
     {
+      MonoObject* exception{ nullptr };
       if(mGcHandle)
-       mono_runtime_invoke(InitMethod, mono_gchandle_get_target(mGcHandle), arg.data(), nullptr);  // We will call an init function to pass in the entityID
+       mono_runtime_invoke(InitMethod, mono_gchandle_get_target(mGcHandle), arg.data(), &exception);  // We will call an init function to pass in the entityID
       else
-        mono_runtime_invoke(InitMethod, mClassInst, arg.data(), nullptr);  // We will call an init function to pass in the entityID
+        mono_runtime_invoke(InitMethod, mClassInst, arg.data(), &exception);  // We will call an init function to pass in the entityID
+
+      // don't print in game build
+#ifndef DISTRIBUTION
+      if (exception) {
+        mono_print_unhandled_exception(exception);
+        IGE_DBGLOGGER.LogError("Init(): C# exception thrown. Check console for details.");
+      }
+#endif
     }
     else
       Debug::DebugLogger::GetInstance().LogError("you are trying to pass an entityID to a script that doesn't inherit from entity");
@@ -138,61 +156,142 @@ void ScriptInstance::ReloadScript()
 void ScriptInstance::InvokeOnUpdate()
 {
   glm::vec2 delt = Input::InputManager::GetInstance().GetMouseDelta();
-  if ( mUpdateMethod)
+  if (mUpdateMethod)
   {
      // std::cout << mScriptName << "\n";
     std::vector<void*> params = { };
-    mono_runtime_invoke( mUpdateMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+    MonoObject* exception{ nullptr };
+    mono_runtime_invoke(mUpdateMethod, mono_gchandle_get_target(mGcHandle), params.data(), &exception);
+
+    // don't print in game build
+#ifndef DISTRIBUTION
+    if (exception) {
+      mono_print_unhandled_exception(exception);
+      IGE_DBGLOGGER.LogError("OnUpdate(): C# exception thrown. Check console for details.");
+    }
+#endif
   }
 }
 
 void ScriptInstance::InvokeOnMouseEnter() {
     if (mMouseEnterMethod) {
         std::vector<void*> params = {  };
-        mono_runtime_invoke(mMouseEnterMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+        MonoObject* exception{ nullptr };
+        mono_runtime_invoke(mMouseEnterMethod, mono_gchandle_get_target(mGcHandle), params.data(), &exception);
+
+        // don't print in game build
+#ifndef DISTRIBUTION
+        if (exception) {
+          mono_print_unhandled_exception(exception);
+          IGE_DBGLOGGER.LogError("OnMouseEnter(): C# exception thrown. Check console for details.");
+        }
+#endif
     }
 }
 void ScriptInstance::InvokeOnMouseExit() {
     if (mMouseExitMethod) {
         std::vector<void*> params = { };
-        mono_runtime_invoke(mMouseExitMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+        MonoObject* exception{ nullptr };
+        mono_runtime_invoke(mMouseExitMethod, mono_gchandle_get_target(mGcHandle), params.data(), &exception);
+
+        // don't print in game build
+#ifndef DISTRIBUTION
+        if (exception) {
+          mono_print_unhandled_exception(exception);
+          IGE_DBGLOGGER.LogError("OnMouseExit(): C# exception thrown. Check console for details.");
+        }
+#endif
     }
 }
 void ScriptInstance::InvokeOnMouseDown() {
     if (mMouseDownMethod) {
         std::vector<void*> params = { };
-        mono_runtime_invoke(mMouseDownMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+        MonoObject* exception{ nullptr };
+        mono_runtime_invoke(mMouseDownMethod, mono_gchandle_get_target(mGcHandle), params.data(), &exception);
+
+        // don't print in game build
+#ifndef DISTRIBUTION
+        if (exception) {
+          mono_print_unhandled_exception(exception);
+          IGE_DBGLOGGER.LogError("OnMouseDown(): C# exception thrown. Check console for details.");
+        }
+#endif
     }
 }
 void ScriptInstance::InvokeOnMouseUp() {
     if (mMouseUpMethod) {
         std::vector<void*> params = { };
-        mono_runtime_invoke(mMouseUpMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+        MonoObject* exception{ nullptr };
+        mono_runtime_invoke(mMouseUpMethod, mono_gchandle_get_target(mGcHandle), params.data(), &exception);
+
+        // don't print in game build
+#ifndef DISTRIBUTION
+        if (exception) {
+          mono_print_unhandled_exception(exception);
+          IGE_DBGLOGGER.LogError("OnMouseUp(): C# exception thrown. Check console for details.");
+        }
+#endif
     }
 }
 
 void ScriptInstance::InvokeOnPointerEnter() {
     if (mPointerEnterMethod) {
         std::vector<void*> params = {  };
-        mono_runtime_invoke(mPointerEnterMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+        MonoObject* exception{ nullptr };
+        mono_runtime_invoke(mPointerEnterMethod, mono_gchandle_get_target(mGcHandle), params.data(), &exception);
+
+        // don't print in game build
+#ifndef DISTRIBUTION
+        if (exception) {
+          mono_print_unhandled_exception(exception);
+          IGE_DBGLOGGER.LogError("OnPointerEnter(): C# exception thrown. Check console for details.");
+        }
+#endif
     }
 }
 void ScriptInstance::InvokeOnPointerExit() {
     if (mPointerExitMethod) {
         std::vector<void*> params = { };
-        mono_runtime_invoke(mPointerExitMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+        MonoObject* exception{ nullptr };
+        mono_runtime_invoke(mPointerExitMethod, mono_gchandle_get_target(mGcHandle), params.data(), &exception);
+
+        // don't print in game build
+#ifndef DISTRIBUTION
+        if (exception) {
+          mono_print_unhandled_exception(exception);
+          IGE_DBGLOGGER.LogError("OnPointerExit(): C# exception thrown. Check console for details.");
+        }
+#endif
     }
 }
 void ScriptInstance::InvokeOnPointerDown() {
     if (mPointerDownMethod) {
         std::vector<void*> params = { };
-        mono_runtime_invoke(mPointerDownMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+        MonoObject* exception{ nullptr };
+        mono_runtime_invoke(mPointerDownMethod, mono_gchandle_get_target(mGcHandle), params.data(), &exception);
+
+        // don't print in game build
+#ifndef DISTRIBUTION
+        if (exception) {
+          mono_print_unhandled_exception(exception);
+          IGE_DBGLOGGER.LogError("OnPointerDown(): C# exception thrown. Check console for details.");
+        }
+#endif
     }
 }
 void ScriptInstance::InvokeOnPointerUp() {
     if (mPointerUpMethod) {
         std::vector<void*> params = { };
-        mono_runtime_invoke(mPointerUpMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+        MonoObject* exception{ nullptr };
+        mono_runtime_invoke(mPointerUpMethod, mono_gchandle_get_target(mGcHandle), params.data(), &exception);
+
+        // don't print in game build
+#ifndef DISTRIBUTION
+        if (exception) {
+          mono_print_unhandled_exception(exception);
+          IGE_DBGLOGGER.LogError("OnPointerUp(): C# exception thrown. Check console for details.");
+        }
+#endif
     }
 }
 
@@ -205,7 +304,16 @@ void ScriptInstance::InvokeStart()
     if (startMethod)
     {
       std::vector<void*> params = { };
-      mono_runtime_invoke(startMethod, mono_gchandle_get_target(mGcHandle), params.data(), nullptr);
+      MonoObject* exception{ nullptr };
+      mono_runtime_invoke(startMethod, mono_gchandle_get_target(mGcHandle), params.data(), &exception);
+
+      // don't print in game build
+#ifndef DISTRIBUTION
+      if (exception) {
+        mono_print_unhandled_exception(exception);
+        IGE_DBGLOGGER.LogError("Start(): C# exception thrown. Check console for details.");
+      }
+#endif
     }
   }
 }
