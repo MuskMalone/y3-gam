@@ -51,8 +51,7 @@ namespace Systems {
       Transform const& parentTrans{ mEntityManager.GetParentEntity(entity).GetComponent<Transform>() };
 
       // update local to world with parent xform
-      trans.parentWorldMtx = parentTrans.worldMtx;
-      trans.worldPos = trans.parentWorldMtx * glm::vec4(trans.position, 1.f);
+      trans.worldPos = parentTrans.worldMtx * glm::vec4(trans.position, 1.f);
       trans.worldRot = /*glm::normalize*/(parentTrans.worldRot * trans.rotation);
       trans.worldScale = parentTrans.worldScale * trans.scale;
 
