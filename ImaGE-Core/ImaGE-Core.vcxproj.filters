@@ -794,7 +794,10 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Core\Components\Tween.h" />
+    <ClInclude Include="source\Core\Components\Animation.h" />
+    <ClInclude Include="source\External\ImNodes\imnodes.h" />
+    <ClInclude Include="source\External\ImNodes\imnodes_internal.h" />
+    <ClInclude Include="source\Core\Systems\AnimationSystem\AnimationSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -1075,5 +1078,12 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
+    <ClCompile Include="source\External\ImNodes\imnodes.cpp" />
+    <ClCompile Include="source\Core\Systems\AnimationSystem\AnimationSystem.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Build-ImaGE-Core.lua" />
+    <None Include="source\External\ImNodes\LICENSE.md" />
+    <None Include="source\External\ImNodes\README.md" />
   </ItemGroup>
 </Project>

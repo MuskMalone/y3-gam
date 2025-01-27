@@ -12,6 +12,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rttr/registration>
 #include <Core/Components/RigidBody.h>
 #include <Core/Components/Light.h>
+#include <Core/Components/Animation.h>
 
 #include <Audio/AudioManager.h>
 namespace
@@ -53,6 +54,16 @@ static void rttr_auto_register_reflection_function3_(); namespace {
     rttr::value("SPOTLIGHT", Component::LightType::SPOTLIGHT),
     rttr::value("POINT", Component::LightType::POINT)
     );
+
+  {
+    using T = Component::Animation::KeyframeType;
+    rttr::registration::enumeration<T>("TweenKeyframeType")(
+      rttr::value("NONE", T::NONE),
+      rttr::value("TRANSLATION", T::TRANSLATION),
+      rttr::value("ROTATION", T::ROTATION),
+      rttr::value("SCALE", T::SCALE)
+      );
+  }
 
   rttr::registration::enumeration<Component::Camera::Type>("CameraType")(
     rttr::value("ORTHO", Component::Camera::Type::ORTHO),

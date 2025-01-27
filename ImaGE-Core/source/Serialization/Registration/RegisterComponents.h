@@ -143,6 +143,9 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("textureAssetGUID", &Sprite2D::textureAsset)
     .property("isTransparent", &Sprite2D::isTransparent);
 
+  REGISTER_COMPONENT(Animation, "Animation");
+    //.property("", &Animation::)
+
   REGISTER_COMPONENT(Camera, "Camera")
       .property("projType", &Component::Camera::projType)
       .property("position", &Component::Camera::position)
