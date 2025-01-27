@@ -186,7 +186,7 @@ namespace IGE {
 			return mRegisteredTypeNames.find(type) != mRegisteredTypeNames.end();
 		}
 
-		std::string AssetManager::GUIDToPath(GUID const& guid) {
+		std::string const& AssetManager::GUIDToPath(GUID const& guid) {
 			if (mGUID2PathRegistry.find(guid) == mGUID2PathRegistry.end())
 				throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("GUID " + std::to_string(static_cast<uint64_t>(guid)) + " doesnt have path"));
 			return mGUID2PathRegistry.at(guid);

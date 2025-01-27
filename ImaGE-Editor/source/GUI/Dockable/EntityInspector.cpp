@@ -528,7 +528,80 @@ namespace GUI {
         ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
         ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
+        IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+        std::vector<std::string> filePaths{ "None" };
+        filePaths.reserve(animation.animations.size());
+        for (IGE::Assets::GUID guid : animation.animations) {
+          try {
+            filePaths.emplace_back(am.GUIDToPath(guid));
+          }
+          catch (Debug::ExceptionBase&) {
+            IGE_DBGLOGGER.LogError("[Inspector] Unable to get path of animation " + std::to_string(static_cast<uint64_t>(guid)));
+            if (animation.currentAnimation == guid) {
+              animation.currentAnimation = {};
+            }
+            // im just gonna erase it and break here
+            animation.animations.erase(guid);
+            break;
+          }
+        }
 
+        NextRowTable("Animations");
+        if (ImGui::TreeNodeEx("##Animations", ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanFullWidth)) {
+          if (ImGui::BeginTable("##AnimationsTable", 2, ImGuiTableFlags_BordersOuter | ImGuiTableColumnFlags_WidthFixed)) {
+            float const rowWidth{ ImGui::GetContentRegionMax().x };
+            float const col1{ rowWidth * 0.7f }, col2{ rowWidth - col1 };
+            ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, col1);
+            ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, col2);
+            
+            unsigned toRemove{};
+            for (unsigned i{ 1 }; i < filePaths.size(); ++i) {
+              ImGui::TableNextRow();
+              ImGui::TableSetColumnIndex(0);
+              if (ImGui::Selectable(filePaths[i].c_str())) {
+
+              }
+              ImGui::TableSetColumnIndex(1);
+              ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.f, 0.f, 1.f));
+              if (ImGui::Button(ICON_FA_MINUS)) {
+                toRemove = i;
+              }
+              ImGui::PopStyleColor();
+            }
+
+            // remove if necessary
+            if (toRemove != 0) {
+              animation.animations.erase(am.PathToGUID(filePaths[toRemove]));
+              if (animation.currentAnimation == filePaths[toRemove]) {
+                animation.currentAnimation = {};
+              }
+            }
+
+            ImGui::EndTable();
+          }
+        }
+
+        NextRowTable("Current Animation");
+        std::string const& currAnim{ animation.currentAnimation ? am.GUIDToPath(animation.currentAnimation) : "None" };
+        if (ImGui::BeginCombo("##CurrAnim", currAnim.c_str())) {
+          for (std::string const& path : filePaths) {
+            if (!ImGui::Selectable(path.c_str())) { continue; }
+
+            // have to do this to handle the "None" option
+            if (path != currAnim) {
+              animation.currentAnimation = (path == "None" ? IGE::Assets::GUID() : am.PathToGUID(path));
+              modified = true;
+            }
+            break;
+          } // end for loop
+
+          ImGui::EndCombo();
+        }
+
+        NextRowTable("Loop");
+        if (ImGui::Checkbox("##Loop", &animation.repeat)) {
+          modified = true;
+        }
 
         ImGui::EndTable();
       }
