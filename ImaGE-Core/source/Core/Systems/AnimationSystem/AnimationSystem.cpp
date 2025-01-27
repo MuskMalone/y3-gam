@@ -1,45 +1,55 @@
 #include <pch.h>
 #include "AnimationSystem.h"
+#include <Core/Entity.h>
 #include <Core/Components/Animation.h>
 #include <Core/Components/Transform.h>
-#include <Core/Entity.h>
-#include <FrameRateController/FrameRateController.h>
+#include <Asset/IGEAssets.h>
+#include <Animation/AnimationData.h>
 
-namespace {
-  
-}
+#include <FrameRateController/FrameRateController.h>
 
 namespace Systems {
   void AnimationSystem::Update() {
     float const deltaTime{ IGE_FRC.GetDeltaTime() };
+    IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+
     for (ECS::Entity entity : mEntityManager.GetAllEntitiesWithComponents<Component::Animation>()) {
       Component::Animation& animation{ entity.GetComponent<Component::Animation>() };
 
-      if (animation.currentAnimation.empty() || !animation.animations.contains(animation.currentAnimation)) { continue; }
+      if (!animation.currentAnimation || !animation.animations.contains(animation.currentAnimation)) { continue; }
 
-      std::vector<Component::Animation::Keyframe> const& keyframes{ animation.GetCurrentAnimation() };
-      
+      try {
+        am.LoadRef<IGE::Assets::AnimationAsset>(animation.currentAnimation);
+      }
+      catch (Debug::ExceptionBase&) {
+        IGE_DBGLOGGER.LogError("[AnimationSystem] Unable to get animation " +
+          std::to_string(static_cast<uint64_t>(animation.currentAnimation)) + " of Entity " + entity.GetTag());
+        continue;
+      }
+
+      auto const&[name, keyframes] { am.GetAsset<IGE::Assets::AnimationAsset>(animation.currentAnimation)->mAnimData };
+
       // assume keyframes are sorted by start time followed by end time
       // add any more keyframes in range into the current list
-      for (unsigned i{ animation.lastKeyframeProcessed }; i < keyframes.size() && animation.timeElapsed >= keyframes[i].startTime; ++i) {
+      for (unsigned& i{ animation.nextKeyframe }; i < keyframes.size() && animation.timeElapsed >= keyframes[i].startTime; ++i) {
         animation.currentKeyframes.emplace_back(i);
       }
 
       Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
       // get the current t value mapped to [0, 1]
-      float const normalizedTime{ (animation.timeElapsed - 
-        keyframes[animation.lastKeyframeProcessed].startTime) / keyframes[animation.lastKeyframeProcessed].duration};
+      float const normalizedTime{ (animation.timeElapsed -
+        keyframes[animation.nextKeyframe].startTime) / keyframes[animation.nextKeyframe].duration };
       float const toBeDeltaTime{ animation.timeElapsed + deltaTime };
 
       // execute all keyframes in range by setting the interpolated value based on the current t
       for (auto iter{ animation.currentKeyframes.cbegin() }; iter != animation.currentKeyframes.cend();) {
-        Component::Animation::Keyframe const& keyframe{ keyframes[*iter] };
+        Anim::Keyframe const& keyframe{ keyframes[*iter] };
 
         // if the keyframe ends this frame, complete and remove it
         bool const lastFrame{ toBeDeltaTime >= keyframe.GetEndTime() };
 
         switch (keyframe.type) {
-        case Component::Animation::TRANSLATION:
+        case Anim::KeyframeType::TRANSLATION:
           if (lastFrame) {
             trans.position = std::get<glm::vec3>(keyframe.endValue);
           }
@@ -48,7 +58,7 @@ namespace Systems {
           }
           trans.modified = true;
           break;
-        case Component::Animation::ROTATION:
+        case Anim::KeyframeType::ROTATION:
           if (lastFrame) {
             trans.SetLocalRotWithEuler(std::get<glm::vec3>(keyframe.endValue));
           }
@@ -59,7 +69,7 @@ namespace Systems {
           }
           trans.modified = true;
           break;
-        case Component::Animation::SCALE:
+        case Anim::KeyframeType::SCALE:
           if (lastFrame) {
             trans.scale = std::get<glm::vec3>(keyframe.endValue);
           }
@@ -68,10 +78,10 @@ namespace Systems {
           }
           trans.modified = true;
           break;
-        case Component::Animation::NONE:
+        case Anim::KeyframeType::NONE:
           break;
         default:
-          IGE_DBGLOGGER.LogError("[AnimationSystem] Invalid Animation Keyframe type: " + std::to_string(keyframe.type));
+          IGE_DBGLOGGER.LogError("[AnimationSystem] Invalid Animation Keyframe type: " + std::to_string(static_cast<int>(keyframe.type)));
           break;
         }
 
@@ -90,7 +100,7 @@ namespace Systems {
         animation.Reset();
 
         if (!animation.repeat) {
-          animation.currentAnimation.clear();
+          animation.currentAnimation = {};
         }
       }
     }

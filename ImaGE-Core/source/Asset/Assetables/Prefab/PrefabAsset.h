@@ -2,10 +2,10 @@
 #include <Asset/SmartPointer.h>
 #include <Prefabs/Prefab.h>
 #include "Asset/AssetMetadata.h"
+
 namespace IGE {
 	namespace Assets {
 		const std::string cPrefabsDirectory{ std::string(gPrefabsDirectory) };
-
 		struct PrefabAsset : public RefCounted {
 			Prefabs::Prefab mPrefabData;
 

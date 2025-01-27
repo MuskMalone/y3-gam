@@ -29,13 +29,15 @@ namespace IGE {
 				IGE::Assets::PrefabAsset,
 				IGE::Assets::FontAsset,
 				IGE::Assets::ShaderAsset,
-				IGE::Assets::MaterialAsset
+				IGE::Assets::MaterialAsset,
+				IGE::Assets::AnimationAsset
 			>();
 			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			//auto fp{ CreateProjectFile() }; // create project file if it doesnt exist
 			//Serialization::Deserializer::DeserializeAny(mMetadata, fp);
 			for (auto const& dir : mRegisteredTypeNames) {
 				auto directoryPath{ cAssetProjectSettingsPath + dir + "\\" };
+				CreateDirectoryIfNotExists(directoryPath);
 				try {
 					for (const auto& entry : std::filesystem::directory_iterator(directoryPath)) {
 						if (entry.is_regular_file()) { // Check if it's a regular file
@@ -57,6 +59,7 @@ namespace IGE {
 					}
 				}
 				catch ([[maybe_unused]] const std::filesystem::filesystem_error& e) {
+					std::cout << "ThROW\n";
 					throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("failed when getting assets"));
 				}
 			}
@@ -108,6 +111,7 @@ namespace IGE {
 			file.close();
 			return out;
 			*/
+			return out;
 		}
 		AssetManager::AssetManager() {
 			SUBSCRIBE_CLASS_FUNC(Events::RegisterAssetsEvent, &AssetManager::HandleAddFiles, this);
@@ -130,7 +134,7 @@ namespace IGE {
 			//Serialization::Serializer::SerializeAny(mMetadata, fp);
 
 			// erase all files that no longer exist from metadata
-			bool removed{ false };
+			/*bool removed{ false };
 			for (auto& entry : mMetadata.mAssetProperties) {
 				for (auto iter{ entry.second.begin() }; iter != entry.second.end();) {
 					if (!iter->second.metadata.contains("path")) {
@@ -154,7 +158,7 @@ namespace IGE {
 
 			if (removed) {
 				SaveMetadata();
-			}
+			}*/
 		}
 
 		AssetManager::~AssetManager()

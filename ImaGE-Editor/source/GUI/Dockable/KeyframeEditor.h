@@ -2,7 +2,7 @@
 #include <GUI/GUIWindow.h>
 #include <memory>
 #include <vector>
-#include <Core/Components/Animation.h>
+#include <Animation/Keyframe.h>
 
 namespace ECS { class Entity; }
 namespace Component { struct Transform; }
@@ -33,7 +33,7 @@ namespace GUI {
     struct KeyframeNode {
       using NodePtr = std::shared_ptr<KeyframeNode>;
 
-      KeyframeNode(Component::Animation::Keyframe const& keyframeData, bool hasInputPin = true, bool hasOutputPin = true);
+      KeyframeNode(Anim::Keyframe const& keyframeData, bool hasInputPin = true, bool hasOutputPin = true);
 
       inline static IDType sLastNodeId = sRootId, sLastPinId = -1;
 
@@ -48,7 +48,7 @@ namespace GUI {
       std::string nodeName;
       std::vector<NodePtr> nextNodes;
       NodePtr previous;
-      Component::Animation::Keyframe data;
+      Anim::Keyframe data;
       IDType inputPin, outputPin;
       //IDType nodeId;
     };

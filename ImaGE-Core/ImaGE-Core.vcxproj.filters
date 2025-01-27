@@ -798,6 +798,9 @@
     <ClInclude Include="source\External\ImNodes\imnodes.h" />
     <ClInclude Include="source\External\ImNodes\imnodes_internal.h" />
     <ClInclude Include="source\Core\Systems\AnimationSystem\AnimationSystem.h" />
+    <ClInclude Include="source\Asset\Assetables\Animation\AnimationAsset.h" />
+    <ClInclude Include="source\Animation\Keyframe.h" />
+    <ClInclude Include="source\Animation\AnimationData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -1080,6 +1083,7 @@
     <ClCompile Include="source\pch.cpp" />
     <ClCompile Include="source\External\ImNodes\imnodes.cpp" />
     <ClCompile Include="source\Core\Systems\AnimationSystem\AnimationSystem.cpp" />
+    <ClCompile Include="source\Asset\Assetables\Animation\AnimationAsset.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Build-ImaGE-Core.lua" />

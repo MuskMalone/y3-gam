@@ -143,6 +143,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   rttr::registration::class_<IGE::Assets::FontAsset>("Fonts");
   rttr::registration::class_<IGE::Assets::ShaderAsset>("PostProcessing");
   rttr::registration::class_<IGE::Assets::MaterialAsset>("Materials");
+  rttr::registration::class_<IGE::Assets::AnimationAsset>("Animations");
 
   /* ------------------- Light ------------------- */
   {

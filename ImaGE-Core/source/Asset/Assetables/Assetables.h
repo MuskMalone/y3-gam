@@ -6,3 +6,4 @@
 #include <Asset/Assetables/Font/FontAsset.h>
 #include <Asset/Assetables/Shader/ShaderAsset.h>
 #include <Asset/Assetables/Material/MaterialAsset.h>
+#include <Asset/Assetables/Animation/AnimationAsset.h>

@@ -56,7 +56,7 @@ static void rttr_auto_register_reflection_function3_(); namespace {
     );
 
   {
-    using T = Component::Animation::KeyframeType;
+    using T = Anim::KeyframeType;
     rttr::registration::enumeration<T>("TweenKeyframeType")(
       rttr::value("NONE", T::NONE),
       rttr::value("TRANSLATION", T::TRANSLATION),

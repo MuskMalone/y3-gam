@@ -5,7 +5,9 @@
 #include <GUI/Helpers/ImGuiHelpers.h>
 #include <Core/Entity.h>
 #include <Core/Components/Transform.h>
+#include <Core/Components/Animation.h>
 #include <GUI/GUIVault.h>
+#include <Asset/IGEAssets.h>
 
 #include <Events/EventManager.h>
 
@@ -23,8 +25,8 @@ namespace GUI {
   KeyframeEditor::CumulativeValues::CumulativeValues(Component::Transform const& trans) :
     pos{ trans.position }, rot{ trans.eulerAngles }, scale{ trans.scale } {}
 
-  KeyframeEditor::KeyframeNode::KeyframeNode(Component::Animation::Keyframe const& keyframeData, bool hasInputPin, bool hasOutputPin) :
-    cumulativeVal{}, nodeName{ sKeyframeTypeStr[keyframeData.type] }, nextNodes{},
+  KeyframeEditor::KeyframeNode::KeyframeNode(Anim::Keyframe const& keyframeData, bool hasInputPin, bool hasOutputPin) :
+    cumulativeVal{}, nodeName{ sKeyframeTypeStr[static_cast<int>(keyframeData.type)] }, nextNodes{},
     previous{}, data{ keyframeData }//, nodeId{ sLastNodeId++ } 
   {
     inputPin = hasInputPin ? ++sLastPinId : INVALID_ID;
@@ -61,7 +63,7 @@ namespace GUI {
     }
 
     if (NodesToolbar()) {
-      QUEUE_EVENT(Events::SceneModifiedEvent);  // let other windows know the scene has been modified
+      
     }
 
     ImNodes::BeginNodeEditor();
@@ -84,7 +86,6 @@ namespace GUI {
 
         if (KeyframeNodeBody(node)) {
           UpdateChain(node);
-          QUEUE_EVENT(Events::SceneModifiedEvent);
         }
 
         if (node->inputPin != INVALID_ID) {
@@ -195,9 +196,9 @@ namespace GUI {
 
       NextRowTable("Type", sRightColWidth);
       if (ImGui::BeginCombo("##Type", node->nodeName.c_str())) {
-        for (int i{}; i < static_cast<int>(Component::Animation::NUM_TYPES); ++i) {
+        for (int i{}; i < static_cast<int>(Anim::KeyframeType::NUM_TYPES); ++i) {
           if (ImGui::Selectable(sKeyframeTypeStr[i])) {
-            Component::Animation::KeyframeType const selected{ static_cast<Component::Animation::KeyframeType>(i) };
+            Anim::KeyframeType const selected{ static_cast<Anim::KeyframeType>(i) };
 
             if (selected != node->data.type) {
               node->data.type = selected;
@@ -211,7 +212,7 @@ namespace GUI {
         ImGui::EndCombo();
       }
 
-      if (node->data.type != Component::Animation::NONE) {
+      if (node->data.type != Anim::KeyframeType::NONE) {
         NextRowTable("Target", sRightColWidth);
         glm::vec3& rawVal{ std::get<glm::vec3>(node->data.endValue) };
         if (NodeVec3Input("##Target Value", rawVal)) {
@@ -255,7 +256,7 @@ namespace GUI {
     }
 
     // current offset from starting value
-    if (node->data.type != Component::Animation::NONE) {
+    if (node->data.type != Anim::KeyframeType::NONE) {
       ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 5.f);
       ImGui::TextUnformatted((node->nodeName + " offset of:").c_str());
 
@@ -280,7 +281,7 @@ namespace GUI {
 
     if (ImGui::Button("New Keyframe")) {
       KeyframeNode::NodePtr newNode{
-        std::make_shared<KeyframeNode>(Component::Animation::Keyframe(), true, true)
+        std::make_shared<KeyframeNode>(Anim::Keyframe(), true, true)
       };
 
       mPinIdToNode.emplace(newNode->inputPin, newNode);
@@ -296,21 +297,32 @@ namespace GUI {
       return;
     }
 
-    Component::Animation::Keyframe const& prevData{ node->previous->data };
+    Anim::Keyframe const& prevData{ node->previous->data };
     node->cumulativeVal = node->previous->cumulativeVal;
     node->data.startTime = prevData.GetEndTime();
 
     switch (prevData.type) {
-    case Component::Animation::TRANSLATION:
-      node->cumulativeVal.pos += prevData.GetNormalizedValue<glm::vec3>();
+    case Anim::KeyframeType::TRANSLATION:
+      node->cumulativeVal.pos = std::get<glm::vec3>(prevData.endValue);
+      break;
+    case Anim::KeyframeType::ROTATION:
+      node->cumulativeVal.rot = std::get<glm::vec3>(prevData.endValue);
+      break;
+    case Anim::KeyframeType::SCALE:
+      node->cumulativeVal.scale = std::get<glm::vec3>(prevData.endValue);
+      break;
+    default:
+      break;
+    }
+
+    switch (node->data.type) {
+    case Anim::KeyframeType::TRANSLATION:
       node->data.startValue = node->cumulativeVal.pos;
       break;
-    case Component::Animation::ROTATION:
-      node->cumulativeVal.rot += prevData.GetNormalizedValue<glm::vec3>();
+    case Anim::KeyframeType::ROTATION:
       node->data.startValue = node->cumulativeVal.rot;
       break;
-    case Component::Animation::SCALE:
-      node->cumulativeVal.scale += prevData.GetNormalizedValue<glm::vec3>();
+    case Anim::KeyframeType::SCALE:
       node->data.startValue = node->cumulativeVal.scale;
       break;
     default:
@@ -326,7 +338,7 @@ namespace GUI {
     Reset();
 
     KeyframeNode::NodePtr newNode{
-      std::make_shared<KeyframeNode>(Component::Animation::Keyframe(), false, true)
+      std::make_shared<KeyframeNode>(Anim::Keyframe(), false, true)
     };
     newNode->nodeName = "Root";
     newNode->cumulativeVal = { trans };
@@ -340,13 +352,23 @@ namespace GUI {
 
     if (animation.animations.empty()) { return false; }
 
+    IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+    try {
+      am.LoadRef<IGE::Assets::AnimationAsset>(*animation.animations.begin());
+    }
+    catch (Debug::ExceptionBase&) {
+      IGE_DBGLOGGER.LogError("[AnimationSystem] Unable to get animation " +
+        std::to_string(static_cast<uint64_t>(*animation.animations.begin())) + " of Entity " + entity.GetTag());
+      return false;
+    }
+
     // default to first animation in the list (or map)
-    auto const& keyframes{ animation.animations.begin()->second };
+    auto const& [name, keyframes]{ am.GetAsset<IGE::Assets::AnimationAsset>(*animation.animations.begin())->mAnimData };
     mNodes.reserve(keyframes.size());
     std::unordered_map<float, KeyframeNode::NodePtr> endTimeToNode;
     endTimeToNode.emplace(0.f, GetRootNode());
 
-    for (Component::Animation::Keyframe const& keyframe : keyframes) {
+    for (Anim::Keyframe const& keyframe : keyframes) {
       KeyframeNode::NodePtr newNode{
         std::make_shared<KeyframeNode>(keyframe)
       };
