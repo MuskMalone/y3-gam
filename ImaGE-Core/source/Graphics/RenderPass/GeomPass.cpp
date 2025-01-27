@@ -60,13 +60,22 @@ namespace Graphics {
   
 
       unsigned matCount{ static_cast<unsigned>(MaterialTable::GetMaterialCount()) };
+
+      float time = static_cast<float>(glfwGetTime()); //for shaders requiring time
       // STEP TRES: Render shader groups
       for (auto const&[shader, matGrp] : shaderGroups) {
 
         // Only bind the shader if it's different from the currently bound one
         shader->Use();
 
+        bool isWaterShader = (shader == ShaderLibrary::Get("Water"));
+
+        if (isWaterShader) {
+            shader->SetUniform("u_Time", time);
+        }
+
         bool isUnlitShader = (shader == ShaderLibrary::Get("Unlit"));
+
         shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);
 
         if (!isUnlitShader) {
