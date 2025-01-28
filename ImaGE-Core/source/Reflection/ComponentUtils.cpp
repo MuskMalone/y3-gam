@@ -52,6 +52,11 @@ namespace Reflection::ComponentUtils {
       entity.EmplaceOrReplaceComponent<AudioSource>(comp);
     }
   }
+  void AddBloom(ECS::Entity entity, rttr::variant const& var) {
+      EXTRACT_RAW_COMP(Bloom, comp);
+
+      entity.EmplaceOrReplaceComponent<Bloom>(comp);
+  }
   void AddTag(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Tag, comp);
 

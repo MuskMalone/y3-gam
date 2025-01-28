@@ -101,7 +101,7 @@ namespace Graphics {
         bool IsDefaultNormalMap() const { return !mNormalMap.IsValid(); }
         bool IsDefaultMetalnessMap() const { return !mMetalnessMap.IsValid(); }
         bool IsDefaultRoughnessMap() const { return !mRoughnessMap.IsValid(); }
-
+    
         IGE::Assets::GUID GetAlbedoMap() const;
         void SetAlbedoMap(IGE::Assets::GUID const& texture);
 

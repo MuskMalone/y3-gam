@@ -12,6 +12,7 @@ layout(location = 6) in vec4 a_Color;
 layout(location = 7) in mat4 a_ModelMatrix; // Model transformation matrix for each instance
 layout(location = 11) in int a_MaterialIdx; 
 layout(location = 12) in int a_Entity;
+layout(location = 13) in vec4 a_BloomProps;
 
 out vec4 v_Color;
 out vec2 v_TexCoord;
@@ -32,6 +33,8 @@ out int v_SubmeshIdx;
 out vec4 v_LightSpaceFragPos;
 
 out vec3 v_ViewPosition;
+
+out flat vec4 v_BloomProps;
 
 uniform bool u_ShadowsActive;
 uniform mat4 u_ViewMtx;
@@ -57,6 +60,7 @@ void main(){
     v_ViewPosition = vec3(u_ViewMtx * worldPosition);
     gl_Position = u_ViewProjMtx * worldPosition;
 
+    v_BloomProps = a_BloomProps;
     // calculate the frag pos in light space
     if (u_ShadowsActive) {
         v_LightSpaceFragPos = u_LightSpaceMtx * worldPosition;

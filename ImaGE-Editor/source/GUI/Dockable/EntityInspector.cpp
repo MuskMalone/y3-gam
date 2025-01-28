@@ -75,6 +75,7 @@ namespace GUI {
     mComponentIcons{
       { typeid(Component::AudioListener), ICON_FA_EAR_LISTEN ICON_PADDING},
       { typeid(Component::AudioSource), ICON_FA_VOLUME_HIGH ICON_PADDING},
+      { typeid(Component::Bloom), ICON_FA_SUN },
       { typeid(Component::Tag), ICON_FA_TAG ICON_PADDING },
       { typeid(Component::Transform), ICON_FA_ROTATE ICON_PADDING },
       { typeid(Component::BoxCollider), ICON_FA_BOMB ICON_PADDING },
@@ -444,7 +445,17 @@ namespace GUI {
               }
           }
       }
+      if (currentEntity.HasComponent<Component::Bloom>()) {
+          rttr::type const compType{ rttr::type::get<Component::Bloom>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(compType);
 
+          if (BloomComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentOverride(compType);
+              }
+          }
+      }
 
       if (currentEntity.HasComponent<Component::EmitterSystem>()) {
           rttr::type const compType{ rttr::type::get<Component::EmitterSystem>() };
@@ -1499,6 +1510,21 @@ namespace GUI {
       return modified;
   }
 
+  bool Inspector::BloomComponentWindow(ECS::Entity entity, bool highlight)
+  {
+      bool const isOpen{ WindowBegin<Component::Bloom>("Bloom", highlight) };
+      bool modified{ false };
+
+      if (isOpen) {
+          auto& bloom{ entity.GetComponent<Component::Bloom>() };
+          ImGui::DragFloat("Threshold", &bloom.threshold, 0.01f, 0.f, 1024.f);
+          ImGui::DragFloat("Intensity", &bloom.intensity, 0.01f, 0.f, 1024.f);
+      }
+
+      WindowEnd(isOpen);
+      return modified;
+  }
+
   bool Inspector::BoxColliderComponentWindow(ECS::Entity entity, bool highlight) {
     bool const isOpen{ WindowBegin<Component::BoxCollider>("Box Collider", highlight) };
     bool modified{ false };
@@ -2285,6 +2311,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Text>("Text");
         DrawAddComponentButton<Component::Transform>("Transform");
         DrawAddComponentButton<Component::Light>("Light");
+        DrawAddComponentButton<Component::Bloom>(" Bloom");
         DrawAddComponentButton<Component::Canvas>("Canvas");
         DrawAddComponentButton<Component::Image>("Image");
         DrawAddComponentButton<Component::Sprite2D>("Sprite2D");

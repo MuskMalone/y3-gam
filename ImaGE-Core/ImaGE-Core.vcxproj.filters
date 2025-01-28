@@ -326,6 +326,9 @@
     <ClInclude Include="source\Core\Components\Transform.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
+    <ClInclude Include="source\Core\Components\Tween.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
     <ClInclude Include="source\Core\Entity.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -809,7 +812,7 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Core\Components\Tween.h" />
+    <ClInclude Include="source\Core\Components\Bloom.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />

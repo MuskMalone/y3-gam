@@ -131,6 +131,10 @@ static void rttr_auto_register_reflection_function2_(); namespace {
       .property("sounds", &AudioSource::sounds);
   REGISTER_COMPONENT(AudioListener, "AudioListener");
 
+  REGISTER_COMPONENT(Bloom, "Bloom")
+      .property("threshold", &Bloom::threshold)
+      .property("intensity", &Bloom::intensity);
+
   REGISTER_COMPONENT(Canvas, "Canvas")
     .property("isVisible", &Component::Canvas::isVisible);
 

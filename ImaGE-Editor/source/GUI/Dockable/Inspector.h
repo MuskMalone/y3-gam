@@ -56,6 +56,7 @@ namespace GUI {
     // Kindly put in alphabetical order, thank you!
     bool AudioListenerComponentWindow(ECS::Entity entity, bool highlight = false);
     bool AudioSourceComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool BloomComponentWindow(ECS::Entity entity, bool highlight = false);
     bool BoxColliderComponentWindow(ECS::Entity entity, bool highlight = false);
     bool CameraComponentWindow(ECS::Entity entity, bool highlight = false);
     bool CanvasComponentWindow(ECS::Entity entity, bool highlight = false);

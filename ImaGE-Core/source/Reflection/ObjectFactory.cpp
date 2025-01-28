@@ -46,6 +46,7 @@ namespace {
   std::unordered_map<rttr::type, AddComponentFunc> const sAddComponentFuncs{
     { RTTR_TYPE(AudioListener), AddAudioListener },
     { RTTR_TYPE(AudioSource), AddAudioSource },
+    { RTTR_TYPE(Bloom), AddBloom },
     { RTTR_TYPE(Tag), AddTag },
     { RTTR_TYPE(Transform), AddTransform },
     { RTTR_TYPE(Layer), AddLayer },
@@ -69,6 +70,7 @@ namespace {
   std::unordered_map<rttr::type, GetComponentFunc> const sGetComponentFuncs{
     { RTTR_TYPE(AudioListener), GetComponentVariant<AudioListener> },
     { RTTR_TYPE(AudioSource), GetComponentVariant<AudioSource> },
+    { RTTR_TYPE(Bloom), GetComponentVariant<Bloom> },
     { RTTR_TYPE(Tag), GetComponentVariant<Tag> },
     { RTTR_TYPE(Transform), GetComponentVariant<Transform> },
     { RTTR_TYPE(Layer), GetComponentVariant<Layer> },
@@ -92,6 +94,7 @@ namespace {
   std::unordered_map<rttr::type, RemoveComponentFunc> const sRemoveComponentFuncs{
     { RTTR_TYPE(AudioListener), RemoveComponent<AudioListener> },
     { RTTR_TYPE(AudioSource), RemoveComponent<AudioSource> },
+    { RTTR_TYPE(Bloom), RemoveComponent<Bloom> },
     { RTTR_TYPE(Tag), RemoveComponent<Tag> },
     { RTTR_TYPE(Transform), RemoveComponent<Transform> },
     { RTTR_TYPE(Layer), RemoveComponent<Layer> },

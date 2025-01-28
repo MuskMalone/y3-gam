@@ -285,6 +285,30 @@ namespace {
         lightUniforms.u_Range[numLights] = light.mRange; // Maximum range of the spotlight
         ++numLights;
       }
+
+      //tch: hack for bloom. im just adding point lights instead of recalculating the lighting again
+      if (entity.HasComponent<Component::Bloom>() && entity.HasComponent<Component::Material>()) {
+          auto const& bloom = entity.GetComponent<Component::Bloom>();
+          auto const& material = entity.GetComponent<Component::Material>();
+          
+          glm::vec4 color{1,1,1,1};
+          if (IGE_ASSETMGR.IsGUIDValid<IGE::Assets::MaterialAsset>(material.materialGUID))
+            color = IGE_ASSETMGR.GetAsset<IGE::Assets::MaterialAsset>(material.materialGUID)->mMaterial->GetEmission();
+          float luminance = glm::dot(glm::vec3(color), glm::vec3(0.2126, 0.7152, 0.0722)); // Standard Rec. 709 weights
+          if (luminance >= bloom.threshold) {
+              lightUniforms.u_type[numLights] = Component::LightType::POINT; // mimic the object glowing
+              //lightUniforms.u_LightDirection[numLights] = entity.GetComponent<Component::Transform>().worldRot * light.forwardVec; // Directional light direction in world space
+              lightUniforms.u_LightColor[numLights] = color;     // Directional light color
+
+              //For spotlight
+              lightUniforms.u_LightPos[numLights] = entity.GetComponent<Component::Transform>().worldPos; // Position of the spotlight
+              //lightUniforms.u_InnerSpotAngle[numLights] = light.mInnerSpotAngle; // Inner spot angle in degrees
+              //lightUniforms.u_OuterSpotAngle[numLights] = light.mOuterSpotAngle; // Outer spot angle in degrees
+              lightUniforms.u_LightIntensity[numLights] = bloom.intensity;//light.mLightIntensity; // Intensity of the light
+                  //lightUniforms.u_Range[numLights] = light.mRange; // Maximum range of the spotlight
+              ++numLights;
+          }
+      }
       //if (numLights >= N)
       //  break;
       //if (entity.HasComponent<Component::Material>()) {

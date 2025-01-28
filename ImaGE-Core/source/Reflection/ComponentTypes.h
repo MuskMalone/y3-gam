@@ -15,11 +15,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Reflection
 {
-
 	std::vector<rttr::type> const gComponentTypes
 	{
 		rttr::type::get<Component::AudioListener>(),
 		rttr::type::get<Component::AudioSource>(),
+		rttr::type::get<Component::Bloom>(),
 		rttr::type::get<Component::Tag>(),
 		rttr::type::get<Component::Transform>(),
 		rttr::type::get<Component::Layer>(),

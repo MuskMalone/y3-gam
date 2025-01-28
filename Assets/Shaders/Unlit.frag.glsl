@@ -33,6 +33,9 @@ in vec3 v_Bitangent;            // Bitangent in world space
 
 // shadows
 in vec4 v_LightSpaceFragPos;
+
+in flat vec4 v_BloomProps;
+
 uniform bool u_ShadowsActive;
 uniform float u_ShadowBias;
 uniform int u_ShadowSoftness;
@@ -56,5 +59,6 @@ void main(){
     //change transparency here
     //float alpha = albedoTexture.a * mat.Transparency;
     float alpha = mat.Transparency;
-	fragColor = vec4(albedo, alpha);
+    fragColor = vec4(albedo, alpha);
+    
 }

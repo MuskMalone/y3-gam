@@ -20,9 +20,7 @@
 #include <Graphics/RenderPass/UIPass.h>
 #pragma endregion
 
-#include "Core/Components/Camera.h"
-#include "Core/Components/Transform.h"
-#include "Core/Components/Light.h"
+#include "Core/Components/Components.h"
 #include "Core/Entity.h"
 #include "Input/InputManager.h"
 
@@ -258,7 +256,7 @@ namespace Graphics {
 		Graphics::FramebufferSpec framebufferSpec;
 		framebufferSpec.width = WINDOW_WIDTH<int>;
 		framebufferSpec.height = WINDOW_HEIGHT<int>;
-		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::RGBA32F, Graphics::FramebufferTextureFormat::DEPTH };
+		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::RGBA32F, Graphics::FramebufferTextureFormat::RGBA32F, Graphics::FramebufferTextureFormat::DEPTH };
 		std::shared_ptr<Framebuffer> fb = Framebuffer::Create(framebufferSpec);
 		InitSkyboxPass(fb);
 
@@ -590,7 +588,8 @@ namespace Graphics {
 		BufferLayout instanceLayout = {
 			{ AttributeType::MAT4, "a_ModelMatrix" },
 			{ AttributeType::INT, "a_MaterialIdx"},
-			{ AttributeType::INT, "a_EntityID"}
+			{ AttributeType::INT, "a_EntityID"},
+			{ AttributeType::VEC4, "a_BloomProps" }
 			//{ AttributeType::VEC4, "a_Color" },
 
 		};
@@ -1162,6 +1161,12 @@ namespace Graphics {
 
 		if (id != INVALID_ENTITY_ID) {
 			instance.entityID = id;
+			
+			ECS::Entity entity{ ECS::Entity::EntityID{static_cast<unsigned>(id)} };
+			if (entity.HasComponent<Component::Bloom>()){
+				auto const& bloom{ entity.GetComponent<Component::Bloom>() };
+				instance.bloomProps = glm::vec4{ 1.f, bloom.threshold, bloom.intensity, 0.f };
+			}
 		}
 		instance.materialIdx = matID;
 		
