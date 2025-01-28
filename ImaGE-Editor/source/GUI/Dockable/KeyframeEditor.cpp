@@ -36,7 +36,7 @@ namespace GUI {
   }
 
   KeyframeEditor::KeyframeEditor(const char* windowName) : GUIWindow(windowName),
-    mPinIdToNode{}, mNodes{}, mLinks{} {
+    mPinIdToNode{}, mNodes{}, mLinks{}, mSelectedAnim{} {
     // the context shall live and die with this window
     ImNodes::CreateContext();
     ImNodesIO& io{ ImNodes::GetIO() };
@@ -49,8 +49,20 @@ namespace GUI {
 
     static ECS::Entity prevEntity{};
     ECS::Entity currEntity{ GUIVault::GetSelectedEntity() };
-    if (!currEntity || !currEntity.HasComponent<Component::Animation>()) {
-      ImGui::Text("Add an Animation component to get started!");
+    if (!mSelectedAnim) {
+      ImVec2 centerPos{ ImGui::GetWindowSize() * 0.5f };
+      ImGui::SetCursorPos(centerPos - ImGui::CalcTextSize("No animati"));
+      ImGui::Text("No animation selected.");
+
+      ImGui::SetCursorPosX(centerPos.x - ImGui::CalcTextSize("Edit an existing one or C").x);
+      ImGui::AlignTextToFramePadding();
+      ImGui::Text("Edit an existing one or");
+      ImGui::SameLine();
+      if (ImGui::Button("Create")) {
+
+      }
+      ImGui::SameLine(); ImGui::Text("one to get started.");
+
       ImGui::End();
       return;
     }
@@ -59,7 +71,7 @@ namespace GUI {
 
     if (currEntity != prevEntity) {
       Init(entityTransform);
-      LoadKeyframes(currEntity);
+      //LoadKeyframes(currEntity);
     }
 
     if (NodesToolbar()) {

@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 #include <Animation/Keyframe.h>
+#include <Asset/SmartPointer.h>
 
 namespace ECS { class Entity; }
 namespace Component { struct Transform; }
@@ -75,5 +76,6 @@ namespace GUI {
     std::unordered_map<IDType, KeyframeNode::NodePtr> mPinIdToNode;
     std::unordered_map<IDType, KeyframeNode::NodePtr> mNodes;
     std::vector<KeyframeLink> mLinks;
+    IGE::Assets::GUID mSelectedAnim;
   };
 }

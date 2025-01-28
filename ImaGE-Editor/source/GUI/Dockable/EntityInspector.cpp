@@ -547,7 +547,7 @@ namespace GUI {
         }
 
         NextRowTable("Animations");
-        if (ImGui::TreeNodeEx("##Animations", ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanFullWidth)) {
+        if (ImGui::TreeNodeEx("Drag here to add to list", ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanFullWidth)) {
           if (ImGui::BeginTable("##AnimationsTable", 2, ImGuiTableFlags_BordersOuter | ImGuiTableColumnFlags_WidthFixed)) {
             float const rowWidth{ ImGui::GetContentRegionMax().x };
             float const col1{ rowWidth * 0.7f }, col2{ rowWidth - col1 };
