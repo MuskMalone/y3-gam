@@ -249,6 +249,9 @@ namespace GUI
         auto const str{ am.GetAsset<IGE::Assets::MaterialAsset>(guid)->mMaterial };
         am.GetAsset<IGE::Assets::MaterialAsset>(guid)->mMaterial->SetName(newPath.stem().string());
       }
+      else if (ext == gAnimationFileExt) {
+        am.ChangeAssetPath<IGE::Assets::AnimationAsset>(am.LoadRef<IGE::Assets::AnimationAsset>(original.string()), newPath.string());
+      }
       else if (ext == gSpriteFileExt) {
         am.ChangeAssetPath<IGE::Assets::TextureAsset>(am.LoadRef<IGE::Assets::TextureAsset>(original.string()), newPath.string());
       }
@@ -645,6 +648,16 @@ namespace GUI
       else if (ext == gMaterialFileExt) {
         if (ImGui::Selectable("Edit Material")) {
           GUIVault::SetSelectedFile(mSelectedAsset);
+        }
+      }
+      else if (ext == gAnimationFileExt) {
+        if (ImGui::Selectable("Edit Animation")) {
+          try {
+            QUEUE_EVENT(Events::EditAnimation, IGE_ASSETMGR.PathToGUID(mSelectedAsset.string()));
+          }
+          catch (Debug::ExceptionBase&) {
+            IGE_DBGLOGGER.LogError("Unable to get GUID of " + mSelectedAsset.string());
+          }
         }
       }
 

@@ -23,6 +23,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/PostProcessing/PostProcessingManager.h>
 #include <Graphics/MaterialData.h>
 #include <Core/Components/Light.h>
+#include <Animation/AnimationData.h>
 
 #define REGISTER_DATA_MEMBER_INST(T, nameStr) rttr::registration::class_<Mono::DataMemberInstance<T>>(nameStr).constructor<>()(rttr::policy::ctor::as_object)\
   .property(JSON_SCRIPT_DMI_DATA_KEY, &Mono::DataMemberInstance<T>::mData)\
@@ -214,6 +215,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
         .property("roughnessMap", &T::mRoughnessMap);
   }
 
+  /* ------------------ Prefabs ---------------------*/
   {
     using T = Serialization::PfbOverridesData;
     rttr::registration::class_<T>("PrefabOverridesData")
@@ -222,6 +224,31 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("subDataId", &T::subDataId)
       .property("componentData", &T::componentData)
       .property("removedComponents", &T::removedComponents);
+  }
+
+  /* ------------------- Animation ------------------- */
+  {
+    using T = Anim::RootKeyframe;
+    rttr::registration::class_<T>("RootKeyframe")
+      .constructor<>()(rttr::policy::ctor::as_object)
+      .property("startPos", &T::startPos)
+      .property("startRot", &T::startRot)
+      .property("startScale", &T::startScale);
+  }
+
+  {
+    using T = Anim::Keyframe;
+    rttr::registration::class_<T>("Keyframe")
+      .constructor<>()(rttr::policy::ctor::as_object)
+      .property("type", &T::type)
+      .property("startTime", &T::startTime)
+      .property("duration", &T::duration);
+  }
+  {
+    using T = Anim::AnimationData;
+    rttr::registration::class_<T>("AnimationData")
+      .constructor<>()(rttr::policy::ctor::as_object)
+      .property("rootKeyframe", &T::rootKeyframe);
   }
 
   /* ------------------- Script ------------------- */

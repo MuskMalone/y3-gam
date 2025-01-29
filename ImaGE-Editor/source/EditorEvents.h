@@ -2,6 +2,7 @@
 #include <Events/Event.h>
 #include <GUI/Helpers/SceneEditorConfig.h>
 #include <filesystem>
+#include <Asset/SmartPointer.h>
 
 namespace Events {
   class CollectEditorSceneData : public Event
@@ -33,5 +34,14 @@ namespace Events {
 
     std::filesystem::path const mOriginal;
     std::string const mNewFile;
+  };
+
+  // guid
+  class EditAnimation : public Event {
+  public:
+    EditAnimation(IGE::Assets::GUID guid) : mGUID{ guid } {}
+    inline std::string GetName() const noexcept override { return "Editing animation " + std::to_string(static_cast<uint64_t>(mGUID)); }
+
+    IGE::Assets::GUID mGUID;
   };
 }

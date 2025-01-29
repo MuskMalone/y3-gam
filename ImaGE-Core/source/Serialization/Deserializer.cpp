@@ -16,6 +16,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <cstdarg>
 #include "JsonKeys.h"
 #include <Serialization/FILEWrapper.h>
+#include <Animation/Keyframe.h>
 
 #include <Prefabs/PrefabManager.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
@@ -24,8 +25,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Components/Script.h>
 #include <Reflection/ProxyScript.h>
 #include <Core/Components/Light.h>
+#include <rapidjson/stringbuffer.h>
+#include <rapidjson/writer.h>
 
-//#define DESERIALIZER_DEBUG
+#define DESERIALIZER_DEBUG
 
 namespace Serialization
 {
@@ -35,7 +38,7 @@ namespace Serialization
   {
     FILEWrapper fileWrapper{ filePath.c_str(), "r" };
     if (!fileWrapper) {
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to read " + filePath);
+      IGE_DBGLOGGER.LogError("[Deserializer] Unable to read " + filePath);
       return;
     }
 
@@ -44,7 +47,7 @@ namespace Serialization
 
     rapidjson::Document document;
     if (document.ParseStream(iStream).HasParseError()) {
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to parse " + filePath);
+      IGE_DBGLOGGER.LogError("[Deserializer] Unable to parse " + filePath);
       return;
     }
 
@@ -63,7 +66,7 @@ namespace Serialization
     }
 
     if (!document.IsObject() || !document.HasMember(JSON_SCENE_KEY) || !document[JSON_SCENE_KEY].IsArray()) {
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + filepath + ": Scene object corrupted!");
+      IGE_DBGLOGGER.LogError("[Deserializer] " + filepath + ": Scene object corrupted!");
 #ifdef _DEBUG
       std::cout << filepath + ": Scene object corrupted!" << "\n";
 #endif
@@ -85,7 +88,7 @@ namespace Serialization
 
         if (!entity.HasMember(JSON_ID_KEY) || !entity.HasMember(JSON_PARENT_KEY) || !entity.HasMember(JSON_CHILD_ENTITIES_KEY)) {
           std::string const msg{ "Reflection::PrefabInst missing members!" };
-          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
+          IGE_DBGLOGGER.LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
           std::cout << msg << "\n";
 #endif
@@ -146,7 +149,7 @@ namespace Serialization
 #ifndef DISTRIBUTION
             std::ostringstream oss{};
             oss << "Trying to deserialize an invalid component: " << compName;
-            Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
+            IGE_DBGLOGGER.LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
             std::cout << oss.str() << "\n";
 #endif
@@ -168,7 +171,7 @@ namespace Serialization
 
     // deserialize layer data
     if (!document.HasMember(JSON_LAYERS_KEY) || !document[JSON_LAYERS_KEY].IsObject()) {
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + filepath + ": Unable to find Layer data");
+      IGE_DBGLOGGER.LogError("[Deserializer] " + filepath + ": Unable to find Layer data");
 #ifdef _DEBUG
       std::cout << filepath + ": Unable to find Layer data" << "\n";
 #endif
@@ -181,7 +184,7 @@ namespace Serialization
 
     // deserialize global properties
     if (!document.HasMember(JSON_GLOBAL_PROPS_KEY) || !document[JSON_GLOBAL_PROPS_KEY].IsObject()) {
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + filepath + ": Unable to find scene Global Properties");
+      IGE_DBGLOGGER.LogError("[Deserializer] " + filepath + ": Unable to find scene Global Properties");
 #ifdef _DEBUG
       std::cout << filepath + ": Unable to find scene Global Properties" << "\n";
 #endif
@@ -262,7 +265,7 @@ namespace Serialization
 #ifndef DISTRIBUTION
           std::ostringstream oss{};
           oss << "Trying to deserialize an invalid component: " << compName;
-          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
+          IGE_DBGLOGGER.LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
           std::cout << oss.str() << "\n";
 #endif
@@ -310,7 +313,7 @@ namespace Serialization
 
       if (keyIter == idxVal.MemberEnd() || valIter == idxVal.MemberEnd()) {
         std::string const msg{ "PrefabOverrides::modifiedComponents missing key or value members" };
-        Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
+        IGE_DBGLOGGER.LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
         std::cout << msg << "\n";
 #endif
@@ -322,7 +325,7 @@ namespace Serialization
 #ifndef DISTRIBUTION
         std::ostringstream oss{};
         oss << "Trying to deserialize an invalid component: " << compType.get_name().to_string();
-        Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
+        IGE_DBGLOGGER.LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
         std::cout << oss.str() << "\n";
 #endif
@@ -382,7 +385,7 @@ namespace Serialization
               std::ostringstream oss{};
               oss << "Unable to find " << prop.get_name().to_string()
                 << " property in " << compType.get_name().to_string();
-              Debug::DebugLogger::GetInstance().LogWarning("[Deserializer] " + oss.str());
+              IGE_DBGLOGGER.LogWarning("[Deserializer] " + oss.str());
 #endif
               continue;
             }
@@ -439,7 +442,7 @@ namespace Serialization
       if (ret == jsonObj.MemberEnd())
       {
         std::string const msg{ "Unable to find property with name: " + prop.get_name().to_string() };
-        Debug::DebugLogger::GetInstance().LogWarning("[Deserializer] " + msg);
+        IGE_DBGLOGGER.LogWarning("[Deserializer] " + msg);
 #ifdef _DEBUG
         std::cout << msg << "\n";
 #endif
@@ -490,7 +493,7 @@ namespace Serialization
           }
           else {
             std::string const msg{ "Unable to convert element to type " + propType.get_name().to_string() };
-            Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
+            IGE_DBGLOGGER.LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
             std::cout << msg << "\n";
 #endif
@@ -592,7 +595,7 @@ namespace Serialization
           }
 
           std::string const msg{ "Unable to set sequential view of type " + seqView.get_value_type().get_name().to_string()};
-          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
+          IGE_DBGLOGGER.LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
           std::cout << msg << "\n";
 #endif
@@ -621,7 +624,9 @@ namespace Serialization
           }
         }
         extractedVal = ctor.invoke();
-        DeserializeRecursive(extractedVal, jsonVal);
+        if (!DeserializeSpecialCases(extractedVal, extractedVal.get_type(), jsonVal)) {
+          DeserializeRecursive(extractedVal, jsonVal);
+        }
       }
       else if (jsonVal.IsArray()) {
         if (type.is_sequential_container()) {
@@ -659,21 +664,21 @@ namespace Serialization
           std::ostringstream oss{};
           oss << "Unable to find key-value pair for element of type " << view.get_key_type().get_name().to_string()
             << "-" << view.get_value_type().get_name().to_string() << " in associative view";
-          Debug::DebugLogger::GetInstance().LogWarning("[Deserializer] " + oss.str());
+          IGE_DBGLOGGER.LogWarning("[Deserializer] " + oss.str());
 #ifdef _DEBUG
           std::cout << oss.str() << "\n";
 #endif
         }
 #endif  // DISTRIBUTION
 
-        auto keyVar{ ExtractValue(keyIter->value, view.get_key_type()) }, valVar{ ExtractValue(valIter->value, view.get_value_type()) };
+        rttr::variant keyVar{ ExtractValue(keyIter->value, view.get_key_type()) }, valVar{ ExtractValue(valIter->value, view.get_value_type()) };
         if (!keyVar || !valVar) {
 #ifndef DISTRIBUTION
           std::ostringstream oss{}, oss2{};
           oss << "Unable to extract key-value pair for element of type " << view.get_key_type().get_name().to_string()
             << "-" << view.get_value_type().get_name().to_string() << " in associative view ";
           oss2 << "Types are " << keyVar.get_type().get_name().to_string() << ", " << valVar.get_type().get_name().to_string();
-          Debug::DebugLogger::GetInstance().LogWarning("[Deserializer] " + oss.str());
+          IGE_DBGLOGGER.LogWarning("[Deserializer] " + oss.str());
 #ifdef _DEBUG
           std::cout << oss.str() << "\n" << oss2.str() << '\n';
 #endif
@@ -695,7 +700,7 @@ namespace Serialization
             std::ostringstream oss{};
             oss << "Unable to insert key-value pair for element of type " << view.get_key_type().get_name().to_string()
               << "-" << view.get_value_type().get_name().to_string();
-            Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
+            IGE_DBGLOGGER.LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
             std::cout << oss.str() << "\n";
             std::cout << "Types are " << keyVar.get_type().get_name().to_string() << " and " << valVar.get_type().get_name().to_string() << "\n";
@@ -714,7 +719,7 @@ namespace Serialization
             DeserializeRecursive(wrappedVal, idxVal);
             if (!view.insert(wrappedVal).second) {
               std::string const msg{ "Unable to extract key-only type of " + view.get_key_type().get_name().to_string() };
-              Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
+              IGE_DBGLOGGER.LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
               std::cout << msg << "\n";
 #endif
@@ -725,7 +730,7 @@ namespace Serialization
         auto result{ view.insert(extractedVal) };
         if (!result.second) {
           std::string const msg{ "Unable to insert key-only type of " + view.get_key_type().get_name().to_string() };
-          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + msg);
+          IGE_DBGLOGGER.LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
           std::cout << msg  << "\n";
 #endif
@@ -734,11 +739,115 @@ namespace Serialization
     }
   }
 
+  void Deserializer::DeserializeAnimKeyframe(Anim::Keyframe& keyframe, rapidjson::Value const& jsonVal) {
+    DeserializeRecursive(keyframe, jsonVal);
+    switch (keyframe.type) {
+    case Anim::KeyframeType::TRANSLATION:
+    case Anim::KeyframeType::SCALE:
+    case Anim::KeyframeType::ROTATION:
+    {
+      glm::vec3& start{ std::get<glm::vec3>(keyframe.startValue) },
+        &end{ std::get<glm::vec3>(keyframe.endValue) };
+      if (jsonVal.HasMember("startValue")) {
+        DeserializeRecursive(start, jsonVal["startValue"]);
+      }
+      else {
+        start = glm::vec3();
+        IGE_DBGLOGGER.LogError("Anim::Keyframe missing \"startValue\" member");
+      }
+
+      if (jsonVal.HasMember("endValue")) {
+        DeserializeRecursive(end, jsonVal["endValue"]);
+      }
+      else {
+        end = glm::vec3();
+        IGE_DBGLOGGER.LogError("Anim::Keyframe missing \"endValue\" member");
+      }
+      break;
+    }
+    default:
+      break;
+    }
+  }
+
+  Anim::AnimationData Deserializer::DeserializeAnimationData(std::string const& filePath) {
+    FILEWrapper fileWrapper{ filePath.c_str(), "r" };
+    if (!fileWrapper) {
+      IGE_DBGLOGGER.LogError("[Deserializer] Unable to read " + filePath);
+      return {};
+    }
+
+    std::vector<char> buffer(sBufferSize);
+    rapidjson::FileReadStream iStream{ fileWrapper.GetFILE(), buffer.data(), sBufferSize };
+
+    rapidjson::Document document;
+    if (document.ParseStream(iStream).HasParseError()) {
+      IGE_DBGLOGGER.LogError("[Deserializer] Unable to parse " + filePath);
+      return {};
+    }
+    if (!document.IsObject() || !document.HasMember("rootKeyframe") || !document.HasMember("keyframes")) {
+      IGE_DBGLOGGER.LogError("[Deserializer] " + filePath + " corrupted!");
+      return {};
+    }
+
+    Anim::AnimationData ret{};
+    std::unordered_map<uint64_t, Anim::Node> idToNode;
+
+    // since we registered everything except "nextNodes",
+    // we can rely on the serializer to handle the basic data members
+    rapidjson::Value const& rootNextNodesJson{ document["rootKeyframe"] };
+    DeserializeRecursive(ret, rootNextNodesJson);
+
+    auto const keyframesArr{ document["keyframes"].GetArray() };
+    idToNode.reserve(keyframesArr.Size());
+    // first pass: deserialize fields
+    for (rapidjson::Value const& elem : keyframesArr) {
+      if (!elem.HasMember(JSON_ANIM_NODE_ID_KEY)) {
+        IGE_DBGLOGGER.LogError("[Deserializer] Anim::Keyframe missing ID field");
+        continue;
+      }
+
+      Anim::Node newNode{ std::make_shared<Anim::Keyframe>() };
+
+      // similarly for Keyframes, we can deserialize most of the fields normally
+      DeserializeAnimKeyframe(*newNode, elem);
+      idToNode.emplace(elem[JSON_ANIM_NODE_ID_KEY].GetUint64(), std::move(newNode));
+    }
+
+    // second pass: link the nodes
+    for (rapidjson::Value const& elem : keyframesArr) {
+      if (!elem.HasMember("nextNodes")) {
+        IGE_DBGLOGGER.LogError("[Deserializer] Anim::Keyframe missing nextNodes field");
+        continue;
+      }
+      
+      auto const nextNodesArr{ elem["nextNodes"].GetArray() };
+      if (nextNodesArr.Empty()) { continue; }
+
+      Anim::Node& node{ idToNode[elem[JSON_ANIM_NODE_ID_KEY].GetUint64()] };
+      node->nextNodes.reserve(nextNodesArr.Size());
+      for (rapidjson::Value const& id : nextNodesArr) {
+        node->nextNodes.emplace_back(idToNode[id.GetUint64()]);
+      }
+    }
+
+    // link the root node
+    if (!rootNextNodesJson.HasMember("nextNodes")) {
+      IGE_DBGLOGGER.LogError("[Deserializer] Anim::RootKeyframe missing nextNodes field");
+      return ret;
+    }
+    for (rapidjson::Value const& id : rootNextNodesJson["nextNodes"].GetArray()) {
+      ret.rootKeyframe.nextNodes.emplace_back(idToNode[id.GetUint64()]);
+    }
+
+    return ret;
+  }
+
 #pragma region ScriptStuff
   void Deserializer::DeserializeProxyScript(rttr::variant& var, rapidjson::Value const& jsonVal) {
 
     if (!jsonVal.HasMember(JSON_SCRIPT_LIST_KEY) || !jsonVal[JSON_SCRIPT_LIST_KEY].IsArray()) {
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Script component missing \"" JSON_SCRIPT_LIST_KEY "\" field");
+      IGE_DBGLOGGER.LogError("[Deserializer] Script component missing \"" JSON_SCRIPT_LIST_KEY "\" field");
       var = {}; return;
     }
 
@@ -772,7 +881,7 @@ namespace Serialization
     // maybe should just call ScanJsonFileForMembers()
     if (!jsonVal.HasMember(JSON_SCRIPT_DMI_TYPE_KEY) || !jsonVal.HasMember(JSON_SCRIPT_DMI_DATA_KEY)
       || !jsonVal.HasMember(JSON_SCRIPT_DMI_SF_KEY)) {
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Data member inst missing members!");
+      IGE_DBGLOGGER.LogError("[Deserializer] Data member inst missing members!");
       return {};
     }
 
@@ -885,7 +994,7 @@ namespace Serialization
   {
     FILEWrapper fileWrapper{ filePath.c_str(), "r" };
     if (!fileWrapper) {
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to read " + filePath);
+      IGE_DBGLOGGER.LogError("[Deserializer] Unable to read " + filePath);
 #ifdef _DEBUG
       std::cout << "Unable to read " << filePath << "\n";
 #endif
@@ -897,7 +1006,7 @@ namespace Serialization
     rapidjson::FileReadStream iStream{ fileWrapper.GetFILE(), buffer.data(), sBufferSize };
 
     if (document.ParseStream(iStream).HasParseError()) {
-      Debug::DebugLogger::GetInstance().LogError("[Deserializer] Unable to parse " + filePath);
+      IGE_DBGLOGGER.LogError("[Deserializer] Unable to parse " + filePath);
 #ifdef _DEBUG
       std::cout << "Unable to parse " + filePath << "\n";
 #endif
@@ -933,7 +1042,7 @@ namespace Serialization
 #ifndef DISTRIBUTION
             std::ostringstream oss{};
             oss << filename << ": Unable to find key \"" + keyName + "\" of element: " << i << " in rapidjson value";
-            Debug::DebugLogger::GetInstance().LogWarning("[Deserializer] " + oss.str());
+            IGE_DBGLOGGER.LogWarning("[Deserializer] " + oss.str());
 #ifdef _DEBUG
             std::cout << oss.str() << "\n";
 #endif
@@ -949,7 +1058,7 @@ namespace Serialization
 #ifndef DISTRIBUTION
               std::ostringstream oss{};
               oss << filename << ": Element \"" << keyName << "\" is not of type bool";
-              Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
+              IGE_DBGLOGGER.LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
               std::cout << oss.str() << "\n";
 #endif
@@ -962,7 +1071,7 @@ namespace Serialization
 #ifndef DISTRIBUTION
             std::ostringstream oss{};
             oss << filename << ": Element \"" << keyName << "\" is not of rapidjson type:" << type;
-            Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
+            IGE_DBGLOGGER.LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
             std::cout << oss.str() << "\n";
 #endif
@@ -982,7 +1091,7 @@ namespace Serialization
 #ifndef DISTRIBUTION
           std::ostringstream oss{};
           oss << filename << ": Unable to find key \"" << keyName << "\" in rapidjson value";
-          Debug::DebugLogger::GetInstance().LogWarning("[Deserializer] " + oss.str());
+          IGE_DBGLOGGER.LogWarning("[Deserializer] " + oss.str());
 #ifdef _DEBUG
           std::cout << oss.str() << "\n";
 #endif
@@ -998,7 +1107,7 @@ namespace Serialization
 #ifndef DISTRIBUTION
             std::ostringstream oss{};
             oss << filename << ": Element \"" << keyName << "\" is not of type bool";
-            Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
+            IGE_DBGLOGGER.LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
             std::cout << oss.str() << "\n";
 #endif
@@ -1011,7 +1120,7 @@ namespace Serialization
 #ifndef DISTRIBUTION
           std::ostringstream oss{};
           oss << filename << ": Element \"" << keyName << "\" is not of rapidjson type:" << type;
-          Debug::DebugLogger::GetInstance().LogError("[Deserializer] " + oss.str());
+          IGE_DBGLOGGER.LogError("[Deserializer] " + oss.str());
 #ifdef _DEBUG
           std::cout << oss.str() << "\n";
 #endif

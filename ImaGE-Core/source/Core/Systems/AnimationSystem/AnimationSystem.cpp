@@ -8,6 +8,10 @@
 
 #include <FrameRateController/FrameRateController.h>
 
+namespace {
+  void InitTransform(Component::Transform& trans, Anim::RootKeyframe const& root);
+}
+
 namespace Systems {
   void AnimationSystem::Update() {
     float const deltaTime{ IGE_FRC.GetDeltaTime() };
@@ -27,23 +31,24 @@ namespace Systems {
         continue;
       }
 
-      auto const&[name, keyframes] { am.GetAsset<IGE::Assets::AnimationAsset>(animation.currentAnimation)->mAnimData };
+      Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
+      Anim::AnimationData const& animData{ am.GetAsset<IGE::Assets::AnimationAsset>(animation.currentAnimation)->mAnimData };
 
-      // assume keyframes are sorted by start time followed by end time
-      // add any more keyframes in range into the current list
-      for (unsigned& i{ animation.nextKeyframe }; i < keyframes.size() && animation.timeElapsed >= keyframes[i].startTime; ++i) {
-        animation.currentKeyframes.emplace_back(i);
+      // if first keyframe, initialize
+      if (animation.currentKeyframes.empty()) {
+        animation.Reset();
+        animation.currentKeyframes = animData.rootKeyframe.nextNodes;
+        InitTransform(trans, animData.rootKeyframe);
       }
 
-      Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
-      // get the current t value mapped to [0, 1]
-      float const normalizedTime{ (animation.timeElapsed -
-        keyframes[animation.nextKeyframe].startTime) / keyframes[animation.nextKeyframe].duration };
       float const toBeDeltaTime{ animation.timeElapsed + deltaTime };
+      std::queue<Anim::Node> completedNodes{};
 
       // execute all keyframes in range by setting the interpolated value based on the current t
-      for (auto iter{ animation.currentKeyframes.cbegin() }; iter != animation.currentKeyframes.cend();) {
-        Anim::Keyframe const& keyframe{ keyframes[*iter] };
+      for (auto iter{ animation.currentKeyframes.begin() }; iter != animation.currentKeyframes.end();) {
+        Anim::Keyframe& keyframe{ **iter };
+        // get the current t value mapped to [0, 1]
+        float const normalizedTime{ (animation.timeElapsed - keyframe.startTime) / keyframe.duration };
 
         // if the keyframe ends this frame, complete and remove it
         bool const lastFrame{ toBeDeltaTime >= keyframe.GetEndTime() };
@@ -86,16 +91,26 @@ namespace Systems {
         }
 
         if (lastFrame) {
+          completedNodes.emplace(*iter);
           iter = animation.currentKeyframes.erase(iter);
         }
         else {
           ++iter;
         }
+      } // end keyframe for loop
+
+      // process the completed nodes
+      while (!completedNodes.empty()) {
+        auto& nextNodes{ completedNodes.front()->nextNodes };
+        // insert the next nodes into the current keyframes
+        if (!nextNodes.empty()) {
+          animation.currentKeyframes.insert(animation.currentKeyframes.end(), nextNodes.begin(), nextNodes.end());
+        }
+        completedNodes.pop();
       }
 
       animation.timeElapsed = toBeDeltaTime; // update elapsed time
 
-      // if reached the end, reset if repeat flag is set
       if (animation.currentKeyframes.empty()) {
         animation.Reset();
 
@@ -103,7 +118,15 @@ namespace Systems {
           animation.currentAnimation = {};
         }
       }
-    }
+    } // end entity for loop
   }
 
 } // namespace Systems
+
+namespace {
+  void InitTransform(Component::Transform& trans, Anim::RootKeyframe const& root) {
+    trans.position = root.startPos;
+    trans.SetLocalRotWithEuler(root.startRot);
+    trans.scale = root.startScale;
+  }
+}

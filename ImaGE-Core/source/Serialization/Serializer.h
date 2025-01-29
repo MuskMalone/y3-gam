@@ -16,6 +16,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rttr/variant.h>
 #include <string>
 #include <Prefabs/Prefab.h>
+#include <Animation/AnimationData.h>
 
 namespace Serialization
 {
@@ -50,7 +51,6 @@ namespace Serialization
     ************************************************************************/
     static void SerializeScene(std::string const& filePath, FileFormat format = FileFormat::PRETTY);
 
-#ifndef IMGUI_DISABLE
     /*!*********************************************************************
     \brief
       Serializes a VariantPrefab object into a json file. The VariantPrefab
@@ -61,8 +61,9 @@ namespace Serialization
     \param filename
       The name of the output file
     ************************************************************************/
-    static void SerializePrefab(Prefabs::Prefab const& prefab, std::string const& filename, FileFormat format = FileFormat::PRETTY);
-#endif
+    static void SerializePrefab(Prefabs::Prefab const& prefab, std::string const& filePath, FileFormat format = FileFormat::PRETTY);
+
+    static void SerializeAnimationData(Anim::AnimationData const& animData, std::string const& filePath);
 
   private:
   };

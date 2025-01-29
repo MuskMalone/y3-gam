@@ -4,11 +4,13 @@
 #include "Asset/AssetManager.h"
 #include "Asset/AssetMetadata.h"
 #include "Asset/Assetables/AssetExtensions.h"
+#include <Serialization/Deserializer.h>
 
 namespace IGE {
 	namespace Assets {
 		AnimationAsset::AnimationAsset(std::string const& fp) {
 			// deserialize from fp into mAnimData
+			mAnimData = Serialization::Deserializer::DeserializeAnimationData(fp);
 		}
 
 		IGE::Assets::GUID AnimationAsset::Import(std::string const& fp, std::string& newFp,

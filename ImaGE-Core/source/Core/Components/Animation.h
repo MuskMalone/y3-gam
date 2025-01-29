@@ -3,6 +3,7 @@
 #include <set>
 #include <vector>
 #include <Asset/SmartPointer.h>
+#include <Animation/Keyframe.h>
 
 namespace Component {
   struct Animation {
@@ -14,23 +15,22 @@ namespace Component {
       repeat = loop;
     }
 
+    void Reset() noexcept {
+      timeElapsed = 0.f;
+      currentKeyframes.clear();
+    }
+
     void Clear() noexcept {
       animations.clear();
+      currentKeyframes.clear();
       currentAnimation = {};
-      nextKeyframe = 0;
       timeElapsed = 0.f;
       repeat = false;
     }
 
-    void Reset() noexcept {
-      nextKeyframe = 0;
-      timeElapsed = 0.f;
-    }
-
     std::set<IGE::Assets::GUID> animations;
-    std::vector<unsigned> currentKeyframes;
+    std::vector<Anim::Node> currentKeyframes;
     IGE::Assets::GUID currentAnimation;
-    unsigned nextKeyframe;
     float timeElapsed;
     bool repeat;
   };

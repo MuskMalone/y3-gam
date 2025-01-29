@@ -139,6 +139,25 @@ namespace ImGuiHelpers
       
       break;
     }
+    case GUI::AssetPayload::ANIMATION:
+    {
+      try {
+        IGE::Assets::GUID const guid{ IGE_ASSETMGR.LoadRef<IGE::Assets::AnimationAsset>(assetPayload.GetFilePath()) };
+
+        // if entity has material component, simply set the material
+        if (entity.HasComponent<Component::Animation>()) {
+          entity.GetComponent<Component::Animation>().animations.emplace(guid);
+        }
+        // else add the component and set the material
+        else {
+          entity.EmplaceComponent<Component::Animation>().animations.emplace(guid);
+        }
+      }
+      catch (Debug::ExceptionBase&) {
+        IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
+      }
+      break;
+    }
     default:
       break;
     }
