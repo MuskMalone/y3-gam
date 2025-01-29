@@ -133,8 +133,8 @@ static void rttr_auto_register_reflection_function2_(); namespace {
 
   REGISTER_COMPONENT(Bloom, "Bloom")
       .property("threshold", &Bloom::threshold)
-      .property("intensity", &Bloom::intensity);
-
+      .property("intensity", &Bloom::intensity)
+      .property("range", &Bloom::range);
   REGISTER_COMPONENT(Canvas, "Canvas")
     .property("isVisible", &Component::Canvas::isVisible);
 

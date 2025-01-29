@@ -305,7 +305,7 @@ namespace {
               //lightUniforms.u_InnerSpotAngle[numLights] = light.mInnerSpotAngle; // Inner spot angle in degrees
               //lightUniforms.u_OuterSpotAngle[numLights] = light.mOuterSpotAngle; // Outer spot angle in degrees
               lightUniforms.u_LightIntensity[numLights] = bloom.intensity;//light.mLightIntensity; // Intensity of the light
-                  //lightUniforms.u_Range[numLights] = light.mRange; // Maximum range of the spotlight
+              lightUniforms.u_Range[numLights] = bloom.range; // Maximum range of the spotlight
               ++numLights;
           }
       }

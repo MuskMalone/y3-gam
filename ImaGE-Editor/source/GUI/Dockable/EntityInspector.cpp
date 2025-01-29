@@ -1519,6 +1519,7 @@ namespace GUI {
           auto& bloom{ entity.GetComponent<Component::Bloom>() };
           ImGui::DragFloat("Threshold", &bloom.threshold, 0.01f, 0.f, 1024.f);
           ImGui::DragFloat("Intensity", &bloom.intensity, 0.01f, 0.f, 1024.f);
+          ImGui::DragFloat("Range", &bloom.range, 0.01f, 0.f, 1024.f);
       }
 
       WindowEnd(isOpen);
