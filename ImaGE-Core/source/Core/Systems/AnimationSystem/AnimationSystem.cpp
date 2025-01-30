@@ -41,7 +41,7 @@ namespace Systems {
         InitTransform(trans, animData.rootKeyframe);
       }
 
-      float const toBeDeltaTime{ animation.timeElapsed + deltaTime };
+      animation.timeElapsed += deltaTime; // update elapsed time
       std::queue<Anim::Node> completedNodes{};
 
       // execute all keyframes in range by setting the interpolated value based on the current t
@@ -51,7 +51,7 @@ namespace Systems {
         float const normalizedTime{ (animation.timeElapsed - keyframe.startTime) / keyframe.duration };
 
         // if the keyframe ends this frame, complete and remove it
-        bool const lastFrame{ toBeDeltaTime >= keyframe.GetEndTime() };
+        bool const lastFrame{ animation.timeElapsed >= keyframe.GetEndTime() };
 
         switch (keyframe.type) {
         case Anim::KeyframeType::TRANSLATION:
@@ -108,8 +108,6 @@ namespace Systems {
         }
         completedNodes.pop();
       }
-
-      animation.timeElapsed = toBeDeltaTime; // update elapsed time
 
       if (animation.currentKeyframes.empty()) {
         animation.Reset();

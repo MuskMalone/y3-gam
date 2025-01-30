@@ -28,7 +28,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
 
-#define DESERIALIZER_DEBUG
+#ifdef _DEBUG
+//#define DESERIALIZER_DEBUG
+#endif
 
 namespace Serialization
 {
@@ -533,6 +535,7 @@ namespace Serialization
     }
 
     case rapidjson::kObjectType:
+      break;
     case rapidjson::kArrayType:
     case rapidjson::kNullType:
     default:
@@ -712,8 +715,12 @@ namespace Serialization
       // else if key-only
       else
       {
-        rttr::variant extractedVal{ ExtractBasicTypes(idxVal) };
+        rttr::variant extractedVal{ ExtractValue(idxVal, view.get_key_type()) };
         if (!extractedVal || !extractedVal.convert(view.get_key_type())) {
+          rapidjson::StringBuffer buffer;
+          rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+          idxVal.Accept(writer);
+          std::cout << buffer.GetString() << std::endl;
             rttr::variant wrappedVal{ view.get_key_type().is_wrapper() ? view.get_key_type().get_raw_type().create() : view.get_key_type().create() };
 
             DeserializeRecursive(wrappedVal, idxVal);

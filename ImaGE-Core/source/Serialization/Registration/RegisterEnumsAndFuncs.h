@@ -13,6 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Components/RigidBody.h>
 #include <Core/Components/Light.h>
 #include <Core/Components/Animation.h>
+#include <Asset/SmartPointer.h>
 
 #include <Audio/AudioManager.h>
 namespace
@@ -23,6 +24,14 @@ namespace
 
   rttr::type RttrTypeFromString(std::string const& str, bool& ok) {
     ok = true; return rttr::type::get_by_name(str);
+  }
+
+  IGE::Assets::GUID UintToGUID(unsigned val, bool& ok) {
+    ok = true; return IGE::Assets::GUID(val);
+  }
+
+  IGE::Assets::GUID Uint64ToGUID(uint64_t val, bool& ok) {
+    ok = true; return IGE::Assets::GUID(val);
   }
 }
 
@@ -37,6 +46,8 @@ static void rttr_auto_register_reflection_function3_(); namespace {
   /* ------------------- FUNCTIONS ------------------- */
   rttr::type::register_converter_func(StringFromRttrType);
   rttr::type::register_converter_func(RttrTypeFromString);
+  rttr::type::register_converter_func(Uint64ToGUID);
+  rttr::type::register_converter_func(UintToGUID);
 
   /* ------------------- ENUMERATIONS ------------------- */
   rttr::registration::enumeration<Component::RigidBody::MotionType>("MotionType")(

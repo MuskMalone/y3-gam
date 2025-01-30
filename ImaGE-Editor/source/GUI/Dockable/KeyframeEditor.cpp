@@ -478,10 +478,10 @@ namespace GUI {
     }
   }
 
-  void KeyframeEditor::CreateOutputTree(Anim::Node const& dest, KeyframeNode::NodePtr const& src) const {
+  void KeyframeEditor::CreateOutputTree(Anim::Node& dest, KeyframeNode::NodePtr const& src) const {
     // recursively construct the new tree from the editor tree
     for (KeyframeNode::NodePtr const& next : src->nextNodes) {
-      KeyframeData const& data{ src->data };
+      KeyframeData const& data{ next->data };
       Anim::Node newNode{
         std::make_shared<Anim::Keyframe>(data.startValue, data.endValue, data.type, data.startTime, data.duration)
       };

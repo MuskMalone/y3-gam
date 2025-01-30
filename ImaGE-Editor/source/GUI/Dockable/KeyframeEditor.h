@@ -82,7 +82,7 @@ namespace GUI {
     void InitRoot(Anim::RootKeyframe const& root);
     Anim::RootKeyframe CreateRootKeyframe(KeyframeNode::NodePtr const& root) const;
     void CloneKeyframeTree(KeyframeNode::NodePtr& dest, Anim::Node const& src);
-    void CreateOutputTree(Anim::Node const& dest, KeyframeNode::NodePtr const& src) const;
+    void CreateOutputTree(Anim::Node& dest, KeyframeNode::NodePtr const& src) const;
     void UpdateChain(KeyframeNode::NodePtr const& parentNode);
     void Reset();
     bool LoadKeyframes(IGE::Assets::GUID guid);
