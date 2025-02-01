@@ -1,31 +1,31 @@
 {
-    "name": "Wood Floor Corridor",
+    "name": "theOtherRoom",
     "shader": "PBR",
     "albedoColor": {
         "x": 1.0,
         "y": 1.0,
         "z": 1.0
     },
-    "metalness": 0.0,
+    "metalness": 0.5,
     "roughness": 0.5,
     "ao": 1.0,
     "emission": {
         "x": 0.0,
-        "y": 225.0,
+        "y": 0.0,
         "z": 0.0,
         "w": 0.0
     },
     "transparency": 1.0,
     "tiling": {
-        "x": 4.0,
-        "y": 21.1299991607666
+        "x": 1.0,
+        "y": 1.0
     },
     "offset": {
         "x": 0.0,
         "y": 0.0
     },
     "albedoMap": {
-        "ID": 9681187262963810135
+        "ID": 5884548424065745377
     },
     "normalMap": {
         "ID": 0

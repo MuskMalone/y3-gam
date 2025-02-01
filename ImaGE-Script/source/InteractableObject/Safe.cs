@@ -302,6 +302,12 @@ public class Safe : Entity
         safeInteraction = false;
       }
 
+      if (Input.GetKeyTriggered(KeyCode.BACKSPACE))
+      {
+        typedText = typedText.Substring(0, typedText.Length - 1);
+        InternalCalls.SetText(safeTextBox.mEntityID, typedText);
+      }
+
       if (waitingForDelay)
       {
         if (Time.gameTime - lastPressTime >= inputDelay)
