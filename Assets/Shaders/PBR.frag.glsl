@@ -186,8 +186,8 @@ void main(){
     //fragColor = vec4(color, alpha) * v_Color;
     // HDR tone mapping
 
-   // vec3 Emission = mat.Emission.xyz * mat.Emission.w;
-    //TotalLight += Emission;
+    vec3 Emission = mat.Emission.xyz * mat.Emission.w;
+    TotalLight += Emission;
     TotalLight = TotalLight / (TotalLight + vec3(1.0));
 
     // Gamma correction
