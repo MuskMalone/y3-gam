@@ -103,8 +103,11 @@ namespace IGE {
             sysManager.UpdateSystems();
           }
           else {
-            sysManager.PausedUpdate<Systems::PreTransformSystem, IGE::Physics::PhysicsSystem,
-              Systems::PostTransformSystem, IGE::Audio::AudioSystem>();
+            sysManager.PausedUpdate<Systems::PreTransformSystem,
+                                    IGE::Physics::PhysicsSystem,
+                                    Systems::PostTransformSystem,
+                                    IGE::Audio::AudioSystem,
+                                    Systems::AnimationSystem>();
             sceneManager.ExecuteMainThreadQueue();
           }
         }

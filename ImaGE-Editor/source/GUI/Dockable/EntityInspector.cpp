@@ -529,51 +529,50 @@ namespace GUI {
         ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
         IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
-        std::map<IGE::Assets::GUID, std::string> guidToFileName{ { {}, "None" } };
+        //std::map<IGE::Assets::GUID, std::string> guidToFileName{ { {}, "None" } };
         
         NextRowTable("Animations");
+        std::string currentAnimStr{ "None" };
         if (ImGui::TreeNodeEx("Drag here to add to list", ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanFullWidth)) {
           if (!animation.animations.empty() && ImGui::BeginTable("##AnimationsTable", 2, ImGuiTableFlags_BordersOuter | ImGuiTableColumnFlags_WidthFixed)) {
             float const col2{ 40.f }, col1{ inputWidth - col2 };
             ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, col1);
             ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, col2);
-            
-            IGE::Assets::GUID toRemove{};
-            for (IGE::Assets::GUID guid : animation.animations) {
-              try {
-                std::string fileName{ am.GUIDToPath(guid) };
-                fileName = fileName.substr(fileName.find_last_of("\\/") + 1);
 
-                ImGui::TableNextRow();
-                ImGui::TableSetColumnIndex(0);
-                ImGui::AlignTextToFramePadding();
-                if (ImGui::Selectable(fileName.c_str())) {
-
-                }
-                ImGui::TableSetColumnIndex(1);
-                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.65f, 0.f, 0.f, 1.f));
-                ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 20.f);
-                if (ImGui::Button(ICON_FA_MINUS)) {
-                  toRemove = guid;
-                }
-                ImGui::PopStyleVar();
-                ImGui::PopStyleColor();
-
-                guidToFileName.emplace(guid, std::move(fileName));
+            std::string toRemove{};
+            for (auto const& [name, guid] : animation.animations) {
+              if (guid == animation.currentAnimation) {
+                currentAnimStr = name;
               }
-              catch (Debug::ExceptionBase&) {
-                IGE_DBGLOGGER.LogError("Unable to get path of GUID: " + std::to_string(static_cast<uint64_t>(guid)));
-                toRemove = guid;  // remove guid from the set if exception thrown
-                continue;
+              std::string buffer{ name };
+
+              ImGui::TableNextRow();
+              ImGui::TableSetColumnIndex(0);
+              ImGui::AlignTextToFramePadding();
+              ImGui::SetNextItemWidth(col1);
+              ImGui::InputText(("##" + buffer).c_str(), &buffer);
+              if (ImGui::IsItemDeactivatedAfterEdit()) {
+                animation.RenameAnimation(name, buffer);
+                break;
               }
+
+              ImGui::TableSetColumnIndex(1);
+              ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.65f, 0.f, 0.f, 1.f));
+              ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 20.f);
+              if (ImGui::Button(ICON_FA_MINUS)) {
+                toRemove = name;
+                break;
+              }
+              ImGui::PopStyleVar();
+              ImGui::PopStyleColor();
             }
 
             // remove if necessary
-            if (toRemove) {
-              animation.animations.erase(toRemove);
-              if (animation.currentAnimation == toRemove) {
+            if (!toRemove.empty()) {
+              if (animation.currentAnimation == animation.animations[toRemove]) {
                 animation.currentAnimation = {};
               }
+              animation.animations.erase(toRemove);
               modified = true;
             }
 
@@ -582,14 +581,13 @@ namespace GUI {
         }
 
         NextRowTable("Current Animation");
-        std::string const& currAnim{ animation.currentAnimation ? guidToFileName[animation.currentAnimation] : "None"};
-        if (ImGui::BeginCombo("##CurrAnim", currAnim.c_str())) {
-          for (auto const&[guid, file] : guidToFileName) {
-            if (!ImGui::Selectable(file.c_str())) { continue; }
+        if (ImGui::BeginCombo("##CurrAnim", currentAnimStr.c_str())) {
+          for (auto const&[name, guid] : animation.animations) {
+            if (!ImGui::Selectable(name.c_str())) { continue; }
 
             // have to do this to handle the "None" option
-            if (guid != currAnim) {
-              animation.currentAnimation = (file == "None" ? IGE::Assets::GUID() : guid);
+            if (name != currentAnimStr) {
+              animation.currentAnimation = (name == "None" ? IGE::Assets::GUID() : guid);
               modified = true;
             }
             break;

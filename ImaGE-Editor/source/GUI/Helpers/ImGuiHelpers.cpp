@@ -146,11 +146,11 @@ namespace ImGuiHelpers
 
         // if entity has material component, simply set the material
         if (entity.HasComponent<Component::Animation>()) {
-          entity.GetComponent<Component::Animation>().animations.emplace(guid);
+          entity.GetComponent<Component::Animation>().animations.emplace(assetPayload.GetFilePath(), guid);
         }
         // else add the component and set the material
         else {
-          entity.EmplaceComponent<Component::Animation>().animations.emplace(guid);
+          entity.EmplaceComponent<Component::Animation>().animations.emplace(assetPayload.GetFilePath(), guid);
         }
       }
       catch (Debug::ExceptionBase&) {

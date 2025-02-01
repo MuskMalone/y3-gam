@@ -452,6 +452,22 @@
                         "castShadows": true,
                         "receiveShadows": true
                     }
+                },
+                {
+                    "Animation": {
+                        "animations": [
+                            {
+                                "key": "TestAnimation1.anim",
+                                "value": {
+                                    "ID": 17393308862282683209
+                                }
+                            }
+                        ],
+                        "currentAnimation": {
+                            "ID": 17393308862282683209
+                        },
+                        "repeat": false
+                    }
                 }
             ]
         }

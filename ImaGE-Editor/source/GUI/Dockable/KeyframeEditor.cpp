@@ -24,6 +24,7 @@ namespace {
   static constexpr float sLeftColWidth = 70.f, sRightColWidth = 170.f;
   static GUI::KeyframeEditor::IDType sRightClickedNode;
   static std::unordered_set<GUI::KeyframeEditor::IDType> sTraversedNodes;
+  static ECS::Entity sPreviewingEntity{};
 
   bool NodeVec3Input(const char* fieldLabel, glm::vec3& val, float min = -FLT_MAX);
   void NextRowTable(const char* labelName, float elemWidth);
@@ -99,7 +100,25 @@ namespace GUI {
 
     ImNodes::BeginNodeEditor();
 
+    bool const editorHovered{ ImNodes::IsEditorHovered() };
     for (auto&[id, node] : mNodes) {
+      bool highlight{ false };
+      if (sPreviewingEntity) {
+        float const timeElapsed{ sPreviewingEntity.GetComponent<Component::Animation>().timeElapsed };
+        if (timeElapsed >= node->data.startTime && timeElapsed <= node->data.GetEndTime()) {
+          highlight = true;
+        }
+      }
+
+      if (highlight) {
+        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.f, 0.f, 0.f, 1.f));
+        ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(1.f, 1.f, 1.f, 1.f));
+        ImNodes::PushColorStyle(ImNodesCol_TitleBar, IM_COL32(212, 175, 55, 255));
+        ImNodes::PushColorStyle(ImNodesCol_TitleBarSelected, IM_COL32(212, 175, 55, 255));
+        ImNodes::PushColorStyle(ImNodesCol_NodeBackground, IM_COL32(187, 161, 39, 255));
+        ImNodes::PushColorStyle(ImNodesCol_NodeBackgroundSelected, IM_COL32(187, 161, 39, 255));
+      }
+
       ImNodes::BeginNode(id);
 
       if (id == sRootId) {
@@ -114,7 +133,7 @@ namespace GUI {
           ImGui::TextUnformatted(oss.str().c_str());
           ImNodes::EndNodeTitleBar();
         }
-
+        
         if (KeyframeNodeBody(node)) {
           UpdateChain(node);
           modified = true;
@@ -136,7 +155,14 @@ namespace GUI {
       } // end else
 
       ImNodes::EndNode();
-    }
+
+      if (highlight) {
+        ImNodes::PopColorStyle(); ImNodes::PopColorStyle();
+        ImNodes::PopColorStyle(); ImNodes::PopColorStyle();
+        ImGui::PopStyleColor(2);
+      }
+
+    } // end mNodes for loop
     
     // establish the links
     for (KeyframeLink const& link : mLinks) {
@@ -146,7 +172,7 @@ namespace GUI {
     ImNodes::MiniMap(0.2f, ImNodesMiniMapLocation_BottomRight);
     ImNodes::EndNodeEditor();
 
-    { // check for tooltip trigger
+     // check for tooltip trigger
       IDType hoveredNodeId{};
       bool const shiftHeld{ ImGui::IsKeyDown(ImGuiKey_LeftShift) || ImGui::IsKeyDown(ImGuiKey_RightShift) };
       bool const hovered{ ImNodes::IsNodeHovered(&hoveredNodeId) };
@@ -167,8 +193,13 @@ namespace GUI {
         modified = true;
       }
 
+      if (!hovered && ImGui::IsMouseClicked(ImGuiMouseButton_Right) && editorHovered) {
+        ImGui::OpenPopup(sOptionsPopupLabel);
+      }
+
+      OptionsMenu();
       NodeOptionsMenu();
-    }
+    
 
     // check for link interaction
     IDType inPin, outPin, linkId;
@@ -195,12 +226,18 @@ namespace GUI {
         mLinks.emplace_back(++sLastLinkId, inPin, outPin);
         srcNode->nextNodes.emplace_back(destNode);
         destNode->previous = srcNode;
-        UpdateChain(srcNode);
+        UpdateChain(destNode);
         modified = true;
       }
     }
 
     ImGui::End();
+
+    if (sPreviewingEntity) {
+      if (sPreviewingEntity.HasComponent<Component::Animation>() && sPreviewingEntity.GetComponent<Component::Animation>().timeElapsed == 0.f) {
+        sPreviewingEntity = {};
+      }
+    }
 
     // only trigger a save after no modifications for <sTimeUntilSave> ms
     if (modified) {
@@ -217,7 +254,6 @@ namespace GUI {
         }
         catch (Debug::ExceptionBase&) {
           IGE_DBGLOGGER.LogError("Unable to get path of GUID: " + std::to_string(static_cast<uint64_t>(mSelectedAnim)));
-          mSelectedAnim = {};
           Reset();
         }
       }
@@ -358,20 +394,45 @@ namespace GUI {
   bool KeyframeEditor::NodesToolbar() {
     bool modified{ false };
 
-    if (ImGui::Button("New Keyframe")) {
-      KeyframeNode::NodePtr newNode{
-        std::make_shared<KeyframeNode>(KeyframeNode::NextID(), Anim::Keyframe(), true, true)
-      };
+    ImGui::Button("Help");
+    if (ImGui::IsItemHovered()) {
+      ImGui::BeginTooltip();
 
-      mPinIdToNode.emplace(newNode->inputPin, newNode);
-      mNodes.emplace(newNode->id, newNode);
-      
-      // create the new node at the currently selected node
-      if (ImNodes::NumSelectedNodes() > 0) {
-        std::vector<IDType> nodes(ImNodes::NumSelectedNodes());
-        ImNodes::GetSelectedNodes(nodes.data());
-        ImNodes::SetNodeGridSpacePos(newNode->id, ImNodes::GetNodeGridSpacePos(nodes.back()) + ImVec2(10.f, -10.f));
+      ImGui::Text("Right-click a node to bring out context menu");
+      ImGui::Text("   - The root node has different options from normal ones");
+      ImGui::Text("Middle-click to pan around");
+      ImGui::Text("   - You can also use the minimap to navigate around");
+      ImGui::Text("Hold SHIFT while hovering over a node to see additional values");
+      ImGui::Text("CTRL + Left-click a link to remap/remove it");
+      ImGui::Text("The file is auto-saved after changes are made");
+      ImGui::Text("Preview requires an entity with an Animation component to be selected first");
+
+      ImGui::EndTooltip();
+    }
+
+    ImGui::SameLine();
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 10.f);
+
+    ECS::Entity selectedEntity{ GUIVault::GetSelectedEntity() };
+    bool const enabled{ selectedEntity && selectedEntity.HasComponent<Component::Animation>() };
+    if (ImGui::Button("Preview Animation")) {
+      if (enabled) {
+        Component::Animation& anim{ selectedEntity.GetComponent<Component::Animation>() };
+        anim.timeElapsed = 0.001f;  // temp
+        QUEUE_EVENT(Events::PreviewAnimation, selectedEntity, mSelectedAnim);
+        sPreviewingEntity = selectedEntity;
       }
+    }
+    if (ImGui::IsItemHovered() && !enabled) {
+      ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.7f, 0.f, 0.f, 1.f));
+      ImGui::SetTooltip("Select an Entity with an Animation component!");
+      ImGui::PopStyleColor();
+    }
+
+    ImGui::SameLine();
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 10.f);
+    if (ImGui::Button("End Session")) {
+      Reset();
     }
 
     return modified;
@@ -393,6 +454,11 @@ namespace GUI {
           rootVals.pos = trans.position;
           rootVals.rot = trans.eulerAngles;
           rootVals.scale = trans.scale;
+
+          // propagate the changes down the root
+          for (KeyframeNode::NodePtr& next : GetRootNode()->nextNodes) {
+            UpdateChain(next);
+          }
 
           modified = true;
         }
@@ -439,6 +505,27 @@ namespace GUI {
         modified = true;
       }
     } // isRoot else block
+
+    ImGui::EndPopup();
+    return modified;
+  }
+
+  bool KeyframeEditor::OptionsMenu() {
+    if (!ImGui::BeginPopup(sOptionsPopupLabel)) { return false; }
+
+    bool modified{ false };
+    if (ImGui::Selectable("New Keyframe")) {
+      KeyframeNode::NodePtr newNode{
+        std::make_shared<KeyframeNode>(KeyframeNode::NextID(), Anim::Keyframe(), true, true)
+      };
+
+      mPinIdToNode.emplace(newNode->inputPin, newNode);
+      mNodes.emplace(newNode->id, newNode);
+
+      // create the new node at the cursor pos
+      ImNodes::SetNodeScreenSpacePos(newNode->id, ImGui::GetMousePos());
+      modified = true;
+    }
 
     ImGui::EndPopup();
     return modified;
@@ -538,6 +625,16 @@ namespace GUI {
       return false;
     }
 
+    Anim::AnimationData const& animData{ am.GetAsset<IGE::Assets::AnimationAsset>(guid)->mAnimData };
+    InitRoot(animData.rootKeyframe);
+
+    // dummy root node to pass into the recursive function
+    Anim::Node dummy{ std::make_shared<Anim::Keyframe>() };
+    dummy->nextNodes = animData.rootKeyframe.nextNodes;
+
+    std::unordered_map<IDType, IDType> idMap;
+    CloneKeyframeTree(GetRootNode(), dummy, idMap);
+
     // deserialize node positions
     auto& metadata{ am.GetMetadata<IGE::Assets::AnimationAsset>(guid).metadata };
     NodePositions nodePositions{};
@@ -551,18 +648,14 @@ namespace GUI {
       CreateEditorFile(path);
     }
 
-    Anim::AnimationData const& animData{ am.GetAsset<IGE::Assets::AnimationAsset>(guid)->mAnimData };
-    InitRoot(animData.rootKeyframe);
-
-    // dummy root node to pass into the recursive function
-    Anim::Node dummy{ std::make_shared<Anim::Keyframe>() };
-    dummy->nextNodes = animData.rootKeyframe.nextNodes;
-
-    CloneKeyframeTree(GetRootNode(), dummy, nodePositions.posMap);
-
     // set root node pos
     if (nodePositions.posMap.contains(sRootId)) {
       ImNodes::SetNodeGridSpacePos(sRootId, nodePositions.posMap.at(sRootId));
+    }
+
+    // restore the positions based on their old IDs
+    for (auto const& [id, pos] : nodePositions.posMap) {
+      ImNodes::SetNodeGridSpacePos(idMap[id], nodePositions.posMap.at(id));
     }
 
     return true;
@@ -649,7 +742,7 @@ namespace GUI {
     metadata.modified = true;
   }
 
-  void KeyframeEditor::CloneKeyframeTree(KeyframeNode::NodePtr& dest, Anim::Node const& src, NodePosMap const& posMap) {
+  void KeyframeEditor::CloneKeyframeTree(KeyframeNode::NodePtr& dest, Anim::Node const& src, std::unordered_map<IDType, IDType>& posMap) {
     // recursively construct the editor tree from the source tree
     for (Anim::Node const& next : src->nextNodes) {
       KeyframeNode::NodePtr newNode{
@@ -666,10 +759,8 @@ namespace GUI {
       CloneKeyframeTree(newNode, next, posMap);
     }
 
-    // set node position
-    if (posMap.contains(dest->id)) {
-      ImNodes::SetNodeGridSpacePos(dest->id, posMap.at(dest->id));
-    }
+    // map old IDs to new ones
+    posMap.emplace(src->id, dest->id);
   }
 
   void KeyframeEditor::CreateOutputTree(Anim::Node& dest, KeyframeNode::NodePtr const& src, NodePosMap& nodePosMap) const {
@@ -699,6 +790,7 @@ namespace GUI {
   }
 
   void KeyframeEditor::Reset() {
+    mSelectedAnim = {};
     mNodes.clear();
     mLinks.clear();
     mPinIdToNode.clear();

@@ -253,7 +253,7 @@ namespace Serialization
     // we'll use the ptr address as the node ID
     writer.StartArray();
     for (Anim::Node const& node : animData.rootKeyframe.nextNodes) {
-      writer.Uint64((uintptr_t)node.get());
+      writer.Int(node->id);
     }
     writer.EndArray();
     writer.EndObject();
@@ -643,7 +643,7 @@ namespace {
     writer.StartObject();
 
     writer.Key(JSON_ANIM_NODE_ID_KEY);
-    writer.Uint64((uintptr_t)node.get());
+    writer.Int(node->id);
 
     writer.Key("startValue");
     SerializeRecursive(node->startValue, writer);
@@ -660,7 +660,7 @@ namespace {
     writer.Key("nextNodes");
     writer.StartArray();
     for (Anim::Node const& next : node->nextNodes) {
-      writer.Uint64((uintptr_t)next.get());
+      writer.Int(next->id);
     }
     writer.EndArray();
 

@@ -34,6 +34,7 @@ namespace GUI {
     inline static constexpr unsigned sTimeUntilSave = 1000; // in ms
     inline static constexpr const char* sMetadataKey = "KeyframeEditorData";  // path to editor file
     inline static constexpr const char* sNodeOptionsPopupLabel = "NodeOptions";
+    inline static constexpr const char* sOptionsPopupLabel = "Options";
     static const std::string sEditorFilePath;
 
     struct CumulativeValues {
@@ -94,7 +95,7 @@ namespace GUI {
     void Init();
     void InitRoot(Anim::RootKeyframe const& root);
     Anim::RootKeyframe CreateRootKeyframe(KeyframeNode::NodePtr const& root) const;
-    void CloneKeyframeTree(KeyframeNode::NodePtr& dest, Anim::Node const& src, NodePosMap const& posMap);
+    void CloneKeyframeTree(KeyframeNode::NodePtr& dest, Anim::Node const& src, std::unordered_map<IDType, IDType>& posMap);
     void CreateOutputTree(Anim::Node& dest, KeyframeNode::NodePtr const& src, NodePosMap& nodePosMap) const;
     void UpdateChainR(KeyframeNode::NodePtr const& parentNode);
     void UpdateChain(KeyframeNode::NodePtr const& parentNode);
@@ -110,6 +111,7 @@ namespace GUI {
     bool DisplayRootNode(KeyframeNode::NodePtr const& root);
     bool KeyframeNodeBody(KeyframeNode::NodePtr const& node);
     bool NodeOptionsMenu();
+    bool OptionsMenu();
     bool NodesToolbar();
     void NewAnimation();
 

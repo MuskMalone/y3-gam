@@ -241,7 +241,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
     using T = Anim::Keyframe;
     rttr::registration::class_<T>("Keyframe")
       .constructor<>()(rttr::policy::ctor::as_object)
-      .property("id", &T::id)
+      .property(JSON_ANIM_NODE_ID_KEY, &T::id)
       .property("type", &T::type)
       .property("startTime", &T::startTime)
       .property("duration", &T::duration);

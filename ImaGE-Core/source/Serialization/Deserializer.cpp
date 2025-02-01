@@ -494,7 +494,8 @@ namespace Serialization
             extractedVal = static_cast<entt::entity>(jsonVal.GetUint());
           }
           else {
-            std::string const msg{ "Unable to convert element to type " + propType.get_name().to_string() };
+            std::string const msg{ "Unable to convert element of type " + extractedVal.get_type().get_name().to_string()
+              + " to type " + propType.get_name().to_string()};
             IGE_DBGLOGGER.LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
             std::cout << msg << "\n";
