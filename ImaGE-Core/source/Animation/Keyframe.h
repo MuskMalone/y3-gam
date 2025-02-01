@@ -5,6 +5,7 @@
 namespace Anim {
   struct Keyframe;
   using Node = std::shared_ptr<Keyframe>;
+  using NodeId = int;
 
   enum class KeyframeType {
     NONE = 0,
@@ -24,10 +25,10 @@ namespace Anim {
   struct Keyframe {
     using ValueType = std::variant<glm::vec3>; // may change to rttr::variant if cant serialize
 
-    Keyframe() : nextNodes{}, startValue{}, endValue{}, type{ KeyframeType::NONE }, startTime{}, duration{} {}
+    Keyframe() : nextNodes{}, startValue{}, endValue{}, type{ KeyframeType::NONE }, startTime{}, duration{}, id{} {}
     Keyframe(ValueType startVal, ValueType endVal, KeyframeType _type, float _startTime, float _duration) :
       nextNodes{}, startValue{ std::move(startVal) }, endValue{ std::move(endVal) },
-      type{ _type }, startTime{ _startTime }, duration{ _duration } {
+      type{ _type }, startTime{ _startTime }, duration{ _duration }, id{} {
 
     }
 
@@ -40,5 +41,6 @@ namespace Anim {
     ValueType startValue, endValue;
     KeyframeType type;
     float startTime, duration;
+    NodeId id;  // only for editor but have to put it here for now welp
   };
 }

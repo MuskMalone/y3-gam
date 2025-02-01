@@ -802,8 +802,7 @@ namespace Serialization
 
     // since we registered everything except "nextNodes",
     // we can rely on the serializer to handle the basic data members
-    rapidjson::Value const& rootNextNodesJson{ document["rootKeyframe"] };
-    DeserializeRecursive(ret, rootNextNodesJson);
+    DeserializeRecursive(ret, document);
 
     auto const keyframesArr{ document["keyframes"].GetArray() };
     idToNode.reserve(keyframesArr.Size());
@@ -839,6 +838,7 @@ namespace Serialization
     }
 
     // link the root node
+    rapidjson::Value const& rootNextNodesJson{ document["rootKeyframe"] };
     if (!rootNextNodesJson.HasMember("nextNodes")) {
       IGE_DBGLOGGER.LogError("[Deserializer] Anim::RootKeyframe missing nextNodes field");
       return ret;

@@ -960,12 +960,20 @@ namespace
       }
       else {
         try {
-          auto guid{ IGE_ASSETMGR.PathToGUID(path.string()) };
+          IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+          auto guid{ am.PathToGUID(path.string()) };
           if (path.extension() == gMaterialFileExt) {
             Graphics::MaterialTable::DeleteMaterial(guid);
           }
-          IGE_DBGLOGGER.LogInfo("DeleteFunction called on " + path.string());
-          IGE_ASSETMGR.DeleteFunction(path.parent_path().filename().string())(guid);
+          // for animations, remove the associated editor file as well
+          else if (path.extension() == gAnimationFileExt) {
+            auto const& metadata{ am.GetMetadata<IGE::Assets::AnimationAsset>(guid).metadata };
+            if (metadata.contains("KeyframeEditorData")) {
+              std::filesystem::remove(metadata.at("KeyframeEditorData"));
+            }
+          }
+          //IGE_DBGLOGGER.LogInfo("DeleteFunction called on " + path.string());
+          am.DeleteFunction(path.parent_path().filename().string())(guid);
         }
         catch (...) {
           //do nothing

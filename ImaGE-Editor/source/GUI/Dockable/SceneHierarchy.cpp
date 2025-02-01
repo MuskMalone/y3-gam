@@ -568,15 +568,15 @@ namespace GUI
   bool SceneHierarchy::MeshMenu(const char* label, bool entitySelected) {
     const char* meshName{ nullptr };
     if (ImGui::BeginMenu(label)) {
-      if (ImGui::Selectable("Cube")) { meshName = "Cube"; }
+      if (ImGui::MenuItem("Cube")) { meshName = "Cube"; }
 
-      if (ImGui::Selectable("Sphere")) { meshName = "Sphere"; }
+      if (ImGui::MenuItem("Sphere")) { meshName = "Sphere"; }
 
-      if (ImGui::Selectable("Plane")) { meshName = "Plane"; }
+      if (ImGui::MenuItem("Plane")) { meshName = "Plane"; }
 
-      if (ImGui::Selectable("Capsule")) { meshName = "Capsule"; }
+      if (ImGui::MenuItem("Capsule")) { meshName = "Capsule"; }
 
-      if (ImGui::Selectable("Quad")) { meshName = "Quad"; }
+      if (ImGui::MenuItem("Quad")) { meshName = "Quad"; }
 
       if (meshName) {
         ECS::Entity newEntity{ mEntityManager.CreateEntityWithTag(meshName) };
@@ -599,21 +599,21 @@ namespace GUI
     if (ImGui::BeginMenu(label)) {
       ECS::Entity newEntity{};
 
-      if (ImGui::Selectable("Directional")) {
+      if (ImGui::MenuItem("Directional")) {
         newEntity = mEntityManager.CreateEntityWithTag("Directional Light");
         newEntity.GetComponent<Component::Transform>().ApplyWorldRotation(-90.f, glm::vec3(1.f, 0.f, 0.f));  // face down by default
         newEntity.EmplaceComponent<Component::Light>(Component::DIRECTIONAL);
         modified = true;
       }
 
-      if (ImGui::Selectable("Spot Light")) {
+      if (ImGui::MenuItem("Spot Light")) {
         newEntity = mEntityManager.CreateEntityWithTag("Spot Light");
         newEntity.GetComponent<Component::Transform>().ApplyWorldRotation(-90.f, glm::vec3(1.f, 0.f, 0.f));  // face down by default
         newEntity.EmplaceComponent<Component::Light>(Component::SPOTLIGHT);
         modified = true;
       }
 
-      if (ImGui::Selectable("Point Light")) {
+      if (ImGui::MenuItem("Point Light")) {
         newEntity = mEntityManager.CreateEntityWithTag("Point Light");
         newEntity.EmplaceComponent<Component::Light>(Component::POINT);
         modified = true;
@@ -637,12 +637,12 @@ namespace GUI
     ECS::Entity newEntity{};
     if (ImGui::BeginMenu(label)) {
 
-      if (ImGui::Selectable("Audio Source")) {
+      if (ImGui::MenuItem("Audio Source")) {
         newEntity = mEntityManager.CreateEntityWithTag("Audio Source");
         newEntity.EmplaceComponent<Component::AudioSource>();
       }
 
-      if (ImGui::Selectable("Audio Listener")) {
+      if (ImGui::MenuItem("Audio Listener")) {
         newEntity = mEntityManager.CreateEntityWithTag("Audio Listener");
         newEntity.EmplaceComponent<Component::AudioListener>();
       }
@@ -665,19 +665,19 @@ namespace GUI
     ECS::Entity newEntity{};
     if (ImGui::BeginMenu(label)) {
       bool canvasCreated{ false };
-      if (ImGui::Selectable("Image")) {
+      if (ImGui::MenuItem("Image")) {
         newEntity = mEntityManager.CreateEntityWithTag("Image");
         newEntity.EmplaceComponent<Component::Image>();
       }
 
-      if (ImGui::Selectable("Text")) {
+      if (ImGui::MenuItem("Text")) {
         newEntity = mEntityManager.CreateEntityWithTag("Text");
         newEntity.EmplaceComponent<Component::Text>();
       }
 
       ImGui::Separator();
 
-      if (ImGui::Selectable("Canvas")) {
+      if (ImGui::MenuItem("Canvas")) {
         newEntity = mEntityManager.CreateEntityWithTag("Canvas");
         newEntity.EmplaceComponent<Component::Canvas>();
         canvasCreated = true;
@@ -733,7 +733,7 @@ namespace GUI
   }
 
   bool SceneHierarchy::CreateEmptyParent(const char* label) {
-    if (!ImGui::Selectable(label)) { return false; }
+    if (!ImGui::MenuItem(label)) { return false; }
 
     ECS::Entity newEntity{ CreateNewEntity() };
 

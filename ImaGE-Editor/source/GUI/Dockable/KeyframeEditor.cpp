@@ -22,18 +22,33 @@ namespace {
     "Empty", "Translation", "Scale", "Rotation"
   };
   static constexpr float sLeftColWidth = 70.f, sRightColWidth = 170.f;
+  static GUI::KeyframeEditor::IDType sRightClickedNode;
+  static std::unordered_set<GUI::KeyframeEditor::IDType> sTraversedNodes;
 
-  bool NodeVec3Input(const char* fieldLabel, glm::vec3& val);
+  bool NodeVec3Input(const char* fieldLabel, glm::vec3& val, float min = -FLT_MAX);
   void NextRowTable(const char* labelName, float elemWidth);
 }
 
 namespace GUI {
-  KeyframeEditor::KeyframeNode::KeyframeNode(Anim::Keyframe const& keyframeData, bool hasInputPin, bool hasOutputPin) :
+  std::string const KeyframeEditor::sEditorFilePath = std::string(gEditorAssetsDirectory) + ".Animation\\";
+
+  KeyframeEditor::KeyframeNode::KeyframeNode(IDType nodeId, Anim::Keyframe const& keyframeData, bool hasInputPin, bool hasOutputPin) :
     data{ keyframeData }, cumulativeVal{}, nodeName{ sKeyframeTypeStr[static_cast<int>(keyframeData.type)] }, nextNodes{},
-    previous{}
+    previous{}, id{ nodeId }
   {
     inputPin = hasInputPin ? ++sLastPinId : INVALID_ID;
     outputPin = hasOutputPin ? ++sLastPinId : INVALID_ID;
+  }
+
+  void KeyframeEditor::KeyframeNode::RemoveLinkedNode(IDType nodeId) {
+    auto result{
+      std::find_if(nextNodes.begin(), nextNodes.end(), [nodeId](KeyframeNode::NodePtr const& node) { return nodeId == node->id; })
+    };
+    if (result == nextNodes.end()) { return; }
+
+    //std::cout << "Removed " << nodeId << " from " << id << "\n";
+    (*result)->previous = nullptr;
+    nextNodes.erase(result);
   }
 
   KeyframeEditor::KeyframeEditor(const char* windowName) : GUIWindow(windowName),
@@ -45,6 +60,11 @@ namespace GUI {
     //ImNodes::PushAttributeFlag(ImNodesAttributeFlags_EnableLinkDetachWithDragClick);
 
     SUBSCRIBE_CLASS_FUNC(Events::EditAnimation, &KeyframeEditor::OnAnimationEdit, this);
+
+    if (!std::filesystem::exists(sEditorFilePath) || !std::filesystem::is_directory(sEditorFilePath)) {
+      std::filesystem::create_directory(sEditorFilePath);
+      IGE_DBGLOGGER.LogInfo("Created directory " + sEditorFilePath);
+    }
   }
 
   void KeyframeEditor::Run() {
@@ -72,8 +92,6 @@ namespace GUI {
       ImGui::End();
       return;
     }
-
-    ECS::Entity currEntity{ GUIVault::GetSelectedEntity() };
 
     if (NodesToolbar()) {
       
@@ -129,44 +147,62 @@ namespace GUI {
     ImNodes::EndNodeEditor();
 
     { // check for tooltip trigger
+      IDType hoveredNodeId{};
       bool const shiftHeld{ ImGui::IsKeyDown(ImGuiKey_LeftShift) || ImGui::IsKeyDown(ImGuiKey_RightShift) };
-      IDType hoveredNodeId;
-      if (shiftHeld && ImNodes::IsNodeHovered(&hoveredNodeId)) {
+      bool const hovered{ ImNodes::IsNodeHovered(&hoveredNodeId) };
+      if (shiftHeld && hovered) {
         // ignore tooltip for root
         if (hoveredNodeId != sRootId) {
           NodePreview(mNodes[hoveredNodeId]);
         }
       }
+      // if node right-clicked
+      else if (ImGui::IsMouseClicked(ImGuiMouseButton_Right) && hovered) {
+        sRightClickedNode = hoveredNodeId;
+        ImGui::OpenPopup(sNodeOptionsPopupLabel);
+      }
+
+      // makeshift solution to consider dragging nodes around a modification
+      if (hovered && ImGui::IsMouseDown(ImGuiMouseButton_Left)) {
+        modified = true;
+      }
+
+      NodeOptionsMenu();
     }
 
     // check for link interaction
     IDType inPin, outPin, linkId;
-    if (ImNodes::IsLinkCreated(&inPin, &outPin)) {
-      //IGE_DBGLOGGER.LogInfo("Created");
-      mLinks.emplace_back(++sLastLinkId, inPin, outPin);
-
-      KeyframeNode::NodePtr& srcPin{ mPinIdToNode[outPin] },
-        destPin{ mPinIdToNode[inPin - 1] };
-
-      destPin->nextNodes.emplace_back(srcPin);
-      srcPin->previous = destPin;
-      UpdateChain(srcPin);
-      modified = true;
-    }
     if (ImNodes::IsLinkDestroyed(&linkId)) {
       //IGE_DBGLOGGER.LogInfo("Destroyed");
       auto result = std::find_if(mLinks.begin(), mLinks.end(), [linkId](KeyframeLink const& link) { return link.linkId == linkId; });
       if (result != mLinks.end()) {
-        IDType inPin{ result->inputPin };
+        inPin = result->inputPin;
 
-        std::erase_if(mPinIdToNode[result->outputPin]->nextNodes, [inPin](KeyframeNode::NodePtr const& node) { return inPin == node->inputPin; });
+        // remove the next ptr and set its prev to null
+        mPinIdToNode[result->outputPin - 1]->RemoveLinkedNode(mPinIdToNode[inPin]->id);
         mLinks.erase(result);
       }
       modified = true;
     }
 
+    if (ImNodes::IsLinkCreated(&outPin, &inPin)) {
+      KeyframeNode::NodePtr& destNode{ mPinIdToNode[inPin] };
+
+      // only create link if current node has no previous
+      if (!destNode->previous) {
+        KeyframeNode::NodePtr& srcNode{ mPinIdToNode[outPin - 1] };
+        //IGE_DBGLOGGER.LogInfo("Created from " + std::to_string(srcNode->id));
+        mLinks.emplace_back(++sLastLinkId, inPin, outPin);
+        srcNode->nextNodes.emplace_back(destNode);
+        destNode->previous = srcNode;
+        UpdateChain(srcNode);
+        modified = true;
+      }
+    }
+
     ImGui::End();
 
+    // only trigger a save after no modifications for <sTimeUntilSave> ms
     if (modified) {
       modifying = true;
       lastModified = std::chrono::steady_clock::now();
@@ -181,42 +217,49 @@ namespace GUI {
         }
         catch (Debug::ExceptionBase&) {
           IGE_DBGLOGGER.LogError("Unable to get path of GUID: " + std::to_string(static_cast<uint64_t>(mSelectedAnim)));
+          mSelectedAnim = {};
+          Reset();
         }
       }
     }
   }
 
-  void KeyframeEditor::DisplayRootNode(KeyframeNode::NodePtr const& root) {
+  bool KeyframeEditor::DisplayRootNode(KeyframeNode::NodePtr const& root) {
     ImNodes::BeginNodeTitleBar();
     ImGui::TextUnformatted("Root Keyframe");
     ImNodes::EndNodeTitleBar();
 
-    ImGui::Text("Current Transform");
-    ImGui::BeginDisabled();
-
+    ImGui::Text("Start Values");
+    bool modified{ false };
     if (ImGui::BeginTable("KeyframeNodePreviewTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
       ImGui::TableSetupColumn("##Col1", ImGuiTableColumnFlags_WidthFixed, sLeftColWidth);
       ImGui::TableSetupColumn("##Col2", ImGuiTableColumnFlags_WidthFixed, sRightColWidth);
       CumulativeValues& vals{ root->cumulativeVal };
 
       NextRowTable("Position", sRightColWidth);
-      NodeVec3Input("##Position", vals.pos);
+      if (NodeVec3Input("##Position", vals.pos)) {
+        modified = true;
+      }
 
       NextRowTable("Rotation", sRightColWidth);
-      NodeVec3Input("##Rotation", vals.rot);
+      if (NodeVec3Input("##Rotation", vals.rot)) {
+        modified = true;
+      }
 
       NextRowTable("Scale", sRightColWidth);
-      NodeVec3Input("##Scale", vals.scale);
+      if (NodeVec3Input("##Scale", vals.scale, 0.001f)) {
+        modified = true;
+      }
 
       ImGui::EndTable();
     }
-
-    ImGui::EndDisabled();
 
     if (root->outputPin != INVALID_ID) {
       ImNodes::BeginOutputAttribute(root->outputPin);
       ImNodes::EndOutputAttribute();
     }
+
+    return modified;
   }
 
   bool KeyframeEditor::KeyframeNodeBody(KeyframeNode::NodePtr const& node) {
@@ -236,6 +279,10 @@ namespace GUI {
               node->data.type = selected;
               node->nodeName = sKeyframeTypeStr[i];
               modified = true;
+
+              if (selected == Anim::KeyframeType::SCALE) {
+                node->data.endValue = glm::clamp(std::get<glm::vec3>(node->data.endValue), glm::vec3(0.001f), glm::vec3(FLT_MAX));
+              }
             }
             break;
           }
@@ -247,7 +294,7 @@ namespace GUI {
       if (node->data.type != Anim::KeyframeType::NONE) {
         NextRowTable("Target", sRightColWidth);
         glm::vec3& rawVal{ std::get<glm::vec3>(node->data.endValue) };
-        if (NodeVec3Input("##Target Value", rawVal)) {
+        if (NodeVec3Input("##Target Value", rawVal, node->data.type == Anim::KeyframeType::SCALE ? 0.001f : -FLT_MAX)) {
           node->data.endValue = rawVal;
           modified = true;
         }
@@ -313,20 +360,102 @@ namespace GUI {
 
     if (ImGui::Button("New Keyframe")) {
       KeyframeNode::NodePtr newNode{
-        std::make_shared<KeyframeNode>(Anim::Keyframe(), true, true)
+        std::make_shared<KeyframeNode>(KeyframeNode::NextID(), Anim::Keyframe(), true, true)
       };
 
       mPinIdToNode.emplace(newNode->inputPin, newNode);
-      mNodes.emplace(KeyframeNode::NextID(), std::move(newNode));
+      mNodes.emplace(newNode->id, newNode);
+      
+      // create the new node at the currently selected node
+      if (ImNodes::NumSelectedNodes() > 0) {
+        std::vector<IDType> nodes(ImNodes::NumSelectedNodes());
+        ImNodes::GetSelectedNodes(nodes.data());
+        ImNodes::SetNodeGridSpacePos(newNode->id, ImNodes::GetNodeGridSpacePos(nodes.back()) + ImVec2(10.f, -10.f));
+      }
     }
 
     return modified;
   }
 
-  void KeyframeEditor::UpdateChain(KeyframeNode::NodePtr const& node) {
+  bool KeyframeEditor::NodeOptionsMenu() {
+    if (!ImGui::BeginPopup(sNodeOptionsPopupLabel)) { return false; }
+
+    bool modified{ false };
+    bool const isRoot{ sRightClickedNode == sRootId };
+
+    if (isRoot) {
+      if (ImGui::Selectable("Use current Entity's transform")) {
+        ECS::Entity const selectedEntity{ GUIVault::GetSelectedEntity() };
+        if (selectedEntity) {
+          CumulativeValues& rootVals{ GetRootNode()->cumulativeVal };
+          Component::Transform const& trans{ selectedEntity.GetComponent<Component::Transform>() };
+
+          rootVals.pos = trans.position;
+          rootVals.rot = trans.eulerAngles;
+          rootVals.scale = trans.scale;
+
+          modified = true;
+        }
+      }
+    } // end isRoot
+    else {
+      if (ImGui::Selectable("Reset")) {
+        KeyframeNode::NodePtr& node{ mNodes[sRightClickedNode] };
+        node->data = {};
+        node->nodeName = sKeyframeTypeStr[0];
+        UpdateChain(node);
+
+        modified = true;
+      }
+
+      if (ImGui::Selectable("Delete Keyframe")) {
+        KeyframeNode::NodePtr& node{ mNodes[sRightClickedNode] };
+        // remove any next ptrs
+        if (!node->nextNodes.empty()) {
+          for (KeyframeNode::NodePtr& next : node->nextNodes) {
+            // remove the ptr reference
+            next->previous = nullptr;
+
+            // remove the link
+            IDType const inPin{ next->inputPin };
+            //std::cout << "Removed link with input pin " << inPin << "\n";
+            std::erase_if(mLinks, [inPin](KeyframeLink const& link) { return inPin == link.inputPin; });
+          }
+        }
+
+        KeyframeNode::NodePtr& prev{ node->previous };
+        if (prev) {
+          // remove the previous node's reference
+          prev->RemoveLinkedNode(sRightClickedNode);
+
+          // remove the link
+          IDType const inPin{ node->inputPin };
+          //std::cout << "Removed link with input pin " << inPin << "\n";
+          std::erase_if(mLinks, [inPin](KeyframeLink const& link) { return inPin == link.inputPin; });
+        }
+
+        // remove the node
+        mNodes.erase(sRightClickedNode);
+        modified = true;
+      }
+    } // isRoot else block
+
+    ImGui::EndPopup();
+    return modified;
+  }
+
+  void KeyframeEditor::UpdateChainR(KeyframeNode::NodePtr const& node) {
     if (!node->previous) {
       node->cumulativeVal = {};
       return;
+    }
+    
+    if (sTraversedNodes.contains(node->id)) {
+      IGE_DBGLOGGER.LogError("[AnimationEditor] LOOP DETECTED! PLEASE REMOVE THE LINK! ABORTING OPERATION...");
+      return;
+    }
+    else {
+      sTraversedNodes.emplace(node->id);
     }
 
     KeyframeData const& prevData{ node->previous->data };
@@ -366,16 +495,21 @@ namespace GUI {
     }
   }
 
+  void KeyframeEditor::UpdateChain(KeyframeNode::NodePtr const& node) {
+    UpdateChainR(node);
+    sTraversedNodes.clear();
+  }
+
   void KeyframeEditor::Init() {
     Reset();
 
     KeyframeNode::NodePtr newNode{
-      std::make_shared<KeyframeNode>(Anim::Keyframe(), false, true)
+      std::make_shared<KeyframeNode>(sRootId, Anim::Keyframe(), false, true)
     };
     newNode->nodeName = "Root";
 
     mPinIdToNode.emplace(newNode->outputPin - 1, newNode);
-    mNodes.emplace(KeyframeNode::NextID(), std::move(newNode));
+    mNodes.emplace(sRootId, std::move(newNode));
   }
 
   void KeyframeEditor::InitRoot(Anim::RootKeyframe const& keyframe) {
@@ -404,37 +538,73 @@ namespace GUI {
       return false;
     }
 
+    // deserialize node positions
+    auto& metadata{ am.GetMetadata<IGE::Assets::AnimationAsset>(guid).metadata };
+    NodePositions nodePositions{};
+    if (metadata.contains(sMetadataKey)) {
+      Serialization::Deserializer::DeserializeAny(nodePositions, metadata[sMetadataKey]);
+    }
+    else {
+      std::string const& path{ am.GUIDToPath(mSelectedAnim) };
+      IGE_DBGLOGGER.LogError("[AnimationEditor] Unable to find editor file for animation " + path + ". New file created.");
+
+      CreateEditorFile(path);
+    }
+
     Anim::AnimationData const& animData{ am.GetAsset<IGE::Assets::AnimationAsset>(guid)->mAnimData };
     InitRoot(animData.rootKeyframe);
 
     // dummy root node to pass into the recursive function
     Anim::Node dummy{ std::make_shared<Anim::Keyframe>() };
     dummy->nextNodes = animData.rootKeyframe.nextNodes;
-      
-    CloneKeyframeTree(GetRootNode(), dummy);
+
+    CloneKeyframeTree(GetRootNode(), dummy, nodePositions.posMap);
+
+    // set root node pos
+    if (nodePositions.posMap.contains(sRootId)) {
+      ImNodes::SetNodeGridSpacePos(sRootId, nodePositions.posMap.at(sRootId));
+    }
 
     return true;
   }
 
   void KeyframeEditor::SaveKeyframes(std::string const& filePath) const {
+    IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+    NodePositions nodePositions;
+    nodePositions.posMap.reserve(mNodes.size());
+
     // first, create the new keyframe tree
-    Anim::AnimationData& animData{ IGE_ASSETMGR.GetAsset<IGE::Assets::AnimationAsset>(mSelectedAnim)->mAnimData };
+    Anim::AnimationData& animData{ am.GetAsset<IGE::Assets::AnimationAsset>(mSelectedAnim)->mAnimData };
 
     // create the root first
     KeyframeNode::NodePtr const& root{ GetRootNode() };
     animData.rootKeyframe = CreateRootKeyframe(root);
+    root->id = sRootId;
+    nodePositions.posMap.emplace(sRootId, ImNodes::GetNodeGridSpacePos(sRootId));
 
     // construct the rest of the tree
     for (KeyframeNode::NodePtr const& next : root->nextNodes) {
       KeyframeData const& data{ next->data };
       Anim::Node newKeyframe{ std::make_shared<Anim::Keyframe>(data.startValue, data.endValue, data.type, data.startTime, data.duration) };
+      newKeyframe->id = next->id;
       animData.rootKeyframe.nextNodes.emplace_back(newKeyframe);
+      nodePositions.posMap.emplace(next->id, ImNodes::GetNodeGridSpacePos(next->id));
 
-      CreateOutputTree(newKeyframe, next);
+      CreateOutputTree(newKeyframe, next, nodePositions.posMap);
     }
 
     // finally, save to file
     Serialization::Serializer::SerializeAnimationData(animData, filePath);
+
+    // save the positions to the path saved in metadata
+    auto& metadata{ am.GetMetadata<IGE::Assets::AnimationAsset>(mSelectedAnim).metadata };
+    if (!metadata.contains(sMetadataKey)) {
+      std::string const& path{ am.GUIDToPath(mSelectedAnim) };
+      IGE_DBGLOGGER.LogError("[AnimationEditor] Unable to find editor file for animation " + path + ". New file created.");
+
+      CreateEditorFile(path);
+    }
+    Serialization::Serializer::SerializeAny(nodePositions, metadata[sMetadataKey]);
   }
 
   void KeyframeEditor::NewAnimation() {
@@ -454,40 +624,66 @@ namespace GUI {
       IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
       mSelectedAnim = am.ImportAsset<IGE::Assets::AnimationAsset>(newFile);
       am.LoadRef<IGE::Assets::AnimationAsset>(mSelectedAnim);
+
+      CreateEditorFile(newFile);
     }
     catch (Debug::ExceptionBase&) {
       IGE_DBGLOGGER.LogError("Error creating new animation: " + newFile);
     }
   }
+  
+  void KeyframeEditor::CreateEditorFile(std::string const& animFile) const {
+    // find a free filename
+    std::string editorFilePath{ sEditorFilePath + std::filesystem::path(animFile).stem().string() };
+    if (std::filesystem::exists(editorFilePath)) {
+      std::string temp{ editorFilePath };
+      for (int i{ 2 }; std::filesystem::exists(temp); ++i) {
+        temp = editorFilePath + std::to_string(i);
+      }
 
-  void KeyframeEditor::CloneKeyframeTree(KeyframeNode::NodePtr& dest, Anim::Node const& src) {
+      editorFilePath = std::move(temp);
+    }
+    // insert into metadata
+    auto& metadata{ IGE_ASSETMGR.GetMetadata<IGE::Assets::AnimationAsset>(mSelectedAnim) };
+    metadata.metadata[sMetadataKey] = editorFilePath;
+    metadata.modified = true;
+  }
+
+  void KeyframeEditor::CloneKeyframeTree(KeyframeNode::NodePtr& dest, Anim::Node const& src, NodePosMap const& posMap) {
     // recursively construct the editor tree from the source tree
     for (Anim::Node const& next : src->nextNodes) {
       KeyframeNode::NodePtr newNode{
-        std::make_shared<KeyframeNode>(*next)
+        std::make_shared<KeyframeNode>(KeyframeNode::NextID(), *next)
       };
       newNode->previous = dest;
       dest->nextNodes.emplace_back(newNode);
-      mNodes.emplace(newNode->NextID(), newNode);
+      mNodes.emplace(newNode->id, newNode);
 
       // create link
       mLinks.emplace_back(++sLastLinkId, newNode->inputPin, dest->outputPin);
       mPinIdToNode.emplace(newNode->inputPin, newNode);
 
-      CloneKeyframeTree(newNode, next);
+      CloneKeyframeTree(newNode, next, posMap);
+    }
+
+    // set node position
+    if (posMap.contains(dest->id)) {
+      ImNodes::SetNodeGridSpacePos(dest->id, posMap.at(dest->id));
     }
   }
 
-  void KeyframeEditor::CreateOutputTree(Anim::Node& dest, KeyframeNode::NodePtr const& src) const {
+  void KeyframeEditor::CreateOutputTree(Anim::Node& dest, KeyframeNode::NodePtr const& src, NodePosMap& nodePosMap) const {
     // recursively construct the new tree from the editor tree
     for (KeyframeNode::NodePtr const& next : src->nextNodes) {
       KeyframeData const& data{ next->data };
       Anim::Node newNode{
         std::make_shared<Anim::Keyframe>(data.startValue, data.endValue, data.type, data.startTime, data.duration)
       };
+      newNode->id = next->id;
       dest->nextNodes.emplace_back(newNode);
+      nodePosMap.emplace(next->id, ImNodes::GetNodeGridSpacePos(next->id));
 
-      CreateOutputTree(newNode, next);
+      CreateOutputTree(newNode, next, nodePosMap);
     }
   }
 
@@ -515,8 +711,8 @@ namespace GUI {
 } // namespace GUI
 
 namespace {
-  bool NodeVec3Input(const char* fieldLabel, glm::vec3& val) {
-    return ImGui::DragFloat3(fieldLabel, glm::value_ptr(val), 0.1f, -FLT_MAX, FLT_MAX, "%.2f");
+  bool NodeVec3Input(const char* fieldLabel, glm::vec3& val, float min) {
+    return ImGui::DragFloat3(fieldLabel, glm::value_ptr(val), 0.1f, min, FLT_MAX, "%.2f");
   }
 
   void NextRowTable(const char* labelName, float elemWidth) {
