@@ -24,8 +24,6 @@ public class  PlayerMove : Entity
   public float speed = 650f;
   public float walkingSpeed = 650f;
   public float runSpeed = 1200f;
-  public float jumpForce = 3000f;
-  private readonly float extraGravityFactorDuringDescent = 15f;
   public float isGroundedRayHeight = 3f;
   public Entity cam;
 
@@ -39,6 +37,7 @@ public class  PlayerMove : Entity
   private Quaternion playerRotation = Quaternion.Identity;  // Player rotation (yaw only)
   private Quaternion cameraRotation = Quaternion.Identity;  // Camera rotation (pitch only)
   private float initialGravityFactor = 5f;
+  private float extraGravityFactorDuringDescent = 15f;
 
   public bool canLook = true;
   public bool canMove = true;
@@ -78,13 +77,6 @@ public class  PlayerMove : Entity
     ProcessLook();
     if (canMove)
       PlayerMovement();
-
-    /*
-    if (Input.GetKeyTriggered(KeyCode.SPACE))
-    {
-      InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
-    }
-    */
   }
   void PlayerMovement()
   {
@@ -104,11 +96,6 @@ public class  PlayerMove : Entity
     Vector3 move = GetComponent<Transform>().right * x * speed + GetComponent<Transform>().forward * z * speed;
 
     InternalCalls.MoveCharacter(mEntityID, move);
-
-    if (Input.GetKeyTriggered(KeyCode.SPACE) && IsGrounded())
-    {
-      Jump();
-    }
 
     if (IsGrounded())
     {
@@ -155,14 +142,6 @@ public class  PlayerMove : Entity
     InternalCalls.MoveCharacter(mEntityID, new Vector3(0, 0, 0));
     InternalCalls.SetAngularVelocity(mEntityID, new Vector3(0, 0, 0));
   }
-
-  private void Jump()
-  {
-    Vector3 currentVelocity = InternalCalls.GetVelocity(mEntityID);
-    currentVelocity.Y = jumpForce;
-    InternalCalls.SetVelocity(mEntityID, currentVelocity);
-  }
-
   public bool IsGrounded()
   {
     Vector3 entityPosition = InternalCalls.GetWorldPosition(mEntityID);
