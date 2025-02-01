@@ -450,7 +450,6 @@
                 116,
                 151,
                 755,
-                1048655,
                 1048685,
                 1048730,
                 2097156,
@@ -2211,7 +2210,6 @@
                 1,
                 31,
                 52,
-                69,
                 74,
                 587,
                 588,
@@ -2219,7 +2217,6 @@
                 1104,
                 1112,
                 1048609,
-                1048643,
                 2097426,
                 3145886,
                 3146283,
@@ -3109,12 +3106,12 @@
                         "position": {
                             "x": 71.20696258544922,
                             "y": 3.7089924812316896,
-                            "z": 38.700775146484378
+                            "z": 8.225383758544922
                         },
                         "scale": {
                             "x": 34.18004608154297,
                             "y": 4.757999897003174,
-                            "z": 52.15585708618164
+                            "z": 148.45213317871095
                         },
                         "rotation": {
                             "x": 0.0,
@@ -3130,12 +3127,12 @@
                         "worldPos": {
                             "x": 71.20695495605469,
                             "y": 3.7089924812316896,
-                            "z": 38.700775146484378
+                            "z": 8.225383758544922
                         },
                         "worldScale": {
                             "x": 34.18004608154297,
                             "y": 4.757999897003174,
-                            "z": 52.15585708618164
+                            "z": 148.45213317871095
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -3148,6 +3145,13 @@
                 {
                     "Layer": {
                         "layerName": "Environment"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        }
                     }
                 },
                 {
@@ -3226,9 +3230,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 10.94646167755127,
+                            "x": 10.950451850891114,
                             "y": 8.766958236694336,
-                            "z": 3.1845970153808595
+                            "z": 3.186717987060547
                         },
                         "scale": {
                             "x": 1.076055645942688,
@@ -3247,9 +3251,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 56.78459548950195,
+                            "x": 56.78671646118164,
                             "y": 18.486190795898439,
-                            "z": 47.068790435791019
+                            "z": 47.06619644165039
                         },
                         "worldScale": {
                             "x": 0.6994361281394959,
@@ -3267,6 +3271,13 @@
                 {
                     "Layer": {
                         "layerName": "Environment"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        }
                     }
                 },
                 {
@@ -3386,6 +3397,13 @@
                 {
                     "Layer": {
                         "layerName": "Environment"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        }
                     }
                 },
                 {
@@ -3576,6 +3594,13 @@
                     }
                 },
                 {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        }
+                    }
+                },
+                {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
@@ -3711,7 +3736,7 @@
                     "Transform": {
                         "position": {
                             "x": 70.26195526123047,
-                            "y": 31.054061889648439,
+                            "y": 30.699621200561525,
                             "z": 6.052089691162109
                         },
                         "scale": {
@@ -3732,7 +3757,7 @@
                         },
                         "worldPos": {
                             "x": 70.26194763183594,
-                            "y": 31.054061889648439,
+                            "y": 30.699621200561525,
                             "z": 6.052089691162109
                         },
                         "worldScale": {
@@ -3900,6 +3925,13 @@
                     }
                 },
                 {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        }
+                    }
+                },
+                {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
@@ -3917,125 +3949,6 @@
                             "x": 16.72585678100586,
                             "y": 13.48012924194336,
                             "z": 0.8686946630477905
-                        },
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
-                    }
-                },
-                {
-                    "RigidBody": {
-                        "velocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "angularVelocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "staticFriction": 0.0,
-                        "dynamicFriction": 0.0,
-                        "restitution": 0.0,
-                        "gravityFactor": 0.0,
-                        "linearDamping": 0.9800000190734863,
-                        "motionType": "KINEMATIC",
-                        "axisLock": 7,
-                        "angularAxisLock": 7
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 69,
-            "Parent": 46,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Pit Room Platform",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 83.48416900634766,
-                            "y": 11.728633880615235,
-                            "z": -30.98944091796875
-                        },
-                        "scale": {
-                            "x": 3.0357675552368166,
-                            "y": 11.45081615447998,
-                            "z": 15.15984058380127
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 83.48416137695313,
-                            "y": 11.728633880615235,
-                            "z": -30.98944091796875
-                        },
-                        "worldScale": {
-                            "x": 3.0357675552368166,
-                            "y": 11.45081615447998,
-                            "z": 15.15984058380127
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Environment"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": false,
-                        "receiveShadows": true
-                    }
-                },
-                {
-                    "BoxCollider": {
-                        "scale": {
-                            "x": 1.5178837776184083,
-                            "y": 5.72540807723999,
-                            "z": 7.571566104888916
                         },
                         "positionOffset": {
                             "x": 0.0,
@@ -9753,7 +9666,9 @@
                 765,
                 766,
                 1048630,
-                1048631
+                1048631,
+                2097219,
+                2097231
             ],
             "Components": [
                 {
@@ -10466,6 +10381,7 @@
                 142,
                 145,
                 1015,
+                1048645,
                 1048903,
                 1049596,
                 1049630
@@ -30503,6 +30419,13 @@
                     }
                 },
                 {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        }
+                    }
+                },
+                {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
@@ -30571,7 +30494,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Pit Room Door Wall (Copy)",
+                        "tag": "a",
                         "isActive": true
                     }
                 },
@@ -30619,6 +30542,13 @@
                 {
                     "Layer": {
                         "layerName": "Environment"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        }
                     }
                 },
                 {
@@ -52322,123 +52252,40 @@
             ]
         },
         {
-            "ID": 1048643,
-            "Parent": 46,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Pit Room Ground",
-                        "isActive": true
-                    }
+            "ID": 1048645,
+            "Parent": 269,
+            "Child Entities": [
+                1049689,
+                2097343,
+                3146001
+            ],
+            "Position": {
+                "x": 71.2135009765625,
+                "y": 29.068328857421876,
+                "z": 9.321282386779786
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
                 },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 68.17938232421875,
-                            "y": 3.708998203277588,
-                            "z": -36.219932556152347
-                        },
-                        "scale": {
-                            "x": 34.18000030517578,
-                            "y": 4.757999897003174,
-                            "z": 29.804000854492189
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 68.17937469482422,
-                            "y": 3.708998203277588,
-                            "z": -36.219932556152347
-                        },
-                        "worldScale": {
-                            "x": 34.18000030517578,
-                            "y": 4.757999897003174,
-                            "z": 29.804000854492189
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "IndoorLight",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
                         }
                     }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Environment"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": false,
-                        "receiveShadows": true
-                    }
-                },
-                {
-                    "BoxCollider": {
-                        "scale": {
-                            "x": 17.09000015258789,
-                            "y": 2.378999948501587,
-                            "z": 14.885576248168946
-                        },
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
-                    }
-                },
-                {
-                    "RigidBody": {
-                        "velocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "angularVelocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "staticFriction": 0.0,
-                        "dynamicFriction": 0.0,
-                        "restitution": 0.0,
-                        "gravityFactor": 0.0,
-                        "linearDamping": 0.9800000190734863,
-                        "motionType": "KINEMATIC",
-                        "axisLock": 7,
-                        "angularAxisLock": 7
-                    }
-                }
-            ]
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 1048646,
@@ -52589,127 +52436,6 @@
                     }
                 }
             ]
-        },
-        {
-            "ID": 1048655,
-            "Parent": 11,
-            "Child Entities": [
-                1048767
-            ],
-            "Prefab": {
-                "GUID": {
-                    "ID": 10628198478850232042
-                },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Inside Pit Painting",
-                            "isActive": true
-                        }
-                    },
-                    {
-                        "key": "Transform",
-                        "value": {
-                            "position": {
-                                "x": 84.12600708007813,
-                                "y": 9.240816116333008,
-                                "z": 44.43792724609375
-                            },
-                            "scale": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
-                            },
-                            "rotation": {
-                                "x": -3.5712730550585549e-9,
-                                "y": -0.7041940689086914,
-                                "z": 3.468784370852518e-9,
-                                "w": 0.7100075483322144
-                            },
-                            "eulerAngles": {
-                                "x": -0.00006938880687812343,
-                                "y": -89.52894592285156,
-                                "z": 0.00006938050501048565
-                            },
-                            "worldPos": {
-                                "x": 84.12600708007813,
-                                "y": 9.240816116333008,
-                                "z": 44.43792724609375
-                            },
-                            "worldScale": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
-                            },
-                            "worldRot": {
-                                "x": -3.5712730550585549e-9,
-                                "y": -0.7041940689086914,
-                                "z": 3.468784370852518e-9,
-                                "w": 0.7100075483322144
-                            }
-                        }
-                    },
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 3.200000047683716,
-                                "y": 3.069999933242798,
-                                "z": 0.20000000298023225
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": -5.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": -0.04361938685178757,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 0.9990482330322266
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 0.0,
-                            "dynamicFriction": 0.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "DYNAMIC",
-                            "axisLock": 0,
-                            "angularAxisLock": 0
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Puzzle"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
         },
         {
             "ID": 1048656,
@@ -54535,39 +54261,6 @@
                     }
                 }
             ]
-        },
-        {
-            "ID": 1048767,
-            "Parent": 1048655,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 10628198478850232042
-                },
-                "subDataId": 1,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Puzzle"
-                        }
-                    },
-                    {
-                        "key": "Mesh",
-                        "value": {
-                            "meshName": "pCube1",
-                            "GUID": {
-                                "ID": 3937837836436612788
-                            },
-                            "submeshIdx": 0,
-                            "isCustomMesh": true,
-                            "castShadows": false,
-                            "receiveShadows": true
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
         },
         {
             "ID": 1048768,
@@ -62462,6 +62155,33 @@
             ]
         },
         {
+            "ID": 1049689,
+            "Parent": 1048645,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "pCylinder10",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 2097156,
             "Parent": 11,
             "Child Entities": [
@@ -62631,6 +62351,258 @@
                 {
                     "Layer": {
                         "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2097219,
+            "Parent": 225,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Pit Room Door Wall (Copy) (Copy)",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 86.94866943359375,
+                            "y": 8.766958236694336,
+                            "z": 2.1086082458496095
+                        },
+                        "scale": {
+                            "x": 3.4596405029296877,
+                            "y": 39.268001556396487,
+                            "z": 98.5432357788086
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.7071068286895752,
+                            "z": 0.0,
+                            "w": 0.7071068286895752
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -90.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 55.70859909057617,
+                            "y": 18.486190795898439,
+                            "z": -2.3326492309570314
+                        },
+                        "worldScale": {
+                            "x": 2.2487661838531496,
+                            "y": 25.916881561279298,
+                            "z": 98.5432357788086
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0000001192092896
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Environment"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.36920735239982607,
+                            "y": 12.410629272460938,
+                            "z": 2.7717456817626955
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2097231,
+            "Parent": 225,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Pit Room Door Wall (Copy)",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -9.909350395202637,
+                            "y": 8.766958236694336,
+                            "z": 2.106769561767578
+                        },
+                        "scale": {
+                            "x": 3.4596405029296877,
+                            "y": 39.268001556396487,
+                            "z": 5.489640712738037
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.7071068286895752,
+                            "z": 0.0,
+                            "w": 0.7071068286895752
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -90.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 55.70676803588867,
+                            "y": 18.486190795898439,
+                            "z": 60.62506866455078
+                        },
+                        "worldScale": {
+                            "x": 2.2487661838531496,
+                            "y": 25.916881561279298,
+                            "z": 5.489640712738037
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0000001192092896
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Environment"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.36920735239982607,
+                            "y": 12.410629272460938,
+                            "z": 2.7717456817626955
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7
                     }
                 }
             ]
@@ -63092,6 +63064,33 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 2097343,
+            "Parent": 1048645,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "pSphere1",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 2097424,
@@ -69845,6 +69844,106 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 3146001,
+            "Parent": 1048645,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
+                },
+                "subDataId": 3,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 0.0,
+                                "y": -4.0,
+                                "z": 0.11449146270751953
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "rotation": {
+                                "x": 0.7107994556427002,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 0.7033947110176086
+                            },
+                            "eulerAngles": {
+                                "x": 90.5999984741211,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": 71.2135009765625,
+                                "y": 25.068328857421876,
+                                "z": 9.435773849487305
+                            },
+                            "worldScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "worldRot": {
+                                "x": 0.7107994556427002,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 0.7033947110176086
+                            }
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9799330830574036,
+                                "y": 0.9335347414016724,
+                                "z": 0.16386844217777253
+                            },
+                            "intensity": 2.0,
+                            "innerAngle": 143.0,
+                            "outerAngle": 53.0,
+                            "range": 93.0,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
+                            }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 3146022,
