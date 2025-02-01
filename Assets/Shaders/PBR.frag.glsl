@@ -84,6 +84,11 @@ void main(){
     vec4 albedoTexture = texture2D(u_AlbedoMaps[int(v_MaterialIdx) + u_MatIdxOffset], texCoord);
     vec3 albedo = albedoTexture.rgb * mat.AlbedoColor.rgb; // Mixing texture and uniform
 
+    // Check for transparency and discard the fragment
+    if (albedoTexture.a * mat.AlbedoColor.a < 0.01) {
+        discard;
+    }
+
 	// Normalize inputs
     vec3 N = normalize(v_Normal);
     vec3 TotalLight = u_AmbientLight * albedo * mat.AO;
