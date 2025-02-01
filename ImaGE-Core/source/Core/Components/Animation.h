@@ -27,9 +27,13 @@ namespace Component {
       animations.erase(iter);
     }
 
+    void Pause() noexcept { paused = true; }
+    void Resume() noexcept { paused = false; }
+
     void Reset() noexcept {
       timeElapsed = 0.f;
       currentKeyframes.clear();
+      paused = false;
     }
 
     void Clear() noexcept {
@@ -37,13 +41,13 @@ namespace Component {
       currentKeyframes.clear();
       currentAnimation = {};
       timeElapsed = 0.f;
-      repeat = false;
+      repeat = paused = false;
     }
 
     std::map<std::string, IGE::Assets::GUID> animations;
     std::vector<Anim::Node> currentKeyframes;
     IGE::Assets::GUID currentAnimation;
     float timeElapsed;
-    bool repeat;
+    bool repeat, paused;
   };
 }

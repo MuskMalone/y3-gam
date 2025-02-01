@@ -474,6 +474,17 @@ namespace GUI {
         modified = true;
       }
 
+      if (ImGui::Selectable("Duplicate")) {
+        KeyframeNode::NodePtr newNode{ NewNode() };
+        KeyframeNode::NodePtr& rightClicked{ mNodes[sRightClickedNode] };
+        newNode->data = rightClicked->data;
+        newNode->data.startTime = 0.f;
+        newNode->nodeName = rightClicked->nodeName;
+
+        ImNodes::SetNodeScreenSpacePos(newNode->id, ImGui::GetMousePos());
+        modified = true;
+      }
+
       if (ImGui::Selectable("Delete Keyframe")) {
         KeyframeNode::NodePtr& node{ mNodes[sRightClickedNode] };
         // remove any next ptrs
@@ -515,12 +526,7 @@ namespace GUI {
 
     bool modified{ false };
     if (ImGui::Selectable("New Keyframe")) {
-      KeyframeNode::NodePtr newNode{
-        std::make_shared<KeyframeNode>(KeyframeNode::NextID(), Anim::Keyframe(), true, true)
-      };
-
-      mPinIdToNode.emplace(newNode->inputPin, newNode);
-      mNodes.emplace(newNode->id, newNode);
+      KeyframeNode::NodePtr newNode{ NewNode() };
 
       // create the new node at the cursor pos
       ImNodes::SetNodeScreenSpacePos(newNode->id, ImGui::GetMousePos());
@@ -698,6 +704,17 @@ namespace GUI {
       CreateEditorFile(path);
     }
     Serialization::Serializer::SerializeAny(nodePositions, metadata[sMetadataKey]);
+  }
+
+  KeyframeEditor::KeyframeNode::NodePtr KeyframeEditor::NewNode() {
+    KeyframeNode::NodePtr newNode{
+        std::make_shared<KeyframeNode>(KeyframeNode::NextID(), Anim::Keyframe(), true, true)
+    };
+
+    mPinIdToNode.emplace(newNode->inputPin, newNode);
+    mNodes.emplace(newNode->id, newNode);
+
+    return newNode;
   }
 
   void KeyframeEditor::NewAnimation() {

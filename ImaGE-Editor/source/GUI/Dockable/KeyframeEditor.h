@@ -114,6 +114,7 @@ namespace GUI {
     bool OptionsMenu();
     bool NodesToolbar();
     void NewAnimation();
+    KeyframeNode::NodePtr NewNode();
 
     EVENT_CALLBACK_DECL(OnAnimationEdit);
 

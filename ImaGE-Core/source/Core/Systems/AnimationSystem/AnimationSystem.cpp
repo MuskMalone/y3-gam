@@ -37,7 +37,7 @@ namespace Systems {
     for (ECS::Entity entity : mEntityManager.GetAllEntitiesWithComponents<Component::Animation>()) {
       Component::Animation& animation{ entity.GetComponent<Component::Animation>() };
 
-      if (!animation.currentAnimation) { continue; }
+      if (!animation.currentAnimation || animation.paused) { continue; }
 
       try {
         am.LoadRef<IGE::Assets::AnimationAsset>(animation.currentAnimation);

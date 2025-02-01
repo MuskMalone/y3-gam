@@ -582,6 +582,10 @@ namespace GUI {
 
         NextRowTable("Current Animation");
         if (ImGui::BeginCombo("##CurrAnim", currentAnimStr.c_str())) {
+          if (ImGui::Selectable("None")) {
+            animation.currentAnimation = {};
+            modified = true;
+          }
           for (auto const&[name, guid] : animation.animations) {
             if (!ImGui::Selectable(name.c_str())) { continue; }
 
