@@ -197,7 +197,7 @@ void main(){
 
     // Gamma correction
     //fragColor = mat.Emission;
-    fragColor = vec4(pow(TotalLight, vec3(1.0/2.2)), 1.0);
+    fragColor = vec4(pow(TotalLight, vec3(1.0/2.2)), mat.Transparency);
 
 }
 

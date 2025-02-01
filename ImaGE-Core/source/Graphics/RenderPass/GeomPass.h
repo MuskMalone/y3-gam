@@ -33,6 +33,9 @@ namespace Graphics {
     static inline constexpr unsigned sMaxLights = 30;
 
     ShaderGroupMap GroupEntities(std::vector<ECS::Entity> const& entities);
+    void GroupEntities(std::vector<ECS::Entity> const& entities,
+        ShaderGroupMap& opaqueGroups,
+        ShaderGroupMap& transparentGroups);
 
     std::shared_ptr<Framebuffer> mPickFramebuffer{ nullptr };
     std::shared_ptr<Texture> mDepthTexture{ nullptr };
