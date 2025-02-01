@@ -4,6 +4,7 @@ in vec2 v_TexCoord;
 
 uniform sampler2D u_TexViewPosition;
 uniform sampler2D u_TexFragColor;
+uniform sampler2D u_BloomColor;
 
 layout(location=0) out vec4 fragColor;
 uniform float u_MinDist;
@@ -19,6 +20,6 @@ void main()
     float dist = length(pos);
     float fogFactor = clamp((dist - u_MinDist) / (u_MaxDist - u_MinDist), 0.0f, 1.0f);
     vec3 color = texture(u_TexFragColor, v_TexCoord).xyz;
-    fragColor = vec4(mix(color, u_FogColor, fogFactor), 1.0f);
+    fragColor = vec4(mix(color, u_FogColor, fogFactor), 1.0f) + texture(u_BloomColor, v_TexCoord);
     // fragColor = texture(u_TexFragColor, v_TexCoord);
 }

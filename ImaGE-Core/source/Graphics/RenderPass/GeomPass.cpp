@@ -40,6 +40,10 @@ namespace Graphics {
   void GeomPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
 
       Begin();
+
+      //clears the last 2 frame buffers
+        GLfloat clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f }; // Black with full alpha
+        glClearBufferfv(GL_COLOR, 3, clearColor); //view pos buffer
      // Renderer::Clear();
       //auto shader = mSpec.pipeline->GetShader();
       GetTargetFramebuffer()->ClearAttachmentInt(1, -1);
@@ -179,7 +183,7 @@ namespace Graphics {
 
       Renderer::FlushBatch(); // Flush transparent sprites
       glDepthMask(GL_TRUE); // Re-enable depth writing
-
+      glDisable(GL_BLEND);
       //Renderer::RenderSceneEnd();
       //=================================================SUBMESH VERSION END===========================================================
       End();
@@ -214,6 +218,16 @@ namespace Graphics {
       // Perform the copy operation
       if (positionTexture) {
           positionTexture->CopyFrom(fb->GetColorAttachmentID(2), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+      }
+      auto& bloomTexture{ pass->mBloomGBuffer };
+      if (!bloomTexture || bloomTexture->GetWidth() != fb->GetFramebufferSpec().width || bloomTexture->GetHeight() != fb->GetFramebufferSpec().height) {
+          // Create or resize mOutputTexture based on the framebuffer's specs
+          bloomTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height, GL_RGBA32F);
+      }
+      
+      // Perform the copy operation
+      if (bloomTexture) {
+          bloomTexture->CopyFrom(fb->GetColorAttachmentID(3), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
       }
   }
 

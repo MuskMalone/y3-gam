@@ -12,6 +12,7 @@ namespace Graphics {
 		postprocessSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };	// temporarily max. 1 shadow-caster
 
 		mPingPongBuffer = Framebuffer::Create(postprocessSpec);
+
 	}
 
 	void PostProcessingPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities)
@@ -20,7 +21,38 @@ namespace Graphics {
 			mOutputTexture = mInputTexture;
 			return; 
 		}
-		{//fog/visibility shader
+		{// blur pass
+			auto saveInputTex = mInputTexture;
+
+			mInputTexture = mBloomGBuffer;
+			glMemoryBarrier(GL_ALL_BARRIER_BITS);
+			auto shader{ ShaderLibrary::Get("Blur") };
+			mSpec.pipeline->GetSpec().shader = shader;
+			Begin();
+			shader->SetUniform("u_BloomColor", mBloomGBuffer, 0);
+			shader->SetUniform("u_Resolution", glm::vec2(
+				mSpec.pipeline->GetSpec().targetFramebuffer->GetFramebufferSpec().width,
+				mSpec.pipeline->GetSpec().targetFramebuffer->GetFramebufferSpec().height
+			));
+			Renderer::RenderFullscreenTexture();
+			//swap back the shader
+			End();
+			glMemoryBarrier(GL_ALL_BARRIER_BITS);
+			auto const& fb = mSpec.pipeline->GetSpec().targetFramebuffer;
+			 //Check if mOutputTexture is null or if dimensions don’t match
+			if (!mBlurredBloom || mBlurredBloom->GetWidth() != fb->GetFramebufferSpec().width || mBlurredBloom->GetHeight() != fb->GetFramebufferSpec().height) {
+				// Create or resize mOutputTexture based on the framebuffer's specs
+				mBlurredBloom = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height, GL_RGBA32F);
+			}
+			glMemoryBarrier(GL_ALL_BARRIER_BITS);
+			if (mBlurredBloom) {
+				mBlurredBloom->CopyFrom(fb->GetColorAttachmentID(1), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+			}
+			glMemoryBarrier(GL_ALL_BARRIER_BITS);
+
+			mInputTexture = saveInputTex;
+		}
+		{//fog/visibility/bloom shader
 	//copy the color buffer to inputTexture
 			glMemoryBarrier(GL_ALL_BARRIER_BITS);
 			auto shader{ ShaderLibrary::Get("Fog") };
@@ -28,6 +60,7 @@ namespace Graphics {
 			Begin();
 			shader->SetUniform("u_TexViewPosition", mPositionGBuffer, 0);
 			shader->SetUniform("u_TexFragColor", mInputTexture, 1);
+			shader->SetUniform("u_BloomColor", mBlurredBloom, 2);
 
 			shader->SetUniform("u_MinDist", Graphics::PostProcessingManager::GetInstance().GetFogMinDist());
 			shader->SetUniform("u_MaxDist", Graphics::PostProcessingManager::GetInstance().GetFogMaxDist());

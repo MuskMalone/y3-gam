@@ -75,7 +75,7 @@ namespace GUI {
     mComponentIcons{
       { typeid(Component::AudioListener), ICON_FA_EAR_LISTEN ICON_PADDING},
       { typeid(Component::AudioSource), ICON_FA_VOLUME_HIGH ICON_PADDING},
-      { typeid(Component::Bloom), ICON_FA_SUN },
+      { typeid(Component::Bloom), ICON_FA_SUN ICON_PADDING },
       { typeid(Component::Tag), ICON_FA_TAG ICON_PADDING },
       { typeid(Component::Transform), ICON_FA_ROTATE ICON_PADDING },
       { typeid(Component::BoxCollider), ICON_FA_BOMB ICON_PADDING },
@@ -1519,9 +1519,9 @@ namespace GUI {
           auto& bloom{ entity.GetComponent<Component::Bloom>() };
           ImGui::DragFloat("Threshold", &bloom.threshold, 0.01f, 0.f, 1024.f);
           ImGui::DragFloat("Intensity", &bloom.intensity, 0.01f, 0.f, 1024.f);
-          ImGui::DragFloat("Range", &bloom.range, 0.01f, 0.f, 1024.f);
+          ImGui::DragFloat("Range", &bloom.range, 0.01f, 1.f, 1024.f);
       }
-
+      
       WindowEnd(isOpen);
       return modified;
   }
@@ -2312,7 +2312,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Text>("Text");
         DrawAddComponentButton<Component::Transform>("Transform");
         DrawAddComponentButton<Component::Light>("Light");
-        DrawAddComponentButton<Component::Bloom>(" Bloom");
+        DrawAddComponentButton<Component::Bloom>("Bloom");
         DrawAddComponentButton<Component::Canvas>("Canvas");
         DrawAddComponentButton<Component::Image>("Image");
         DrawAddComponentButton<Component::Sprite2D>("Sprite2D");

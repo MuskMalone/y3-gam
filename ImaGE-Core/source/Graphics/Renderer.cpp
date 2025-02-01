@@ -243,6 +243,7 @@ namespace Graphics {
 		ShaderLibrary::Add("SkyboxPano", Shader::Create("Skybox\\Panoramic.vert.glsl", "Skybox\\Panoramic.frag.glsl"));
 		ShaderLibrary::Add("Highlight", Shader::Create("Highlight.vert.glsl", "Highlight.frag.glsl"));
 		ShaderLibrary::Add("Fog", Shader::Create("Fog.vert.glsl", "Fog.frag.glsl"));
+		ShaderLibrary::Add("Blur", Shader::Create("Blur.vert.glsl", "Blur.frag.glsl"));
 		ShaderLibrary::Add("Particle", Shader::Create("Particle\\Particle.geom.glsl", "Particle\\Particle.vert.glsl", "Particle\\Particle.frag.glsl"));
 		
 		////compute shaders
@@ -349,7 +350,7 @@ namespace Graphics {
 		Graphics::FramebufferSpec postprocessSpec;
 		postprocessSpec.width = WINDOW_WIDTH<int>;
 		postprocessSpec.height = WINDOW_HEIGHT<int>;
-		postprocessSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };	// temporarily max. 1 shadow-caster
+		postprocessSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::RGBA32F };	// temporarily max. 1 shadow-caster
 
 		PipelineSpec postprocessPSpec;
 
