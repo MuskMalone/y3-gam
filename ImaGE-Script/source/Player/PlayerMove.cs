@@ -21,9 +21,9 @@ using System.Numerics;
 
 public class  PlayerMove : Entity
 {
-  public float speed = 650f;
-  public float walkingSpeed = 650f;
-  public float runSpeed = 1200f;
+  public float speed = 750f;
+  public float walkingSpeed = 750f;
+  public float runSpeed = 1300f;
   public float isGroundedRayHeight = 3f;
   public Entity cam;
 
