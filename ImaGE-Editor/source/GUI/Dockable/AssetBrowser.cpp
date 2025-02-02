@@ -249,6 +249,9 @@ namespace GUI
         auto const str{ am.GetAsset<IGE::Assets::MaterialAsset>(guid)->mMaterial };
         am.GetAsset<IGE::Assets::MaterialAsset>(guid)->mMaterial->SetName(newPath.stem().string());
       }
+      else if (ext == gAnimationFileExt) {
+        am.ChangeAssetPath<IGE::Assets::AnimationAsset>(am.LoadRef<IGE::Assets::AnimationAsset>(original.string()), newPath.string());
+      }
       else if (ext == gSpriteFileExt) {
         am.ChangeAssetPath<IGE::Assets::TextureAsset>(am.LoadRef<IGE::Assets::TextureAsset>(original.string()), newPath.string());
       }
@@ -647,6 +650,16 @@ namespace GUI
           GUIVault::SetSelectedFile(mSelectedAsset);
         }
       }
+      else if (ext == gAnimationFileExt) {
+        if (ImGui::Selectable("Edit Animation")) {
+          try {
+            QUEUE_EVENT(Events::EditAnimation, IGE_ASSETMGR.PathToGUID(mSelectedAsset.string()));
+          }
+          catch (Debug::ExceptionBase&) {
+            IGE_DBGLOGGER.LogError("Unable to get GUID of " + mSelectedAsset.string());
+          }
+        }
+      }
 
       if (ImGui::Selectable("Delete##AssetMenu")) {
         sDeletePopup = true;
@@ -947,12 +960,20 @@ namespace
       }
       else {
         try {
-          auto guid{ IGE_ASSETMGR.PathToGUID(path.string()) };
+          IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+          auto guid{ am.PathToGUID(path.string()) };
           if (path.extension() == gMaterialFileExt) {
             Graphics::MaterialTable::DeleteMaterial(guid);
           }
-          IGE_DBGLOGGER.LogInfo("DeleteFunction called on " + path.string());
-          IGE_ASSETMGR.DeleteFunction(path.parent_path().filename().string())(guid);
+          // for animations, remove the associated editor file as well
+          else if (path.extension() == gAnimationFileExt) {
+            auto const& metadata{ am.GetMetadata<IGE::Assets::AnimationAsset>(guid).metadata };
+            if (metadata.contains("KeyframeEditorData")) {
+              std::filesystem::remove(metadata.at("KeyframeEditorData"));
+            }
+          }
+          //IGE_DBGLOGGER.LogInfo("DeleteFunction called on " + path.string());
+          am.DeleteFunction(path.parent_path().filename().string())(guid);
         }
         catch (...) {
           //do nothing

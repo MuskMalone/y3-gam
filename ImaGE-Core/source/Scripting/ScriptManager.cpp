@@ -272,6 +272,10 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(PlaySound);
   ADD_INTERNAL_CALL(PauseSound);
   ADD_INTERNAL_CALL(StopSound);
+  ADD_INTERNAL_CALL(PlayAnimation);
+  ADD_INTERNAL_CALL(PauseAnimation);
+  ADD_INTERNAL_CALL(ResumeAnimation);
+  ADD_INTERNAL_CALL(StopAnimationLoop);
   ADD_INTERNAL_CALL(GetLayerName);
   ADD_INTERNAL_CALL(GetCurrentScene);
   ADD_INTERNAL_CALL(SetCurrentScene);
@@ -737,7 +741,16 @@ MonoObject* Mono::ScriptManager::InstantiateClass(const char* className, std::ve
     {
       classCtor = mono_class_get_method_from_name(currClass, ".ctor", static_cast<int>(arg.size()));
     }
-    mono_runtime_invoke(classCtor, classInstance, arg.data(), nullptr);
+    MonoObject* exception{ nullptr };
+    mono_runtime_invoke(classCtor, classInstance, arg.data(), &exception);
+
+    // don't print in game build
+#ifndef DISTRIBUTION
+    if (exception) {
+      mono_print_unhandled_exception(exception);
+      IGE_DBGLOGGER.LogError("C# exception thrown from " + std::string(className) + " constructor. Check console for details.");
+    }
+#endif
 
 
     if (classInstance == nullptr) {
@@ -1032,37 +1045,53 @@ ECS::Entity::EntityID Mono::RaycastFromEntity(ECS::Entity::EntityID e, glm::vec3
 
 void Mono::SetSoundPitch(ECS::Entity::EntityID e, MonoString* s, float p)
 {
-    std::string name{ MonoStringToSTD(s) };
+    std::string const name{ MonoStringToSTD(s) };
     ECS::Entity entity{ e };
     entity.GetComponent<Component::AudioSource>().SetSoundPitch(name, p);
 }
 
 void Mono::SetSoundVolume(ECS::Entity::EntityID e, MonoString* s, float v) 
 {
-    std::string name{ MonoStringToSTD(s) };
+    std::string const name{ MonoStringToSTD(s) };
     ECS::Entity entity{ e };
     entity.GetComponent<Component::AudioSource>().SetSoundVolume(name, v);
 }
 
 void Mono::PlaySound(ECS::Entity::EntityID e, MonoString* s)
 {
-    std::string name{ MonoStringToSTD(s) };
+    std::string const name{ MonoStringToSTD(s) };
     ECS::Entity entity{ e };
     entity.GetComponent<Component::AudioSource>().PlaySound(name);
 }
 
 void Mono::PauseSound(ECS::Entity::EntityID e, MonoString* s)
 {
-    std::string name{ MonoStringToSTD(s) };
+    std::string const name{ MonoStringToSTD(s) };
     ECS::Entity entity{ e };
     entity.GetComponent<Component::AudioSource>().PauseSound(name);
 }
 
 void Mono::StopSound(ECS::Entity::EntityID e, MonoString* s)
 {
-    std::string name{ MonoStringToSTD(s) };
+    std::string const name{ MonoStringToSTD(s) };
     ECS::Entity entity{ e };
     entity.GetComponent<Component::AudioSource>().StopSound(name);
+}
+
+void Mono::PlayAnimation(ECS::Entity::EntityID entity, MonoString* str, bool loop) {
+  std::string const name{ MonoStringToSTD(str) };
+  ECS::Entity(entity).GetComponent<Component::Animation>().PlayAnimation(name, loop);
+}
+
+void Mono::PauseAnimation(ECS::Entity::EntityID entity) {
+  ECS::Entity(entity).GetComponent<Component::Animation>().Pause();
+}
+void Mono::ResumeAnimation(ECS::Entity::EntityID entity) {
+  ECS::Entity(entity).GetComponent<Component::Animation>().Resume();
+}
+
+void Mono::StopAnimationLoop(ECS::Entity::EntityID entity) {
+  ECS::Entity(entity).GetComponent<Component::Animation>().repeat = false;
 }
 
 glm::vec3 Mono::GetVelocity(ECS::Entity::EntityID e)

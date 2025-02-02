@@ -12,6 +12,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rttr/registration>
 #include <Core/Components/RigidBody.h>
 #include <Core/Components/Light.h>
+#include <Core/Components/Animation.h>
+#include <Asset/SmartPointer.h>
 
 #include <Audio/AudioManager.h>
 namespace
@@ -22,6 +24,22 @@ namespace
 
   rttr::type RttrTypeFromString(std::string const& str, bool& ok) {
     ok = true; return rttr::type::get_by_name(str);
+  }
+
+  IGE::Assets::GUID UintToGUID(unsigned val, bool& ok) {
+    ok = true; return IGE::Assets::GUID(val);
+  }
+
+  IGE::Assets::GUID Uint64ToGUID(uint64_t val, bool& ok) {
+    ok = true; return IGE::Assets::GUID(val);
+  }
+
+  int UintToInt(unsigned val, bool& ok) {
+    ok = true; return static_cast<int>(val);
+  }
+
+  unsigned IntToUint(int val, bool& ok) {
+    ok = true; return static_cast<unsigned>(val);
   }
 }
 
@@ -36,6 +54,10 @@ static void rttr_auto_register_reflection_function3_(); namespace {
   /* ------------------- FUNCTIONS ------------------- */
   rttr::type::register_converter_func(StringFromRttrType);
   rttr::type::register_converter_func(RttrTypeFromString);
+  rttr::type::register_converter_func(Uint64ToGUID);
+  rttr::type::register_converter_func(UintToGUID);
+  rttr::type::register_converter_func(UintToInt);
+  rttr::type::register_converter_func(IntToUint);
 
   /* ------------------- ENUMERATIONS ------------------- */
   rttr::registration::enumeration<Component::RigidBody::MotionType>("MotionType")(
@@ -53,6 +75,16 @@ static void rttr_auto_register_reflection_function3_(); namespace {
     rttr::value("SPOTLIGHT", Component::LightType::SPOTLIGHT),
     rttr::value("POINT", Component::LightType::POINT)
     );
+
+  {
+    using T = Anim::KeyframeType;
+    rttr::registration::enumeration<T>("KeyframeType")(
+      rttr::value("NONE", T::NONE),
+      rttr::value("TRANSLATION", T::TRANSLATION),
+      rttr::value("ROTATION", T::ROTATION),
+      rttr::value("SCALE", T::SCALE)
+      );
+  }
 
   rttr::registration::enumeration<Component::Camera::Type>("CameraType")(
     rttr::value("ORTHO", Component::Camera::Type::ORTHO),
