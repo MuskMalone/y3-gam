@@ -191,7 +191,7 @@ public class SpecialDialogue : Entity
     {
       dialogueSystem.SetDialogue(initialDialogue, 
         new Dialogue.Emotion[] { Dialogue.Emotion.Neutral, Dialogue.Emotion.Neutral, 
-          Dialogue.Emotion.Happy, Dialogue.Emotion.Surprised, Dialogue.Emotion.Happy}, 
+          Dialogue.Emotion.Happy, Dialogue.Emotion.Happy}, 
         mainDialogueFontScale);
       triggerInitialDialogue = false;
     }
