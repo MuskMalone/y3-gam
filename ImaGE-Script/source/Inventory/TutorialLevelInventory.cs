@@ -284,14 +284,15 @@ public class TutorialLevelInventory : Entity
 
         if (!highlighted || currentItem != selectedItem)
         {
-            if (isVisible)
-            {
-                Vector3 handPosition = new Vector3(iconPosition.X + selectionHandXOffset, iconPosition.Y, 1f);
-                InternalCalls.SetPosition(selectionHand.mEntityID, ref handPosition);
-                selectionHand.SetActive(true);
+            Vector3 inventorySelectPosition = new Vector3(iconPosition.X, iconPosition.Y, 0.5f);
+            InternalCalls.SetPosition(inventorySelectSquare.mEntityID, ref inventorySelectPosition);
 
-                Vector3 inventorySelectPosition = new Vector3(iconPosition.X, iconPosition.Y, 0.5f);
-                InternalCalls.SetPosition(inventorySelectSquare.mEntityID, ref inventorySelectPosition);
+            Vector3 handPosition = new Vector3(iconPosition.X + selectionHandXOffset, iconPosition.Y, 1f);
+            InternalCalls.SetPosition(selectionHand.mEntityID, ref handPosition);
+
+      if (isVisible)
+            {
+                selectionHand.SetActive(true);
                 inventorySelectSquare.SetActive(true);
             }
 
