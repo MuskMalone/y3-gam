@@ -585,6 +585,8 @@ namespace GUI {
               ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 20.f);
               if (ImGui::Button(ICON_FA_MINUS)) {
                 toRemove = name;
+                ImGui::PopStyleVar();
+                ImGui::PopStyleColor();
                 break;
               }
               ImGui::PopStyleVar();

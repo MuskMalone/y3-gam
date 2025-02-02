@@ -76,9 +76,6 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetVelocity(uint ID);
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static uint[] GetAllChildren(uint ID);
     #endregion
 
 
@@ -162,6 +159,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static uint FindChildByTag(uint EntityID, string s);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static uint[] GetAllChildren(uint ID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static uint FindParentByTag(string s);
