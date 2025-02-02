@@ -41,7 +41,6 @@ public class  PlayerMove : Entity
 
   public bool canLook = true;
   public bool canMove = true;
-  public 
   private double currTime = 0.0;
   private double targetTime = 1.0;
   private bool startTimer = false;
