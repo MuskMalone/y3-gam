@@ -26,6 +26,7 @@ namespace IGE {
 		public:
 			static std::shared_ptr<IGE::Physics::PhysicsSystem> GetInstance();
 			PhysicsSystem();
+			void UpdatePhysicsToTransform(ECS::Entity e);
 			~PhysicsSystem();
 
 			void Update() override;
