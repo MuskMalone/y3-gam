@@ -18,9 +18,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Systems/SystemManager/SystemManager.h>
 #include <Graphics/Renderer.h>
 
-#include <imgui/imgui.h>
-#include <imgui/backends/imgui_impl_glfw.h>
-#include <imgui/backends/imgui_impl_opengl3.h>
+#include <ImGui/imgui.h>
+#include <ImGui/backends/imgui_impl_glfw.h>
+#include <ImGui/backends/imgui_impl_opengl3.h>
 #include <csignal>
 
 #include <Events/AssetEvents.h>
@@ -103,8 +103,12 @@ namespace IGE {
             sysManager.UpdateSystems();
           }
           else {
-            sysManager.PausedUpdate<Systems::PreTransformSystem, IGE::Physics::PhysicsSystem,
-              Systems::PostTransformSystem, IGE::Audio::AudioSystem, Systems::ParticleSystem>();
+            sysManager.PausedUpdate<Systems::PreTransformSystem,
+                                    IGE::Physics::PhysicsSystem,
+                                    Systems::PostTransformSystem,
+                                    IGE::Audio::AudioSystem,
+                                    Systems::AnimationSystem,
+                                    Systems::ParticleSystem>();
             sceneManager.ExecuteMainThreadQueue();
           }
         }

@@ -340,6 +340,11 @@ namespace Mono
 		static void PauseSound(ECS::Entity::EntityID, MonoString*);
 		static void StopSound(ECS::Entity::EntityID, MonoString*);
 
+		static void PlayAnimation(ECS::Entity::EntityID entity, MonoString* name, bool loop);
+		static void PauseAnimation(ECS::Entity::EntityID entity);
+		static void ResumeAnimation(ECS::Entity::EntityID entity);
+		static void StopAnimationLoop(ECS::Entity::EntityID entity);
+
 		static glm::vec3 GetVelocity(ECS::Entity::EntityID);
 
 		static MonoString* GetLayerName(ECS::Entity::EntityID);

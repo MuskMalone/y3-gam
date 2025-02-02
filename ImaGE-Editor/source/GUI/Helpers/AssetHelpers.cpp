@@ -19,9 +19,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <shlobj_core.h>  // enable selection in file explorer
 #include "Graphics/MaterialTable.h"
 
-namespace AssetHelpers
-{
-
+namespace AssetHelpers {
   std::string GetRelativeFilePath(std::string const& filepath, std::string const& rootDir) {
     return ".." + filepath.substr(filepath.find(rootDir) + rootDir.size());
   }
@@ -86,16 +84,19 @@ namespace AssetHelpers
     return {};
   }
 
-  std::string SaveFileToExplorer(const char* extensionsFilter, unsigned numFilters, const char* initialDir)
+  std::string SaveFileToExplorer(const char* defaultExt, const char* defaultFileName, const char* extensionsFilter,
+    unsigned numFilters, const char* initialDir)
   {
     OPENFILENAMEA fileName{};
-    CHAR size[MAX_PATH]{};
+    CHAR buffer[MAX_PATH]{};
+    std::strcpy(buffer, defaultFileName);
 
     ZeroMemory(&fileName, sizeof(fileName));
     fileName.lStructSize = sizeof(fileName);
     fileName.hwndOwner = NULL;
-    fileName.lpstrFile = size;
-    fileName.nMaxFile = sizeof(size);
+    fileName.lpstrFile = buffer;
+    fileName.nMaxFile = sizeof(buffer);
+    fileName.lpstrDefExt = defaultExt;  // append default ext if not specified
     fileName.lpstrFilter = extensionsFilter;
     fileName.nFilterIndex = numFilters;			// number of filters
     fileName.lpstrFileTitle = NULL;
@@ -105,7 +106,8 @@ namespace AssetHelpers
     fileName.Flags = OFN_OVERWRITEPROMPT | OFN_NOCHANGEDIR;
 
     if (GetSaveFileNameA(&fileName)) {
-      std::string const newFile{ GetRelativeFilePath(fileName.lpstrFile) };
+      std::string newFile{ GetRelativeFilePath(fileName.lpstrFile) };
+
       std::ofstream ofs{ newFile };
       if (ofs) {
         ofs.close();

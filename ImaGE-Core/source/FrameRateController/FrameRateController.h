@@ -3,6 +3,9 @@
 #include <map>
 #include <Singleton/ThreadSafeSingleton.h>
 
+// FrameRateController
+#define IGE_FRC Performance::FrameRateController::GetInstance()
+
 namespace Performance {
   class FrameRateController : public ThreadSafeSingleton<FrameRateController> {
   public:

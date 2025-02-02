@@ -20,4 +20,5 @@
 #include "Sprite2D.h"
 #include "Skybox.h"
 #include "Interactive.h"
+#include "Animation.h"
 #include "EmitterSystem.h"

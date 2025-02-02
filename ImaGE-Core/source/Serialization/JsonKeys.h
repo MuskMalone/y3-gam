@@ -38,3 +38,5 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #define JSON_SCRIPT_DMI_DATA_KEY    "data"
 #define JSON_SCRIPT_DMI_TYPE_KEY    "type"
 #define JSON_SCRIPT_DMI_SF_KEY      "scriptField"
+
+#define JSON_ANIM_NODE_ID_KEY       "nodeId"

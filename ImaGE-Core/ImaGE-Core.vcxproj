@@ -176,7 +176,10 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="source\Animation\AnimationData.h" />
+    <ClInclude Include="source\Animation\Keyframe.h" />
     <ClInclude Include="source\Application.h" />
+    <ClInclude Include="source\Asset\Assetables\Animation\AnimationAsset.h" />
     <ClInclude Include="source\Asset\AssetManager.h" />
     <ClInclude Include="source\Asset\AssetMetadata.h" />
     <ClInclude Include="source\Asset\AssetUtils.h" />
@@ -223,7 +226,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClInclude Include="source\Core\Components\Tag.h" />
     <ClInclude Include="source\Core\Components\Text.h" />
     <ClInclude Include="source\Core\Components\Transform.h" />
-    <ClInclude Include="source\Core\Components\Tween.h" />
+    <ClInclude Include="source\Core\Components\Animation.h" />
     <ClInclude Include="source\Core\Entity.h" />
     <ClInclude Include="source\Core\EntityManager.h" />
     <ClInclude Include="source\Core\GUID.h" />
@@ -278,6 +281,8 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClInclude Include="source\External\fmod\include\fmod_output.h" />
     <ClInclude Include="source\External\glad\include\KHR\khrplatform.h" />
     <ClInclude Include="source\External\glad\include\glad\glad.h" />
+    <ClInclude Include="source\External\ImNodes\imnodes.h" />
+    <ClInclude Include="source\External\ImNodes\imnodes_internal.h" />
     <ClInclude Include="source\External\mono\include\mono\jit\jit.h" />
     <ClInclude Include="source\External\mono\include\mono\jit\mono-private-unstable.h" />
     <ClInclude Include="source\External\mono\include\mono\metadata\appdomain.h" />
@@ -387,9 +392,11 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClInclude Include="source\Singleton\Singleton.h" />
     <ClInclude Include="source\Singleton\ThreadSafeSingleton.h" />
     <ClInclude Include="source\pch.h" />
+    <ClInclude Include="source\Core\Systems\AnimationSystem\AnimationSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
+    <ClCompile Include="source\Asset\Assetables\Animation\AnimationAsset.cpp" />
     <ClCompile Include="source\Asset\AssetManager.cpp" />
     <ClCompile Include="source\Asset\AssetUtils.cpp" />
     <ClCompile Include="source\Asset\Assetables\Audio\AudioAsset.cpp" />
@@ -471,6 +478,11 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClCompile Include="source\External\glad.c">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="source\External\ImNodes\imnodes.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="source\External\stb\stb_image.cpp.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -525,11 +537,17 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClCompile Include="source\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="source\Core\Systems\AnimationSystem\AnimationSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ImaGE-Script\ImaGE-Script.csproj">
       <Project>{0AEC9CEB-F64E-2C90-9FD4-64468B16F812}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Build-ImaGE-Core.lua" />
+    <None Include="source\External\ImNodes\LICENSE.md" />
+    <None Include="source\External\ImNodes\README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

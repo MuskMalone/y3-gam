@@ -450,7 +450,6 @@
                 116,
                 151,
                 755,
-                1048655,
                 1048685,
                 1048730,
                 2097156,
@@ -1147,8 +1146,8 @@
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "staticFriction": 0.0,
-                        "dynamicFriction": 0.0,
+                        "staticFriction": 1.0,
+                        "dynamicFriction": 1.0,
                         "restitution": 0.0,
                         "gravityFactor": 0.0,
                         "linearDamping": 0.9800000190734863,
@@ -1745,11 +1744,11 @@
                             "y": 0.0,
                             "z": 1.03297058433471e-25
                         },
-                        "staticFriction": 1.0,
-                        "dynamicFriction": 1.0,
+                        "staticFriction": 0.800000011920929,
+                        "dynamicFriction": 0.800000011920929,
                         "restitution": 0.0,
-                        "gravityFactor": 50.0,
-                        "linearDamping": 10.0,
+                        "gravityFactor": 40.0,
+                        "linearDamping": 1.0,
                         "motionType": "DYNAMIC",
                         "axisLock": 0,
                         "angularAxisLock": 5
@@ -1794,28 +1793,21 @@
                                         }
                                     },
                                     {
-                                        "data": 3000.0,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "jumpForce"
-                                        }
-                                    },
-                                    {
-                                        "data": 1200.0,
+                                        "data": 1300.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "runSpeed"
                                         }
                                     },
                                     {
-                                        "data": 650.0,
+                                        "data": 750.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "speed"
                                         }
                                     },
                                     {
-                                        "data": 650.0,
+                                        "data": 750.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "walkingSpeed"
@@ -2218,7 +2210,6 @@
                 1,
                 31,
                 52,
-                69,
                 74,
                 587,
                 588,
@@ -2226,7 +2217,6 @@
                 1104,
                 1112,
                 1048609,
-                1048643,
                 2097426,
                 3145886,
                 3146283,
@@ -3116,12 +3106,12 @@
                         "position": {
                             "x": 71.20696258544922,
                             "y": 3.7089924812316896,
-                            "z": 38.700775146484378
+                            "z": 8.225383758544922
                         },
                         "scale": {
                             "x": 34.18004608154297,
                             "y": 4.757999897003174,
-                            "z": 52.15585708618164
+                            "z": 148.45213317871095
                         },
                         "rotation": {
                             "x": 0.0,
@@ -3137,12 +3127,12 @@
                         "worldPos": {
                             "x": 71.20695495605469,
                             "y": 3.7089924812316896,
-                            "z": 38.700775146484378
+                            "z": 8.225383758544922
                         },
                         "worldScale": {
                             "x": 34.18004608154297,
                             "y": 4.757999897003174,
-                            "z": 52.15585708618164
+                            "z": 148.45213317871095
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -3155,6 +3145,13 @@
                 {
                     "Layer": {
                         "layerName": "Environment"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        }
                     }
                 },
                 {
@@ -3174,7 +3171,7 @@
                         "scale": {
                             "x": 17.090023040771486,
                             "y": 2.378999948501587,
-                            "z": 26.04918670654297
+                            "z": 74.22606658935547
                         },
                         "positionOffset": {
                             "x": 0.0,
@@ -3233,9 +3230,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 10.94646167755127,
+                            "x": 10.950451850891114,
                             "y": 8.766958236694336,
-                            "z": 3.1845970153808595
+                            "z": 3.186717987060547
                         },
                         "scale": {
                             "x": 1.076055645942688,
@@ -3254,9 +3251,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 56.78459548950195,
+                            "x": 56.78671646118164,
                             "y": 18.486190795898439,
-                            "z": 47.068790435791019
+                            "z": 47.06619644165039
                         },
                         "worldScale": {
                             "x": 0.6994361281394959,
@@ -3274,6 +3271,13 @@
                 {
                     "Layer": {
                         "layerName": "Environment"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        }
                     }
                 },
                 {
@@ -3393,6 +3397,13 @@
                 {
                     "Layer": {
                         "layerName": "Environment"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        }
                     }
                 },
                 {
@@ -3583,6 +3594,13 @@
                     }
                 },
                 {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        }
+                    }
+                },
+                {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
@@ -3599,7 +3617,7 @@
                         "scale": {
                             "x": 5.037999629974365,
                             "y": 15.414999961853028,
-                            "z": 57.86045837402344
+                            "z": 57.92430114746094
                         },
                         "positionOffset": {
                             "x": 0.0,
@@ -3718,7 +3736,7 @@
                     "Transform": {
                         "position": {
                             "x": 70.26195526123047,
-                            "y": 31.054061889648439,
+                            "y": 30.699621200561525,
                             "z": 6.052089691162109
                         },
                         "scale": {
@@ -3739,7 +3757,7 @@
                         },
                         "worldPos": {
                             "x": 70.26194763183594,
-                            "y": 31.054061889648439,
+                            "y": 30.699621200561525,
                             "z": 6.052089691162109
                         },
                         "worldScale": {
@@ -3907,6 +3925,13 @@
                     }
                 },
                 {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        }
+                    }
+                },
+                {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
@@ -3923,126 +3948,7 @@
                         "scale": {
                             "x": 16.72585678100586,
                             "y": 13.48012924194336,
-                            "z": 0.8686946630477905
-                        },
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
-                    }
-                },
-                {
-                    "RigidBody": {
-                        "velocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "angularVelocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "staticFriction": 0.0,
-                        "dynamicFriction": 0.0,
-                        "restitution": 0.0,
-                        "gravityFactor": 0.0,
-                        "linearDamping": 0.9800000190734863,
-                        "motionType": "KINEMATIC",
-                        "axisLock": 7,
-                        "angularAxisLock": 7
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 69,
-            "Parent": 46,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Pit Room Platform",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 83.48416900634766,
-                            "y": 11.728633880615235,
-                            "z": -30.98944091796875
-                        },
-                        "scale": {
-                            "x": 3.0357675552368166,
-                            "y": 11.45081615447998,
-                            "z": 15.15984058380127
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 83.48416137695313,
-                            "y": 11.728633880615235,
-                            "z": -30.98944091796875
-                        },
-                        "worldScale": {
-                            "x": 3.0357675552368166,
-                            "y": 11.45081615447998,
-                            "z": 15.15984058380127
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Environment"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": false,
-                        "receiveShadows": true
-                    }
-                },
-                {
-                    "BoxCollider": {
-                        "scale": {
-                            "x": 1.5178837776184083,
-                            "y": 5.72540807723999,
-                            "z": 7.571566104888916
+                            "z": 0.8696531653404236
                         },
                         "positionOffset": {
                             "x": 0.0,
@@ -6709,6 +6615,13 @@
                 "subDataId": 3,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": false
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -6748,13 +6661,6 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": false
                         }
                     },
                     {
@@ -9760,7 +9666,9 @@
                 765,
                 766,
                 1048630,
-                1048631
+                1048631,
+                2097219,
+                2097231
             ],
             "Components": [
                 {
@@ -10473,6 +10381,7 @@
                 142,
                 145,
                 1015,
+                1048645,
                 1048903,
                 1049596,
                 1049630
@@ -10882,6 +10791,13 @@
                 "subDataId": 3,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": false
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -10921,13 +10837,6 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": false
                         }
                     },
                     {
@@ -11056,6 +10965,13 @@
                 "subDataId": 3,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": false
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -11095,13 +11011,6 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": false
                         }
                     },
                     {
@@ -11412,6 +11321,13 @@
                 "subDataId": 3,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": false
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -11451,13 +11367,6 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": false
                         }
                     },
                     {
@@ -11627,6 +11536,13 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Props_Vase2",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -11666,13 +11582,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Props_Vase2",
-                            "isActive": true
                         }
                     },
                     {
@@ -11779,6 +11688,13 @@
                 "subDataId": 3,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": false
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -11818,13 +11734,6 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": false
                         }
                     },
                     {
@@ -11969,6 +11878,13 @@
                 "subDataId": 3,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": false
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -12008,13 +11924,6 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": false
                         }
                     },
                     {
@@ -30510,6 +30419,13 @@
                     }
                 },
                 {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        }
+                    }
+                },
+                {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
@@ -30578,7 +30494,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Pit Room Door Wall (Copy)",
+                        "tag": "a",
                         "isActive": true
                     }
                 },
@@ -30626,6 +30542,13 @@
                 {
                     "Layer": {
                         "layerName": "Environment"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        }
                     }
                 },
                 {
@@ -48129,171 +48052,6 @@
             ]
         },
         {
-            "ID": 1018,
-            "Parent": null,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "TransitionCube",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 58.93669128417969,
-                            "y": 18.01188087463379,
-                            "z": 53.2342643737793
-                        },
-                        "scale": {
-                            "x": 3.859999656677246,
-                            "y": 23.736936569213868,
-                            "z": 20.984193801879884
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 58.93669128417969,
-                            "y": 18.01188087463379,
-                            "z": 53.2342643737793
-                        },
-                        "worldScale": {
-                            "x": 3.859999656677246,
-                            "y": 23.736936569213868,
-                            "z": 20.984193801879884
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 9688658947475917145
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": false,
-                        "receiveShadows": true
-                    }
-                },
-                {
-                    "BoxCollider": {
-                        "scale": {
-                            "x": 1.929999828338623,
-                            "y": 11.868468284606934,
-                            "z": 10.492096900939942
-                        },
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": true
-                    }
-                },
-                {
-                    "RigidBody": {
-                        "velocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "angularVelocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "staticFriction": 0.0,
-                        "dynamicFriction": 0.0,
-                        "restitution": 0.0,
-                        "gravityFactor": 0.0,
-                        "linearDamping": 0.9800000190734863,
-                        "motionType": "KINEMATIC",
-                        "axisLock": 7,
-                        "angularAxisLock": 7
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 1018,
-                                "scriptName": "EndSceneFadeToBlack",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": 3.0,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "fadeDuration"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 758,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "fadeImage"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 40,
-                                            "scriptName": "PlayerMove"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "playerMove"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        {
             "ID": 1033,
             "Parent": 46,
             "Child Entities": [],
@@ -49285,7 +49043,7 @@
                         "position": {
                             "x": 5.87576961517334,
                             "y": 25.000194549560548,
-                            "z": -48.70994186401367
+                            "z": -23.97988510131836
                         },
                         "scale": {
                             "x": 0.7599999904632568,
@@ -49306,7 +49064,7 @@
                         "worldPos": {
                             "x": 5.87576961517334,
                             "y": 25.000194549560548,
-                            "z": -48.70994186401367
+                            "z": -23.97988510131836
                         },
                         "worldScale": {
                             "x": 0.7599999904632568,
@@ -49344,7 +49102,7 @@
                         "position": {
                             "x": 0.00001049041748046875,
                             "y": 0.000133514404296875,
-                            "z": 0.0
+                            "z": -24500.140625
                         },
                         "scale": {
                             "x": 0.47999998927116396,
@@ -49352,20 +49110,20 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
+                            "x": -9.099629210140847e-7,
+                            "y": 1.0,
+                            "z": -9.099629210140847e-7,
+                            "w": 8.280325210219264e-13
                         },
                         "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
+                            "x": -179.99989318847657,
+                            "y": -0.0,
+                            "z": -179.99989318847657
                         },
                         "worldPos": {
                             "x": 5.875777721405029,
                             "y": 25.000253677368165,
-                            "z": -48.70994186401367
+                            "z": -48.48002624511719
                         },
                         "worldScale": {
                             "x": 0.36479997634887698,
@@ -49373,10 +49131,10 @@
                             "z": 0.0010000000474974514
                         },
                         "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
+                            "x": -9.099629210140847e-7,
+                            "y": 1.0,
+                            "z": -9.099629210140847e-7,
+                            "w": 8.280325210219264e-13
                         }
                     }
                 },
@@ -49388,7 +49146,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 0
+                            "ID": 9907430074531686588
                         }
                     }
                 },
@@ -49925,6 +49683,13 @@
                 "subDataId": 3,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -49964,13 +49729,6 @@
                                 "z": 0.0,
                                 "w": 0.7071068286895752
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": true
                         }
                     },
                     {
@@ -50312,6 +50070,33 @@
                         }
                     },
                     {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.099999904632568,
+                                "y": 4.918574810028076,
+                                "z": 0.908768355846405
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    },
+                    {
                         "key": "Layer",
                         "value": {
                             "layerName": "Environment"
@@ -50339,6 +50124,33 @@
                         }
                     },
                     {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.099999904632568,
+                                "y": 7.2537522315979,
+                                "z": 0.908768355846405
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    },
+                    {
                         "key": "Layer",
                         "value": {
                             "layerName": "Environment"
@@ -50355,7 +50167,6 @@
                 1102,
                 1103,
                 1105,
-                1108,
                 1114,
                 1116,
                 1117,
@@ -50367,6 +50178,13 @@
                 },
                 "subDataId": 0,
                 "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Stair Head",
+                            "isActive": true
+                        }
+                    },
                     {
                         "key": "Transform",
                         "value": {
@@ -50410,10 +50228,30 @@
                         }
                     },
                     {
-                        "key": "Tag",
+                        "key": "BoxCollider",
                         "value": {
-                            "tag": "Stair Head",
-                            "isActive": true
+                            "scale": {
+                                "x": 4.099999904632568,
+                                "y": 7.940000057220459,
+                                "z": 0.9782022833824158
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
                         }
                     },
                     {
@@ -50444,6 +50282,33 @@
                         }
                     },
                     {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.099999904632568,
+                                "y": 4.195086479187012,
+                                "z": 0.908768355846405
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    },
+                    {
                         "key": "Layer",
                         "value": {
                             "layerName": "Environment"
@@ -50463,6 +50328,33 @@
                 },
                 "subDataId": 4,
                 "componentData": [
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.099999904632568,
+                                "y": 6.603954792022705,
+                                "z": 0.908768355846405
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    },
                     {
                         "key": "Layer",
                         "value": {
@@ -50484,79 +50376,36 @@
                 "subDataId": 5,
                 "componentData": [
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 1108,
-            "Parent": 1104,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 6262955587491398611
-                },
-                "subDataId": 8,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 1.0,
-                            "dynamicFriction": 1.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "KINEMATIC",
-                            "axisLock": 7,
-                            "angularAxisLock": 7
-                        }
-                    },
-                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
-                                "x": 4.0,
-                                "y": 1.2000000476837159,
-                                "z": 9.300000190734864
+                                "x": 4.099999904632568,
+                                "y": 6.031038284301758,
+                                "z": 0.908768355846405
                             },
                             "positionOffset": {
                                 "x": 0.0,
-                                "y": 2.0999999046325685,
-                                "z": 1.0
+                                "y": 0.0,
+                                "z": 0.0
                             },
                             "degreeRotationOffsetEuler": {
-                                "x": -31.0,
+                                "x": 0.0,
                                 "y": 0.0,
                                 "z": 0.0
                             },
                             "rotationOffset": {
-                                "x": -0.2672383785247803,
+                                "x": 0.0,
                                 "y": 0.0,
                                 "z": 0.0,
-                                "w": 0.9636304378509522
+                                "w": 1.0
                             },
                             "sensor": false
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -50573,6 +50422,33 @@
                 },
                 "subDataId": 7,
                 "componentData": [
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.099999904632568,
+                                "y": 4.918574810028076,
+                                "z": 0.908768355846405
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    },
                     {
                         "key": "Layer",
                         "value": {
@@ -50594,6 +50470,33 @@
                 "subDataId": 1,
                 "componentData": [
                     {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.099999904632568,
+                                "y": 4.195086479187012,
+                                "z": 0.908768355846405
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    },
+                    {
                         "key": "Layer",
                         "value": {
                             "layerName": "Environment"
@@ -50614,6 +50517,33 @@
                 "subDataId": 6,
                 "componentData": [
                     {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.099999904632568,
+                                "y": 5.473169326782227,
+                                "z": 0.908768355846405
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    },
+                    {
                         "key": "Layer",
                         "value": {
                             "layerName": "Environment"
@@ -50632,7 +50562,6 @@
                 1109,
                 1110,
                 1111,
-                1113,
                 1115,
                 1119
             ],
@@ -50685,79 +50614,36 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 1113,
-            "Parent": 1112,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 6262955587491398611
-                },
-                "subDataId": 8,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 1.0,
-                            "dynamicFriction": 1.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "KINEMATIC",
-                            "axisLock": 7,
-                            "angularAxisLock": 7
-                        }
-                    },
-                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
-                                "x": 4.0,
-                                "y": 1.2000000476837159,
-                                "z": 9.300000190734864
+                                "x": 4.099999904632568,
+                                "y": 7.940000057220459,
+                                "z": 0.9782022833824158
                             },
                             "positionOffset": {
                                 "x": 0.0,
-                                "y": 2.0999999046325685,
-                                "z": 1.0
+                                "y": 0.0,
+                                "z": 0.0
                             },
                             "degreeRotationOffsetEuler": {
-                                "x": -31.0,
+                                "x": 0.0,
                                 "y": 0.0,
                                 "z": 0.0
                             },
                             "rotationOffset": {
-                                "x": -0.2672383785247803,
+                                "x": 0.0,
                                 "y": 0.0,
                                 "z": 0.0,
-                                "w": 0.9636304378509522
+                                "w": 1.0
                             },
                             "sensor": false
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -50782,6 +50668,33 @@
                         }
                     },
                     {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.099999904632568,
+                                "y": 3.514685869216919,
+                                "z": 0.9688934683799744
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    },
+                    {
                         "key": "Layer",
                         "value": {
                             "layerName": "Environment"
@@ -50801,6 +50714,33 @@
                 },
                 "subDataId": 3,
                 "componentData": [
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.099999904632568,
+                                "y": 7.2537522315979,
+                                "z": 0.908768355846405
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    },
                     {
                         "key": "Layer",
                         "value": {
@@ -50826,6 +50766,33 @@
                         "value": {
                             "tag": "Stair Part",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.099999904632568,
+                                "y": 6.603954792022705,
+                                "z": 0.908768355846405
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
                         }
                     },
                     {
@@ -50856,6 +50823,33 @@
                         }
                     },
                     {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.099999904632568,
+                                "y": 5.473169326782227,
+                                "z": 0.908768355846405
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    },
+                    {
                         "key": "Layer",
                         "value": {
                             "layerName": "Environment"
@@ -50883,6 +50877,33 @@
                         }
                     },
                     {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.099999904632568,
+                                "y": 6.031038284301758,
+                                "z": 0.908768355846405
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    },
+                    {
                         "key": "Layer",
                         "value": {
                             "layerName": "Environment"
@@ -50902,6 +50923,33 @@
                 },
                 "subDataId": 2,
                 "componentData": [
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.099999904632568,
+                                "y": 3.514685869216919,
+                                "z": 0.9688934683799744
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    },
                     {
                         "key": "Layer",
                         "value": {
@@ -50943,6 +50991,13 @@
                 "subDataId": 3,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": false
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -50982,13 +51037,6 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": false
                         }
                     },
                     {
@@ -51196,6 +51244,13 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "ArcDoor",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -51235,13 +51290,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "ArcDoor",
-                            "isActive": true
                         }
                     },
                     {
@@ -51456,8 +51504,8 @@
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "staticFriction": 0.0,
-                        "dynamicFriction": 0.0,
+                        "staticFriction": 1.0,
+                        "dynamicFriction": 1.0,
                         "restitution": 0.0,
                         "gravityFactor": 0.0,
                         "linearDamping": 0.9800000190734863,
@@ -52204,123 +52252,40 @@
             ]
         },
         {
-            "ID": 1048643,
-            "Parent": 46,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Pit Room Ground",
-                        "isActive": true
-                    }
+            "ID": 1048645,
+            "Parent": 269,
+            "Child Entities": [
+                1049689,
+                2097343,
+                3146001
+            ],
+            "Position": {
+                "x": 71.2135009765625,
+                "y": 29.068328857421876,
+                "z": 9.321282386779786
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
                 },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 68.17938232421875,
-                            "y": 3.708998203277588,
-                            "z": -36.219932556152347
-                        },
-                        "scale": {
-                            "x": 34.18000030517578,
-                            "y": 4.757999897003174,
-                            "z": 29.804000854492189
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 68.17937469482422,
-                            "y": 3.708998203277588,
-                            "z": -36.219932556152347
-                        },
-                        "worldScale": {
-                            "x": 34.18000030517578,
-                            "y": 4.757999897003174,
-                            "z": 29.804000854492189
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "IndoorLight",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
                         }
                     }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Environment"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": false,
-                        "receiveShadows": true
-                    }
-                },
-                {
-                    "BoxCollider": {
-                        "scale": {
-                            "x": 17.09000015258789,
-                            "y": 2.378999948501587,
-                            "z": 14.885576248168946
-                        },
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
-                    }
-                },
-                {
-                    "RigidBody": {
-                        "velocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "angularVelocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "staticFriction": 0.0,
-                        "dynamicFriction": 0.0,
-                        "restitution": 0.0,
-                        "gravityFactor": 0.0,
-                        "linearDamping": 0.9800000190734863,
-                        "motionType": "KINEMATIC",
-                        "axisLock": 7,
-                        "angularAxisLock": 7
-                    }
-                }
-            ]
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 1048646,
@@ -52471,127 +52436,6 @@
                     }
                 }
             ]
-        },
-        {
-            "ID": 1048655,
-            "Parent": 11,
-            "Child Entities": [
-                1048767
-            ],
-            "Prefab": {
-                "GUID": {
-                    "ID": 10628198478850232042
-                },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "Transform",
-                        "value": {
-                            "position": {
-                                "x": 84.12600708007813,
-                                "y": 9.240816116333008,
-                                "z": 44.43792724609375
-                            },
-                            "scale": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
-                            },
-                            "rotation": {
-                                "x": -3.5712730550585549e-9,
-                                "y": -0.7041940689086914,
-                                "z": 3.468784370852518e-9,
-                                "w": 0.7100075483322144
-                            },
-                            "eulerAngles": {
-                                "x": -0.00006938880687812343,
-                                "y": -89.52894592285156,
-                                "z": 0.00006938050501048565
-                            },
-                            "worldPos": {
-                                "x": 84.12600708007813,
-                                "y": 9.240816116333008,
-                                "z": 44.43792724609375
-                            },
-                            "worldScale": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
-                            },
-                            "worldRot": {
-                                "x": -3.5712730550585549e-9,
-                                "y": -0.7041940689086914,
-                                "z": 3.468784370852518e-9,
-                                "w": 0.7100075483322144
-                            }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Inside Pit Painting",
-                            "isActive": true
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Puzzle"
-                        }
-                    },
-                    {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 0.0,
-                            "dynamicFriction": 0.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "DYNAMIC",
-                            "axisLock": 0,
-                            "angularAxisLock": 0
-                        }
-                    },
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 3.200000047683716,
-                                "y": 3.069999933242798,
-                                "z": 0.20000000298023225
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": -5.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": -0.04361938685178757,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 0.9990482330322266
-                            },
-                            "sensor": false
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
         },
         {
             "ID": 1048656,
@@ -54417,39 +54261,6 @@
                     }
                 }
             ]
-        },
-        {
-            "ID": 1048767,
-            "Parent": 1048655,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 10628198478850232042
-                },
-                "subDataId": 1,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Puzzle"
-                        }
-                    },
-                    {
-                        "key": "Mesh",
-                        "value": {
-                            "meshName": "pCube1",
-                            "GUID": {
-                                "ID": 3937837836436612788
-                            },
-                            "submeshIdx": 0,
-                            "isCustomMesh": true,
-                            "castShadows": false,
-                            "receiveShadows": true
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
         },
         {
             "ID": 1048768,
@@ -62344,6 +62155,33 @@
             ]
         },
         {
+            "ID": 1049689,
+            "Parent": 1048645,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "pCylinder10",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 2097156,
             "Parent": 11,
             "Child Entities": [
@@ -62513,6 +62351,258 @@
                 {
                     "Layer": {
                         "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2097219,
+            "Parent": 225,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Pit Room Door Wall (Copy) (Copy)",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 86.94866943359375,
+                            "y": 8.766958236694336,
+                            "z": 2.1086082458496095
+                        },
+                        "scale": {
+                            "x": 3.4596405029296877,
+                            "y": 39.268001556396487,
+                            "z": 98.5432357788086
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.7071068286895752,
+                            "z": 0.0,
+                            "w": 0.7071068286895752
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -90.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 55.70859909057617,
+                            "y": 18.486190795898439,
+                            "z": -2.3326492309570314
+                        },
+                        "worldScale": {
+                            "x": 2.2487661838531496,
+                            "y": 25.916881561279298,
+                            "z": 98.5432357788086
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0000001192092896
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Environment"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 1.1243830919265748,
+                            "y": 12.958440780639649,
+                            "z": 49.2716178894043
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2097231,
+            "Parent": 225,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Pit Room Door Wall (Copy)",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -9.909350395202637,
+                            "y": 8.766958236694336,
+                            "z": 2.106769561767578
+                        },
+                        "scale": {
+                            "x": 3.4596405029296877,
+                            "y": 39.268001556396487,
+                            "z": 5.489640712738037
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.7071068286895752,
+                            "z": 0.0,
+                            "w": 0.7071068286895752
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -90.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 55.70676803588867,
+                            "y": 18.486190795898439,
+                            "z": 60.62506866455078
+                        },
+                        "worldScale": {
+                            "x": 2.2487661838531496,
+                            "y": 25.916881561279298,
+                            "z": 5.489640712738037
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0000001192092896
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Environment"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8297051694531430861
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.36920735239982607,
+                            "y": 12.410629272460938,
+                            "z": 2.7717456817626955
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7
                     }
                 }
             ]
@@ -62976,6 +63066,33 @@
             ]
         },
         {
+            "ID": 2097343,
+            "Parent": 1048645,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "pSphere1",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 2097424,
             "Parent": 2097426,
             "Child Entities": [],
@@ -63049,113 +63166,6 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 2097425,
-            "Parent": 4194552,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Stair Collider",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 2.4959444999694826e-7,
-                            "z": -3.748929500579834
-                        },
-                        "scale": {
-                            "x": 0.08764733374118805,
-                            "y": 0.062972292304039,
-                            "z": 0.5111417174339294
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 5.850792407989502,
-                            "y": 0.6156737804412842,
-                            "z": -19.5789794921875
-                        },
-                        "worldScale": {
-                            "x": 1.517087697982788,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0000021020557596784785,
-                            "y": 1.0,
-                            "z": 0.0000021020557596784785,
-                            "w": 4.418638632069927e-12
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Environment"
-                    }
-                },
-                {
-                    "BoxCollider": {
-                        "scale": {
-                            "x": 8.800000190734864,
-                            "y": 4.400000095367432,
-                            "z": 9.300000190734864
-                        },
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": -0.699999988079071,
-                            "z": 2.5999999046325685
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": -31.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": -0.2672383785247803,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 0.9636304378509522
-                        },
-                        "sensor": false
-                    }
-                },
-                {
-                    "RigidBody": {
-                        "velocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "angularVelocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "staticFriction": 1.0,
-                        "dynamicFriction": 1.0,
-                        "restitution": 0.0,
-                        "gravityFactor": 0.0,
-                        "linearDamping": 0.9800000190734863,
-                        "motionType": "KINEMATIC",
-                        "axisLock": 7,
-                        "angularAxisLock": 7
                     }
                 }
             ]
@@ -64057,6 +64067,32 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 8.654500007629395,
+                            "y": 7.2537522315979,
+                            "z": 0.908768355846405
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
                     }
                 }
             ]
@@ -64980,6 +65016,32 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 8.654500007629395,
+                            "y": 5.473169326782227,
+                            "z": 0.908768355846405
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
                     }
                 }
             ]
@@ -67487,6 +67549,32 @@
                         "castShadows": true,
                         "receiveShadows": true
                     }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 8.654500007629395,
+                            "y": 4.195086479187012,
+                            "z": 0.908768355846405
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
                 }
             ]
         },
@@ -67720,6 +67808,32 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 8.654500007629395,
+                            "y": 6.031038284301758,
+                            "z": 0.908768355846405
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
                     }
                 }
             ]
@@ -69732,6 +69846,106 @@
             ]
         },
         {
+            "ID": 3146001,
+            "Parent": 1048645,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8127129382647120287
+                },
+                "subDataId": 3,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 0.0,
+                                "y": -4.0,
+                                "z": 0.11449146270751953
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "rotation": {
+                                "x": 0.7107994556427002,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 0.7033947110176086
+                            },
+                            "eulerAngles": {
+                                "x": 90.5999984741211,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": 71.2135009765625,
+                                "y": 25.068328857421876,
+                                "z": 9.435773849487305
+                            },
+                            "worldScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "worldRot": {
+                                "x": 0.7107994556427002,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 0.7033947110176086
+                            }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9799330830574036,
+                                "y": 0.9335347414016724,
+                                "z": 0.16386844217777253
+                            },
+                            "intensity": 2.0,
+                            "innerAngle": 143.0,
+                            "outerAngle": 53.0,
+                            "range": 93.0,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 3146022,
             "Parent": 702,
             "Child Entities": [],
@@ -70517,6 +70731,13 @@
                 "subDataId": 1,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Vase2",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -70556,13 +70777,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Vase2",
-                            "isActive": true
                         }
                     },
                     {
@@ -70847,12 +71061,6 @@
                 "subDataId": 13,
                 "componentData": [
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -70877,6 +71085,12 @@
                                 "w": 1.0
                             },
                             "sensor": false
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
                         }
                     }
                 ],
@@ -71497,12 +71711,6 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -71527,6 +71735,12 @@
                                 "w": 1.0
                             },
                             "sensor": false
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
                         }
                     }
                 ],
@@ -71590,6 +71804,13 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "ArcDoor",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -71629,13 +71850,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "ArcDoor",
-                            "isActive": true
                         }
                     },
                     {
@@ -72209,6 +72423,32 @@
                         "castShadows": true,
                         "receiveShadows": true
                     }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 8.654500007629395,
+                            "y": 4.918574810028076,
+                            "z": 0.908768355846405
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
                 }
             ]
         },
@@ -72416,7 +72656,6 @@
             "ID": 4194552,
             "Parent": 46,
             "Child Entities": [
-                2097425,
                 2097478,
                 2097534,
                 2097717,
@@ -72495,6 +72734,32 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 8.654500007629395,
+                            "y": 7.940000057220459,
+                            "z": 0.9782022833824158
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
                     }
                 }
             ]
@@ -73273,6 +73538,32 @@
                         "castShadows": true,
                         "receiveShadows": true
                     }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 8.654500007629395,
+                            "y": 6.603954792022705,
+                            "z": 0.908768355846405
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
                 }
             ]
         },
@@ -73448,6 +73739,32 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 8.654500007629395,
+                            "y": 3.514685869216919,
+                            "z": 0.9688934683799744
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
                     }
                 }
             ]
@@ -73679,6 +73996,13 @@
                 "subDataId": 1,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "ArcDoor Wall",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -73718,13 +74042,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "ArcDoor Wall",
-                            "isActive": true
                         }
                     },
                     {
@@ -73775,6 +74092,13 @@
                 "subDataId": 1,
                 "componentData": [
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "ArcDoor Wall",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -73814,13 +74138,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "ArcDoor Wall",
-                            "isActive": true
                         }
                     },
                     {

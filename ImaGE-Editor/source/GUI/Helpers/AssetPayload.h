@@ -31,6 +31,7 @@ namespace GUI
       AUDIO,
       FONT,
       SHADER,
+      ANIMATION,
       DIRECTORY
     };
 
@@ -48,11 +49,14 @@ namespace GUI
       else if (fileExt == gPrefabFileExt) {
         mAssetType = AssetType::PREFAB;
       }
-      else if (IGE::Assets::cMeshExtensions.find(fileExt) != IGE::Assets::cMeshExtensions.end()) {
-        mAssetType = AssetType::MODEL;
-      }
       else if (fileExt == gMaterialFileExt) {
         mAssetType = AssetType::MATERIAL;
+      }
+      else if (fileExt == gAnimationFileExt) {
+        mAssetType = AssetType::ANIMATION;
+      }
+      else if (IGE::Assets::cMeshExtensions.find(fileExt) != IGE::Assets::cMeshExtensions.end()) {
+        mAssetType = AssetType::MODEL;
       }
       else if (IGE::Assets::cAudioExtensions.find(fileExt) != IGE::Assets::cAudioExtensions.end()) {
           mAssetType = AssetType::AUDIO;

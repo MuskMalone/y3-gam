@@ -95,6 +95,11 @@ void main(){
     vec4 albedoTexture = texture2D(u_AlbedoMaps[int(v_MaterialIdx) + u_MatIdxOffset], texCoord);
     vec3 albedo = albedoTexture.rgb * mat.AlbedoColor.rgb; // Mixing texture and uniform
 
+    // Check for transparency and discard the fragment
+    if (albedoTexture.a * mat.AlbedoColor.a < 0.01) {
+        discard;
+    }
+
 	// Normalize inputs
     vec3 N = normalize(v_Normal);
     vec3 TotalLight = u_AmbientLight * albedo * mat.AO;
@@ -197,8 +202,8 @@ void main(){
     //fragColor = vec4(color, alpha) * v_Color;
     // HDR tone mapping
 
-   // vec3 Emission = mat.Emission.xyz * mat.Emission.w;
-    //TotalLight += Emission;
+    vec3 Emission = mat.Emission.xyz * mat.Emission.w;
+    TotalLight += Emission;
     TotalLight = TotalLight / (TotalLight + vec3(1.0));
 
     float luminance = dot(mat.Emission.xyz, vec3(0.2126, 0.7152, 0.0722)); // Standard Rec. 709 weights

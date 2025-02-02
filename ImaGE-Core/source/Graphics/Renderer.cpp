@@ -232,6 +232,7 @@ namespace Graphics {
 		ShaderLibrary::Add("Tex", Shader::Create("Default.vert.glsl", "Default.frag.glsl"));
 		ShaderLibrary::Add("PBR", Shader::Create("PBR.vert.glsl", "PBR.frag.glsl"));
 		ShaderLibrary::Add("Unlit", Shader::Create("Unlit.vert.glsl", "Unlit.frag.glsl"));
+		ShaderLibrary::Add("Water", Shader::Create("Water.vert.glsl", "Water.frag.glsl"));
 #ifdef DISTRIBUTION
 		ShaderLibrary::Add("ShadowMap", Shader::Create("ShadowMap.vert.glsl", "ShadowMap.frag.glsl"));
 #else

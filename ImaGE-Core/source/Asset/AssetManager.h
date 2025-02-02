@@ -392,7 +392,7 @@ namespace IGE {
           //keep in mind that any instance of Ref<T> always has a minimum of 1 reference
           std::unordered_map<TypeAssetKey, RefAny> mAssetRefs; //bitwise xor the typeguid and guid for the key;
         public: //get set
-            std::string GUIDToPath(GUID const& guid);
+            std::string const& GUIDToPath(GUID const& guid);
 
             GUID PathToGUID(std::string const& path);
             ImportFunc ImportFunction(std::string const& type);
