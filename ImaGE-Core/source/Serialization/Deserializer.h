@@ -16,6 +16,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <string>
 #include <Reflection/ObjectFactory.h>
 #include <Serialization/PfbOverridesData.h>
+#include <Animation/AnimationData.h>
 
 namespace Mono { struct ScriptInstance; }
 
@@ -65,7 +66,8 @@ namespace Serialization
        The Prefab object
      ************************************************************************/
     static Prefabs::Prefab DeserializePrefabToVariant(std::string const& json);
-
+    
+    static Anim::AnimationData DeserializeAnimationData(std::string const& filePath);
   private:
     using EntityID = ECS::EntityManager::EntityID;
 
@@ -174,6 +176,8 @@ namespace Serialization
       The json data of the container
     ************************************************************************/
     static void DeserializeAssociativeContainer(rttr::variant_associative_view& view, rapidjson::Value const& jsonVal);
+
+    static void DeserializeAnimKeyframe(Anim::Keyframe& keyframe, rapidjson::Value const& jsonVal);
 
 #pragma region ScriptStuff
     /*!*********************************************************************

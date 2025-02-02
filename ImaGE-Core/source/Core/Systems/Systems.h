@@ -3,7 +3,7 @@
 #include <Audio/AudioManager.h>
 #include <Core/Systems/TransformSystem/PreTransformSystem.h>
 #include <Core/Systems/TransformSystem/PostTransformSystem.h>
+#include <Core/Systems/AnimationSystem/AnimationSystem.h>
 #include <Scripting/ScriptingSystem.h>
 #include <Graphics/RenderSystem.h>
 #include <Audio/AudioSystem.h>
-#include <Core/LayerManager/LayerManager.h>

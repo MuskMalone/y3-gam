@@ -174,6 +174,12 @@ namespace Reflection::ComponentUtils {
     }
   }
 
+  void AddAnimation(ECS::Entity entity, rttr::variant const& var) {
+    EXTRACT_RAW_COMP(Animation, comp);
+
+    entity.EmplaceOrReplaceComponent<Animation>(comp);
+  }
+
   void AddCamera(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Camera, comp);
 

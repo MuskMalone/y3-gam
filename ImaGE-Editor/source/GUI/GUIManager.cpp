@@ -69,7 +69,7 @@ namespace GUI {
     mWindows.emplace_back(std::make_shared<LayerWindow>("Layers"));
     mWindows.emplace_back(std::make_shared<RenderPassViewer>("Render Pass Viewer"))->Toggle();  // default to non-active
     mWindows.emplace_back(std::make_shared<PostProcessingSettings>("Post Processing"));
-    mWindows.emplace_back(std::make_shared<KeyframeEditor>("Keyframe Editor"))->Toggle();
+    mWindows.emplace_back(std::make_shared<KeyframeEditor>("Keyframe Editor"));
 
     Styler& styler{ GUIVault::GetStyler() };
     styler.LoadFonts();

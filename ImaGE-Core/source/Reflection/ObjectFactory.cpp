@@ -43,6 +43,7 @@ namespace {
 
   using namespace Reflection::ComponentUtils;
   using namespace Component;
+#pragma region FunctionMaps
   std::unordered_map<rttr::type, AddComponentFunc> const sAddComponentFuncs{
     { RTTR_TYPE(AudioListener), AddAudioListener },
     { RTTR_TYPE(AudioSource), AddAudioSource },
@@ -61,6 +62,7 @@ namespace {
     { RTTR_TYPE(Canvas), AddCanvas },
     { RTTR_TYPE(Image), AddImage },
     { RTTR_TYPE(Sprite2D), AddSprite2D },
+    { RTTR_TYPE(Animation), AddAnimation },
     { RTTR_TYPE(Camera), AddCamera },
     { RTTR_TYPE(Skybox), AddSkybox },
     { RTTR_TYPE(Interactive), AddInteractive }
@@ -83,6 +85,7 @@ namespace {
     { RTTR_TYPE(Canvas), GetComponentVariant<Canvas> },
     { RTTR_TYPE(Image), GetComponentVariant<Image> },
     { RTTR_TYPE(Sprite2D), GetComponentVariant<Sprite2D> },
+    { RTTR_TYPE(Animation), GetComponentVariant<Animation> },
     { RTTR_TYPE(Camera), GetComponentVariant<Camera> },
     { RTTR_TYPE(Skybox), GetComponentVariant<Skybox> },
     { RTTR_TYPE(Interactive), GetComponentVariant<Interactive> }
@@ -105,19 +108,23 @@ namespace {
     { RTTR_TYPE(Canvas), RemoveComponent<Canvas> },
     { RTTR_TYPE(Image), RemoveComponent<Image> },
     { RTTR_TYPE(Sprite2D), RemoveComponent<Sprite2D> },
+    { RTTR_TYPE(Animation), RemoveComponent<Animation> },
     { RTTR_TYPE(Camera), RemoveComponent<Camera> },
     { RTTR_TYPE(Skybox), RemoveComponent<Skybox> },
     { RTTR_TYPE(Interactive), RemoveComponent<Interactive> }
   };
+#pragma endregion
 }
 
 namespace Reflection
 {
-
   ObjectFactory::ObjectFactory() {
     using namespace Component;
 
     if (sAddComponentFuncs.size() != gComponentTypes.size()) {
+#ifndef DISTRIBUTION
+      std::cout << "ObjectFactory::mAddComponentFuncs and Reflection::gComponentTypes size mismatch! Did you forget to update one?\n";
+#endif
       throw Debug::Exception<ObjectFactory>(Debug::LVL_CRITICAL,
         Msg("ObjectFactory::mAddComponentFuncs and Reflection::gComponentTypes size mismatch! Did you forget to update one?"));
     }

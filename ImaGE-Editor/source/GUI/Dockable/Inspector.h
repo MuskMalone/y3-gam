@@ -54,6 +54,7 @@ namespace GUI {
       True if any part of the component was modified and false otherwise
     ************************************************************************/
     // Kindly put in alphabetical order, thank you!
+    bool AnimationComponentWindow(ECS::Entity entity, bool highlight = false);
     bool AudioListenerComponentWindow(ECS::Entity entity, bool highlight = false);
     bool AudioSourceComponentWindow(ECS::Entity entity, bool highlight = false);
     bool BoxColliderComponentWindow(ECS::Entity entity, bool highlight = false);
@@ -61,6 +62,7 @@ namespace GUI {
     bool CanvasComponentWindow(ECS::Entity entity, bool highlight = false);
     bool CapsuleColliderComponentWindow(ECS::Entity entity, bool highlight = false);
     bool ImageComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool InteractiveComponentWindow(ECS::Entity entity, bool highlight = false);
     bool LayerComponentWindow(ECS::Entity entity, bool highlight = false);
     bool LightComponentWindow(ECS::Entity entity, bool highlight = false);
     bool MaterialWindow(ECS::Entity entity, bool highlight = false);
@@ -71,7 +73,6 @@ namespace GUI {
     bool SphereColliderComponentWindow(ECS::Entity entity, bool highlight = false);
     bool Sprite2DComponentWindow(ECS::Entity entity, bool highlight = false);
     bool SkyboxComponentWindow(ECS::Entity entity, bool highlight = false);
-    bool InteractiveComponentWindow(ECS::Entity entity, bool highlight = false);
     bool TagComponentWindow(ECS::Entity entity, bool highlight = false);
     bool TextComponentWindow(ECS::Entity entity, bool highlight = false);
     bool TransformComponentWindow(ECS::Entity entity, bool highlight = false);
