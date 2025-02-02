@@ -65,85 +65,72 @@ namespace IGE {
 		}
 
 		void PhysicsSystem::Update() {
-			mRays.clear();
-			mOnTriggerPairs.clear();
+			// Static accumulator to keep track of elapsed time.
+			// (You may want to move this to a member variable if needed.)
+			static float physicsAccumulator = 0.f;
+			physicsAccumulator += gDeltaTime;
 
-			//mPhysicsSystem.Update(gDeltaTime, 1, &mTempAllocator, &mJobSystem);
-				// Simulate one time step (1/60 second)
-			mScene->simulate(gTimeStep);
+			// Run the physics simulation in fixed time steps.
+			while (physicsAccumulator >= gTimeStep) {
+				// Clear any previous frame data (if needed for this physics step).
+				mRays.clear();
+				mOnTriggerPairs.clear();
 
-			// Wait for the simulation to complete
-			mScene->fetchResults(true);
-			//i only need to fetch rigidbodies as they are the only ones that can move
-			auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::RigidBody, Component::Transform>() };
-			for (auto entity : rbsystem) {
-				auto& xfm{ rbsystem.get<Component::Transform>(entity) };
-				auto& rb{ rbsystem.get<Component::RigidBody>(entity) };
+				// Simulate one fixed time step (e.g., 1/60 second).
+				mScene->simulate(gTimeStep);
+				mScene->fetchResults(true);
 
-				auto rbiter{ mRigidBodyIDs.find(rb.bodyID) };
-				if (rbiter != mRigidBodyIDs.end()) {
-					physx::PxRigidDynamic* pxrigidbody{ mRigidBodyIDs.at(rb.bodyID) };
+				// Retrieve only the rigid bodies (that are the only ones that can move)
+				auto rbsystem = ECS::EntityManager::GetInstance()
+					.GetAllEntitiesWithComponents<Component::RigidBody, Component::Transform>();
+				for (auto entity : rbsystem) {
+					auto& xfm = rbsystem.get<Component::Transform>(entity);
+					auto& rb = rbsystem.get<Component::RigidBody>(entity);
 
-					if (!ECS::Entity{ entity }.IsActive()) {
-						if (mInactiveActors.find(pxrigidbody) == mInactiveActors.end()) {
-							mScene->removeActor(*pxrigidbody);
-							mInactiveActors.insert(pxrigidbody);
+					auto rbiter = mRigidBodyIDs.find(rb.bodyID);
+					if (rbiter != mRigidBodyIDs.end()) {
+						physx::PxRigidDynamic* pxrigidbody = mRigidBodyIDs.at(rb.bodyID);
+
+						// If the entity is inactive, remove the actor if necessary.
+						if (!ECS::Entity{ entity }.IsActive()) {
+							if (mInactiveActors.find(pxrigidbody) == mInactiveActors.end()) {
+								mScene->removeActor(*pxrigidbody);
+								mInactiveActors.insert(pxrigidbody);
+							}
+							continue;
 						}
-						continue;
-					}
-
-					else {
-						if (mInactiveActors.find(pxrigidbody) != mInactiveActors.end()) {
-							mScene->addActor(*pxrigidbody);
-							mInactiveActors.erase(pxrigidbody);
+						else {
+							if (mInactiveActors.find(pxrigidbody) != mInactiveActors.end()) {
+								mScene->addActor(*pxrigidbody);
+								mInactiveActors.erase(pxrigidbody);
+							}
 						}
+
+						// Only add gravity in this fixed timestep update.
+						if (rb.motionType == Component::RigidBody::MotionType::DYNAMIC) {
+							float gravForce = gGravity * rb.gravityFactor * rb.mass;
+							// Apply gravity force. (If needed, you could also multiply by gTimeStep here,
+							// but if your physics simulation is set up to expect a per-timestep force, then this is fine.)
+							pxrigidbody->addForce(ToPxVec3(glm::vec3(0.f, gravForce, 0.f)));
+						}
+
+						// Update the transform based on the physics simulation result.
+						auto pose = pxrigidbody->getGlobalPose();
+						xfm.worldPos = ToGLMVec3(pose.p);
+						xfm.worldRot = ToGLMQuat(pose.q);
+						xfm.modified = true;
+
+						// Update the rigid body's velocities.
+						rb.velocity = pxrigidbody->getLinearVelocity();
+						rb.angularVelocity = pxrigidbody->getAngularVelocity();
 					}
-
-					//apply gravity
-					if (rb.motionType == Component::RigidBody::MotionType::DYNAMIC) {
-						float grav{ gGravity * rb.gravityFactor * rb.mass };
-						pxrigidbody->addForce(ToPxVec3(glm::vec3(0.f, grav, 0.f)));
-					}
-					auto pose{ pxrigidbody->getGlobalPose() };
-					xfm.worldPos = ToGLMVec3(pose.p);
-
-					//getting from physics
-					xfm.worldRot = ToGLMQuat(pose.q);
-					//xfm.worldPos += ToGLMVec3(pxrigidbody->getLinearVelocity() * gTimeStep);
-					//{
-					//	auto angularVelocity = pxrigidbody->getAngularVelocity();
-					//	float angle = angularVelocity.magnitude() * gTimeStep;
-					//	if (glm::abs(angle) > glm::epsilon<float>()) {
-					//		auto axis = angularVelocity;
-					//		physx::PxQuat deltaRotation(angle, axis);
-					//		// to add rotations, multiply 2 quats tgt
-					//		xfm.worldRot *= ToGLMQuat(deltaRotation);
-					//	}
-					//}
-					xfm.modified = true; // include this 
-
-					rb.velocity = pxrigidbody->getLinearVelocity();
-					rb.angularVelocity = pxrigidbody->getAngularVelocity();
-
-					//bool angmod{ false };
-					//if (rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::X)) {
-					//	rb.angularVelocity.x = 0.f; angmod = true;
-					//}
-					//if (rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::Y)) {
-					//	rb.angularVelocity.y = 0.f; angmod = true;
-					//}
-					//if (rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::Z)) {
-					//	rb.angularVelocity.z = 0.f; angmod = true;
-					//}
-					//pxrigidbody->setAngularVelocity(rb.angularVelocity);
-					//pxrigidbody->setLinearVelocity(rb.velocity);
 				}
-				//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
-				//xfm.worldPos = ToGLMVec3(bodyInterface.GetPosition(rb.bodyID));
-				//xfm.worldPos = ToGLMVec3(bodyInterface.(rb.bodyID));
-			}
 
+				// Decrement the accumulator by the fixed timestep.
+				physicsAccumulator -= gTimeStep;
+			}
 		}
+
 
 		void PhysicsSystem::PausedUpdate() {
 			auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Transform>() };
