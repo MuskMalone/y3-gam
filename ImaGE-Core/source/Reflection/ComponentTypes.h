@@ -15,11 +15,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Reflection
 {
-
 	std::vector<rttr::type> const gComponentTypes
 	{
 		rttr::type::get<Component::AudioListener>(),
 		rttr::type::get<Component::AudioSource>(),
+		rttr::type::get<Component::Bloom>(),
 		rttr::type::get<Component::Tag>(),
 		rttr::type::get<Component::Transform>(),
 		rttr::type::get<Component::Layer>(),
@@ -38,7 +38,8 @@ namespace Reflection
 		rttr::type::get<Component::Animation>(),
 		rttr::type::get<Component::Camera>(),
 		rttr::type::get<Component::Skybox>(),
-		rttr::type::get<Component::Interactive>()
+		rttr::type::get<Component::Interactive>(),
+		rttr::type::get<Component::EmitterSystem>()
 	};
 
 } // namespace Reflection

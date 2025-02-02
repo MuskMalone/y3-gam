@@ -16,6 +16,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace Reflection::ComponentUtils {
   void AddAudioListener(ECS::Entity entity, rttr::variant const& var);  
   void AddAudioSource(ECS::Entity entity, rttr::variant const& var);
+  void AddBloom(ECS::Entity entity, rttr::variant const& var);
   void AddTag(ECS::Entity entity, rttr::variant const& var);
   void AddTransform(ECS::Entity entity, rttr::variant const& var);
   void AddLayer(ECS::Entity entity, rttr::variant const& var);
@@ -35,6 +36,8 @@ namespace Reflection::ComponentUtils {
   void AddCamera(ECS::Entity entity, rttr::variant const& var);
   void AddSkybox(ECS::Entity entity, rttr::variant const& var);
   void AddInteractive(ECS::Entity entity, rttr::variant const& var);
+  void AddEmitterSystem(ECS::Entity entity, rttr::variant const& var);
+ // namespace Reflection
 
   template <typename T>
   rttr::variant GetComponentVariant(ECS::Entity entity) {

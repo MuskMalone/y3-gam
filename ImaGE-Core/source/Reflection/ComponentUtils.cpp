@@ -52,6 +52,11 @@ namespace Reflection::ComponentUtils {
       entity.EmplaceOrReplaceComponent<AudioSource>(comp);
     }
   }
+  void AddBloom(ECS::Entity entity, rttr::variant const& var) {
+      EXTRACT_RAW_COMP(Bloom, comp);
+
+      entity.EmplaceOrReplaceComponent<Bloom>(comp);
+  }
   void AddTag(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Tag, comp);
 
@@ -217,5 +222,11 @@ namespace Reflection::ComponentUtils {
       EXTRACT_RAW_COMP(Interactive, comp);
 
       entity.EmplaceOrReplaceComponent<Interactive>(comp);
+  }
+  void AddEmitterSystem(ECS::Entity entity, rttr::variant const& var)
+  {
+      EXTRACT_RAW_COMP(EmitterSystem, comp);
+      entity.EmplaceOrReplaceComponent<EmitterSystem>(comp);
+      Graphics::ParticleManager::GetInstance().MultiEmitterAction(entity.GetComponent<EmitterSystem>().emitters, 1);
   }
 } // namespace Reflection

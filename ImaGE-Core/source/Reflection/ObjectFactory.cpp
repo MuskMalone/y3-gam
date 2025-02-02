@@ -47,6 +47,7 @@ namespace {
   std::unordered_map<rttr::type, AddComponentFunc> const sAddComponentFuncs{
     { RTTR_TYPE(AudioListener), AddAudioListener },
     { RTTR_TYPE(AudioSource), AddAudioSource },
+    { RTTR_TYPE(Bloom), AddBloom },
     { RTTR_TYPE(Tag), AddTag },
     { RTTR_TYPE(Transform), AddTransform },
     { RTTR_TYPE(Layer), AddLayer },
@@ -65,11 +66,13 @@ namespace {
     { RTTR_TYPE(Animation), AddAnimation },
     { RTTR_TYPE(Camera), AddCamera },
     { RTTR_TYPE(Skybox), AddSkybox },
-    { RTTR_TYPE(Interactive), AddInteractive }
+    { RTTR_TYPE(Interactive), AddInteractive },
+    { RTTR_TYPE(EmitterSystem), AddEmitterSystem }
   };
   std::unordered_map<rttr::type, GetComponentFunc> const sGetComponentFuncs{
     { RTTR_TYPE(AudioListener), GetComponentVariant<AudioListener> },
     { RTTR_TYPE(AudioSource), GetComponentVariant<AudioSource> },
+    { RTTR_TYPE(Bloom), GetComponentVariant<Bloom> },
     { RTTR_TYPE(Tag), GetComponentVariant<Tag> },
     { RTTR_TYPE(Transform), GetComponentVariant<Transform> },
     { RTTR_TYPE(Layer), GetComponentVariant<Layer> },
@@ -88,11 +91,13 @@ namespace {
     { RTTR_TYPE(Animation), GetComponentVariant<Animation> },
     { RTTR_TYPE(Camera), GetComponentVariant<Camera> },
     { RTTR_TYPE(Skybox), GetComponentVariant<Skybox> },
-    { RTTR_TYPE(Interactive), GetComponentVariant<Interactive> }
+    { RTTR_TYPE(Interactive), GetComponentVariant<Interactive> },
+    { RTTR_TYPE(EmitterSystem), GetComponentVariant<EmitterSystem> }
   };
   std::unordered_map<rttr::type, RemoveComponentFunc> const sRemoveComponentFuncs{
     { RTTR_TYPE(AudioListener), RemoveComponent<AudioListener> },
     { RTTR_TYPE(AudioSource), RemoveComponent<AudioSource> },
+    { RTTR_TYPE(Bloom), RemoveComponent<Bloom> },
     { RTTR_TYPE(Tag), RemoveComponent<Tag> },
     { RTTR_TYPE(Transform), RemoveComponent<Transform> },
     { RTTR_TYPE(Layer), RemoveComponent<Layer> },
@@ -111,7 +116,8 @@ namespace {
     { RTTR_TYPE(Animation), RemoveComponent<Animation> },
     { RTTR_TYPE(Camera), RemoveComponent<Camera> },
     { RTTR_TYPE(Skybox), RemoveComponent<Skybox> },
-    { RTTR_TYPE(Interactive), RemoveComponent<Interactive> }
+    { RTTR_TYPE(Interactive), RemoveComponent<Interactive> },
+    { RTTR_TYPE(EmitterSystem), RemoveComponent<EmitterSystem> }
   };
 #pragma endregion
 }

@@ -7,3 +7,6 @@
 #include <Scripting/ScriptingSystem.h>
 #include <Graphics/RenderSystem.h>
 #include <Audio/AudioSystem.h>
+#include <Core/LayerManager/LayerManager.h>
+#include <Core/Systems/ParticleSystem/ParticleSystem.h>
+#include <Core/Systems/TextSystem/TextSystem.h>

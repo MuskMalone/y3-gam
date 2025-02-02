@@ -132,6 +132,12 @@ public class PictureAlign : Entity
                     //tutorialFade.StartFade();
                     startFade = true;
         }
+        else if (picture == "CorridorPainting")
+        {
+          isTransitioning = false;
+          playerMove.UnfreezePlayer();
+          InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
+        }
 
       }
     }

@@ -20,6 +20,7 @@ public class Inventory : Entity
   public Entity seedUI;
   public Entity nightPaintingUI;
   public Entity toolsPaintingUI;
+  public Entity CorridorPaintingUI;
   public Entity hammerUI;
   public Entity crowbarUI;
   public Entity transitionPaintingUI;
@@ -317,14 +318,15 @@ public class Inventory : Entity
 
     if (!highlighted || currentItem != selectedItem)
     {
+      Vector3 inventorySelectPosition = new Vector3(iconPosition.X, iconPosition.Y, 0.5f);
+      InternalCalls.SetPosition(inventorySelectSquare.mEntityID, ref inventorySelectPosition);
+
+      Vector3 handPosition = new Vector3(iconPosition.X + selectionHandXOffset, iconPosition.Y, 1f);
+      InternalCalls.SetPosition(selectionHand.mEntityID, ref handPosition);
+
       if (isVisible)
       {
-        Vector3 handPosition = new Vector3(iconPosition.X + selectionHandXOffset, iconPosition.Y, 1f);
-        InternalCalls.SetPosition(selectionHand.mEntityID, ref handPosition);
         selectionHand.SetActive(true);
-
-        Vector3 inventorySelectPosition = new Vector3(iconPosition.X, iconPosition.Y, 0.5f);
-        InternalCalls.SetPosition(inventorySelectSquare.mEntityID, ref inventorySelectPosition);
         inventorySelectSquare.SetActive(true);
       }
 
@@ -357,6 +359,10 @@ public class Inventory : Entity
       case "ToolsPainting":
         toolsPaintingUI?.SetActive(true);
         toolsPaintingUI?.FindScript<HoldupUI>().SetAlginUI("ToolsPainting", GetItemByName("ToolsPainting"));
+        break;
+      case "CorrdiorPainting":
+        CorridorPaintingUI?.SetActive(true);
+        CorridorPaintingUI?.FindScript<HoldupUI>().SetAlginUI("CorrdiorPainting", GetItemByName("CorrdiorPainting"));
         break;
       case "Hammer":
         hammerUI?.SetActive(true);
@@ -392,6 +398,7 @@ public class Inventory : Entity
     crowbarUI?.SetActive(false);
     crowbarEquipped = false;
     transitionPaintingUI?.SetActive(false);
+    CorridorPaintingUI?.SetActive(false);
     keyUI?.SetActive(false);
     keyEquipped = false;
     pictureAlignscript.ClearUI();

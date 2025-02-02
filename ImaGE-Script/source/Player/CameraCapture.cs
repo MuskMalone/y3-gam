@@ -28,11 +28,11 @@ public class CameraCapture : Entity
 
   void Update()
   {
-    // Capture image and store data when the capture key is pressed
-    //if (Input.GetKeyDown(captureKey))
-    //{
-    //  CaptureImageAndStoreData();
-    //}
+   // Capture image and store data when the capture key is pressed
+    if (Input.GetKeyDown(captureKey))
+    {
+      CaptureImageAndStoreData();
+    }
   }
 
   void CaptureImageAndStoreData()
