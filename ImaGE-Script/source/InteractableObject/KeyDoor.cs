@@ -50,7 +50,7 @@ public class KeyDoor : Entity
   private void UnlockDoor()
   {
     InternalCalls.PlaySound(mEntityID, "UnlockDoor");
-    InternalCalls.PlayAnimation(mEntityID, "OpenDoor");
+    InternalCalls.PlayAnimation(InternalCalls.GetParentByID(mEntityID), "OpenDoor");
     //InternalCalls.SetPosition(mEntityID, ref UnlockedPosition);
     //InternalCalls.SetRotation(mEntityID, ref UnlockedQuaternion);
     //InternalCalls.SetWorldRotation(mEntityID, ref UnlockedQuaternion);

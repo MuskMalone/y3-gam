@@ -123,7 +123,7 @@ public class Inventory : Entity
 
         if (ItemAdded != null)
         {
-          Console.WriteLine("Item "+item.Name + " has been added to inventory");
+          //Console.WriteLine("Item "+item.Name + " has been added to inventory");
           ItemAdded(this, new InventoryEventArgs(item, iconPosition[i]));
         }
         return;
@@ -140,7 +140,7 @@ public class Inventory : Entity
     hammerEquipped = false;
     keyEquipped = false;
     seedEquipped = false;
-    Console.WriteLine("Remove item: "+ item.Name);
+    //Console.WriteLine("Remove item: "+ item.Name);
     currentItem = null;
     highlighted = false;
     selectionHand.SetActive(false);
@@ -296,8 +296,8 @@ public class Inventory : Entity
       if (highlighted) // i.e. Item is selected
       {
         string itemName = mItems[index].Name;
-        Debug.Log($"Item in slot {index + 1}: {itemName}");
-        Debug.Log("Item selected");
+        //Debug.Log($"Item in slot {index + 1}: {itemName}");
+        //Debug.Log("Item selected");
         ShowUIForItem(itemName);
       }
       else
@@ -348,7 +348,7 @@ public class Inventory : Entity
     switch (itemName)
     {
       case "Seed":
-        Debug.Log("Seed Equipped");
+        //Debug.Log("Seed Equipped");
         seedUI?.SetActive(true);
         seedEquipped = true;
         break;
@@ -402,6 +402,6 @@ public class Inventory : Entity
     keyUI?.SetActive(false);
     keyEquipped = false;
     pictureAlignscript.ClearUI();
-    Console.WriteLine("CLEAE ARROWS");
+    //Console.WriteLine("CLEAE ARROWS");
   }
 }
