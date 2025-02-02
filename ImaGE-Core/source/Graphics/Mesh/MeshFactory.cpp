@@ -10,6 +10,9 @@ namespace Graphics {
     else if (meshName == "Plane") {
       return CreatePlane();
     }
+    else if (meshName == "HalfPlane") {
+        return CreateHalfPlane();
+    }
     else if (meshName == "Quad") {
         return CreateQuad();
     }
@@ -238,6 +241,64 @@ namespace Graphics {
     ret.ComputeBV();
     return ret;
   }
+
+  MeshSource MeshFactory::CreateHalfPlane() {
+      std::vector<Vertex> planeVertices{
+          // Front face
+          {{-0.5f,  0.f,  0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}},
+          {{ 0.5f,  0.f,  0.5f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}},
+          {{ 0.5f,  0.f, -0.5f}, {0.0f, 1.0f, 0.0f}, {1.0f, 1.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}},
+          {{-0.5f,  0.f, -0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}}
+      };
+
+      std::vector<uint32_t> planeIndices = {
+          // Front face
+          0, 1, 2,
+          0, 2, 3
+      };
+
+      // Create VAO and VBO
+      auto vao = VertexArray::Create();
+      auto vbo = VertexBuffer::Create(static_cast<unsigned>(planeVertices.size() * sizeof(Vertex)));
+      vbo->SetData(planeVertices.data(), static_cast<unsigned>(planeVertices.size() * sizeof(Vertex)));
+
+      BufferLayout planeLayout = {
+          {AttributeType::VEC3, "a_Position"},
+          {AttributeType::VEC3, "a_Normal"},
+          {AttributeType::VEC2, "a_TexCoord"},
+          {AttributeType::FLOAT, "a_TexIdx"},
+          {AttributeType::VEC3, "a_Tangent"},
+          {AttributeType::VEC3, "a_Bitangent"},
+          {AttributeType::VEC4, "a_Color"},
+      };
+
+      vbo->SetLayout(planeLayout);
+      vao->AddVertexBuffer(vbo);
+
+      // Create and bind Element Buffer Object (EBO) for the indices
+      std::shared_ptr<ElementBuffer> ebo = ElementBuffer::Create(planeIndices.data(), static_cast<uint32_t>(planeIndices.size()));
+      vao->SetElementBuffer(ebo);
+
+      // Set up submesh
+      std::vector<Submesh> submeshes;
+      Submesh planeSubmesh{
+          0,                                 // baseVtx
+          0,                                 // baseIdx
+          static_cast<uint32_t>(planeVertices.size()),   // vtxCount
+          static_cast<uint32_t>(planeIndices.size()),    // idxCount
+          0,                                 // materialIdx
+          glm::mat4(1.0f),                   // Identity matrix for transform
+          planeIndices                       // Indices for the submesh
+      };
+
+      submeshes.push_back(planeSubmesh);
+
+      // Create MeshSource with the generated data
+      MeshSource ret{ vao, submeshes, planeVertices, planeIndices };
+      ret.ComputeBV();
+      return ret;
+  }
+
 
   MeshSource MeshFactory::CreateSphere(uint32_t stacks, uint32_t slices){
       std::vector<Vertex> sphereVertices;
