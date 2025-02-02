@@ -35,7 +35,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 4.402960300445557,
+                            "x": 77.00299835205078,
                             "y": 13.755091667175293,
                             "z": 51.40264892578125
                         },
@@ -61,7 +61,7 @@
                     "Camera": {
                         "projType": "PERSP",
                         "position": {
-                            "x": 4.402960300445557,
+                            "x": 77.00299835205078,
                             "y": 13.755091667175293,
                             "z": 51.40264892578125
                         },
@@ -461,6 +461,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -531,12 +537,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -654,6 +654,12 @@
                 "subDataId": 1,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -693,12 +699,6 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -794,6 +794,12 @@
                 "subDataId": 1,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -833,12 +839,6 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -1676,7 +1676,7 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 4.402960300445557,
+                                            "x": 77.00299835205078,
                                             "y": 10.785017013549805,
                                             "z": 50.972084045410159
                                         },
@@ -1701,7 +1701,7 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 4.402960300445557,
+                                            "x": 77.00299835205078,
                                             "y": 10.785017013549805,
                                             "z": 50.972084045410159
                                         },
@@ -1726,7 +1726,7 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 4.402960300445557,
+                                            "x": 77.00299835205078,
                                             "y": 10.785017013549805,
                                             "z": 50.972084045410159
                                         },
@@ -1755,7 +1755,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 4.402960300445557,
+                            "x": 77.00299835205078,
                             "y": 10.785017013549805,
                             "z": 50.972084045410159
                         },
@@ -1776,7 +1776,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 4.402960300445557,
+                            "x": 77.00299835205078,
                             "y": 10.785017013549805,
                             "z": 50.972084045410159
                         },
@@ -2729,7 +2729,7 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -9.18820571899414,
+                                            "x": 63.411834716796878,
                                             "y": 2.6667213439941408,
                                             "z": 41.29563522338867
                                         },
@@ -2754,7 +2754,7 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -9.18820571899414,
+                                            "x": 63.411834716796878,
                                             "y": 2.6667213439941408,
                                             "z": 41.29563522338867
                                         },
@@ -2779,7 +2779,7 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -9.18820571899414,
+                                            "x": 63.411834716796878,
                                             "y": 2.6667213439941408,
                                             "z": 41.29563522338867
                                         },
@@ -2804,7 +2804,7 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -9.18820571899414,
+                                            "x": 63.411834716796878,
                                             "y": 2.6667213439941408,
                                             "z": 41.29563522338867
                                         },
@@ -2829,7 +2829,7 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -9.18820571899414,
+                                            "x": 63.411834716796878,
                                             "y": 2.6667213439941408,
                                             "z": 41.29563522338867
                                         },
@@ -2854,7 +2854,7 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -9.18820571899414,
+                                            "x": 63.411834716796878,
                                             "y": 2.6667213439941408,
                                             "z": 41.29563522338867
                                         },
@@ -2879,7 +2879,7 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -9.18820571899414,
+                                            "x": 63.411834716796878,
                                             "y": 2.6667213439941408,
                                             "z": 41.29563522338867
                                         },
@@ -2904,7 +2904,7 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -9.18820571899414,
+                                            "x": 63.411834716796878,
                                             "y": 2.6667213439941408,
                                             "z": 41.29563522338867
                                         },
@@ -2929,7 +2929,7 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -9.18820571899414,
+                                            "x": 63.411834716796878,
                                             "y": 2.6667213439941408,
                                             "z": 41.29563522338867
                                         },
@@ -2954,7 +2954,7 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -9.18820571899414,
+                                            "x": 63.411834716796878,
                                             "y": 2.6667213439941408,
                                             "z": 41.29563522338867
                                         },
@@ -2979,7 +2979,7 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -9.18820571899414,
+                                            "x": 63.411834716796878,
                                             "y": 2.6667213439941408,
                                             "z": 41.29563522338867
                                         },
@@ -3004,7 +3004,7 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -9.18820571899414,
+                                            "x": 63.411834716796878,
                                             "y": 2.6667213439941408,
                                             "z": 41.29563522338867
                                         },
@@ -3029,7 +3029,7 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -9.18820571899414,
+                                            "x": 63.411834716796878,
                                             "y": 2.6667213439941408,
                                             "z": 41.29563522338867
                                         },
@@ -3054,7 +3054,7 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -9.18820571899414,
+                                            "x": 63.411834716796878,
                                             "y": 2.6667213439941408,
                                             "z": 41.29563522338867
                                         },
@@ -3079,7 +3079,7 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -9.18820571899414,
+                                            "x": 63.411834716796878,
                                             "y": 2.6667213439941408,
                                             "z": 41.29563522338867
                                         },
@@ -3129,7 +3129,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -9.18820571899414,
+                            "x": 63.411834716796878,
                             "y": 2.6667213439941408,
                             "z": 41.29563522338867
                         },
@@ -6786,6 +6786,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -6857,12 +6863,6 @@
                                 "customCenter": false
                             }
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -6883,6 +6883,12 @@
                         "value": {
                             "tag": "Light",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
                         }
                     },
                     {
@@ -6914,12 +6920,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -10114,6 +10114,12 @@
                 "subDataId": 1,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -10153,12 +10159,6 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -10951,6 +10951,12 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -10990,12 +10996,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -11037,6 +11037,12 @@
                         "value": {
                             "tag": "Light",
                             "isActive": false
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
                         }
                     },
                     {
@@ -11110,12 +11116,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -11490,6 +11490,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -11560,12 +11566,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -12064,6 +12064,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -12103,12 +12109,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
                         }
                     }
                 ],
@@ -12216,6 +12216,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -12286,12 +12292,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -12406,6 +12406,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -12476,12 +12482,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -51681,7 +51681,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 5047024384054427783
+                            "ID": 13393721084583815832
                         }
                     }
                 }
@@ -51816,7 +51816,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 15242025849356918529
+                            "ID": 8253918027542086844
                         }
                     }
                 }
@@ -52565,6 +52565,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -52635,12 +52641,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -53945,6 +53945,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -53970,12 +53976,6 @@
                             },
                             "sensor": false
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -53996,6 +53996,12 @@
                         "value": {
                             "tag": "Stair Part",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     },
                     {
@@ -54023,12 +54029,6 @@
                                 "w": 1.0
                             },
                             "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -54058,6 +54058,12 @@
                         "value": {
                             "tag": "Stair Head",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     },
                     {
@@ -54128,12 +54134,6 @@
                             },
                             "sensor": false
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -54154,6 +54154,12 @@
                         "value": {
                             "tag": "Stair Part",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     },
                     {
@@ -54182,12 +54188,6 @@
                             },
                             "sensor": false
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -54203,6 +54203,12 @@
                 },
                 "subDataId": 4,
                 "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
                     {
                         "key": "BoxCollider",
                         "value": {
@@ -54229,12 +54235,6 @@
                             },
                             "sensor": false
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -54250,6 +54250,12 @@
                 },
                 "subDataId": 5,
                 "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
                     {
                         "key": "BoxCollider",
                         "value": {
@@ -54275,12 +54281,6 @@
                                 "w": 1.0
                             },
                             "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -54376,6 +54376,12 @@
                 "subDataId": 7,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -54401,12 +54407,6 @@
                             },
                             "sensor": false
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -54422,6 +54422,12 @@
                 },
                 "subDataId": 1,
                 "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
                     {
                         "key": "BoxCollider",
                         "value": {
@@ -54448,12 +54454,6 @@
                             },
                             "sensor": false
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -54469,6 +54469,12 @@
                 },
                 "subDataId": 6,
                 "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
                     {
                         "key": "BoxCollider",
                         "value": {
@@ -54495,12 +54501,6 @@
                             },
                             "sensor": false
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -54524,6 +54524,12 @@
                 },
                 "subDataId": 0,
                 "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
                     {
                         "key": "Transform",
                         "value": {
@@ -54592,12 +54598,6 @@
                             },
                             "sensor": false
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -54618,6 +54618,12 @@
                         "value": {
                             "tag": "Stair Part",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     },
                     {
@@ -54646,12 +54652,6 @@
                             },
                             "sensor": false
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -54667,6 +54667,12 @@
                 },
                 "subDataId": 3,
                 "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
                     {
                         "key": "BoxCollider",
                         "value": {
@@ -54693,12 +54699,6 @@
                             },
                             "sensor": false
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -54719,6 +54719,12 @@
                         "value": {
                             "tag": "Stair Part",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     },
                     {
@@ -54747,12 +54753,6 @@
                             },
                             "sensor": false
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -54773,6 +54773,12 @@
                         "value": {
                             "tag": "Stair Part",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     },
                     {
@@ -54801,12 +54807,6 @@
                             },
                             "sensor": false
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -54827,6 +54827,12 @@
                         "value": {
                             "tag": "Stair Part",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     },
                     {
@@ -54855,12 +54861,6 @@
                             },
                             "sensor": false
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -54876,6 +54876,12 @@
                 },
                 "subDataId": 2,
                 "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
                     {
                         "key": "BoxCollider",
                         "value": {
@@ -54901,12 +54907,6 @@
                                 "w": 1.0
                             },
                             "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -54948,6 +54948,12 @@
                         "value": {
                             "tag": "Light",
                             "isActive": false
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
                         }
                     },
                     {
@@ -55021,12 +55027,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -55102,6 +55102,12 @@
                 "subDataId": 1,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -55142,12 +55148,6 @@
                                 "w": 0.7071067690849304
                             }
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -55174,6 +55174,12 @@
                         "value": {
                             "tag": "ArcDoor",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     },
                     {
@@ -55217,12 +55223,6 @@
                                 "w": 1.0
                             }
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -55244,6 +55244,12 @@
                 },
                 "subDataId": 0,
                 "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
                     {
                         "key": "Transform",
                         "value": {
@@ -55284,12 +55290,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -55335,7 +55335,7 @@
                             "z": 53.59003448486328
                         },
                         "scale": {
-                            "x": 88.50130462646485,
+                            "x": 93.5009994506836,
                             "y": 4.775000095367432,
                             "z": 20.499656677246095
                         },
@@ -55356,7 +55356,7 @@
                             "z": 53.59003448486328
                         },
                         "worldScale": {
-                            "x": 88.50130462646485,
+                            "x": 93.5009994506836,
                             "y": 4.775000095367432,
                             "z": 20.499656677246095
                         },
@@ -55459,6 +55459,12 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -55499,12 +55505,6 @@
                                 "w": 1.0
                             }
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -55520,6 +55520,12 @@
                 },
                 "subDataId": 1,
                 "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
                     {
                         "key": "Transform",
                         "value": {
@@ -55560,12 +55566,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -74006,6 +74006,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -74076,12 +74082,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -74747,6 +74747,12 @@
                 "subDataId": 1,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -74786,12 +74792,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
                         }
                     }
                 ],
@@ -74844,6 +74844,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -74883,12 +74889,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
                         }
                     }
                 ],
@@ -75167,6 +75167,12 @@
                 "subDataId": 13,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    },
+                    {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
@@ -75191,12 +75197,6 @@
                                 "w": 1.0
                             },
                             "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
                         }
                     }
                 ],
@@ -75245,6 +75245,12 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -75284,12 +75290,6 @@
                                 "z": 0.0,
                                 "w": 0.7569234371185303
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
                         }
                     }
                 ],
@@ -75755,6 +75755,12 @@
                 "subDataId": 12,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -75821,12 +75827,6 @@
                                 "w": 1.0
                             },
                             "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
                         }
                     }
                 ],
@@ -75897,6 +75897,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -75936,12 +75942,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -76549,6 +76549,12 @@
                 "subDataId": 1,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -76588,12 +76594,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
                         }
                     }
                 ],
@@ -78069,6 +78069,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -78108,12 +78114,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -78165,6 +78165,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -78204,12 +78210,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
