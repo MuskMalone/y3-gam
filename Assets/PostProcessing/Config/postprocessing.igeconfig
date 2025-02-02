@@ -1,12 +1,58 @@
 {
     "configs": [
         {
-            "key": "ModelTest",
-            "value": [
-                5252750118345199729,
-                7488299143892968521,
-                3357145615205506964
-            ]
+            "key": "",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 50.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "M3",
+            "value": {
+                "shaders": [
+                    7488299143892968521
+                ],
+                "fogMinDist": 0.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "mainmenu",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 201.8000030517578,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "emission test",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 7.400000095367432,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
         }
     ]
 }

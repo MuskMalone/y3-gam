@@ -67,10 +67,13 @@ namespace Graphics {
 		glm::mat4 modelMatrix;
 		int materialIdx;
 		int entityID = -1;
+
+		//x == active/not active, y = threshold, z = intensity
+		glm::vec4 bloomProps;
 		//glm::vec4 color;
 		InstanceData() = default;
-		InstanceData(const glm::mat4& mtx, int mat, int ent = -1)
-			: modelMatrix{ mtx }, materialIdx{ mat }, entityID{ ent } {}
+		InstanceData(const glm::mat4& mtx, int mat, int ent = -1, glm::vec4 bloom = glm::vec4{})
+			: modelMatrix{ mtx }, materialIdx{ mat }, entityID{ ent }, bloomProps{ bloom } {}
 	};
 
 	struct SubmeshInstanceData {
@@ -254,6 +257,7 @@ namespace Graphics {
 		static void InitShadowMapPass();
 		static void InitScreenPass(std::shared_ptr<Framebuffer> const& fb);
 		static void InitPostProcessPass();
+		static void InitParticlePass();
 		static void InitUIPass();
 		static void InitMeshSources();
 

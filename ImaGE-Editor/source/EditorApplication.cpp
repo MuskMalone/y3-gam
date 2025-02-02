@@ -107,7 +107,8 @@ namespace IGE {
                                     IGE::Physics::PhysicsSystem,
                                     Systems::PostTransformSystem,
                                     IGE::Audio::AudioSystem,
-                                    Systems::AnimationSystem>();
+                                    Systems::AnimationSystem,
+                                    Systems::ParticleSystem>();
             sceneManager.ExecuteMainThreadQueue();
           }
         }

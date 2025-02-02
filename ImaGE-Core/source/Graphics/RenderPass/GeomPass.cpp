@@ -6,6 +6,7 @@
 #include "Asset/IGEAssets.h"
 #include <Graphics/Renderer.h>
 #include <Graphics/RenderPass/ShadowPass.h>
+#include <Graphics/Renderpass/PostProcessPass.h>
 #include "Graphics/MaterialData.h"
 #include "Graphics/RenderAPI.h"
 #include "Scenes/SceneManager.h"
@@ -37,7 +38,12 @@ namespace Graphics {
   GeomPass::GeomPass(const RenderPassSpec& spec) : RenderPass(spec) {}
 
   void GeomPass::Render(CameraSpec const& cam, std::vector<ECS::Entity> const& entities) {
+
       Begin();
+
+      //clears the last 2 frame buffers
+        GLfloat clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f }; // Black with full alpha
+        glClearBufferfv(GL_COLOR, 3, clearColor); //view pos buffer
      // Renderer::Clear();
       //auto shader = mSpec.pipeline->GetShader();
       GetTargetFramebuffer()->ClearAttachmentInt(1, -1);
@@ -77,7 +83,7 @@ namespace Graphics {
         bool isUnlitShader = (shader == ShaderLibrary::Get("Unlit"));
 
         shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);
-
+        shader->SetUniform("u_ViewMtx", cam.viewMatrix);
         if (!isUnlitShader) {
           shader->SetUniform("u_CamPos", cam.position);
 
@@ -186,10 +192,9 @@ namespace Graphics {
 
       Renderer::FlushBatch(); // Flush transparent sprites
       glDepthMask(GL_TRUE); // Re-enable depth writing
-
+      glDisable(GL_BLEND);
       //Renderer::RenderSceneEnd();
       //=================================================SUBMESH VERSION END===========================================================
-
       End();
 
       auto const& fb = mSpec.pipeline->GetSpec().targetFramebuffer;
@@ -210,6 +215,28 @@ namespace Graphics {
           mOutputTexture->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
           mDepthTexture->CopyFrom(fb->GetDepthAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
           mRedTexture->CopyFrom(fb->GetColorAttachmentID(1), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+      }
+
+      auto const& pass{ Renderer::GetPass<PostProcessingPass>() };
+      auto& positionTexture{ pass->mPositionGBuffer };
+      if (!positionTexture || positionTexture->GetWidth() != fb->GetFramebufferSpec().width || positionTexture->GetHeight() != fb->GetFramebufferSpec().height) {
+          // Create or resize mOutputTexture based on the framebuffer's specs
+          positionTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height, GL_RGBA32F);
+      }
+
+      // Perform the copy operation
+      if (positionTexture) {
+          positionTexture->CopyFrom(fb->GetColorAttachmentID(2), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+      }
+      auto& bloomTexture{ pass->mBloomGBuffer };
+      if (!bloomTexture || bloomTexture->GetWidth() != fb->GetFramebufferSpec().width || bloomTexture->GetHeight() != fb->GetFramebufferSpec().height) {
+          // Create or resize mOutputTexture based on the framebuffer's specs
+          bloomTexture = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height, GL_RGBA32F);
+      }
+      
+      // Perform the copy operation
+      if (bloomTexture) {
+          bloomTexture->CopyFrom(fb->GetColorAttachmentID(3), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
       }
   }
 
@@ -280,6 +307,30 @@ namespace {
         lightUniforms.u_LightIntensity[numLights] = light.mLightIntensity; // Intensity of the light
         lightUniforms.u_Range[numLights] = light.mRange; // Maximum range of the spotlight
         ++numLights;
+      }
+
+      //tch: hack for bloom. im just adding point lights instead of recalculating the lighting again
+      if (entity.HasComponent<Component::Bloom>() && entity.HasComponent<Component::Material>()) {
+          auto const& bloom = entity.GetComponent<Component::Bloom>();
+          auto const& material = entity.GetComponent<Component::Material>();
+          
+          glm::vec4 color{1,1,1,1};
+          if (IGE_ASSETMGR.IsGUIDValid<IGE::Assets::MaterialAsset>(material.materialGUID))
+            color = IGE_ASSETMGR.GetAsset<IGE::Assets::MaterialAsset>(material.materialGUID)->mMaterial->GetEmission();
+          float luminance = glm::dot(glm::vec3(color), glm::vec3(0.2126, 0.7152, 0.0722)); // Standard Rec. 709 weights
+          if (luminance >= bloom.threshold) {
+              lightUniforms.u_type[numLights] = Component::LightType::POINT; // mimic the object glowing
+              //lightUniforms.u_LightDirection[numLights] = entity.GetComponent<Component::Transform>().worldRot * light.forwardVec; // Directional light direction in world space
+              lightUniforms.u_LightColor[numLights] = color;     // Directional light color
+
+              //For spotlight
+              lightUniforms.u_LightPos[numLights] = entity.GetComponent<Component::Transform>().worldPos; // Position of the spotlight
+              //lightUniforms.u_InnerSpotAngle[numLights] = light.mInnerSpotAngle; // Inner spot angle in degrees
+              //lightUniforms.u_OuterSpotAngle[numLights] = light.mOuterSpotAngle; // Outer spot angle in degrees
+              lightUniforms.u_LightIntensity[numLights] = bloom.intensity;//light.mLightIntensity; // Intensity of the light
+              lightUniforms.u_Range[numLights] = bloom.range; // Maximum range of the spotlight
+              ++numLights;
+          }
       }
       //if (numLights >= N)
       //  break;

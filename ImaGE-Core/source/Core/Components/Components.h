@@ -1,6 +1,7 @@
 #pragma once
 #include "AudioListener.h"
 #include "AudioSource.h"
+#include "Bloom.h"
 #include "Layer.h"
 #include "Script.h"
 #include "Tag.h"
@@ -20,3 +21,4 @@
 #include "Skybox.h"
 #include "Interactive.h"
 #include "Animation.h"
+#include "EmitterSystem.h"

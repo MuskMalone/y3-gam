@@ -18,6 +18,7 @@ namespace Graphics
 
     enum class FramebufferTextureFormat {
         NONE = 0,
+        RGBA32F,
         RGBA8,
         RED_INTEGER,
         SHADOW_MAP,

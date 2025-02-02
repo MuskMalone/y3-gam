@@ -19,6 +19,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Reflection/ObjectFactory.h>
 #include <Core/EntityManager.h>
 #include <Graphics/PostProcessing/PostProcessingManager.h>
+#include <Graphics/PostProcessing/ParticleManager.h>
 #include <Core/LayerManager/LayerManager.h>
 #pragma endregion
 
@@ -29,6 +30,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 #include <Core/Systems/SystemManager/SystemManager.h>
 #include <Core/Systems/Systems.h>
+#include <Audio/AudioSystem.h>
+#include <Core/Systems/ParticleSystem/ParticleSystem.h>
+#pragma endregion
 
 #include "Serialization/Serializer.h"
 #include "Serialization/Deserializer.h"
@@ -56,6 +60,7 @@ namespace IGE {
     Graphics::PostProcessingManager::CreateInstance();
     CMD::CommandManager::CreateInstance();
 
+    Graphics::ParticleManager::CreateInstance();
     
     // @TODO: Init physics and audio singletons
     //IGE::Physics::PhysicsSystem::InitAllocator();
@@ -145,6 +150,7 @@ namespace IGE {
     systemManager.RegisterSystem<Systems::AnimationSystem>("Animation System"); // interpolates local transform after Post-Transform update
     systemManager.RegisterSystem<IGE::Audio::AudioSystem>("Audio System");
     systemManager.RegisterSystem<Systems::TextSystem>("Text System");
+    systemManager.RegisterSystem<Systems::ParticleSystem>("Particle System");
   }
 
   Application::Application(ApplicationSpecification spec) : mWindow{}
@@ -232,6 +238,8 @@ namespace IGE {
     // shutdown singletons
     CMD::CommandManager::DestroyInstance();
     Systems::SystemManager::DestroyInstance();
+    IGE::Audio::AudioManager::DestroyInstance();
+    Graphics::ParticleManager::DestroyInstance();
     Graphics::PostProcessingManager::DestroyInstance();
     Scenes::SceneManager::DestroyInstance();
     Prefabs::PrefabManager::DestroyInstance();
