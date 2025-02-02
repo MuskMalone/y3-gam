@@ -12,8 +12,8 @@ public class KeyDoor : Entity
   private bool doorFlag = false;
   public bool doorInteraction = true;
 
-  private Vector3 UnlockedPosition = new Vector3(57.197f, 13.759f, 52.316f);
-  private Quaternion UnlockedQuaternion = new Quaternion(0f, -0.2745087f, 0f, 0.9615892f);
+  //private Vector3 UnlockedPosition = new Vector3(57.197f, 13.759f, 52.316f);
+  //private Quaternion UnlockedQuaternion = new Quaternion(0f, -0.2745087f, 0f, 0.9615892f);
 
   void Start()
   {
@@ -50,11 +50,12 @@ public class KeyDoor : Entity
   private void UnlockDoor()
   {
     InternalCalls.PlaySound(mEntityID, "UnlockDoor");
-    InternalCalls.SetPosition(mEntityID, ref UnlockedPosition);
-    InternalCalls.SetRotation(mEntityID, ref UnlockedQuaternion);
-    InternalCalls.SetWorldRotation(mEntityID, ref UnlockedQuaternion);
+    InternalCalls.PlayAnimation(InternalCalls.GetParentByID(mEntityID), "OpenDoor");
+    //InternalCalls.SetPosition(mEntityID, ref UnlockedPosition);
+    //InternalCalls.SetRotation(mEntityID, ref UnlockedQuaternion);
+    //InternalCalls.SetWorldRotation(mEntityID, ref UnlockedQuaternion);
     unlockDoorUI.SetActive(false);
-    SetActive(false);
+    //SetActive(false);
     doorInteraction = false;
   }
 }
