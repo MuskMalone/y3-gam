@@ -197,8 +197,12 @@ namespace GUI {
         ImGui::OpenPopup(sOptionsPopupLabel);
       }
 
-      OptionsMenu();
-      NodeOptionsMenu();
+      if (OptionsMenu()) {
+        modified = true;
+      }
+      if (NodeOptionsMenu()) {
+        modified = true;
+      }
     
 
     // check for link interaction
@@ -465,13 +469,27 @@ namespace GUI {
       }
     } // end isRoot
     else {
-      if (ImGui::Selectable("Reset")) {
-        KeyframeNode::NodePtr& node{ mNodes[sRightClickedNode] };
-        node->data = {};
-        node->nodeName = sKeyframeTypeStr[0];
-        UpdateChain(node);
+      if (ImGui::Selectable("Use current Entity's transform")) {
+        ECS::Entity const selectedEntity{ GUIVault::GetSelectedEntity() };
+        if (selectedEntity) {
+          KeyframeNode::NodePtr& rightClicked{ mNodes[sRightClickedNode] };
+          switch (rightClicked->data.type) {
+          case Anim::KeyframeType::TRANSLATION:
+            rightClicked->data.endValue = selectedEntity.GetComponent<Component::Transform>().position;
+            break;
+          case Anim::KeyframeType::ROTATION:
+            rightClicked->data.endValue = selectedEntity.GetComponent<Component::Transform>().eulerAngles;
+            break;
+          case Anim::KeyframeType::SCALE:
+            rightClicked->data.endValue = selectedEntity.GetComponent<Component::Transform>().scale;
+            break;
+          default:
+            break;
+          }
 
-        modified = true;
+          UpdateChain(rightClicked);
+          modified = true;
+        }
       }
 
       if (ImGui::Selectable("Duplicate")) {
@@ -482,6 +500,15 @@ namespace GUI {
         newNode->nodeName = rightClicked->nodeName;
 
         ImNodes::SetNodeScreenSpacePos(newNode->id, ImGui::GetMousePos());
+        modified = true;
+      }
+
+      if (ImGui::Selectable("Reset")) {
+        KeyframeNode::NodePtr& node{ mNodes[sRightClickedNode] };
+        node->data = {};
+        node->nodeName = sKeyframeTypeStr[0];
+        UpdateChain(node);
+
         modified = true;
       }
 

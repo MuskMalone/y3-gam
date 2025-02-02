@@ -5,7 +5,7 @@
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
-                "fogMaxDist": 50.0,
+                "fogMaxDist": 10000.0,
                 "fogColor": {
                     "x": 1.0,
                     "y": 1.0,
@@ -20,7 +20,7 @@
                     7488299143892968521
                 ],
                 "fogMinDist": 0.0,
-                "fogMaxDist": 1000.0,
+                "fogMaxDist": 10000.0,
                 "fogColor": {
                     "x": 1.0,
                     "y": 1.0,
@@ -46,7 +46,20 @@
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
-                "fogMaxDist": 201.8000030517578,
+                "fogMaxDist": 10000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "TutorialLevel",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 10000.0,
                 "fogColor": {
                     "x": 1.0,
                     "y": 1.0,
@@ -59,7 +72,7 @@
             "value": {
                 "shaders": [],
                 "fogMinDist": 7.400000095367432,
-                "fogMaxDist": 1000.0,
+                "fogMaxDist": 10000.0,
                 "fogColor": {
                     "x": 1.0,
                     "y": 1.0,
