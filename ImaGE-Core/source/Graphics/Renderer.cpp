@@ -270,7 +270,6 @@ namespace Graphics {
 		geomPassSpec.pipeline = Pipeline::Create(geomPipelineSpec);
 		geomPassSpec.debugName = "Geometry Pass";
 
-
 		AddPass(RenderPass::Create<GeomPass>(geomPassSpec));
 	}
 
@@ -1167,6 +1166,9 @@ namespace Graphics {
 			if (entity.HasComponent<Component::Bloom>()){
 				auto const& bloom{ entity.GetComponent<Component::Bloom>() };
 				instance.bloomProps = glm::vec4{ 1.f, bloom.threshold, bloom.intensity, 0.f };
+			}
+			else {
+				instance.bloomProps = glm::vec4{ 0.f };
 			}
 		}
 		instance.materialIdx = matID;

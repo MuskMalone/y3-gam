@@ -35,6 +35,7 @@ out vec4 v_LightSpaceFragPos;
 out vec3 v_ViewPosition;
 
 out flat vec4 v_BloomProps;
+out vec4 testingPos;
 
 uniform bool u_ShadowsActive;
 uniform mat4 u_ViewMtx;
@@ -60,6 +61,8 @@ void main(){
     v_ViewPosition = vec3(u_ViewMtx * worldPosition);
     gl_Position = u_ViewProjMtx * worldPosition;
 
+    
+    testingPos = vec4(fract(sin(float(gl_InstanceID)) * 43758.5453), fract(sin(float(gl_InstanceID) + 1.0) * 43758.5453), fract(sin(float(gl_InstanceID) + 2.0) * 43758.5453), 1);
     v_BloomProps = a_BloomProps;
     // calculate the frag pos in light space
     if (u_ShadowsActive) {

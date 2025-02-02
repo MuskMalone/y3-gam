@@ -41,6 +41,7 @@ in vec4 v_LightSpaceFragPos;
 in vec3 v_ViewPosition;
 
 in flat vec4 v_BloomProps;
+in vec4 testingPos;
 
 uniform bool u_ShadowsActive;
 uniform float u_ShadowBias;
@@ -202,13 +203,13 @@ void main(){
 
     float luminance = dot(mat.Emission.xyz, vec3(0.2126, 0.7152, 0.0722)); // Standard Rec. 709 weights
     fragColor = vec4(pow(TotalLight, vec3(1.0/2.2)), 1.0);
-    bloomColor = vec4(0);
+    bloomColor = vec4(0,0,0,1);
     if (v_BloomProps.x > 0.1){ // if there is bloom and it is above threshold
         if (luminance >= v_BloomProps.y){
             fragColor = vec4(mat.Emission.xyz, 1);
             bloomColor = vec4(mat.Emission.xyz, v_BloomProps.z);
         }else{
-            fragColor = fragColor + vec4(mat.Emission.xyz, 1);
+            fragColor = fragColor * vec4(mat.Emission.xyz, 1);
         }
     }
 }
