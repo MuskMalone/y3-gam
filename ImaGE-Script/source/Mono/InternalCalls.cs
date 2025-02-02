@@ -145,7 +145,6 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetTag(uint EntityID, string tag); // Try not to use, dangerous
 
-    // avoid using this, prefer SetPosition (local)
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetActive(uint entityHandle, bool active);
 
@@ -167,6 +166,10 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static uint FindParentByTag(string s);
 
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static uint GetParentByID(uint EntityID);
+
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetMainCameraPosition(uint cameraEntityID);
 
@@ -175,6 +178,8 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Quaternion GetMainCameraRotation(uint cameraEntityID);
+
+
     #endregion
 
 
@@ -243,6 +248,18 @@ namespace IGE.Utils
     extern public static void PauseSound(uint entity, string sound);
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void StopSound(uint entity, string sound);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void PlayAnimation(uint entity, string animation, bool loop = false);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void PauseAnimation(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void ResumeAnimation(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void StopAnimationLoop(uint entity); // stops the animation after the current loop ends
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static float GetDeltaTime();

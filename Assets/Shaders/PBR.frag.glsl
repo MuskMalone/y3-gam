@@ -20,6 +20,8 @@ layout(std430, binding = 0) buffer MaterialPropsBuffer {
 
 layout(location = 0) out vec4 fragColor;
 layout(location = 1) out int entityID;
+layout(location = 2) out vec4 viewPosition;
+layout(location = 3) out vec4 bloomColor;
 
 in vec4 v_Color;
 in vec2 v_TexCoord;
@@ -35,6 +37,12 @@ in vec3 v_Bitangent;            // Bitangent in world space
 
 // shadows
 in vec4 v_LightSpaceFragPos;
+
+in vec3 v_ViewPosition;
+
+in flat vec4 v_BloomProps;
+in vec4 testingPos;
+
 uniform bool u_ShadowsActive;
 uniform float u_ShadowBias;
 uniform int u_ShadowSoftness;
@@ -77,6 +85,9 @@ float geomSmith(float dp, float Roughness);
 
 void main(){
     entityID = v_EntityID;
+    // //pls add this line for subsequent custom shaders
+    viewPosition = vec4(v_ViewPosition, 1);
+
     bool hasRenderDir = false;
 	//vec4 texColor = texture2D(u_NormalMaps[int(v_MaterialIdx)], texCoord); //currently unused
     MaterialProperties mat = materials[v_MaterialIdx];
@@ -173,7 +184,7 @@ void main(){
 
         vec3 DiffuseBRDF = kD * fLambert / PI;
 
-       vec3 FinalColor = (DiffuseBRDF + SpecBRDF) * LightIntensity * NdotL;
+        vec3 FinalColor = (DiffuseBRDF + SpecBRDF) * LightIntensity * NdotL;
 
         TotalLight += FinalColor * (1.0 - shadow);
     }
@@ -195,10 +206,17 @@ void main(){
     TotalLight += Emission;
     TotalLight = TotalLight / (TotalLight + vec3(1.0));
 
-    // Gamma correction
-    //fragColor = mat.Emission;
+    float luminance = dot(mat.Emission.xyz, vec3(0.2126, 0.7152, 0.0722)); // Standard Rec. 709 weights
     fragColor = vec4(pow(TotalLight, vec3(1.0/2.2)), 1.0);
-
+    bloomColor = vec4(0,0,0,1);
+    if (v_BloomProps.x > 0.1){ // if there is bloom and it is above threshold
+        if (luminance >= v_BloomProps.y){
+            fragColor = vec4(mat.Emission.xyz, 1);
+            bloomColor = vec4(mat.Emission.xyz, v_BloomProps.z);
+        }else{
+            fragColor = fragColor * vec4(mat.Emission.xyz, 1);
+        }
+    }
 }
 
 vec3 fresnelSchlick(float cosTheta, vec3 F0)

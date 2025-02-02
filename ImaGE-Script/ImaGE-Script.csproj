@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
+    <ProjectGuid>{0AEC9CEB-F64E-2C90-9FD4-64468B16F812}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ImaGE-Script</RootNamespace>
+    <AssemblyName>ImaGE-Script</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Binaries\windows-x86_64\Debug\ImaGE-Script\</OutputPath>
+    <BaseIntermediateOutputPath>..\Binaries\Intermediates\windows-x86_64\Debug\ImaGE-Script\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
+    <DefineConstants>WINDOWS;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Binaries\windows-x86_64\Release\ImaGE-Script\</OutputPath>
+    <BaseIntermediateOutputPath>..\Binaries\Intermediates\windows-x86_64\Release\ImaGE-Script\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
+    <DefineConstants>WINDOWS;NDEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Distribution|x64' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Binaries\windows-x86_64\Distribution\ImaGE-Script\</OutputPath>
+    <BaseIntermediateOutputPath>..\Binaries\Intermediates\windows-x86_64\Distribution\ImaGE-Script\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
+    <DefineConstants>WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Collections" />
+    <Reference Include="System.IO" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Threading" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Collections" />
+    <Reference Include="System.IO" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Threading" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Distribution|x64' ">
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Collections" />
+    <Reference Include="System.IO" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Threading" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="source\Cutscene\EndSceneFadeToBlack.cs" />
+    <Compile Include="source\Cutscene\TutorialCutscene.cs" />
+    <Compile Include="source\Dialogue\Dialogue.cs" />
+    <Compile Include="source\Dialogue\SpecialDialogue.cs" />
+    <Compile Include="source\Engine Tools\Easing.cs" />
+    <Compile Include="source\Engine Tools\FPS.cs" />
+    <Compile Include="source\InteractableObject\AltarPaintingFrame.cs" />
+    <Compile Include="source\InteractableObject\BackToMainMenuButton.cs" />
+    <Compile Include="source\InteractableObject\ControlPanel.cs" />
+    <Compile Include="source\InteractableObject\CorridorPainting.cs" />
+    <Compile Include="source\InteractableObject\Crowbar.cs" />
+    <Compile Include="source\InteractableObject\Hammer.cs" />
+    <Compile Include="source\InteractableObject\Key.cs" />
+    <Compile Include="source\InteractableObject\KeyDoor.cs" />
+    <Compile Include="source\InteractableObject\LightSwitch.cs" />
+    <Compile Include="source\InteractableObject\NightPainting.cs" />
+    <Compile Include="source\InteractableObject\NoteInteraction.cs" />
+    <Compile Include="source\InteractableObject\PitPainting.cs" />
+    <Compile Include="source\InteractableObject\Safe.cs" />
+    <Compile Include="source\InteractableObject\SafeButtons.cs" />
+    <Compile Include="source\InteractableObject\Seed.cs" />
+    <Compile Include="source\InteractableObject\SuspiciousPainting.cs" />
+    <Compile Include="source\InteractableObject\Tools.cs" />
+    <Compile Include="source\InteractableObject\ToolsPainting.cs" />
+    <Compile Include="source\InteractableObject\TutorialPainting.cs" />
+    <Compile Include="source\Inventory\HUD.cs" />
+    <Compile Include="source\Inventory\Inventory.cs" />
+    <Compile Include="source\Inventory\InventoryItemData.cs" />
+    <Compile Include="source\Inventory\TutorialLevelHUD.cs" />
+    <Compile Include="source\Inventory\TutorialLevelInventory.cs" />
+    <Compile Include="source\Level2\ControlPanel2.cs" />
+    <Compile Include="source\MainMenu\CDDragAndDrop.cs" />
+    <Compile Include="source\MainMenu\ContinueCD.cs" />
+    <Compile Include="source\MainMenu\NewGameCD.cs" />
+    <Compile Include="source\MainMenu\OpenedCdLid.cs" />
+    <Compile Include="source\Mono\Color.cs" />
+    <Compile Include="source\Mono\Component.cs" />
+    <Compile Include="source\Mono\Debug.cs" />
+    <Compile Include="source\Mono\Entity.cs" />
+    <Compile Include="source\Mono\Image.cs" />
+    <Compile Include="source\Mono\Input.cs" />
+    <Compile Include="source\Mono\Inside.cs" />
+    <Compile Include="source\Mono\InsideB.cs" />
+    <Compile Include="source\Mono\InternalCalls.cs" />
+    <Compile Include="source\Mono\Keycode.cs" />
+    <Compile Include="source\Mono\Math.cs" />
+    <Compile Include="source\Mono\Time.cs" />
+    <Compile Include="source\Mono\Vec2.cs" />
+    <Compile Include="source\Mono\Vec3.cs" />
+    <Compile Include="source\Mono\Vec4.cs" />
+    <Compile Include="source\Mono\textAsset.cs" />
+    <Compile Include="source\Painting\AudioManager.cs" />
+    <Compile Include="source\Painting\HoldupUI.cs" />
+    <Compile Include="source\Painting\HoldupUINight.cs" />
+    <Compile Include="source\Painting\ImageDisintegrating.cs" />
+    <Compile Include="source\Painting\ImageDisintegratingNight.cs" />
+    <Compile Include="source\Painting\PictureAlign.cs" />
+    <Compile Include="source\Painting\RotatePainting.cs" />
+    <Compile Include="source\Painting\RotationGuidance.cs" />
+    <Compile Include="source\Painting\RotationGuidanceNightPainting.cs" />
+    <Compile Include="source\Player\CameraCapture.cs" />
+    <Compile Include="source\Player\InputManager.cs" />
+    <Compile Include="source\Player\PlayerFootsteps.cs" />
+    <Compile Include="source\Player\PlayerInteraction.cs" />
+    <Compile Include="source\Player\PlayerMove.cs" />
+    <Compile Include="source\SelectionManager.cs" />
+    <Compile Include="source\Test.cs" />
+    <Compile Include="source\ToolsPuzzle\HoldupUITools.cs" />
+    <Compile Include="source\ToolsPuzzle\ImageDisintegratingTools.cs" />
+    <Compile Include="source\ToolsPuzzle\PictureAlignTools.cs" />
+    <Compile Include="source\ToolsPuzzle\RotationGuidanceToolsPainting.cs" />
+    <Compile Include="source\Triggers\DeathtriggerPit.cs" />
+    <Compile Include="source\Triggers\FinishLineTrigger.cs" />
+    <Compile Include="source\Tutorial\InventoryTutorial.cs" />
+    <Compile Include="source\Tutorial\TutorialDialogue.cs" />
+    <Compile Include="source\Tutorial\TutorialFade.cs" />
+    <Compile Include="source\Tutorial\WASDTutorial.cs" />
+    <Compile Include="source\tttt.cs" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>copy /B /Y "ImaGE-Script.dll" "$(SolutionDir)Assets\Scripts\"
+copy /B /Y "ImaGE-Script.pdb" "$(SolutionDir)Assets\Scripts\"</PostBuildEvent>
+  </PropertyGroup>
+</Project>

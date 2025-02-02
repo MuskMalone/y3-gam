@@ -75,6 +75,7 @@ namespace GUI {
     mComponentIcons{
       { typeid(Component::AudioListener), ICON_FA_EAR_LISTEN ICON_PADDING},
       { typeid(Component::AudioSource), ICON_FA_VOLUME_HIGH ICON_PADDING},
+      { typeid(Component::Bloom), ICON_FA_SUN ICON_PADDING },
       { typeid(Component::Tag), ICON_FA_TAG ICON_PADDING },
       { typeid(Component::Transform), ICON_FA_ROTATE ICON_PADDING },
       { typeid(Component::BoxCollider), ICON_FA_BOMB ICON_PADDING },
@@ -93,7 +94,8 @@ namespace GUI {
       { typeid(Component::Animation), ICON_FA_PERSON_RUNNING ICON_PADDING },
       { typeid(Component::Camera), ICON_FA_CAMERA ICON_PADDING },
       { typeid(Component::Skybox), ICON_FA_EARTH_ASIA ICON_PADDING },
-      { typeid(Component::Interactive), ICON_FA_COMPUTER_MOUSE ICON_PADDING }
+      { typeid(Component::Interactive), ICON_FA_COMPUTER_MOUSE ICON_PADDING },
+      { typeid(Component::EmitterSystem), ICON_FA_STAR ICON_PADDING }
     },
     mObjFactory{ Reflection::ObjectFactory::GetInstance() },
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
@@ -460,9 +462,29 @@ namespace GUI {
               }
           }
       }
-// ComponentWindows endregion
-#pragma endregion
+      if (currentEntity.HasComponent<Component::Bloom>()) {
+          rttr::type const compType{ rttr::type::get<Component::Bloom>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(compType);
 
+          if (BloomComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentOverride(compType);
+              }
+          }
+      }
+
+      if (currentEntity.HasComponent<Component::EmitterSystem>()) {
+          rttr::type const compType{ rttr::type::get<Component::EmitterSystem>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(compType);
+
+          if (EmitterSystemComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentOverride(compType);
+              }
+          }
+      }
       if (prefabOverride) {
         for (rttr::type const& type : prefabOverride->removedComponents) {
           DisplayRemovedComponent(type);
@@ -488,6 +510,8 @@ namespace GUI {
       ImGuiHelpers::WrapMousePos(1 << ImGuiAxis_X);
     }
   }
+  // ComponentWindows endregion
+#pragma endregion
 
   EVENT_CALLBACK_DEF(Inspector, OnSceneSave) {
       mIsComponentEdited = mFirstEdit = false;
@@ -1759,7 +1783,21 @@ namespace GUI {
     WindowEnd(isOpen);
     return modified;
   }
+  bool Inspector::BloomComponentWindow(ECS::Entity entity, bool highlight)
+  {
+      bool const isOpen{ WindowBegin<Component::Bloom>("Bloom", highlight) };
+      bool modified{ false };
 
+      if (isOpen) {
+          auto& bloom{ entity.GetComponent<Component::Bloom>() };
+          ImGui::DragFloat("Threshold", &bloom.threshold, 0.01f, 0.f, 1024.f);
+          ImGui::DragFloat("Intensity", &bloom.intensity, 0.01f, 0.f, 1024.f);
+          ImGui::DragFloat("Range", &bloom.range, 0.01f, 1.f, 1024.f);
+      }
+
+      WindowEnd(isOpen);
+      return modified;
+  }
   bool Inspector::SphereColliderComponentWindow(ECS::Entity entity, bool highlight)
   {
       bool const isOpen{ WindowBegin<Component::SphereCollider>("Sphere Collider", highlight) };
@@ -2003,7 +2041,111 @@ namespace GUI {
     WindowEnd(isOpen);
     return modified;
   }
+  bool Inspector::EmitterSystemComponentWindow(ECS::Entity entity, bool highlight) {
+      bool const isOpen{ WindowBegin<Component::EmitterSystem>("Emitter System", highlight) };
+      bool modified{ false };
 
+      if (isOpen) {
+          Component::EmitterSystem& emitterSystem = entity.GetComponent<Component::EmitterSystem>();
+          auto& emitters = emitterSystem.emitters;
+
+          float const inputWidth{ CalcInputWidth(50.f) / 3.f };
+
+          // Iterate over each emitter
+          for (size_t i = 0; i < emitters.size(); ++i) {
+              auto& emitter = emitters[i];
+
+              // Display emitter header with index
+              std::string emitterLabel = "Emitter #" + std::to_string(i);
+              bool isOpenEmitter = ImGui::CollapsingHeader(emitterLabel.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
+
+              if (isOpenEmitter) {
+                  // Show vertices based on vCount
+                  for (int j = 0; j < emitter.vCount; ++j) {
+                      ImGui::Text("Vertex %d: X: %.2f, Y: %.2f, Z: %.2f, W: %.2f", j, emitter.vertices[j].x, emitter.vertices[j].y, emitter.vertices[j].z, emitter.vertices[j].w);
+                      if (ImGui::DragFloat4(("##Vertex_" + std::to_string(i) + "_" + std::to_string(j)).c_str(), &emitter.vertices[j][0], 0.1f, -FLT_MAX, FLT_MAX)) {
+                          modified = true;
+                      }
+                  }
+
+                  // Edit color
+                  if (ImGui::ColorEdit4(("Color##" + std::to_string(i)).c_str(), &emitter.col[0])) {
+                      modified = true;
+                  }
+
+                  // Edit velocity
+                  if (ImGui::DragFloat3(("Velocity##" + std::to_string(i)).c_str(), &emitter.vel[0], 0.1f, -FLT_MAX, FLT_MAX)) {
+                      modified = true;
+                  }
+
+                  // Edit gravity
+                  if (ImGui::DragFloat3(("Gravity##" + std::to_string(i)).c_str(), &emitter.gravity[0], 0.01f, -99999.f, 99999.f)) {
+                      modified = true;
+                  }
+
+                  // Edit size
+                  if (ImGui::DragFloat2(("Size##" + std::to_string(i)).c_str(), &emitter.size[0], 0.02f, 0.001f, FLT_MAX)) {
+                      modified = true;
+                  }
+
+                  //// Edit angular velocity
+                  //if (ImGui::DragFloat(("Angular Velocity##" + std::to_string(i)).c_str(), &emitter.angvel, 0.1f, -FLT_MAX, FLT_MAX)) {
+                  //    modified = true;
+                  //}
+
+                  // Edit lifetime
+                  if (ImGui::DragFloat(("Lifetime##" + std::to_string(i)).c_str(), &emitter.lifetime, 0.1f, 0.1f, 100.f)) {
+                      modified = true;
+                  }
+
+                  // Edit speed
+                  if (ImGui::DragFloat(("Speed##" + std::to_string(i)).c_str(), &emitter.speed, 0.1f, 0.1f, 100.f)) {
+                      modified = true;
+                  }
+
+                  // Edit frequency
+                  if (ImGui::DragFloat(("Frequency##" + std::to_string(i)).c_str(), &emitter.frequency, 0.01f, 0.01f, 10.f)) {
+                      modified = true;
+                  }
+
+                  // Edit particles per frame
+                  if (ImGui::DragInt(("Particles Per Frame##" + std::to_string(i)).c_str(), &emitter.particlesPerFrame, 1, 1, 1000)) {
+                      modified = true;
+                  }
+
+                  // Dropdown for preset
+                  const char* presetTitles[] = {
+                      "Alpha Over Lifetime",
+                      "Size Over Lifetime",
+                      "Alpha and Size Decrease Over Lifetime",
+                      "Alpha and Size Increase Over Lifetime"
+                  };
+                  if (ImGui::Combo(("Preset##" + std::to_string(i)).c_str(), &emitter.preset, presetTitles, IM_ARRAYSIZE(presetTitles))) {
+                      modified = true;
+                  }
+
+                  // Delete button for this emitter
+                  if (ImGui::Button(("Delete Emitter##" + std::to_string(i)).c_str())) {
+                      emitterSystem.RemoveEmitter(i);
+                      modified = true;
+                  }
+
+                  if (modified) {
+                      emitter.modified = true;
+                  }
+              }
+          }
+
+          // Add emitter button
+          if (ImGui::Button("Add Emitter")) {
+              emitterSystem.AddEmitter();
+              modified = true;
+          }
+      }
+
+      WindowEnd(isOpen);
+      return modified;
+  }
   bool Inspector::TextComponentWindow(ECS::Entity entity, bool highlight) {
     bool const isOpen{ WindowBegin<Component::Text>("Text", highlight) };
     bool modified{ false };
@@ -2282,6 +2424,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Text>("Text");
         DrawAddComponentButton<Component::Transform>("Transform");
         DrawAddComponentButton<Component::Light>("Light");
+        DrawAddComponentButton<Component::Bloom>("Bloom");
         DrawAddComponentButton<Component::Canvas>("Canvas");
         DrawAddComponentButton<Component::Image>("Image");
         DrawAddComponentButton<Component::Sprite2D>("Sprite2D");
@@ -2289,6 +2432,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Camera>("Camera");
         DrawAddComponentButton<Component::Skybox>("Skybox");
         DrawAddComponentButton<Component::Interactive>("Interactive");
+        DrawAddComponentButton<Component::EmitterSystem>("Emitter System");
         ImGui::EndTable();
       }
 

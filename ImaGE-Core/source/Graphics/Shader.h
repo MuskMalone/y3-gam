@@ -15,12 +15,19 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace Graphics {
 	class Shader {
 	public:
+		//singular file for compute shader
 		Shader(std::string const& shdrFile);
 		Shader(std::string const& vertFile, std::string const& fragFile);
+		//for vert geom 
 		Shader(std::string const& geomFile, std::string const& vertFile, std::string const& fragFile);
 		~Shader();
 
+		static std::shared_ptr<Shader> Create(std::string const& shdrFile);
 		static std::shared_ptr<Shader> Create(std::string const& vertFile, std::string const& fragFile);
+		static std::shared_ptr<Shader> Create(std::string const& geomFile, std::string const& vertFile, std::string const& fragFile);
+
+		std::string ReadFile(const std::string& filePath);
+		std::string PreprocessShader(const std::string& filePath, std::unordered_map<std::string, std::string>& cache);
 		void CreateComputeShader(std::string const& shdrFile);
 		void CreateShaderFromString(std::string const& vertSrc, std::string const& fragSrc, std::string const& vertName = "", std::string const& fragName = "");
 		void CreateShaderFromFile(std::string const& vertFile, std::string const& fragFile);

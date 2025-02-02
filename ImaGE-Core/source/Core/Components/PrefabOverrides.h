@@ -51,7 +51,7 @@ namespace Component {
     ************************************************************************/
     template <typename T>
     inline bool IsComponentRemoved() const { return removedComponents.contains(rttr::type::get<T>()); }
-
+    
     /*!*********************************************************************
     \brief
       Checks if a component exists in the list of removed components
