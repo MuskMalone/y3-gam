@@ -98,6 +98,7 @@
     <Compile Include="source\InteractableObject\AltarPaintingFrame.cs" />
     <Compile Include="source\InteractableObject\BackToMainMenuButton.cs" />
     <Compile Include="source\InteractableObject\ControlPanel.cs" />
+    <Compile Include="source\InteractableObject\CorridorPainting.cs" />
     <Compile Include="source\InteractableObject\Crowbar.cs" />
     <Compile Include="source\InteractableObject\Hammer.cs" />
     <Compile Include="source\InteractableObject\Key.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="source\Inventory\InventoryItemData.cs" />
     <Compile Include="source\Inventory\TutorialLevelHUD.cs" />
     <Compile Include="source\Inventory\TutorialLevelInventory.cs" />
+    <Compile Include="source\Level2\ControlPanel2.cs" />
     <Compile Include="source\MainMenu\CDDragAndDrop.cs" />
     <Compile Include="source\MainMenu\NewGameCD.cs" />
     <Compile Include="source\MainMenu\OpenedCdLid.cs" />
@@ -137,15 +139,12 @@
     <Compile Include="source\Mono\Vec3.cs" />
     <Compile Include="source\Mono\Vec4.cs" />
     <Compile Include="source\Mono\textAsset.cs" />
-    <Compile Include="source\Painting\AlignUI.cs" />
-    <Compile Include="source\Painting\AlignUINight.cs" />
     <Compile Include="source\Painting\AudioManager.cs" />
     <Compile Include="source\Painting\HoldupUI.cs" />
     <Compile Include="source\Painting\HoldupUINight.cs" />
     <Compile Include="source\Painting\ImageDisintegrating.cs" />
     <Compile Include="source\Painting\ImageDisintegratingNight.cs" />
     <Compile Include="source\Painting\PictureAlign.cs" />
-    <Compile Include="source\Painting\PictureAlignNight.cs" />
     <Compile Include="source\Painting\RotatePainting.cs" />
     <Compile Include="source\Painting\RotationGuidance.cs" />
     <Compile Include="source\Painting\RotationGuidanceNightPainting.cs" />
@@ -157,7 +156,6 @@
     <Compile Include="source\PointerTest.cs" />
     <Compile Include="source\SelectionManager.cs" />
     <Compile Include="source\Test.cs" />
-    <Compile Include="source\ToolsPuzzle\AlignUITools.cs" />
     <Compile Include="source\ToolsPuzzle\HoldupUITools.cs" />
     <Compile Include="source\ToolsPuzzle\ImageDisintegratingTools.cs" />
     <Compile Include="source\ToolsPuzzle\PictureAlignTools.cs" />
