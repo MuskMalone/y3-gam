@@ -1,12 +1,12 @@
 {
-    "name": "Wood Floor Corridor Alternate",
+    "name": "WoodFloorPit",
     "shader": "PBR",
     "albedoColor": {
         "x": 1.0,
         "y": 1.0,
         "z": 1.0
     },
-    "metalness": 0.0,
+    "metalness": 0.5,
     "roughness": 0.5,
     "ao": 1.0,
     "emission": {
@@ -17,8 +17,8 @@
     },
     "transparency": 1.0,
     "tiling": {
-        "x": 19.18000030517578,
-        "y": 3.940000057220459
+        "x": 10.569999694824219,
+        "y": 30.219999313354493
     },
     "offset": {
         "x": 0.0,
