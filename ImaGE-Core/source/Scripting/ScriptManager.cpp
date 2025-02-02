@@ -241,6 +241,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetTag);
   ADD_INTERNAL_CALL(FindScript);
   ADD_INTERNAL_CALL(FindScriptInEntity);
+  ADD_INTERNAL_CALL(GetParentByID);
   ADD_INTERNAL_CALL(DestroyEntity);
   ADD_INTERNAL_CALL(DestroyScript);
   ADD_INTERNAL_CALL(SetActive);
@@ -1166,6 +1167,7 @@ ECS::Entity::EntityID Mono::FindChildByTag(ECS::Entity::EntityID entity, MonoStr
   return static_cast<ECS::Entity::EntityID>(std::numeric_limits<std::uint32_t>::max());
 }
 
+
 ECS::Entity::EntityID Mono::FindParentByTag(MonoString* s) {
   std::string msg{ MonoStringToSTD(s) };
   for (ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntities()) {
@@ -1174,6 +1176,17 @@ ECS::Entity::EntityID Mono::FindParentByTag(MonoString* s) {
       }
   }
   return ECS::Entity::EntityID();
+}
+
+
+static ECS::Entity::EntityID GetParentByID(ECS::Entity::EntityID entity)
+{
+  if (ECS::Entity(entity) && ECS::EntityManager::GetInstance().HasParent(entity))
+  {
+    return ECS::EntityManager::GetInstance().GetParentEntity(entity).GetRawEnttEntityID();
+  }
+  Debug::DebugLogger::GetInstance().LogError("You are trying to find the parent of an entity that doesnt have one");
+  return static_cast<ECS::Entity::EntityID>(std::numeric_limits<std::uint32_t>::max());
 }
 
 void Mono::DestroyEntity(ECS::Entity::EntityID entity)

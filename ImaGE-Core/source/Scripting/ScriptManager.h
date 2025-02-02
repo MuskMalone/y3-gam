@@ -379,6 +379,7 @@ namespace Mono
 
 		static ECS::Entity::EntityID FindParentByTag(MonoString* s);
 
+		static ECS::Entity::EntityID GetParentByID(ECS::Entity::EntityID entity);
 
 		static MonoArray* GetAllChildren(ECS::Entity::EntityID entity);
 
