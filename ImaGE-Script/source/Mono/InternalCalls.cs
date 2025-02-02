@@ -166,6 +166,10 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static uint FindParentByTag(string s);
 
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static uint GetParentByID(uint EntityID);
+
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetMainCameraPosition(uint cameraEntityID);
 
@@ -174,6 +178,8 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Quaternion GetMainCameraRotation(uint cameraEntityID);
+
+
     #endregion
 
 
