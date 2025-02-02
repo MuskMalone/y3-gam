@@ -202,4 +202,15 @@ namespace Events
     TriggerPausedUpdate() : Event() {}
     inline std::string GetName() const noexcept override { return "Triggering paused update"; }
   };
+
+  // entity, GUID
+  class PreviewAnimation : public Event {
+  public:
+    PreviewAnimation(ECS::Entity entity, IGE::Assets::GUID guid) : Event(), mGUID{ guid }, mEntity{ entity } {}
+    inline std::string GetName() const noexcept override { return "Previewing animation " + std::to_string(static_cast<uint64_t>(mGUID))
+      + " for Entity " + mEntity.GetTag(); }
+
+    IGE::Assets::GUID mGUID;
+    ECS::Entity const mEntity;
+  };
 }

@@ -142,6 +142,7 @@ namespace IGE {
     // converts world -> local (after physics update)
     systemManager.RegisterSystem<Systems::PostTransformSystem>("Post-Transform System");
 
+    systemManager.RegisterSystem<Systems::AnimationSystem>("Animation System"); // interpolates local transform after Post-Transform update
     systemManager.RegisterSystem<IGE::Audio::AudioSystem>("Audio System");
     systemManager.RegisterSystem<Systems::TextSystem>("Text System");
   }

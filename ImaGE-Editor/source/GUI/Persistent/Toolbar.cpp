@@ -52,7 +52,7 @@ namespace GUI
 
       if (ImGui::BeginMenu("File"))
       {
-        const char* const sceneFilter{ "Scenes (*.scn)\0*.scn" }, * const initialDir{ "..\\Assets\\Scenes" };
+        const char* const sceneFilter{ "Scenes (*.scn)\0*.scn\0\0" }, * const initialDir{ "..\\Assets\\Scenes" };
         bool const creationMode{ !mDisableAll && mAllowCreationOnly };
 
         // im sorry this is messy
@@ -226,7 +226,7 @@ namespace GUI
       ImGui::Text("Name of Scene:");
       ImGui::SameLine();
       if (!ImGui::IsAnyItemActive()) ImGui::SetKeyboardFocusHere();
-      if (ImGui::InputText(".scn", &sceneName)) {
+      if (ImGui::InputText(gSceneFileExt, &sceneName)) {
         blankWarning = existingSceneWarning = false;
       }
 
@@ -244,12 +244,11 @@ namespace GUI
           blankWarning = true;
           existingSceneWarning = false;
         }
-        // @TODO: ADD CHECK WHEN ASSET MANAGER IS UP
-        /*else if (Assets::AssetManager::GetInstance().HasScene(sceneName))
+        else if (std::filesystem::exists(gScenesDirectory + sceneName + gSceneFileExt))
         {
           existingSceneWarning = true;
           blankWarning = false;
-        }*/
+        }
         else {
           QUEUE_EVENT(Events::LoadSceneEvent, sceneName, std::string());
           blankWarning = existingSceneWarning = false;

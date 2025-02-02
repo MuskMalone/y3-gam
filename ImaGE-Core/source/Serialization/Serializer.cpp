@@ -23,6 +23,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Serialization/PfbOverridesData.h>
 #include <Core/Components/Components.h>
 #include <Core/Entity.h>
+#include <Animation/Keyframe.h>
 
 #include <Prefabs/PrefabManager.h>
 #include <Reflection/ObjectFactory.h>
@@ -43,8 +44,6 @@ namespace {
 
   static rttr::type const sScriptCompType = rttr::type::get<Component::Script>();
   static rttr::type const sMonoObjectVecType = rttr::type::get<MonoObjectVector>();
-  template <typename T>
-  static T* sWriter = nullptr;
   static constexpr unsigned sBufferSize = 65536;
 
   // had to decltype a lambda LOL
@@ -165,6 +164,9 @@ namespace {
   template <typename WriterType>
   bool SerializeRecursive(rttr::variant const& var, WriterType& writer);
 
+  template <typename WriterType>
+  bool SerializeCustomTypes(rttr::variant const& var, rttr::type const& type, WriterType& writer);
+
   /*!*********************************************************************
   \brief
     Serializes an rttr::variant containing an associative container type
@@ -176,6 +178,9 @@ namespace {
   ************************************************************************/
   template <typename WriterType>
   void WriteAssociativeContainer(rttr::variant_associative_view const& view, WriterType& writer);
+
+  template<typename WriterType>
+  void SerializeNextNodes(Anim::Node const& node, WriterType& writer);
 }
 
 namespace Serialization
@@ -204,7 +209,6 @@ namespace Serialization
     StreamType outStream{ fileWrapper.GetFILE(), buffer.data(), sBufferSize };
     if (format == FileFormat::PRETTY) {
       PrettyWriterType writer{ outStream };
-      sWriter<PrettyWriterType> = &writer;
       SerializeClassTypes(obj, writer);
     }
     else {
@@ -221,6 +225,48 @@ namespace Serialization
 
     SerializeSceneInternal<CompactWriterType>(filePath);
   }
+
+  void Serializer::SerializeAnimationData(Anim::AnimationData const& animData, std::string const& filePath) {
+    Serialization::FILEWrapper fileWrapper{ filePath.c_str(), "w" };
+    if (!fileWrapper) {
+      Debug::DebugLogger::GetInstance().LogError("[Serializer] Unable to create AnimationData file: " + filePath);
+      return;
+    }
+
+    std::vector<char> buffer(sBufferSize);
+    StreamType outStream{ fileWrapper.GetFILE(), buffer.data(), sBufferSize };
+    PrettyWriterType writer{ outStream };
+    
+    writer.StartObject();
+
+    writer.Key("rootKeyframe");
+    writer.StartObject();
+
+    writer.Key("startPos");
+    SerializeRecursive(animData.rootKeyframe.startPos, writer);
+    writer.Key("startRot");
+    SerializeRecursive(animData.rootKeyframe.startRot, writer);
+    writer.Key("startScale");
+    SerializeRecursive(animData.rootKeyframe.startScale, writer);
+
+    writer.Key("nextNodes");
+    // we'll use the ptr address as the node ID
+    writer.StartArray();
+    for (Anim::Node const& node : animData.rootKeyframe.nextNodes) {
+      writer.Int(node->id);
+    }
+    writer.EndArray();
+    writer.EndObject();
+
+    writer.Key("keyframes");
+    writer.StartArray();
+    for (Anim::Node const& node : animData.rootKeyframe.nextNodes) {
+      SerializeNextNodes(node, writer);
+    }
+    writer.EndArray();
+
+    writer.EndObject();
+  }
 } // namespace Serialization
 
 namespace {
@@ -229,6 +275,7 @@ namespace {
     Serialization::FILEWrapper fileWrapper{ filePath.c_str(), "w" };
     if (!fileWrapper) {
       Debug::DebugLogger::GetInstance().LogError("[Serializer] Unable to create scene file: " + filePath);
+      return;
     }
 
     std::vector<char> buffer(sBufferSize);
@@ -527,14 +574,10 @@ namespace {
     }
     else
     {
-      auto properties{ type.get_properties() };
-      if (properties.empty()) {
-        if (type == rttr::type::get<rttr::type>()) {
-          bool ok;
-          writer.String(var.convert<std::string>(&ok).c_str());
-          return true;
-        }
-
+      if (SerializeCustomTypes(var, type, writer)) {
+        return true;
+      }
+      else if (type.get_properties().empty()) {
         std::string const msg{ "Unable to write variant of type " + (isWrapper ? type.get_name().to_string() : type.get_name().to_string()) };
         Debug::DebugLogger::GetInstance().LogError("[Serializer] " + msg);
 #ifdef _DEBUG
@@ -575,6 +618,58 @@ namespace {
     }
 
     writer.EndArray();
+  }
+
+  template <typename WriterType>
+  bool SerializeCustomTypes(rttr::variant const& var, rttr::type const& type, WriterType & writer) {
+    if (type == rttr::type::get<rttr::type>()) {
+      bool ok;
+      writer.String(var.convert<std::string>(&ok).c_str());
+      return true;
+    }
+    else if (type == rttr::type::get<Anim::Keyframe::ValueType>()) {
+      Anim::Keyframe::ValueType const& rawVal{ var.get_value<Anim::Keyframe::ValueType>() };
+      if (std::holds_alternative<glm::vec3>(rawVal)) {
+        SerializeClassTypes(std::get<glm::vec3>(rawVal), writer);
+      }
+      return true;
+    }
+
+    return false;
+  }
+
+  template <typename WriterType>
+  void SerializeNextNodes(Anim::Node const& node, WriterType& writer) {
+    writer.StartObject();
+
+    writer.Key(JSON_ANIM_NODE_ID_KEY);
+    writer.Int(node->id);
+
+    writer.Key("startValue");
+    SerializeRecursive(node->startValue, writer);
+    writer.Key("endValue");
+    SerializeRecursive(node->endValue, writer);
+    writer.Key("type");
+    SerializeRecursive(node->type, writer);
+
+    writer.Key("startTime");
+    writer.Double(node->startTime);
+    writer.Key("duration");
+    writer.Double(node->duration);
+
+    writer.Key("nextNodes");
+    writer.StartArray();
+    for (Anim::Node const& next : node->nextNodes) {
+      writer.Int(next->id);
+    }
+    writer.EndArray();
+
+    writer.EndObject();
+
+    // recursively call this on the next node
+    for (Anim::Node const& next : node->nextNodes) {
+      SerializeNextNodes(next, writer);
+    }
   }
 
 #pragma region ScriptsSpecific

@@ -38,9 +38,10 @@ namespace AssetHelpers
 				1. Label of the file extension
 				2. Semicolon separated list of file extensions accepted by the
 						filter
+			The string should end with 2 null-terminating characters ("\0\0")
 
 		Example:
-			"Scenes (*.scn)\0*.scn\0All Files (*.*)\0*.*"
+			"Scenes (*.scn)\0*.scn\0All Files (*.*)\0*.*\0\0"
 	\param numFilters
 		The number of filters (should correspond to extensionsFilter)
 	\param initialDir
@@ -49,7 +50,7 @@ namespace AssetHelpers
 	\return
 		The vector of filepaths selected
 	************************************************************************/
-	std::vector<std::string> SelectFilesFromExplorer(const char* winTitle = "Open", const char* extensionsFilter = "All Files (*.*)\0*.*",
+	std::vector<std::string> SelectFilesFromExplorer(const char* winTitle = "Open", const char* extensionsFilter = "All Files (*.*)\0*.*\0\0",
 		unsigned numFilters = 1, const char* initialDir = "./Assets");
 
 	/*!*********************************************************************
@@ -64,9 +65,10 @@ namespace AssetHelpers
 				1. Label of the file extension
 				2. Semicolon separated list of file extensions accepted by the
 						filter
+			The string should end with 2 null-terminating characters ("\0\0")
 
 		Example:
-			"Scenes (*.scn)\0*.scn\0All Files (*.*)\0*.*"
+			"Scenes (*.scn)\0*.scn\0All Files (*.*)\0*.*\0\0"
 	\param numFilters
 		The number of filters (should correspond to extensionsFilter)
 	\param initialDir
@@ -75,7 +77,7 @@ namespace AssetHelpers
 	\return
 		The filepath of the file selected
 	************************************************************************/
-	std::string LoadFileFromExplorer(const char* extensionsFilter = "All Files (*.*)\0*.*",
+	std::string LoadFileFromExplorer(const char* extensionsFilter = "All Files (*.*)\0*.*\0\0",
 		unsigned numFilters = 1, const char* initialDir = "./Assets");
 
 	/*!*********************************************************************
@@ -90,19 +92,23 @@ namespace AssetHelpers
 					1. Label of the file extension
 					2. Semicolon separated list of file extensions accepted by the
 						 filter
+				The string should end with 2 null-terminating characters ("\0\0")
 
 			Example:
-				"Scenes (*.scn)\0*.scn\0All Files (*.*)\0*.*"
+				"Scenes (*.scn)\0*.scn\0All Files (*.*)\0*.*\0\0"
 		\param numFilters
 			The number of filters (should correspond to extensionsFilter)
+		\param defaultExt
+			The default file extension to append to the file
 		\param initialDir
 			The filepath of the initial directory the file explorer opens up at.
 			Defaults to Assets.
 		\return
 			The filepath of the file selected
 		************************************************************************/
-	static std::string SaveFileToExplorer(const char* extensionsFilter = "All Files (*.*)\0*.*",
-		unsigned numFilters = 1, const char* initialDir = "./Assets");
+	std::string SaveFileToExplorer(const char* defaultExt, const char* defaultFileName,
+		const char* extensionsFilter = "All Files (*.*)\0*.*\0\0",
+		unsigned numFilters = 1, const char* initialDir = "../Assets");
 
 	/*!*********************************************************************
 	\brief

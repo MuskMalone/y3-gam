@@ -1,4 +1,5 @@
 using IGE.Utils;
+using System;
 
 public class LightSwitch : Entity
 {
@@ -24,6 +25,7 @@ public class LightSwitch : Entity
     {
       if (isSwitchHit)
       {
+                Console.WriteLine("CameHere");    
         foreach (Entity light in LightsToToggleActive)
         {
           light.SetActive(!InternalCalls.IsActive(light.mEntityID));
