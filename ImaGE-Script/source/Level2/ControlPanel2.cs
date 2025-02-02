@@ -34,6 +34,14 @@ public class ControlPanel2 : Entity
     public Entity UVLight;
     public Entity[] hiddenText0;
     public Entity[] hiddenText1;
+    public Entity[] hiddenText2;
+    public Entity[] hiddenText3;
+    public Entity zeusStatue;
+    public Entity poseidonStatue;
+    public Entity artemisStatue;
+    public Entity dionysusStatue;
+
+
     //public Entity[][] hiddenTexts; // Stores all hidden texts for each mode
     public int activeModeIndex = 0;
     public Entity playerCamera;
@@ -72,6 +80,21 @@ public class ControlPanel2 : Entity
         {
             text?.SetActive(false);
         }
+
+        foreach (Entity text in hiddenText2)
+        {
+            text?.SetActive(false);
+        }
+
+        foreach (Entity text in hiddenText3)
+        {
+            text?.SetActive(false);
+        }
+
+        zeusStatue.SetActive(true);
+        poseidonStatue.SetActive(false);
+        artemisStatue.SetActive(false);
+        dionysusStatue.SetActive(false);
     }
 
     void Update()
@@ -79,16 +102,36 @@ public class ControlPanel2 : Entity
         bool mouseClicked = Input.GetMouseButtonTriggered(0);
         bool isPanelHit = playerInteraction.RayHitString == "ControlPanel2";
         
+        //when painting used
         if(!controllingLights)
         {
             if(Input.GetKeyDown(KeyCode.N))
             {
                 currMode = 1;
+                DisableAllStatues();
+                zeusStatue.SetActive(true);
+                
                 //SwitchMode(0);
             }
             else if(Input.GetKeyDown(KeyCode.M))
             {
                 currMode = 2;
+                DisableAllStatues();
+                poseidonStatue.SetActive(true);
+                //SwitchMode(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.Y))
+            {
+                currMode = 3;
+                DisableAllStatues();
+                artemisStatue.SetActive(true);
+                //SwitchMode(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.U))
+            {
+                currMode = 4;
+                DisableAllStatues();
+                dionysusStatue.SetActive(true);
                 //SwitchMode(1);
             }
         }
@@ -100,20 +143,7 @@ public class ControlPanel2 : Entity
 
             if (AreAllLightsOff())
             {
-                if (currMode == 1)
-                {
-                    foreach (Entity text in hiddenText0)
-                    {
-                        text?.SetActive(true);
-                    }
-                }
-                else if(currMode == 2) 
-                {
-                    foreach (Entity text in hiddenText1)
-                    {
-                        text?.SetActive(true);
-                    }
-                }
+                SwitchMode(currMode);
             }
         }
 
@@ -153,20 +183,8 @@ public class ControlPanel2 : Entity
             {
                 controllingLights = false;
                 playerMove.UnfreezePlayer();
-                if (currMode == 1)
-                {
-                    foreach (Entity text in hiddenText0)
-                    {
-                        text?.SetActive(false);
-                    }
-                }
-                else if (currMode == 2)
-                {
-                    foreach (Entity text in hiddenText1)
-                    {
-                        text?.SetActive(false);
-                    }
-                }
+                DisableMode(currMode);
+                
                 SetPlayerCameraAsMain();
             }
         }
@@ -198,10 +216,82 @@ public class ControlPanel2 : Entity
         return true;
     }
 
-    //public void SwitchMode(int index)
-    //{
-        
-    //}
+    public void DisableMode(int index)
+    {
+        if (index == 1)
+        {
+            foreach (Entity text in hiddenText0)
+            {
+                text?.SetActive(false);
+            }
+        }
+        else if (index == 2)
+        {
+            foreach (Entity text in hiddenText1)
+            {
+                text?.SetActive(false);
+            }
+        }
+        else if (index == 3)
+        {
+            foreach (Entity text in hiddenText2)
+            {
+                text?.SetActive(false);
+            }
+        }
+        else if (index == 4)
+        {
+            foreach (Entity text in hiddenText3)
+            {
+                text?.SetActive(false);
+            }
+        }
+    }
+
+    public void DisableAllStatues()
+    {
+        zeusStatue.SetActive(false);
+        poseidonStatue.SetActive(false);
+        artemisStatue.SetActive(false);
+        dionysusStatue.SetActive(false);
+    }
+
+
+    public void SwitchMode(int index)
+    {
+        if (index == 1)
+        {
+            foreach (Entity text in hiddenText0)
+            {
+                text?.SetActive(true);
+            }
+            
+        }
+        else if (index == 2)
+        {
+            foreach (Entity text in hiddenText1)
+            {
+                text?.SetActive(true);
+            }
+            
+        }
+        else if (index == 3)
+        {
+            foreach (Entity text in hiddenText2)
+            {
+                text?.SetActive(true);
+            }
+            
+        }
+        else if (index == 4)
+        {
+            foreach (Entity text in hiddenText3)
+            {
+                text?.SetActive(true);
+            }
+            
+        }
+    }
 }
 
 
