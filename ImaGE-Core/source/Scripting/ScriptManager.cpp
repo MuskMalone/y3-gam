@@ -1179,7 +1179,7 @@ ECS::Entity::EntityID Mono::FindParentByTag(MonoString* s) {
 }
 
 
-static ECS::Entity::EntityID GetParentByID(ECS::Entity::EntityID entity)
+ECS::Entity::EntityID Mono::GetParentByID(ECS::Entity::EntityID entity)
 {
   if (ECS::Entity(entity) && ECS::EntityManager::GetInstance().HasParent(entity))
   {
