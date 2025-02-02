@@ -9466,8 +9466,19 @@
                 182,
                 183,
                 187,
+                188,
+                189,
+                190,
+                191,
+                192,
+                193,
+                194,
+                196,
+                197,
+                198,
                 1048713,
                 1048757,
+                1048771,
                 2097294
             ],
             "Components": [
@@ -13014,9 +13025,9 @@
                     "Light": {
                         "lightType": "SPOTLIGHT",
                         "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "x": 0.6617375612258911,
+                            "y": 0.16867822408676148,
+                            "z": 0.9698996543884277
                         },
                         "intensity": 1.0,
                         "innerAngle": -8.0,
@@ -13307,6 +13318,1046 @@
                             "x": 46.058433532714847,
                             "y": 84.73124694824219,
                             "z": -119.99494934082031
+                        },
+                        "worldScale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "worldRot": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 2993027541165936622
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 6.0,
+                            "y": 6.0,
+                            "z": 6.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 188,
+            "Parent": 138,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HiddenText2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 46.058433532714847,
+                            "y": 87.4587631225586,
+                            "z": -181.097900390625
+                        },
+                        "scale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "rotation": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": 89.9720230102539,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 46.058433532714847,
+                            "y": 87.4587631225586,
+                            "z": -181.65867614746095
+                        },
+                        "worldScale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "worldRot": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 2993027541165936622
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 6.0,
+                            "y": 6.0,
+                            "z": 6.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 189,
+            "Parent": 138,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HiddenText3",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 46.016639709472659,
+                            "y": 59.293190002441409,
+                            "z": -120.53762817382813
+                        },
+                        "scale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "rotation": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": 89.9720230102539,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 46.016639709472659,
+                            "y": 59.293190002441409,
+                            "z": -121.09840393066406
+                        },
+                        "worldScale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "worldRot": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 17131431125324269348
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 6.0,
+                            "y": 6.0,
+                            "z": 6.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 190,
+            "Parent": 138,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HiddenText4",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 45.91151428222656,
+                            "y": 38.338401794433597,
+                            "z": -121.13473510742188
+                        },
+                        "scale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "rotation": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": 89.9720230102539,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 45.91151428222656,
+                            "y": 38.338401794433597,
+                            "z": -121.69551086425781
+                        },
+                        "worldScale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "worldRot": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 2993027541165936622
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 6.0,
+                            "y": 6.0,
+                            "z": 6.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 191,
+            "Parent": 138,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HiddenText5",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 46.23664474487305,
+                            "y": 87.70341491699219,
+                            "z": -152.39263916015626
+                        },
+                        "scale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "rotation": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": 89.9720230102539,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 46.23664474487305,
+                            "y": 87.70341491699219,
+                            "z": -152.9534149169922
+                        },
+                        "worldScale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "worldRot": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 17131431125324269348
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 6.0,
+                            "y": 6.0,
+                            "z": 6.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 192,
+            "Parent": 138,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HiddenText6",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 46.28612518310547,
+                            "y": 60.570457458496097,
+                            "z": -182.5750274658203
+                        },
+                        "scale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "rotation": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": 89.9720230102539,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 46.28612518310547,
+                            "y": 60.570457458496097,
+                            "z": -183.13580322265626
+                        },
+                        "worldScale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "worldRot": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 17131431125324269348
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 6.0,
+                            "y": 6.0,
+                            "z": 6.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 193,
+            "Parent": 138,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HiddenText7",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 46.33692169189453,
+                            "y": 60.570457458496097,
+                            "z": -182.5750274658203
+                        },
+                        "scale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "rotation": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": 89.9720230102539,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 46.33692169189453,
+                            "y": 60.570457458496097,
+                            "z": -183.13580322265626
+                        },
+                        "worldScale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "worldRot": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 17646321977684163061
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 6.0,
+                            "y": 6.0,
+                            "z": 6.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 194,
+            "Parent": 138,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HiddenText8",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 46.258888244628909,
+                            "y": 87.4587631225586,
+                            "z": -181.097900390625
+                        },
+                        "scale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "rotation": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": 89.9720230102539,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 46.258888244628909,
+                            "y": 87.4587631225586,
+                            "z": -181.65867614746095
+                        },
+                        "worldScale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "worldRot": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 17445112992923721496
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 6.0,
+                            "y": 6.0,
+                            "z": 6.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 196,
+            "Parent": 138,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HiddenText10",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 46.058433532714847,
+                            "y": 84.73124694824219,
+                            "z": -119.43417358398438
+                        },
+                        "scale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "rotation": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": 89.9720230102539,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 46.058433532714847,
+                            "y": 84.73124694824219,
+                            "z": -119.99494934082031
+                        },
+                        "worldScale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "worldRot": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 17445112992923721496
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 6.0,
+                            "y": 6.0,
+                            "z": 6.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 197,
+            "Parent": 138,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HiddenText11",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 46.25584411621094,
+                            "y": 59.293190002441409,
+                            "z": -120.53762817382813
+                        },
+                        "scale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "rotation": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": 89.9720230102539,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 46.25584411621094,
+                            "y": 59.293190002441409,
+                            "z": -121.09840393066406
+                        },
+                        "worldScale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "worldRot": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 17646321977684163061
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 6.0,
+                            "y": 6.0,
+                            "z": 6.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 198,
+            "Parent": 138,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HiddenText12",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 45.92085266113281,
+                            "y": 38.338401794433597,
+                            "z": -121.13473510742188
+                        },
+                        "scale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "rotation": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": 89.9720230102539,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 45.92085266113281,
+                            "y": 38.338401794433597,
+                            "z": -121.69551086425781
                         },
                         "worldScale": {
                             "x": 12.0,
@@ -14882,6 +15933,79 @@
                                 "scriptName": "ControlPanel2",
                                 "scriptFieldInstList": [
                                     {
+                                        "data": [
+                                            {
+                                                "entityID": 184,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 184,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 121,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 121,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 40,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 40,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 26,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 26,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 25,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 25,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "type": "MonoObjectVec",
+                                        "scriptField": {
+                                            "fieldName": "LightsToToggleActive"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 183,
                                             "scriptName": "Entity"
@@ -14892,6 +16016,13 @@
                                         }
                                     },
                                     {
+                                        "data": 0,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "activeModeIndex"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 1048757,
                                             "scriptName": "Entity"
@@ -14899,6 +16030,13 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "controlPanelCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": 1,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "currMode"
                                         }
                                     },
                                     {
@@ -14915,11 +16053,162 @@
                                                         }
                                                     }
                                                 ]
+                                            },
+                                            {
+                                                "entityID": 188,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 188,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 189,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 189,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 190,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 190,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 191,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 191,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 192,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 192,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         ],
                                         "type": "MonoObjectVec",
                                         "scriptField": {
-                                            "fieldName": "hiddenText"
+                                            "fieldName": "hiddenText0"
+                                        }
+                                    },
+                                    {
+                                        "data": [
+                                            {
+                                                "entityID": 193,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 193,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 194,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 194,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 1048771,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 1048771,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 196,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 196,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 197,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 197,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 198,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 198,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "type": "MonoObjectVec",
+                                        "scriptField": {
+                                            "fieldName": "hiddenText1"
                                         }
                                     },
                                     {
@@ -15065,6 +16354,110 @@
                         "aspectRatio": 1.7777777910232545,
                         "nearClip": 0.10000000149011612,
                         "farClip": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048771,
+            "Parent": 138,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HiddenText9",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 46.23664474487305,
+                            "y": 87.70341491699219,
+                            "z": -152.39263916015626
+                        },
+                        "scale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "rotation": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": 89.9720230102539,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 46.23664474487305,
+                            "y": 87.70341491699219,
+                            "z": -152.9534149169922
+                        },
+                        "worldScale": {
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 12.0
+                        },
+                        "worldRot": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 17646321977684163061
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 6.0,
+                            "y": 6.0,
+                            "z": 6.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
                     }
                 }
             ]

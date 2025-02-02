@@ -32,7 +32,10 @@ public class ControlPanel2 : Entity
 {
     public PlayerInteraction playerInteraction;
     public Entity UVLight;
-    public Entity[] hiddenText;
+    public Entity[] hiddenText0;
+    public Entity[] hiddenText1;
+    //public Entity[][] hiddenTexts; // Stores all hidden texts for each mode
+    public int activeModeIndex = 0;
     public Entity playerCamera;
     public Entity controlPanelCamera;
     public PlayerMove playerMove;
@@ -44,7 +47,9 @@ public class ControlPanel2 : Entity
     public float maxHorizontalRotation = 32.0f;  // Maximum yaw
 
     private bool controllingLights = false;
-
+    public int currMode = 1;
+    //public LightSwitch lightSwitch;
+    public Entity[] LightsToToggleActive;
     public ControlPanel2() : base()
     {
 
@@ -58,7 +63,12 @@ public class ControlPanel2 : Entity
             return;
         }
 
-        foreach (Entity text in hiddenText)
+        foreach (Entity text in hiddenText0)
+        {
+            text?.SetActive(false);
+        }
+
+        foreach (Entity text in hiddenText1)
         {
             text?.SetActive(false);
         }
@@ -68,14 +78,42 @@ public class ControlPanel2 : Entity
     {
         bool mouseClicked = Input.GetMouseButtonTriggered(0);
         bool isPanelHit = playerInteraction.RayHitString == "ControlPanel2";
+        
+        if(!controllingLights)
+        {
+            if(Input.GetKeyDown(KeyCode.N))
+            {
+                currMode = 1;
+                //SwitchMode(0);
+            }
+            else if(Input.GetKeyDown(KeyCode.M))
+            {
+                currMode = 2;
+                //SwitchMode(1);
+            }
+        }
 
         if (mouseClicked && isPanelHit)
         {
             SetControlPanelCameraAsMain();
             controllingLights = true;
-            foreach (Entity text in hiddenText)
+
+            if (AreAllLightsOff())
             {
-                text?.SetActive(true);
+                if (currMode == 1)
+                {
+                    foreach (Entity text in hiddenText0)
+                    {
+                        text?.SetActive(true);
+                    }
+                }
+                else if(currMode == 2) 
+                {
+                    foreach (Entity text in hiddenText1)
+                    {
+                        text?.SetActive(true);
+                    }
+                }
             }
         }
 
@@ -87,13 +125,13 @@ public class ControlPanel2 : Entity
 
             if (Input.GetKeyDown(KeyCode.W))
             {
-                Console.WriteLine("Entered W");
+                //Console.WriteLine("Entered W");
                 currentRotation.X += rotationSpeed * deltaTime;
             }
 
             if (Input.GetKeyDown(KeyCode.S))
             {
-                Console.WriteLine("Entered S");
+                //Console.WriteLine("Entered S");
                 currentRotation.X -= rotationSpeed * deltaTime;
             }
 
@@ -115,9 +153,19 @@ public class ControlPanel2 : Entity
             {
                 controllingLights = false;
                 playerMove.UnfreezePlayer();
-                foreach (Entity text in hiddenText)
+                if (currMode == 1)
                 {
-                    text?.SetActive(false);
+                    foreach (Entity text in hiddenText0)
+                    {
+                        text?.SetActive(false);
+                    }
+                }
+                else if (currMode == 2)
+                {
+                    foreach (Entity text in hiddenText1)
+                    {
+                        text?.SetActive(false);
+                    }
                 }
                 SetPlayerCameraAsMain();
             }
@@ -137,6 +185,25 @@ public class ControlPanel2 : Entity
         InternalCalls.SetTag(playerCamera.mEntityID, "PlayerCamera");
         InternalCalls.SetTag(controlPanelCamera.mEntityID, "MainCamera");
     }
+
+    private bool AreAllLightsOff()
+    {
+        foreach (Entity light in LightsToToggleActive)
+        {
+            if (light.IsActive())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //public void SwitchMode(int index)
+    //{
+        
+    //}
 }
+
+
 
 
