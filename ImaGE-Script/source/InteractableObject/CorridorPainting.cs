@@ -14,7 +14,7 @@ public class CorrdiorPainting : Entity, IInventoryItem
   {
     get
     {
-      return "CorrdiorPainting";
+      return "CorridorPainting";
     }
   }
 

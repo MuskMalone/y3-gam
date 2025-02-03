@@ -135,9 +135,8 @@ public class PictureAlign : Entity
                     //tutorialFade.StartFade();
                     startFade = true;
         }
-        else if (picture == "CorrdiorPainting")
+        else if (picture == "CorridorPainting")
         {
-          Console.WriteLine("Corridorrrrrrrrrrrrrrrrrrrrrrrrrrrr");
           isTransitioning = false;
           playerMove.UnfreezePlayer();
           InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Level2.scn");

@@ -31,6 +31,7 @@ public class Inventory : Entity
   public Entity seedSelection;
   public Entity nightPaintingSelection;
   public Entity toolsPaintingSelection;
+  public Entity CorridorPaintingSelection;
   public Entity hammerSelection;
   public Entity crowbarSelection;
   public Entity transitionPaintingSelection;
@@ -353,6 +354,7 @@ public class Inventory : Entity
         seedEquipped = true;
         break;
       case "NightPainting":
+        Console.WriteLine("Night");
         nightPaintingUI?.SetActive(true);
         nightPaintingUI?.FindScript<HoldupUI>().SetAlginUI("NightPainting", GetItemByName("NightPainting"));
         break;
@@ -360,9 +362,10 @@ public class Inventory : Entity
         toolsPaintingUI?.SetActive(true);
         toolsPaintingUI?.FindScript<HoldupUI>().SetAlginUI("ToolsPainting", GetItemByName("ToolsPainting"));
         break;
-      case "CorrdiorPainting":
+      case "CorridorPainting":
+        Console.WriteLine("CORR");
         CorridorPaintingUI?.SetActive(true);
-        CorridorPaintingUI?.FindScript<HoldupUI>().SetAlginUI("CorrdiorPainting", GetItemByName("CorrdiorPainting"));
+        CorridorPaintingUI?.FindScript<HoldupUI>().SetAlginUI("CorridorPainting", GetItemByName("CorridorPainting"));
         break;
       case "Hammer":
         hammerUI?.SetActive(true);
