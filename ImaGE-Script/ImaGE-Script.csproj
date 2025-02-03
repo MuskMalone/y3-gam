@@ -117,6 +117,7 @@
     <Compile Include="source\Inventory\HUD.cs" />
     <Compile Include="source\Inventory\Inventory.cs" />
     <Compile Include="source\Inventory\InventoryItemData.cs" />
+    <Compile Include="source\Inventory\TemporaryInventory.cs" />
     <Compile Include="source\Inventory\TutorialLevelHUD.cs" />
     <Compile Include="source\Inventory\TutorialLevelInventory.cs" />
     <Compile Include="source\Level2\ControlPanel2.cs" />
