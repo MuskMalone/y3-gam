@@ -270,11 +270,11 @@
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "staticFriction": 1.0,
-                        "dynamicFriction": 1.0,
+                        "staticFriction": 0.800000011920929,
+                        "dynamicFriction": 0.800000011920929,
                         "restitution": 0.0,
-                        "gravityFactor": 50.0,
-                        "linearDamping": 10.0,
+                        "gravityFactor": 40.0,
+                        "linearDamping": 1.0,
                         "motionType": "DYNAMIC",
                         "axisLock": 0,
                         "angularAxisLock": 5
@@ -319,28 +319,21 @@
                                         }
                                     },
                                     {
-                                        "data": 2500.0,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "jumpForce"
-                                        }
-                                    },
-                                    {
-                                        "data": 1200.0,
+                                        "data": 1300.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "runSpeed"
                                         }
                                     },
                                     {
-                                        "data": 650.0,
+                                        "data": 750.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "speed"
                                         }
                                     },
                                     {
-                                        "data": 650.0,
+                                        "data": 750.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "walkingSpeed"
@@ -3112,7 +3105,7 @@
                 {
                     "Tag": {
                         "tag": "Ceiling",
-                        "isActive": false
+                        "isActive": true
                     }
                 },
                 {
@@ -3272,7 +3265,7 @@
                 {
                     "Tag": {
                         "tag": "Ceiling (Exit)",
-                        "isActive": false
+                        "isActive": true
                     }
                 },
                 {
@@ -3343,7 +3336,7 @@
                 {
                     "Tag": {
                         "tag": "Ceiling (Room)",
-                        "isActive": false
+                        "isActive": true
                     }
                 },
                 {
@@ -21740,7 +21733,7 @@
                 {
                     "Tag": {
                         "tag": "[Folder] Ceiling",
-                        "isActive": false
+                        "isActive": true
                     }
                 },
                 {
