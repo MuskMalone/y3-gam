@@ -77,248 +77,11 @@
             ]
         },
         {
-            "ID": 39,
-            "Parent": 52,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "AudioSource": {
-                        "sounds": [
-                            {
-                                "key": "DefaultDialogueSound",
-                                "value": {
-                                    "guid": {
-                                        "ID": 10835122463629634547
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": -4.599999904632568,
-                                            "y": -7.599999904632568,
-                                            "z": 0.0
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
-                                    }
-                                }
-                            }
-                        ]
-                    }
-                },
-                {
-                    "Tag": {
-                        "tag": "DialogueText",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -4.599999904632568,
-                            "y": -7.599999904632568,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -4.599999904632568,
-                            "y": -7.599999904632568,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "UI"
-                    }
-                },
-                {
-                    "Text": {
-                        "textContent": "YOUR TEXT HERE",
-                        "color": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "scale": 0.009999999776482582,
-                        "textAssetGUID": {
-                            "ID": 11715672305158928427
-                        },
-                        "fontFamilyName": "Sniglet-Regular",
-                        "alignment": 0,
-                        "multiLineSpacingOffset": 0.0,
-                        "textBoxEnabledFlag": false,
-                        "textBoxDimensions": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 0.0
-                        }
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 39,
-                                "scriptName": "TutorialDialogue",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 63,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "DialogueBox"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 4194738,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "DisturbedTara"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 4194737,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "HappyTara"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 1048616,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "NeutralTara"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 2097601,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "SadTara"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 4194542,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "ShockedTara"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 4194581,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "SurprisedTara"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 1048617,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "ThinkingTara"
-                                        }
-                                    },
-                                    {
-                                        "data": false,
-                                        "type": "System.Boolean",
-                                        "scriptField": {
-                                            "fieldName": "isInDialogueMode"
-                                        }
-                                    },
-                                    {
-                                        "data": false,
-                                        "type": "System.Boolean",
-                                        "scriptField": {
-                                            "fieldName": "isLineComplete"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 2097156,
-                                            "scriptName": "PlayerMove"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "playerMove"
-                                        }
-                                    },
-                                    {
-                                        "data": 0.009999999776482582,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "textSpeed"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        {
             "ID": 52,
             "Parent": 37,
             "Child Entities": [
-                39,
-                63
+                63,
+                1048615
             ],
             "Components": [
                 {
@@ -2392,9 +2155,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -2568,9 +2331,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -7.315000057220459,
+                            "x": -6.666280269622803,
                             "y": 10.621471405029297,
-                            "z": -10.395719528198243
+                            "z": -9.746999740600586
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -2579,9 +2342,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -2594,9 +2357,9 @@
                     "Camera": {
                         "projType": "PERSP",
                         "position": {
-                            "x": -7.315000057220459,
+                            "x": -6.666280269622803,
                             "y": 10.621471405029297,
-                            "z": -10.395719528198243
+                            "z": -9.746999740600586
                         },
                         "yaw": 0.0,
                         "pitch": 0.0,
@@ -4827,6 +4590,243 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048615,
+            "Parent": 52,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "DefaultDialogueSound",
+                                "value": {
+                                    "guid": {
+                                        "ID": 4933977475060192867
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -4.599999904632568,
+                                            "y": -7.599999904632568,
+                                            "z": 0.0
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "DialogueText",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -4.599999904632568,
+                            "y": -7.599999904632568,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -4.599999904632568,
+                            "y": -7.599999904632568,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Text": {
+                        "textContent": "YOUR TEXT HERE",
+                        "color": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "scale": 0.009999999776482582,
+                        "textAssetGUID": {
+                            "ID": 11715672305158928427
+                        },
+                        "fontFamilyName": "Sniglet-Regular",
+                        "alignment": 0,
+                        "multiLineSpacingOffset": 0.0,
+                        "textBoxEnabledFlag": false,
+                        "textBoxDimensions": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048615,
+                                "scriptName": "TutorialDialogue",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 63,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "DialogueBox"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4194738,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "DisturbedTara"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4194737,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "HappyTara"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1048616,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "NeutralTara"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2097601,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "SadTara"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4194542,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "ShockedTara"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4194581,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "SurprisedTara"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1048617,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "ThinkingTara"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isInDialogueMode"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isLineComplete"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2097156,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.009999999776482582,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "textSpeed"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
@@ -8140,13 +8140,13 @@
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": -0.0,
+                            "y": -90.0,
                             "z": 0.0
                         },
                         "worldPos": {
@@ -8161,9 +8161,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
