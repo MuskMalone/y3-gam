@@ -238,7 +238,6 @@ namespace IGE {
     // shutdown singletons
     CMD::CommandManager::DestroyInstance();
     Systems::SystemManager::DestroyInstance();
-    IGE::Audio::AudioManager::DestroyInstance();
     Graphics::ParticleManager::DestroyInstance();
     Graphics::PostProcessingManager::DestroyInstance();
     Scenes::SceneManager::DestroyInstance();

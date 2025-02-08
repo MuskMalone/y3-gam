@@ -16,6 +16,7 @@ namespace IGE {
         }
         AudioManager::~AudioManager()
         {
+            std::cerr << "audio destructed>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n";
             Release();
         }
         //std::unordered_map<std::string, std::list<FMOD::Channel*>> AudioManager::_mChannels;
