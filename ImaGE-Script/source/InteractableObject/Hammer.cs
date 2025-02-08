@@ -1,4 +1,6 @@
 using IGE.Utils;
+using System;
+using static Dialogue;
 
 public class Hammer : Entity, IInventoryItem
 {
@@ -7,6 +9,8 @@ public class Hammer : Entity, IInventoryItem
   public Inventory inventoryScript;
   public PlayerInteraction playerInteraction;
   public Entity EToPickUpUI;
+  public Dialogue dialogueSystem;
+  public string[] hammerDialogue;
 
   public string Name
   {
@@ -53,6 +57,7 @@ public class Hammer : Entity, IInventoryItem
     {
       InternalCalls.PlaySound(mEntityID, "PickupObjects");
       inventoryScript.Additem(this);
+      dialogueSystem.SetDialogue(hammerDialogue, new Dialogue.Emotion[] { Emotion.Surprised }, 0.006f, "IncoherentWhispers", "..\\Assets\\Textures\\Stagedive-d58X.ttf");
     }
     EToPickUpUI.SetActive(isHammerHit);
   }
