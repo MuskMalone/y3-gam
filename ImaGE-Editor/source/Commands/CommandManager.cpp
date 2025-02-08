@@ -22,7 +22,7 @@ void CMD::TransformCmd(ParamPack const& pp)
 {
 	ECS::Entity e{ std::any_cast<ECS::Entity>(pp[0]) };
 	Component::Transform t{ std::any_cast<Component::Transform>(pp[1]) };
-	e.GetComponent<Component::Transform>() = t;
+	(e.GetComponent<Component::Transform>() = t).modified = true;	// set modified flag
 }
 
 

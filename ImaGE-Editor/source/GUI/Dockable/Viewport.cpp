@@ -18,6 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <FrameRateController/FrameRateController.h>
 #include <Scenes/SceneManager.h>
 #include <Core/EntityManager.h>
+#include <Commands/CommandManager.h>
 
 #include <GUI/Helpers/AssetPayload.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
@@ -363,7 +364,8 @@ namespace GUI
     float const windowWidth{ ImGui::GetWindowWidth() };
     float const windowHeight{ ImGui::GetWindowHeight() };
     ImGuizmo::SetRect(windowPos.x, windowPos.y, windowWidth, windowHeight);
-    Component::Transform& transform{ selectedEntity.GetComponent<Component::Transform>() };
+    Component::Transform& transform{ selectedEntity.GetComponent<Component::Transform>() },
+      oldTrans{ transform };  // old cpy for undo/redo
 
     glm::mat4 const& viewMatrix{ mEditorCam->viewMatrix };
     glm::mat4 const projMatrix{ mEditorCam->GetProjMatrix() };
@@ -489,6 +491,7 @@ namespace GUI
         }
       }
 
+      IGE_CMDMGR.AddCommand("Transform", selectedEntity, std::move(oldTrans));
       QUEUE_EVENT(Events::SceneModifiedEvent);
     }
 

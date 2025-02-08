@@ -17,6 +17,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Input/InputManager.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
 #include <Graphics/Renderer.h>
+#include  <Commands/CommandManager.h>
 
 #include <ImGui/imgui.h>
 #include <ImGui/backends/imgui_impl_glfw.h>
@@ -67,6 +68,8 @@ namespace IGE {
     Application::Init();  // perform default Init
 
     // init editor-specific stuff
+    CMD::CommandManager::CreateInstance();
+
     mGUIManager.Init(std::static_pointer_cast<Graphics::EditorCamera>(mEditorCamera));
 
     SUBSCRIBE_CLASS_FUNC(Events::SignalEvent, &EditorApplication::SignalCallback, this);
@@ -292,6 +295,8 @@ namespace IGE {
   {
     // shutdown editor-specific stuff
     mGUIManager.Shutdown();
+
+    CMD::CommandManager::DestroyInstance();
 
     // perform default shutdown
     Application::Shutdown();

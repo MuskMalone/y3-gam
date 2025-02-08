@@ -14,19 +14,17 @@
 			written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************************/
-//#include <Core/Coordinator.hpp>
-//#include <Core/Serialization/Serializer.hpp>
 #include <any>
 #include "Core/Components/Transform.h"
 #include "Core/EntityManager.h"
 #include "Core/Entity.h"
 
+#define IGE_CMDMGR CMD::CommandManager::GetInstance()
 
 using ParamPack = std::vector<std::any>;
 
 namespace CMD
 {
-
 	void TransformCmd(ParamPack const&);
 
 	class CommandManager : public ThreadSafeSingleton<CommandManager>
@@ -48,8 +46,8 @@ namespace CMD
 		CommandManager();
 
 		template <typename... _args>
-		void AddCommand(std::string const& cmd, _args... args) {
-			mCommandStack.push_back(CommandBlock{ cmd, args... });
+		void AddCommand(std::string const& cmd, _args&&... args) {
+			mCommandStack.emplace_back(cmd, std::forward<_args>(args)...);
 		}
 		inline void UndoCommand() {
 			if (mCommandStack.empty()) return;
@@ -62,6 +60,6 @@ namespace CMD
 
 	private:
 		std::deque<CommandBlock> mCommandStack{};
-		std::map<std::string, std::function<void(ParamPack const&)>> mCommandLookup{ {"Transform",TransformCmd}};
+		std::map<std::string, std::function<void(ParamPack const&)>> mCommandLookup{ {"Transform", TransformCmd}};
 	};
 }
