@@ -1938,7 +1938,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 0
+                            "ID": 427688129345306984
                         }
                     }
                 },
@@ -9413,7 +9413,6 @@
                 144,
                 145,
                 159,
-                180,
                 182,
                 183,
                 187,
@@ -12662,205 +12661,6 @@
                             "w": 1.0
                         },
                         "sensor": false
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 180,
-            "Parent": 138,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Light Switch",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 79.8935775756836,
-                            "y": 34.839012145996097,
-                            "z": -175.8837127685547
-                        },
-                        "scale": {
-                            "x": 0.9999994039535523,
-                            "y": 1.9895811080932618,
-                            "z": 1.396230936050415
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 79.8935775756836,
-                            "y": 34.839012145996097,
-                            "z": -176.44448852539063
-                        },
-                        "worldScale": {
-                            "x": 0.9999994039535523,
-                            "y": 1.9895811080932618,
-                            "z": 1.396230936050415
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 427688129345306984
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                },
-                {
-                    "BoxCollider": {
-                        "scale": {
-                            "x": 0.4999997019767761,
-                            "y": 0.9947905540466309,
-                            "z": 0.6981154680252075
-                        },
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 180,
-                                "scriptName": "LightSwitch",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": [
-                                            {
-                                                "entityID": 184,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 184,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 121,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 121,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 40,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 40,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 26,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 26,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 25,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 25,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        ],
-                                        "type": "MonoObjectVec",
-                                        "scriptField": {
-                                            "fieldName": "LightsToToggleActive"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 3145735,
-                                            "scriptName": "PlayerInteraction"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "playerInteraction"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
                     }
                 }
             ]
@@ -27422,6 +27222,109 @@
             ]
         },
         {
+            "ID": 391,
+            "Parent": null,
+            "Child Entities": [
+                416,
+                417,
+                418,
+                419,
+                420,
+                421,
+                422,
+                423,
+                424,
+                425,
+                426,
+                427,
+                428,
+                429,
+                430,
+                431,
+                432,
+                433,
+                434,
+                435,
+                436,
+                437,
+                438,
+                439,
+                440,
+                441,
+                442,
+                443,
+                444,
+                445,
+                446,
+                447,
+                448,
+                449,
+                450,
+                451,
+                452,
+                453,
+                454,
+                455,
+                456,
+                457,
+                458
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Puzzle_ControlPanelOpen",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "scale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "rotation": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.000001781842797754507,
+                            "y": -89.98021697998047,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
             "ID": 397,
             "Parent": 185,
             "Child Entities": [
@@ -28192,8 +28095,6 @@
             "Parent": 27,
             "Child Entities": [
                 411,
-                412,
-                413,
                 1048984,
                 3146137
             ],
@@ -28207,9 +28108,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -17.106157302856447,
-                            "y": -17.596221923828126,
-                            "z": 0.0
+                            "x": -4.732806205749512,
+                            "y": -21.091930389404298,
+                            "z": -5.561004638671875
                         },
                         "scale": {
                             "x": 1.0,
@@ -28228,9 +28129,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -17.106157302856447,
-                            "y": -17.596221923828126,
-                            "z": -0.5607719421386719
+                            "x": -4.732806205749512,
+                            "y": -21.091930389404298,
+                            "z": -6.121776580810547
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -28266,41 +28167,41 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 96.79174041748047,
-                            "y": 44.54899978637695,
-                            "z": -98.76594543457031
+                            "x": 96.79173278808594,
+                            "y": 50.493587493896487,
+                            "z": -98.5858154296875
                         },
                         "scale": {
-                            "x": 1.5089999437332154,
-                            "y": 1.0,
-                            "z": 2.2669999599456789
+                            "x": 2.508999824523926,
+                            "y": 2.0,
+                            "z": 3.2669999599456789
                         },
                         "rotation": {
-                            "x": -0.010734600946307183,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 0.9999423623085022
+                            "x": 0.1415807008743286,
+                            "y": -0.692787766456604,
+                            "z": -0.14157739281654359,
+                            "w": 0.6927884817123413
                         },
                         "eulerAngles": {
-                            "x": -1.2301183938980103,
-                            "y": 0.0,
-                            "z": 0.0
+                            "x": 90.0,
+                            "y": -66.9000015258789,
+                            "z": -89.99972534179688
                         },
                         "worldPos": {
-                            "x": 79.68558502197266,
-                            "y": 26.952777862548829,
-                            "z": -99.32672119140625
+                            "x": 92.05892944335938,
+                            "y": 29.401657104492189,
+                            "z": -104.70759582519531
                         },
                         "worldScale": {
-                            "x": 1.5089999437332154,
-                            "y": 1.0,
-                            "z": 2.2669999599456789
+                            "x": 2.508999824523926,
+                            "y": 2.0,
+                            "z": 3.2669999599456789
                         },
                         "worldRot": {
-                            "x": -0.010734600946307183,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 0.9999423623085022
+                            "x": 0.1415807008743286,
+                            "y": -0.692787766456604,
+                            "z": -0.14157739281654359,
+                            "w": 0.6927884817123413
                         }
                     }
                 },
@@ -28332,26 +28233,210 @@
         },
         {
             "ID": 412,
-            "Parent": 410,
-            "Child Entities": [],
+            "Parent": null,
+            "Child Entities": [
+                413,
+                414,
+                415
+            ],
             "Components": [
                 {
                     "Tag": {
-                        "tag": "p1p2",
+                        "tag": "Light Switch",
                         "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": 98.29655456542969,
-                            "y": 44.549407958984378,
-                            "z": -95.38941955566406
+                            "x": 79.75332641601563,
+                            "y": 34.764549255371097,
+                            "z": -175.07028198242188
                         },
                         "scale": {
-                            "x": 1.5089998245239258,
+                            "x": 1.0,
                             "y": 1.0,
-                            "z": 0.9034748077392578
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.6632733345031738,
+                            "w": 0.7483772039413452
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -83.0999984741211
+                        },
+                        "worldPos": {
+                            "x": 79.75332641601563,
+                            "y": 34.764549255371097,
+                            "z": -175.07028198242188
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.6632733345031738,
+                            "w": 0.7483772039413452
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 1.0,
+                            "y": 0.699999988079071,
+                            "z": 1.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 412,
+                                "scriptName": "LightSwitch",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": [
+                                            {
+                                                "entityID": 184,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 184,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 121,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 121,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 40,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 40,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 26,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 26,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 25,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 25,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "type": "MonoObjectVec",
+                                        "scriptField": {
+                                            "fieldName": "LightsToToggleActive"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 3145735,
+                                            "scriptName": "PlayerInteraction"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerInteraction"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 413,
+            "Parent": 412,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder27",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
                         },
                         "rotation": {
                             "x": 0.0,
@@ -28361,24 +28446,24 @@
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": -0.0,
+                            "y": 0.0,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 81.19039916992188,
-                            "y": 26.95318603515625,
-                            "z": -95.9501953125
+                            "x": 79.75332641601563,
+                            "y": 34.764549255371097,
+                            "z": -175.07028198242188
                         },
                         "worldScale": {
-                            "x": 1.5089998245239258,
+                            "x": 1.0,
                             "y": 1.0,
-                            "z": 0.9034748077392578
+                            "z": 1.0
                         },
                         "worldRot": {
                             "x": 0.0,
                             "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
+                            "z": -0.6632733345031738,
+                            "w": 0.7483772039413452
                         }
                     }
                 },
@@ -28396,12 +28481,12 @@
                 },
                 {
                     "Mesh": {
-                        "meshName": "Plane",
+                        "meshName": "pCylinder27",
                         "GUID": {
-                            "ID": 3815097445005270835
+                            "ID": 7578868128261303171
                         },
                         "submeshIdx": 0,
-                        "isCustomMesh": false,
+                        "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
                     }
@@ -28409,27 +28494,27 @@
             ]
         },
         {
-            "ID": 413,
-            "Parent": 410,
+            "ID": 414,
+            "Parent": 412,
             "Child Entities": [],
             "Components": [
                 {
                     "Tag": {
-                        "tag": "p3p2",
+                        "tag": "pSphere65",
                         "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": 95.08914184570313,
-                            "y": 44.549407958984378,
-                            "z": -95.40304565429688
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
                         },
                         "scale": {
-                            "x": 1.5089998245239258,
+                            "x": 1.0,
                             "y": 1.0,
-                            "z": 0.9034748077392578
+                            "z": 1.0
                         },
                         "rotation": {
                             "x": 0.0,
@@ -28439,24 +28524,24 @@
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": -0.0,
+                            "y": 0.0,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 77.98298645019531,
-                            "y": 26.95318603515625,
-                            "z": -95.96382141113281
+                            "x": 79.75332641601563,
+                            "y": 34.764549255371097,
+                            "z": -175.07028198242188
                         },
                         "worldScale": {
-                            "x": 1.5089998245239258,
+                            "x": 1.0,
                             "y": 1.0,
-                            "z": 0.9034748077392578
+                            "z": 1.0
                         },
                         "worldRot": {
                             "x": 0.0,
                             "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
+                            "z": -0.6632733345031738,
+                            "w": 0.7483772039413452
                         }
                     }
                 },
@@ -28474,12 +28559,3767 @@
                 },
                 {
                     "Mesh": {
-                        "meshName": "Plane",
+                        "meshName": "pSphere65",
                         "GUID": {
-                            "ID": 3815097445005270835
+                            "ID": 7578868128261303171
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 415,
+            "Parent": 412,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder28",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 79.75332641601563,
+                            "y": 34.764549255371097,
+                            "z": -175.07028198242188
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.6632733345031738,
+                            "w": 0.7483772039413452
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder28",
+                        "GUID": {
+                            "ID": 7578868128261303171
+                        },
+                        "submeshIdx": 2,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 416,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder40",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder40",
+                        "GUID": {
+                            "ID": 1117336223056402826
                         },
                         "submeshIdx": 0,
-                        "isCustomMesh": false,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 417,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "CPBackBox",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "CPBackBox",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 418,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Line",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Line",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 2,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 419,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder41",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder41",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 3,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 420,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder42",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder42",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 4,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 421,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder43",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder43",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 5,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 422,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Blackoutline2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Blackoutline2",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 6,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 423,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Button",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Button",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 7,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 424,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Blackoutline2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Blackoutline2",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 8,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 425,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Button",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Button",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 9,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 426,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Blackoutline2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Blackoutline2",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 10,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 427,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Button",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Button",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 11,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 428,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Blackoutline2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Blackoutline2",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 12,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 429,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Button",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Button",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 13,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 430,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Blackoutline2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Blackoutline2",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 14,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 431,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Button",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Button",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 15,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 432,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Blackoutline2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Blackoutline2",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 16,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 433,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Button",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Button",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 17,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 434,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Blackoutline2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Blackoutline2",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 18,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 435,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Button",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Button",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 19,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 436,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Blackoutline2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Blackoutline2",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 20,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 437,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Button",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Button",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 21,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 438,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder27",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder27",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 22,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 439,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pSphere65",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pSphere65",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 23,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 440,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pSphere66",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pSphere66",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 24,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 441,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "CPBoxCover1",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "CPBoxCover1",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 25,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 442,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder35",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder35",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 26,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 443,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder32",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder32",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 27,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 444,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder33",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder33",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 28,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 445,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder34",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder34",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 29,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 446,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder29",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder29",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 30,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 447,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder36",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder36",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 31,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 448,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder37",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder37",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 32,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 449,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder38",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder38",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 33,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 450,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder39",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder39",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 34,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 451,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder30",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder30",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 35,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 452,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Label",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Label",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 36,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 453,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Label1",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Label1",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 37,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 454,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Label2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Label2",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 38,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 455,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Label3",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Label3",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 39,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 456,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "CPDoor2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "CPDoor2",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 40,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 457,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Blackoutline",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Blackoutline",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 41,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 458,
+            "Parent": 391,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "triangle",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 85.7806167602539,
+                            "y": 35.938133239746097,
+                            "z": -197.96665954589845
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 1.0995165666827234e-8,
+                            "y": -0.7071067690849304,
+                            "z": 1.0995165666827234e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "triangle",
+                        "GUID": {
+                            "ID": 1117336223056402826
+                        },
+                        "submeshIdx": 42,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 459,
+            "Parent": null,
+            "Child Entities": [
+                460,
+                461,
+                462
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "UVLightSwitch",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 79.75332641601563,
+                            "y": 34.764549255371097,
+                            "z": -179.8243865966797
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.6632733345031738,
+                            "w": 0.7483772039413452
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -83.0999984741211
+                        },
+                        "worldPos": {
+                            "x": 79.75332641601563,
+                            "y": 34.764549255371097,
+                            "z": -179.8243865966797
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.6632733345031738,
+                            "w": 0.7483772039413452
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 1.0,
+                            "y": 0.699999988079071,
+                            "z": 1.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 460,
+            "Parent": 459,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder27",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 79.75332641601563,
+                            "y": 34.764549255371097,
+                            "z": -179.8243865966797
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.6632733345031738,
+                            "w": 0.7483772039413452
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder27",
+                        "GUID": {
+                            "ID": 7578868128261303171
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 461,
+            "Parent": 459,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pSphere65",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 79.75332641601563,
+                            "y": 34.764549255371097,
+                            "z": -179.8243865966797
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.6632733345031738,
+                            "w": 0.7483772039413452
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pSphere65",
+                        "GUID": {
+                            "ID": 7578868128261303171
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 462,
+            "Parent": 459,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder28",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 79.75332641601563,
+                            "y": 34.764549255371097,
+                            "z": -179.8243865966797
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.6632733345031738,
+                            "w": 0.7483772039413452
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder28",
+                        "GUID": {
+                            "ID": 7578868128261303171
+                        },
+                        "submeshIdx": 2,
+                        "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
                     }
@@ -32688,41 +36528,41 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 98.2929458618164,
-                            "y": 44.549407958984378,
-                            "z": -96.97406005859375
+                            "x": 96.7919921875,
+                            "y": 50.0,
+                            "z": -96.25068664550781
                         },
                         "scale": {
-                            "x": 1.5089998245239258,
-                            "y": 1.0,
-                            "z": 2.267226219177246
+                            "x": 2.508999824523926,
+                            "y": 2.0,
+                            "z": 3.267226219177246
                         },
                         "rotation": {
-                            "x": 0.4999999701976776,
-                            "y": -0.4999999701976776,
-                            "z": 0.4999999701976776,
-                            "w": 0.4999999701976776
+                            "x": -0.01687835343182087,
+                            "y": -0.706904947757721,
+                            "z": -0.01687837392091751,
+                            "w": 0.7069056630134583
                         },
                         "eulerAngles": {
-                            "x": 0.0,
+                            "x": 0.31624773144721987,
                             "y": -90.0,
-                            "z": 90.0
+                            "z": -3.14089298248291
                         },
                         "worldPos": {
-                            "x": 81.1867904663086,
-                            "y": 26.95318603515625,
-                            "z": -97.53483581542969
+                            "x": 92.05918884277344,
+                            "y": 28.908069610595704,
+                            "z": -102.37246704101563
                         },
                         "worldScale": {
-                            "x": 1.5089998245239258,
-                            "y": 1.0,
-                            "z": 2.267226219177246
+                            "x": 2.508999824523926,
+                            "y": 2.0,
+                            "z": 3.267226219177246
                         },
                         "worldRot": {
-                            "x": 0.4999999701976776,
-                            "y": -0.4999999701976776,
-                            "z": 0.4999999701976776,
-                            "w": 0.4999999701976776
+                            "x": -0.01687835343182087,
+                            "y": -0.706904947757721,
+                            "z": -0.01687837392091751,
+                            "w": 0.7069056630134583
                         }
                     }
                 },
@@ -34799,41 +38639,41 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 98.4702377319336,
-                            "y": 44.54899978637695,
-                            "z": -95.81050109863281
+                            "x": 96.7919921875,
+                            "y": 50.61582946777344,
+                            "z": -93.91131591796875
                         },
                         "scale": {
-                            "x": 1.5089999437332154,
-                            "y": 1.0,
-                            "z": 2.2669999599456789
+                            "x": 2.508999824523926,
+                            "y": 2.0,
+                            "z": 3.2669999599456789
                         },
                         "rotation": {
-                            "x": 0.4999999701976776,
-                            "y": -0.4999999701976776,
-                            "z": 0.4999999701976776,
-                            "w": 0.4999999701976776
+                            "x": -0.18093933165073396,
+                            "y": -0.6835606098175049,
+                            "z": 0.18094269931316377,
+                            "w": 0.6835682988166809
                         },
                         "eulerAngles": {
-                            "x": 90.0,
-                            "y": -89.9720230102539,
-                            "z": 0.0
+                            "x": -89.99864196777344,
+                            "y": -60.34743881225586,
+                            "z": 89.9989242553711
                         },
                         "worldPos": {
-                            "x": 81.36408233642578,
-                            "y": 26.952777862548829,
-                            "z": -96.37127685546875
+                            "x": 92.05918884277344,
+                            "y": 29.52389907836914,
+                            "z": -100.03309631347656
                         },
                         "worldScale": {
-                            "x": 1.5089999437332154,
-                            "y": 1.0,
-                            "z": 2.2669999599456789
+                            "x": 2.508999824523926,
+                            "y": 2.0,
+                            "z": 3.2669999599456789
                         },
                         "worldRot": {
-                            "x": 0.4999999701976776,
-                            "y": -0.4999999701976776,
-                            "z": 0.4999999701976776,
-                            "w": 0.4999999701976776
+                            "x": -0.18093933165073396,
+                            "y": -0.6835606098175049,
+                            "z": 0.18094269931316377,
+                            "w": 0.6835682988166809
                         }
                     }
                 },
