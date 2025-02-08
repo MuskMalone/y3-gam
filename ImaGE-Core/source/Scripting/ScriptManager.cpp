@@ -1092,7 +1092,17 @@ bool Mono::IsPlayingAnimation(ECS::Entity::EntityID entityId) {
     return false;
   }
 
-  return entity.GetComponent<Component::Animation>().currentAnimation;
+  return entity.GetComponent<Component::Animation>().IsPlayingAnimation();
+}
+
+MonoString* GetCurrentAnimation(ECS::Entity::EntityID entityId) {
+  ECS::Entity const entity{ entityId };
+  if (!entity.HasComponent<Component::Animation>()) {
+    IGE_DBGLOGGER.LogError("IsPlayingAnimation(): Entity " + entity.GetTag() + " does not have an animation component!");
+    return nullptr;
+  }
+
+  return STDToMonoString(entity.GetComponent<Component::Animation>().currentAnimation.first);
 }
 
 void Mono::PauseAnimation(ECS::Entity::EntityID entity) {

@@ -37,19 +37,19 @@ namespace Systems {
     for (ECS::Entity entity : mEntityManager.GetAllEntitiesWithComponents<Component::Animation>()) {
       Component::Animation& animation{ entity.GetComponent<Component::Animation>() };
 
-      if (!animation.currentAnimation || animation.paused) { continue; }
+      if (!animation.currentAnimation.second || animation.paused) { continue; }
 
       try {
-        am.LoadRef<IGE::Assets::AnimationAsset>(animation.currentAnimation);
+        am.LoadRef<IGE::Assets::AnimationAsset>(animation.currentAnimation.second);
       }
       catch (Debug::ExceptionBase&) {
         IGE_DBGLOGGER.LogError("[AnimationSystem] Unable to get animation " +
-          std::to_string(static_cast<uint64_t>(animation.currentAnimation)) + " of Entity " + entity.GetTag());
+          std::to_string(static_cast<uint64_t>(animation.currentAnimation.second)) + " of Entity " + entity.GetTag());
         continue;
       }
 
       Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
-      Anim::AnimationData const& animData{ am.GetAsset<IGE::Assets::AnimationAsset>(animation.currentAnimation)->mAnimData };
+      Anim::AnimationData const& animData{ am.GetAsset<IGE::Assets::AnimationAsset>(animation.currentAnimation.second)->mAnimData };
 
       // if first keyframe, initialize
       if (animation.currentKeyframes.empty()) {

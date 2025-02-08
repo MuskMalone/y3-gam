@@ -255,6 +255,9 @@ namespace IGE.Utils
     extern public static bool IsPlayingAnimation(uint entity);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static string GetCurrentAnimation(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void PauseAnimation(uint entity);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]

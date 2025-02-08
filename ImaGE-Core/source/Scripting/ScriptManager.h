@@ -342,6 +342,7 @@ namespace Mono
 
 		static void PlayAnimation(ECS::Entity::EntityID entity, MonoString* name, bool loop);
 		static bool IsPlayingAnimation(ECS::Entity::EntityID entity);
+		static MonoString* GetCurrentAnimation(ECS::Entity::EntityID entity);
 		static void PauseAnimation(ECS::Entity::EntityID entity);
 		static void ResumeAnimation(ECS::Entity::EntityID entity);
 		static void StopAnimationLoop(ECS::Entity::EntityID entity);
