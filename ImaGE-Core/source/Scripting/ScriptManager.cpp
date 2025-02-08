@@ -1560,7 +1560,7 @@ void Mono::SaveScreenShot(std::string name, int width, int height)
 
 bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
 
-  ECS::Entity e = ECS::EntityManager::GetInstance().GetEntityFromTag("[Folder] Outdoorlight");
+  ECS::Entity e = ECS::EntityManager::GetInstance().GetEntityFromTag("[Folder] Lights");
   if (ECS::Entity(e))
   {
     for (ECS::Entity child : ECS::EntityManager::GetInstance().GetChildEntity(e))
@@ -1573,12 +1573,16 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
           {
             Component::Light& l = gchild.GetComponent<Component::Light>();
             l.mRange = 21.f;
-            l.mLightIntensity += (2.0f - l.mLightIntensity) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
-            if (l.mLightIntensity >= 1.96f)
+            l.color.r += (0.67f - l.color.r) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
+            l.color.g += (1.f - l.color.g) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
+            l.color.b += (0.96f - l.color.b) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
+            if (l.color.r > 0.67 || l.color.g > 1.f || l.color.b > 0.96f)
             {
-              //std::cout << "Faster?\n";
-              l.mLightIntensity = 2.f;
+              l.color.r = 0.67f;
+              l.color.g = 1.f;
+              l.color.b = 0.96f;
             }
+            std::cout << l.color.r << "\n";
           }
         }
       }
@@ -1603,7 +1607,7 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
     }
   }
   else
-    Debug::DebugLogger::GetInstance().LogError("Unable to find entity: [Folder] Outdoorlight");
+    Debug::DebugLogger::GetInstance().LogError("Unable to find entity: [Folder] Lights");
    
   for (ECS::Entity child : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Light>())
   {
