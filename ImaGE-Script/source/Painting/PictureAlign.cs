@@ -107,6 +107,7 @@ public class PictureAlign : Entity
         {
           if (ChangeSkyBox())
           {
+            Console.WriteLine("NIght");
             InternalCalls.ChangeToolsPainting();
             playerMove.UnfreezePlayer();
             isTransitioning = false;
@@ -116,6 +117,7 @@ public class PictureAlign : Entity
         }
         else if (picture == "ToolsPainting")
         {
+          Console.WriteLine("Tool");
           InternalCalls.SpawnToolBox();
           playerMove.UnfreezePlayer();
           isTransitioning = false;
@@ -124,6 +126,7 @@ public class PictureAlign : Entity
         }
         else if (picture == "TutorialPainting")
         {
+          Console.WriteLine("Tut");
           InternalCalls.SpawnOpenDoor();
           playerMove.UnfreezePlayer();
           isTransitioning = false;
@@ -136,7 +139,11 @@ public class PictureAlign : Entity
         {
           isTransitioning = false;
           playerMove.UnfreezePlayer();
-          InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
+          InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Level2.scn");
+        }
+        else
+        {
+          Console.WriteLine("WHAt");
         }
 
       }

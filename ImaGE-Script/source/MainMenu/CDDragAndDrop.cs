@@ -30,10 +30,10 @@ using System.Numerics;
 
 public class CDDragAndDrop : Entity
 {
-    
+       
+    public Entity NewGameCDinCase;
+    public Entity ContinueCDinCase;
 
-    
-    public Entity CDinCase;
     public Entity cdPlayer;
     //public Entity cdLidOpened;
     //public Entity cdLidClosed;
@@ -90,7 +90,9 @@ public class CDDragAndDrop : Entity
         //cdLidOpened.SetActive(false);
 
         //Console.WriteLine("My Entity WorldPos INITIAL " + InternalCalls.GetWorldPosition(mEntityID));
-        CDinCase.SetActive(false);
+        NewGameCDinCase.SetActive(false);
+        ContinueCDinCase.SetActive(false);
+
         Vector3 scaleVector = InternalCalls.GetScale(mEntityID);
         originalScale = new Vec3<float>(scaleVector.X, scaleVector.Y, scaleVector.Z);
         hoverScale = new Vec3<float>(
@@ -148,7 +150,7 @@ public class CDDragAndDrop : Entity
             
             //rotation
             string tag = InternalCalls.GetTag(mEntityID);
-            if (tag == "NewGameCDChild")
+            if (tag == "NewGameCDChild" || tag == "ContinueCDChild")
             {
                 if (!isSpinningSoundPlaying)
                 {
@@ -216,8 +218,9 @@ public class CDDragAndDrop : Entity
         {
             fadeElapsed += Time.deltaTime;
             float alpha = Mathf.Lerp(startAlpha, targetAlpha, fadeElapsed / fadeDuration);
-
-            if (fadeImage != null)
+            string tag = InternalCalls.GetTag(mEntityID);
+            
+                if (fadeImage != null)
             {
                 fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, alpha);
             }
@@ -228,7 +231,14 @@ public class CDDragAndDrop : Entity
             {
                 isFading = false;
                 //InternalCalls.StopSound(mEntityID, "..\\Assets\\Audio\\Picture Perfect - BGM1_Vers1_Loop.wav");
-                InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\TutorialLevel.scn");
+                if (tag == "NewGameCDChild")
+                {
+                    InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\TutorialLevel.scn");
+                }
+                else if(tag == "ContinueCDChild")
+                {
+                    InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
+                }
                 //InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
             }
         }
@@ -281,7 +291,8 @@ public class CDDragAndDrop : Entity
     {
         //shaking cds
         string tag = InternalCalls.GetTag(mEntityID);
-        if(tag == "ContinueCDChild" || tag == "CreditsCDChild" || tag == "SettingsCDChild")
+        //if(tag == "ContinueCDChild" || tag == "CreditsCDChild" || tag == "SettingsCDChild")
+        if (tag == "CreditsCDChild" || tag == "SettingsCDChild")
         {
             //Debug.Log("Entered tag == for shakecd");
             
@@ -307,8 +318,9 @@ public class CDDragAndDrop : Entity
         Vector3 MousePos = InternalCalls.GetMousePosWorld(1.0f);
         Vector3 MousPosRayEnd = MousePos + (InternalCalls.GetCameraForward() * 5.0f);
         uint hitEntity = InternalCalls.Raycast(MousePos, MousPosRayEnd);
-
-        if (InternalCalls.GetTag(hitEntity) == "CDPlayer_Body") {
+        string tag = InternalCalls.GetTag(mEntityID);
+        if (InternalCalls.GetTag(hitEntity) == "CDPlayer_Body") 
+        {
 
             mouseOnCDPlayer = true;
         }
@@ -316,7 +328,15 @@ public class CDDragAndDrop : Entity
         if (mouseOnCDPlayer)
         {
             isLidOpen = true;
-            CDinCase.SetActive(true);
+            if (tag == "NewGameCDChild")
+            {
+                //Console.WriteLine("bitch");
+                NewGameCDinCase.SetActive(true);
+            }
+            else if (tag == "ContinueCDChild")
+            {
+                ContinueCDinCase.SetActive(true);
+            }
             InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
             NextScene();
         }
@@ -370,6 +390,12 @@ public class CDDragAndDrop : Entity
         isHovered = false;
         string tag = InternalCalls.GetTag(mEntityID);
         if (tag == "NewGameCDChild")
+        {
+            InternalCalls.SetWorldRotation(mEntityID, ref originalRotation);
+            InternalCalls.PauseSound(mEntityID, "SpinningDiscPS1_SFX");
+            isSpinningSoundPlaying = false;
+        }
+        else if (tag == "ContinueCDChild")
         {
             InternalCalls.SetWorldRotation(mEntityID, ref originalRotation);
             InternalCalls.PauseSound(mEntityID, "SpinningDiscPS1_SFX");

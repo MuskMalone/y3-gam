@@ -38,9 +38,14 @@ public class OpenedCdLid : Entity
     private Vector3 openCDpos = new Vector3(0.382f, -0.308f, -0.442f);
     private NewGameCD newGameCD;
     // Start is called before the first frame update
+    private ContinueCD continueCD;
+
+    //private ContinueCD continueCD;
     void Start()
     {
         newGameCD = FindObjectOfType<NewGameCD>();
+        continueCD = FindObjectOfType<ContinueCD>();
+
         originalPosition = InternalCalls.GetWorldPosition(mEntityID);
         //originalRotation = InternalCalls.GetWorldRotation(mEntityID);
 
@@ -59,7 +64,7 @@ public class OpenedCdLid : Entity
     void Update()
     {
         string tag = InternalCalls.GetTag(mEntityID);
-        if (newGameCD.isLidOpen)
+        if (newGameCD.isLidOpen || continueCD.isLidOpen)
         {
             if (tag == "OpenCircular_Lid")
             {
@@ -69,7 +74,7 @@ public class OpenedCdLid : Entity
             {
                 InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
 
-      }
+        }
     }
         else
         {

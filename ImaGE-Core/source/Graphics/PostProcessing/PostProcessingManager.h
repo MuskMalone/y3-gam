@@ -9,7 +9,7 @@ namespace Graphics {
 		struct PostProcessingConfigs {
 			struct ShaderOrder {
 				float fogMinDist{1.f};
-				float fogMaxDist{50.f};
+				float fogMaxDist{1000.f};
 				glm::vec3 fogColor{1,1,1};
 				std::vector<uint64_t> shaders;
 			};
