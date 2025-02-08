@@ -464,6 +464,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -492,12 +498,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     },
                     {
@@ -6805,6 +6805,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -6833,12 +6839,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     },
                     {
@@ -6905,6 +6905,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -6933,12 +6939,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -11204,6 +11204,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -11232,12 +11238,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     },
                     {
@@ -11654,6 +11654,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -11682,12 +11688,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     },
                     {
@@ -12380,6 +12380,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -12408,12 +12414,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     },
                     {
@@ -12570,6 +12570,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -12598,12 +12604,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     },
                     {
@@ -25750,9 +25750,7 @@
                                     {
                                         "data": [
                                             "In the dream I had, I saw her...",
-                                            "She must be somewhere around here!",
-                                            "Try using WASD to walk around.",
-                                            "Use I to bring up your inventory and switch slots\nwith Num Keys!"
+                                            "She must be somewhere around here!"
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
@@ -52973,6 +52971,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -53001,12 +53005,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     },
                     {
@@ -54475,6 +54473,33 @@
                         }
                     },
                     {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.099999904632568,
+                                "y": 7.940000057220459,
+                                "z": 0.9782022833824158
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -54514,33 +54539,6 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 7.940000057220459,
-                                "z": 0.9782022833824158
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
                         }
                     }
                 ],
@@ -54939,6 +54937,33 @@
                         }
                     },
                     {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.099999904632568,
+                                "y": 7.940000057220459,
+                                "z": 0.9782022833824158
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -54978,33 +55003,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 7.940000057220459,
-                                "z": 0.9782022833824158
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
                         }
                     }
                 ],
@@ -55590,6 +55588,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -55618,12 +55622,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     },
                     {
@@ -74655,6 +74653,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -74683,12 +74687,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     },
                     {
@@ -76420,6 +76418,33 @@
                         }
                     },
                     {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 2.700000047683716,
+                                "y": 4.300000190734863,
+                                "z": 1.100000023841858
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -76459,33 +76484,6 @@
                                 "z": 0.0,
                                 "w": 0.932442307472229
                             }
-                        }
-                    },
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 2.700000047683716,
-                                "y": 4.300000190734863,
-                                "z": 1.100000023841858
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
                         }
                     }
                 ],

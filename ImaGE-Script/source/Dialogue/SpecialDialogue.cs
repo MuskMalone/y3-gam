@@ -190,8 +190,7 @@ public class SpecialDialogue : Entity
     if (triggerInitialDialogue)
     {
       dialogueSystem.SetDialogue(initialDialogue, 
-        new Dialogue.Emotion[] { Dialogue.Emotion.Neutral, Dialogue.Emotion.Neutral, 
-          Dialogue.Emotion.Happy, Dialogue.Emotion.Happy}, 
+        new Dialogue.Emotion[] { Dialogue.Emotion.Neutral, Dialogue.Emotion.Happy }, 
         mainDialogueFontScale);
       triggerInitialDialogue = false;
     }
