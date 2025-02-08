@@ -213,11 +213,16 @@ namespace GUI {
 #pragma region ComponentWindows
       if (currentEntity.HasComponent<Component::Transform>()) {
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(rttr::type::get<Component::Transform>());
-        Component::Transform& trans{ currentEntity.GetComponent<Component::Transform>() };
+        Component::Transform& trans{ currentEntity.GetComponent<Component::Transform>() },
+          oldTrans{ trans };  // note: this is a cpy; reference only applies to first elem
         glm::vec3 const oldPos{ trans.position };
+
         if (TransformComponentWindow(currentEntity, componentOverriden)) {
           trans.modified = true;
           SetIsComponentEdited(true);
+
+          // undo
+          IGE_CMDMGR.AddCommand("Transform", currentEntity, std::move(oldTrans));
 
           if (prefabOverride) {
             if (!componentOverriden && prefabOverride->subDataId == Prefabs::PrefabSubData::BasePrefabId) {
@@ -2281,7 +2286,6 @@ namespace GUI {
 
     if (isOpen) {
       Component::Transform& transform = entity.GetComponent<Component::Transform>();
-      Component::Transform oldTrans = transform;
 
       float const inputWidth{ CalcInputWidth(50.f) / 3.f };
 
@@ -2335,10 +2339,6 @@ namespace GUI {
       ImGui::EndDisabled();
 
       EndVec3Table();
-
-
-      if (modified)
-        CMD::CommandManager::GetInstance().AddCommand("Transform", entity, oldTrans);
     }
 
     WindowEnd(isOpen);

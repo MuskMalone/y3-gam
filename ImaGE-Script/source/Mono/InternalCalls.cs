@@ -205,6 +205,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void AppendText(uint TextEntityID, string textContent);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetTextFont(uint TextEntityID, string textFontName);
     #endregion
 
 

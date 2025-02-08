@@ -259,6 +259,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetText);
   ADD_INTERNAL_CALL(SetText);
   ADD_INTERNAL_CALL(AppendText);
+  ADD_INTERNAL_CALL(SetTextFont);
   ADD_INTERNAL_CALL(GetImageColor);
   ADD_INTERNAL_CALL(SetImageColor);
   ADD_INTERNAL_CALL(GetSprite2DColor);
@@ -1387,6 +1388,19 @@ void Mono::AppendText(ECS::Entity::EntityID textEntity, MonoString* textContent)
   Component::Text& TextComponent{ ECS::Entity{ textEntity }.GetComponent<Component::Text>() };
   TextComponent.textContent += scriptTextContent;
   TextComponent.newLineIndicesUpdatedFlag = false;
+}
+
+void Mono::SetTextFont(ECS::Entity::EntityID textEntity, MonoString* s) {
+  std::string scriptTextFont{ MonoStringToSTD(s) };
+
+  if (!ECS::Entity{ textEntity }.HasComponent<Component::Text>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to set the font of an entity that does not have the Text Component");
+    return;
+  }
+
+  ECS::Entity{ textEntity }.GetComponent<Component::Text>().textAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::FontAsset>(scriptTextFont);
+  ECS::Entity{ textEntity }.GetComponent<Component::Text>().fontFamilyName = scriptTextFont;
+  ECS::Entity{ textEntity }.GetComponent<Component::Text>().newLineIndicesUpdatedFlag = false;
 }
 
 

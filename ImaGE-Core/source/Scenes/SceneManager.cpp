@@ -92,14 +92,14 @@ namespace Scenes
   // i should just combine clear and unload functions
   void SceneManager::ClearScene() {
     mSceneName.clear();
-    IGE::Physics::PhysicsSystem::GetInstance()->ClearSystem();
-    Graphics::MaterialTable::ClearMaterials();
+    Reflection::ObjectFactory::GetInstance().ClearData();
+    ECS::EntityManager::GetInstance().Reset();
   }
 
   void SceneManager::UnloadScene()
   {
-    Reflection::ObjectFactory::GetInstance().ClearData();
-    ECS::EntityManager::GetInstance().Reset();
+    IGE::Physics::PhysicsSystem::GetInstance()->ClearSystem();
+    Graphics::MaterialTable::ClearMaterials();
   }
 
   void SceneManager::ReloadScene()

@@ -14,10 +14,20 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Component {
 
-  glm::mat4 Transform::GetLocalMdlMatrix() const {
-    glm::mat4 t{ glm::translate(glm::mat4{ 1.f }, position) };
-    glm::mat4 r{ glm::toMat4(rotation) };
-    glm::mat4 s{ glm::scale(glm::mat4{ 1.f }, scale) };
+  glm::mat4 Transform::GetLocalMtx() const {
+    glm::mat4 const t{
+      1.f, 0.f, 0.f, 0.f,
+      0.f, 1.f, 0.f, 0.f,
+      0.f, 0.f, 1.f, 0.f,
+      position.x, position.y, position.z, 1.f
+    };
+    glm::mat4 const r{ glm::toMat4(rotation) };
+    glm::mat4 const s{
+      scale.x, 0.f, 0.f, 0.f,
+      0.f, scale.y, 0.f, 0.f,
+      0.f, 0.f, scale.z, 0.f,
+      0.f, 0.f, 0.f, 1.f
+    };
 
     return t * r * s;
   }
@@ -44,11 +54,21 @@ namespace Component {
   }
 
   void Transform::ComputeWorldMtx() {
-    glm::mat4 trans{ glm::translate(glm::mat4{ 1.f }, worldPos) };
-    glm::mat4 rot{ glm::toMat4(worldRot) };
-    glm::mat4 scale{ glm::scale(glm::mat4{ 1.f }, worldScale) };
+    glm::mat4 const t{
+      1.f, 0.f, 0.f, 0.f,
+      0.f, 1.f, 0.f, 0.f,
+      0.f, 0.f, 1.f, 0.f,
+      worldPos.x, worldPos.y, worldPos.z, 1.f
+    };
+    glm::mat4 const r{ glm::toMat4(worldRot) };
+    glm::mat4 const s{
+      worldScale.x, 0.f, 0.f, 0.f,
+      0.f, worldScale.y, 0.f, 0.f,
+      0.f, 0.f, worldScale.z, 0.f,
+      0.f, 0.f, 0.f, 1.f
+    };
 
-    worldMtx = trans * rot * scale;
+    worldMtx = t * r * s;
   }
 
   void Transform::ResetLocal() {

@@ -403,6 +403,8 @@ namespace Mono
 
 		static void AppendText(ECS::Entity::EntityID textEntity, MonoString* textContent);
 
+		static void SetTextFont(ECS::Entity::EntityID textEntity, MonoString* s);
+
 		static glm::vec4 GetImageColor(ECS::Entity::EntityID entity);
 
 		static void SetImageColor(ECS::Entity::EntityID entity, glm::vec4 val);
