@@ -561,7 +561,6 @@ namespace GUI {
         //std::map<IGE::Assets::GUID, std::string> guidToFileName{ { {}, "None" } };
         
         NextRowTable("Animations");
-        std::string currentAnimStr{ "None" };
         if (ImGui::TreeNodeEx("Drag here to add to list", ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanFullWidth)) {
           if (!animation.animations.empty() && ImGui::BeginTable("##AnimationsTable", 2, ImGuiTableFlags_BordersOuter | ImGuiTableColumnFlags_WidthFixed)) {
             float const col2{ 40.f }, col1{ inputWidth - col2 };
@@ -570,9 +569,6 @@ namespace GUI {
 
             std::string toRemove{};
             for (auto const& [name, guid] : animation.animations) {
-              if (guid == animation.currentAnimation) {
-                currentAnimStr = name;
-              }
               std::string buffer{ name };
 
               ImGui::TableNextRow();
@@ -600,7 +596,7 @@ namespace GUI {
 
             // remove if necessary
             if (!toRemove.empty()) {
-              if (animation.currentAnimation == animation.animations[toRemove]) {
+              if (animation.currentAnimation.second == animation.animations[toRemove]) {
                 animation.currentAnimation = {};
               }
               animation.animations.erase(toRemove);
@@ -612,7 +608,8 @@ namespace GUI {
         }
 
         NextRowTable("Current Animation");
-        if (ImGui::BeginCombo("##CurrAnim", currentAnimStr.c_str())) {
+        Component::Animation::AnimationEntry const& currAnim{ animation.GetCurrentAnimation() };
+        if (ImGui::BeginCombo("##CurrAnim", currAnim.first.c_str())) {
           if (ImGui::Selectable("None")) {
             animation.currentAnimation = {};
             modified = true;
@@ -621,8 +618,13 @@ namespace GUI {
             if (!ImGui::Selectable(name.c_str())) { continue; }
 
             // have to do this to handle the "None" option
-            if (name != currentAnimStr) {
-              animation.currentAnimation = (name == "None" ? IGE::Assets::GUID() : guid);
+            if (guid != currAnim.second) {
+              if (name == "None") {
+                animation.currentAnimation = {};
+              }
+              else {
+                animation.SetCurrentAnimation(name, guid);
+              }
               modified = true;
             }
             break;

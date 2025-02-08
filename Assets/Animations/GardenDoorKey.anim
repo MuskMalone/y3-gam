@@ -74,11 +74,11 @@
             "startTime": 0.9000000357627869,
             "duration": 0.5,
             "nextNodes": [
-                5
+                4
             ]
         },
         {
-            "nodeId": 5,
+            "nodeId": 4,
             "startValue": {
                 "x": 0.0,
                 "y": 0.0,
@@ -93,11 +93,11 @@
             "startTime": 1.4000000953674317,
             "duration": 0.20000000298023225,
             "nextNodes": [
-                4
+                5
             ]
         },
         {
-            "nodeId": 4,
+            "nodeId": 5,
             "startValue": {
                 "x": -90.0,
                 "y": -0.0,
@@ -110,6 +110,25 @@
             },
             "type": "ROTATION",
             "startTime": 1.6000001430511475,
+            "duration": 0.5,
+            "nextNodes": [
+                6
+            ]
+        },
+        {
+            "nodeId": 6,
+            "startValue": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "endValue": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "type": "NONE",
+            "startTime": 2.1000001430511476,
             "duration": 0.5,
             "nextNodes": []
         }
