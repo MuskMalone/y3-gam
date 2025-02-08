@@ -2196,10 +2196,12 @@
                 372,
                 373,
                 410,
+                465,
                 1048618,
                 1048623,
                 1048656,
                 1048680,
+                1049040,
                 2097196
             ],
             "Components": [
@@ -3135,9 +3137,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 138.8606719970703,
-                            "y": 29.552913665771486,
-                            "z": -202.28968811035157
+                            "x": 126.53395080566406,
+                            "y": 31.553237915039064,
+                            "z": -163.12823486328126
                         },
                         "scale": {
                             "x": 1.0,
@@ -3156,9 +3158,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 138.8606719970703,
-                            "y": 29.552913665771486,
-                            "z": -202.28968811035157
+                            "x": 126.53395080566406,
+                            "y": 31.553237915039064,
+                            "z": -163.12823486328126
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -3186,10 +3188,10 @@
                             "y": 1.0,
                             "z": 1.0
                         },
-                        "intensity": 7.0,
+                        "intensity": 10.5,
                         "innerAngle": 5.0,
                         "outerAngle": 12.5,
-                        "range": 70.0,
+                        "range": 161.5,
                         "castShadows": false,
                         "shadowConfig": {
                             "centerPos": {
@@ -3226,7 +3228,7 @@
                         "position": {
                             "x": 128.76939392089845,
                             "y": 80.05691528320313,
-                            "z": -202.28968811035157
+                            "z": -213.31777954101563
                         },
                         "scale": {
                             "x": 1.0,
@@ -3247,7 +3249,7 @@
                         "worldPos": {
                             "x": 128.76939392089845,
                             "y": 80.05691528320313,
-                            "z": -202.28968811035157
+                            "z": -213.31777954101563
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -23976,7 +23978,7 @@
                     "Transform": {
                         "position": {
                             "x": 127.11425018310547,
-                            "y": 39.008934020996097,
+                            "y": 45.03392791748047,
                             "z": -201.30084228515626
                         },
                         "scale": {
@@ -23997,7 +23999,7 @@
                         },
                         "worldPos": {
                             "x": 127.11425018310547,
-                            "y": 39.008934020996097,
+                            "y": 45.03392791748047,
                             "z": -201.30084228515626
                         },
                         "worldScale": {
@@ -24082,7 +24084,7 @@
                         },
                         "worldPos": {
                             "x": 127.11463165283203,
-                            "y": 39.00861358642578,
+                            "y": 45.033607482910159,
                             "z": -201.30101013183595
                         },
                         "worldScale": {
@@ -24160,7 +24162,7 @@
                         },
                         "worldPos": {
                             "x": 127.11463165283203,
-                            "y": 39.00861358642578,
+                            "y": 45.033607482910159,
                             "z": -201.30101013183595
                         },
                         "worldScale": {
@@ -24238,7 +24240,7 @@
                         },
                         "worldPos": {
                             "x": 127.11463165283203,
-                            "y": 39.00861358642578,
+                            "y": 45.033607482910159,
                             "z": -201.30101013183595
                         },
                         "worldScale": {
@@ -24316,7 +24318,7 @@
                         },
                         "worldPos": {
                             "x": 127.11463165283203,
-                            "y": 39.00861358642578,
+                            "y": 45.033607482910159,
                             "z": -201.30101013183595
                         },
                         "worldScale": {
@@ -24394,7 +24396,7 @@
                         },
                         "worldPos": {
                             "x": 127.11463165283203,
-                            "y": 39.00861358642578,
+                            "y": 45.033607482910159,
                             "z": -201.30101013183595
                         },
                         "worldScale": {
@@ -24472,7 +24474,7 @@
                         },
                         "worldPos": {
                             "x": 127.11463165283203,
-                            "y": 39.00861358642578,
+                            "y": 45.033607482910159,
                             "z": -201.30101013183595
                         },
                         "worldScale": {
@@ -24550,7 +24552,7 @@
                         },
                         "worldPos": {
                             "x": 127.11463165283203,
-                            "y": 39.00861358642578,
+                            "y": 45.033607482910159,
                             "z": -201.30101013183595
                         },
                         "worldScale": {
@@ -24628,7 +24630,7 @@
                         },
                         "worldPos": {
                             "x": 127.11463165283203,
-                            "y": 39.00861358642578,
+                            "y": 45.033607482910159,
                             "z": -201.30101013183595
                         },
                         "worldScale": {
@@ -24706,7 +24708,7 @@
                         },
                         "worldPos": {
                             "x": 127.11463165283203,
-                            "y": 39.00861358642578,
+                            "y": 45.033607482910159,
                             "z": -201.30101013183595
                         },
                         "worldScale": {
@@ -24762,9 +24764,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.000022106778487795965,
-                            "y": -0.000018596649169921876,
-                            "z": -0.0000095367431640625
+                            "x": 0.000020503997802734376,
+                            "y": -0.000019073486328125,
+                            "z": -0.00000762939453125
                         },
                         "scale": {
                             "x": 1.0,
@@ -24783,9 +24785,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 127.11463165283203,
-                            "y": 39.00861358642578,
-                            "z": -201.30101013183595
+                            "x": 127.1146011352539,
+                            "y": 45.033599853515628,
+                            "z": -201.3009796142578
                         },
                         "worldScale": {
                             "x": 17.200000762939454,
@@ -24862,7 +24864,7 @@
                         },
                         "worldPos": {
                             "x": 127.11463165283203,
-                            "y": 39.00861358642578,
+                            "y": 45.033607482910159,
                             "z": -201.30101013183595
                         },
                         "worldScale": {
@@ -24940,7 +24942,7 @@
                         },
                         "worldPos": {
                             "x": 127.11463165283203,
-                            "y": 39.00861358642578,
+                            "y": 45.033607482910159,
                             "z": -201.30101013183595
                         },
                         "worldScale": {
@@ -25018,7 +25020,7 @@
                         },
                         "worldPos": {
                             "x": 127.11463165283203,
-                            "y": 39.00861358642578,
+                            "y": 45.033607482910159,
                             "z": -201.30101013183595
                         },
                         "worldScale": {
@@ -25096,7 +25098,7 @@
                         },
                         "worldPos": {
                             "x": 127.11463165283203,
-                            "y": 39.00861358642578,
+                            "y": 45.033607482910159,
                             "z": -201.30101013183595
                         },
                         "worldScale": {
@@ -25174,7 +25176,7 @@
                         },
                         "worldPos": {
                             "x": 127.11463165283203,
-                            "y": 39.00861358642578,
+                            "y": 45.033607482910159,
                             "z": -201.30101013183595
                         },
                         "worldScale": {
@@ -25252,7 +25254,7 @@
                         },
                         "worldPos": {
                             "x": 127.11463165283203,
-                            "y": 39.00861358642578,
+                            "y": 45.033607482910159,
                             "z": -201.30101013183595
                         },
                         "worldScale": {
@@ -25330,7 +25332,7 @@
                         },
                         "worldPos": {
                             "x": 127.11463165283203,
-                            "y": 39.00861358642578,
+                            "y": 45.033607482910159,
                             "z": -201.30101013183595
                         },
                         "worldScale": {
@@ -25408,7 +25410,7 @@
                         },
                         "worldPos": {
                             "x": 127.11463165283203,
-                            "y": 39.00861358642578,
+                            "y": 45.033607482910159,
                             "z": -201.30101013183595
                         },
                         "worldScale": {
@@ -28328,37 +28330,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 184,
+                                                "entityID": 25,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 184,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 121,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 121,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 40,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 40,
+                                                        "data": 25,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -28380,11 +28356,37 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 25,
+                                                "entityID": 40,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 25,
+                                                        "data": 40,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 121,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 121,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 184,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 184,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -32327,6 +32329,173 @@
             ]
         },
         {
+            "ID": 463,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Point Light (Copy)",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 126.53395080566406,
+                            "y": 18.240760803222658,
+                            "z": -187.9389190673828
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 3.1866629123687746
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 126.53395080566406,
+                            "y": 18.240760803222658,
+                            "z": -187.9389190673828
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 3.1866629123687746
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "POINT",
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "intensity": 13.0,
+                        "innerAngle": 5.0,
+                        "outerAngle": 12.5,
+                        "range": 64.5,
+                        "castShadows": false,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 465,
+            "Parent": 27,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "PoseidonName",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 228.15174865722657,
+                            "y": 26.375577926635743,
+                            "z": -87.04969787597656
+                        },
+                        "scale": {
+                            "x": 9.508000373840332,
+                            "y": 0.24799999594688416,
+                            "z": 4.90500020980835
+                        },
+                        "rotation": {
+                            "x": 0.7071067690849304,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 228.15174865722657,
+                            "y": 26.375577926635743,
+                            "z": -87.6104736328125
+                        },
+                        "worldScale": {
+                            "x": 9.508000373840332,
+                            "y": 0.24799999594688416,
+                            "z": 4.90500020980835
+                        },
+                        "worldRot": {
+                            "x": 0.7071067690849304,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 17717183004844462254
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048579,
             "Parent": 2,
             "Child Entities": [],
@@ -34028,37 +34197,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 184,
+                                                "entityID": 25,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 184,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 121,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 121,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 40,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 40,
+                                                        "data": 25,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -34080,11 +34223,37 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 25,
+                                                "entityID": 40,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 25,
+                                                        "data": 40,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 121,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 121,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 184,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 184,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -34155,50 +34324,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 187,
+                                                "entityID": 192,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 187,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 188,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 188,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 189,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 189,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 190,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 190,
+                                                        "data": 192,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -34220,11 +34350,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 192,
+                                                "entityID": 190,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 192,
+                                                        "data": 190,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 189,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 189,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 188,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 188,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 187,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 187,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -34241,50 +34410,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 193,
+                                                "entityID": 198,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 193,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 194,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 194,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 1048771,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 1048771,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 196,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 196,
+                                                        "data": 198,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -34306,11 +34436,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 198,
+                                                "entityID": 196,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 198,
+                                                        "data": 196,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 1048771,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 1048771,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 194,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 194,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 193,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 193,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -34327,50 +34496,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 253,
+                                                "entityID": 258,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 253,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 254,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 254,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 255,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 255,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 256,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 256,
+                                                        "data": 258,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -34392,11 +34522,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 258,
+                                                "entityID": 256,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 258,
+                                                        "data": 256,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 255,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 255,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 254,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 254,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 253,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 253,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -34413,50 +34582,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 259,
+                                                "entityID": 264,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 259,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 260,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 260,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 261,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 261,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 262,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 262,
+                                                        "data": 264,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -34478,11 +34608,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 264,
+                                                "entityID": 262,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 264,
+                                                        "data": 262,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 261,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 261,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 260,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 260,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 259,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 259,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -36583,6 +36752,84 @@
                         "meshName": "Plane",
                         "GUID": {
                             "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049040,
+            "Parent": 27,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "ZeusNamet",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 127.289306640625,
+                            "y": 26.375577926635743,
+                            "z": -196.75350952148438
+                        },
+                        "scale": {
+                            "x": 9.508000373840332,
+                            "y": 0.24799999594688416,
+                            "z": 4.90500020980835
+                        },
+                        "rotation": {
+                            "x": 0.7071067690849304,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 127.289306640625,
+                            "y": 26.375577926635743,
+                            "z": -197.3142852783203
+                        },
+                        "worldScale": {
+                            "x": 9.508000373840332,
+                            "y": 0.24799999594688416,
+                            "z": 4.90500020980835
+                        },
+                        "worldRot": {
+                            "x": 0.7071067690849304,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 12773144862760774111
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
