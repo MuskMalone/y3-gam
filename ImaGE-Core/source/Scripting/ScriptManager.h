@@ -341,9 +341,14 @@ namespace Mono
 		static void StopSound(ECS::Entity::EntityID, MonoString*);
 
 		static void PlayAnimation(ECS::Entity::EntityID entity, MonoString* name, bool loop);
+		static bool IsPlayingAnimation(ECS::Entity::EntityID entity);
+		static MonoString* GetCurrentAnimation(ECS::Entity::EntityID entity);
 		static void PauseAnimation(ECS::Entity::EntityID entity);
 		static void ResumeAnimation(ECS::Entity::EntityID entity);
 		static void StopAnimationLoop(ECS::Entity::EntityID entity);
+
+		// updates physics of the entity to align with its world transform values
+		static void UpdatePhysicsToTransform(ECS::Entity::EntityID entity);
 
 		static glm::vec3 GetVelocity(ECS::Entity::EntityID);
 

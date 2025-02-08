@@ -131,7 +131,7 @@ namespace IGE {
 					.GetAllEntitiesWithComponents<Component::RigidBody, Component::Transform>();
 				for (auto entity : rbsystem) {
 					ECS::Entity e{ entity };
-					if (e.HasComponent<Component::Animation>() && e.GetComponent<Component::Animation>().currentAnimation ) {
+					if (e.HasComponent<Component::Animation>() && e.GetComponent<Component::Animation>().GetCurrentAnimation().second) {
 							//runs if the animation is currently running
 						UpdatePhysicsToTransform(e);
 						continue;

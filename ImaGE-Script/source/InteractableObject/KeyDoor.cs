@@ -1,4 +1,5 @@
 using IGE.Utils;
+using System;
 using System.Numerics;
 
 public class KeyDoor : Entity
@@ -9,12 +10,11 @@ public class KeyDoor : Entity
   public Entity unlockDoorUI;
   public string[] lockedDialogue;
   public Dialogue dialogueSystem;
-  private bool doorFlag = false;
   public bool doorInteraction = true;
-  public Entity unlockedColliderEntity;
+  public string doorAnimName;  // input from inspector based on name in anim component
 
-  private Vector3 UnlockedPosition = new Vector3(58.293f, 14.157f, 57.587f);
-  private Vector3 UnlockedEuler = new Vector3(0.089f, 89.778f, 0.088f);
+  private bool doorFlag = false;
+  private string currentAnim = null;
 
   void Start()
   {
@@ -36,8 +36,7 @@ public class KeyDoor : Entity
           return;
         }
 
-        UnlockDoor();
-        return;
+        doorInteraction = false;
       }
       unlockDoorUI.SetActive(isDoorHit);
 
@@ -46,17 +45,27 @@ public class KeyDoor : Entity
         doorFlag = false;
       }
     }
+    // if an animation is in progress
+    else if (!string.IsNullOrEmpty(currentAnim))
+    {
+      if (currentAnim == doorAnimName)
+      {
+        uint parent = InternalCalls.GetParentByID(mEntityID);
+
+        // align the collider to the animated transform
+        InternalCalls.UpdatePhysicsToTransform(mEntityID);
+
+        // end of animation sequence, clear the current anim
+        if (!InternalCalls.IsPlayingAnimation(parent)) { currentAnim = null; }
+      }
+    }
   }
 
-  private void UnlockDoor()
+  public void UnlockDoor()
   {
+    currentAnim = doorAnimName;
     InternalCalls.PlaySound(mEntityID, "UnlockDoor");
-    InternalCalls.PlayAnimation(InternalCalls.GetParentByID(mEntityID), "OpenDoor");
-    //InternalCalls.SetWorldPosition(mEntityID, ref UnlockedPosition);
-    //InternalCalls.SetRotationEuler(mEntityID, ref UnlockedEuler);
+    InternalCalls.PlayAnimation(InternalCalls.GetParentByID(mEntityID), doorAnimName);
     unlockDoorUI.SetActive(false);
-    SetActive(false);
-    unlockedColliderEntity.SetActive(true);
-    doorInteraction = false;
   }
 }
