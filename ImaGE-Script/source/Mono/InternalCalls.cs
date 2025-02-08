@@ -179,7 +179,6 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Quaternion GetMainCameraRotation(uint cameraEntityID);
 
-
     #endregion
 
 
@@ -256,6 +255,9 @@ namespace IGE.Utils
     extern public static void PlayAnimation(uint entity, string animation, bool loop = false);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool IsPlayingAnimation(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void PauseAnimation(uint entity);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -263,6 +265,10 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void StopAnimationLoop(uint entity); // stops the animation after the current loop ends
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    // updates physics of the entity to align with its world transform values
+    internal extern static void UpdatePhysicsToTransform(uint entity);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static float GetDeltaTime();

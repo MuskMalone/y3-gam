@@ -265,6 +265,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetSprite2DColor);
   ADD_INTERNAL_CALL(SetSprite2DColor);
   ADD_INTERNAL_CALL(SetDaySkyBox);
+  ADD_INTERNAL_CALL(UpdatePhysicsToTransform);
 
   // Utility Functions
   ADD_INTERNAL_CALL(Raycast);
@@ -275,6 +276,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(PauseSound);
   ADD_INTERNAL_CALL(StopSound);
   ADD_INTERNAL_CALL(PlayAnimation);
+  ADD_INTERNAL_CALL(IsPlayingAnimation);
   ADD_INTERNAL_CALL(PauseAnimation);
   ADD_INTERNAL_CALL(ResumeAnimation);
   ADD_INTERNAL_CALL(StopAnimationLoop);
@@ -1084,6 +1086,15 @@ void Mono::PlayAnimation(ECS::Entity::EntityID entity, MonoString* str, bool loo
   std::string const name{ MonoStringToSTD(str) };
   ECS::Entity(entity).GetComponent<Component::Animation>().PlayAnimation(name, loop);
 }
+bool Mono::IsPlayingAnimation(ECS::Entity::EntityID entityId) {
+  ECS::Entity const entity{ entityId };
+  if (!entity.HasComponent<Component::Animation>()) {
+    IGE_DBGLOGGER.LogError("IsPlayingAnimation(): Entity " + entity.GetTag() + " does not have an animation component!");
+    return false;
+  }
+
+  return entity.GetComponent<Component::Animation>().currentAnimation;
+}
 
 void Mono::PauseAnimation(ECS::Entity::EntityID entity) {
   ECS::Entity(entity).GetComponent<Component::Animation>().Pause();
@@ -1104,6 +1115,10 @@ glm::vec3 Mono::GetVelocity(ECS::Entity::EntityID e)
         return glm::vec3{ rb.velocity.x, rb.velocity.y, rb.velocity.z };
     }
     return glm::vec3();
+}
+
+void Mono::UpdatePhysicsToTransform(ECS::Entity::EntityID entity) {
+  IGE::Physics::PhysicsSystem::GetInstance()->UpdatePhysicsToTransform(entity);
 }
 
 MonoString* Mono::GetLayerName(ECS::Entity::EntityID e)
