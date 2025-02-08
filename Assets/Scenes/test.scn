@@ -90,9 +90,9 @@
                             "z": -5.05384635925293
                         },
                         "scale": {
-                            "x": 132.24000549316407,
-                            "y": 132.24000549316407,
-                            "z": 132.24000549316407
+                            "x": 189.39999389648438,
+                            "y": 10.199999809265137,
+                            "z": 138.75999450683595
                         },
                         "rotation": {
                             "x": 0.0,
@@ -111,9 +111,9 @@
                             "z": -5.05384635925293
                         },
                         "worldScale": {
-                            "x": 132.24000549316407,
-                            "y": 132.24000549316407,
-                            "z": 132.24000549316407
+                            "x": 189.39999389648438,
+                            "y": 10.199999809265137,
+                            "z": 138.75999450683595
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -130,9 +130,128 @@
                 },
                 {
                     "Mesh": {
-                        "meshName": "Plane",
+                        "meshName": "Cube",
                         "GUID": {
-                            "ID": 3815097445005270835
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 94.69999694824219,
+                            "y": 5.099999904632568,
+                            "z": 69.37999725341797
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048608,
+            "Parent": 3145729,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Cube",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 1.1920928955078126e-7,
+                            "y": 2.9802322387695315e-8,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -68.09416961669922,
+                            "y": 18.315113067626954,
+                            "z": 5.667450904846191
+                        },
+                        "worldScale": {
+                            "x": 37.2599983215332,
+                            "y": 37.2599983215332,
+                            "z": 37.2599983215332
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -158,7 +277,7 @@
                         "position": {
                             "x": 0.0,
                             "y": 0.0,
-                            "z": 0.0
+                            "z": 92.60381317138672
                         },
                         "scale": {
                             "x": 1.0,
@@ -173,13 +292,13 @@
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -0.0,
                             "z": 0.0
                         },
                         "worldPos": {
                             "x": 0.0,
                             "y": 0.0,
-                            "z": 0.0
+                            "z": 92.60381317138672
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -205,7 +324,7 @@
                         "position": {
                             "x": 0.0,
                             "y": 0.0,
-                            "z": 0.0
+                            "z": 92.60381317138672
                         },
                         "yaw": 0.0,
                         "pitch": 0.0,
@@ -380,7 +499,9 @@
         {
             "ID": 3145729,
             "Parent": null,
-            "Child Entities": [],
+            "Child Entities": [
+                1048608
+            ],
             "Components": [
                 {
                     "Tag": {
@@ -392,7 +513,7 @@
                     "Transform": {
                         "position": {
                             "x": -68.09417724609375,
-                            "y": -0.050170913338661197,
+                            "y": 18.31511116027832,
                             "z": 5.667450904846191
                         },
                         "scale": {
@@ -413,7 +534,7 @@
                         },
                         "worldPos": {
                             "x": -68.09417724609375,
-                            "y": -0.050170913338661197,
+                            "y": 18.31511116027832,
                             "z": 5.667450904846191
                         },
                         "worldScale": {
@@ -435,22 +556,51 @@
                     }
                 },
                 {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 6418878341695253411
-                        }
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 18.6299991607666,
+                            "y": 18.6299991607666,
+                            "z": 18.6299991607666
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
                     }
                 },
                 {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
                         },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 5.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "DYNAMIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0
                     }
                 },
                 {
@@ -464,7 +614,10 @@
                             }
                         ],
                         "currentAnimation": {
-                            "ID": 17393308862282683209
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
                         },
                         "repeat": false
                     }
