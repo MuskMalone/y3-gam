@@ -1,13 +1,13 @@
 {
     "editorCam": {
         "position": {
-            "x": -0.8774197697639465,
-            "y": 0.8692425489425659,
-            "z": 0.19138647615909577
+            "x": 90.22352600097656,
+            "y": 42.33746337890625,
+            "z": -29.958555221557618
         },
         "fov": 45.0,
-        "pitch": -44.06613540649414,
-        "yaw": -12.304862976074219,
+        "pitch": -44.59077835083008,
+        "yaw": -234.32760620117188,
         "nearClip": 0.10000000149011612,
         "farClip": 1500.0
     },
@@ -15,7 +15,7 @@
         {
             "entityId": 37,
             "stackId": 4285898929,
-            "isOpen": true
+            "isOpen": false
         },
         {
             "entityId": 52,
@@ -40,7 +40,17 @@
         {
             "entityId": 118,
             "stackId": 240194231,
+            "isOpen": false
+        },
+        {
+            "entityId": 124,
+            "stackId": 870312652,
             "isOpen": true
+        },
+        {
+            "entityId": 125,
+            "stackId": 24642668,
+            "isOpen": false
         },
         {
             "entityId": 1048581,
@@ -53,6 +63,16 @@
             "isOpen": false
         },
         {
+            "entityId": 1048699,
+            "stackId": 3818346722,
+            "isOpen": true
+        },
+        {
+            "entityId": 1049042,
+            "stackId": 971982137,
+            "isOpen": false
+        },
+        {
             "entityId": 2097156,
             "stackId": 3178739339,
             "isOpen": true
@@ -60,7 +80,7 @@
         {
             "entityId": 2097593,
             "stackId": 1417147241,
-            "isOpen": false
+            "isOpen": true
         },
         {
             "entityId": 2097595,
@@ -75,7 +95,7 @@
         {
             "entityId": 4194535,
             "stackId": 3210063346,
-            "isOpen": true
+            "isOpen": false
         }
     ]
 }

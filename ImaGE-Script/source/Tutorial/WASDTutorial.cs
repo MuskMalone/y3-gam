@@ -43,7 +43,7 @@ public class WASDTutorial : Entity
     public bool finish = false;
 
     private float timer = 0f;
-    private float duration = 4f;
+    public float duration = 4f;
 
     void Start()
     {
