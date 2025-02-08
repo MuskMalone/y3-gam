@@ -339,6 +339,13 @@
                                         }
                                     },
                                     {
+                                        "data": 1.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "fadeSpeed"
+                                        }
+                                    },
+                                    {
                                         "data": false,
                                         "type": "System.Boolean",
                                         "scriptField": {
@@ -11643,7 +11650,7 @@
                 {
                     "Tag": {
                         "tag": "FadeImage",
-                        "isActive": false
+                        "isActive": true
                     }
                 },
                 {

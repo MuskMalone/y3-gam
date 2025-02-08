@@ -45,7 +45,15 @@ public class PictureAlign : Entity
 
   delegate void PictureInteration();
     public bool startFade = false;
-   //private TutorialFade tutorialFade;
+    //private TutorialFade tutorialFade;
+
+
+    //fading out after alignment
+    public float fadeSpeed = 1.0f;
+    private float currentAlpha = 1f;
+    private bool hasFaded = false;
+    private float timer = 0f;
+
   void Start()
   {
         //tutorialFade = FindObjectOfType<TutorialFade>();
@@ -53,8 +61,8 @@ public class PictureAlign : Entity
     playerMove = player.FindObjectOfType<PlayerMove>();
 
     if (playerMove == null) Debug.LogError("PlayerMove component not found!");
-        
-  }
+
+    }
 
   void Update()
   {
@@ -71,7 +79,7 @@ public class PictureAlign : Entity
           alignCheck = true;
           //Debug.Log("Player is aligned.");
           playerMove.FreezePlayer();
-          currentImg.SetActive(false);
+          //currentImg.SetActive(false);
           isTransitioning = true;
 
 
@@ -82,7 +90,7 @@ public class PictureAlign : Entity
           LeftArrow.SetActive(false);
           UpArrow.SetActive(false);
           DownArrow.SetActive(false);
-          SetActive(false);
+          //SetActive(false);
           InternalCalls.PlaySound(player.mEntityID, "PaintingMatchObject");
           isNight = true;
         }
@@ -105,41 +113,62 @@ public class PictureAlign : Entity
       {
         if (picture == "NightPainting")
         {
+          FadeOut();
           if (ChangeSkyBox())
           {
             Console.WriteLine("NIght");
             InternalCalls.ChangeToolsPainting();
-            playerMove.UnfreezePlayer();
-            isTransitioning = false;
-            currentImg.RemoveItself();
-            currentImg = null;
+            if (hasFaded)
+            {
+                playerMove.UnfreezePlayer();
+                isTransitioning = false;
+                currentImg.RemoveItself();
+                currentImg = null;
+                hasFaded = false;
+            }
           }
         }
         else if (picture == "ToolsPainting")
         {
           Console.WriteLine("Tool");
-          InternalCalls.SpawnToolBox();
-          playerMove.UnfreezePlayer();
-          isTransitioning = false;
-          currentImg.RemoveItself();
-          currentImg = null;
+            FadeOut();
+            InternalCalls.SpawnToolBox();
+            if (hasFaded)
+            {
+                playerMove.UnfreezePlayer();
+                isTransitioning = false;
+                currentImg.RemoveItself();
+                currentImg = null;
+                hasFaded = false;
+            }
         }
         else if (picture == "TutorialPainting")
         {
           Console.WriteLine("Tut");
+          FadeOut();
           InternalCalls.SpawnOpenDoor();
-          playerMove.UnfreezePlayer();
-          isTransitioning = false;
-          currentImg.TutorialRemoveItself();
-          currentImg = null;
-                    //tutorialFade.StartFade();
-                    startFade = true;
+            if (hasFaded)
+            {
+                currentImg.SetActive(false);
+                SetActive(false);
+                playerMove.UnfreezePlayer();
+                isTransitioning = false;
+                currentImg.TutorialRemoveItself();
+                currentImg = null;
+                //tutorialFade.StartFade();
+                startFade = true;
+                hasFaded = false;
+            }
         }
         else if (picture == "CorridorPainting")
         {
-          isTransitioning = false;
-          playerMove.UnfreezePlayer();
-          InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Level2.scn");
+            FadeOut();
+            if (hasFaded)
+            {
+                isTransitioning = false;
+                playerMove.UnfreezePlayer();
+                InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Level2.scn");
+            }
         }
         else
         {
@@ -283,7 +312,7 @@ public class PictureAlign : Entity
 
   public bool ChangeSkyBox()
   {
-    return InternalCalls.SetDaySkyBox(mainCamera.mEntityID, 2.0f);
+    return InternalCalls.SetDaySkyBox(mainCamera.mEntityID, 1.0f);
   }
 
   public Vector2 CalculatePitchAndYawDifferences(Quaternion current, Quaternion target)
@@ -314,4 +343,27 @@ public class PictureAlign : Entity
 
     return new Vector2((float)pitchDifference, (float)yawDifference); // X = Pitch, Y = Yaw
   }
+
+    void FadeOut()
+    {
+        if (currentImg != null | border != null)
+        {
+            currentAlpha = Mathf.Lerp(currentAlpha, 0f, fadeSpeed * Time.deltaTime);
+
+            Color painting_color = currentImg.GetComponent<Image>().color;
+            painting_color.a = currentAlpha;
+            currentImg.GetComponent<Image>().color = painting_color;
+
+            Color border_color = border.GetComponent<Image>().color;
+            border_color.a = currentAlpha;
+            border.GetComponent<Image>().color = border_color;
+
+            if (Mathf.Abs(currentAlpha - 0f) < 0.01f)
+            {
+                currentAlpha = 0f;
+                hasFaded = true;
+            }
+        }
+
+    }
 }
