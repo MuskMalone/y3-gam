@@ -18,7 +18,7 @@ public class PictureAlign : Entity
   public Entity LeftArrow;
   public Entity UpArrow;
   public Entity DownArrow;
-  public Entity LeftClickText;
+  //public Entity LeftClickText;
   private bool isBigPic;
   private bool toStop = true;
   private bool isTransitioning = false;
@@ -63,8 +63,8 @@ public class PictureAlign : Entity
       // Perform alignment checks and freeze the player if aligned
       if (IsActive() && isBigPic && IsAligned())
       {
-        if (LeftClickText != null)
-          LeftClickText.SetActive(true);
+        //if (LeftClickText != null)
+        //  LeftClickText.SetActive(true);
         if (Input.GetMouseButtonDown(0))
         {
           toStop = true;
@@ -76,8 +76,8 @@ public class PictureAlign : Entity
 
 
 
-          if (LeftClickText != null)
-            LeftClickText.SetActive(false);
+          //if (LeftClickText != null)
+          //  LeftClickText.SetActive(false);
           RightArrow.SetActive(false);
           LeftArrow.SetActive(false);
           UpArrow.SetActive(false);
@@ -93,8 +93,8 @@ public class PictureAlign : Entity
       }
       else
       {
-        if (LeftClickText != null)
-          LeftClickText.SetActive(false);
+        //if (LeftClickText != null)
+        //  LeftClickText.SetActive(false);
         alignCheck = false;
       }
     }
@@ -151,7 +151,7 @@ public class PictureAlign : Entity
   }
 
 
-    bool IsAligned()
+    public bool IsAligned()
   {
     float positionDistance = Vector3.Distance(player.GetComponent<Transform>().worldPosition, savedPosition);
     Vector2 currRot =playerMove.GetRotation();

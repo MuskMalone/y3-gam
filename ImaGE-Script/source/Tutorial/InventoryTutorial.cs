@@ -40,7 +40,7 @@ public class InventoryTutorial : Entity
     private bool isFadingIn = false;
     private bool isFadingOut = false;
     private bool isVisible = false;
-    private bool finish = false;
+    public bool finish = false;
 
     private float timer = 0f;
     public float duration = 4f;
