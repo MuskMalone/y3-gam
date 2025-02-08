@@ -18,6 +18,7 @@
 #include "Core/Components/Transform.h"
 #include "Core/EntityManager.h"
 #include "Core/Entity.h"
+#include <Events/EventCallback.h>
 
 #define IGE_CMDMGR CMD::CommandManager::GetInstance()
 
@@ -59,6 +60,8 @@ namespace CMD
 		}
 
 	private:
+		EVENT_CALLBACK_DECL(OnSceneChange);
+
 		std::deque<CommandBlock> mCommandStack{};
 		std::map<std::string, std::function<void(ParamPack const&)>> mCommandLookup{ {"Transform", TransformCmd}};
 	};
