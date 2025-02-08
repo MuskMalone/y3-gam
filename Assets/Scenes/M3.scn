@@ -290,6 +290,7 @@
             "Child Entities": [
                 43,
                 98,
+                278,
                 385,
                 451,
                 469,
@@ -307,7 +308,6 @@
                 1048925,
                 1049562,
                 2097443,
-                2097535,
                 2097543,
                 2097713,
                 3145733,
@@ -464,6 +464,43 @@
                         }
                     },
                     {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
+                            }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -502,43 +539,6 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071067690849304
-                            }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
                             }
                         }
                     }
@@ -660,6 +660,12 @@
                 "subDataId": 1,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -699,12 +705,6 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -800,6 +800,12 @@
                 "subDataId": 1,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -839,12 +845,6 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -6807,6 +6807,43 @@
                         }
                     },
                     {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
+                            }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -6847,43 +6884,6 @@
                                 "w": 0.7071067690849304
                             }
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
-                            }
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -6904,12 +6904,6 @@
                         "value": {
                             "tag": "Light",
                             "isActive": true
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     },
                     {
@@ -6941,6 +6935,12 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -10160,6 +10160,12 @@
                 "subDataId": 1,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -10199,12 +10205,6 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -10814,6 +10814,86 @@
             ]
         },
         {
+            "ID": 278,
+            "Parent": 6,
+            "Child Entities": [
+                2097535
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Painting Pivot",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 52.8120002746582,
+                            "y": 15.151000022888184,
+                            "z": 49.02000045776367
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": -0.03609558939933777,
+                            "y": -0.6964356899261475,
+                            "z": 0.10153618454933167,
+                            "w": 0.7094820737838745
+                        },
+                        "eulerAngles": {
+                            "x": -81.92000579833985,
+                            "y": -78.77999877929688,
+                            "z": 87.25
+                        },
+                        "worldPos": {
+                            "x": 52.8120002746582,
+                            "y": 15.151000022888184,
+                            "z": 49.02000045776367
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": -0.03609558939933777,
+                            "y": -0.6964356899261475,
+                            "z": 0.10153618454933167,
+                            "w": 0.7094820737838745
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Animation": {
+                        "animations": [
+                            {
+                                "key": "PaintingDrop",
+                                "value": {
+                                    "ID": 3697798013431578153
+                                }
+                            }
+                        ],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
+                        },
+                        "repeat": false
+                    }
+                }
+            ]
+        },
+        {
             "ID": 280,
             "Parent": 275,
             "Child Entities": [],
@@ -10997,6 +11077,12 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -11036,12 +11122,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -11086,6 +11166,43 @@
                         }
                     },
                     {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
+                            }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -11124,43 +11241,6 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071067690849304
-                            }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
                             }
                         }
                     }
@@ -11536,6 +11616,43 @@
                         }
                     },
                     {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9397993087768555,
+                                "y": 0.9177237749099731,
+                                "z": 0.7512108087539673
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
+                            }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -11574,43 +11691,6 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071067690849304
-                            }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9397993087768555,
-                                "y": 0.9177237749099731,
-                                "z": 0.7512108087539673
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
                             }
                         }
                     }
@@ -12110,6 +12190,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -12149,12 +12235,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
                         }
                     }
                 ],
@@ -12262,6 +12342,43 @@
                         }
                     },
                     {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
+                            }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -12300,43 +12417,6 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071067690849304
-                            }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
                             }
                         }
                     }
@@ -12452,6 +12532,43 @@
                         }
                     },
                     {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
+                            }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -12490,43 +12607,6 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071067690849304
-                            }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
                             }
                         }
                     }
@@ -52879,6 +52959,43 @@
                         }
                     },
                     {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 183.0,
+                            "outerAngle": 360.0,
+                            "range": 25.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
+                            }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -52917,43 +53034,6 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071068286895752
-                            }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 183.0,
-                            "outerAngle": 360.0,
-                            "range": 25.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
                             }
                         }
                     }
@@ -54375,6 +54455,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -54414,12 +54500,6 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     },
                     {
@@ -54839,6 +54919,12 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -54878,12 +54964,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     },
                     {
@@ -55496,6 +55576,43 @@
                         }
                     },
                     {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
+                            }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -55534,43 +55651,6 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071067690849304
-                            }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
                             }
                         }
                     }
@@ -55647,6 +55727,12 @@
                 "subDataId": 1,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -55687,12 +55773,6 @@
                                 "w": 0.7071067690849304
                             }
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -55719,6 +55799,12 @@
                         "value": {
                             "tag": "ArcDoor",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     },
                     {
@@ -55762,12 +55848,6 @@
                                 "w": 1.0
                             }
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -55789,6 +55869,12 @@
                 },
                 "subDataId": 0,
                 "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
                     {
                         "key": "Transform",
                         "value": {
@@ -55829,12 +55915,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -56004,6 +56084,12 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -56044,12 +56130,6 @@
                                 "w": 1.0
                             }
                         }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -56065,6 +56145,12 @@
                 },
                 "subDataId": 1,
                 "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
                     {
                         "key": "Transform",
                         "value": {
@@ -56105,12 +56191,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -63842,9 +63922,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -63852,10 +63932,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -68086,9 +68166,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -68096,10 +68176,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -68164,9 +68244,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -68174,10 +68254,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -68242,9 +68322,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -68252,10 +68332,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -68398,9 +68478,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -68408,10 +68488,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -69146,9 +69226,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -69156,10 +69236,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -69284,9 +69364,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -69294,10 +69374,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -69616,9 +69696,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -69626,10 +69706,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -69765,7 +69845,7 @@
         },
         {
             "ID": 2097535,
-            "Parent": 6,
+            "Parent": 278,
             "Child Entities": [
                 1049330,
                 2097431,
@@ -69806,9 +69886,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 52.441856384277347,
-                            "y": 12.964421272277832,
-                            "z": 47.431434631347659
+                            "x": -1.4651923179626465,
+                            "y": -2.455036163330078,
+                            "z": 0.7280158996582031
                         },
                         "scale": {
                             "x": 0.5800000429153442,
@@ -69816,20 +69896,20 @@
                             "z": 0.5800000429153442
                         },
                         "rotation": {
-                            "x": -0.10730765759944916,
-                            "y": -0.6941619515419006,
-                            "z": 0.10874219238758087,
-                            "w": 0.7034198641777039
+                            "x": -0.07937097549438477,
+                            "y": -0.007887551560997963,
+                            "z": 0.03813300281763077,
+                            "w": 0.9960843324661255
                         },
                         "eulerAngles": {
-                            "x": -87.48749542236328,
-                            "y": -72.40873718261719,
-                            "z": 87.6051254272461
+                            "x": -9.133148193359375,
+                            "y": -0.553487241268158,
+                            "z": 4.428964614868164
                         },
                         "worldPos": {
-                            "x": 52.441856384277347,
-                            "y": 12.964421272277832,
-                            "z": 47.431434631347659
+                            "x": 52.303829193115237,
+                            "y": 12.402544975280762,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -69837,10 +69917,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765759944916,
-                            "y": -0.6941619515419006,
-                            "z": 0.10874219238758087,
-                            "w": 0.7034198641777039
+                            "x": -0.1180228516459465,
+                            "y": -0.7059873342514038,
+                            "z": 0.07320120930671692,
+                            "w": 0.6944739818572998
                         }
                     }
                 },
@@ -69878,7 +69958,7 @@
                 {
                     "RigidBody": {
                         "velocity": {
-                            "x": 0.0,
+                            "x": 0.00018194429867435247,
                             "y": 0.0,
                             "z": 0.0
                         },
@@ -69887,12 +69967,12 @@
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "staticFriction": 0.0,
-                        "dynamicFriction": 0.0,
-                        "restitution": 0.0,
-                        "gravityFactor": 0.0,
-                        "linearDamping": 0.9800000190734863,
-                        "motionType": "KINEMATIC",
+                        "staticFriction": 1.0,
+                        "dynamicFriction": 1.0,
+                        "restitution": 0.10000000149011612,
+                        "gravityFactor": 5.0,
+                        "linearDamping": 0.0,
+                        "motionType": "DYNAMIC",
                         "axisLock": 7,
                         "angularAxisLock": 7
                     }
@@ -69904,6 +69984,13 @@
                                 "entityID": 2097535,
                                 "scriptName": "SuspiciousPainting",
                                 "scriptFieldInstList": [
+                                    {
+                                        "data": "PaintingDrop",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "dropAnimName"
+                                        }
+                                    },
                                     {
                                         "data": {
                                             "entityID": 40,
@@ -70044,9 +70131,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -70054,10 +70141,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -70122,9 +70209,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -70132,10 +70219,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -70200,9 +70287,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -70210,10 +70297,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -70387,9 +70474,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -70397,10 +70484,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -70465,9 +70552,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -70475,10 +70562,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -70543,9 +70630,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -70553,10 +70640,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -70855,9 +70942,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -70865,10 +70952,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -70933,9 +71020,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -70943,10 +71030,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -71011,9 +71098,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -71021,10 +71108,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -71089,9 +71176,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -71099,10 +71186,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -71167,9 +71254,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -71177,10 +71264,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -71401,9 +71488,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -71411,10 +71498,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -71479,9 +71566,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -71489,10 +71576,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -71557,9 +71644,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -71567,10 +71654,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -71635,9 +71722,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -71645,10 +71732,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -71713,9 +71800,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -71723,10 +71810,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -73740,9 +73827,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -73750,10 +73837,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -74580,6 +74667,43 @@
                         }
                     },
                     {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "intensity": 2.0,
+                            "innerAngle": 143.0,
+                            "outerAngle": 53.0,
+                            "range": 93.0,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
+                            }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -74618,43 +74742,6 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7033947110176086
-                            }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
-                            },
-                            "intensity": 2.0,
-                            "innerAngle": 143.0,
-                            "outerAngle": 53.0,
-                            "range": 93.0,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
                             }
                         }
                     }
@@ -75328,6 +75415,12 @@
                 "subDataId": 1,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -75367,12 +75460,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
                         }
                     }
                 ],
@@ -75425,6 +75512,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -75464,12 +75557,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
                         }
                     }
                 ],
@@ -75694,9 +75781,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -75704,10 +75791,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -75826,6 +75913,12 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -75865,12 +75958,6 @@
                                 "z": 0.0,
                                 "w": 0.7569234371185303
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
                         }
                     }
                 ],
@@ -75912,9 +75999,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 52.44044876098633,
-                            "y": 12.965022087097168,
-                            "z": 47.43146514892578
+                            "x": 52.302459716796878,
+                            "y": 12.403228759765625,
+                            "z": 48.0756721496582
                         },
                         "worldScale": {
                             "x": 0.5800000429153442,
@@ -75922,10 +76009,10 @@
                             "z": 0.5800000429153442
                         },
                         "worldRot": {
-                            "x": -0.10730765014886856,
-                            "y": -0.694162130355835,
-                            "z": 0.10874250531196594,
-                            "w": 0.7034196853637695
+                            "x": -0.1180228590965271,
+                            "y": -0.7059875130653381,
+                            "z": 0.07320152968168259,
+                            "w": 0.6944738030433655
                         }
                     }
                 },
@@ -76336,6 +76423,12 @@
                 "subDataId": 12,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -76375,12 +76468,6 @@
                                 "z": 0.0,
                                 "w": 0.932442307472229
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
                         }
                     },
                     {
@@ -76478,6 +76565,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -76517,12 +76610,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -77130,6 +77217,12 @@
                 "subDataId": 1,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -77169,12 +77262,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
                         }
                     }
                 ],
@@ -77713,9 +77800,9 @@
                             "z": 85.78472137451172
                         },
                         "worldPos": {
-                            "x": 52.539859771728519,
-                            "y": 12.960061073303223,
-                            "z": 47.43204879760742
+                            "x": 52.40129089355469,
+                            "y": 12.392194747924805,
+                            "z": 48.07984161376953
                         },
                         "worldScale": {
                             "x": 2.876800298690796,
@@ -77723,10 +77810,10 @@
                             "z": 4.454400062561035
                         },
                         "worldRot": {
-                            "x": 0.40997764468193056,
-                            "y": -0.42997729778289797,
-                            "z": 0.5558720231056213,
-                            "w": 0.5814157724380493
+                            "x": 0.39597421884536745,
+                            "y": -0.4630609452724457,
+                            "z": 0.5383613109588623,
+                            "w": 0.5821908712387085
                         }
                     }
                 },
@@ -78650,6 +78737,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -78689,12 +78782,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -78746,6 +78833,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -78785,12 +78878,6 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -78994,7 +79081,7 @@
                 1,
                 0,
                 1,
-                0,
+                1,
                 1,
                 0,
                 0,
@@ -79011,7 +79098,7 @@
                 0,
                 1,
                 0,
-                0,
+                1,
                 0,
                 1,
                 0,

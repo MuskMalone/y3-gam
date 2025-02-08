@@ -88,6 +88,10 @@ namespace GUI {
       GUIVault::sDevTools = !GUIVault::sDevTools;
     }
 
+    if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyDown(ImGuiKey_Z)) {
+      CMD::CommandManager::GetInstance().UndoCommand();
+    }
+
     // Always run persistent windows
     for (auto const& elem : mPersistentElements) {
       elem->Run();
@@ -107,11 +111,6 @@ namespace GUI {
     if (mEditorViewport->IsActive()) {
       mEditorViewport->Render(framebuffer);
     }
-
-    if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyDown(ImGuiKey_Z)){
-      CMD::CommandManager::GetInstance().UndoCommand();
-    }
-
   }
 
   EVENT_CALLBACK_DEF(GUIManager, OnCollectEditorData) {

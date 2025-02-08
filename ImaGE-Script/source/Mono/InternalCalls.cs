@@ -270,10 +270,6 @@ namespace IGE.Utils
     extern public static void StopAnimationLoop(uint entity); // stops the animation after the current loop ends
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    // updates physics of the entity to align with its world transform values
-    internal extern static void UpdatePhysicsToTransform(uint entity);
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static float GetDeltaTime();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -296,6 +292,13 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetGravityFactor(uint mEntityID, float gravityFactor);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    // updates physics of the entity to align with its world transform values
+    internal extern static void UpdatePhysicsToTransform(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void LockRigidBody(uint entity, bool toLock);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static Entity FindScript(string s);

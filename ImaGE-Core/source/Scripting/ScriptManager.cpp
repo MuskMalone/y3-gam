@@ -224,6 +224,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetVelocity);
   ADD_INTERNAL_CALL(GetGravityFactor);
   ADD_INTERNAL_CALL(SetGravityFactor);
+  ADD_INTERNAL_CALL(LockRigidBody);
 
   //Debug Functions
   ADD_INTERNAL_CALL(Log);
@@ -997,13 +998,36 @@ float Mono::GetGravityFactor(ECS::Entity::EntityID entity) {
   return ECS::Entity(entity).GetComponent<Component::RigidBody>().gravityFactor;
 }
 
-void Mono::SetGravityFactor(ECS::Entity::EntityID entity, float gravity) {
-  if (!ECS::Entity(entity).HasComponent<Component::RigidBody>()) {
-    Debug::DebugLogger::GetInstance().LogError("Entity does not have the RigidBody component");
+void Mono::SetGravityFactor(ECS::Entity::EntityID entityId, float gravity) {
+  ECS::Entity entity{ entityId };
+  if (!entity.HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity " + entity.GetTag() + " does not have the RigidBody component");
     return;
   }
-  ECS::Entity(entity).GetComponent<Component::RigidBody>().gravityFactor = gravity;
+  entity.GetComponent<Component::RigidBody>().gravityFactor = gravity;
   IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::GRAVITY_FACTOR);
+}
+
+void Mono::LockRigidBody(ECS::Entity::EntityID entityId, bool lock) {
+  ECS::Entity entity{ entityId };
+  if (!entity.HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity " + entity.GetTag() + " does not have the RigidBody component");
+    return;
+  }
+
+  Component::RigidBody& rigidBody{ entity.GetComponent<Component::RigidBody>() };
+  if (lock) {
+    int const combinedAxes{ 
+      (int)Component::RigidBody::Axis::X | (int)Component::RigidBody::Axis::Y | (int)Component::RigidBody::Axis::Z
+    };
+    rigidBody.SetAxisLock(combinedAxes);
+    rigidBody.SetAngleAxisLock(combinedAxes);
+  }
+  else {
+    rigidBody.axisLock = 0;
+    rigidBody.angularAxisLock = 0;
+  }
+  IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::LOCK);
 }
 
 glm::vec3 Mono::GetMouseDelta()
