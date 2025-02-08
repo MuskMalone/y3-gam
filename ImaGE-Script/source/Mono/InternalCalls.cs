@@ -26,290 +26,301 @@ using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace IGE.Utils
 {
-  public static class InternalCalls
-  {
-    #region Transform
+    public static class InternalCalls
+    {
+        #region Transform
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vector3 GetScale(uint ID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static Vector3 GetScale(uint ID);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetScale(uint entityHandle, ref Vector3 scale);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetScale(uint entityHandle, ref Vector3 scale);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vector3 GetColliderScale(uint ID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static Vector3 GetColliderScale(uint ID);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vector3 GetWorldPosition(uint ID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static Vector3 GetWorldPosition(uint ID);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vector3 GetPosition(uint ID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static Vector3 GetPosition(uint ID);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetPosition(uint entityHandle, ref Vector3 position);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetPosition(uint entityHandle, ref Vector3 position);
 
-    // avoid using this, prefer SetPosition (local)
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetWorldPosition(uint entityHandle, ref Vector3 position);
+        // avoid using this, prefer SetPosition (local)
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetWorldPosition(uint entityHandle, ref Vector3 position);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Quaternion GetRotation(uint ID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static Quaternion GetRotation(uint ID);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vector3 GetRotationEuler(uint ID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static Vector3 GetRotationEuler(uint ID);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetRotationEuler(uint ID, ref Vector3 position);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetRotationEuler(uint ID, ref Vector3 position);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vector3 GetWorldRotationEuler(uint ID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static Vector3 GetWorldRotationEuler(uint ID);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetRotation(uint entityHandle, ref Quaternion position);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetRotation(uint entityHandle, ref Quaternion position);
 
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Quaternion GetWorldRotation(uint ID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static Quaternion GetWorldRotation(uint ID);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static void SetWorldRotation(uint entityHandle, ref Quaternion position);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetWorldRotation(uint entityHandle, ref Quaternion position);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vector3 GetVelocity(uint ID);
-    #endregion
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static Vector3 GetVelocity(uint ID);
+        #endregion
 
 
-    #region Input
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static bool IsKeyTriggered(KeyCode key);
+        #region Input
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static bool IsKeyTriggered(KeyCode key);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static bool IsKeyHeld(KeyCode key);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static bool IsKeyHeld(KeyCode key);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static bool IsKeyPressed(KeyCode key);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static bool IsKeyPressed(KeyCode key);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static float GetAxis(string s);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static float GetAxis(string s);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static bool AnyKeyDown();
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static bool AnyKeyDown();
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static bool AnyKeyTriggered();
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static bool AnyKeyTriggered();
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vector3 GetMouseDelta();
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static Vector3 GetMouseDelta();
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vector3 GetMousePos();
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static Vector3 GetMousePos();
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vector3 GetMousePosWorld(float depth);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static Vector3 GetMousePosWorld(float depth);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vector3 GetCameraForward();
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static Vector3 GetCameraForward();
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static string GetInputString();
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static string GetInputString();
 
-    #endregion
+        #endregion
 
 
-    #region Logging
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void Log(string s);
+        #region Logging
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void Log(string s);
 
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void LogWarning(string s);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void LogWarning(string s);
 
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void LogError(string s);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void LogError(string s);
 
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void LogCritical(string s);
-    #endregion
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void LogCritical(string s);
+        #endregion
 
 
-    #region Entity
+        #region Entity
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static string GetTag(uint EntityID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static string GetTag(uint EntityID);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SetTag(uint EntityID, string tag); // Try not to use, dangerous
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void SetTag(uint EntityID, string tag); // Try not to use, dangerous
 
-    // avoid using this, prefer SetPosition (local)
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SetActive(uint entityHandle, bool active);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void SetActive(uint entityHandle, bool active);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static bool IsActive(uint entityHandle);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static bool IsActive(uint entityHandle);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void DestroyEntity(uint EntityID);
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void DestroyScript(Entity obj, uint EntityID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void DestroyEntity(uint EntityID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void DestroyScript(Entity obj, uint EntityID);
 
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static Entity FindScriptInEntity(uint entity,string s);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static Entity FindScriptInEntity(uint entity, string s);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static uint FindChildByTag(uint EntityID, string s);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static uint FindChildByTag(uint EntityID, string s);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static uint[] GetAllChildren(uint ID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static uint[] GetAllChildren(uint ID);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static uint FindParentByTag(string s);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static uint FindParentByTag(string s);
 
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static uint GetParentByID(uint EntityID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static uint GetParentByID(uint EntityID);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vector3 GetMainCameraPosition(uint cameraEntityID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static Vector3 GetMainCameraPosition(uint cameraEntityID);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Vector3 GetMainCameraDirection(uint cameraEntityID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static Vector3 GetMainCameraDirection(uint cameraEntityID);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static Quaternion GetMainCameraRotation(uint cameraEntityID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static Quaternion GetMainCameraRotation(uint cameraEntityID);
 
 
-    #endregion
+        #endregion
 
 
-    #region Text Component
+        #region Text Component
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static Vector4 GetTextColor(uint EntityID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static Vector4 GetTextColor(uint EntityID);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SetTextColor(uint TextEntityID, Vector4 textColor);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void SetTextColor(uint TextEntityID, Vector4 textColor);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static float GetTextScale(uint EntityID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static float GetTextScale(uint EntityID);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SetTextScale(uint TextEntityID, float textScale);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void SetTextScale(uint TextEntityID, float textScale);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static string GetText(uint EntityID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static string GetText(uint EntityID);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SetText(uint TextEntityID, string textContent);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void SetText(uint TextEntityID, string textContent);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void AppendText(uint TextEntityID, string textContent);
-    #endregion
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void AppendText(uint TextEntityID, string textContent);
+        #endregion
 
 
-    #region Color Component
+        #region Color Component
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static Vector4 GetImageColor(uint EntityID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static Vector4 GetImageColor(uint EntityID);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SetImageColor(uint EntityID, Vector4 val);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void SetImageColor(uint EntityID, Vector4 val);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static Vector4 GetSprite2DColor(uint EntityID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static Vector4 GetSprite2DColor(uint EntityID);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SetSprite2DColor(uint EntityID, Vector4 val);
-    #endregion
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void SetSprite2DColor(uint EntityID, Vector4 val);
+        #endregion
 
 
-    #region Utility
+        #region Utility
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static string GetLayerName(uint entity);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static string GetLayerName(uint entity);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static uint Raycast(Vector3 start, Vector3 end);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static uint Raycast(Vector3 start, Vector3 end);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static uint RaycastFromEntity(uint entity, Vector3 start, Vector3 end);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static uint RaycastFromEntity(uint entity, Vector3 start, Vector3 end);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SetSoundPitch(uint entity, string sound, float pitch);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void SetSoundPitch(uint entity, string sound, float pitch);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SetSoundVolume(uint entity, string sound, float volume);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void SetSoundVolume(uint entity, string sound, float volume);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void PlaySound(uint entity, string sound);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void PlaySound(uint entity, string sound);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void PauseSound(uint entity, string sound);
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void StopSound(uint entity, string sound);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void PauseSound(uint entity, string sound);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void StopSound(uint entity, string sound);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static float GetDeltaTime();
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void PlayAnimation(uint entity, string animation, bool loop = false);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static float GetTime();
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void PauseAnimation(uint entity);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static float GetFPS();
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void ResumeAnimation(uint entity);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void MoveCharacter(uint mEntityID, Vector3 dVec);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void StopAnimationLoop(uint entity); // stops the animation after the current loop ends
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SetAngularVelocity(uint mEntityID, Vector3 angularVelocity);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static float GetDeltaTime();
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SetVelocity(uint mEntityID, Vector3 velocity);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static float GetTime();
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static float GetGravityFactor(uint mEntityID);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static float GetFPS();
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SetGravityFactor(uint mEntityID, float gravityFactor);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void MoveCharacter(uint mEntityID, Vector3 dVec);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static Entity FindScript(string s);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void SetAngularVelocity(uint mEntityID, Vector3 angularVelocity);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static string GetCurrentScene();
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void SetVelocity(uint mEntityID, Vector3 velocity);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SetCurrentScene(string sceneName);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static float GetGravityFactor(uint mEntityID);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void TakeScreenShot(string s, int width, int height);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void SetGravityFactor(uint mEntityID, float gravityFactor);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static bool SetDaySkyBox(uint mEntityID, float speed);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static Entity FindScript(string s);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void ShowCursor();
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static string GetCurrentScene();
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void HideCursor();
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void SetCurrentScene(string sceneName);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static bool OnTriggerEnter(uint entityTrigger, uint entityOther);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void TakeScreenShot(string s, int width, int height);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static bool OnTriggerExit(uint entityTrigger, uint entityOther);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static bool SetDaySkyBox(uint mEntityID, float speed);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void ChangeToolsPainting();
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void ShowCursor();
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void HideCursor();
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SpawnToolBox();
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static bool OnTriggerEnter(uint entityTrigger, uint entityOther);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SpawnOpenDoor();
-    #endregion
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static bool OnTriggerExit(uint entityTrigger, uint entityOther);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void ChangeToolsPainting();
+
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void SpawnToolBox();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern public static void SpawnOpenDoor();
+        #endregion
     }
 }
