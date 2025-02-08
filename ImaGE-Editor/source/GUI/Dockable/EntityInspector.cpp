@@ -609,7 +609,7 @@ namespace GUI {
 
         NextRowTable("Current Animation");
         Component::Animation::AnimationEntry const& currAnim{ animation.GetCurrentAnimation() };
-        if (ImGui::BeginCombo("##CurrAnim", currAnim.first.c_str())) {
+        if (ImGui::BeginCombo("##CurrAnim", currAnim.first.empty() ? "None" : currAnim.first.c_str())) {
           if (ImGui::Selectable("None")) {
             animation.currentAnimation = {};
             modified = true;
