@@ -46,8 +46,8 @@ namespace Systems {
     Transform& trans{ entity.GetComponent<Transform>() };
     bool modified{ false };
 
-    // dont bother computing if nothing changed
-    if (trans.modified || parentModified) {
+    // parent modified: update local based on world
+    if (parentModified) {
       Transform const& parentTrans{ mEntityManager.GetParentEntity(entity).GetComponent<Transform>() };
 
       // update local to world with parent xform
@@ -57,6 +57,31 @@ namespace Systems {
 
       // compute the mtx
       trans.ComputeWorldMtx();
+
+      // set flags
+      trans.modified = false;
+      modified = true;
+    }
+    // modified but parent wasn't: update world using local to match parent
+    else if (trans.modified) {
+      if (trans.scale.x == 0.f || trans.scale.y == 0.f || trans.scale.z == 0.f) {
+        throw Debug::Exception<PreTransformSystem>(Debug::LVL_CRITICAL,
+          Msg("Entity " + entity.GetTag() + "'s scale is 0!"));
+      }
+
+      Transform const& parentTrans{ mEntityManager.GetParentEntity(entity).GetComponent<Transform>() };
+
+      // update local with inverse of parent xform
+      trans.position = glm::inverse(parentTrans.worldMtx) * glm::vec4(trans.worldPos, 1.f);
+      // due to floating point precision, explicitly check
+      // if quat has been rounded < 1.f to prevent NaN euler values
+      if (glm::abs(glm::length2(trans.worldRot) - 1.f) > glm::epsilon<float>()) {
+        trans.rotation = glm::normalize(glm::inverse(parentTrans.worldRot) * trans.worldRot);
+      }
+      else {
+        trans.rotation = glm::normalize(glm::inverse(parentTrans.worldRot) * trans.worldRot);
+      }
+      trans.scale = trans.worldScale / parentTrans.worldScale;
 
       // set flags
       trans.modified = false;

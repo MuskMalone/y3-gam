@@ -25,32 +25,31 @@ namespace TransformHelpers {
       Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
       trans.SetLocalToWorld();
       trans.ComputeWorldMtx();
-      return;
-    }
-   
-    Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
-
-    Component::Transform& parentTrans{ em.GetParentEntity(entity).GetComponent<Component::Transform>() };
-
-    if (parentTrans.scale.x == 0.f || parentTrans.scale.y == 0.f || parentTrans.scale.z == 0.f) {
-      throw Debug::Exception<Component::Transform>(Debug::LVL_CRITICAL,
-        Msg("Entity " + em.GetParentEntity(entity).GetComponent<Component::Tag>().tag + "'s scale is 0!"));
-    }
-
-    // update local with inverse of parent xform
-    trans.position = glm::inverse(parentTrans.worldMtx) * glm::vec4(trans.worldPos, 1.f);
-
-    // due to floating point precision, explicitly check
-    // if quat has been rounded < 1.f to prevent NaN euler values
-    if (glm::abs(glm::length2(trans.worldRot) - 1.f) > glm::epsilon<float>()) {
-      trans.rotation = glm::normalize(glm::inverse(parentTrans.worldRot) * trans.worldRot);
-      trans.eulerAngles = glm::degrees(glm::eulerAngles(trans.rotation));
     }
     else {
-      trans.rotation = /*glm::normalize*/(glm::inverse(parentTrans.worldRot) * trans.worldRot);
-      trans.eulerAngles = glm::degrees(glm::eulerAngles(trans.rotation));
+      Component::Transform& trans{ entity.GetComponent<Component::Transform>() };
+      Component::Transform& parentTrans{ em.GetParentEntity(entity).GetComponent<Component::Transform>() };
+
+      if (parentTrans.scale.x == 0.f || parentTrans.scale.y == 0.f || parentTrans.scale.z == 0.f) {
+        throw Debug::Exception<Component::Transform>(Debug::LVL_CRITICAL,
+          Msg("Entity " + em.GetParentEntity(entity).GetComponent<Component::Tag>().tag + "'s scale is 0!"));
+      }
+
+      // update local with inverse of parent xform
+      trans.position = glm::inverse(parentTrans.worldMtx) * glm::vec4(trans.worldPos, 1.f);
+
+      // due to floating point precision, explicitly check
+      // if quat has been rounded < 1.f to prevent NaN euler values
+      if (glm::abs(glm::length2(trans.worldRot) - 1.f) > glm::epsilon<float>()) {
+        trans.rotation = glm::normalize(glm::inverse(parentTrans.worldRot) * trans.worldRot);
+        trans.eulerAngles = glm::degrees(glm::eulerAngles(trans.rotation));
+      }
+      else {
+        trans.rotation = /*glm::normalize*/(glm::inverse(parentTrans.worldRot) * trans.worldRot);
+        trans.eulerAngles = glm::degrees(glm::eulerAngles(trans.rotation));
+      }
+      trans.scale = trans.worldScale / parentTrans.worldScale;
     }
-    trans.scale = trans.worldScale / parentTrans.worldScale;
 
     // if no children, we are done
     if (!em.HasChild(entity)) { return; }
