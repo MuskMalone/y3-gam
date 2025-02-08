@@ -9,9 +9,8 @@ public class KeyDoor : Entity
   public Entity unlockDoorUI;
   public string[] lockedDialogue;
   public Dialogue dialogueSystem;
-  private bool doorFlag = false;
+  private bool doorFlag = false, isDoorOpening = false;
   public bool doorInteraction = true;
-  public Entity unlockedColliderEntity;
 
   private Vector3 UnlockedPosition = new Vector3(58.293f, 14.157f, 57.587f);
   private Vector3 UnlockedEuler = new Vector3(0.089f, 89.778f, 0.088f);
@@ -46,6 +45,17 @@ public class KeyDoor : Entity
         doorFlag = false;
       }
     }
+    // if the door animation is in progress
+    else if (isDoorOpening)
+    {
+      uint parent = InternalCalls.GetParentByID(mEntityID);
+
+      // align the collider to the animated transform
+      InternalCalls.UpdatePhysicsToTransform(mEntityID);
+
+      // update the state of the animation
+      isDoorOpening = InternalCalls.IsPlayingAnimation(parent);
+    }
   }
 
   private void UnlockDoor()
@@ -55,8 +65,8 @@ public class KeyDoor : Entity
     //InternalCalls.SetWorldPosition(mEntityID, ref UnlockedPosition);
     //InternalCalls.SetRotationEuler(mEntityID, ref UnlockedEuler);
     unlockDoorUI.SetActive(false);
-    SetActive(false);
-    unlockedColliderEntity.SetActive(true);
+    //SetActive(false);
     doorInteraction = false;
+    isDoorOpening = true;
   }
 }
