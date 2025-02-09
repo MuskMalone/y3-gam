@@ -1,0 +1,39 @@
+{
+    "name": "LuminousYellow",
+    "shader": "PBR",
+    "albedoColor": {
+        "x": 1.0,
+        "y": 0.9745193123817444,
+        "z": 0.5518394708633423
+    },
+    "metalness": 0.5,
+    "roughness": 0.5,
+    "ao": 1.0,
+    "emission": {
+        "x": 1.0,
+        "y": 0.9335018992424011,
+        "z": 0.5150501728057861,
+        "w": 0.0
+    },
+    "transparency": 1.0,
+    "tiling": {
+        "x": 1.0,
+        "y": 1.0
+    },
+    "offset": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "albedoMap": {
+        "ID": 0
+    },
+    "normalMap": {
+        "ID": 0
+    },
+    "metalnessMap": {
+        "ID": 0
+    },
+    "roughnessMap": {
+        "ID": 0
+    }
+}
