@@ -464,43 +464,6 @@
                         }
                     },
                     {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
-                            }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -539,6 +502,43 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071067690849304
+                            }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
                             }
                         }
                     }
@@ -660,12 +660,6 @@
                 "subDataId": 1,
                 "componentData": [
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -705,6 +699,12 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -800,12 +800,6 @@
                 "subDataId": 1,
                 "componentData": [
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -845,6 +839,12 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -6815,43 +6815,6 @@
                         }
                     },
                     {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
-                            }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -6892,6 +6855,43 @@
                                 "w": 0.7071067690849304
                             }
                         }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
+                            }
+                        }
                     }
                 ],
                 "removedComponents": []
@@ -6912,6 +6912,12 @@
                         "value": {
                             "tag": "Light",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
                         }
                     },
                     {
@@ -6943,12 +6949,6 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -10168,12 +10168,6 @@
                 "subDataId": 1,
                 "componentData": [
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -10213,6 +10207,12 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -11085,12 +11085,6 @@
                 "subDataId": 0,
                 "componentData": [
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -11130,6 +11124,12 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -11174,43 +11174,6 @@
                         }
                     },
                     {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
-                            }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -11249,6 +11212,43 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071067690849304
+                            }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
                             }
                         }
                     }
@@ -11624,43 +11624,6 @@
                         }
                     },
                     {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9397993087768555,
-                                "y": 0.9177237749099731,
-                                "z": 0.7512108087539673
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
-                            }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -11699,6 +11662,43 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071067690849304
+                            }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9397993087768555,
+                                "y": 0.9177237749099731,
+                                "z": 0.7512108087539673
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
                             }
                         }
                     }
@@ -12198,12 +12198,6 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -12243,6 +12237,12 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
                         }
                     }
                 ],
@@ -12350,43 +12350,6 @@
                         }
                     },
                     {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
-                            }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -12425,6 +12388,43 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071067690849304
+                            }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
                             }
                         }
                     }
@@ -12540,43 +12540,6 @@
                         }
                     },
                     {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
-                            }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -12615,6 +12578,43 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071067690849304
+                            }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
                             }
                         }
                     }
@@ -23775,7 +23775,7 @@
                                         }
                                     },
                                     {
-                                        "data": 1.0,
+                                        "data": 1.2000000476837159,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "fadeSpeed"
@@ -52985,43 +52985,6 @@
                         }
                     },
                     {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 183.0,
-                            "outerAngle": 360.0,
-                            "range": 25.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
-                            }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -53060,6 +53023,43 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071068286895752
+                            }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 183.0,
+                            "outerAngle": 360.0,
+                            "range": 25.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
                             }
                         }
                     }
@@ -54481,12 +54481,6 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -54526,6 +54520,12 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     },
                     {
@@ -54945,12 +54945,6 @@
                 "subDataId": 0,
                 "componentData": [
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -54990,6 +54984,12 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     },
                     {
@@ -55653,6 +55653,13 @@
                                         }
                                     },
                                     {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isPainting"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 1125,
                                             "scriptName": "Entity"
@@ -55923,43 +55930,6 @@
                         }
                     },
                     {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
-                            }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -55998,6 +55968,43 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071067690849304
+                            }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
                             }
                         }
                     }
@@ -56074,12 +56081,6 @@
                 "subDataId": 1,
                 "componentData": [
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -56120,6 +56121,12 @@
                                 "w": 0.7071067690849304
                             }
                         }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
                     }
                 ],
                 "removedComponents": []
@@ -56146,12 +56153,6 @@
                         "value": {
                             "tag": "ArcDoor",
                             "isActive": true
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     },
                     {
@@ -56195,6 +56196,12 @@
                                 "w": 1.0
                             }
                         }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
                     }
                 ],
                 "removedComponents": []
@@ -56216,12 +56223,6 @@
                 },
                 "subDataId": 0,
                 "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
                     {
                         "key": "Transform",
                         "value": {
@@ -56262,6 +56263,12 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -56431,12 +56438,6 @@
                 "subDataId": 0,
                 "componentData": [
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -56477,6 +56478,12 @@
                                 "w": 1.0
                             }
                         }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
                     }
                 ],
                 "removedComponents": []
@@ -56492,12 +56499,6 @@
                 },
                 "subDataId": 1,
                 "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
                     {
                         "key": "Transform",
                         "value": {
@@ -56538,6 +56539,12 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -75014,43 +75021,6 @@
                         }
                     },
                     {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
-                            },
-                            "intensity": 2.0,
-                            "innerAngle": 143.0,
-                            "outerAngle": 53.0,
-                            "range": 93.0,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
-                            }
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -75089,6 +75059,43 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7033947110176086
+                            }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "intensity": 2.0,
+                            "innerAngle": 143.0,
+                            "outerAngle": 53.0,
+                            "range": 93.0,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
                             }
                         }
                     }
@@ -75762,12 +75769,6 @@
                 "subDataId": 1,
                 "componentData": [
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -75807,6 +75808,12 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
                         }
                     }
                 ],
@@ -75859,12 +75866,6 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -75904,6 +75905,12 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
                         }
                     }
                 ],
@@ -76260,12 +76267,6 @@
                 "subDataId": 0,
                 "componentData": [
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -76305,6 +76306,12 @@
                                 "z": 0.0,
                                 "w": 0.7569234371185303
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
                         }
                     }
                 ],
@@ -76770,12 +76777,6 @@
                 "subDataId": 12,
                 "componentData": [
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -76815,6 +76816,12 @@
                                 "z": 0.0,
                                 "w": 0.932442307472229
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
                         }
                     },
                     {
@@ -76912,12 +76919,6 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -76957,6 +76958,12 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -77564,12 +77571,6 @@
                 "subDataId": 1,
                 "componentData": [
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -77609,6 +77610,12 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
                         }
                     }
                 ],
@@ -79084,12 +79091,6 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -79129,6 +79130,12 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -79180,12 +79187,6 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -79225,6 +79226,12 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
                         }
                     }
                 ],

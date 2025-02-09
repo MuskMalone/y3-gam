@@ -32,12 +32,12 @@ public class PaintingAlignUIGarden : Entity
     private HoldupUI holdupUIScript;
     private Inventory inventoryScript;
     private PictureAlign pictureAlignScript;
-    private InventoryTutorial inventoryTutorialScript;
 
     public Entity bigPaintingUI;
     public Entity smallPaintingUI;
     public Entity alignmentUI;
 
+    public bool isPainting = false;
 
     // Start is called before the first frame update
     void Start()
@@ -54,7 +54,7 @@ public class PaintingAlignUIGarden : Entity
     // Update is called once per frame
     void Update()
     {
-        if (inventoryScript.highlighted)
+        if (inventoryScript.highlighted && isPainting)
         {
             if (holdupUIScript.isBigPaintingActive)
             {
@@ -86,6 +86,8 @@ public class PaintingAlignUIGarden : Entity
         }
 
     }
+
 }
+
 
 

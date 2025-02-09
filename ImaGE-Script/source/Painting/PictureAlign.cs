@@ -167,6 +167,8 @@ public class PictureAlign : Entity
             {
                 isTransitioning = false;
                 playerMove.UnfreezePlayer();
+                currentImg.RemoveItself();
+                currentImg = null;
                 InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Level2.scn");
             }
         }
@@ -268,6 +270,15 @@ public class PictureAlign : Entity
      savedPosition = position;
      savedCameraRotation = rot;
      savedCameraEuler = euler;
+
+        if (border != null)
+        {
+            Image borderImage = border.GetComponent<Image>();
+            if (borderImage != null)
+            {
+                borderImage.color = new Color(1f, 1f, 1f, 1f); // White color with full opacity
+            }
+        }
       currentImg = UI;
       picture = s;
       DownArrow.SetActive(true);
