@@ -1585,7 +1585,7 @@ void Mono::SaveScreenShot(std::string name, int width, int height)
 }
 
 bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
-
+  //
   ECS::Entity e = ECS::EntityManager::GetInstance().GetEntityFromTag("[Folder] Lights");
   if (ECS::Entity(e))
   {
@@ -1634,6 +1634,14 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
   }
   else
     Debug::DebugLogger::GetInstance().LogError("Unable to find entity: [Folder] Lights");
+
+  ECS::Entity es = ECS::EntityManager::GetInstance().GetEntityFromTag("Garden Light");
+  if (ECS::Entity(es))
+  {
+    ECS::Entity(es).SetIsActive(false);
+  }
+  else
+    Debug::DebugLogger::GetInstance().LogError("Unable to find entity: Garden Light");
    
   for (ECS::Entity child : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Light>())
   {
