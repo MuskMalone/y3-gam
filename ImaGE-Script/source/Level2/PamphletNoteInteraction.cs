@@ -60,6 +60,7 @@ public class PamphletNoteInteraction : Entity
     {
         if (odysseusUI != null && playerMove != null)
         {
+            InternalCalls.PlaySound(mEntityID, "ViewNote");
             odysseusUI.SetActive(true);
             playerMove.FreezePlayer();
             viewNoteUI.SetActive(false); // Hide hover text when note opens

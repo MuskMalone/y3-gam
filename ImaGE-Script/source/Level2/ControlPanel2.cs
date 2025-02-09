@@ -189,6 +189,7 @@ public class ControlPanel2 : Entity
         //i can use the control panel
         if (mouseClicked && isPanelHit)
         {
+            InternalCalls.PlaySound(mEntityID, "UVLight");
             SetControlPanelCameraAsMain();
             controllingLights = true;
 
