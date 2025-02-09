@@ -136,7 +136,12 @@ static void rttr_auto_register_reflection_function2_(); namespace {
       .property("intensity", &Bloom::intensity)
       .property("range", &Bloom::range);
   REGISTER_COMPONENT(Canvas, "Canvas")
-    .property("isVisible", &Component::Canvas::isVisible);
+      .property("isVisible", &Component::Canvas::isVisible)
+      .property("hasTransition", &Component::Canvas::hasTransition)
+      .property("transitionProgress", &Component::Canvas::transitionProgress)
+      .property("transitionSpeed", &Component::Canvas::transitionSpeed)
+      .property("fadeColor", &Component::Canvas::fadeColor)
+      .property("fadingOut", &Component::Canvas::fadingOut);
 
   REGISTER_COMPONENT(Image, "Image")
     .property("color", &Image::color)

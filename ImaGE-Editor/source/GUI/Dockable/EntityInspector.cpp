@@ -905,28 +905,71 @@ namespace GUI {
   }
 
   bool Inspector::CanvasComponentWindow(ECS::Entity entity, bool highlight) {
-    bool const isOpen{ WindowBegin<Component::Canvas>("Canvas", highlight) };
-    bool modified{ false };
+      bool const isOpen{ WindowBegin<Component::Canvas>("Canvas", highlight) };
+      bool modified{ false };
 
-    //if (isOpen) {
-    //    Component::Canvas& canvas = entity.GetComponent<Component::Canvas>();
-    //    float const inputWidth{ CalcInputWidth(60.f) };
-    //    // Start a table for organizing the color and textureAsset inputs
-    //    ImGui::BeginTable("ImageTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+      if (isOpen) {
+          Component::Canvas& canvas = entity.GetComponent<Component::Canvas>();
+          float const inputWidth{ CalcInputWidth(60.f) };
 
-    //    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-    //    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+          // Start a table for organizing UI properties
+          ImGui::BeginTable("CanvasTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
-    //    NextRowTable("Toggle Visiblity");
-    //    if (ImGui::Checkbox("##IsActive", &canvas.isActive)) {
-    //        modified = true;
-    //    }
-    //    ImGui::EndTable();
-    //}
+          // Toggle UI visibility
+          NextRowTable("Toggle Visibility");
+          if (ImGui::Checkbox("##IsActive", &canvas.isVisible)) {
+              modified = true;
+          }
 
-    WindowEnd(isOpen);
-    return modified;
+          // Toggle transition effect
+          NextRowTable("Enable Transition");
+          if (ImGui::Checkbox("##EnableTransition", &canvas.hasTransition)) {
+              modified = true;
+          }
+
+          // Transition type selection
+          NextRowTable("Transition Type");
+          static const char* transitionTypes[] = { "Fade", "TV Switch", "Wipe" };
+          int transitionTypeIndex = static_cast<int>(canvas.transitionType);
+          if (ImGui::Combo("##TransitionType", &transitionTypeIndex, transitionTypes, IM_ARRAYSIZE(transitionTypes))) {
+              canvas.transitionType = static_cast<Component::Canvas::TransitionType>(transitionTypeIndex);
+              modified = true;
+          }
+
+          // Transition direction (Fade in or Fade out)
+          NextRowTable("Fade Out?");
+          if (ImGui::Checkbox("##FadeOut", &canvas.fadingOut)) {
+              modified = true;
+          }
+
+          // Transition speed slider
+          NextRowTable("Fade Speed");
+          if (ImGui::SliderFloat("##TransitionSpeed", &canvas.transitionSpeed, 0.1f, 3.0f)) {
+              modified = true;
+          }
+
+          // Transition progress slider
+          NextRowTable("Transition Progress");
+          if (ImGui::SliderFloat("##TransitionProgress", &canvas.transitionProgress, 0.0f, 1.0f)) {
+              modified = true;
+          }
+
+          // Fade color picker
+          NextRowTable("Fade Color");
+          if (ImGui::ColorEdit4("##FadeColor", &canvas.fadeColor[0])) {
+              modified = true;
+          }
+
+          ImGui::EndTable();
+      }
+
+      WindowEnd(isOpen);
+      return modified;
   }
+
+
 
   bool Inspector::CapsuleColliderComponentWindow(ECS::Entity entity, bool highlight)
   {
