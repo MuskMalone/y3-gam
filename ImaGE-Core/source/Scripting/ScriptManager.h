@@ -329,6 +329,7 @@ namespace Mono
 
 		static float GetGravityFactor(ECS::Entity::EntityID entity);
 		static void SetGravityFactor(ECS::Entity::EntityID entity, float gravity);
+		static void LockRigidBody(ECS::Entity::EntityID entity, bool lock);
 
 		static ECS::Entity::EntityID Raycast(glm::vec3 start, glm::vec3 end);
 

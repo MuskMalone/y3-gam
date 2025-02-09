@@ -224,6 +224,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetVelocity);
   ADD_INTERNAL_CALL(GetGravityFactor);
   ADD_INTERNAL_CALL(SetGravityFactor);
+  ADD_INTERNAL_CALL(LockRigidBody);
 
   //Debug Functions
   ADD_INTERNAL_CALL(Log);
@@ -997,13 +998,36 @@ float Mono::GetGravityFactor(ECS::Entity::EntityID entity) {
   return ECS::Entity(entity).GetComponent<Component::RigidBody>().gravityFactor;
 }
 
-void Mono::SetGravityFactor(ECS::Entity::EntityID entity, float gravity) {
-  if (!ECS::Entity(entity).HasComponent<Component::RigidBody>()) {
-    Debug::DebugLogger::GetInstance().LogError("Entity does not have the RigidBody component");
+void Mono::SetGravityFactor(ECS::Entity::EntityID entityId, float gravity) {
+  ECS::Entity entity{ entityId };
+  if (!entity.HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity " + entity.GetTag() + " does not have the RigidBody component");
     return;
   }
-  ECS::Entity(entity).GetComponent<Component::RigidBody>().gravityFactor = gravity;
+  entity.GetComponent<Component::RigidBody>().gravityFactor = gravity;
   IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::GRAVITY_FACTOR);
+}
+
+void Mono::LockRigidBody(ECS::Entity::EntityID entityId, bool lock) {
+  ECS::Entity entity{ entityId };
+  if (!entity.HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity " + entity.GetTag() + " does not have the RigidBody component");
+    return;
+  }
+
+  Component::RigidBody& rigidBody{ entity.GetComponent<Component::RigidBody>() };
+  if (lock) {
+    int const combinedAxes{ 
+      (int)Component::RigidBody::Axis::X | (int)Component::RigidBody::Axis::Y | (int)Component::RigidBody::Axis::Z
+    };
+    rigidBody.SetAxisLock(combinedAxes);
+    rigidBody.SetAngleAxisLock(combinedAxes);
+  }
+  else {
+    rigidBody.axisLock = 0;
+    rigidBody.angularAxisLock = 0;
+  }
+  IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::LOCK);
 }
 
 glm::vec3 Mono::GetMouseDelta()
@@ -1560,7 +1584,7 @@ void Mono::SaveScreenShot(std::string name, int width, int height)
 
 bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
 
-  ECS::Entity e = ECS::EntityManager::GetInstance().GetEntityFromTag("[Folder] Outdoorlight");
+  ECS::Entity e = ECS::EntityManager::GetInstance().GetEntityFromTag("[Folder] Lights");
   if (ECS::Entity(e))
   {
     for (ECS::Entity child : ECS::EntityManager::GetInstance().GetChildEntity(e))
@@ -1573,12 +1597,16 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
           {
             Component::Light& l = gchild.GetComponent<Component::Light>();
             l.mRange = 21.f;
-            l.mLightIntensity += (2.0f - l.mLightIntensity) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
-            if (l.mLightIntensity >= 1.96f)
+            l.color.r += (0.67f - l.color.r) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
+            l.color.g += (1.f - l.color.g) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
+            l.color.b += (0.96f - l.color.b) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
+            if (l.color.r > 0.67 || l.color.g > 1.f || l.color.b > 0.96f)
             {
-              //std::cout << "Faster?\n";
-              l.mLightIntensity = 2.f;
+              l.color.r = 0.67f;
+              l.color.g = 1.f;
+              l.color.b = 0.96f;
             }
+            std::cout << l.color.r << "\n";
           }
         }
       }
@@ -1603,7 +1631,7 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
     }
   }
   else
-    Debug::DebugLogger::GetInstance().LogError("Unable to find entity: [Folder] Outdoorlight");
+    Debug::DebugLogger::GetInstance().LogError("Unable to find entity: [Folder] Lights");
    
   for (ECS::Entity child : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Light>())
   {

@@ -171,6 +171,7 @@ namespace IGE {
 						auto pose = pxrigidbody->getGlobalPose();
 						xfm.worldPos = ToGLMVec3(pose.p);
 						xfm.worldRot = ToGLMQuat(pose.q);
+						xfm.ComputeWorldMtx();
 						xfm.modified = true;
 
 						// Update the rigid body's velocities.
