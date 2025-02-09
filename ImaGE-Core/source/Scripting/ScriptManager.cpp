@@ -87,6 +87,7 @@ namespace Mono
     { "PlayerInteraction", ScriptFieldType::PLAYERINTERACTION },
     { "Inventory", ScriptFieldType::INVENTORY },
     { "TutorialLevelInventory", ScriptFieldType::TUTORIALLEVELINVENTORY },
+    { "Level2Inventory", ScriptFieldType::LEVEL2INVENTORY },
     { "SpecialDialogue", ScriptFieldType::SPECIALDIALOGUE },
     { "KeyDoor", ScriptFieldType::KEYDOOR },
     { "PictureAlign", ScriptFieldType::PICTUREALIGN },

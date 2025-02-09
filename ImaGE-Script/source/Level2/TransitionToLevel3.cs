@@ -1,48 +1,36 @@
-﻿/******************************************************************************/
-/*!
-\par        Image Engine
-\file       .cs
-
-\author     
-\date       
-
-\brief      
-
-
-Copyright (C) 2024 DigiPen Institute of Technology. Reproduction
-or disclosure of this file or its contents without the prior
-written consent of DigiPen Institute of Technology is prohibited.
-*/
-/******************************************************************************/
-
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using IGE.Utils;
+﻿using IGE.Utils;
 
 public class TransitionToLevel3 : Entity
 {
-    // Start is called before the first frame update
+    public PlayerInteraction playerInteraction; // Handles raycasting
+    public string targetObjectName = "Level2Frag"; 
+    public string nextScenePath = "..\\Assets\\Scenes\\Level3.scn"; // Path to next scene
+
+    public TransitionToLevel3() : base() { }
+
     void Start()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.NUM_4))
+        if (playerInteraction == null)
         {
-            InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Level3.scn");
+            Debug.LogError("[TransitionToLevel3.cs] PlayerInteraction Script not found!");
+            return;
         }
     }
+
+    void Update()
+    {
+        bool mouseClicked = Input.GetMouseButtonTriggered(0);
+        bool isObjectHit = playerInteraction.RayHitString == targetObjectName;
+
+        if (mouseClicked && isObjectHit)
+        {
+            LoadNextScene();
+        }
+    }
+
+    private void LoadNextScene()
+    {
+        //InternalCalls.PlaySound(mEntityID, "ConfirmClick"); // Optional click sound
+        InternalCalls.SetCurrentScene(nextScenePath); // Load next scene
+    }
 }
-
-

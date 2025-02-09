@@ -25,7 +25,8 @@ public class LightSwitch : Entity
     {
       if (isSwitchHit)
       {
-                Console.WriteLine("CameHere");    
+                Console.WriteLine("CameHere");
+        InternalCalls.PlaySound(mEntityID, "LightSwitch");
         foreach (Entity light in LightsToToggleActive)
         {
           light.SetActive(!InternalCalls.IsActive(light.mEntityID));
