@@ -28082,6 +28082,7 @@
                 180,
                 468,
                 469,
+                472,
                 1049046
             ],
             "Components": [
@@ -33524,6 +33525,78 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 472,
+            "Parent": 394,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "FadeImage",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 37.7599983215332,
+                            "y": 20.600000381469728,
+                            "z": 20.600000381469728
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 37.7599983215332,
+                            "y": 20.600000381469728,
+                            "z": 20.600000381469728
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 11422530766509655204
+                        }
                     }
                 }
             ]
@@ -39493,6 +39566,22 @@
                                 "entityID": 3145735,
                                 "scriptName": "TransitionToLevel3",
                                 "scriptFieldInstList": []
+                            },
+                            {
+                                "entityID": 3145735,
+                                "scriptName": "LevelStartFade",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 472,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fadeImageEntity"
+                                        }
+                                    }
+                                ]
                             }
                         ]
                     }
