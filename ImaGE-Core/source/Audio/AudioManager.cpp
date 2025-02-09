@@ -7,6 +7,9 @@
 #include <Core/Components/Components.h>
 #include <Events/EventManager.h>
 #include "Scenes/SceneManager.h"
+
+//#define AUDIO_VERBOSE
+
 namespace IGE {
     namespace Audio {
         AudioManager::AudioManager()
@@ -112,10 +115,12 @@ namespace IGE {
                 std::string str(FMOD_ErrorString(result));
                 Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
             }
+#ifdef AUDIO_VERBOSE
             else
             {
                 Debug::DebugLogger::GetInstance().LogInfo("Successful FMOD Channel Group Creation", true);
             }
+#endif
             return groupguid;//return the channel group
         }
 
@@ -132,10 +137,12 @@ namespace IGE {
                     Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
                 }
             }
+#ifdef AUDIO_VERBOSE
             else
             {
                 Debug::DebugLogger::GetInstance().LogInfo("Set group volume to " + std::to_string(volume), true);
             }
+#endif
         }
 
         float AudioManager::GetGroupVolume(std::string const& name)
@@ -152,10 +159,12 @@ namespace IGE {
                     std::string str(FMOD_ErrorString(result));
                     Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
                 }
+#ifdef AUDIO_VERBOSE
                 else
                 {
                     Debug::DebugLogger::GetInstance().LogInfo("Group Volume is" + std::to_string(volume), true);
                 }
+#endif
             }
             else
             {
@@ -175,10 +184,12 @@ namespace IGE {
                     std::string str(FMOD_ErrorString(result));
                     Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
                 }
+#ifdef AUDIO_VERBOSE
                 else
                 {
                     Debug::DebugLogger::GetInstance().LogInfo("Stop Group", true);
                 }
+#endif
             }
             else
             {
@@ -197,10 +208,12 @@ namespace IGE {
                     std::string str(FMOD_ErrorString(result));
                     Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
                 }
+#ifdef AUDIO_VERBOSE
                 else
                 {
                     Debug::DebugLogger::GetInstance().LogInfo("Resume Group", true);
                 }
+#endif
             }
             else
             {
@@ -219,10 +232,12 @@ namespace IGE {
                     std::string str(FMOD_ErrorString(result));
                     Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
                 }
+#ifdef AUDIO_VERBOSE
                 else
                 {
                     Debug::DebugLogger::GetInstance().LogInfo("Pause Group", true);
                 }
+#endif
             }
             else
             {
@@ -280,10 +295,12 @@ namespace IGE {
                 std::string str(FMOD_ErrorString(result));
                 Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
             }
+#ifdef AUDIO_VERBOSE
             else
             {
                 Debug::DebugLogger::GetInstance().LogInfo("Successfully added sound: " + std::string(filepath), true);
             }
+#endif
 
             return mData[namehash];
         }
@@ -352,7 +369,9 @@ namespace IGE {
                 return;
             }
 
+#ifdef AUDIO_VERBOSE
             Debug::DebugLogger::GetInstance().LogInfo("Playing sound: " + std::to_string(sound), true);
+#endif
             temp->setCallback(
                 settings.FMODChannelCallback
             );
@@ -509,7 +528,9 @@ namespace IGE {
                 try {
                     SoundInvokeSetting* settings = static_cast<SoundInvokeSetting*>(userData);
                     settings->channels.erase(channel); // Remove channel from active list
+#ifdef AUDIO_VERBOSE
                     Debug::DebugLogger::GetInstance().LogInfo("sound has finished playing, removing channel ptr");
+#endif
                 }
                 catch (...) {
                     Debug::DebugLogger::GetInstance().LogWarning("audio instance doesnt exist");
