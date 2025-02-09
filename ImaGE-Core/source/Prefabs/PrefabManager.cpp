@@ -94,17 +94,18 @@ void PrefabManager::CreatePrefabFromEntity(ECS::Entity entity, std::string const
 {
   ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
   Prefab prefab{ name };
-  prefab.GetRoot().mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(entity);
+  prefab.mObjects.emplace_back(PrefabSubData::BasePrefabId, PrefabSubData::InvalidId);
+  prefab.mObjects.back().mComponents = Reflection::ObjectFactory::GetInstance().GetEntityComponents(entity);
 
   if (entityMan.HasChild(entity)) {
     prefab.CreateSubData({}, entityMan.GetChildEntity(entity));
   }
 
   std::string const savePath{ path.empty() ? gPrefabsDirectory + name + gPrefabFileExt : path };
+  IGE::Assets::GUID const guid{ IGE_ASSETMGR.ImportAsset<IGE::Assets::PrefabAsset>(savePath) };
   Serialization::Serializer::SerializePrefab(prefab, savePath);
 
   // add the new guid to the PrefabOverrides component
-  IGE::Assets::GUID const guid{ IGE_ASSETMGR.ImportAsset<IGE::Assets::PrefabAsset>(savePath) };
   entity.EmplaceComponent<Component::PrefabOverrides>();
   UpdateInstanceGUID(entity, guid);
 
