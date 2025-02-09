@@ -184,6 +184,23 @@ public class PictureAlign : Entity
                 //InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Level2.scn");
             }
         }
+
+        else if (picture == "DionysusPainting")
+        {
+            FadeOut();
+            if (hasFaded)
+            {
+                currentImg.SetActive(false);
+                SetActive(false);
+                playerMove.UnfreezePlayer();
+                isTransitioning = false;
+                currentImg.Level2RemoveItself();
+                currentImg = null;
+                //tutorialFade.StartFade();
+                startFade = true;
+                hasFaded = false;
+            }
+        }
         else
         {
           Console.WriteLine("WHAt");

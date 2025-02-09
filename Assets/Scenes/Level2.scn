@@ -12988,80 +12988,8 @@
             ]
         },
         {
-            "ID": 185,
-            "Parent": null,
-            "Child Entities": [
-                186,
-                397,
-                405,
-                406,
-                407,
-                1049433,
-                1049435
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Canvas",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Canvas": {
-                        "isVisible": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 186,
-            "Parent": 185,
+            "Parent": 394,
             "Child Entities": [],
             "Components": [
                 {
@@ -27301,6 +27229,67 @@
             ]
         },
         {
+            "ID": 385,
+            "Parent": 394,
+            "Child Entities": [
+                404
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Interaction UI",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                }
+            ]
+        },
+        {
             "ID": 390,
             "Parent": 27,
             "Child Entities": [],
@@ -27515,37 +27504,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 184,
+                                                "entityID": 25,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 184,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 121,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 121,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 40,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 40,
+                                                        "data": 25,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -27567,11 +27530,37 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 25,
+                                                "entityID": 40,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 25,
+                                                        "data": 40,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 121,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 121,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 184,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 184,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -27642,50 +27631,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 192,
+                                                "entityID": 187,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 192,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 191,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 191,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 190,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 190,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 189,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 189,
+                                                        "data": 187,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -27707,11 +27657,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 187,
+                                                "entityID": 189,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 187,
+                                                        "data": 189,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 190,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 190,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 191,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 191,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 192,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 192,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -27728,50 +27717,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 198,
+                                                "entityID": 193,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 198,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 197,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 197,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 196,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 196,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 1048771,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 1048771,
+                                                        "data": 193,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -27793,11 +27743,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 193,
+                                                "entityID": 1048771,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 193,
+                                                        "data": 1048771,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 196,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 196,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 197,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 197,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 198,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 198,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -27814,50 +27803,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 258,
+                                                "entityID": 253,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 258,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 257,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 257,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 256,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 256,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 255,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 255,
+                                                        "data": 253,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -27879,11 +27829,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 253,
+                                                "entityID": 255,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 253,
+                                                        "data": 255,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 256,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 256,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 257,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 257,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 258,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 258,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -27900,50 +27889,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 264,
+                                                "entityID": 259,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 264,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 263,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 263,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 262,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 262,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 261,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 261,
+                                                        "data": 259,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -27965,11 +27915,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 259,
+                                                "entityID": 261,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 259,
+                                                        "data": 261,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 262,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 262,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 263,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 263,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 264,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 264,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -28080,10 +28069,16 @@
             "Parent": null,
             "Child Entities": [
                 180,
+                186,
+                385,
+                397,
                 468,
                 469,
                 472,
-                1049046
+                480,
+                484,
+                1049046,
+                1049503
             ],
             "Components": [
                 {
@@ -28147,7 +28142,7 @@
         },
         {
             "ID": 397,
-            "Parent": 185,
+            "Parent": 394,
             "Child Entities": [
                 398,
                 399,
@@ -28304,6 +28299,13 @@
                                         }
                                     },
                                     {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "moveDuration"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 3145735,
                                             "scriptName": "Entity"
@@ -28332,6 +28334,13 @@
                                         "type": "System.Boolean",
                                         "scriptField": {
                                             "fieldName": "startFade"
+                                        }
+                                    },
+                                    {
+                                        "data": 5.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "targetY"
                                         }
                                     }
                                 ]
@@ -28438,13 +28447,13 @@
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": -0.0,
+                            "y": 0.0,
                             "z": -0.7071067690849304,
                             "w": 0.7071067690849304
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": -0.0,
+                            "y": 0.0,
                             "z": -90.0
                         },
                         "worldPos": {
@@ -28517,7 +28526,7 @@
                         "eulerAngles": {
                             "x": 0.0,
                             "y": -0.0,
-                            "z": 180.0
+                            "z": -180.0
                         },
                         "worldPos": {
                             "x": 0.0,
@@ -28786,8 +28795,80 @@
             ]
         },
         {
+            "ID": 404,
+            "Parent": 385,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "PickupDionysusPaintingUI",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.5,
+                            "y": -1.5,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 7.7769999504089359,
+                            "y": 3.325000047683716,
+                            "z": 8.258000373840332
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.5,
+                            "y": -1.5,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 7.7769999504089359,
+                            "y": 3.325000047683716,
+                            "z": 8.258000373840332
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 16948251644551116755
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 405,
-            "Parent": 185,
+            "Parent": 484,
             "Child Entities": [],
             "Components": [
                 {
@@ -28852,220 +28933,6 @@
                         },
                         "textureAssetGUID": {
                             "ID": 15902179404490983115
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 406,
-            "Parent": 185,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "DionysusPaintingSelection",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.1550000011920929,
-                            "y": 4.320000171661377,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.1550000011920929,
-                            "y": 4.320000171661377,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "UI"
-                    }
-                },
-                {
-                    "Image": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 16800171591668965471
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 407,
-            "Parent": 185,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "DionysusPaintingUI",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 12.0,
-                            "y": -4.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 6.614999771118164,
-                            "y": 6.614999771118164,
-                            "z": 6.614999771118164
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 12.0,
-                            "y": -4.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 6.614999771118164,
-                            "y": 6.614999771118164,
-                            "z": 6.614999771118164
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "UI"
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 407,
-                                "scriptName": "HoldupUI",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "x": 0.0,
-                                            "y": 0.6000000238418579,
-                                            "z": 0.0
-                                        },
-                                        "type": "System.Numerics.Vector3",
-                                        "scriptField": {
-                                            "fieldName": "bigPicPos"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "x": 12.979999542236329,
-                                            "y": 13.800000190734864,
-                                            "z": 12.979999542236329
-                                        },
-                                        "type": "System.Numerics.Vector3",
-                                        "scriptField": {
-                                            "fieldName": "bigPicScale"
-                                        }
-                                    },
-                                    {
-                                        "data": "DionysusPainting.txt",
-                                        "type": "System.String",
-                                        "scriptField": {
-                                            "fieldName": "dataFilePath"
-                                        }
-                                    },
-                                    {
-                                        "data": false,
-                                        "type": "System.Boolean",
-                                        "scriptField": {
-                                            "fieldName": "isBigPaintingActive"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "x": 10.0,
-                                            "y": 0.0,
-                                            "z": 0.0
-                                        },
-                                        "type": "System.Numerics.Vector3",
-                                        "scriptField": {
-                                            "fieldName": "smallPicPos"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "x": 6.0,
-                                            "y": 6.0,
-                                            "z": 6.0
-                                        },
-                                        "type": "System.Numerics.Vector3",
-                                        "scriptField": {
-                                            "fieldName": "smallPicScale"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                },
-                {
-                    "Image": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 16800171591668965471
                         }
                     }
                 }
@@ -29309,37 +29176,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 184,
+                                                "entityID": 25,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 184,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 121,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 121,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 40,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 40,
+                                                        "data": 25,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -29361,11 +29202,37 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 25,
+                                                "entityID": 40,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 25,
+                                                        "data": 40,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 121,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 121,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 184,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 184,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -33602,6 +33469,1019 @@
             ]
         },
         {
+            "ID": 477,
+            "Parent": null,
+            "Child Entities": [
+                478
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Puzzle",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 478,
+            "Parent": 477,
+            "Child Entities": [
+                479
+            ],
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "PickupPainting",
+                                "value": {
+                                    "guid": {
+                                        "ID": 14271662682490721671
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 96.7030029296875,
+                                            "y": 30.020999908447267,
+                                            "z": -83.87100219726563
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "DionysusPainting",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 96.7030029296875,
+                            "y": 30.020999908447267,
+                            "z": -83.87100219726563
+                        },
+                        "scale": {
+                            "x": 1.1799999475479127,
+                            "y": 1.1799999475479127,
+                            "z": 1.1799999475479127
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 96.7030029296875,
+                            "y": 30.020999908447267,
+                            "z": -83.87100219726563
+                        },
+                        "worldScale": {
+                            "x": 1.1799999475479127,
+                            "y": 1.1799999475479127,
+                            "z": 1.1799999475479127
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 1.7000000476837159,
+                            "y": 0.4000000059604645,
+                            "z": 2.0999999046325685
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 478,
+                                "scriptName": "DionysusPainting",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 404,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "EToPickUpUI"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 485,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "_Image"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 481,
+                                            "scriptName": "Level2Inventory"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "level2inventoryScript"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 3145735,
+                                            "scriptName": "PlayerInteraction"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerInteraction"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 479,
+            "Parent": 478,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Painting",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 96.7030029296875,
+                            "y": 30.020999908447267,
+                            "z": -83.87100219726563
+                        },
+                        "worldScale": {
+                            "x": 3.5399999618530275,
+                            "y": 3.5399999618530275,
+                            "z": 3.5399999618530275
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 16565766957154628416
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 480,
+            "Parent": 394,
+            "Child Entities": [
+                481,
+                482,
+                483
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Inventory Tools",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 481,
+            "Parent": 480,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "InventoryPopUp",
+                                "value": {
+                                    "guid": {
+                                        "ID": 6850159606409790597
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -15.899999618530274,
+                                            "y": 0.0,
+                                            "z": -2.0
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "MoveSlots",
+                                "value": {
+                                    "guid": {
+                                        "ID": 2818988100017391053
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -15.899999618530274,
+                                            "y": 0.0,
+                                            "z": -2.0
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "Inventory",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -15.899999618530274,
+                            "y": 0.0,
+                            "z": -2.0
+                        },
+                        "scale": {
+                            "x": 3.9010000228881838,
+                            "y": 17.900999069213868,
+                            "z": -1.0989999771118165
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -15.899999618530274,
+                            "y": 0.0,
+                            "z": -2.0
+                        },
+                        "worldScale": {
+                            "x": 3.9010000228881838,
+                            "y": 17.900999069213868,
+                            "z": -1.0989999771118165
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 481,
+                                "scriptName": "Level2Inventory",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 485,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "dionysusPaintingSelection"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 404,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "dionysusPaintingUI"
+                                        }
+                                    },
+                                    {
+                                        "data": -15.850000381469727,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "endScreenPosX"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.4000000059604645,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "handExpandDuration"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "highlighted"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 481,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "inventoryImage"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 483,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "inventorySelectSquare"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isVisible"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 482,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "selectionHand"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.30000001192092898,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "slideDuration"
+                                        }
+                                    },
+                                    {
+                                        "data": -20.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "startScreenPosX"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 8394662900419204535
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 482,
+            "Parent": 480,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Inventory Select Hand",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -12.600000381469727,
+                            "y": 7.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.899999976158142,
+                            "y": 2.5999999046325685,
+                            "z": -0.38100001215934756
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -12.600000381469727,
+                            "y": 7.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.899999976158142,
+                            "y": 2.5999999046325685,
+                            "z": -0.38100001215934756
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 11329054189817364228
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 483,
+            "Parent": 480,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Inventory Select Square",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -15.899999618530274,
+                            "y": -7.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 2.0799999237060549,
+                            "y": 1.899999976158142,
+                            "z": -1.440000057220459
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -15.899999618530274,
+                            "y": -7.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 2.0799999237060549,
+                            "y": 1.899999976158142,
+                            "z": -1.440000057220459
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 5662221334067653333
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 484,
+            "Parent": 394,
+            "Child Entities": [
+                405,
+                485,
+                486,
+                1049435
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Inventory UI",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 485,
+            "Parent": 484,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "DionysusPaintingSelection",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.1550000011920929,
+                            "y": 4.320000171661377,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.1550000011920929,
+                            "y": 4.320000171661377,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 16800171591668965471
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 486,
+            "Parent": 484,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "DionysusPaintingUI",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 12.0,
+                            "y": -4.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 6.614999771118164,
+                            "y": 6.614999771118164,
+                            "z": 6.614999771118164
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 12.0,
+                            "y": -4.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 6.614999771118164,
+                            "y": 6.614999771118164,
+                            "z": 6.614999771118164
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 486,
+                                "scriptName": "HoldupUI",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "x": 0.0,
+                                            "y": 0.6000000238418579,
+                                            "z": 0.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "bigPicPos"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 12.979999542236329,
+                                            "y": 13.800000190734864,
+                                            "z": 12.979999542236329
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "bigPicScale"
+                                        }
+                                    },
+                                    {
+                                        "data": "DionysusPainting.txt",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "dataFilePath"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isBigPaintingActive"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 10.0,
+                                            "y": 0.0,
+                                            "z": 0.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "smallPicPos"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 6.0,
+                                            "y": 6.0,
+                                            "z": 6.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "smallPicScale"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048579,
             "Parent": 2,
             "Child Entities": [],
@@ -37502,67 +38382,6 @@
             ]
         },
         {
-            "ID": 1049410,
-            "Parent": null,
-            "Child Entities": [
-                1049426
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "[Folder] Inventory",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
             "ID": 1049412,
             "Parent": 376,
             "Child Entities": [],
@@ -38653,117 +39472,6 @@
             ]
         },
         {
-            "ID": 1049426,
-            "Parent": 1049410,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Temporary Inventory",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 1049426,
-                                "scriptName": "TemporaryInventory",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 405,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "artemisPaintingSelection"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 1049435,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "artemisPaintingUI"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 406,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "dionysusPaintingSelection"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 407,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "dionysusPaintingUI"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        {
             "ID": 1049432,
             "Parent": 397,
             "Child Entities": [],
@@ -38829,90 +39537,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 334264312856471928
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1049433,
-            "Parent": 185,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "LeftClickText",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.20000000298023225,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 8.760000228881836,
-                            "y": 8.760000228881836,
-                            "z": 8.760000228881836
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.20000000298023225,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 8.760000228881836,
-                            "y": 8.760000228881836,
-                            "z": 8.760000228881836
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "UI"
-                    }
-                },
-                {
-                    "Text": {
-                        "textContent": "Left Click to Align",
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "scale": 0.008999999612569809,
-                        "textAssetGUID": {
-                            "ID": 11715672305158928427
-                        },
-                        "fontFamilyName": "Sniglet-Regular",
-                        "alignment": 2,
-                        "multiLineSpacingOffset": 0.0,
-                        "textBoxEnabledFlag": false,
-                        "textBoxDimensions": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 0.0
+                            "ID": 136201228599137842
                         }
                     }
                 }
@@ -38920,7 +39545,7 @@
         },
         {
             "ID": 1049435,
-            "Parent": 185,
+            "Parent": 484,
             "Child Entities": [],
             "Components": [
                 {
@@ -39055,6 +39680,334 @@
                         },
                         "textureAssetGUID": {
                             "ID": 15902179404490983115
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049503,
+            "Parent": 394,
+            "Child Entities": [
+                1049504,
+                1049505,
+                1049506
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Painting Alignment UI",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1049503,
+                                "scriptName": "PaintingAlignUILevel2",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 1049506,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "alignmentUI"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1049504,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "bigPaintingUI"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isPainting"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1049505,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "smallPaintingUI"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049504,
+            "Parent": 1049503,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Big Painting UI",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 12.979000091552735,
+                            "y": 6.488999843597412,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 6.0,
+                            "y": 6.0,
+                            "z": 6.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 12.979000091552735,
+                            "y": 6.488999843597412,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 6.0,
+                            "y": 6.0,
+                            "z": 6.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 1609949114547940496
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049505,
+            "Parent": 1049503,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Small Painting UI",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 12.699999809265137,
+                            "y": 4.863999843597412,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 5.920000076293945,
+                            "y": 8.779999732971192,
+                            "z": 6.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 12.699999809265137,
+                            "y": 4.863999843597412,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 5.920000076293945,
+                            "y": 8.779999732971192,
+                            "z": 6.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 2320052153270925563
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049506,
+            "Parent": 1049503,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Alignment UI",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 12.88700008392334,
+                            "y": 6.361000061035156,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 4.0,
+                            "y": 3.299999952316284,
+                            "z": 4.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 12.88700008392334,
+                            "y": 6.361000061035156,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 4.0,
+                            "y": 3.299999952316284,
+                            "z": 4.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 3449897380420308920
                         }
                     }
                 }
@@ -39301,10 +40254,60 @@
                     "AudioSource": {
                         "sounds": [
                             {
+                                "key": "..\\Assets\\Audio\\GardenAmbience_BGM.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 1367675903760881373
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -4.9980149269104,
+                                            "y": 1.6629999876022339,
+                                            "z": 25.219053268432618
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": true,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "LINEAR"
+                                    }
+                                }
+                            },
+                            {
                                 "key": "..\\Assets\\Audio\\Picture Perfect - BGM1_Vers1_Loop.wav",
                                 "value": {
                                     "guid": {
                                         "ID": 12594617213081250855
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -4.9980149269104,
+                                            "y": 1.6629999876022339,
+                                            "z": 25.219053268432618
+                                        },
+                                        "volume": 0.6000000238418579,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": true,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "PaintingMatchObject",
+                                "value": {
+                                    "guid": {
+                                        "ID": 9407064822443940162
                                     },
                                     "playSettings": {
                                         "position": {
@@ -39317,7 +40320,7 @@
                                         "pan": 0.0,
                                         "mute": false,
                                         "loop": false,
-                                        "playOnAwake": true,
+                                        "playOnAwake": false,
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
@@ -39427,11 +40430,11 @@
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "staticFriction": 1.0,
-                        "dynamicFriction": 1.0,
+                        "staticFriction": 0.800000011920929,
+                        "dynamicFriction": 0.800000011920929,
                         "restitution": 0.0,
-                        "gravityFactor": 50.0,
-                        "linearDamping": 10.0,
+                        "gravityFactor": 40.0,
+                        "linearDamping": 1.0,
                         "motionType": "DYNAMIC",
                         "axisLock": 0,
                         "angularAxisLock": 5
@@ -39476,21 +40479,21 @@
                                         }
                                     },
                                     {
-                                        "data": 1500.0,
+                                        "data": 1300.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "runSpeed"
                                         }
                                     },
                                     {
-                                        "data": 650.0,
+                                        "data": 750.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "speed"
                                         }
                                     },
                                     {
-                                        "data": 1500.0,
+                                        "data": 750.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "walkingSpeed"
