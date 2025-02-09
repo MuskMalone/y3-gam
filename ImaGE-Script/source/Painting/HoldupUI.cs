@@ -42,10 +42,10 @@ public class HoldupUI : Entity
     tutorialInventoryScript = FindObjectOfType<TutorialLevelInventory>();
     level2InventoryScript = FindObjectOfType<Level2Inventory>();
     pictureAlignscript = FindObjectOfType<PictureAlign>();
-    if (pictureAlignscript != null)
-      Console.WriteLine(pictureAlignscript.GetComponent<Tag>().tag);
-    else
-      Console.WriteLine("No pic align");
+    //if (pictureAlignscript != null)
+    //  Console.WriteLine(pictureAlignscript.GetComponent<Tag>().tag);
+    //else
+    //  Console.WriteLine("No pic align");
 
     LoadDataFromTextAsset();
     if (isBigPaintingActive)

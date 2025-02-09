@@ -1051,17 +1051,20 @@ namespace
     else if (ext == gPrefabFileExt) {
       ImGui::TextColored(sFileIconCol, ICON_FA_PERSON);
     }
-    else if (ext == gFontFileExt) {
-      ImGui::TextColored(sFileIconCol, ICON_FA_FONT);
-    }
     else if (ext == gMaterialFileExt) {
       ImGui::TextColored(sFileIconCol, ICON_FA_GEM);
     }
     else if (ext == gSpriteFileExt || ext == ".png") {
       ImGui::TextColored(sFileIconCol, ICON_FA_IMAGE);
     }
+    else if (ext == gAnimationFileExt) {
+      ImGui::TextColored(sFileIconCol, ICON_FA_PERSON_RUNNING);
+    }
     else if (std::string(gSupportedAudioFormats).find(ext) != std::string::npos) {
       ImGui::TextColored(sFileIconCol, ICON_FA_MUSIC);
+    }
+    else if (ext == gFontFileExt) {
+      ImGui::TextColored(sFileIconCol, ICON_FA_FONT);
     }
     else if (ext == ".glsl") {
       ImGui::TextColored(sFileIconCol, ICON_FA_WATER);

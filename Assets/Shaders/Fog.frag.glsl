@@ -20,7 +20,7 @@ void main()
     float dist = length(pos);
     float fogFactor = clamp((dist - u_MinDist) / (u_MaxDist - u_MinDist), 0.0f, 1.0f);
     vec3 color = texture(u_TexFragColor, v_TexCoord).xyz;
-    fragColor = vec4(mix(color, u_FogColor, fogFactor), 1.0f);// + texture(u_BloomColor, v_TexCoord);
+    fragColor = vec4(mix(color, u_FogColor, fogFactor), 1.0f) + texture(u_BloomColor, v_TexCoord);
     // fragColor = texture(u_BloomColor, v_TexCoord);
     // fragColor = texture(u_TexFragColor, v_TexCoord);
 }

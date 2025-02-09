@@ -41,10 +41,13 @@ namespace Graphics {
 
 	}
 	void Renderer::Init() {
+
+		glEnable(GL_FRAMEBUFFER_SRGB);
+
 		SUBSCRIBE_STATIC_FUNC(Events::WindowResized, OnResize);
 		SUBSCRIBE_STATIC_FUNC(Events::EntitySelectedInEditor, OnEntityPicked);
 		InitUICamera();
-
+		RINIT
 		//----------------------Init Batching Quads------------------------------------------------------------//
 		mData.quadVertexArray = VertexArray::Create();
 		mData.quadVertexBuffer = VertexBuffer::Create(mData.cMaxVertices2D * sizeof(QuadVtx));
@@ -233,6 +236,8 @@ namespace Graphics {
 		ShaderLibrary::Add("PBR", Shader::Create("PBR.vert.glsl", "PBR.frag.glsl"));
 		ShaderLibrary::Add("Unlit", Shader::Create("Unlit.vert.glsl", "Unlit.frag.glsl"));
 		ShaderLibrary::Add("Water", Shader::Create("Water.vert.glsl", "Water.frag.glsl"));
+
+		ShaderLibrary::Add("Transition", Shader::Create("Transition.vert.glsl", "Transition.frag.glsl"));
 #ifdef DISTRIBUTION
 		ShaderLibrary::Add("ShadowMap", Shader::Create("ShadowMap.vert.glsl", "ShadowMap.frag.glsl"));
 #else
@@ -1083,8 +1088,10 @@ namespace Graphics {
 		}
 	}
 
-	void Renderer::RenderFullscreenTexture(){
-		glDisable(GL_BLEND);
+	void Renderer::RenderFullscreenTexture(bool blend) {
+		if(!blend)
+			glDisable(GL_BLEND);
+
 		RenderAPI::DrawTriangles(mData.screen.screenVertexArray, 6);
 		glEnable(GL_BLEND);
 	}

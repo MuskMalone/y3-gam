@@ -181,7 +181,7 @@ namespace Graphics {
 		static void DrawCircle(glm::vec3 const& center, float radius, glm::vec4 const& color, glm::vec3 const& normal);
 		static void DrawLightGizmo(Component::Light const& light, Component::Transform const& xform, CameraSpec const& cam, int lightID);
 
-		static void RenderFullscreenTexture();
+		static void RenderFullscreenTexture(bool blend = false);
 
 		static void SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr = Color::COLOR_WHITE);
 		static void SubmitTriangle(glm::vec3 const& v1, glm::vec3 const& v2, glm::vec3 const& v3, glm::vec4 const& clr = Color::COLOR_WHITE);
