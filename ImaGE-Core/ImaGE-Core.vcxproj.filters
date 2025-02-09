@@ -278,9 +278,6 @@
       <Filter>BoundingVolumes</Filter>
     </ClInclude>
     <ClInclude Include="source\Color.h" />
-    <ClInclude Include="source\Commands\CommandManager.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
     <ClInclude Include="source\Core\Components\Animation.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
@@ -889,9 +886,6 @@
     </ClCompile>
     <ClCompile Include="source\BoundingVolumes\IntersectionTests.cpp">
       <Filter>BoundingVolumes</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Commands\CommandManager.cpp">
-      <Filter>Commands</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Components\AudioSource.cpp">
       <Filter>Core\Components</Filter>

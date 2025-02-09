@@ -179,7 +179,6 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Quaternion GetMainCameraRotation(uint cameraEntityID);
 
-
     #endregion
 
 
@@ -205,6 +204,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void AppendText(uint TextEntityID, string textContent);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetTextFont(uint TextEntityID, string textFontName);
     #endregion
 
 
@@ -253,6 +255,12 @@ namespace IGE.Utils
     extern public static void PlayAnimation(uint entity, string animation, bool loop = false);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool IsPlayingAnimation(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static string GetCurrentAnimation(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void PauseAnimation(uint entity);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -284,6 +292,13 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetGravityFactor(uint mEntityID, float gravityFactor);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    // updates physics of the entity to align with its world transform values
+    internal extern static void UpdatePhysicsToTransform(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void LockRigidBody(uint entity, bool toLock);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static Entity FindScript(string s);

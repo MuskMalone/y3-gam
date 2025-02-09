@@ -8,15 +8,32 @@
 
 namespace Component {
   struct Animation {
+    using AnimationEntry = std::pair<std::string, IGE::Assets::GUID>;
+
     Animation() = default;
 
-    void PlayAnimation(IGE::Assets::GUID guid, bool loop = false) noexcept {
+    // use this if the animation name doesn't matter
+    // the animation does not have to be in the animation map
+    void PlayAnimation(IGE::Assets::GUID guid, bool loop = false, std::string const& animName = {}) noexcept {
       Reset();
-      currentAnimation = guid;
+      currentAnimation = { animName, guid };
       repeat = loop;
     }
     void PlayAnimation(std::string const& name, bool loop = false) {
-      PlayAnimation(animations[name], loop);
+      Reset();
+      currentAnimation = { name, animations[name] };
+      repeat = loop;
+    }
+
+    void Pause() noexcept { paused = true; }
+    void Resume() noexcept { paused = false; }
+    bool IsPlayingAnimation() const noexcept { return currentAnimation.second; }
+
+    // returns <name, guid>
+    AnimationEntry const& GetCurrentAnimation() const noexcept{ return currentAnimation; }
+
+    void SetCurrentAnimation(std::string name, IGE::Assets::GUID guid) {
+      currentAnimation = std::make_pair(std::move(name), guid);
     }
 
     void RenameAnimation(std::string const& oldName, std::string const& newName) {
@@ -27,8 +44,6 @@ namespace Component {
       animations.erase(iter);
     }
 
-    void Pause() noexcept { paused = true; }
-    void Resume() noexcept { paused = false; }
 
     void Reset() noexcept {
       timeElapsed = 0.f;
@@ -46,7 +61,7 @@ namespace Component {
 
     std::map<std::string, IGE::Assets::GUID> animations;
     std::vector<Anim::Node> currentKeyframes;
-    IGE::Assets::GUID currentAnimation;
+    AnimationEntry currentAnimation; // name, guid
     float timeElapsed;
     bool repeat, paused;
   };

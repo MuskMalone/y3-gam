@@ -74,6 +74,9 @@ uniform  float u_LightIntensity[maxLights]; // Intensity of the light
 uniform  float u_Range[maxLights]; // Maximum range of the spotlight
 uniform  float gSpecularPower;
 
+uniform float u_Gamma; // Default value should be set in the application
+
+
 const float PI = 3.14159265359;
 
 float DistributionGGX(vec3 N, vec3 H, float roughness);
@@ -207,7 +210,8 @@ void main(){
     TotalLight = TotalLight / (TotalLight + vec3(1.0));
 
     float luminance = dot(mat.Emission.xyz, vec3(0.2126, 0.7152, 0.0722)); // Standard Rec. 709 weights
-    fragColor = vec4(pow(TotalLight, vec3(1.0/2.2)), 1.0);
+
+
     bloomColor = vec4(0,0,0,1);
     if (v_BloomProps.x > 0.1){ // if there is bloom and it is above threshold
         if (luminance >= v_BloomProps.y){
@@ -217,6 +221,8 @@ void main(){
             fragColor = fragColor * vec4(mat.Emission.xyz, 1);
         }
     }
+
+    fragColor = vec4(pow(TotalLight, vec3(1.0 / u_Gamma)), 1.0);
 }
 
 vec3 fresnelSchlick(float cosTheta, vec3 F0)

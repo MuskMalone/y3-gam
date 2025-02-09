@@ -44,15 +44,31 @@ namespace Systems {
   void PostTransformSystem::UpdateWorldTransform(ECS::Entity entity, bool parentModified) {
     Transform& trans{ entity.GetComponent<Transform>() };
     bool modified{ false };
-    
-    // dont bother computing if nothing changed
-    if (trans.modified || parentModified) {
+
+    // parent modified: update world based on local
+    if (parentModified) {
       Transform const& parentTrans{ mEntityManager.GetParentEntity(entity).GetComponent<Transform>() };
 
+      // update local to world with parent xform
+      trans.worldPos = parentTrans.worldMtx * glm::vec4(trans.position, 1.f);
+      trans.worldRot = /*glm::normalize*/(parentTrans.worldRot * trans.rotation);
+      trans.worldScale = parentTrans.worldScale * trans.scale;
+
+      // compute the mtx
+      trans.ComputeWorldMtx();
+
+      // set flags
+      trans.modified = false;
+      modified = true;
+    }
+    // modified but parent wasn't: update local using world to match parent
+    else if (trans.modified) {
       if (trans.scale.x == 0.f || trans.scale.y == 0.f || trans.scale.z == 0.f) {
         throw Debug::Exception<PostTransformSystem>(Debug::LVL_CRITICAL,
           Msg("Entity " + entity.GetTag() + "'s scale is 0!"));
       }
+
+      Transform const& parentTrans{ mEntityManager.GetParentEntity(entity).GetComponent<Transform>() };
 
       // update local with inverse of parent xform
       trans.position = glm::inverse(parentTrans.worldMtx) * glm::vec4(trans.worldPos, 1.f);

@@ -162,7 +162,7 @@ namespace GUI
       sLoadHierarchyState = false;
     }
 
-    if (ImGui::IsKeyPressed(ImGuiKey_Delete) && GUIVault::GetSelectedEntity() && !mLockControls) {
+    if (ImGui::IsKeyPressed(ImGuiKey_Delete) && ImGui::IsWindowFocused() && GUIVault::GetSelectedEntity() && !mLockControls) {
       ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
       auto entities{ GUIVault::GetSelectedEntities() };
       if (!entities.empty()) {

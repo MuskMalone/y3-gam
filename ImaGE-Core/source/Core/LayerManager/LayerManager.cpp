@@ -109,7 +109,7 @@ namespace Layers {
       entity.GetComponent<Component::Layer>().name);
 
     if (itr == mLayerData.layerNames.end()) {
-      Debug::DebugLogger::GetInstance().LogWarning("[Layers] Entiy does not have Valid Layer");
+      Debug::DebugLogger::GetInstance().LogWarning("[Layers] Entity " + entity.GetTag() + ": Unable to find get layer " + entity.GetComponent<Component::Layer>().name);
 
       // Add entity with non-existent layer into default layer
       mLayerEntities[std::string(BUILTIN_LAYER_0)].push_back(ECS::Entity{ entity });

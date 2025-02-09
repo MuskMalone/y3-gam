@@ -1,6 +1,19 @@
 {
     "configs": [
         {
+            "key": "Level2",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
             "key": "",
             "value": {
                 "shaders": [],
@@ -14,7 +27,7 @@
             }
         },
         {
-            "key": "Level2",
+            "key": "test",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -55,6 +68,19 @@
             }
         },
         {
+            "key": "TutorialLevelNew",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
             "key": "TutorialLevel",
             "value": {
                 "shaders": [],
@@ -68,7 +94,7 @@
             }
         },
         {
-            "key": "TutorialLevelNew",
+            "key": "Level3",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -94,7 +120,33 @@
             }
         },
         {
-            "key": "Level3",
+            "key": "M3-Isolated",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "PaintingAnimTest",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "KeyAnimTest",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,

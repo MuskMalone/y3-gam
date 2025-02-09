@@ -24,6 +24,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Graphics/PostProcessing/ParticleManager.h>
 #include <Graphics/MaterialData.h>
 #include <Core/Components/Light.h>
+#include <Core/Components/Animation.h>
 #include <Animation/AnimationData.h>
 
 #define REGISTER_DATA_MEMBER_INST(T, nameStr) rttr::registration::class_<Mono::DataMemberInstance<T>>(nameStr).constructor<>()(rttr::policy::ctor::as_object)\
@@ -276,6 +277,13 @@ static void rttr_auto_register_reflection_function_(); namespace {
     rttr::registration::class_<T>("AnimationData")
       .constructor<>()(rttr::policy::ctor::as_object)
       .property("rootKeyframe", &T::rootKeyframe);
+  }
+  {
+    using T = Component::Animation::AnimationEntry;
+    rttr::registration::class_<T>("AnimationEntry")
+      .constructor<>()(rttr::policy::ctor::as_object)
+      .property("first", &T::first)
+      .property("second", &T::second);
   }
 
   /* ------------------- Script ------------------- */

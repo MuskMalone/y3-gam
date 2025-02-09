@@ -5,6 +5,19 @@ public class SuspiciousPainting : Entity
   // Script to be placed in the SuspiciousPainting Entity (Parent)
   public PlayerInteraction playerInteraction;
   public Entity removePaintingUI;
+  public string dropAnimName;
+  public float timeUntilDespawn;
+
+  private enum State
+  {
+    ON_WALL,    // starting state
+    ANIMATION,  // animation to tilt painting
+    TILTED,     // painting has been tilted
+    FALLEN      // after falling to the ground
+  }
+
+  private State currState = State.ON_WALL;
+  private float timeElapsed = 0.0f;
 
   void Start()
   {
@@ -13,17 +26,49 @@ public class SuspiciousPainting : Entity
 
   void Update()
   {
-    if (IsActive())
+    switch (currState)
     {
-      bool isPaintingHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
-      if (Input.GetMouseButtonTriggered(0) && isPaintingHit)
-      {
-        SetActive(false);
-        removePaintingUI.SetActive(false);
-        return;
-      }
+      case State.ON_WALL:
+        bool isPaintingHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
+        if (Input.GetMouseButtonTriggered(0) && isPaintingHit)
+        {
+          InternalCalls.PlayAnimation(InternalCalls.GetParentByID(mEntityID), dropAnimName);
 
-      removePaintingUI.SetActive(isPaintingHit);
+          currState = State.ANIMATION;
+          removePaintingUI.SetActive(false);
+          return;
+        }
+
+        removePaintingUI.SetActive(isPaintingHit);
+        break;
+
+      case State.ANIMATION:
+        // update collider while animation is playing
+        InternalCalls.UpdatePhysicsToTransform(mEntityID);
+
+        // switch state when animation ends
+        if (!InternalCalls.IsPlayingAnimation(InternalCalls.GetParentByID(mEntityID)))
+        {
+          currState = State.TILTED;
+        }
+        break;
+
+      case State.TILTED:
+        // unlock the rigidbody
+        InternalCalls.LockRigidBody(mEntityID, false);
+        InternalCalls.SetGravityFactor(mEntityID, 30.0f);
+        currState = State.FALLEN;
+        break;
+
+      case State.FALLEN:
+        timeElapsed += InternalCalls.GetDeltaTime();
+
+        // if time has exceeded, destroy the entire painting entity
+        if (timeElapsed >= timeUntilDespawn)
+        {
+          Destroy(InternalCalls.GetParentByID(mEntityID));
+        }
+        break;
     }
   }
 }
