@@ -1,6 +1,19 @@
 {
     "configs": [
         {
+            "key": "Level2",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
             "key": "",
             "value": {
                 "shaders": [],
@@ -27,19 +40,6 @@
             }
         },
         {
-            "key": "Level2",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
             "key": "M3",
             "value": {
                 "shaders": [
@@ -47,19 +47,6 @@
                 ],
                 "fogMinDist": 0.0,
                 "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "TutorialLevel",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 50.0,
                 "fogColor": {
                     "x": 1.0,
                     "y": 1.0,
@@ -94,11 +81,11 @@
             }
         },
         {
-            "key": "emission test",
+            "key": "TutorialLevel",
             "value": {
                 "shaders": [],
-                "fogMinDist": 7.400000095367432,
-                "fogMaxDist": 10000.0,
+                "fogMinDist": 1.0,
+                "fogMaxDist": 50.0,
                 "fogColor": {
                     "x": 1.0,
                     "y": 1.0,
@@ -112,6 +99,19 @@
                 "shaders": [],
                 "fogMinDist": 1.0,
                 "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "emission test",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 7.400000095367432,
+                "fogMaxDist": 10000.0,
                 "fogColor": {
                     "x": 1.0,
                     "y": 1.0,
