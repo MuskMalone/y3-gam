@@ -324,32 +324,42 @@ namespace Reflection
   {
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
 
-    // iterate through data and create entities
-    for (auto const& data : mRawEntities)
-    {
-      ECS::Entity newEntity{ entityMan.CreateEntityWithID({}, data.mID) };
+#ifndef DISTRIBUTION
+    try {
+#endif
+      // iterate through data and create entities
+      for (auto const& data : mRawEntities)
+      {
+        ECS::Entity newEntity{ entityMan.CreateEntityWithID({}, data.mID) };
 
-      // if the ID is taken, map it to the new ID
-      if (newEntity.GetRawEnttEntityID() != data.mID) {
-        mNewIDs.emplace(data.mID, newEntity);
+        // if the ID is taken, map it to the new ID
+        if (newEntity.GetRawEnttEntityID() != data.mID) {
+          mNewIDs.emplace(data.mID, newEntity);
+        }
+
+        newEntity.SetIsActive(data.mIsActive);
+        AddComponentsToEntity(newEntity, data.mComponents);
       }
 
-      newEntity.SetIsActive(data.mIsActive);
-      AddComponentsToEntity(newEntity, data.mComponents);
+      // restore the hierarchy
+      for (auto const& data : mRawEntities)
+      {
+        if (data.mParent == entt::null) { continue; }
+
+        // get ID from map if it was re-mapped
+        entityMan.SetParentEntity(
+          mNewIDs.contains(data.mParent) ? mNewIDs[data.mParent] : data.mParent,
+          mNewIDs.contains(data.mID) ? mNewIDs[data.mID] : data.mID);
+      }
+
+      LoadPrefabInstances();
+#ifndef DISTRIBUTION
     }
-
-    // restore the hierarchy
-    for (auto const& data : mRawEntities)
-    {
-      if (data.mParent == entt::null) { continue; }
-
-      // get ID from map if it was re-mapped
-      entityMan.SetParentEntity(
-        mNewIDs.contains(data.mParent) ? mNewIDs[data.mParent] : data.mParent,
-        mNewIDs.contains(data.mID) ? mNewIDs[data.mID] : data.mID);
+    catch (Debug::ExceptionBase& e) {
+      e.LogSource();
     }
+#endif
 
-    LoadPrefabInstances();
     // trigger the guid remapping popup if needed
     QUEUE_EVENT(Events::TriggerGUIDRemap);
   }

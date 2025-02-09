@@ -499,7 +499,7 @@ namespace IGE {
                 AudioManager::GetInstance().FreeSound(mKeyhash);
             }
             catch (...) {
-                
+              IGE_DBGLOGGER.LogError("[AudioManager] Failed to free sound" + mKey);
             }
         }
         void Sound::PlaySound(SoundInvokeSetting const& settings, FMOD::ChannelGroup* group) {
