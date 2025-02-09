@@ -121,6 +121,8 @@
     <Compile Include="source\Inventory\TutorialLevelHUD.cs" />
     <Compile Include="source\Inventory\TutorialLevelInventory.cs" />
     <Compile Include="source\Level2\ControlPanel2.cs" />
+    <Compile Include="source\Level2\OdysseusNoteInteraction.cs" />
+    <Compile Include="source\Level2\PamphletNoteInteraction.cs" />
     <Compile Include="source\Level2\TransitionToLevel3.cs" />
     <Compile Include="source\MainMenu\CDDragAndDrop.cs" />
     <Compile Include="source\MainMenu\ContinueCD.cs" />
