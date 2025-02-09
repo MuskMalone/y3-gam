@@ -62,6 +62,8 @@ public class PictureAlign : Entity
     public float targetY = 5.0f; // Adjust as needed
     private CorridorTransitionFade corridorTransitionFadeScript;
 
+    private ControlPanel2 controlPanelScript;
+
     void Start()
     {
         //tutorialFade = FindObjectOfType<TutorialFade>();
@@ -69,6 +71,7 @@ public class PictureAlign : Entity
     playerMove = player.FindObjectOfType<PlayerMove>();
 
         corridorTransitionFadeScript = FindObjectOfType<CorridorTransitionFade>();
+        controlPanelScript = FindObjectOfType<ControlPanel2>();
 
     if (playerMove == null) Debug.LogError("PlayerMove component not found!");
 
@@ -188,6 +191,10 @@ public class PictureAlign : Entity
         else if (picture == "DionysusPainting")
         {
             FadeOut();
+            controlPanelScript.dionysusStatueVisible = true;
+            controlPanelScript.artemisStatueVisible = false;
+            controlPanelScript.zeusStatueVisible = false;
+            controlPanelScript.poseidonStatueVisible = false;
             if (hasFaded)
             {
                 currentImg.SetActive(false);
@@ -196,8 +203,60 @@ public class PictureAlign : Entity
                 isTransitioning = false;
                 currentImg.Level2RemoveItself();
                 currentImg = null;
-                //tutorialFade.StartFade();
-                startFade = true;
+                hasFaded = false;
+            }
+        }
+        else if (picture == "ArtemisPainting")
+        {
+            FadeOut();
+            controlPanelScript.dionysusStatueVisible = false;
+            controlPanelScript.artemisStatueVisible = true;
+            controlPanelScript.zeusStatueVisible = false;
+            controlPanelScript.poseidonStatueVisible = false;
+            if (hasFaded)
+            {
+                currentImg.SetActive(false);
+                SetActive(false);
+                playerMove.UnfreezePlayer();
+                isTransitioning = false;
+                currentImg.Level2RemoveItself();
+                currentImg = null;
+                hasFaded = false;
+            }
+        }
+        else if (picture == "ZeusPainting")
+        {
+            FadeOut();
+            controlPanelScript.dionysusStatueVisible = false;
+            controlPanelScript.artemisStatueVisible = false;
+            controlPanelScript.zeusStatueVisible = true;
+            controlPanelScript.poseidonStatueVisible = false;
+            if (hasFaded)
+            {
+                currentImg.SetActive(false);
+                SetActive(false);
+                playerMove.UnfreezePlayer();
+                isTransitioning = false;
+                currentImg.Level2RemoveItself();
+                currentImg = null;
+                hasFaded = false;
+            }
+        }
+        else if (picture == "PoseidonPainting")
+        {
+            FadeOut();
+            controlPanelScript.dionysusStatueVisible = false;
+            controlPanelScript.artemisStatueVisible = false;
+            controlPanelScript.zeusStatueVisible = false;
+            controlPanelScript.poseidonStatueVisible = true;
+            if (hasFaded)
+            {
+                currentImg.SetActive(false);
+                SetActive(false);
+                playerMove.UnfreezePlayer();
+                isTransitioning = false;
+                currentImg.Level2RemoveItself();
+                currentImg = null;
                 hasFaded = false;
             }
         }

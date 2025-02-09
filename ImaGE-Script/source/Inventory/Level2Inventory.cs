@@ -18,15 +18,23 @@ public class Level2Inventory : Entity
 
     // Inventory Item UI (Image at the bottom right)
     public Entity dionysusPaintingUI;
+    public Entity artemisPaintingUI;
+    public Entity zeusPaintingUI;
+    public Entity poseidonPaintingUI;
 
     // Inventory Item Selection (Image in the inventory bar)
     public Entity dionysusPaintingSelection;
+    public Entity artemisPaintingSelection;
+    public Entity zeusPaintingSelection;
+    public Entity poseidonPaintingSelection;
 
     // Inventory Tools
     public Entity inventorySelectSquare;
     public Entity selectionHand;
     public Entity inventoryImage;
     private PictureAlign pictureAlignscript;
+
+    private PaintingAlignUILevel2 paintingAlignUILevel2Script;
 
     //public Vec3<float>[] SlotPositionList;
     // Workaround for lack of Vec3<float>[]
@@ -81,6 +89,7 @@ public class Level2Inventory : Entity
         InternalCalls.SetPosition(dionysusPaintingUI.mEntityID, ref startPosition);
 
         pictureAlignscript = FindObjectOfType<PictureAlign>();
+        paintingAlignUILevel2Script = FindObjectOfType<PaintingAlignUILevel2>();
     }
 
     public void Additem(IInventoryItem item)
@@ -317,6 +326,25 @@ public class Level2Inventory : Entity
             case "DionysusPainting":
                 dionysusPaintingUI?.SetActive(true);
                 dionysusPaintingUI?.FindScript<HoldupUI>().SetAlginUI("DionysusPainting", GetItemByName("DionysusPainting"));
+                paintingAlignUILevel2Script.isPainting = true;
+                break;
+
+            case "ArtemisPainting":
+                artemisPaintingUI?.SetActive(true);
+                artemisPaintingUI?.FindScript<HoldupUI>().SetAlginUI("ArtemisPainting", GetItemByName("ArtemisPainting"));
+                paintingAlignUILevel2Script.isPainting = true;
+                break;
+
+            case "ZeusPainting":
+                zeusPaintingUI?.SetActive(true);
+                zeusPaintingUI?.FindScript<HoldupUI>().SetAlginUI("ZeusPainting", GetItemByName("ZeusPainting"));
+                paintingAlignUILevel2Script.isPainting = true;
+                break;
+
+            case "PoseidonPainting":
+                poseidonPaintingUI?.SetActive(true);
+                poseidonPaintingUI?.FindScript<HoldupUI>().SetAlginUI("PoseidonPainting", GetItemByName("PoseidonPainting"));
+                paintingAlignUILevel2Script.isPainting = true;
                 break;
 
         }
@@ -325,6 +353,10 @@ public class Level2Inventory : Entity
     private void DisableAllUI()
     {
         dionysusPaintingUI?.SetActive(false);
+        artemisPaintingUI?.SetActive(false);
+        zeusPaintingUI?.SetActive(false);
+        poseidonPaintingUI?.SetActive(false);
+        paintingAlignUILevel2Script.isPainting = false;
         pictureAlignscript.ClearUI();
 
     }

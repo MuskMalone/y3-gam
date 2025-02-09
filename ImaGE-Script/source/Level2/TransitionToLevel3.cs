@@ -38,11 +38,11 @@ public class TransitionToLevel3 : Entity
     // Update is called once per frame
     void Update()
     {
-        //StartFadeOut();
-        if (Input.GetKeyDown(KeyCode.NUM_4))
-        {
-            InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Level3.scn");
-        }
+        ////StartFadeOut();
+        //if (Input.GetKeyDown(KeyCode.NUM_4))
+        //{
+        //    InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Level3.scn");
+        //}
     }
 }
 

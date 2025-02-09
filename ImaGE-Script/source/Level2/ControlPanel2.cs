@@ -41,6 +41,11 @@ public class ControlPanel2 : Entity
     public Entity artemisStatue;
     public Entity dionysusStatue;
 
+    public bool zeusStatueVisible = false;
+    public bool poseidonStatueVisible = false;
+    public bool artemisStatueVisible = false;
+    public bool dionysusStatueVisible = false;
+
 
     //public Entity[][] hiddenTexts; // Stores all hidden texts for each mode
     public int activeModeIndex = 0;
@@ -110,7 +115,8 @@ public class ControlPanel2 : Entity
         //when painting used
         if(!controllingLights)
         {
-            if(Input.GetKeyDown(KeyCode.N))
+            //if(Input.GetKeyDown(KeyCode.N))
+            if(!dionysusStatueVisible && zeusStatueVisible && !poseidonStatueVisible && !artemisStatueVisible)
             {
                 if (AreAllLightsOff() && isUVLightActive)
                 {
@@ -126,7 +132,8 @@ public class ControlPanel2 : Entity
                 
                 //SwitchMode(0);
             }
-            else if(Input.GetKeyDown(KeyCode.M))
+            //else if(Input.GetKeyDown(KeyCode.M))
+            else if (!dionysusStatueVisible && !zeusStatueVisible && poseidonStatueVisible && !artemisStatueVisible)
             {
                 if (AreAllLightsOff() && isUVLightActive)
                 {
@@ -141,7 +148,8 @@ public class ControlPanel2 : Entity
                 }
                 //SwitchMode(1);
             }
-            else if (Input.GetKeyDown(KeyCode.Y))
+            //else if (Input.GetKeyDown(KeyCode.Y))
+            else if (!dionysusStatueVisible && !zeusStatueVisible && !poseidonStatueVisible && artemisStatueVisible)
             {
                 
                 if (AreAllLightsOff() && isUVLightActive)
@@ -160,7 +168,8 @@ public class ControlPanel2 : Entity
                 }
                 //SwitchMode(1);
             }
-            else if (Input.GetKeyDown(KeyCode.U))
+            //else if (Input.GetKeyDown(KeyCode.U))
+            else if (dionysusStatueVisible && !zeusStatueVisible && !poseidonStatueVisible && !artemisStatueVisible) 
             {
                 if (AreAllLightsOff() && isUVLightActive)
                 {
