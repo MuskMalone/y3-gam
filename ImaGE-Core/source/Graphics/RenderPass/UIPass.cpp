@@ -194,6 +194,37 @@ namespace Graphics {
 
 		//Renderer::RenderInstances();
 
+		
+//================== TRANSITION PART =========================================
+		if (!cam.isEditor) {  // Apply transition only in gameplay, not the editor
+			for (ECS::Entity const& entity : entities) {
+				if (!entity.HasComponent<Component::Canvas>()) continue; // Skip if no Canvas
+
+				auto const& canvas = entity.GetComponent<Component::Canvas>();
+				if (!canvas.hasTransition) continue; // Skip if transition is not active
+
+				auto const& transitionShader = ShaderLibrary::Get("Transition");
+				transitionShader->Use();
+
+				// Bind previous scene texture (mInputTexture)
+				transitionShader->SetUniform("u_ScreenTexture", mInputTexture, 0);
+
+				// Pass transition progress (0.0 = black, 1.0 = fully visible)
+				transitionShader->SetUniform("u_TransitionProgress", canvas.transitionProgress);
+
+				// Pass fade color (default to black)
+				transitionShader->SetUniform("u_FadeColor", canvas.fadeColor);
+
+				// Check if we're fading out or in
+				transitionShader->SetUniform("u_FadeOut", canvas.fadingOut);
+
+				// Render the final scene with the transition effect applied
+				Renderer::RenderFullscreenTexture();
+			}
+		}
+
+
+
 		End();
 	}
 }
