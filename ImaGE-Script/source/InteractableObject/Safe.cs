@@ -28,6 +28,7 @@ public class Safe : Entity
   public Entity WXYZ;
   public Entity Enter;
   public Entity Back;
+  public Entity doorPivot;  // for door opening anim
 
   private SafeButtons ABCButtonScript;
   private SafeButtons DEFButtonScript;
@@ -40,6 +41,7 @@ public class Safe : Entity
   private SafeButtons EnterButtonScript;
   private SafeButtons BackButtonScript;
 
+  static private readonly string openSafeAnim = "SafeOpen";
   private bool safeInteraction = false;
   private bool safeUIActive = false;
 
@@ -351,6 +353,7 @@ public class Safe : Entity
       if (correctAnswer)
       {
         InternalCalls.PlaySound(mEntityID, "SafeInteract");
+        InternalCalls.PlayAnimation(doorPivot.mEntityID, openSafeAnim);
         EndSafeUI();
         safeDoorPart.SetActive(false);
       }
