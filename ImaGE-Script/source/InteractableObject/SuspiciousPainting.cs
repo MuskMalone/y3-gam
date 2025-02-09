@@ -6,7 +6,18 @@ public class SuspiciousPainting : Entity
   public PlayerInteraction playerInteraction;
   public Entity removePaintingUI;
   public string dropAnimName;
-  private bool playerInteracted = false, isPlayingAnim = false;
+  public float timeUntilDespawn;
+
+  private enum State
+  {
+    ON_WALL,    // starting state
+    ANIMATION,  // animation to tilt painting
+    TILTED,     // painting has been tilted
+    FALLEN      // after falling to the ground
+  }
+
+  private State currState = State.ON_WALL;
+  private float timeElapsed = 0.0f;
 
   void Start()
   {
@@ -15,37 +26,49 @@ public class SuspiciousPainting : Entity
 
   void Update()
   {
-    if (!playerInteracted)
+    switch (currState)
     {
-      bool isPaintingHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
-      if (Input.GetMouseButtonTriggered(0) && isPaintingHit)
-      {
-        InternalCalls.PlayAnimation(InternalCalls.GetParentByID(mEntityID), dropAnimName);
+      case State.ON_WALL:
+        bool isPaintingHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
+        if (Input.GetMouseButtonTriggered(0) && isPaintingHit)
+        {
+          InternalCalls.PlayAnimation(InternalCalls.GetParentByID(mEntityID), dropAnimName);
 
-        isPlayingAnim = playerInteracted = true;
-        removePaintingUI.SetActive(false);
-        return;
-      }
+          currState = State.ANIMATION;
+          removePaintingUI.SetActive(false);
+          return;
+        }
 
-      removePaintingUI.SetActive(isPaintingHit);
-    }
-    else
-    {
-      // animation to tilt painting
-      if (isPlayingAnim)
-      {
+        removePaintingUI.SetActive(isPaintingHit);
+        break;
+
+      case State.ANIMATION:
         // update collider while animation is playing
         InternalCalls.UpdatePhysicsToTransform(mEntityID);
 
-        isPlayingAnim = InternalCalls.IsPlayingAnimation(InternalCalls.GetParentByID(mEntityID));
-      }
-      // when animation ends, trigger physics to drop the painting
-      else
-      {
+        // switch state when animation ends
+        if (!InternalCalls.IsPlayingAnimation(InternalCalls.GetParentByID(mEntityID)))
+        {
+          currState = State.TILTED;
+        }
+        break;
+
+      case State.TILTED:
         // unlock the rigidbody
         InternalCalls.LockRigidBody(mEntityID, false);
         InternalCalls.SetGravityFactor(mEntityID, 30.0f);
-      }
+        currState = State.FALLEN;
+        break;
+
+      case State.FALLEN:
+        timeElapsed += InternalCalls.GetDeltaTime();
+
+        // if time has exceeded, destroy the entire painting entity
+        if (timeElapsed >= timeUntilDespawn)
+        {
+          Destroy(InternalCalls.GetParentByID(mEntityID));
+        }
+        break;
     }
   }
 }
