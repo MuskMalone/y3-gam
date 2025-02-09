@@ -392,6 +392,8 @@ public class PictureAlign : Entity
         }
       currentImg = UI;
       picture = s;
+        //hasFaded = false;
+        //currentAlpha = 1f;
       DownArrow.SetActive(true);
       UpArrow.SetActive(true);
       RightArrow.SetActive(true);

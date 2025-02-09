@@ -10453,7 +10453,8 @@
                 155,
                 156,
                 157,
-                158
+                158,
+                496
             ],
             "Components": [
                 {
@@ -10674,7 +10675,7 @@
                 {
                     "Tag": {
                         "tag": "FragWall3",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -10907,7 +10908,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "CentreBaset (Copy)",
+                        "tag": "Level2Frag",
                         "isActive": true
                     }
                 },
@@ -10974,6 +10975,32 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
                     }
                 }
             ]
@@ -28347,7 +28374,17 @@
                 },
                 {
                     "Canvas": {
-                        "isVisible": true
+                        "isVisible": true,
+                        "hasTransition": false,
+                        "transitionProgress": 1.0,
+                        "transitionSpeed": 1.0,
+                        "fadeColor": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "fadingOut": false
                     }
                 }
             ]
@@ -36090,6 +36127,84 @@
             ]
         },
         {
+            "ID": 496,
+            "Parent": 152,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Plane",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 64.53326416015625,
+                            "y": 65.20601654052735,
+                            "z": -436.6013488769531
+                        },
+                        "scale": {
+                            "x": 6.599999904632568,
+                            "y": 6.599999904632568,
+                            "z": 6.599999904632568
+                        },
+                        "rotation": {
+                            "x": 0.7071067690849304,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 64.53326416015625,
+                            "y": 65.20601654052735,
+                            "z": -436.6013488769531
+                        },
+                        "worldScale": {
+                            "x": 6.599999904632568,
+                            "y": 6.599999904632568,
+                            "z": 6.599999904632568
+                        },
+                        "worldRot": {
+                            "x": 0.7071067690849304,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 15804932297155393904
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048579,
             "Parent": 2,
             "Child Entities": [],
@@ -42207,7 +42322,32 @@
                             {
                                 "entityID": 3145735,
                                 "scriptName": "TransitionToLevel3",
-                                "scriptFieldInstList": []
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": "..\\Assets\\Scenes\\Level3.scn",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "nextScenePath"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 3145735,
+                                            "scriptName": "PlayerInteraction"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": "Level2Frag",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "targetObjectName"
+                                        }
+                                    }
+                                ]
                             },
                             {
                                 "entityID": 3145735,
