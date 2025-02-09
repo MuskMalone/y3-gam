@@ -929,6 +929,15 @@ namespace GUI {
               modified = true;
           }
 
+          // Transition type selection
+          NextRowTable("Transition Type");
+          static const char* transitionTypes[] = { "Fade", "TV Switch", "Wipe" };
+          int transitionTypeIndex = static_cast<int>(canvas.transitionType);
+          if (ImGui::Combo("##TransitionType", &transitionTypeIndex, transitionTypes, IM_ARRAYSIZE(transitionTypes))) {
+              canvas.transitionType = static_cast<Component::Canvas::TransitionType>(transitionTypeIndex);
+              modified = true;
+          }
+
           // Transition direction (Fade in or Fade out)
           NextRowTable("Fade Out?");
           if (ImGui::Checkbox("##FadeOut", &canvas.fadingOut)) {
@@ -941,9 +950,11 @@ namespace GUI {
               modified = true;
           }
 
-          // Transition progress (for debugging)
+          // Transition progress slider
           NextRowTable("Transition Progress");
-          ImGui::ProgressBar(canvas.transitionProgress, ImVec2(100.0f, 0.0f));
+          if (ImGui::SliderFloat("##TransitionProgress", &canvas.transitionProgress, 0.0f, 1.0f)) {
+              modified = true;
+          }
 
           // Fade color picker
           NextRowTable("Fade Color");
@@ -957,6 +968,7 @@ namespace GUI {
       WindowEnd(isOpen);
       return modified;
   }
+
 
 
   bool Inspector::CapsuleColliderComponentWindow(ECS::Entity entity, bool highlight)

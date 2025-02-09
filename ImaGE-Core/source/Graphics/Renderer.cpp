@@ -1085,8 +1085,10 @@ namespace Graphics {
 		}
 	}
 
-	void Renderer::RenderFullscreenTexture(){
-		glDisable(GL_BLEND);
+	void Renderer::RenderFullscreenTexture(bool blend) {
+		if(!blend)
+			glDisable(GL_BLEND);
+
 		RenderAPI::DrawTriangles(mData.screen.screenVertexArray, 6);
 		glEnable(GL_BLEND);
 	}
