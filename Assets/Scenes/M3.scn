@@ -506,12 +506,6 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -541,6 +535,12 @@
                                 "customCenter": false
                             }
                         }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
                     }
                 ],
                 "removedComponents": []
@@ -555,6 +555,7 @@
                 116,
                 151,
                 755,
+                1127,
                 1048632,
                 1048685,
                 1048730,
@@ -1947,7 +1948,7 @@
                                 "scriptName": "CameraCapture",
                                 "scriptFieldInstList": [
                                     {
-                                        "data": "test test",
+                                        "data": "CorridorPaintingTara",
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "PictureName"
@@ -6857,12 +6858,6 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -6892,6 +6887,12 @@
                                 "customCenter": false
                             }
                         }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
                     }
                 ],
                 "removedComponents": []
@@ -6912,12 +6913,6 @@
                         "value": {
                             "tag": "Light",
                             "isActive": true
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
                         }
                     },
                     {
@@ -6949,6 +6944,12 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -11216,12 +11217,6 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -11250,6 +11245,12 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -11666,12 +11667,6 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -11700,6 +11695,12 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -12392,12 +12393,6 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -12426,6 +12421,12 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -12582,12 +12583,6 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -12616,6 +12611,12 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -23806,6 +23807,13 @@
                                         }
                                     },
                                     {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "moveDuration"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 40,
                                             "scriptName": "Entity"
@@ -23834,6 +23842,13 @@
                                         "type": "System.Boolean",
                                         "scriptField": {
                                             "fieldName": "startFade"
+                                        }
+                                    },
+                                    {
+                                        "data": 25.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "targetY"
                                         }
                                     }
                                 ]
@@ -51130,7 +51145,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 14401261846097900411
+                            "ID": 16565766957154628416
                         }
                     }
                 },
@@ -52187,7 +52202,7 @@
                                         }
                                     },
                                     {
-                                        "data": "CorridorPainting.txt",
+                                        "data": "CorridorPaintingTara.txt",
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "dataFilePath"
@@ -52236,7 +52251,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 8253918027542086844
+                            "ID": 12363053353531237807
                         }
                     }
                 }
@@ -53027,12 +53042,6 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -53061,6 +53070,12 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -55893,6 +55908,79 @@
             ]
         },
         {
+            "ID": 1127,
+            "Parent": 11,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "TaraSilhouette",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 79.75299835205078,
+                            "y": 63.47638702392578,
+                            "z": -42.801849365234378
+                        },
+                        "scale": {
+                            "x": 13.0,
+                            "y": 12.999999046325684,
+                            "z": 12.999999046325684
+                        },
+                        "rotation": {
+                            "x": 0.7071067690849304,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 79.75299835205078,
+                            "y": 63.47638702392578,
+                            "z": -42.801849365234378
+                        },
+                        "worldScale": {
+                            "x": 13.0,
+                            "y": 12.999999046325684,
+                            "z": 12.999999046325684
+                        },
+                        "worldRot": {
+                            "x": 0.7071067690849304,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Sprite2D": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 12663366849034873865
+                        },
+                        "isTransparent": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048583,
             "Parent": 311,
             "Child Entities": [],
@@ -55972,12 +56060,6 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -56006,6 +56088,12 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
                         }
                     }
                 ],
@@ -75063,12 +75151,6 @@
                         }
                     },
                     {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Lights"
-                        }
-                    },
-                    {
                         "key": "Light",
                         "value": {
                             "lightType": "SPOTLIGHT",
@@ -75097,6 +75179,12 @@
                                 "shadowModified": true,
                                 "customCenter": false
                             }
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
                         }
                     }
                 ],
