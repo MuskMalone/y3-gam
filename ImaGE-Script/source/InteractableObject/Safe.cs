@@ -353,7 +353,8 @@ public class Safe : Entity
       if (correctAnswer)
       {
         InternalCalls.PlaySound(mEntityID, "SafeInteract");
-        InternalCalls.PlayAnimation(doorPivot.mEntityID, openSafeAnim);
+        InternalCalls.PlaySound(mEntityID, "SafeUnlock");
+        //InternalCalls.PlayAnimation(doorPivot.mEntityID, openSafeAnim);
         EndSafeUI();
         safeDoorPart.SetActive(false);
       }

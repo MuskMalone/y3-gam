@@ -56,6 +56,7 @@ public class Hammer : Entity, IInventoryItem
     if (Input.GetKeyTriggered(KeyCode.E) && isHammerHit)
     {
       InternalCalls.PlaySound(mEntityID, "PickupObjects");
+      InternalCalls.PlaySound(mEntityID, "IncoherentWhispers");
       inventoryScript.Additem(this);
       dialogueSystem.SetDialogue(hammerDialogue, new Dialogue.Emotion[] { Emotion.Surprised }, 0.006f, "IncoherentWhispers", "..\\Assets\\Textures\\Stagedive-d58X.ttf");
     }

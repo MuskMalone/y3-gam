@@ -68,13 +68,18 @@ public class KeyDoor : Entity
 
         if (initialAnimation)
         {
+          Console.WriteLine("Start");
+          Debug.Log("Start");
           zoomInPos = InternalCalls.GetPosition(keyCamera.mEntityID);
           zoomOutPos = zoomInPos + new Vector3(-15, 0, 0);
           initialAnimation = false;
+          InternalCalls.PlaySound(mEntityID, "DoorSwing");
         }
 
         if (isZoomingOut)
         {
+          Console.WriteLine("Zooming");
+          Debug.Log("Zooming");
           elapsedTime += Time.deltaTime;
           float t = elapsedTime / zoomOutDuration;
           t = t * t * (3 - 2 * t); // SmoothStep easing
@@ -83,13 +88,16 @@ public class KeyDoor : Entity
 
           if (elapsedTime >= zoomOutDuration)
           {
+            Console.WriteLine("Zooming End");
             elapsedTime = 0.0f;
             isZoomingOut = false;
           }
         }
 
         // end of animation sequence, clear the current anim
-        if (!InternalCalls.IsPlayingAnimation(parent)) { 
+        if (!InternalCalls.IsPlayingAnimation(parent)) {
+          Console.WriteLine("End");
+          Debug.Log("End");
           currentAnim = null;
           SetPlayerCameraAsMain();
           playerMove.UnfreezePlayer();
