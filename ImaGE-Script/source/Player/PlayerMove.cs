@@ -39,8 +39,8 @@ public class  PlayerMove : Entity
   private float initialGravityFactor = 5f;
   private float extraGravityFactorDuringDescent = 15f;
 
-  public bool canLook = true;
-  public bool canMove = true;
+  public bool canLook = true, canMove = true;
+  private bool skipNextMouseDelta = false;  // to skip the jump in delta when unfreezing player
   private double currTime = 0.0;
   private double targetTime = 1.0;
   private bool startTimer = false;
@@ -76,7 +76,10 @@ public class  PlayerMove : Entity
     if(InternalCalls.IsKeyTriggered(KeyCode.SEMICOLON))
       canLook = false;
 
-    ProcessLook();
+    // Skip look processing if the player is frozen
+    if (canLook)
+      ProcessLook();
+
     if (canMove)
       PlayerMovement();
   }
@@ -111,25 +114,28 @@ public class  PlayerMove : Entity
 
   void ProcessLook()
   {
-    // Skip look processing if the player is frozen
-    if (canLook)
-    {
+    Vector3 mouseDelt = InternalCalls.GetMouseDelta();
 
-      Vector3 mouseDelt = InternalCalls.GetMouseDelta();
-      float mouseDeltaX = mouseDelt.X;
-      float mouseDeltaY = mouseDelt.Y;
-
-      yaw -= mouseDeltaX * sensitivity;
-      if(yaw > 360.0f || yaw < -360.0f) 
-        yaw /= 360.0f;
-
-      // Apply mouse delta to pitch (rotate camera around the X-axis)
-      pitch -= mouseDeltaY * sensitivity;
-
-      // Clamp pitch to prevent camera from flipping upside down
-      pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
+    if (skipNextMouseDelta && mouseDelt.X != 0.0f && mouseDelt.Y != 0.0f) {
+      skipNextMouseDelta = false;
+      //Debug.Log("Skipped delta of: " + InternalCalls.GetMouseDelta().ToString());
+      return;
     }
-   // Console.WriteLine(yaw);
+
+    float mouseDeltaX = mouseDelt.X;
+    float mouseDeltaY = mouseDelt.Y;
+
+    yaw -= mouseDeltaX * sensitivity;
+    if (yaw > 360.0f || yaw < -360.0f)
+      yaw /= 360.0f;
+
+    // Apply mouse delta to pitch (rotate camera around the X-axis)
+    pitch -= mouseDeltaY * sensitivity;
+
+    // Clamp pitch to prevent camera from flipping upside down
+    pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
+
+    // Console.WriteLine(yaw);
     // Update the camera's rotation (pitch)
     cam.GetComponent<Transform>().rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(pitch));
 
@@ -168,6 +174,7 @@ public class  PlayerMove : Entity
     ResetPlayerVelocity();
     canMove = true;
     canLook = true;
+    skipNextMouseDelta = true;
   }
 
 

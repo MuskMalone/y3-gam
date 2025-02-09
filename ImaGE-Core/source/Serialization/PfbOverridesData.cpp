@@ -7,7 +7,7 @@ namespace Serialization {
   PfbOverridesData::PfbOverridesData(Component::PrefabOverrides const& overrides, ECS::Entity entity)
     : componentData{}, removedComponents{}, guid{ overrides.guid }, subDataId{ overrides.subDataId } {
     for (rttr::type const& type : overrides.removedComponents) {
-      removedComponents.emplace(type);
+      removedComponents.emplace(type.get_name().to_string());
     }
 
     FillData(overrides.modifiedComponents, entity);
@@ -17,7 +17,7 @@ namespace Serialization {
     Reflection::ObjectFactory& of{ Reflection::ObjectFactory::GetInstance() };
 
     for (rttr::type const& type : components) {
-      componentData.emplace(type, of.GetEntityComponent(entity, type));
+      componentData.emplace(type.get_name().to_string(), of.GetEntityComponent(entity, type));
     }
   }
 
@@ -27,11 +27,11 @@ namespace Serialization {
     ret.removedComponents.reserve(removedComponents.size());
 
     for (auto const& iter : componentData) {
-      ret.modifiedComponents.emplace(iter.first);
+      ret.modifiedComponents.emplace(rttr::type::get_by_name(iter.first));
     }
 
-    for (rttr::type const& type : removedComponents) {
-      ret.removedComponents.emplace(type);
+    for (std::string const& typeStr : removedComponents) {
+      ret.removedComponents.emplace(rttr::type::get_by_name(typeStr));
     }
 
     return ret;
