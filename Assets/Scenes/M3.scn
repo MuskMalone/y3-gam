@@ -2009,15 +2009,15 @@
                         "castShadows": true,
                         "shadowConfig": {
                             "centerPos": {
-                                "x": -6.300000190734863,
-                                "y": 8.699999809265137,
-                                "z": -12.600000381469727
+                                "x": 20.700000762939454,
+                                "y": 18.600000381469728,
+                                "z": -52.5
                             },
-                            "softness": 2,
-                            "bias": 0.0035000001080334188,
-                            "nearPlane": -109.8499984741211,
-                            "farPlane": 56.5,
-                            "scenesBounds": 1.5099999904632569,
+                            "softness": 3,
+                            "bias": 0.004000000189989805,
+                            "nearPlane": -134.75,
+                            "farPlane": 53.79999923706055,
+                            "scenesBounds": 1.909999966621399,
                             "isStatic": true,
                             "shadowModified": false,
                             "customCenter": true
@@ -3470,7 +3470,7 @@
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
-                        "castShadows": false,
+                        "castShadows": true,
                         "receiveShadows": true
                     }
                 },
@@ -3664,7 +3664,7 @@
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
-                        "castShadows": false,
+                        "castShadows": true,
                         "receiveShadows": true
                     }
                 },
@@ -47195,7 +47195,7 @@
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
-                        "castShadows": false,
+                        "castShadows": true,
                         "receiveShadows": true
                     }
                 },
@@ -47444,7 +47444,7 @@
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
-                        "castShadows": false,
+                        "castShadows": true,
                         "receiveShadows": true
                     }
                 }
