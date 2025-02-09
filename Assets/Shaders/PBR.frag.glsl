@@ -222,7 +222,7 @@ void main(){
         }
     }
 
-    fragColor = vec4(pow(TotalLight, vec3(1.0 / u_Gamma)), 1.0);
+    fragColor = vec4(pow(TotalLight, vec3(1.0 / u_Gamma)), mat.Transparency);
 }
 
 vec3 fresnelSchlick(float cosTheta, vec3 F0)
