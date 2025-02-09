@@ -58,7 +58,7 @@ namespace Graphics {
 
         // Ensures accesses to the SSBOs "reflect" writes from compute shader
         Bind();
-        glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
+        glMemoryBarrier(GL_ALL_BARRIER_BITS);
 
         //create
         for (uint64_t i{}; i < MAX_BUFFER; ++i) { mEmitterIdxQueue.push(static_cast<unsigned int>(i)); }
@@ -138,10 +138,11 @@ namespace Graphics {
             emitterShader->SetUniform("emitter.preset", emitter.preset);
             emitterShader->SetUniform("emitter.particlesPerFrame", emitter.particlesPerFrame);
 
+            emitterShader->SetUniform("emitter.alive", emitter.active);
         }
 
         glDispatchCompute(1, 1, 1);
-        glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
+        glMemoryBarrier(GL_ALL_BARRIER_BITS);
 
         //set the flags back
         //mParticleShader->SetUniform("spawnEmitter", 0);
