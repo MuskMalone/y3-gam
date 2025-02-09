@@ -13,7 +13,7 @@ public class TutorialLevelInventory : Entity
     public event EventHandler<InventoryEventArgs> ItemRemoved;
 
     private IInventoryItem currentItem;
-    private bool highlighted = false;
+    public bool highlighted = false;
     public bool isVisible = false;
 
     // Inventory Item UI (Image at the bottom right)

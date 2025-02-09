@@ -419,18 +419,27 @@ namespace GUI {
 
     ECS::Entity selectedEntity{ GUIVault::GetSelectedEntity() };
     bool const enabled{ selectedEntity && selectedEntity.HasComponent<Component::Animation>() };
+    ImGui::BeginDisabled(!enabled || sPreviewingEntity);
     if (ImGui::Button("Preview Animation")) {
       if (enabled) {
         Component::Animation& anim{ selectedEntity.GetComponent<Component::Animation>() };
         anim.timeElapsed = 0.001f;  // temp
+        SaveKeyframes(IGE_ASSETMGR.GUIDToPath(mSelectedAnim));  // force a save before previewing
         QUEUE_EVENT(Events::PreviewAnimation, selectedEntity, mSelectedAnim);
         sPreviewingEntity = selectedEntity;
       }
     }
-    if (ImGui::IsItemHovered() && !enabled) {
-      ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.7f, 0.f, 0.f, 1.f));
-      ImGui::SetTooltip("Select an Entity with an Animation component!");
-      ImGui::PopStyleColor();
+    ImGui::EndDisabled();
+
+    if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+      if (!enabled) {
+        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.7f, 0.f, 0.f, 1.f));
+        ImGui::SetTooltip("Select an Entity with an Animation component!");
+        ImGui::PopStyleColor();
+      }
+      else if (sPreviewingEntity) {
+        ImGui::SetTooltip("Animation in Progress...");
+      }
     }
 
     ImGui::SameLine();

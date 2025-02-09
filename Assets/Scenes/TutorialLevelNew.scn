@@ -10,6 +10,7 @@
                 113,
                 114,
                 115,
+                135,
                 1048618,
                 2097595,
                 2097603,
@@ -77,248 +78,11 @@
             ]
         },
         {
-            "ID": 39,
-            "Parent": 52,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "AudioSource": {
-                        "sounds": [
-                            {
-                                "key": "DefaultDialogueSound",
-                                "value": {
-                                    "guid": {
-                                        "ID": 10835122463629634547
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": -4.599999904632568,
-                                            "y": -7.599999904632568,
-                                            "z": 0.0
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": true,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
-                                    }
-                                }
-                            }
-                        ]
-                    }
-                },
-                {
-                    "Tag": {
-                        "tag": "DialogueText",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -4.599999904632568,
-                            "y": -7.599999904632568,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -4.599999904632568,
-                            "y": -7.599999904632568,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Text": {
-                        "textContent": "YOUR TEXT HERE",
-                        "color": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "scale": 0.006000000052154064,
-                        "textAssetGUID": {
-                            "ID": 11715672305158928427
-                        },
-                        "fontFamilyName": "Sniglet-Regular",
-                        "alignment": 0,
-                        "multiLineSpacingOffset": 0.0,
-                        "textBoxEnabledFlag": false,
-                        "textBoxDimensions": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 0.0
-                        }
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 39,
-                                "scriptName": "TutorialDialogue",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 63,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "DialogueBox"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 4194738,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "DisturbedTara"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 4194737,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "HappyTara"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 1048616,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "NeutralTara"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 2097601,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "SadTara"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 4194542,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "ShockedTara"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 4194581,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "SurprisedTara"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 1048617,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "ThinkingTara"
-                                        }
-                                    },
-                                    {
-                                        "data": false,
-                                        "type": "System.Boolean",
-                                        "scriptField": {
-                                            "fieldName": "isInDialogueMode"
-                                        }
-                                    },
-                                    {
-                                        "data": false,
-                                        "type": "System.Boolean",
-                                        "scriptField": {
-                                            "fieldName": "isLineComplete"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 2097156,
-                                            "scriptName": "PlayerMove"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "playerMove"
-                                        }
-                                    },
-                                    {
-                                        "data": 0.0,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "textSpeed"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        {
             "ID": 52,
             "Parent": 37,
             "Child Entities": [
-                39,
-                63
+                63,
+                1048615
             ],
             "Components": [
                 {
@@ -370,7 +134,7 @@
                 },
                 {
                     "Layer": {
-                        "layerName": "Default"
+                        "layerName": "UI"
                     }
                 }
             ]
@@ -429,7 +193,7 @@
                 },
                 {
                     "Layer": {
-                        "layerName": "Default"
+                        "layerName": "UI"
                     }
                 },
                 {
@@ -438,7 +202,7 @@
                             "x": 1.0,
                             "y": 1.0,
                             "z": 1.0,
-                            "w": 1.0
+                            "w": 0.8627451062202454
                         },
                         "textureAssetGUID": {
                             "ID": 18060467368391342928
@@ -539,16 +303,6 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 1048618,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "LeftClickText"
-                                        }
-                                    },
-                                    {
-                                        "data": {
                                             "entityID": 106,
                                             "scriptName": "Entity"
                                         },
@@ -582,6 +336,13 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "border"
+                                        }
+                                    },
+                                    {
+                                        "data": 1.2000000476837159,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "fadeSpeed"
                                         }
                                     },
                                     {
@@ -619,14 +380,14 @@
                                         }
                                     },
                                     {
-                                        "data": 1.0,
+                                        "data": 3.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "positionThreshold"
                                         }
                                     },
                                     {
-                                        "data": 2.0,
+                                        "data": 0.5,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "rotationThreshold"
@@ -949,7 +710,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.36000001430511477,
-                            "y": 0.4000000059604645,
+                            "y": 0.0,
                             "z": -0.009999999776482582
                         },
                         "scale": {
@@ -970,7 +731,7 @@
                         },
                         "worldPos": {
                             "x": 0.36000001430511477,
-                            "y": 0.4000000059604645,
+                            "y": 0.0,
                             "z": -0.009999999776482582
                         },
                         "worldScale": {
@@ -1000,7 +761,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 8394662900419204535
+                            "ID": 136201228599137842
                         }
                     }
                 }
@@ -1204,6 +965,13 @@
                                         }
                                     },
                                     {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "highlighted"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 110,
                                             "scriptName": "Entity"
@@ -1266,7 +1034,7 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 116,
+                                            "entityID": 1048692,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -1624,8 +1392,8 @@
             "ID": 115,
             "Parent": 37,
             "Child Entities": [
-                116,
-                117
+                117,
+                1048692
             ],
             "Components": [
                 {
@@ -1654,7 +1422,7 @@
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -0.0,
                             "z": 0.0
                         },
                         "worldPos": {
@@ -1677,142 +1445,7 @@
                 },
                 {
                     "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 116,
-            "Parent": 115,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "TutorialPaintingUI",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 12.0,
-                            "y": -4.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 6.614999771118164,
-                            "y": 6.614999771118164,
-                            "z": 6.614999771118164
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 12.0,
-                            "y": -4.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 6.614999771118164,
-                            "y": 6.614999771118164,
-                            "z": 6.614999771118164
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
                         "layerName": "UI"
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 116,
-                                "scriptName": "HoldupUI",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "x": 0.0,
-                                            "y": 0.6000000238418579,
-                                            "z": 0.0
-                                        },
-                                        "type": "System.Numerics.Vector3",
-                                        "scriptField": {
-                                            "fieldName": "bigPicPos"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "x": 12.979999542236329,
-                                            "y": 13.800000190734864,
-                                            "z": 12.979999542236329
-                                        },
-                                        "type": "System.Numerics.Vector3",
-                                        "scriptField": {
-                                            "fieldName": "bigPicScale"
-                                        }
-                                    },
-                                    {
-                                        "data": "TutorialPaintingtxt",
-                                        "type": "System.String",
-                                        "scriptField": {
-                                            "fieldName": "dataFilePath"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "x": 10.0,
-                                            "y": 0.0,
-                                            "z": 0.0
-                                        },
-                                        "type": "System.Numerics.Vector3",
-                                        "scriptField": {
-                                            "fieldName": "smallPicPos"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "x": 6.0,
-                                            "y": 6.0,
-                                            "z": 6.0
-                                        },
-                                        "type": "System.Numerics.Vector3",
-                                        "scriptField": {
-                                            "fieldName": "smallPicScale"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                },
-                {
-                    "Image": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 807835583089018592
-                        }
                     }
                 }
             ]
@@ -1848,7 +1481,7 @@
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -0.0,
                             "z": 0.0
                         },
                         "worldPos": {
@@ -1883,7 +1516,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 807835583089018592
+                            "ID": 1562391855474573918
                         }
                     }
                 }
@@ -2053,13 +1686,13 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
+                            "x": 1.8917211294174195,
+                            "y": -0.0004730224609375,
+                            "z": -37.91204833984375
                         },
                         "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
+                            "x": 0.5901394486427307,
+                            "y": 1.0691708326339722,
                             "z": 1.0
                         },
                         "rotation": {
@@ -2074,20 +1707,20 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 16.399999618530275,
-                            "y": 6.599999904632568,
-                            "z": -11.730999946594239
+                            "x": 0.1488623470067978,
+                            "y": 6.59998083114624,
+                            "z": -28.18599510192871
                         },
                         "worldScale": {
-                            "x": 0.03999999910593033,
-                            "y": 0.03999999910593033,
+                            "x": 0.0438145287334919,
+                            "y": 0.04276683181524277,
                             "z": 0.03999999910593033
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.7071067690849304,
+                            "y": 0.0,
                             "z": 0.0,
-                            "w": 0.7071067690849304
+                            "w": 1.0
                         }
                     }
                 },
@@ -2131,9 +1764,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 13.56307601928711,
+                            "x": 2.5904319286346437,
                             "y": 6.60099983215332,
-                            "z": -8.874763488769532
+                            "z": -25.89000701904297
                         },
                         "scale": {
                             "x": 6.0,
@@ -2142,19 +1775,19 @@
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": -0.7071067690849304,
+                            "y": 0.0,
                             "z": 0.0,
-                            "w": 0.7071067690849304
+                            "w": 1.0
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": -90.0,
+                            "y": -0.0,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 13.56307601928711,
+                            "x": 2.5904319286346437,
                             "y": 6.60099983215332,
-                            "z": -8.874763488769532
+                            "z": -25.89000701904297
                         },
                         "worldScale": {
                             "x": 6.0,
@@ -2163,9 +1796,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.7071067690849304,
+                            "y": 0.0,
                             "z": 0.0,
-                            "w": 0.7071067690849304
+                            "w": 1.0
                         }
                     }
                 },
@@ -2199,18 +1832,18 @@
                     "AudioSource": {
                         "sounds": [
                             {
-                                "key": "Pavement1",
+                                "key": "Wooden1",
                                 "value": {
                                     "guid": {
-                                        "ID": 17459441173899898824
+                                        "ID": 3692094709506884826
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -7.315000057220459,
-                                            "y": 6.60099983215332,
-                                            "z": -9.746999740600586
+                                            "x": 0.00800000037997961,
+                                            "y": 6.721551418304443,
+                                            "z": -1.9971760511398316
                                         },
-                                        "volume": 1.0,
+                                        "volume": 3.5,
                                         "pitch": 1.0,
                                         "pan": 0.0,
                                         "mute": false,
@@ -2224,18 +1857,18 @@
                                 }
                             },
                             {
-                                "key": "Pavement2",
+                                "key": "Wooden2",
                                 "value": {
                                     "guid": {
-                                        "ID": 7663956586326383679
+                                        "ID": 3915418001198232854
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -7.315000057220459,
-                                            "y": 6.60099983215332,
-                                            "z": -9.746999740600586
+                                            "x": 0.00800000037997961,
+                                            "y": 6.721551418304443,
+                                            "z": -1.9971760511398316
                                         },
-                                        "volume": 1.0,
+                                        "volume": 3.5,
                                         "pitch": 1.0,
                                         "pan": 0.0,
                                         "mute": false,
@@ -2249,18 +1882,18 @@
                                 }
                             },
                             {
-                                "key": "Pavement3",
+                                "key": "Wooden3",
                                 "value": {
                                     "guid": {
-                                        "ID": 12011731387334425923
+                                        "ID": 11295149910885220024
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -7.315000057220459,
-                                            "y": 6.60099983215332,
-                                            "z": -9.746999740600586
+                                            "x": 0.00800000037997961,
+                                            "y": 6.721551418304443,
+                                            "z": -1.9971760511398316
                                         },
-                                        "volume": 1.0,
+                                        "volume": 3.5,
                                         "pitch": 1.0,
                                         "pan": 0.0,
                                         "mute": false,
@@ -2274,18 +1907,18 @@
                                 }
                             },
                             {
-                                "key": "Pavement4",
+                                "key": "Wooden4",
                                 "value": {
                                     "guid": {
-                                        "ID": 10871485496724890079
+                                        "ID": 7827877820513640779
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -7.315000057220459,
-                                            "y": 6.60099983215332,
-                                            "z": -9.746999740600586
+                                            "x": 0.00800000037997961,
+                                            "y": 6.721551418304443,
+                                            "z": -1.9971760511398316
                                         },
-                                        "volume": 1.0,
+                                        "volume": 3.5,
                                         "pitch": 1.0,
                                         "pan": 0.0,
                                         "mute": false,
@@ -2299,18 +1932,18 @@
                                 }
                             },
                             {
-                                "key": "Pavement5",
+                                "key": "Wooden5",
                                 "value": {
                                     "guid": {
-                                        "ID": 12729974832043865096
+                                        "ID": 696386623329056322
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -7.315000057220459,
-                                            "y": 6.60099983215332,
-                                            "z": -9.746999740600586
+                                            "x": 0.00800000037997961,
+                                            "y": 6.721551418304443,
+                                            "z": -1.9971760511398316
                                         },
-                                        "volume": 1.0,
+                                        "volume": 3.5,
                                         "pitch": 1.0,
                                         "pan": 0.0,
                                         "mute": false,
@@ -2324,18 +1957,18 @@
                                 }
                             },
                             {
-                                "key": "Pavement6",
+                                "key": "Wooden6",
                                 "value": {
                                     "guid": {
-                                        "ID": 5348227824585655450
+                                        "ID": 9253881664932996385
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -7.315000057220459,
-                                            "y": 6.60099983215332,
-                                            "z": -9.746999740600586
+                                            "x": 0.00800000037997961,
+                                            "y": 6.721551418304443,
+                                            "z": -1.9971760511398316
                                         },
-                                        "volume": 1.0,
+                                        "volume": 3.5,
                                         "pitch": 1.0,
                                         "pan": 0.0,
                                         "mute": false,
@@ -2381,9 +2014,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -7.315000057220459,
-                            "y": 6.60099983215332,
-                            "z": -9.746999740600586
+                            "x": 0.00800000037997961,
+                            "y": 6.721551418304443,
+                            "z": -1.9971760511398316
                         },
                         "worldScale": {
                             "x": 0.7200000286102295,
@@ -2392,15 +2025,15 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.7071067690849304,
+                            "y": 0.0,
                             "z": 0.0,
-                            "w": 0.7071067690849304
+                            "w": 1.0
                         }
                     }
                 },
                 {
                     "Layer": {
-                        "layerName": "Default"
+                        "layerName": "Player"
                     }
                 },
                 {
@@ -2411,7 +2044,7 @@
                                 "scriptName": "PlayerFootsteps",
                                 "scriptFieldInstList": [
                                     {
-                                        "data": 0.5,
+                                        "data": 0.6000000238418579,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "interval"
@@ -2440,6 +2073,904 @@
                                 ]
                             }
                         ]
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 124,
+            "Parent": 1048699,
+            "Child Entities": [
+                125,
+                127,
+                128
+            ],
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "PickupObjects",
+                                "value": {
+                                    "guid": {
+                                        "ID": 14271662682490721671
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -15.41988754272461,
+                                            "y": 6.828000068664551,
+                                            "z": -23.147876739501954
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "TutorialPainting",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -15.41988754272461,
+                            "y": 6.828000068664551,
+                            "z": -23.147876739501954
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": -0.1678260862827301,
+                            "y": 0.633432924747467,
+                            "z": 0.14333702623844148,
+                            "w": 0.7416546940803528
+                        },
+                        "eulerAngles": {
+                            "x": -25.500995635986329,
+                            "y": 81.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -15.41988754272461,
+                            "y": 6.828000068664551,
+                            "z": -23.147876739501954
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": -0.1678260862827301,
+                            "y": 0.633432924747467,
+                            "z": 0.14333702623844148,
+                            "w": 0.7416546940803528
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Puzzle"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.5,
+                            "y": 0.5,
+                            "z": 0.10000000149011612
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 5.0,
+                            "y": 10.0,
+                            "z": 4.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.04038813337683678,
+                            "y": 0.08853624016046524,
+                            "z": 0.03093424066901207,
+                            "w": 0.9947730302810669
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 124,
+                                "scriptName": "TutorialPainting",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 5243107,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "EToPickUpUI"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 117,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "_Image"
+                                        }
+                                    },
+                                    {
+                                        "data": [
+                                            "I won't lose her again. I've already waited for so long..",
+                                            "If I can align the painting with the door... \nIt doesn't have to end here."
+                                        ],
+                                        "type": "System.String[]",
+                                        "scriptField": {
+                                            "fieldName": "dialogueWhenPaintingPickup"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 110,
+                                            "scriptName": "TutorialLevelInventory"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "inventoryScript"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2097156,
+                                            "scriptName": "PlayerInteraction"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerInteraction"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 125,
+            "Parent": 124,
+            "Child Entities": [
+                126
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Props_PaintingFrame1",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.00011378660565242171,
+                            "y": 0.0002117156982421875,
+                            "z": 0.0004596710205078125
+                        },
+                        "scale": {
+                            "x": 0.15000000596046449,
+                            "y": 0.15000000596046449,
+                            "z": 0.15000000596046449
+                        },
+                        "rotation": {
+                            "x": 0.09576700627803803,
+                            "y": 0.07373275607824326,
+                            "z": 0.02681981399655342,
+                            "w": 0.9923069477081299
+                        },
+                        "eulerAngles": {
+                            "x": 11.301908493041993,
+                            "y": 8.116952896118164,
+                            "z": 3.900892734527588
+                        },
+                        "worldPos": {
+                            "x": -15.419549942016602,
+                            "y": 6.8283891677856449,
+                            "z": -23.147937774658204
+                        },
+                        "worldScale": {
+                            "x": 0.15000000596046449,
+                            "y": 0.15000000596046449,
+                            "z": 0.15000000596046449
+                        },
+                        "worldRot": {
+                            "x": -0.08908902108669281,
+                            "y": 0.7014721035957336,
+                            "z": 0.08908911049365998,
+                            "w": 0.701472282409668
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 126,
+            "Parent": 125,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Frame3",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.000339508056640625,
+                            "y": -0.00090789794921875,
+                            "z": 0.0032196044921875
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 7.450580596923828e-8,
+                            "y": -8.381903171539307e-9,
+                            "z": 3.0547380447387697e-7,
+                            "w": 0.9999999403953552
+                        },
+                        "eulerAngles": {
+                            "x": 0.000008537736903235782,
+                            "y": -9.604979140931392e-7,
+                            "z": 0.00003500471939332783
+                        },
+                        "worldPos": {
+                            "x": -15.419048309326172,
+                            "y": 6.828377723693848,
+                            "z": -23.14798927307129
+                        },
+                        "worldScale": {
+                            "x": 0.15000000596046449,
+                            "y": 0.15000000596046449,
+                            "z": 0.15000000596046449
+                        },
+                        "worldRot": {
+                            "x": -0.08908874541521073,
+                            "y": 0.7014720439910889,
+                            "z": 0.08908926695585251,
+                            "w": 0.7014722228050232
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 9989484729768110263
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Frame3",
+                        "GUID": {
+                            "ID": 1205933146232742357
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 127,
+            "Parent": 124,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Painting",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.002588927047327161,
+                            "y": 0.011318206787109375,
+                            "z": -0.010527610778808594
+                        },
+                        "scale": {
+                            "x": 0.8859999775886536,
+                            "y": 0.8859999775886536,
+                            "z": 0.8859999775886536
+                        },
+                        "rotation": {
+                            "x": 0.7427321076393127,
+                            "y": 0.07240234315395355,
+                            "z": -0.030228108167648317,
+                            "w": 0.6649762392044067
+                        },
+                        "eulerAngles": {
+                            "x": 96.60001373291016,
+                            "y": 8.116969108581543,
+                            "z": 3.900883197784424
+                        },
+                        "worldPos": {
+                            "x": -15.434490203857422,
+                            "y": 6.833683490753174,
+                            "z": -23.147567749023439
+                        },
+                        "worldScale": {
+                            "x": 0.8859999775886536,
+                            "y": 0.8859999775886536,
+                            "z": 0.8859999775886536
+                        },
+                        "worldRot": {
+                            "x": 0.4097249507904053,
+                            "y": 0.5763033032417297,
+                            "z": -0.4097250699996948,
+                            "w": 0.5763033032417297
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8402171933765989402
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 128,
+            "Parent": 124,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Framestand",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.015686701983213426,
+                            "y": -0.24220848083496095,
+                            "z": -0.22313404083251954
+                        },
+                        "scale": {
+                            "x": 0.08100000023841858,
+                            "y": 0.421999990940094,
+                            "z": 0.0860000029206276
+                        },
+                        "rotation": {
+                            "x": 0.44093412160873415,
+                            "y": 0.07845223695039749,
+                            "z": -0.001026421901769936,
+                            "w": 0.8941037058830261
+                        },
+                        "eulerAngles": {
+                            "x": 52.77801513671875,
+                            "y": 8.11694622039795,
+                            "z": 3.900879383087158
+                        },
+                        "worldPos": {
+                            "x": -15.518264770507813,
+                            "y": 6.513322830200195,
+                            "z": -23.14757537841797
+                        },
+                        "worldScale": {
+                            "x": 0.08100000023841858,
+                            "y": 0.421999990940094,
+                            "z": 0.0860000029206276
+                        },
+                        "worldRot": {
+                            "x": 0.16507165133953095,
+                            "y": 0.6875691413879395,
+                            "z": -0.16507160663604737,
+                            "w": 0.6875693202018738
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 9989484729768110263
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 132,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Painting_Deco",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -18.53367805480957,
+                            "y": 13.558340072631836,
+                            "z": -14.37216854095459
+                        },
+                        "scale": {
+                            "x": 4.686999797821045,
+                            "y": 4.440000057220459,
+                            "z": 7.247000217437744
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.7071067690849304,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 90.0
+                        },
+                        "worldPos": {
+                            "x": -18.53367805480957,
+                            "y": 13.558340072631836,
+                            "z": -14.37216854095459
+                        },
+                        "worldScale": {
+                            "x": 4.686999797821045,
+                            "y": 4.440000057220459,
+                            "z": 7.247000217437744
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.7071067690849304,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 6515583414970565237
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 133,
+            "Parent": 135,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Big Painting UI",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 12.979010581970215,
+                            "y": 6.488999843597412,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 6.0,
+                            "y": 6.0,
+                            "z": 6.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 12.979010581970215,
+                            "y": 6.488999843597412,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 6.0,
+                            "y": 6.0,
+                            "z": 6.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 1609949114547940496
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 134,
+            "Parent": 135,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Small Painting UI",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 12.699999809265137,
+                            "y": 4.863999843597412,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 5.920000076293945,
+                            "y": 8.779999732971192,
+                            "z": 6.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 12.699999809265137,
+                            "y": 4.863999843597412,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 5.920000076293945,
+                            "y": 8.779999732971192,
+                            "z": 6.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 2320052153270925563
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 135,
+            "Parent": 37,
+            "Child Entities": [
+                133,
+                134,
+                136
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Painting Alignment UI",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 135,
+                                "scriptName": "PaintingAlignUI",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 136,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "alignmentUI"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 133,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "bigPaintingUI"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 134,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "smallPaintingUI"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 136,
+            "Parent": 135,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Alignment UI",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 12.88672924041748,
+                            "y": 6.360979080200195,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 4.0,
+                            "y": 3.299999952316284,
+                            "z": 4.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 12.88672924041748,
+                            "y": 6.360979080200195,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 4.0,
+                            "y": 3.299999952316284,
+                            "z": 4.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 3449897380420308920
+                        }
                     }
                 }
             ]
@@ -2564,13 +3095,13 @@
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": -0.0,
+                            "y": 0.0,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -6.666280269622803,
-                            "y": 10.500919342041016,
-                            "z": -9.746999740600586
+                            "x": 0.00800000037997961,
+                            "y": 10.621471405029297,
+                            "z": -2.6458959579467775
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -2579,9 +3110,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.7071067690849304,
+                            "y": 0.0,
                             "z": 0.0,
-                            "w": 0.7071067690849304
+                            "w": 1.0
                         }
                     }
                 },
@@ -2594,9 +3125,9 @@
                     "Camera": {
                         "projType": "PERSP",
                         "position": {
-                            "x": -6.666280269622803,
-                            "y": 10.500919342041016,
-                            "z": -9.746999740600586
+                            "x": 0.00800000037997961,
+                            "y": 10.621471405029297,
+                            "z": -2.6458959579467775
                         },
                         "yaw": 0.0,
                         "pitch": 0.0,
@@ -2710,13 +3241,13 @@
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 90.0,
                             "z": 0.0
                         },
                         "worldPos": {
@@ -2731,9 +3262,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -2765,41 +3296,41 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
+                            "x": -0.6669972538948059,
+                            "y": -0.3630751967430115,
+                            "z": 0.0014677641447633505
                         },
                         "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "x": 0.2199999988079071,
+                            "y": 0.2199999988079071,
+                            "z": 0.2199999988079071
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 89.98021697998047,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.0,
-                            "y": 12.195351600646973,
-                            "z": -11.831483840942383
+                            "x": 0.029354484751820566,
+                            "y": 4.933847427368164,
+                            "z": 1.5084600448608399
                         },
                         "worldScale": {
-                            "x": 20.0,
-                            "y": 20.0,
-                            "z": 20.0
+                            "x": 4.400000095367432,
+                            "y": 4.400000095367432,
+                            "z": 4.400000095367432
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.9999999403953552,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.0
                         }
                     }
                 },
@@ -2809,22 +3340,17 @@
                     }
                 },
                 {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 15736275066296596629
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "House_Fence",
-                        "GUID": {
-                            "ID": 1348367580428624277
+                    "Sprite2D": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
                         },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
+                        "textureAssetGUID": {
+                            "ID": 10315826563890463758
+                        },
+                        "isTransparent": true
                     }
                 }
             ]
@@ -2835,6 +3361,37 @@
             "Child Entities": [],
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "..\\Assets\\Audio\\FireFireplaceSFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 10300509119954620865
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -0.2422138750553131,
+                                            "y": 6.050980091094971,
+                                            "z": 3.187333106994629
+                                        },
+                                        "volume": 0.25,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": true,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "House_Fire",
                         "isActive": true
@@ -2843,41 +3400,41 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
+                            "x": -0.7509409189224243,
+                            "y": -0.3072185814380646,
+                            "z": -0.012110650539398194
                         },
                         "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "x": 0.4000000059604645,
+                            "y": 0.4000000059604645,
+                            "z": 0.4000000059604645
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -89.98021697998047,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.0,
-                            "y": 12.195351600646973,
-                            "z": -11.831483840942383
+                            "x": -0.2422138750553131,
+                            "y": 6.050980091094971,
+                            "z": 3.187333106994629
                         },
                         "worldScale": {
-                            "x": 20.0,
-                            "y": 20.0,
-                            "z": 20.0
+                            "x": 8.0,
+                            "y": 8.0,
+                            "z": 8.0
                         },
                         "worldRot": {
                             "x": 0.0,
                             "y": 0.0,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.9999999403953552
                         }
                     }
                 },
@@ -2887,22 +3444,17 @@
                     }
                 },
                 {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 12801981188417368718
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "House_Fire",
-                        "GUID": {
-                            "ID": 1348367580428624277
+                    "Sprite2D": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
                         },
-                        "submeshIdx": 1,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
+                        "textureAssetGUID": {
+                            "ID": 14881540463113329554
+                        },
+                        "isTransparent": true
                     }
                 }
             ]
@@ -2953,9 +3505,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -3031,9 +3583,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -3109,9 +3661,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -3142,7 +3694,7 @@
                 {
                     "BoxCollider": {
                         "scale": {
-                            "x": 3.9000000953674318,
+                            "x": 4.099999904632568,
                             "y": 4.5,
                             "z": 3.5999999046325685
                         },
@@ -3213,9 +3765,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -3317,9 +3869,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -3395,9 +3947,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -3473,9 +4025,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -3551,9 +4103,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -3629,9 +4181,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -3707,9 +4259,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -3785,9 +4337,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -3863,9 +4415,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -3941,9 +4493,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -4019,9 +4571,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -4097,9 +4649,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -4175,9 +4727,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -4253,9 +4805,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -4331,9 +4883,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -4409,9 +4961,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -4487,9 +5039,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -4565,9 +5117,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -4643,9 +5195,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -4721,9 +5273,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -4799,9 +5351,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -4832,21 +5384,52 @@
             ]
         },
         {
-            "ID": 1048616,
-            "Parent": 4194535,
+            "ID": 1048615,
+            "Parent": 52,
             "Child Entities": [],
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "DefaultDialogueSound",
+                                "value": {
+                                    "guid": {
+                                        "ID": 4933977475060192867
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -4.599999904632568,
+                                            "y": -7.599999904632568,
+                                            "z": 0.0
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
-                        "tag": "Neutral",
+                        "tag": "DialogueText",
                         "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
-                            "y": 0.0,
+                            "x": -4.599999904632568,
+                            "y": -7.599999904632568,
                             "z": 0.0
                         },
                         "scale": {
@@ -4862,12 +5445,12 @@
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -0.0,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
+                            "x": -4.599999904632568,
+                            "y": -7.599999904632568,
                             "z": 0.0
                         },
                         "worldScale": {
@@ -4885,7 +5468,226 @@
                 },
                 {
                     "Layer": {
-                        "layerName": "Default"
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Text": {
+                        "textContent": "YOUR TEXT HERE",
+                        "color": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "scale": 0.009999999776482582,
+                        "textAssetGUID": {
+                            "ID": 11715672305158928427
+                        },
+                        "fontFamilyName": "Sniglet-Regular",
+                        "alignment": 0,
+                        "multiLineSpacingOffset": 0.0,
+                        "textBoxEnabledFlag": false,
+                        "textBoxDimensions": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048615,
+                                "scriptName": "TutorialDialogue",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 63,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "DialogueBox"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4194738,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "DisturbedTara"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4194737,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "HappyTara"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1048616,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "NeutralTara"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2097601,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "SadTara"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4194542,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "ShockedTara"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4194581,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "SurprisedTara"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1048617,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "ThinkingTara"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isInDialogueMode"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isLineComplete"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2097156,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.009999999776482582,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "textSpeed"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048616,
+            "Parent": 4194535,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Neutral",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -8.902999877929688,
+                            "y": -5.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -8.902999877929688,
+                            "y": -5.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 11605399919160481108
+                        }
                     }
                 }
             ]
@@ -4904,14 +5706,14 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
-                            "y": 0.0,
+                            "x": -8.902999877929688,
+                            "y": -5.0,
                             "z": 0.0
                         },
                         "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
                         },
                         "rotation": {
                             "x": 0.0,
@@ -4925,14 +5727,14 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
+                            "x": -8.902999877929688,
+                            "y": -5.0,
                             "z": 0.0
                         },
                         "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -4944,7 +5746,20 @@
                 },
                 {
                     "Layer": {
-                        "layerName": "Default"
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 1233074818290280070
+                        }
                     }
                 }
             ]
@@ -5010,9 +5825,9 @@
                     "Text": {
                         "textContent": "Left Click To Align",
                         "color": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
                             "w": 1.0
                         },
                         "scale": 0.008999999612569809,
@@ -5078,9 +5893,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -5156,9 +5971,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -5234,9 +6049,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -5312,9 +6127,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -5390,9 +6205,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -5468,9 +6283,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -5546,9 +6361,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -5624,9 +6439,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -5702,9 +6517,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -5780,9 +6595,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -5858,9 +6673,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -5962,9 +6777,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -6040,9 +6855,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -6118,9 +6933,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -6196,9 +7011,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -6274,9 +7089,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -6352,9 +7167,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -6430,9 +7245,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -6508,9 +7323,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -6612,9 +7427,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -6690,9 +7505,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -6768,9 +7583,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -6872,9 +7687,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -6950,9 +7765,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -7028,9 +7843,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -7106,9 +7921,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -7184,9 +7999,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -7262,9 +8077,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -7340,9 +8155,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -7444,9 +8259,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -7522,9 +8337,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -7600,9 +8415,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -7678,9 +8493,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -7756,9 +8571,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -7789,6 +8604,148 @@
             ]
         },
         {
+            "ID": 1048692,
+            "Parent": 115,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "TutorialPaintingUI",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 12.0,
+                            "y": -4.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 6.614999771118164,
+                            "y": 6.614999771118164,
+                            "z": 6.614999771118164
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 12.0,
+                            "y": -4.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 6.614999771118164,
+                            "y": 6.614999771118164,
+                            "z": 6.614999771118164
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048692,
+                                "scriptName": "HoldupUI",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "x": 0.0,
+                                            "y": 0.6000000238418579,
+                                            "z": 0.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "bigPicPos"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 12.979999542236329,
+                                            "y": 13.800000190734864,
+                                            "z": 12.979999542236329
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "bigPicScale"
+                                        }
+                                    },
+                                    {
+                                        "data": "TutorialPaintingM4.txt",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "dataFilePath"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isBigPaintingActive"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 10.0,
+                                            "y": 0.0,
+                                            "z": 0.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "smallPicPos"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 6.0,
+                                            "y": 6.0,
+                                            "z": 6.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "smallPicScale"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 1562391855474573918
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048695,
             "Parent": 118,
             "Child Entities": [
@@ -7804,47 +8761,326 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 16.399999618530275,
+                            "x": 0.008412718772888184,
                             "y": 6.599999904632568,
-                            "z": -11.730999946594239
+                            "z": -26.669513702392579
                         },
                         "scale": {
-                            "x": 0.03999999910593033,
+                            "x": 0.07424436509609223,
                             "y": 0.03999999910593033,
                             "z": 0.03999999910593033
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": -0.7071067690849304,
+                            "y": 0.0,
                             "z": 0.0,
-                            "w": 0.7071067690849304
+                            "w": 1.0
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": -90.0,
+                            "y": -0.0,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 16.399999618530275,
+                            "x": 0.008412718772888184,
                             "y": 6.599999904632568,
-                            "z": -11.730999946594239
+                            "z": -26.669513702392579
                         },
                         "worldScale": {
-                            "x": 0.03999999910593033,
+                            "x": 0.07424436509609223,
                             "y": 0.03999999910593033,
                             "z": 0.03999999910593033
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.7071067690849304,
+                            "y": 0.0,
                             "z": 0.0,
-                            "w": 0.7071067690849304
+                            "w": 1.0
                         }
                     }
                 },
                 {
                     "Layer": {
                         "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048699,
+            "Parent": null,
+            "Child Entities": [
+                124
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Puzzle",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Puzzle"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049042,
+            "Parent": 2097593,
+            "Child Entities": [
+                1049043,
+                1049044
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Props_CeilingLight",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 20.841999053955079,
+                            "z": -11.831000328063965
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 20.841999053955079,
+                            "z": -11.831000328063965
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049043,
+            "Parent": 1049042,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder10",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 20.841999053955079,
+                            "z": -11.831000328063965
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder10",
+                        "GUID": {
+                            "ID": 12467580282968539768
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049044,
+            "Parent": 1049042,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pSphere1",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 20.841999053955079,
+                            "z": -11.831000328063965
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pSphere1",
+                        "GUID": {
+                            "ID": 12467580282968539768
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
                     }
                 }
             ]
@@ -7895,9 +9131,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -7973,9 +9209,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -8024,15 +9260,40 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -7.315000057220459,
-                                            "y": 6.60099983215332,
-                                            "z": -9.746999740600586
+                                            "x": 0.00800000037997961,
+                                            "y": 6.721551418304443,
+                                            "z": -1.9971760511398316
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
                                         "pan": 0.0,
                                         "mute": false,
-                                        "loop": false,
+                                        "loop": true,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "LINEAR"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "BGM",
+                                "value": {
+                                    "guid": {
+                                        "ID": 12594617213081250855
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.00800000037997961,
+                                            "y": 6.721551418304443,
+                                            "z": -1.9971760511398316
+                                        },
+                                        "volume": 0.6000000238418579,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": true,
                                         "playOnAwake": true,
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
@@ -8042,16 +9303,16 @@
                                 }
                             },
                             {
-                                "key": "..\\Assets\\Audio\\PaintingMatchObject_SFX.wav",
+                                "key": "PaintingMatchObject",
                                 "value": {
                                     "guid": {
                                         "ID": 9407064822443940162
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -7.315000057220459,
-                                            "y": 6.60099983215332,
-                                            "z": -9.746999740600586
+                                            "x": 0.00800000037997961,
+                                            "y": 6.721551418304443,
+                                            "z": -1.9971760511398316
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -8078,9 +9339,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -7.315000057220459,
-                            "y": 6.60099983215332,
-                            "z": -9.746999740600586
+                            "x": 0.00800000037997961,
+                            "y": 6.721551418304443,
+                            "z": -1.9971760511398316
                         },
                         "scale": {
                             "x": 0.7200000286102295,
@@ -8089,19 +9350,19 @@
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": -0.7071067690849304,
+                            "y": 0.0,
                             "z": 0.0,
-                            "w": 0.7071067690849304
+                            "w": 1.0
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": -90.0,
+                            "y": -0.0,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -7.315000057220459,
-                            "y": 6.60099983215332,
-                            "z": -9.746999740600586
+                            "x": 0.00800000037997961,
+                            "y": 6.721551418304443,
+                            "z": -1.9971760511398316
                         },
                         "worldScale": {
                             "x": 0.7200000286102295,
@@ -8110,9 +9371,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.7071067690849304,
+                            "y": 0.0,
                             "z": 0.0,
-                            "w": 0.7071067690849304
+                            "w": 1.0
                         }
                     }
                 },
@@ -8168,11 +9429,11 @@
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "staticFriction": 1.0,
-                        "dynamicFriction": 1.0,
+                        "staticFriction": 0.800000011920929,
+                        "dynamicFriction": 0.800000011920929,
                         "restitution": 0.0,
-                        "gravityFactor": 50.0,
-                        "linearDamping": 10.0,
+                        "gravityFactor": 40.0,
+                        "linearDamping": 1.0,
                         "motionType": "DYNAMIC",
                         "axisLock": 0,
                         "angularAxisLock": 5
@@ -8217,28 +9478,21 @@
                                         }
                                     },
                                     {
-                                        "data": 2500.0,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "jumpForce"
-                                        }
-                                    },
-                                    {
-                                        "data": 1200.0,
+                                        "data": 1300.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "runSpeed"
                                         }
                                     },
                                     {
-                                        "data": 650.0,
+                                        "data": 750.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "speed"
                                         }
                                     },
                                     {
-                                        "data": 650.0,
+                                        "data": 750.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "walkingSpeed"
@@ -8262,6 +9516,73 @@
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "RayHitString"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "entityID": 2097156,
+                                "scriptName": "TutorialFade",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 4194315,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fadeImageEntity"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isFading"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "entityID": 2097156,
+                                "scriptName": "CameraCapture",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": "TutorialPaintingM4",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "PictureName"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "imageCaptured"
+                                        }
+                                    },
+                                    {
+                                        "data": 700,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "imageHeight"
+                                        }
+                                    },
+                                    {
+                                        "data": 700,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "imageWidth"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2097156,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "player"
                                         }
                                     }
                                 ]
@@ -8317,9 +9638,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -8395,9 +9716,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -8473,9 +9794,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -8512,7 +9833,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "House_CloseDoor",
+                        "tag": "ClosedDoor",
                         "isActive": true
                     }
                 },
@@ -8530,13 +9851,13 @@
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": -0.0,
+                            "y": 90.0,
                             "z": 0.0
                         },
                         "worldPos": {
@@ -8551,9 +9872,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -8590,7 +9911,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "House_OpenDoor",
+                        "tag": "OpenDoor",
                         "isActive": true
                     }
                 },
@@ -8608,13 +9929,13 @@
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": -0.0,
+                            "y": 90.0,
                             "z": 0.0
                         },
                         "worldPos": {
@@ -8629,9 +9950,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -8657,32 +9978,6 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
-                    }
-                },
-                {
-                    "BoxCollider": {
-                        "scale": {
-                            "x": 4.199999809265137,
-                            "y": 4.5,
-                            "z": 2.200000047683716
-                        },
-                        "positionOffset": {
-                            "x": 14.100000381469727,
-                            "y": -4.900000095367432,
-                            "z": -1.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 36.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.30901700258255007,
-                            "z": 0.0,
-                            "w": 0.9510565400123596
-                        },
-                        "sensor": false
                     }
                 }
             ]
@@ -8733,9 +10028,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -8837,9 +10132,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -8915,9 +10210,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -9019,9 +10314,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -9097,9 +10392,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -9201,9 +10496,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -9279,9 +10574,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -9318,7 +10613,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "House_Floor",
+                        "tag": "Wooden Ground",
                         "isActive": true
                     }
                 },
@@ -9357,9 +10652,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -9461,9 +10756,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -9475,7 +10770,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 5632164739546152945
+                            "ID": 13113330380908349488
                         }
                     }
                 },
@@ -9565,9 +10860,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -9669,9 +10964,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -9715,9 +11010,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.15800000727176667,
-                            "y": 15.755000114440918,
-                            "z": -34.00899887084961
+                            "x": -24.034038543701173,
+                            "y": 27.81155776977539,
+                            "z": -8.800125122070313
                         },
                         "scale": {
                             "x": 1.0,
@@ -9725,20 +11020,20 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -0.7071067690849304,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
+                            "x": -0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": 0.4999999701976776,
+                            "w": 0.4999999701976776
                         },
                         "eulerAngles": {
                             "x": -90.0,
-                            "y": 0.0,
+                            "y": 89.9720230102539,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.15800000727176667,
-                            "y": 15.755000114440918,
-                            "z": -34.00899887084961
+                            "x": -24.034038543701173,
+                            "y": 27.81155776977539,
+                            "z": -8.800125122070313
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -9746,10 +11041,10 @@
                             "z": 1.0
                         },
                         "worldRot": {
-                            "x": -0.7071067690849304,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
+                            "x": -0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": 0.4999999701976776,
+                            "w": 0.4999999701976776
                         }
                     }
                 },
@@ -9760,7 +11055,7 @@
                 },
                 {
                     "Light": {
-                        "lightType": "SPOTLIGHT",
+                        "lightType": "POINT",
                         "color": {
                             "x": 1.0,
                             "y": 0.8117647171020508,
@@ -9769,7 +11064,7 @@
                         "intensity": 3.5,
                         "innerAngle": 88.0,
                         "outerAngle": 62.0,
-                        "range": 28.0,
+                        "range": 52.0,
                         "castShadows": false,
                         "shadowConfig": {
                             "centerPos": {
@@ -9794,6 +11089,7 @@
             "ID": 2097593,
             "Parent": null,
             "Child Entities": [
+                1049042,
                 2097592,
                 2097594
             ],
@@ -9866,9 +11162,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.057999998331069949,
-                            "y": 15.755000114440918,
-                            "z": -0.6087334156036377
+                            "x": 0.7035753130912781,
+                            "y": 18.392742156982423,
+                            "z": -9.509410858154297
                         },
                         "scale": {
                             "x": 1.0,
@@ -9876,20 +11172,20 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -0.7071067690849304,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
+                            "x": -0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": 0.4999999701976776,
+                            "w": 0.4999999701976776
                         },
                         "eulerAngles": {
                             "x": -90.0,
-                            "y": 0.0,
+                            "y": 89.9720230102539,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.057999998331069949,
-                            "y": 15.755000114440918,
-                            "z": -0.6087334156036377
+                            "x": 0.7035753130912781,
+                            "y": 18.392742156982423,
+                            "z": -9.509410858154297
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -9897,10 +11193,10 @@
                             "z": 1.0
                         },
                         "worldRot": {
-                            "x": -0.7071067690849304,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
+                            "x": -0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": 0.4999999701976776,
+                            "w": 0.4999999701976776
                         }
                     }
                 },
@@ -9911,7 +11207,7 @@
                 },
                 {
                     "Light": {
-                        "lightType": "SPOTLIGHT",
+                        "lightType": "POINT",
                         "color": {
                             "x": 1.0,
                             "y": 0.8117647171020508,
@@ -9920,7 +11216,7 @@
                         "intensity": 3.5,
                         "innerAngle": 88.0,
                         "outerAngle": 62.0,
-                        "range": 28.0,
+                        "range": 37.0,
                         "castShadows": false,
                         "shadowConfig": {
                             "centerPos": {
@@ -10016,14 +11312,14 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
-                            "y": 0.0,
+                            "x": -8.902999877929688,
+                            "y": -5.0,
                             "z": 0.0
                         },
                         "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
                         },
                         "rotation": {
                             "x": 0.0,
@@ -10037,14 +11333,14 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
+                            "x": -8.902999877929688,
+                            "y": -5.0,
                             "z": 0.0
                         },
                         "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -10056,7 +11352,20 @@
                 },
                 {
                     "Layer": {
-                        "layerName": "Default"
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 7494685273356301810
+                        }
                     }
                 }
             ]
@@ -10118,7 +11427,7 @@
                 },
                 {
                     "Layer": {
-                        "layerName": "Default"
+                        "layerName": "UI"
                     }
                 }
             ]
@@ -10137,8 +11446,8 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 13.559000015258789,
-                            "y": 6.51200008392334,
+                            "x": 14.089273452758789,
+                            "y": 6.733203887939453,
                             "z": 0.0
                         },
                         "scale": {
@@ -10158,8 +11467,8 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 13.559000015258789,
-                            "y": 6.51200008392334,
+                            "x": 14.089273452758789,
+                            "y": 6.733203887939453,
                             "z": 0.0
                         },
                         "worldScale": {
@@ -10188,10 +11497,24 @@
                                 "scriptName": "InventoryTutorial",
                                 "scriptFieldInstList": [
                                     {
+                                        "data": 4.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "duration"
+                                        }
+                                    },
+                                    {
                                         "data": 2.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "fadeSpeed"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "finish"
                                         }
                                     }
                                 ]
@@ -10228,8 +11551,8 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 12.373000144958496,
-                            "y": 6.511000156402588,
+                            "x": 12.287972450256348,
+                            "y": 6.705531120300293,
                             "z": 0.0
                         },
                         "scale": {
@@ -10245,12 +11568,12 @@
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -0.0,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 12.373000144958496,
-                            "y": 6.511000156402588,
+                            "x": 12.287972450256348,
+                            "y": 6.705531120300293,
                             "z": 0.0
                         },
                         "worldScale": {
@@ -10278,6 +11601,13 @@
                                 "entityID": 3146166,
                                 "scriptName": "WASDTutorial",
                                 "scriptFieldInstList": [
+                                    {
+                                        "data": 4.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "duration"
+                                        }
+                                    },
                                     {
                                         "data": 2.0,
                                         "type": "System.Single",
@@ -10446,7 +11776,7 @@
                 },
                 {
                     "Layer": {
-                        "layerName": "Default"
+                        "layerName": "UI"
                     }
                 }
             ]
@@ -10465,14 +11795,14 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
-                            "y": 0.0,
+                            "x": -8.902999877929688,
+                            "y": -5.0,
                             "z": 0.0
                         },
                         "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
                         },
                         "rotation": {
                             "x": 0.0,
@@ -10486,14 +11816,14 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
+                            "x": -8.902999877929688,
+                            "y": -5.0,
                             "z": 0.0
                         },
                         "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -10505,7 +11835,20 @@
                 },
                 {
                     "Layer": {
-                        "layerName": "Default"
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 13863339516529885375
+                        }
                     }
                 }
             ]
@@ -10524,14 +11867,14 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
-                            "y": 0.0,
+                            "x": -8.902999877929688,
+                            "y": -6.0,
                             "z": 0.0
                         },
                         "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
                         },
                         "rotation": {
                             "x": 0.0,
@@ -10545,14 +11888,14 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
+                            "x": -8.902999877929688,
+                            "y": -6.0,
                             "z": 0.0
                         },
                         "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -10564,7 +11907,20 @@
                 },
                 {
                     "Layer": {
-                        "layerName": "Default"
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 12235583251651195842
+                        }
                     }
                 }
             ]
@@ -10583,14 +11939,14 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
-                            "y": 0.0,
+                            "x": -8.902999877929688,
+                            "y": -5.0,
                             "z": 0.0
                         },
                         "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
                         },
                         "rotation": {
                             "x": 0.0,
@@ -10604,14 +11960,14 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
+                            "x": -8.902999877929688,
+                            "y": -5.0,
                             "z": 0.0
                         },
                         "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -10623,7 +11979,20 @@
                 },
                 {
                     "Layer": {
-                        "layerName": "Default"
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 11411763348412290564
+                        }
                     }
                 }
             ]
@@ -10642,14 +12011,14 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
-                            "y": 0.0,
+                            "x": -8.902999877929688,
+                            "y": -5.0,
                             "z": 0.0
                         },
                         "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
                         },
                         "rotation": {
                             "x": 0.0,
@@ -10663,14 +12032,14 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
+                            "x": -8.902999877929688,
+                            "y": -5.0,
                             "z": 0.0
                         },
                         "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -10682,7 +12051,20 @@
                 },
                 {
                     "Layer": {
-                        "layerName": "Default"
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 17618773469114924600
+                        }
                     }
                 }
             ]
@@ -10706,8 +12088,8 @@
                             "z": 0.0
                         },
                         "scale": {
-                            "x": 10.017000198364258,
-                            "y": 3.1649999618530275,
+                            "x": 7.7769999504089359,
+                            "y": 3.325000047683716,
                             "z": 8.258000373840332
                         },
                         "rotation": {
@@ -10727,8 +12109,8 @@
                             "z": 0.0
                         },
                         "worldScale": {
-                            "x": 10.017000198364258,
-                            "y": 3.1649999618530275,
+                            "x": 7.7769999504089359,
+                            "y": 3.325000047683716,
                             "z": 8.258000373840332
                         },
                         "worldRot": {

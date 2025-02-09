@@ -74,6 +74,9 @@ namespace Graphics {
         // Only bind the shader if it's different from the currently bound one
         shader->Use();
 
+        // Set the gamma uniform
+        shader->SetUniform("u_Gamma", 2.2f); // Default gamma value
+
         bool isWaterShader = (shader == ShaderLibrary::Get("Water"));
 
         if (isWaterShader) {

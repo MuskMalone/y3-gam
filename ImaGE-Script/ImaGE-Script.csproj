@@ -121,6 +121,7 @@
     <Compile Include="source\Inventory\TutorialLevelHUD.cs" />
     <Compile Include="source\Inventory\TutorialLevelInventory.cs" />
     <Compile Include="source\Level2\ControlPanel2.cs" />
+    <Compile Include="source\Level2\CorridorTransitionFade.cs" />
     <Compile Include="source\Level2\TransitionToLevel3.cs" />
     <Compile Include="source\MainMenu\CDDragAndDrop.cs" />
     <Compile Include="source\MainMenu\ContinueCD.cs" />
@@ -147,6 +148,8 @@
     <Compile Include="source\Painting\HoldupUINight.cs" />
     <Compile Include="source\Painting\ImageDisintegrating.cs" />
     <Compile Include="source\Painting\ImageDisintegratingNight.cs" />
+    <Compile Include="source\Painting\PaintingAlignUI.cs" />
+    <Compile Include="source\Painting\PaintingAlignUIGarden.cs" />
     <Compile Include="source\Painting\PictureAlign.cs" />
     <Compile Include="source\Painting\RotatePainting.cs" />
     <Compile Include="source\Painting\RotationGuidance.cs" />

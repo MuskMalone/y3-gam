@@ -13,7 +13,7 @@ public class Inventory : Entity
   public event EventHandler<InventoryEventArgs> ItemRemoved;
 
   private IInventoryItem currentItem;
-  private bool highlighted = false;
+  public bool highlighted = false;
   public bool isVisible = false;
 
   // Inventory Item UI (Image at the bottom right)
@@ -79,6 +79,10 @@ public class Inventory : Entity
   private Vector2 endHandScale = new Vector2(1.4f, 1.8f);
   private Vector2 currentHandScale;
 
+  //Painting Alignment UI
+  private PaintingAlignUIGarden paintingAlignUIGardenScript;
+
+
   void Start()
   {
     keyEquipped = false;
@@ -111,6 +115,7 @@ public class Inventory : Entity
     InternalCalls.SetPosition(crowbarUI.mEntityID, ref startPosition);
     InternalCalls.SetPosition(keyUI.mEntityID, ref startPosition);
     pictureAlignscript = FindObjectOfType<PictureAlign>();
+    paintingAlignUIGardenScript = FindObjectOfType<PaintingAlignUIGarden>();
   }
 
   public void Additem(IInventoryItem item)
@@ -352,28 +357,34 @@ public class Inventory : Entity
         //Debug.Log("Seed Equipped");
         seedUI?.SetActive(true);
         seedEquipped = true;
+        paintingAlignUIGardenScript.isPainting = false;
         break;
       case "NightPainting":
         Console.WriteLine("Night");
         nightPaintingUI?.SetActive(true);
+        paintingAlignUIGardenScript.isPainting = true;
         nightPaintingUI?.FindScript<HoldupUI>().SetAlginUI("NightPainting", GetItemByName("NightPainting"));
         break;
       case "ToolsPainting":
         toolsPaintingUI?.SetActive(true);
+        paintingAlignUIGardenScript.isPainting = true;
         toolsPaintingUI?.FindScript<HoldupUI>().SetAlginUI("ToolsPainting", GetItemByName("ToolsPainting"));
         break;
       case "CorridorPainting":
         Console.WriteLine("CORR");
         CorridorPaintingUI?.SetActive(true);
+        paintingAlignUIGardenScript.isPainting = true;
         CorridorPaintingUI?.FindScript<HoldupUI>().SetAlginUI("CorridorPainting", GetItemByName("CorridorPainting"));
         break;
       case "Hammer":
         hammerUI?.SetActive(true);
         hammerEquipped = true;
+        paintingAlignUIGardenScript.isPainting = false;
         break;
       case "Crowbar":
         crowbarUI?.SetActive(true);
         crowbarEquipped = true;
+        paintingAlignUIGardenScript.isPainting = false;
         break;
       //case "Transition Painting":
       //  Console.WriteLine("TransitionPainting");
@@ -383,6 +394,7 @@ public class Inventory : Entity
       case "Key":
         keyUI?.SetActive(true);
         keyEquipped = true;
+        paintingAlignUIGardenScript.isPainting = false;
         break;
 
 

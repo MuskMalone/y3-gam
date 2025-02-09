@@ -295,6 +295,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(ChangeToolsPainting);
   ADD_INTERNAL_CALL(SpawnToolBox);
   ADD_INTERNAL_CALL(SpawnOpenDoor);
+  ADD_INTERNAL_CALL(SpawnTaraSilhouette);
   ADD_INTERNAL_CALL(SetShaderState);
 }
 
@@ -1734,6 +1735,16 @@ void Mono::SpawnOpenDoor() {
         ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(openDoor);
         ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(closedDoor);
         ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(glowingDoor);
+    }
+
+}
+
+void Mono::SpawnTaraSilhouette() {
+    ECS::Entity taraSilhouette = ECS::EntityManager::GetInstance().GetEntityFromTag("TaraSilhouette");
+    if (ECS::EntityManager::GetInstance().IsValidEntity(taraSilhouette))
+    {
+        taraSilhouette.SetIsActive(true);
+        ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(taraSilhouette);
     }
 
 }

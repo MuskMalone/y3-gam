@@ -60,6 +60,13 @@ public class PlayerFootsteps : Entity
         string soundName = $"Pavement{soundNumber}";
         InternalCalls.PlaySound(mEntityID, soundName);
     }
+
+    public void PlayRandomWoodenSound()
+    {
+        int soundNumber = random.Next(1, 6);
+        string soundName = $"Wooden{soundNumber}";
+        InternalCalls.PlaySound(mEntityID, soundName);
+    }
     void PlayFootstepSound()
     {
         // Raycast downward to detect the ground surface
@@ -92,6 +99,9 @@ public class PlayerFootsteps : Entity
                     break;
                 case "Metal Pipes":
                     PlayRandomMetalSound();
+                    break;
+                case "Wooden Ground":
+                    PlayRandomWoodenSound();
                     break;
                 default:
                     Debug.Log("No Sound Case " + tag);

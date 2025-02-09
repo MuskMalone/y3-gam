@@ -9,7 +9,7 @@ using System.Data;
 public class HoldupUI : Entity
 {
   //Data on how to display the Image on the screen
-  private bool isBigPaintingActive = false;
+  public bool isBigPaintingActive = false;
   public Vector3 bigPicPos = new Vector3(0, 0.6f, 0);
   public Vector3 bigPicScale = new Vector3(12.980f, 13.8f, 12.980f);
   public Vector3 smallPicPos = new Vector3(10,0, 0);

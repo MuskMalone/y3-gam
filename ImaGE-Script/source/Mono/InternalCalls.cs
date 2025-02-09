@@ -343,6 +343,9 @@ namespace IGE.Utils
     extern public static void SpawnOpenDoor();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SpawnTaraSilhouette();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetShaderState(uint idx, bool active);
     #endregion
     }
