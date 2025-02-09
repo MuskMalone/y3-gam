@@ -60,12 +60,15 @@ public class PictureAlign : Entity
     private bool isMovingCamera = false;
     private float startY;
     public float targetY = 5.0f; // Adjust as needed
+    private CorridorTransitionFade corridorTransitionFadeScript;
 
     void Start()
-  {
+    {
         //tutorialFade = FindObjectOfType<TutorialFade>();
         // Initialize the movement and camera control components
     playerMove = player.FindObjectOfType<PlayerMove>();
+
+        corridorTransitionFadeScript = FindObjectOfType<CorridorTransitionFade>();
 
     if (playerMove == null) Debug.LogError("PlayerMove component not found!");
 
@@ -387,6 +390,48 @@ public class PictureAlign : Entity
 
     }
 
+    //private void TransitionCamera()
+    //{
+    //    if (!isMovingCamera)
+    //    {
+    //        // Start camera transition
+    //        isMovingCamera = true;
+    //        elapsedTime = 0f;
+    //        startY = mainCamera.GetComponent<Transform>().position.Y;
+    //    }
+
+    //    if (isMovingCamera)
+    //    {
+    //        elapsedTime += InternalCalls.GetDeltaTime();
+
+    //        // Lerp the camera Y position over time
+    //        float newY = Mathf.Lerp(startY, targetY, elapsedTime / moveDuration);
+    //        mainCamera.GetComponent<Transform>().position = new Vector3(
+    //            mainCamera.GetComponent<Transform>().position.X,
+    //            newY,
+    //            mainCamera.GetComponent<Transform>().position.Z
+    //        );
+
+    //        // Check if movement is complete
+    //        if (elapsedTime >= moveDuration)
+    //        {
+    //            mainCamera.GetComponent<Transform>().position = new Vector3(
+    //                mainCamera.GetComponent<Transform>().position.X,
+    //                targetY,
+    //                mainCamera.GetComponent<Transform>().position.Z
+    //            );
+
+    //            isMovingCamera = false; // Stop updating
+
+    //            // Proceed with scene transition
+    //            isTransitioning = false;
+    //            playerMove.UnfreezePlayer();
+    //            currentImg.RemoveItself();
+    //            currentImg = null;
+    //            InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Level2.scn");
+    //        }
+    //    }
+    //}
     private void TransitionCamera()
     {
         if (!isMovingCamera)
@@ -395,6 +440,14 @@ public class PictureAlign : Entity
             isMovingCamera = true;
             elapsedTime = 0f;
             startY = mainCamera.GetComponent<Transform>().position.Y;
+
+            // Trigger the fade effect before moving the camera
+           
+            if (corridorTransitionFadeScript != null)
+            {
+                Console.Write("corridorTransitionFadeScript missing");
+                corridorTransitionFadeScript.isFading = true;
+            }
         }
 
         if (isMovingCamera)
@@ -409,8 +462,8 @@ public class PictureAlign : Entity
                 mainCamera.GetComponent<Transform>().position.Z
             );
 
-            // Check if movement is complete
-            if (elapsedTime >= moveDuration)
+            // Check if fade is complete before transitioning scene
+            if (corridorTransitionFadeScript != null && !corridorTransitionFadeScript.isFading && elapsedTime >= moveDuration)
             {
                 mainCamera.GetComponent<Transform>().position = new Vector3(
                     mainCamera.GetComponent<Transform>().position.X,
@@ -420,7 +473,7 @@ public class PictureAlign : Entity
 
                 isMovingCamera = false; // Stop updating
 
-                // Proceed with scene transition
+                // Proceed with scene transition after fade & camera movement
                 isTransitioning = false;
                 playerMove.UnfreezePlayer();
                 currentImg.RemoveItself();
@@ -429,5 +482,6 @@ public class PictureAlign : Entity
             }
         }
     }
+
 
 }
