@@ -449,7 +449,7 @@ namespace IGE {
 					physx::PxVec3 deltaVelocity = targetVelocity - currentVelocity;
 
 					// Choose a time interval (in seconds). This could be your simulation timestep, for instance:
-					float dt = 1.0f / 60.0f;  // For a 60Hz simulation
+					float dt = Performance::FrameRateController::GetInstance().GetDeltaTime();//1.0f / 60.0f;  // For a 60Hz simulation
 
 					// Get the mass of the actor.
 					float mass = rbptr->getMass();
