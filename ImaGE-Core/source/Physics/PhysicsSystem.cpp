@@ -235,6 +235,7 @@ namespace IGE {
 				rb->setAngularVelocity(rigidbody.angularVelocity);
 				rb->setLinearVelocity(rigidbody.velocity);
 				rb->setLinearDamping(rigidbody.linearDamping);
+				rb->setAngularDamping(rigidbody.linearDamping);
 				rb->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_LINEAR_X, rigidbody.IsAxisLocked((int)Component::RigidBody::Axis::X) ? true : false);
 				rb->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_LINEAR_Y, rigidbody.IsAxisLocked((int)Component::RigidBody::Axis::Y) ? true : false);
 				rb->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_LINEAR_Z, rigidbody.IsAxisLocked((int)Component::RigidBody::Axis::Z) ? true : false);
@@ -418,6 +419,7 @@ namespace IGE {
 				}break;
 				case Component::RigidBodyVars::LINEAR_DAMPING: {
 					rbptr->setLinearDamping(rb.linearDamping);
+					rbptr->setAngularDamping(rb.linearDamping);
 				}break;
 				case Component::RigidBodyVars::ANGULAR_VELOCITY: {
 					rbptr->setAngularVelocity(rb.angularVelocity);

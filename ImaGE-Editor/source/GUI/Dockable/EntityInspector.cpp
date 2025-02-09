@@ -1592,13 +1592,13 @@ namespace GUI {
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
 
       NextRowTable("Linear Damping");
-      if (ImGui::DragFloat("##RigidBodyLinearDamping", &rigidBody.linearDamping, 0.01f, 0.0f, 1.0f)) {
+      if (ImGui::DragFloat("##RigidBodyLinearDamping", &rigidBody.linearDamping, 0.01f, 0.0f, 1024.0f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::LINEAR_DAMPING);
         modified = true;
       }
 
       NextRowTable("Static Friction");
-      if (ImGui::DragFloat("##RigidBodyStaticFriction", &rigidBody.staticFriction, 0.01f, 0.0f, 10244.0f)) {
+      if (ImGui::DragFloat("##RigidBodyStaticFriction", &rigidBody.staticFriction, 0.01f, 0.0f, 1024.0f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::STATIC_FRICTION);
         modified = true;
       }
