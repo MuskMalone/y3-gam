@@ -478,6 +478,7 @@ public class PictureAlign : Entity
                 playerMove.UnfreezePlayer();
                 currentImg.RemoveItself();
                 currentImg = null;
+                Globals.lv1To2TransitionPlaybackSound = InternalCalls.GetSoundPlaybackPosition(player.mEntityID, "BGM");
                 InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Level2.scn");
             }
         }

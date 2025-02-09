@@ -17,7 +17,11 @@ public class PlayerFootsteps : Entity
     }
     void Start()
     {
-
+        string currentScene = InternalCalls.GetCurrentScene();
+        if (currentScene == "Level2")
+        {
+            InternalCalls.PlaySoundFromPosition(player.mEntityID, "BGM", Globals.lv1To2TransitionPlaybackSound);
+        }
     }
 
     // Update is called once per frame

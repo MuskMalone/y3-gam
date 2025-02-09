@@ -53,6 +53,8 @@ public class  PlayerMove : Entity
   // Start is called before the first frame update
   void Start()
   {
+    //Console.WriteLine($"this is globals lv1 to 2: {Globals.lv1To2TransitionPlaybackSound}");
+    //Globals.lv1To2TransitionPlaybackSound++;
     ResetPlayerVelocity();
     //initialGravityFactor = InternalCalls.GetGravityFactor(mEntityID);
   }
