@@ -68763,6 +68763,25 @@
                         },
                         "sensor": false
                     }
+                },
+                {
+                    "Animation": {
+                        "animations": [
+                            {
+                                "key": "SafeOpen",
+                                "value": {
+                                    "ID": 1615039560224063368
+                                }
+                            }
+                        ],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
+                        },
+                        "repeat": false
+                    }
                 }
             ]
         },
