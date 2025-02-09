@@ -101,6 +101,7 @@ public class Key : Entity, IInventoryItem
       keyDoor.unlockDoorUI.SetActive(false);  // hide the Unlock UI during the animation
       TriggerAnimation();
       startedAnimation = true;
+      InternalCalls.PlaySound(mEntityID, "KeyUnlock");
     }
 
     if (isPlayingAnimation)
@@ -127,6 +128,7 @@ public class Key : Entity, IInventoryItem
     }
 
     // animation completed, remove item and trigger door unlock
+    InternalCalls.StopSound(mEntityID, "KeyUnlock");
     inventoryScript.RemoveItem(this);
   }
 

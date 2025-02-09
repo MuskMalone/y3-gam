@@ -284,5 +284,7 @@ public class SpecialDialogue : Entity
     dialogueSystem.SetDialogue(new string[] { "She left something on that table..."},
         new Dialogue.Emotion[] { Dialogue.Emotion.Surprised },
         mainDialogueFontScale);
+
+    InternalCalls.SetShaderState(0, false);
   }
 }
