@@ -1,4 +1,5 @@
 using IGE.Utils;
+using System.Numerics;
 
 public class Key : Entity, IInventoryItem
 {
@@ -8,9 +9,19 @@ public class Key : Entity, IInventoryItem
   public PlayerInteraction playerInteraction;
   public Entity EToPickUpUI;
   public KeyDoor keyDoor;
+
+  public PlayerMove playerMove;
+  public Entity playerCamera;
+  public Entity keyCamera;
+
   public string keyAnimName;  // input from inspector based on name in anim component
 
   private bool startedAnimation = false, isPlayingAnimation = false;
+  private Vector3 startPos;
+  private Vector3 zoomInPos;
+  float elapsedTime = 0.0f;
+  float zoomInDuration = 2.0f;
+  bool isZoomingIn = true;
 
   public string Name
   {
@@ -47,6 +58,25 @@ public class Key : Entity, IInventoryItem
 
   void Start()
   {
+    if (playerMove == null)
+    {
+      Debug.LogError("[Key.cs] PlayerMove Script Entity not found!");
+      return;
+    }
+
+    if (keyCamera == null)
+    {
+      Debug.LogError("[Key.cs] Key Camera not found");
+      return;
+    }
+
+    startPos = InternalCalls.GetPosition(keyCamera.mEntityID);
+    /*
+    targetPos = startPos - InternalCalls.GetMainCameraDirection(keyCamera.mEntityID) * 5.0f;
+    */
+
+    zoomInPos = startPos + new Vector3(2, 0, 0);
+    
     _Image?.SetActive(false);
     EToPickUpUI?.SetActive(false);
   }
@@ -77,6 +107,22 @@ public class Key : Entity, IInventoryItem
     {
       // update state of animation every loop
       isPlayingAnimation = InternalCalls.IsPlayingAnimation(mEntityID);
+
+      if (isZoomingIn)
+      {
+        elapsedTime += Time.deltaTime;
+        float t = elapsedTime / zoomInDuration;
+        t = t * t * (3 - 2 * t); // SmoothStep easing
+        Vector3 newPos = Vector3.Lerp(startPos, zoomInPos, t);
+        InternalCalls.SetPosition(keyCamera.mEntityID, ref newPos);
+
+        if (elapsedTime >= zoomInDuration)
+        {
+          elapsedTime = 0.0f;
+          isZoomingIn = false;
+        }
+      }
+
       return;
     }
 
@@ -89,5 +135,13 @@ public class Key : Entity, IInventoryItem
     SetActive(true);
     InternalCalls.PlayAnimation(mEntityID, keyAnimName);
     isPlayingAnimation = true;
+    playerMove.FreezePlayer();
+    SetKeyCameraAsMain();
+  }
+
+  private void SetKeyCameraAsMain()
+  {
+    InternalCalls.SetTag(playerCamera.mEntityID, "PlayerCamera");
+    InternalCalls.SetTag(keyCamera.mEntityID, "MainCamera");
   }
 }

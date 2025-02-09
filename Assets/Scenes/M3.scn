@@ -470,37 +470,6 @@
                         }
                     },
                     {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
-                            }
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -539,6 +508,37 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071067690849304
+                            }
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
                             }
                         }
                     }
@@ -6846,37 +6846,6 @@
                         }
                     },
                     {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
-                            }
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -6915,6 +6884,37 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071067690849304
+                            }
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
                             }
                         }
                     }
@@ -11205,37 +11205,6 @@
                         }
                     },
                     {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
-                            }
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -11274,6 +11243,37 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071067690849304
+                            }
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
                             }
                         }
                     }
@@ -11686,6 +11686,12 @@
                         }
                     },
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -11724,6 +11730,37 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071067690849304
+                            }
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9397993087768555,
+                                "y": 0.9177237749099731,
+                                "z": 0.7512108087539673
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
                             }
                         }
                     }
@@ -12381,37 +12418,6 @@
                         }
                     },
                     {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
-                            }
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -12450,6 +12456,37 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071067690849304
+                            }
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
                             }
                         }
                     }
@@ -12571,37 +12608,6 @@
                         }
                     },
                     {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
-                            }
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -12640,6 +12646,37 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071067690849304
+                            }
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
                             }
                         }
                     }
@@ -30483,6 +30520,16 @@
                                     },
                                     {
                                         "data": {
+                                            "entityID": 1127,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "keyCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 3146049,
                                             "scriptName": "KeyDoor"
                                         },
@@ -30493,12 +30540,32 @@
                                     },
                                     {
                                         "data": {
+                                            "entityID": 0,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 40,
                                             "scriptName": "PlayerInteraction"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
                                         }
                                     }
                                 ]
@@ -53030,37 +53097,6 @@
                         }
                     },
                     {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 183.0,
-                            "outerAngle": 360.0,
-                            "range": 25.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
-                            }
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -53099,6 +53135,37 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071068286895752
+                            }
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 183.0,
+                            "outerAngle": 360.0,
+                            "range": 25.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
                             }
                         }
                     }
@@ -54526,33 +54593,6 @@
                         }
                     },
                     {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 7.940000057220459,
-                                "z": 0.9782022833824158
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -54592,6 +54632,33 @@
                                 "z": 0.0,
                                 "w": 0.7071067690849304
                             }
+                        }
+                    },
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.099999904632568,
+                                "y": 7.940000057220459,
+                                "z": 0.9782022833824158
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
                         }
                     }
                 ],
@@ -54990,33 +55057,6 @@
                         }
                     },
                     {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 7.940000057220459,
-                                "z": 0.9782022833824158
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -55056,6 +55096,33 @@
                                 "z": 0.0,
                                 "w": 1.0
                             }
+                        }
+                    },
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.099999904632568,
+                                "y": 7.940000057220459,
+                                "z": 0.9782022833824158
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
                         }
                     }
                 ],
@@ -55933,6 +56000,81 @@
         },
         {
             "ID": 1127,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "KeyCamera",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 35.0,
+                            "y": 12.800999641418457,
+                            "z": 54.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": -0.014822735451161862,
+                            "y": -0.7062726616859436,
+                            "z": -0.014794304035604,
+                            "w": 0.7076299786567688
+                        },
+                        "eulerAngles": {
+                            "x": -2.4000000953674318,
+                            "y": -89.88999938964844,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 35.0,
+                            "y": 12.800999641418457,
+                            "z": 54.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": -0.014822735451161862,
+                            "y": -0.7062726616859436,
+                            "z": -0.014794304035604,
+                            "w": 0.7076299786567688
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Camera": {
+                        "projType": "PERSP",
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -10.0
+                        },
+                        "yaw": 0.0,
+                        "pitch": 0.0,
+                        "fov": 45.0,
+                        "aspectRatio": 1.7777777910232545,
+                        "nearClip": 0.10000000149011612,
+                        "farClip": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1127,
             "Parent": 11,
             "Child Entities": [],
             "Components": [
@@ -56120,37 +56262,6 @@
                         }
                     },
                     {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 0.9411764740943909,
-                                "y": 0.9176470637321472,
-                                "z": 0.7529411911964417
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 360.0,
-                            "outerAngle": 360.0,
-                            "range": 19.5,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
-                            }
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -56189,6 +56300,37 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7071067690849304
+                            }
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9411764740943909,
+                                "y": 0.9176470637321472,
+                                "z": 0.7529411911964417
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
                             }
                         }
                     }
@@ -70548,6 +70690,13 @@
                                         "scriptField": {
                                             "fieldName": "removePaintingUI"
                                         }
+                                    },
+                                    {
+                                        "data": 3.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "timeUntilDespawn"
+                                        }
                                     }
                                 ]
                             }
@@ -75211,37 +75360,6 @@
                         }
                     },
                     {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "SPOTLIGHT",
-                            "color": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
-                            },
-                            "intensity": 2.0,
-                            "innerAngle": 143.0,
-                            "outerAngle": 53.0,
-                            "range": 93.0,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
-                            }
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -75280,6 +75398,37 @@
                                 "y": 0.0,
                                 "z": 0.0,
                                 "w": 0.7033947110176086
+                            }
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "intensity": 2.0,
+                            "innerAngle": 143.0,
+                            "outerAngle": 53.0,
+                            "range": 93.0,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
                             }
                         }
                     }
@@ -75655,6 +75804,16 @@
                                         }
                                     },
                                     {
+                                        "data": {
+                                            "entityID": 1127,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "keyCamera"
+                                        }
+                                    },
+                                    {
                                         "data": [
                                             "It won't budge. I need a key."
                                         ],
@@ -75665,12 +75824,32 @@
                                     },
                                     {
                                         "data": {
+                                            "entityID": 0,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 40,
                                             "scriptName": "PlayerInteraction"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
                                         }
                                     },
                                     {
@@ -76967,33 +77146,6 @@
                         }
                     },
                     {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 2.700000047683716,
-                                "y": 4.300000190734863,
-                                "z": 1.100000023841858
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -77033,6 +77185,33 @@
                                 "z": 0.0,
                                 "w": 0.932442307472229
                             }
+                        }
+                    },
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 2.700000047683716,
+                                "y": 4.300000190734863,
+                                "z": 1.100000023841858
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
                         }
                     }
                 ],
