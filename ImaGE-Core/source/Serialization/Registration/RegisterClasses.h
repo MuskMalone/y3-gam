@@ -213,10 +213,6 @@ static void rttr_auto_register_reflection_function_(); namespace {
           .property("particlesPerFrame", &Graphics::EmitterInstance::particlesPerFrame);
   }
   /* ------------------ Shaders ---------------------*/
-  rttr::registration::class_<Graphics::PostProcessingManager::PostProcessingConfigs::ShaderLayer>("ShaderLayer")
-      .constructor<>()(rttr::policy::ctor::as_object)
-      .property("active", &Graphics::PostProcessingManager::PostProcessingConfigs::ShaderLayer::active)
-      .property("shader", &Graphics::PostProcessingManager::PostProcessingConfigs::ShaderLayer::shader);
   rttr::registration::class_<Graphics::PostProcessingManager::PostProcessingConfigs::ShaderOrder>("ShaderOrder")
       .constructor<>()(rttr::policy::ctor::as_object)
       .property("shaders", &Graphics::PostProcessingManager::PostProcessingConfigs::ShaderOrder::shaders)

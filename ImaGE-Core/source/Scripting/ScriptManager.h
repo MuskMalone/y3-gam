@@ -339,8 +339,6 @@ namespace Mono
 		static void SetSoundVolume(ECS::Entity::EntityID, MonoString*, float);
 		static void PlaySound(ECS::Entity::EntityID, MonoString*);
 		static void PauseSound(ECS::Entity::EntityID, MonoString*);
-		static void PlaySoundFromPosition(ECS::Entity::EntityID, MonoString*, unsigned time);
-		static unsigned GetSoundPlaybackPosition(ECS::Entity::EntityID, MonoString*);
 		static void StopSound(ECS::Entity::EntityID, MonoString*);
 
 		static void PlayAnimation(ECS::Entity::EntityID entity, MonoString* name, bool loop);
@@ -349,8 +347,6 @@ namespace Mono
 		static void PauseAnimation(ECS::Entity::EntityID entity);
 		static void ResumeAnimation(ECS::Entity::EntityID entity);
 		static void StopAnimationLoop(ECS::Entity::EntityID entity);
-
-		static void SetShaderState(unsigned idx, bool active);
 
 		// updates physics of the entity to align with its world transform values
 		static void UpdatePhysicsToTransform(ECS::Entity::EntityID entity);

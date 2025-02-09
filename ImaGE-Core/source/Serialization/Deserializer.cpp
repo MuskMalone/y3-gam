@@ -302,7 +302,7 @@ namespace Serialization
       rttr::variant var{ std::set<rttr::type>() };
       auto associativeView{ var.create_associative_view() };
       DeserializeAssociativeContainer(associativeView, json["removedComponents"]);
-      overrides.removedComponents = std::move(var.get_value<std::set<std::string>>());
+      overrides.removedComponents = std::move(var.get_value<std::set<rttr::type>>());
     }
 
     // deserialize modified components
@@ -321,8 +321,7 @@ namespace Serialization
 #endif
       }
 
-      std::string typeStr{ keyIter->value.GetString() };
-      rttr::type compType{ rttr::type::get_by_name(typeStr) };
+      rttr::type compType{ rttr::type::get_by_name(keyIter->value.GetString()) };
       if (!compType.is_valid())
       {
 #ifndef DISTRIBUTION
@@ -340,7 +339,7 @@ namespace Serialization
       if (!DeserializeSpecialCases(compVar, compType, valIter->value)) {
         DeserializeComponent(compVar, compType, valIter->value);
       }
-      overrides.componentData.emplace(std::move(typeStr), std::move(compVar));
+      overrides.componentData.emplace(std::move(compType), std::move(compVar));
     }
   }
 

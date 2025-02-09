@@ -252,11 +252,6 @@ namespace IGE.Utils
     extern public static void StopSound(uint entity, string sound);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void PlaySoundFromPosition(uint entity, string sound);
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void GetSoundPlaybackPosition(uint entity, string sound, uint time);
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void PlayAnimation(uint entity, string animation, bool loop = false);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -344,9 +339,6 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SpawnTaraSilhouette();
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SetShaderState(uint idx, bool active);
     #endregion
     }
 }

@@ -64,7 +64,7 @@ namespace ECS {
 
   bool EntityManager::HasParent(Entity entity) const {
     if (!mRegistry.valid(entity.GetRawEnttEntityID())) {
-      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity " + std::to_string(entity.GetEntityID()) + " is not valid!");
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity is not valid!");
       return false;
     }
 
@@ -74,7 +74,7 @@ namespace ECS {
 
   bool EntityManager::HasChild(Entity entity) const {
     if (!mRegistry.valid(entity.GetRawEnttEntityID())) {
-      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity " + std::to_string(entity.GetEntityID()) + " is not valid!");
+      Debug::DebugLogger::GetInstance().LogError("[EntityManager] Entity is not valid!");
       return Entity();
     }
 

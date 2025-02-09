@@ -23,7 +23,7 @@ public class PlayerInteraction : Entity
         if (rayHitID != 0)
         {
             RayHitString = InternalCalls.GetTag(rayHitID);
-            //Console.WriteLine(RayHitString);
+            Console.WriteLine(RayHitString);
         }
         else
             RayHitString = "None";

@@ -7,9 +7,6 @@
 #include <Core/Components/Components.h>
 #include <Events/EventManager.h>
 #include "Scenes/SceneManager.h"
-
-//#define AUDIO_VERBOSE
-
 namespace IGE {
     namespace Audio {
         AudioManager::AudioManager()
@@ -19,7 +16,6 @@ namespace IGE {
         }
         AudioManager::~AudioManager()
         {
-            std::cerr << "audio destructed>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n";
             Release();
         }
         //std::unordered_map<std::string, std::list<FMOD::Channel*>> AudioManager::_mChannels;
@@ -77,6 +73,8 @@ namespace IGE {
 
             return true;
         }
+
+
         void AudioManager::Release()
         {
             FMOD_RESULT result;
@@ -114,12 +112,10 @@ namespace IGE {
                 std::string str(FMOD_ErrorString(result));
                 Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
             }
-#ifdef AUDIO_VERBOSE
             else
             {
                 Debug::DebugLogger::GetInstance().LogInfo("Successful FMOD Channel Group Creation", true);
             }
-#endif
             return groupguid;//return the channel group
         }
 
@@ -136,12 +132,10 @@ namespace IGE {
                     Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
                 }
             }
-#ifdef AUDIO_VERBOSE
             else
             {
                 Debug::DebugLogger::GetInstance().LogInfo("Set group volume to " + std::to_string(volume), true);
             }
-#endif
         }
 
         float AudioManager::GetGroupVolume(std::string const& name)
@@ -158,12 +152,10 @@ namespace IGE {
                     std::string str(FMOD_ErrorString(result));
                     Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
                 }
-#ifdef AUDIO_VERBOSE
                 else
                 {
                     Debug::DebugLogger::GetInstance().LogInfo("Group Volume is" + std::to_string(volume), true);
                 }
-#endif
             }
             else
             {
@@ -183,12 +175,10 @@ namespace IGE {
                     std::string str(FMOD_ErrorString(result));
                     Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
                 }
-#ifdef AUDIO_VERBOSE
                 else
                 {
                     Debug::DebugLogger::GetInstance().LogInfo("Stop Group", true);
                 }
-#endif
             }
             else
             {
@@ -207,12 +197,10 @@ namespace IGE {
                     std::string str(FMOD_ErrorString(result));
                     Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
                 }
-#ifdef AUDIO_VERBOSE
                 else
                 {
                     Debug::DebugLogger::GetInstance().LogInfo("Resume Group", true);
                 }
-#endif
             }
             else
             {
@@ -231,12 +219,10 @@ namespace IGE {
                     std::string str(FMOD_ErrorString(result));
                     Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
                 }
-#ifdef AUDIO_VERBOSE
                 else
                 {
                     Debug::DebugLogger::GetInstance().LogInfo("Pause Group", true);
                 }
-#endif
             }
             else
             {
@@ -294,12 +280,10 @@ namespace IGE {
                 std::string str(FMOD_ErrorString(result));
                 Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
             }
-#ifdef AUDIO_VERBOSE
             else
             {
                 Debug::DebugLogger::GetInstance().LogInfo("Successfully added sound: " + std::string(filepath), true);
             }
-#endif
 
             return mData[namehash];
         }
@@ -368,9 +352,7 @@ namespace IGE {
                 return;
             }
 
-#ifdef AUDIO_VERBOSE
             Debug::DebugLogger::GetInstance().LogInfo("Playing sound: " + std::to_string(sound), true);
-#endif
             temp->setCallback(
                 settings.FMODChannelCallback
             );
@@ -451,6 +433,11 @@ namespace IGE {
             }
             //after releasing the sounds, the data map is cleared 
             mData.clear();
+            //_mCurrentBGM.clear();
+            //_mOriginalBGM.clear();
+            //_mCurrentAmbience.clear();
+
+            //Debug::DebugLogger::GetInstance().LogInfo("Successfully released " + std::to_string(soundCount) + " sounds.", true);
         }
 
         FMOD::System* AudioManager::GetSystem()
@@ -522,9 +509,7 @@ namespace IGE {
                 try {
                     SoundInvokeSetting* settings = static_cast<SoundInvokeSetting*>(userData);
                     settings->channels.erase(channel); // Remove channel from active list
-#ifdef AUDIO_VERBOSE
                     Debug::DebugLogger::GetInstance().LogInfo("sound has finished playing, removing channel ptr");
-#endif
                 }
                 catch (...) {
                     Debug::DebugLogger::GetInstance().LogWarning("audio instance doesnt exist");

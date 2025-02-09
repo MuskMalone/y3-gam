@@ -12,9 +12,9 @@ namespace Serialization {
     void FillData(std::unordered_set<rttr::type> const& components, ECS::Entity entity);
     Component::PrefabOverrides ToPrefabOverrides() const;
 
-    // using componentName as key to keep it ordered for serialization
-    std::map<std::string, rttr::variant> componentData;
-    std::set<std::string> removedComponents;
+    // keep components ordered for serialization
+    std::map<rttr::type, rttr::variant> componentData;
+    std::set<rttr::type> removedComponents;
     IGE::Assets::GUID guid;
     Prefabs::SubDataId subDataId;
   };
