@@ -21,7 +21,9 @@ namespace Component {
 		MOTION,
 		LOCK,
 		LINEAR_DAMPING,
-		ANGULAR_DAMPING
+		ANGULAR_DAMPING, 
+
+		FORCE //will take the velocity of RigidBody as the target, then apply a force to achieve that target speed
 	};
 
 	struct RigidBody {

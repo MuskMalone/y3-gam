@@ -237,8 +237,8 @@ namespace Reflection
 
         // then remove those in the vector
         if (!overrides.removedComponents.empty()) {
-          for (rttr::type const& type : overrides.removedComponents) {
-            RemoveComponentFromEntity(entity, type);
+          for (std::string const& typeStr : overrides.removedComponents) {
+            RemoveComponentFromEntity(entity, rttr::type::get_by_name(typeStr));
           }
         }
       }
