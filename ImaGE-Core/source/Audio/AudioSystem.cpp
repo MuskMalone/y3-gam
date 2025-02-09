@@ -38,6 +38,7 @@ namespace IGE {
                 }
             }
             {//only accounts for one audio listener
+                
                 auto rbsystem{ mEntityManager.GetAllEntitiesWithComponents<Component::AudioListener, Component::Transform, Component::Camera>() };
                 //gets the first listener
                 if (rbsystem.size_hint() > 0) {
@@ -74,8 +75,9 @@ namespace IGE {
                         }
                         
                         for (auto channel : setting.channels) {
-                            FMOD_VECTOR fmodPosition = { setting.position.x, setting.position.y, setting.position.z };
-                            channel->set3DAttributes(&fmodPosition, 0);
+                            //commented out for now to make sounds 2d
+                            //FMOD_VECTOR fmodPosition = { setting.position.x, setting.position.y, setting.position.z };
+                            //channel->set3DAttributes(&fmodPosition, 0);
                         }
                     }
                 }
