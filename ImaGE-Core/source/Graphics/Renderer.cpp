@@ -47,7 +47,7 @@ namespace Graphics {
 		SUBSCRIBE_STATIC_FUNC(Events::WindowResized, OnResize);
 		SUBSCRIBE_STATIC_FUNC(Events::EntitySelectedInEditor, OnEntityPicked);
 		InitUICamera();
-
+		RINIT
 		//----------------------Init Batching Quads------------------------------------------------------------//
 		mData.quadVertexArray = VertexArray::Create();
 		mData.quadVertexBuffer = VertexBuffer::Create(mData.cMaxVertices2D * sizeof(QuadVtx));
