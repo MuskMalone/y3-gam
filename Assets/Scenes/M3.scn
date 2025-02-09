@@ -555,6 +555,7 @@
                 116,
                 151,
                 755,
+                1127,
                 1048632,
                 1048685,
                 1048730,
@@ -1947,7 +1948,7 @@
                                 "scriptName": "CameraCapture",
                                 "scriptFieldInstList": [
                                     {
-                                        "data": "test test",
+                                        "data": "CorridorPaintingTara",
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "PictureName"
@@ -1982,6 +1983,29 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "player"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "entityID": 40,
+                                "scriptName": "CorridorTransitionFade",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 1128,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fadeImageEntity"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isFading"
                                         }
                                     }
                                 ]
@@ -4416,6 +4440,7 @@
                 767,
                 799,
                 1123,
+                1128,
                 5243127
             ],
             "Components": [
@@ -11621,6 +11646,43 @@
                         "value": {
                             "tag": "Light",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Lights"
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.9397993087768555,
+                                "y": 0.9177237749099731,
+                                "z": 0.7512108087539673
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 360.0,
+                            "outerAngle": 360.0,
+                            "range": 19.5,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
+                            }
                         }
                     },
                     {
@@ -23806,6 +23868,13 @@
                                         }
                                     },
                                     {
+                                        "data": 3.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "moveDuration"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 40,
                                             "scriptName": "Entity"
@@ -23834,6 +23903,13 @@
                                         "type": "System.Boolean",
                                         "scriptField": {
                                             "fieldName": "startFade"
+                                        }
+                                    },
+                                    {
+                                        "data": 25.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "targetY"
                                         }
                                     }
                                 ]
@@ -51160,7 +51236,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 14401261846097900411
+                            "ID": 16565766957154628416
                         }
                     }
                 },
@@ -52217,7 +52293,7 @@
                                         }
                                     },
                                     {
-                                        "data": "CorridorPainting.txt",
+                                        "data": "CorridorPaintingTara.txt",
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "dataFilePath"
@@ -52266,7 +52342,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 8253918027542086844
+                            "ID": 12363053353531237807
                         }
                     }
                 }
@@ -55993,6 +56069,151 @@
                         "aspectRatio": 1.7777777910232545,
                         "nearClip": 0.10000000149011612,
                         "farClip": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1127,
+            "Parent": 11,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "TaraSilhouette",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 79.75299835205078,
+                            "y": 63.47638702392578,
+                            "z": -42.801849365234378
+                        },
+                        "scale": {
+                            "x": 13.0,
+                            "y": 12.999999046325684,
+                            "z": 12.999999046325684
+                        },
+                        "rotation": {
+                            "x": 0.7071067690849304,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 79.75299835205078,
+                            "y": 63.47638702392578,
+                            "z": -42.801849365234378
+                        },
+                        "worldScale": {
+                            "x": 13.0,
+                            "y": 12.999999046325684,
+                            "z": 12.999999046325684
+                        },
+                        "worldRot": {
+                            "x": 0.7071067690849304,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Sprite2D": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 12663366849034873865
+                        },
+                        "isTransparent": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1128,
+            "Parent": 75,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "FadeImage",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 73.0,
+                            "y": 32.0,
+                            "z": 8.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 73.0,
+                            "y": 32.0,
+                            "z": 8.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 11422530766509655204
+                        }
                     }
                 }
             ]

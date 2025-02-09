@@ -437,6 +437,8 @@ namespace Mono
 
 		static void SpawnOpenDoor();
 
+		static void SpawnTaraSilhouette();
+
 		static bool OnTriggerEnter(ECS::Entity trigger, ECS::Entity other);
 
 		static bool OnTriggerExit(ECS::Entity trigger, ECS::Entity other);
