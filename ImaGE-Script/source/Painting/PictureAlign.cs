@@ -76,6 +76,28 @@ public class PictureAlign : Entity
 
   void Update()
   {
+    //if (Input.GetKeyTriggered(KeyCode.G))
+    //  playerMove.canLook = false;
+    //if (Input.GetKeyTriggered(KeyCode.M))
+    //{
+    //  toStop = true;
+    //  alignCheck = true;
+    //  //Debug.Log("Player is aligned.");
+    //  playerMove.FreezePlayer();
+    //  //currentImg.SetActive(false);
+    //  isTransitioning = true;
+    //  //if (LeftClickText != null)
+    //  //  LeftClickText.SetActive(false);
+    //  RightArrow.SetActive(false);
+    //  LeftArrow.SetActive(false);
+    //  UpArrow.SetActive(false);
+    //  DownArrow.SetActive(false);
+    //  //SetActive(false);
+    //  InternalCalls.PlaySound(player.mEntityID, "PaintingMatchObject");
+    //  isNight = true;
+    //  playerMove.canLook = false;
+    //}
+
     if (!toStop)
     {
       // Perform alignment checks and freeze the player if aligned
@@ -200,7 +222,8 @@ public class PictureAlign : Entity
     Vector2 currRot =playerMove.GetRotation();
     //Vector3 currWRot = mainCamera.GetComponent<Transform>().rotationWorldEuler;
     //Vector3 currLRot = mainCamera.GetComponent<Transform>().rotationEuler;
-
+    Console.WriteLine("Curr:" + player.GetComponent<Transform>().worldPosition + " vs:" + savedPosition);
+    Console.WriteLine("DIFF: " + positionDistance);
     bool aligned = true;
 
     if (positionDistance > positionThreshold)

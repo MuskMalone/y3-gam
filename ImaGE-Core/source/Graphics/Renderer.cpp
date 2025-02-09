@@ -41,9 +41,6 @@ namespace Graphics {
 
 	}
 	void Renderer::Init() {
-
-		glEnable(GL_FRAMEBUFFER_SRGB);
-
 		SUBSCRIBE_STATIC_FUNC(Events::WindowResized, OnResize);
 		SUBSCRIBE_STATIC_FUNC(Events::EntitySelectedInEditor, OnEntityPicked);
 		InitUICamera();

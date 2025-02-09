@@ -44,26 +44,6 @@ namespace Component {
 			IGE::Audio::AudioManager::GetInstance().StopSound(sound.guid, sound.playSettings);
 		}
 	}
-	//gets the playback time of the most recent channel in milliseconds
-	uint32_t AudioSource::GetPlaybackTime(std::string const& id) const {
-		if (sounds.find(id) != sounds.end()) {
-			auto& sound{ sounds.at(id) };
-			auto channel{ *sound.playSettings.channels.begin() };
-			uint32_t playbackTime{};
-			channel->getPosition(&playbackTime, FMOD_TIMEUNIT_MS);
-			return playbackTime;
-		}
-		return 0;
-	}
-	//sets the playback time of the most recent channel in milliseconds
-	void AudioSource::SetPlaybackTime(std::string const& id, uint32_t time) {
-		if (sounds.find(id) != sounds.end()) {
-			auto& sound{ sounds.at(id) };
-			for (auto& channel : sound.playSettings.channels) {
-				channel->setPosition(time, FMOD_TIMEUNIT_MS);
-			}
-		}
-	}
 	void AudioSource::RemoveSound(std::string const& id)
 	{
 		//stop all the channels first

@@ -344,9 +344,6 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SpawnTaraSilhouette();
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SetShaderState(uint idx, bool active);
     #endregion
     }
 }
