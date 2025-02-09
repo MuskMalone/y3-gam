@@ -35,6 +35,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Asset/AssetManager.h"
 #include "Physics/PhysicsSystem.h"
 #include "Graphics/RenderSystem.h"
+#include "Graphics/PostProcessing/PostProcessingManager.h"
 //#define DEBUG_MONO
 namespace Mono
 {
@@ -276,6 +277,8 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(PlaySound);
   ADD_INTERNAL_CALL(PauseSound);
   ADD_INTERNAL_CALL(StopSound);
+  ADD_INTERNAL_CALL(PlaySoundFromPosition);
+  ADD_INTERNAL_CALL(GetSoundPlaybackPosition);
   ADD_INTERNAL_CALL(PlayAnimation);
   ADD_INTERNAL_CALL(IsPlayingAnimation);
   ADD_INTERNAL_CALL(PauseAnimation);
@@ -292,6 +295,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(ChangeToolsPainting);
   ADD_INTERNAL_CALL(SpawnToolBox);
   ADD_INTERNAL_CALL(SpawnOpenDoor);
+  ADD_INTERNAL_CALL(SetShaderState);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -1099,6 +1103,20 @@ void Mono::PauseSound(ECS::Entity::EntityID e, MonoString* s)
     entity.GetComponent<Component::AudioSource>().PauseSound(name);
 }
 
+void Mono::PlaySoundFromPosition(ECS::Entity::EntityID e, MonoString* s, unsigned time)
+{
+    std::string const name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().SetPlaybackTime(name, time);
+}
+
+unsigned Mono::GetSoundPlaybackPosition(ECS::Entity::EntityID e, MonoString* s)
+{
+    std::string const name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    return entity.GetComponent<Component::AudioSource>().GetPlaybackTime(name);
+}
+
 void Mono::StopSound(ECS::Entity::EntityID e, MonoString* s)
 {
     std::string const name{ MonoStringToSTD(s) };
@@ -1139,6 +1157,11 @@ void Mono::ResumeAnimation(ECS::Entity::EntityID entity) {
 
 void Mono::StopAnimationLoop(ECS::Entity::EntityID entity) {
   ECS::Entity(entity).GetComponent<Component::Animation>().repeat = false;
+}
+
+void Mono::SetShaderState(unsigned idx, bool active)
+{
+    Graphics::PostProcessingManager::GetInstance().SetShaderState(idx, active);
 }
 
 glm::vec3 Mono::GetVelocity(ECS::Entity::EntityID e)

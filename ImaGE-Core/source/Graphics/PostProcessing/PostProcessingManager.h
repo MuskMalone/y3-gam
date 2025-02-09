@@ -7,11 +7,15 @@ namespace Graphics {
 	class PostProcessingManager : public ThreadSafeSingleton<PostProcessingManager>{
 	public:
 		struct PostProcessingConfigs {
+			struct ShaderLayer {
+				bool active{ true };
+				uint64_t shader;
+			};
 			struct ShaderOrder {
 				float fogMinDist{1.f};
 				float fogMaxDist{1000.f};
 				glm::vec3 fogColor{1,1,1};
-				std::vector<uint64_t> shaders;
+				std::vector<ShaderLayer> shaders;
 			};
 			std::unordered_map<std::string, ShaderOrder> mConfigs;
 			
@@ -27,6 +31,7 @@ namespace Graphics {
 		void MovePriorityDown(unsigned idx);
 		void RemoveShader(unsigned idx);
 		std::shared_ptr<Graphics::Shader> GetShader(unsigned idx);
+		void SetShaderState(unsigned idx, bool active);
 		std::shared_ptr<Graphics::Shader> GetDefaultShader();
 		std::string GetShaderName(unsigned idx);
 		unsigned GetShaderNum();

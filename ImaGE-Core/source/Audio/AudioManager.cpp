@@ -74,8 +74,6 @@ namespace IGE {
 
             return true;
         }
-
-
         void AudioManager::Release()
         {
             FMOD_RESULT result;
@@ -434,11 +432,6 @@ namespace IGE {
             }
             //after releasing the sounds, the data map is cleared 
             mData.clear();
-            //_mCurrentBGM.clear();
-            //_mOriginalBGM.clear();
-            //_mCurrentAmbience.clear();
-
-            //Debug::DebugLogger::GetInstance().LogInfo("Successfully released " + std::to_string(soundCount) + " sounds.", true);
         }
 
         FMOD::System* AudioManager::GetSystem()
