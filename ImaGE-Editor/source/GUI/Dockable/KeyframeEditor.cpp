@@ -642,6 +642,10 @@ namespace GUI {
   EVENT_CALLBACK_DEF(KeyframeEditor, OnAnimationEdit) {
     Init();
     LoadKeyframes(CAST_TO_EVENT(Events::EditAnimation)->mGUID);
+
+    for (KeyframeNode::NodePtr const& next : GetRootNode()->nextNodes) {
+      UpdateChain(next);
+    }
   }
 
   bool KeyframeEditor::LoadKeyframes(IGE::Assets::GUID guid) {

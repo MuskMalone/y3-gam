@@ -101,7 +101,6 @@ public class  PlayerMove : Entity
     {
       InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor);
     }
-
     else
     {
       InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor * extraGravityFactorDuringDescent);
@@ -134,7 +133,8 @@ public class  PlayerMove : Entity
 
     // Update the player's rotation (yaw)
     GetComponent<Transform>().rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, Mathf.DegToRad(yaw));
-    
+    // not sure if theres another way
+    InternalCalls.UpdatePhysicsToTransform(mEntityID);  // fix for player physics overriding transform updates
   }
 
   private void ResetPlayerVelocity()

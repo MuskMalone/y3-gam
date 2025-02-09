@@ -27,6 +27,7 @@ public class Safe : Entity
   public Entity TUV;
   public Entity WXYZ;
   public Entity Enter;
+  public Entity Back;
 
   private SafeButtons ABCButtonScript;
   private SafeButtons DEFButtonScript;
@@ -37,6 +38,7 @@ public class Safe : Entity
   private SafeButtons TUVButtonScript;
   private SafeButtons WXYZButtonScript;
   private SafeButtons EnterButtonScript;
+  private SafeButtons BackButtonScript;
 
   private bool safeInteraction = false;
   private bool safeUIActive = false;
@@ -97,6 +99,7 @@ public class Safe : Entity
     TUV?.SetActive(false);
     WXYZ?.SetActive(false);
     Enter?.SetActive(false);
+    Back?.SetActive(false);
 
     ABCButtonScript = ABC.FindScript<SafeButtons>();
     DEFButtonScript = DEF.FindScript<SafeButtons>();
@@ -107,6 +110,7 @@ public class Safe : Entity
     TUVButtonScript = TUV.FindScript<SafeButtons>();
     WXYZButtonScript = WXYZ.FindScript<SafeButtons>();
     EnterButtonScript = Enter.FindScript<SafeButtons>();
+    BackButtonScript = Back.FindScript<SafeButtons>();
 
     foreach (var key in letterGroups.Keys)
     {
@@ -296,17 +300,29 @@ public class Safe : Entity
         }
       }
 
+      else if (BackButtonScript.IsVisible)
+      {
+        Back.SetActive(true);
+        if (BackButtonScript.TriggerButton)
+        {
+          BackButtonScript.TriggerButton = false;
+          BackButton();
+        }
+      }
+
       if (Input.GetKeyTriggered(KeyCode.ESCAPE))
       {
         EndSafeUI();
         safeInteraction = false;
       }
 
+      /*
       if (Input.GetKeyTriggered(KeyCode.BACKSPACE))
       {
         typedText = typedText.Substring(0, typedText.Length - 1);
         InternalCalls.SetText(safeTextBox.mEntityID, typedText);
       }
+      */
 
       if (waitingForDelay)
       {
@@ -375,6 +391,7 @@ public class Safe : Entity
     TUV?.SetActive(false);
     WXYZ?.SetActive(false);
     Enter?.SetActive(false);
+    Back?.SetActive(false);
   }
 
   public void PressButton(string buttonGroup)
@@ -433,6 +450,12 @@ public class Safe : Entity
   public void EnterButton()
   {
     enterPressed = true;
+  }
+  private void BackButton()
+  {
+    PlayRandomKeypadButtonSound();
+    typedText = typedText.Substring(0, typedText.Length - 1);
+    InternalCalls.SetText(safeTextBox.mEntityID, typedText);
   }
   private void PlayRandomKeypadButtonSound()
   {

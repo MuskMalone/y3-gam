@@ -125,7 +125,8 @@ namespace Graphics {
         }
 
         bool IsModified() const { return mModified; }
-        void ClearModifiedFlag() { mModified = false; }
+        void Modified() noexcept { mModified = true; }
+        void ClearModifiedFlag() noexcept { mModified = false; }
 
     private:
         std::shared_ptr<Shader> mShader;

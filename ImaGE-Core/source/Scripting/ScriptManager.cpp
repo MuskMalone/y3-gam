@@ -224,6 +224,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetVelocity);
   ADD_INTERNAL_CALL(GetGravityFactor);
   ADD_INTERNAL_CALL(SetGravityFactor);
+  ADD_INTERNAL_CALL(LockRigidBody);
 
   //Debug Functions
   ADD_INTERNAL_CALL(Log);
@@ -259,11 +260,13 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetText);
   ADD_INTERNAL_CALL(SetText);
   ADD_INTERNAL_CALL(AppendText);
+  ADD_INTERNAL_CALL(SetTextFont);
   ADD_INTERNAL_CALL(GetImageColor);
   ADD_INTERNAL_CALL(SetImageColor);
   ADD_INTERNAL_CALL(GetSprite2DColor);
   ADD_INTERNAL_CALL(SetSprite2DColor);
   ADD_INTERNAL_CALL(SetDaySkyBox);
+  ADD_INTERNAL_CALL(UpdatePhysicsToTransform);
 
   // Utility Functions
   ADD_INTERNAL_CALL(Raycast);
@@ -274,6 +277,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(PauseSound);
   ADD_INTERNAL_CALL(StopSound);
   ADD_INTERNAL_CALL(PlayAnimation);
+  ADD_INTERNAL_CALL(IsPlayingAnimation);
   ADD_INTERNAL_CALL(PauseAnimation);
   ADD_INTERNAL_CALL(ResumeAnimation);
   ADD_INTERNAL_CALL(StopAnimationLoop);
@@ -994,13 +998,36 @@ float Mono::GetGravityFactor(ECS::Entity::EntityID entity) {
   return ECS::Entity(entity).GetComponent<Component::RigidBody>().gravityFactor;
 }
 
-void Mono::SetGravityFactor(ECS::Entity::EntityID entity, float gravity) {
-  if (!ECS::Entity(entity).HasComponent<Component::RigidBody>()) {
-    Debug::DebugLogger::GetInstance().LogError("Entity does not have the RigidBody component");
+void Mono::SetGravityFactor(ECS::Entity::EntityID entityId, float gravity) {
+  ECS::Entity entity{ entityId };
+  if (!entity.HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity " + entity.GetTag() + " does not have the RigidBody component");
     return;
   }
-  ECS::Entity(entity).GetComponent<Component::RigidBody>().gravityFactor = gravity;
+  entity.GetComponent<Component::RigidBody>().gravityFactor = gravity;
   IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::GRAVITY_FACTOR);
+}
+
+void Mono::LockRigidBody(ECS::Entity::EntityID entityId, bool lock) {
+  ECS::Entity entity{ entityId };
+  if (!entity.HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity " + entity.GetTag() + " does not have the RigidBody component");
+    return;
+  }
+
+  Component::RigidBody& rigidBody{ entity.GetComponent<Component::RigidBody>() };
+  if (lock) {
+    int const combinedAxes{ 
+      (int)Component::RigidBody::Axis::X | (int)Component::RigidBody::Axis::Y | (int)Component::RigidBody::Axis::Z
+    };
+    rigidBody.SetAxisLock(combinedAxes);
+    rigidBody.SetAngleAxisLock(combinedAxes);
+  }
+  else {
+    rigidBody.axisLock = 0;
+    rigidBody.angularAxisLock = 0;
+  }
+  IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::LOCK);
 }
 
 glm::vec3 Mono::GetMouseDelta()
@@ -1083,6 +1110,25 @@ void Mono::PlayAnimation(ECS::Entity::EntityID entity, MonoString* str, bool loo
   std::string const name{ MonoStringToSTD(str) };
   ECS::Entity(entity).GetComponent<Component::Animation>().PlayAnimation(name, loop);
 }
+bool Mono::IsPlayingAnimation(ECS::Entity::EntityID entityId) {
+  ECS::Entity const entity{ entityId };
+  if (!entity.HasComponent<Component::Animation>()) {
+    IGE_DBGLOGGER.LogError("IsPlayingAnimation(): Entity " + entity.GetTag() + " does not have an animation component!");
+    return false;
+  }
+
+  return entity.GetComponent<Component::Animation>().IsPlayingAnimation();
+}
+
+MonoString* GetCurrentAnimation(ECS::Entity::EntityID entityId) {
+  ECS::Entity const entity{ entityId };
+  if (!entity.HasComponent<Component::Animation>()) {
+    IGE_DBGLOGGER.LogError("IsPlayingAnimation(): Entity " + entity.GetTag() + " does not have an animation component!");
+    return nullptr;
+  }
+
+  return STDToMonoString(entity.GetComponent<Component::Animation>().currentAnimation.first);
+}
 
 void Mono::PauseAnimation(ECS::Entity::EntityID entity) {
   ECS::Entity(entity).GetComponent<Component::Animation>().Pause();
@@ -1103,6 +1149,10 @@ glm::vec3 Mono::GetVelocity(ECS::Entity::EntityID e)
         return glm::vec3{ rb.velocity.x, rb.velocity.y, rb.velocity.z };
     }
     return glm::vec3();
+}
+
+void Mono::UpdatePhysicsToTransform(ECS::Entity::EntityID entity) {
+  IGE::Physics::PhysicsSystem::GetInstance()->UpdatePhysicsToTransform(entity);
 }
 
 MonoString* Mono::GetLayerName(ECS::Entity::EntityID e)
@@ -1389,6 +1439,19 @@ void Mono::AppendText(ECS::Entity::EntityID textEntity, MonoString* textContent)
   TextComponent.newLineIndicesUpdatedFlag = false;
 }
 
+void Mono::SetTextFont(ECS::Entity::EntityID textEntity, MonoString* s) {
+  std::string scriptTextFont{ MonoStringToSTD(s) };
+
+  if (!ECS::Entity{ textEntity }.HasComponent<Component::Text>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to set the font of an entity that does not have the Text Component");
+    return;
+  }
+
+  ECS::Entity{ textEntity }.GetComponent<Component::Text>().textAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::FontAsset>(scriptTextFont);
+  ECS::Entity{ textEntity }.GetComponent<Component::Text>().fontFamilyName = scriptTextFont;
+  ECS::Entity{ textEntity }.GetComponent<Component::Text>().newLineIndicesUpdatedFlag = false;
+}
+
 
 glm::vec4 Mono::GetImageColor(ECS::Entity::EntityID entity)
 {
@@ -1521,7 +1584,7 @@ void Mono::SaveScreenShot(std::string name, int width, int height)
 
 bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
 
-  ECS::Entity e = ECS::EntityManager::GetInstance().GetEntityFromTag("[Folder] Outdoorlight");
+  ECS::Entity e = ECS::EntityManager::GetInstance().GetEntityFromTag("[Folder] Lights");
   if (ECS::Entity(e))
   {
     for (ECS::Entity child : ECS::EntityManager::GetInstance().GetChildEntity(e))
@@ -1534,12 +1597,16 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
           {
             Component::Light& l = gchild.GetComponent<Component::Light>();
             l.mRange = 21.f;
-            l.mLightIntensity += (2.0f - l.mLightIntensity) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
-            if (l.mLightIntensity >= 1.96f)
+            l.color.r += (0.67f - l.color.r) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
+            l.color.g += (1.f - l.color.g) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
+            l.color.b += (0.96f - l.color.b) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
+            if (l.color.r > 0.67 || l.color.g > 1.f || l.color.b > 0.96f)
             {
-              //std::cout << "Faster?\n";
-              l.mLightIntensity = 2.f;
+              l.color.r = 0.67f;
+              l.color.g = 1.f;
+              l.color.b = 0.96f;
             }
+            std::cout << l.color.r << "\n";
           }
         }
       }
@@ -1564,7 +1631,7 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
     }
   }
   else
-    Debug::DebugLogger::GetInstance().LogError("Unable to find entity: [Folder] Outdoorlight");
+    Debug::DebugLogger::GetInstance().LogError("Unable to find entity: [Folder] Lights");
    
   for (ECS::Entity child : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Light>())
   {

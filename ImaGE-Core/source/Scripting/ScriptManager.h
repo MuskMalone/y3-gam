@@ -329,6 +329,7 @@ namespace Mono
 
 		static float GetGravityFactor(ECS::Entity::EntityID entity);
 		static void SetGravityFactor(ECS::Entity::EntityID entity, float gravity);
+		static void LockRigidBody(ECS::Entity::EntityID entity, bool lock);
 
 		static ECS::Entity::EntityID Raycast(glm::vec3 start, glm::vec3 end);
 
@@ -341,9 +342,14 @@ namespace Mono
 		static void StopSound(ECS::Entity::EntityID, MonoString*);
 
 		static void PlayAnimation(ECS::Entity::EntityID entity, MonoString* name, bool loop);
+		static bool IsPlayingAnimation(ECS::Entity::EntityID entity);
+		static MonoString* GetCurrentAnimation(ECS::Entity::EntityID entity);
 		static void PauseAnimation(ECS::Entity::EntityID entity);
 		static void ResumeAnimation(ECS::Entity::EntityID entity);
 		static void StopAnimationLoop(ECS::Entity::EntityID entity);
+
+		// updates physics of the entity to align with its world transform values
+		static void UpdatePhysicsToTransform(ECS::Entity::EntityID entity);
 
 		static glm::vec3 GetVelocity(ECS::Entity::EntityID);
 
@@ -402,6 +408,8 @@ namespace Mono
 		static void SetText(ECS::Entity::EntityID textEntity, MonoString* textContent);
 
 		static void AppendText(ECS::Entity::EntityID textEntity, MonoString* textContent);
+
+		static void SetTextFont(ECS::Entity::EntityID textEntity, MonoString* s);
 
 		static glm::vec4 GetImageColor(ECS::Entity::EntityID entity);
 

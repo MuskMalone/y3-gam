@@ -14,6 +14,19 @@
             }
         },
         {
+            "key": "test",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
             "key": "Level2",
             "value": {
                 "shaders": [],
@@ -82,6 +95,45 @@
         },
         {
             "key": "Level3",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "M3-Isolated",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "PaintingAnimTest",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "KeyAnimTest",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,

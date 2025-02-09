@@ -8,6 +8,9 @@ public class Key : Entity, IInventoryItem
   public PlayerInteraction playerInteraction;
   public Entity EToPickUpUI;
   public KeyDoor keyDoor;
+  public string keyAnimName;  // input from inspector based on name in anim component
+
+  private bool startedAnimation = false, isPlayingAnimation = false;
 
   public string Name
   {
@@ -38,6 +41,7 @@ public class Key : Entity, IInventoryItem
 
   public void OnUsed()
   {
+    keyDoor.UnlockDoor();
     Destroy(mEntityID);
   }
 
@@ -49,17 +53,41 @@ public class Key : Entity, IInventoryItem
 
   void Update()
   {
-    bool isKeyHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
-    if (Input.GetKeyTriggered(KeyCode.E) && isKeyHit)
+    if (keyDoor.doorInteraction)
     {
-      InternalCalls.PlaySound(mEntityID, "PickupObjects");
-      inventoryScript.Additem(this);
+      bool isKeyHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
+      if (Input.GetKeyTriggered(KeyCode.E) && isKeyHit)
+      {
+        InternalCalls.PlaySound(mEntityID, "PickupObjects");
+        inventoryScript.Additem(this);
+      }
+      EToPickUpUI.SetActive(isKeyHit);
+      return;
     }
-    EToPickUpUI.SetActive(isKeyHit);
 
-    if (!keyDoor.doorInteraction)
+    // one-time flag to start animation
+    if (!startedAnimation)
     {
-      inventoryScript.RemoveItem(this);
+      keyDoor.unlockDoorUI.SetActive(false);  // hide the Unlock UI during the animation
+      TriggerAnimation();
+      startedAnimation = true;
     }
+
+    if (isPlayingAnimation)
+    {
+      // update state of animation every loop
+      isPlayingAnimation = InternalCalls.IsPlayingAnimation(mEntityID);
+      return;
+    }
+
+    // animation completed, remove item and trigger door unlock
+    inventoryScript.RemoveItem(this);
+  }
+
+  void TriggerAnimation()
+  {
+    SetActive(true);
+    InternalCalls.PlayAnimation(mEntityID, keyAnimName);
+    isPlayingAnimation = true;
   }
 }
