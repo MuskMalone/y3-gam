@@ -2201,6 +2201,7 @@
                 465,
                 466,
                 467,
+                471,
                 1048618,
                 1048623,
                 1048656,
@@ -28235,16 +28236,6 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 397,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "LeftClickText"
-                                        }
-                                    },
-                                    {
-                                        "data": {
                                             "entityID": 401,
                                             "scriptName": "Entity"
                                         },
@@ -28278,6 +28269,13 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "border"
+                                        }
+                                    },
+                                    {
+                                        "data": 1.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "fadeSpeed"
                                         }
                                     },
                                     {
@@ -29021,6 +29019,13 @@
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "dataFilePath"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isBigPaintingActive"
                                         }
                                     },
                                     {
@@ -33446,6 +33451,84 @@
             ]
         },
         {
+            "ID": 471,
+            "Parent": 27,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Otherhint",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 79.18985748291016,
+                            "y": 35.154422760009769,
+                            "z": -165.47021484375
+                        },
+                        "scale": {
+                            "x": 6.997043132781982,
+                            "y": 1.9999998807907105,
+                            "z": 3.159144163131714
+                        },
+                        "rotation": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": 89.9720230102539,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 79.18985748291016,
+                            "y": 35.154422760009769,
+                            "z": -166.03099060058595
+                        },
+                        "worldScale": {
+                            "x": 6.997043132781982,
+                            "y": 1.9999998807907105,
+                            "z": 3.159144163131714
+                        },
+                        "worldRot": {
+                            "x": 0.4999999701976776,
+                            "y": 0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8641247491201317829
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048579,
             "Parent": 2,
             "Child Entities": [],
@@ -36968,7 +37051,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "p1 (Copy) (Copy)",
+                        "tag": "OtherHint",
                         "isActive": true
                     }
                 },
@@ -38853,6 +38936,13 @@
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "dataFilePath"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isBigPaintingActive"
                                         }
                                     },
                                     {
