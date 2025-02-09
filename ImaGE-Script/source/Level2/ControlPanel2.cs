@@ -58,6 +58,9 @@ public class ControlPanel2 : Entity
     public int currMode = 1;
     //public LightSwitch lightSwitch;
     public Entity[] LightsToToggleActive;
+
+    private bool isUVLightActive = false;
+    private bool areNumbersActive = false;
     public ControlPanel2() : base()
     {
 
@@ -95,6 +98,8 @@ public class ControlPanel2 : Entity
         poseidonStatue.SetActive(false);
         artemisStatue.SetActive(false);
         dionysusStatue.SetActive(false);
+
+        UVLight.SetActive(false);
     }
 
     void Update()
@@ -107,48 +112,112 @@ public class ControlPanel2 : Entity
         {
             if(Input.GetKeyDown(KeyCode.N))
             {
+                if (AreAllLightsOff() && isUVLightActive)
+                {
+                    DisableMode(currMode);
+                }
                 currMode = 1;
                 DisableAllStatues();
                 zeusStatue.SetActive(true);
+                if(AreAllLightsOff() && isUVLightActive)
+                {
+                    SwitchMode(currMode);
+                }
                 
                 //SwitchMode(0);
             }
             else if(Input.GetKeyDown(KeyCode.M))
             {
+                if (AreAllLightsOff() && isUVLightActive)
+                {
+                    DisableMode(currMode);
+                }
                 currMode = 2;
                 DisableAllStatues();
                 poseidonStatue.SetActive(true);
+                if (AreAllLightsOff() && isUVLightActive)
+                {
+                    SwitchMode(currMode);
+                }
                 //SwitchMode(1);
             }
             else if (Input.GetKeyDown(KeyCode.Y))
             {
+                
+                if (AreAllLightsOff() && isUVLightActive)
+                {
+                    //Console.WriteLine("currMode before" + currMode);
+                    DisableMode(currMode);
+                }
                 currMode = 3;
                 DisableAllStatues();
                 artemisStatue.SetActive(true);
+                //Console.WriteLine("currMode after" + currMode);
+                if (AreAllLightsOff() && isUVLightActive)
+                {
+                    
+                    SwitchMode(currMode);
+                }
                 //SwitchMode(1);
             }
             else if (Input.GetKeyDown(KeyCode.U))
             {
+                if (AreAllLightsOff() && isUVLightActive)
+                {
+                    DisableMode(currMode);
+                }
                 currMode = 4;
                 DisableAllStatues();
                 dionysusStatue.SetActive(true);
+                if (AreAllLightsOff() && isUVLightActive)
+                {
+                    SwitchMode(currMode);
+                }
                 //SwitchMode(1);
             }
         }
 
+        //i can use the control panel
         if (mouseClicked && isPanelHit)
         {
             SetControlPanelCameraAsMain();
             controllingLights = true;
 
+            //if the lights are off
             if (AreAllLightsOff())
             {
+                //i turn on the currentmode number
                 SwitchMode(currMode);
+                //numbers are visible
+                areNumbersActive = true;
             }
         }
 
+        //if the light are on
+        if(!AreAllLightsOff())
+        {
+            //i turn off the numbers
+            DisableMode(currMode);
+            //numbers are invisible
+            areNumbersActive = false;
+        }
+        //if the lights are off and the numbers are invisible
+        if(AreAllLightsOff() && !areNumbersActive)
+        {
+            //turn on the numbers
+            SwitchMode(currMode);
+            //numbers visible
+            areNumbersActive = true;
+        }
+
+        
         if (controllingLights)
         {
+            if(!isUVLightActive)
+            {
+                UVLight.SetActive(true);
+                isUVLightActive = true;
+            }
             playerMove.FreezePlayer();
             Vector3 currentRotation = InternalCalls.GetRotationEuler(UVLight.mEntityID);
             float deltaTime = Time.deltaTime;
@@ -183,13 +252,13 @@ public class ControlPanel2 : Entity
             {
                 controllingLights = false;
                 playerMove.UnfreezePlayer();
-                DisableMode(currMode);
+                //DisableMode(currMode);
                 
                 SetPlayerCameraAsMain();
             }
         }
 
-        UVLight.SetActive(controllingLights);
+        //UVLight.SetActive(controllingLights);
     }
 
     private void SetPlayerCameraAsMain()

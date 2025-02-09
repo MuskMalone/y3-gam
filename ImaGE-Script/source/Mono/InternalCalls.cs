@@ -336,6 +336,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SpawnOpenDoor();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SpawnTaraSilhouette();
     #endregion
     }
 }
