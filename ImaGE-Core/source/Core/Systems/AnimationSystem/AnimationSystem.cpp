@@ -10,17 +10,14 @@
 #include <FrameRateController/FrameRateController.h>
 
 namespace {
-#ifndef DISTRIBUTION
   struct EntityPreviewData {
     Component::Transform trans;
     IGE::Assets::GUID anim;
     ECS::Entity entity;
   };
-#else
-  struct EntityPreviewData {};
-#endif
-  static EntityPreviewData sPreviewData;  // this is for the "Preview" feature, though we don't need this in game build
-                                          // @TODO: Find a way to make this editor only
+
+  static std::unique_ptr<EntityPreviewData> sPreviewData; // this is for the "Preview" feature, though we don't need this in game build
+                                                          // @TODO: Find a way to make this editor only
 
   void InitTransform(Component::Transform& trans, Anim::RootKeyframe const& root);
 }
@@ -138,35 +135,37 @@ namespace Systems {
 
   EVENT_CALLBACK_DEF(AnimationSystem, OnEntityPreview) {
     auto ptr{ CAST_TO_EVENT(Events::PreviewAnimation) };
-    sPreviewData.entity = ptr->mEntity;
+    sPreviewData = std::make_unique<EntityPreviewData>();
+
+    sPreviewData->entity = ptr->mEntity;
     // keep a copy of the transform to restore afterwards
-    sPreviewData.trans = sPreviewData.entity.GetComponent<Component::Transform>();
-    sPreviewData.anim = ptr->mGUID;
+    sPreviewData->trans = sPreviewData->entity.GetComponent<Component::Transform>();
+    sPreviewData->anim = ptr->mGUID;
   }
 
   // exactly the same as Update(), except we only run entities with "preview" flag set to true
   void AnimationSystem::PausedUpdate() {
-    if (!sPreviewData.entity) { return; }
+    if (!sPreviewData || !sPreviewData->entity) { return; }
 
     float const deltaTime{ IGE_FRC.GetDeltaTime() };
     IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
 
-    Component::Animation& animation{ sPreviewData.entity.GetComponent<Component::Animation>() };
+    Component::Animation& animation{ sPreviewData->entity.GetComponent<Component::Animation>() };
 
-    if (!sPreviewData.anim) { return; }
+    if (!sPreviewData->anim) { return; }
 
     try {
-      am.LoadRef<IGE::Assets::AnimationAsset>(sPreviewData.anim);
+      am.LoadRef<IGE::Assets::AnimationAsset>(sPreviewData->anim);
     }
     catch (Debug::ExceptionBase&) {
       IGE_DBGLOGGER.LogError("[AnimationSystem] Unable to get animation " +
-        std::to_string(static_cast<uint64_t>(sPreviewData.anim)) + " of Entity " + sPreviewData.entity.GetTag());
-      sPreviewData.entity = {};
+        std::to_string(static_cast<uint64_t>(sPreviewData->anim)) + " of Entity " + sPreviewData->entity.GetTag());
+      sPreviewData->entity = {};
       return;
     }
 
-    Component::Transform& trans{ sPreviewData.entity.GetComponent<Component::Transform>() };
-    Anim::AnimationData const& animData{ am.GetAsset<IGE::Assets::AnimationAsset>(sPreviewData.anim)->mAnimData };
+    Component::Transform& trans{ sPreviewData->entity.GetComponent<Component::Transform>() };
+    Anim::AnimationData const& animData{ am.GetAsset<IGE::Assets::AnimationAsset>(sPreviewData->anim)->mAnimData };
 
     // if first keyframe, initialize
     if (animation.currentKeyframes.empty()) {
@@ -245,8 +244,8 @@ namespace Systems {
 
     if (animation.currentKeyframes.empty()) {
       animation.Reset();
-      sPreviewData.entity.EmplaceOrReplaceComponent<Component::Transform>(sPreviewData.trans).modified = true;
-      sPreviewData = {};
+      sPreviewData->entity.EmplaceOrReplaceComponent<Component::Transform>(sPreviewData->trans).modified = true;
+      sPreviewData.reset();
     }
   }
 
