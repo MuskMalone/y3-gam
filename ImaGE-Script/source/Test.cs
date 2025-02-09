@@ -42,7 +42,7 @@ public class Test : Entity
     public float TestFloat = 0.1f;
 
     public float TestFloat2 = 1.0f;
-
+    public bool TestBool = false;
     //public float TestFloat = 22f;
     //public double TestDouble = 30.0;
     //public Vector3 dVec3 = new Vector3(336.318f, 100f, 0f);
@@ -89,6 +89,10 @@ public class Test : Entity
 
         InternalCalls.SetSoundPitch(mEntityID, "BGM", TestFloat);
         InternalCalls.SetSoundVolume(mEntityID, "BGM", TestFloat2);
+        if (Input.GetKeyDown(KeyCode.SPACE))
+        {
+            InternalCalls.SetShaderState(0, TestBool);
+        }
     //Console.WriteLine("TEST INT2:" + TestInt3);
     //  Console.WriteLine(testEnt.mEntityID.ToString());
     // Console.WriteLine("Hit\n");
@@ -100,24 +104,24 @@ public class Test : Entity
     //GetComponent<Transform>().Position = new Vec3<float>(1,1,2);
     //  Console.WriteLine(Position.X + "," + Position.Y + "," + Position.Z);
 
-    //  bool isChanged = false;
+        //  bool isChanged = false;
 
-    //  currTrans.Y += (InternalCalls.IsKeyTriggered(KeyCode.W) || InternalCalls.IsKeyHeld(KeyCode.W)) ? (speed * (float)dt) : 0;
-    //  currTrans.X -= (InternalCalls.IsKeyTriggered(KeyCode.A) || InternalCalls.IsKeyHeld(KeyCode.A)) ? (speed * (float)dt) : 0;
-    //  currTrans.Y -= (InternalCalls.IsKeyTriggered(KeyCode.S) || InternalCalls.IsKeyHeld(KeyCode.S)) ? (speed * (float)dt) : 0;
-    //  currTrans.X += (InternalCalls.IsKeyTriggered(KeyCode.D) || InternalCalls.IsKeyHeld(KeyCode.D)) ? (speed * (float)dt) : 0;
+        //  currTrans.Y += (InternalCalls.IsKeyTriggered(KeyCode.W) || InternalCalls.IsKeyHeld(KeyCode.W)) ? (speed * (float)dt) : 0;
+        //  currTrans.X -= (InternalCalls.IsKeyTriggered(KeyCode.A) || InternalCalls.IsKeyHeld(KeyCode.A)) ? (speed * (float)dt) : 0;
+        //  currTrans.Y -= (InternalCalls.IsKeyTriggered(KeyCode.S) || InternalCalls.IsKeyHeld(KeyCode.S)) ? (speed * (float)dt) : 0;
+        //  currTrans.X += (InternalCalls.IsKeyTriggered(KeyCode.D) || InternalCalls.IsKeyHeld(KeyCode.D)) ? (speed * (float)dt) : 0;
 
 
-    //  isChanged =
-    //      (InternalCalls.IsKeyTriggered(KeyCode.W) || InternalCalls.IsKeyHeld(KeyCode.W)) ||
-    //      (InternalCalls.IsKeyTriggered(KeyCode.A) || InternalCalls.IsKeyHeld(KeyCode.A)) ||
-    //      (InternalCalls.IsKeyTriggered(KeyCode.S) || InternalCalls.IsKeyHeld(KeyCode.S)) ||
-    //      (InternalCalls.IsKeyTriggered(KeyCode.D) || InternalCalls.IsKeyHeld(KeyCode.D));
+        //  isChanged =
+        //      (InternalCalls.IsKeyTriggered(KeyCode.W) || InternalCalls.IsKeyHeld(KeyCode.W)) ||
+        //      (InternalCalls.IsKeyTriggered(KeyCode.A) || InternalCalls.IsKeyHeld(KeyCode.A)) ||
+        //      (InternalCalls.IsKeyTriggered(KeyCode.S) || InternalCalls.IsKeyHeld(KeyCode.S)) ||
+        //      (InternalCalls.IsKeyTriggered(KeyCode.D) || InternalCalls.IsKeyHeld(KeyCode.D));
 
-    //if(isChanged)
-    //  {
-    //    InternalCalls.SetPosition(mEntityID, ref currTrans);
-    //  }
+        //if(isChanged)
+        //  {
+        //    InternalCalls.SetPosition(mEntityID, ref currTrans);
+        //  }
 
 
 

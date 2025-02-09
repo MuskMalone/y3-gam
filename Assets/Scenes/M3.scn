@@ -1852,8 +1852,8 @@
                             "y": 0.0,
                             "z": 1.03297058433471e-25
                         },
-                        "staticFriction": 0.800000011920929,
-                        "dynamicFriction": 0.800000011920929,
+                        "staticFriction": 1.0,
+                        "dynamicFriction": 10.0,
                         "restitution": 0.0,
                         "gravityFactor": 40.0,
                         "linearDamping": 1.0,
@@ -1901,21 +1901,21 @@
                                         }
                                     },
                                     {
-                                        "data": 1300.0,
+                                        "data": 20.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "runSpeed"
                                         }
                                     },
                                     {
-                                        "data": 750.0,
+                                        "data": 8.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "speed"
                                         }
                                     },
                                     {
-                                        "data": 750.0,
+                                        "data": 8.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "walkingSpeed"
@@ -55047,6 +55047,33 @@
                         }
                     },
                     {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.099999904632568,
+                                "y": 7.940000057220459,
+                                "z": 0.9782022833824158
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -70610,11 +70637,11 @@
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "staticFriction": 1.0,
-                        "dynamicFriction": 1.0,
+                        "staticFriction": 1000.0,
+                        "dynamicFriction": 1000.0,
                         "restitution": 0.10000000149011612,
                         "gravityFactor": 5.0,
-                        "linearDamping": 0.0,
+                        "linearDamping": 3.0,
                         "motionType": "DYNAMIC",
                         "axisLock": 7,
                         "angularAxisLock": 7
@@ -77133,6 +77160,33 @@
                         "key": "Layer",
                         "value": {
                             "layerName": "Props"
+                        }
+                    },
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 2.700000047683716,
+                                "y": 4.300000190734863,
+                                "z": 1.100000023841858
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
                         }
                     },
                     {
