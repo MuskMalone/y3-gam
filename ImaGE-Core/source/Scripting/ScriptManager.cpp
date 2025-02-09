@@ -950,11 +950,11 @@ void Mono::MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec) {
   }
 
   Performance::FrameRateController::TimeType dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
-  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.x = dVec.x * dt;
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.x = dVec.x;
   //ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y = dVec.y * dt;
-  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.z = dVec.z * dt;
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.z = dVec.z;
      
-  IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
+  IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::FORCE);
 }
 
 void Mono::SetAngularVelocity(ECS::Entity::EntityID entity, glm::vec3 angularVelocity) {

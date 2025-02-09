@@ -41,6 +41,8 @@ namespace IGE {
 			//mTempAllocator{ 10 * 1024 * 1024 },
 			//mJobSystem{ cMaxPhysicsJobs, cMaxPhysicsBarriers, static_cast<int>(thread::hardware_concurrency() - 1) }
 		{
+			mMaterial->setFrictionCombineMode(physx::PxCombineMode::eMAX);
+
 			SUBSCRIBE_CLASS_FUNC(Events::RemoveComponentEvent, &PhysicsSystem::HandleRemoveComponent, this);
 			SUBSCRIBE_CLASS_FUNC(Events::RemoveEntityEvent, &PhysicsSystem::HandleRemoveEntity, this);
 
@@ -193,15 +195,6 @@ namespace IGE {
 		}
 
 		Component::RigidBody& PhysicsSystem::AddRigidBody(ECS::Entity entity, Component::RigidBody rigidbody) {
-			//if (entity.HasComponent<Component::RigidBody>()) return;
-			//auto& bodyinterface = mPhysicsSystem.GetBodyInterface();
-
-				// Half extents (1 unit per side)
-				//physx::PxRigidDynamic* rb = PxCreateDynamic(
-				//	*mPhysics, 
-				//	physx::PxTransform(ToPxVec3(transform.worldPos)),
-				//	physx::PxBoxGeometry(ToPxVec3(transform.worldScale)),
-				//	*mMaterial, rigidbody.mass); // Mass = 10.0f
 			physx::PxRigidDynamic* rb { }; // Mass = 10.0f
 			//if (entity.HasComponent<Component::BoxCollider>() ||
 			//	entity.HasComponent<Component::SphereCollider>() ||
@@ -307,7 +300,7 @@ namespace IGE {
 				xfm = physx::PxTransform(collider.positionOffset);
 			}
 
-			physx::PxShape* shape { CreateShape(geom, collider, entity) };//mPhysics->createShape(geom, *mMaterial, true) };
+			physx::PxShape* shape { CreateShape(geom, collider, entity) };
 			rb->setGlobalPose(xfm);
 			collider.rotationOffset = ToPxQuat(collider.degreeRotationOffsetEuler);
 			shape->setLocalPose({ collider.positionOffset, collider.rotationOffset});
@@ -325,15 +318,10 @@ namespace IGE {
 			//getting from graphics
 			physx::PxTransform xfm(ToPxVec3(transform.worldPos), ToPxQuat(transform.worldRot));
 			SetGeom(geom, collider, transform, newCollider);
-			//rb = physx::PxCreateDynamic(
-			//	*mPhysics,
-			//	xfm,
-			//	geom,
-			//	*mMaterial, 10.f); //default mass will be 10 lmao material is default also
 			rb = mPhysics->createRigidDynamic(xfm);
 			//ugly syntax to get the shape 
 			//assumes that there is only one shape (there should only ever be one starting out)
-			physx::PxShape* shape { CreateShape(geom, collider, entity) };//mPhysics->createShape(geom, *mMaterial, true) };
+			physx::PxShape* shape { CreateShape(geom, collider, entity) };
 			collider.rotationOffset = ToPxQuat(collider.degreeRotationOffsetEuler);
 			shape->setLocalPose({ collider.positionOffset, collider.rotationOffset });
 			collider.idx = rb->getNbShapes();
@@ -447,9 +435,33 @@ namespace IGE {
 					rbptr->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y, rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::Y) ? true : false);
 					rbptr->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z, rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::Z) ? true : false);
 
+				}break;
+
+				case Component::RigidBodyVars::FORCE: {
+					// Assume dynamicBody is a pointer to your PxRigidDynamic actor
+					physx::PxVec3 currentVelocity = rbptr->getLinearVelocity();
+					physx::PxVec3 targetVelocity = rb.velocity;
+
+					// Determine the velocity change required.
+					physx::PxVec3 deltaVelocity = targetVelocity - currentVelocity;
+
+					// Choose a time interval (in seconds). This could be your simulation timestep, for instance:
+					float dt = 1.0f / 60.0f;  // For a 60Hz simulation
+
+					// Get the mass of the actor.
+					float mass = rbptr->getMass();
+
+					// Calculate the acceleration needed.
+					physx::PxVec3 acceleration = deltaVelocity / dt;
+
+					// Calculate the force needed.
+					physx::PxVec3 force = mass * acceleration;
+
+					// Apply the force. Using eFORCE will apply it continuously over the timestep.
+					rbptr->addForce(force, physx::PxForceMode::eFORCE);
+				}break;
 				}
-				}
-				if (entity.HasComponent<Component::BoxCollider>()) {
+				if (entity.HasComponent<Component::BoxCollider>() || entity.HasComponent<Component::CapsuleCollider>() || entity.HasComponent<Component::SphereCollider>()) {
 					physx::PxShape* shape[3]{};
 					auto shapecount{ rbptr->getNbShapes() };
 					rbptr->getShapes(shape, 3);// assuming that all the rigidbodies only have one shape
