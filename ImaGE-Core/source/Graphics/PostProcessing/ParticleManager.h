@@ -3,9 +3,10 @@
 #include <queue>
 #include <array>
 #include "Singleton/ThreadSafeSingleton.h"
+#include "Events/EventCallback.h"
 #define MAX_BUFFER 1000000
 #define WORK_GROUP 1000 //max buffer should be divisible by work group
-namespace Graphics{
+namespace Graphics {
 #pragma warning(push)
 #pragma warning(disable : 4324)
     namespace GLSLStructs {
@@ -70,51 +71,53 @@ namespace Graphics{
     struct EmitterInstance {
         std::array<glm::vec4, 8> vertices{};  // 4 vec4s, each vec4 is 16 bytes, total 64 bytes
         //color
-        glm::vec4 col{1,1,1,1};          // 16 bytes
+        glm::vec4 col{ 1,1,1,1 };          // 16 bytes
         glm::vec3 vel{ .5f, .0f, -0.5f };          // vec3
         glm::vec3 gravity{ 0,0,0 };
-        glm::vec2 size{1,1};         // vec2
+        glm::vec2 size{ 1,1 };         // vec2
 
         //since particles are billboard, means that angle velocity is 2d
-        float angvel{0};
+        float angvel{ 0 };
         //lifetime of each particle
-        float lifetime{5.f};         // 4 bytes
-        float speed{2.5f};            // 4 bytes
+        float lifetime{ 5.f };         // 4 bytes
+        float speed{ 2.5f };            // 4 bytes
 
         // total duration the Emitter has existed for
         float time;             // 4 bytes
-        float frequency{0.5f};        // 4 bytes
+        float frequency{ 0.5f };        // 4 bytes
 
-        int type{1};               // 4 bytes
-        int vCount{1};             // 4 bytes
-        int preset{0};             // 4 bytes
-        int particlesPerFrame{100};  // 4 bytes
+        int type{ 1 };               // 4 bytes
+        int vCount{ 1 };             // 4 bytes
+        int preset{ 0 };             // 4 bytes
+        int particlesPerFrame{ 100 };  // 4 bytes
 
         int idx{ -1 };
 
         bool modified{ false };
     };
 
-	class ParticleManager : public ThreadSafeSingleton<ParticleManager> {
-	public:
-		void Initialize();
-		ParticleManager();
+    class ParticleManager : public ThreadSafeSingleton<ParticleManager> {
+    public:
+        void Initialize();
+        ParticleManager();
         ~ParticleManager();
         void MultiEmitterAction(std::vector<EmitterInstance>& emitters, int action);
         void EmitterAction(EmitterInstance& emitter, int action);
         void DebugSSBO();
         void Bind();
         void Unbind();
+    private:
+        EVENT_CALLBACK_DECL(HandleSystemEvents);
+        void ClearParticleBuffer();
+    private:
+        GLuint mEmitterSSbo;
+        GLuint mParticleSSbo;
+        GLuint mParticleStartSSbo;
 
-	private:
-		GLuint mEmitterSSbo;
-		GLuint mParticleSSbo;
-		GLuint mParticleStartSSbo;
+        //for randomness in glsl
+        GLuint mRandomSSbo;
+        GLuint mVariableSSbo;
 
-		//for randomness in glsl
-		GLuint mRandomSSbo;
-		GLuint mVariableSSbo;
-
-		std::queue<GLuint> mEmitterIdxQueue;
-	};
+        std::queue<GLuint> mEmitterIdxQueue;
+    };
 }
