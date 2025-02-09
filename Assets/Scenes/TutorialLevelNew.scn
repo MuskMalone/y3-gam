@@ -72,7 +72,17 @@
                 },
                 {
                     "Canvas": {
-                        "isVisible": true
+                        "isVisible": true,
+                        "hasTransition": false,
+                        "transitionProgress": 1.0,
+                        "transitionSpeed": 1.0,
+                        "fadeColor": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "fadingOut": false
                     }
                 }
             ]
@@ -370,6 +380,13 @@
                                         }
                                     },
                                     {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "moveDuration"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 2097156,
                                             "scriptName": "Entity"
@@ -398,6 +415,13 @@
                                         "type": "System.Boolean",
                                         "scriptField": {
                                             "fieldName": "startFade"
+                                        }
+                                    },
+                                    {
+                                        "data": 5.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "targetY"
                                         }
                                     }
                                 ]
@@ -9429,11 +9453,11 @@
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "staticFriction": 0.800000011920929,
-                        "dynamicFriction": 0.800000011920929,
+                        "staticFriction": 1.0,
+                        "dynamicFriction": 10.0,
                         "restitution": 0.0,
                         "gravityFactor": 40.0,
-                        "linearDamping": 1.0,
+                        "linearDamping": 10.0,
                         "motionType": "DYNAMIC",
                         "axisLock": 0,
                         "angularAxisLock": 5
@@ -9478,21 +9502,21 @@
                                         }
                                     },
                                     {
-                                        "data": 1300.0,
+                                        "data": 20.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "runSpeed"
                                         }
                                     },
                                     {
-                                        "data": 750.0,
+                                        "data": 40.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "speed"
                                         }
                                     },
                                     {
-                                        "data": 750.0,
+                                        "data": 10.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "walkingSpeed"
