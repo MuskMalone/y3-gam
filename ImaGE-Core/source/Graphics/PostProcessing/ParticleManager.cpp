@@ -2,11 +2,12 @@
 #include "ParticleManager.h"
 #include <random>
 #include "Graphics/Shader.h"
-
+#include <Events/EventManager.h>
 
 namespace Graphics{
     void ParticleManager::Initialize()
     {
+        SUBSCRIBE_CLASS_FUNC(Events::SceneStateChange, &ParticleManager::HandleSystemEvents, this);
         //2 4byte variables to be stored, macros for idx corresponding to each var in Common.glsl
         constexpr int variableCount{ 2 };
         GLuint zero = 0;
@@ -183,5 +184,55 @@ namespace Graphics{
         glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 13, 0);
         glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 14, 0);
         glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 15, 0);
+    }
+    void ParticleManager::ClearParticleBuffer()
+    {
+        // Bind the buffer
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, mParticleSSbo);
+
+        // Map the entire buffer for writing.
+        // We use GL_MAP_WRITE_BIT to write and GL_MAP_INVALIDATE_BUFFER_BIT to tell OpenGL
+        // that we don't care about the previous contents.
+        GLSLStructs::Particle* data = (GLSLStructs::Particle*)
+            glMapBufferRange(GL_SHADER_STORAGE_BUFFER, 0, MAX_BUFFER * sizeof(GLSLStructs::Particle),
+                GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
+
+        if (data)
+        {
+            // Clear the buffer by setting all bytes to zero.
+            memset(data, 0, MAX_BUFFER * sizeof(GLSLStructs::Particle));
+
+            // Unmap the buffer so that the changes take effect.
+            glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
+        }
+        
+        //do it again
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, mParticleStartSSbo);
+        data = (GLSLStructs::Particle*)
+            glMapBufferRange(GL_SHADER_STORAGE_BUFFER, 0, MAX_BUFFER * sizeof(GLSLStructs::Particle),
+                GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
+        if (data)
+        {
+            memset(data, 0, MAX_BUFFER * sizeof(GLSLStructs::Particle));
+            glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
+        }
+
+        //and again
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, mEmitterSSbo);
+        GLSLStructs::Emitter* data2 = (GLSLStructs::Emitter*)
+            glMapBufferRange(GL_SHADER_STORAGE_BUFFER, 0, MAX_BUFFER * sizeof(GLSLStructs::Emitter),
+                GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
+        if (data2)
+        {
+            memset(data2, 0, MAX_BUFFER * sizeof(GLSLStructs::Emitter));
+            glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
+        }
+    }
+    EVENT_CALLBACK_DEF(ParticleManager, HandleSystemEvents) {
+        auto const& state{ CAST_TO_EVENT(Events::SceneStateChange)->mNewState };
+
+        if (state == Events::SceneStateChange::NewSceneState::STOPPED || state == Events::SceneStateChange::NewSceneState::CHANGED) {
+            ClearParticleBuffer();
+        }
     }
 }

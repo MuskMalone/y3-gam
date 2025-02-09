@@ -3,6 +3,7 @@
 #include <queue>
 #include <array>
 #include "Singleton/ThreadSafeSingleton.h"
+#include "Events/EventCallback.h"
 #define MAX_BUFFER 1000000
 #define WORK_GROUP 1000 //max buffer should be divisible by work group
 namespace Graphics{
@@ -105,7 +106,9 @@ namespace Graphics{
         void DebugSSBO();
         void Bind();
         void Unbind();
-
+    private:
+        EVENT_CALLBACK_DECL(HandleSystemEvents);
+        void ClearParticleBuffer();
 	private:
 		GLuint mEmitterSSbo;
 		GLuint mParticleSSbo;
